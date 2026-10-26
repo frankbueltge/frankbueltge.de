@@ -12,6 +12,8 @@ export type EstimateKind = 'count' | 'percent' | 'degrees'
 
 export interface Matter {
   id: string
+  /** a name short enough to label a mark in the figure */
+  short: string
   title: string
   gist: string
   /** place in the briefing's "Urgent but quiet" list, best first; null when the briefing does not list it */
@@ -48,6 +50,8 @@ export interface Round {
 }
 
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+/** the longest label a mark of the figure carries */
+export const SHORT_MAX = 28
 const DAY = /^\d{4}-\d{2}-\d{2}$/
 
 /** The range an answer may take, per kind — anything outside is refused, not clamped. */
@@ -72,6 +76,7 @@ export function roundProblems(r: Round): string[] {
     if (!ID.test(m.id) || ids.has(m.id)) out.push(`matter id ${m.id}`)
     ids.add(m.id)
     if (!m.title || !m.gist) out.push(`matter ${m.id} text`)
+    if (!m.short || m.short.length > SHORT_MAX) out.push(`matter ${m.id} short name`)
     if (!m.terms.length || m.terms.some((t) => t.trim().length < 2)) out.push(`matter ${m.id} terms`)
   }
   if (r.matters.length < 4) out.push('fewer than four matters')

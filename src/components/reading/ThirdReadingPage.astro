@@ -41,10 +41,11 @@ const quietIds = round.matters
   .map((m) => m.id)
 
 const fig = gapFigure(
-  round.matters.map((m) => ({ id: m.id, title: m.title, quiet: m.quiet_rank !== null, signals: signals[m.id] ?? 0 })),
+  round.matters.map((m) => ({ id: m.id, title: m.short, quiet: m.quiet_rank !== null, signals: signals[m.id] ?? 0 })),
   audience.rank,
 )
 const rankOf = new Map(audience.rank.map((r) => [r.id, r]))
+const fullTitle = new Map(round.matters.map((m) => [m.id, m.title]))
 const attentionOf = new Map(attention.matters.map((m) => [m.matter, m]))
 
 const fmtDay = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
@@ -135,7 +136,7 @@ const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
             {
               fig.marks.map((m) => (
                 <g>
-                  <title>{`${m.title}: ${m.signals} signals; ${audience.readings ? `chosen first ${m.score} %` : 'no reading yet'}`}</title>
+                  <title>{`${fullTitle.get(m.id)}: ${m.signals} signals; ${audience.readings ? `chosen first ${m.score} %` : 'no reading yet'}`}</title>
                   {m.yLow !== m.yHigh && <line class="rd-int" x1={m.x} y1={m.yLow} x2={m.x} y2={m.yHigh} />}
                   <circle class={m.quiet ? 'rd-ring' : 'rd-dot'} cx={m.x} cy={m.y} r="5" />
                   <text class="rd-label" x={m.labelX} y={m.labelY} text-anchor={m.anchor}>{m.title}</text>

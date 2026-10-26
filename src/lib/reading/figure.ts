@@ -53,6 +53,9 @@ export interface GapFigure {
 /** log10(1 + signals), so zero has a place on the axis. */
 const lx = (signals: number): number => Math.log10(1 + Math.max(0, signals))
 
+/** A label's width in figure units: 12px type, about 0.55 em a character. */
+export const labelWidth = (text: string): number => text.length * 6.6
+
 export function gapFigure(
   matters: readonly { id: string; title: string; quiet: boolean; signals: number }[],
   rank: readonly RankRow[],
@@ -87,13 +90,27 @@ export function gapFigure(
     }
   })
 
-  // Labels that would overlap are pushed apart vertically, in order of height, 13 units at least.
-  const order = [...marks].sort((a, b) => a.labelY - b.labelY || a.x - b.x)
-  for (let i = 1; i < order.length; i++) {
-    const prev = order[i - 1]!
-    const cur = order[i]!
-    const near = Math.abs(cur.labelX - prev.labelX) < 150
-    if (near && cur.labelY - prev.labelY < 13) cur.labelY = prev.labelY + 13
+  // Labels whose boxes would overlap are pushed apart vertically, the lower one moving down by a
+  // line at a time, so no two labels share ink; a label never leaves the plot.
+  const span = (m: FigureMark): [number, number] => {
+    const w = labelWidth(m.title)
+    return m.anchor === 'start' ? [m.labelX, m.labelX + w] : [m.labelX - w, m.labelX]
+  }
+  const placed: FigureMark[] = []
+  for (const m of [...marks].sort((a, b) => a.labelY - b.labelY || a.x - b.x)) {
+    const [l, r] = span(m)
+    for (let moved = true; moved; ) {
+      moved = false
+      for (const p of placed) {
+        const [pl, pr] = span(p)
+        if (l < pr && pl < r && Math.abs(m.labelY - p.labelY) < 13) {
+          m.labelY = p.labelY + 13
+          moved = true
+        }
+      }
+    }
+    m.labelY = Math.min(m.labelY, box.height - box.padBottom - 2)
+    placed.push(m)
   }
 
   const xTicks: FigureTick[] = [0, 1, 3, 10, 30, 100, 300, 1000]

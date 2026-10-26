@@ -533,7 +533,7 @@ function trendingMarks(): ThumbMark[] {
  */
 function thirdReadingMarks(audience: AudienceReading, signals: Record<string, number>): ThumbMark[] {
   const fig = gapFigure(
-    CURRENT_ROUND.matters.map((m) => ({ id: m.id, title: m.title, quiet: m.quiet_rank !== null, signals: signals[m.id] ?? 0 })),
+    CURRENT_ROUND.matters.map((m) => ({ id: m.id, title: m.short, quiet: m.quiet_rank !== null, signals: signals[m.id] ?? 0 })),
     audience.rank,
     { width: W, height: H, padLeft: P + 2, padRight: P + 2, padTop: P + 2, padBottom: P + 2 },
   )

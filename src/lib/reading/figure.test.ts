@@ -32,6 +32,20 @@ describe('gapFigure', () => {
     expect(silent.yLow).toBeGreaterThan(silent.y)
   })
 
+  it('pushes apart labels whose boxes overlap, even when their marks stand apart', () => {
+    const f = gapFigure(
+      [
+        { id: 'a', title: 'A long label that runs far to the right', quiet: false, signals: 0 },
+        { id: 'b', title: 'Another long label', quiet: false, signals: 1 },
+        { id: 'c', title: 'Loud', quiet: false, signals: 1000 },
+      ],
+      [],
+    )
+    const [a, b] = f.marks
+    expect(b!.x - a!.x).toBeGreaterThan(40)
+    expect(Math.abs(a!.labelY - b!.labelY)).toBeGreaterThanOrEqual(13)
+  })
+
   it('pushes labels apart that would collide', () => {
     const f = gapFigure(
       [
