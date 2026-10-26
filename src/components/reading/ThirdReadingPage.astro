@@ -230,7 +230,10 @@ const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
                   const s = audience.estimates.find((x) => x.id === e.id)!
                   return (
                     <tr>
-                      <td>{e.question}</td>
+                      <td>
+                        <b class="text-fg">{e.label}</b>
+                        <span class="block text-fg-muted">{e.question}</span>
+                      </td>
                       <td>
                         {e.truth_label}
                         <a class="block text-fg-muted underline decoration-line underline-offset-4 hover:decoration-fg" href={e.source.url} rel="noopener">

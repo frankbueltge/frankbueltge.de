@@ -4,6 +4,7 @@ import type { EstimateItem } from './round'
 
 const people: EstimateItem = {
   id: 'p',
+  label: 'People',
   matter: 'm',
   question: '?',
   kind: 'count',

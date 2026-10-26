@@ -432,15 +432,18 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
           <li>
             <span className="rd-stand-label">Your estimates</span>
             <span>
-              {answers
-                .map(([id, v]) => {
-                  const it = items.find((x) => x.id === id)!
-                  if (v === null) return `${it.unit}: you did not guess; the figure is ${it.truth_label}`
-                  const d = judge(it.kind, v, it.truth).direction
-                  return `${fmtValue(it.kind, v)} against ${it.truth_label} (${d === 'close' ? 'close' : d === 'under' ? 'too low' : 'too high'})`
-                })
-                .join('; ')}
-              .
+              {answers.map(([id, v]) => {
+                const it = items.find((x) => x.id === id)!
+                const d = v === null ? null : judge(it.kind, v, it.truth).direction
+                return (
+                  <span key={id} className="block">
+                    <b className="font-semibold text-fg">{it.label}:</b>{' '}
+                    {v === null
+                      ? `no guess; the figure is ${it.truth_label}.`
+                      : `${fmtValue(it.kind, v)} against ${it.truth_label} (${d === 'close' ? 'close' : d === 'under' ? 'too low' : 'too high'}).`}
+                  </span>
+                )
+              })}
             </span>
           </li>
         ) : null}

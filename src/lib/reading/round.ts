@@ -22,6 +22,8 @@ export interface Matter {
 
 export interface EstimateItem {
   id: string
+  /** a short name for the reader's result and the page's table */
+  label: string
   matter: string
   question: string
   kind: EstimateKind
@@ -82,6 +84,7 @@ export function roundProblems(r: Round): string[] {
     if (!ID.test(e.id) || eids.has(e.id)) out.push(`estimate id ${e.id}`)
     eids.add(e.id)
     if (!ids.has(e.matter)) out.push(`estimate ${e.id} names unknown matter ${e.matter}`)
+    if (!e.label?.trim() || !e.question?.trim().endsWith('?')) out.push(`estimate ${e.id} text`)
     const range = ESTIMATE_RANGE[e.kind]
     if (!range) out.push(`estimate ${e.id} kind`)
     else if (!(e.truth > range.min && e.truth <= range.max)) out.push(`estimate ${e.id} truth out of range`)
