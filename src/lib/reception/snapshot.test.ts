@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { EMPTY_SNAPSHOT, inert, receptionMarkdown, serializeSnapshot, toSnapshot, verbatim } from './snapshot'
+import { EMPTY_SNAPSHOT, inert, receptionMarkdown, serializeSnapshot, toSnapshot, verbatim, type Snapshot } from './snapshot'
 import { damped, rankWorks } from './record'
 import latest from '@/data/reception/latest.json'
 
@@ -43,8 +43,12 @@ describe('the snapshot', () => {
     for (const p of [null, { ok: false, reason: 'standby' }, { ok: true, schema: 2, works: [], notes: [], hidden: [] }, { ok: true, schema: 1 }]) expect(() => toSnapshot(p)).toThrow()
   })
 
-  it('starts from the committed empty record', () => {
-    expect(toSnapshot({ ok: true, ...latest })).toEqual(toSnapshot({ ok: true, ...EMPTY_SNAPSHOT }))
+  it('keeps the committed record in its own normal form, whatever it holds', () => {
+    expect(serializeSnapshot(toSnapshot({ ok: true, ...latest }))).toBe(serializeSnapshot(latest as unknown as Snapshot))
+  })
+
+  it('starts from an empty record before the first rating', () => {
+    expect(toSnapshot({ ok: true, ...EMPTY_SNAPSHOT })).toEqual(EMPTY_SNAPSHOT)
   })
 })
 
