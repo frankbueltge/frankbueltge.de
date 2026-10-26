@@ -198,8 +198,8 @@ const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
         {
           audience.speaks ? (
             <p class="leading-relaxed text-fg-muted">
-              Across {audience.readings} readings, of the {audience.louder.of} choices between two matters the web was not equally
-              loud about, <b class="text-fg">{louderPct} %</b> went to the louder one. Where a matter the briefing calls urgent but
+              Across {audience.readings} readings, of the {audience.louder.of} choices between two matters one of which the web
+              was clearly louder about, <b class="text-fg">{louderPct} %</b> went to the louder one. Where a matter the briefing calls urgent but
               quiet met one it does not, it was chosen <b class="text-fg">{quietPct} %</b> of the time.
               {audience.primed > 0 && ` ${audience.primed} of the readings were given after opening this fold.`}
             </p>

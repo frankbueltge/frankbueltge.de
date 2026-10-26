@@ -437,11 +437,11 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
         <li>
           <span className="rd-stand-label">Against the noise</span>
           {louder.of === 0 ? (
-            <span>None of your choices set a louder matter against a quieter one.</span>
+            <span>None of your choices set a clearly louder matter against a quieter one.</span>
           ) : (
             <span>
-              Of your {louder.of} choices between two matters the web was not equally loud about, you gave <b className="text-fg">{louder.went}</b> to the
-              louder one{lean! > 0.65 ? ' — your urgency mostly followed the noise' : lean! < 0.35 ? ' — you mostly chose against the noise' : ' — loudness did not decide it for you'}.
+              Of your {louder.of} choices between two matters one of which the web was clearly louder about (twice the signals or more), you gave{' '}
+              <b className="text-fg">{louder.went}</b> to the louder one{lean! > 0.65 ? ' — your urgency mostly followed the noise' : lean! < 0.35 ? ' — you mostly chose against the noise' : ' — loudness did not decide it for you'}.
             </span>
           )}
         </li>
