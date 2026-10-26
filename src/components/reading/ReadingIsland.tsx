@@ -266,7 +266,7 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
           </Button>
           <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint" aria-live="polite">
             {status.state === 'open'
-              ? `open · ${status.readings} ${status.readings === 1 ? 'reading' : 'readings'} on the record`
+              ? `open · ${status.readings} ${status.readings === 1 ? 'reading' : 'readings'} stored so far`
               : status.state === 'closed'
                 ? `not stored at the moment: ${status.why}`
                 : 'asking whether the round is open …'}
