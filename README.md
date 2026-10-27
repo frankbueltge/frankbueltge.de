@@ -83,7 +83,7 @@ Its investigations: **[The Foreknown](https://frankbueltge.de/attention)** was r
 *The Interval* (slow-onset food crises). Dark Ocean was retired the same day. The practice's
 discovery pass now builds candidates through its admission path: *The Interval* and
 *Planetary Listening* are in their acceptance experiments since 2026-10-19, *The Synthetic Flood*
-is at V0, *The Declared Network* is a new exposé, and Memory Hole (V0 since 2026-08-15, asking
+is at V0, *The Declared Network* is parked after its audit (its station register refuses automated readers), and Memory Hole (V0 since 2026-08-15, asking
 what power changes about its own published past) runs on — none of them with a stage until it
 passes its own acceptance experiment. Its instrument is
 **[The State Before the Interface](https://frankbueltge.de/observatory)**.
