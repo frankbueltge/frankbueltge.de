@@ -18,7 +18,9 @@
 //   · a convening whose result the relay carries → the next cycle opens on that question a day
 //     after the tally, unless the architect objected (his silence is consent)
 //   · a convening with no result seven days after it opened → the next cycle opens on the
-//     continuing question, which stays the programme's origin and its fallback
+//     fallback of the convening's briefing (since 2026-10-25: the first "urgent but quiet" matter
+//     of the Middle's briefing, docs/design/2026-10-25-the-briefing.md), and only without a
+//     briefing on the continuing question, which stays the programme's origin
 //   · a seed released to all three → the next cycle opens on the seed at once, from a working
 //     cycle or from a convening; only a seed's own cycle is never cut short, and a seed's cycle
 //     whose presentations stand goes on to the next waiting seed before anything convenes
@@ -80,6 +82,7 @@ interface RawConvening {
   after_cycle: number
   opened: string
   objected?: string | null
+  briefing?: { url: string; fallback: string } | null
 }
 
 /** The tally in words: "the Studio 5 · the Field 3 · the Atelier 1 (borda)". */
@@ -134,6 +137,13 @@ export function planTurn(
       return { kind: 'convened', next: opening(raw, n, today, { question: result.question, source: 'convening', seedId: null, taken }, line), line }
     }
     if (today < fallbackOn(conv.opened)) return null // the practices still have days to agree
+    const briefed = conv.briefing?.fallback?.trim()
+    if (briefed) {
+      const line =
+        `${where} reached no result within ${CONVENING_DAYS} days. Cycle ${pad(n)} opens on ${today} on the ` +
+        `fallback of the convening's briefing, its first matter that is urgent but quiet (${conv.briefing!.url}). ${RULE}`
+      return { kind: 'fallback', next: opening(raw, n, today, { question: briefed, source: 'convening', seedId: null, taken }, line), line }
+    }
     const line =
       `${where} reached no result within ${CONVENING_DAYS} days. Cycle ${pad(n)} opens on ${today} on the ` +
       `continuing question, ${continuing.question}, as the fallback. ${RULE}`
@@ -167,9 +177,10 @@ export function planTurn(
   // All three have presented and no seed waits: the practices convene on what comes next.
   const line =
     `Cycle ${pad(cycle)} (${inSeedCycle ? "a seed's cycle, " : ''}opened ${opened}) closed on ${today}: all three ` +
-    `practices presented. The convening opens: each practice proposes the next question and ranks the three ` +
-    `proposals, and the tally opens cycle ${pad(n)} a day later unless the architect objects. Without a result by ` +
-    `${fallbackOn(today)}, cycle ${pad(n)} opens on the continuing question, ${continuing.question}. ${RULE}`
+    `practices presented. The convening opens: the Middle writes a briefing, each practice proposes the next ` +
+    `question from it and ranks the three proposals, and the tally opens cycle ${pad(n)} a day later unless the ` +
+    `architect objects. Without a result by ${fallbackOn(today)}, cycle ${pad(n)} opens on the briefing's first ` +
+    `matter that is urgent but quiet, or without a briefing on the continuing question, ${continuing.question}. ${RULE}`
   return { kind: 'convene', next: convening(raw, today, line), line }
 }
 

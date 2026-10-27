@@ -1,0 +1,148 @@
+{
+  "date": "2026-10-26",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-26T11:26:26Z",
+    "counts": {
+      "botwall": 16,
+      "gone_404": 0,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 280,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 281,
+    "excluded_unverifiable": 19,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0199
+    ],
+    "gone_rate": 0.0036,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0135
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-24",
+    "receipts": [
+      {
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20261024070000",
+        "http_code": 410,
+        "title": "Inspections likely to see if Sunday's bank holiday racing can go ahead",
+        "url": "https://www.breakingnews.ie/racing/inspections-likely-to-see-if-sundays-bank-holiday-racing-can-go-ahead-1955153.html"
+      }
+    ],
+    "sample_drawn_at": "2026-10-25T10:00:43Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3216,
+      "replaced": 3562,
+      "trivial": 440,
+      "update": 275
+    },
+    "day": "2026-10-25",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "J",
+          "J"
+        ],
+        "after": "\"No Industry Has Been as Criminal as Big Pharma\": Gardiner on J&J – Sri Lanka Guardian",
+        "before": "\"No Industry Has Been as Criminal as Big Pharma\": Gardiner Harris on Johnson & Johnson – Sri Lanka Guardian",
+        "detected": "2026-10-25T06:46:15Z",
+        "domain": "slguardian.org",
+        "removed": [
+          "Harris",
+          "Johnson",
+          "Johnson"
+        ],
+        "similarity": 0.812,
+        "url": "https://slguardian.org/no-industry-has-been-as-criminal-as-big-pharma-gardiner-harris-on-johnson-johnson/",
+        "weight": 10,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Kim",
+          "Kardashian"
+        ],
+        "after": "Taylor Swift is a vision in strapless blue gown as she leads best dressed stars with Kim Kardashian, Kate Hudson and Jessica Biel at 2026 Academy Museum Gala",
+        "before": "Taylor Swift is a vision in strapless blue gown as she leads best dressed stars with Kate Hudson, Jessica Biel and Sarah Pidgeon at 2026 Academy Museum Gala",
+        "detected": "2026-10-25T02:47:33Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Sarah",
+          "Pidgeon"
+        ],
+        "similarity": 0.867,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16217877/academy-museum-gala-2026-best-dressed.html",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Mahoba",
+          "health",
+          "centre"
+        ],
+        "after": "Mahoba Health Centre: Six-foot snake spotted near lab at Mahoba health centre, triggers panic among patients",
+        "before": "Snake Sighting Hospital: Six-foot snake spotted near lab at Mahoba health centre, triggers panic among patients",
+        "detected": "2026-10-25T03:03:08Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Sighting",
+          "Hospital",
+          "snake"
+        ],
+        "similarity": 0.875,
+        "url": "https://timesofindia.indiatimes.com/etimes/animals/six-foot-snake-spotted-near-lab-at-mahoba-health-centre-triggers-panic-among-patients/articleshow/135022993.cms",
+        "weight": 9,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 12019,
+      "PAGE_TEXTCHANGE": 78060,
+      "PAGE_TITLECHANGE": 32188,
+      "UNCHANGED_CONTENT": 502268
+    },
+    "title_changes_en": 7493,
+    "trace": [
+      {
+        "bytes_billed": 16777216,
+        "created": "1793013781443",
+        "job_id": "world_gdg_counts_20261025",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 157286400,
+        "created": "1793013786685",
+        "job_id": "world_gdg_titles_20261025",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-26T11:26:26Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-25.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

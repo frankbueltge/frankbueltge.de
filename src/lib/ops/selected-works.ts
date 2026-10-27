@@ -27,7 +27,7 @@ import { loadFieldPapers, loadPresentations, type PracticeId, type PresentationE
 import { pieceHref } from '@/lib/engines/publication-links'
 import { pageTitle, readN1Shelf } from '@/lib/n1/shelf'
 import { withoutHouseSuffix } from './edition'
-import { makerStill, n1MarginWork, shelfCrop, shelfKey } from './shelf-stills'
+import { makerStill, n1MarginWork, pageShotSource, shelfCrop, shelfKey } from './shelf-stills'
 import { dayMonthYear } from './since'
 
 export interface ShelfCard {
@@ -48,6 +48,8 @@ export interface ShelfCard {
   reason: string
   /** where it is read: its own address, unless the publication rule sends it elsewhere */
   href: string
+  /** shown on every visit of the edition, whatever the draw (SELECTED_WORKS.pinned) */
+  pinned?: boolean
   /** the crop of the maker's own still, or null where the maker committed none */
   still: { src: string; alt: string; source: string } | null
 }
@@ -264,8 +266,10 @@ export function readPick(pick: ShelfPick, root: string = process.cwd(), shelf: r
               ? n1Work(work.href, root, work)
               : attentionExperiment(work.id, root, work)
   const sentence = pick.sentence ?? record.line ?? fail(work, 'it says no sentence, and its record carries no line to use')
-  const source = makerStill(work, root)
   const crop = shelfCrop(work)
+  const maker = makerStill(work, root)
+  // a piece whose maker committed no still shows a shot of its own page, where one is committed
+  const source = maker ?? pageShotSource(record.href)
   return {
     key: shelfKey(work),
     title: record.title,
@@ -279,7 +283,7 @@ export function readPick(pick: ShelfPick, root: string = process.cwd(), shelf: r
     href: pieceHref(record.href, root),
     // a still shows only once its crop is committed (npm run shelf:stills): the full screenshot is
     // never loaded in its place
-    still: source && existsSync(join(root, crop.file)) ? { src: crop.src, alt: W.stillAlt(record.title), source } : null,
+    still: existsSync(join(root, crop.file)) ? { src: crop.src, alt: (maker ? W.stillAlt : W.shotAlt)(record.title), source } : null,
   }
 }
 

@@ -14,7 +14,8 @@
 //
 // On the edition (since 2026-10-22) the list holds the whole pool of finished pieces
 // (src/lib/ops/shelf-pool.ts) and shows the first `shown`, the hand-chosen picks; the rest stand
-// hidden, and the edition's script draws a new eight from all of them on every visit. A hidden
+// hidden, and the edition's script draws a new eight from all of them on every visit, a pinned
+// piece always among them (SELECTED_WORKS.pinned, which leads the pool). A hidden
 // card's still is lazy, so it loads only once the draw shows it.
 import { SELECTED_WORKS } from '@/config/selected-works'
 import type { ShelfCard } from '@/lib/ops/selected-works'
@@ -41,6 +42,7 @@ const to = (href: string) => (href.startsWith('/') ? link(href) : href)
       class={['ed-shelf-card', card.voice ? `pp-voice-${card.voice}` : 'ed-shelf-card--house'].join(' ')}
       id={variant === 'dossier' ? `pick-${card.key}` : undefined}
       hidden={variant === 'edition' && i >= shown}
+      data-ed-shelf-pinned={variant === 'edition' && card.pinned ? '' : undefined}
     >
       <a class="ed-shelf-link" href={to(card.href)}>
         <span class={['ed-shelf-frame', card.still ? '' : 'ed-shelf-frame--plate'].filter(Boolean).join(' ')}>

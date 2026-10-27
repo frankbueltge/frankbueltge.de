@@ -43,7 +43,8 @@ verhandelt. Neu: **eine gemeinsame Forschungsfrage** für alle drei Praxen (Seed
 `/seed`; ohne Seed Default-Themen: Field „E2E automation of AI research" · Atelier „How
 can AI and automation meaningfully support artistic research?" · Studio baut aus dem
 Material der Geschwister, ohne eigenen Verwaltungs-/Theorieapparat), **3–5 Sessions je
-Praxis pro Frage**, danach gemeinsame Präsentation; **jede Session ein Artefakt** und ein
+Praxis pro Frage** (seit Zyklus 010 — Änderung vom 2026-10-22 — **ein Werk in drei oder vier Sessions**, jede Session
+mit Prozess-Eintrag und Screenshot, `PROCESS.json`), danach gemeinsame Präsentation; **jede Session ein Artefakt** und ein
 `BULLETIN.md` ≤40 Zeilen (Nachvollziehbarkeit für Frank ist Verfassungspflicht); **Post
 Office = poste restante** (Senden ist kein Erfolgskriterium; Sieben-Tage-Bindung und
 Empfänger-Pflicht abgeschafft); der v2-Gate-Apparat (Konzept-Gates, Prä-Registrierung,
@@ -56,7 +57,7 @@ eine fortlaufende Frage** (*continuing question*: *Missing Data Art*): Sie erset
 Default-Themen, Runden drehen sich selbst (Zyklusuhr `src/lib/ecology/cycle-turn.ts` im
 `cycle-sentinel.yml`), und nur ein an alle drei freigegebener Seed unterbricht sie; Zyklus 004
 liest sie durch den Seed *human extinction*. Maßgeblich:
-`docs/design/2026-10-03-the-continuing-question.md`. Maßgeblich: `docs/design/2026-08-30-research-ecology-v3.md`
+`docs/design/2026-10-03-the-continuing-question.md`. **Seit 2026-10-25 (Frank, Wortlaut privat) kommt die Frage aus der Welt:** Vor jedem Convening schreibt die Mitte ein Lagebild (research-ecology `briefings/`, gegen Common Ground gelesen), die Vorschläge greifen darauf zurück, und der Rückfall ist dessen erste Lage „urgent but quiet“ statt *Missing Data Art*; maßgeblich `docs/design/2026-10-25-the-briefing.md`. **Seit 2026-10-25 (Frank, Wortlaut privat) führt die Ecology Forschungslinien** über Zyklen hinweg (`research-ecology/lines/`, von der Middle geführt, auf `/lines` gespiegelt); Vorschläge nennen ihre Linie, Werke ihr `Builds on:`. Maßgeblich: `docs/design/2026-10-25-the-lines.md`. Maßgeblich: `docs/design/2026-08-30-research-ecology-v3.md`
 + decision-log 2026-08-30. Die v2-Ordnung (2026-08-08 – 2026-08-30) ist datiert abgelöst;
 ältere Beschreibungen (Seasons, Arcs, Ship-Gates, Kill-Reading) sind historisch.
 

@@ -29,9 +29,10 @@
 // Three house rules hold here as on the rest of the entrance, and the test holds them:
 //   · NO DIGIT IS TYPED. A sentence or a reason with a number in it goes stale the night the
 //     record moves; a date or a count the card shows is read from the record.
-//   · NO PICTURE IS MADE UP. A card shows its maker's own still or a plate that says there is
-//     none — the rule the score's newest-piece card keeps (src/components/ecology/score/
-//     PracticePart.astro). The shelf crops and scales a still; it never draws one.
+//   · NO PICTURE IS MADE UP. A card shows its maker's own still; where the maker committed none,
+//     a screenshot of the piece's own page as this site serves it (scripts/shelf-shots.ts, since
+//     2026-10-23, Frank's request, wording private); only where neither exists, a plate that says
+//     so. The shelf crops and scales a picture of the piece; it never draws one.
 //   · NOTHING IS LINKED THAT THE SITE DOES NOT PUBLISH. A pick whose page leaves the site turns the
 //     test red instead of leaving the shelf pointing at a redirect.
 
@@ -69,6 +70,11 @@ export const SELECTED_WORKS = {
   sub: 'finished pieces from across the house, drawn anew on every visit',
   /** what /dossier sets before each pick's reason */
   reasonLabel: 'why it is here',
+
+  /** Pieces the edition shows on every visit, whatever the draw: the other cards are drawn at
+   *  random from the pool around them (Frank's request of 2026-10-23, wording private). A pinned
+   *  piece is read like any pick, from its record, and needs no words of its own here. */
+  pinned: [{ kind: 'experiment', id: 'trending' }] satisfies ShelfWork[],
 
   picks: [
     {
@@ -150,4 +156,6 @@ export const SELECTED_WORKS = {
   plate: (noun: string) => `no still on the record — the ${noun} is a page of its own`,
   /** the alternative text of a still */
   stillAlt: (title: string) => `${title}, in its maker’s own screenshot`,
+  /** the alternative text of a screenshot of the piece's own page, for a piece whose maker committed no still */
+  shotAlt: (title: string) => `${title}, a screenshot of its page`,
 }

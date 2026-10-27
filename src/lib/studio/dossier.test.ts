@@ -176,8 +176,14 @@ describe('buildStudioDossiers over the committed record', () => {
     // every work the mirror carries, so a work that premiered tonight is quoted under test tonight
     for (const d of dossiers.filter((x) => x.slug)) {
       const meta = METAS[d.slug!]
-      expect(d.description?.text, d.id).toBe(meta.embodies)
-      expect(d.description?.source, d.id).toBe(`${WORKS_DIR}/${d.slug}/meta.json`)
+      if (meta.embodies) {
+        expect(d.description?.text, d.id).toBe(meta.embodies)
+        expect(d.description?.source, d.id).toBe(`${WORKS_DIR}/${d.slug}/meta.json`)
+      } else {
+        // a meta.json without `embodies` (GOING OUT, 2026-10-25) is shown without a description,
+        // never with the medium standing in for it
+        expect(d.description, d.id).toBeNull()
+      }
       expect(d.form?.text, d.id).toBe(meta.medium)
     }
     // spelled out once in full, so the path above is a real path and not this test's own template

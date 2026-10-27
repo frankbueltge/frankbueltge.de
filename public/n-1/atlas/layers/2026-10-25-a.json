@@ -1,0 +1,182 @@
+{
+ "layer": "2026-10-25-a",
+ "session": {
+  "executed_by": "Remainder, night 91 (record 117); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 18 session 2: the standard read, lead-outs read as addresses; 502 discs end at exactly 74:00:00, most of them audiobooks -- nights/117-ninety-first-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:91",
+   "type": "event",
+   "label": "night 91 -- project 18, session 2: one frame, 74:00:00",
+   "created": "2026-10-25",
+   "refs": [
+    "nights/117-ninety-first-night.md"
+   ]
+  },
+  {
+   "id": "source:ecma-130",
+   "type": "source",
+   "label": "ECMA-130, 2nd edition (1996), Data interchange on read-only 120 mm optical data disks (CD-ROM): no playing time named; user data zone to d8 = 116 mm max; addresses in absolute time from the start of the user data area",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/SESSION2.md",
+    "https://www.ecma-international.org/wp-content/uploads/ECMA-130_2nd_edition_june_1996.pdf"
+   ]
+  },
+  {
+   "id": "material:mb-releases",
+   "type": "material",
+   "label": "MusicBrainz core export 20261024-102842, the tables joining a disc to its releases (medium_cdtoc, medium, medium_format, release, release_country, release_unknown_country, release_group and its types), CC0",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/count2.py",
+    "projects/full-disc/session2.json"
+   ]
+  },
+  {
+   "id": "finding:frame-333000",
+   "type": "problem",
+   "label": "502 discs end at exactly frame 333,000 (74:00:00), against at most 103 on any other frame between 330,000 and 336,000; 74 % of the 475 attached are audiobooks (6 % of discs ending 70:00-72:59)",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/session2.json",
+    "projects/full-disc/explore2.json"
+   ],
+   "intensity": {
+    "value": "the commonest length of a compact disc is a machine's cut of a spoken book, obeyed to the frame",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:edge-80-smear",
+   "type": "problem",
+   "label": "at 80:00 no frame stands out (commonest in 357,000-361,000 holds 35); discs stop across 79:59-80:02 (495, 169, 102, 80 by address second)",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/session2.json"
+   ]
+  },
+  {
+   "id": "deadend:p5-p7",
+   "type": "event",
+   "label": "dead end: the three cutting edges named before the count (compilations at 80, older discs at 74, burnt discs at 80) all refused; P2, P5-P8 failed",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/session2.json",
+    "projects/full-disc/check2.json"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:91",
+   "relation": "continues",
+   "to": "project:full-disc",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "e49436e",
+     "note": "SESSION2.md pushed before any row was read"
+    }
+   ]
+  },
+  {
+   "from": "source:ecma-130",
+   "relation": "moves",
+   "to": "project:full-disc",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/ASSEMBLAGE.md",
+     "note": "T2 entry 2: field 3 moved from minutes to millimetres, field 2 gains the address; the count read addresses, not playing lengths"
+    }
+   ]
+  },
+  {
+   "from": "project:full-disc",
+   "relation": "takes",
+   "to": "material:mb-releases",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/LOG.md",
+     "note": "export hash equals SHA256SUMS, 1d8d34df..."
+    }
+   ]
+  },
+  {
+   "from": "material:mb-releases",
+   "relation": "finds",
+   "to": "finding:frame-333000",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "a887a61",
+     "note": "count2.py run once; P4 held; explore2.py exploratory"
+    }
+   ]
+  },
+  {
+   "from": "finding:crest-73-58",
+   "relation": "resolved-as",
+   "to": "finding:frame-333000",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/session2.json",
+     "note": "address second 4440 holds 1,229; 502 of them on frame 333,000"
+    }
+   ]
+  },
+  {
+   "from": "material:mb-releases",
+   "relation": "finds",
+   "to": "finding:edge-80-smear",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/session2.json",
+     "note": "largest_falls_4300_4899, frames_357000_361000"
+    }
+   ]
+  },
+  {
+   "from": "material:mb-releases",
+   "relation": "refuses",
+   "to": "deadend:p5-p7",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/session2.json",
+     "note": "P2, P5, P6, P7 false"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/check2.json",
+     "note": "17 answered, 17 agree; P8 false as registered"
+    }
+   ]
+  },
+  {
+   "from": "finding:frame-333000",
+   "relation": "documented-in",
+   "to": "page:full-disc",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/index.html",
+     "note": "section 'One frame: 74:00:00', built by build.py from session2.json and explore2.json"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,5040 @@
+{
+ "summary": {
+  "S2": {
+   "n": 72,
+   "orig": 71,
+   "country": 72,
+   "orig_rate": 98.6,
+   "placed": 71,
+   "median_err_km": 2.0
+  },
+  "S8": {
+   "n": 72,
+   "orig": 60,
+   "country": 72,
+   "orig_rate": 83.3,
+   "placed": 60,
+   "median_err_km": 8.0
+  },
+  "S30": {
+   "n": 72,
+   "orig": 3,
+   "country": 72,
+   "orig_rate": 4.2,
+   "placed": 29,
+   "median_err_km": 10.9
+  },
+  "captured_S30": {
+   "n": 21,
+   "near": 12,
+   "orig": 0
+  }
+ },
+ "predictions": {
+  "Q1": true,
+  "Q2": true,
+  "Q3": true,
+  "Q4": true,
+  "Q5": "read by hand"
+ },
+ "makers": {
+  "m1": {
+   "how": "I matched each coordinate from memory to the nearest town whose approximate coordinates I know. Pins in sparse or unfamiliar areas (9, 12, 14, 16, 19, 24, and to a lesser extent 5, 6, 8, 13) are low-confidence best guesses based on regional proximity.",
+   "tools": "none"
+  },
+  "m2": {
+   "how": "I matched each coordinate from memory to the nearest town whose approximate latitude and longitude I know, using nearby reference cities to fix the region. I'm confident about Dubbo, Zalingei, Ergani, Keffi, Oliveira, Ipatovo and Sragen. Several small-town answers (3, 4, 5, 12, 18, 23) are best guesses.",
+   "tools": "none"
+  },
+  "m3": {
+   "how": "I matched each coordinate from memory to the town I remember being closest to it, comparing against nearby known places. Pins 5, 13, 16, 18 and 20 are low-confidence guesses. I didn't check any of them.",
+   "tools": "none"
+  },
+  "m4": {
+   "how": "From memory, I matched each coordinate to the region it falls in, then picked the nearest town whose coordinates I remembered. Several are low-confidence guesses, especially 1, 3, 8, 11, 17, 18 and 20.",
+   "tools": "none"
+  },
+  "m5": {
+   "how": "I compared each coordinate with the town coordinates I remember and picked the closest settlement. These match well: Dubbo, Ipatovo, Ergani, Zalingei, Keffi, Terek, Sragen, Oliveira, Mirador, Chalchihuites. These are rough guesses: pins 1, 4, 5, 6, 9, 11, 12, 18 and 22.",
+   "tools": "none"
+  },
+  "m6": {
+   "how": "I matched each coordinate from memory to the nearest town whose approximate latitude and longitude I remember. I'm fairly sure of the well-known cities. Pins 9, 16, 20 and 23 are lower-confidence best guesses between nearby towns.",
+   "tools": "none"
+  },
+  "m7": {
+   "how": "I matched each coordinate from memory against the approximate positions of nearby towns and picked the closest one I could recall. Several answers are low-confidence: 2, 7, 18, 19, 20, 21, 22 and 23 are guesses near a known reference town.",
+   "tools": "none"
+  },
+  "m8": {
+   "how": "I matched each coordinate from memory to the nearest town I could recall. Some are confident (Dubbo, Zalingei, Keffi, Ergani, Sragen, Oliveira, Ipatovo). Others are best guesses where I don't remember the towns in that area well (2, 9, 11, 12, 14, 17, 18, 19, 22).",
+   "tools": "none"
+  },
+  "m9": {
+   "how": "I matched each coordinate from memory to the town whose position I remember as closest. For the remote or ambiguous pins (2, 8, 12, 13), I gave the nearest plausible town, and these are low-confidence guesses.",
+   "tools": "none"
+  }
+ },
+ "pins": [
+  {
+   "maker": "m1",
+   "line": 1,
+   "j": 21,
+   "cond": "S2",
+   "key": "23.15879, 88.10108",
+   "pin": [
+    23.15879,
+    88.10108
+   ],
+   "answer": "Memari, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Memāri",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    23.17647,
+    88.09749,
+    "Memāri"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 2,
+   "j": 1,
+   "cond": "S8",
+   "key": "-6.20892, 143.61856",
+   "pin": [
+    -6.20892,
+    143.61856
+   ],
+   "answer": "Mendi, Papua New Guinea",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mendi",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -6.14755,
+    143.65633,
+    "Mendi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 3,
+   "j": 3,
+   "cond": "S2",
+   "key": "-20.68097, -44.81732",
+   "pin": [
+    -20.68097,
+    -44.81732
+   ],
+   "answer": "Oliveira, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Oliveira",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -20.69639,
+    -44.82722,
+    "Oliveira"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 4,
+   "j": 12,
+   "cond": "S2",
+   "key": "37.40132, -94.72414",
+   "pin": [
+    37.40132,
+    -94.72414
+   ],
+   "answer": "Pittsburg, United States",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Pittsburg",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    37.41088,
+    -94.70496,
+    "Pittsburg"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 5,
+   "j": 14,
+   "cond": "S30",
+   "key": "-31.97468, 148.63871",
+   "pin": [
+    -31.97468,
+    148.63871
+   ],
+   "answer": "Eumungerie, Australia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Dubbo",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 6,
+   "j": 7,
+   "cond": "S8",
+   "key": "-12.97285, -39.64920",
+   "pin": [
+    -12.97285,
+    -39.6492
+   ],
+   "answer": "Amargosa, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Amargosa",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -13.03028,
+    -39.60472,
+    "Amargosa"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 7,
+   "j": 24,
+   "cond": "S2",
+   "key": "6.19123, 6.51224",
+   "pin": [
+    6.19123,
+    6.51224
+   ],
+   "answer": "Ogwashi-Uku, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ogwashi-Uku",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    6.17811,
+    6.52461,
+    "Ogwashi-Uku"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 8,
+   "j": 23,
+   "cond": "S30",
+   "key": "-7.38792, 110.75293",
+   "pin": [
+    -7.38792,
+    110.75293
+   ],
+   "answer": "Gemolong, Indonesia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Colomadu",
+   "nearest_km": 16.17,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 9,
+   "j": 5,
+   "cond": "S30",
+   "key": "43.29598, 43.87060",
+   "pin": [
+    43.29598,
+    43.8706
+   ],
+   "answer": "Anzorey, Russia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Nartkala",
+   "nearest_km": 28.76,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 10,
+   "j": 18,
+   "cond": "S2",
+   "key": "-32.82971, 151.37744",
+   "pin": [
+    -32.82971,
+    151.37744
+   ],
+   "answer": "Cessnock, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Cessnock",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -32.83211,
+    151.35623,
+    "Cessnock"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 11,
+   "j": 15,
+   "cond": "S2",
+   "key": "47.04102, 4.82982",
+   "pin": [
+    47.04102,
+    4.82982
+   ],
+   "answer": "Beaune, France",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Beaune",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    47.02413,
+    4.83887,
+    "Beaune"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 12,
+   "j": 2,
+   "cond": "S30",
+   "key": "12.70393, 25.63247",
+   "pin": [
+    12.70393,
+    25.63247
+   ],
+   "answer": "Shangil Tobaya, Sudan",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Sh'īarīah",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 13,
+   "j": 13,
+   "cond": "S8",
+   "key": "53.55480, 13.14001",
+   "pin": [
+    53.5548,
+    13.14001
+   ],
+   "answer": "Neubrandenburg, Germany",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Neubrandenburg",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    53.55735,
+    13.26105,
+    "Neubrandenburg"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 14,
+   "j": 11,
+   "cond": "S30",
+   "key": "8.70665, 7.64009",
+   "pin": [
+    8.70665,
+    7.64009
+   ],
+   "answer": "Nasarawa, Nigeria",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Nasarawa",
+   "nearest_km": 20.1,
+   "err_km": 20.1,
+   "named_at": [
+    8.53895,
+    7.70821,
+    "Nasarawa"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 15,
+   "j": 19,
+   "cond": "S8",
+   "key": "-27.29762, -70.31233",
+   "pin": [
+    -27.29762,
+    -70.31233
+   ],
+   "answer": "Copiapó, Chile",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Copiapó",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -27.36737,
+    -70.33219,
+    "Copiapó"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 16,
+   "j": 17,
+   "cond": "S30",
+   "key": "12.71697, 23.27642",
+   "pin": [
+    12.71697,
+    23.27642
+   ],
+   "answer": "Zalingei, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Zalinjay",
+   "nearest_km": 30.0,
+   "err_km": 30.0,
+   "named_at": [
+    12.90918,
+    23.47058,
+    "Zalinjay"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 17,
+   "j": 16,
+   "cond": "S8",
+   "key": "27.93607, 81.49113",
+   "pin": [
+    27.93607,
+    81.49113
+   ],
+   "answer": "Nanpara, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nānpāra",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    27.86459,
+    81.50036,
+    "Nānpāra"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 18,
+   "j": 22,
+   "cond": "S8",
+   "key": "9.97099, -83.70948",
+   "pin": [
+    9.97099,
+    -83.70948
+   ],
+   "answer": "Turrialba, Costa Rica",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Turrialba",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    9.90371,
+    -83.68361,
+    "Turrialba"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 19,
+   "j": 20,
+   "cond": "S30",
+   "key": "38.40215, 39.45531",
+   "pin": [
+    38.40215,
+    39.45531
+   ],
+   "answer": "Sivrice, Turkey",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Çermik",
+   "nearest_km": 29.68,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 20,
+   "j": 9,
+   "cond": "S2",
+   "key": "-6.37447, -44.38078",
+   "pin": [
+    -6.37447,
+    -44.38078
+   ],
+   "answer": "Mirador, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mirador",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -6.37083,
+    -44.36306,
+    "Mirador"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 21,
+   "j": 6,
+   "cond": "S2",
+   "key": "-17.81434, 177.43091",
+   "pin": [
+    -17.81434,
+    177.43091
+   ],
+   "answer": "Nadi, Fiji",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nadi",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -17.80309,
+    177.41617,
+    "Nadi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 22,
+   "j": 10,
+   "cond": "S8",
+   "key": "19.60916, -98.64293",
+   "pin": [
+    19.60916,
+    -98.64293
+   ],
+   "answer": "Calpulalpan, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Calpulalpan",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    19.58867,
+    -98.56972,
+    "Calpulalpan"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 23,
+   "j": 4,
+   "cond": "S8",
+   "key": "23.56029, -103.62923",
+   "pin": [
+    23.56029,
+    -103.62923
+   ],
+   "answer": "Sombrerete, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sombrerete",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    23.63138,
+    -103.64134,
+    "Sombrerete"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m1",
+   "line": 24,
+   "j": 8,
+   "cond": "S30",
+   "key": "45.45602, 42.99818",
+   "pin": [
+    45.45602,
+    42.99818
+   ],
+   "answer": "Svetlograd, Russia",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Svetlograd",
+   "nearest_km": 18.1,
+   "err_km": 18.1,
+   "named_at": [
+    45.32736,
+    42.8562,
+    "Svetlograd"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 1,
+   "j": 18,
+   "cond": "S8",
+   "key": "-32.90001, 151.38454",
+   "pin": [
+    -32.90001,
+    151.38454
+   ],
+   "answer": "Cessnock, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Cessnock",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -32.83211,
+    151.35623,
+    "Cessnock"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 2,
+   "j": 23,
+   "cond": "S2",
+   "key": "-7.41114, 111.03184",
+   "pin": [
+    -7.41114,
+    111.03184
+   ],
+   "answer": "Sragen, Indonesia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sragen",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -7.42639,
+    111.02222,
+    "Sragen"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 3,
+   "j": 9,
+   "cond": "S8",
+   "key": "-6.32655, -44.30601",
+   "pin": [
+    -6.32655,
+    -44.30601
+   ],
+   "answer": "Sucupira do Norte, Brazil",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Mirador",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 4,
+   "j": 13,
+   "cond": "S30",
+   "key": "53.72421, 13.61867",
+   "pin": [
+    53.72421,
+    13.61867
+   ],
+   "answer": "Spantekow, Germany",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Neubrandenburg",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 5,
+   "j": 24,
+   "cond": "S8",
+   "key": "6.23590, 6.56772",
+   "pin": [
+    6.2359,
+    6.56772
+   ],
+   "answer": "Ogwashi-Uku, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ogwashi-Uku",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    6.17811,
+    6.52461,
+    "Ogwashi-Uku"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 6,
+   "j": 3,
+   "cond": "S8",
+   "key": "-20.70042, -44.90401",
+   "pin": [
+    -20.70042,
+    -44.90401
+   ],
+   "answer": "Oliveira, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Oliveira",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -20.69639,
+    -44.82722,
+    "Oliveira"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 7,
+   "j": 8,
+   "cond": "S2",
+   "key": "45.70240, 42.89333",
+   "pin": [
+    45.7024,
+    42.89333
+   ],
+   "answer": "Ipatovo, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ipatovo",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    45.71801,
+    42.90612,
+    "Ipatovo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 8,
+   "j": 12,
+   "cond": "S8",
+   "key": "37.47565, -94.74440",
+   "pin": [
+    37.47565,
+    -94.7444
+   ],
+   "answer": "Frontenac, United States",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Pittsburg",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 9,
+   "j": 21,
+   "cond": "S8",
+   "key": "23.12345, 88.15038",
+   "pin": [
+    23.12345,
+    88.15038
+   ],
+   "answer": "Memari, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Memāri",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    23.17647,
+    88.09749,
+    "Memāri"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 10,
+   "j": 19,
+   "cond": "S30",
+   "key": "-27.50276, -70.06925",
+   "pin": [
+    -27.50276,
+    -70.06925
+   ],
+   "answer": "Tierra Amarilla, Chile",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Copiapó",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 11,
+   "j": 1,
+   "cond": "S30",
+   "key": "-6.36176, 143.82134",
+   "pin": [
+    -6.36176,
+    143.82134
+   ],
+   "answer": "Kagua, Papua New Guinea",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Mendi",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 12,
+   "j": 2,
+   "cond": "S2",
+   "key": "12.43978, 25.56273",
+   "pin": [
+    12.43978,
+    25.56273
+   ],
+   "answer": "Shearia, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sh'īarīah",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    12.43883,
+    25.58112,
+    "Sh'īarīah"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 13,
+   "j": 4,
+   "cond": "S30",
+   "key": "23.42472, -103.83051",
+   "pin": [
+    23.42472,
+    -103.83051
+   ],
+   "answer": "Chalchihuites, Mexico",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Sombrerete",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 14,
+   "j": 5,
+   "cond": "S2",
+   "key": "43.46636, 44.14616",
+   "pin": [
+    43.46636,
+    44.14616
+   ],
+   "answer": "Terek, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Terek",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    43.48329,
+    44.13781,
+    "Terek"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 15,
+   "j": 7,
+   "cond": "S30",
+   "key": "-13.27690, -39.71708",
+   "pin": [
+    -13.2769,
+    -39.71708
+   ],
+   "answer": "Ubaíra, Brazil",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Ubaíra",
+   "nearest_km": 5.96,
+   "err_km": 6.0,
+   "named_at": [
+    -13.26806,
+    -39.66278,
+    "Ubaíra"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 16,
+   "j": 11,
+   "cond": "S2",
+   "key": "8.86320, 7.86675",
+   "pin": [
+    8.8632,
+    7.86675
+   ],
+   "answer": "Keffi, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Keffi",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    8.84651,
+    7.87354,
+    "Keffi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 17,
+   "j": 10,
+   "cond": "S30",
+   "key": "19.62982, -98.85278",
+   "pin": [
+    19.62982,
+    -98.85278
+   ],
+   "answer": "Acolman, Mexico",
+   "orig": false,
+   "captured": true,
+   "near": false,
+   "nearest": "Teotihuacán de Arista",
+   "nearest_km": 6.71,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 18,
+   "j": 16,
+   "cond": "S30",
+   "key": "27.63124, 81.34735",
+   "pin": [
+    27.63124,
+    81.34735
+   ],
+   "answer": "Bahraich, India",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Bahraigh",
+   "nearest_km": 25.19,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 19,
+   "j": 14,
+   "cond": "S2",
+   "key": "-32.23697, 148.58479",
+   "pin": [
+    -32.23697,
+    148.58479
+   ],
+   "answer": "Dubbo, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Dubbo",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -32.24295,
+    148.60484,
+    "Dubbo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 20,
+   "j": 6,
+   "cond": "S8",
+   "key": "-17.85562, 177.46781",
+   "pin": [
+    -17.85562,
+    177.46781
+   ],
+   "answer": "Nadi, Fiji",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nadi",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -17.80309,
+    177.41617,
+    "Nadi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 21,
+   "j": 17,
+   "cond": "S2",
+   "key": "12.90165, 23.48734",
+   "pin": [
+    12.90165,
+    23.48734
+   ],
+   "answer": "Zalingei, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Zalinjay",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    12.90918,
+    23.47058,
+    "Zalinjay"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 22,
+   "j": 22,
+   "cond": "S30",
+   "key": "9.91330, -83.95732",
+   "pin": [
+    9.9133,
+    -83.95732
+   ],
+   "answer": "Tres Ríos, Costa Rica",
+   "orig": false,
+   "captured": true,
+   "near": false,
+   "nearest": "San Diego",
+   "nearest_km": 5.07,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 23,
+   "j": 15,
+   "cond": "S8",
+   "key": "47.09503, 4.85677",
+   "pin": [
+    47.09503,
+    4.85677
+   ],
+   "answer": "Échevronne, France",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Beaune",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m2",
+   "line": 24,
+   "j": 20,
+   "cond": "S2",
+   "key": "38.26023, 39.77447",
+   "pin": [
+    38.26023,
+    39.77447
+   ],
+   "answer": "Ergani, Turkey",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ergani",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    38.26899,
+    39.75446,
+    "Ergani"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 1,
+   "j": 8,
+   "cond": "S8",
+   "key": "45.65518, 42.95629",
+   "pin": [
+    45.65518,
+    42.95629
+   ],
+   "answer": "Ipatovo, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ipatovo",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    45.71801,
+    42.90612,
+    "Ipatovo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 2,
+   "j": 24,
+   "cond": "S30",
+   "key": "6.14580, 6.79402",
+   "pin": [
+    6.1458,
+    6.79402
+   ],
+   "answer": "Onitsha, Nigeria",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Onitsha",
+   "nearest_km": 1.02,
+   "err_km": 1.0,
+   "named_at": [
+    6.14978,
+    6.78569,
+    "Onitsha"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 3,
+   "j": 17,
+   "cond": "S8",
+   "key": "12.84012, 23.49129",
+   "pin": [
+    12.84012,
+    23.49129
+   ],
+   "answer": "Zalingei, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Zalinjay",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    12.90918,
+    23.47058,
+    "Zalinjay"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 4,
+   "j": 19,
+   "cond": "S2",
+   "key": "-27.38461, -70.33795",
+   "pin": [
+    -27.38461,
+    -70.33795
+   ],
+   "answer": "Copiapó, Chile",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Copiapó",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -27.36737,
+    -70.33219,
+    "Copiapó"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 5,
+   "j": 18,
+   "cond": "S30",
+   "key": "-32.65580, 151.59903",
+   "pin": [
+    -32.6558,
+    151.59903
+   ],
+   "answer": "Woodville, Australia",
+   "orig": false,
+   "captured": true,
+   "near": false,
+   "nearest": "Maitland",
+   "nearest_km": 9.43,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 6,
+   "j": 13,
+   "cond": "S2",
+   "key": "53.55487, 13.23106",
+   "pin": [
+    53.55487,
+    13.23106
+   ],
+   "answer": "Neubrandenburg, Germany",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Neubrandenburg",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    53.55735,
+    13.26105,
+    "Neubrandenburg"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 7,
+   "j": 9,
+   "cond": "S30",
+   "key": "-6.12344, -44.25476",
+   "pin": [
+    -6.12344,
+    -44.25476
+   ],
+   "answer": "Colinas, Brazil",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Colinas",
+   "nearest_km": 10.87,
+   "err_km": 10.9,
+   "named_at": [
+    -6.02583,
+    -44.24917,
+    "Colinas"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 8,
+   "j": 12,
+   "cond": "S30",
+   "key": "37.20198, -94.91961",
+   "pin": [
+    37.20198,
+    -94.91961
+   ],
+   "answer": "Columbus, United States",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Pittsburg",
+   "nearest_km": 30.0,
+   "err_km": 515.1,
+   "named_at": [
+    41.42973,
+    -97.36838,
+    "Columbus"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 9,
+   "j": 1,
+   "cond": "S2",
+   "key": "-6.16203, 143.64560",
+   "pin": [
+    -6.16203,
+    143.6456
+   ],
+   "answer": "Mendi, Papua New Guinea",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mendi",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -6.14755,
+    143.65633,
+    "Mendi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 10,
+   "j": 23,
+   "cond": "S8",
+   "key": "-7.47702, 111.07377",
+   "pin": [
+    -7.47702,
+    111.07377
+   ],
+   "answer": "Sragen, Indonesia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sragen",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -7.42639,
+    111.02222,
+    "Sragen"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 11,
+   "j": 11,
+   "cond": "S8",
+   "key": "8.77460, 7.87579",
+   "pin": [
+    8.7746,
+    7.87579
+   ],
+   "answer": "Keffi, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Keffi",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    8.84651,
+    7.87354,
+    "Keffi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 12,
+   "j": 7,
+   "cond": "S2",
+   "key": "-13.03999, -39.58918",
+   "pin": [
+    -13.03999,
+    -39.58918
+   ],
+   "answer": "Amargosa, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Amargosa",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -13.03028,
+    -39.60472,
+    "Amargosa"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 13,
+   "j": 15,
+   "cond": "S30",
+   "key": "47.14852, 5.19048",
+   "pin": [
+    47.14852,
+    5.19048
+   ],
+   "answer": "Aiserey, France",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Chenôve",
+   "nearest_km": 21.36,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 14,
+   "j": 6,
+   "cond": "S30",
+   "key": "-17.53329, 177.41697",
+   "pin": [
+    -17.53329,
+    177.41697
+   ],
+   "answer": "Lautoka, Fiji",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Lautoka",
+   "nearest_km": 9.95,
+   "err_km": 9.9,
+   "named_at": [
+    -17.61686,
+    177.45049,
+    "Lautoka"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 15,
+   "j": 10,
+   "cond": "S2",
+   "key": "19.60622, -98.57392",
+   "pin": [
+    19.60622,
+    -98.57392
+   ],
+   "answer": "Calpulalpan, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Calpulalpan",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    19.58867,
+    -98.56972,
+    "Calpulalpan"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 16,
+   "j": 2,
+   "cond": "S8",
+   "key": "12.42949, 25.65417",
+   "pin": [
+    12.42949,
+    25.65417
+   ],
+   "answer": "Shaeria, Sudan",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Sh'īarīah",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 17,
+   "j": 14,
+   "cond": "S8",
+   "key": "-32.18854, 148.66048",
+   "pin": [
+    -32.18854,
+    148.66048
+   ],
+   "answer": "Dubbo, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Dubbo",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -32.24295,
+    148.60484,
+    "Dubbo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 18,
+   "j": 5,
+   "cond": "S8",
+   "key": "43.41717, 44.17687",
+   "pin": [
+    43.41717,
+    44.17687
+   ],
+   "answer": "Elkhotovo, Russia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Terek",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 19,
+   "j": 3,
+   "cond": "S30",
+   "key": "-20.43213, -44.76915",
+   "pin": [
+    -20.43213,
+    -44.76915
+   ],
+   "answer": "Cláudio, Brazil",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Cláudio",
+   "nearest_km": 1.29,
+   "err_km": 1.3,
+   "named_at": [
+    -20.44333,
+    -44.76583,
+    "Cláudio"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 20,
+   "j": 21,
+   "cond": "S30",
+   "key": "23.01429, 87.86309",
+   "pin": [
+    23.01429,
+    87.86309
+   ],
+   "answer": "Arambagh, India",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Arāmbāgh",
+   "nearest_km": 16.7,
+   "err_km": 16.7,
+   "named_at": [
+    22.88333,
+    87.78333,
+    "Arāmbāgh"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 21,
+   "j": 4,
+   "cond": "S2",
+   "key": "23.64557, -103.62927",
+   "pin": [
+    23.64557,
+    -103.62927
+   ],
+   "answer": "Sombrerete, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sombrerete",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    23.63138,
+    -103.64134,
+    "Sombrerete"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 22,
+   "j": 20,
+   "cond": "S8",
+   "key": "38.28855, 39.66626",
+   "pin": [
+    38.28855,
+    39.66626
+   ],
+   "answer": "Ergani, Turkey",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ergani",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    38.26899,
+    39.75446,
+    "Ergani"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 23,
+   "j": 22,
+   "cond": "S2",
+   "key": "9.89408, -83.69903",
+   "pin": [
+    9.89408,
+    -83.69903
+   ],
+   "answer": "Turrialba, Costa Rica",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Turrialba",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    9.90371,
+    -83.68361,
+    "Turrialba"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m3",
+   "line": 24,
+   "j": 16,
+   "cond": "S2",
+   "key": "27.86147, 81.52040",
+   "pin": [
+    27.86147,
+    81.5204
+   ],
+   "answer": "Nanpara, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nānpāra",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    27.86459,
+    81.50036,
+    "Nānpāra"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 1,
+   "j": 8,
+   "cond": "S30",
+   "key": "45.45602, 42.99818",
+   "pin": [
+    45.45602,
+    42.99818
+   ],
+   "answer": "Svetlograd, Russia",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Svetlograd",
+   "nearest_km": 18.1,
+   "err_km": 18.1,
+   "named_at": [
+    45.32736,
+    42.8562,
+    "Svetlograd"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 2,
+   "j": 17,
+   "cond": "S30",
+   "key": "12.71697, 23.27642",
+   "pin": [
+    12.71697,
+    23.27642
+   ],
+   "answer": "Zalingei, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Zalinjay",
+   "nearest_km": 30.0,
+   "err_km": 30.0,
+   "named_at": [
+    12.90918,
+    23.47058,
+    "Zalinjay"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 3,
+   "j": 5,
+   "cond": "S30",
+   "key": "43.29598, 43.87060",
+   "pin": [
+    43.29598,
+    43.8706
+   ],
+   "answer": "Chikola, Russia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Nartkala",
+   "nearest_km": 28.76,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 4,
+   "j": 13,
+   "cond": "S8",
+   "key": "53.55480, 13.14001",
+   "pin": [
+    53.5548,
+    13.14001
+   ],
+   "answer": "Neubrandenburg, Germany",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Neubrandenburg",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    53.55735,
+    13.26105,
+    "Neubrandenburg"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 5,
+   "j": 18,
+   "cond": "S2",
+   "key": "-32.82971, 151.37744",
+   "pin": [
+    -32.82971,
+    151.37744
+   ],
+   "answer": "Cessnock, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Cessnock",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -32.83211,
+    151.35623,
+    "Cessnock"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 6,
+   "j": 12,
+   "cond": "S2",
+   "key": "37.40132, -94.72414",
+   "pin": [
+    37.40132,
+    -94.72414
+   ],
+   "answer": "Pittsburg, United States",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Pittsburg",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    37.41088,
+    -94.70496,
+    "Pittsburg"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 7,
+   "j": 21,
+   "cond": "S2",
+   "key": "23.15879, 88.10108",
+   "pin": [
+    23.15879,
+    88.10108
+   ],
+   "answer": "Memari, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Memāri",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    23.17647,
+    88.09749,
+    "Memāri"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 8,
+   "j": 2,
+   "cond": "S30",
+   "key": "12.70393, 25.63247",
+   "pin": [
+    12.70393,
+    25.63247
+   ],
+   "answer": "Shangil Tobaya, Sudan",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Sh'īarīah",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 9,
+   "j": 4,
+   "cond": "S8",
+   "key": "23.56029, -103.62923",
+   "pin": [
+    23.56029,
+    -103.62923
+   ],
+   "answer": "Sombrerete, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sombrerete",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    23.63138,
+    -103.64134,
+    "Sombrerete"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 10,
+   "j": 3,
+   "cond": "S2",
+   "key": "-20.68097, -44.81732",
+   "pin": [
+    -20.68097,
+    -44.81732
+   ],
+   "answer": "Oliveira, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Oliveira",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -20.69639,
+    -44.82722,
+    "Oliveira"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 11,
+   "j": 20,
+   "cond": "S30",
+   "key": "38.40215, 39.45531",
+   "pin": [
+    38.40215,
+    39.45531
+   ],
+   "answer": "Sivrice, Turkey",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Çermik",
+   "nearest_km": 29.68,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 12,
+   "j": 19,
+   "cond": "S8",
+   "key": "-27.29762, -70.31233",
+   "pin": [
+    -27.29762,
+    -70.31233
+   ],
+   "answer": "Copiapó, Chile",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Copiapó",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -27.36737,
+    -70.33219,
+    "Copiapó"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 13,
+   "j": 9,
+   "cond": "S2",
+   "key": "-6.37447, -44.38078",
+   "pin": [
+    -6.37447,
+    -44.38078
+   ],
+   "answer": "Mirador, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mirador",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -6.37083,
+    -44.36306,
+    "Mirador"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 14,
+   "j": 16,
+   "cond": "S8",
+   "key": "27.93607, 81.49113",
+   "pin": [
+    27.93607,
+    81.49113
+   ],
+   "answer": "Nanpara, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nānpāra",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    27.86459,
+    81.50036,
+    "Nānpāra"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 15,
+   "j": 6,
+   "cond": "S2",
+   "key": "-17.81434, 177.43091",
+   "pin": [
+    -17.81434,
+    177.43091
+   ],
+   "answer": "Nadi, Fiji",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nadi",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -17.80309,
+    177.41617,
+    "Nadi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 16,
+   "j": 15,
+   "cond": "S2",
+   "key": "47.04102, 4.82982",
+   "pin": [
+    47.04102,
+    4.82982
+   ],
+   "answer": "Beaune, France",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Beaune",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    47.02413,
+    4.83887,
+    "Beaune"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 17,
+   "j": 14,
+   "cond": "S30",
+   "key": "-31.97468, 148.63871",
+   "pin": [
+    -31.97468,
+    148.63871
+   ],
+   "answer": "Eumungerie, Australia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Dubbo",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 18,
+   "j": 11,
+   "cond": "S30",
+   "key": "8.70665, 7.64009",
+   "pin": [
+    8.70665,
+    7.64009
+   ],
+   "answer": "Nasarawa, Nigeria",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Nasarawa",
+   "nearest_km": 20.1,
+   "err_km": 20.1,
+   "named_at": [
+    8.53895,
+    7.70821,
+    "Nasarawa"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 19,
+   "j": 7,
+   "cond": "S8",
+   "key": "-12.97285, -39.64920",
+   "pin": [
+    -12.97285,
+    -39.6492
+   ],
+   "answer": "Amargosa, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Amargosa",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -13.03028,
+    -39.60472,
+    "Amargosa"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 20,
+   "j": 23,
+   "cond": "S30",
+   "key": "-7.38792, 110.75293",
+   "pin": [
+    -7.38792,
+    110.75293
+   ],
+   "answer": "Gemolong, Indonesia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Colomadu",
+   "nearest_km": 16.17,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 21,
+   "j": 10,
+   "cond": "S8",
+   "key": "19.60916, -98.64293",
+   "pin": [
+    19.60916,
+    -98.64293
+   ],
+   "answer": "Calpulalpan, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Calpulalpan",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    19.58867,
+    -98.56972,
+    "Calpulalpan"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 22,
+   "j": 1,
+   "cond": "S8",
+   "key": "-6.20892, 143.61856",
+   "pin": [
+    -6.20892,
+    143.61856
+   ],
+   "answer": "Mendi, Papua New Guinea",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mendi",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -6.14755,
+    143.65633,
+    "Mendi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 23,
+   "j": 22,
+   "cond": "S8",
+   "key": "9.97099, -83.70948",
+   "pin": [
+    9.97099,
+    -83.70948
+   ],
+   "answer": "Turrialba, Costa Rica",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Turrialba",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    9.90371,
+    -83.68361,
+    "Turrialba"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m4",
+   "line": 24,
+   "j": 24,
+   "cond": "S2",
+   "key": "6.19123, 6.51224",
+   "pin": [
+    6.19123,
+    6.51224
+   ],
+   "answer": "Ogwashi-Uku, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ogwashi-Uku",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    6.17811,
+    6.52461,
+    "Ogwashi-Uku"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 1,
+   "j": 21,
+   "cond": "S8",
+   "key": "23.12345, 88.15038",
+   "pin": [
+    23.12345,
+    88.15038
+   ],
+   "answer": "Memari, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Memāri",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    23.17647,
+    88.09749,
+    "Memāri"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 2,
+   "j": 19,
+   "cond": "S30",
+   "key": "-27.50276, -70.06925",
+   "pin": [
+    -27.50276,
+    -70.06925
+   ],
+   "answer": "Tierra Amarilla, Chile",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Copiapó",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 3,
+   "j": 14,
+   "cond": "S2",
+   "key": "-32.23697, 148.58479",
+   "pin": [
+    -32.23697,
+    148.58479
+   ],
+   "answer": "Dubbo, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Dubbo",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -32.24295,
+    148.60484,
+    "Dubbo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 4,
+   "j": 1,
+   "cond": "S30",
+   "key": "-6.36176, 143.82134",
+   "pin": [
+    -6.36176,
+    143.82134
+   ],
+   "answer": "Kagua, Papua New Guinea",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Mendi",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 5,
+   "j": 2,
+   "cond": "S2",
+   "key": "12.43978, 25.56273",
+   "pin": [
+    12.43978,
+    25.56273
+   ],
+   "answer": "Shearia, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sh'īarīah",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    12.43883,
+    25.58112,
+    "Sh'īarīah"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 6,
+   "j": 13,
+   "cond": "S30",
+   "key": "53.72421, 13.61867",
+   "pin": [
+    53.72421,
+    13.61867
+   ],
+   "answer": "Friedland, Germany",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Neubrandenburg",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 7,
+   "j": 12,
+   "cond": "S8",
+   "key": "37.47565, -94.74440",
+   "pin": [
+    37.47565,
+    -94.7444
+   ],
+   "answer": "Frontenac, United States",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Pittsburg",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 8,
+   "j": 23,
+   "cond": "S2",
+   "key": "-7.41114, 111.03184",
+   "pin": [
+    -7.41114,
+    111.03184
+   ],
+   "answer": "Sragen, Indonesia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sragen",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -7.42639,
+    111.02222,
+    "Sragen"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 9,
+   "j": 16,
+   "cond": "S30",
+   "key": "27.63124, 81.34735",
+   "pin": [
+    27.63124,
+    81.34735
+   ],
+   "answer": "Bahraich, India",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Bahraigh",
+   "nearest_km": 25.19,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 10,
+   "j": 8,
+   "cond": "S2",
+   "key": "45.70240, 42.89333",
+   "pin": [
+    45.7024,
+    42.89333
+   ],
+   "answer": "Ipatovo, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ipatovo",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    45.71801,
+    42.90612,
+    "Ipatovo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 11,
+   "j": 15,
+   "cond": "S8",
+   "key": "47.09503, 4.85677",
+   "pin": [
+    47.09503,
+    4.85677
+   ],
+   "answer": "Magny-lès-Villers, France",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Beaune",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 12,
+   "j": 10,
+   "cond": "S30",
+   "key": "19.62982, -98.85278",
+   "pin": [
+    19.62982,
+    -98.85278
+   ],
+   "answer": "Acolman, Mexico",
+   "orig": false,
+   "captured": true,
+   "near": false,
+   "nearest": "Teotihuacán de Arista",
+   "nearest_km": 6.71,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 13,
+   "j": 6,
+   "cond": "S8",
+   "key": "-17.85562, 177.46781",
+   "pin": [
+    -17.85562,
+    177.46781
+   ],
+   "answer": "Nadi, Fiji",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nadi",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -17.80309,
+    177.41617,
+    "Nadi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 14,
+   "j": 7,
+   "cond": "S30",
+   "key": "-13.27690, -39.71708",
+   "pin": [
+    -13.2769,
+    -39.71708
+   ],
+   "answer": "Ubaíra, Brazil",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Ubaíra",
+   "nearest_km": 5.96,
+   "err_km": 6.0,
+   "named_at": [
+    -13.26806,
+    -39.66278,
+    "Ubaíra"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 15,
+   "j": 20,
+   "cond": "S2",
+   "key": "38.26023, 39.77447",
+   "pin": [
+    38.26023,
+    39.77447
+   ],
+   "answer": "Ergani, Turkey",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ergani",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    38.26899,
+    39.75446,
+    "Ergani"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 16,
+   "j": 9,
+   "cond": "S8",
+   "key": "-6.32655, -44.30601",
+   "pin": [
+    -6.32655,
+    -44.30601
+   ],
+   "answer": "Mirador, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mirador",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -6.37083,
+    -44.36306,
+    "Mirador"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 17,
+   "j": 4,
+   "cond": "S30",
+   "key": "23.42472, -103.83051",
+   "pin": [
+    23.42472,
+    -103.83051
+   ],
+   "answer": "Chalchihuites, Mexico",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Sombrerete",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 18,
+   "j": 24,
+   "cond": "S8",
+   "key": "6.23590, 6.56772",
+   "pin": [
+    6.2359,
+    6.56772
+   ],
+   "answer": "Ibusa, Nigeria",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Ogwashi-Uku",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 19,
+   "j": 22,
+   "cond": "S30",
+   "key": "9.91330, -83.95732",
+   "pin": [
+    9.9133,
+    -83.95732
+   ],
+   "answer": "Tres Ríos, Costa Rica",
+   "orig": false,
+   "captured": true,
+   "near": false,
+   "nearest": "San Diego",
+   "nearest_km": 5.07,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 20,
+   "j": 17,
+   "cond": "S2",
+   "key": "12.90165, 23.48734",
+   "pin": [
+    12.90165,
+    23.48734
+   ],
+   "answer": "Zalingei, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Zalinjay",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    12.90918,
+    23.47058,
+    "Zalinjay"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 21,
+   "j": 3,
+   "cond": "S8",
+   "key": "-20.70042, -44.90401",
+   "pin": [
+    -20.70042,
+    -44.90401
+   ],
+   "answer": "Oliveira, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Oliveira",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -20.69639,
+    -44.82722,
+    "Oliveira"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 22,
+   "j": 18,
+   "cond": "S8",
+   "key": "-32.90001, 151.38454",
+   "pin": [
+    -32.90001,
+    151.38454
+   ],
+   "answer": "Cessnock, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Cessnock",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -32.83211,
+    151.35623,
+    "Cessnock"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 23,
+   "j": 5,
+   "cond": "S2",
+   "key": "43.46636, 44.14616",
+   "pin": [
+    43.46636,
+    44.14616
+   ],
+   "answer": "Terek, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Terek",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    43.48329,
+    44.13781,
+    "Terek"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m5",
+   "line": 24,
+   "j": 11,
+   "cond": "S2",
+   "key": "8.86320, 7.86675",
+   "pin": [
+    8.8632,
+    7.86675
+   ],
+   "answer": "Keffi, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Keffi",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    8.84651,
+    7.87354,
+    "Keffi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 1,
+   "j": 14,
+   "cond": "S8",
+   "key": "-32.18854, 148.66048",
+   "pin": [
+    -32.18854,
+    148.66048
+   ],
+   "answer": "Dubbo, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Dubbo",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -32.24295,
+    148.60484,
+    "Dubbo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 2,
+   "j": 10,
+   "cond": "S2",
+   "key": "19.60622, -98.57392",
+   "pin": [
+    19.60622,
+    -98.57392
+   ],
+   "answer": "Calpulalpan, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Calpulalpan",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    19.58867,
+    -98.56972,
+    "Calpulalpan"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 3,
+   "j": 9,
+   "cond": "S30",
+   "key": "-6.12344, -44.25476",
+   "pin": [
+    -6.12344,
+    -44.25476
+   ],
+   "answer": "Colinas, Brazil",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Colinas",
+   "nearest_km": 10.87,
+   "err_km": 10.9,
+   "named_at": [
+    -6.02583,
+    -44.24917,
+    "Colinas"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 4,
+   "j": 19,
+   "cond": "S2",
+   "key": "-27.38461, -70.33795",
+   "pin": [
+    -27.38461,
+    -70.33795
+   ],
+   "answer": "Copiapó, Chile",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Copiapó",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -27.36737,
+    -70.33219,
+    "Copiapó"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 5,
+   "j": 5,
+   "cond": "S8",
+   "key": "43.41717, 44.17687",
+   "pin": [
+    43.41717,
+    44.17687
+   ],
+   "answer": "Terek, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Terek",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    43.48329,
+    44.13781,
+    "Terek"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 6,
+   "j": 4,
+   "cond": "S2",
+   "key": "23.64557, -103.62927",
+   "pin": [
+    23.64557,
+    -103.62927
+   ],
+   "answer": "Sombrerete, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sombrerete",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    23.63138,
+    -103.64134,
+    "Sombrerete"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 7,
+   "j": 24,
+   "cond": "S30",
+   "key": "6.14580, 6.79402",
+   "pin": [
+    6.1458,
+    6.79402
+   ],
+   "answer": "Onitsha, Nigeria",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Onitsha",
+   "nearest_km": 1.02,
+   "err_km": 1.0,
+   "named_at": [
+    6.14978,
+    6.78569,
+    "Onitsha"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 8,
+   "j": 17,
+   "cond": "S8",
+   "key": "12.84012, 23.49129",
+   "pin": [
+    12.84012,
+    23.49129
+   ],
+   "answer": "Zalingei, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Zalinjay",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    12.90918,
+    23.47058,
+    "Zalinjay"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 9,
+   "j": 15,
+   "cond": "S30",
+   "key": "47.14852, 5.19048",
+   "pin": [
+    47.14852,
+    5.19048
+   ],
+   "answer": "Genlis, France",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Chenôve",
+   "nearest_km": 21.36,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 10,
+   "j": 8,
+   "cond": "S8",
+   "key": "45.65518, 42.95629",
+   "pin": [
+    45.65518,
+    42.95629
+   ],
+   "answer": "Ipatovo, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ipatovo",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    45.71801,
+    42.90612,
+    "Ipatovo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 11,
+   "j": 16,
+   "cond": "S2",
+   "key": "27.86147, 81.52040",
+   "pin": [
+    27.86147,
+    81.5204
+   ],
+   "answer": "Nanpara, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nānpāra",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    27.86459,
+    81.50036,
+    "Nānpāra"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 12,
+   "j": 20,
+   "cond": "S8",
+   "key": "38.28855, 39.66626",
+   "pin": [
+    38.28855,
+    39.66626
+   ],
+   "answer": "Ergani, Turkey",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ergani",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    38.26899,
+    39.75446,
+    "Ergani"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 13,
+   "j": 23,
+   "cond": "S8",
+   "key": "-7.47702, 111.07377",
+   "pin": [
+    -7.47702,
+    111.07377
+   ],
+   "answer": "Sragen, Indonesia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sragen",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -7.42639,
+    111.02222,
+    "Sragen"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 14,
+   "j": 13,
+   "cond": "S2",
+   "key": "53.55487, 13.23106",
+   "pin": [
+    53.55487,
+    13.23106
+   ],
+   "answer": "Neubrandenburg, Germany",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Neubrandenburg",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    53.55735,
+    13.26105,
+    "Neubrandenburg"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 15,
+   "j": 3,
+   "cond": "S30",
+   "key": "-20.43213, -44.76915",
+   "pin": [
+    -20.43213,
+    -44.76915
+   ],
+   "answer": "Cláudio, Brazil",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Cláudio",
+   "nearest_km": 1.29,
+   "err_km": 1.3,
+   "named_at": [
+    -20.44333,
+    -44.76583,
+    "Cláudio"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 16,
+   "j": 18,
+   "cond": "S30",
+   "key": "-32.65580, 151.59903",
+   "pin": [
+    -32.6558,
+    151.59903
+   ],
+   "answer": "Paterson, Australia",
+   "orig": false,
+   "captured": true,
+   "near": false,
+   "nearest": "Maitland",
+   "nearest_km": 9.43,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 17,
+   "j": 7,
+   "cond": "S2",
+   "key": "-13.03999, -39.58918",
+   "pin": [
+    -13.03999,
+    -39.58918
+   ],
+   "answer": "Amargosa, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Amargosa",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -13.03028,
+    -39.60472,
+    "Amargosa"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 18,
+   "j": 6,
+   "cond": "S30",
+   "key": "-17.53329, 177.41697",
+   "pin": [
+    -17.53329,
+    177.41697
+   ],
+   "answer": "Lautoka, Fiji",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Lautoka",
+   "nearest_km": 9.95,
+   "err_km": 9.9,
+   "named_at": [
+    -17.61686,
+    177.45049,
+    "Lautoka"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 19,
+   "j": 22,
+   "cond": "S2",
+   "key": "9.89408, -83.69903",
+   "pin": [
+    9.89408,
+    -83.69903
+   ],
+   "answer": "Turrialba, Costa Rica",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Turrialba",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    9.90371,
+    -83.68361,
+    "Turrialba"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 20,
+   "j": 21,
+   "cond": "S30",
+   "key": "23.01429, 87.86309",
+   "pin": [
+    23.01429,
+    87.86309
+   ],
+   "answer": "Arambagh, India",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Arāmbāgh",
+   "nearest_km": 16.7,
+   "err_km": 16.7,
+   "named_at": [
+    22.88333,
+    87.78333,
+    "Arāmbāgh"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 21,
+   "j": 11,
+   "cond": "S8",
+   "key": "8.77460, 7.87579",
+   "pin": [
+    8.7746,
+    7.87579
+   ],
+   "answer": "Keffi, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Keffi",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    8.84651,
+    7.87354,
+    "Keffi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 22,
+   "j": 12,
+   "cond": "S30",
+   "key": "37.20198, -94.91961",
+   "pin": [
+    37.20198,
+    -94.91961
+   ],
+   "answer": "Columbus, United States",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Pittsburg",
+   "nearest_km": 30.0,
+   "err_km": 515.1,
+   "named_at": [
+    41.42973,
+    -97.36838,
+    "Columbus"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 23,
+   "j": 2,
+   "cond": "S8",
+   "key": "12.42949, 25.65417",
+   "pin": [
+    12.42949,
+    25.65417
+   ],
+   "answer": "Shearia, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sh'īarīah",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    12.43883,
+    25.58112,
+    "Sh'īarīah"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m6",
+   "line": 24,
+   "j": 1,
+   "cond": "S2",
+   "key": "-6.16203, 143.64560",
+   "pin": [
+    -6.16203,
+    143.6456
+   ],
+   "answer": "Mendi, Papua New Guinea",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mendi",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -6.14755,
+    143.65633,
+    "Mendi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 1,
+   "j": 15,
+   "cond": "S2",
+   "key": "47.04102, 4.82982",
+   "pin": [
+    47.04102,
+    4.82982
+   ],
+   "answer": "Beaune, France",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Beaune",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    47.02413,
+    4.83887,
+    "Beaune"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 2,
+   "j": 2,
+   "cond": "S30",
+   "key": "12.70393, 25.63247",
+   "pin": [
+    12.70393,
+    25.63247
+   ],
+   "answer": "Shangil Tobaya, Sudan",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Sh'īarīah",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 3,
+   "j": 9,
+   "cond": "S2",
+   "key": "-6.37447, -44.38078",
+   "pin": [
+    -6.37447,
+    -44.38078
+   ],
+   "answer": "Mirador, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mirador",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -6.37083,
+    -44.36306,
+    "Mirador"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 4,
+   "j": 16,
+   "cond": "S8",
+   "key": "27.93607, 81.49113",
+   "pin": [
+    27.93607,
+    81.49113
+   ],
+   "answer": "Nanpara, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nānpāra",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    27.86459,
+    81.50036,
+    "Nānpāra"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 5,
+   "j": 7,
+   "cond": "S8",
+   "key": "-12.97285, -39.64920",
+   "pin": [
+    -12.97285,
+    -39.6492
+   ],
+   "answer": "Amargosa, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Amargosa",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -13.03028,
+    -39.60472,
+    "Amargosa"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 6,
+   "j": 21,
+   "cond": "S2",
+   "key": "23.15879, 88.10108",
+   "pin": [
+    23.15879,
+    88.10108
+   ],
+   "answer": "Memari, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Memāri",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    23.17647,
+    88.09749,
+    "Memāri"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 7,
+   "j": 23,
+   "cond": "S30",
+   "key": "-7.38792, 110.75293",
+   "pin": [
+    -7.38792,
+    110.75293
+   ],
+   "answer": "Gemolong, Indonesia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Colomadu",
+   "nearest_km": 16.17,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 8,
+   "j": 18,
+   "cond": "S2",
+   "key": "-32.82971, 151.37744",
+   "pin": [
+    -32.82971,
+    151.37744
+   ],
+   "answer": "Cessnock, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Cessnock",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -32.83211,
+    151.35623,
+    "Cessnock"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 9,
+   "j": 24,
+   "cond": "S2",
+   "key": "6.19123, 6.51224",
+   "pin": [
+    6.19123,
+    6.51224
+   ],
+   "answer": "Ogwashi-Uku, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ogwashi-Uku",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    6.17811,
+    6.52461,
+    "Ogwashi-Uku"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 10,
+   "j": 10,
+   "cond": "S8",
+   "key": "19.60916, -98.64293",
+   "pin": [
+    19.60916,
+    -98.64293
+   ],
+   "answer": "Calpulalpan, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Calpulalpan",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    19.58867,
+    -98.56972,
+    "Calpulalpan"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 11,
+   "j": 17,
+   "cond": "S30",
+   "key": "12.71697, 23.27642",
+   "pin": [
+    12.71697,
+    23.27642
+   ],
+   "answer": "Zalingei, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Zalinjay",
+   "nearest_km": 30.0,
+   "err_km": 30.0,
+   "named_at": [
+    12.90918,
+    23.47058,
+    "Zalinjay"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 12,
+   "j": 4,
+   "cond": "S8",
+   "key": "23.56029, -103.62923",
+   "pin": [
+    23.56029,
+    -103.62923
+   ],
+   "answer": "Sombrerete, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sombrerete",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    23.63138,
+    -103.64134,
+    "Sombrerete"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 13,
+   "j": 6,
+   "cond": "S2",
+   "key": "-17.81434, 177.43091",
+   "pin": [
+    -17.81434,
+    177.43091
+   ],
+   "answer": "Nadi, Fiji",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nadi",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -17.80309,
+    177.41617,
+    "Nadi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 14,
+   "j": 12,
+   "cond": "S2",
+   "key": "37.40132, -94.72414",
+   "pin": [
+    37.40132,
+    -94.72414
+   ],
+   "answer": "Pittsburg, United States",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Pittsburg",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    37.41088,
+    -94.70496,
+    "Pittsburg"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 15,
+   "j": 19,
+   "cond": "S8",
+   "key": "-27.29762, -70.31233",
+   "pin": [
+    -27.29762,
+    -70.31233
+   ],
+   "answer": "Copiapó, Chile",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Copiapó",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -27.36737,
+    -70.33219,
+    "Copiapó"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 16,
+   "j": 1,
+   "cond": "S8",
+   "key": "-6.20892, 143.61856",
+   "pin": [
+    -6.20892,
+    143.61856
+   ],
+   "answer": "Mendi, Papua New Guinea",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mendi",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -6.14755,
+    143.65633,
+    "Mendi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 17,
+   "j": 22,
+   "cond": "S8",
+   "key": "9.97099, -83.70948",
+   "pin": [
+    9.97099,
+    -83.70948
+   ],
+   "answer": "Turrialba, Costa Rica",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Turrialba",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    9.90371,
+    -83.68361,
+    "Turrialba"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 18,
+   "j": 20,
+   "cond": "S30",
+   "key": "38.40215, 39.45531",
+   "pin": [
+    38.40215,
+    39.45531
+   ],
+   "answer": "Sivrice, Turkey",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Çermik",
+   "nearest_km": 29.68,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 19,
+   "j": 11,
+   "cond": "S30",
+   "key": "8.70665, 7.64009",
+   "pin": [
+    8.70665,
+    7.64009
+   ],
+   "answer": "Nasarawa, Nigeria",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Nasarawa",
+   "nearest_km": 20.1,
+   "err_km": 20.1,
+   "named_at": [
+    8.53895,
+    7.70821,
+    "Nasarawa"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 20,
+   "j": 5,
+   "cond": "S30",
+   "key": "43.29598, 43.87060",
+   "pin": [
+    43.29598,
+    43.8706
+   ],
+   "answer": "Chikola, Russia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Nartkala",
+   "nearest_km": 28.76,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 21,
+   "j": 14,
+   "cond": "S30",
+   "key": "-31.97468, 148.63871",
+   "pin": [
+    -31.97468,
+    148.63871
+   ],
+   "answer": "Eumungerie, Australia",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Dubbo",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 22,
+   "j": 8,
+   "cond": "S30",
+   "key": "45.45602, 42.99818",
+   "pin": [
+    45.45602,
+    42.99818
+   ],
+   "answer": "Svetlograd, Russia",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Svetlograd",
+   "nearest_km": 18.1,
+   "err_km": 18.1,
+   "named_at": [
+    45.32736,
+    42.8562,
+    "Svetlograd"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 23,
+   "j": 13,
+   "cond": "S8",
+   "key": "53.55480, 13.14001",
+   "pin": [
+    53.5548,
+    13.14001
+   ],
+   "answer": "Neubrandenburg, Germany",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Neubrandenburg",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    53.55735,
+    13.26105,
+    "Neubrandenburg"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m7",
+   "line": 24,
+   "j": 3,
+   "cond": "S2",
+   "key": "-20.68097, -44.81732",
+   "pin": [
+    -20.68097,
+    -44.81732
+   ],
+   "answer": "Oliveira, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Oliveira",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -20.69639,
+    -44.82722,
+    "Oliveira"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 1,
+   "j": 18,
+   "cond": "S8",
+   "key": "-32.90001, 151.38454",
+   "pin": [
+    -32.90001,
+    151.38454
+   ],
+   "answer": "Cessnock, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Cessnock",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -32.83211,
+    151.35623,
+    "Cessnock"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 2,
+   "j": 12,
+   "cond": "S8",
+   "key": "37.47565, -94.74440",
+   "pin": [
+    37.47565,
+    -94.7444
+   ],
+   "answer": "Frontenac, United States",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Pittsburg",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 3,
+   "j": 8,
+   "cond": "S2",
+   "key": "45.70240, 42.89333",
+   "pin": [
+    45.7024,
+    42.89333
+   ],
+   "answer": "Ipatovo, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ipatovo",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    45.71801,
+    42.90612,
+    "Ipatovo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 4,
+   "j": 7,
+   "cond": "S30",
+   "key": "-13.27690, -39.71708",
+   "pin": [
+    -13.2769,
+    -39.71708
+   ],
+   "answer": "Ubaíra, Brazil",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Ubaíra",
+   "nearest_km": 5.96,
+   "err_km": 6.0,
+   "named_at": [
+    -13.26806,
+    -39.66278,
+    "Ubaíra"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 5,
+   "j": 4,
+   "cond": "S30",
+   "key": "23.42472, -103.83051",
+   "pin": [
+    23.42472,
+    -103.83051
+   ],
+   "answer": "Chalchihuites, Mexico",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Sombrerete",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 6,
+   "j": 3,
+   "cond": "S8",
+   "key": "-20.70042, -44.90401",
+   "pin": [
+    -20.70042,
+    -44.90401
+   ],
+   "answer": "Oliveira, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Oliveira",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -20.69639,
+    -44.82722,
+    "Oliveira"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 7,
+   "j": 5,
+   "cond": "S2",
+   "key": "43.46636, 44.14616",
+   "pin": [
+    43.46636,
+    44.14616
+   ],
+   "answer": "Terek, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Terek",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    43.48329,
+    44.13781,
+    "Terek"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 8,
+   "j": 11,
+   "cond": "S2",
+   "key": "8.86320, 7.86675",
+   "pin": [
+    8.8632,
+    7.86675
+   ],
+   "answer": "Keffi, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Keffi",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    8.84651,
+    7.87354,
+    "Keffi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 9,
+   "j": 13,
+   "cond": "S30",
+   "key": "53.72421, 13.61867",
+   "pin": [
+    53.72421,
+    13.61867
+   ],
+   "answer": "Friedland, Germany",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Neubrandenburg",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 10,
+   "j": 6,
+   "cond": "S8",
+   "key": "-17.85562, 177.46781",
+   "pin": [
+    -17.85562,
+    177.46781
+   ],
+   "answer": "Nadi, Fiji",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nadi",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -17.80309,
+    177.41617,
+    "Nadi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 11,
+   "j": 19,
+   "cond": "S30",
+   "key": "-27.50276, -70.06925",
+   "pin": [
+    -27.50276,
+    -70.06925
+   ],
+   "answer": "Tierra Amarilla, Chile",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Copiapó",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 12,
+   "j": 10,
+   "cond": "S30",
+   "key": "19.62982, -98.85278",
+   "pin": [
+    19.62982,
+    -98.85278
+   ],
+   "answer": "Acolman, Mexico",
+   "orig": false,
+   "captured": true,
+   "near": false,
+   "nearest": "Teotihuacán de Arista",
+   "nearest_km": 6.71,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 13,
+   "j": 17,
+   "cond": "S2",
+   "key": "12.90165, 23.48734",
+   "pin": [
+    12.90165,
+    23.48734
+   ],
+   "answer": "Zalingei, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Zalinjay",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    12.90918,
+    23.47058,
+    "Zalinjay"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 14,
+   "j": 22,
+   "cond": "S30",
+   "key": "9.91330, -83.95732",
+   "pin": [
+    9.9133,
+    -83.95732
+   ],
+   "answer": "Tres Ríos, Costa Rica",
+   "orig": false,
+   "captured": true,
+   "near": false,
+   "nearest": "San Diego",
+   "nearest_km": 5.07,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 15,
+   "j": 21,
+   "cond": "S8",
+   "key": "23.12345, 88.15038",
+   "pin": [
+    23.12345,
+    88.15038
+   ],
+   "answer": "Memari, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Memāri",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    23.17647,
+    88.09749,
+    "Memāri"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 16,
+   "j": 14,
+   "cond": "S2",
+   "key": "-32.23697, 148.58479",
+   "pin": [
+    -32.23697,
+    148.58479
+   ],
+   "answer": "Dubbo, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Dubbo",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -32.24295,
+    148.60484,
+    "Dubbo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 17,
+   "j": 24,
+   "cond": "S8",
+   "key": "6.23590, 6.56772",
+   "pin": [
+    6.2359,
+    6.56772
+   ],
+   "answer": "Ogwashi-Uku, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ogwashi-Uku",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    6.17811,
+    6.52461,
+    "Ogwashi-Uku"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 18,
+   "j": 16,
+   "cond": "S30",
+   "key": "27.63124, 81.34735",
+   "pin": [
+    27.63124,
+    81.34735
+   ],
+   "answer": "Bahraich, India",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Bahraigh",
+   "nearest_km": 25.19,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 19,
+   "j": 2,
+   "cond": "S2",
+   "key": "12.43978, 25.56273",
+   "pin": [
+    12.43978,
+    25.56273
+   ],
+   "answer": "Labado, Sudan",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Sh'īarīah",
+   "nearest_km": 2.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 20,
+   "j": 1,
+   "cond": "S30",
+   "key": "-6.36176, 143.82134",
+   "pin": [
+    -6.36176,
+    143.82134
+   ],
+   "answer": "Kagua, Papua New Guinea",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Mendi",
+   "nearest_km": 30.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 21,
+   "j": 20,
+   "cond": "S2",
+   "key": "38.26023, 39.77447",
+   "pin": [
+    38.26023,
+    39.77447
+   ],
+   "answer": "Ergani, Turkey",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ergani",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    38.26899,
+    39.75446,
+    "Ergani"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 22,
+   "j": 15,
+   "cond": "S8",
+   "key": "47.09503, 4.85677",
+   "pin": [
+    47.09503,
+    4.85677
+   ],
+   "answer": "Savigny-lès-Beaune, France",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Beaune",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 23,
+   "j": 23,
+   "cond": "S2",
+   "key": "-7.41114, 111.03184",
+   "pin": [
+    -7.41114,
+    111.03184
+   ],
+   "answer": "Sragen, Indonesia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sragen",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -7.42639,
+    111.02222,
+    "Sragen"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m8",
+   "line": 24,
+   "j": 9,
+   "cond": "S8",
+   "key": "-6.32655, -44.30601",
+   "pin": [
+    -6.32655,
+    -44.30601
+   ],
+   "answer": "Mirador, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mirador",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -6.37083,
+    -44.36306,
+    "Mirador"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 1,
+   "j": 7,
+   "cond": "S2",
+   "key": "-13.03999, -39.58918",
+   "pin": [
+    -13.03999,
+    -39.58918
+   ],
+   "answer": "Amargosa, Brazil",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Amargosa",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -13.03028,
+    -39.60472,
+    "Amargosa"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 2,
+   "j": 2,
+   "cond": "S8",
+   "key": "12.42949, 25.65417",
+   "pin": [
+    12.42949,
+    25.65417
+   ],
+   "answer": "Shaeria, Sudan",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Sh'īarīah",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 3,
+   "j": 6,
+   "cond": "S30",
+   "key": "-17.53329, 177.41697",
+   "pin": [
+    -17.53329,
+    177.41697
+   ],
+   "answer": "Lautoka, Fiji",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Lautoka",
+   "nearest_km": 9.95,
+   "err_km": 9.9,
+   "named_at": [
+    -17.61686,
+    177.45049,
+    "Lautoka"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 4,
+   "j": 20,
+   "cond": "S8",
+   "key": "38.28855, 39.66626",
+   "pin": [
+    38.28855,
+    39.66626
+   ],
+   "answer": "Maden, Turkey",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Ergani",
+   "nearest_km": 8.0,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 5,
+   "j": 14,
+   "cond": "S8",
+   "key": "-32.18854, 148.66048",
+   "pin": [
+    -32.18854,
+    148.66048
+   ],
+   "answer": "Dubbo, Australia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Dubbo",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -32.24295,
+    148.60484,
+    "Dubbo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 6,
+   "j": 10,
+   "cond": "S2",
+   "key": "19.60622, -98.57392",
+   "pin": [
+    19.60622,
+    -98.57392
+   ],
+   "answer": "Calpulalpan, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Calpulalpan",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    19.58867,
+    -98.56972,
+    "Calpulalpan"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 7,
+   "j": 13,
+   "cond": "S2",
+   "key": "53.55487, 13.23106",
+   "pin": [
+    53.55487,
+    13.23106
+   ],
+   "answer": "Neubrandenburg, Germany",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Neubrandenburg",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    53.55735,
+    13.26105,
+    "Neubrandenburg"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 8,
+   "j": 18,
+   "cond": "S30",
+   "key": "-32.65580, 151.59903",
+   "pin": [
+    -32.6558,
+    151.59903
+   ],
+   "answer": "Paterson, Australia",
+   "orig": false,
+   "captured": true,
+   "near": false,
+   "nearest": "Maitland",
+   "nearest_km": 9.43,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 9,
+   "j": 24,
+   "cond": "S30",
+   "key": "6.14580, 6.79402",
+   "pin": [
+    6.1458,
+    6.79402
+   ],
+   "answer": "Onitsha, Nigeria",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Onitsha",
+   "nearest_km": 1.02,
+   "err_km": 1.0,
+   "named_at": [
+    6.14978,
+    6.78569,
+    "Onitsha"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 10,
+   "j": 23,
+   "cond": "S8",
+   "key": "-7.47702, 111.07377",
+   "pin": [
+    -7.47702,
+    111.07377
+   ],
+   "answer": "Sragen, Indonesia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sragen",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    -7.42639,
+    111.02222,
+    "Sragen"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 11,
+   "j": 4,
+   "cond": "S2",
+   "key": "23.64557, -103.62927",
+   "pin": [
+    23.64557,
+    -103.62927
+   ],
+   "answer": "Sombrerete, Mexico",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Sombrerete",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    23.63138,
+    -103.64134,
+    "Sombrerete"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 12,
+   "j": 21,
+   "cond": "S30",
+   "key": "23.01429, 87.86309",
+   "pin": [
+    23.01429,
+    87.86309
+   ],
+   "answer": "Raina, India",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Arāmbāgh",
+   "nearest_km": 16.7,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 13,
+   "j": 12,
+   "cond": "S30",
+   "key": "37.20198, -94.91961",
+   "pin": [
+    37.20198,
+    -94.91961
+   ],
+   "answer": "Columbus, United States",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Pittsburg",
+   "nearest_km": 30.0,
+   "err_km": 515.1,
+   "named_at": [
+    41.42973,
+    -97.36838,
+    "Columbus"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 14,
+   "j": 16,
+   "cond": "S2",
+   "key": "27.86147, 81.52040",
+   "pin": [
+    27.86147,
+    81.5204
+   ],
+   "answer": "Nanpara, India",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Nānpāra",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    27.86459,
+    81.50036,
+    "Nānpāra"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 15,
+   "j": 22,
+   "cond": "S2",
+   "key": "9.89408, -83.69903",
+   "pin": [
+    9.89408,
+    -83.69903
+   ],
+   "answer": "Turrialba, Costa Rica",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Turrialba",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    9.90371,
+    -83.68361,
+    "Turrialba"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 16,
+   "j": 1,
+   "cond": "S2",
+   "key": "-6.16203, 143.64560",
+   "pin": [
+    -6.16203,
+    143.6456
+   ],
+   "answer": "Mendi, Papua New Guinea",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Mendi",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -6.14755,
+    143.65633,
+    "Mendi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 17,
+   "j": 8,
+   "cond": "S8",
+   "key": "45.65518, 42.95629",
+   "pin": [
+    45.65518,
+    42.95629
+   ],
+   "answer": "Ipatovo, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Ipatovo",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    45.71801,
+    42.90612,
+    "Ipatovo"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 18,
+   "j": 3,
+   "cond": "S30",
+   "key": "-20.43213, -44.76915",
+   "pin": [
+    -20.43213,
+    -44.76915
+   ],
+   "answer": "Cláudio, Brazil",
+   "orig": false,
+   "captured": true,
+   "near": true,
+   "nearest": "Cláudio",
+   "nearest_km": 1.29,
+   "err_km": 1.3,
+   "named_at": [
+    -20.44333,
+    -44.76583,
+    "Cláudio"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 19,
+   "j": 9,
+   "cond": "S30",
+   "key": "-6.12344, -44.25476",
+   "pin": [
+    -6.12344,
+    -44.25476
+   ],
+   "answer": "Colinas, Brazil",
+   "orig": false,
+   "captured": false,
+   "near": true,
+   "nearest": "Colinas",
+   "nearest_km": 10.87,
+   "err_km": 10.9,
+   "named_at": [
+    -6.02583,
+    -44.24917,
+    "Colinas"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 20,
+   "j": 17,
+   "cond": "S8",
+   "key": "12.84012, 23.49129",
+   "pin": [
+    12.84012,
+    23.49129
+   ],
+   "answer": "Zalingei, Sudan",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Zalinjay",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    12.90918,
+    23.47058,
+    "Zalinjay"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 21,
+   "j": 11,
+   "cond": "S8",
+   "key": "8.77460, 7.87579",
+   "pin": [
+    8.7746,
+    7.87579
+   ],
+   "answer": "Keffi, Nigeria",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Keffi",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    8.84651,
+    7.87354,
+    "Keffi"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 22,
+   "j": 5,
+   "cond": "S8",
+   "key": "43.41717, 44.17687",
+   "pin": [
+    43.41717,
+    44.17687
+   ],
+   "answer": "Terek, Russia",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Terek",
+   "nearest_km": 8.0,
+   "err_km": 8.0,
+   "named_at": [
+    43.48329,
+    44.13781,
+    "Terek"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 23,
+   "j": 19,
+   "cond": "S2",
+   "key": "-27.38461, -70.33795",
+   "pin": [
+    -27.38461,
+    -70.33795
+   ],
+   "answer": "Copiapó, Chile",
+   "orig": true,
+   "captured": false,
+   "near": false,
+   "nearest": "Copiapó",
+   "nearest_km": 2.0,
+   "err_km": 2.0,
+   "named_at": [
+    -27.36737,
+    -70.33219,
+    "Copiapó"
+   ],
+   "country_hit": true
+  },
+  {
+   "maker": "m9",
+   "line": 24,
+   "j": 15,
+   "cond": "S30",
+   "key": "47.14852, 5.19048",
+   "pin": [
+    47.14852,
+    5.19048
+   ],
+   "answer": "Brazey-en-Plaine, France",
+   "orig": false,
+   "captured": false,
+   "near": false,
+   "nearest": "Chenôve",
+   "nearest_km": 21.36,
+   "err_km": null,
+   "named_at": null,
+   "country_hit": true
+  }
+ ]
+}

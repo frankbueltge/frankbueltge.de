@@ -554,7 +554,9 @@ export const NODES: readonly ApparatusNode[] = [
     members: [
       { label: 'src/data/saat/register.json', what: 'offered seeds and each practice’s answer' },
       { label: 'src/data/post', what: 'the post office ledger' },
-      { label: 'src/data/reception', what: 'critique the ecology has received' },
+      // 2026-10-17: the reception's ratings and notes, committed as dated JSON every night when they
+      // changed (duty 2 of .claude/rules/runtime-and-works.md), beside the one critique of before.
+      { label: 'src/data/reception', what: 'every night, the public record of ratings and notes on the works; and the one critique received before them', ref: '.github/workflows/reception-snapshot.yml', workflowName: 'Reception snapshot', cron: ['20 2 * * *'] },
     ],
   },
 
@@ -574,7 +576,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'delivery',
     kind: 'host',
     owner: 'shared',
-    what: 'Serves the static build, plus the request-time functions behind the seed inlet, the post office and the control room.',
+    what: 'Serves the static build, plus the request-time functions behind the seed inlet, the post office, the reception and the control room.',
   },
   {
     id: 'del-workers',
@@ -613,12 +615,14 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'oversight',
     kind: 'service',
     owner: 'shared',
-    what: 'The request-time doors. Nothing a stranger types reaches a repository unchecked: a seed waits in a private queue for a human review, and a declined one is deleted rather than recorded.',
+    what: 'The request-time doors. Nothing a stranger types reaches a repository unchecked: a seed waits in a private queue for a human review, and a declined one is deleted rather than recorded. A rating’s note waits for nobody: it goes live after a bot check and a named text check, and reaches a practice only as material in the nightly snapshot.',
     members: [
       { label: 'POST /api/seed', what: 'ten fail-closed stages, then a private queue — commits nothing', ref: 'functions/api/seed.js', secrets: ['TURNSTILE_SECRET_KEY', 'GEMINI_API_KEY', 'SEED_PENDING_KV'] },
       { label: 'POST /api/impulse', what: 'writes into Assay’s own impulse inbox', ref: 'functions/api/impulse.js', secrets: ['IMPULSE_GITHUB_TOKEN'] },
       { label: 'POST /api/post', what: 'the post office', ref: 'functions/api/post.js' },
       { label: '/api/zentrale/*', what: 'the control room: answer a request, review a seed, merge an engine PR', secrets: ['ZENTRALE_SECRET', 'ZENTRALE_GITHUB_TOKEN'] },
+      // 2026-10-17 (docs/design/2026-10-17-the-reception.md).
+      { label: '/api/reception/*', what: 'the reception: rate a published work from 1 to 5, with an optional note, live at once; the architect’s notes skip both checks', ref: 'functions/api/reception/rate.js', secrets: ['RECEPTION_DB', 'RECEPTION_OWNER_KEY', 'TURNSTILE_SECRET_KEY', 'GEMINI_API_KEY'] },
     ],
   },
   {
@@ -682,7 +686,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'st-catalogues', to: 'del-build', kind: 'workflow_run', mechanism: 'workflow_run after the scouts complete', checked: 'derived', ref: '.github/workflows/deploy-cf.yml' },
   { from: 'st-mirrors', to: 'del-build', kind: 'workflow_run', mechanism: 'workflow_run after each integrate completes', checked: 'derived', ref: '.github/workflows/deploy-cf.yml' },
   { from: 'st-encounters', to: 'del-build', kind: 'workflow_run', mechanism: 'workflow_run after the ecology integrate completes', checked: 'derived', ref: '.github/workflows/deploy-cf.yml' },
-  { from: 'st-inlets', to: 'del-build', kind: 'workflow_run', mechanism: 'workflow_run after the requests watchdog completes', checked: 'derived', ref: '.github/workflows/deploy-cf.yml' },
+  { from: 'st-inlets', to: 'del-build', kind: 'workflow_run', mechanism: 'workflow_run after the requests watchdog or the reception snapshot completes', checked: 'derived', ref: '.github/workflows/deploy-cf.yml' },
   { from: 'gate-sitepr', to: 'del-build', kind: 'push', mechanism: 'a human merges the pull request, and the merge fires on:push normally', checked: 'derived', ref: '.github/workflows/engine-site-pr.yml' },
   { from: 'del-build', to: 'del-pages', kind: 'deploy', mechanism: 'wrangler pages deploy dist — the public site key is inlined here, at build time', checked: 'derived', ref: '.github/workflows/deploy-cf.yml' },
   {
@@ -711,6 +715,13 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'conductor', to: 'st-inlets', kind: 'github-api', mechanism: 'an approved seed is committed into the public register', checked: 'declared', ref: 'functions/api/seed.js' },
   { from: 'ov-inlets', to: 'repo-ulysses', kind: 'github-api', mechanism: 'an impulse is written straight into the practice’s own inbox', checked: 'declared', ref: 'functions/api/impulse.js' },
   { from: 'del-pages', to: 'ov-inlets', kind: 'deploy', mechanism: 'the inlets run as functions on the same host that serves the static build', checked: 'declared', ref: 'functions/api/seed.js' },
+  // The reception (2026-10-17): the record is read back every night, committed, and written into the
+  // practices' feedback folders with the tokens their refusal letters use.
+  { from: 'ov-inlets', to: 'st-inlets', kind: 'commit', mechanism: 'every night the public record of ratings and notes is read back and committed as dated JSON, only when it changed', checked: 'derived', ref: '.github/workflows/reception-snapshot.yml' },
+  { from: 'conductor', to: 'ov-inlets', kind: 'human', mechanism: 'his own notes on the works go live under his name, through a cookie his device holds, with no queue and no check', checked: 'declared', ref: 'src/lib/reception/handlers.ts' },
+  { from: 'st-inlets', to: 'repo-ulysses', kind: 'github-api', mechanism: 'every night: reception.md, the ratings and notes on its works, into atelier-feedback/', checked: 'derived', ref: '.github/workflows/reception-snapshot.yml' },
+  { from: 'st-inlets', to: 'repo-field', kind: 'github-api', mechanism: 'every night: reception.md, the ratings and notes on its works, into field-feedback/', checked: 'derived', ref: '.github/workflows/reception-snapshot.yml' },
+  { from: 'st-inlets', to: 'repo-studio', kind: 'github-api', mechanism: 'every night: reception.md, the ratings and notes on its works, into studio-feedback/', checked: 'derived', ref: '.github/workflows/reception-snapshot.yml' },
 ] as const
 
 // ─────────────────────────────────────────────────────────── domains

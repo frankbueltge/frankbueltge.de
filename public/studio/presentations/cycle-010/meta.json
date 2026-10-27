@@ -1,0 +1,69 @@
+{
+ "title": "GOING OUT",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-10-25",
+ "session": 203,
+ "cycle": 10,
+ "question": "Missing Data Art",
+ "artifact": "index.html (the work as it stands in works/2026-10-24-going-out/index.html; it and data.js are byte-identical to the work's, checked by verify.mjs). Source, score, critique, process and checks are in the work's directory.",
+ "long_work": {
+  "slug": "2026-10-24-going-out",
+  "increments": {
+   "1": "session 201: the dome for each report, the going-out to the chart matched, the lens, the twenty-year band",
+   "2": "session 202: the turning from the filed hour; the lost reports opened (trails of every hour, outline over 0 N 0 E); go out yourself, kept in the visitor's browser",
+   "3": "session 203: the loss counted on the dome and the gone stars left as holes; the band beside the sky, labelled, with the stars kept per report per year; the visitor's report set against their latitude by decade; a lede with the observers' 9.6 % against the satellites' 2 %; presented"
+  },
+  "score": "works/2026-10-24-going-out/SCORE.md",
+  "critique": "works/2026-10-24-going-out/CRITIQUE.md"
+ },
+ "medium": "An animated, interactive night sky in the browser: one Globe at Night report at a time, its sky set for its place and minute and taken away to what the observer saw; a lens that restores the sky where the visitor holds the pointer; a band of every report since 2006.",
+ "form": "Canvas dome with a counter of the stars gone, animation, pointer lens; a labelled band beside it (stars kept per report per year; reports by chart; no chart, no hour fits, no place), clickable; star trails for reports with no hour; a participatory panel for the visitor's own report, set against everyone who filed from their latitude (geolocation if allowed, otherwise a time-zone guess; localStorage only, nothing sent).",
+ "embodies": "A RECORD OF WHAT COULD NOT BE SEEN. 287,352 Globe at Night naked-eye reports, 2006-2025, each turned back into its whole sky and taken away to the chart matched; 99,515 re-timed, 6,411 fitting no hour, 3,176 filed at no place, 36,596 with no chart; stars kept per report about 560 in 2006 and about 370 in 2025 (an estimate, not a trend).",
+ "form_argument": "What the record holds is a subtraction, so the work performs the subtraction on a whole sky each time instead of plotting a number of stars.",
+ "the_rule_the_work_kept": "A star is lit if it is no fainter than the chart the observer matched (the work's simplification: they matched one constellation). A report's hour is its filed UT if that puts its constellation's brightest star more than 5 degrees up; otherwise its filed local time shifted by its longitude, if that fits (flagged on the page); otherwise not drawn. Reports at 0 N 0 E and reports with no chart are counted and not drawn. A re-timed report keeps the offset of its filed UT and turns from it (in the sample most often 10 to 14 hours before the placed hour; that it was an evening hour filed as a morning one is the work's guess). Lost reports: a sample of up to 24 per year of each kind. Stars kept per report (the band's top strip): the catalogue's stars no fainter than the chart matched, halved for the half-sky above a horizon, averaged over each year's reports with a chart (an estimate; not a trend, since who reports changes). The visitor's comparison: every report with a chart and a place (247,546), counted by chart per 10-degree band of latitude and per year, whatever its hour.",
+ "headline": {
+  "gan_reports": 287352,
+  "stars_to_6_5": 8404,
+  "sampled": 6400,
+  "drawable": 241135,
+  "no_chart_filed": 36596,
+  "placed_by_local_time": 99515,
+  "no_place_0N0E": 3176,
+  "unplaceable": 6411,
+  "unreadable": 34,
+  "lost_sampled": 547,
+  "with_chart_and_place": 247546
+ },
+ "sources": [
+  "https://globeatnight.org/maps-data/ (Globe at Night, NOIRLab; yearly CSVs 2006-2025; CC BY 4.0; fetched 2026-10-24, sizes and SHA-256 in raw-manifest.json)",
+  "https://cdsarc.cds.unistra.fr/ftp/V/50/catalog.gz (Bright Star Catalogue, 5th revised ed., Hoffleit & Warren 1991, CDS VizieR V/50)",
+  "Kyba, Altintas, Walker, Newhouse, Science 379(6629):265-268, 2023, doi:10.1126/science.abq7781 (cited on the page for the 7-10 % a year and the 51,351 reports, from its abstract)",
+  "https://noirlab.edu/public/news/noirlab2302/ (NOIRLab release of the Kyba et al. paper, 2023: 9.6 % a year from Globe at Night against roughly 2 % a year in satellite measurements of surface brightness; quoted in the lede)",
+  "https://app.globeatnight.org/ (Globe at Night's own reporting form, linked for the visitor's report; the work sends nothing)"
+ ],
+ "atlas_neighbours": [
+  {
+   "title": "ASTRES: Mapping the Firmament",
+   "artist": "Playmodes Studio",
+   "daylight": "There, the night sky is drawn in laser light to celebrate it. Here it is drawn so that it can be subtracted, one person's report at a time."
+  },
+  {
+   "title": "Bathsheba Grossman's Crystal Engravings",
+   "artist": "Bathsheba Grossman",
+   "daylight": "There, astronomical data is fixed whole in glass. Here the whole sky appears only to be taken away, and comes back only where the visitor holds their eye."
+  },
+  {
+   "title": "The Library of Missing Datasets (v2.0)",
+   "artist": "Mimi Ọnụọha",
+   "daylight": "There, data that does not exist is filed as empty folders. Here the data exists, written by hundreds of thousands of hands, and what it records is a negative: the stars not seen."
+  }
+ ],
+ "siblings": {
+  "field": "The Withheld Cell (field-research, artifacts/cycle-010/the-withheld-cell/; paper to come in presentations/cycle-010/paper.md); not taken as material",
+  "atelier": "Supplied (ulysses, artifacts/cycle-010/supplied/; presentation to come in presentations/cycle-010/); its process-shot tool taken up (ho-2026-10-22-atelier-5), no material"
+ },
+ "for_the_programme": "Some missing data is kept by the people it is missing from: a record of stars not seen measured the night's loss where satellites missed it; next, who else keeps such negative records?",
+ "summary": "SUMMARY.md"
+}

@@ -34,7 +34,11 @@ const kept = new Set<string>()
 
 for (const { pick } of readPoolEntries(root)) {
   const source = makerStill(pick.work, root)
-  if (!source) continue
+  // a piece without a still of its maker's keeps the shot of its page (scripts/shelf-shots.ts)
+  if (!source) {
+    kept.add(shelfCrop(pick.work).file)
+    continue
+  }
   const crop = shelfCrop(pick.work)
   kept.add(crop.file)
   const image = sharp(join(root, source))

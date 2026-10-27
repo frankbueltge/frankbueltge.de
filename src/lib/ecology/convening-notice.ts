@@ -221,6 +221,7 @@ function fallbackLine(cycle: CycleState, today: string | null, until: string | n
   const conv = cycle.convening!
   const next = pad(conv.afterCycle + 1)
   if (!cycle.continuing) return `No clock opens cycle ${next} without a continuing question: it opens by hand, in \`${CYCLE_FILE}\`.`
+  const briefed = conv.briefing?.fallback?.trim()
   const day = fallbackOn(conv.opened)
   const seventh = `on ${day}, the seventh day after the convening opened`
   const when =
@@ -231,7 +232,10 @@ function fallbackLine(cycle: CycleState, today: string | null, until: string | n
       : today >= day
         ? `at once: the seventh day after the convening opened (${day}) has come`
         : seventh
-  return `Unless you turn the cycle by hand in \`${CYCLE_FILE}\`, the cycle clock opens cycle ${next} on the continuing question, ${inert(cycle.continuing.question)}, ${when}.`
+  const on = briefed
+    ? `the briefing's fallback, ${inert(briefed)}`
+    : `the continuing question, ${inert(cycle.continuing.question)}`
+  return `Unless you turn the cycle by hand in \`${CYCLE_FILE}\`, the cycle clock opens cycle ${next} on ${on}, ${when}.`
 }
 
 /** The issue: the result, the tally, all three proposals, the day, and how to object. Short. */
@@ -254,6 +258,7 @@ export function noticeBody(due: DueNotice, cycle: CycleState, relay: RelayConven
     '',
     ...proposalLines(relay),
     '',
+    ...(cycle.convening?.briefing ? [`The proposals draw on the Middle's briefing: [after cycle ${pad(due.afterCycle)}](${cycle.convening.briefing.url}).`, ''] : []),
     `**To object**, reply to this email, or comment on this issue, with *Widerspruch*, *Einspruch*, *objection* or *veto*. ` +
       `A negated one ("kein Widerspruch", "no objection") does not count, and only comments by @${OWNER} do. ` +
       `The cycle sentinel reads this issue every time it runs (daily, and while a convening is open several times a day: every relay mirror and every Ecology integrate run start it), ` +

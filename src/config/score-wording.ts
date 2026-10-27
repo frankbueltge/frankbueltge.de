@@ -272,6 +272,8 @@ export const SCORE_WORDING = {
     line: (since: string) => `the research ecology · a project of frankbueltge.de · order set at the reading of ${since}`,
     also: 'Also here:',
     links: [
+      // 2026-10-25: the research lines the ecology keeps across cycles (/lines)
+      { label: 'the research lines', href: '/lines/' },
       { label: 'the post office', href: '/post' },
       { label: 'how this is run', href: '/apparatus' },
     ],

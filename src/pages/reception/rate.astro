@@ -1,0 +1,369 @@
+---
+// /reception/rate?work=<practice>:<slug> — the rating form (2026-10-17; docs/design/
+// 2026-10-17-the-reception.md). The one page of the reception that loads the bot check, the way /seed
+// does: Cloudflare Turnstile is the house's declared exception, and it is loaded here only, and only
+// when the form is open for a visitor — never for the architect, whose cookie stands in for it. Every
+// work page opens this page in a same-origin frame (/reception/widget.js); it also stands on its own.
+//
+// What the form keeps is said on the form itself (duty 1 of .claude/rules/runtime-and-works.md), with
+// the text gate's prompt word for word, as /seed publishes its own.
+import Base from '@/layouts/Base.astro'
+import { buttonVariants } from '@/components/ui/button'
+import { fieldLabel, fieldVariants } from '@/lib/ui/field'
+import { cn } from '@/lib/ui/cn'
+import { GATE_MODEL, RECEPTION_GATE_PROMPT } from '@/lib/reception/gate'
+import { MAX_NAME, MAX_NOTE, MAX_OWNER_NOTE } from '@/lib/reception/text'
+import { DAILY_CAP, GATE_DAILY_CAP, OWNER_LABEL } from '@/lib/reception/handlers'
+
+const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined) ?? ''
+const config = JSON.stringify({ siteKey, maxNote: MAX_NOTE, maxOwnerNote: MAX_OWNER_NOTE, ownerLabel: OWNER_LABEL, dailyCap: DAILY_CAP }).replace(/</g, '\\u003c')
+
+const input = cn(fieldVariants({ kind: 'input' }), 'mt-2')
+const textarea = cn(fieldVariants({ kind: 'textarea' }), 'mt-2 min-h-24')
+const primary = cn(buttonVariants({ variant: 'default' }))
+const outlineSm = cn(buttonVariants({ variant: 'outline', size: 'sm' }))
+---
+
+<Base title="Rate a work | Frank Bültge" description="Rate a work of this site from 1 to 5, or leave a note. Ratings and notes are public and reach the practices every night." noindex>
+  <main id="main" class="rcp-page mx-auto w-full max-w-2xl px-5 pb-10 pt-6">
+    <p class="rcp-standalone font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href="/reception">Reception</a> · frankbueltge.de
+    </p>
+    <h1 class="mt-2 text-xl font-bold leading-snug" data-rcp="title">Rate a work</h1>
+    <p class="mt-1 text-sm text-fg-muted" data-rcp="sub">From 1 to 5, with a note if you like.</p>
+
+    <div class="mt-4 rounded-sm border border-line bg-bg/40 p-3 text-sm text-fg" data-rcp="owner" hidden>
+      You post as <b>{OWNER_LABEL}</b>: your rating and note go live at once, without the bot check or the
+      text check, and your note may run to {MAX_OWNER_NOTE} characters.
+      <a class="ml-1 underline decoration-line underline-offset-4 hover:decoration-fg" href="/api/reception/owner?logout" target="_top">Sign this device out</a>
+    </div>
+
+    <p class="mt-4 rounded-sm border border-line bg-bg/40 p-3 text-sm text-fg-muted" data-rcp="standby" role="status">Reading the work’s record…</p>
+
+    <form class="mt-4 space-y-4" data-rcp="form" data-config={config} novalidate hidden>
+      <fieldset>
+        <legend class={fieldLabel}>Your rating</legend>
+        <div class="mt-2 flex items-center gap-1" data-rcp="stars">
+          {[1, 2, 3, 4, 5].map((n) => (
+            <label class="rcp-star cursor-pointer select-none px-1 text-3xl leading-none text-fg-faint" data-score={n}>
+              <input class="sr-only" type="radio" name="score" value={n} required />
+              <span aria-hidden="true">☆</span>
+              <span class="sr-only">{n} of 5</span>
+            </label>
+          ))}
+          <span class="ml-2 font-mono text-xs text-fg-faint" data-rcp="score-label"></span>
+        </div>
+      </fieldset>
+
+      <div>
+        <label for="rcp-text" class={fieldLabel}>A note (optional)</label>
+        <textarea id="rcp-text" name="text" rows="4" maxlength={MAX_OWNER_NOTE} class={textarea} data-rcp="text"></textarea>
+        <div class="mt-1 flex items-start justify-between gap-3">
+          <p class="text-xs text-fg-muted" data-rcp="text-note">What did the work do to you, or fail to do? The practice that made it reads every note.</p>
+          <span class="shrink-0 font-mono text-xs text-fg-faint" data-rcp="counter">0/{MAX_NOTE}</span>
+        </div>
+      </div>
+
+      <div data-rcp="visitor-only">
+        <label for="rcp-name" class={fieldLabel}>Your name or mark (optional, shown with the note)</label>
+        <input id="rcp-name" name="name" type="text" maxlength={MAX_NAME} autocomplete="off" placeholder="a visitor" class={input} />
+      </div>
+
+      <label class="flex items-start gap-2.5 text-xs text-fg-muted" data-rcp="consent-row">
+        <input type="checkbox" name="consent" class="mt-0.5 shrink-0" />
+        <span>If I leave a note, it is published here and passed to the practice under
+          <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license noopener" target="_blank">CC BY-NC-SA 4.0</a>,
+          the licence of the public seeds. A rating without a note needs no tick.</span>
+      </label>
+
+      <input type="text" name="website" class="rcp-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div data-rcp="turnstile"></div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button type="submit" class={primary} data-rcp="submit">Send</button>
+        <p class="text-sm text-fg-muted" role="status" aria-live="polite" data-rcp="msg"></p>
+      </div>
+    </form>
+
+    <div class="mt-4 rounded-sm border border-line bg-bg/40 p-3" data-rcp="done" hidden>
+      <p class="text-sm font-semibold text-fg" data-rcp="done-text">Thank you. Your rating is live.</p>
+      <button type="button" class={cn(outlineSm, 'mt-2')} data-rcp="again">Write another note</button>
+    </div>
+
+    <details class="mt-6 text-xs leading-relaxed text-fg-muted">
+      <summary class="cursor-pointer text-fg">What this form keeps, for how long, and why</summary>
+      <p class="mt-2">
+        Your rating, your note and your name if you give them, and the moment you sent them, are stored in
+        the site’s database (Cloudflare D1) and shown at once below the work and on
+        <a class="underline" href="/reception" target="_top">/reception</a>. Every night the public part is
+        committed to the site’s repository as dated JSON, and each practice receives the ratings and notes on
+        its own works in its feedback folder, where it reads them at the start of every session: as material,
+        never as instructions.
+      </p>
+      <p class="mt-2">
+        To allow one rating per work per visitor and day, the site keeps a keyed hash of your address and
+        browser for 24 hours. The key is new every day and is deleted when the day is over, so the hash cannot
+        be traced back to you, by anyone, the house included. No cookie is set for you.
+      </p>
+      <p class="mt-2">
+        Before anything is stored, Cloudflare Turnstile checks that a person is sending (Cloudflare’s privacy
+        notice applies to that check). A note is then read by a named model, {GATE_MODEL}, against the prompt
+        below; a refused note is not stored, only counted by its reason. The site takes at most {DAILY_CAP}
+        ratings a day and checks at most {GATE_DAILY_CAP} notes; at either limit the form says so and waits
+        until midnight UTC. The reception ends when its store ends; the committed snapshots remain. Three
+        reports from different visitors hide a note until the architect has read it.
+        More in the <a class="underline" href="/datenschutz" target="_top">privacy notice</a>.
+      </p>
+      <p class="mt-3 font-mono text-[11px] leading-relaxed text-fg-faint">The text check’s prompt, word for word: {RECEPTION_GATE_PROMPT}</p>
+    </details>
+  </main>
+</Base>
+
+<style>
+  .rcp-hp {
+    position: absolute !important;
+    left: -9999px !important;
+    height: 1px;
+    width: 1px;
+    opacity: 0;
+  }
+  :global(html[data-rcp-framed]) .rcp-standalone {
+    display: none;
+  }
+  :global(html[data-rcp-framed]) .rcp-page {
+    padding-top: 0.75rem;
+  }
+  :global(html[data-rcp-framed] body) {
+    background: transparent;
+  }
+  .rcp-star[data-on] {
+    color: var(--color-fg, currentColor);
+  }
+</style>
+
+<script>
+  type Config = { siteKey: string; maxNote: number; maxOwnerNote: number; ownerLabel: string; dailyCap: number }
+  type Turnstile = { render: (el: HTMLElement, opts: Record<string, unknown>) => string; reset: (id?: string) => void }
+
+  const STANDBY: Record<string, string> = {
+    store: 'The reception’s store is not connected yet, so nothing can be stored. Please come back later.',
+    registry: 'The list of published works could not be read, so the form cannot tell this work from any other. Please try again later.',
+    'bot-check': 'The bot check is not configured, so the form stays closed.',
+    'daily-cap': 'Today’s ratings are full: the house takes a limited number a day. The form opens again at midnight UTC.',
+    'text-check': 'Notes are paused, because the text check is not configured. You can still send a rating without a note.',
+    'gate-cap': 'Notes are paused for today, at the text check’s daily limit. You can still send a rating without a note.',
+  }
+  const GATE: Record<string, string> = {
+    spam: 'it reads as advertising or link dumping',
+    abuse: 'it insults, threatens or attacks someone',
+    pii: 'it carries personal data about someone else',
+    injection: 'it addresses a machine with instructions instead of responding to the work',
+    other: 'it falls under one of the exclusion grounds below',
+  }
+  const REFUSED: Record<string, string> = {
+    'unknown-work': 'This work is not on the list of works the site publishes.',
+    score: 'Please choose from 1 to 5 stars.',
+    text: 'The note could not be read.',
+    'text-too-long': 'The note is too long.',
+    name: 'The name could not be read.',
+    'name-too-long': 'The name is too long (at most 60 characters).',
+    consent: 'Please tick the box: a note is published under CC BY-NC-SA 4.0.',
+    turnstile: 'The bot check failed. Please try again.',
+    'rate-limit': 'You have rated this work today already. Tomorrow is another day.',
+    'too-fast': 'Too many tries in a short time. Please wait a few minutes.',
+    'gate-unavailable': 'The text check cannot be reached right now, so nothing was published. Please try again in a moment.',
+    'gate-cap': STANDBY['gate-cap']!,
+    origin: 'The request came from another site and was refused.',
+    upstream: 'The store did not answer. Nothing may have been saved; please try again.',
+  }
+
+  const $ = <T extends Element>(name: string): T | null => document.querySelector<T>(`[data-rcp="${name}"]`)
+  const framed = window.parent !== window
+  const tell = () => {
+    if (!framed) return
+    window.parent.postMessage({ type: 'reception:height', height: document.documentElement.scrollHeight }, location.origin)
+  }
+
+  // Runs on the first load and after every client-side navigation (the house's ClientRouter), and
+  // binds a form once: a module script executes only once per document, whatever the router does.
+  async function main(): Promise<void> {
+    const form = $<HTMLFormElement>('form')
+    if (!form || form.hasAttribute('data-rcp-bound')) return
+    form.setAttribute('data-rcp-bound', '')
+    if (framed) {
+      document.documentElement.setAttribute('data-rcp-framed', '')
+      if ('ResizeObserver' in window) new ResizeObserver(tell).observe(document.body)
+    }
+    const config = JSON.parse(form.dataset.config ?? '{}') as Config
+    const standby = $<HTMLElement>('standby')!
+    const say = (text: string) => {
+      standby.textContent = text
+      standby.hidden = false
+      tell()
+    }
+    const work = new URLSearchParams(location.search).get('work') ?? ''
+    if (!/^[a-z0-9-]+:[a-z0-9][a-z0-9-]*$/.test(work)) return say('No work is named in this address. Open the form from the work’s own page.')
+
+    let data: any = null
+    let owner = false
+    try {
+      const [w, o] = await Promise.all([
+        fetch(`/api/reception/work?id=${encodeURIComponent(work)}`, { headers: { accept: 'application/json' } }),
+        fetch('/api/reception/owner', { headers: { accept: 'application/json' } }),
+      ])
+      data = await w.json().catch(() => null)
+      owner = (await o.json().catch(() => ({})))?.owner === true
+    } catch {
+      return say('The work’s record could not be read just now. Please try again later.')
+    }
+    if (!data?.ok) {
+      if (data?.reason === 'standby') return say(STANDBY[data.detail] ?? 'The reception is in standby.')
+      return say(REFUSED[data?.reason] ?? 'The work’s record could not be read just now.')
+    }
+
+    $<HTMLElement>('title')!.textContent = `Rate ${data.work.title}`
+    const sub = $<HTMLElement>('sub')!
+    sub.textContent = data.count > 0 ? `${data.count} ${data.count === 1 ? 'rating' : 'ratings'} so far, average ${Number(data.average).toFixed(1)} of 5.` : 'No rating yet. Yours would be the first.'
+    if (!owner && !data.open) return say(STANDBY[data.standby] ?? 'The reception is in standby.')
+
+    const text = form.querySelector<HTMLTextAreaElement>('textarea[name="text"]')!
+    const counter = $<HTMLElement>('counter')!
+    const maxNote = owner ? config.maxOwnerNote : config.maxNote
+    text.maxLength = maxNote
+    const count = () => (counter.textContent = `${[...text.value].length}/${maxNote}`)
+    text.addEventListener('input', count)
+    count()
+
+    $<HTMLElement>('again')!.hidden = !owner
+    if (owner) {
+      $<HTMLElement>('owner')!.hidden = false
+      $<HTMLElement>('visitor-only')!.hidden = true
+      $<HTMLElement>('consent-row')!.hidden = true
+    } else if (!data.notes_open) {
+      text.disabled = true
+      $<HTMLElement>('text-note')!.textContent = STANDBY[data.standby] ?? 'Notes are paused.'
+    }
+
+    // stars
+    const labels = [...form.querySelectorAll<HTMLLabelElement>('.rcp-star')]
+    const scoreLabel = $<HTMLElement>('score-label')!
+    const paint = (upTo: number) =>
+      labels.forEach((l) => {
+        const n = Number(l.dataset.score)
+        const on = n <= upTo
+        l.toggleAttribute('data-on', on)
+        l.querySelector('[aria-hidden]')!.textContent = on ? '★' : '☆'
+      })
+    const chosen = () => Number(form.querySelector<HTMLInputElement>('input[name="score"]:checked')?.value ?? 0)
+    labels.forEach((l) => {
+      l.addEventListener('mouseenter', () => paint(Number(l.dataset.score)))
+      l.addEventListener('mouseleave', () => paint(chosen()))
+    })
+    form.addEventListener('change', () => {
+      paint(chosen())
+      scoreLabel.textContent = chosen() ? `${chosen()} of 5` : ''
+    })
+
+    // the bot check, for visitors only, loaded now that the form is open
+    let token: string | null = null
+    let widget: string | undefined
+    const slot = $<HTMLElement>('turnstile')!
+    if (!owner) {
+      if (!config.siteKey) return say(STANDBY['bot-check']!)
+      await new Promise<void>((resolve) => {
+        const s = document.createElement('script')
+        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+        s.async = true
+        s.onload = () => resolve()
+        s.onerror = () => resolve()
+        document.head.appendChild(s)
+      })
+      const ts = (window as unknown as { turnstile?: Turnstile }).turnstile
+      if (!ts) return say('The bot check could not be loaded. Please try again later.')
+      widget = ts.render(slot, {
+        sitekey: config.siteKey,
+        theme: 'auto',
+        size: 'flexible',
+        callback: (t: string) => (token = t),
+        'expired-callback': () => (token = null),
+        'error-callback': () => (token = null),
+      })
+    }
+
+    standby.hidden = true
+    form.hidden = false
+    tell()
+
+    const msg = $<HTMLElement>('msg')!
+    const submit = $<HTMLButtonElement>('submit')!
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const fd = new FormData(form)
+      const score = chosen()
+      if (!score) {
+        msg.textContent = REFUSED.score!
+        return tell()
+      }
+      const note = String(fd.get('text') ?? '').trim()
+      if (!owner && note && fd.get('consent') !== 'on') {
+        msg.textContent = REFUSED.consent!
+        return tell()
+      }
+      if (!owner && !token) {
+        msg.textContent = 'The bot check has not finished yet. Please wait a moment.'
+        return tell()
+      }
+      submit.disabled = true
+      msg.textContent = 'Sending…'
+      let res: any = null
+      try {
+        const r = await fetch('/api/reception/rate', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            work,
+            score,
+            text: note || null,
+            name: owner ? null : String(fd.get('name') ?? '').trim() || null,
+            consent: fd.get('consent') === 'on',
+            website: String(fd.get('website') ?? ''),
+            turnstileToken: token,
+          }),
+        })
+        res = await r.json().catch(() => null)
+      } catch {
+        res = null
+      }
+      submit.disabled = false
+      if (!owner && widget !== undefined) {
+        ;(window as unknown as { turnstile?: Turnstile }).turnstile?.reset(widget)
+        token = null
+      }
+      if (res?.ok) {
+        form.hidden = true
+        $<HTMLElement>('done')!.hidden = false
+        $<HTMLElement>('done-text')!.textContent = res.entry?.owner ? `Live, under ${config.ownerLabel}.` : 'Thank you. Your rating is live.'
+        msg.textContent = ''
+        if (framed) window.parent.postMessage({ type: 'reception:posted' }, location.origin)
+        return tell()
+      }
+      if (res?.reason === 'gate') msg.textContent = `Your note was not published: ${GATE[res.code] ?? GATE.other}. Your rating was not stored either; you can send it again without the note, or with a different one.`
+      else if (res?.reason === 'standby') msg.textContent = STANDBY[res.detail] ?? 'The reception is in standby.'
+      else msg.textContent = REFUSED[res?.reason] ?? 'Something went wrong; nothing was stored. Please try again.'
+      tell()
+    })
+
+    $<HTMLButtonElement>('again')!.addEventListener('click', () => {
+      form.reset()
+      paint(0)
+      scoreLabel.textContent = ''
+      count()
+      $<HTMLElement>('done')!.hidden = true
+      form.hidden = false
+      tell()
+    })
+  }
+
+  document.addEventListener('astro:page-load', () => void main())
+  void main()
+</script>

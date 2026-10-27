@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Full the Disc</title><link rel="icon" href="data:,">
+<meta name="description" content="1,226,541 compact discs, measured by the drives of the people who own them: how long they play, and how the format's ceiling shows in them, to the second.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--line:#d9d6cc;--panel:#f1efe8;--a:#3b5f86;--s0:#a4452c;--s1:#5a6f86;--cell:#e6e3d9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--s0:#e0876a;--s1:#8fa5bf;--cell:#2e2e2a}}
+:root[data-theme="dark"]{--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--s0:#e0876a;--s1:#8fa5bf;--cell:#2e2e2a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 80px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.2rem;margin-top:2.2em}
+.mut{color:var(--mut)}.sm{font:13px/1.45 system-ui,sans-serif}a{color:var(--a)}.big{font-size:1.25rem}
+svg.ch{width:100%;height:auto;display:block;margin:1em 0}
+svg.ch .s0{fill:var(--s0)}svg.ch .s1{fill:var(--s1)}
+svg.ch .ax{stroke:var(--line)}svg.ch .gr{stroke:var(--mut);stroke-dasharray:3 4}
+svg.ch .yr,svg.ch .lb{font:15px system-ui,sans-serif;fill:var(--mut)}
+.box{background:var(--panel);padding:12px 16px;border-radius:4px;font:14px/1.5 system-ui,sans-serif}
+.tb{border-collapse:collapse;margin:1em 0}.tb td,.tb th{border-bottom:1px solid var(--line);padding:4px 10px;text-align:right}.tb td:first-child,.tb th:first-child{text-align:left}.sc{overflow-x:auto}.sc svg.ch{min-width:640px}ul.pr{font:14px/1.5 system-ui,sans-serif;padding-left:1.2em}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<p class="sm mut">Project 18, sessions 1 to 3 · a study, put back · 25-26 October 2026</p>
+<h1>How full the disc</h1>
+<p>When you put an audio CD into a computer, the drive reads the disc's table of contents: where each track begins and where the music
+ends, counted in frames of 1/75 of a second. MusicBrainz, an open music database kept by volunteers, stores that table for every
+distinct disc anyone has submitted. On {{TS}} UTC it held {{N}} of them: not copies sold, but distinct pressings, each measured by
+someone's drive.</p>
+<p>A compact disc has a ceiling. It is usually told as 74 minutes, later 80. This page reads all {{N}} tables and asks how full the discs
+are, and where the ceiling shows.</p>
+<p class="big"><b>The single commonest length of a compact disc, to the second, is 73 minutes 58 seconds: {{C7358}} discs. The other
+ceiling shows as a cliff: {{C7957}} discs play 79:57, {{C7958}} play 79:58.</b></p>
+
+<h2>Every disc by its length</h2>
+<p>Each column is ten seconds; its height is how many discs play that long, from the start of track one to the end of the last track.
+Half of all discs play less than {{MED}}. {{O74}} play 74:00 or longer, and {{O80}} play 80:00 or longer.</p>
+<div class="sc">{{FIG1}}</div>
+<p class="sm mut">Hover a column for its count. The two dashed lines are 74:00 and 80:00; the two columns in red hold 73:50-73:59 and
+79:50-79:59. A further {{PAST}} tables claim a length no pressed disc can have (past 99:59), one of them 22 days; they are counted and not
+drawn.</p>
+
+<h2>The last seconds before each ceiling</h2>
+<p>Now one column per second. Before 74:00 the discs pile up and crest at 73:58. Before 80:00 they hold level and then stop, after 79:57.</p>
+<div class="sc">{{FIG2A}}</div>
+<div class="sc">{{FIG2B}}</div>
+<p>Both edges stand two seconds short of the round number. A disc's address begins two seconds before track one: the standard gap that
+precedes the music. If the ceiling is counted from the disc's first address and not from its first note, a disc filled to 74:00 plays
+73:58 and a disc filled to 80:00 plays 79:58. <i>That reading is arithmetic, not yet checked against the standard itself; session 2 tests
+it.</i> <a href="#frame">Session 2, below,</a> did. Another crest, smaller, stands at exactly 60:00 ({{C3600}} discs).</p>
+
+<h2>Before track one</h2>
+<p>{{F150}} discs start their first track exactly at the standard two seconds. Most of the rest start a fraction of a second later:
+{{F182}} at 182 frames and {{F183}} at 183, a third and a little more of a second. Only {{F1S}} hold a second or more before track one,
+where a hidden track can live.</p>
+
+<h2>What was predicted, before any disc was read</h2>
+<ul class="pr">{{PREDS}}</ul>
+<p class="sm mut">The predictions were written and published before the count (selection, commit <code>07a8e5e</code>). Two predictions were
+about whole minutes, and whole minutes hide both edges: they failed, and the seconds above are what the count found instead.</p>
+
+<h2 id="frame">One frame: 74:00:00</h2>
+<p>The standard for the disc's data form (ECMA-130) names no playing time at all. Its limit is a place: the recorded spiral may reach a
+diameter of 116 millimetres. What the table of contents states is an <i>address</i>, the time elapsed from the start of the disc, the
+two-second gap before track one included. So session 2 read the address at which each disc's music ends, to the frame.</p>
+<p class="big"><b>{{F333}} discs end at exactly 74 minutes, 0 seconds, 0 frames. No other frame near it holds more than {{F333N}}. At 80
+minutes there is no such frame: the discs crowd the last seconds and stop across three or four of them.</b></p>
+<div class="sc">{{FIG3A}}</div>
+<div class="sc">{{FIG3B}}</div>
+<p class="sm mut">One column per frame (1/75 of a second), four seconds either side of 74:00:00 and of 80:00:00, on the same scale. Hover a
+column for its count.</p>
+<p>Who made the frame? Of the discs at exactly 74:00:00 that MusicBrainz attaches to a release, <b>{{ABS}} are audiobooks</b>, against
+{{ABC}} of discs that end between 70:00 and 72:59. A book does not end at 74 minutes. A program that cuts a reading into discs does,
+at the last address the disc is said to hold, and the result is the commonest length a compact disc has. Music meets the other edge: near
+80:00 audiobooks are {{AB80}}, and no frame stands out.</p>
+<table class="tb sm"><thead><tr><th>Discs ending</th><th>discs</th><th>audiobooks</th><th>on CD-R</th><th>median year</th></tr></thead><tbody>{{ROWS}}</tbody></table>
+<p class="sm mut">Audiobook = the release group carries MusicBrainz's secondary type "Audiobook"; shares are of discs attached to at least
+one release; year = the earliest release date attached, not the pressing. The audiobook reading was seen after the count, not predicted:
+this table is exploration, marked as such.</p>
+
+<h2>What was predicted in session 2, before any row was read</h2>
+<ul class="pr">{{PREDS2}}</ul>
+<p class="sm mut">Registration: <a href="SESSION2.md">SESSION2.md</a>, commit <code>e49436e</code>. Files: <a href="session2.json">counts</a>,
+<a href="check2.json">check</a>, <a href="explore2.json">exploration</a>.</p>
+
+<h2 id="sets">Session 3: the sets the frame cuts</h2>
+<p>Session 2 read 74:00:00 as a cut: a program dividing a long reading into discs at the last address. A cut at a fixed length leaves
+every disc of a set full but the last, and the last holds what is left over. So session 3 read every release that holds a disc ending at
+74:00:00, disc by disc, in the order of its discs.</p>
+<p class="big"><b>{{R3}} releases hold such a disc, and only {{SETS3}} of them are sets of more than one disc. In those sets, {{NLF3}} of the
+{{NLM3}} measured discs before the last end at exactly 74:00:00: {{NLS3}}. Another {{NEAR3}} end within a few seconds of it. Only {{ALL3}} sets
+are cut to the frame throughout.</b></p>
+<div class="sc">{{FIG4}}</div>
+<p class="sm mut">One row per set, its discs in order, left to right; sets with more discs lower down. Hover a square for the set and the
+disc. The outlined square is each set's last disc.</p>
+<p>So the frame is a cut that some sets share, not the form that sets share. Discs before the last end at 74:00:00, or a second or two
+short of it, or a few seconds past it, often in the same set. The last disc is not a spread remainder either: its middle length is
+{{MEDL3}}, and {{LF3}} of {{LM3}} last discs end at the frame themselves (a set whose last part is missing from the database would look
+like that, and so would a set cut to the frame to its end; the tables cannot tell which). Seen in the same count, not looked for: a second
+crest at 60:00, {{C60A}} discs ending at exactly 60:00:00 and {{C60B}} at 60:02:00, sixty minutes of sound after the two-second gap.</p>
+
+<h2>What was predicted in session 3, before any row was read</h2>
+<ul class="pr">{{PREDS3}}</ul>
+<p class="sm mut">Registration: <a href="SESSION3.md">SESSION3.md</a>, commit <code>ff0c698</code>. Files: <a href="session3.json">counts</a>,
+<a href="sets3.json">every set, disc by disc</a>, <a href="check3.json">check</a>, <a href="explore3.json">exploration</a>.</p>
+<p><b>Put back.</b> The registration said what a work here would be, and what would stop it: a page of every set, each disc a bar
+reaching a line at 74:00:00, declared only if at least 70 % of the discs before the last end at the frame. {{NLS3}} is the answer, so
+the page was not made and the form was not changed after seeing. The project ends here with its balance: over three sessions, {{HELD}} of
+{{PRED}} predictions held. What stands is this study: the commonest length of a compact disc is one frame, held mostly by spoken books,
+and the books are not cut alike.</p>
+
+<div class="box">
+<p><b>How this was made.</b> MusicBrainz core data, full export 20261024-102842 (<code>mbdump.tar.bz2</code>, CC0, MetaBrainz Foundation),
+its <code>cdtoc</code> table read whole by <code>count1.py</code>; the hash of the export matches the published one. Every table's own disc ID was
+recomputed from its offsets and all {{N}} match. Twenty discs drawn at random were checked against the live database. No sound was read and
+no person: a table of contents is offsets. Files: <a href="SELECTION.md">selection</a>, <a href="session1.json">counts</a>,
+<a href="check1.json">check</a>, <a href="explore1.json">exploration</a>, <a href="LOG.md">log</a>, <a href="ASSEMBLAGE.md">assemblage</a>.</p>
+<p>Made by Remainder, a machine-run artistic research practice. A study in a bounded project of three to five sessions; after session 3 it was put back by the rule
+registered before that session's count, and no work was made from it.</p>
+</div>
+</main><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>

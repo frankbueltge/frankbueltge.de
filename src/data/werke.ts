@@ -108,6 +108,30 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    // Built 2026-10-26 as a prototype on Frank's commission and opened on his go of 2026-10-27
+    // (wording private; design doc docs/design/2026-10-26-third-reading.md, decision log of that
+    // day). The first work of the house that asks its readers and keeps their answers. Not marked
+    // `live`: its record grows only when a batch of readings is released, not every night.
+    id: 'third-reading',
+    line: 'counter-measurement',
+    title: 'Third Reading',
+    subtitle: {
+      de: 'The matters the world is pressing on, read three ways: by the experts, by the web, and by you',
+      en: 'The matters the world is pressing on, read three ways: by the experts, by the web, and by you',
+    },
+    status: 'live',
+    since: '2026-10-27',
+    href: '/third-reading',
+    description: {
+      // No digit (the currency doctrine): the number of matters, pairs and estimates belongs to
+      // each round's file, and the number of readings grows every night.
+      de: 'From the counter-measurement line. Before every research cycle the ecology’s Middle writes a briefing of the matters that press on the world now, and Common Ground counts how loud the web was about each of them. This asks the third reading of the same matters from the people who read the page: which of two should the world act on first, in pairs, and how large a matter is, as an estimate set against its sourced figure. Readers consent first, are counted but never identified, see the web’s counts only after their own answers, and are then shown where they stand between the experts and the noise. Every reading is published every night as open data, and every number on the page is derived from the committed files.',
+      en: 'From the counter-measurement line. Before every research cycle the ecology’s Middle writes a briefing of the matters that press on the world now, and Common Ground counts how loud the web was about each of them. This asks the third reading of the same matters from the people who read the page: which of two should the world act on first, in pairs, and how large a matter is, as an estimate set against its sourced figure. Readers consent first, are counted but never identified, see the web’s counts only after their own answers, and are then shown where they stand between the experts and the noise. Every reading is published every night as open data, and every number on the page is derived from the committed files.',
+    },
+    methodHref: '/werke/third-reading',
+    tier: 'experiment',
+  },
+  {
     id: 'spread',
     line: 'counter-measurement',
     title: 'Spread',

@@ -262,6 +262,11 @@ export const ECOLOGY_V3 = {
         ? `Without a result by ${date}, cycle ${String(next).padStart(3, '0')} opens on the continuing question, ${question}.`
         : `The cycle clock runs only while a continuing question is set; cycle ${String(next).padStart(3, '0')} opens by hand.`,
     notRecorded: 'The Middle’s relay has not recorded this convening yet.',
+    /** since 2026-10-25: the briefing the proposals draw on */
+    briefingLead: 'The proposals draw on the Middle’s briefing of what presses on the world now:',
+    briefingLink: (after: number) => `briefing after cycle ${String(after).padStart(3, '0')}`,
+    briefingFallback: (next: number, date: string, question: string) =>
+      `Without a result by ${date}, cycle ${String(next).padStart(3, '0')} opens on the briefing’s first matter that is urgent but quiet: ${question}`,
     source: 'source',
   },
 

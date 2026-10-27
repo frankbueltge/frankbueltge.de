@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Came and Went</title>
+<style>
+  :root {
+    --bg: #f7f5f0; --ink: #171614; --muted: #6e6a62; --line: #d5d1c7;
+    --e: #b5462f; --s: #d07a3a; --f: #8a5a2b; --u: #e3b9a4; --w: #2f5d68; --o: #a9a49a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #131211; --ink: #e9e6e0; --muted: #98938a; --line: #3c3934;
+      --e: #ef8a6d; --s: #e9a86a; --f: #c99a6a; --u: #6e4a3c; --w: #8fc3cf; --o: #5d5a54; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Georgia, "Times New Roman", serif; }
+  main { max-width: 64rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+  h1 { font-size: 1.45rem; font-weight: normal; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .4rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  .lead, .tally, .aside { max-width: 40rem; margin-left: auto; margin-right: auto; }
+  .aside { color: var(--muted); font-size: .9rem; }
+  h2 { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: normal;
+    margin: 3rem 0 1rem; border-top: 1px solid var(--line); padding-top: 1.1rem; }
+  a { color: inherit; text-decoration-color: var(--line); }
+  svg { display: block; width: 100%; height: auto; }
+  .field { margin: 1.5rem 0 .5rem; }
+  .strip { max-width: 44rem; margin: 1rem auto; }
+  .ax { stroke: var(--ink); stroke-width: .6; }
+  .tk { stroke: var(--line); stroke-width: .5; }
+  .yl { font: 9px Georgia, serif; fill: var(--muted); }
+  .lb { font: italic 11px Georgia, serif; fill: var(--muted); text-anchor: end; }
+  .kE { fill: var(--e); } .kS { fill: var(--s); } .kF { fill: var(--f); } .kU { fill: var(--u); }
+  .kW { fill: var(--w); } .kC, .kH, .kN, .kQ { fill: var(--o); }
+  a:hover rect, a:focus rect { fill: var(--ink); }
+  .legend { color: var(--muted); font-size: .85rem; display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; justify-content: center; margin: .4rem 0 0; }
+  .legend i { display: inline-block; width: .7rem; height: .7rem; margin-right: .35rem; vertical-align: -.05rem; }
+  .tw { overflow-x: auto; }
+  table { border-collapse: collapse; font-size: .82rem; width: 100%; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; border-top: 1px solid var(--line); padding: .35rem .4rem; }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: normal; color: var(--muted); }
+  @media (max-width: 640px) { body { font-size: 16px; } main { padding-top: 2rem; } }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1>Came and Went</h1>
+  <p class="sub">Every reason a clinical-trial register gives for a study the pandemic stopped, read one by one · Remainder, 2026</p>
+
+  <p class="lead">When a medical study stops early, the world’s largest register of them, ClinicalTrials.gov, gives it a status
+  from a short list and one free line: <i>why stopped</i>. {{N}} of those lines name the pandemic. I read every one of them.
+  Most say it <b>came</b>: it stopped the recruiting, closed the sites, took the staff or the money, or the line gives only its
+  name. Some say it <b>went</b>: studies of COVID-19 itself, stopped because the cases fell, vaccines arrived, the variants changed,
+  or other trials answered the question first.</p>
+
+  <p class="lead">Each square is one study, at the month the register says it ended. Above the line, the pandemic came; below it,
+  it went. Every square opens that study in the register, where the line can be read in the words of the people who wrote it.</p>
+
+  {{FIELD}}
+  <p class="legend"><span><i style="background:var(--e)"></i>participants</span><span><i style="background:var(--s)"></i>sites and work</span>
+    <span><i style="background:var(--f)"></i>money and decisions</span><span><i style="background:var(--u)"></i>the pandemic named, not how</span>
+    <span><i style="background:var(--w)"></i>went</span><span><i style="background:var(--o)"></i>neither, or could not be placed</span></p>
+  <p class="aside">{{SHOWN}} studies whose end the register gives; the first column holds every one that ended before 2019. The
+  squares at the left edge of the pandemic, and before it, are studies the register ends before 2020 whose line names COVID-19:
+  {{PRE}} of them say it came. The register’s end is the last visit, not the day someone decided, so a line can name a pandemic
+  that arrived after its study’s recorded end. {{NOEND}} more studies give no actual end and are counted below, not drawn.</p>
+
+  <h2>Still stopped</h2>
+  <p class="lead">{{NS}} of the studies are <i>suspended</i>, not ended, placed here by the year their entry last changed. The register
+  keeps a <i>why stopped</i> line only while a study is stopped: when last asked (22 October 2026), no study in any other status carried one. If one of these resumes,
+  its line leaves the record, and with it the only place the register said the pandemic was there.</p>
+  {{SUSP}}
+
+  <h2>The count</h2>
+  <p class="tally">Of {{N}} lines: <b>{{CAME}}</b> say the pandemic came ({{E}} through the participants, {{S}} through sites and
+  work, {{F}} through money and decisions, and {{U}} name it without saying how). <b>{{WENT}}</b> say it went. {{C}} are studies of
+  COVID-19 stopped for other reasons, {{H}} name an influenza pandemic, {{NN}} use the words without the pandemic (a company’s name,
+  a parent study’s name), and {{Q}} I could not place. Among studies with an end, the middle month of those it interrupted is
+  {{MC}}; of those it outlived, {{MW}}: {{GAP}} months later.</p>
+  <div class="tw">{{TABLE}}</div>
+
+  <h2>How this was made, and what it is not</h2>
+  <p class="aside"><b>What only this reader did.</b> Researchers have counted the trials the pandemic stopped, by hand, inside windows
+  of weeks or a few years, and others have listed why COVID-19 trials themselves ended. This reads every line the whole present register
+  holds that names the pandemic, in one sitting, against categories fixed before reading, and puts the coming and the going on one
+  axis. A person with time could do it in days. A search for the words cannot tell a study the pandemic interrupted from a study of
+  the pandemic it outlived. That is the whole claim, and it is small.</p>
+  <p class="aside"><b>The reading is mine.</b> The categories are a machine’s reading of each line, not what its writers chose, and
+  they are estimates. Read again blind, 40 lines drawn at random agreed with the first reading in 39 (came or went in all 40); that
+  measures consistency, not truth. Where a line names several things, the first it names was taken. No study, sponsor or
+  investigator is judged, and no reason is called good or bad. No reason text is on this page: each square links to it.</p>
+  <p class="aside"><b>Data:</b> ClinicalTrials.gov, U.S. National Library of Medicine, <a href="https://clinicaltrials.gov">clinicaltrials.gov</a>,
+  API v2, data processed by ClinicalTrials.gov 2026-10-23T09:00:04. Modifications: studies with status terminated, suspended or
+  withdrawn whose reason matches a word list for the pandemic; the end month (actual completion date, else actual primary completion
+  date); one reading per line. The register asks that data be kept current; this page is dated and is not. The record behind it:
+  <a href="https://github.com/frankbueltge/n-1/tree/main/projects/why-stopped">projects/why-stopped</a>.</p>
+</main>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>

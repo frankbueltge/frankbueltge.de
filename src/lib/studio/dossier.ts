@@ -392,6 +392,13 @@ const FILE_NOTES: Record<string, string> = {
   [KILLS_PATH]: 'the curated kill list — session-commit quotes the mirror itself does not carry',
 }
 
+/** The evening a work first shipped. A long work is begun on one evening and presented on a later
+ *  one (GOING OUT, 2026-10-24 to 2026-10-25), and its meta.json keeps the evening it was begun —
+ *  filing the dossier under that evening would date the premiere before it happened. */
+function premiereDate(chronicle: readonly DossierChronicleEntry[], slug: string): string | undefined {
+  return chronicle.find((e) => e.move === 'ship' && e.works[0] === slug)?.date
+}
+
 /**
  * Builds one dossier per body of the house — every premiered work (including the withdrawn one) and
  * every struck position — with the current premiere first.
@@ -499,8 +506,8 @@ export function buildStudioDossiers(input: StudioDossierInput): StudioDossier[] 
       title,
       spotlight: slug === spotlight,
       slug,
-      date: meta.date ?? firstDate,
-      dateKnown: Boolean(meta.date),
+      date: premiereDate(chronicle, slug) ?? meta.date ?? firstDate,
+      dateKnown: Boolean(premiereDate(chronicle, slug) ?? meta.date),
       session: sessionLabel(
         chronicle.find((e) => e.move === 'ship' && e.works.includes(slug))?.collective_session ?? null,
       ),
