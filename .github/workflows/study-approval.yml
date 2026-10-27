@@ -6,7 +6,8 @@
 # src/data/studies/approved.json. MERGING IT IS THE APPROVAL, AND ONLY THE ARCHITECT MERGES IT (Frank's
 # decision of 2026-10-27, wording private): the merge authority of 2026-08-14 does not reach these
 # pull requests. A pull request of an older version of the same study is closed with a pointer to the
-# new one; a closed pull request is never reopened (declined stays declined until the file changes).
+# new one; a closed pull request is never reopened (declined stays declined until the file changes),
+# and an open one that another approval has overtaken is rebuilt on main, so two never conflict.
 # The pull requests come from GITHUB_TOKEN, so they start no other workflow; the merge, a human push,
 # runs CI and the deploy as usual.
 name: Study approval
@@ -57,8 +58,15 @@ jobs:
           for dir in /tmp/study-approvals/*/; do
             branch=$(cat "$dir/branch.txt")
             study=$(cat "$dir/study.txt")
-            if [ -n "$(gh pr list --head "$branch" --state all --json number --jq '.[].number')" ]; then
-              echo "$branch: a pull request exists already"
+            state=$(gh pr list --head "$branch" --state all --json state --jq '.[0].state // ""')
+            if [ "$state" = "MERGED" ] || [ "$state" = "CLOSED" ]; then
+              echo "$branch: decided already ($state)"
+              continue
+            fi
+            # An open request whose file still matches today's approvals plus this study stays as it
+            # is; one that another approval has overtaken is rebuilt on main, so it never conflicts.
+            if [ "$state" = "OPEN" ] && git show "origin/$branch:src/data/studies/approved.json" 2>/dev/null | cmp -s - "$dir/approved.json"; then
+              echo "$branch: open and current"
               continue
             fi
             git checkout -q -B "$branch" origin/main
@@ -66,6 +74,10 @@ jobs:
             git add src/data/studies/approved.json
             git commit -q -m "studies: approve $study" -m "Merging approves exactly the manifest named in the pull request; only the architect merges it."
             git push -q --force origin "$branch"
+            if [ "$state" = "OPEN" ]; then
+              echo "$branch: rebuilt on main"
+              continue
+            fi
             url=$(gh pr create --base main --head "$branch" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" --label study-approval --assignee frankbueltge)
             echo "$branch: $url"
             # an older version of the same study: close its pull request and point to this one
