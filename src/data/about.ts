@@ -5,6 +5,9 @@ export type About = {
   metaDesc: string
   lede: string
   sections: { heading: string; paragraphs: string[] }[]
+  /** How the name is spelled elsewhere, and that a namesake exists (2026-10-23): one line that
+   *  lets a reader, a search engine and an answer engine tell the two people apart. */
+  nameNote: string
 }
 
 // Rewritten 2026-08-09 (late; Frank's objection, wording private: the page was focused too
@@ -14,6 +17,8 @@ export type About = {
 // project evenly, each one door away. The 2026-07-31 ecology-led version lives in git history.
 
 const de: About = {
+  nameNote:
+    'Bültge, auch Bueltge geschrieben, wo der Umlaut nicht hinpasst. Nicht zu verwechseln mit dem WordPress-Entwickler Frank Bültge: gleicher Name, andere Person.',
   metaTitle: 'Über Frank Bültge — Data Engineering & Analytics',
   metaDesc:
     'Frank Bültge — Data Engineering & Analytics. Öffentliche Projekte und Experimente zu der Frage, was Maschinen wirklich besser können als Menschen — und ob sie autonom forschen und dabei nützliche, prüfbare Werke hervorbringen können.',
@@ -53,6 +58,8 @@ const de: About = {
 }
 
 const en: About = {
+  nameNote:
+    'Bültge, written Bueltge where the umlaut cannot go. Not to be confused with the WordPress developer Frank Bültge: same name, different person.',
   metaTitle: 'About Frank Bültge — Data Engineering & Analytics',
   metaDesc:
     'Frank Bültge — Data Engineering & Analytics. Creator of datavism.org and data-snack.com. Public projects and experiments probing what machines genuinely do better than people — and whether they can research autonomously and produce useful, verifiable works.',
