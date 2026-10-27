@@ -102,8 +102,10 @@ const outlineSm = cn(buttonVariants({ variant: 'outline', size: 'sm' }))
       </p>
       <p class="mt-2">
         To allow one rating per work per visitor and day, the site keeps a keyed hash of your address and
-        browser for 24 hours. The key is new every day and is deleted when the day is over, so the hash cannot
-        be traced back to you, by anyone, the house included. No cookie is set for you.
+        browser, with the work and the day but not the time. The key is new every day; key and hash are deleted
+        after the day is over (UTC), by the following night at the latest. The database’s own backups keep
+        earlier states for up to 30 days, key and hash included, for the site’s operator only; after that,
+        nothing can trace the hash back to you. No cookie is set for you.
       </p>
       <p class="mt-2">
         Before anything is stored, Cloudflare Turnstile checks that a person is sending (Cloudflare’s privacy

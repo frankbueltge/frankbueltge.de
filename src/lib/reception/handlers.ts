@@ -41,6 +41,7 @@ import {
 } from './crypto'
 import {
   bump,
+  cleanup,
   countOf,
   ensureSchema,
   hasMark,
@@ -225,6 +226,10 @@ export function publicNote(row: Pick<NoteRow, 'id' | 'score' | 'name' | 'owner' 
 
 // ── GET /api/reception/work?id= ───────────────────────────────────────────────────────────────
 
+/** The day each store was last cleaned by a work view. Every work page asks for its view, so the
+ *  view cleans once per store per isolate per day and spends no write on any other request. */
+const cleanedOn = new WeakMap<object, string>()
+
 export async function handleWork(request: Request, env: ReceptionEnv, deps: Deps): Promise<Response> {
   const id = new URL(request.url).searchParams.get('id')
   if (!isWorkId(id)) return json(400, { ok: false, reason: 'unknown-work' })
@@ -237,6 +242,10 @@ export async function handleWork(request: Request, env: ReceptionEnv, deps: Deps
   try {
     await ensureSchema(db)
     const day = dayOf(deps.now())
+    if (cleanedOn.get(db) !== day) {
+      await cleanup(db, day)
+      cleanedOn.set(db, day)
+    }
     const [view, entriesToday, gateToday] = await Promise.all([workView(db, id), countOf(db, day, 'entries'), countOf(db, day, 'gate')])
     const open = Boolean(env.TURNSTILE_SECRET_KEY) && entriesToday < DAILY_CAP
     const notesOpen = open && Boolean(env.GEMINI_API_KEY) && gateToday < GATE_DAILY_CAP
@@ -291,11 +300,10 @@ export async function handleRate(request: Request, env: ReceptionEnv, deps: Deps
   try {
     await ensureSchema(db)
     const day = dayOf(now)
-    const nowS = seconds(now)
     let hash: string | null = null
     if (!actsAsOwner) {
       if ((await countOf(db, day, 'entries')) >= DAILY_CAP) return standby('daily-cap')
-      const salt = await todaysSalt(db, day, randomHex(32), nowS)
+      const salt = await todaysSalt(db, day, randomHex(32))
       hash = await dayHash(salt, ip ?? 'unknown', request.headers.get('user-agent') ?? 'unknown')
       if (await hasMark(db, hash, v.value.work, 'rate')) return json(429, { ok: false, reason: 'rate-limit' })
 
@@ -325,7 +333,7 @@ export async function handleRate(request: Request, env: ReceptionEnv, deps: Deps
     }
     const shown = publicNote({ id: entry.id, score: entry.score, text: entry.text, name: entry.name, owner: entry.owner ? 1 : 0, created_at: entry.createdAt })
     if (dryRun) return json(200, { ok: true, dry_run: true, entry: shown })
-    if (!(await insertEntry(db, entry, { hash, nowS, day }))) return json(429, { ok: false, reason: 'rate-limit' })
+    if (!(await insertEntry(db, entry, { hash, day }))) return json(429, { ok: false, reason: 'rate-limit' })
     return json(200, { ok: true, status: 'live', work: entry.work, entry: shown })
   } catch {
     return json(502, { ok: false, reason: 'upstream' })
@@ -367,10 +375,9 @@ export async function handleReport(request: Request, env: ReceptionEnv, deps: De
   try {
     await ensureSchema(db)
     const day = dayOf(now)
-    const nowS = seconds(now)
-    const salt = await todaysSalt(db, day, randomHex(32), nowS)
+    const salt = await todaysSalt(db, day, randomHex(32))
     const hash = await dayHash(salt, request.headers.get('cf-connecting-ip') ?? 'unknown', request.headers.get('user-agent') ?? 'unknown')
-    const status = await reportEntry(db, id, { hash, nowS, day, at: now.toISOString() })
+    const status = await reportEntry(db, id, { hash, day, at: now.toISOString() })
     if (status === 'not-found') return json(404, { ok: false, reason: 'unknown-note' })
     return json(200, { ok: true, status })
   } catch {
@@ -381,13 +388,17 @@ export async function handleReport(request: Request, env: ReceptionEnv, deps: De
 // ── GET /api/reception/record ─────────────────────────────────────────────────────────────────
 
 /** The public record: what the record page shows and what the nightly snapshot commits. A hidden
- *  note is listed by its id and dates only; its text stays out until the architect restores it. */
+ *  note is listed by its id and dates only; its text stays out until the architect restores it.
+ *  Every call first deletes the finished days' salts and marks, so a day without a single rating
+ *  loses them too: the snapshot calls at 02:20 UTC, and the edge keeps a record for a minute only,
+ *  so even a cached answer then was made by a call after midnight, which cleaned. */
 export async function handleRecord(request: Request, env: ReceptionEnv, deps: Deps): Promise<Response> {
   const db = env.RECEPTION_DB
   if (!db) return standby('store')
   const registry = (await loadRegistry(request, env, deps)) ?? new Map<string, RatableWork>()
   try {
     await ensureSchema(db)
+    await cleanup(db, dayOf(deps.now()))
     const r = await publicRecord(db)
     const workOf = (id: string) => {
       const w = registry.get(id)
