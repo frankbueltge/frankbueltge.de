@@ -119,6 +119,8 @@ export default defineConfig({
         !/\/society\/room(\/|$)/.test(page) &&
         // the reception's form opens inside a work's page; on its own it is a form, not a page to find
         !/\/reception\/rate(\/|$)/.test(page) &&
+        // the analytics opt-out is a noindex tool, not a page to find (the /society/room conflict)
+        !/\/analytics-opt-out(\/|$)/.test(page) &&
         !/\/werke\/?$/.test(page),
     }),
     mdx(),
