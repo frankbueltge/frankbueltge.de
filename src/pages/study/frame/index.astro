@@ -112,11 +112,15 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
   :global(html:not([data-stf-framed])) .stf-framed {
     display: none;
   }
+  /* Framed inside a work, the frame does not know the work's ground, so it brings its own: a solid card
+     in the reader's colour scheme, never a transparent page whose text would sit on whatever is below. */
   :global(html[data-stf-framed]) .stf-page {
-    padding-top: 0.75rem;
+    padding-top: 1rem;
   }
   :global(html[data-stf-framed] body) {
-    background: transparent;
+    background: var(--color-bg);
+    border: 1px solid var(--color-line);
+    border-radius: 4px;
   }
 </style>
 
