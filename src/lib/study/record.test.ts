@@ -4,7 +4,7 @@ import { CONSENT_LINES, CONSENT_VERSION, consentDigest } from './consent'
 import { ANSWERS } from './fixtures'
 import type { StoredAnswers } from './store'
 
-const stored = (i: number, day: string): StoredAnswers => ({ id: `s-${i.toString(16).padStart(16, '0')}`, day, consent: CONSENT_VERSION, answers: ANSWERS })
+const stored = (i: number, day: string): StoredAnswers => ({ id: `s-${i.toString(16).padStart(16, '0')}`, day, consent: CONSENT_VERSION, manifest: 'a'.repeat(64), answers: ANSWERS })
 const payload = (entries: unknown[]) => ({ ok: true, study: 'studio-what-you-heard', work: 'studio:the-remainder', batch_size: BATCH_SIZE, entries })
 
 describe('releaseBatches and the record file', () => {
@@ -23,18 +23,42 @@ describe('releaseBatches and the record file', () => {
     expect(JSON.parse(text)).toEqual(f)
     expect(text.split('\n').filter((l) => l.includes('"id":"s-')).length).toBe(BATCH_SIZE)
     expect(() => toRecordFile(payload([{ ...entries[0]!, day: '2026-10-27' }]), 'test')).toThrow()
+    expect(() => toRecordFile(payload([{ ...entries[0]!, manifest: undefined }]), 'test')).toThrow(/manifest/)
     expect(() => toRecordFile({ ok: false, reason: 'standby' }, 'test')).toThrow()
   })
 })
 
 describe('the house consent text for studies', () => {
   /** Every consent text an answer set was ever given under, by version. Add a line when the text
-   *  changes — never edit one: stored answers carry the version they were given under. */
-  const GIVEN: Record<string, string> = { '2026-10-27': 'afd120f4' }
-  it('names who asks, what is kept and not, where it goes, why it cannot be taken back, and who is responsible', () => {
-    expect(CONSENT_LINES.map((l) => l.label)).toEqual(['Who asks', 'What is kept', 'What is not', 'Where it goes', 'Why it cannot be taken back', 'Who is responsible'])
+   *  changes — never edit one: stored answers carry the version they were given under. (The text of
+   *  2026-10-27 never took an answer: it claimed the frame was the only way in, which a work on the
+   *  same origin could disprove, and was replaced before the studies went live.) */
+  const GIVEN: Record<string, string> = { '2026-10-28': '2aa422b3' }
+  it('names who asks, the work and the frame, what is kept and not, where it goes, why it cannot be taken back, and who is responsible', () => {
+    expect(CONSENT_LINES.map((l) => l.label)).toEqual([
+      'Who asks',
+      'The work and this frame',
+      'What is kept',
+      'What is not',
+      'Where it goes',
+      'Why it cannot be taken back',
+      'Who is responsible',
+    ])
     const all = CONSENT_LINES.map((l) => l.text).join(' ')
-    for (const word of ['approved', 'CC0', 'batches of at least five', 'without the day', '30 days', 'not even the bot check', '16 or older', 'privacy policy', 'material']) {
+    for (const word of [
+      'approved',
+      'the operator approved the questions, not the code',
+      'which version of the questions',
+      'how long you took',
+      'CC0',
+      'batches of at least five',
+      'without the day',
+      '30 days',
+      'this frame has sent nothing, not even the bot check',
+      '16 or older',
+      'privacy policy',
+      'material',
+    ]) {
       expect(all).toContain(word)
     }
     expect(GIVEN[CONSENT_VERSION]).toBe(consentDigest())

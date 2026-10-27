@@ -2,13 +2,12 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { findStudies, readApprovals, registryOf, resolveStudies, sha256, type Approval } from './registry'
-import { approvalBranch, approvalRequest, proposalsOf, withApproval } from './proposals'
+import { APPROVALS_FILE, findStudies, readApprovals, registryOf, resolveStudies, sha256, type Approval } from './registry'
 import { MANIFEST } from './fixtures'
 
 let root: string
-const work = (ns: string, slug: string, manifest?: unknown, html = true) => {
-  const dir = join(root, 'public', ns, 'werke-html', slug)
+const work = (ns: string, slug: string, manifest?: unknown, html = true, parent = 'werke-html') => {
+  const dir = join(root, 'public', ns, parent, slug)
   mkdirSync(dir, { recursive: true })
   if (html) writeFileSync(join(dir, 'index.html'), '<!doctype html><title>w</title>')
   if (manifest !== undefined) writeFileSync(join(dir, 'study.json'), typeof manifest === 'string' ? manifest : JSON.stringify(manifest))
@@ -30,6 +29,17 @@ describe('findStudies', () => {
     expect(found.map((f) => f.work)).toEqual(['studio:the-remainder'])
     expect(found[0]).toMatchObject({ practice: 'studio', href: '/studio/werke-html/the-remainder/', problems: [] })
     expect(found[0]!.sha256).toBe(sha256(JSON.stringify(MANIFEST)))
+  })
+
+  it('finds a work that stands in the open cycle and in werke-html once, where it is published', () => {
+    fresh()
+    mkdirSync(join(root, 'src/data/ecology'), { recursive: true })
+    writeFileSync(join(root, 'src/data/ecology/cycle.json'), JSON.stringify({ cycle: 11, phase: 'working' }))
+    work('studio', 'long-work', MANIFEST, true, 'artifacts/cycle-011')
+    expect(findStudies(join(root, 'public'), root).map((f) => f.href)).toEqual(['/studio/artifacts/cycle-011/long-work/'])
+    work('studio', 'long-work', MANIFEST)
+    const found = findStudies(join(root, 'public'), root)
+    expect(found.map((f) => [f.work, f.href])).toEqual([['studio:long-work', '/studio/werke-html/long-work/']])
   })
 
   it('keeps an invalid manifest with its problems, for the practice to read', () => {
@@ -64,10 +74,22 @@ describe('resolveStudies and registryOf', () => {
     expect(resolveStudies(found, [approval(found[0]!.sha256)], '2026-12-01')[0]!.state).toBe('closed')
   })
 
-  it('stops both works that claim the same study id', () => {
+  it('needs an id that begins with the practice, so no practice can take or stop another’s study', () => {
     fresh()
     work('studio', 'one', MANIFEST)
     work('field', 'two', MANIFEST)
+    const r = resolveStudies(findStudies(join(root, 'public'), root), [], '2026-10-27')
+    expect(r.map((s) => [s.work, s.state])).toEqual([
+      ['field:two', 'invalid'],
+      ['studio:one', 'proposed'],
+    ])
+    expect(r[0]!.problems).toEqual(['id: begin it with "field-", the practice whose work asks'])
+  })
+
+  it('stops both works of a practice that claim the same id', () => {
+    fresh()
+    work('studio', 'one', MANIFEST)
+    work('studio', 'two', MANIFEST)
     const r = resolveStudies(findStudies(join(root, 'public'), root), [], '2026-10-27')
     expect(r.map((s) => s.state)).toEqual(['invalid', 'invalid'])
   })
@@ -76,11 +98,11 @@ describe('resolveStudies and registryOf', () => {
     fresh()
     work('studio', 'the-remainder', MANIFEST)
     const found = findStudies(join(root, 'public'), root)
-    const approvals = [approval(found[0]!.sha256), approval('f'.repeat(64), { id: 'gone-study', work: 'atelier:gone' })]
+    const approvals = [approval(found[0]!.sha256), approval('f'.repeat(64), { id: 'atelier-gone-study', work: 'atelier:gone' })]
     const reg = registryOf(resolveStudies(found, approvals, '2026-10-27'), approvals)
-    expect(reg.known.map((k) => [k.id, k.state, k.manifest !== null])).toEqual([
-      ['gone-study', 'gone', false],
-      [MANIFEST.id, 'approved', true],
+    expect(reg.known.map((k) => [k.id, k.state, k.sha256.length, k.manifest !== null])).toEqual([
+      ['atelier-gone-study', 'gone', 64, false],
+      [MANIFEST.id, 'approved', 64, true],
     ])
   })
 })
@@ -89,27 +111,22 @@ describe('readApprovals', () => {
   it('reads the committed approvals file, which starts empty', () => {
     expect(readApprovals(process.cwd())).toEqual([])
   })
-})
 
-describe('proposals', () => {
-  it('lists what waits and what is invalid, and words the pull request that asks for approval', () => {
+  it('refuses the whole file for a malformed approval, a foreign prefix or a study approved twice', () => {
     fresh()
-    work('studio', 'the-remainder', MANIFEST)
-    work('field', 'broken', '{')
-    const resolved = resolveStudies(findStudies(join(root, 'public'), root), [], '2026-10-27')
-    expect(proposalsOf(resolved).map((p) => [p.work, p.state])).toEqual([
-      ['field:broken', 'invalid'],
-      ['studio:the-remainder', 'proposed'],
-    ])
-    const s = resolved.find((r) => r.state === 'proposed')!
-    const { title, body } = approvalRequest(s)
-    expect(title).toBe('Study approval: studio asks “What did you hear?”')
-    expect(body).toContain('only the architect merges it')
-    expect(body).toContain(`> ${MANIFEST.purpose}`)
-    expect(body).toContain(s.sha256)
-    for (const q of MANIFEST.questions) expect(body).toContain(q.prompt)
-    expect(approvalBranch(MANIFEST.id, s.sha256)).toBe(`study/approve-${MANIFEST.id}-${s.sha256.slice(0, 8)}`)
-    const next = withApproval({ $contract: 'study-approvals/1', approvals: [{ id: MANIFEST.id, work: s.work, sha256: 'old', approved: '2026-10-01' }] }, s, '2026-10-28')
-    expect(next.approvals).toEqual([{ id: MANIFEST.id, work: s.work, sha256: s.sha256, approved: '2026-10-28' }])
+    mkdirSync(join(root, 'src/data/studies'), { recursive: true })
+    const good: Approval = { id: MANIFEST.id, work: 'studio:the-remainder', sha256: 'a'.repeat(64), approved: '2026-10-28' }
+    const write = (approvals: unknown[]) => writeFileSync(join(root, APPROVALS_FILE), JSON.stringify({ $contract: 'study-approvals/1', approvals }))
+    write([good])
+    expect(readApprovals(root)).toEqual([good])
+    for (const bad of [
+      [{ ...good, sha256: 'a'.repeat(8) }],
+      [{ ...good, work: 'field:the-remainder' }],
+      [{ ...good, work: 'n-1:elsewhere' }],
+      [good, { ...good, work: 'studio:another' }],
+    ]) {
+      write(bad)
+      expect(() => readApprovals(root), JSON.stringify(bad)).toThrow()
+    }
   })
 })

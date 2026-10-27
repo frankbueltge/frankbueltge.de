@@ -40,15 +40,16 @@ export const MANIFEST: StudyManifest = {
   ],
 }
 
+/** Answers as the store keeps them: each pair with its items in id order, the pairs sorted. */
 export const ANSWERS: Answers = {
   heard: 'a gap',
   words: ['loss', 'debt'],
   weight: 6,
   guess: 40,
   urgent: [
-    ['food', 'water', 0, 2100],
-    ['shelter', 'health', 2, 1800],
-    ['water', 'health', null, 900],
+    ['food', 'water', 0],
+    ['health', 'shelter', 2],
+    ['health', 'water', null],
   ],
   rank: ['second', 'first'],
   note: null,

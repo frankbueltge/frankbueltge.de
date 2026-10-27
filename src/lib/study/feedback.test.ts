@@ -27,6 +27,11 @@ describe('studiesMarkdown', () => {
     expect(md).toContain('`works/the-remainder/study.json`')
   })
 
+  it('names the open cycle’s folder for a study that asks from there', () => {
+    const s = study('proposed', { href: '/studio/artifacts/cycle-011/long-work/', file: 'studio/artifacts/cycle-011/long-work/study.json', slug: 'long-work', work: 'studio:long-work' })
+    expect(studiesMarkdown('studio', [s], [], {}, '2026-10-29')).toContain('`artifacts/cycle-011/long-work/study.json`')
+  })
+
   it('names the problems of a manifest the house cannot read', () => {
     const md = studiesMarkdown('studio', [study('invalid', { manifest: null, problems: ['not valid JSON'] })], [], {}, '2026-10-29')
     expect(md).toContain('invalid — the house cannot read it')

@@ -66,6 +66,26 @@ export interface StudyManifest {
   closes?: string
 }
 
+/** What a manifest may not hold and a written answer loses. Control characters, line breaks included,
+ *  and the line and paragraph separators; and every invisible character: format characters such as
+ *  zero-width spaces and direction marks, and the default-ignorable ones such as variation selectors.
+ *  A manifest is shown to the architect and to every reader, and an answer is shown back to its reader
+ *  before it is sent, so nothing in either may be there without being seen. */
+export const CONTROL_CHARS = /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/u
+export const INVISIBLE_CHARS = /[\p{Cf}\p{Default_Ignorable_Code_Point}]/u
+const HIDDEN_CHARS = new RegExp(`${CONTROL_CHARS.source}|${INVISIBLE_CHARS.source}`, 'u')
+
+const codePoint = (c: string): string => `U+${c.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}`
+
+/** Every string of the manifest, wherever it stands, checked for what cannot be seen. */
+function hiddenProblems(v: unknown, where: string, out: string[]): void {
+  if (typeof v === 'string') {
+    const hit = HIDDEN_CHARS.exec(v)
+    if (hit) out.push(`${where || 'a string'}: ${codePoint(hit[0])} at character ${hit.index + 1}; a manifest's text is visible characters on one line`)
+  } else if (Array.isArray(v)) v.forEach((x, i) => hiddenProblems(x, `${where}[${i}]`, out))
+  else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) hiddenProblems(x, where ? `${where}.${k}` : k, out)
+}
+
 const str = (v: unknown, max: number): v is string => typeof v === 'string' && v.trim().length > 0 && v.length <= max
 const int = (v: unknown): v is number => Number.isInteger(v)
 const num = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
@@ -136,7 +156,8 @@ export function manifestProblems(m: unknown): string[] {
   if (!s || typeof s !== 'object' || Array.isArray(s)) return ['not a JSON object']
   const out: string[] = []
   if (s.$contract !== MANIFEST_CONTRACT) out.push(`$contract must be "${MANIFEST_CONTRACT}"`)
-  if (typeof s.id !== 'string' || !STUDY_ID.test(s.id) || s.id.length < 3 || s.id.length > LIMITS.idLength) out.push('id: lowercase words joined by hyphens, 3 to 80 characters')
+  if (typeof s.id !== 'string' || !STUDY_ID.test(s.id) || s.id.length < 3 || s.id.length > LIMITS.idLength) out.push('id: lowercase words joined by hyphens, 3 to 80 characters, beginning with the practice (atelier-, field-, studio-)')
+  hiddenProblems(s, '', out)
   if (!str(s.title, LIMITS.title)) out.push(`title of at most ${LIMITS.title} characters`)
   if (!str(s.question, LIMITS.question)) out.push(`question of at most ${LIMITS.question} characters`)
   if (!str(s.purpose, LIMITS.purpose)) out.push(`purpose of at most ${LIMITS.purpose} characters`)

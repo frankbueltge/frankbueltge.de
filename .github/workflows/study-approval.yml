@@ -5,9 +5,16 @@
 # request per new or changed manifest, which adds the approval of exactly that file to
 # src/data/studies/approved.json. MERGING IT IS THE APPROVAL, AND ONLY THE ARCHITECT MERGES IT (Frank's
 # decision of 2026-10-27, wording private): the merge authority of 2026-08-14 does not reach these
-# pull requests. A pull request of an older version of the same study is closed with a pointer to the
-# new one; a closed pull request is never reopened (declined stays declined until the file changes),
-# and an open one that another approval has overtaken is rebuilt on main, so two never conflict.
+# pull requests.
+#
+# One branch per study and exact file: study/approve-<id>-<full SHA-256>, so a request can never be
+# moved to another file. On every run:
+#   · a request the architect closed stays declined until the file changes (a new hash, a new branch);
+#   · an open request whose file another approval has overtaken is rebuilt on main, so two never
+#     conflict, and its title and body are written afresh either way;
+#   · a request the house closed as superseded, or one merged before a later file replaced it, asks
+#     again if its file returns;
+#   · every open request that no longer matches a waiting file is closed and labelled superseded.
 # The pull requests come from GITHUB_TOKEN, so they start no other workflow; the merge, a human push,
 # runs CI and the deploy as usual.
 name: Study approval
@@ -44,29 +51,42 @@ jobs:
       - run: npm ci
 
       - name: Find the studies that wait for the architect
-        run: npx tsx scripts/study/approvals.ts --out /tmp/study-approvals
+        run: npx tsx scripts/study/approvals.ts --out /tmp/study-approvals --commit "$(git rev-parse HEAD)"
 
-      - name: Open one pull request per waiting study
+      - name: Open, refresh or close the approval requests
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           gh label create study-approval --color 5b5b5b --description "A practice's study, approved only by the architect's merge" 2>/dev/null || true
+          gh label create study-superseded --color 5b5b5b --description "Closed by the house: its file no longer waits for approval" 2>/dev/null || true
           git config user.name "Study-Approval"
           git config user.email "study-approval@frankbueltge.de"
           shopt -s nullglob
           for dir in /tmp/study-approvals/*/; do
             branch=$(cat "$dir/branch.txt")
             study=$(cat "$dir/study.txt")
-            state=$(gh pr list --head "$branch" --state all --json state --jq '.[0].state // ""')
-            if [ "$state" = "MERGED" ] || [ "$state" = "CLOSED" ]; then
-              echo "$branch: decided already ($state)"
+            sha=$(cat "$dir/sha.txt")
+            # the newest request from this branch, with whether the house closed it as superseded
+            latest=$(gh pr list --head "$branch" --state all --json number,state,labels \
+              --jq 'sort_by(.number) | last // empty | "\(.number) \(.state) \([.labels[].name] | index("study-superseded") != null)"')
+            number=""; state=""; superseded="false"
+            if [ -n "$latest" ]; then read -r number state superseded <<<"$latest"; fi
+            if [ "$state" = "CLOSED" ] && [ "$superseded" != "true" ]; then
+              echo "$branch: declined (#$number)"
               continue
             fi
-            # An open request whose file still matches today's approvals plus this study stays as it
-            # is; one that another approval has overtaken is rebuilt on main, so it never conflicts.
+            if [ "$state" = "MERGED" ]; then
+              # merged while this run read main: approved already, nothing to ask
+              git fetch -q origin main
+              if git show origin/main:src/data/studies/approved.json | grep -q "\"sha256\": \"$sha\""; then
+                echo "$branch: approved (#$number)"
+                continue
+              fi
+            fi
             if [ "$state" = "OPEN" ] && git show "origin/$branch:src/data/studies/approved.json" 2>/dev/null | cmp -s - "$dir/approved.json"; then
-              echo "$branch: open and current"
+              gh pr edit "$number" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" >/dev/null
+              echo "$branch: open and current (#$number)"
               continue
             fi
             git checkout -q -B "$branch" origin/main
@@ -75,13 +95,23 @@ jobs:
             git commit -q -m "studies: approve $study" -m "Merging approves exactly the manifest named in the pull request; only the architect merges it."
             git push -q --force origin "$branch"
             if [ "$state" = "OPEN" ]; then
-              echo "$branch: rebuilt on main"
+              gh pr edit "$number" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" >/dev/null
+              echo "$branch: rebuilt on main (#$number)"
               continue
             fi
             url=$(gh pr create --base main --head "$branch" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" --label study-approval --assignee frankbueltge)
             echo "$branch: $url"
-            # an older version of the same study: close its pull request and point to this one
-            for old in $(gh pr list --state open --label study-approval --json number,headRefName --jq ".[] | select(.headRefName | startswith(\"study/approve-$study-\")) | select(.headRefName != \"$branch\") | .number"); do
-              gh pr close "$old" --comment "Superseded by $url: the practice changed the study's file." || true
-            done
+          done
+          # An open request whose file no longer waits (an older version of a study, or one approved,
+          # withdrawn or fixed since) is closed, so a stale file can never be approved by mistake; the
+          # label lets it ask again if the same file returns.
+          touch /tmp/study-approvals/branches.txt
+          for row in $(gh pr list --state open --label study-approval --limit 200 --json number,headRefName --jq '.[] | "\(.number):\(.headRefName)"'); do
+            number=${row%%:*}
+            head=${row#*:}
+            if ! grep -qxF "$head" /tmp/study-approvals/branches.txt; then
+              gh pr close "$number" --comment "Superseded: this file no longer waits for approval. The practice changed it, or the study was approved, withdrawn or fixed since. If the same file returns, the request asks again." \
+                && gh pr edit "$number" --add-label study-superseded >/dev/null
+              echo "$head: closed as superseded (#$number)"
+            fi
           done

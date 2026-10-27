@@ -11,13 +11,18 @@
 // its manifest changes the hash, and the study waits for a new approval; the approval workflow opens a
 // pull request for it, and Frank's merge is the approval (his decision of 2026-10-27, wording private).
 //
+// A study's id begins with the practice whose work asks (`studio-…`), so no practice can take, or
+// stop, another's study by using its id. Within a practice an id names one work: two works with the
+// same id both wait until one gives it up. One work found in two places — the open cycle's folder and,
+// once published, werke-html — is one work, and the published place is the one that asks.
+//
 // Node only: it reads the file system. The Functions read what the build wrote, dist/study/studies.json.
 import { createHash } from 'node:crypto'
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { openCycleFolders } from '../engines/publication.mjs'
 import { readOpenCycle } from '../engines/publication-prune.mjs'
-import { manifestProblems, type StudyManifest } from './manifest'
+import { manifestProblems, STUDY_ID, type StudyManifest } from './manifest'
 
 export const STUDY_PRACTICES = ['atelier', 'field', 'studio'] as const
 export type StudyPractice = (typeof STUDY_PRACTICES)[number]
@@ -27,6 +32,9 @@ export const REGISTRY_FILE = 'study/studies.json'
 export const APPROVALS_CONTRACT = 'study-approvals/1'
 
 const SLUG = /^[a-z0-9][a-z0-9-]{0,119}$/
+const WORK = /^(atelier|field|studio):[a-z0-9][a-z0-9-]{0,119}$/
+const SHA256 = /^[0-9a-f]{64}$/
+const DAY = /^\d{4}-\d{2}-\d{2}$/
 
 export interface Approval {
   id: string
@@ -78,14 +86,17 @@ export function studyFolders(root: string): { practice: StudyPractice; parent: s
   return out
 }
 
-/** Every `study.json` beside a published work's index.html under `base`. */
+/** Every `study.json` beside a published work's index.html under `base`. werke-html is walked first,
+ *  so a work that also still stands in the open cycle's folder is found once, where it is published. */
 export function findStudies(base: string, root: string): FoundStudy[] {
   const out: FoundStudy[] = []
+  const seen = new Set<string>()
   for (const { practice, parent } of studyFolders(root)) {
     for (const slug of dirs(join(base, parent))) {
-      if (!SLUG.test(slug)) continue
+      if (!SLUG.test(slug) || seen.has(`${practice}:${slug}`)) continue
       const file = `${parent}/${slug}/study.json`
       if (!isFile(join(base, file)) || !isFile(join(base, parent, slug, 'index.html'))) continue
+      seen.add(`${practice}:${slug}`)
       const bytes = readFileSync(join(base, file))
       let manifest: StudyManifest | null = null
       let problems: string[]
@@ -102,21 +113,36 @@ export function findStudies(base: string, root: string): FoundStudy[] {
   return out
 }
 
+/** The committed approvals, refused whole if one is malformed or a study is approved twice: the
+ *  registry is then not written, and the endpoints stand by rather than guess which one holds. */
 export function readApprovals(root: string): Approval[] {
   const p = join(root, APPROVALS_FILE)
   if (!isFile(p)) return []
   const f = JSON.parse(readFileSync(p, 'utf8')) as ApprovalsFile
   if (f.$contract !== APPROVALS_CONTRACT || !Array.isArray(f.approvals)) throw new Error(`${APPROVALS_FILE}: not a ${APPROVALS_CONTRACT} file`)
+  const ids = new Set<string>()
+  for (const a of f.approvals) {
+    const ok =
+      a && typeof a.id === 'string' && STUDY_ID.test(a.id) && typeof a.work === 'string' && WORK.test(a.work) && a.id.startsWith(`${a.work.split(':')[0]}-`) &&
+      typeof a.sha256 === 'string' && SHA256.test(a.sha256) && typeof a.approved === 'string' && DAY.test(a.approved)
+    if (!ok) throw new Error(`${APPROVALS_FILE}: a malformed approval (${JSON.stringify(a?.id ?? null)})`)
+    if (ids.has(a.id)) throw new Error(`${APPROVALS_FILE}: the study ${a.id} is approved twice`)
+    ids.add(a.id)
+  }
   return f.approvals
 }
 
-/** Each found study with its state. A study id used by two works stops both. */
+const ownPrefix = (s: FoundStudy): boolean => Boolean(s.manifest?.id.startsWith(`${s.practice}-`))
+
+/** Each found study with its state. An id must begin with its practice; one used by two works of
+ *  that practice stops both. */
 export function resolveStudies(found: readonly FoundStudy[], approvals: readonly Approval[], today: string): ResolvedStudy[] {
   const byId = new Map<string, number>()
-  for (const s of found) if (s.manifest) byId.set(s.manifest.id, (byId.get(s.manifest.id) ?? 0) + 1)
+  for (const s of found) if (s.manifest && ownPrefix(s)) byId.set(s.manifest.id, (byId.get(s.manifest.id) ?? 0) + 1)
   return found.map((s) => {
     if (!s.manifest) return { ...s, state: 'invalid' as const, approval: null }
-    if ((byId.get(s.manifest.id) ?? 0) > 1) return { ...s, problems: [`id ${s.manifest.id} is used by more than one work`], state: 'invalid' as const, approval: null }
+    if (!ownPrefix(s)) return { ...s, problems: [`id: begin it with "${s.practice}-", the practice whose work asks`], state: 'invalid' as const, approval: null }
+    if ((byId.get(s.manifest.id) ?? 0) > 1) return { ...s, problems: [`id ${s.manifest.id} is used by more than one of your works`], state: 'invalid' as const, approval: null }
     const approval = approvals.find((a) => a.id === s.manifest!.id && a.work === s.work) ?? null
     if (!approval) return { ...s, state: 'proposed' as const, approval: null }
     if (approval.sha256 !== s.sha256) return { ...s, state: 'changed' as const, approval }

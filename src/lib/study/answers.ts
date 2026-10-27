@@ -5,22 +5,47 @@
 // Every question may be left out (null); at least one must be answered.
 //
 //   choice    one of the options, as written
-//   multi     a list of distinct options, at most `max`
+//   multi     a list of distinct options, at most `max`; kept in the manifest's order
 //   scale     an integer from min to max
 //   number    a number from min to max
-//   pairwise  [left, right, pick, ms] per pair: pick 0 left, 1 right, 2 equally, null can't say
+//   pairwise  [left, right, pick] per pair: pick 0 left, 1 right, 2 equally, null can't say. No time:
+//             a time the work measures is a number the reader cannot check, so it could carry anything.
+//             Kept with each pair's items in id order and the pairs sorted, so neither the side an item
+//             was shown on nor the order of the pairs is kept: both are invisible to the reader
 //   order     every item id, once, most important first
-//   text      at most max_length characters, checked by the text gate before it is stored
-import { LIMITS, type Question, type StudyManifest } from './manifest'
+//   text      at most max_length characters, checked by the text gate before it is stored; control and
+//             invisible characters are removed first, so what is stored is what the reader saw
+import { CONTROL_CHARS, INVISIBLE_CHARS, LIMITS, type Question, type StudyManifest } from './manifest'
 
-export type PairTuple = [string, string, 0 | 1 | 2 | null, number]
+export type PairTuple = [string, string, 0 | 1 | 2 | null]
 export type Answer = string | string[] | number | PairTuple[] | null
 export type Answers = Record<string, Answer>
 
-/** The longest a pair may take before the answer is refused as malformed. */
-export const MAX_MS = 30 * 60 * 1000
+const CONTROL_ALL = new RegExp(CONTROL_CHARS.source, 'gu')
+const INVISIBLE_ALL = new RegExp(INVISIBLE_CHARS.source, 'gu')
+/** A written answer as it is kept: line breaks and control characters become spaces, invisible
+ *  characters go, the rest is composed (NFC) and trimmed. */
+export const cleanText = (s: string): string => s.replace(CONTROL_ALL, ' ').replace(INVISIBLE_ALL, '').normalize('NFC').replace(/ {2,}/g, ' ').trim()
 
 const pairKey = (a: string, b: string): string => (a < b ? `${a}|${b}` : `${b}|${a}`)
+const flip = (pick: PairTuple[2]): PairTuple[2] => (pick === 0 ? 1 : pick === 1 ? 0 : pick)
+
+/** An answer as it is kept and shown back: nothing in it the reader could not see. */
+function canonical(q: Question, a: Answer): Answer {
+  if (a === null) return null
+  switch (q.kind) {
+    case 'text':
+      return cleanText(a as string)
+    case 'multi':
+      return [...(a as string[])].sort((x, y) => q.options.indexOf(x) - q.options.indexOf(y))
+    case 'pairwise':
+      return (a as PairTuple[])
+        .map(([l, r, pick]): PairTuple => (l < r ? [l, r, pick] : [r, l, flip(pick)]))
+        .sort((x, y) => pairKey(x[0], x[1]).localeCompare(pairKey(y[0], y[1])))
+    default:
+      return a
+  }
+}
 
 function answerOk(q: Question, a: Answer): boolean {
   if (a === null) return true
@@ -40,11 +65,10 @@ function answerOk(q: Question, a: Answer): boolean {
       const ids = new Set(q.items.map((i) => i.id))
       const seen = new Set<string>()
       for (const p of a as unknown[]) {
-        if (!Array.isArray(p) || p.length !== 4) return false
-        const [l, r, pick, ms] = p as unknown[]
+        if (!Array.isArray(p) || p.length !== 3) return false
+        const [l, r, pick] = p as unknown[]
         if (typeof l !== 'string' || typeof r !== 'string' || l === r || !ids.has(l) || !ids.has(r)) return false
         if (!(pick === 0 || pick === 1 || pick === 2 || pick === null)) return false
-        if (!Number.isInteger(ms) || (ms as number) < 0 || (ms as number) > MAX_MS) return false
         const k = pairKey(l, r)
         if (seen.has(k)) return false
         seen.add(k)
@@ -57,7 +81,7 @@ function answerOk(q: Question, a: Answer): boolean {
       return new Set(a as string[]).size === ids.length && (a as unknown[]).every((x) => typeof x === 'string' && ids.includes(x))
     }
     case 'text':
-      return typeof a === 'string' && a.trim().length > 0 && a.length <= (q.max_length ?? LIMITS.text)
+      return typeof a === 'string' && cleanText(a).length > 0 && cleanText(a).length <= (q.max_length ?? LIMITS.text)
   }
 }
 
@@ -74,7 +98,7 @@ export function checkAnswers(m: Pick<StudyManifest, 'questions'>, raw: unknown):
   for (const q of m.questions) {
     const a = (given[q.id] ?? null) as Answer
     if (!answerOk(q, a)) return { ok: false, reason: 'answers', question: q.id }
-    out[q.id] = q.kind === 'text' && typeof a === 'string' ? a.trim() : a
+    out[q.id] = canonical(q, a)
     if (a !== null) answered++
   }
   if (answered === 0) return { ok: false, reason: 'answers' }
@@ -100,9 +124,15 @@ export function describeAnswer(q: Question, a: Answer): string {
     case 'number':
       return `${a}${q.kind === 'number' && q.unit ? ` ${q.unit}` : ''}`
     case 'pairwise': {
-      const n = (a as PairTuple[]).length
-      const decided = (a as PairTuple[]).filter((p) => p[2] === 0 || p[2] === 1).length
-      return `${n} ${n === 1 ? 'pair' : 'pairs'}, ${decided} decided`
+      // every pair, with its pick: the reader sees all that is sent
+      const label = new Map(q.items.map((i) => [i.id, i.label]))
+      return (a as PairTuple[])
+        .map(([l, r, pick]) => {
+          const L = label.get(l)
+          const R = label.get(r)
+          return pick === 0 ? `${L} over ${R}` : pick === 1 ? `${R} over ${L}` : pick === 2 ? `${L} and ${R} equally` : `${L} or ${R}: can’t say`
+        })
+        .join('; ')
     }
     case 'order': {
       const label = new Map(q.items.map((i) => [i.id, i.label]))

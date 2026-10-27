@@ -5,10 +5,15 @@
 // A practice's work embeds this page in a same-origin frame through /study/client.js. The frame shows
 // the study in the practice's words and the house's consent text in its own, takes the reader's
 // consent, receives the answers the work collected, shows them back before anything is sent, and
-// sends them — the bot check loads here, with the last button, and nowhere else: a practice's page may
-// not load a script from another host (src/lib/engines/practice-policy.ts), so this frame is the only
-// way an answer reaches the store. What it keeps is said on the frame itself (duty 1 of
-// .claude/rules/runtime-and-works.md).
+// sends them; the bot check loads here, with the last button. What it keeps is said on the frame
+// itself (duty 1 of .claude/rules/runtime-and-works.md).
+//
+// The frame is the house's path for answers, not a wall: the work around it runs on the same origin,
+// so its code could reach into this page or around it. What the frame does hold: it answers only a
+// person's click on its own controls, only inside the work whose study it is, and its bot check is
+// bound to this study and this host. Everything else rests on the practice's constitution, and the
+// consent text says so (docs/design/2026-10-27-practice-studies.md, "What the frame is, and what it
+// is not").
 import Base from '@/layouts/Base.astro'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/ui/cn'
@@ -130,6 +135,8 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
   import type { StudyManifest } from '@/lib/study/manifest'
 
   type Known = { id: string; work: string; href: string | null; state: string; manifest: StudyManifest | null }
+  /** As src/lib/study/handlers.ts checks it. */
+  const TURNSTILE_ACTION = 'study'
   type Turnstile = { render: (el: HTMLElement, opts: Record<string, unknown>) => string }
 
   const PRACTICE: Record<string, string> = { atelier: 'The Atelier (Assay)', field: 'The Field (Meridian)', studio: 'The Studio (Ensemble)' }
@@ -177,7 +184,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     tell()
   }
 
-  async function botCheck(siteKey: string): Promise<string> {
+  async function botCheck(siteKey: string, study: string): Promise<string> {
     if (!siteKey) return ''
     const w = window as unknown as { turnstile?: Turnstile }
     await new Promise<void>((resolve, reject) => {
@@ -192,6 +199,8 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     return new Promise<string>((resolve, reject) => {
       w.turnstile!.render($<HTMLElement>('turnstile'), {
         sitekey: siteKey,
+        action: TURNSTILE_ACTION,
+        cData: study,
         theme: 'auto',
         callback: (t: string) => resolve(t),
         'error-callback': () => reject(new Error('bot check')),
@@ -226,6 +235,23 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     const practice = known.work.split(':')[0] ?? ''
     $('kicker').textContent = `A study of ${PRACTICE[practice] ?? practice}`
     if (known.href) $<HTMLAnchorElement>('work').href = known.href
+    if (framed) {
+      // Only the work whose study this is may hold the frame. Another page of the site could embed it,
+      // and a page elsewhere cannot (frame-ancestors 'self'); a parent this frame cannot read is not
+      // the work.
+      let parentPath = ''
+      try {
+        parentPath = window.parent.location.pathname
+      } catch {
+        parentPath = ''
+      }
+      if (!known.href || !parentPath.startsWith(known.href)) {
+        $('title').textContent = 'This frame belongs to another work'
+        say('This study is asked by its own work, not by the page around this frame, so it takes no answers here.')
+        post({ type: 'house-study:closed', study: id, reason: 'wrong-work' })
+        return
+      }
+    }
     if (known.state !== 'approved' || !known.manifest) {
       $('title').textContent = known.manifest?.title ?? 'This study takes no answers'
       say(STANDBY[known.state] ?? 'This study takes no answers now.')
@@ -258,14 +284,20 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     $('status').hidden = true
     if (!framed) return tell()
 
+    // Consent and sending answer only a person: an event a script makes (el.click(), dispatchEvent)
+    // is not trusted, and changes nothing here.
     const agree = $<HTMLInputElement>('agree')
     const start = $<HTMLButtonElement>('start')
     $('consent').hidden = false
-    agree.addEventListener('change', () => (start.disabled = !agree.checked))
+    let ticked = false
+    agree.addEventListener('change', (e) => {
+      ticked = e.isTrusted && agree.checked
+      start.disabled = !ticked
+    })
     let phase: 'consent' | 'waiting' | 'review' | 'sent' = 'consent'
     let answers: Answers | null = null
-    start.addEventListener('click', () => {
-      if (!agree.checked) return
+    start.addEventListener('click', (e) => {
+      if (!e.isTrusted || !ticked || !agree.checked || phase !== 'consent') return
       phase = 'waiting'
       $('consent').hidden = true
       say('You are taking part. Answer in the work; your answers come back here for you to see before anything is sent.')
@@ -309,14 +341,14 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
       say('Nothing was sent. Your answers stay with you.')
       finish(false, 'kept')
     })
-    $('send').addEventListener('click', async () => {
-      if (phase !== 'review' || !answers) return
+    $('send').addEventListener('click', async (e) => {
+      if (!e.isTrusted || phase !== 'review' || !answers) return
       const send = $<HTMLButtonElement>('send')
       send.disabled = true
       send.textContent = 'Sending …'
       let token = ''
       try {
-        token = await botCheck(root.dataset.siteKey ?? '')
+        token = await botCheck(root.dataset.siteKey ?? '', id)
       } catch {
         say('The bot check could not run, so nothing was sent.')
         return finish(false, 'bot-check')

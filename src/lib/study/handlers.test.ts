@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { fakeD1, sqliteAvailable } from '../reception/fake-d1'
-import { handleRecord, handleStatus, handleSubmit, resetBurst, resetRegistryCache, type Deps, type StudyEnv } from './handlers'
+import { handleRecord, handleStatus, handleSubmit, parseRegistry, resetBurst, resetRegistryCache, type Deps, type StudyEnv } from './handlers'
 import { CONSENT_VERSION } from './consent'
 import { BATCH_SIZE } from './record'
 import { ADDRESS_DAILY_MAX } from './store'
@@ -9,9 +9,16 @@ import { ANSWERS, MANIFEST } from './fixtures'
 const ORIGIN = 'https://frankbueltge.de'
 let now = new Date('2026-10-28T10:00:00Z')
 const gate = vi.fn((text: string) => (/BUY NOW/.test(text) ? '{"verdict":"block","reason":"spam"}' : '{"verdict":"pass"}'))
+/** What siteverify answers for each test token: solved in this study's frame on this host, or not. */
+const SOLVED: Record<string, object> = {
+  human: { success: true, action: 'study', cdata: MANIFEST.id, hostname: 'frankbueltge.de' },
+  'from-the-reception': { success: true, action: '', cdata: '', hostname: 'frankbueltge.de' },
+  'for-another-study': { success: true, action: 'study', cdata: 'studio-another', hostname: 'frankbueltge.de' },
+  'on-another-host': { success: true, action: 'study', cdata: MANIFEST.id, hostname: 'elsewhere.example' },
+}
 const network = vi.fn(async (url: string | URL | Request, init?: RequestInit) => {
   const u = String(url)
-  if (u.includes('turnstile')) return new Response(JSON.stringify({ success: new URLSearchParams(String(init?.body)).get('response') === 'human' }))
+  if (u.includes('turnstile')) return new Response(JSON.stringify(SOLVED[new URLSearchParams(String(init?.body)).get('response') ?? ''] ?? { success: false }))
   if (u.includes('generativelanguage')) {
     const body = JSON.parse(String(init?.body))
     return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: gate(body.contents[0].parts[0].text) }] } }] }))
@@ -23,8 +30,8 @@ const deps: Deps = { fetch: network as unknown as typeof fetch, now: () => now }
 const REGISTRY = {
   schema: 1,
   known: [
-    { id: MANIFEST.id, work: 'studio:the-remainder', href: '/studio/werke-html/the-remainder/', state: 'approved', manifest: MANIFEST },
-    { id: 'changed-study', work: 'field:changed', href: '/field/werke-html/changed/', state: 'changed', manifest: null },
+    { id: MANIFEST.id, work: 'studio:the-remainder', href: '/studio/werke-html/the-remainder/', state: 'approved', sha256: 'a'.repeat(64), manifest: MANIFEST },
+    { id: 'field-changed-study', work: 'field:changed', href: '/field/werke-html/changed/', state: 'changed', sha256: 'b'.repeat(64), manifest: null },
   ],
 }
 
@@ -66,15 +73,16 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/study/submit', () => {
     const res = await submit(env, body())
     expect(await res.json()).toEqual({ ok: true, status: 'stored', study: MANIFEST.id, entries: 1 })
     const row = raw(env).prepare('SELECT * FROM study_entries').all()[0]!
-    expect(Object.keys(row).sort()).toEqual(['answers', 'consent', 'day', 'id', 'study'])
+    expect(Object.keys(row).sort()).toEqual(['answers', 'consent', 'day', 'id', 'manifest', 'study'])
     expect(row.id).toMatch(/^s-[0-9a-f]{16}$/)
+    expect(row.manifest).toBe('a'.repeat(64))
     expect(JSON.stringify(row)).not.toContain('203.0.113.7')
   })
 
   it('refuses a study the architect has not approved, or whose file changed since', async () => {
     const env = await makeEnv()
     expect((await submit(env, body({ study: 'never-proposed' }))).status).toBe(404)
-    const changed = await submit(env, body({ study: 'changed-study' }))
+    const changed = await submit(env, body({ study: 'field-changed-study' }))
     expect([changed.status, (await changed.json()).reason]).toEqual([403, 'not-open'])
   })
 
@@ -97,12 +105,32 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/study/submit', () => {
     expect((await submit(env, body(), { origin: 'https://elsewhere.example' })).status).toBe(403)
   })
 
+  it('spends only a token solved in this study’s frame on this host', async () => {
+    const env = await makeEnv()
+    for (const token of ['from-the-reception', 'for-another-study', 'on-another-host']) {
+      expect(await (await submit(env, body({ turnstileToken: token }))).json(), token).toEqual({ ok: false, reason: 'turnstile' })
+    }
+    // refused before the store is even opened
+    expect(() => raw(env).prepare('SELECT COUNT(*) AS n FROM study_entries').all()).toThrow(/no such table/)
+    // Cloudflare's test secret answers without an action, cData or hostname: local development only
+    const local = await makeEnv({ TURNSTILE_SECRET_KEY: '1x0000000000000000000000000000000AA' })
+    expect((await submit(local, body({ turnstileToken: 'from-the-reception' }))).status).toBe(200)
+  })
+
   it('takes one answer set per reader per day, and a few per address whatever browser it claims', async () => {
     const env = await makeEnv()
     expect((await submit(env, body())).status).toBe(200)
     expect((await (await submit(env, body())).json()).reason).toBe('once-a-day')
     for (let i = 2; i <= ADDRESS_DAILY_MAX; i++) expect((await submit(env, body(), { 'user-agent': `browser ${i}` })).status).toBe(200)
     expect((await (await submit(env, body(), { 'user-agent': 'one more' })).json()).reason).toBe('address-limit')
+  })
+
+  it('refuses a set over the address limit before its text leaves for the gate', async () => {
+    const env = await makeEnv()
+    for (let i = 1; i <= ADDRESS_DAILY_MAX; i++) expect((await submit(env, body(), { 'user-agent': `browser ${i}` })).status).toBe(200)
+    const res = await submit(env, body({ answers: { ...ANSWERS, note: 'hollow' } }), { 'user-agent': 'one more' })
+    expect((await res.json()).reason).toBe('address-limit')
+    expect(gate).not.toHaveBeenCalled()
   })
 
   it('sends written answers through the text gate, and refuses what it blocks', async () => {
@@ -121,7 +149,7 @@ describe.skipIf(!(await sqliteAvailable()))('GET /api/study/status and /record',
     const env = await makeEnv()
     await submit(env, body())
     expect(await (await get(handleStatus, env, `?study=${MANIFEST.id}`)).json()).toEqual({ ok: true, study: MANIFEST.id, open: true, standby: null, entries: 1 })
-    expect(await (await get(handleStatus, env, '?study=changed-study')).json()).toMatchObject({ open: false, standby: 'changed' })
+    expect(await (await get(handleStatus, env, '?study=field-changed-study')).json()).toMatchObject({ open: false, standby: 'changed' })
     expect((await get(handleStatus, env, '?study=unknown')).status).toBe(404)
   })
 
@@ -132,8 +160,30 @@ describe.skipIf(!(await sqliteAvailable()))('GET /api/study/status and /record',
     now = new Date('2026-10-29T02:50:00Z')
     const r = await (await get(handleRecord, env, `?study=${MANIFEST.id}`)).json()
     expect(r).toMatchObject({ ok: true, study: MANIFEST.id, work: 'studio:the-remainder', state: 'approved', batch_size: BATCH_SIZE, entries_count: BATCH_SIZE })
-    for (const e of r.entries) expect(Object.keys(e).sort()).toEqual(['answers', 'batch', 'consent', 'id'])
+    for (const e of r.entries) expect(Object.keys(e).sort()).toEqual(['answers', 'batch', 'consent', 'id', 'manifest'])
+    expect(r.entries[0].manifest).toBe('a'.repeat(64))
     for (const table of ['study_salts', 'study_marks', 'study_addr']) expect(raw(env).prepare(`SELECT COUNT(*) AS n FROM ${table}`).all()[0]!.n, table).toBe(0)
+  })
+
+  it('clears a finished day on every record call, whatever it answers', async () => {
+    const env = await makeEnv()
+    await submit(env, body())
+    now = new Date('2026-10-29T02:50:00Z')
+    const marks = () => raw(env).prepare('SELECT COUNT(*) AS n FROM study_marks').all()[0]!.n
+    expect(marks()).toBe(1)
+    resetRegistryCache()
+    expect((await get(handleRecord, { ...env, ASSETS: undefined }, `?study=${MANIFEST.id}`)).status).toBe(503)
+    expect(marks()).toBe(0)
+    await submit(env, body())
+    now = new Date('2026-10-30T02:50:00Z')
+    expect((await get(handleRecord, env, '')).status).toBe(400)
+    expect(marks()).toBe(0)
+  })
+
+  it('stands by rather than guess when the registry names a study twice', () => {
+    expect(parseRegistry(REGISTRY)).not.toBeNull()
+    expect(parseRegistry({ ...REGISTRY, known: [...REGISTRY.known, { ...REGISTRY.known[0]!, work: 'studio:another' }] })).toBeNull()
+    expect(parseRegistry({ ...REGISTRY, known: [{ ...REGISTRY.known[0]!, sha256: undefined }] })).toBeNull()
   })
 
   it('keeps no order of writing that could pair an answer set with its reader', async () => {

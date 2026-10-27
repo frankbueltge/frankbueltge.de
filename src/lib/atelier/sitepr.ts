@@ -15,6 +15,17 @@ export interface SitePrRejection { ok: false; slug: string; reasons: string[] }
 const SLUG_RE = /^[a-z0-9][a-z0-9-]{0,79}$/
 const ALLOWED_EXT = /\.(astro|ts|js|mjs|json|css|svg|html|md|txt)$/
 const MAX_FILES = 50
+const STUDY_BARS = [
+  'src/data/studies/',
+  'src/lib/study/',
+  'src/pages/study/',
+  'src/pages/studies/',
+  'src/layouts/Base.astro',
+  'src/lib/reception/',
+  'src/lib/engines/publication',
+  'src/lib/engines/practice-policy',
+  'src/data/ecology/cycle.json',
+]
 
 // Pfad-Grenze: Ablehnungsgrund zurückgeben oder null (= erlaubt).
 export function checkSitePrPath(p: string): string | null {
@@ -26,9 +37,11 @@ export function checkSitePrPath(p: string): string | null {
   if (!p.startsWith('src/')) return 'außerhalb von src/ (Workflows, Pipelines, Configs sind tabu)'
   if (p.startsWith('src/content/protokoll/')) return 'das Protokoll-Archiv ist unantastbar'
   // A study runs on the architect's approval of its exact file (2026-10-27): no practice may propose a
-  // change to the approvals, to the rules that check a study, or to the frame that takes consent.
-  if (['src/data/studies/', 'src/lib/study/', 'src/pages/study/'].some((d) => p.startsWith(d))) {
-    return 'studies: the approvals, their rules and the consent frame are the architect’s to change'
+  // change to the approvals, to the rules that check a study, to the frame that takes consent, or to
+  // what the frame stands on — the page layout, the reception's text gate and hashes, the publication
+  // rule and the cycle that decide where a study may stand, and the policy of the practices' pages.
+  if (STUDY_BARS.some((d) => p.startsWith(d))) {
+    return 'studies: the approvals, their rules, the consent frame and what it stands on are the architect’s to change'
   }
   if (!ALLOWED_EXT.test(p)) return 'Dateityp nicht erlaubt'
   return null

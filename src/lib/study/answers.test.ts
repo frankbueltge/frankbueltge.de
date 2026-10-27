@@ -31,10 +31,12 @@ describe('checkAnswers', () => {
       ['weight', { weight: 8 }],
       ['weight', { weight: 2.5 }],
       ['guess', { guess: 140 }],
-      ['urgent', { urgent: [['food', 'food', 0, 10]] }],
-      ['urgent', { urgent: [['food', 'water', 0, 10], ['water', 'food', 1, 10]] }],
-      ['urgent', { urgent: [['food', 'water', 3 as 0, 10]] }],
-      ['urgent', { urgent: [['food', 'water', 0, 10], ['food', 'health', 0, 10], ['water', 'health', 0, 10], ['shelter', 'food', 0, 10]] }],
+      ['urgent', { urgent: [['food', 'food', 0]] }],
+      ['urgent', { urgent: [['food', 'water', 0], ['water', 'food', 1]] }],
+      ['urgent', { urgent: [['food', 'water', 3 as 0]] }],
+      ['urgent', { urgent: [['food', 'water', 0], ['food', 'health', 0], ['water', 'health', 0], ['shelter', 'food', 0]] }],
+      // a time per pair is a number the reader cannot check, so a pair carries none
+      ['urgent', { urgent: [['food', 'water', 0, 2100]] as unknown as Answers['urgent'] }],
       ['rank', { rank: ['first'] }],
       ['note', { note: 'x'.repeat(81) }],
     ]
@@ -44,6 +46,18 @@ describe('checkAnswers', () => {
   it('trims written answers', () => {
     const r = checkAnswers(MANIFEST, with_({ note: '  quiet  ' }))
     expect(r.ok && r.value.note).toBe('quiet')
+  })
+
+  it('keeps nothing in a written answer the reader cannot see', () => {
+    const r = checkAnswers(MANIFEST, with_({ note: 'qu\u200biet\u200d\ufe0f\u{e0041}\nnow\u2028then' }))
+    expect(r.ok && r.value.note).toBe('quiet now then')
+    expect(checkAnswers(MANIFEST, with_({ note: '\u200b\u200c\ufeff' }))).toEqual({ ok: false, reason: 'answers', question: 'note' })
+  })
+
+  it('keeps neither the order of the picks nor the side an item was shown on', () => {
+    const r = checkAnswers(MANIFEST, with_({ words: ['debt', 'loss'], urgent: [['water', 'health', null], ['water', 'food', 1], ['shelter', 'health', 2]] }))
+    expect(r.ok && r.value.words).toEqual(['loss', 'debt'])
+    expect(r.ok && r.value.urgent).toEqual(ANSWERS.urgent)
   })
 })
 
@@ -57,7 +71,8 @@ describe('textOf and describeAnswer', () => {
     const q = (id: string) => MANIFEST.questions.find((x) => x.id === id)!
     expect(describeAnswer(q('words'), ['loss', 'debt'])).toBe('loss; debt')
     expect(describeAnswer(q('guess'), 40)).toBe('40 %')
-    expect(describeAnswer(q('urgent'), ANSWERS.urgent!)).toBe('3 pairs, 1 decided')
+    expect(describeAnswer(q('urgent'), ANSWERS.urgent!)).toBe('Food over Water; Health and Shelter equally; Health or Water: can’t say')
+    expect(describeAnswer(q('urgent'), [['food', 'water', 1]])).toBe('Water over Food')
     expect(describeAnswer(q('rank'), ['second', 'first'])).toBe('Second movement › First movement')
     expect(describeAnswer(q('note'), null)).toBe('left out')
   })

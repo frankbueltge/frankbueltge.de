@@ -48,6 +48,20 @@ describe('manifestProblems', () => {
     const p = manifestProblems(bad).join(' | ')
     for (const needle of ['(a): 2 to 12 options', '(b): max', '(c): a scale', '(d): a range', '(e): pairs', '(f): item id', '(g): max_length']) expect(p).toContain(needle)
   })
+
+  it('refuses a line break or an invisible character anywhere in the text, and says where', () => {
+    const hide = copy()
+    hide.questions[0]!.prompt = 'What did the silence sound like?\n<!--'
+    expect(manifestProblems(hide).join(' | ')).toContain('questions[0].prompt: U+000A at character 33')
+    for (const c of ['\u200b', '\u202e', '\ufe0f', '\u00ad', '\u2028', '\u{e0041}']) {
+      const m = copy()
+      m.purpose = `Why${c} we ask`
+      expect(manifestProblems(m).join(' | '), JSON.stringify(c)).toMatch(/^purpose: U\+[0-9A-F]{4,5} at character 4/)
+    }
+    const opt = copy()
+    ;(opt.questions[0] as { options: string[] }).options[1] = 'a\u200bgap'
+    expect(manifestProblems(opt).join(' | ')).toContain('questions[0].options[1]: U+200B')
+  })
 })
 
 describe('isClosed and hasText', () => {

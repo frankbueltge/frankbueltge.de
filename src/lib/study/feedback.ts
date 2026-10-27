@@ -15,6 +15,10 @@ const STATE: Record<ResolvedStudy['state'], string> = {
   invalid: 'invalid — the house cannot read it; it waits for nothing until it is fixed',
 }
 
+/** Where the manifest stands in the practice's own repository: `works/<slug>/`, or the open cycle's
+ *  folder `artifacts/cycle-NNN/<slug>/`. */
+const ownPath = (s: ResolvedStudy): string => (s.file.includes('/werke-html/') ? `works/${s.slug}/study.json` : s.file.slice(s.practice.length + 1))
+
 export function studiesMarkdown(practice: string, own: readonly ResolvedStudy[], approvals: readonly Approval[], released: Record<string, number>, day: string): string {
   const lines = [
     `# Studies — ${practice}`,
@@ -24,7 +28,7 @@ export function studiesMarkdown(practice: string, own: readonly ResolvedStudy[],
   ]
   for (const s of own) {
     const id = s.manifest?.id ?? '(no readable id)'
-    lines.push(`## ${id} — ${s.work}`, '', `- State: ${STATE[s.state]}`, `- File: \`works/${s.slug}/study.json\` (SHA-256 \`${s.sha256.slice(0, 12)}…\`)`)
+    lines.push(`## ${id} — ${s.work}`, '', `- State: ${STATE[s.state]}`, `- File: \`${ownPath(s)}\` (SHA-256 \`${s.sha256.slice(0, 12)}…\`)`)
     if (s.problems.length) lines.push('- Problems:', ...s.problems.map((p) => `  - ${p}`))
     if (s.manifest && released[s.manifest.id] !== undefined) {
       lines.push(`- Released: ${released[s.manifest.id]} answer set(s), in batches of five, without their days — in \`studies/${s.manifest.id}.json\``)

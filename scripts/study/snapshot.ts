@@ -56,6 +56,10 @@ for (const a of approvals) {
   console.log(`[study] ${a.id}: ${next.entries_count} answer set(s) in the record`)
 }
 
+// Every record call first clears a finished day's salts, marks and address counts. One call without a
+// study does only that (it answers 400), so the promise holds on a night with no approval to read too.
+await fetch(base, { headers: { accept: 'application/json', 'user-agent': 'frankbueltge.de study-snapshot' } }).catch(() => null)
+
 const resolved = resolveStudies(findStudies(join(root, 'public'), root), approvals, today)
 const rows: string[] = []
 mkdirSync(out, { recursive: true })

@@ -2,7 +2,8 @@
 //
 // The release rule of Third Reading (src/lib/reading/record.ts), for every study: only answers of
 // finished UTC days, in whole batches of BATCH_SIZE, oldest first, each without its day — a batch
-// number instead, and a random id. Polling the record shows nothing arrive, and each night's addition
+// number instead, and a random id — and with the SHA-256 of the manifest it answered, so a study whose
+// changed file was approved again shows which answers belong to which version of its questions. Polling the record shows nothing arrive, and each night's addition
 // to it, and to git history, holds a batch or nothing. The nightly snapshot commits the record as
 // src/data/studies/records/<study>.json under CC0, one answer set per line, and hands a copy to the
 // practice that asked (scripts/study/snapshot.ts).
@@ -12,11 +13,13 @@ import type { StoredAnswers } from './store'
 export const BATCH_SIZE = 5
 export const RECORD_CONTRACT = 'study-record/1'
 export const ENTRY_ID = /^s-[0-9a-f]{16}$/
+const SHA256 = /^[0-9a-f]{64}$/
 
 export interface PublicAnswers {
   id: string
   batch: number
   consent: string
+  manifest: string
   answers: Answers
 }
 
@@ -35,7 +38,7 @@ export function releaseBatches(finished: readonly StoredAnswers[], size = BATCH_
   const released = Math.floor(finished.length / size) * size
   return finished
     .slice(0, released)
-    .map((e, i) => ({ id: e.id, batch: Math.floor(i / size) + 1, consent: e.consent, answers: e.answers }))
+    .map((e, i) => ({ id: e.id, batch: Math.floor(i / size) + 1, consent: e.consent, manifest: e.manifest, answers: e.answers }))
     .sort((a, b) => a.batch - b.batch || a.id.localeCompare(b.id))
 }
 
@@ -49,8 +52,9 @@ export function toRecordFile(payload: unknown, source: string): StudyRecordFile 
     const e = raw as Record<string, unknown>
     if (typeof e.id !== 'string' || !ENTRY_ID.test(e.id) || !Number.isInteger(e.batch) || (e.batch as number) < 1 || typeof e.consent !== 'string') throw new Error('malformed answer set')
     if ('day' in e) throw new Error(`answer set ${e.id} carries its day`)
+    if (typeof e.manifest !== 'string' || !SHA256.test(e.manifest)) throw new Error(`answer set ${e.id} does not name its manifest`)
     if (!e.answers || typeof e.answers !== 'object' || Array.isArray(e.answers)) throw new Error(`malformed answers in ${e.id}`)
-    return { id: e.id, batch: e.batch as number, consent: e.consent, answers: e.answers as Answers }
+    return { id: e.id, batch: e.batch as number, consent: e.consent, manifest: e.manifest, answers: e.answers as Answers }
   })
   entries.sort((a, b) => a.batch - b.batch || a.id.localeCompare(b.id))
   return { $contract: RECORD_CONTRACT, study: p.study, work: p.work, source, licence: 'CC0-1.0', batch_size: p.batch_size as number, entries_count: entries.length, entries }

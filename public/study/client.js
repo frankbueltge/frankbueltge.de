@@ -3,7 +3,9 @@
 // A same-origin static file, so it runs under the practices' policy (script-src 'self') with nothing
 // new. It puts the house's frame, /study/frame/?study=<id>, into the work, and passes messages between
 // the work and the frame. The frame shows the study and the consent text, takes the consent, shows the
-// reader the answers before anything is sent, and sends them; the work never sends anything itself.
+// reader the answers before anything is sent, and sends them. The work hands its answers to the frame
+// and sends nothing itself: its constitution forbids it to keep or send them any other way. The frame
+// answers only a person's click, and only inside the work whose study it is.
 // The guide: https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/studies/GUIDE.md
 //
 //   var study = HouseStudy.mount(document.getElementById('ask'), {
@@ -13,7 +15,7 @@
 //     onClosed: function (r) { /* the study takes no answers now: r.reason */ },
 //   })
 //   // ... when the reader is done:
-//   study.submit({ heard: 'a gap', weight: 6, note: null }).then(function (r) { ... })
+//   study.submit({ heard: 'a gap', weight: 6, urgent: [['food', 'water', 0]], note: null }).then(function (r) { ... })
 ;(function () {
   'use strict'
   if (window.HouseStudy) return
