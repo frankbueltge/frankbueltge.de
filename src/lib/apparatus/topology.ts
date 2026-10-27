@@ -615,7 +615,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'oversight',
     kind: 'service',
     owner: 'shared',
-    what: 'The request-time doors. Nothing a stranger types reaches a repository unchecked: a seed waits in a private queue for a human review, and a declined one is deleted rather than recorded. A rating’s note waits for nobody: it goes live after a bot check and a named text check, and reaches a practice only as material in the nightly snapshot.',
+    what: 'The request-time doors. Nothing a stranger types reaches a repository unchecked: a seed waits in a private queue for a human review, and a declined one is deleted rather than recorded. A rating’s note waits for nobody: it goes live after a bot check and a named text check, and reaches a practice only as material in the nightly snapshot. An answer to a reading or a study waits for its day, and is published only in batches of five, without it.',
     members: [
       { label: 'POST /api/seed', what: 'ten fail-closed stages, then a private queue — commits nothing', ref: 'functions/api/seed.js', secrets: ['TURNSTILE_SECRET_KEY', 'GEMINI_API_KEY', 'SEED_PENDING_KV'] },
       { label: 'POST /api/impulse', what: 'writes into Assay’s own impulse inbox', ref: 'functions/api/impulse.js', secrets: ['IMPULSE_GITHUB_TOKEN'] },
@@ -623,6 +623,9 @@ export const NODES: readonly ApparatusNode[] = [
       { label: '/api/zentrale/*', what: 'the control room: answer a request, review a seed, merge an engine PR', secrets: ['ZENTRALE_SECRET', 'ZENTRALE_GITHUB_TOKEN'] },
       // 2026-10-17 (docs/design/2026-10-17-the-reception.md).
       { label: '/api/reception/*', what: 'the reception: rate a published work from 1 to 5, with an optional note, live at once; the architect’s notes skip both checks', ref: 'functions/api/reception/rate.js', secrets: ['RECEPTION_DB', 'RECEPTION_OWNER_KEY', 'TURNSTILE_SECRET_KEY', 'GEMINI_API_KEY'] },
+      // 2026-10-27 (docs/design/2026-10-26-third-reading.md, docs/design/2026-10-27-practice-studies.md).
+      { label: '/api/reading/*', what: 'Third Reading: a reader’s reading of the briefing’s matters, anonymous, released only after its day in batches of five, without the day', ref: 'functions/api/reading/submit.js', secrets: ['RECEPTION_DB', 'TURNSTILE_SECRET_KEY'] },
+      { label: '/api/study/*', what: 'the practices’ studies: answers to a study the architect approved, sent from the house’s consent frame inside its work; anonymous, released after their day in batches of five, and back to the practice each night as material', ref: 'functions/api/study/submit.js', secrets: ['RECEPTION_DB', 'TURNSTILE_SECRET_KEY', 'GEMINI_API_KEY'] },
     ],
   },
   {
