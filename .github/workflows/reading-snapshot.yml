@@ -1,0 +1,52 @@
+# .github/workflows/reading-snapshot.yml — Third Reading's nightly snapshot (2026-10-26).
+#
+# Third Reading (docs/design/2026-10-26-third-reading.md) keeps its readings in Cloudflare D1, in the
+# reception's database. Every night this workflow reads the public record of the current round
+# (GET /api/reading/record: only what the site publishes anyway, so no Cloudflare token is needed) and
+# commits it as src/data/reading/<round>.json when it changed (duty 2 of
+# .claude/rules/runtime-and-works.md). The page derives every number about "this audience" from that
+# file at build time; the commit's push to main deploys it. A record in standby writes nothing.
+name: Reading snapshot
+
+on:
+  schedule:
+    - cron: '35 2 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: reading-snapshot
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Read the public record and write the snapshot
+        run: npx tsx scripts/reading/snapshot.ts
+
+      - name: Commit the snapshot (only when the record changed)
+        run: |
+          if [ -n "$(git status --porcelain src/data/reading)" ]; then
+            git config user.name "Reading-Snapshot"
+            git config user.email "reading-snapshot@frankbueltge.de"
+            git add src/data/reading
+            git commit -m "reading: snapshot of $(date -u +%F)"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase --autostash origin main && git push && break
+              git rebase --abort 2>/dev/null || true
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts" >&2; exit 1; }
+              sleep $((attempt * 5))
+            done
+          else
+            echo "snapshot unchanged"
+          fi
