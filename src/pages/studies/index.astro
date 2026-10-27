@@ -1,0 +1,92 @@
+---
+// /studies — every study the practices' works ask, and what became of it (2026-10-27;
+// docs/design/2026-10-27-practice-studies.md). Read at build time from the mirrors (the manifests
+// beside the works), the architect's approvals and the committed records, so the page says what the
+// repository holds and nothing more.
+import { existsSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import Page from '@/layouts/Page.astro'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import { findStudies, readApprovals, resolveStudies, type ResolvedStudy } from '@/lib/study/registry'
+import '@/styles/experiment-sheet.css'
+
+const root = process.cwd()
+const today = new Date().toISOString().slice(0, 10)
+const resolved = resolveStudies(findStudies(join(root, 'public'), root), readApprovals(root), today)
+const shown = resolved.filter((s) => s.state !== 'invalid')
+const released = (id: string): number | null => {
+  const file = join(root, 'src/data/studies/records', `${id}.json`)
+  if (!existsSync(file)) return null
+  try {
+    return (JSON.parse(readFileSync(file, 'utf8')) as { entries_count?: number }).entries_count ?? null
+  } catch {
+    return null
+  }
+}
+const PRACTICE: Record<string, string> = { atelier: 'The Atelier (Assay)', field: 'The Field (Meridian)', studio: 'The Studio (Ensemble)' }
+const STATE: Record<ResolvedStudy['state'], string> = {
+  approved: 'takes answers',
+  closed: 'closed',
+  changed: 'changed since its approval — waits for a new one',
+  proposed: 'proposed — waits for the architect’s approval',
+  invalid: 'invalid',
+}
+const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+---
+
+<Page title="Studies | Frank Bültge" description="The questions the research practices' works ask the people who see them, under the house's consent and approved one by one by the site's operator.">
+  <main id="main" class="sheet mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:py-14">
+    <SheetHead
+      kicker="The practices ask"
+      title="Studies"
+      sub="Some works of the Atelier, the Field and the Studio ask the people who see them. The practice decides what to ask; the house keeps the consent, the store and the rules, and every study runs only after the site’s operator has approved it."
+    />
+
+    <section class="mb-10 max-w-3xl leading-relaxed text-fg-muted">
+      <p>
+        A study is a file beside its work, in the practice’s own repository: what it asks, why, and how the
+        answers will be read. Taking part happens in the house’s frame inside the work — consent first, the
+        answers shown back before anything is sent, and nothing sent before the last button. Answers are
+        anonymous, released only after their day in batches of five and without the day, published as open
+        data (CC0), and returned every night to the practice as material for its research.
+        <a class={link} href={`${REPO}/blob/main/docs/studies/GUIDE.md`}>The practices’ guide</a> ·
+        <a class={link} href="/privacy">privacy</a>.
+      </p>
+    </section>
+
+    {
+      shown.length === 0 ? (
+        <p class="text-fg-muted">No work asks yet.</p>
+      ) : (
+        <ul class="space-y-6">
+          {shown.map((s) => (
+            <li class="border-t border-line pt-4">
+              <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-faint">
+                {PRACTICE[s.practice] ?? s.practice} · {STATE[s.state]}
+              </p>
+              <p class="mt-1 text-lg font-semibold text-fg">
+                <a class={link} href={s.href}>{s.manifest?.title}</a>
+              </p>
+              <p class="mt-1 text-fg-muted">{s.manifest?.question}</p>
+              {s.state === 'approved' || s.state === 'closed' ? (
+                <p class="mt-2 text-sm text-fg-muted">
+                  {(() => {
+                    const n = released(s.manifest!.id)
+                    return n === null ? 'No answers released yet.' : `${n} answer set${n === 1 ? '' : 's'} released.`
+                  })()}{' '}
+                  <a class={link} href={`/api/study/record?study=${s.manifest!.id}`}>Record (JSON)</a> ·{' '}
+                  <a class={link} href={`${REPO}/blob/main/public/${s.file}`}>the study’s file</a>
+                </p>
+              ) : (
+                <p class="mt-2 text-sm text-fg-muted">
+                  <a class={link} href={`${REPO}/blob/main/public/${s.file}`}>The study’s file</a>
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </main>
+</Page>

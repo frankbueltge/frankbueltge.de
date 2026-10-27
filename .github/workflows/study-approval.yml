@@ -1,0 +1,75 @@
+# .github/workflows/study-approval.yml — a practice's study waits for the architect (2026-10-27).
+#
+# A practice's work may ask the people who see it (docs/design/2026-10-27-practice-studies.md). Its
+# `study.json` arrives with the work through the practice's integrate; this workflow then opens one pull
+# request per new or changed manifest, which adds the approval of exactly that file to
+# src/data/studies/approved.json. MERGING IT IS THE APPROVAL, AND ONLY THE ARCHITECT MERGES IT (Frank's
+# decision of 2026-10-27, wording private): the merge authority of 2026-08-14 does not reach these
+# pull requests. A pull request of an older version of the same study is closed with a pointer to the
+# new one; a closed pull request is never reopened (declined stays declined until the file changes).
+# The pull requests come from GITHUB_TOKEN, so they start no other workflow; the merge, a human push,
+# runs CI and the deploy as usual.
+name: Study approval
+
+on:
+  workflow_run:
+    workflows:
+      - Atelier integrate
+      - Field integrate
+      - Studio integrate
+    types: [completed]
+  schedule:
+    - cron: '40 3 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: study-approval
+
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Find the studies that wait for the architect
+        run: npx tsx scripts/study/approvals.ts --out /tmp/study-approvals
+
+      - name: Open one pull request per waiting study
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh label create study-approval --color 5b5b5b --description "A practice's study, approved only by the architect's merge" 2>/dev/null || true
+          git config user.name "Study-Approval"
+          git config user.email "study-approval@frankbueltge.de"
+          shopt -s nullglob
+          for dir in /tmp/study-approvals/*/; do
+            branch=$(cat "$dir/branch.txt")
+            study=$(cat "$dir/study.txt")
+            if [ -n "$(gh pr list --head "$branch" --state all --json number --jq '.[].number')" ]; then
+              echo "$branch: a pull request exists already"
+              continue
+            fi
+            git checkout -q -B "$branch" origin/main
+            cp "$dir/approved.json" src/data/studies/approved.json
+            git add src/data/studies/approved.json
+            git commit -q -m "studies: approve $study" -m "Merging approves exactly the manifest named in the pull request; only the architect merges it."
+            git push -q --force origin "$branch"
+            url=$(gh pr create --base main --head "$branch" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" --label study-approval --assignee frankbueltge)
+            echo "$branch: $url"
+            # an older version of the same study: close its pull request and point to this one
+            for old in $(gh pr list --state open --label study-approval --json number,headRefName --jq ".[] | select(.headRefName | startswith(\"study/approve-$study-\")) | select(.headRefName != \"$branch\") | .number"); do
+              gh pr close "$old" --comment "Superseded by $url: the practice changed the study's file." || true
+            done
+          done
