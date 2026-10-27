@@ -84,6 +84,9 @@ on:
       # The reception's nightly snapshot (2026-10-17) commits src/data/reception with the built-in
       # token; /reception renders that snapshot, so without this line it would wait for another push.
       - Reception snapshot
+      # Third Reading's nightly snapshot (2026-10-26) commits src/data/reading the same way; the page
+      # derives every number about its readers from that file at build time.
+      - Reading snapshot
     types: [completed]
 
 permissions:
