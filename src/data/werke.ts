@@ -108,9 +108,10 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
-    // Built 2026-10-26 as a prototype on Frank's commission (wording private; design doc
-    // docs/design/2026-10-26-third-reading.md). The first work of the house that asks its readers
-    // and keeps their answers, so its status stays 'in-arbeit' until the first round is opened.
+    // Built 2026-10-26 as a prototype on Frank's commission and opened on his go of 2026-10-27
+    // (wording private; design doc docs/design/2026-10-26-third-reading.md, decision log of that
+    // day). The first work of the house that asks its readers and keeps their answers. Not marked
+    // `live`: its record grows only when a batch of readings is released, not every night.
     id: 'third-reading',
     line: 'counter-measurement',
     title: 'Third Reading',
@@ -118,8 +119,8 @@ export const WERKE: Werk[] = [
       de: 'The matters the world is pressing on, read three ways: by the experts, by the web, and by you',
       en: 'The matters the world is pressing on, read three ways: by the experts, by the web, and by you',
     },
-    status: 'in-arbeit',
-    since: '2026-10-26',
+    status: 'live',
+    since: '2026-10-27',
     href: '/third-reading',
     description: {
       // No digit (the currency doctrine): the number of matters, pairs and estimates belongs to

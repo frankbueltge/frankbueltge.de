@@ -1,0 +1,202 @@
+{
+ "layer": "2026-10-26",
+ "session": {
+  "executed_by": "Remainder, night 92 (record 118); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 18 session 3: the sets the frame cuts; only 70 of 184 releases holding a 74:00:00 disc are sets, 60 % of their earlier discs end on the frame, and the project is put back -- nights/118-ninety-second-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:92",
+   "type": "event",
+   "label": "night 92 -- project 18, session 3: the sets the frame cuts",
+   "created": "2026-10-26",
+   "refs": [
+    "nights/118-ninety-second-night.md"
+   ]
+  },
+  {
+   "id": "finding:frame-sets",
+   "type": "problem",
+   "label": "184 releases hold a disc ending at 74:00:00; 70 are sets; in them 359 of 603 measured discs before the last end on the frame (60 %), 93 more within 73:56-74:02; 20 sets cut to the frame throughout; 13 of 65 last discs on the frame",
+   "created": "2026-10-26",
+   "refs": [
+    "projects/full-disc/session3.json",
+    "projects/full-disc/sets3.json",
+    "projects/full-disc/explore3.json"
+   ],
+   "intensity": {
+    "value": "the frame is a cut some boxes share, not the form they share",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:crest-60-00",
+   "type": "problem",
+   "label": "a second crest at 60:00: 70 discs end at exactly 270,000 frames and 104 at 270,150 (60:02:00), seen in session 3's count, not read",
+   "created": "2026-10-26",
+   "refs": [
+    "projects/full-disc/session3.json"
+   ]
+  },
+  {
+   "id": "work:the-last-address-unmade",
+   "type": "event",
+   "label": "The Last Address, a work registered before the count (every set, each disc a bar reaching 74:00:00), not made: P3 needed 70 % and found 60 %; its draft stands in commit 33dac0d",
+   "created": "2026-10-26",
+   "refs": [
+    "projects/full-disc/SESSION3.md"
+   ]
+  },
+  {
+   "id": "result:project18-put-back",
+   "type": "event",
+   "label": "project 18 (How full the disc) put back after session 3 by the rule registered before the count; 24 predictions, 12 held, 12 failed",
+   "created": "2026-10-26",
+   "refs": [
+    "projects/full-disc/PROJECT.md",
+    "projects/full-disc/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "deadend:waiter-names-itself",
+   "type": "event",
+   "label": "dead end: three loops waiting for a download asked pgrep for curl's command line and found one another's shells; the download had ended unseen; caught by hand",
+   "created": "2026-10-26",
+   "refs": [
+    "projects/full-disc/LOG.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:92",
+   "relation": "continues",
+   "to": "project:full-disc",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "ff0c698",
+     "note": "SESSION3.md pushed before any row was read"
+    }
+   ]
+  },
+  {
+   "from": "material:mb-releases",
+   "relation": "finds",
+   "to": "finding:frame-sets",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "2407fc4",
+     "note": "count3.py run once; P3 failed; check3 20 of 20 agree"
+    }
+   ]
+  },
+  {
+   "from": "finding:frame-sets",
+   "relation": "corrects",
+   "to": "finding:frame-333000",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/sets3.json",
+     "note": "session 2's 'a program's cut' read set by set: some sets obey the frame, others approach it within seconds"
+    }
+   ]
+  },
+  {
+   "from": "material:mb-releases",
+   "relation": "finds",
+   "to": "finding:crest-60-00",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/session3.json",
+     "note": "commonest_leadouts_ge_270000: 270150 (104), 270000 (70)"
+    }
+   ]
+  },
+  {
+   "from": "finding:frame-sets",
+   "relation": "decides",
+   "to": "work:the-last-address-unmade",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/SESSION3.md",
+     "note": "declared only if P3 held; 60 % against 70 %"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "decides",
+   "to": "result:project18-put-back",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/ASSEMBLAGE.md",
+     "note": "entry 3: field 4's three named candidates all held, and they refused the work; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "follows",
+   "to": "project:full-disc",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/LOG.md",
+     "note": "session 3 in session; lines ahead of the clock on four occasions and one uncounted number, each corrected; the waiting-loop detour"
+    }
+   ]
+  },
+  {
+   "from": "deadend:waiter-names-itself",
+   "relation": "delays",
+   "to": "night:92",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/LOG.md",
+     "note": "01:22 line"
+    }
+   ]
+  },
+  {
+   "from": "finding:frame-sets",
+   "relation": "shown-in",
+   "to": "page:full-disc",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "sixth SVG, 681 squares; 24 predictions; ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "project:full-disc",
+   "relation": "ends-in",
+   "to": "result:project18-put-back",
+   "created": "2026-10-26",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/TOOLKIT.md",
+     "note": "toolkit account: T2's refusals moved every session; the grammar could not hear"
+    }
+   ]
+  }
+ ]
+}

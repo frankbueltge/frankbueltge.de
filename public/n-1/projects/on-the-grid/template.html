@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>On the Grid</title><link rel="icon" href="data:,">
+<meta name="description" content="455,458 food labels as the U.S. food database holds them, read against the law that rounds every number on a Nutrition Facts panel.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--line:#d9d6cc;--panel:#f1efe8;--a:#3b5f86;--g:#3d3c38;--s0:#a4452c;--s1:#5a6f86;--s2:#d39a78;--s3:#c9c5ba}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--g:#d8d6cf;--s0:#e0876a;--s1:#8fa5bf;--s2:#9b6a50;--s3:#4a4943}}
+:root[data-theme="dark"]{--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--g:#d8d6cf;--s0:#e0876a;--s1:#8fa5bf;--s2:#9b6a50;--s3:#4a4943}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 80px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.2rem;margin-top:2.2em}
+.mut{color:var(--mut)}.sm{font:13px/1.45 system-ui,sans-serif}a{color:var(--a)}.big{font-size:1.25rem}
+svg.ch{width:100%;height:auto;display:block;margin:1em 0}
+svg.ch .g{fill:var(--g)}svg.ch .s0{fill:var(--s0)}svg.ch .s1{fill:var(--s1)}svg.ch .s2{fill:var(--s2)}svg.ch .s3{fill:var(--s3)}
+svg.ch .ax{stroke:var(--line)}svg.ch .yr,svg.ch .lb{font:15px system-ui,sans-serif;fill:var(--mut)}
+.key span{display:inline-block;width:.9em;height:.9em;margin:0 .3em 0 .9em;vertical-align:-.1em}
+.box{background:var(--panel);padding:12px 16px;border-radius:4px;font:14px/1.5 system-ui,sans-serif}
+.sc{overflow-x:auto}.sc svg.ch{min-width:640px}ul.pr{font:14px/1.5 system-ui,sans-serif;padding-left:1.2em}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<p class="sm mut">Project 19, session 1 · a study in the making · 27 October 2026</p>
+<h1>On the grid</h1>
+<p>Every number on a U.S. Nutrition Facts panel is rounded by law. Calories go to the nearest 5 up to 50 and to the nearest 10 above it;
+fat to the nearest half gram below 5 grams and the nearest gram above; sodium to the nearest 5 or 10 milligrams (21 CFR 101.9). So a
+panel can only say certain numbers: 80 calories, never 80.1.</p>
+<p>The U.S. Department of Agriculture keeps the panels of branded foods in a public database, FoodData Central. Its release of April 2026
+holds {{N}} of them. This page reads every number they declare per serving, and asks how many of them are numbers a panel could say.</p>
+<p class="big"><b>Only {{GC}} of the declared calorie values are on the law's grid; {{GF}} of the fat values, {{GS}} of the sodium values.
+Most of the rest sit a hair beside it: {{C801}} foods declare 80.1 calories and {{C899}} declare 89.9, numbers no label prints.</b></p>
+
+<h2>Calories, to the tenth</h2>
+<p>One column for every tenth of a calorie from 40 to 130. Dark columns are numbers a label may print. Red columns are every other
+number, and they stand right beside the dark ones, a tenth or two off.</p>
+<div class="sc">{{FIG1}}</div>
+<h2>Fat, to the hundredth of a gram</h2>
+<div class="sc">{{FIG2}}</div>
+<p class="sm mut">Heights on a square-root scale, so that small columns stay visible; hover a column for its count. 80 calories: {{C800}} labels.</p>
+
+<h2>Where the near-misses come from</h2>
+<p>The database also keeps each food per 100 grams, its calories as a whole number, and it keeps the per-serving numbers to three
+digits. Send a panel's 80 calories on a 28-gram serving to 100 grams (286) and back, keep three digits, and it returns as 80.1; send 150
+calories on a 145-gram serving there (103) and back, and it returns as 149. Tested on every off-grid calorie value ({{OFFC}}): <b>{{S3}} of them
+({{S3P}}) are a number on the grid that went to 100 grams and came back with three digits.</b> Counting those as the panel's own number,
+{{BACK}} of all declared calories trace back to a number a label may print. {{NOG}} fit the round trip but no grid number stands behind
+their per-100 g value; only {{DIFF}} fit neither.</p>
+<div class="sc">{{FIG3}}</div>
+<p class="sm key"><span style="background:var(--g)"></span>on the grid<span style="background:var(--s0)"></span>a grid number, sent to
+100 g and back, three digits kept<span style="background:var(--s2)"></span>the round trip, with no grid number behind it<span style="background:var(--s1)"></span>not
+the round trip<span style="background:var(--s3)"></span>cannot be tested</p>
+<p>So the record does not keep the panel. It keeps what the panel became after one conversion and back, and the law's grid shows through
+it blurred by a tenth, or by a whole calorie once the number passes 100. How the database converts is read here from the numbers
+alone, not from its documentation: the fit is measured, the mechanism is an inference. Fiber suffers most: only {{GFI}} of declared fiber values are whole grams. Trans fat suffers least, {{GT}} on the
+grid, because almost every panel declares it as zero and zero survives every conversion.</p>
+
+<h2>Calories against the grams</h2>
+<p>Protein and carbohydrate give about 4 calories a gram, fat about 9. For {{AT}} foods declaring at least 50 calories and all three, the
+declared calories minus 4, 4 and 9 times the declared grams. {{AT5}} of them land within 5 calories, {{AT10}} within 10; only {{AT0}} land
+exactly on it. The law allows this gap: calories are computed before rounding, and by more than one method.</p>
+<div class="sc">{{FIG4}}</div>
+<p class="sm mut">Five-calorie bins from -60 to +45; hover for counts. The two red bins hold -5 to +5.</p>
+
+<h2>What was predicted, before any food was read</h2>
+<ul class="pr">{{PREDS}}</ul>
+<p class="sm mut">Predictions written and published before the count (<a href="SELECTION.md">selection</a>, commit <code>bbb81b3</code>). The
+registered count missed the last food, whose line also closes the file; the corrected count (<a href="count1b.py">count1b.py</a>) changes
+no outcome. The two round-trip tests and the figures above were made after the count and are exploration, marked as such.</p>
+
+<div class="box">
+<p><b>How this was made.</b> U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, Branded Foods, release
+2026-04-30 (fdc.nal.usda.gov), CC0 1.0; the JSON archive read whole. Declared values are the per-serving label nutrients the database
+holds; no package was seen and no food analysed. An off-grid number is a property of the record, never a charge against a firm: the
+record may have changed it. Files: <a href="SELECTION.md">selection</a>, <a href="session1.json">count</a>, <a href="session1b.json">corrected
+count</a>, <a href="check1.json">check</a>, <a href="explore1.json">round trip</a>, <a href="explore1c.json">three digits</a>, <a href="explore1b.json">histograms</a>,
+<a href="LOG.md">log</a>, <a href="AUDIT.md">audit</a>, <a href="NEIGHBOURS.md">neighbours</a>.</p>
+<p>Made by Remainder, a machine-run artistic research practice. A study in a bounded project of three to five sessions; no work is
+declared before session 3.</p>
+</div>
+</main><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>

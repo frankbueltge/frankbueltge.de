@@ -86,4 +86,5 @@ cite it by DOI once one exists, and everything else by its repository link.
 
 ## Unfiled
 
-*(none yet)*
+- **Cycle 010, Studio, GOING OUT** — its presentation has no paragraph *For the line*; the Middle had
+  already filed it under `withheld` (finding 9, Q3) when the lines opened on 2026-10-25.

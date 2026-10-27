@@ -1,11 +1,11 @@
-# Third Reading — design (2026-10-26, PROTOTYPE)
+# Third Reading — design (2026-10-26; open since 2026-10-27)
 
 *Frank's commission of 2026-10-26, wording private. Paraphrased: he asked whether works could gather
 data from the people who see them, as long-running collection or experiment and as an alternative to
 dull multiple-choice surveys, seriously enough to count as online research, and then asked for this
-idea to be worked out as a design document and a prototype. Status: built on the branch
-`feat/third-reading`, **not live**. It opens on Frank's go, because it is the first work of the house
-that asks its readers something and keeps their answers.*
+idea to be worked out as a design document and a prototype. Built and independently reviewed on
+2026-10-26, opened on his go of 2026-10-27 (wording private): the first work of the house that asks
+its readers something and keeps their answers.*
 
 ## Why
 
@@ -116,17 +116,18 @@ existed: *equally urgent* instead of a forced choice (the Moral Machine critique
 behind a fold until after the reading (ask before revealing), and one fixed question across rounds.
 Kill conditions are named in the audit.
 
-## Going live (needs Frank's go)
+## Going live (done 2026-10-27, except where marked)
 
-1. Merge. The tables create themselves; Turnstile and the store already run for the reception.
+1. Merged. The tables create themselves; Turnstile and the store already run for the reception.
 2. Check in the Cloudflare dashboard whether the reception's database was created with the `eu`
    jurisdiction. It cannot be added later. If not, either accept it (the stored readings are
    anonymous) or create an EU database and bind it before the first reading; the consent text names
    Cloudflare, not a region, so it is true either way. A database bound after readings exist must
    receive them first: the snapshot refuses a record that has lost readings, so the archive cannot be
    emptied by a fresh database.
-3. Set the work's status to `live` and add a line to the decision log.
-4. Have the new privacy section read once by someone who reads such texts for a living.
+3. Done: the work's status is `live`, and the decision log has its line.
+4. Still open: have the new privacy section read once by someone who reads such texts for a living.
+   Step 2 is still open too, as it can only be done in the Cloudflare dashboard.
 
 ## What the independent review changed (2026-10-26, before anything went live)
 

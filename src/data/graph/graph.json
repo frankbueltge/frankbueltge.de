@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "ace7cc80b4b9b694"
+        "sha256": "20ad7a3127c3a0ef"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "9eb1a2c5516d2e8d"
+        "sha256": "5903f7b4e8402c06"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -48,23 +48,23 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "dd6f0829c9c695ab",
-        "files": 96
+        "sha256": "075cdfe384c2abb2",
+        "files": 97
       },
       {
         "file": "src/data/attention/export.json",
-        "sha256": "a9b38f7adaa23e37"
+        "sha256": "1d2506c64c4f7ce4"
       }
     ],
     "counts": {
-      "nodes": 554,
-      "edges": 495,
+      "nodes": 556,
+      "edges": 497,
       "nodesByKind": {
-        "decision": 154,
+        "decision": 155,
         "encounter": 6,
         "neighbor": 135,
         "practice": 9,
-        "practice-work": 214,
+        "practice-work": 215,
         "receiver": 8,
         "work": 28
       },
@@ -72,10 +72,10 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 214,
+        "made-by": 215,
         "neighbor-of": 136,
         "participates": 17,
-        "touches": 113
+        "touches": 114
       }
     }
   },
@@ -1621,6 +1621,16 @@
       }
     },
     {
+      "id": "decision:2026-10-27-1",
+      "kind": "decision",
+      "label": "Third Reading opens: the briefing's matters are read three ways, the third by the page's readers",
+      "date": "2026-10-27",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Third Reading opens: the briefing's matters are read three ways, the third by the page's readers"
+      }
+    },
+    {
       "id": "encounter:enc-2026-001-calibration-gap-travels",
       "kind": "encounter",
       "label": "The Calibration Gap travels: Instrument 001 → Native Speaker → correction upstream",
@@ -3116,8 +3126,8 @@
         },
         {
           "key": "memoryhole_nights_on_record",
-          "value": 70,
-          "asOf": "2026-10-24"
+          "value": 72,
+          "asOf": "2026-10-26"
         },
         {
           "key": "sources_in_register",
@@ -3141,23 +3151,23 @@
         },
         {
           "key": "protocol_steps",
-          "value": 398,
-          "asOf": "2026-10-25"
+          "value": 405,
+          "asOf": "2026-10-27"
         },
         {
           "key": "protocol_model_steps",
-          "value": 72,
-          "asOf": "2026-10-25"
+          "value": 74,
+          "asOf": "2026-10-27"
         },
         {
           "key": "protocol_model_steps_with_tokens",
-          "value": 25,
-          "asOf": "2026-10-25"
+          "value": 27,
+          "asOf": "2026-10-27"
         },
         {
           "key": "protocol_model_steps_with_cost",
           "value": 1,
-          "asOf": "2026-10-25"
+          "asOf": "2026-10-27"
         }
       ]
     },
@@ -5134,6 +5144,21 @@
       "medium": "Interactive page (index.html, SVG built in the browser): the visitor places their own reading of 'Probably' first; then, for 27 probability and quantity phrases, 46 people's answers as dots, twelve machine instances' answers as stacks, and two stated distributions as bands (six instances describing the people, six describing themselves); a switch marks where the family's centre differs from the people's. A figure (figure.svg); Python for briefs, scoring and a labelled post-hoc check; briefs, verbatim replies and predictions."
     },
     {
+      "id": "practice-work:atelier/2026-10-26-without-a-tongue",
+      "kind": "practice-work",
+      "label": "Without a Tongue",
+      "slug": "2026-10-26-without-a-tongue",
+      "practiceId": "ulysses",
+      "date": "2026-10-26",
+      "href": "/error-as-method/2026-10-26-without-a-tongue",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-26-without-a-tongue/meta.json",
+        "quote": "\"title\": \"Without a Tongue\""
+      },
+      "embodies": "A machine judge describing an audience it cannot recall: asked what 59 people liked, it moved half the distance from its own taste to theirs. It neither keeps its own norm nor reaches the people's.",
+      "medium": "Interactive page (index.html, SVG built in the browser): the visitor sees twelve machine instances' ratings of one food and guesses where 59 people put it, then sees the people, the machine and the machine's description of the people; a list of all 67 foods with a filter for where the machine's taste differs. A figure (figure.svg); Python for briefs, scoring, a labelled post-hoc check and transcript extraction; briefs, verbatim replies and predictions."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -6989,7 +7014,7 @@
       "label": "Third Reading",
       "werkId": "third-reading",
       "href": "/third-reading",
-      "since": "2026-10-26",
+      "since": "2026-10-27",
       "source": {
         "file": "src/data/werke.ts",
         "quote": "id: 'third-reading'"
@@ -8352,6 +8377,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-25-asked-three-ways/meta.json",
         "quote": "\"date\": \"2026-10-25\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-26-without-a-tongue",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-26-without-a-tongue/meta.json",
+        "quote": "\"date\": \"2026-10-26\""
       }
     },
     {
@@ -11813,6 +11847,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/data/trending/watchlist.json"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-27-1",
+      "to": "work:third-reading",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "docs/design/2026-10-26-third-reading.md"
       }
     }
   ]
