@@ -1,7 +1,7 @@
 # Line: machine-written-records
 
 Status: active · Opened: 2026-10-25, from cycles 001–002, 006 and the Field's standing work ·
-Kept after cycle: 010 (in part)
+Kept after cycle: 010
 
 ## 1. Question
 
@@ -30,8 +30,9 @@ outside the machine check it?
    instrument `tools/is-it-a-licence-v2/`.
 7. 1,667 scientific papers carry a public expression of concern with no retraction on record.
    *Holds as of 2026-09-01* — Studio, [NOT YET](https://github.com/frankbueltge/studio/tree/main/works/2026-09-01-not-yet).
-8. 51.3 % of an editor's letters reach a model's training text as the scribe's. *In progress* —
-   Atelier, [Supplied](https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-010/supplied) (critique of 2026-10-24 open).
+8. 51.3 % of an editor's letters reach a model's training text as the scribe's. *Holds, extended*: the
+   same letters stand in the model's answer key, in 29.7 % of test gaps cut by the 2026 protocol (39.7 %
+   cut the 2024 way). — Atelier, [Supplied](https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-010) (cycle 010).
 9. **The house's own ledger.** The Field pre-registers every prediction before it measures and
    publishes which held: cycle 006, 5 of 19 failed; cycle 007, 6 of 23 failed; cycle 008, 22 of 34
    held; cycle 009, 22 of 31 held. *Holds* — the Field's papers 1–4.
@@ -48,10 +49,13 @@ outside the machine check it?
   cycle 010, matter 9. *All three.*
 - **Q5** Who writes the record of skill once the entry job is gone? Briefing after cycle 010,
   matter 8. *Atelier, Field.*
+- **Q6** What share of a published restoration score is earned on letters an editor wrote, and does a
+  model scored separately on the editor's and the scribe's letters rank differently? *Field, Atelier*
+  (from cycle 010).
 
 ## 4. Works
 
-- Atelier: [Supplied](https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-010/supplied) (c010, in progress) ·
+- Atelier: [Supplied](https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-010) (c010) ·
   [Who is left to write it](https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-006) · [Publish the range](https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-002) ·
   [The clause, the threshold and the list](https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-001)
 - Field: [paper 1](https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-006) · [the near miss in the record](https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-09-the-near-miss-in-the-record) ·
@@ -68,9 +72,10 @@ outside the machine check it?
 
 - Field: the nightly research loop (`tools/autoloop/`), `tools/is-it-a-licence-v2/`,
   `tools/paper-behind-the-number/`, `tools/a-number-you-cannot-check/`.
+- Atelier: `supplied.py`, `bench.py`, `paths.py` in `presentations/cycle-010/` (ulysses).
 - The house's paper register: `https://frankbueltge.de/papers/index.json`.
 - Anchor datasets: AI Incident Database; OECD AI Incidents Monitor; CSET annotations; Crossref and
-  the Retraction Watch database.
+  the Retraction Watch database; Duke Databank of Documentary Papyri (EpiDoc, CC BY 3.0).
 
 ## 6. Docking
 
@@ -82,6 +87,9 @@ outside the machine check it?
   this house holds what such systems rarely publish, a dated record of every pre-registered
   prediction and whether it held (Q1).
 - **Crossref / Retraction Watch** — the record of expressions of concern and retractions.
+- **Computational philology** — Cullhed (arXiv:2409.13870, 2024) and Cullhed and Thörn Cleland
+  (arXiv:2608.07249, 2026), the papyrus-restoration corpus and test protocol the Atelier re-read: this
+  line adds which of the editor's marks the corpus keeps and which it turns into the scribe's ink.
 - In conversation with: Grace et al., *Thousands of AI Authors on the Future of AI*
   (arXiv:2401.02843), read by the Studio; Buolamwini and Gebru, *Gender Shades* (2018), transcribed by
   the Studio for NOT AT THIS SIZE.
