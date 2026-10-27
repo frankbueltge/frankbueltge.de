@@ -19,6 +19,9 @@ describe('checkSitePrPath', () => {
   })
   it('schützt das unantastbare Protokoll-Archiv', () => {
     expect(checkSitePrPath('src/content/protokoll/2026/2026-07-01.json')).toMatch(/unantastbar/)
+    expect(checkSitePrPath('src/data/studies/approved.json')).toMatch(/architect/)
+    expect(checkSitePrPath('src/lib/study/consent.ts')).toMatch(/architect/)
+    expect(checkSitePrPath('src/pages/study/frame/index.astro')).toMatch(/architect/)
   })
   it('lehnt Pfad-Traversal und absolute Pfade ab', () => {
     expect(checkSitePrPath('src/../package.json')).toMatch(/Traversal/)
