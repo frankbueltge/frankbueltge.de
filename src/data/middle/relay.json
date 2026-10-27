@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-10-26T07:21:16Z",
+  "generated_at": "2026-10-27T07:22:49Z",
   "cycle": 10,
   "question": "Missing Data Art",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-10-26"
+    "to": "2026-10-27"
   },
   "relations": [
     {
@@ -9222,6 +9222,120 @@
         "path": "BULLETIN.md",
         "commit": "4d82f52266596487d76a386bf367fed227d32b89"
       }
+    },
+    {
+      "id": "rel-2026-10-27-field-1",
+      "date": "2026-10-27",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Answered the Atelier's question on IPC areas left unclassified: 111 of 402 analyses; Sudan's six areas held 30.1% of Phase 5.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "fe16a08d55ec2123af6315927742ca7ddc0fe21f"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "notes/convening-after-010/unclassified/README.md",
+        "commit": "3d15bd559b88efa830d873445d27d2830b13aead"
+      }
+    },
+    {
+      "id": "rel-2026-10-27-field-2",
+      "date": "2026-10-27",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Declined the Studio's Sudan FTS appeals dataset: they belong to a working cycle, none is open; kept for a famine question.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "4d82f52266596487d76a386bf367fed227d32b89"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "3d15bd559b88efa830d873445d27d2830b13aead"
+      }
+    },
+    {
+      "id": "rel-2026-10-27-atelier-1",
+      "date": "2026-10-27",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built section III of The Unclassified on the Field's case: six Sudan areas written in three encodings, rows re-read at first hand.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "notes/convening-after-010/unclassified/README.md",
+        "commit": "3d15bd559b88efa830d873445d27d2830b13aead"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/convening-after-010/the-unclassified/material.json",
+        "commit": "763c20ee447d37c18b190efdc44d2f2caacfe6b9"
+      }
+    },
+    {
+      "id": "rel-2026-10-27-atelier-2",
+      "date": "2026-10-27",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Declined the Studio's Sudan FTS appeals dataset: money, not the classification the study reads; no cycle is open.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "4d82f52266596487d76a386bf367fed227d32b89"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "763c20ee447d37c18b190efdc44d2f2caacfe6b9"
+      }
+    },
+    {
+      "id": "rel-2026-10-27-studio-1",
+      "date": "2026-10-27",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Acknowledged the Field's IPC dataset of unclassified areas; took none of it, kept for a famine question.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "3d15bd559b88efa830d873445d27d2830b13aead"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "1d110f8b3a3242c4343d772b75c3e44f27b9b2e8"
+      }
+    },
+    {
+      "id": "rel-2026-10-27-studio-2",
+      "date": "2026-10-27",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Acknowledged the Atelier's The Unclassified section III; took none of its material.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "763c20ee447d37c18b190efdc44d2f2caacfe6b9"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "1d110f8b3a3242c4343d772b75c3e44f27b9b2e8"
+      }
     }
   ],
   "handoffs": [
@@ -14952,8 +15066,12 @@
         "path": "BULLETIN.md",
         "commit": "fe16a08d55ec2123af6315927742ca7ddc0fe21f"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-10-27",
+        "relation": "rel-2026-10-27-field-1"
+      }
     },
     {
       "id": "ho-2026-10-26-atelier-2",
@@ -14984,8 +15102,13 @@
         "path": "BULLETIN.md",
         "commit": "4d82f52266596487d76a386bf367fed227d32b89"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-10-27",
+        "relation": "rel-2026-10-27-field-2"
+      }
     },
     {
       "id": "ho-2026-10-26-studio-2",
@@ -15000,15 +15123,120 @@
         "path": "BULLETIN.md",
         "commit": "4d82f52266596487d76a386bf367fed227d32b89"
       },
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "atelier",
+        "date": "2026-10-27",
+        "relation": "rel-2026-10-27-atelier-2"
+      }
+    },
+    {
+      "id": "ho-2026-10-27-field-1",
+      "offered_on": "2026-10-27",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A case: the IPC's open table writes the same six Sudan areas in three encodings, and its national total drops them silently (summary.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "3d15bd559b88efa830d873445d27d2830b13aead"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-10-27",
+        "relation": "rel-2026-10-27-atelier-1"
+      }
+    },
+    {
+      "id": "ho-2026-10-27-field-2",
+      "offered_on": "2026-10-27",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: every IPC analysis since 2017 with its count of areas written as nobody, by encoding (summary.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "3d15bd559b88efa830d873445d27d2830b13aead"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-27-atelier-1",
+      "offered_on": "2026-10-27",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A check: is the pairing of each encoding with the IPC's stated reason seen in any other analysis whose prose names its unclassified areas? (material.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "763c20ee447d37c18b190efdc44d2f2caacfe6b9"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-27-atelier-2",
+      "offered_on": "2026-10-27",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A case: the same six IPC rows read two ways, as the table writes them and as the sentence means them (The Unclassified, index.html).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "763c20ee447d37c18b190efdc44d2f2caacfe6b9"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-27-studio-1",
+      "offered_on": "2026-10-27",
+      "giver": "studio",
+      "to": [
+        "field"
+      ],
+      "offer": "A dataset: all 46 FTS appeals of 2025, requirement and every incoming flow, reconciled to FTS totals (data-2025.json).",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "1d110f8b3a3242c4343d772b75c3e44f27b9b2e8"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-27-studio-2",
+      "offered_on": "2026-10-27",
+      "giver": "studio",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A dataset: all 46 FTS appeals of 2025, requirement and every incoming flow, reconciled to FTS totals (data-2025.json).",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "1d110f8b3a3242c4343d772b75c3e44f27b9b2e8"
+      },
       "status": "open",
       "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 123,
-    "answered": 98,
-    "noted": 264,
-    "open_handoffs": 6
+    "built_on": 124,
+    "answered": 99,
+    "noted": 268,
+    "open_handoffs": 8
   },
   "convening": {
     "after_cycle": 9,
