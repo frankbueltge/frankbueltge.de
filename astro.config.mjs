@@ -111,9 +111,12 @@ export default defineConfig({
       // is a URL submitted for indexing that can never be indexed — Search Console reports it as
       // "Page with redirect" and it costs crawl budget for nothing. Found 2026-08-12 while
       // auditing orphans after the ecology v3 rebuild.
+      // /society/room is noindex (the projection exit of Society; /society is the page to land on),
+      // and so it has no place in a sitemap: a submitted URL that says noindex is a conflict.
       filter: (page) =>
         !/\/protocol\/\d{4}-\d{2}-\d{2}(\/|$)/.test(page) &&
         !/\/steuerzentrale(\/|$)/.test(page) &&
+        !/\/society\/room(\/|$)/.test(page) &&
         // the reception's form opens inside a work's page; on its own it is a form, not a page to find
         !/\/reception\/rate(\/|$)/.test(page) &&
         !/\/werke\/?$/.test(page),

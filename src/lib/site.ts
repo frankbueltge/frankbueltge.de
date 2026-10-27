@@ -1,7 +1,11 @@
 /** Single source of truth for identity, links and brand profiles (ported from the prior build). */
 export const SITE = {
   name: 'Frank Bültge',
-  alternateName: 'Frank Bueltge',
+  /** The spellings a search or an answer engine may meet the name in: the transliteration without
+   *  the umlaut (also the imprint's form) and the one that drops it altogether. */
+  alternateName: ['Frank Bueltge', 'Frank Bultge'],
+  givenName: 'Frank',
+  familyName: 'Bültge',
   url: 'https://frankbueltge.de',
   role: { de: 'Data Engineering & Analytics', en: 'Data Engineering & Analytics' },
   /** Where Frank works from; visible on /about and in the Person data (name-query disambiguation). */
