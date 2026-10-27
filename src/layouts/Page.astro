@@ -16,11 +16,13 @@ interface Props {
   surface?: 'paper'
   /** see Base.astro — a page's own preview image; extra head matter goes into the `head` slot */
   ogImage?: string
+  /** see Base.astro — false keeps the page out of the visitor count (the analytics opt-out) */
+  analytics?: boolean
 }
-const { title, description, noindex, canonicalPath, surface, ogImage } = Astro.props
+const { title, description, noindex, canonicalPath, surface, ogImage, analytics } = Astro.props
 ---
 
-<Base title={title} description={description} noindex={noindex} canonicalPath={canonicalPath} surface={surface} ogImage={ogImage}>
+<Base title={title} description={description} noindex={noindex} analytics={analytics} canonicalPath={canonicalPath} surface={surface} ogImage={ogImage}>
   <slot name="head" slot="head" />
   <TopBar />
   <slot />

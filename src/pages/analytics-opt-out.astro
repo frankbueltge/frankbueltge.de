@@ -1,0 +1,125 @@
+---
+// /analytics-opt-out — "don't count this browser" (2026-10-28). The site's visitor count included
+// the owner's own devices; this page lets any reader switch the count off for the browser they
+// are using. The switch is Umami's own: the tracker sends nothing while `umami.disabled` sits in
+// the browser's local storage, and the page sets or clears that one entry
+// (src/lib/analytics/opt-out.ts). The page itself is never counted, carries noindex and is kept
+// out of the sitemap (astro.config.mjs): it is a tool, not a page to be found.
+//
+// Every word stands in the markup. The script only flips `hidden` attributes; it writes no text
+// and no style attribute (this site's CSP drops those).
+import Page from '@/layouts/Page.astro'
+import { buttonVariants } from '@/components/ui/button'
+import { SITE } from '@/lib/site'
+import { cn } from '@/lib/ui/cn'
+
+// Local storage is per origin, so the page names both addresses the site answers on.
+const apex = new URL('/analytics-opt-out/', SITE.url)
+const www = new URL(apex)
+www.hostname = `www.${apex.hostname}`
+
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const link = 'underline decoration-line underline-offset-2 hover:text-fg'
+---
+
+<Page
+  title="Don't count this browser | Frank Bültge"
+  description="Switch off the visitor count of this site for the browser you are using."
+  noindex
+  analytics={false}
+>
+  <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-6 py-16 sm:py-24" data-optout>
+    <h1 class="text-h1 font-bold">Don't count this browser</h1>
+    <p class="mt-6 text-small leading-relaxed text-fg-muted">
+      This site measures its reach with a self-hosted Umami: no cookies, no fingerprinting, no
+      personal profiles (<a class={link} href="/privacy">privacy notice</a>). The switch below stops
+      that count for the browser you are reading this in. It sets Umami's own off-switch, one entry
+      in this browser's local storage. Nothing is sent anywhere, and this page itself is never
+      counted.
+    </p>
+
+    <div class={cn(panel, 'mt-8 p-5')}>
+      <p class="text-small text-fg" aria-live="polite">
+        <span data-optout-state="pending">Checking this browser …</span>
+        <span data-optout-state="counted" hidden>This browser is <strong>counted</strong>.</span>
+        <span data-optout-state="off" hidden>This browser is <strong>not counted</strong>.</span>
+        <span data-optout-state="blocked" hidden>
+          This browser does not let the site store anything (a private window, or blocked site
+          data), so the switch cannot hold here.
+        </span>
+      </p>
+      <button type="button" class={cn(buttonVariants({ variant: 'outline' }), 'mt-4')} data-optout-toggle hidden>
+        <span data-optout-label="counted">Stop counting this browser</span>
+        <span data-optout-label="off" hidden>Count this browser again</span>
+      </button>
+      <noscript>
+        <p class="mt-3 text-small text-fg-muted">
+          The switch needs JavaScript. A browser without JavaScript is not counted in the first
+          place: the counter is a script as well.
+        </p>
+      </noscript>
+    </div>
+
+    <section class="mt-10">
+      <h2 class="text-h3 font-semibold">Where the setting lives</h2>
+      <p class="mt-3 text-small leading-relaxed text-fg-muted">
+        In this browser, for this address only. Open the page once in every browser you use: on
+        <a class={link} href={apex.href}>{apex.hostname}</a>, and on
+        <a class={link} href={www.href}>{www.hostname}</a> as well if you visit the site there.
+        Clearing this site's data removes the setting, and a private window forgets it when it
+        closes.
+      </p>
+    </section>
+  </main>
+</Page>
+
+<script>
+  // Reads the one entry, shows the matching sentence and button label, and flips the entry on a
+  // click. Runs on every page load, because the ClientRouter keeps this module alive between
+  // pages and swaps the markup underneath it.
+  import { isOptedOut, optIn, optOut } from '@/lib/analytics/opt-out'
+
+  type State = 'counted' | 'off' | 'blocked'
+
+  function storage(): Storage | null {
+    try {
+      return window.localStorage
+    } catch {
+      return null
+    }
+  }
+
+  function show(root: HTMLElement, state: State): void {
+    for (const el of root.querySelectorAll<HTMLElement>('[data-optout-state]')) {
+      el.hidden = el.dataset.optoutState !== state
+    }
+    for (const el of root.querySelectorAll<HTMLElement>('[data-optout-label]')) {
+      el.hidden = el.dataset.optoutLabel !== state
+    }
+    const toggle = root.querySelector<HTMLButtonElement>('[data-optout-toggle]')
+    if (toggle) toggle.hidden = state === 'blocked'
+  }
+
+  function start(): void {
+    const root = document.querySelector<HTMLElement>('[data-optout]')
+    const toggle = root?.querySelector<HTMLButtonElement>('[data-optout-toggle]')
+    if (!root || !toggle) return
+
+    const store = storage()
+    if (!store) return show(root, 'blocked')
+    show(root, isOptedOut(store) ? 'off' : 'counted')
+
+    toggle.addEventListener('click', () => {
+      try {
+        if (isOptedOut(store)) optIn(store)
+        else optOut(store)
+        show(root, isOptedOut(store) ? 'off' : 'counted')
+      } catch {
+        // a storage that refuses the write cannot hold the switch: say so instead of pretending
+        show(root, 'blocked')
+      }
+    })
+  }
+
+  document.addEventListener('astro:page-load', start)
+</script>
