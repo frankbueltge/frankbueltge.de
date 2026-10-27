@@ -1,30 +1,30 @@
 {
-  "date": "2026-10-26",
+  "date": "2026-10-27",
   "deletion": {
     "available": true,
-    "checked_at": "2026-10-26T11:26:26Z",
+    "checked_at": "2026-10-27T10:51:29Z",
     "counts": {
-      "botwall": 16,
+      "botwall": 15,
       "gone_404": 0,
       "gone_410": 1,
       "legal_451": 0,
-      "ok": 280,
-      "other": 0,
+      "ok": 281,
+      "other": 2,
       "server_error": 0,
-      "unreachable": 3
+      "unreachable": 1
     },
-    "decided": 281,
-    "excluded_unverifiable": 19,
+    "decided": 284,
+    "excluded_unverifiable": 16,
     "gone": 1,
     "gone_ci95": [
       0.0006,
-      0.0199
+      0.0197
     ],
-    "gone_rate": 0.0036,
+    "gone_rate": 0.0035,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.0135
+      0.0133
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,116 +33,115 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-10-24",
+    "pool_day": "2026-10-25",
     "receipts": [
       {
         "class": "gone_410",
         "domain": "breakingnews.ie",
-        "first_seen": "20261024070000",
+        "first_seen": "20261025070000",
         "http_code": 410,
-        "title": "Inspections likely to see if Sunday's bank holiday racing can go ahead",
-        "url": "https://www.breakingnews.ie/racing/inspections-likely-to-see-if-sundays-bank-holiday-racing-can-go-ahead-1955153.html"
+        "title": "Dublin tenant who told RTB of ceiling piece falling on 'son's cot' awarded damages",
+        "url": "https://www.breakingnews.ie/ireland/dublin-tenant-who-told-rtb-of-ceiling-piece-falling-on-sons-cot-awarded-damages-1955276.html"
       }
     ],
-    "sample_drawn_at": "2026-10-25T10:00:43Z",
+    "sample_drawn_at": "2026-10-26T11:23:16Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 3216,
-      "replaced": 3562,
-      "trivial": 440,
-      "update": 275
+      "reframing": 3776,
+      "replaced": 3981,
+      "trivial": 741,
+      "update": 393
     },
-    "day": "2026-10-25",
+    "day": "2026-10-26",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "J",
-          "J"
+          "Northwest",
+          "Arkansas"
         ],
-        "after": "\"No Industry Has Been as Criminal as Big Pharma\": Gardiner on J&J – Sri Lanka Guardian",
-        "before": "\"No Industry Has Been as Criminal as Big Pharma\": Gardiner Harris on Johnson & Johnson – Sri Lanka Guardian",
-        "detected": "2026-10-25T06:46:15Z",
-        "domain": "slguardian.org",
+        "after": "Voting early? Here's where and when you can do it in Northwest Arkansas | The Arkansas Democrat-Gazette",
+        "before": "Voting early? Here's where and when you can do it in Benton and Washington counties | The Arkansas Democrat-Gazette",
+        "detected": "2026-10-26T23:31:48Z",
+        "domain": "arkansasonline.com",
         "removed": [
-          "Harris",
-          "Johnson",
-          "Johnson"
+          "Benton",
+          "and",
+          "Washington",
+          "counties"
         ],
-        "similarity": 0.812,
-        "url": "https://slguardian.org/no-industry-has-been-as-criminal-as-big-pharma-gardiner-harris-on-johnson-johnson/",
-        "weight": 10,
-        "window": "24h"
-      },
-      {
-        "added": [
-          "Kim",
-          "Kardashian"
-        ],
-        "after": "Taylor Swift is a vision in strapless blue gown as she leads best dressed stars with Kim Kardashian, Kate Hudson and Jessica Biel at 2026 Academy Museum Gala",
-        "before": "Taylor Swift is a vision in strapless blue gown as she leads best dressed stars with Kate Hudson, Jessica Biel and Sarah Pidgeon at 2026 Academy Museum Gala",
-        "detected": "2026-10-25T02:47:33Z",
-        "domain": "dailymail.com",
-        "removed": [
-          "Sarah",
-          "Pidgeon"
-        ],
-        "similarity": 0.867,
-        "url": "https://www.dailymail.com/tvshowbiz/article-16217877/academy-museum-gala-2026-best-dressed.html",
-        "weight": 8,
+        "similarity": 0.8,
+        "url": "https://www.arkansasonline.com/news/2026/oct/19/voting-early-heres-where-and-when-you-can-do-it/",
+        "weight": 9,
         "window": "1w"
       },
       {
         "added": [
-          "Mahoba",
-          "health",
-          "centre"
+          "cop"
         ],
-        "after": "Mahoba Health Centre: Six-foot snake spotted near lab at Mahoba health centre, triggers panic among patients",
-        "before": "Snake Sighting Hospital: Six-foot snake spotted near lab at Mahoba health centre, triggers panic among patients",
-        "detected": "2026-10-25T03:03:08Z",
+        "after": "Video of ASI sexually harassing volunteer at Kolkata puja pandal goes viral; cop arrested",
+        "before": "Kolkata Harassment: Video of ASI sexually harassing volunteer at Kolkata puja pandal goes viral; arrested | Kolkata News",
+        "detected": "2026-10-26T10:16:34Z",
         "domain": "indiatimes.com",
         "removed": [
-          "Sighting",
-          "Hospital",
-          "snake"
+          "Harassment",
+          "Kolkata",
+          "Kolkata",
+          "News"
         ],
-        "similarity": 0.875,
-        "url": "https://timesofindia.indiatimes.com/etimes/animals/six-foot-snake-spotted-near-lab-at-mahoba-health-centre-triggers-panic-among-patients/articleshow/135022993.cms",
+        "similarity": 0.812,
+        "url": "https://timesofindia.indiatimes.com/city/kolkata/kolkata-asi-arrested-for-sexually-harassing-durga-puja-volunteer/articleshow/135045447.cms",
         "weight": 9,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "III"
+        ],
+        "after": "Rare photos of Myanmar's ex-leader Suu Kyi show her receiving books sent by King Charles III",
+        "before": "Rare photos of Myanmar's ex-leader Aung San Suu Kyi show her receiving books sent by King Charles",
+        "detected": "2026-10-26T15:47:56Z",
+        "domain": "abcnews.com",
+        "removed": [
+          "Aung",
+          "San"
+        ],
+        "similarity": 0.85,
+        "url": "https://abcnews.com/International/wireStory/rare-photos-myanmars-leader-aung-san-suu-kyi-137382339",
+        "weight": 6,
         "window": "1w"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 12019,
-      "PAGE_TEXTCHANGE": 78060,
-      "PAGE_TITLECHANGE": 32188,
-      "UNCHANGED_CONTENT": 502268
+      "HTTP_REDIRECT": 11807,
+      "PAGE_TEXTCHANGE": 101857,
+      "PAGE_TITLECHANGE": 40056,
+      "UNCHANGED_CONTENT": 590094
     },
-    "title_changes_en": 7493,
+    "title_changes_en": 8891,
     "trace": [
       {
-        "bytes_billed": 16777216,
-        "created": "1793013781443",
-        "job_id": "world_gdg_counts_20261025",
+        "bytes_billed": 19922944,
+        "created": "1793098040721",
+        "job_id": "world_gdg_counts_20261026",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 157286400,
-        "created": "1793013786685",
-        "job_id": "world_gdg_titles_20261025",
+        "bytes_billed": 187695104,
+        "created": "1793098046138",
+        "job_id": "world_gdg_titles_20261026",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-10-26T11:26:26Z",
+  "generated_at": "2026-10-27T10:51:29Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-10-25.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-10-26.json",
   "schema_version": "1",
   "selection_version": "v1"
 }
