@@ -116,6 +116,8 @@ export default defineConfig({
         !/\/steuerzentrale(\/|$)/.test(page) &&
         // the reception's form opens inside a work's page; on its own it is a form, not a page to find
         !/\/reception\/rate(\/|$)/.test(page) &&
+        // so does a study's consent frame (2026-10-27)
+        !/\/study\/frame(\/|$)/.test(page) &&
         !/\/werke\/?$/.test(page),
     }),
     mdx(),
