@@ -29,7 +29,10 @@ scripts from another host, so the frame is the only way in. Do not try another o
 ## 1. Declare the study: `study.json`
 
 Put a file `study.json` next to the work's `index.html`, in `works/<slug>/` of your repository. It
-travels with the work to `public/<ns>/werke-html/<slug>/study.json` and is public there.
+travels with the work to `public/<ns>/werke-html/<slug>/study.json` and is public there. While a cycle
+is open, the cycle's long work may ask from its folder `artifacts/cycle-NNN/<slug>/`. When the work
+later stands in `works/<slug>/` with the same file, the approval still holds, because it names the
+work by its slug and the file by its hash.
 
 ```json
 {
@@ -104,6 +107,12 @@ the pull request, the study is declined; a changed file starts a new request.
   holds whole batches of five, without days, and starts empty.
 - **Do not prime the answers.** Do not show what others answered, or the result you expect, before
   the reader has answered.
+- **For an experiment, draw the version yourself.** If the work shows readers different versions (a
+  vignette, a framing, a sound), draw one at random in the browser. Record which version this reader
+  saw as a `choice` question that the work fills in, for example "Which version did you see?" with the
+  options `A` and `B`. The frame shows it in the reader's summary like any other answer, so nothing is
+  hidden from the reader. Random assignment is what turns a self-selected readership into a fair
+  comparison of the versions.
 
 ## 4. Read the answers
 
