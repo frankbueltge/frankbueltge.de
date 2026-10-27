@@ -1,0 +1,88 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Spans of Age</title>
+<style>
+html,body{margin:0;background:#0f1418;}
+body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,serif;color:#c9c3b6}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1100" height="800"></canvas>
+<script src="data/bridges.js"></script>
+<script>
+const cv=document.getElementById('c'),g=cv.getContext('2d');
+const W=1100,H=800,dpr=1;
+g.fillStyle='#0f1418';g.fillRect(0,0,W,H);
+function dms(v){const d=Math.floor(v/1e6),m=Math.floor(v/1e4)%100,s=(v%1e4)/100;return d+m/60+s/3600;}
+const B=BRIDGES.map(b=>({lat:dms(b.LAT_016),lon:-dms(b.LONG_017),y:b.YEAR_BUILT_027,adt:b.ADT_029,len:b.STRUCTURE_LEN_MT_049,r:b.LOWEST_RATING,c:b.BRIDGE_CONDITION,k:b.STRUCTURE_KIND_043A,f:b.FEATURES_DESC_006A}));
+const NOW=2025;
+// colour by lowest rating
+function col(r,a){const t={9:[150,200,230],8:[130,190,215],7:[150,195,180],6:[205,200,150],5:[225,165,95],4:[230,110,70],3:[240,70,60],2:[240,40,40],1:[240,20,20],0:[255,0,0]}[r]||[200,200,200];return `rgba(${t[0]},${t[1]},${t[2]},${a})`;}
+// ---------- arches: each bridge spans from its year built to the year of the inventory
+const x0=400,x1=1060,base=540;
+const ymin=Math.min(...B.map(b=>b.y));
+const X=y=>x0+(y-ymin)/(NOW-ymin)*(x1-x0);
+const maxA=Math.max(...B.map(b=>b.adt));
+// water
+const grd=g.createLinearGradient(0,base,0,H);grd.addColorStop(0,'#13202a');grd.addColorStop(1,'#0f1418');
+
+const sorted=[...B].sort((a,b)=>b.r-a.r); // poor drawn last
+
+for(const b of sorted){
+  const xa=X(b.y),xb=X(NOW),cx=(xa+xb)/2,rad=(xb-xa)/2;
+  if(rad<0.5) continue;
+  const lw=0.35+2.2*Math.log10(1+b.adt)/Math.log10(1+maxA);
+  const a=b.r<=4?0.9:0.22;
+  g.lineWidth=lw;
+  g.strokeStyle=col(b.r,a);
+  g.beginPath();g.ellipse(cx,base,rad,rad,0,Math.PI,2*Math.PI);g.stroke();
+  // reflection
+  g.strokeStyle=col(b.r,a*0.35);
+  g.beginPath();g.ellipse(cx,base,rad,rad*0.22,0,0,Math.PI);g.stroke();
+}
+g.globalCompositeOperation='source-over';
+// baseline + year ticks
+g.strokeStyle='rgba(201,195,182,0.5)';g.lineWidth=1;
+g.beginPath();g.moveTo(x0-20,base+0.5);g.lineTo(x1+20,base+0.5);g.stroke();
+g.fillStyle='rgba(201,195,182,0.55)';g.font='11px Georgia';g.textAlign='center';
+g.strokeStyle='#0f1418';g.lineWidth=3;for(let y=1850;y<=2000;y+=25){g.fillRect(X(y)-0.5,base+1,1,5);g.strokeText(y,X(y),base+19);g.fillText(y,X(y),base+19);}
+g.fillText(ymin,X(ymin),base+19);
+g.fillStyle='rgba(201,195,182,0.85)';g.fillText(NOW,X(NOW),base+19);
+// ---------- map
+const lats=B.map(b=>b.lat),lons=B.map(b=>b.lon);
+const la0=Math.min(...lats),la1=Math.max(...lats),lo0=Math.min(...lons),lo1=Math.max(...lons);
+const k=Math.cos((la0+la1)/2*Math.PI/180);
+const mh=700,sc=mh/(la1-la0),mw=(lo1-lo0)*k*sc;
+const mx=60+(260-mw)/2,my=50;
+const P=b=>[mx+(b.lon-lo0)*k*sc,my+(la1-b.lat)*sc];
+const maxL=Math.max(...B.map(b=>b.len));
+for(const b of sorted){
+  const [px,py]=P(b);
+  const rr=1.2+5*Math.sqrt(b.len/maxL)*1.6;
+  const age=NOW-b.y;
+  // tiny arch, width by length, same rating colour
+  g.strokeStyle=col(b.r,b.r<=4?0.95:0.6);g.lineWidth=0.9;
+  g.beginPath();g.arc(px,py+rr*0.3,Math.min(rr,9),Math.PI,2*Math.PI);g.stroke();
+}
+// ---------- text
+g.textAlign='left';g.fillStyle='#e6dfd0';g.font='italic 30px Georgia';
+g.fillText('Spans of Age',x0,90);
+g.font='13px Georgia';g.fillStyle='rgba(201,195,182,0.8)';
+const n=B.length;
+const lines=[`${n} highway bridges of Delaware, National Bridge Inventory ${NOW}.`,
+`Each arch springs from the year a bridge was built and lands in ${NOW}:`,
+`the older the bridge, the wider and higher it stands.`,
+`Line weight: average daily traffic. Colour: its lowest condition rating.`];
+lines.forEach((t,i)=>g.fillText(t,x0,118+i*18));
+// legend
+const ratings=[...new Set(B.map(b=>b.r))].sort((a,b)=>b-a);
+let lx=x0;const ly=base+112;
+g.font='11px Georgia';
+g.fillStyle='rgba(201,195,182,0.6)';g.fillText('lowest rating',lx,ly-14);
+for(const r of ratings){const c=B.filter(b=>b.r===r).length;
+  g.strokeStyle=col(r,1);g.lineWidth=2;g.beginPath();g.arc(lx+9,ly+10,8,Math.PI,2*Math.PI);g.stroke();
+  g.fillStyle='rgba(201,195,182,0.85)';g.fillText(`${r}  ·  ${c}`,lx+22,ly+12);lx+=78;}
+const old=B.reduce((a,b)=>b.y<a.y?b:a);
+g.fillStyle='rgba(201,195,182,0.6)';
+g.fillText(`oldest: built ${old.y}, crossing ${old.f.toLowerCase()}`,x0,ly+46);
+g.fillText(`left: each bridge where it stands, north at top; arch width by structure length`,x0,ly+64);
+g.save();g.translate(30,my+mh);g.rotate(-Math.PI/2);g.fillStyle='rgba(201,195,182,0.35)';g.fillText('Delaware',0,0);g.restore();
+</script></body></html>

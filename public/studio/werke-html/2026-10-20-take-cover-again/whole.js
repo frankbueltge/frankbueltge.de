@@ -23,6 +23,9 @@ ev.sort((a, b) => a[0] - b[0] || a[3] - b[3] || a[1] - b[1]);
 const issueSorted = Array.from(D.issue.keys()).sort((a, b) => D.issue[a] - D.issue[b]);
 const END = ev[ev.length - 1][0];
 const DEAD = R.dead.slice().sort((a, b) => a[0] - b[0]);
+// coda (session 192): the deadliest tornado, which the Field showed carries 29 % of the dead after a run of 3+
+const BIG = DEAD.reduce((a, d) => d[1] > a[1] ? d : a, DEAD[0]);
+let aside = false;
 const OBS = new Set(R.observed);
 const wCounties = new Map();
 for (let c = 0; c < NC; c++) for (const w of D.counties[c][2]) if (OBS.has(w)) (wCounties.get(w) || wCounties.set(w, []).get(w)).push(c);
@@ -102,6 +105,7 @@ function draw() {
   // the dead: a disc for a year after they died, then a small mark that stays; full red when their warning
   // came after three or more empty ones in their county, pale red otherwise (fewer, or no warning at all)
   for (let i = 0; i < nd; i++) {
+    if (aside && DEAD[i] === BIG) continue;
     const [m, k, , c, rb] = DEAD[i]; if (c < 0 || !cent[c]) continue;
     const old = t - m > 525600, deep = rb >= 3;
     ctx.beginPath();
@@ -144,12 +148,13 @@ function readout() {
   const n = bsearch(wEnd, t, x => x), m = bsearch(wEndMet, t, x => x);
   const nd = bsearch(DEAD, t, x => x[0]);
   let dead = 0, deadAfter3 = 0;
-  for (let i = 0; i < nd; i++) { dead += DEAD[i][1]; if (DEAD[i][4] >= 3) deadAfter3 += DEAD[i][1]; }
+  for (let i = 0; i < nd; i++) { if (aside && DEAD[i] === BIG) continue; dead += DEAD[i][1]; if (DEAD[i][4] >= 3) deadAfter3 += DEAD[i][1]; }
   let dark3 = 0, dark10 = 0;
   const arr = mode === 'now' ? run : longest;
   for (let c = 0; c < NC; c++) { if (arr[c] >= 3) dark3++; if (arr[c] >= 10) dark10++; }
   const pc = (a, b) => b ? Math.round(100 * a / b) + ' %' : '—';
-  $('wbase').innerHTML = `Of the times a tornado met a county's warning so far, <b>${pc(met3, metN)}</b> came after three or more empty ones there. Of the dead so far, <b>${pc(deadAfter3, dead)}</b> did.`;
+  $('wbase').innerHTML = `Of the times a tornado met a county's warning so far, <b>${pc(met3, metN)}</b> came after three or more empty ones there. Of the dead so far, <b>${pc(deadAfter3, dead)}</b> did.${aside ? ' (the deadliest tornado set aside)' : ''}` +
+    (nd === DEAD.length ? ` <span class="coda">Coda, 2026-10-22: drawn again tornado by tornado, the dead's share could have been anywhere from <b>${aside ? '21 to 43 %' : '23 to 55 %'}</b>; the hits' share lies inside. ${aside ? 'Without Joplin it is about the hits\' share.' : 'One tornado, Joplin 2011, carries 158 of the ' + fmtN(deadAfter3) + '.'}</span>` : '');
   $('wdate').textContent = new Date(T0 + t * 60000).toISOString().slice(0, 10);
   $('wcount').innerHTML = [
     [fmtN(n), 'tornado warnings answered'],
@@ -182,6 +187,7 @@ $('speed').onchange = () => { rate = +$('speed').value; };
 $('scrub').max = END; $('scrub').oninput = () => { seek(+$('scrub').value); draw(); };
 $('mode').onchange = () => { mode = $('mode').value; draw(); };
 $('obs').onchange = () => { showObs = $('obs').checked; draw(); };
+$('aside').onchange = () => { aside = $('aside').checked; draw(); };
 
 // sound: the doubt as a drone, each tornado's answer as a bell pitched by the run it ended
 let audio = null;

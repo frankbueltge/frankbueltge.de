@@ -8,6 +8,10 @@
 // shelf's frame once and commits the crop under public/shelf/; this module says which picture is
 // whose, and where its crop lives. It reads files only — no Vite, no build — because the script
 // runs it under tsx.
+//
+// Since 2026-10-23 every other piece of the pool shows a screenshot of its own page as this site
+// serves it, taken by scripts/shelf-shots.ts from the built site and committed under the same
+// name; the maker's own still always wins where one exists.
 
 import { existsSync, readFileSync } from 'node:fs'
 import { join, posix } from 'node:path'
@@ -88,6 +92,9 @@ export function makerStill(work: ShelfWork, root: string = process.cwd()): strin
       return null
   }
 }
+
+/** What a page shot shows: the piece's own page, named by its address on this site. */
+export const pageShotSource = (href: string): string => `page:${href}`
 
 /** The committed crop of a pick's still: its file, and the address the page loads. */
 export function shelfCrop(work: ShelfWork): { file: string; src: string } {

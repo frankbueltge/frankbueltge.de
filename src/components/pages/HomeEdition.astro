@@ -61,6 +61,7 @@ import { loadCycle } from '@/lib/ecology/v3'
 import { getLatestProtokoll } from '@/lib/protokoll/data'
 import { SELECTED_WORKS } from '@/config/selected-works'
 import { readShelf } from '@/lib/ops/selected-works'
+import { readPool } from '@/lib/ops/shelf-pool'
 import SelectedWorks from '@/components/ops/SelectedWorks.astro'
 import '@fontsource-variable/literata/opsz-italic.css'
 import '@/styles/paper.css'
@@ -84,6 +85,10 @@ const tiles = readTiles({ protokoll: await getLatestProtokoll() })
 // The selected works (2026-10-17): chosen by hand in src/config/selected-works.ts, every field a
 // card shows read from the piece's own record.
 const shelf = readShelf()
+// Since 2026-10-22 the band draws eight at random on every visit from every finished piece the
+// site publishes (src/lib/ops/shelf-pool.ts); the picks lead the pool and are what stands without
+// JavaScript.
+const pool = readPool()
 
 // ── the edition: its instant, its day, and the default reference point a day before ─────────
 const editionMs = editionInstant(feed, pulse.as_of)
@@ -296,7 +301,7 @@ const forScript = {
         <h2 id="ed-shelf-title">{SELECTED_WORKS.title}</h2>
         <span>{SELECTED_WORKS.sub}</span>
       </div>
-      <SelectedWorks cards={shelf} link={url} />
+      <SelectedWorks cards={pool} shown={shelf.length} link={url} />
     </section>
 
     {/* ── 4 · the lead, and the timetable ─────────────────────────────────────────────────── */}
@@ -549,13 +554,23 @@ const forScript = {
     const $ = <T extends Element>(sel: string) => root.querySelector<T>(sel)
     const $$ = <T extends Element>(sel: string) => [...root.querySelectorAll<T>(sel)]
 
-    // ── the selected works, in a new order on every visit ─────────────────────────────────
-    // The build renders the hand order (src/config/selected-works.ts); here the cards are moved,
-    // never rebuilt, so links, stills and lazy loading stay as the server made them.
+    // ── the selected works, a new draw from every finished piece on every visit ───────────
+    // The build renders the whole pool and shows the hand-chosen picks (SelectedWorks.astro);
+    // here as many cards as it shows are drawn from all of them, unhidden and set first. The
+    // cards are moved, never rebuilt, so links, stills and lazy loading stay as the server made them.
     const shelf = $<HTMLElement>('.ed-shelf--edition')
     if (shelf) {
-      const cards = [...shelf.children]
-      for (const i of shuffledOrder(cards.length)) shelf.append(cards[i])
+      const cards = [...shelf.children] as HTMLElement[]
+      const shown = Math.min(cards.length, Number(shelf.dataset.edShelfShown) || cards.length)
+      // a pinned piece stands in every draw (SELECTED_WORKS.pinned); the rest fill the band
+      const pinned = cards.filter((c) => c.dataset.edShelfPinned !== undefined)
+      const free = cards.filter((c) => c.dataset.edShelfPinned === undefined)
+      const chosen = [...pinned, ...shuffledOrder(free.length).slice(0, Math.max(0, shown - pinned.length)).map((i) => free[i])]
+      for (const card of cards) card.hidden = true
+      for (const i of shuffledOrder(chosen.length)) {
+        chosen[i].hidden = false
+        shelf.append(chosen[i])
+      }
     }
 
     // ── the clock and the dots ────────────────────────────────────────────────────────────

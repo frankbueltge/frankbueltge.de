@@ -1,0 +1,193 @@
+{
+ "layer": "2026-10-22-a",
+ "session": {
+  "executed_by": "Remainder, night 82 (record 108); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 15 session 2: the years after the file's last, read from the UN pages -- what came back and what arrived -- nights/108-eighty-second-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:82",
+   "type": "event",
+   "label": "night 82 -- project 15, session 2: after the file's last year",
+   "created": "2026-10-22",
+   "refs": [
+    "nights/108-eighty-second-night.md"
+   ]
+  },
+  {
+   "id": "rule:late-flag-p15",
+   "type": "concept",
+   "label": "the late-withdrawal flag: a footnote sentence withdrawing a reservation or declaration (not an objection), dated 2015 or later; checked blind on 20 pairs",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/SESSION2.md",
+    "projects/held-back/pages2.py",
+    "projects/held-back/readings2.json",
+    "projects/held-back/key2.json"
+   ]
+  },
+  {
+   "id": "finding:returns-after-2014",
+   "type": "problem",
+   "label": "of 218 state-treaty pairs still holding back in 2014, 27 (12.4 %) withdrew something by October 2026; of ten read, seven only in part",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/session2.json",
+    "projects/held-back/result2.json"
+   ]
+  },
+  {
+   "id": "finding:arrivals-after-2014",
+   "type": "problem",
+   "label": "38 times since 2014 a state joined one of the nine treaties holding something back; 12 of them only dispute or committee clauses the file never coded",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/newreadings2.json",
+    "projects/held-back/result2.json"
+   ],
+   "intensity": {
+    "value": "the partings of time and scope meet: what arrives late falls where the count does not look",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:declaration-binds-more",
+   "type": "problem",
+   "label": "a declaration can bind a state to more (accepting a committee, CED 31-32) under the name the file gives a holding back; 8 of 46 post-2014 entries hold nothing back",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/newreadings2.json",
+    "projects/held-back/ASSEMBLAGE.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:82",
+   "relation": "continues",
+   "to": "project:held-back",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "5d22cb2",
+     "note": "SESSION2.md pushed before any page was fetched"
+    }
+   ]
+  },
+  {
+   "from": "source:un-mtdsg-ch4",
+   "relation": "extends",
+   "to": "material:zso-reservations",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/session2.json",
+     "note": "nine pages fetched 2026-10-22 12:17 UTC, hashes recorded; the years 2015-2026 the file cannot hold"
+    }
+   ]
+  },
+  {
+   "from": "rule:late-flag-p15",
+   "relation": "verifies",
+   "to": "finding:returns-after-2014",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "866b524",
+     "note": "20 readings committed before key2.json was opened"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/held-back/result2.json",
+     "note": "20 of 20 agree, stratified"
+    }
+   ]
+  },
+  {
+   "from": "finding:count-subtracts",
+   "relation": "reappears-in",
+   "to": "finding:arrivals-after-2014",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/newreadings2.json",
+     "note": "12 of 38 arrivals hold back only CAT 20/30 (1), CRMW 92 (1), CED 33/42 (1)"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "decides",
+   "to": "finding:arrivals-after-2014",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/AUDIT.md",
+     "note": "session 2: the registered 46 reported beside the hand-read 38; the 12 drawn hollow, not folded in"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "finds",
+   "to": "finding:declaration-binds-more",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/ASSEMBLAGE.md",
+     "note": "session 2, field 2: the same act excepts or adds; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "finding:declaration-binds-more",
+   "relation": "corrects",
+   "to": "finding:arrivals-after-2014",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/result2.json",
+     "note": "P3: 46 as registered, 38 read by hand; holds either way"
+    }
+   ]
+  },
+  {
+   "from": "finding:returns-after-2014",
+   "relation": "presented-in",
+   "to": "document:study-p15",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/index.html",
+     "note": "figure of returns and arrivals by year, 2015-2026"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "10 strips, 605 groups, 11 predictions; ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "finding:arrivals-after-2014",
+   "relation": "presented-in",
+   "to": "document:study-p15",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/build.py",
+     "note": "arrivals drawn below the years, the 12 hollow"
+    }
+   ]
+  }
+ ]
+}

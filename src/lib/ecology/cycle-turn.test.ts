@@ -122,7 +122,7 @@ describe('a presented cycle opens the convening', () => {
     })
     expect(t.line).toMatch(/^Cycle 006 \(opened 2026-10-07\) closed on 2026-10-10: all three practices presented\./)
     expect(t.line).toContain('opens cycle 007 a day later unless the architect objects')
-    expect(t.line).toContain('Without a result by 2026-10-17, cycle 007 opens on the continuing question, Missing Data Art')
+    expect(t.line).toContain("Without a result by 2026-10-17, cycle 007 opens on the briefing's first matter that is urgent but quiet, or without a briefing on the continuing question, Missing Data Art")
   })
 
   it('no longer opens a next round on the continuing question by itself', () => {
@@ -282,5 +282,51 @@ describe('the clock is started where the relay lands, and deploys what it turns'
     expect(sentinel).toContain(
       "(steps.turn.outputs.turned == 'true' || steps.objection.outputs.recorded == 'true') && github.triggering_actor == 'github-actions[bot]'",
     )
+  })
+})
+
+describe('the briefing (2026-10-25)', () => {
+  const BRIEFING = {
+    url: 'https://github.com/frankbueltge/research-ecology/blob/main/briefings/after-cycle-006.md',
+    fallback: 'What does a famine look like in the data before it is declared?',
+  }
+
+  it("falls back to the briefing's first urgent-but-quiet matter, not the continuing question", () => {
+    const t = planTurn(convening('2026-10-10', { briefing: BRIEFING }), true, [], '2026-10-17', relay(null))!
+    expect(t.kind).toBe('fallback')
+    expect(t.next).toMatchObject({ cycle: 7, phase: 'working', question: BRIEFING.fallback, source: 'convening', seed_id: null })
+    expect(t.line).toContain('urgent but quiet')
+    expect(t.line).toContain(BRIEFING.url)
+  })
+
+  it('keeps the continuing question as the fallback while no briefing is linked', () => {
+    const t = planTurn(convening('2026-10-10', { briefing: null }), true, [], '2026-10-17', relay(null))!
+    expect(t.next).toMatchObject({ question: 'Missing Data Art', source: 'continuing' })
+  })
+
+  it('lets a tally stand over the briefing', () => {
+    const t = planTurn(convening('2026-10-10', { briefing: BRIEFING }), true, [], '2026-10-13', relay('2026-10-12'))!
+    expect(t.kind).toBe('convened')
+    expect(t.next).toMatchObject({ question: 'What the archive refuses to count' })
+  })
+
+  it('names the briefing when the convening opens', () => {
+    expect(planTurn(state(), true, [], TODAY)!.line).toContain('the Middle writes a briefing')
+  })
+
+  it('validates the briefing block on load', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'briefing-'))
+    fs.mkdirSync(path.join(root, 'src/data/ecology'), { recursive: true })
+    const write = (b: unknown) =>
+      fs.writeFileSync(
+        path.join(root, 'src/data/ecology/cycle.json'),
+        JSON.stringify(convening('2026-10-10', { briefing: b })),
+      )
+    write(BRIEFING)
+    expect(loadCycle(root).convening?.briefing).toEqual(BRIEFING)
+    write({ url: 'http://x', fallback: 'q' })
+    expect(() => loadCycle(root)).toThrow(/https/)
+    write({ url: BRIEFING.url, fallback: ' ' })
+    expect(() => loadCycle(root)).toThrow(/fallback/)
   })
 })

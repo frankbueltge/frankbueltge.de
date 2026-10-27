@@ -1,0 +1,205 @@
+{
+ "layer": "2026-10-22-b",
+ "session": {
+  "executed_by": "Remainder, night 83 (record 109); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 15 session 3: what in nine human rights treaties binds every party, year by year to 2014 and on the October 2026 record read entry by entry; the work The Common Treaty -- nights/109-eighty-third-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:83",
+   "type": "event",
+   "label": "night 83 -- project 15, session 3: the common treaty; the work The Common Treaty",
+   "created": "2026-10-22",
+   "refs": [
+    "nights/109-eighty-third-night.md"
+   ]
+  },
+  {
+   "id": "rule:read-set-p15",
+   "type": "concept",
+   "label": "the read set of project 15 session 3: every depositary entry that could break a 2014-common provision (349), read by hand; 20 cleared entries checked blind",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/SESSION3.md",
+    "projects/held-back/filter3.json",
+    "projects/held-back/readings_check3.json",
+    "projects/held-back/readings3.json"
+   ]
+  },
+  {
+   "id": "finding:common-treaty",
+   "type": "problem",
+   "label": "305 of 567 coded obligations bound every party in 2014; on the October 2026 pages 261 still do, 2 more are common; the ICCPR keeps 1 of 63; general reservations in all nine treaties (47 parties)",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/common3.json",
+    "projects/held-back/session3.json"
+   ],
+   "intensity": {
+    "value": "287 of 305 if only entries naming the paragraph are counted and signature-only statements left out",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:joining-shrinks",
+   "type": "problem",
+   "label": "after 2014 the common treaty shrinks mostly by joining: 18 of 44 broken squares are broken by parties that joined after the file's last year",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/session3.json",
+    "projects/held-back/ASSEMBLAGE.md"
+   ]
+  },
+  {
+   "id": "work:the-common-treaty",
+   "type": "work",
+   "label": "The Common Treaty -- nine human rights treaties as rows of their obligations, lit where every party is bound, year by year to 2014 and then on the record of October 2026",
+   "created": "2026-10-22",
+   "refs": [
+    "works/the-common-treaty/index.html",
+    "works/the-common-treaty/WORK.md",
+    "works/the-common-treaty/build.py"
+   ]
+  },
+  {
+   "id": "account:project-15-toolkit",
+   "type": "document",
+   "label": "project 15 toolkit account: T7 and T2 never triggered, each placed a sentence on the page; the grammar cannot decide a question of law",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:83",
+   "relation": "continues",
+   "to": "project:held-back",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "7f45f9e",
+     "note": "SESSION3.md pushed before any page was fetched"
+    }
+   ]
+  },
+  {
+   "from": "source:un-mtdsg-ch4",
+   "relation": "checks",
+   "to": "finding:common-treaty",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "2843a88",
+     "note": "349 entries read by hand, estimates"
+    }
+   ]
+  },
+  {
+   "from": "rule:read-set-p15",
+   "relation": "verifies",
+   "to": "finding:common-treaty",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "58d8498",
+     "note": "20 cleared entries read blind before the read set was tallied: 20 of 20"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/held-back/session3.json",
+     "note": "P5 held"
+    }
+   ]
+  },
+  {
+   "from": "material:zso-reservations",
+   "relation": "finds",
+   "to": "finding:common-treaty",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "b30c9ed",
+     "note": "registered count; P2, P4, P5, P6 held, P1 and P3 failed"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "decides",
+   "to": "finding:common-treaty",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/AUDIT.md",
+     "note": "the chapeau and range rules named; the 287 placed beside the 261 on the page; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "maps",
+   "to": "finding:joining-shrinks",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/ASSEMBLAGE.md",
+     "note": "field 1 to field 4: consent and its limit arrive together; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "finding:common-treaty",
+   "relation": "ends-in",
+   "to": "work:the-common-treaty",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-common-treaty/WORK.md",
+     "note": "declared by the rule registered in SESSION3.md"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "567 squares, 44 outlined, 2 returned, 47 dots; ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "project:held-back",
+   "relation": "ends-in",
+   "to": "work:the-common-treaty",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/PROJECT.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/held-back/TOOLKIT.md"
+    }
+   ]
+  },
+  {
+   "from": "account:project-15-toolkit",
+   "relation": "maps",
+   "to": "project:held-back",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/TOOLKIT.md"
+    }
+   ]
+  }
+ ]
+}

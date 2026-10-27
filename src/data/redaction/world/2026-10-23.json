@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-23",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-23T10:27:54Z",
+    "counts": {
+      "botwall": 13,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 283,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 284,
+    "excluded_unverifiable": 16,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0197
+    ],
+    "gone_rate": 0.0035,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0133
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-21",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "slugmag.com",
+        "first_seen": "20261021020000",
+        "http_code": 404,
+        "title": "High West Whiskey Experience at Van Ryder",
+        "url": "https://www.slugmag.com/event/high-west-whiskey-experience-at-van-ryder/"
+      }
+    ],
+    "sample_drawn_at": "2026-10-22T10:25:44Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5913,
+      "replaced": 5255,
+      "trivial": 854,
+      "update": 557
+    },
+    "day": "2026-10-22",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Jaafar",
+          "English",
+          "Movie",
+          "News"
+        ],
+        "after": "Jaafar Jackson on people who want the 'Michael' sequel to address the singer's controversies: 'I can't say, because I don't know' | English Movie News",
+        "before": "Jafaar Jackson on people who want the 'Michael' sequel to address the singer's controversies: 'I can't say, because I don't know' |",
+        "detected": "2026-10-22T03:47:38Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Jafaar"
+        ],
+        "similarity": 0.8,
+        "url": "https://timesofindia.indiatimes.com/entertainment/english/hollywood/news/jafaar-jackson-on-people-who-want-the-michael-sequel-to-address-the-singers-controversies-i-cant-say-because-i-dont-know/articleshow/135081068.cms",
+        "weight": 10,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Dow",
+          "Jones",
+          "Energy"
+        ],
+        "after": "Dow Jones Energy Forum: Policymakers Too Complacent About Volatile Oil, Gas Supplies, Ineos Energy Chairman Says",
+        "before": "DJE Forum: Policymakers Too Complacent About Volatile Oil, Gas Supplies, Ineos Energy Chairman Says",
+        "detected": "2026-10-22T18:50:21Z",
+        "domain": "dowjones.com",
+        "removed": [
+          "DJE"
+        ],
+        "similarity": 0.812,
+        "url": "https://www.dowjones.com/business-intelligence/blog/dje-forum-policymakers-too-complacent-about-volatile-oil-gas-supplies-ineos-energy-chairman-says/",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "HC"
+        ],
+        "after": "CCB sought I-T returns filed by me, my wife and mother-in-law for last 10 years: Anbil Mahesh tells Madras HC",
+        "before": "CCB sought I-T returns filed by me, my wife and mother-in-law for last 10 years, Anbil Mahesh Poyyamozhi tells Madras High Court",
+        "detected": "2026-10-22T19:32:50Z",
+        "domain": "thehindu.com",
+        "removed": [
+          "Poyyamozhi",
+          "High",
+          "Court"
+        ],
+        "similarity": 0.846,
+        "url": "https://www.thehindu.com/news/national/tamil-nadu/ccb-sought-i-t-returns-filed-by-me-my-wife-and-mother-in-law-for-last-10-years-anbil-mahesh-poyyamozhi-tells-madras-high-court/article71589303.ece",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 18069,
+      "PAGE_TEXTCHANGE": 138198,
+      "PAGE_TITLECHANGE": 51096,
+      "UNCHANGED_CONTENT": 758177
+    },
+    "title_changes_en": 12579,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1792750973070",
+        "job_id": "world_gdg_counts_20261022",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 243269632,
+        "created": "1792750978775",
+        "job_id": "world_gdg_titles_20261022",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-23T10:27:54Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-22.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

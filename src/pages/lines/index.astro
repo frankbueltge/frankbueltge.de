@@ -1,0 +1,43 @@
+---
+// /lines — the research ecology's lines, the questions it keeps working on across cycles
+// (2026-10-25; docs/design/2026-10-25-the-lines.md). Read from the mirror of research-ecology's
+// lines/ at build time (src/lib/ecology/research-lines.ts); the page adds nothing to what the files say.
+import Page from '@/layouts/Page.astro'
+import { LINES } from '@/config/lines-wording'
+import { loadLines, LINES_REPO } from '@/lib/ecology/research-lines'
+
+const lines = loadLines()
+---
+
+<Page title={LINES.seoTitle} description={LINES.seoDescription}>
+  <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-4 py-14">
+    <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      <a href="/ecology" class="underline underline-offset-2">{LINES.kicker}</a>
+    </p>
+    <h1 class="mb-4 text-3xl font-semibold tracking-tight text-fg">{LINES.title}</h1>
+    <p class="mb-10 text-[15.5px] leading-relaxed text-fg-muted">{LINES.lead}</p>
+
+    {lines.length === 0 && <p class="text-fg-muted">{LINES.none}</p>}
+    {lines.length > 0 && (
+      <ol class="border-b border-line">
+        {lines.map((line) => (
+          <li class="border-t border-line py-7">
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+              {line.slug} · {LINES.status[line.status]} · {LINES.open(line.openQuestions)}
+            </p>
+            <h2 class="mt-2 text-xl font-semibold leading-snug text-fg">
+              <a href={`/lines/${line.slug}/`} class="underline-offset-4 hover:underline focus-visible:underline">{line.question ?? line.slug}</a>
+            </h2>
+            <p class="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">
+              <a href={`/lines/${line.slug}/`} class="underline underline-offset-2">{LINES.read}</a>
+            </p>
+          </li>
+        ))}
+      </ol>
+    )}
+
+    <p class="mt-10 font-mono text-[11px] leading-relaxed text-fg-faint">
+      <a href={`${LINES_REPO}/README.md`} class="underline underline-offset-2">{LINES.rules} ↗</a>
+    </p>
+  </main>
+</Page>

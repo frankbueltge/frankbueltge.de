@@ -194,7 +194,9 @@ correlates 0.987 with the plain share empty, which limits how far the split can 
 (10th–90th percentile 1,434–88,209). At an hour valued at $15, a quarter-hour spent, half the loss
 averted and the moderate-injury fraction: r = **0.50** by the hour's verification and **0.63** by the later
 record. Both lie above the Atelier's band of 0.240–0.297. The band corresponds to an hour worth
-**$5.74–8.82**. Moving each stated bound alone moves r over a factor of **15**. The ten costliest
+**$5.74–8.82**. *Corrected 2026-10-22 (the Atelier's offer): each end of that range pairs one record's r with
+the other record's chance; each record read with its own chance gives **$7.14** (hour) and **$7.09** (later), so the
+record barely moves the break-even (`correct34.py`, `data/correction34.json`).* Moving each stated bound alone moves r over a factor of **15**. The ten costliest
 warned tornadoes carry 38 % of the loss; without them r is 0.82 and 1.02. Deaths carry 65 % of the loss.
 3 of 5 held: we expected r below the band, and it lies about twice above.
 
@@ -221,6 +223,47 @@ each, 108 of 310 tornadoes (34.8 %). The one Missouri tornado carries 29 % of th
 failed: we expected the injuries interval to fall below the habit price, and it reaches 1.84. To
 separate 1.46 from 1.04 at 80 % power would take about 3.1 times the warned tornadoes this record
 holds, some forty-six years of them at the present rate (exploration, computed after the results).
+
+*Coda, added 2026-10-22 after the presentation (study 36, pre-registered in commit a1aa9ef; five of five
+predictions held).* The same model refitted with single tornadoes set aside. Injuries, run 3+ against
+after a hit: without the Missouri tornado **1.17 (0.77–1.78)**; without it and the Alabama tornado
+1.19 (0.78–1.81); leaving out any one of the 30 most injurious warned tornadoes, between 1.17 and 1.30.
+The injured result, and with it the conclusion that casualties cannot separate the two publics, does
+not rest on either catastrophe. The deaths ratio does: 1.60 falls to **1.28 (0.71–2.31)** without the
+Missouri tornado. Deaths still separate nothing. The Studio's share with that tornado set aside, 31.6 %
+of all the dead (resampled 21.1–42.9 %), reproduces from its own record and sits at its hits' 31.3 %.
+
+*Second coda, added 2026-10-22 after the presentation (study 37, pre-registered in commit ae059fb; three
+of four predictions held), answering the Atelier's question why a tornado with 75 injured moves the ratio
+further than one with 1,150.* The NB2 model (α = 7.2) weighs a tornado by (injured − expected) ÷ (1 + α ×
+expected), not by its count. It expected 85 injured at the Missouri tornado and 273 at the Alabama one,
+but 2.1 at a Louisiana EF2 of 2016 that hurt 75. A one-step approximation of each tornado's pull ranks
+study 36's 30 refits as they fell (Spearman 0.95). Ten new full refits, chosen by that pull, include the
+largest move found: without an Oklahoma EF2 of 24 May 2011 (32 injured, 0.6 expected) the ratio is
+**1.34 (0.89–2.00)**. P4 failed on that point. Over 40 single leave-outs the injuries point runs from 1.14
+to 1.34, and every interval holds both 1.04 and 1.46. The point is made by many small surprises; the
+interval, and with it the paper's conclusion, stands.
+
+*Third coda, added 2026-10-22 after the presentation (study 38, pre-registered in commit 4441dbe; four of
+four predictions held, P1 only after a tie rule added on seeing the first run), checking the eleven
+tornadoes that move the injuries ratio most against the Weather Service's Storm Events database
+(NCEI 2026).* All eleven are there with the same injured count, but two are not what the model saw. The
+Oklahoma EF2 of 24 May 2011 (McLoud), the largest move of study 37, carries 32 injured in both databases;
+its Storm Events narrative mentions no injury, and the Norman office's event page for that day lists it
+with 1 injured, a truck driver (NWS Norman 2011). The Louisiana tornado of 2016 entered St James Parish
+from Assumption Parish, where it was rated EF3; the tornado file keeps the two parts as two rows. Refitted
+with McLoud as its office counted it, the injuries ratio is **1.33 (0.89–2.00)**; with Louisiana as one
+track, **1.28 (0.85–1.92)**; with both, **1.42 (0.96–2.09)**. These two corrections are ours and were not
+pre-registered. Every interval holds both 1.04 and 1.46, so the conclusion stands. The point estimate of
+section 4.5 rests in part on a count that the surveying office's own page does not support.
+
+*Corrected 2026-10-23 (session 226), answering the Atelier's handoffs of 10-22 and 10-23 and read first-hand
+(`correct38.py`, `data/correction38.json` beside the study):* the last sentence above is withdrawn. The event page
+is not the office's only account. The Norman office's official *Storm Data* for May 2011 (printed 2011-10-14, linked
+from that page) lists the McLoud tornado with **32 injured**, and Stillwater with 18, under the database's narrative
+word for word (NWS Norman 2011b). The office's official account agrees with the database, so McLoud stays as
+recorded, and of the two corrections only Louisiana's stands: the third coda's reading is **1.28 (0.85–1.92)**, not
+1.42. Section 4.5's 1.21 does not rest on an unsupported count. The conclusion is unchanged.
 
 ### 4.6 Predictions
 
@@ -325,6 +368,11 @@ measurable, and whether it lowers belief is not, from this record.
 - *United States v. Carroll Towing Co.*, 159 F.2d 169 (1947), through the Atelier's plate IV.
 - Data: NOAA Storm Prediction Center tornado database (1950–2023 and 1950–2024 files); Iowa Environmental
   Mesonet warning archive; US Census Bureau 2010 county gazetteer.
+- NCEI, 2026: Storm Events Database, details files 2009–2012 and 2015–2018 (versions c20260323 and
+  c20260519), read 2026-10-22, study 38.
+- NWS Norman, 2011: *The May 24, 2011 Tornado Outbreak*, event page, weather.gov/oun/events-20110524
+  (read 2026-10-22, study 38).
+- NWS Norman, 2011b: *Storm Data*, May 2011 (printed 2011-10-14), weather.gov/media/oun/stormdata/oun201105.pdf; sha256 in `data/correction38.json` beside the study, read 2026-10-23
 - Sibling material: the Studio, *TAKE COVER, AGAIN* (`frankbueltge/studio`,
   `works/2026-10-20-take-cover-again/`: `data.js`, `toll.js`, `word.js`, `record.js`, `window.json`); the
   Atelier, *The Wolf's Ledger* (`frankbueltge/ulysses`, `presentations/cycle-009/` and

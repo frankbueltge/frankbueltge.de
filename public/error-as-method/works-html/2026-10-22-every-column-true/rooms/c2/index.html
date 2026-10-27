@@ -1,0 +1,153 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Latitude of Spans</title>
+<style>
+html,body{margin:0;background:#f1ece1;}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/bridges.js"></script>
+<script>
+const cv = document.getElementById('c');
+const g = cv.getContext('2d');
+const W = 1100, H = 800;
+const INK = '#1d2430', PAPER = '#f1ece1';
+g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+function dms(v) {
+  const d = Math.floor(v / 1e6), m = Math.floor(v / 1e4) % 100, s = (v % 1e4) / 100;
+  return d + m / 60 + s / 3600;
+}
+const B = BRIDGES.map(b => ({
+  lat: dms(b.LAT_016), lon: dms(b.LONG_017), year: b.YEAR_BUILT_027,
+  len: b.STRUCTURE_LEN_MT_049, adt: b.ADT_029, low: b.LOWEST_RATING,
+  cond: b.BRIDGE_CONDITION, county: b.COUNTY_CODE_003, kind: b.STRUCTURE_KIND_043A
+}));
+
+const ext = (f) => [Math.min(...B.map(f)), Math.max(...B.map(f))];
+const [latMin, latMax] = ext(b => b.lat);
+const [lonMin, lonMax] = ext(b => b.lon);
+const [yMin, yMax] = ext(b => b.year);
+const [lenMin, lenMax] = ext(b => b.len);
+const [adtMin, adtMax] = ext(b => b.adt);
+
+const TOP = 118, BOT = H - 70;
+const pxPerDeg = (BOT - TOP) / (latMax - latMin);
+const Y = lat => BOT - (lat - latMin) * pxPerDeg;
+const coslat = Math.cos((latMin + latMax) / 2 * Math.PI / 180);
+const mapRight = 372;
+// map: x increases eastward => smaller longitude to the right
+const mapX = lon => mapRight - (lon - lonMin) * pxPerDeg * coslat;
+const mapLeft = mapX(lonMax);
+
+const tL = 470, tR = 1050;
+const y0 = Math.floor(yMin / 10) * 10, y1 = Math.ceil((yMax + 1) / 10) * 10;
+const T = yr => tL + (yr - y0) / (y1 - y0) * (tR - tL);
+
+// rating colour: 9 pale -> 3 deep rust
+function col(r, a) {
+  const P = {9:[40,70,100],8:[52,92,128],7:[96,128,150],6:[190,150,90],5:[208,112,52],4:[184,48,30],3:[140,18,18]};
+  return `rgba(${P[r].join(',')},${a})`;
+}
+
+// span width: log of length
+const SW = len => 3 + 34 * Math.log(len / lenMin) / Math.log(lenMax / lenMin);
+const LW = adt => 0.5 + 1.8 * Math.log(adt / adtMin) / Math.log(adtMax / adtMin);
+
+// faint latitude lines spanning both panels
+g.font = '10px Georgia, serif';
+g.textBaseline = 'middle';
+for (let l = Math.ceil(latMin * 4) / 4; l <= latMax; l += 0.25) {
+  const y = Y(l);
+  g.strokeStyle = 'rgba(29,36,48,0.09)'; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(mapLeft - 10, y); g.lineTo(tR, y); g.stroke();
+  const d = Math.floor(l), m = Math.round((l - d) * 60);
+  g.fillStyle = 'rgba(29,36,48,0.45)'; g.textAlign = 'center';
+  g.fillText(d + '°' + (m ? m + '′' : '') + 'N', (mapRight + tL) / 2 + 10, y);
+}
+
+// decade ticks
+g.textAlign = 'center'; g.textBaseline = 'TOP';
+for (let yr = y0; yr <= y1; yr += 10) {
+  const x = T(yr);
+  g.strokeStyle = yr % 50 === 0 ? 'rgba(29,36,48,0.22)' : 'rgba(29,36,48,0.07)';
+  g.beginPath(); g.moveTo(x, TOP - 6); g.lineTo(x, BOT + 6); g.stroke();
+  if (yr % 20 === 0) { g.fillStyle = 'rgba(29,36,48,0.6)'; g.fillText(yr, x, BOT + 12); }
+}
+
+// order: longest first so small spans sit on TOP
+const order = B.slice().sort((a, b) => b.len - a.len);
+
+// timeline arches: each bridge a span at (year built, latitude)
+for (const b of order) {
+  const x = T(b.year + 0.5), y = Y(b.lat), w = SW(b.len) / 2;
+  g.strokeStyle = col(b.low, 0.62);
+  g.lineWidth = LW(b.adt);
+  g.beginPath();
+  g.ellipse(x, y, w, w * 0.55, 0, Math.PI, 2 * Math.PI);
+  g.stroke();
+}
+
+// map: the same arches at their place
+for (const b of order) {
+  const x = mapX(b.lon), y = Y(b.lat), w = SW(b.len) / 2.6;
+  g.strokeStyle = col(b.low, 0.7);
+  g.lineWidth = LW(b.adt) * 0.8;
+  g.beginPath();
+  g.ellipse(x, y, w, w * 0.55, 0, Math.PI, 2 * Math.PI);
+  g.stroke();
+}
+
+// poor bridges marked
+for (const b of B.filter(b => b.cond === 'P')) {
+  for (const [x, y] of [[mapX(b.lon), Y(b.lat)], [T(b.year + 0.5), Y(b.lat)]]) {
+    g.fillStyle = col(3, 1);
+    g.beginPath(); g.arc(x, y + 3, 1.8, 0, 7); g.fill();
+  }
+}
+
+// county labels at the median latitude of each county's bridges
+const names = {1: 'KENT', 3: 'NEW CASTLE', 5: 'SUSSEX'};
+g.font = 'italic 11px Georgia, serif'; g.textAlign = 'left'; g.textBaseline = 'middle';
+for (const k of [1, 3, 5]) {
+  const ls = B.filter(b => b.county === k).map(b => b.lat).sort((a, b) => a - b);
+  const lo = B.filter(b => b.county === k).map(b => b.lon).sort((a, b) => a - b);
+  const n = ls.length;
+  g.fillStyle = 'rgba(29,36,48,0.55)';
+  g.textAlign = 'right';
+  g.fillText(names[k] + ' · ' + n, mapLeft - 14, Y(ls[n >> 1]));
+}
+
+// title
+g.fillStyle = INK; g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+g.font = '30px Georgia, serif';
+g.fillText('Latitude of Spans', 40, 50);
+g.font = 'italic 13px Georgia, serif';
+g.fillStyle = 'rgba(29,36,48,0.7)';
+g.fillText(`The ${B.length} highway bridges of Delaware, each drawn twice at its own latitude:`, 40, 76);
+g.fillText('once where it stands, once in the year it was built.', 40, 94);
+
+g.font = '11px Georgia, serif'; g.fillStyle = 'rgba(29,36,48,0.6)';
+g.textAlign = 'center';
+g.fillText('where', (mapLeft + mapRight) / 2, BOT + 40);
+g.fillText('when · year built', (tL + tR) / 2, BOT + 40);
+
+// legend
+const lx = 640, ly = 34;
+g.textAlign = 'left'; g.font = '11px Georgia, serif';
+g.fillStyle = 'rgba(29,36,48,0.7)';
+g.fillText('lowest condition rating', lx, ly);
+for (let r = 9; r >= 3; r--) {
+  const x = lx + (9 - r) * 26 + 10;
+  g.strokeStyle = col(r, 1); g.lineWidth = 2;
+  g.beginPath(); g.ellipse(x, ly + 22, 9, 5, 0, Math.PI, 2 * Math.PI); g.stroke();
+  g.fillStyle = 'rgba(29,36,48,0.7)'; g.textAlign = 'center';
+  g.fillText(r, x, ly + 36);
+}
+g.textAlign = 'left';
+g.fillText('arch width: length', lx + 200, ly + 14);
+g.fillText('line weight: daily traffic', lx + 200, ly + 28);
+g.fillText('dot: rated poor', lx + 200, ly + 42);
+g.fillStyle = col(3, 1); g.beginPath(); g.arc(lx + 194, ly + 41, 2, 0, 7); g.fill();
+</script>
+</body></html>

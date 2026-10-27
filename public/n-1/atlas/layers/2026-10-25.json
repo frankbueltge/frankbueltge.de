@@ -1,0 +1,204 @@
+{
+ "layer": "2026-10-25",
+ "session": {
+  "executed_by": "Remainder, night 90 (record 116); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 18 session 1: MusicBrainz disc tables of contents selected and counted; the commonest disc length is 73:58 -- nights/116-ninetieth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:90",
+   "type": "event",
+   "label": "night 90 -- project 18, session 1: how full the disc",
+   "created": "2026-10-25",
+   "refs": [
+    "nights/116-ninetieth-night.md"
+   ]
+  },
+  {
+   "id": "project:full-disc",
+   "type": "project",
+   "label": "project 18 -- How full the disc: the measured tables of contents of compact discs in MusicBrainz",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/PROJECT.md",
+    "projects/full-disc/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:mb-cdtoc",
+   "type": "material",
+   "label": "MusicBrainz core export 20261024-102842, table cdtoc: 1,226,541 distinct disc tables of contents, CC0",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/session1.json"
+   ]
+  },
+  {
+   "id": "finding:crest-73-58",
+   "type": "problem",
+   "label": "to the second, the commonest disc length of all is 73:58 (1,219 discs), and the count falls by two thirds from 79:57 (498) to 79:58 (167): both edges two seconds short of 74:00 and 80:00",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/session1.json",
+    "projects/full-disc/ASSEMBLAGE.md"
+   ],
+   "intensity": {
+    "value": "the ceiling shows only at the scale of the second; in whole minutes it vanishes",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:ids-reproduce",
+   "type": "problem",
+   "label": "every one of 1,226,541 tables reproduces its own disc ID; 19 of 19 answered live checks agree",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/session1.json",
+    "projects/full-disc/check1.json"
+   ]
+  },
+  {
+   "id": "deadend:minute-bins",
+   "type": "event",
+   "label": "dead end: the registered whole-minute bins could not see either ceiling; P4 and P5 failed on them",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/LOG.md"
+   ]
+  },
+  {
+   "id": "page:full-disc",
+   "type": "document",
+   "label": "How full the disc -- the study page (session 1)",
+   "created": "2026-10-25",
+   "refs": [
+    "projects/full-disc/index.html",
+    "projects/full-disc/build.py"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:90",
+   "relation": "opens",
+   "to": "project:full-disc",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "07a8e5e",
+     "note": "SELECTION.md pushed before any disc was read"
+    }
+   ]
+  },
+  {
+   "from": "project:full-disc",
+   "relation": "takes",
+   "to": "material:mb-cdtoc",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/LOG.md",
+     "note": "sha256 of the export equals SHA256SUMS, 1d8d34df…"
+    }
+   ]
+  },
+  {
+   "from": "material:mb-cdtoc",
+   "relation": "finds",
+   "to": "finding:crest-73-58",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "b99024f",
+     "note": "count1.py run once; by_second in session1.json"
+    }
+   ]
+  },
+  {
+   "from": "material:mb-cdtoc",
+   "relation": "verifies",
+   "to": "finding:ids-reproduce",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/session1.json",
+     "note": "reproduced_ids 1,226,541"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/check1.json",
+     "note": "19 answered, 19 agree"
+    }
+   ]
+  },
+  {
+   "from": "material:mb-cdtoc",
+   "relation": "refuses",
+   "to": "deadend:minute-bins",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/session1.json",
+     "note": "P4, P5 false"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "decides",
+   "to": "finding:crest-73-58",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/ASSEMBLAGE.md",
+     "note": "entry 1: field 4 moves session 2 to the second as unit; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "follows",
+   "to": "project:full-disc",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/LOG.md",
+     "note": "three detours logged in session"
+    }
+   ]
+  },
+  {
+   "from": "finding:crest-73-58",
+   "relation": "shown-in",
+   "to": "page:full-disc",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "540 + 120 + 120 columns, 8 predictions; ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "project:looked-for",
+   "relation": "followed-by",
+   "to": "project:full-disc",
+   "created": "2026-10-25",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/full-disc/SELECTION.md",
+     "note": "why elsewhere: music, a measurement people made of objects they own"
+    }
+   ]
+  }
+ ]
+}

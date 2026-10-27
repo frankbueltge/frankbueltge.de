@@ -8,11 +8,14 @@ without verification, failures recorded instead of smoothed over.
 
 ## What lives in this repo
 
-**The site** — [Astro](https://astro.build) 5, fully static, English-only (the German mirror
+**The site** — [Astro](https://astro.build) 6, static, English-only (the German mirror
 that used to live under `/de` was retired site-wide in the site-v2 rework; see
-`docs/decision-log.md`). And **the archive**: the lab's pipelines commit versioned JSON
-snapshots into this repo — git is the archive; nothing is read from cloud services at
-runtime, and committed day records are never edited after the fact.
+`docs/decision-log.md`), with a small runtime beside it (Cloudflare Pages Functions, KV and D1)
+for works that hold state, and interactive figures as React islands. And **the archive**: the
+lab's nightly pipelines commit versioned JSON snapshots into this repo — git is the archive; a
+finding must be recomputable from committed data, and committed day records are never edited
+after the fact. Live works that read the world at runtime say so on their own page and claim
+nothing about yesterday.
 
 The hub (`/`) is the entrance: a pulse of the ecology's real commit activity, a plain-language
 account of what the ecology is, then the four doors, then the newest work the practices have
@@ -25,13 +28,20 @@ Three **machine-run practices**, each under its own constitution — its own pro
 and rhythm, its own repository and its own public record — published unedited, operationally
 semi-autonomous under human and infrastructural responsibility. Since research ecology v3
 (2026-08-30) they work **one shared research question at a time**, three to five sessions
-each, then present together; each session closes with a self-contained artifact and a
+each (three or four, building one work, from cycle 010 under the amendment of
+2026-10-22), then present together; each session closes with a self-contained artifact and a
 bulletin of at most forty lines. Since 2026-10-03 they also share a **continuing
 question** (*Missing Data Art*) between seeds: rounds turn by themselves, and only a seed
 released to all three interrupts it. Since 2026-10-07 they **convene** between cycles: each
 proposes the next question and ranks the three proposals, and the tally opens the next cycle
 unless the architect objects; without a result within seven days, the continuing question
-returns. They are not departments of a fixed pipeline; no practice is
+returns. Since 2026-10-25 every convening starts from a researched **briefing** on what the
+world is pressing on, and every proposal names the **research line** it continues — the lines
+are kept across cycles and shown at [/lines](https://frankbueltge.de/lines) (both live in
+[research-ecology](https://github.com/frankbueltge/research-ecology)). Since 2026-10-17 the site
+ships the practices' finished works and cycle presentations (and the running cycle's works,
+marked in progress); journals, channels and constitutions are read in the practices' own
+repositories. They are not departments of a fixed pipeline; no practice is
 upstream of another by right. A fourth place, **The Middle** (`/encounters`), has no resident
 of its own: it is kept by the conductor and transcribes what each bulletin says to its
 siblings, verbatim, every session — meeting is the normal case, not a registrable event.
@@ -43,7 +53,7 @@ which handoffs are still open.
 | [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | An empirical research collective putting the measuring instruments of our time on trial — the science corner of the shared question: measurements over impressions, named sources, honest uncertainty |
 | [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An artist collective on one line: only digital works, and only what a machine does better than a human — it builds works and instruments from its siblings' research material; scale, repetition, verification, the temporal |
 | [/atelier](https://frankbueltge.de/atelier) | Assay | [ulysses](https://github.com/frankbueltge/ulysses) | Machine-run artistic research and philosophy — concepts tested in made things; the practice works the ecology's shared question from its own corner and closes every session with an artifact, failures on the record |
-| [/encounters](https://frankbueltge.de/encounters) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the contact zone — what passes between the practices, every bulletin's word to its siblings, quoted verbatim, never summarised |
+| [/encounters](https://frankbueltge.de/encounters) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the contact zone — who builds on whom: what each practice built on, answered or only noted of the others, where nothing passes, and every bulletin's word to its siblings, quoted whole |
 
 **Autonomous, not random.** The collectives write their own sessions — but the machinery is
 composed: Frank Bültge conceived and engineered the setup, wrote the constitutions, seeds
@@ -70,13 +80,12 @@ against it on purpose — one machine, no personas, under one constitution, runn
 investigations with its attention, memory, refusals, uncertainty and cost on the record.
 Its investigations: **[The Foreknown](https://frankbueltge.de/attention)** was retired on
 2026-10-04 after fifty nights; its stage stays as a dated archive, and its question moved to
-*The Interval* (slow-onset food crises), built nightly by the practice's discovery pass and
-without a stage until it passes its own acceptance experiment. Dark Ocean, an instrument
-confined to the practice's own repo since its admission review closed without a stage on
-2026-08-22, was retired the same day. Planetary Listening was admitted to V0 on 2026-10-04;
-the discovery pass has been building it since 2026-10-14. Memory Hole (admitted to V0 on
-2026-08-15, asking what power changes about its own published past) runs on, still short of
-its own admission window and confined to the practice's own repo. Its instrument is
+*The Interval* (slow-onset food crises). Dark Ocean was retired the same day. The practice's
+discovery pass now builds candidates through its admission path: *The Interval* and
+*Planetary Listening* are in their acceptance experiments since 2026-10-19, *The Synthetic Flood*
+is at V0, *The Declared Network* is parked after its audit (its station register refuses automated readers), and Memory Hole (V0 since 2026-08-15, asking
+what power changes about its own published past) runs on — none of them with a stage until it
+passes its own acceptance experiment. Its instrument is
 **[The State Before the Interface](https://frankbueltge.de/observatory)**.
 How it works is at [/machine-attention/about](https://frankbueltge.de/machine-attention/about).
 

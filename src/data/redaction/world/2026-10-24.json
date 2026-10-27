@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-24",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-24T09:47:29Z",
+    "counts": {
+      "botwall": 20,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 274,
+      "other": 1,
+      "server_error": 1,
+      "unreachable": 2
+    },
+    "decided": 277,
+    "excluded_unverifiable": 23,
+    "gone": 2,
+    "gone_ci95": [
+      0.002,
+      0.0259
+    ],
+    "gone_rate": 0.0072,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0137
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-22",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "tvnewscheck.com",
+        "first_seen": "20261022180000",
+        "http_code": 404,
+        "title": "JJ Watt Permanently Replaces Tony Romo As Top Game Analyst For NFL On CBS",
+        "url": "https://tvnewscheck.com/people/article/jj-watt-permanently-replaces-tony-romo-as-top-game-analyst-for-nfl-on-cbs/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wsmv.com",
+        "first_seen": "20261022150000",
+        "http_code": 404,
+        "title": "Family confirms death in social media statement",
+        "url": "https://www.wsmv.com/2026/10/22/john-anderson-country-music-hall-fame-singer-dies-71/"
+      }
+    ],
+    "sample_drawn_at": "2026-10-23T10:23:14Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5273,
+      "replaced": 4900,
+      "trivial": 952,
+      "update": 385
+    },
+    "day": "2026-10-23",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Gulf",
+          "Coast",
+          "Restaurant"
+        ],
+        "after": "Gulf Coast Restaurant Roundup: Dutch Bros. Coffee opens in Spanish Fort, Greer's Markets coming to Magnolia Springs summer 2027",
+        "before": "Food roundup: Dutch Bros. Coffee opens in Spanish Fort, Greer's Markets coming to Magnolia Springs summer 2027",
+        "detected": "2026-10-23T20:46:36Z",
+        "domain": "gulfcoastmedia.com",
+        "removed": [
+          "Food"
+        ],
+        "similarity": 0.81,
+        "url": "http://www.gulfcoastmedia.com/stories/food-roundup-dutch-bros-coffee-opens-in-spanish-fort-greers-markets-coming-to-magnolia-springs,353467",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "IFP"
+        ],
+        "after": "Keerthy Suresh, Radhika Apte, Rana Daggubati, Huma Qureshi and Vetrimaaran: IFP announces its celeb lineup for Season 16",
+        "before": "Keerthy Suresh, Radhika Apte, Rana Daggubati, Huma Qureshi and Vetrimaaran: Indian Film Project announces its celeb lineup for Season 16",
+        "detected": "2026-10-23T10:34:45Z",
+        "domain": "hindustantimes.com",
+        "removed": [
+          "Indian",
+          "Film",
+          "Project"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.hindustantimes.com/entertainment/bollywood/keerthy-suresh-radhika-apte-rana-daggubati-huma-qureshi-and-vetrimaaran-indian-film-project-announces-its-celeb-lineup-for-season-16-101792658514240.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Coimbatore",
+          "XI"
+        ],
+        "after": "'Do you eat beef': Coimbatore teacher under scanner after Dalit Class XI student dies by suicide | Chennai News",
+        "before": "'Do you eat beef': Chennai teacher under scanner after Dalit Class X student dies by suicide | Chennai News",
+        "detected": "2026-10-23T06:17:50Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "X",
+          "Chennai"
+        ],
+        "similarity": 0.842,
+        "url": "https://timesofindia.indiatimes.com/city/chennai/do-you-eat-beef-chennai-teacher-under-scanner-after-dalit-class-x-student-dies-by-suicide/articleshow/135108640.cms",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 16209,
+      "PAGE_TEXTCHANGE": 127426,
+      "PAGE_TITLECHANGE": 47866,
+      "UNCHANGED_CONTENT": 749845
+    },
+    "title_changes_en": 11510,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1792835025924",
+        "job_id": "world_gdg_counts_20261023",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 236978176,
+        "created": "1792835031635",
+        "job_id": "world_gdg_titles_20261023",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-24T09:47:29Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-23.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

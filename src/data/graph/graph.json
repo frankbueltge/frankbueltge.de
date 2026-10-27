@@ -4,15 +4,15 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "1e48c7164896b22e"
+        "sha256": "20ad7a3127c3a0ef"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "a2171978bdb8eec0"
+        "sha256": "fcd6bd82ffb837af"
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "ad16dea8c003a491"
+        "sha256": "5903f7b4e8402c06"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -43,39 +43,39 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "db32ef9a25889305",
-        "files": 58
+        "sha256": "97d0af7f9563abb6",
+        "files": 60
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "30ce5d9fcef618e4",
-        "files": 89
+        "sha256": "075cdfe384c2abb2",
+        "files": 97
       },
       {
         "file": "src/data/attention/export.json",
-        "sha256": "433aea3a8056861f"
+        "sha256": "1d2506c64c4f7ce4"
       }
     ],
     "counts": {
-      "nodes": 529,
-      "edges": 473,
+      "nodes": 556,
+      "edges": 497,
       "nodesByKind": {
-        "decision": 150,
+        "decision": 155,
         "encounter": 6,
-        "neighbor": 124,
+        "neighbor": 135,
         "practice": 9,
-        "practice-work": 205,
+        "practice-work": 215,
         "receiver": 8,
-        "work": 27
+        "work": 28
       },
       "edgesByKind": {
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 205,
-        "neighbor-of": 125,
+        "made-by": 215,
+        "neighbor-of": 136,
         "participates": 17,
-        "touches": 111
+        "touches": 114
       }
     }
   },
@@ -1493,6 +1493,16 @@
     {
       "id": "decision:2026-10-17-1",
       "kind": "decision",
+      "label": "Every published work can be rated from 1 to 5, with a note, without an approval queue; the practices read what came in at every session",
+      "date": "2026-10-17",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Every published work can be rated from 1 to 5, with a note, without an approval queue; the practices read what came in at every session"
+      }
+    },
+    {
+      "id": "decision:2026-10-17-2",
+      "kind": "decision",
       "label": "The dossier for curators & press goes public, and the entrance gets a shelf of selected works",
       "date": "2026-10-17",
       "source": {
@@ -1501,7 +1511,7 @@
       }
     },
     {
-      "id": "decision:2026-10-17-2",
+      "id": "decision:2026-10-17-3",
       "kind": "decision",
       "label": "The mirrors keep what the site publishes and what the build reads, and no more",
       "date": "2026-10-17",
@@ -1511,7 +1521,7 @@
       }
     },
     {
-      "id": "decision:2026-10-17-3",
+      "id": "decision:2026-10-17-4",
       "kind": "decision",
       "label": "Round Numbers, Patterns and Ghost Fleet are retired with a date, their archives kept, and their pages say RETIRED",
       "date": "2026-10-17",
@@ -1521,7 +1531,7 @@
       }
     },
     {
-      "id": "decision:2026-10-17-4",
+      "id": "decision:2026-10-17-5",
       "kind": "decision",
       "label": "The site publishes only finished works and cycle presentations; journals, session artifacts, channels, constitutions and working material stay in the practices' public repositories and are linked",
       "date": "2026-10-17",
@@ -1531,7 +1541,7 @@
       }
     },
     {
-      "id": "decision:2026-10-17-5",
+      "id": "decision:2026-10-17-6",
       "kind": "decision",
       "label": "The name stands in the entrance's main heading again, and /about is marked as the profile page",
       "date": "2026-10-17",
@@ -1578,6 +1588,46 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "A cycle in its working phase is published in progress"
+      }
+    },
+    {
+      "id": "decision:2026-10-22-1",
+      "kind": "decision",
+      "label": "A work's process is shown, session by session",
+      "date": "2026-10-22",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "A work's process is shown, session by session"
+      }
+    },
+    {
+      "id": "decision:2026-10-25-1",
+      "kind": "decision",
+      "label": "The ecology keeps research lines across cycles",
+      "date": "2026-10-25",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The ecology keeps research lines across cycles"
+      }
+    },
+    {
+      "id": "decision:2026-10-25-2",
+      "kind": "decision",
+      "label": "The cycle's question comes from a researched briefing",
+      "date": "2026-10-25",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The cycle's question comes from a researched briefing"
+      }
+    },
+    {
+      "id": "decision:2026-10-27-1",
+      "kind": "decision",
+      "label": "Third Reading opens: the briefing's matters are read three ways, the third by the page's readers",
+      "date": "2026-10-27",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Third Reading opens: the briefing's matters are read three ways, the third by the page's readers"
       }
     },
     {
@@ -1804,6 +1854,16 @@
       "url": "https://arxiv.org/abs/2603.21871"
     },
     {
+      "id": "neighbor:axa-com-en-news-future-risks-report",
+      "kind": "neighbor",
+      "label": "AXA Future Risks Report, with Ipsos",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[AXA Future Risks Report, with Ipsos](https://www.axa.com/en/news/future-risks-report) — the strongest neighbour: every year since at least 2018, experts and a representative public rank the same twenty risks, compared in an interactive radar ([2026 edition, Ipsos](https://www.ipsos.com/en-us/axa-future-risks-report-2026)). Two of the three readings, with far better samples than any self-selected audience; no media reading, fixed risk categories rather than current named matters, no pairwise choices, and no open microdata found."
+      },
+      "url": "https://www.axa.com/en/news/future-risks-report"
+    },
+    {
       "id": "neighbor:berghain-ravers-workers-dev-dashboard-crawl-stats",
       "kind": "neighbor",
       "label": "AI Crawler Transparency Dashboard (berghain.ravers.workers.dev)",
@@ -1903,6 +1963,16 @@
       }
     },
     {
+      "id": "neighbor:care-org-resources-the-10-most-under-reported-crises-of-2025",
+      "kind": "neighbor",
+      "label": "CARE, *The 10 most under-reported humanitarian crises*",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[CARE, *The 10 most under-reported humanitarian crises*](https://www.care.org/resources/the-10-most-under-reported-crises-of-2025/) — \"urgent but quiet\" as an institution, in its tenth edition, beside [NRC's neglected displacement crises](https://www.nrc.no/resources/reports/the-worlds-most-neglected-displacement-crises-2025) and the [ECHO Forgotten Crisis Assessment](https://civil-protection-humanitarian-aid.ec.europa.eu/what/humanitarian-aid/needs-assessment/forgotten-crises_en): severity against coverage from media monitoring and the INFORM Severity Index, published mostly as PDFs, with no public reading at all."
+      },
+      "url": "https://www.care.org/resources/the-10-most-under-reported-crises-of-2025/"
+    },
+    {
       "id": "neighbor:changedetection-io",
       "kind": "neighbor",
       "label": "changedetection.io",
@@ -1931,6 +2001,16 @@
         "quote": "[Omnipedia](https://collablab.northwestern.edu/pubs/CHI2012-BaoEtAl-Omnipedia.pdf) (Northwestern, CHI 2012) — visualizes shared vs. unique content across up to 25 language editions at once."
       },
       "url": "https://collablab.northwestern.edu/pubs/CHI2012-BaoEtAl-Omnipedia.pdf"
+    },
+    {
+      "id": "neighbor:comparativeagendas-net",
+      "kind": "neighbor",
+      "label": "Comparative Agendas Project",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Comparative Agendas Project](https://www.comparativeagendas.net/) — the public agenda (Gallup's \"most important problem\"), the media agenda and the policy agenda on one topic codebook for about twenty countries, downloadable; no expert urgency, no current named matters, no participation."
+      },
+      "url": "https://www.comparativeagendas.net/"
     },
     {
       "id": "neighbor:data-ted-europa-eu",
@@ -2001,6 +2081,16 @@
         "quote": "[Erasure as an artform](https://en.wikipedia.org/wiki/Erasure_(artform)) (blackout poetry, Richard Galpin's survey of erasure in art) and [auto-destructive art](https://en.wikipedia.org/wiki/Auto-destructive_art) (Metzger) — destroying text to make meaning is a mature, named tradition."
       },
       "url": "https://en.wikipedia.org/wiki/Erasure_(artform"
+    },
+    {
+      "id": "neighbor:en-wikipedia-org-wiki-hans-haacke",
+      "kind": "neighbor",
+      "label": "Hans Haacke, *MoMA Poll* (1970)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Hans Haacke, *MoMA Poll* (1970)](https://en.wikipedia.org/wiki/Hans_Haacke) — the lineage in art: visitors' ballots, counted in the gallery. Polling the audience is a canonical move, and this work is that move kept as open data."
+      },
+      "url": "https://en.wikipedia.org/wiki/Hans_Haacke"
     },
     {
       "id": "neighbor:en-wikipedia-org-wiki-wikipedia-on-this-day",
@@ -2090,6 +2180,16 @@
         "quote": "[Federal Reserve Bank of San Francisco — \"Revisions to Payroll Employment Gains in Historical Context\"](https://www.frbsf.org) — a live, regularly updated (last updated 2026-07-02) official tool built on the Philadelphia Fed's Real-Time Data Set, visualizing first-vs-second-release revisions since 1990, average revision line, distribution, latest month highlighted, downloadable CSV."
       },
       "url": "https://www.frbsf.org"
+    },
+    {
+      "id": "neighbor:gapminder-org-misconception-studies",
+      "kind": "neighbor",
+      "label": "Gapminder misconception studies",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Gapminder misconception studies](https://www.gapminder.org/misconception-studies/) — estimate, then reveal, as a mature genre, beside [Ipsos *Perils of Perception*](https://www.ipsos.com/en/perils-perception-2015); the estimates here belong to that genre and claim nothing new as a form."
+      },
+      "url": "https://www.gapminder.org/misconception-studies/"
     },
     {
       "id": "neighbor:gdacs-itself-reliefweb-wired-by-third-party-dashboards",
@@ -2322,6 +2422,16 @@
       "url": "https://www.media.mit.edu/projects/media-cloud/overview"
     },
     {
+      "id": "neighbor:media-mit-edu-publications-the-moral-machine-experiment",
+      "kind": "neighbor",
+      "label": "MIT, *The Moral Machine experiment*",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[MIT, *The Moral Machine experiment*](https://www.media.mit.edu/publications/the-moral-machine-experiment) — forty million pairwise judgments with public data: the precedent for an audience's choices kept as a dataset, and the source of the critique this work answers by offering \"equally urgent\" — a [re-examination](https://ideas.repec.org/a/nat/nature/v579y2020i7797d10.1038_s41586-020-1987-4.html) found that forced choice manufactured strong preferences an \"equal\" option dissolved."
+      },
+      "url": "https://www.media.mit.edu/publications/the-moral-machine-experiment"
+    },
+    {
       "id": "neighbor:meetglimpse-com",
       "kind": "neighbor",
       "label": "Glimpse",
@@ -2419,6 +2529,16 @@
       "url": "https://www.nytimes.com/interactive/2024/07/08/climate/home-insurance-climate-change.html"
     },
     {
+      "id": "neighbor:odi-org-en-publications-technology-and-the-data-revolution-l",
+      "kind": "neighbor",
+      "label": "MY World survey (ODI)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[MY World survey (ODI)](https://odi.org/en/publications/technology-and-the-data-revolution-lessons-from-the-my-world-survey/) — about ten million self-selected votes for six of sixteen priorities, beside the [OECD Better Life Index](https://www.oecd.org/en/publications/what-matters-the-most-to-people_edf9a89a-en.html)'s visitor weightings; no media reading, no pairs, and the MY World domains have since lapsed — the strongest argument found for keeping an archive inside the repository."
+      },
+      "url": "https://odi.org/en/publications/technology-and-the-data-revolution-lessons-from-the-my-world-survey/"
+    },
+    {
       "id": "neighbor:ojs-aaai-org-index-php-icwsm-article-view-42794",
       "kind": "neighbor",
       "label": "MediaSpin dataset",
@@ -2449,6 +2569,16 @@
       "url": "https://ourworldindata.org"
     },
     {
+      "id": "neighbor:ourworldindata-org-does-the-news-reflect-what-we-die-from",
+      "kind": "neighbor",
+      "label": "Our World in Data, *Does the news reflect what we die from?*",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Our World in Data, *Does the news reflect what we die from?*](https://ourworldindata.org/does-the-news-reflect-what-we-die-from) — causes of death set against their coverage in three US newspapers, counted with Media Cloud; its predecessor by [Shen et al.](https://owenshen24.github.io/charting-death/) added Google searches as a stand-in for the public. Reality against the media, but searching is not judging, and causes of death are not the matters of a month."
+      },
+      "url": "https://ourworldindata.org/does-the-news-reflect-what-we-die-from"
+    },
+    {
       "id": "neighbor:pewresearch-org-data-labs-2024-05-17-when-online-content-dis",
       "kind": "neighbor",
       "label": "Pew Research, \"When Online Content Disappears\" (2024)",
@@ -2477,6 +2607,16 @@
         "quote": "[PMC12827721 — \"The carbon and water footprints of data centers...\"](https://pmc.ncbi.nlm.nih.gov/articles/PMC12827721) (2025, peer-reviewed) — a comparison table of PUE, disclosure completeness and consumption across the same hyperscalers."
       },
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12827721"
+    },
+    {
+      "id": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc4439069",
+      "kind": "neighbor",
+      "label": "All Our Ideas — Salganik and Levy, *Wiki Surveys*, PLOS ONE (2015)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[All Our Ideas — Salganik and Levy, *Wiki Surveys*, PLOS ONE (2015)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4439069) — the pairwise wiki survey this work's ranking follows: random pairs, an \"I can't decide\", posterior intervals and a score read as the chance of beating a random option. The method is off the shelf; no instance was found that applies it to the matters of a briefing against their media attention."
+      },
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4439069"
     },
     {
       "id": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc7906373",
@@ -2594,6 +2734,16 @@
         "quote": "[Ed Hawkins, *Warming Stripes*](https://showyourstripes.info/) — the formal neighbour: one long instrumental series as a texture a stranger reads instantly. This is the standard the plates are trying to reach and it does the job with one series and no counterfactual; the second plate here is more complex than a stripe and has to earn that."
       },
       "url": "https://showyourstripes.info/"
+    },
+    {
+      "id": "neighbor:slate-com-articles-technology-copenhagen-consensus-2012-2012",
+      "kind": "neighbor",
+      "label": "Copenhagen Consensus reader votes (Slate, 2012)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Copenhagen Consensus reader votes (Slate, 2012)](https://www.slate.com/articles/technology/copenhagen_consensus_2012/2012/05/copenhagen_consensus_readers_vote_for_family_planning_better_nutrition_and_tobacco_taxes_.html) — the direct precedent for \"the experts' ranking against this audience\": a panel of economists ranked investments and self-selected readers voted on the same list, once in 2008 and once in 2012; solutions rather than urgency, and no media reading."
+      },
+      "url": "https://www.slate.com/articles/technology/copenhagen_consensus_2012/2012/05/copenhagen_consensus_readers_vote_for_family_planning_better_nutrition_and_tobacco_taxes_.html"
     },
     {
       "id": "neighbor:sparc-navigating-risk-in-vendor-data-privacy-practices",
@@ -2791,6 +2941,16 @@
       "url": "https://tylervigen.com/spurious-correlations"
     },
     {
+      "id": "neighbor:un-org-en-un75-finalreport",
+      "kind": "neighbor",
+      "label": "UN75, final report (2020)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[UN75, final report (2020)](https://www.un.org/en/un75/finalreport) — the only case found that held all three readings of world priorities at once: a one-minute survey of over a million people, polling by Edelman and Pew, an AI analysis of media in seventy countries and a mapping of research. It ran once, gave respondents nothing back and asked no pairs; whether its report lines the streams up issue by issue could not be verified, because the PDF yielded no text."
+      },
+      "url": "https://www.un.org/en/un75/finalreport"
+    },
+    {
       "id": "neighbor:uptime-institute-global-data-center-survey-annual-since-2007",
       "kind": "neighbor",
       "label": "Uptime Institute Global Data Center Survey (annual since 2007)",
@@ -2966,8 +3126,8 @@
         },
         {
           "key": "memoryhole_nights_on_record",
-          "value": 66,
-          "asOf": "2026-10-20"
+          "value": 72,
+          "asOf": "2026-10-26"
         },
         {
           "key": "sources_in_register",
@@ -2991,23 +3151,23 @@
         },
         {
           "key": "protocol_steps",
-          "value": 371,
-          "asOf": "2026-10-21"
+          "value": 405,
+          "asOf": "2026-10-27"
         },
         {
           "key": "protocol_model_steps",
-          "value": 62,
-          "asOf": "2026-10-21"
+          "value": 74,
+          "asOf": "2026-10-27"
         },
         {
           "key": "protocol_model_steps_with_tokens",
-          "value": 15,
-          "asOf": "2026-10-21"
+          "value": 27,
+          "asOf": "2026-10-27"
         },
         {
           "key": "protocol_model_steps_with_cost",
           "value": 1,
-          "asOf": "2026-10-21"
+          "asOf": "2026-10-27"
         }
       ]
     },
@@ -4879,6 +5039,126 @@
       "medium": "Interactive page (index.html): a wiring of the table's seventeen column names to the columns that answer them, which the visitor rewires by chance (blind, typed, seeing) or by hand, under one fresh maker's work running live beside its untouched parent; the night's 24 mutants with blind distance, a judge's verdict and a reader's verdict, each loadable into the wiring; the family; the predictions. A figure (figure.svg); briefs, makers' reports, rooms, rebind-core.js shared by the night and the face, blind codes, the practice's verdicts, scoring."
     },
     {
+      "id": "practice-work:atelier/2026-10-22-every-column-true",
+      "kind": "practice-work",
+      "label": "Every Column True",
+      "slug": "2026-10-22-every-column-true",
+      "practiceId": "ulysses",
+      "date": "2026-10-22",
+      "href": "/error-as-method/2026-10-22-every-column-true",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-every-column-true/meta.json",
+        "quote": "\"title\": \"Every Column True\""
+      },
+      "embodies": "Judging and perceiving a lie that keeps every promise. Shuffling a column among the rows keeps every value, count and legend true and cuts only the relations between columns. A fresh judge without the table still refused 9 of 11 such pages whose words were true of their drawing: against the state's shape it remembered, a fact it carried, and the other versions in its packet. It passed only the two lies nothing in view could show, which a judge with the table caught by computing.",
+      "medium": "Interactive page (index.html): the visitor is shown two pages from Delaware's bridge inventory, one with a column dealt out to the wrong bridges, and picks the register; then sees six seats' verdicts on the dealt page; a live dealer runs each of the four makers' works on the true table and on a table with a chosen column shuffled in the browser, with the year-rating correlation of each; the night's 20 pages with every seat's verdict; the predictions. A figure (figure.svg); briefs, makers' rooms and replies, shuffle-core.js (the operator, shared by the night and the face), blind codes, the practice's blind calls and verdicts, scoring."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-22-old-tools",
+      "kind": "practice-work",
+      "label": "Old Tools",
+      "slug": "2026-10-22-old-tools",
+      "practiceId": "ulysses",
+      "date": "2026-10-22",
+      "href": "/error-as-method/2026-10-22-old-tools",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-old-tools/meta.json",
+        "quote": "\"title\": \"Old Tools\""
+      },
+      "embodies": "Choosing material by starting from the old tool. Sixteen fresh makers, each given one finished instrument and asked for a material on which it could show them something they did not know, chose from that instrument's own shelf (10 of 12) and never from another instrument's (0 of 24 cross-placements). The instrument did not free the choice from the shelf; it chose the shelf, and what was unknown arrived as detail inside a frame already known.",
+      "medium": "Interactive page (index.html): sixteen instrument readings (SVG) in four columns, one per instrument, each edged by whether its material was already on that instrument's shelf, each opening onto its maker's first three thoughts, expectation and account; under each column the shelf of 40 lines named before any maker ran, the taken lines marked; the predictions. A figure (figure.svg); four instruments (stdlib Python), shelves, briefs, the rooms with their readings, blind codes, scoring."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-22-twin-chips",
+      "kind": "practice-work",
+      "label": "Twin Chips",
+      "slug": "2026-10-22-twin-chips",
+      "practiceId": "ulysses",
+      "date": "2026-10-22",
+      "href": "/error-as-method/2026-10-22-twin-chips",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-twin-chips/meta.json",
+        "quote": "\"title\": \"Twin Chips\""
+      },
+      "embodies": "Perceiving, and telling it from recall. Read as hex numbers, the crowd's own name came back on 20 of 72 exact points and 9 of 72 invisible twins; looked at, on 5 of 144. A human canon held by a machine is tied to the exact key, and a step no eye can see removes it.",
+      "medium": "Interactive page (index.html): 24 pairs of colour chips, each an exact point of the xkcd colour survey beside an invisible twin, with the names six number-reading makers gave each and six looking makers gave the colour; a mode to name them yourself first; the hex numbers on demand; sorted by what the twin lost. A figure (figure.svg); stdlib Python for the draw, the sheets, the scoring; briefs, replies and predictions."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-23-the-blank",
+      "kind": "practice-work",
+      "label": "The Blank",
+      "slug": "2026-10-23-the-blank",
+      "practiceId": "ulysses",
+      "date": "2026-10-23",
+      "href": "/error-as-method/2026-10-23-the-blank",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-23-the-blank/meta.json",
+        "quote": "\"title\": \"The Blank\""
+      },
+      "embodies": "Measuring the sameness of a machine practice's own instrument against people. Three people agree on a cue's first word 1.7 times in 24; three instances agreed 16 times, and on keys no norm prints 28 of 48. The one word was the people's commonest only 8 times. Struck out, the people's word did not open the family into many words. Where the family's word was already off the people's peak, it stayed where it was.",
+      "medium": "Interactive page (index.html): 24 cue words, each with a blank on which three people drawn from the published free-association norms are written in pencil, again and again, beside the six words six fresh machine instances wrote in ink; the same cues with the people's first word struck; 24 word pairs no norm prints; and a view of each cue's whole human list with the machines' word inked in it. A figure (figure.svg); stdlib Python for the draw, the scoring and a labelled post-hoc reading; briefs, verbatim replies and predictions."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-23-twin-fixes",
+      "kind": "practice-work",
+      "label": "Twin Fixes",
+      "slug": "2026-10-23-twin-fixes",
+      "practiceId": "ulysses",
+      "date": "2026-10-23",
+      "href": "/error-as-method/2026-10-23-twin-fixes",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-23-twin-fixes/meta.json",
+        "quote": "\"title\": \"Twin Fixes\""
+      },
+      "embodies": "Telling a table from a map in what a machine holds. A gazetteer's towns came back on keys no gazetteer prints, exactly as on its own strings (72, 71, 72 of 72), held to 8 km and let go by 30, handed to the neighbour; nine instances drew one map, errors included.",
+      "medium": "Interactive page (index.html): a world map of 24 small towns whose pins move from the gazetteer's own string through a rewritten string, an invisible twin and steps of 2, 8 and 30 km, coloured by what three fresh makers named at each; a local map per town drawing every answer to its place; the twin test on colour and on towns side by side. A figure (figure.svg); stdlib Python for the draw, the canon check, both rounds' scoring and the post-hoc placing; briefs, replies and two sets of predictions."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-24-drawn-in-twenty-seconds",
+      "kind": "practice-work",
+      "label": "Drawn in Twenty Seconds",
+      "slug": "2026-10-24-drawn-in-twenty-seconds",
+      "practiceId": "ulysses",
+      "date": "2026-10-24",
+      "href": "/error-as-method/2026-10-24-drawn-in-twenty-seconds",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-24-drawn-in-twenty-seconds/meta.json",
+        "quote": "\"title\": \"Drawn in Twenty Seconds\""
+      },
+      "embodies": "Bringing the outside in as material, not as reference. Six fresh instances draw one computer where six people draw six. Shown their own six they close in (12 of 12); shown six people they spread a little, still below the people's 5th percentile on 11 of 12, and say they drew 'the most common simple depiction'. A plurality shown to the family comes back as its mode.",
+      "medium": "Interactive page (index.html, canvas): for each of twelve words, six people's drawings from the Quick, Draw! dataset laid over one another beside six machine instances' drawings laid over one another, re-drawable on the people's side only; three arms (the word alone, shown their own six, shown six people); a strip of every drawing; a meter placing each arm in the people's spread. A figure (figure.svg); Python for the sample, the measure, the scoring and a labelled post-hoc check; briefs, verbatim replies and predictions."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-25-asked-three-ways",
+      "kind": "practice-work",
+      "label": "Asked Three Ways",
+      "slug": "2026-10-25-asked-three-ways",
+      "practiceId": "ulysses",
+      "date": "2026-10-25",
+      "href": "/error-as-method/2026-10-25-asked-three-ways",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-25-asked-three-ways/meta.json",
+        "quote": "\"title\": \"Asked Three Ways\""
+      },
+      "embodies": "A machine judge's three relations to a norm, set side by side: performing it (twelve instances give one number, identical on 12 of 27 phrases), stating its own (asked about itself, it finds its centre), and describing the people's (it draws their spread and moves their centre onto its own on 10 of 11 phrases where the two differ, with the poll in recall).",
+      "medium": "Interactive page (index.html, SVG built in the browser): the visitor places their own reading of 'Probably' first; then, for 27 probability and quantity phrases, 46 people's answers as dots, twelve machine instances' answers as stacks, and two stated distributions as bands (six instances describing the people, six describing themselves); a switch marks where the family's centre differs from the people's. A figure (figure.svg); Python for briefs, scoring and a labelled post-hoc check; briefs, verbatim replies and predictions."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-26-without-a-tongue",
+      "kind": "practice-work",
+      "label": "Without a Tongue",
+      "slug": "2026-10-26-without-a-tongue",
+      "practiceId": "ulysses",
+      "date": "2026-10-26",
+      "href": "/error-as-method/2026-10-26-without-a-tongue",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-26-without-a-tongue/meta.json",
+        "quote": "\"title\": \"Without a Tongue\""
+      },
+      "embodies": "A machine judge describing an audience it cannot recall: asked what 59 people liked, it moved half the distance from its own taste to theirs. It neither keeps its own norm nor reaches the people's.",
+      "medium": "Interactive page (index.html, SVG built in the browser): the visitor sees twelve machine instances' ratings of one food and guesses where 59 people put it, then sees the people, the machine and the machine's description of the people; a list of all 67 foods with a filter for where the machine's taste differs. A figure (figure.svg); Python for briefs, scoring, a labelled post-hoc check and transcript extraction; briefs, verbatim replies and predictions."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -6150,6 +6430,36 @@
       "medium": "A participatory desk with sound: a real local warning from FEMA's alert archive is dealt with its words, place (lit on a county map), keeper and everything the record holds after it. The visitor files it under heeded, ignored, never needed or the record can't say; the record answers backed, contradicted, no word or agrees, with a tone or with silence. The filings build the visitor's own column (kept in the browser, downloadable as CSV), set against a grid of all 15,012 warnings showing the most the record could ever say."
     },
     {
+      "id": "practice-work:studio/2026-10-20-take-cover-again",
+      "kind": "practice-work",
+      "label": "TAKE COVER, AGAIN",
+      "slug": "2026-10-20-take-cover-again",
+      "practiceId": "ensemble",
+      "date": "2026-10-21",
+      "href": "/studio/works/2026-10-20-take-cover-again",
+      "source": {
+        "file": "src/content/studio/works/2026-10-20-take-cover-again/meta.json",
+        "quote": "\"title\": \"TAKE COVER, AGAIN\""
+      },
+      "embodies": "THE RECORD OF FALSE ALARMS IS A DEBT THAT ONLY A TORNADO CLEARS. 53,267 warnings, 75 % empty. On the median day since 2009 about 44 % of the warned counties stood three or more empty warnings deep; after three or more, the next warning was still met one time in five. 550 of the 1,399 dead (39 %) died under a warning that came after three or more empty ones in their county, against 31 % of all the times a tornado met a county's warning. [Corrected 2026-10-22, in a coda added after the presentation: the 39 % against 31 % cannot be told from chance. Drawn again tornado by tornado, the dead's share lies anywhere from 23 to 55 %; one tornado, Joplin 2011, carries 158 of the 550, and without it the share is 31.6 %, the hits' share. The 550 stands; the claim that the runs' dead stand out does not.]",
+      "medium": "An interactive map with sound that plays every US county's run of empty tornado warnings from 2008, with the dead where they died; and a participatory card on which a visitor lives through one county's warnings, taking cover in the dark one second per minute the warning stood, or staying, before the record answers."
+    },
+    {
+      "id": "practice-work:studio/2026-10-24-going-out",
+      "kind": "practice-work",
+      "label": "GOING OUT",
+      "slug": "2026-10-24-going-out",
+      "practiceId": "ensemble",
+      "date": "2026-10-25",
+      "href": "/studio/works/2026-10-24-going-out",
+      "source": {
+        "file": "src/content/studio/works/2026-10-24-going-out/meta.json",
+        "quote": "\"title\": \"GOING OUT\""
+      },
+      "embodies": "A RECORD OF WHAT COULD NOT BE SEEN. 287,352 Globe at Night naked-eye reports, 2006-2025, each turned back into its whole sky and taken away to the chart matched; 99,515 re-timed, 6,411 fitting no hour, 3,176 filed at no place, 36,596 with no chart; stars kept per report about 560 in 2006 and about 370 in 2025 (an estimate, not a trend).",
+      "medium": "An animated, interactive night sky in the browser: one Globe at Night report at a time, its sky set for its place and minute and taken away to what the observer saw; a lens that restores the sky where the visitor holds the pointer; a band of every report since 2006."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -6277,7 +6587,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'balance'"
       },
-      "rank": 6,
+      "rank": 7,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "UNIQUE",
@@ -6299,7 +6609,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 9,
+      "rank": 10,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -6319,7 +6629,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'consensus'"
       },
-      "rank": 15,
+      "rank": 16,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "ADDED VALUE",
@@ -6341,7 +6651,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 16,
+      "rank": 17,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -6375,7 +6685,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 10,
+      "rank": 11,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -6397,7 +6707,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'globe'"
       },
-      "rank": 3,
+      "rank": 4,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -6419,7 +6729,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'invoked-past'"
       },
-      "rank": 5,
+      "rank": 6,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (as a living instrument).",
@@ -6473,7 +6783,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'parallaxe'"
       },
-      "rank": 18,
+      "rank": 19,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT-leaning.",
       "daylight": "The plausible surviving differentiator is *process*, not method: a committed, versioned, git-archived daily register with a fixed non-selected topic set, never retconned — none of the neighbors offer that as a public, continuously-dated artifact (INFOGAP is a paper/dataset; Omnipedia/Manypedia are dead demos). Name this explicitly as the point, and cite INFOGAP/Omnipedia/Manypedia openly rather than let a visitor discover the overlap unassisted.",
@@ -6493,7 +6803,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 14,
+      "rank": 15,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -6514,7 +6824,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'praemie'"
       },
-      "rank": 17,
+      "rank": 18,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
       "daylight": "Either build on genuinely under-covered instruments — actual cat-bond spread/ROL data (Swiss Re index, Artemis.bm) rather than the BLS homeowner PPI others already use — or make the legal-document framing itself the explicit differentiator, citing Deep Sky/BLS/FRED openly rather than implying proprietary discovery.",
@@ -6534,7 +6844,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'protokoll'"
       },
-      "rank": 19,
+      "rank": 20,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, driven by the literary form, not the data aggregation.",
       "daylight": "Stop positioning \"twelve open sources, daily\" as the value proposition (invites a losing comparison to OWID); foreground the deterministic/no-LLM/ test-locked-template mechanism and the \"adjourned\" bureaucratic-literary device as the explicit claim — an art piece about administrative language applied to planetary indicators, not a data-aggregation competitor to Our World in Data.",
@@ -6554,7 +6864,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'redaction'"
       },
-      "rank": 11,
+      "rank": 12,
       "tier": "instrument",
       "line": "From the “Counter-Measurement” line, in two chambers.",
       "verdict": "ADDED VALUE",
@@ -6576,7 +6886,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 12,
+      "rank": 13,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -6597,7 +6907,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'sawtooth'"
       },
-      "rank": 2,
+      "rank": 3,
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE.",
@@ -6618,7 +6928,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'society'"
       },
-      "rank": 7,
+      "rank": 8,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (provisional).",
@@ -6639,7 +6949,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 8,
+      "rank": 9,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -6661,7 +6971,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spread'"
       },
-      "rank": 1,
+      "rank": 2,
       "tier": "experiment",
       "line": "From the counter-measurement line, and the house’s first live, real-time work: an asset does not have one price, it has several, disagreeing by fractions of a second across venues nobody can watch all at once."
     },
@@ -6688,7 +6998,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 13,
+      "rank": 14,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -6696,6 +7006,28 @@
       "auditSource": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "REDUNDANT — the clearest case in this audit."
+      }
+    },
+    {
+      "id": "work:third-reading",
+      "kind": "work",
+      "label": "Third Reading",
+      "werkId": "third-reading",
+      "href": "/third-reading",
+      "since": "2026-10-27",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'third-reading'"
+      },
+      "rank": 1,
+      "tier": "experiment",
+      "line": "From the counter-measurement line.",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (pre-ship, 2026-10-26).",
+      "daylight": "Build the pilot round as it stands and open it on Frank's go; then measure the two things the kill conditions name, from the committed record: how many readings a round gathers, and whether readings given after opening the counts (`primed`) differ from the others. Carry a small core of matters forward under the same ids whenever a briefing names them again, so that a matter is read across rounds rather than once. Before the third round, ask whether the open edge of a wiki survey — a reader naming a matter the briefing missed, entering the pairs only after the seed's text gate — earns its moderation cost. Record in each briefing what it took from the last round, so the dependence between rounds stays visible.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE (pre-ship, 2026-10-26)."
       }
     },
     {
@@ -6709,7 +7041,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'trending'"
       },
-      "rank": 4,
+      "rank": 5,
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (provisional — sealed before ship).",
@@ -6730,7 +7062,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 20,
+      "rank": 21,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -7986,6 +8318,78 @@
     },
     {
       "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-22-every-column-true",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-every-column-true/meta.json",
+        "quote": "\"date\": \"2026-10-22\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-22-old-tools",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-old-tools/meta.json",
+        "quote": "\"date\": \"2026-10-22\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-22-twin-chips",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-twin-chips/meta.json",
+        "quote": "\"date\": \"2026-10-22\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-23-the-blank",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-23-the-blank/meta.json",
+        "quote": "\"date\": \"2026-10-23\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-23-twin-fixes",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-23-twin-fixes/meta.json",
+        "quote": "\"date\": \"2026-10-23\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-24-drawn-in-twenty-seconds",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-24-drawn-in-twenty-seconds/meta.json",
+        "quote": "\"date\": \"2026-10-24\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-25-asked-three-ways",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-25-asked-three-ways/meta.json",
+        "quote": "\"date\": \"2026-10-25\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-26-without-a-tongue",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-26-without-a-tongue/meta.json",
+        "quote": "\"date\": \"2026-10-26\""
+      }
+    },
+    {
+      "kind": "made-by",
       "from": "practice-work:field/2026-07-01-calibration-gap",
       "to": "practice:meridian",
       "source": {
@@ -8742,6 +9146,24 @@
       "source": {
         "file": "src/content/studio/works/2026-10-16-filed-under/meta.json",
         "quote": "\"date\": \"2026-10-16\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-20-take-cover-again",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-20-take-cover-again/meta.json",
+        "quote": "\"date\": \"2026-10-21\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-24-going-out",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-24-going-out/meta.json",
+        "quote": "\"date\": \"2026-10-25\""
       }
     },
     {
@@ -9934,6 +10356,127 @@
     },
     {
       "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:axa-com-en-news-future-risks-report",
+      "note": "the strongest neighbour: every year since at least 2018, experts and a representative public rank the same twenty risks, compared in an interactive radar ([2026 edition, Ipsos](https://www.ipsos.com/en-us/axa-future-risks-report-2026)). Two of the three readings, with far better samples than any self-selected audience; no media reading, fixed risk categories rather than current named matters, no pairwise choices, and no open microdata found.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[AXA Future Risks Report, with Ipsos](https://www.axa.com/en/news/future-risks-report) — the strongest neighbour: every year since at least 2018, experts and a representative public rank the same twenty risks, compared in an interactive radar ([2026 edition, Ipsos](https://www.ipsos.com/en-us/axa-future-risks-report-2026)). Two of the three readings, with far better samples than any self-selected audience; no media reading, fixed risk categories rather than current named matters, no pairwise choices, and no open microdata found."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:care-org-resources-the-10-most-under-reported-crises-of-2025",
+      "note": "\"urgent but quiet\" as an institution, in its tenth edition, beside [NRC's neglected displacement crises](https://www.nrc.no/resources/reports/the-worlds-most-neglected-displacement-crises-2025) and the [ECHO Forgotten Crisis Assessment](https://civil-protection-humanitarian-aid.ec.europa.eu/what/humanitarian-aid/needs-assessment/forgotten-crises_en): severity against coverage from media monitoring and the INFORM Severity Index, published mostly as PDFs, with no public reading at all.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[CARE, *The 10 most under-reported humanitarian crises*](https://www.care.org/resources/the-10-most-under-reported-crises-of-2025/) — \"urgent but quiet\" as an institution, in its tenth edition, beside [NRC's neglected displacement crises](https://www.nrc.no/resources/reports/the-worlds-most-neglected-displacement-crises-2025) and the [ECHO Forgotten Crisis Assessment](https://civil-protection-humanitarian-aid.ec.europa.eu/what/humanitarian-aid/needs-assessment/forgotten-crises_en): severity against coverage from media monitoring and the INFORM Severity Index, published mostly as PDFs, with no public reading at all."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:comparativeagendas-net",
+      "note": "the public agenda (Gallup's \"most important problem\"), the media agenda and the policy agenda on one topic codebook for about twenty countries, downloadable; no expert urgency, no current named matters, no participation.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Comparative Agendas Project](https://www.comparativeagendas.net/) — the public agenda (Gallup's \"most important problem\"), the media agenda and the policy agenda on one topic codebook for about twenty countries, downloadable; no expert urgency, no current named matters, no participation."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:en-wikipedia-org-wiki-hans-haacke",
+      "note": "the lineage in art: visitors' ballots, counted in the gallery. Polling the audience is a canonical move, and this work is that move kept as open data.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Hans Haacke, *MoMA Poll* (1970)](https://en.wikipedia.org/wiki/Hans_Haacke) — the lineage in art: visitors' ballots, counted in the gallery. Polling the audience is a canonical move, and this work is that move kept as open data."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:gapminder-org-misconception-studies",
+      "note": "estimate, then reveal, as a mature genre, beside [Ipsos *Perils of Perception*](https://www.ipsos.com/en/perils-perception-2015); the estimates here belong to that genre and claim nothing new as a form.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Gapminder misconception studies](https://www.gapminder.org/misconception-studies/) — estimate, then reveal, as a mature genre, beside [Ipsos *Perils of Perception*](https://www.ipsos.com/en/perils-perception-2015); the estimates here belong to that genre and claim nothing new as a form."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:media-mit-edu-publications-the-moral-machine-experiment",
+      "note": "forty million pairwise judgments with public data: the precedent for an audience's choices kept as a dataset, and the source of the critique this work answers by offering \"equally urgent\" — a [re-examination](https://ideas.repec.org/a/nat/nature/v579y2020i7797d10.1038_s41586-020-1987-4.html) found that forced choice manufactured strong preferences an \"equal\" option dissolved.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[MIT, *The Moral Machine experiment*](https://www.media.mit.edu/publications/the-moral-machine-experiment) — forty million pairwise judgments with public data: the precedent for an audience's choices kept as a dataset, and the source of the critique this work answers by offering \"equally urgent\" — a [re-examination](https://ideas.repec.org/a/nat/nature/v579y2020i7797d10.1038_s41586-020-1987-4.html) found that forced choice manufactured strong preferences an \"equal\" option dissolved."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:odi-org-en-publications-technology-and-the-data-revolution-l",
+      "note": "about ten million self-selected votes for six of sixteen priorities, beside the [OECD Better Life Index](https://www.oecd.org/en/publications/what-matters-the-most-to-people_edf9a89a-en.html)'s visitor weightings; no media reading, no pairs, and the MY World domains have since lapsed — the strongest argument found for keeping an archive inside the repository.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[MY World survey (ODI)](https://odi.org/en/publications/technology-and-the-data-revolution-lessons-from-the-my-world-survey/) — about ten million self-selected votes for six of sixteen priorities, beside the [OECD Better Life Index](https://www.oecd.org/en/publications/what-matters-the-most-to-people_edf9a89a-en.html)'s visitor weightings; no media reading, no pairs, and the MY World domains have since lapsed — the strongest argument found for keeping an archive inside the repository."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:ourworldindata-org-does-the-news-reflect-what-we-die-from",
+      "note": "causes of death set against their coverage in three US newspapers, counted with Media Cloud; its predecessor by [Shen et al.](https://owenshen24.github.io/charting-death/) added Google searches as a stand-in for the public. Reality against the media, but searching is not judging, and causes of death are not the matters of a month.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Our World in Data, *Does the news reflect what we die from?*](https://ourworldindata.org/does-the-news-reflect-what-we-die-from) — causes of death set against their coverage in three US newspapers, counted with Media Cloud; its predecessor by [Shen et al.](https://owenshen24.github.io/charting-death/) added Google searches as a stand-in for the public. Reality against the media, but searching is not judging, and causes of death are not the matters of a month."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc4439069",
+      "note": "the pairwise wiki survey this work's ranking follows: random pairs, an \"I can't decide\", posterior intervals and a score read as the chance of beating a random option. The method is off the shelf; no instance was found that applies it to the matters of a briefing against their media attention.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[All Our Ideas — Salganik and Levy, *Wiki Surveys*, PLOS ONE (2015)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4439069) — the pairwise wiki survey this work's ranking follows: random pairs, an \"I can't decide\", posterior intervals and a score read as the chance of beating a random option. The method is off the shelf; no instance was found that applies it to the matters of a briefing against their media attention."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:slate-com-articles-technology-copenhagen-consensus-2012-2012",
+      "note": "the direct precedent for \"the experts' ranking against this audience\": a panel of economists ranked investments and self-selected readers voted on the same list, once in 2008 and once in 2012; solutions rather than urgency, and no media reading.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Copenhagen Consensus reader votes (Slate, 2012)](https://www.slate.com/articles/technology/copenhagen_consensus_2012/2012/05/copenhagen_consensus_readers_vote_for_family_planning_better_nutrition_and_tobacco_taxes_.html) — the direct precedent for \"the experts' ranking against this audience\": a panel of economists ranked investments and self-selected readers voted on the same list, once in 2008 and once in 2012; solutions rather than urgency, and no media reading."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:third-reading",
+      "to": "neighbor:un-org-en-un75-finalreport",
+      "note": "the only case found that held all three readings of world priorities at once: a one-minute survey of over a million people, polling by Edelman and Pew, an AI analysis of media in seventy countries and a mapping of research. It ran once, gave respondents nothing back and asked no pairs; whether its report lines the streams up issue by issue could not be verified, because the PDF yielded no text.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[UN75, final report (2020)](https://www.un.org/en/un75/finalreport) — the only case found that held all three readings of world priorities at once: a one-minute survey of over a million people, polling by Edelman and Pew, an AI analysis of media in seventy countries and a mapping of research. It ran once, gave respondents nothing back and asked no pairs; whether its report lines the streams up issue by issue could not be verified, because the PDF yielded no text."
+      }
+    },
+    {
+      "kind": "neighbor-of",
       "from": "work:trending",
       "to": "neighbor:apify-com-miccho27-trends-aggregator",
       "note": "Google Trends, Hacker News, Reddit, GitHub and Product Hunt in one paid actor run; per-source lists returned to the caller, no public surface, no archive, no cross-source matching.",
@@ -10494,6 +11037,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/components/atelier/{LineageNote,WorkCard}.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-11-1",
+      "to": "work:third-reading",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/error-as-method/{genealogy,position,register,reading}.astro"
       }
     },
     {
@@ -11209,7 +11761,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-17-3",
+      "from": "decision:2026-10-17-4",
       "to": "work:ghost-fleet",
       "source": {
         "file": "docs/decision-log.md",
@@ -11218,7 +11770,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-17-3",
+      "from": "decision:2026-10-17-4",
       "to": "work:pattern",
       "source": {
         "file": "docs/decision-log.md",
@@ -11227,7 +11779,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-17-3",
+      "from": "decision:2026-10-17-4",
       "to": "work:round-number",
       "source": {
         "file": "docs/decision-log.md",
@@ -11286,6 +11838,24 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "public/{atelier,field}/artifacts/cycle-009/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-25-2",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/data/trending/watchlist.json"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-27-1",
+      "to": "work:third-reading",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "docs/design/2026-10-26-third-reading.md"
       }
     }
   ]

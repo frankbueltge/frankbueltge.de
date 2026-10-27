@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Spans of Delaware</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f2ede3; }
+  body { width: 1100px; height: 800px; overflow: hidden; font-family: Georgia, "Times New Roman", serif; color: #2b2925; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<svg id="s" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data/bridges.js"></script>
+<script>
+(function () {
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("s");
+  const el = (tag, attrs, parent, text) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    (parent || svg).appendChild(e);
+    return e;
+  };
+  const dms = v => {
+    const s = String(v).padStart(8, "0");
+    return +s.slice(0, 2) + +s.slice(2, 4) / 60 + (+s.slice(4, 6) + +s.slice(6, 8) / 100) / 3600;
+  };
+  // lowest condition rating -> colour
+  const RC = { 9: "#3f7f8c", 8: "#3f7f8c", 7: "#6f9aa0", 6: "#9a9688", 5: "#c48a3a", 4: "#b44a2a", 3: "#8a1f14", 2: "#8a1f14", 1: "#8a1f14", 0: "#8a1f14" };
+  const col = r => RC[r] || "#999";
+
+  const B = BRIDGES.map(b => ({
+    b, lat: dms(b.LAT_016), lon: dms(b.LONG_017),
+    len: b.STRUCTURE_LEN_MT_049, adt: b.ADT_029, yr: b.YEAR_BUILT_027, r: b.LOWEST_RATING
+  }));
+
+  const arch = (g, x, y, w, h, sw, c, op) => {
+    el("path", {
+      d: `M${(x - w / 2).toFixed(2)},${y.toFixed(2)} C${(x - w / 2).toFixed(2)},${(y - h * 1.33).toFixed(2)} ${(x + w / 2).toFixed(2)},${(y - h * 1.33).toFixed(2)} ${(x + w / 2).toFixed(2)},${y.toFixed(2)}`,
+      fill: "none", stroke: c, "stroke-width": sw.toFixed(2), "stroke-linecap": "round", opacity: op
+    }, g);
+  };
+
+  // ---------- Left: the state drawn by its bridges ----------
+  const k = Math.cos(39 * Math.PI / 180);
+  const xs = B.map(d => -d.lon * k), ys = B.map(d => -d.lat);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const MAP = { l: 40, t: 112, w: 330, h: 650 };
+  const sc = Math.min(MAP.w / (x1 - x0), MAP.h / (y1 - y0));
+  const ox = MAP.l + (MAP.w - (x1 - x0) * sc) / 2;
+  B.forEach((d, i) => { d.mx = ox + (xs[i] - x0) * sc; d.my = MAP.t + (ys[i] - y0) * sc; });
+
+  const lg10 = Math.log10;
+  const spanW = L => 2.5 + 5.2 * Math.max(0, lg10(L) - 0.7);
+  const traffic = A => 0.5 + 0.42 * Math.max(0, lg10(Math.max(A, 1)) - 1);
+
+  const gm = el("g", {});
+  // draw longest first so small ones sit on top
+  [...B].sort((a, b) => b.len - a.len).forEach(d => {
+    const w = spanW(d.len);
+    arch(gm, d.mx, d.my, w, w * 0.42, traffic(d.adt) * 1.15, col(d.r), 0.85);
+  });
+
+  // county names placed at each county's centroid of bridges
+  const CN = { 1: "KENT", 3: "NEW CASTLE", 5: "SUSSEX" };
+  const cty = {};
+  B.forEach(d => { const c = d.b.COUNTY_CODE_003; (cty[c] = cty[c] || []).push(d); });
+  Object.keys(cty).forEach(c => {
+    const a = cty[c];
+    const cy = a.reduce((s, d) => s + d.my, 0) / a.length;
+    const minx = Math.min(...a.map(d => d.mx));
+    el("text", { x: Math.max(14, minx - 16), y: cy, "font-size": 10, "letter-spacing": 2.5, fill: "#7d776a",
+      transform: `rotate(-90 ${Math.max(14, minx - 16)} ${cy})`, "text-anchor": "middle" }, null, `${CN[c] || c} · ${a.length}`);
+  });
+
+  // the longest bridge, annotated
+  const longest = B.reduce((m, d) => d.len > m.len ? d : m, B[0]);
+  const lx = longest.mx + 14, ly = longest.my - 6;
+  el("line", { x1: longest.mx + 6, y1: longest.my - 3, x2: 278, y2: 196, stroke: "#5c574d", "stroke-width": 0.6 });
+  el("text", { x: 282, y: 192, "font-size": 10.5, fill: "#2b2925", "font-style": "italic" }, null, longest.b.FEATURES_DESC_006A.toLowerCase().replace(/\b\w/g, m => m.toUpperCase()));
+  el("text", { x: 282, y: 205, "font-size": 9.5, fill: "#5c574d" }, null, `${Math.round(longest.len).toLocaleString("en-US")} m, ${longest.yr}`);
+
+  // ---------- Right: the same bridges stacked by when they were built ----------
+  const P = { l: 470, r: 1068, base: 700 };
+  const yrs = B.map(d => d.yr);
+  const yMin = Math.floor(Math.min(...yrs) / 5) * 5, yMax = Math.floor(Math.max(...yrs) / 5) * 5 + 5;
+  const nb = (yMax - yMin) / 5;
+  const bw = (P.r - P.l) / nb;
+  const bins = Array.from({ length: nb }, () => []);
+  B.forEach(d => bins[Math.floor((d.yr - yMin) / 5)].push(d));
+  const maxN = Math.max(...bins.map(b => b.length));
+  const rowH = Math.min(6.4, (P.base - 262) / maxN);
+
+  const gh = el("g", {});
+  bins.forEach((bin, i) => {
+    bin.sort((a, b) => a.r - b.r || b.len - a.len);
+    const cx = P.l + (i + 0.5) * bw;
+    bin.forEach((d, j) => {
+      const w = Math.min(bw - 2, 3 + (bw - 5) * Math.max(0, lg10(d.len) - 0.7) / 2.8);
+      arch(gh, cx, P.base - j * rowH, w, rowH * 0.78, traffic(d.adt) * 0.9, col(d.r), 0.95);
+    });
+  });
+  // ground line + year ticks
+  el("line", { x1: P.l - 4, y1: P.base + 2, x2: P.r + 4, y2: P.base + 2, stroke: "#2b2925", "stroke-width": 0.8 });
+  for (let y = Math.ceil(yMin / 25) * 25; y <= yMax; y += 25) {
+    const x = P.l + (y - yMin) / 5 * bw;
+    el("line", { x1: x, y1: P.base + 2, x2: x, y2: P.base + 7, stroke: "#2b2925", "stroke-width": 0.8 });
+    el("text", { x, y: P.base + 20, "font-size": 11, "text-anchor": "middle", fill: "#3d3a34" }, null, y);
+  }
+  el("text", { x: P.r, y: P.base + 38, "font-size": 10, "text-anchor": "end", fill: "#7d776a", "font-style": "italic" }, null, "year built, in five-year courses");
+
+  // tallest course annotated
+  const ti = bins.findIndex(b => b.length === maxN);
+  const tx = P.l + (ti + 0.5) * bw, ty = P.base - (maxN - 1) * rowH - 10;
+  el("text", { x: tx, y: ty - 6, "font-size": 10, "text-anchor": "middle", fill: "#5c574d" }, null, `${yMin + ti * 5}–${yMin + ti * 5 + 4}: ${maxN}`);
+
+  // ---------- Title, key ----------
+  el("text", { x: 40, y: 54, "font-size": 30, fill: "#2b2925", "letter-spacing": 0.5 }, null, "Spans of Delaware");
+  el("text", { x: 40, y: 78, "font-size": 12.5, fill: "#5c574d", "font-style": "italic" }, null,
+    `${B.length} highway bridges, each drawn once where it stands and once when it was built`);
+  el("text", { x: 40, y: 95, "font-size": 10, fill: "#7d776a" }, null, "National Bridge Inventory, 2025");
+
+  const K = { x: 470, y: 150 };
+  el("text", { x: K.x, y: K.y, "font-size": 10.5, fill: "#3d3a34", "letter-spacing": 1.2 }, null, "LOWEST CONDITION RATING");
+  [[8, "8–9  very good"], [7, "7  good"], [6, "6  satisfactory"], [5, "5  fair"], [4, "4  poor"], [3, "3  serious"]].forEach(([r, t], i) => {
+    const yy = K.y + 22 + i * 17;
+    arch(svg, K.x + 9, yy, 16, 6, 1.8, col(r), 1);
+    const n = B.filter(d => r === 8 ? d.r >= 8 : d.r === r).length;
+    el("text", { x: K.x + 24, y: yy, "font-size": 11, fill: "#3d3a34" }, null, `${t}`);
+    el("text", { x: K.x + 150, y: yy, "font-size": 10, fill: "#7d776a", "text-anchor": "end" }, null, n);
+  });
+  const K2 = { x: 650, y: 150 };
+  el("text", { x: K2.x, y: K2.y, "font-size": 10.5, fill: "#3d3a34", "letter-spacing": 1.2 }, null, "WIDTH = LENGTH · WEIGHT = TRAFFIC");
+  [[8, 100], [40, 3000], [300, 30000], [3000, 100000]].forEach(([L, A], i) => {
+    const x = K2.x + 10 + i * 46;
+    const w = spanW(L);
+    arch(svg, x + 8, K2.y + 32, w, w * 0.42, traffic(A), "#5c574d", 1);
+    el("text", { x: x + 8, y: K2.y + 50, "font-size": 9, fill: "#7d776a", "text-anchor": "middle" }, null, L >= 1000 ? (L / 1000) + " km" : L + " m");
+  });
+  el("text", { x: K2.x, y: K2.y + 66, "font-size": 9.5, fill: "#7d776a", "font-style": "italic" }, null, "heavier stroke: more vehicles per day");
+})();
+</script>
+</body>
+</html>

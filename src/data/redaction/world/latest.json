@@ -1,30 +1,30 @@
 {
-  "date": "2026-10-21",
+  "date": "2026-10-27",
   "deletion": {
     "available": true,
-    "checked_at": "2026-10-21T10:30:18Z",
+    "checked_at": "2026-10-27T10:51:29Z",
     "counts": {
-      "botwall": 29,
-      "gone_404": 1,
-      "gone_410": 0,
+      "botwall": 15,
+      "gone_404": 0,
+      "gone_410": 1,
       "legal_451": 0,
-      "ok": 268,
-      "other": 1,
+      "ok": 281,
+      "other": 2,
       "server_error": 0,
       "unreachable": 1
     },
-    "decided": 270,
-    "excluded_unverifiable": 30,
+    "decided": 284,
+    "excluded_unverifiable": 16,
     "gone": 1,
     "gone_ci95": [
-      0.0007,
-      0.0207
+      0.0006,
+      0.0197
     ],
-    "gone_rate": 0.0037,
+    "gone_rate": 0.0035,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.014
+      0.0133
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,54 +33,32 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-10-19",
+    "pool_day": "2026-10-25",
     "receipts": [
       {
-        "class": "gone_404",
-        "domain": "wbap.com",
-        "first_seen": "20261019130000",
-        "http_code": 404,
-        "title": "Man Dies After Harry Hines Drop-Off As Dallas Police Probe Two Homicides",
-        "url": "https://www.wbap.com/2026/10/19/man-dies-after-harry-hines-drop-off-as-dallas-police-probe-two-homicides/"
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20261025070000",
+        "http_code": 410,
+        "title": "Dublin tenant who told RTB of ceiling piece falling on 'son's cot' awarded damages",
+        "url": "https://www.breakingnews.ie/ireland/dublin-tenant-who-told-rtb-of-ceiling-piece-falling-on-sons-cot-awarded-damages-1955276.html"
       }
     ],
-    "sample_drawn_at": "2026-10-20T10:17:41Z",
+    "sample_drawn_at": "2026-10-26T11:23:16Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 5258,
-      "replaced": 5044,
-      "trivial": 964,
-      "update": 449
+      "reframing": 3776,
+      "replaced": 3981,
+      "trivial": 741,
+      "update": 393
     },
-    "day": "2026-10-20",
+    "day": "2026-10-26",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
-      {
-        "added": [
-          "14",
-          "CEC",
-          "Gyanesh",
-          "Kumar",
-          "India",
-          "News"
-        ],
-        "after": "Cec Gyanesh Kumar: Missing pages, Rs 200 fee shortfall: SC flags 14 defects in INDIA bloc plea against CEC Gyanesh Kumar | India News",
-        "before": "Missing pages, Rs 200 fee shortfall: SC flags over 10 defects in INDIA bloc plea against CEC Gyanesh Kumar",
-        "detected": "2026-10-20T02:32:36Z",
-        "domain": "indiatimes.com",
-        "removed": [
-          "over",
-          "10"
-        ],
-        "similarity": 0.81,
-        "url": "https://timesofindia.indiatimes.com/india/missing-pages-rs-200-fee-shortfall-sc-flags-over-10-defects-in-india-bloc-plea-against-cec-gyanesh-kumar/articleshow/134906163.cms",
-        "weight": 12,
-        "window": "1w"
-      },
       {
         "added": [
           "Northwest",
@@ -88,7 +66,7 @@
         ],
         "after": "Voting early? Here's where and when you can do it in Northwest Arkansas | The Arkansas Democrat-Gazette",
         "before": "Voting early? Here's where and when you can do it in Benton and Washington counties | The Arkansas Democrat-Gazette",
-        "detected": "2026-10-20T23:32:37Z",
+        "detected": "2026-10-26T23:31:48Z",
         "domain": "arkansasonline.com",
         "removed": [
           "Benton",
@@ -99,55 +77,71 @@
         "similarity": 0.8,
         "url": "https://www.arkansasonline.com/news/2026/oct/19/voting-early-heres-where-and-when-you-can-do-it/",
         "weight": 9,
-        "window": "24h"
+        "window": "1w"
       },
       {
         "added": [
-          "Northwest",
-          "Arkansas"
+          "cop"
         ],
-        "after": "Voting early? Here's where and when you can do it in Northwest Arkansas | Northwest Arkansas Democrat-Gazette",
-        "before": "Voting early? Here's where and when you can do it in Benton and Washington counties | Northwest Arkansas Democrat-Gazette",
-        "detected": "2026-10-20T22:32:43Z",
-        "domain": "nwaonline.com",
+        "after": "Video of ASI sexually harassing volunteer at Kolkata puja pandal goes viral; cop arrested",
+        "before": "Kolkata Harassment: Video of ASI sexually harassing volunteer at Kolkata puja pandal goes viral; arrested | Kolkata News",
+        "detected": "2026-10-26T10:16:34Z",
+        "domain": "indiatimes.com",
         "removed": [
-          "Benton",
-          "and",
-          "Washington",
-          "counties"
+          "Harassment",
+          "Kolkata",
+          "Kolkata",
+          "News"
         ],
-        "similarity": 0.842,
-        "url": "https://www.nwaonline.com/news/2026/oct/19/voting-early-heres-where-and-when-you-can-do-it/",
+        "similarity": 0.812,
+        "url": "https://timesofindia.indiatimes.com/city/kolkata/kolkata-asi-arrested-for-sexually-harassing-durga-puja-volunteer/articleshow/135045447.cms",
         "weight": 9,
-        "window": "24h"
+        "window": "1w"
+      },
+      {
+        "added": [
+          "III"
+        ],
+        "after": "Rare photos of Myanmar's ex-leader Suu Kyi show her receiving books sent by King Charles III",
+        "before": "Rare photos of Myanmar's ex-leader Aung San Suu Kyi show her receiving books sent by King Charles",
+        "detected": "2026-10-26T15:47:56Z",
+        "domain": "abcnews.com",
+        "removed": [
+          "Aung",
+          "San"
+        ],
+        "similarity": 0.85,
+        "url": "https://abcnews.com/International/wireStory/rare-photos-myanmars-leader-aung-san-suu-kyi-137382339",
+        "weight": 6,
+        "window": "1w"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 17036,
-      "PAGE_TEXTCHANGE": 125095,
-      "PAGE_TITLECHANGE": 48148,
-      "UNCHANGED_CONTENT": 732285
+      "HTTP_REDIRECT": 11807,
+      "PAGE_TEXTCHANGE": 101857,
+      "PAGE_TITLECHANGE": 40056,
+      "UNCHANGED_CONTENT": 590094
     },
-    "title_changes_en": 11715,
+    "title_changes_en": 8891,
     "trace": [
       {
-        "bytes_billed": 25165824,
-        "created": "1792578417883",
-        "job_id": "world_gdg_counts_20261020",
+        "bytes_billed": 19922944,
+        "created": "1793098040721",
+        "job_id": "world_gdg_counts_20261026",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 231735296,
-        "created": "1792578422219",
-        "job_id": "world_gdg_titles_20261020",
+        "bytes_billed": 187695104,
+        "created": "1793098046138",
+        "job_id": "world_gdg_titles_20261026",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-10-21T10:30:18Z",
+  "generated_at": "2026-10-27T10:51:29Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-10-20.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-10-26.json",
   "schema_version": "1",
   "selection_version": "v1"
 }

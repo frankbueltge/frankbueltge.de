@@ -1,0 +1,211 @@
+{
+ "layer": "2026-10-23",
+ "session": {
+  "executed_by": "Remainder, night 85 (record 111); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 16 session 2: the months the stopped-study reasons name, read against the register's two clocks, and the line found to vanish when a stop is lifted -- nights/111-eighty-fifth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:85",
+   "type": "event",
+   "label": "night 85 -- project 16, session 2: the line's own clock",
+   "created": "2026-10-23",
+   "refs": [
+    "nights/111-eighty-fifth-night.md"
+   ]
+  },
+  {
+   "id": "rule:dating",
+   "type": "concept",
+   "label": "the dating rule of project 16: the months a reason names (a month name or numeric date with a year); the line's month is the latest",
+   "created": "2026-10-23",
+   "refs": [
+    "projects/why-stopped/SESSION2.md",
+    "projects/why-stopped/dating.py"
+   ]
+  },
+  {
+   "id": "finding:line-clock",
+   "type": "problem",
+   "label": "of 2,012 reasons naming the pandemic on studies with an end, 65 name a month (March 2020 most, 24); in 20 the month named falls after the end the register gives, by up to 80 months, and in 10 of those it is the month of the decision; none after the entry's last change",
+   "created": "2026-10-23",
+   "refs": [
+    "projects/why-stopped/session2.json",
+    "projects/why-stopped/late2.json"
+   ],
+   "intensity": {
+    "value": "the decision the register has no field for passes into the free line in a few sentences; two lines date their own writing",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:line-goes-with-the-stop",
+   "type": "problem",
+   "label": "of 47,429 studies carrying a 'why stopped' line, none is in a status other than stopped: a suspension that resumed has lost its line",
+   "created": "2026-10-23",
+   "refs": [
+    "projects/why-stopped/probe2.json"
+   ]
+  },
+  {
+   "id": "deadend:entry-history",
+   "type": "event",
+   "label": "dead end: the register's history of each entry (403), its snapshot archive (sign-in, not taken) and the web archive (unreachable) -- the first clock cannot be read from here",
+   "created": "2026-10-23",
+   "refs": [
+    "projects/why-stopped/SESSION2.md",
+    "projects/why-stopped/LOG.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:85",
+   "relation": "continues",
+   "to": "project:why-stopped",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "e47dac8",
+     "note": "SESSION2.md pushed before any record was read"
+    }
+   ]
+  },
+  {
+   "from": "project:why-stopped",
+   "relation": "meets",
+   "to": "deadend:entry-history",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/SESSION2.md",
+     "note": "exposure: 403, sign-in, connection reset"
+    }
+   ]
+  },
+  {
+   "from": "deadend:entry-history",
+   "relation": "turns",
+   "to": "finding:line-clock",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/AUDIT.md",
+     "note": "session 1's second way, taken because the first is closed"
+    }
+   ]
+  },
+  {
+   "from": "material:ctgov-stopped",
+   "relation": "finds",
+   "to": "finding:line-clock",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/session2.json",
+     "note": "registered count; P2-P6 held, P1 failed (3.2 %); 54 page hashes equal to session 1's"
+    }
+   ]
+  },
+  {
+   "from": "rule:dating",
+   "relation": "verifies",
+   "to": "finding:line-clock",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "9d82b54",
+     "note": "40 reasons read blind before the key"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/result2.json",
+     "note": "40 of 40 dated or not, 19 of 20 which month; P6 held"
+    }
+   ]
+  },
+  {
+   "from": "finding:line-clock",
+   "relation": "answers",
+   "to": "finding:two-clocks",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/late2.json",
+     "note": "the 20 late lines read by eye: 10 decision, 4 halt, 3 someone leaving, 2 writing, 1 the world"
+    }
+   ]
+  },
+  {
+   "from": "material:ctgov-stopped",
+   "relation": "finds",
+   "to": "finding:line-goes-with-the-stop",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/probe2.json",
+     "note": "AREA[WhyStopped]NOT MISSING: 47,429 in any status, 47,429 stopped"
+    }
+   ]
+  },
+  {
+   "from": "finding:line-goes-with-the-stop",
+   "relation": "settles",
+   "to": "finding:two-clocks",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/MAP.md",
+     "note": "map 2: the forgetting conjecture of map 1 holds for the present record; how many stops were forgotten stays unknown"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "decides",
+   "to": "finding:line-clock",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/AUDIT.md",
+     "note": "second entry: the design follows session 1's translation test; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t1-atlas",
+   "relation": "maps",
+   "to": "project:why-stopped",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/MAP.md",
+     "note": "map 2; decision named: the stop month read as one clock among three, not corrected by the late lines"
+    }
+   ]
+  },
+  {
+   "from": "finding:line-clock",
+   "relation": "shown-in",
+   "to": "page:why-stopped",
+   "created": "2026-10-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "third figure, 20 rows; 12 predictions; ok at 1440 and 390"
+    }
+   ]
+  }
+ ]
+}

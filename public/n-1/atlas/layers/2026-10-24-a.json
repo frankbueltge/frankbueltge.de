@@ -1,0 +1,199 @@
+{
+ "layer": "2026-10-24-a",
+ "session": {
+  "executed_by": "Remainder, night 87 (record 113); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 17 session 1: GBIF's absence records counted, their sources found concentrated in legally required surveys, and silence found counted as presence -- nights/113-eighty-seventh-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:87",
+   "type": "event",
+   "label": "night 87 -- project 17, session 1: looked for",
+   "created": "2026-10-24",
+   "refs": [
+    "nights/113-eighty-seventh-night.md"
+   ]
+  },
+  {
+   "id": "project:looked-for",
+   "type": "project",
+   "label": "project 17 -- Looked for: the records in GBIF that say a living thing was looked for and not there",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/PROJECT.md",
+    "projects/looked-for/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:gbif-absent",
+   "type": "material",
+   "label": "GBIF occurrence index, read by counts and facets filtered on occurrenceStatus (API v1, 2026-10-23 UTC)",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/fetch_log.json"
+   ]
+  },
+  {
+   "id": "finding:absence-concentrated",
+   "type": "problem",
+   "label": "136,979,181 of 3,983,226,782 records say absent (3.4 %), from 3,070 datasets; ten write 72.3 %, the Norwegian petroleum seabed surveys 25.2 %",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/session1.json"
+   ],
+   "intensity": {
+    "value": "the largest single source of 'not there' in the world's biodiversity index is a legal duty of an industry",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:silence-as-presence",
+   "type": "problem",
+   "label": "a record that says nothing of status is counted present without a flag: 4 of 40 drawn; only 128,149 records carry the inferred-from-kind flag",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/result1.json",
+    "projects/looked-for/session1.json"
+   ]
+  },
+  {
+   "id": "deadend:refused-statuses",
+   "type": "event",
+   "label": "dead end: the index's enumeration lists DETECTED and NOT_DETECTED, its search refuses both ('Cannot parse')",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/LOG.md",
+    "projects/looked-for/count1.py"
+   ]
+  },
+  {
+   "id": "page:looked-for",
+   "type": "document",
+   "label": "study page: absences by source, by year, by kingdom; the check; six predictions",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/index.html",
+    "projects/looked-for/build.py"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:87",
+   "relation": "opens",
+   "to": "project:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "e096191",
+     "note": "SELECTION.md pushed before any count or record was read"
+    }
+   ]
+  },
+  {
+   "from": "project:looked-for",
+   "relation": "takes",
+   "to": "material:gbif-absent",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/fetch_log.json",
+     "note": "every call, its time and hash"
+    }
+   ]
+  },
+  {
+   "from": "material:gbif-absent",
+   "relation": "finds",
+   "to": "finding:absence-concentrated",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/session1.json",
+     "note": "registered count; P1, P3, P4 held, P2 and P5 failed"
+    }
+   ]
+  },
+  {
+   "from": "material:gbif-absent",
+   "relation": "finds",
+   "to": "finding:silence-as-presence",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "e101eef",
+     "note": "40 records read from the publisher's words before the key; 36 of 36 agree, 4 name-only counted present"
+    }
+   ]
+  },
+  {
+   "from": "material:gbif-absent",
+   "relation": "refuses",
+   "to": "deadend:refused-statuses",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/LOG.md",
+     "note": "23:27 detour"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "decides",
+   "to": "finding:absence-concentrated",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/AUDIT.md",
+     "note": "entry 1: two-sided, not triggered; moves session 2 to the space each absence was searched in, beginning with the petroleum surveys"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "follows",
+   "to": "project:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/LOG.md",
+     "note": "written in session; two detours logged (terms refused, statuses refused)"
+    }
+   ]
+  },
+  {
+   "from": "finding:absence-concentrated",
+   "relation": "shown-in",
+   "to": "page:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "11 source segments, 77 years, 40 squares, 6 predictions; ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "project:why-stopped",
+   "relation": "followed-by",
+   "to": "project:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/SELECTION.md",
+     "note": "why elsewhere: living things, another source, another kind of statement"
+    }
+   ]
+  }
+ ]
+}

@@ -9,15 +9,17 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { SELECTED_WORKS, type ShelfPick } from '@/config/selected-works'
 import { WERKE } from '@/data/werke'
-import { loadFieldPapers } from '@/lib/ecology/v3'
+import { loadCycle, loadFieldPapers } from '@/lib/ecology/v3'
 import { pieceHref } from '@/lib/engines/publication-links'
 import { readPick, readShelfReport, retirementDay } from './selected-works'
-import { makerStill, SHELF_STILL_DIR, shelfCrop, shelfKey } from './shelf-stills'
+import { pageSentence, readPoolEntries } from './shelf-pool'
+import { makerStill, pageShotSource, SHELF_STILL_DIR, shelfCrop, shelfKey } from './shelf-stills'
 import { dayMonthYear } from './since'
 
 const picks: readonly ShelfPick[] = SELECTED_WORKS.picks
 const { cards, missing } = readShelfReport()
 const byKey = new Map(cards.map((c) => [c.key, c]))
+const poolEntries = readPoolEntries()
 
 // WHERE THE SHELF IS HELD STRICTLY. Locally and in the pull request's CI, every pick must read: that
 // is where a person changes the shelf, and a typo should be loud. The integrate and deploy runs
@@ -114,12 +116,13 @@ describe('what the shelf types', () => {
 })
 
 describe('the stills', () => {
-  it.each(picks.map((p) => [shelfKey(p.work), p] as const))('%s shows its maker’s own still, cut to the frame, or none', (key, pick) => {
+  it.each(picks.map((p) => [shelfKey(p.work), p] as const))('%s shows its maker’s own still, cut to the frame, or a shot of its own page', (key, pick) => {
     const source = makerStill(pick.work)
     const card = byKey.get(key)
     if (!card) return // left off tonight; the strict run above names it
     if (!source) {
-      expect(card.still, `${key} shows a picture its maker never committed`).toBeNull()
+      // no still of its maker's: the picture, where there is one, is its own page (shelf:shots)
+      if (card.still) expect(card.still.source).toBe(pageShotSource(card.href))
       return
     }
     const crop = shelfCrop(pick.work)
@@ -128,11 +131,78 @@ describe('the stills', () => {
     expect(card.still?.source).toBe(source)
   })
 
-  it('keeps no crop that no pick uses', () => {
-    // a crop named after a pick is never stray, even on a night its source left the mirror
-    const wanted = new Set(picks.map((p) => shelfCrop(p.work).file))
+  it('keeps no crop that no piece of the pool uses', () => {
+    // a crop named after a pick is never stray, even on a night its source left the mirror; a pool
+    // piece's crop goes stray when a mirror drops the piece, which only a person tidies, so the
+    // nightly runs do not ask
+    if (!STRICT) return
+    const wanted = new Set([...picks.map((p) => p.work), ...poolEntries.map((e) => e.pick.work)].map((w) => shelfCrop(w).file))
     const present = existsSync(SHELF_STILL_DIR) ? readdirSync(SHELF_STILL_DIR).map((f) => `${SHELF_STILL_DIR}/${f}`) : []
     expect(present.filter((f) => !wanted.has(f)), 'a stray crop — run npm run shelf:stills').toEqual([])
+  })
+})
+
+describe('the pool the edition draws from', () => {
+  const pool = poolEntries.map((e) => e.card)
+
+  it('leads with the pinned pieces, then the picks in their order, and holds far more than the shelf shows', () => {
+    const pinned = SELECTED_WORKS.pinned.map((w) => shelfKey(w))
+    expect(pool.slice(0, pinned.length).map((c) => c.key)).toEqual(pinned)
+    expect(pool.filter((c) => c.pinned).map((c) => c.key)).toEqual(pinned)
+    const rest = pool.slice(pinned.length).map((c) => c.key)
+    expect(rest.slice(0, cards.length - pinned.filter((k) => byKey.has(k)).length)).toEqual(cards.map((c) => c.key).filter((k) => !pinned.includes(k)))
+    expect(pool.length).toBeGreaterThan(cards.length * 3)
+  })
+
+  it('holds every piece once, by key, by address and by title', () => {
+    for (const pick of [(c: (typeof pool)[number]) => c.key, (c: (typeof pool)[number]) => c.href, (c: (typeof pool)[number]) => `${c.title}|${c.maker}`]) {
+      const seen = pool.map(pick)
+      expect(new Set(seen).size).toBe(seen.length)
+    }
+  })
+
+  it('draws from every maker of the house', () => {
+    const makers = new Set(pool.map((c) => c.voice ?? c.maker))
+    for (const voice of ['studio', 'atelier', 'field']) expect(makers.has(voice), voice).toBe(true)
+    expect(makers.size).toBeGreaterThanOrEqual(6)
+  })
+
+  it.each(pool.map((c) => [c.key, c] as const))('%s is published, dated, and shows only a committed crop', (_key, card) => {
+    expect(card.title.trim()).not.toBe('')
+    expect(card.day).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(card.href.startsWith('/')).toBe(true)
+    expect(pieceHref(card.href)).toBe(card.href)
+    expect(pageExists(card.href), `no page is built at ${card.href}`).toBe(true)
+    if (card.still) expect(existsSync(join('public', card.still.src)), card.still.src).toBe(true)
+  })
+
+  it('shows a picture of its piece on almost every card', () => {
+    // a work that landed tonight has no shot until npm run shelf:shots runs, so this asks for most,
+    // not all; a missing shot never turns a practice's delivery red
+    const pictured = pool.filter((c) => c.still).length
+    expect(pictured / pool.length, `${pool.length - pictured} card(s) without a picture — run npm run shelf:shots`).toBeGreaterThan(0.9)
+  })
+
+  it('leaves the running cycle out until it is presented', () => {
+    const cycle = loadCycle()
+    if (cycle.phase !== 'working') return
+    const pad = String(cycle.cycle).padStart(3, '0')
+    expect(pool.filter((c) => c.key.endsWith(`cycle-${pad}`)).map((c) => c.key)).toEqual([])
+  })
+})
+
+describe('a page’s own sentence', () => {
+  it('is its description, unless that only names who made it', () => {
+    expect(pageSentence('<meta name="description" content="A desk deals real warnings, and the record answers mostly with silence.">')).toBe(
+      'A desk deals real warnings, and the record answers mostly with silence.',
+    )
+    expect(
+      pageSentence('<meta name="description" content="The Atelier · cycle 004, read through extinction"><p>Each square is one record, lettered by its class. More follows.</p>'),
+    ).toBe('Each square is one record, lettered by its class.')
+  })
+
+  it('is nothing where the page says nothing of itself', () => {
+    expect(pageSentence('<p>Short.</p>')).toBeUndefined()
   })
 })
 

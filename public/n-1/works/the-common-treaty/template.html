@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>The Common Treaty</title>
+<style>
+  :root {
+    --bg: #f7f5f0; --ink: #171614; --muted: #6e6a62; --line: #d5d1c7; --card: #fffdf8;
+    --lit: #2f5d50; --off: #e4e0d6; --gone: #b5462f; --gen: #7a5c99;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #131211; --ink: #e9e6e0; --muted: #98938a; --line: #3c3934; --card: #1c1a18;
+      --lit: #8fcfb8; --off: #2a2825; --gone: #ef8a6d; --gen: #c2a5e6; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Georgia, "Times New Roman", serif; }
+  main { max-width: 60rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+  h1 { font-size: 1.45rem; font-weight: normal; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .4rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  .lead { max-width: 40rem; margin: 0 auto 2rem; }
+  h2 { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: normal;
+    margin: 3rem 0 1rem; border-top: 1px solid var(--line); padding-top: 1.1rem; }
+  a { color: inherit; text-decoration-color: var(--line); }
+  .ctl { display: flex; align-items: center; gap: 1rem; margin: 0 0 1.4rem; flex-wrap: wrap; justify-content: center; }
+  .ctl input { width: min(28rem, 100%); accent-color: var(--lit); }
+  .yr { font-size: 1.6rem; font-variant-numeric: tabular-nums; min-width: 9rem; text-align: center; }
+  .ctl button { font: inherit; font-size: .9rem; background: none; color: var(--ink); border: 1px solid var(--line); border-radius: 3px;
+    padding: .25rem .8rem; cursor: pointer; }
+  .ctl button:hover { border-color: var(--ink); }
+  .row { display: grid; grid-template-columns: 13rem 1fr; gap: .2rem 1rem; padding: .7rem 0; border-top: 1px solid var(--line); }
+  .head b { display: block; font-weight: normal; letter-spacing: .06em; }
+  .head small { display: block; color: var(--muted); font-size: .78rem; line-height: 1.35; }
+  .head .n { color: var(--muted); font-size: .8rem; font-variant-numeric: tabular-nums; margin-top: .25rem; }
+  .cells { display: flex; flex-wrap: wrap; gap: 3px; align-content: flex-start; padding-top: .2rem; }
+  .c { width: 13px; height: 13px; border-radius: 2px; background: var(--off); }
+  .c.on { background: var(--lit); }
+  .c.gone { background: transparent; box-shadow: inset 0 0 0 2px var(--gone); }
+  .c.back { background: var(--lit); box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--lit); }
+  .row.few .cells { opacity: .25; }
+  .gen { display: flex; flex-wrap: wrap; gap: 3px; margin-top: .4rem; }
+  .g { width: 9px; height: 9px; border-radius: 50%; background: var(--gen); }
+  .legend { color: var(--muted); font-size: .85rem; margin: 1rem 0 0; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; }
+  .legend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .legend .c, .legend .g { display: inline-block; }
+  .tally { font-size: 1.05rem; max-width: 40rem; margin: 0 auto; }
+  .aside { color: var(--muted); font-size: .9rem; max-width: 40rem; margin-left: auto; margin-right: auto; }
+  #note { min-height: 3.2em; color: var(--muted); font-size: .9rem; text-align: center; margin: 0 0 .6rem; }
+  table { border-collapse: collapse; font-size: .85rem; width: 100%; }
+  th, td { text-align: left; vertical-align: top; border-top: 1px solid var(--line); padding: .4rem .5rem .4rem 0; }
+  .nojs { overflow-x: auto; }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .row { grid-template-columns: 1fr; }
+    .c { width: 11px; height: 11px; }
+  }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1>The Common Treaty</h1>
+  <p class="sub">Nine human rights treaties, and what in them binds every state that joined · Remainder, 2026</p>
+
+  <p class="lead">A state may join a treaty and, in the same act, hold back part of it. What is left that binds
+  <i>every</i> state that joined is smaller than the treaty, and it changes each time a state joins with a reservation or
+  withdraws one. Each row below is one of the nine core United Nations human rights treaties; each square is one of its
+  obligations. A square is lit when, in the year shown, no party holds it back.</p>
+
+  <div id="piece" hidden>
+    <div class="ctl"><button id="prev" aria-label="Earlier year">←</button><span class="yr" id="yr"></span>
+      <button id="next" aria-label="Later year">→</button>
+      <input id="slider" type="range" min="0" value="0" aria-label="Year"></div>
+    <p id="note"></p>
+    <div id="rows"></div>
+    <p class="legend"><span><i class="c on"></i>binds every party</span><span><i class="c"></i>held back by at least one</span>
+      <span><i class="c gone"></i>common in 2014, held back on the 2026 pages</span>
+      <span><i class="c back"></i>common now, not in the file’s 2014</span>
+      <span><i class="g"></i>a party with a general reservation (2026), not spread over the squares</span></p>
+  </div>
+
+  <noscript><div class="nojs"><p class="aside">Without JavaScript the years cannot be moved; the first year shown, 2014 and
+  October 2026 stand below.</p>
+  <table><thead><tr><th>Treaty</th><th>First year with 20 parties</th><th>Common then</th><th>Common in 2014</th>
+  <th>Common on the October 2026 pages</th><th>Parties with a general reservation, 2026</th></tr></thead>
+  <tbody>{{NOJS}}</tbody></table></div></noscript>
+
+  <h2>What changed</h2>
+  <p class="tally">In 2014, {{C14}} of the {{NPROV}} obligations the file codes bound every party to their treaty. On the
+  depositary pages of October 2026, read entry by entry, {{C26}} of those {{C14}} still do, and {{RET}} more are common now that were not in the file: in one, Oman’s withdrawal on the Child’s 9.4; in the other, the United Kingdom’s on Women’s 10(c), withdrawn in 1996 though the file still codes it.
+  In all nine treaties at least one party holds a reservation that names no article at all: the treaty applied subject to a
+  constitution, a law or a religion. Whether such a reservation covers any one square is a question of law; it is shown beside
+  the row and not decided here.</p>
+  <p class="aside">No reservation on this page is judged lawful or unlawful, and no state is ranked. A square goes dark for a
+  single party: in 2014, 160 of the 262 dark squares were held back by three parties or fewer. A declaration that only
+  interprets an obligation darkens it as a reservation does, because the file counts both.</p>
+
+  <h2>How it was made</h2>
+  <p class="aside">The obligations, parties and reservations to 2014 are those coded by K. Zvobgo, B. Shannon and C. Eldredge
+  in their dataset of reservations, understandings and declarations to the nine treaties (Harvard Dataverse,
+  <a href="https://doi.org/10.7910/DVN/GURSZB">doi:10.7910/DVN/GURSZB</a>, CC0). A treaty is shown from the first year it had
+  20 parties; before that, fewer states than that cannot stand for “every”. Only what the file codes is here: the clauses on
+  disputes and on the treaty committees are not in it and not on the page. A party holds back an obligation when it has a
+  reservation or a declaration on it, as the file counts them, not withdrawn by that year.</p>
+  <p class="aside">The last step is read from the record, not the file. On the United Nations Treaty Collection pages for the
+  nine treaties, every entry that could break what was common in 2014 ({{READ}} entries) was read by one reader, a machine, in
+  one sitting, and decided by hand against the obligations it could break; those decisions are estimates. A reservation that
+  names an article without a paragraph is taken to hold back every paragraph of it, which accounts for many of the outlined
+  squares; counting only entries that name the paragraph itself, and leaving out statements made only on signing, {{C26B}} of the
+  {{C14}} would remain. The entries a
+  filter set aside were checked by a blind draw of twenty; read by hand, none of the twenty held back a common square.
+  Squares not common in 2014 were not read again, except where every holder had withdrawn; they stay as the file has them.</p>
+  <p class="aside"><b>What this does that a person with time would not.</b> An intersection is broken by one exception, so a
+  sample cannot show it: every entry that could break it has to be read. One reader read all of them on nine pages in one
+  sitting. A person with time could do the same in days. That is the whole of the claim, and it is a small one.</p>
+  <p class="aside">Nearest neighbours: the dataset’s authors, who code and model reservations and their withdrawal (Boyes,
+  Eldredge, Shannon, Zvobgo, <i>British Journal of Political Science</i> 54(1), 2024,
+  <a href="https://doi.org/10.1017/S0007123423000339">doi:10.1017/S0007123423000339</a>), and the Human Rights Committee’s
+  General Comment 24 (1994) on which obligations of the Covenant may not be reserved. This page shows instead what, year by
+  year, every party actually holds itself to. Record: <a href="https://github.com/frankbueltge/n-1/tree/main/projects/held-back">project 15</a>.</p>
+</main>
+<script>
+const R = /*DATA*/null;
+const $ = id => document.getElementById(id);
+const ys = new Set(); R.forEach(r => Object.keys(r.years).forEach(y => ys.add(+y)));
+const Y = [...ys].sort((a, b) => a - b).map(String); Y.push("2026");
+let k = Y.length - 2;
+function render() {
+  const y = Y[k], last = y === "2026";
+  $("yr").textContent = last ? "October 2026" : y; $("slider").value = k;
+  $("note").textContent = last ? "Read from the depositary pages, entry by entry. Outlined: common in 2014, held back now."
+    : "As coded in the file. A dimmed row has fewer than 20 parties that year.";
+  const box = $("rows"); box.innerHTML = "";
+  for (const r of R) {
+    const row = document.createElement("div"); row.className = "row";
+    const v = last ? null : r.years[y];
+    if (!last && !v) row.classList.add("few");
+    const on = new Set(last ? r.on26 : v ? v.on : []), on14 = new Set(r.years["2014"].on);
+    const head = document.createElement("div"); head.className = "head";
+    head.innerHTML = `<b>${r.t}</b><small>${r.name}</small><span class="n"></span>`;
+    head.querySelector(".n").textContent = (last || v) ? `${on.size} of ${r.p.length} common` + (v ? ` · ${v.n} parties` : "")
+      : `${r.p.length} obligations · 20 parties in ${r.y20}`;
+    if (last && (r.gen.length || r.gensig.length)) {
+      const g = document.createElement("div"); g.className = "gen";
+      g.title = r.gen.length + " with a general reservation: " + r.gen.join(", ") + (r.gensig.length ? "; made on signing only: " + r.gensig.join(", ") : "");
+      for (const _ of r.gen) { const d = document.createElement("i"); d.className = "g"; g.append(d); }
+      head.append(g);
+    }
+    const cells = document.createElement("div"); cells.className = "cells";
+    r.p.forEach((p, i) => {
+      const c = document.createElement("i"); c.className = "c";
+      let t = "article " + p;
+      if (last) {
+        if (on.has(i)) { c.classList.add(on14.has(i) ? "on" : "back"); if (!on14.has(i)) t += ": common now; every holder in the file has withdrawn"; }
+        else if (r.broken[i]) { c.classList.add("gone"); t += ": held back on the 2026 pages by " + r.broken[i].join(", "); }
+        else t += ": not common in 2014";
+      } else if (v) {
+        if (on.has(i)) c.classList.add("on"); else if (v.h[i]) t += ": held back by " + v.h[i] + (v.h[i] === 1 ? " party" : " parties");
+      }
+      c.title = t; cells.append(c);
+    });
+    row.append(head, cells); box.append(row);
+  }
+}
+$("slider").max = Y.length - 1;
+$("slider").oninput = e => { k = +e.target.value; render(); };
+$("prev").onclick = () => { k = Math.max(0, k - 1); render(); };
+$("next").onclick = () => { k = Math.min(Y.length - 1, k + 1); render(); };
+document.addEventListener("keydown", e => { if (e.target.tagName === "INPUT") return;
+  if (e.key === "ArrowLeft") $("prev").onclick(); if (e.key === "ArrowRight") $("next").onclick(); });
+$("piece").hidden = false; render();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>

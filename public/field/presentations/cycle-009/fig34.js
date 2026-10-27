@@ -48,6 +48,7 @@
     out.textContent = `Burden per warning ${money(B)}; loss a precaution averts per warning that comes true ${money(L)}. ` +
       `B / L = ${fmt(rv)}. Hand owes the precaution for ${owed.length ? owed.map(k => NAMES[k]).join(", ") : "no class"} ` +
       `(${fmt(100 * share, 1)} % of the Atelier's warnings). ` +
+      `By this record, Hand owes a radar-indicated warning while an hour is worth less than $${fmt(S.classes.R[st.rec] * st.v / rv)}. ` +
       (rv > S.band[1] ? "The price lies above the band: radar-indicated warnings are not owed." : rv < S.band[0] ? "The price lies below the band: every radar-indicated warning is owed." : "The price lies inside the band: the verdict on radar-indicated warnings turns on the record.");
     for (const [k, f] of [["vsl", v => `$${fmt(v, 1)} M`], ["inj", v => fmt(v, 3)], ["e", v => fmt(v, 2)], ["min", v => `${v} min`], ["v", v => `$${v}`]])
       document.getElementById("o-" + k).textContent = f(st[k]);

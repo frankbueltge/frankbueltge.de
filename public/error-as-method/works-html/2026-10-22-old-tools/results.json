@@ -1,0 +1,307 @@
+{
+ "P1": {
+  "own_shelf_hits": 10,
+  "of": 12,
+  "by_arm": {
+   "CYCLES": 4,
+   "GAPS": 3,
+   "DIGITS": 3
+  },
+  "holds": true
+ },
+ "P2": {
+  "by_arm": {
+   "CYCLES": {
+    "own": 4,
+    "GAPS": 0,
+    "DIGITS": 0
+   },
+   "GAPS": {
+    "own": 3,
+    "CYCLES": 0,
+    "DIGITS": 0
+   },
+   "DIGITS": {
+    "own": 3,
+    "CYCLES": 0,
+    "GAPS": 0
+   }
+  },
+  "holds": true
+ },
+ "P3": {
+  "general_shelf_hits": 4,
+  "rooms": [
+   "r01",
+   "r02",
+   "r12",
+   "r13"
+  ],
+  "holds": true
+ },
+ "P4": {
+  "MET": 7,
+  "PARTLY": 9,
+  "NOT_MET": 0,
+  "holds": false
+ },
+ "P5": {
+  "among_first_three": 15,
+  "holds": true
+ },
+ "P6": {
+  "people_area_money": 2,
+  "holds": false
+ },
+ "P7": {
+  "refetched_or_matched": 16,
+  "holds": true
+ },
+ "S142.SHELF": {
+  "different_items": 13,
+  "largest_first_three_share": 4,
+  "falsified": true
+ },
+ "rooms": {
+  "r01": {
+   "arm": "CYCLES",
+   "item": "NYC 311 noise complaints",
+   "domain": "urban noise complaints",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "SAME",
+    "GENERAL28": "SAME",
+    "PLOT": "SAME"
+   },
+   "met": "PARTLY",
+   "specific": "YES",
+   "met_reason": "The year (355), 7-day and 3.5-day periods all appear, but the week is clearly strongest (0.199 vs 0.083), which contradicts the expectation that the year would dominate."
+  },
+  "r02": {
+   "arm": "DIGITS",
+   "item": "JPL asteroid diameters",
+   "domain": "asteroid sizes",
+   "codes": {
+    "DIGITS": "SAME",
+    "GAPS": "OFF",
+    "CYCLES": "OFF",
+    "GENERAL28": "KIN",
+    "PLOT": "OFF"
+   },
+   "met": "MET",
+   "specific": "YES",
+   "met_reason": "The digits deviate from Benford, with too many 2s, 3s and 4s, too few 1s (14.6%) and a very large chi-square, as expected."
+  },
+  "r03": {
+   "arm": "DIGITS",
+   "item": "UK government spending over 25k",
+   "domain": "government spending",
+   "codes": {
+    "DIGITS": "SAME",
+    "GAPS": "OFF",
+    "CYCLES": "OFF",
+    "GENERAL28": "OFF",
+    "PLOT": "OFF"
+   },
+   "met": "MET",
+   "specific": "YES",
+   "met_reason": "Digit 1 is well below Benford (22.4% vs 30.1%), digits 2-4 are over-represented and chi-square is large (666.5), though digit 2 is only slightly inflated (18.3% vs 17.6%), less than digit 3, so the hedged 'may' part is weak."
+  },
+  "r04": {
+   "arm": "CYCLES",
+   "item": "England and Wales measles",
+   "domain": "measles epidemics",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "SAME",
+    "GENERAL28": "OFF",
+    "PLOT": "OFF"
+   },
+   "met": "MET",
+   "specific": "YES",
+   "met_reason": "There are peaks at 26 fortnights and at ~54 (near the 52-fortnight biennial), plus long-period power at ~75, though the ~2-year peak leads the annual one."
+  },
+  "r05": {
+   "arm": "PLOT",
+   "item": "US weekly gasoline price",
+   "domain": "gasoline prices",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "SAME",
+    "GENERAL28": "OFF",
+    "PLOT": "SAME"
+   },
+   "met": "PARTLY",
+   "specific": "YES",
+   "met_reason": "Min 0.907 and max 5.006 fit the ~$1 floor and ~$5 spike, but the output has no timing, so the 2008 peak, plateaus, dips and the 2026 level cannot be checked."
+  },
+  "r06": {
+   "arm": "GAPS",
+   "item": "Billboard Hot 100 chart dates",
+   "domain": "music charts",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "SAME",
+    "CYCLES": "OFF",
+    "GENERAL28": "OFF",
+    "PLOT": "OFF"
+   },
+   "met": "PARTLY",
+   "specific": "YES",
+   "met_reason": "The 7-day cadence holds, but the output shows one real 12-day gap and no irregular steps, the opposite of both specific claims."
+  },
+  "r07": {
+   "arm": "DIGITS",
+   "item": "UK house prices paid",
+   "domain": "house prices",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "OFF",
+    "GENERAL28": "OFF",
+    "PLOT": "OFF"
+   },
+   "met": "PARTLY",
+   "specific": "YES",
+   "met_reason": "2s and 3s are over-represented, 5-9 are under-represented, chi-square is large and 2 beats 1, but digit 1 is under-represented (24.6% vs 30.1%), not 'far too many'."
+  },
+  "r08": {
+   "arm": "GAPS",
+   "item": "Billboard Hot 100 chart dates",
+   "domain": "music charts",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "SAME",
+    "CYCLES": "OFF",
+    "GENERAL28": "OFF",
+    "PLOT": "OFF"
+   },
+   "met": "MET",
+   "specific": "YES",
+   "met_reason": "The cadence is 7 days, with 1 irregular step and 2 gaps (12 and 8 days), matching the expected handful of irregular steps and one or two gaps; the 1962 timing cannot be checked."
+  },
+  "r09": {
+   "arm": "GAPS",
+   "item": "Curiosity rover weather",
+   "domain": "Mars weather",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "KIN",
+    "CYCLES": "OFF",
+    "GENERAL28": "OFF",
+    "PLOT": "OFF"
+   },
+   "met": "MET",
+   "specific": "YES",
+   "met_reason": "The cadence is 1 day, the 182 gaps fit a regular sprinkle plus longer outages (31, 24, 16 days), and no repeats appear, which the expectation marked only as possible."
+  },
+  "r10": {
+   "arm": "PLOT",
+   "item": "Great Lakes water levels",
+   "domain": "lake water levels",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "OFF",
+    "GENERAL28": "OFF",
+    "PLOT": "OFF"
+   },
+   "met": "PARTLY",
+   "specific": "YES",
+   "met_reason": "n=1305 matches ~1,300 months and the 1.93 m range fits swings over a metre, but the sawtooth and the dated highs and lows cannot be checked from min/max."
+  },
+  "r11": {
+   "arm": "GAPS",
+   "item": "xkcd publication dates",
+   "domain": "webcomic publication",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "OFF",
+    "GENERAL28": "OFF",
+    "PLOT": "OFF"
+   },
+   "met": "PARTLY",
+   "specific": "YES",
+   "met_reason": "The 2-day cadence, many gaps (1098), repeats (46) and irregular steps (40) appear, but the longest gap is 5 days, with no gaps of a week or two."
+  },
+  "r12": {
+   "arm": "DIGITS",
+   "item": "JPL asteroid diameters",
+   "domain": "asteroid sizes",
+   "codes": {
+    "DIGITS": "SAME",
+    "GAPS": "OFF",
+    "CYCLES": "OFF",
+    "GENERAL28": "KIN",
+    "PLOT": "OFF"
+   },
+   "met": "MET",
+   "specific": "YES",
+   "met_reason": "Digit 1 is under-represented (14.6%), digits 2-5 are over-represented and chi-square is very large (32,434), as expected."
+  },
+  "r13": {
+   "arm": "CYCLES",
+   "item": "NYC 311 noise complaints",
+   "domain": "urban noise complaints",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "SAME",
+    "GENERAL28": "SAME",
+    "PLOT": "SAME"
+   },
+   "met": "MET",
+   "specific": "YES",
+   "met_reason": "The strongest periods are 24, 168 and 12 hours, exactly in the expected order."
+  },
+  "r14": {
+   "arm": "CYCLES",
+   "item": "US influenza-like illness",
+   "domain": "influenza surveillance",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "SAME",
+    "GENERAL28": "OFF",
+    "PLOT": "SAME"
+   },
+   "met": "PARTLY",
+   "specific": "YES",
+   "met_reason": "52.25 weeks dominates and there is multi-year power (89.6 weeks), but it carries only 33% of the power, not most, and the 26-week harmonic is third rather than second."
+  },
+  "r15": {
+   "arm": "PLOT",
+   "item": "Bank of England Bank Rate",
+   "domain": "interest rates",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "OFF",
+    "GENERAL28": "OFF",
+    "PLOT": "KIN"
+   },
+   "met": "PARTLY",
+   "specific": "YES",
+   "met_reason": "Max 17.0 matches the 17% peak and min 0.1 matches 'almost nothing', but the shape and dates (the 18th-century plateau, 2% floor, 1979, 2022-23 bump) are not shown."
+  },
+  "r16": {
+   "arm": "PLOT",
+   "item": "Lake Mendota ice",
+   "domain": "lake ice phenology",
+   "codes": {
+    "DIGITS": "OFF",
+    "GAPS": "OFF",
+    "CYCLES": "OFF",
+    "GENERAL28": "OFF",
+    "PLOT": "SAME"
+   },
+   "met": "PARTLY",
+   "specific": "YES",
+   "met_reason": "n=171, max 161 and min 21 match the expected ~170 winters, ~160 days and the 21-day low, but the downward drift and where the minimum falls are not shown."
+  }
+ }
+}

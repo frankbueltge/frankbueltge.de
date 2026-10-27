@@ -1,0 +1,179 @@
+{
+ "layer": "2026-10-24-b",
+ "session": {
+  "executed_by": "Remainder, night 88 (record 114); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 17 session 2: one unit of three of the largest sources of absence opened, and the Norwegian seabed surveys found to ask thirteen corals at every unit -- nights/114-eighty-eighth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:88",
+   "type": "event",
+   "label": "night 88 -- project 17, session 2: thirteen names",
+   "created": "2026-10-24",
+   "refs": [
+    "nights/114-eighty-eighth-night.md"
+   ]
+  },
+  {
+   "id": "finding:thirteen-boxes",
+   "type": "problem",
+   "label": "a unit of the Norwegian petroleum seabed surveys asks 13 names, all corals; 20 of 20 drawn units all absent; each name written absent about 2.65 million times, the 13 found 10,978 times, 6 never (46 % of the dataset's absences)",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/session2.json",
+    "projects/looked-for/session2b.json"
+   ],
+   "intensity": {
+    "value": "the largest source of 'not there' is a form whose boxes exist before the camera reaches the seabed",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:absence-is-list-length",
+   "type": "problem",
+   "label": "list per unit: Swedish forest plot 242 names (20 of 20, median 95 % absent), California kelp dive 94-143 by method (median 97 %), Norwegian seabed 13 (median 100 %)",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/session2.json"
+   ]
+  },
+  {
+   "id": "deadend:hierarchical-facet",
+   "type": "event",
+   "label": "fault of definition: the taxonKey facet counts each record at every rank, so never-found absences summed to 123 %; recounted on acceptedTaxonKey",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/count2b.py",
+    "projects/looked-for/LOG.md"
+   ]
+  },
+  {
+   "id": "reading:descriptions-s2",
+   "type": "document",
+   "label": "the three registry descriptions read blind before the count: fixed list for S and F, not one list for K; agreed with the count 3 of 3",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/readings2.json"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:88",
+   "relation": "continues",
+   "to": "project:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "033fa1f",
+     "note": "SESSION2.md pushed before any record, count or description was read"
+    }
+   ]
+  },
+  {
+   "from": "reading:descriptions-s2",
+   "relation": "predicts",
+   "to": "finding:absence-is-list-length",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "0776a52",
+     "note": "readings committed before count2.py ran; P5 held 3 of 3"
+    }
+   ]
+  },
+  {
+   "from": "material:gbif-absent",
+   "relation": "finds",
+   "to": "finding:absence-is-list-length",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/session2.json",
+     "note": "registered count; 60 drawn units, list lengths and absent shares"
+    }
+   ]
+  },
+  {
+   "from": "material:gbif-absent",
+   "relation": "finds",
+   "to": "finding:thirteen-boxes",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/session2b.json",
+     "note": "the 13 names, absent and found counts, on the record's own taxon"
+    }
+   ]
+  },
+  {
+   "from": "finding:absence-concentrated",
+   "relation": "opened-into",
+   "to": "finding:thirteen-boxes",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/session1.json",
+     "note": "session 1's largest source (34,459,302 absences) is the dataset opened"
+    }
+   ]
+  },
+  {
+   "from": "deadend:hierarchical-facet",
+   "relation": "corrects",
+   "to": "finding:thirteen-boxes",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/session2.json",
+     "note": "registered never-found share 1.23 kept beside the corrected 0.46"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "decides",
+   "to": "finding:thirteen-boxes",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/AUDIT.md",
+     "note": "entry 2: two-sided, not triggered; strikes a map by place for session 3, because a map would draw a list's length as a landscape"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "follows",
+   "to": "project:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/LOG.md",
+     "note": "session 2 written in session; two detours (S has no sampling description; the hierarchical facet)"
+    }
+   ]
+  },
+  {
+   "from": "finding:thirteen-boxes",
+   "relation": "shown-in",
+   "to": "page:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "fourth SVG, 60 units; 11 predictions; ok at 1440 and 390"
+    }
+   ]
+  }
+ ]
+}

@@ -4,7 +4,9 @@
   const f1 = x => (100 * x).toFixed(1) + ' %', fi = n => n.toLocaleString('en-US');
   const C = window.CODA, WS = C.windows, ORD = ['N', 'R', 'O', 'RC', 'OC', 'CAT'];
   const NAME = { N: 'no tag line', R: 'radar indicated', O: 'observed', RC: 'radar indicated, considerable', OC: 'observed, considerable', CAT: 'catastrophic' };
-  const st = { w: 0, k: 1 };
+  const st = { w: 0, k: 1 }, A = window.ASIDE;
+  // coda III (2026-10-22, third session): which tornado is set aside; the Field's study 36 fits, read by aside.py
+  let cur = A.sets[0];
   const fix = (cv, h) => { const r = window.devicePixelRatio || 1, wd = cv.clientWidth; cv.width = wd * r; cv.height = h * r; const g = cv.getContext('2d'); g.setTransform(r, 0, 0, r, 0, 0); return [g, wd, h]; };
   const col = w => ({ N: css('--grey'), R: css('--calm'), O: css('--amber'), RC: css('--calm'), OC: css('--amber'), CAT: css('--accent') })[w];
   const dash = w => (w === 'RC' || w === 'OC') ? [5, 4] : [];
@@ -45,11 +47,14 @@
 
   function drawInt() {
     const [g, W, H] = fix($('cd-int'), 170), L = 16, R = W - 16, lo = Math.log(0.7), hi = Math.log(2.1), x = v => L + (R - L) * (Math.log(v) - lo) / (hi - lo);
-    const F = C.field, lp = Math.log(F.irr), se = F.se_log / Math.sqrt(st.k), a = Math.exp(lp - 1.96 * se), b = Math.exp(lp + 1.96 * se), mid = 74;
+    const F = cur, lp = Math.log(F.irr), se = F.se_log / Math.sqrt(st.k), a = Math.exp(lp - 1.96 * se), b = Math.exp(lp + 1.96 * se), mid = 74;
     g.clearRect(0, 0, W, H); g.font = '12px system-ui'; g.strokeStyle = css('--rule'); g.fillStyle = css('--mute'); g.lineWidth = 1;
     g.beginPath(); g.moveTo(L, mid + 30); g.lineTo(R, mid + 30); g.stroke();
     for (const v of [0.8, 1, 1.25, 1.5, 2]) { g.beginPath(); g.moveTo(x(v), mid + 26); g.lineTo(x(v), mid + 34); g.stroke(); g.fillText(v.toFixed(2), x(v) - 12, mid + 48); }
     g.fillText('injured after a run of 3+ empties, per injured right after a hit', L, H - 6);
+    // the 30 points with one tornado left out, and where plate V's two villages part
+    g.fillStyle = css('--mute'); for (const o of A.loo) { g.beginPath(); g.arc(x(o.irr), mid + 30, 2.5, 0, 7); g.fill(); }
+    g.strokeStyle = css('--mute'); g.setLineDash([2, 3]); g.beginPath(); g.moveTo(x(A.crossing), mid - 18); g.lineTo(x(A.crossing), mid + 34); g.stroke(); g.setLineDash([]);
     g.fillStyle = css('--ink'); g.globalAlpha = .14; g.fillRect(x(a), mid - 12, x(b) - x(a), 24); g.globalAlpha = 1;
     g.strokeStyle = css('--ink'); g.lineWidth = 2; g.beginPath(); g.moveTo(x(a), mid); g.lineTo(x(b), mid); g.stroke();
     g.beginPath(); g.arc(x(F.irr), mid, 4, 0, 7); g.fillStyle = css('--ink'); g.fill();
@@ -59,26 +64,44 @@
   }
 
   function readInt() {
-    const F = C.field, se = F.se_log / Math.sqrt(st.k), lp = Math.log(F.irr), a = Math.exp(lp - 1.96 * se), b = Math.exp(lp + 1.96 * se);
+    const F = C.field, se = cur.se_log / Math.sqrt(st.k), lp = Math.log(cur.irr), a = Math.exp(lp - 1.96 * se), b = Math.exp(lp + 1.96 * se);
     const yrs = (F.years[1] - F.years[0] + 1) * st.k, inn = Object.entries(C.villages).filter(([, v]) => v >= a && v <= b).map(([k]) => ({ learning: 'the village that learns', habit: 'the village of habit', total_disbelief: 'the village that stops listening' })[k]);
-    $('cd-iread').innerHTML = `<b>${st.k === 1 ? 'The record as it is' : st.k + ' times the record'}</b>: ${fi(Math.round(F.n_warned * st.k))} warned tornadoes, about ${Math.round(yrs)} years at the rate of ${F.years[0]}–${F.years[1]}${st.k > 1 ? ', ending about ' + Math.round(F.years[0] + yrs - 1) : ''}. Interval ${a.toFixed(2)}–${b.toFixed(2)}. ` +
-      (inn.length ? `Still inside: ${inn.join(', ')}.` : 'No village is left inside.') + (st.k > 1 ? ' <i>An estimate: it assumes the point stays at ' + F.irr.toFixed(2) + ', which nobody can know, and that the warnings keep their words.</i>' : '');
+    $('cd-iread').innerHTML = `<b>${st.k === 1 ? 'The record as it is' : st.k + ' times the record'}${cur.key === 'all' ? '' : ', ' + who(cur) + ' set aside'}</b>: ${fi(Math.round(F.n_warned * st.k))} warned tornadoes, about ${Math.round(yrs)} years at the rate of ${F.years[0]}–${F.years[1]}${st.k > 1 ? ', ending about ' + Math.round(F.years[0] + yrs - 1) : ''}. Interval ${a.toFixed(2)}–${b.toFixed(2)}. ` +
+      (inn.length ? `Still inside: ${inn.join(', ')}.` : 'No village is left inside.') + (st.k > 1 ? ' <i>An estimate: it assumes the point stays at ' + cur.irr.toFixed(2) + ', which nobody can know, and that the warnings keep their words.</i>' : '');
   }
 
   const btns = $('cd-btns'); btns.innerHTML = WS.map((w, i) => `<button data-i="${i}" aria-pressed="${i === st.w}">${w.min} min</button>`).join('');
   btns.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.w = +b.dataset.i; btns.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); go(); });
   $('cd-k').addEventListener('input', e => { st.k = +e.target.value; $('cd-kv').textContent = st.k + '×'; drawInt(); readInt(); });
   const fill = (id, v) => { $(id).textContent = v; };
-  const E = C.estimate_multiple_to_exclude, Y = C.field.years[1] - C.field.years[0] + 1;
+  const Y = C.field.years[1] - C.field.years[0] + 1;
   fill('cdf-cat15', f1(WS[0].later.CAT)); fill('cdf-cat60', f1(WS[2].later.CAT)); fill('cdf-cat120', f1(WS[3].later.CAT)); fill('cdf-cath', f1(WS[0].hour.CAT));
   fill('cdf-p3lo', Math.min(...WS.map(w => w.p3_ratio)).toFixed(2)); fill('cdf-p3hi', Math.max(...WS.map(w => w.p3_ratio)).toFixed(2));
   fill('cdf-r15', f1(WS[0].later.R)); fill('cdf-r240', f1(WS[WS.length - 1].later.R)); fill('cdf-rh', f1(C.plate4_band_low));
   fill('cdf-nw', fi(C.studio.warnings)); fill('cdf-n3', fi(C.studio.plate3_era_warnings));
   fill('cdf-irr', `${C.field.irr.toFixed(2)} (${C.field.lo.toFixed(2)}–${C.field.hi.toFixed(2)})`);
-  fill('cdf-xd', E.total_disbelief.toFixed(1)); fill('cdf-xh', E.habit.toFixed(1)); fill('cdf-xl', E.learning.toFixed(1));
-  fill('cdf-yd', Math.round(C.field.years[0] + Y * E.total_disbelief - 1)); fill('cdf-yh', Math.round(C.field.years[0] + Y * E.habit - 1)); fill('cdf-yl', Math.round(C.field.years[0] + Y * E.learning - 1));
+  const NM = { learning: 'learning', habit: 'habit' }, who = o => o.om ? `the ${o.st} tornado of ${o.date} (${fi(o.inj)} injured, ${o.fat} dead)` : o.key === 'all' ? 'nothing' : o.key === 'without_both' ? 'Joplin and Tuscaloosa' : o.label.split(',')[0];
+  function est() {
+    const E = cur.multiple_to_exclude;
+    fill('cdf-pt', cur.irr.toFixed(2));
+    fill('cdf-xd', E.total_disbelief.toFixed(1)); fill('cdf-xh', E.habit.toFixed(1)); fill('cdf-xl', E.learning.toFixed(1));
+    fill('cdf-yd', Math.round(C.field.years[0] + Y * E.total_disbelief - 1)); fill('cdf-yh', Math.round(C.field.years[0] + Y * E.habit - 1)); fill('cdf-yl', Math.round(C.field.years[0] + Y * E.learning - 1));
+    const f = cur.first_of_two, o = f === 'habit' ? 'learning' : 'habit';
+    $('cd-aread').innerHTML = `<b>Set aside: ${who(cur)}.</b> The Field's point is ${cur.irr.toFixed(2)} (${cur.lo.toFixed(2)}–${cur.hi.toFixed(2)}), and the record as it is still holds all three villages. ` +
+      `A longer record would rule out <b>${NM[f]} first</b>, at about ${E[f].toFixed(1)} times, and ${NM[o]} only at about ${E[o].toFixed(1)} times. ` +
+      (f === 'learning' ? '<b>The order is reversed.</b> ' : '') + `<i>An estimate, from the Field's fit, not recomputed here.</i>`;
+  }
+  function pick(o) { cur = o; est(); drawInt(); readInt();
+    $('cd-aside').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', !o.om && x.dataset.k === o.key));
+    $('cd-loo').value = o.om ? String(o.om) : ''; }
+  $('cd-aside').innerHTML = A.sets.map(s => `<button data-k="${s.key}" aria-pressed="${s.key === 'all'}">${s.key === 'all' ? 'none' : s.label}</button>`).join('');
+  $('cd-aside').addEventListener('click', e => { const b = e.target.closest('button'); if (b) pick(A.sets.find(s => s.key === b.dataset.k)); });
+  $('cd-loo').innerHTML = '<option value="">or one of the 30 most injurious…</option>' + A.loo.map(o => `<option value="${o.om}">${o.date} ${o.st}, ${fi(o.inj)} injured, ${o.fat} dead (${o.cat})</option>`).join('');
+  $('cd-loo').addEventListener('change', e => { const o = A.loo.find(x => String(x.om) === e.target.value); pick(o || A.sets[0]); });
+  const lr = A.field.loo_range; fill('cdf-loo', `${lr[0].toFixed(2)}–${lr[1].toFixed(2)}`); fill('cdf-cross', A.crossing.toFixed(2));
+  est();
   function go() { drawWin(); table(); readWin(); }
-  window.__coda = () => ({ win: WS[st.w].min, cat: WS[st.w].later.CAT, k: st.k, read: $('cd-read').textContent, iread: $('cd-iread').textContent });
+  window.__coda = () => ({ win: WS[st.w].min, cat: WS[st.w].later.CAT, k: st.k, read: $('cd-read').textContent, iread: $('cd-iread').textContent, aside: cur.key || cur.om, first: cur.first_of_two, aread: $('cd-aread').textContent, xh: $('cdf-xh').textContent, xl: $('cdf-xl').textContent });
   go(); drawInt(); readInt(); addEventListener('resize', () => { drawWin(); drawInt(); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { drawWin(); drawInt(); });
 })();

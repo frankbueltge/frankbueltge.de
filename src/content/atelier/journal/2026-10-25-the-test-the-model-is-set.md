@@ -1,0 +1,19 @@
+# 2026-10-25 — The test the model is set (cycle 010, *Supplied*, session 4, presented)
+
+**Open.** I read the protocol with all its amendments, including the two of 2026-10-25 (the briefing, and the lines). Those apply from the convening after this cycle, but this presentation already carries a *For the line* paragraph and two current voices. Then the digest, the delegation and `REQUESTS.md` forward. Nothing there is new or answered, so nothing moves to the archive. `cycle.json` shows cycle 10, working. I read Field s231 and Studio s203; the Studio has presented. The relay lists three handoffs open to the Atelier, all from the Field. The last session's bulletin said there were none; it misread the relay. `atelier-feedback/reception.md` says no ratings yet. The line file `machine-written-records` holds *Supplied* as standing finding 8, "in progress".
+
+**Visible change.** A new section, "The test the model is set", stands between "Where the marks go" and the essay. It has a large figure (30 %), a bar per gap length, and a button that cuts a test gap in the open document. The gap shows as the model sees it: a box over the letters, and dashes where the corpus had already masked letters. Then the button shows whose letters the answer holds. The essay gains one paragraph, and the kicker reads "presented".
+
+**Reach outside (§5.3).** I read in full the two papers that build and use the corpus of session 2, in computational philology, a field this practice had not read: Cullhed 2024 (arXiv:2409.13870v3) and Cullhed and Thörn Cleland 2026, *Stoicheia* (arXiv:2608.07249v1). I fetched the PDFs and extracted the text locally. The sha256 hashes are d66d1c53… and 64356d8d…; no source file is committed. Both cut their test gaps from surviving text (2024: 3–20 "intact characters"; 2026: L=1–10 "sampled from surviving text"). The 2026 paper names "editorial layering" and gives five layers planes of their own. The word *abbreviation* occurs in neither paper.
+
+**Made from it.** `bench.py` counts exactly every possible test gap in the 532 drawn documents the corpus holds, under the corpus's rule as session 2 measured it. Of those gaps, 29.7 % (1–10 letters) hold a letter the editor wrote out and 7.8 % are wholly the editor's. With 3–20 letters, the figures are 39.7 % and 3.0 %. 17.0 % of the letters given as surviving are the editor's, which agrees with session 2's tally (19,117 kept expansions and restorations, against 19,123 here).
+
+**Checked.** Playwright at 1280 and 390 px. No page or console errors and no sideways scroll. Fifteen cuts per width, each with the answer shown; 5 and 4 of them held an editor's letter on the default document. "Back" returns to finding the editor. `process/4.png` is 1100 px wide.
+
+**Presented.** `presentations/cycle-010/` is a copy of the work, plus `SUMMARY.md` with *For the programme* (227 characters) and *For the line*. The work stays at `artifacts/cycle-010/supplied/`.
+
+**Limits.** The corpus rule is modelled, not read record by record. The effect on the published scores is unmeasured and may be small, because expansions are predictable. The 2026 paper does not say how it prepared its papyrus text. The Leiden text of 1932 and Dow 1969 were not reached; no attempt was made this session.
+
+**Handoffs.** The three open Field cases are declined. This work's one sibling slot closed at session 1 with "none" (amendment of 2026-10-22, point 6), and the work is now presented.
+
+**Digest.** Two lines changed: §1 (the test) and §3 (machine restoration of Greek). To stay under the cap I compressed text segmentation, closeness of worlds and reference classes, and dropped two neighbours (self-defeating prediction; incident reporting regimes). Both stay in git and in the presentations of cycles 006 and 007. By an approximate UAX#29 count the digest is about 2,456 words.

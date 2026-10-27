@@ -1,0 +1,96 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Spans of Delaware</title>
+<style>
+html,body{margin:0;background:#efe9dd;}
+canvas{display:block;}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/bridges.js"></script>
+<script>
+const W=1100,H=800, dpr=window.devicePixelRatio||1;
+const cv=document.getElementById('c');
+cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+g.fillStyle='#efe9dd';g.fillRect(0,0,W,H);
+
+function dms(v){const d=Math.floor(v/1e6),m=Math.floor(v/1e4)%100,s=(v%1e4)/100;return d+m/60+s/3600;}
+const B=BRIDGES.map(b=>({b,lat:dms(b.LAT_016),lon:-dms(b.LONG_017),len:b.STRUCTURE_LEN_MT_049,
+  yr:b.YEAR_BUILT_027,adt:b.ADT_029,r:b.LOWEST_RATING,cond:b.BRIDGE_CONDITION}));
+
+// colour by lowest rating
+function col(r,a){
+  const c = r>=8?[38,70,96]: r==7?[70,104,120]: r==6?[150,140,110]: r==5?[196,128,58]: [178,40,30];
+  return `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+}
+function arch(x,y,w,h,lw,style){
+  g.beginPath();
+  g.moveTo(x-w/2,y);
+  g.bezierCurveTo(x-w/2,y-h*1.33,x+w/2,y-h*1.33,x+w/2,y);
+  g.lineWidth=lw;g.strokeStyle=style;g.stroke();
+  // deck
+  g.beginPath();g.moveTo(x-w/2-lw,y-h*1.0-0);g.lineTo(x+w/2+lw,y-h*1.0);
+  g.lineWidth=Math.max(.5,lw*.6);g.stroke();
+}
+
+// ---- map ----
+let la0=Infinity,la1=-Infinity,lo0=Infinity,lo1=-Infinity;
+B.forEach(p=>{la0=Math.min(la0,p.lat);la1=Math.max(la1,p.lat);lo0=Math.min(lo0,p.lon);lo1=Math.max(lo1,p.lon);});
+const k=Math.cos((la0+la1)/2*Math.PI/180);
+const mapTop=46,mapBot=760, sc=(mapBot-mapTop)/(la1-la0);
+const mapW=(lo1-lo0)*k*sc, mapL=70;
+B.forEach(p=>{p.x=mapL+(p.lon-lo0)*k*sc; p.y=mapBot-(p.lat-la0)*sc;});
+const wOf=p=>2.5+Math.sqrt(p.len)*0.62;
+const lwOf=p=>0.5+Math.log10(Math.max(p.adt,10))*0.38;
+[...B].sort((a,b)=>b.len-a.len).forEach(p=>{
+  const w=wOf(p);
+  arch(p.x,p.y,w,w*0.32,lwOf(p),col(p.r,p.r<=4?0.95:0.72));
+});
+
+// ---- ledger by year ----
+const L=mapL+mapW+90, R=W-50, base=700;
+let y0=Infinity,y1=-Infinity;B.forEach(p=>{y0=Math.min(y0,p.yr);y1=Math.max(y1,p.yr);});
+y0=Math.floor(y0/10)*10; y1=Math.ceil((y1+1)/10)*10;
+const yx=y=>L+(y-y0)/(y1-y0)*(R-L);
+const step=(R-L)/(y1-y0);
+const byYear={};
+B.forEach(p=>{(byYear[p.yr]=byYear[p.yr]||[]).push(p);});
+const rowH=13;
+Object.keys(byYear).forEach(y=>{
+  const list=byYear[y].sort((a,b)=>b.r-a.r||a.len-b.len);
+  list.forEach((p,i)=>{
+    const x=yx(+y)+step/2, yy=base-i*rowH;
+    const w=Math.min(step*0.95, 1.2+Math.sqrt(p.len)*0.35);
+    arch(x,yy,Math.max(w,1.6),rowH*0.55,0.9,col(p.r,0.9));
+  });
+});
+// axis
+g.strokeStyle='rgba(40,40,40,.5)';g.lineWidth=.7;
+g.beginPath();g.moveTo(L,base+3);g.lineTo(R,base+3);g.stroke();
+g.font='10px Georgia, serif';g.fillStyle='rgba(40,40,40,.75)';g.textAlign='center';
+for(let y=y0;y<=y1;y+=20){g.beginPath();g.moveTo(yx(y),base+3);g.lineTo(yx(y),base+8);g.stroke();g.fillText(y,yx(y),base+20);}
+
+// text
+g.textAlign='left';g.fillStyle='#2a2a2a';
+g.font='italic 30px Georgia, serif';g.fillText('Spans of Delaware',L,92);
+g.font='12px Georgia, serif';g.fillStyle='rgba(40,40,40,.8)';
+const lines=[
+ `${B.length} highway bridges, National Bridge Inventory 2025.`,
+ 'Left: each drawn where it stands, its width from its length,',
+ 'its line from the traffic it carries. Right: the same bridges',
+ 'stacked in the year they were built.',
+ 'Colour is the lowest inspected rating:'];
+lines.forEach((t,i)=>g.fillText(t,L,118+i*17));
+const keys=[[9,'8–9'],[7,'7'],[6,'6'],[5,'5'],[4,'3–4']];
+keys.forEach(([r,t],i)=>{const x=L+12+i*58,y=118+lines.length*17+14;
+  arch(x,y,16,5,1.4,col(r,.95));g.fillStyle='rgba(40,40,40,.8)';g.fillText(t,x+12,y);});
+// counties hint
+g.font='italic 11px Georgia, serif';g.fillStyle='rgba(40,40,40,.55)';
+const cn={3:'New Castle',1:'Kent',5:'Sussex'};
+[3,1,5].forEach(c=>{const ps=B.filter(p=>p.b.COUNTY_CODE_003==c);
+  const my=ps.reduce((s,p)=>s+p.y,0)/ps.length; g.textAlign='right';g.fillText(cn[c],mapL-14,my);});
+// longest named
+const lg=[...B].sort((a,b)=>b.len-a.len)[0];
+g.textAlign='left';g.font='italic 10px Georgia, serif';g.fillStyle='rgba(40,40,40,.65)';
+g.fillText(lg.b.FEATURES_DESC_006A.toLowerCase()+', '+Math.round(lg.len)+' m',lg.x+wOf(lg)/2+6,lg.y-4);
+</script></body></html>
