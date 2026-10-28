@@ -6,7 +6,8 @@
 //   2. Honeypot (`website`)                                       → silent 200, nothing stored
 //   3. In-memory burst limit per isolate (best effort)            → 429 too-fast
 //   —  Standby: no RECEPTION_DB, no bot check, no registry         → 503 standby (declared, never half-working)
-//   4. The study: approved by the architect, not closed           → 404 unknown-study / 403 not-open
+//   4. The study: open (the house's check passed its file, not stopped, not closed)
+//                                                                 → 404 unknown-study / 403 not-open
 //   5. The consent text's version, the version of the questions the frame showed (the manifest's
 //      SHA-256), and the answers (./answers.ts)                     → 422 consent / version / answers
 //   6. Turnstile, server-side: solved for this study, with the frame's action, on this host → 403
@@ -17,10 +18,10 @@
 //   9. Free text: the reception's text gate, with its own cap     → 503 / 422 with the reason code
 //  10. Stored in one transaction, with the manifest's SHA-256     → 200, without the answers' id
 //
-// The registry is the build's dist/study/studies.json (src/lib/study/registry.ts): every approval, with
-// its state today; only `approved` takes answers. The record (GET /api/study/record) releases only
-// finished days, in batches and without their day, and every call to it — whatever it then answers —
-// first clears the finished day's salts, marks and address counts. Invariants
+// The registry is the build's dist/study/studies.json (src/lib/study/registry.ts): every study the
+// house knows, with its state today; only `open` takes answers. The record (GET /api/study/record)
+// releases only finished days, in batches and without their day, and every call to it — whatever it
+// then answers — first clears the finished day's salts, marks and address counts. Invariants
 // (.claude/rules/runtime-and-works.md): fail-closed everywhere; no secret in any response, error or
 // log; no CORS headers, same origin only.
 //
@@ -78,14 +79,15 @@ const standby = (detail: string): Response => json(503, { ok: false, reason: 'st
 
 // ── the registry the build wrote ──────────────────────────────────────────────────────────────
 
-export type RegistryState = 'approved' | 'closed' | 'changed' | 'gone'
+export type RegistryState = 'open' | 'closed' | 'stopped' | 'unchecked' | 'refused' | 'gone'
+const REGISTRY_STATES: readonly string[] = ['open', 'closed', 'stopped', 'unchecked', 'refused', 'gone']
 
 export interface KnownStudy {
   id: string
   work: string
   href: string | null
   state: RegistryState
-  /** the SHA-256 of the approved file, stored with every answer set */
+  /** the SHA-256 of the file the check passed, stored with every answer set */
   sha256: string
   manifest: StudyManifest | null
 }
@@ -105,8 +107,8 @@ export function parseRegistry(data: unknown): Map<string, KnownStudy> | null {
   for (const raw of list) {
     const s = raw as KnownStudy
     if (!s || typeof s.id !== 'string' || !STUDY_ID.test(s.id) || typeof s.work !== 'string' || out.has(s.id)) return null
-    if (!['approved', 'closed', 'changed', 'gone'].includes(s.state) || typeof s.sha256 !== 'string' || !SHA256.test(s.sha256)) return null
-    if (s.state === 'approved' && (!s.manifest || !Array.isArray(s.manifest.questions))) return null
+    if (!REGISTRY_STATES.includes(s.state) || typeof s.sha256 !== 'string' || !SHA256.test(s.sha256)) return null
+    if (s.state === 'open' && (!s.manifest || !Array.isArray(s.manifest.questions))) return null
     out.set(s.id, s)
   }
   return out
@@ -224,9 +226,9 @@ export async function handleSubmit(request: Request, env: StudyEnv, deps: Deps):
   const day = dayOf(now)
   const study = typeof body.study === 'string' ? registry.get(body.study) : undefined
   if (!study) return json(404, { ok: false, reason: 'unknown-study' })
-  if (study.state !== 'approved' || !study.manifest || isClosed(study.manifest, day)) return json(403, { ok: false, reason: 'not-open' })
+  if (study.state !== 'open' || !study.manifest || isClosed(study.manifest, day)) return json(403, { ok: false, reason: 'not-open' })
   if (body.consent !== CONSENT_VERSION) return json(422, { ok: false, reason: 'consent' })
-  // answers given to the questions a reader saw, never to a newer approval of a changed file
+  // answers given to the questions a reader saw, never to a newer version of a changed file
   if (body.manifest !== study.sha256) return json(422, { ok: false, reason: 'version' })
   const checked = checkAnswers(study.manifest, body.answers)
   if (!checked.ok) return json(422, { ok: false, reason: 'answers', question: checked.question ?? null })
@@ -286,7 +288,7 @@ export async function handleStatus(request: Request, env: StudyEnv, deps: Deps):
     const day = dayOf(deps.now())
     const entries = await studyTotal(db, id)
     let standbyReason: string | null = null
-    if (study.state !== 'approved' || !study.manifest) standbyReason = study.state
+    if (study.state !== 'open' || !study.manifest) standbyReason = study.state
     else if (isClosed(study.manifest, day)) standbyReason = 'closed'
     else if (!env.TURNSTILE_SECRET_KEY) standbyReason = 'bot-check'
     else if (hasText(study.manifest) && !env.GEMINI_API_KEY) standbyReason = 'text-check'
@@ -301,7 +303,7 @@ export async function handleStatus(request: Request, env: StudyEnv, deps: Deps):
 
 /** The released batches of one study's finished days. What the nightly snapshot commits and hands
  *  to the practice. Every call first clears what a finished day kept to stop a second answer set —
- *  also when no study is approved, the registry stands by, or the id is unknown — so the nightly
+ *  also when no study is open, the registry stands by, or the id is unknown — so the nightly
  *  snapshot's call keeps the promise "by the next night at the latest" whatever else is true. */
 export async function handleRecord(request: Request, env: StudyEnv, deps: Deps): Promise<Response> {
   const db = env.RECEPTION_DB

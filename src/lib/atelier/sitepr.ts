@@ -40,12 +40,13 @@ export function checkSitePrPath(p: string): string | null {
   if (segs.some((s) => s.startsWith('.'))) return 'versteckte Datei / verstecktes Verzeichnis'
   if (!p.startsWith('src/')) return 'außerhalb von src/ (Workflows, Pipelines, Configs sind tabu)'
   if (p.startsWith('src/content/protokoll/')) return 'das Protokoll-Archiv ist unantastbar'
-  // A study runs on the architect's approval of its exact file (2026-10-27): no practice may propose a
-  // change to the approvals, to the rules that check a study, to the frame that takes consent, or to
-  // what the frame stands on — the page layout, the reception's text gate and hashes, the publication
-  // rule and the cycle that decide where a study may stand, and the policy of the practices' pages.
+  // A study runs on the house's check of its exact file (2026-10-27; the check replaced the architect's
+  // approval on 2026-10-28): no practice may propose a change to the checks and stops, to the rules
+  // and the prompt that check a study, to the frame that takes consent, or to what the frame stands on
+  // — the page layout, the reception's text gate and hashes, the publication rule and the cycle that
+  // decide where a study may stand, and the policy of the practices' pages.
   if (STUDY_BARS.some((d) => p.startsWith(d))) {
-    return 'studies: the approvals, their rules, the consent frame and what it stands on are the architect’s to change'
+    return 'studies: the checks, their rules, the consent frame and what it stands on are the architect’s to change'
   }
   if (!ALLOWED_EXT.test(p)) return 'Dateityp nicht erlaubt'
   return null

@@ -90,6 +90,9 @@ on:
       # The practices' studies (2026-10-27) commit src/data/studies/records the same way; /studies
       # counts what each record has released.
       - Study snapshot
+      # The house's check of a study (2026-10-28) commits its verdict to src/data/studies/checks.json
+      # with the built-in token; a study that passed opens only with the deploy this line starts.
+      - Study check
     types: [completed]
 
 permissions:

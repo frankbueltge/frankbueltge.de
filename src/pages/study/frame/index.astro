@@ -17,7 +17,7 @@
 import Base from '@/layouts/Base.astro'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/ui/cn'
-import { CONSENT_LINES } from '@/lib/study/consent'
+import { CONSENT_LINES, CONSENT_SUMMARY } from '@/lib/study/consent'
 
 const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined) ?? ''
 const primary = cn(buttonVariants({ variant: 'default' }))
@@ -42,16 +42,20 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
         <summary class="cursor-pointer text-fg-muted">What it asks</summary>
         <ol class="mt-2 list-decimal space-y-1 pl-5 text-fg-muted" data-stf="questions"></ol>
       </details>
-      <dl class="stf-consent mt-5 text-sm">
-        {
-          CONSENT_LINES.map((c) => (
-            <div>
-              <dt>{c.label}</dt>
-              <dd>{c.text}</dd>
-            </div>
-          ))
-        }
-      </dl>
+      <p class="mt-5 text-sm leading-relaxed text-fg">{CONSENT_SUMMARY}</p>
+      <details class="mt-2 text-sm">
+        <summary class="cursor-pointer text-fg-muted">What exactly happens to your answers</summary>
+        <dl class="stf-consent mt-3 text-sm">
+          {
+            CONSENT_LINES.map((c) => (
+              <div>
+                <dt>{c.label}</dt>
+                <dd>{c.text}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </details>
       <p class="stf-standalone mt-4 text-sm text-fg-muted">
         This frame belongs inside its work: <a class={link} data-stf="work" href="/studies/">open the work</a> to take part.
       </p>
@@ -60,7 +64,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     <section class="stf-framed mt-5" data-stf="consent" hidden>
       <label class="flex items-start gap-3 text-sm text-fg">
         <input type="checkbox" class="mt-1" autocomplete="off" data-stf="agree" />
-        <span>I am 16 or older and agree that my answers are kept and published as described above.</span>
+        <span>I am 16 or older and agree that my answers are kept and published as described here.</span>
       </label>
       <button type="button" class={cn(primary, 'mt-4')} data-stf="start" disabled>Take part</button>
     </section>
@@ -142,11 +146,13 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
   const PRACTICE: Record<string, string> = { atelier: 'The Atelier (Assay)', field: 'The Field (Meridian)', studio: 'The Studio (Ensemble)' }
   const STANDBY: Record<string, string> = {
     store: 'The store behind these studies is not connected, so nothing can be stored.',
-    registry: 'The list of approved studies could not be read.',
+    registry: 'The list of studies could not be read.',
     'bot-check': 'The bot check is not configured, so nothing can be sent.',
     'daily-cap': 'Today’s answers are full: the house takes a limited number a day. It opens again at midnight UTC.',
     'text-check': 'This study asks for written answers, and the text check is not configured.',
-    changed: 'The practice changed this study since it was approved; it takes answers again once the change is approved.',
+    unchecked: 'The house’s check has not read this version of the study yet; it takes answers once the check has passed it.',
+    refused: 'The house’s check refused this version of the study, so it takes no answers.',
+    stopped: 'This study has been stopped, so it takes no answers.',
     closed: 'This study has closed.',
     gone: 'This study no longer stands beside its work.',
   }
@@ -165,7 +171,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     version: 'The study’s questions changed while you were answering; reload the page to see the new ones.',
     answers: 'The work sent answers this study does not ask for. Nothing was stored.',
     'not-open': 'This study does not take answers now.',
-    'unknown-study': 'This study is not among the approved ones.',
+    'unknown-study': 'The house knows no study by this name.',
     'too-fast': 'Too many requests from this connection in a short time.',
     'gate-unavailable': 'The text check cannot be reached right now. Nothing was stored; please try again in a moment.',
     'gate-cap': 'Written answers are paused for today, at the text check’s daily limit.',
@@ -229,7 +235,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     }
     if (!known) {
       $('title').textContent = 'No such study'
-      say('This study is not among the ones the architect has approved, so it takes no answers.')
+      say('The house knows no study by this name, so it takes no answers.')
       post({ type: 'house-study:closed', study: id, reason: 'unknown-study' })
       return
     }
@@ -254,7 +260,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
         return
       }
     }
-    if (known.state !== 'approved' || !known.manifest) {
+    if (known.state !== 'open' || !known.manifest) {
       $('title').textContent = known.manifest?.title ?? 'This study takes no answers'
       say(STANDBY[known.state] ?? 'This study takes no answers now.')
       post({ type: 'house-study:closed', study: id, reason: known.state })

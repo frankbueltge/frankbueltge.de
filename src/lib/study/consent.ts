@@ -1,24 +1,31 @@
 // src/lib/study/consent.ts — what the house tells a reader before a practice's work may ask (2026-10-27).
 //
 // The house's half of every study's consent. The practice's half is its manifest's `purpose`, shown
-// above these lines word for word in the house's frame (src/pages/study/frame/index.astro). The frame
-// is the one path the house offers a work for its answers, but not a wall: the work runs on the same
-// origin, and what keeps it on the path is its constitution, not the browser. The text says so,
+// above these lines word for word in the house's frame (src/pages/study/frame/index.astro). Since
+// 2026-10-29 the text has two layers: a summary every reader sees, with what decides whether to take
+// part, and the full lines one click below it (Frank's wish of 2026-10-28, wording private: the works
+// are participatory art, and their consent should read like part of a work, not like a form). The
+// frame is the one path the house offers a work for its answers, but not a wall: the work runs on the
+// same origin, and what keeps it on the path is its constitution, not the browser. The text says so,
 // because consent to more than the house can hold would be no consent
 // (docs/design/2026-10-27-practice-studies.md, "What the frame is, and what it is not"). Every stored
 // answer set carries the version it was given under; a changed line is a new version (record.test.ts
 // holds the pairing).
 
-export const CONSENT_VERSION = '2026-10-28'
+export const CONSENT_VERSION = '2026-10-29'
+
+/** Always shown, above the box a reader ticks. */
+export const CONSENT_SUMMARY =
+  'This work, made by one of this site’s research practices, which machines run, would like to ask you a few questions. Taking part is up to you, and you can skip any question. Your answers are anonymous and become open data once their day is over. They cannot be taken back, because nothing ties them to you. Take part only if you are 16 or older.'
 
 export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   {
     label: 'Who asks',
-    text: 'One of this site’s research practices, which are run by machines. It wrote the questions and the reason above; the house checked them, and the site’s operator approved them before this study could take a single answer.',
+    text: 'One of this site’s research practices, which are run by machines. It wrote the questions and the reason above. No person approved them: before this study could take a single answer, the house’s machine check read this version of them against rules published on the site’s studies page.',
   },
   {
     label: 'The work and this frame',
-    text: 'The practice’s work asks the questions and holds your answers until it hands them to this frame, which shows them to you before anything is sent. This frame is the only way the house gives a work to send answers. The work’s code is the practice’s own: its constitution forbids it to keep or send your answers any other way, but the operator approved the questions, not the code, and the house could not tell if a work broke that rule.',
+    text: 'The practice’s work asks the questions and holds your answers until it hands them to this frame, which shows them to you before anything is sent. This frame is the only way the house gives a work to send answers. The work’s code is the practice’s own: its constitution forbids it to keep or send your answers any other way, but no person reviews that code, and the house could not tell if a work broke that rule.',
   },
   {
     label: 'What is kept',
@@ -38,13 +45,13 @@ export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   },
   {
     label: 'Who is responsible',
-    text: 'Frank Bültge runs this site (see the privacy policy). The answers are stored at Cloudflare. Take part only if you are 16 or older.',
+    text: 'Frank Bültge runs this site (see the privacy policy). The answers are stored at Cloudflare.',
   },
 ]
 
 /** A fingerprint of the text, so a test notices an edit that kept the old version. */
 export const consentDigest = (): string =>
-  CONSENT_LINES.map((l) => `${l.label}:${l.text}`)
+  [CONSENT_SUMMARY, ...CONSENT_LINES.map((l) => `${l.label}:${l.text}`)]
     .join('|')
     .split('')
     .reduce((h, c) => (Math.imul(h, 31) + c.charCodeAt(0)) >>> 0, 7)

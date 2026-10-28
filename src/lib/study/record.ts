@@ -3,8 +3,9 @@
 // The release rule of Third Reading (src/lib/reading/record.ts), for every study: only answers of
 // finished UTC days, in whole batches of BATCH_SIZE, oldest first, each without its day — a batch
 // number instead, and a random id — and with the SHA-256 of the manifest it answered, so a study whose
-// changed file was approved again shows which answers belong to which version of its questions. Polling the record shows nothing arrive, and each night's addition
-// to it, and to git history, holds a batch or nothing. The nightly snapshot commits the record as
+// changed file passed the check again shows which answers belong to which version of its questions.
+// Polling the record shows nothing arrive, and each night's addition to it, and to git history, holds
+// a batch or nothing. The nightly snapshot commits the record as
 // src/data/studies/records/<study>.json under CC0, one answer set per line, and hands a copy to the
 // practice that asked (scripts/study/snapshot.ts).
 import type { Answers } from './answers'

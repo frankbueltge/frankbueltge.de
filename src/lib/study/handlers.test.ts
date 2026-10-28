@@ -30,8 +30,10 @@ const deps: Deps = { fetch: network as unknown as typeof fetch, now: () => now }
 const REGISTRY = {
   schema: 1,
   known: [
-    { id: MANIFEST.id, work: 'studio:the-remainder', href: '/studio/werke-html/the-remainder/', state: 'approved', sha256: 'a'.repeat(64), manifest: MANIFEST },
-    { id: 'field-changed-study', work: 'field:changed', href: '/field/werke-html/changed/', state: 'changed', sha256: 'b'.repeat(64), manifest: null },
+    { id: MANIFEST.id, work: 'studio:the-remainder', href: '/studio/werke-html/the-remainder/', state: 'open', sha256: 'a'.repeat(64), manifest: MANIFEST },
+    { id: 'field-changed-study', work: 'field:changed', href: '/field/werke-html/changed/', state: 'unchecked', sha256: 'b'.repeat(64), manifest: null },
+    { id: 'field-refused-study', work: 'field:refused', href: '/field/werke-html/refused/', state: 'refused', sha256: 'c'.repeat(64), manifest: null },
+    { id: 'studio-stopped-study', work: 'studio:stopped', href: '/studio/werke-html/stopped/', state: 'stopped', sha256: 'd'.repeat(64), manifest: null },
   ],
 }
 
@@ -68,7 +70,7 @@ beforeEach(() => {
 })
 
 describe.skipIf(!(await sqliteAvailable()))('POST /api/study/submit', () => {
-  it('stores the answers of an approved study, and hands the reader no id', async () => {
+  it('stores the answers of an open study, and hands the reader no id', async () => {
     const env = await makeEnv()
     const res = await submit(env, body())
     expect(await res.json()).toEqual({ ok: true, status: 'stored', study: MANIFEST.id, entries: 1 })
@@ -79,17 +81,19 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/study/submit', () => {
     expect(JSON.stringify(row)).not.toContain('203.0.113.7')
   })
 
-  it('refuses a study the architect has not approved, or whose file changed since', async () => {
+  it('refuses a study the house’s check has not passed, refused or stopped, or whose file changed since', async () => {
     const env = await makeEnv()
     expect((await submit(env, body({ study: 'never-proposed' }))).status).toBe(404)
-    const changed = await submit(env, body({ study: 'field-changed-study' }))
-    expect([changed.status, (await changed.json()).reason]).toEqual([403, 'not-open'])
+    for (const study of ['field-changed-study', 'field-refused-study', 'studio-stopped-study']) {
+      const res = await submit(env, body({ study }))
+      expect([res.status, (await res.json()).reason], study).toEqual([403, 'not-open'])
+    }
   })
 
   it('refuses another consent text, another version of the questions, and answers the study does not ask', async () => {
     const env = await makeEnv()
     expect((await (await submit(env, body({ consent: '2020-01-01' }))).json()).reason).toBe('consent')
-    // a frame that showed an earlier approval of a changed file: the answers belong to other questions
+    // a frame that showed an earlier version of a changed file: the answers belong to other questions
     expect((await (await submit(env, body({ manifest: 'b'.repeat(64) }))).json()).reason).toBe('version')
     expect((await (await submit(env, body({ manifest: undefined }))).json()).reason).toBe('version')
     const res = await submit(env, body({ answers: { ...ANSWERS, age: 34 } }))
@@ -152,7 +156,9 @@ describe.skipIf(!(await sqliteAvailable()))('GET /api/study/status and /record',
     const env = await makeEnv()
     await submit(env, body())
     expect(await (await get(handleStatus, env, `?study=${MANIFEST.id}`)).json()).toEqual({ ok: true, study: MANIFEST.id, open: true, standby: null, entries: 1 })
-    expect(await (await get(handleStatus, env, '?study=field-changed-study')).json()).toMatchObject({ open: false, standby: 'changed' })
+    expect(await (await get(handleStatus, env, '?study=field-changed-study')).json()).toMatchObject({ open: false, standby: 'unchecked' })
+    expect(await (await get(handleStatus, env, '?study=field-refused-study')).json()).toMatchObject({ open: false, standby: 'refused' })
+    expect(await (await get(handleStatus, env, '?study=studio-stopped-study')).json()).toMatchObject({ open: false, standby: 'stopped' })
     expect((await get(handleStatus, env, '?study=unknown')).status).toBe(404)
   })
 
@@ -162,7 +168,7 @@ describe.skipIf(!(await sqliteAvailable()))('GET /api/study/status and /record',
     expect(await (await get(handleRecord, env, `?study=${MANIFEST.id}`)).json()).toMatchObject({ entries_count: 0, entries: [] })
     now = new Date('2026-10-29T02:50:00Z')
     const r = await (await get(handleRecord, env, `?study=${MANIFEST.id}`)).json()
-    expect(r).toMatchObject({ ok: true, study: MANIFEST.id, work: 'studio:the-remainder', state: 'approved', batch_size: BATCH_SIZE, entries_count: BATCH_SIZE })
+    expect(r).toMatchObject({ ok: true, study: MANIFEST.id, work: 'studio:the-remainder', state: 'open', batch_size: BATCH_SIZE, entries_count: BATCH_SIZE })
     for (const e of r.entries) expect(Object.keys(e).sort()).toEqual(['answers', 'batch', 'consent', 'id', 'manifest'])
     expect(r.entries[0].manifest).toBe('a'.repeat(64))
     for (const table of ['study_salts', 'study_marks', 'study_addr']) expect(raw(env).prepare(`SELECT COUNT(*) AS n FROM ${table}`).all()[0]!.n, table).toBe(0)
@@ -187,6 +193,9 @@ describe.skipIf(!(await sqliteAvailable()))('GET /api/study/status and /record',
     expect(parseRegistry(REGISTRY)).not.toBeNull()
     expect(parseRegistry({ ...REGISTRY, known: [...REGISTRY.known, { ...REGISTRY.known[0]!, work: 'studio:another' }] })).toBeNull()
     expect(parseRegistry({ ...REGISTRY, known: [{ ...REGISTRY.known[0]!, sha256: undefined }] })).toBeNull()
+    // a registry written before 2026-10-28 named its open studies `approved`; it opens nothing now
+    expect(parseRegistry({ ...REGISTRY, known: [{ ...REGISTRY.known[0]!, state: 'approved' }] })).toBeNull()
+    expect(parseRegistry({ ...REGISTRY, known: [{ ...REGISTRY.known[0]!, manifest: null }] })).toBeNull()
   })
 
   it('keeps no order of writing that could pair an answer set with its reader', async () => {

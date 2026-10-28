@@ -81,8 +81,6 @@ const commitsSiteData = (source: string): boolean =>
 const NOT_A_MAIN_COMMITTER: Record<string, string> = {
   'engine-site-pr.yml':
     'pushes to a pull-request branch and to the engine repositories, never to main — the human merge fires on:push normally',
-  'study-approval.yml':
-    'pushes only the branch of a study-approval pull request, never main — the approval is the architect’s merge, a human push that fires on:push normally',
 }
 
 describe('the apparatus map describes the workflows this repository actually has', () => {

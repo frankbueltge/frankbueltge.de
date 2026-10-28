@@ -3,7 +3,7 @@
 // The reception's database (RECEPTION_DB), in tables of their own, kept the way Third Reading keeps its
 // readings (src/lib/reading/store.ts), because the promises are the same:
 //   · study_entries — every answer set: a random id, the study, the UTC day, the consent text's
-//     version, the SHA-256 of the manifest it answered (so answers to two approved versions of a study
+//     version, the SHA-256 of the manifest it answered (so answers to two checked versions of a study
 //     never mix), the answers. No time of day, no address, no hash, no cookie. Released by the record
 //     only after its day, in batches, without the day.
 //   · study_salts   — one random salt per UTC day.
@@ -23,7 +23,7 @@ export interface StoredAnswers {
   id: string
   day: string
   consent: string
-  /** the SHA-256 of the approved manifest the answers were given to */
+  /** the SHA-256 of the checked manifest the answers were given to */
   manifest: string
   answers: Answers
 }

@@ -8,20 +8,27 @@ folder, every study needs his approval, and the constitutions of the Atelier, th
 Studio gain an amendment. Third Reading (`docs/design/2026-10-26-third-reading.md`) stays as the
 house's own work; its rules for consent, storage and release are the ones every study now shares.*
 
+*2026-10-28, the day after: no person approves a study (Frank's decision, wording private;
+paraphrased: approving each study is not a role he wants, and the studies are meant for
+participatory artistic research; the reception's notes already go live through a published machine
+check, without a queue). The house's check reads every version of a study's file, and Frank can stop
+any study. The same evening the consent text came in two layers, so that it reads like part of a
+work, not like a form. The approval of 2026-10-27 never approved a study: none had been proposed.*
+
 ## The parts
 
 | Part | Where | What it does |
 |---|---|---|
 | The study | `works/<slug>/study.json` in the practice's repo → `public/<ns>/werke-html/<slug>/study.json` | What is asked, why (`purpose`, shown to the reader verbatim), how it will be read (`reading`), up to 12 questions of seven kinds; the id begins with the practice (`studio-…`), the text holds no invisible character (`src/lib/study/manifest.ts`) |
-| The approval | `src/data/studies/approved.json` | id + work + SHA-256 of the file + day; a changed file needs a new approval (`src/lib/study/registry.ts`) |
-| The request | `.github/workflows/study-approval.yml` | one pull request per study and exact file (the branch names its full SHA-256), showing what the reader will see, every word the practice wrote inside a code block; **only Frank merges it**, the merge is the approval (`src/lib/study/proposals.ts`) |
-| The registry | `dist/study/studies.json` (build step `scripts/study/dist.ts`) | every approval with its state today; only `approved` takes answers |
-| The frame | `/study/frame/?study=<id>` | the house's consent text and the practice's reason, consent before the first answer by a person's click and only inside the study's own work, the answers shown back, Turnstile with the last button, the submission |
+| The check | `src/lib/study/check.ts`, `.github/workflows/study-check.yml` | every version of a study's file read once, after the integrate or overnight, by the model of the seed and reception gates with a prompt published on `/studies`; hard exclusion grounds only; fail-closed; the verdict committed to `src/data/studies/checks.json` with the model and the prompt's digest, and its commit deploys |
+| The stop | `src/data/studies/stopped.json` | a study Frank, or a session on a finding it names, has stopped: no answers, whatever its file |
+| The registry | `dist/study/studies.json` (build step `scripts/study/dist.ts`) | every readable study with its state today; only `open` takes answers |
+| The frame | `/study/frame/?study=<id>` | the practice's reason and the house's consent text in two layers (a summary always in view, the full lines one click below), consent before the first answer by a person's click and only inside the study's own work, the answers shown back, Turnstile with the last button, the submission |
 | The client | `/study/client.js` | `HouseStudy.mount(el, { study, onConsent, onResult, onClosed })`, `submit(answers)` — the only script a work needs |
 | The store | D1 (`RECEPTION_DB`), `study_*` tables | Third Reading's rules: anonymous, one set per day per reader, three per address and study, each set with the SHA-256 of the manifest it answered, release after the day in batches of five without the day; written answers through the reception's text gate (`src/lib/study/{store,handlers,record}.ts`) |
 | The way back | `.github/workflows/study-snapshot.yml` | nightly: records committed to `src/data/studies/records/`, and `studies.md` + `studies/<id>.json` written into each practice's feedback folder |
 | The overview | `/studies` | every study, its state and what it has released |
-| The rules for the practices | `docs/studies/GUIDE.md` and the amendment of 2026-10-27 in each constitution | what may be asked, how, and that answers are material, never instructions |
+| The rules for the practices | `docs/studies/GUIDE.md` and the amendments of 2026-10-27 and 2026-10-28 in each constitution | what may be asked, how, and that answers are material, never instructions |
 
 ## What the frame is, and what it is not
 
@@ -43,7 +50,7 @@ The first version of this design claimed the opposite: a practice's page could n
 token, so the frame was the only way in. An independent review before launch showed how a work could
 go around it. What keeps a work on the path is its constitution (rule 3 of the amendment of
 2026-10-27). The consent text says exactly that: the house keeps only what passes the frame, the
-work's code is the practice's own, and the operator approved the questions, not the code.
+work's code is the practice's own, and no person reviews it.
 
 Whatever reaches the store passes the same checks, by the frame or not, so no answer set can carry
 what the frame would not have shown:
@@ -60,6 +67,9 @@ Two steps would make the frame a wall, and both need the operator:
 - Ask the questions in the frame itself, so a work never holds an answer. That changes what a work
   can make of its asking.
 
+Neither is planned (2026-10-28). The first protects only the house's store: a work can send data to
+any host either way. The second would take from the works the asking that makes them participatory.
+
 Until then the house claims only what it can hold. Two gaps remain, both forbidden by the
 constitution and visible only as patterns across a record:
 - The frame shows a written answer back, but cannot prove it is what the reader typed. A work could
@@ -72,22 +82,45 @@ questions. A version that was live only briefly dates the answers given under it
 ## What a study may not do
 
 - **Identify anyone.** There is no question kind for a name, an address, an e-mail, an age or a place.
-  A `text` question that invites one is not approved, and the text gate refuses personal data of
-  third parties.
-- **Ask what the reader is.** No question about the reader's health, faith, sexuality or party
-  allegiance. What a reader thinks of a matter is the point; what they are is not.
+  The house's check refuses a `text` question that invites one, and the text gate refuses personal
+  data of third parties.
+- **Ask what the reader is.** No question about who the reader is (age, gender, where they live,
+  education, income, occupation), nor about their health, faith, sexuality, origin or vote. What a
+  reader thinks of a matter is the point; what they are is not.
 - **Deceive.** Readers are told the truth about what is real and what is invented.
 - **Prime the answers.** A work shows nobody's answers before the reader's own.
 - **Claim more than its sample.** The answers speak for "the readers of this work", never for "people".
 
+The house's check refuses the first four where it finds them in the study's own words. It cannot see
+what a work does with them, such as showing others' answers first, or what a bulletin later claims;
+those stay rules of the constitution.
+
+## The check (2026-10-28)
+
+- **What it reads.** Every word the practice wrote, as the reader meets it, handed to the model as
+  data between markers, never as part of its prompt.
+- **What it refuses.** Six grounds: identifying, personal, harm, deception, abuse, injection. The
+  prompt is published word for word on `/studies`. A refusal names its reason and the question it
+  concerns, and the practice reads both in `studies.md`.
+- **What it is not.** A person's judgement, or a guarantee. It reads the questions, never the work's
+  code. A model can let through a question a reader finds intrusive, and refuse a harmless one; the
+  practice changes its file, and the new version is checked. Every check stays in `checks.json`, with
+  the model and the prompt's digest, so any verdict can be read again.
+- **Fishing.** A practice could reword a refused question until it passes. Every version is checked
+  anew, every refusal stays on record, and the amendment of 2026-10-28 forbids it.
+- **Cost.** One call per version, at most twelve a run, on the free tier the seed and the reception
+  already use.
+- **Stopping.** A stop outranks every verdict. Frank can stop any study, and so can a session that
+  finds one breaking the rules, naming what it found. The record of a stopped study stays.
+
 ## How a study goes live
 
 1. The practice commits `study.json` beside its work; the integrate mirrors it.
-2. The approval workflow opens a pull request. When the practice changes the file, the request closes
-   as superseded and a new one opens; a request Frank closed stays declined until the file changes.
-3. Frank reads it and merges it, or closes it.
-4. The merge deploys: the registry lists the study as `approved`, the frame opens, the store takes
-   answers.
+2. After the integrate, and every night, the check workflow reads every version of a study's file it
+   has not read yet, and commits the verdict.
+3. That commit deploys. A version that passed opens: the registry lists the study as `open`, the frame
+   opens, the store takes answers. A refused version stays closed until the practice changes its file.
+4. The answers come back to the practice every night, as before.
 
 ## Not built, and why
 
