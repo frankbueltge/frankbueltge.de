@@ -6,9 +6,10 @@
 # integrate; this workflow then asks the house's check (src/lib/study/check.ts: the model of the seed
 # and the reception gates, a prompt published word for word on /studies, hard exclusion grounds only)
 # about every version of a study's file it has not read yet, and commits the verdicts to
-# src/data/studies/checks.json. That commit starts the deploy (deploy-cf.yml waits on this workflow),
-# which opens a study that passed. A refused version waits for the practice to change its file; the
-# practice reads why in its feedback folder the next night.
+# src/data/studies/checks.json. Only then does it start the deploy, which opens a study that passed: a
+# push with the built-in token starts no other workflow, so it asks for the deploy itself, and a run
+# that found nothing new deploys nothing. A refused version waits for the practice to change its file;
+# the practice reads why in its feedback folder the next night.
 #
 # Fail-closed: no key, an unreachable gate or an unreadable verdict records nothing, and the next run
 # asks again.
@@ -27,6 +28,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: study-check
@@ -48,7 +50,9 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: npx tsx scripts/study/check.ts
 
-      - name: Commit the verdicts (only when there is a new one)
+      - name: Commit the verdicts and deploy them (only when there is a new one)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -n "$(git status --porcelain src/data/studies/checks.json)" ]; then
             git config user.name "Study-Check"
@@ -61,6 +65,7 @@ jobs:
               [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts" >&2; exit 1; }
               sleep $((attempt * 5))
             done
+            gh workflow run deploy-cf.yml --ref main
           else
             echo "no new verdict"
           fi
