@@ -35,6 +35,8 @@ export const LIMITS = {
   options: 12,
   pairItems: 20,
   orderItems: 10,
+  /** a `marks` question: one number per item, enough for a work that asks about a whole vocabulary */
+  markItems: 30,
   text: 280,
 } as const
 
@@ -50,10 +52,11 @@ export type Question =
   | { id: string; kind: 'number'; prompt: string; min: number; max: number; unit?: string }
   | { id: string; kind: 'pairwise'; prompt: string; items: Item[]; pairs: number }
   | { id: string; kind: 'order'; prompt: string; items: Item[] }
+  | { id: string; kind: 'marks'; prompt: string; items: Item[]; min: number; max: number; unit?: string }
   | { id: string; kind: 'text'; prompt: string; max_length?: number }
 
 export type QuestionKind = Question['kind']
-export const QUESTION_KINDS: readonly QuestionKind[] = ['choice', 'multi', 'scale', 'number', 'pairwise', 'order', 'text']
+export const QUESTION_KINDS: readonly QuestionKind[] = ['choice', 'multi', 'scale', 'number', 'pairwise', 'order', 'marks', 'text']
 
 export interface StudyManifest {
   $contract: typeof MANIFEST_CONTRACT
@@ -103,6 +106,7 @@ const QUESTION_FIELDS: Record<QuestionKind, readonly string[]> = {
   number: ['min', 'max', 'unit'],
   pairwise: ['items', 'pairs'],
   order: ['items'],
+  marks: ['items', 'min', 'max', 'unit'],
   text: ['max_length'],
 }
 
@@ -161,6 +165,11 @@ function questionProblems(q: Question, i: number): string[] {
     }
     case 'order':
       out.push(...itemProblems(where, q.items, 2, LIMITS.orderItems))
+      break
+    case 'marks':
+      out.push(...itemProblems(where, q.items, 2, LIMITS.markItems))
+      if (!num(q.min) || !num(q.max) || q.min >= q.max) out.push(`${where}: a range`)
+      if (q.unit !== undefined && !str(q.unit, 40)) out.push(`${where}: unit`)
       break
     case 'text':
       if (q.max_length !== undefined && (!int(q.max_length) || q.max_length < 10 || q.max_length > LIMITS.text)) out.push(`${where}: max_length of 10 to ${LIMITS.text}`)

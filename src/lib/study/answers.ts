@@ -14,12 +14,15 @@
 //             Kept with each pair's items in id order and the pairs sorted, so neither the side an item
 //             was shown on nor the order of the pairs is kept: both are invisible to the reader
 //   order     every item id, once, most important first
+//   marks     one number or null per item, in the manifest's order, each from min to max with at most
+//             two decimals, at least one of them given: a work where a reader places many things on one
+//             line (since 2026-10-29)
 //   text      at most max_length characters, checked by the text gate before it is stored; control and
 //             invisible characters are removed first, so what is stored is what the reader saw
 import { CONTROL_CHARS, INVISIBLE_CHARS, LIMITS, type Question, type StudyManifest } from './manifest'
 
 export type PairTuple = [string, string, 0 | 1 | 2 | null]
-export type Answer = string | string[] | number | PairTuple[] | null
+export type Answer = string | string[] | number | PairTuple[] | (number | null)[] | null
 export type Answers = Record<string, Answer>
 
 const CONTROL_ALL = new RegExp(CONTROL_CHARS.source, 'gu')
@@ -52,6 +55,10 @@ function canonical(q: Question, a: Answer): Answer {
   }
 }
 
+/** A number from min to max with at most two decimals: more would be digits the reader may not notice. */
+const inRange = (a: unknown, min: number, max: number): boolean =>
+  typeof a === 'number' && Number.isFinite(a) && a >= min && a <= max && Math.abs(a * 100 - Math.round(a * 100)) < 1e-6
+
 function answerOk(q: Question, a: Answer): boolean {
   if (a === null) return true
   switch (q.kind) {
@@ -64,7 +71,9 @@ function answerOk(q: Question, a: Answer): boolean {
     case 'scale':
       return Number.isInteger(a) && (a as number) >= q.min && (a as number) <= q.max
     case 'number':
-      return typeof a === 'number' && Number.isFinite(a) && a >= q.min && a <= q.max && Math.abs(a * 100 - Math.round(a * 100)) < 1e-6
+      return inRange(a, q.min, q.max)
+    case 'marks':
+      return Array.isArray(a) && a.length === q.items.length && a.some((x) => x !== null) && a.every((x) => x === null || inRange(x, q.min, q.max))
     case 'pairwise': {
       if (!Array.isArray(a) || a.length < 1 || a.length > q.pairs) return false
       const ids = new Set(q.items.map((i) => i.id))
@@ -142,6 +151,13 @@ export function describeAnswer(q: Question, a: Answer): string {
     case 'order': {
       const label = new Map(q.items.map((i) => [i.id, i.label]))
       return (a as string[]).map((id) => label.get(id)).join(' › ')
+    }
+    case 'marks': {
+      // every mark the reader gave, by its item, and how many items they left unmarked
+      const marks = a as (number | null)[]
+      const given = q.items.flatMap((it, i) => (marks[i] === null ? [] : [`${it.label} ${marks[i]}${q.unit ? ` ${q.unit}` : ''}`]))
+      const left = marks.filter((x) => x === null).length
+      return `${given.join('; ')}${left ? ` · ${left} not marked` : ''}`
     }
   }
 }

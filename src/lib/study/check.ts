@@ -122,6 +122,8 @@ function questionText(q: Question, i: number): string {
       return line(`pairwise, ${q.pairs} pairs`, `items: ${quoted(q.items.map((it) => it.label))}`)
     case 'order':
       return line('order', `items: ${quoted(q.items.map((it) => it.label))}`)
+    case 'marks':
+      return line(`marks, one number from ${q.min} to ${q.max}${q.unit ? ` ${q.unit}` : ''} per item`, `items: ${quoted(q.items.map((it) => it.label))}`)
     case 'text':
       return line(`text, at most ${q.max_length ?? LIMITS.text} characters`)
   }

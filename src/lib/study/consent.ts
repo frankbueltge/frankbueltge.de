@@ -8,15 +8,17 @@
 // frame is the one path the house offers a work for its answers, but not a wall: the work runs on the
 // same origin, and what keeps it on the path is its constitution, not the browser. The text says so,
 // because consent to more than the house can hold would be no consent
-// (docs/design/2026-10-27-practice-studies.md, "What the frame is, and what it is not"). Every stored
-// answer set carries the version it was given under; a changed line is a new version (record.test.ts
-// holds the pairing).
+// (docs/design/2026-10-27-practice-studies.md, "What the frame is, and what it is not"). Since the
+// second text of 2026-10-29 the reader takes part first and meets this text when the work offers to add
+// the answers to the record (Frank's decision of that day, wording private). Every stored answer set
+// carries the version it was given under; a changed line is a new version (record.test.ts holds the
+// pairing).
 
-export const CONSENT_VERSION = '2026-10-29'
+export const CONSENT_VERSION = '2026-10-29.2'
 
-/** Always shown, above the box a reader ticks. */
+/** Always shown, under the reader's answers and above the box they tick. */
 export const CONSENT_SUMMARY =
-  'This work, made by one of this site’s research practices, which machines run, would like to ask you a few questions. Taking part is up to you: nothing is sent until you have seen your answers here and pressed the last button. Your answers are anonymous. After their day they are published as open data, in batches of five, and they cannot be taken back, because nothing ties them to you. Take part only if you are 16 or older.'
+  'This work, made by one of this site’s research practices, which machines run, would like to add what you answered in it to an open record. Whether it does is up to you: nothing leaves this page until you have seen your answers here and pressed the last button. Your answers are anonymous. After their day they are published as open data, in batches of five, and they cannot be taken back, because nothing ties them to you. Take part only if you are 16 or older.'
 
 export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   {

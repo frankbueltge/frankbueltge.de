@@ -88,3 +88,23 @@ describe('textOf and describeAnswer', () => {
     expect(describeAnswer(q('note'), null)).toBe('left out')
   })
 })
+
+describe('a marks question (2026-10-29)', () => {
+  const study = {
+    questions: [
+      { id: 'phrases', kind: 'marks' as const, prompt: 'Where does each phrase sit for you?', items: [{ id: 'probably', label: 'Probably' }, { id: 'likely', label: 'Likely' }, { id: 'doubt', label: 'We Doubt' }], min: 0, max: 100, unit: '%' },
+    ],
+  }
+
+  it('takes one number or null per item, in the manifest’s order, at least one of them given', () => {
+    expect(checkAnswers(study, { phrases: [70, null, 20.5] })).toEqual({ ok: true, value: { phrases: [70, null, 20.5] } })
+    for (const bad of [[70, 20], [70, null, 20, 5], [null, null, null], [70, 101, 20], [70, 20.125, 20], ['70', 20, 20], 70]) {
+      expect(checkAnswers(study, { phrases: bad }), JSON.stringify(bad)).toEqual({ ok: false, reason: 'answers', question: 'phrases' })
+    }
+  })
+
+  it('shows every mark back by its item, and how many were left unmarked', () => {
+    expect(describeAnswer(study.questions[0]!, [70, null, 20.5])).toBe('Probably 70 %; We Doubt 20.5 % · 1 not marked')
+    expect(describeAnswer(study.questions[0]!, [70, 75, 20])).toBe('Probably 70 %; Likely 75 %; We Doubt 20 %')
+  })
+})

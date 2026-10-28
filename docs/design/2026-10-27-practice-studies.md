@@ -22,6 +22,18 @@ built nothing while it waited. Its studies stand beside a work's face in
 `error-as-method/<slug>/`. Their ids begin with `error-as-method-`, and the record goes back to its
 `feedback/` folder, written with the reception's token. Its constitution gained a note of that day.*
 
+*2026-10-29, later the same day: taking part comes first (Frank's decision, wording private;
+paraphrased: works should be able to keep the interactions readers have with them anyway, where that
+fits, without every work being built around it). A reader takes part in the work as it is, and the
+answers stay in the page. When the work hands them to the frame, the frame offers to add them to the
+record: it shows them exactly as they would be sent, with the practice's reason and the house's
+consent text, takes the consent there and sends nothing before its last button. Until then the reader
+had to consent before the work could ask. A new question kind, `marks`, holds one number per item for
+up to 30 items: a work such as the nightly line's *Asked Three Ways*, where a reader places 27
+expressions of probability on one line, fits into one question. The consent text is version
+`2026-10-29.2`; the constitutions gained an amendment, and the nightly line's note says it from the
+start.*
+
 ## The parts
 
 | Part | Where | What it does |
@@ -30,7 +42,7 @@ built nothing while it waited. Its studies stand beside a work's face in
 | The check | `src/lib/study/check.ts`, `.github/workflows/study-check.yml` | one verdict for every version of a study's file, after the integrate or overnight, from the model of the seed and reception gates with a prompt published on `/studies`; hard exclusion grounds only; fail-closed; the verdict committed to `src/data/studies/checks.json` with the model and the prompt's digest, and the deploy started after it |
 | The stop | `src/data/studies/stopped.json` | a study Frank, or a session on a finding it names, has stopped: no answers, whatever its file; the stop names the study and its work, and holds for either |
 | The registry | `dist/study/studies.json` (build step `scripts/study/dist.ts`) | every readable study with its state today; only `open` takes answers |
-| The frame | `/study/frame/?study=<id>` | the practice's reason and the house's consent text in two layers (a summary always in view, the full lines one click below), consent before the first answer by a person's click and only inside the study's own work, the answers shown back, Turnstile with the last button, the submission |
+| The frame | `/study/frame/?study=<id>` | one line while the reader takes part in the work; when the work hands over the answers, the answers exactly as they would be sent, the practice's reason and the house's consent text in two layers (a summary always in view, the full lines one click below), consent by a person's click and only inside the study's own work, Turnstile with the last button, the submission |
 | The client | `/study/client.js` | `HouseStudy.mount(el, { study, onConsent, onResult, onClosed })`, `submit(answers)` — the only script a work needs |
 | The store | D1 (`RECEPTION_DB`), `study_*` tables | Third Reading's rules: anonymous, one set per day per reader, three per address and study, each set with the SHA-256 of the manifest it answered, release after the day in batches of five without the day; written answers through the reception's text gate (`src/lib/study/{store,handlers,record}.ts`) |
 | The way back | `.github/workflows/study-snapshot.yml` | nightly: records committed to `src/data/studies/records/`, and `studies.md` + `studies/<id>.json` written into each practice's feedback folder |
@@ -40,8 +52,9 @@ built nothing while it waited. Its studies stand beside a work's face in
 ## What the frame is, and what it is not
 
 The frame is the one path the house offers a work for its answers, and on that path it holds what it
-promises. Consent comes before the first answer, from a person's click: a click a script makes is
-undone on the box and ignored on the buttons. The frame works only inside the work whose study it
+promises. Consent comes before anything is sent, from a person's click: a click a script makes is
+undone on the box and ignored on the send button. Answers that arrive or change hold the button for a
+second, so a click meant for the answers on screen cannot send newer ones. The frame works only inside the work whose study it
 is. It shows the answers back exactly as they will be stored, and sends none of them before its last
 button; it loads no analytics. Its bot check is bound to the frame's action, to the study and to the
 host, and the answers to the version of the questions it showed (`src/lib/study/handlers.ts`).
