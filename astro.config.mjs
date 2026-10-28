@@ -26,10 +26,11 @@ export default defineConfig({
     locales: ['en'],
     routing: { prefixDefaultLocale: false },
   },
-  // Content-Security-Policy: Astro 6 hasht eigene inline/gebündelte Skripte automatisch (kein
-  // 'unsafe-inline' in script-src); extern nur der Cloudflare-Analytics-Beacon. API stabil unter
-  // security.csp — script-src und style-src gehen NICHT in directives, sondern in scriptDirective/
-  // styleDirective. frame-ancestors muss per HTTP-Header gesetzt werden (→ public/_headers).
+  // Content-Security-Policy: Astro 6 hashes its own inline and bundled scripts automatically
+  // (no 'unsafe-inline' in script-src); the one external script host is Turnstile's (below).
+  // The API is stable under security.csp — script-src and style-src do NOT go into directives
+  // but into scriptDirective/styleDirective. frame-ancestors has to be set as an HTTP header
+  // (→ public/_headers).
   security: {
     csp: {
       directives: [
@@ -54,7 +55,7 @@ export default defineConfig({
         // only ask "and now?" a few times a second. Scheme-wide, like the https opening beside it,
         // so a new source is a line of code and not a config change.
         "connect-src 'self' https: wss:",
-        // Turnstile rendert seine Challenge in einem Iframe von derselben Domain.
+        // Turnstile renders its challenge in an iframe from its own host (challenges.cloudflare.com).
         // 'self' since 2026-10-17: the reception opens its rating form (/reception/rate, the one
         // reception page that loads Turnstile) in a same-origin frame below each work, so a work page
         // needs no script host of its own (docs/design/2026-10-17-the-reception.md).
@@ -63,12 +64,12 @@ export default defineConfig({
         "base-uri 'self'",
       ],
       scriptDirective: {
-        // 'self' muss explizit genannt werden, wenn resources gesetzt ist (Astro ersetzt den Default).
-        // Astro hasht seine gebündelten/Modul-Skripte automatisch, aber NICHT `is:inline`-Skripte
-        // (die opten bewusst aus der Verarbeitung aus). Der Hash unten deckt das Anti-FOUC-Theme-
-        // Skript im <head> von Base.astro ab. Bei Änderung dieses Skripts neu berechnen:
-        //   build → sha256-base64 des <script>-Inhalts in dist/index.html.
-        // challenges.cloudflare.com lädt das Turnstile-Widget-Script auf /saat (s. o.).
+        // 'self' has to be named explicitly once resources is set (Astro replaces the default).
+        // Astro hashes its bundled and module scripts automatically, but NOT `is:inline` scripts
+        // (they opt out of processing on purpose). The two hashes below cover the two is:inline
+        // scripts of Base.astro. Recompute one whenever its script changes:
+        //   build → sha256-base64 of the <script> content in dist/index.html.
+        // challenges.cloudflare.com serves the Turnstile widget script for the site's forms.
         resources: [
           "'self'",
           // The anti-FOUC theme resolver (Base.astro, is:inline). Re-pinned 2026-09-02: the hash
@@ -87,18 +88,18 @@ export default defineConfig({
         ],
       },
       styleDirective: {
-        // Tailwind v4 / Inline-Styles — 'unsafe-inline' ist vertretbar (kein JS-Risiko).
+        // Tailwind v4 / inline styles — 'unsafe-inline' is acceptable here (no JS risk).
         resources: ["'self'", "'unsafe-inline'"],
       },
     },
   },
-  // Tages-Snapshots (/protocol/<datum>) sind noindex + aus der Sitemap — dünn & wächst
-  // täglich; Frische trägt die aktuelle /protocol-Seite + das Archiv-Register.
-  // ACHTUNG: Der Werk-Pfad wurde 2026-07-20 von /protokoll → /protocol umbenannt (siehe
-  // public/_redirects); das Regex hier hing noch am alten deutschen Slug, wodurch ~35 dünne
-  // noindex-Snapshots wieder in die Sitemap geraten sind (widersprüchliches Signal). Fix: /protocol.
-  // /steuerzentrale ist ein privates Operator-Werkzeug (noindex, token-gated) — nie in der
-  // Sitemap, unabhängig davon, ob Google robots.txt beachtet.
+  // Daily snapshots (/protocol/<date>) are noindex and kept out of the sitemap — thin, and one
+  // more every day; freshness is carried by the current /protocol page and the archive register.
+  // NOTE: the work's path was renamed from /protokoll to /protocol on 2026-07-20 (see
+  // public/_redirects); the regex here still matched the old German slug, which put ~35 thin
+  // noindex snapshots back into the sitemap (a contradictory signal). Fix: /protocol.
+  // /steuerzentrale is a private operator tool (noindex, token-gated) — never in the sitemap,
+  // whether or not Google honours robots.txt.
   integrations: [
     // React islands — the visual layer (Frank, 2026-09-02; docs/design/2026-09-02-the-visual-
     // layer.md). An island's client code is a bundled module script, which Astro hashes into the
@@ -106,11 +107,10 @@ export default defineConfig({
     // security.csp. Geometry stays in src/lib/** (pure, tested); islands mount and interact.
     react(),
     sitemap({
-      // Das Dataset Register hatte bis 2026-07-27 eine Unterseite je Eintrag bzw. je
-      // Werk; der Sitemap-Filter musste die abgeleiteten Fassungsseiten hier wieder
-      // ausschließen. Mit dem Rückbau auf eine kuratierte Liste (docs/design/
-      // 2026-07-27-register-rueckbau-und-scouts.md) entfallen beide — es gibt nur noch
-      // /datasets selbst, und damit nichts mehr zu filtern.
+      // Until 2026-07-27 the Dataset Register had a subpage per entry and per work; the
+      // sitemap filter had to exclude the derived version pages here. With the register cut
+      // back to a curated list (docs/design/2026-07-27-register-rueckbau-und-scouts.md) both
+      // are gone — there is only /datasets itself, and so nothing left to filter.
       // /werke is a redirect page (it 301s to /experiments), and a redirect listed in a sitemap
       // is a URL submitted for indexing that can never be indexed — Search Console reports it as
       // "Page with redirect" and it costs crawl budget for nothing. Found 2026-08-12 while
@@ -143,8 +143,8 @@ export default defineConfig({
   // rewrite them to the public repos' blob/tree URLs so they don't 404 on the site.
   markdown: { rehypePlugins: [rehypeRepoLinks] },
   vite: {
-    // @tailwindcss/vite hängt noch an Vite 6, Astro 6 nutzt Vite 7 → die Plugin-Typen
-    // kollidieren (reiner Typ-Konflikt, der Build läuft). Cast, bis Tailwind auf Vite 7 zieht.
+    // @tailwindcss/vite still depends on Vite 6 while Astro 6 uses Vite 7, so the plugin types
+    // collide (a pure type conflict; the build runs). Cast until Tailwind moves to Vite 7.
     plugins: [/** @type {any} */ (tailwindcss())],
     build: {
       // Every script stays an external module file, none is inlined (re-skin 2a, 2026-09-02).
@@ -161,8 +161,8 @@ export default defineConfig({
       format: 'es',
     },
     optimizeDeps: {
-      // satellite.js bringt einen WASM-Build mit Top-Level-Await mit — Vites
-      // Dev-Optimizer (esbuild, es2020) bricht daran; Rollup im Prod-Build nicht.
+      // satellite.js ships a WASM build with top-level await — Vite's dev optimizer
+      // (esbuild, es2020) breaks on it; Rollup in the production build does not.
       exclude: ['satellite.js'],
     },
     server: {
