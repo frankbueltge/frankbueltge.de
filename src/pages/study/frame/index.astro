@@ -184,7 +184,10 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
   const post = (message: Record<string, unknown>) => {
     if (framed) window.parent.postMessage(message, location.origin)
   }
-  const tell = () => post({ type: 'house-study:height', height: document.documentElement.scrollHeight })
+  // The frame's height is the bottom of its content, plus the body's lower border. Not the document's
+  // height: the page's body is at least as tall as the frame (min-h-dvh), so that height could only
+  // grow, and a frame whose details a reader opened and closed again would stay as tall as when open.
+  const tell = () => post({ type: 'house-study:height', height: Math.ceil($('root').getBoundingClientRect().bottom + window.scrollY) + 1 })
   const say = (text: string) => {
     $('status').textContent = text
     $('status').hidden = false
@@ -223,7 +226,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     root.setAttribute('data-stf-bound', '')
     if (framed) {
       document.documentElement.setAttribute('data-stf-framed', '')
-      if ('ResizeObserver' in window) new ResizeObserver(tell).observe(document.body)
+      if ('ResizeObserver' in window) new ResizeObserver(tell).observe(root)
     }
     const id = new URLSearchParams(location.search).get('study') ?? ''
     let known: Known | undefined
