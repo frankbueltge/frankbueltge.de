@@ -22,7 +22,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { openCycleFolders } from '../engines/publication.mjs'
 import { readOpenCycle } from '../engines/publication-prune.mjs'
-import { manifestProblems, STUDY_ID, type StudyManifest } from './manifest'
+import { LIMITS, manifestProblems, STUDY_ID, type StudyManifest } from './manifest'
 
 export const STUDY_PRACTICES = ['atelier', 'field', 'studio'] as const
 export type StudyPractice = (typeof STUDY_PRACTICES)[number]
@@ -100,12 +100,15 @@ export function findStudies(base: string, root: string): FoundStudy[] {
       const bytes = readFileSync(join(base, file))
       let manifest: StudyManifest | null = null
       let problems: string[]
-      try {
-        const parsed = JSON.parse(bytes.toString('utf8'))
-        problems = manifestProblems(parsed)
-        if (!problems.length) manifest = parsed as StudyManifest
-      } catch {
-        problems = ['not valid JSON']
+      if (bytes.length > LIMITS.bytes) problems = [`the file is ${bytes.length} bytes; at most ${LIMITS.bytes}`]
+      else {
+        try {
+          const parsed = JSON.parse(bytes.toString('utf8'))
+          problems = manifestProblems(parsed)
+          if (!problems.length) manifest = parsed as StudyManifest
+        } catch {
+          problems = ['not valid JSON']
+        }
       }
       out.push({ practice, work: `${practice}:${slug}`, slug, href: `/${parent}/${slug}/`, file, sha256: sha256(bytes), manifest, problems })
     }

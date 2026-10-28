@@ -20,6 +20,9 @@ const ITEM_ID = /^[a-z0-9][a-z0-9_-]{0,31}$/
 const DAY = /^\d{4}-\d{2}-\d{2}$/
 
 export const LIMITS = {
+  /** the file's size in bytes: with every field at its limit a manifest stays below this, and the
+   *  pull request that shows it twice stays below GitHub's limit for a body */
+  bytes: 20 * 1024,
   idLength: 80,
   title: 80,
   question: 300,
@@ -90,11 +93,29 @@ const str = (v: unknown, max: number): v is string => typeof v === 'string' && v
 const int = (v: unknown): v is number => Number.isInteger(v)
 const num = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
 
+/** The fields each kind of question may carry; anything else is refused, so a file cannot grow past
+ *  what the frame shows and the architect reads. */
+const QUESTION_FIELDS: Record<QuestionKind, readonly string[]> = {
+  choice: ['options'],
+  multi: ['options', 'max'],
+  scale: ['min', 'max', 'labels'],
+  number: ['min', 'max', 'unit'],
+  pairwise: ['items', 'pairs'],
+  order: ['items'],
+  text: ['max_length'],
+}
+
+const unknownFields = (where: string, o: object, known: readonly string[]): string[] =>
+  Object.keys(o)
+    .filter((k) => !known.includes(k))
+    .map((k) => `${where}: unknown field ${JSON.stringify(k)}`)
+
 function itemProblems(where: string, items: unknown, min: number, max: number): string[] {
   if (!Array.isArray(items) || items.length < min || items.length > max) return [`${where}: ${min} to ${max} items`]
   const out: string[] = []
   const seen = new Set<string>()
   for (const it of items as Item[]) {
+    if (it && typeof it === 'object') out.push(...unknownFields(`${where}: item ${String(it.id)}`, it, ['id', 'label']))
     if (!it || typeof it !== 'object' || typeof it.id !== 'string' || !ITEM_ID.test(it.id) || seen.has(it.id)) out.push(`${where}: item id ${String(it?.id)}`)
     else seen.add(it.id)
     if (!str(it?.label, LIMITS.option)) out.push(`${where}: label of ${String(it?.id)}`)
@@ -146,6 +167,7 @@ function questionProblems(q: Question, i: number): string[] {
     default:
       out.push(`${where}: kind must be one of ${QUESTION_KINDS.join(', ')}`)
   }
+  if (QUESTION_KINDS.includes(q.kind)) out.push(...unknownFields(where, q, ['id', 'kind', 'prompt', ...QUESTION_FIELDS[q.kind]]))
   return out
 }
 
@@ -176,7 +198,7 @@ export function manifestProblems(m: unknown): string[] {
     }
   })
   const known = new Set(['$contract', 'id', 'title', 'question', 'purpose', 'reading', 'questions', 'closes'])
-  for (const k of Object.keys(s)) if (!known.has(k)) out.push(`unknown field: ${k}`)
+  for (const k of Object.keys(s)) if (!known.has(k)) out.push(`unknown field: ${JSON.stringify(k)}`)
   return out
 }
 

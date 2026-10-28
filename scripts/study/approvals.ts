@@ -6,6 +6,7 @@
 //   <out>/<n>/branch.txt    study/approve-<id>-<sha256>, the file's full hash
 //   <out>/<n>/study.txt     the study's id
 //   <out>/<n>/sha.txt       the file's SHA-256
+//   <out>/<n>/work.txt      the work, `<practice>:<slug>`
 //   <out>/<n>/title.txt     the pull request's title: the study's id, nothing a practice wrote freely
 //   <out>/<n>/body.md       what the reader will be shown and asked, with the file pinned to <commit>
 //   <out>/<n>/approved.json the approvals file with this study approved
@@ -42,6 +43,7 @@ waiting.forEach((s, i) => {
   writeFileSync(join(dir, 'branch.txt'), approvalBranch(s.manifest!.id, s.sha256))
   writeFileSync(join(dir, 'study.txt'), s.manifest!.id)
   writeFileSync(join(dir, 'sha.txt'), s.sha256)
+  writeFileSync(join(dir, 'work.txt'), s.work)
   writeFileSync(join(dir, 'title.txt'), title)
   writeFileSync(join(dir, 'body.md'), `${body}\n`)
   writeFileSync(join(dir, 'approved.json'), `${JSON.stringify(withApproval(file, s, today), null, 2)}\n`)

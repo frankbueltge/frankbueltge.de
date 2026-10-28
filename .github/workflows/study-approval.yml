@@ -10,8 +10,10 @@
 # One branch per study and exact file: study/approve-<id>-<full SHA-256>, so a request can never be
 # moved to another file. On every run:
 #   · a request the architect closed stays declined until the file changes (a new hash, a new branch);
-#   · an open request whose file another approval has overtaken is rebuilt on main, so two never
-#     conflict, and its title and body are written afresh either way;
+#   · an open request whose file another approval has overtaken is rebuilt on the main this run read,
+#     and its title and body are written afresh either way;
+#   · only requests the house itself opened count: a fork's pull request from the same branch name is
+#     never taken for one;
 #   · a request the house closed as superseded, or one merged before a later file replaced it, asks
 #     again if its file returns;
 #   · every open request that no longer matches a waiting file is closed and labelled superseded.
@@ -63,13 +65,18 @@ jobs:
           git config user.name "Study-Approval"
           git config user.email "study-approval@frankbueltge.de"
           shopt -s nullglob
+          # Every rebuild starts from the main this run read, so an approval merged while it runs is
+          # never written over: the request then conflicts, or merges cleanly beside it.
+          base=$(git rev-parse HEAD)
           for dir in /tmp/study-approvals/*/; do
             branch=$(cat "$dir/branch.txt")
             study=$(cat "$dir/study.txt")
             sha=$(cat "$dir/sha.txt")
-            # the newest request from this branch, with whether the house closed it as superseded
-            latest=$(gh pr list --head "$branch" --state all --json number,state,labels \
-              --jq 'sort_by(.number) | last // empty | "\(.number) \(.state) \([.labels[].name] | index("study-superseded") != null)"')
+            work=$(cat "$dir/work.txt")
+            # the newest request from this branch that the house opened (a fork may use the same
+            # branch name), with whether the house closed it as superseded
+            latest=$(gh pr list --head "$branch" --state all --json number,state,labels,isCrossRepository,author \
+              --jq '[.[] | select((.isCrossRepository | not) and .author.login == "app/github-actions")] | sort_by(.number) | last // empty | "\(.number) \(.state) \([.labels[].name] | index("study-superseded") != null)"')
             number=""; state=""; superseded="false"
             if [ -n "$latest" ]; then read -r number state superseded <<<"$latest"; fi
             if [ "$state" = "CLOSED" ] && [ "$superseded" != "true" ]; then
@@ -77,29 +84,34 @@ jobs:
               continue
             fi
             if [ "$state" = "MERGED" ]; then
-              # merged while this run read main: approved already, nothing to ask
+              # merged while this run read main: approved already, for this very work, nothing to ask
               git fetch -q origin main
-              if git show origin/main:src/data/studies/approved.json | grep -q "\"sha256\": \"$sha\""; then
+              if git show FETCH_HEAD:src/data/studies/approved.json | jq -e --arg id "$study" --arg work "$work" --arg sha "$sha" \
+                '.approvals | any(.id == $id and .work == $work and .sha256 == $sha)' >/dev/null; then
                 echo "$branch: approved (#$number)"
                 continue
               fi
             fi
             if [ "$state" = "OPEN" ] && git show "origin/$branch:src/data/studies/approved.json" 2>/dev/null | cmp -s - "$dir/approved.json"; then
-              gh pr edit "$number" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" >/dev/null
+              gh pr edit "$number" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" >/dev/null || echo "$branch: could not refresh #$number"
               echo "$branch: open and current (#$number)"
               continue
             fi
-            git checkout -q -B "$branch" origin/main
+            git checkout -q -B "$branch" "$base"
             cp "$dir/approved.json" src/data/studies/approved.json
             git add src/data/studies/approved.json
             git commit -q -m "studies: approve $study" -m "Merging approves exactly the manifest named in the pull request; only the architect merges it."
             git push -q --force origin "$branch"
             if [ "$state" = "OPEN" ]; then
-              gh pr edit "$number" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" >/dev/null
+              gh pr edit "$number" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" >/dev/null || echo "$branch: could not refresh #$number"
               echo "$branch: rebuilt on main (#$number)"
               continue
             fi
-            url=$(gh pr create --base main --head "$branch" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" --label study-approval --assignee frankbueltge)
+            # one study that cannot be asked about stops no other
+            if ! url=$(gh pr create --base main --head "$branch" --title "$(cat "$dir/title.txt")" --body-file "$dir/body.md" --label study-approval --assignee frankbueltge); then
+              echo "$branch: could not open the request"
+              continue
+            fi
             echo "$branch: $url"
           done
           # An open request whose file no longer waits (an older version of a study, or one approved,
@@ -110,8 +122,12 @@ jobs:
             number=${row%%:*}
             head=${row#*:}
             if ! grep -qxF "$head" /tmp/study-approvals/branches.txt; then
-              gh pr close "$number" --comment "Superseded: this file no longer waits for approval. The practice changed it, or the study was approved, withdrawn or fixed since. If the same file returns, the request asks again." \
-                && gh pr edit "$number" --add-label study-superseded >/dev/null
-              echo "$head: closed as superseded (#$number)"
+              # labelled first: a request closed without the label would count as declined
+              if gh pr edit "$number" --add-label study-superseded >/dev/null; then
+                gh pr close "$number" --comment "Superseded: this file no longer waits for approval. The practice changed it, or the study was approved, withdrawn or fixed since. If the same file returns, the request asks again." >/dev/null \
+                  && echo "$head: closed as superseded (#$number)" || echo "$head: could not close #$number"
+              else
+                echo "$head: could not label #$number; left open"
+              fi
             fi
           done

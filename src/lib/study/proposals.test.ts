@@ -99,4 +99,28 @@ describe('approvalRequest', () => {
     const long: StudyManifest = { ...MANIFEST, purpose: 'word '.repeat(79).trim() }
     for (const line of studyText(long).split('\n')) expect(line.length, line).toBeLessThanOrEqual(92)
   })
+
+  it('lets no space of another kind, and no long word, push text past the edge of the block', () => {
+    const sly: StudyManifest = {
+      ...MANIFEST,
+      purpose: `Visible${'\u3000'.repeat(150)}hidden\u00a0beyond\u00a0the\u00a0edge ${'\u2800'.repeat(200)} ${'x'.repeat(300)}`,
+    }
+    const text = studyText(sly)
+    for (const line of text.split('\n')) expect([...line].length, line).toBeLessThanOrEqual(92)
+    expect(text).toContain('hidden')
+    expect(text).toContain('edge')
+  })
+
+  it('shows the file once when twice would pass GitHub’s limit for a body', () => {
+    const many = Array.from({ length: 12 }, (_, i) => ({
+      id: `q${i}`,
+      kind: 'pairwise' as const,
+      prompt: 'p'.repeat(300),
+      items: Array.from({ length: 20 }, (__, j) => ({ id: `i${j}`, label: `${'l'.repeat(110)}${j}` })),
+      pairs: 45,
+    }))
+    const { body } = approvalRequest(study({}, { ...MANIFEST, questions: many }), COMMIT)
+    expect(body.length).toBeLessThan(65_536)
+    expect(body).toContain('too long to show here a second time')
+  })
 })

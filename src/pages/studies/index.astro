@@ -12,7 +12,18 @@ import '@/styles/experiment-sheet.css'
 
 const root = process.cwd()
 const today = new Date().toISOString().slice(0, 10)
-const resolved = resolveStudies(findStudies(join(root, 'public'), root), readApprovals(root), today)
+// A malformed approvals file fails no build: the registry step then writes nothing and the endpoints
+// stand by (scripts/study/dist.ts), and this page says so instead of naming any study approved.
+let approvalsUnreadable = false
+const approvals = (() => {
+  try {
+    return readApprovals(root)
+  } catch {
+    approvalsUnreadable = true
+    return []
+  }
+})()
+const resolved = resolveStudies(findStudies(join(root, 'public'), root), approvals, today)
 const shown = resolved.filter((s) => s.state !== 'invalid')
 const released = (id: string): number | null => {
   const file = join(root, 'src/data/studies/records', `${id}.json`)
@@ -56,6 +67,8 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
         <a class={link} href="/privacy">privacy</a>.
       </p>
     </section>
+
+    {approvalsUnreadable && <p class="mb-6 text-fg-muted">The approvals file could not be read, so no study takes answers until it is repaired.</p>}
 
     {
       shown.length === 0 ? (

@@ -25,7 +25,7 @@ const quiet = cn(buttonVariants({ variant: 'ghost' }))
 const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 ---
 
-<Base title="A study of a practice | Frank Bültge" description="The house's consent frame for a study a research practice asks in one of its works." noindex>
+<Base title="A study of a practice | Frank Bültge" description="The house's consent frame for a study a research practice asks in one of its works." noindex analytics={false}>
   <main id="main" class="stf-page mx-auto w-full max-w-2xl px-5 pb-10 pt-6" data-stf="root" data-site-key={siteKey}>
     <p class="stf-standalone font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
       <a class={link} href="/studies/">Studies</a> · frankbueltge.de
@@ -59,7 +59,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 
     <section class="stf-framed mt-5" data-stf="consent" hidden>
       <label class="flex items-start gap-3 text-sm text-fg">
-        <input type="checkbox" class="mt-1" data-stf="agree" />
+        <input type="checkbox" class="mt-1" autocomplete="off" data-stf="agree" />
         <span>I am 16 or older and agree that my answers are kept and published as described above.</span>
       </label>
       <button type="button" class={cn(primary, 'mt-4')} data-stf="start" disabled>Take part</button>
@@ -134,7 +134,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
   import { CONSENT_VERSION } from '@/lib/study/consent'
   import type { StudyManifest } from '@/lib/study/manifest'
 
-  type Known = { id: string; work: string; href: string | null; state: string; manifest: StudyManifest | null }
+  type Known = { id: string; work: string; href: string | null; state: string; sha256: string; manifest: StudyManifest | null }
   /** As src/lib/study/handlers.ts checks it. */
   const TURNSTILE_ACTION = 'study'
   type Turnstile = { render: (el: HTMLElement, opts: Record<string, unknown>) => string }
@@ -162,6 +162,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     'address-limit': 'This connection has given as many answers to this study today as one place may.',
     turnstile: 'The bot check did not pass. Nothing was stored.',
     consent: 'The consent text changed while you were answering; reload the page.',
+    version: 'The study’s questions changed while you were answering; reload the page to see the new ones.',
     answers: 'The work sent answers this study does not ask for. Nothing was stored.',
     'not-open': 'This study does not take answers now.',
     'unknown-study': 'This study is not among the approved ones.',
@@ -245,7 +246,8 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
       } catch {
         parentPath = ''
       }
-      if (!known.href || !parentPath.startsWith(known.href)) {
+      // a study without a work ("gone") says so below; this check is for one that has its work
+      if (known.href && !parentPath.startsWith(known.href)) {
         $('title').textContent = 'This frame belongs to another work'
         say('This study is asked by its own work, not by the page around this frame, so it takes no answers here.')
         post({ type: 'house-study:closed', study: id, reason: 'wrong-work' })
@@ -259,6 +261,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
       return
     }
     const m = known.manifest
+    const sha256 = known.sha256
     $('title').textContent = m.title
     $('purpose').textContent = m.purpose
     $('reading').textContent = m.reading
@@ -284,14 +287,21 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
     $('status').hidden = true
     if (!framed) return tell()
 
-    // Consent and sending answer only a person: an event a script makes (el.click(), dispatchEvent)
-    // is not trusted, and changes nothing here.
+    // Consent and sending answer only a person. A click a script makes (el.click(), dispatchEvent) is
+    // not trusted: on the box it is undone, on the buttons it does nothing. The box is read on its
+    // click, not its change, because the change a scripted click causes counts as trusted.
     const agree = $<HTMLInputElement>('agree')
     const start = $<HTMLButtonElement>('start')
+    agree.checked = false
+    start.disabled = true
     $('consent').hidden = false
     let ticked = false
-    agree.addEventListener('change', (e) => {
-      ticked = e.isTrusted && agree.checked
+    agree.addEventListener('click', (e) => {
+      if (!e.isTrusted) {
+        e.preventDefault()
+        return
+      }
+      ticked = agree.checked
       start.disabled = !ticked
     })
     let phase: 'consent' | 'waiting' | 'review' | 'sent' = 'consent'
@@ -357,7 +367,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
         const res = await fetch('/api/study/submit', {
           method: 'POST',
           headers: { 'content-type': 'application/json', accept: 'application/json' },
-          body: JSON.stringify({ study: id, consent: CONSENT_VERSION, answers, turnstileToken: token, website: $<HTMLInputElement>('hp').value }),
+          body: JSON.stringify({ study: id, consent: CONSENT_VERSION, manifest: sha256, answers, turnstileToken: token, website: $<HTMLInputElement>('hp').value }),
         })
         const body = (await res.json().catch(() => null)) as { status?: string; reason?: string; detail?: string; code?: string; entries?: number } | null
         if (res.ok && body?.status === 'stored') {

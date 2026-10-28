@@ -48,6 +48,17 @@ describe('checkAnswers', () => {
     expect(r.ok && r.value.note).toBe('quiet')
   })
 
+  it('reads only the answers given, whatever a question is called', () => {
+    const m = { questions: [{ id: 'constructor', kind: 'scale' as const, prompt: 'How?', min: 1, max: 5 }, { id: 'other', kind: 'scale' as const, prompt: 'And?', min: 1, max: 5 }] }
+    expect(checkAnswers(m, { other: 3 })).toEqual({ ok: true, value: { constructor: null, other: 3 } })
+  })
+
+  it('takes a number with at most two decimals', () => {
+    expect(checkAnswers(MANIFEST, with_({ guess: 40.25 })).ok).toBe(true)
+    expect(checkAnswers(MANIFEST, with_({ guess: 0.07 })).ok).toBe(true)
+    expect(checkAnswers(MANIFEST, with_({ guess: 40.000012345 }))).toEqual({ ok: false, reason: 'answers', question: 'guess' })
+  })
+
   it('keeps nothing in a written answer the reader cannot see', () => {
     const r = checkAnswers(MANIFEST, with_({ note: 'qu\u200biet\u200d\ufe0f\u{e0041}\nnow\u2028then' }))
     expect(r.ok && r.value.note).toBe('quiet now then')

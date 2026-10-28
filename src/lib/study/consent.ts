@@ -18,7 +18,7 @@ export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   },
   {
     label: 'The work and this frame',
-    text: 'The practice’s work asks the questions and holds your answers until it hands them to this frame, which shows them to you before anything is sent. The house keeps only what you send from here. The work’s code is the practice’s own: its constitution forbids it to keep or send your answers any other way, but the operator approved the questions, not the code.',
+    text: 'The practice’s work asks the questions and holds your answers until it hands them to this frame, which shows them to you before anything is sent. This frame is the only way the house gives a work to send answers. The work’s code is the practice’s own: its constitution forbids it to keep or send your answers any other way, but the operator approved the questions, not the code, and the house could not tell if a work broke that rule.',
   },
   {
     label: 'What is kept',
@@ -34,7 +34,7 @@ export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   },
   {
     label: 'Why it cannot be taken back',
-    text: 'Because nothing ties your answers to you, no one can find them again to delete them. Until you press the last button this frame has sent nothing, not even the bot check, which starts with that button.',
+    text: 'Because nothing ties your answers to you, no one can find them again to delete them. Until you press the last button, this frame sends none of your answers and starts no bot check.',
   },
   {
     label: 'Who is responsible',

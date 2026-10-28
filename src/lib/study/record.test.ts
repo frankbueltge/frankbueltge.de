@@ -33,7 +33,7 @@ describe('the house consent text for studies', () => {
    *  changes — never edit one: stored answers carry the version they were given under. (The text of
    *  2026-10-27 never took an answer: it claimed the frame was the only way in, which a work on the
    *  same origin could disprove, and was replaced before the studies went live.) */
-  const GIVEN: Record<string, string> = { '2026-10-28': '2aa422b3' }
+  const GIVEN: Record<string, string> = { '2026-10-28': '7cd022d8' }
   it('names who asks, the work and the frame, what is kept and not, where it goes, why it cannot be taken back, and who is responsible', () => {
     expect(CONSENT_LINES.map((l) => l.label)).toEqual([
       'Who asks',
@@ -48,13 +48,14 @@ describe('the house consent text for studies', () => {
     for (const word of [
       'approved',
       'the operator approved the questions, not the code',
+      'the house could not tell if a work broke that rule',
       'which version of the questions',
       'how long you took',
       'CC0',
       'batches of at least five',
       'without the day',
       '30 days',
-      'this frame has sent nothing, not even the bot check',
+      'this frame sends none of your answers and starts no bot check',
       '16 or older',
       'privacy policy',
       'material',

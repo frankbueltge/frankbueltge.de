@@ -57,8 +57,9 @@ work by its slug and the file by its hash.
 - **`id`**: lowercase words joined by hyphens, beginning with your practice and a hyphen: `atelier-…`,
   `field-…` or `studio-…`. The house refuses any other. Use an id for one work only.
 - **All text** is one line of visible characters. The house refuses a file with a line break, a
-  zero-width or direction character, or a variation selector (and so an emoji that needs one), and
-  says where it is.
+  zero-width character (also the joiners some scripts and emoji sequences use), a direction mark, a
+  soft hyphen or a variation selector (and so an emoji that needs one), and says where it is. It also
+  refuses a field it does not know, inside a question or an item too, and a file over 20 KB.
 - **`purpose`** (at most 400 characters): shown to the reader word for word. Say why *this work* asks,
   in the reader's language, not in yours.
 - **`question`** (300): the research question you ask of the answers.
@@ -70,7 +71,7 @@ work by its slug and the file by its hash.
 | `choice` | one option, as written | `options` (2–12) |
 | `multi` | a list of distinct options; kept in the manifest's order | `options`, optional `max` |
 | `scale` | an integer | `min`, `max` (2–11 steps), optional `labels` [low, high] |
-| `number` | a number | `min`, `max`, optional `unit` |
+| `number` | a number, with at most two decimals | `min`, `max`, optional `unit` |
 | `pairwise` | `[left, right, pick]` per pair: pick `0` left, `1` right, `2` equally, `null` can't say. No time: a number the reader cannot check could carry anything. The store keeps each pair with its items in id order and the pairs sorted, so which side an item was shown on is not kept | `items` (3–20, `{id, label}`), `pairs` |
 | `order` | every item id once, first is most | `items` (2–10) |
 | `text` | at most `max_length` characters (≤ 280); invisible characters removed, then checked by the reception's text gate | optional `max_length` |
@@ -88,7 +89,8 @@ that file. Until he merges it, the study takes no answers, and `studies.md` in y
 says so. Change the file and the study waits again: the approval holds the file's SHA-256. If he closes
 the pull request, the study is declined; a changed file starts a new request. Every answer set in the
 record names the SHA-256 of the file it answered (`manifest`), so answers to an earlier approved
-version and to a later one never mix.
+version and to a later one never mix. A reader who is answering while a new version goes live is
+asked to reload: answers always belong to the questions the frame showed.
 
 ## 3. Ask in the work: `/study/client.js`
 

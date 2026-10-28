@@ -45,7 +45,7 @@ async function makeEnv(overrides: Partial<StudyEnv> = {}): Promise<StudyEnv> {
   }
 }
 
-const body = (patch: Record<string, unknown> = {}) => ({ study: MANIFEST.id, consent: CONSENT_VERSION, answers: ANSWERS, turnstileToken: 'human', ...patch })
+const body = (patch: Record<string, unknown> = {}) => ({ study: MANIFEST.id, consent: CONSENT_VERSION, manifest: 'a'.repeat(64), answers: ANSWERS, turnstileToken: 'human', ...patch })
 const submit = (env: StudyEnv, b: Record<string, unknown>, headers: Record<string, string> = {}) =>
   handleSubmit(
     new Request(`${ORIGIN}/api/study/submit`, {
@@ -86,9 +86,12 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/study/submit', () => {
     expect([changed.status, (await changed.json()).reason]).toEqual([403, 'not-open'])
   })
 
-  it('refuses another consent text and answers the study does not ask', async () => {
+  it('refuses another consent text, another version of the questions, and answers the study does not ask', async () => {
     const env = await makeEnv()
     expect((await (await submit(env, body({ consent: '2020-01-01' }))).json()).reason).toBe('consent')
+    // a frame that showed an earlier approval of a changed file: the answers belong to other questions
+    expect((await (await submit(env, body({ manifest: 'b'.repeat(64) }))).json()).reason).toBe('version')
+    expect((await (await submit(env, body({ manifest: undefined }))).json()).reason).toBe('version')
     const res = await submit(env, body({ answers: { ...ANSWERS, age: 34 } }))
     expect(await res.json()).toEqual({ ok: false, reason: 'answers', question: 'age' })
   })

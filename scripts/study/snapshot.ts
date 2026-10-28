@@ -29,6 +29,11 @@ const root = process.cwd()
 const today = new Date().toISOString().slice(0, 10)
 const recordFile = (id: string) => join(root, 'src/data/studies/records', `${id}.json`)
 
+// Every record call first clears a finished day's salts, marks and address counts. One call without a
+// study does only that (it answers 400), made first so nothing below can keep the promise from being
+// kept, also on a night with no approval to read.
+await fetch(base, { headers: { accept: 'application/json', 'user-agent': 'frankbueltge.de study-snapshot' } }).catch(() => null)
+
 let failed = false
 const approvals = readApprovals(root)
 for (const a of approvals) {
@@ -55,10 +60,6 @@ for (const a of approvals) {
   writeFileSync(file, text)
   console.log(`[study] ${a.id}: ${next.entries_count} answer set(s) in the record`)
 }
-
-// Every record call first clears a finished day's salts, marks and address counts. One call without a
-// study does only that (it answers 400), so the promise holds on a night with no approval to read too.
-await fetch(base, { headers: { accept: 'application/json', 'user-agent': 'frankbueltge.de study-snapshot' } }).catch(() => null)
 
 const resolved = resolveStudies(findStudies(join(root, 'public'), root), approvals, today)
 const rows: string[] = []

@@ -26,10 +26,11 @@ house's own work; its rules for consent, storage and release are the ones every 
 ## What the frame is, and what it is not
 
 The frame is the one path the house offers a work for its answers, and on that path it holds what it
-promises. Consent comes before the first answer, from a person's click: an event a script makes
-changes nothing. The frame works only inside the work whose study it is. It shows the answers back
-exactly as they will be stored, and sends nothing before its last button. Its bot check is bound to
-the frame's action, to the study and to the host (`src/lib/study/handlers.ts`).
+promises. Consent comes before the first answer, from a person's click: a click a script makes is
+undone on the box and ignored on the buttons. The frame works only inside the work whose study it
+is. It shows the answers back exactly as they will be stored, and sends none of them before its last
+button; it loads no analytics. Its bot check is bound to the frame's action, to the study and to the
+host, and the answers to the version of the questions it showed (`src/lib/study/handlers.ts`).
 
 It is not a wall. The work runs on the site's own origin, and the practices' pages may run inline
 script (`src/lib/engines/practice-policy.ts`). So a work's code could:
@@ -44,7 +45,8 @@ go around it. What keeps a work on the path is its constitution (rule 3 of the a
 2026-10-27). The consent text says exactly that: the house keeps only what passes the frame, the
 work's code is the practice's own, and the operator approved the questions, not the code.
 
-Even against a work that tried, the record holds nothing the reader did not see:
+Whatever reaches the store passes the same checks, by the frame or not, so no answer set can carry
+what the frame would not have shown:
 - An answer carries no timing. A manifest refuses invisible characters, and a written answer loses
   them.
 - A pair is kept with its items in id order and the pairs sorted, and a multiple choice in the
@@ -63,6 +65,9 @@ constitution and visible only as patterns across a record:
 - The frame shows a written answer back, but cannot prove it is what the reader typed. A work could
   swap a letter for a look-alike.
 - The choice of which pairs a work shows could carry a few bits.
+
+One more is the record's own: it omits the day, but not the version of the consent text or of the
+questions. A version that was live only briefly dates the answers given under it to that window.
 
 ## What a study may not do
 

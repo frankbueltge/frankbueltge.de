@@ -4,6 +4,7 @@ import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 import { APPROVALS_FILE, findStudies, readApprovals, registryOf, resolveStudies, sha256, type Approval } from './registry'
 import { MANIFEST } from './fixtures'
+import { LIMITS } from './manifest'
 
 let root: string
 const work = (ns: string, slug: string, manifest?: unknown, html = true, parent = 'werke-html') => {
@@ -40,6 +41,14 @@ describe('findStudies', () => {
     work('studio', 'long-work', MANIFEST)
     const found = findStudies(join(root, 'public'), root)
     expect(found.map((f) => [f.work, f.href])).toEqual([['studio:long-work', '/studio/werke-html/long-work/']])
+  })
+
+  it('refuses a file larger than the limit before reading it', () => {
+    fresh()
+    work('studio', 'big', JSON.stringify({ ...MANIFEST, purpose: 'x' }).replace('"purpose"', `${' '.repeat(LIMITS.bytes)}"purpose"`))
+    const [found] = findStudies(join(root, 'public'), root)
+    expect(found!.manifest).toBeNull()
+    expect(found!.problems[0]).toMatch(/^the file is \d+ bytes; at most 20480$/)
   })
 
   it('keeps an invalid manifest with its problems, for the practice to read', () => {

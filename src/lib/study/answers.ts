@@ -7,7 +7,8 @@
 //   choice    one of the options, as written
 //   multi     a list of distinct options, at most `max`; kept in the manifest's order
 //   scale     an integer from min to max
-//   number    a number from min to max
+//   number    a number from min to max, with at most two decimals (more would be digits the reader
+//             may not notice in the summary)
 //   pairwise  [left, right, pick] per pair: pick 0 left, 1 right, 2 equally, null can't say. No time:
 //             a time the work measures is a number the reader cannot check, so it could carry anything.
 //             Kept with each pair's items in id order and the pairs sorted, so neither the side an item
@@ -41,7 +42,11 @@ function canonical(q: Question, a: Answer): Answer {
     case 'pairwise':
       return (a as PairTuple[])
         .map(([l, r, pick]): PairTuple => (l < r ? [l, r, pick] : [r, l, flip(pick)]))
-        .sort((x, y) => pairKey(x[0], x[1]).localeCompare(pairKey(y[0], y[1])))
+        .sort((x, y) => {
+          const a = pairKey(x[0], x[1])
+          const b = pairKey(y[0], y[1])
+          return a < b ? -1 : a > b ? 1 : 0
+        })
     default:
       return a
   }
@@ -59,7 +64,7 @@ function answerOk(q: Question, a: Answer): boolean {
     case 'scale':
       return Number.isInteger(a) && (a as number) >= q.min && (a as number) <= q.max
     case 'number':
-      return typeof a === 'number' && Number.isFinite(a) && a >= q.min && a <= q.max
+      return typeof a === 'number' && Number.isFinite(a) && a >= q.min && a <= q.max && Math.abs(a * 100 - Math.round(a * 100)) < 1e-6
     case 'pairwise': {
       if (!Array.isArray(a) || a.length < 1 || a.length > q.pairs) return false
       const ids = new Set(q.items.map((i) => i.id))
@@ -96,7 +101,7 @@ export function checkAnswers(m: Pick<StudyManifest, 'questions'>, raw: unknown):
   const out: Answers = {}
   let answered = 0
   for (const q of m.questions) {
-    const a = (given[q.id] ?? null) as Answer
+    const a = (Object.hasOwn(given, q.id) ? (given[q.id] ?? null) : null) as Answer
     if (!answerOk(q, a)) return { ok: false, reason: 'answers', question: q.id }
     out[q.id] = canonical(q, a)
     if (a !== null) answered++

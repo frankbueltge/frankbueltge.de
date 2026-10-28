@@ -12,7 +12,7 @@ describe('manifestProblems', () => {
   it('refuses what is not a study/1 object, and an unknown field', () => {
     expect(manifestProblems(null)).toEqual(['not a JSON object'])
     expect(manifestProblems({ ...copy(), $contract: 'study/0' })).toContain('$contract must be "study/1"')
-    expect(manifestProblems({ ...copy(), email: 'ask for it' }).join(' ')).toContain('unknown field: email')
+    expect(manifestProblems({ ...copy(), email: 'ask for it' }).join(' ')).toContain('unknown field: "email"')
   })
 
   it('needs an id, a title, a research question, a purpose and a reading', () => {
@@ -47,6 +47,15 @@ describe('manifestProblems', () => {
     ]
     const p = manifestProblems(bad).join(' | ')
     for (const needle of ['(a): 2 to 12 options', '(b): max', '(c): a scale', '(d): a range', '(e): pairs', '(f): item id', '(g): max_length']) expect(p).toContain(needle)
+  })
+
+  it('refuses a field it does not know inside a question or an item too', () => {
+    const m = copy()
+    ;(m.questions[0] as unknown as Record<string, unknown>).notes = 'x'.repeat(70_000)
+    ;(m.questions[4] as unknown as { items: Record<string, unknown>[] }).items[0]!.hint = 'more'
+    const p = manifestProblems(m).join(' | ')
+    expect(p).toContain('question 1 (heard): unknown field "notes"')
+    expect(p).toContain('item food: unknown field "hint"')
   })
 
   it('refuses a line break or an invisible character anywhere in the text, and says where', () => {
