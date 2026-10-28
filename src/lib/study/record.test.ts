@@ -31,13 +31,14 @@ describe('releaseBatches and the record file', () => {
 describe('the house consent text for studies', () => {
   /** Every consent text an answer set was ever given under, by version. Add a line when the text
    *  changes — never edit one: stored answers carry the version they were given under. (The texts of
-   *  2026-10-27 and 2026-10-28 never took an answer. The first claimed the frame was the only way in,
-   *  which a work on the same origin could disprove; the second said the operator approved every
-   *  study's questions, until the house's check replaced him on 2026-10-28. Both were replaced before
-   *  any study opened.) */
-  const GIVEN: Record<string, string> = { '2026-10-29': 'fef9f7ec' }
+   *  2026-10-27, 2026-10-28 and the first of 2026-10-29 never took an answer. The first claimed the
+   *  frame was the only way in, which a work on the same origin could disprove; the second said the
+   *  operator approved every study's questions, until the house's check replaced him on 2026-10-28;
+   *  the third was written for consent before the first question, until taking part came first the
+   *  next day. All were replaced before any study opened.) */
+  const GIVEN: Record<string, string> = { '2026-10-29.2': 'fb136b05' }
   it('sums up, always in view, what decides whether to take part', () => {
-    for (const words of ['research practices, which machines run', 'up to you', 'nothing is sent until you have seen your answers', 'anonymous', 'open data', 'batches of five', 'cannot be taken back', '16 or older']) {
+    for (const words of ['research practices, which machines run', 'what you answered in it', 'up to you', 'nothing leaves this page until you have seen your answers', 'anonymous', 'open data', 'batches of five', 'cannot be taken back', '16 or older']) {
       expect(CONSENT_SUMMARY).toContain(words)
     }
   })

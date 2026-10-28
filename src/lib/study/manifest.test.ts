@@ -85,3 +85,21 @@ describe('isClosed and hasText', () => {
     expect(hasText({ questions: MANIFEST.questions.filter((q) => q.kind !== 'text') })).toBe(false)
   })
 })
+
+describe('a marks question (2026-10-29)', () => {
+  const items = (n: number) => Array.from({ length: n }, (_, i) => ({ id: `p${i}`, label: `Phrase ${i}` }))
+  const marks = (patch: Record<string, unknown> = {}) => ({ id: 'probably', kind: 'marks', prompt: 'Where does each phrase sit for you?', items: items(27), min: 0, max: 100, unit: '%', ...patch })
+  const study = (q: unknown) => ({ ...MANIFEST, questions: [q] })
+
+  it('holds one number per item for up to 30 items, so a whole vocabulary fits one question', () => {
+    expect(manifestProblems(study(marks()))).toEqual([])
+    expect(manifestProblems(study(marks({ items: items(30) })))).toEqual([])
+  })
+
+  it('refuses too few or too many items, a range that is not one, and a field it does not know', () => {
+    expect(manifestProblems(study(marks({ items: items(31) })))).toEqual(['question 1 (probably): 2 to 30 items'])
+    expect(manifestProblems(study(marks({ items: items(1) })))).toEqual(['question 1 (probably): 2 to 30 items'])
+    expect(manifestProblems(study(marks({ min: 100, max: 0 })))).toEqual(['question 1 (probably): a range'])
+    expect(manifestProblems(study(marks({ pairs: 3 })))).toEqual(['question 1 (probably): unknown field "pairs"'])
+  })
+})

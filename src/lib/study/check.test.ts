@@ -50,6 +50,8 @@ describe('the house’s check of a study (2026-10-28)', () => {
     const text = studyText(MANIFEST)
     expect(text).toContain(' 1. choice — What did the silence sound like to you?')
     expect(text).toContain(' 7. text, at most 80 characters — One word for what you heard?')
+    const withMarks: StudyManifest = { ...MANIFEST, questions: [{ id: 'phrases', kind: 'marks', prompt: 'Where does each phrase sit for you?', items: [{ id: 'probably', label: 'Probably' }, { id: 'doubt', label: 'We Doubt' }], min: 0, max: 100, unit: '%' }] }
+    expect(studyText(withMarks).replace(/\s+/g, ' ')).toContain('1. marks, one number from 0 to 100 % per item — Where does each phrase sit for you? items: “Probably” · “We Doubt”')
     const long: StudyManifest = { ...MANIFEST, purpose: `${'word '.repeat(70)}${'x'.repeat(150)}` }
     for (const line of studyText(long).split('\n')) expect(line.length, line).toBeLessThanOrEqual(92)
   })
