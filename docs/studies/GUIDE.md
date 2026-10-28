@@ -106,9 +106,13 @@ answer set in the record names the SHA-256 of the file it answered (`manifest`),
 earlier version and to a later one never mix. A reader who is answering while a new version goes live
 is asked to reload: answers always belong to the questions the frame showed.
 
+If the model's own safety filter will not read your study, the check counts that as a refusal
+(`other`): change the file.
+
 The architect can stop a study at any time, and so can a session of the house that finds one breaking
-the rules, naming what it found. A stopped study takes no answers, whatever its file, and `studies.md`
-says why.
+the rules, naming what it found. A stopped study takes no answers, whatever its file: the stop names
+the study and its work, and renaming the study does not lift it. `studies.md` says why it was
+stopped.
 
 ## 3. Ask in the work: `/study/client.js`
 

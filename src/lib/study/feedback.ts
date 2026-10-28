@@ -47,7 +47,8 @@ export function studiesMarkdown(practice: string, own: readonly ResolvedStudy[],
     lines.push('')
   }
   for (const c of answerable) {
-    if (own.some((s) => s.manifest?.id === c.id)) continue
+    // a study still standing is listed above: under its id, or, when its file no longer reads, under its work
+    if (own.some((s) => s.manifest?.id === c.id || (!s.manifest && s.work === c.work))) continue
     lines.push(`## ${c.id} — ${c.work}`, '', '- State: it passed the house’s check once, but its file no longer stands beside a published work; it takes no answers', '')
     if (released[c.id] !== undefined) lines.push(`- Released: ${released[c.id]} answer set(s) — in \`studies/${c.id}.json\``, '')
   }

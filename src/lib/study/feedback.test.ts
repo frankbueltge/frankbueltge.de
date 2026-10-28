@@ -57,6 +57,12 @@ describe('studiesMarkdown', () => {
     expect(md).toContain('  - not valid JSON')
   })
 
+  it('lists a study that passed once and whose file no longer reads only once, as invalid', () => {
+    const md = studiesMarkdown('studio', [study('invalid', { manifest: null, problems: ['not valid JSON'] })], [passed], {}, '2026-10-29')
+    expect(md.match(/^## /gm)).toHaveLength(1)
+    expect(md).toContain('invalid — the house cannot read it')
+  })
+
   it('keeps a study that passed once and whose file left its work on the list', () => {
     const md = studiesMarkdown('studio', [], [{ ...passed, id: 'studio-old-study', work: 'studio:gone' }], { 'studio-old-study': 10 }, '2026-10-29')
     expect(md).toContain('## studio-old-study — studio:gone')

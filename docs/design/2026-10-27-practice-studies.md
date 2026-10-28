@@ -20,8 +20,8 @@ work, not like a form. The approval of 2026-10-27 never approved a study: none h
 | Part | Where | What it does |
 |---|---|---|
 | The study | `works/<slug>/study.json` in the practice's repo → `public/<ns>/werke-html/<slug>/study.json` | What is asked, why (`purpose`, shown to the reader verbatim), how it will be read (`reading`), up to 12 questions of seven kinds; the id begins with the practice (`studio-…`), the text holds no invisible character (`src/lib/study/manifest.ts`) |
-| The check | `src/lib/study/check.ts`, `.github/workflows/study-check.yml` | every version of a study's file read once, after the integrate or overnight, by the model of the seed and reception gates with a prompt published on `/studies`; hard exclusion grounds only; fail-closed; the verdict committed to `src/data/studies/checks.json` with the model and the prompt's digest, and its commit deploys |
-| The stop | `src/data/studies/stopped.json` | a study Frank, or a session on a finding it names, has stopped: no answers, whatever its file |
+| The check | `src/lib/study/check.ts`, `.github/workflows/study-check.yml` | one verdict for every version of a study's file, after the integrate or overnight, from the model of the seed and reception gates with a prompt published on `/studies`; hard exclusion grounds only; fail-closed; the verdict committed to `src/data/studies/checks.json` with the model and the prompt's digest, and the deploy started after it |
+| The stop | `src/data/studies/stopped.json` | a study Frank, or a session on a finding it names, has stopped: no answers, whatever its file; the stop names the study and its work, and holds for either |
 | The registry | `dist/study/studies.json` (build step `scripts/study/dist.ts`) | every readable study with its state today; only `open` takes answers |
 | The frame | `/study/frame/?study=<id>` | the practice's reason and the house's consent text in two layers (a summary always in view, the full lines one click below), consent before the first answer by a person's click and only inside the study's own work, the answers shown back, Turnstile with the last button, the submission |
 | The client | `/study/client.js` | `HouseStudy.mount(el, { study, onConsent, onResult, onClosed })`, `submit(answers)` — the only script a work needs |
@@ -91,27 +91,34 @@ questions. A version that was live only briefly dates the answers given under it
 - **Prime the answers.** A work shows nobody's answers before the reader's own.
 - **Claim more than its sample.** The answers speak for "the readers of this work", never for "people".
 
-The house's check refuses the first four where it finds them in the study's own words. It cannot see
-what a work does with them, such as showing others' answers first, or what a bulletin later claims;
-those stay rules of the constitution.
+The house's check refuses the first three where it finds them in the study's own words. It cannot
+see what a work does, such as showing others' answers first, or what a bulletin later claims; those
+stay rules of the constitution.
 
 ## The check (2026-10-28)
 
 - **What it reads.** Every word the practice wrote, as the reader meets it, handed to the model as
-  data between markers, never as part of its prompt.
+  data between markers, never as part of its prompt. The markers carry a code drawn for each call, so
+  no study can write the line that ends its own data.
 - **What it refuses.** Six grounds: identifying, personal, harm, deception, abuse, injection. The
   prompt is published word for word on `/studies`. A refusal names its reason and the question it
-  concerns, and the practice reads both in `studies.md`.
+  concerns, and the practice reads both in `studies.md`. A study the model's own safety filter will
+  not read is refused as `other`, rather than asked about again every night.
 - **What it is not.** A person's judgement, or a guarantee. It reads the questions, never the work's
   code. A model can let through a question a reader finds intrusive, and refuse a harmless one; the
   practice changes its file, and the new version is checked. Every check stays in `checks.json`, with
   the model and the prompt's digest, so any verdict can be read again.
 - **Fishing.** A practice could reword a refused question until it passes. Every version is checked
   anew, every refusal stays on record, and the amendment of 2026-10-28 forbids it.
-- **Cost.** One call per version, at most twelve a run, on the free tier the seed and the reception
-  already use.
+- **Cost.** One verdict per version, on the free tier the seed and the reception already use. A call
+  that gives none is repeated on the next run; a run makes at most twelve, in random order, so no study
+  that keeps failing takes the first place every time.
 - **Stopping.** A stop outranks every verdict. Frank can stop any study, and so can a session that
-  finds one breaking the rules, naming what it found. The record of a stopped study stays.
+  finds one breaking the rules, naming what it found. A stop names the study and its work and holds
+  for either, so renaming the study does not lift it. The record of a stopped study stays.
+- **When it runs.** After every integrate of the three practices that succeeded, and every night. An
+  integrate that another workflow started with the built-in token ends without the event this
+  workflow listens for, so such an integrate starts the check itself.
 
 ## How a study goes live
 

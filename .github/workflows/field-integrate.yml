@@ -162,7 +162,10 @@ jobs:
         if: success() && github.triggering_actor == 'github-actions[bot]'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
+        run: |
+          gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
+          # and the house's check of a study that came with the mirror, for the same reason (2026-10-28)
+          gh workflow run study-check.yml --repo "$GITHUB_REPOSITORY" --ref main
 
       - name: Rejection feedback to the engine repo (green builds too)
         if: success()

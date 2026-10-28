@@ -16,7 +16,7 @@ export const CONSENT_VERSION = '2026-10-29'
 
 /** Always shown, above the box a reader ticks. */
 export const CONSENT_SUMMARY =
-  'This work, made by one of this site’s research practices, which machines run, would like to ask you a few questions. Taking part is up to you, and you can skip any question. Your answers are anonymous and become open data once their day is over. They cannot be taken back, because nothing ties them to you. Take part only if you are 16 or older.'
+  'This work, made by one of this site’s research practices, which machines run, would like to ask you a few questions. Taking part is up to you: nothing is sent until you have seen your answers here and pressed the last button. Your answers are anonymous. After their day they are published as open data, in batches of five, and they cannot be taken back, because nothing ties them to you. Take part only if you are 16 or older.'
 
 export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   {

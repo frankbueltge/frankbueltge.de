@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { CHECKS_FILE, findStudies, readChecks, readStops, registryOf, resolveStudies, sha256, STOPS_FILE, type Check, type Stop } from './registry'
+import { CHECKS_FILE, findStudies, readChecks, readStops, registryOf, resolveStudies, sha256, STOPS_FILE, wordsShown, type Check, type Stop } from './registry'
 import { MANIFEST } from './fixtures'
 import { LIMITS } from './manifest'
 
@@ -75,7 +75,7 @@ describe('resolveStudies and registryOf', () => {
     ...patch,
   })
   const block = (sha: string): Check => check(sha, { verdict: 'block', reason: 'personal', question: 2 })
-  const stop: Stop = { id: MANIFEST.id, stopped: '2026-10-29', why: 'It asked where readers live.' }
+  const stop: Stop = { id: MANIFEST.id, work: 'studio:the-remainder', stopped: '2026-10-29', why: 'It asked where readers live.' }
 
   it('opens a study only for the exact file the house’s check passed, and a stop outranks every verdict', () => {
     fresh()
@@ -91,6 +91,15 @@ describe('resolveStudies and registryOf', () => {
     expect(state([check('0'.repeat(64)), block(sha)])).toBe('refused')
     expect(state([check(sha)], [stop])).toBe('stopped')
     expect(state([], [stop])).toBe('stopped')
+  })
+
+  it('keeps a stop when the practice renames its study, because the stop names the work too', () => {
+    fresh()
+    work('studio', 'the-remainder', { ...MANIFEST, id: 'studio-a-new-name' })
+    const found = findStudies(join(root, 'public'), root)
+    const passed = check(found[0]!.sha256, { id: 'studio-a-new-name' })
+    expect(resolveStudies(found, [passed], [stop], '2026-10-28')[0]!.state).toBe('stopped')
+    expect(resolveStudies(found, [passed], [{ ...stop, work: 'studio:another' }], '2026-10-28')[0]!.state).toBe('open')
   })
 
   it('closes a study after its last day, unless the check refused it', () => {
@@ -123,7 +132,7 @@ describe('resolveStudies and registryOf', () => {
     expect(r.map((s) => s.state)).toEqual(['invalid', 'invalid'])
   })
 
-  it('lists every readable study with its state, gives a manifest only to the open, and keeps one that passed once after its work has gone', () => {
+  it('lists every readable study with its state, gives the words only to a study whose file passed, and keeps one that passed once after its work has gone', () => {
     fresh()
     work('studio', 'the-remainder', MANIFEST)
     work('field', 'waiting', { ...MANIFEST, id: 'field-waiting' })
@@ -138,12 +147,34 @@ describe('resolveStudies and registryOf', () => {
       [MANIFEST.id, 'open', 64, true],
     ])
   })
+
+  it('repeats a study’s words only while the file that passed is open or closed, never once it is refused or stopped', () => {
+    fresh()
+    work('studio', 'the-remainder', { ...MANIFEST, closes: '2026-11-30' })
+    const found = findStudies(join(root, 'public'), root)
+    const sha = found[0]!.sha256
+    const one = (checks: Check[], stops: Stop[], day: string) => resolveStudies(found, checks, stops, day)[0]!
+    const cases: [Check[], Stop[], string, boolean][] = [
+      [[check(sha)], [], '2026-10-28', true],
+      [[check(sha)], [], '2026-12-01', true],
+      [[], [], '2026-12-01', false],
+      [[], [], '2026-10-28', false],
+      [[block(sha)], [], '2026-10-28', false],
+      [[check(sha)], [stop], '2026-10-28', false],
+    ]
+    for (const [checks, stops, day, shown] of cases) {
+      const s = one(checks, stops, day)
+      expect(wordsShown(s), `${s.state} on ${day}`).toBe(shown)
+      expect(registryOf([s], checks).known[0]!.manifest !== null, `${s.state} on ${day}`).toBe(shown)
+    }
+  })
 })
 
 describe('readChecks and readStops', () => {
-  it('reads the committed files, which start empty', () => {
-    expect(readChecks(process.cwd())).toEqual([])
-    expect(readStops(process.cwd())).toEqual([])
+  // Never that they are empty: the check commits verdicts to main, and every deploy runs these tests.
+  it('reads the committed files', () => {
+    expect(Array.isArray(readChecks(process.cwd()))).toBe(true)
+    expect(Array.isArray(readStops(process.cwd()))).toBe(true)
   })
 
   it('refuses the whole checks file for a malformed check, a foreign prefix or a file checked twice', () => {
@@ -173,11 +204,11 @@ describe('readChecks and readStops', () => {
   it('refuses the whole stops file for a malformed stop or a study stopped twice', () => {
     fresh()
     mkdirSync(join(root, 'src/data/studies'), { recursive: true })
-    const good: Stop = { id: MANIFEST.id, stopped: '2026-10-29', why: 'It asked where readers live.' }
+    const good: Stop = { id: MANIFEST.id, work: 'studio:the-remainder', stopped: '2026-10-29', why: 'It asked where readers live.' }
     const write = (stopped: unknown[]) => writeFileSync(join(root, STOPS_FILE), JSON.stringify({ $contract: 'study-stops/1', stopped }))
     write([good])
     expect(readStops(root)).toEqual([good])
-    for (const bad of [[{ ...good, why: '  ' }], [{ ...good, id: 'other-study' }], [{ ...good, stopped: 'tomorrow' }], [good, good]]) {
+    for (const bad of [[{ ...good, why: '  ' }], [{ ...good, id: 'other-study' }], [{ ...good, work: 'field:the-remainder' }], [{ ...good, work: undefined }], [{ ...good, stopped: 'tomorrow' }], [good, good]]) {
       write(bad)
       expect(() => readStops(root), JSON.stringify(bad)).toThrow()
     }

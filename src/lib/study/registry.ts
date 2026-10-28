@@ -67,9 +67,12 @@ export interface ChecksFile {
   checks: Check[]
 }
 
-/** A study that takes no answers, whatever its file, until the stop is removed. */
+/** A study that takes no answers, whatever its file, until the stop is removed. It names the study's
+ *  id and its work, and holds for either: a practice that renames its study does not lift the stop. */
 export interface Stop {
   id: string
+  /** the work, `<practice>:<slug>` */
+  work: string
   /** the day it was stopped */
   stopped: string
   /** what was found, in a sentence */
@@ -186,7 +189,8 @@ export function readStops(root: string): Stop[] {
   const ids = new Set<string>()
   for (const x of f.stopped) {
     const ok =
-      x && typeof x.id === 'string' && STUDY_ID.test(x.id) && OWN_ID.test(x.id) && typeof x.stopped === 'string' && DAY.test(x.stopped) &&
+      x && typeof x.id === 'string' && STUDY_ID.test(x.id) && OWN_ID.test(x.id) && typeof x.work === 'string' && WORK.test(x.work) &&
+      x.id.startsWith(`${x.work.split(':')[0]}-`) && typeof x.stopped === 'string' && DAY.test(x.stopped) &&
       typeof x.why === 'string' && x.why.trim().length > 0 && x.why.length <= 500
     if (!ok) throw new Error(`${STOPS_FILE}: a malformed stop (${JSON.stringify(x?.id ?? null)})`)
     if (ids.has(x.id)) throw new Error(`${STOPS_FILE}: the study ${x.id} is stopped twice`)
@@ -216,7 +220,7 @@ export function resolveStudies(found: readonly FoundStudy[], checks: readonly Ch
     if ((byId.get(s.manifest.id) ?? 0) > 1) return { ...s, problems: [`id ${s.manifest.id} is used by more than one of your works`], state: 'invalid', check: null, stop: null }
     const id = s.manifest.id
     const check = checks.find((c) => c.id === id && c.work === s.work && c.sha256 === s.sha256) ?? null
-    const stop = stops.find((x) => x.id === id) ?? null
+    const stop = stops.find((x) => x.id === id || x.work === s.work) ?? null
     if (stop) return { ...s, state: 'stopped', check, stop }
     if (check?.verdict === 'block') return { ...s, state: 'refused', check, stop }
     if (isClosed(s.manifest, today)) return { ...s, state: 'closed', check, stop }
@@ -238,12 +242,16 @@ export interface RegistryEntry {
   manifest: StudyManifest | null
 }
 
+/** Whether the house may repeat a study's own words, in the frame or on /studies: only once the check
+ *  has passed exactly this file, and only while the study is open or closed — never for one that waits,
+ *  was refused or was stopped. */
+export const wordsShown = (s: ResolvedStudy): boolean => s.check?.verdict === 'pass' && (s.state === 'open' || s.state === 'closed')
+
 export function registryOf(resolved: readonly ResolvedStudy[], checks: readonly Check[]): { schema: 1; known: RegistryEntry[] } {
   const known: RegistryEntry[] = []
   for (const s of resolved) {
     if (s.state === 'invalid' || !s.manifest) continue
-    const shown = s.state === 'open' || (s.state === 'closed' && s.check?.verdict === 'pass')
-    known.push({ id: s.manifest.id, work: s.work, href: s.href, state: s.state, sha256: s.sha256, manifest: shown ? s.manifest : null })
+    known.push({ id: s.manifest.id, work: s.work, href: s.href, state: s.state, sha256: s.sha256, manifest: wordsShown(s) ? s.manifest : null })
   }
   for (const c of answerable(checks)) {
     if (known.some((k) => k.id === c.id)) continue
