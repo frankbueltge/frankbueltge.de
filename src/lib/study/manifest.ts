@@ -179,7 +179,7 @@ export function manifestProblems(m: unknown): string[] {
   if (!s || typeof s !== 'object' || Array.isArray(s)) return ['not a JSON object']
   const out: string[] = []
   if (s.$contract !== MANIFEST_CONTRACT) out.push(`$contract must be "${MANIFEST_CONTRACT}"`)
-  if (typeof s.id !== 'string' || !STUDY_ID.test(s.id) || s.id.length < 3 || s.id.length > LIMITS.idLength) out.push('id: lowercase words joined by hyphens, 3 to 80 characters, beginning with the practice (atelier-, field-, studio-)')
+  if (typeof s.id !== 'string' || !STUDY_ID.test(s.id) || s.id.length < 3 || s.id.length > LIMITS.idLength) out.push('id: lowercase words joined by hyphens, 3 to 80 characters, beginning with the practice (atelier-, field-, studio-, error-as-method-)')
   hiddenProblems(s, '', out)
   if (!str(s.title, LIMITS.title)) out.push(`title of at most ${LIMITS.title} characters`)
   if (!str(s.question, LIMITS.question)) out.push(`question of at most ${LIMITS.question} characters`)

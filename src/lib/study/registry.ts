@@ -3,7 +3,9 @@
 //
 // A study exists where a published work of the Atelier, the Field or the Studio carries a `study.json`
 // beside its `index.html`: in `werke-html/<slug>/`, or in the open cycle's folders while a cycle is in
-// its working phase (src/lib/engines/publication.mjs). The same layout stands in the mirrors under
+// its working phase (src/lib/engines/publication.mjs). Since 2026-10-29 the nightly line's works may
+// ask too (Frank's decision, wording private): a work's own face in `error-as-method/works-html/<slug>/`,
+// or a work that is only a stage, in `error-as-method/<slug>/`. The same layout stands in the mirrors under
 // public/ and in the built site under dist/, so one walk serves the build step, the check workflow and
 // the /studies page.
 //
@@ -28,7 +30,7 @@ import { readOpenCycle } from '../engines/publication-prune.mjs'
 import { CHECK_REASONS, type CheckReason } from './check'
 import { isClosed, LIMITS, manifestProblems, STUDY_ID, type StudyManifest } from './manifest'
 
-export const STUDY_PRACTICES = ['atelier', 'field', 'studio'] as const
+export const STUDY_PRACTICES = ['atelier', 'field', 'studio', 'error-as-method'] as const
 export type StudyPractice = (typeof STUDY_PRACTICES)[number]
 
 export const CHECKS_FILE = 'src/data/studies/checks.json'
@@ -38,8 +40,19 @@ export const CHECKS_CONTRACT = 'study-checks/1'
 export const STOPS_CONTRACT = 'study-stops/1'
 
 const SLUG = /^[a-z0-9][a-z0-9-]{0,119}$/
-const WORK = /^(atelier|field|studio):[a-z0-9][a-z0-9-]{0,119}$/
-const OWN_ID = /^(atelier|field|studio)-/
+const WORK = /^(atelier|field|studio|error-as-method):[a-z0-9][a-z0-9-]{0,119}$/
+const OWN_ID = /^(atelier|field|studio|error-as-method)-/
+
+/** Where each practice's published works stand, the published place first. The nightly line serves
+ *  a text work's own face under `works-html/`, and a work that is only a stage at its own route. */
+const WORK_FOLDERS: Record<StudyPractice, readonly string[]> = {
+  atelier: ['atelier/werke-html'],
+  field: ['field/werke-html'],
+  studio: ['studio/werke-html'],
+  'error-as-method': ['error-as-method/works-html', 'error-as-method'],
+}
+/** Folders inside a practice's tree that hold works rather than being one. */
+const CONTAINERS = new Set(['error-as-method/works-html'])
 const SHA256 = /^[0-9a-f]{64}$/
 const DIGEST = /^[0-9a-f]{12}$/
 const DAY = /^\d{4}-\d{2}-\d{2}$/
@@ -114,7 +127,7 @@ export const sha256 = (bytes: Buffer | string): string => createHash('sha256').u
 
 /** The work folders a study may stand in, relative to `base` (public/ or dist/). */
 export function studyFolders(root: string): { practice: StudyPractice; parent: string }[] {
-  const out: { practice: StudyPractice; parent: string }[] = STUDY_PRACTICES.map((p) => ({ practice: p, parent: `${p}/werke-html` }))
+  const out: { practice: StudyPractice; parent: string }[] = STUDY_PRACTICES.flatMap((p) => WORK_FOLDERS[p].map((parent) => ({ practice: p, parent })))
   for (const folder of openCycleFolders(readOpenCycle(root))) {
     const practice = folder.split('/')[0] as StudyPractice
     if ((STUDY_PRACTICES as readonly string[]).includes(practice)) out.push({ practice, parent: folder })
@@ -129,7 +142,7 @@ export function findStudies(base: string, root: string): FoundStudy[] {
   const seen = new Set<string>()
   for (const { practice, parent } of studyFolders(root)) {
     for (const slug of dirs(join(base, parent))) {
-      if (!SLUG.test(slug) || seen.has(`${practice}:${slug}`)) continue
+      if (!SLUG.test(slug) || seen.has(`${practice}:${slug}`) || CONTAINERS.has(`${parent}/${slug}`)) continue
       const file = `${parent}/${slug}/study.json`
       if (!isFile(join(base, file)) || !isFile(join(base, parent, slug, 'index.html'))) continue
       seen.add(`${practice}:${slug}`)

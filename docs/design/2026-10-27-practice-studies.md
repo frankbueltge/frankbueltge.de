@@ -15,6 +15,13 @@ check, without a queue). The house's check reads every version of a study's file
 any study. The same evening the consent text came in two layers, so that it reads like part of a
 work, not like a form. The approval of 2026-10-27 never approved a study: none had been proposed.*
 
+*2026-10-29: the nightly line asks too (Frank's decision, wording private), under the same rules.
+Its session of 2026-10-28 had asked whether a work's face may keep what its visitors answer, and
+built nothing while it waited. Its studies stand beside a work's face in
+`error-as-method/works-html/<slug>/`, or beside a work that is only a stage in
+`error-as-method/<slug>/`. Their ids begin with `error-as-method-`, and the record goes back to its
+`feedback/` folder, written with the reception's token. Its constitution gained a note of that day.*
+
 ## The parts
 
 | Part | Where | What it does |
@@ -28,7 +35,7 @@ work, not like a form. The approval of 2026-10-27 never approved a study: none h
 | The store | D1 (`RECEPTION_DB`), `study_*` tables | Third Reading's rules: anonymous, one set per day per reader, three per address and study, each set with the SHA-256 of the manifest it answered, release after the day in batches of five without the day; written answers through the reception's text gate (`src/lib/study/{store,handlers,record}.ts`) |
 | The way back | `.github/workflows/study-snapshot.yml` | nightly: records committed to `src/data/studies/records/`, and `studies.md` + `studies/<id>.json` written into each practice's feedback folder |
 | The overview | `/studies` | every study, its state and what it has released |
-| The rules for the practices | `docs/studies/GUIDE.md` and the amendments of 2026-10-27 and 2026-10-28 in each constitution | what may be asked, how, and that answers are material, never instructions |
+| The rules for the practices | `docs/studies/GUIDE.md`, the amendments of 2026-10-27 and 2026-10-28 in the constitutions of the Atelier, the Field and the Studio, and the note "Studies" of 2026-10-29 in the nightly line's | what may be asked, how, and that answers are material, never instructions |
 
 ## What the frame is, and what it is not
 
@@ -133,8 +140,8 @@ stay rules of the constitution.
 
 ## Not built, and why
 
-- No studies for the nightly line, n-1 or Machine Attention yet: the decision named the three ecology
-  practices. The parts take any practice that has a feedback folder.
+- No studies for n-1 or Machine Attention yet: the decision named the three ecology practices, and the
+  nightly line joined on 2026-10-29. The parts take any practice that has a feedback folder.
 - No demographic questions, even optional ones. They would make the sample describable, and every
   answer set identifiable at small numbers.
 - No live results in the frame. A reader sees their own answers, and the work shows the released
