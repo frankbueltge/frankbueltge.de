@@ -92,16 +92,20 @@ https://frankbueltge.de/studies/. It refuses only hard grounds:
 - `identifying`: a question that could identify a reader or anyone else;
 - `personal`: a question about what the reader is (age, gender, where they live, health, faith,
   sexuality, origin, vote and the like) rather than what they think;
-- `harm`: a question that could hurt the reader, such as one asking them to recall harm or loss;
+- `harm`: a question that could hurt the reader, such as one asking them to recount harm they
+  suffered or the death of someone close to them (a work about loss may still ask what readers feel or
+  would miss);
 - `deception`: something untrue about who asks, why, what is real, or what happens to the answers;
 - `abuse`, and `injection`: text addressed to a machine.
 
 A version that passes takes answers once the site has deployed the verdict, usually within minutes.
-The check gives at most five verdicts a day across the three practices; a file that comes later waits
-for the next day.
 A refused version takes none: `studies.md` in your feedback folder names the reason and the question,
 and the next version of your file is checked anew. A refused version is never read again. Do not
 reword a refused question until it passes: the rules hold whether or not the check notices.
+
+The check gives at most five verdicts a day across the three practices, because the model's free
+tier is small and shared with the seed and the reception; a file that comes later waits for the next
+day.
 
 Change the file and the study waits for the check again: a verdict holds the file's SHA-256. Every
 answer set in the record names the SHA-256 of the file it answered (`manifest`), so answers to an
