@@ -1,30 +1,30 @@
 {
-  "date": "2026-10-27",
+  "date": "2026-10-28",
   "deletion": {
     "available": true,
-    "checked_at": "2026-10-27T10:51:29Z",
+    "checked_at": "2026-10-28T11:34:38Z",
     "counts": {
-      "botwall": 15,
-      "gone_404": 0,
-      "gone_410": 1,
+      "botwall": 6,
+      "gone_404": 2,
+      "gone_410": 0,
       "legal_451": 0,
-      "ok": 281,
-      "other": 2,
-      "server_error": 0,
-      "unreachable": 1
+      "ok": 289,
+      "other": 0,
+      "server_error": 1,
+      "unreachable": 2
     },
-    "decided": 284,
-    "excluded_unverifiable": 16,
-    "gone": 1,
+    "decided": 291,
+    "excluded_unverifiable": 9,
+    "gone": 2,
     "gone_ci95": [
-      0.0006,
-      0.0197
+      0.0019,
+      0.0247
     ],
-    "gone_rate": 0.0035,
+    "gone_rate": 0.0069,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.0133
+      0.013
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,30 +33,38 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-10-25",
+    "pool_day": "2026-10-26",
     "receipts": [
       {
-        "class": "gone_410",
-        "domain": "breakingnews.ie",
-        "first_seen": "20261025070000",
-        "http_code": 410,
-        "title": "Dublin tenant who told RTB of ceiling piece falling on 'son's cot' awarded damages",
-        "url": "https://www.breakingnews.ie/ireland/dublin-tenant-who-told-rtb-of-ceiling-piece-falling-on-sons-cot-awarded-damages-1955276.html"
+        "class": "gone_404",
+        "domain": "klif.com",
+        "first_seen": "20261026190000",
+        "http_code": 404,
+        "title": "Halloween Horror In Dallas: Two Shot, Driver Hits Woman With Car And Flees",
+        "url": "https://www.klif.com/2026/10/26/halloween-horror-in-dallas-two-shot-driver-hits-woman-with-car-and-flees/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "rrr.org.au",
+        "first_seen": "20261026220000",
+        "http_code": 404,
+        "title": "Segments: Future Perfect: Zoe Daniel on Helen Haines And What Is Driving Political Violence — Triple R 102.7FM, Melbourne Independent Radio",
+        "url": "https://www.rrr.org.au/on-demand/segments/future-perfect-zoe-daniel-on-helen-haines-and-what-is-driving-political-violence"
       }
     ],
-    "sample_drawn_at": "2026-10-26T11:23:16Z",
+    "sample_drawn_at": "2026-10-27T10:47:43Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 3776,
-      "replaced": 3981,
-      "trivial": 741,
-      "update": 393
+      "reframing": 4902,
+      "replaced": 5357,
+      "trivial": 1053,
+      "update": 359
     },
-    "day": "2026-10-26",
+    "day": "2026-10-27",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
@@ -64,84 +72,84 @@
           "Northwest",
           "Arkansas"
         ],
-        "after": "Voting early? Here's where and when you can do it in Northwest Arkansas | The Arkansas Democrat-Gazette",
-        "before": "Voting early? Here's where and when you can do it in Benton and Washington counties | The Arkansas Democrat-Gazette",
-        "detected": "2026-10-26T23:31:48Z",
-        "domain": "arkansasonline.com",
+        "after": "Voting early? Here's where and when you can do it in Northwest Arkansas | Northwest Arkansas Democrat-Gazette",
+        "before": "Voting early? Here's where and when you can do it in Benton and Washington counties | Northwest Arkansas Democrat-Gazette",
+        "detected": "2026-10-27T03:48:33Z",
+        "domain": "nwaonline.com",
         "removed": [
           "Benton",
           "and",
           "Washington",
           "counties"
         ],
-        "similarity": 0.8,
-        "url": "https://www.arkansasonline.com/news/2026/oct/19/voting-early-heres-where-and-when-you-can-do-it/",
+        "similarity": 0.842,
+        "url": "https://www.nwaonline.com/news/2026/oct/19/voting-early-heres-where-and-when-you-can-do-it/",
         "weight": 9,
         "window": "1w"
       },
       {
         "added": [
-          "cop"
+          "Nyrraa",
+          "Padosi"
         ],
-        "after": "Video of ASI sexually harassing volunteer at Kolkata puja pandal goes viral; cop arrested",
-        "before": "Kolkata Harassment: Video of ASI sexually harassing volunteer at Kolkata puja pandal goes viral; arrested | Kolkata News",
-        "detected": "2026-10-26T10:16:34Z",
-        "domain": "indiatimes.com",
+        "after": "Nyrraa M Banerji on her role in 'Dil Padosi': Was drawn to Diya because she's so unapologetically herself",
+        "before": "Nyrra M Banerji on her role in 'Dil Paodsi': Was drawn to Diya because she's so unapologetically herself",
+        "detected": "2026-10-27T06:34:16Z",
+        "domain": "ianslive.in",
         "removed": [
-          "Harassment",
-          "Kolkata",
-          "Kolkata",
-          "News"
+          "Nyrra",
+          "Paodsi"
         ],
-        "similarity": 0.812,
-        "url": "https://timesofindia.indiatimes.com/city/kolkata/kolkata-asi-arrested-for-sexually-harassing-durga-puja-volunteer/articleshow/135045447.cms",
-        "weight": 9,
-        "window": "1w"
+        "similarity": 0.81,
+        "url": "https://ianslive.in/nyrra-m-banerji-on-her-role-in-dil-paodsi-was-drawn-to-diya-because-shes-so-unapologetically-herself--20261026113852",
+        "weight": 8,
+        "window": "24h"
       },
       {
         "added": [
-          "III"
+          "Town"
         ],
-        "after": "Rare photos of Myanmar's ex-leader Suu Kyi show her receiving books sent by King Charles III",
-        "before": "Rare photos of Myanmar's ex-leader Aung San Suu Kyi show her receiving books sent by King Charles",
-        "detected": "2026-10-26T15:47:56Z",
-        "domain": "abcnews.com",
+        "after": "Town MP welcomes Government U-turn on jury trials but warns more needs to be done",
+        "before": "Burnham-On-Sea MP welcomes Government U-turn on jury trials but warns more needs to be done",
+        "detected": "2026-10-27T02:46:41Z",
+        "domain": "burnham-on-sea.com",
         "removed": [
-          "Aung",
-          "San"
+          "Burnham",
+          "Sea",
+          "on"
         ],
-        "similarity": 0.85,
-        "url": "https://abcnews.com/International/wireStory/rare-photos-myanmars-leader-aung-san-suu-kyi-137382339",
+        "similarity": 0.833,
+        "url": "https://www.burnham-on-sea.com/news/burnham-on-sea-mp-welcomes-government-u-turn-on-jury-trials-but-warns-more-needs-to-be-done/",
         "weight": 6,
-        "window": "1w"
+        "window": "24h"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 11807,
-      "PAGE_TEXTCHANGE": 101857,
-      "PAGE_TITLECHANGE": 40056,
-      "UNCHANGED_CONTENT": 590094
+      "HTTP_REDIRECT": 15553,
+      "PAGE_TEXTCHANGE": 127875,
+      "PAGE_TITLECHANGE": 47442,
+      "UNCHANGED_CONTENT": 725505
     },
-    "title_changes_en": 8891,
+    "title_changes_en": 11671,
     "trace": [
       {
-        "bytes_billed": 19922944,
-        "created": "1793098040721",
-        "job_id": "world_gdg_counts_20261026",
+        "bytes_billed": 25165824,
+        "created": "1793186995359",
+        "job_id": "world_gdg_counts_20261027",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 187695104,
-        "created": "1793098046138",
-        "job_id": "world_gdg_titles_20261026",
+        "bytes_billed": 231735296,
+        "created": "1793186999754",
+        "job_id": "world_gdg_titles_20261027",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-10-27T10:51:29Z",
+  "generated_at": "2026-10-28T11:34:38Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-10-26.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-10-27.json",
   "schema_version": "1",
   "selection_version": "v1"
 }

@@ -1,0 +1,155 @@
+{
+  "date": "2026-10-28",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-28T11:34:38Z",
+    "counts": {
+      "botwall": 6,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 289,
+      "other": 0,
+      "server_error": 1,
+      "unreachable": 2
+    },
+    "decided": 291,
+    "excluded_unverifiable": 9,
+    "gone": 2,
+    "gone_ci95": [
+      0.0019,
+      0.0247
+    ],
+    "gone_rate": 0.0069,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.013
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-26",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "klif.com",
+        "first_seen": "20261026190000",
+        "http_code": 404,
+        "title": "Halloween Horror In Dallas: Two Shot, Driver Hits Woman With Car And Flees",
+        "url": "https://www.klif.com/2026/10/26/halloween-horror-in-dallas-two-shot-driver-hits-woman-with-car-and-flees/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "rrr.org.au",
+        "first_seen": "20261026220000",
+        "http_code": 404,
+        "title": "Segments: Future Perfect: Zoe Daniel on Helen Haines And What Is Driving Political Violence — Triple R 102.7FM, Melbourne Independent Radio",
+        "url": "https://www.rrr.org.au/on-demand/segments/future-perfect-zoe-daniel-on-helen-haines-and-what-is-driving-political-violence"
+      }
+    ],
+    "sample_drawn_at": "2026-10-27T10:47:43Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 4902,
+      "replaced": 5357,
+      "trivial": 1053,
+      "update": 359
+    },
+    "day": "2026-10-27",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Northwest",
+          "Arkansas"
+        ],
+        "after": "Voting early? Here's where and when you can do it in Northwest Arkansas | Northwest Arkansas Democrat-Gazette",
+        "before": "Voting early? Here's where and when you can do it in Benton and Washington counties | Northwest Arkansas Democrat-Gazette",
+        "detected": "2026-10-27T03:48:33Z",
+        "domain": "nwaonline.com",
+        "removed": [
+          "Benton",
+          "and",
+          "Washington",
+          "counties"
+        ],
+        "similarity": 0.842,
+        "url": "https://www.nwaonline.com/news/2026/oct/19/voting-early-heres-where-and-when-you-can-do-it/",
+        "weight": 9,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Nyrraa",
+          "Padosi"
+        ],
+        "after": "Nyrraa M Banerji on her role in 'Dil Padosi': Was drawn to Diya because she's so unapologetically herself",
+        "before": "Nyrra M Banerji on her role in 'Dil Paodsi': Was drawn to Diya because she's so unapologetically herself",
+        "detected": "2026-10-27T06:34:16Z",
+        "domain": "ianslive.in",
+        "removed": [
+          "Nyrra",
+          "Paodsi"
+        ],
+        "similarity": 0.81,
+        "url": "https://ianslive.in/nyrra-m-banerji-on-her-role-in-dil-paodsi-was-drawn-to-diya-because-shes-so-unapologetically-herself--20261026113852",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Town"
+        ],
+        "after": "Town MP welcomes Government U-turn on jury trials but warns more needs to be done",
+        "before": "Burnham-On-Sea MP welcomes Government U-turn on jury trials but warns more needs to be done",
+        "detected": "2026-10-27T02:46:41Z",
+        "domain": "burnham-on-sea.com",
+        "removed": [
+          "Burnham",
+          "Sea",
+          "on"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.burnham-on-sea.com/news/burnham-on-sea-mp-welcomes-government-u-turn-on-jury-trials-but-warns-more-needs-to-be-done/",
+        "weight": 6,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 15553,
+      "PAGE_TEXTCHANGE": 127875,
+      "PAGE_TITLECHANGE": 47442,
+      "UNCHANGED_CONTENT": 725505
+    },
+    "title_changes_en": 11671,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1793186995359",
+        "job_id": "world_gdg_counts_20261027",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 231735296,
+        "created": "1793186999754",
+        "job_id": "world_gdg_titles_20261027",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-28T11:34:38Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-27.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
