@@ -1,4 +1,5 @@
 // @ts-check
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import mdx from '@astrojs/mdx'
@@ -6,6 +7,9 @@ import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
 import rehypeRepoLinks from './src/lib/engines/rehype-repo-links.mjs'
 import publicationPrune from './src/lib/engines/publication-prune.mjs'
+
+// Other sessions' checkouts of this repository, which the dev server leaves alone (vite.server).
+const worktrees = fileURLToPath(new URL('./.claude/worktrees', import.meta.url))
 
 // English-only (site-v2 work order §6, decisions doc 2026-07-16 §1.5: "Deutsch fliegt komplett
 // raus" — Frank, 2026-07-16). The /de mirror is gone; public/_redirects sends old /de/* URLs to
@@ -160,6 +164,17 @@ export default defineConfig({
       // satellite.js bringt einen WASM-Build mit Top-Level-Await mit — Vites
       // Dev-Optimizer (esbuild, es2020) bricht daran; Rollup im Prod-Build nicht.
       exclude: ['satellite.js'],
+    },
+    server: {
+      watch: {
+        // Other sessions keep whole checkouts of this repository in .claude/worktrees/ — gitignored,
+        // but Vite's watcher does not read .gitignore. `astro dev` in the main checkout followed
+        // every install and build inside them: on the night of 2026-10-27 it ran at 400–460 % CPU
+        // for an hour and a half, its log nothing but `[watch] .claude/worktrees/…` lines. The path
+        // is anchored to this checkout, so a dev server started inside one of those worktrees still
+        // watches its own files (a `**/.claude/worktrees/**` glob would blind it).
+        ignored: [(file) => file === worktrees || file.startsWith(`${worktrees}/`)],
+      },
     },
   },
 })
