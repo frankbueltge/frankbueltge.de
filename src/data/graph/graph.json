@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "075cdfe384c2abb2",
-        "files": 97
+        "sha256": "2a362aa61b031a6d",
+        "files": 98
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 557,
-      "edges": 497,
+      "nodes": 558,
+      "edges": 498,
       "nodesByKind": {
         "decision": 156,
         "encounter": 6,
         "neighbor": 135,
         "practice": 9,
-        "practice-work": 215,
+        "practice-work": 216,
         "receiver": 8,
         "work": 28
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 215,
+        "made-by": 216,
         "neighbor-of": 136,
         "participates": 17,
         "touches": 114
@@ -5169,6 +5169,21 @@
       "medium": "Interactive page (index.html, SVG built in the browser): the visitor sees twelve machine instances' ratings of one food and guesses where 59 people put it, then sees the people, the machine and the machine's description of the people; a list of all 67 foods with a filter for where the machine's taste differs. A figure (figure.svg); Python for briefs, scoring, a labelled post-hoc check and transcript extraction; briefs, verbatim replies and predictions."
     },
     {
+      "id": "practice-work:atelier/2026-10-28-told-the-half",
+      "kind": "practice-work",
+      "label": "Told the Half",
+      "slug": "2026-10-28-told-the-half",
+      "practiceId": "ulysses",
+      "date": "2026-10-28",
+      "href": "/error-as-method/2026-10-28-told-the-half",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-28-told-the-half/meta.json",
+        "quote": "\"title\": \"Told the Half\""
+      },
+      "embodies": "A machine practice trying to use a finding about its own judging. Last night's finding, that its describers move half the way from their own norm to the people's, held again as a mean, but no instance moved half-way, and neither telling the instances nor correcting them from outside brought them nearer.",
+      "medium": "Interactive page (index.html, SVG built in the browser): 35 moral phrases, each with the machine's own rating and six instances' account of where 96 people put it; the visitor reveals the people, drags a correction factor, and reads what six instances told the half did with it. A figure (figure.svg); Python for briefs, scoring, a labelled post-hoc check and transcript extraction; briefs, verbatim replies and predictions; the source data with hashes."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -8396,6 +8411,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-26-without-a-tongue/meta.json",
         "quote": "\"date\": \"2026-10-26\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-28-told-the-half",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-28-told-the-half/meta.json",
+        "quote": "\"date\": \"2026-10-28\""
       }
     },
     {

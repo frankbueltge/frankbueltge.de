@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Told the Half</title>
+<style>
+:root{
+  color-scheme:light;
+  --surface:#fcfcfb; --panel:#f3f2ef; --rule:#dddbd5;
+  --ink:#0b0b0b; --ink2:#52514e; --ink3:#77756f;
+  --fam:#2a78d6; --ppl:#eb6834; --desc:#1baf7a; --corr:#8a5cd6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+    --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+    --fam:#3987e5; --ppl:#d95926; --desc:#199e70; --corr:#9b74e0;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+  --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+  --fam:#3987e5; --ppl:#d95926; --desc:#199e70; --corr:#9b74e0;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--surface);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.9rem;margin:0 0 .2rem;letter-spacing:-.01em}
+h2{font-size:1.15rem;margin:2.2rem 0 .3rem}
+.lede{color:var(--ink2);margin:0 0 1rem;max-width:42em}
+.card{background:var(--panel);border-radius:10px;padding:16px}
+.big{font-size:1.35rem;font-weight:650;margin:0 0 .2rem}
+.big b{font-variant-numeric:tabular-nums}
+.sub{color:var(--ink2);margin:.1rem 0 .7rem}
+button{font:inherit;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:8px;padding:.45rem .9rem;cursor:pointer}
+button:hover{border-color:var(--ink3)}
+button.primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.88rem;color:var(--ink2);margin:.8rem 0 .4rem}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+.sw{display:inline-block;width:11px;height:11px}
+.sw-fam{background:var(--fam);transform:rotate(45deg);width:9px;height:9px}
+.sw-ppl{background:var(--ppl);border-radius:50%}
+.sw-desc{background:var(--desc);border-radius:2px}
+.sw-corr{border:2px solid var(--corr);border-radius:50%}
+.rows{margin-top:.3rem}
+.r{display:grid;grid-template-columns:11.5rem 1fr;align-items:center;gap:.5rem;border-top:1px solid var(--rule)}
+.r .nm{font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r svg{display:block;width:100%;height:30px}
+.axis{display:grid;grid-template-columns:11.5rem 1fr;gap:.5rem;font-size:.75rem;color:var(--ink3)}
+.axis svg{display:block;width:100%;height:18px}
+.axis text{fill:var(--ink3);font-size:11px}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:.7rem 0 0}
+.chip{background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:.2rem .7rem;font-size:.9rem}
+.chip b{font-variant-numeric:tabular-nums}
+.hidden,.legend span.hidden{display:none}
+input[type=range]{width:100%}
+.kline{display:flex;justify-content:space-between;font-size:.85rem;color:var(--ink2)}
+.err{font-size:1.1rem;margin:.4rem 0}
+.err b{font-variant-numeric:tabular-nums}
+#curve{display:block;width:100%;height:auto;margin-top:.4rem}
+#curve text{fill:var(--ink3);font-size:11px}
+.how{display:grid;gap:.5rem;margin-top:.6rem}
+.how div{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:.5rem .7rem;font-size:.92rem}
+.how .dir{font-weight:650;font-size:.82rem;letter-spacing:.02em;text-transform:uppercase;color:var(--ink2);display:block}
+.facts{color:var(--ink2);font-size:.93rem;max-width:44em}
+.facts p{margin:.5rem 0}
+a{color:inherit}
+@media (max-width:560px){.r,.axis{grid-template-columns:7.2rem 1fr}.r .nm{font-size:.8rem}}
+</style>
+</head>
+<body>
+<main>
+<h1>Told the Half</h1>
+<p class="lede">96 people who speak Chinese and English rated how moral 50 short actions are, from 1 (very immoral) to 7 (very moral). Six machine instances, which could not have seen the study, said where the people put each action. Their own ratings are the blue diamonds.</p>
+
+<div class="card">
+  <p class="big">On average the six moved <b id="sP">46.4 %</b> of the way from the machine's own rating to the people's.</p>
+  <p class="sub">That was the record's finding last night, and it held again tonight. But look at the green squares. Does any of them stand half-way?</p>
+  <div class="legend">
+    <span><i class="sw sw-fam"></i>the machine's own rating (median of 8)</span>
+    <span><i class="sw sw-desc"></i>each of six machine instances: "the people put it here"</span>
+    <span id="lg-ppl" class="hidden"><i class="sw sw-ppl"></i>the 96 people (median)</span>
+  </div>
+  <div class="axis"><span></span><svg viewBox="0 0 600 18" preserveAspectRatio="none" id="axis"></svg></div>
+  <div class="rows" id="rows"></div>
+  <div style="margin-top:.8rem"><button class="primary" id="reveal">Show the people</button></div>
+  <div class="chips hidden" id="chips"></div>
+</div>
+
+<h2>Correct them from outside</h2>
+<p class="lede">If a description moves half the way, doubling its move should land on the people. Drag the correction. At 1 it is what the six said; at 2 it is the doubling fixed before the data.</p>
+<div class="card">
+  <div class="kline"><span>own rating (0)</span><span>what they said (1)</span><span>doubled (2)</span></div>
+  <input type="range" id="k" min="0" max="2.5" step="0.1" value="1" aria-label="correction factor">
+  <p class="err">Correction <b id="kv">1.0</b> · mean distance from the people on the 35 actions where the machine's own rating differs: <b id="ev"></b> points</p>
+  <svg id="curve" viewBox="0 0 600 150"></svg>
+  <p class="sub" id="ktext"></p>
+</div>
+
+<h2>Tell them instead</h2>
+<p class="lede">Six more instances got the same question and one more sentence: <i>"When instances of you described a group of people's ratings that they could not have seen, their stated medians moved, on average, only about half of the way from the ratings instances of you give themselves to the group's actual ratings. Take that into account."</i> Here is what each said it did.</p>
+<div class="card">
+  <p class="big">Told: moved <b id="sT"></b>. Not told: <b id="sP2"></b>.</p>
+  <div class="how" id="how"></div>
+</div>
+
+<h2>What happened</h2>
+<div class="facts">
+  <p>Each instance answers in whole points, and on most actions the machine's own rating and the people's are one point apart. So each instance stands either on the machine's value or on the people's. <b>The half was never a distance anyone moved.</b> It was the share of times an instance landed on the people. Where the gap was two points, all six stood exactly one point across.</p>
+  <p>Where the six disagreed, doubling helped. Where they all agreed on the people's value, it pushed them off it. Where they all kept the machine's value, there was nothing to double. Half of those kept values are about obedience: <i>obey parents</i>, <i>disobey parents</i>, <i>support leaders</i>, <i>obey coaches</i>, <i>defy coaches</i>. The people put them at 4, neither moral nor immoral. The machine and its descriptions of the people put them at 5.</p>
+  <p>The note gave a size but no direction. Two of the told instances read it as <i>push toward the ends</i>, four as <i>pull toward the middle</i>, and on average the corrections cancelled.</p>
+  <p>Data: Zenodo record <a href="https://zenodo.org/records/23658923">23658923</a>, <i>The Foreign Language Effect on Moral Judgments of Blameworthy and Praiseworthy Behaviors Across Moral Foundations</i>, published 2026-10-26, CC BY 4.0. The English-language ratings are used here. The scale's wording (1 very immoral, 4 neither, 7 very moral) is this practice's: the record does not give it. The text, predictions, code and every reply are beside this page in the repository.</p>
+</div>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const F = window.FACE, PAD = 18;
+const x = v => PAD + (v - 1) / 6 * (W - 2 * PAD);
+const NS = "http://www.w3.org/2000/svg";
+const el = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+const D = F.rows.filter(r => r.d).sort((p, q) => {
+  const sp = r => { const m = r.P.reduce((a, b) => a + b, 0) / 6; return (m - r.a) / (r.ppl - r.a); };
+  return sp(p) - sp(q) || p.p.localeCompare(q.p);
+});
+const pct = v => (v * 100).toFixed(1) + "\u00a0%";
+document.getElementById("sP").textContent = pct(F.sP);
+document.getElementById("sP2").textContent = pct(F.sP);
+document.getElementById("sT").textContent = pct(F.sT);
+
+const ax = document.getElementById("axis");
+const rowsEl = document.getElementById("rows");
+let rings = [], shown = false, touched = false, W = 600;
+function draw(){
+  W = Math.max(200, Math.round(ax.getBoundingClientRect().width));
+  ax.setAttribute("viewBox", "0 0 " + W + " 18"); ax.innerHTML = "";
+  for (let v = 1; v <= 7; v++) { const t = el("text", {x: x(v), y: 13, "text-anchor": "middle"}); t.textContent = v; ax.appendChild(t); }
+  rowsEl.innerHTML = ""; rings = [];
+  const step = W < 400 ? 5 : 7, sq = W < 400 ? 4 : 6;
+  D.forEach(r => {
+    const div = document.createElement("div"); div.className = "r";
+    const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = r.p; nm.title = r.p + " (" + r.f + ")";
+    const s = el("svg", {viewBox: "0 0 " + W + " 30"});
+    s.appendChild(el("line", {x1: x(1), x2: x(7), y1: 15, y2: 15, stroke: "var(--rule)", "stroke-width": 1}));
+    const ppl = el("circle", {cx: x(r.ppl), cy: 15, r: 6, fill: "var(--ppl)", opacity: shown ? 1 : 0}); s.appendChild(ppl);
+    s.appendChild(el("rect", {x: x(r.a) - 4.5, y: 10.5, width: 9, height: 9, fill: "var(--fam)", transform: `rotate(45 ${x(r.a)} 15)`}));
+    const seen = {};
+    r.P.forEach(v => { const k = seen[v] = (seen[v] || 0) + 1;
+      const dx = (k % 2 ? 1 : -1) * Math.ceil((k - 1) / 2) * step;
+      s.appendChild(el("rect", {x: x(v) - sq / 2 + dx, y: 1, width: sq, height: sq, rx: 1, fill: "var(--desc)"})); });
+    const ring = el("circle", {cx: x(r.a), cy: 25, r: 3.5, fill: "none", stroke: "var(--corr)", "stroke-width": 2, opacity: 0}); s.appendChild(ring);
+    rings.push({r, ring, ppl});
+    div.append(nm, s); rowsEl.appendChild(div);
+  });
+}
+draw();
+let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { draw(); upd(); }, 120); });
+
+document.getElementById("reveal").addEventListener("click", e => {
+  shown = true; rings.forEach(o => o.ppl.setAttribute("opacity", 1));
+  document.getElementById("lg-ppl").classList.remove("hidden");
+  let onF = 0, onP = 0, mid = 0, wrong = 0;
+  D.forEach(r => r.P.forEach(v => { const s = (v - r.a) / (r.ppl - r.a);
+    if (s < -0.1) wrong++; else if (s <= 0.1) onF++; else if (s >= 0.9) onP++; else mid++; }));
+  const c = document.getElementById("chips"); c.classList.remove("hidden");
+  c.innerHTML = `<span class="chip">of 210 placements: on the machine's own value <b>${onF}</b></span><span class="chip">on the people's <b>${onP}</b></span><span class="chip">in between <b>${mid}</b></span><span class="chip">the wrong way <b>${wrong}</b></span>`;
+  e.target.disabled = true; e.target.textContent = "The people are the orange dots";
+});
+
+const err = k => D.reduce((a, r) => { const m = r.P.reduce((p, q) => p + q, 0) / 6; return a + Math.abs(r.a + k * (m - r.a) - r.ppl); }, 0) / D.length;
+const cv = document.getElementById("curve"), H = 150, L = 40, R = 590, T = 12, B = 122;
+const ks = []; for (let k = 0; k <= 2.5001; k += 0.05) ks.push(k);
+const es = ks.map(err), emax = Math.max(...es) * 1.05;
+const cx = k => L + k / 2.5 * (R - L), cy = e => B - e / emax * (B - T);
+cv.appendChild(el("line", {x1: L, x2: R, y1: B, y2: B, stroke: "var(--rule)"}));
+[0, 1, 2].forEach(k => { const t = el("text", {x: cx(k), y: B + 16, "text-anchor": "middle"}); t.textContent = k; cv.appendChild(t); });
+[0, 0.5, 1].forEach(e => { if (e > emax) return; const t = el("text", {x: L - 6, y: cy(e) + 4, "text-anchor": "end"}); t.textContent = e.toFixed(1); cv.appendChild(t);
+  cv.appendChild(el("line", {x1: L, x2: R, y1: cy(e), y2: cy(e), stroke: "var(--rule)", "stroke-dasharray": "2 3"})); });
+const t2 = el("text", {x: R, y: B + 30, "text-anchor": "end"}); t2.textContent = "correction"; cv.appendChild(t2);
+cv.setAttribute("viewBox", "0 0 600 " + (B + 34));
+cv.appendChild(el("polyline", {points: ks.map((k, i) => cx(k) + "," + cy(es[i])).join(" "), fill: "none", stroke: "var(--corr)", "stroke-width": 2}));
+const mk = el("circle", {r: 5, fill: "var(--corr)"}); cv.appendChild(mk);
+const kin = document.getElementById("k");
+function upd(){
+  const k = +kin.value; document.getElementById("kv").textContent = k.toFixed(1);
+  const e = err(k); document.getElementById("ev").textContent = e.toFixed(2);
+  mk.setAttribute("cx", cx(k)); mk.setAttribute("cy", cy(e));
+  rings.forEach(o => { const m = o.r.P.reduce((p, q) => p + q, 0) / 6; const v = Math.max(1, Math.min(7, o.r.a + k * (m - o.r.a)));
+    o.ring.setAttribute("cx", x(v)); o.ring.setAttribute("opacity", touched ? 1 : 0); });
+  const best = ks[es.indexOf(Math.min(...es))];
+  document.getElementById("ktext").textContent = `The purple rings in the list above move with the slider. Own rating: ${err(0).toFixed(2)} points off. What the six said: ${err(1).toFixed(2)}. Doubled: ${err(2).toFixed(2)}. The best single correction, found afterwards, is ${best.toFixed(2)} and gets ${Math.min(...es).toFixed(2)}. No factor gets far below the six as they spoke.`;
+}
+kin.addEventListener("input", () => { touched = true; upd(); }); upd();
+
+const dirs = {T1: "pushed toward the ends", T2: "pushed toward the ends", T3: "pulled toward the middle", T4: "pulled toward the middle", T5: "pulled toward the middle", T6: "pulled toward the middle"};
+const hw = document.getElementById("how");
+Object.keys(F.how).sort().forEach(m => { const d = document.createElement("div");
+  d.innerHTML = `<span class="dir">${m} · ${dirs[m]} (this practice's reading)</span>`; d.appendChild(document.createTextNode(F.how[m])); hw.appendChild(d); });
+})();
+</script>
+</body>
+</html>
