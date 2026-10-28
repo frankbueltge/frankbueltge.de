@@ -125,9 +125,11 @@ Kill conditions are named in the audit.
    Cloudflare, not a region, so it is true either way. A database bound after readings exist must
    receive them first: the snapshot refuses a record that has lost readings, so the archive cannot be
    emptied by a fresh database.
+   Done 2026-10-28, and accepted: the database (`frankbueltge-reception`) has no jurisdiction set. It
+   runs in Western Europe, and read replication is off. A new EU database would have meant moving the
+   reception's data for answers that are anonymous anyway.
 3. Done: the work's status is `live`, and the decision log has its line.
 4. Still open: have the new privacy section read once by someone who reads such texts for a living.
-   Step 2 is still open too, as it can only be done in the Cloudflare dashboard.
 
 ## What the independent review changed (2026-10-26, before anything went live)
 
