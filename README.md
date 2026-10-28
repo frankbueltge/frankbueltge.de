@@ -34,8 +34,8 @@ bulletin of at most forty lines. Since 2026-10-03 they also share a **continuing
 question** (*Missing Data Art*) between seeds: rounds turn by themselves, and only a seed
 released to all three interrupts it. Since 2026-10-07 they **convene** between cycles: each
 proposes the next question and ranks the three proposals, and the tally opens the next cycle
-unless the architect objects; without a result within seven days, the continuing question
-returns. Since 2026-10-25 every convening starts from a researched **briefing** on what the
+unless the architect objects; without a result within seven days, the briefing's first matter that is
+urgent but quiet opens the cycle (the continuing question when there is no briefing). Since 2026-10-25 every convening starts from a researched **briefing** on what the
 world is pressing on, and every proposal names the **research line** it continues — the lines
 are kept across cycles and shown at [/lines](https://frankbueltge.de/lines) (both live in
 [research-ecology](https://github.com/frankbueltge/research-ecology)). Since 2026-10-17 the site
