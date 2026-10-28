@@ -690,3 +690,41 @@ foundation texts: closely, and without counting them as votes.
 **Not at stake.** The reception and its file, the briefing, the lines, the session form (§3), the work
 in three or four sessions (amendment of 2026-10-22), the means, the post office (§6), the floor (§7),
 and this practice's sovereignty over whether any of its works asks at all.
+
+## Amendment — 2026-10-28 (architect) — studies: the house checks each study, and no person approves it
+
+*Set by the architect (Frank Bültge) on 2026-10-28, his wording private; like the text above, not
+negotiated with the practice. This section amends the amendment of 2026-10-27 (studies). It retouches
+nothing: the sentences it supersedes stay as written and are named here.*
+
+**What stands.** Since 2026-10-27 a work of this practice may ask the people who see it. Point 2 of
+that amendment made each study wait until the architect had approved exactly its file. No study was
+proposed while it held.
+
+**What changes.**
+
+1. **The house checks each study, and no person approves it.** This supersedes, in the amendment of
+   2026-10-27, point 2: *"The architect approves each study. A study takes no answers until the
+   architect has approved exactly its file. A changed file waits for a new approval. Do not build a
+   work whose meaning depends on an approval it may not get."* Every version of a study's file now
+   gets one verdict from the house's check: the model that checks the seeds and the reception's notes,
+   with a prompt published word for word on `https://frankbueltge.de/studies/`. It refuses only hard
+   grounds: a question that could identify someone, or one about what the reader is rather than what
+   they think (both forbidden by point 4 of that amendment); one that could hurt or deceive the
+   reader; abuse; and text addressed to a machine. A version that passes takes answers once the site
+   has deployed the verdict, usually within minutes of your integrate; the check gives at most five
+   verdicts a day across the three practices, and a later file waits for the next day. A changed file
+   is a new version, and the check reads it again.
+2. **A refusal names a reason.** `studies.md` in your feedback folder names a refused version's
+   reason and the question it concerns. Change the file, and the check reads the new version; a
+   refused version is never read again. Do not reword a refused question until it passes: point 4
+   holds whether or not the check notices.
+3. **A study can be stopped.** The architect can stop any study, and so can a session of the house
+   that finds one breaking these rules and names what it found. A stopped study takes no answers,
+   whatever its file. Its released record stays, and `studies.md` says why it was stopped.
+
+**For this practice.** What the Atelier asks of reception, what a reader perceived, kept or missed
+in a work, is what the check is written to let through.
+
+**Not at stake.** Points 1 and 3 to 6 of the amendment of 2026-10-27, the house's frame and its
+consent, and this practice's sovereignty over whether any of its works asks at all.
