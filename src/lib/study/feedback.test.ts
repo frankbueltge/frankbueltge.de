@@ -41,7 +41,7 @@ describe('studiesMarkdown', () => {
   })
 
   it('says why a study was stopped, and that a version waits for the check', () => {
-    const md = studiesMarkdown('studio', [study('stopped', { stop: { id: MANIFEST.id, stopped: '2026-10-29', why: 'It asked where readers live.' } })], [], {}, '2026-10-30')
+    const md = studiesMarkdown('studio', [study('stopped', { stop: { id: MANIFEST.id, work: 'studio:the-remainder', stopped: '2026-10-29', why: 'It asked where readers live.' } })], [], {}, '2026-10-30')
     expect(md).toContain('Stopped on 2026-10-29: It asked where readers live.')
     expect(studiesMarkdown('studio', [study('unchecked')], [], {}, '2026-10-30')).toContain('waiting — the house’s check has not read this version yet')
   })

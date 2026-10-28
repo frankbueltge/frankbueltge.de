@@ -70,7 +70,7 @@ describe('the house’s check of a study (2026-10-28)', () => {
     expect(calls[0]!.url).not.toContain('key-123')
     expect((calls[0]!.init.headers as Record<string, string>)['x-goog-api-key']).toBe('key-123')
     expect(await runStudyCheck(model('{"verdict":"block","reason":"identifying","question":7}'), 'k', subject)).toEqual({ verdict: 'block', reason: 'identifying', question: 7 })
-    const status = (async () => new Response('{}', { status: 429 })) as unknown as typeof fetch
+    const status = (async () => new Response('{}', { status: 500 })) as unknown as typeof fetch
     const offline = (async () => {
       throw new Error('offline')
     }) as unknown as typeof fetch
@@ -107,6 +107,22 @@ describe('the house’s check of a study (2026-10-28)', () => {
     ])
     expect(run.unanswered).toEqual(['studio-c'])
     expect(run.left).toBe(1)
+  })
+
+  it('stops asking once the model’s quota answers, and leaves the rest waiting', async () => {
+    const study = (id: string): CheckCandidate => ({ practice: 'studio', work: `studio:${id}`, manifest: { ...MANIFEST, id: `studio-${id}` }, sha256: id.padEnd(64, '0') })
+    const asked: string[] = []
+    const ask = async (s: { manifest: StudyManifest }): Promise<CheckVerdict> => {
+      asked.push(s.manifest.id)
+      return s.manifest.id === 'studio-b' ? { verdict: 'invalid', busy: true } : { verdict: 'pass' }
+    }
+    const run = await checkStudies(['a', 'b', 'c', 'd'].map(study), ask, { today: '2026-10-29', max: 12, order: (xs) => [...xs] })
+    expect(asked).toEqual(['studio-a', 'studio-b'])
+    expect(run.added.map((c) => c.id)).toEqual(['studio-a'])
+    expect(run.unanswered).toEqual(['studio-b'])
+    expect(run.left).toBe(2)
+    const busy = (async () => new Response('{"error":{"status":"RESOURCE_EXHAUSTED"}}', { status: 429 })) as unknown as typeof fetch
+    expect(await runStudyCheck(busy, 'k', subject)).toEqual({ verdict: 'invalid', busy: true })
   })
 
   it('shuffles without losing or doubling a study', () => {

@@ -97,6 +97,8 @@ https://frankbueltge.de/studies/. It refuses only hard grounds:
 - `abuse`, and `injection`: text addressed to a machine.
 
 A version that passes takes answers once the site has deployed the verdict, usually within minutes.
+The check gives at most five verdicts a day across the three practices; a file that comes later waits
+for the next day.
 A refused version takes none: `studies.md` in your feedback folder names the reason and the question,
 and the next version of your file is checked anew. A refused version is never read again. Do not
 reword a refused question until it passes: the rules hold whether or not the check notices.

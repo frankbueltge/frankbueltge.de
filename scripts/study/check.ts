@@ -3,7 +3,7 @@
 //
 // Reads the manifests beside the mirrored works (public/), the committed checks and stops, and asks the
 // house's check (src/lib/study/check.ts) about every readable study whose exact file has no verdict
-// yet, at most MAX_PER_RUN a run and in random order. Each verdict is added to
+// yet, at most DAILY_MAX verdicts a UTC day, in random order and PAUSE_MS apart. Each verdict is added to
 // src/data/studies/checks.json; the workflow (.github/workflows/study-check.yml) commits it and starts
 // the deploy, which opens a study that passed. A stopped study is not read, and neither is one whose
 // last day has passed.
@@ -16,8 +16,11 @@ import { join } from 'node:path'
 import { checkStudies, runStudyCheck } from '../../src/lib/study/check'
 import { CHECKS_CONTRACT, CHECKS_FILE, findStudies, readChecks, readStops, resolveStudies } from '../../src/lib/study/registry'
 
-/** A bound on one run's calls, whatever the mirrors bring. */
-const MAX_PER_RUN = 12
+/** At most this many verdicts a UTC day, and a pause between two calls. The model's free tier gives
+ *  this project 20 calls a day (GenerateRequestsPerDayPerProjectPerModel-FreeTier, read on
+ *  2026-10-28), and the seed and the reception's notes share them: the check takes at most a quarter. */
+const DAILY_MAX = 5
+const PAUSE_MS = 8000
 
 const root = process.cwd()
 const today = new Date().toISOString().slice(0, 10)
@@ -28,13 +31,18 @@ if (!waiting.length) {
   console.log('[study] no study waits for the check')
   process.exit(0)
 }
+const budget = DAILY_MAX - checks.filter((c) => c.checked === today).length
+if (budget <= 0) {
+  console.log(`[study] ${waiting.length} study(ies) wait for the check; today's ${DAILY_MAX} verdicts are given, so they wait for tomorrow`)
+  process.exit(0)
+}
 const key = process.env.GEMINI_API_KEY ?? ''
 if (!key) {
   console.log(`[study] ${waiting.length} study(ies) wait for the check, but no GEMINI_API_KEY is set; nothing was checked`)
   process.exit(0)
 }
 
-const { added, unanswered, left } = await checkStudies(waiting, (s) => runStudyCheck(fetch, key, s), { today, max: MAX_PER_RUN })
+const { added, unanswered, left } = await checkStudies(waiting, (s) => runStudyCheck(fetch, key, s), { today, max: budget, pause: PAUSE_MS })
 for (const c of added) console.log(`[study] ${c.id}: ${c.verdict === 'pass' ? 'passed' : `refused (${c.reason}${c.question === null || c.question === undefined ? '' : `, question ${c.question}`})`}`)
 for (const id of unanswered) console.log(`[study] ${id}: the check gave no verdict; it waits for the next run`)
 if (left) console.log(`[study] ${left} more wait for the next run`)

@@ -110,9 +110,11 @@ stay rules of the constitution.
   the model and the prompt's digest, so any verdict can be read again.
 - **Fishing.** A practice could reword a refused question until it passes. Every version is checked
   anew, every refusal stays on record, and the amendment of 2026-10-28 forbids it.
-- **Cost.** One verdict per version, on the free tier the seed and the reception already use. A call
-  that gives none is repeated on the next run; a run makes at most twelve, in random order, so no study
-  that keeps failing takes the first place every time.
+- **Cost.** One verdict per version, on the free tier the seed and the reception already use. That
+  tier gives the project 20 calls a day for this model (read on 2026-10-28), so the check gives at most
+  five verdicts a UTC day, eight seconds apart, and a run stops at the first answer that the quota is
+  spent. A call that gives no verdict is repeated on the next run, in random order, so no study that
+  keeps failing takes the first place every time.
 - **Stopping.** A stop outranks every verdict. Frank can stop any study, and so can a session that
   finds one breaking the rules, naming what it found. A stop names the study and its work and holds
   for either, so renaming the study does not lift it. The record of a stopped study stays.

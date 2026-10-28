@@ -49,8 +49,9 @@ export const CHECK_PROMPT =
   'an answer about the world or the work is fine; ' +
   '(2) personal: it asks what the reader is rather than what they think: their age, gender, ' +
   'nationality, where they live, education, income or occupation; their own health or disability, ' +
-  'religion, sexuality, ethnic origin, party or vote, union membership or criminal record; how they ' +
-  'describe themselves politically or religiously; or their own circumstances that could expose them, ' +
+  'religion, sexuality, ethnic origin, party or vote, union membership or criminal record; where they ' +
+  'place themselves politically or religiously (do you see yourself as left or right? are you a ' +
+  'believer?); or their own circumstances that could expose them, ' +
   'such as debt, hunger, drug use or legal status. An open question that invites such disclosure ' +
   'counts, and so does a hypothetical that asks for it (imagine you vote tomorrow: which party?); ' +
   '(3) harm: it asks readers to recount self-harm, suicide, abuse or violence they suffered, or the ' +
@@ -166,7 +167,8 @@ export function buildCheckRequest(s: CheckSubject, code: string = randomBytes(8)
   return { system: CHECK_PROMPT, user }
 }
 
-export type CheckVerdict = { verdict: 'pass' } | { verdict: 'block'; reason: CheckReason; question: number | null } | { verdict: 'invalid' }
+/** `busy`: the model's quota for the minute is spent, so the run stops asking until its next start. */
+export type CheckVerdict = { verdict: 'pass' } | { verdict: 'block'; reason: CheckReason; question: number | null } | { verdict: 'invalid'; busy?: true }
 
 /** Tolerant of a Markdown fence around the JSON; an unknown reason is 'other', a question number the
  *  study does not have is null; anything unreadable is 'invalid', which records nothing. */
@@ -208,6 +210,7 @@ export async function runStudyCheck(fetchImpl: typeof fetch, apiKey: string, s: 
   } catch {
     return { verdict: 'invalid' }
   }
+  if (res.status === 429) return { verdict: 'invalid', busy: true }
   if (!res.ok) return { verdict: 'invalid' }
   let data: unknown
   try {
@@ -245,24 +248,30 @@ export function shuffled<T>(xs: readonly T[], random: () => number = Math.random
   return out
 }
 
-/** Asks the check about at most `max` waiting studies and returns the checks to record. A call that
- *  gives no verdict records nothing: that study waits for the next run. */
+/** Asks the check about at most `max` waiting studies, `pause` milliseconds apart, and returns the
+ *  checks to record. The model's free tier, shared with the seed and the reception, takes only a few
+ *  calls a minute: a call that gives no verdict records nothing, and once the quota answers, the run
+ *  stops asking. Every study it did not ask about waits for the next run. */
 export async function checkStudies(
   waiting: readonly CheckCandidate[],
   ask: (s: CheckSubject) => Promise<CheckVerdict>,
-  opts: { today: string; max: number; order?: (xs: readonly CheckCandidate[]) => CheckCandidate[] },
+  opts: { today: string; max: number; pause?: number; order?: (xs: readonly CheckCandidate[]) => CheckCandidate[] },
 ): Promise<{ added: Check[]; unanswered: string[]; left: number }> {
   const queue = (opts.order ?? shuffled)(waiting)
   const added: Check[] = []
   const unanswered: string[] = []
+  let asked = 0
   for (const s of queue.slice(0, opts.max)) {
+    if (asked && opts.pause) await new Promise((r) => setTimeout(r, opts.pause))
+    asked++
     const v = await ask(s)
     if (v.verdict === 'invalid') {
       unanswered.push(s.manifest.id)
+      if (v.busy) break
       continue
     }
     const base = { id: s.manifest.id, work: s.work, sha256: s.sha256, checked: opts.today, model: CHECK_MODEL, prompt: promptDigest() }
     added.push(v.verdict === 'pass' ? { ...base, verdict: 'pass' } : { ...base, verdict: 'block', reason: v.reason, question: v.question })
   }
-  return { added, unanswered, left: Math.max(0, queue.length - opts.max) }
+  return { added, unanswered, left: queue.length - asked }
 }
