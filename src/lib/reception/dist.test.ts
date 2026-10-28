@@ -125,10 +125,10 @@ describe('the built site', () => {
 })
 
 describe('the build', () => {
-  it('ends with the reception step, after the wall texts are framed anew', () => {
+  it('runs the reception step after the wall texts are framed anew, and the studies\' registry last (2026-10-27)', () => {
     // The band stands outside the frame, so the frame's rewrite must come first; and every build —
     // the integrate gates, CI and the deploy — writes the list the endpoints accept.
     const pkg = JSON.parse(readFileSync(fileURLToPath(new URL('../../../package.json', import.meta.url)), 'utf8'))
-    expect(pkg.scripts.build).toBe('astro build && tsx scripts/engines/frame-dist.ts && tsx scripts/reception/dist.ts')
+    expect(pkg.scripts.build).toBe('astro build && tsx scripts/engines/frame-dist.ts && tsx scripts/reception/dist.ts && tsx scripts/study/dist.ts')
   })
 })

@@ -20,6 +20,27 @@ describe('checkSitePrPath', () => {
   it('schützt das unantastbare Protokoll-Archiv', () => {
     expect(checkSitePrPath('src/content/protokoll/2026/2026-07-01.json')).toMatch(/unantastbar/)
   })
+  it('keeps the studies, their consent frame and what the frame stands on out of reach (2026-10-27)', () => {
+    for (const p of [
+      'src/data/studies/approved.json',
+      'src/lib/study/consent.ts',
+      'src/pages/study/frame/index.astro',
+      'src/pages/studies/index.astro',
+      'src/layouts/Base.astro',
+      'src/styles/global.css',
+      'src/components/ui/button.tsx',
+      'src/data/legal.ts',
+      'src/lib/reception/gate.ts',
+      'src/lib/reception/crypto.ts',
+      'src/lib/engines/publication.mjs',
+      'src/lib/engines/publication-prune.mjs',
+      'src/lib/engines/practice-policy.ts',
+      'src/data/ecology/cycle.json',
+    ]) {
+      expect(checkSitePrPath(p), p).toMatch(/architect/)
+    }
+    expect(checkSitePrPath('src/lib/engines/other.ts')).toBeNull()
+  })
   it('lehnt Pfad-Traversal und absolute Pfade ab', () => {
     expect(checkSitePrPath('src/../package.json')).toMatch(/Traversal/)
     expect(checkSitePrPath('src/lib/../../.github/x.yml')).toMatch(/Traversal/)

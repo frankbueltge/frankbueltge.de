@@ -1,0 +1,91 @@
+# .github/workflows/study-snapshot.yml — the practices' studies: nightly snapshot and delivery (2026-10-27).
+#
+# Every night this reads the public record of each study the architect has approved (GET
+# /api/study/record: only what the site publishes, so no Cloudflare token is needed), commits it as
+# src/data/studies/records/<id>.json when it changed (duty 2 of .claude/rules/runtime-and-works.md;
+# a record may only grow), and writes `studies.md` and `studies/<id>.json` into the feedback folder of
+# each practice that has a study — with the tokens and into the folders the reception uses, and only
+# where the bytes differ. The answers are material for the practices, never instructions.
+name: Study snapshot
+
+on:
+  schedule:
+    - cron: '50 2 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: study-snapshot
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Read the records and write the snapshot and the practices' files
+        run: npx tsx scripts/study/snapshot.ts --out /tmp/studies
+
+      - name: Commit the snapshot (only when a record changed)
+        run: |
+          if [ -n "$(git status --porcelain src/data/studies)" ]; then
+            git config user.name "Study-Snapshot"
+            git config user.email "study-snapshot@frankbueltge.de"
+            git add src/data/studies
+            git commit -m "studies: snapshot of $(date -u +%F)"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase --autostash origin main && git push && break
+              git rebase --abort 2>/dev/null || true
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts" >&2; exit 1; }
+              sleep $((attempt * 5))
+            done
+          else
+            echo "snapshot unchanged"
+          fi
+
+      - name: Write studies.md and the records into each practice's feedback folder (only when they changed)
+        env:
+          ATELIER_BOT_TOKEN: ${{ secrets.ATELIER_BOT_TOKEN }}
+          FIELD_BOT_TOKEN: ${{ secrets.FIELD_BOT_TOKEN }}
+          STUDIO_BOT_TOKEN: ${{ secrets.STUDIO_BOT_TOKEN }}
+        run: |
+          OUT=/tmp/studies
+          [ -s "$OUT/deliveries.tsv" ] || { echo "no practice has a study yet"; exit 0; }
+          while IFS=$'\t' read -r practice repo folder secret; do
+            [ -n "$practice" ] || continue
+            token="${!secret:-}"
+            if [ -z "$token" ]; then
+              echo "::notice::$practice: no $secret is set, so $repo/$folder was not written"
+              continue
+            fi
+            dir="/tmp/std-$practice"
+            rm -rf "$dir"
+            if ! git clone -q --depth 1 "https://x-access-token:${token}@github.com/${repo}" "$dir"; then
+              echo "::warning::$practice: the repository could not be cloned with $secret"
+              continue
+            fi
+            mkdir -p "$dir/$folder/studies"
+            cp "$OUT/$practice/studies.md" "$dir/$folder/studies.md"
+            rsync -a --delete "$OUT/$practice/studies/" "$dir/$folder/studies/"
+            (
+              cd "$dir"
+              if [ -z "$(git status --porcelain "$folder/studies.md" "$folder/studies")" ]; then echo "$practice: unchanged"; exit 0; fi
+              git config user.name "Study-Snapshot"
+              git config user.email "study-snapshot@frankbueltge.de"
+              git add "$folder/studies.md" "$folder/studies"
+              git commit -q -m "feedback: studies of $(date -u +%F)"
+              for attempt in 1 2 3; do
+                git push -q && exit 0
+                git pull -q --rebase || { git rebase --abort 2>/dev/null; exit 1; }
+              done
+              exit 1
+            ) && echo "$practice: delivered to $repo/$folder" || echo "::warning::$practice: the push to $repo failed"
+          done < "$OUT/deliveries.tsv"

@@ -1,0 +1,397 @@
+---
+// /study/frame/?study=<id> — the house's consent frame for a practice's study (2026-10-27;
+// docs/design/2026-10-27-practice-studies.md).
+//
+// A practice's work embeds this page in a same-origin frame through /study/client.js. The frame shows
+// the study in the practice's words and the house's consent text in its own, takes the reader's
+// consent, receives the answers the work collected, shows them back before anything is sent, and
+// sends them; the bot check loads here, with the last button. What it keeps is said on the frame
+// itself (duty 1 of .claude/rules/runtime-and-works.md).
+//
+// The frame is the house's path for answers, not a wall: the work around it runs on the same origin,
+// so its code could reach into this page or around it. What the frame does hold: it answers only a
+// person's click on its own controls, only inside the work whose study it is, and its bot check is
+// bound to this study and this host. Everything else rests on the practice's constitution, and the
+// consent text says so (docs/design/2026-10-27-practice-studies.md, "What the frame is, and what it
+// is not").
+import Base from '@/layouts/Base.astro'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/ui/cn'
+import { CONSENT_LINES } from '@/lib/study/consent'
+
+const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined) ?? ''
+const primary = cn(buttonVariants({ variant: 'default' }))
+const quiet = cn(buttonVariants({ variant: 'ghost' }))
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+---
+
+<Base title="A study of a practice | Frank Bültge" description="The house's consent frame for a study a research practice asks in one of its works." noindex analytics={false}>
+  <main id="main" class="stf-page mx-auto w-full max-w-2xl px-5 pb-10 pt-6" data-stf="root" data-site-key={siteKey}>
+    <p class="stf-standalone font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <a class={link} href="/studies/">Studies</a> · frankbueltge.de
+    </p>
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint" data-stf="kicker">A study</p>
+    <h1 class="mt-2 text-xl font-bold leading-snug" data-stf="title">Reading the study…</h1>
+    <p class="mt-3 rounded-sm border border-line bg-bg/40 p-3 text-sm text-fg-muted" data-stf="status" role="status">Reading the study…</p>
+
+    <section data-stf="about" hidden>
+      <p class="mt-4 text-sm text-fg-muted">Why this work asks, in the practice’s own words:</p>
+      <blockquote class="mt-1 border-l-2 border-line pl-3 leading-relaxed text-fg" data-stf="purpose"></blockquote>
+      <p class="mt-3 text-sm text-fg-muted">How it will read the answers: <span class="text-fg" data-stf="reading"></span></p>
+      <details class="mt-3 text-sm">
+        <summary class="cursor-pointer text-fg-muted">What it asks</summary>
+        <ol class="mt-2 list-decimal space-y-1 pl-5 text-fg-muted" data-stf="questions"></ol>
+      </details>
+      <dl class="stf-consent mt-5 text-sm">
+        {
+          CONSENT_LINES.map((c) => (
+            <div>
+              <dt>{c.label}</dt>
+              <dd>{c.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="stf-standalone mt-4 text-sm text-fg-muted">
+        This frame belongs inside its work: <a class={link} data-stf="work" href="/studies/">open the work</a> to take part.
+      </p>
+    </section>
+
+    <section class="stf-framed mt-5" data-stf="consent" hidden>
+      <label class="flex items-start gap-3 text-sm text-fg">
+        <input type="checkbox" class="mt-1" autocomplete="off" data-stf="agree" />
+        <span>I am 16 or older and agree that my answers are kept and published as described above.</span>
+      </label>
+      <button type="button" class={cn(primary, 'mt-4')} data-stf="start" disabled>Take part</button>
+    </section>
+
+    <section class="stf-framed mt-5" data-stf="review" hidden>
+      <p class="text-sm text-fg-muted">Your answers, exactly as they would be sent:</p>
+      <dl class="stf-consent mt-2 text-sm" data-stf="summary"></dl>
+      <input type="text" name="website" class="stf-hp" tabindex="-1" autocomplete="off" aria-hidden="true" data-stf="hp" />
+      <div class="mt-4" data-stf="turnstile"></div>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <button type="button" class={primary} data-stf="send">Add my answers to the record</button>
+        <button type="button" class={quiet} data-stf="keep">Keep them to myself</button>
+      </div>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .stf-hp {
+    position: absolute !important;
+    left: -9999px !important;
+    height: 1px;
+    width: 1px;
+    opacity: 0;
+  }
+  .stf-consent {
+    display: grid;
+    gap: 0.55rem;
+  }
+  .stf-consent > :global(div) {
+    display: grid;
+    gap: 0.1rem;
+  }
+  @media (min-width: 560px) {
+    .stf-consent > :global(div) {
+      grid-template-columns: 10rem 1fr;
+      gap: 0.9rem;
+    }
+  }
+  .stf-consent :global(dt) {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+    padding-top: 0.15rem;
+  }
+  .stf-consent :global(dd) {
+    color: var(--color-fg-muted);
+  }
+  :global(html[data-stf-framed]) .stf-standalone {
+    display: none;
+  }
+  :global(html:not([data-stf-framed])) .stf-framed {
+    display: none;
+  }
+  /* Framed inside a work, the frame does not know the work's ground, so it brings its own: a solid card
+     in the reader's colour scheme, never a transparent page whose text would sit on whatever is below. */
+  :global(html[data-stf-framed]) .stf-page {
+    padding-top: 1rem;
+  }
+  :global(html[data-stf-framed] body) {
+    background: var(--color-bg);
+    border: 1px solid var(--color-line);
+    border-radius: 4px;
+  }
+</style>
+
+<script>
+  import { checkAnswers, describeAnswer, type Answers } from '@/lib/study/answers'
+  import { CONSENT_VERSION } from '@/lib/study/consent'
+  import type { StudyManifest } from '@/lib/study/manifest'
+
+  type Known = { id: string; work: string; href: string | null; state: string; sha256: string; manifest: StudyManifest | null }
+  /** As src/lib/study/handlers.ts checks it. */
+  const TURNSTILE_ACTION = 'study'
+  type Turnstile = { render: (el: HTMLElement, opts: Record<string, unknown>) => string }
+
+  const PRACTICE: Record<string, string> = { atelier: 'The Atelier (Assay)', field: 'The Field (Meridian)', studio: 'The Studio (Ensemble)' }
+  const STANDBY: Record<string, string> = {
+    store: 'The store behind these studies is not connected, so nothing can be stored.',
+    registry: 'The list of approved studies could not be read.',
+    'bot-check': 'The bot check is not configured, so nothing can be sent.',
+    'daily-cap': 'Today’s answers are full: the house takes a limited number a day. It opens again at midnight UTC.',
+    'text-check': 'This study asks for written answers, and the text check is not configured.',
+    changed: 'The practice changed this study since it was approved; it takes answers again once the change is approved.',
+    closed: 'This study has closed.',
+    gone: 'This study no longer stands beside its work.',
+  }
+  const GATE: Record<string, string> = {
+    spam: 'it reads as advertising or link dumping',
+    abuse: 'it insults, threatens or attacks someone',
+    pii: 'it carries personal data about someone else',
+    injection: 'it addresses a machine with instructions',
+    other: 'it falls under one of the text check’s exclusion grounds',
+  }
+  const REFUSED: Record<string, string> = {
+    'once-a-day': 'You have answered this study today already.',
+    'address-limit': 'This connection has given as many answers to this study today as one place may.',
+    turnstile: 'The bot check did not pass. Nothing was stored.',
+    consent: 'The consent text changed while you were answering; reload the page.',
+    version: 'The study’s questions changed while you were answering; reload the page to see the new ones.',
+    answers: 'The work sent answers this study does not ask for. Nothing was stored.',
+    'not-open': 'This study does not take answers now.',
+    'unknown-study': 'This study is not among the approved ones.',
+    'too-fast': 'Too many requests from this connection in a short time.',
+    'gate-unavailable': 'The text check cannot be reached right now. Nothing was stored; please try again in a moment.',
+    'gate-cap': 'Written answers are paused for today, at the text check’s daily limit.',
+    origin: 'The request did not come from this page.',
+    upstream: 'The store did not answer. Nothing may have been stored.',
+  }
+
+  const $ = <T extends HTMLElement = HTMLElement>(name: string): T => document.querySelector<T>(`[data-stf="${name}"]`)!
+  const framed = window.parent !== window
+  const post = (message: Record<string, unknown>) => {
+    if (framed) window.parent.postMessage(message, location.origin)
+  }
+  const tell = () => post({ type: 'house-study:height', height: document.documentElement.scrollHeight })
+  const say = (text: string) => {
+    $('status').textContent = text
+    $('status').hidden = false
+    tell()
+  }
+
+  async function botCheck(siteKey: string, study: string): Promise<string> {
+    if (!siteKey) return ''
+    const w = window as unknown as { turnstile?: Turnstile }
+    await new Promise<void>((resolve, reject) => {
+      if (w.turnstile) return resolve()
+      const s = document.createElement('script')
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+      s.async = true
+      s.onload = () => resolve()
+      s.onerror = () => reject(new Error('bot check script'))
+      document.head.appendChild(s)
+    })
+    return new Promise<string>((resolve, reject) => {
+      w.turnstile!.render($<HTMLElement>('turnstile'), {
+        sitekey: siteKey,
+        action: TURNSTILE_ACTION,
+        cData: study,
+        theme: 'auto',
+        callback: (t: string) => resolve(t),
+        'error-callback': () => reject(new Error('bot check')),
+        'expired-callback': () => reject(new Error('bot check expired')),
+      })
+      tell()
+    })
+  }
+
+  async function main(): Promise<void> {
+    const root = $<HTMLElement>('root')
+    if (root.hasAttribute('data-stf-bound')) return
+    root.setAttribute('data-stf-bound', '')
+    if (framed) {
+      document.documentElement.setAttribute('data-stf-framed', '')
+      if ('ResizeObserver' in window) new ResizeObserver(tell).observe(document.body)
+    }
+    const id = new URLSearchParams(location.search).get('study') ?? ''
+    let known: Known | undefined
+    try {
+      const reg = (await (await fetch('/study/studies.json', { headers: { accept: 'application/json' } })).json()) as { known?: Known[] }
+      known = reg.known?.find((k) => k.id === id)
+    } catch {
+      known = undefined
+    }
+    if (!known) {
+      $('title').textContent = 'No such study'
+      say('This study is not among the ones the architect has approved, so it takes no answers.')
+      post({ type: 'house-study:closed', study: id, reason: 'unknown-study' })
+      return
+    }
+    const practice = known.work.split(':')[0] ?? ''
+    $('kicker').textContent = `A study of ${PRACTICE[practice] ?? practice}`
+    if (known.href) $<HTMLAnchorElement>('work').href = known.href
+    if (framed) {
+      // Only the work whose study this is may hold the frame. Another page of the site could embed it,
+      // and a page elsewhere cannot (frame-ancestors 'self'); a parent this frame cannot read is not
+      // the work.
+      let parentPath = ''
+      try {
+        parentPath = window.parent.location.pathname
+      } catch {
+        parentPath = ''
+      }
+      // a study without a work ("gone") says so below; this check is for one that has its work
+      if (known.href && !parentPath.startsWith(known.href)) {
+        $('title').textContent = 'This frame belongs to another work'
+        say('This study is asked by its own work, not by the page around this frame, so it takes no answers here.')
+        post({ type: 'house-study:closed', study: id, reason: 'wrong-work' })
+        return
+      }
+    }
+    if (known.state !== 'approved' || !known.manifest) {
+      $('title').textContent = known.manifest?.title ?? 'This study takes no answers'
+      say(STANDBY[known.state] ?? 'This study takes no answers now.')
+      post({ type: 'house-study:closed', study: id, reason: known.state })
+      return
+    }
+    const m = known.manifest
+    const sha256 = known.sha256
+    $('title').textContent = m.title
+    $('purpose').textContent = m.purpose
+    $('reading').textContent = m.reading
+    const list = $<HTMLOListElement>('questions')
+    for (const q of m.questions) {
+      const li = document.createElement('li')
+      li.textContent = q.prompt
+      list.appendChild(li)
+    }
+    $('about').hidden = false
+
+    let status: { open?: boolean; standby?: string | null } | null = null
+    try {
+      status = await (await fetch(`/api/study/status?study=${encodeURIComponent(id)}`, { headers: { accept: 'application/json' } })).json()
+    } catch {
+      status = null
+    }
+    if (!status?.open) {
+      say(STANDBY[status?.standby ?? (status as { detail?: string } | null)?.detail ?? ''] ?? 'This study takes no answers at the moment.')
+      post({ type: 'house-study:closed', study: id, reason: status?.standby ?? 'standby' })
+      return
+    }
+    $('status').hidden = true
+    if (!framed) return tell()
+
+    // Consent and sending answer only a person. A click a script makes (el.click(), dispatchEvent) is
+    // not trusted: on the box it is undone, on the buttons it does nothing. The box is read on its
+    // click, not its change, because the change a scripted click causes counts as trusted.
+    const agree = $<HTMLInputElement>('agree')
+    const start = $<HTMLButtonElement>('start')
+    agree.checked = false
+    start.disabled = true
+    $('consent').hidden = false
+    let ticked = false
+    agree.addEventListener('click', (e) => {
+      if (!e.isTrusted) {
+        e.preventDefault()
+        return
+      }
+      ticked = agree.checked
+      start.disabled = !ticked
+    })
+    let phase: 'consent' | 'waiting' | 'review' | 'sent' = 'consent'
+    let answers: Answers | null = null
+    start.addEventListener('click', (e) => {
+      if (!e.isTrusted || !ticked || !agree.checked || phase !== 'consent') return
+      phase = 'waiting'
+      $('consent').hidden = true
+      say('You are taking part. Answer in the work; your answers come back here for you to see before anything is sent.')
+      post({ type: 'house-study:consent', study: id, consent: CONSENT_VERSION })
+    })
+
+    window.addEventListener('message', (e: MessageEvent) => {
+      if (e.origin !== location.origin || e.source !== window.parent) return
+      const data = e.data as { type?: string; answers?: unknown } | null
+      if (data?.type !== 'house-study:answers' || phase !== 'waiting') return
+      const checked = checkAnswers(m, data.answers)
+      if (!checked.ok) {
+        say(REFUSED.answers!)
+        post({ type: 'house-study:result', study: id, stored: false, reason: 'answers', question: checked.question ?? null })
+        return
+      }
+      answers = checked.value
+      phase = 'review'
+      const summary = $<HTMLDListElement>('summary')
+      summary.replaceChildren()
+      for (const q of m.questions) {
+        const row = document.createElement('div')
+        const dt = document.createElement('dt')
+        dt.textContent = q.prompt.length > 60 ? `${q.prompt.slice(0, 57)}…` : q.prompt
+        const dd = document.createElement('dd')
+        dd.textContent = describeAnswer(q, answers[q.id] ?? null)
+        row.append(dt, dd)
+        summary.appendChild(row)
+      }
+      $('status').hidden = true
+      $('review').hidden = false
+      tell()
+    })
+
+    const finish = (stored: boolean, reason: string | null, extra: Record<string, unknown> = {}) => {
+      phase = 'sent'
+      $('review').hidden = true
+      post({ type: 'house-study:result', study: id, stored, reason, ...extra })
+    }
+    $('keep').addEventListener('click', () => {
+      say('Nothing was sent. Your answers stay with you.')
+      finish(false, 'kept')
+    })
+    $('send').addEventListener('click', async (e) => {
+      if (!e.isTrusted || phase !== 'review' || !answers) return
+      const send = $<HTMLButtonElement>('send')
+      send.disabled = true
+      send.textContent = 'Sending …'
+      let token = ''
+      try {
+        token = await botCheck(root.dataset.siteKey ?? '', id)
+      } catch {
+        say('The bot check could not run, so nothing was sent.')
+        return finish(false, 'bot-check')
+      }
+      try {
+        const res = await fetch('/api/study/submit', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', accept: 'application/json' },
+          body: JSON.stringify({ study: id, consent: CONSENT_VERSION, manifest: sha256, answers, turnstileToken: token, website: $<HTMLInputElement>('hp').value }),
+        })
+        const body = (await res.json().catch(() => null)) as { status?: string; reason?: string; detail?: string; code?: string; entries?: number } | null
+        if (res.ok && body?.status === 'stored') {
+          say(`Your answers are stored, one of ${body.entries} set${body.entries === 1 ? '' : 's'} in this study. They join the open record once their day is over, in the next full batch of five, without their day.`)
+          return finish(true, null, { entries: body.entries })
+        }
+        if (body?.reason === 'gate') {
+          say(`The text check refused a written answer: ${GATE[body.code ?? 'other'] ?? GATE.other}. Nothing was stored.`)
+          return finish(false, 'gate', { code: body.code ?? 'other' })
+        }
+        if (body?.reason === 'standby') {
+          say(STANDBY[body.detail ?? ''] ?? 'The study is closed right now. Nothing was stored.')
+          return finish(false, 'standby', { detail: body.detail ?? null })
+        }
+        say(REFUSED[body?.reason ?? 'upstream'] ?? REFUSED.upstream!)
+        return finish(false, body?.reason ?? 'upstream')
+      } catch {
+        say(REFUSED.upstream!)
+        return finish(false, 'upstream')
+      }
+    })
+    tell()
+  }
+
+  void main()
+  document.addEventListener('astro:page-load', () => void main())
+</script>
