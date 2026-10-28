@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { BATCH_SIZE, RECORD_CONTRACT, releaseBatches, serializeRecord, toRecordFile } from './record'
-import { CONSENT_LINES, CONSENT_VERSION, consentDigest } from './consent'
+import { CONSENT_LINES, CONSENT_SUMMARY, CONSENT_VERSION, consentDigest } from './consent'
 import { ANSWERS } from './fixtures'
 import type { StoredAnswers } from './store'
 
@@ -30,10 +30,18 @@ describe('releaseBatches and the record file', () => {
 
 describe('the house consent text for studies', () => {
   /** Every consent text an answer set was ever given under, by version. Add a line when the text
-   *  changes — never edit one: stored answers carry the version they were given under. (The text of
-   *  2026-10-27 never took an answer: it claimed the frame was the only way in, which a work on the
-   *  same origin could disprove, and was replaced before the studies went live.) */
-  const GIVEN: Record<string, string> = { '2026-10-28': '7cd022d8' }
+   *  changes — never edit one: stored answers carry the version they were given under. (The texts of
+   *  2026-10-27 and 2026-10-28 never took an answer. The first claimed the frame was the only way in,
+   *  which a work on the same origin could disprove; the second said the operator approved every
+   *  study's questions, until the house's check replaced him on 2026-10-28. Both were replaced before
+   *  any study opened.) */
+  const GIVEN: Record<string, string> = { '2026-10-29': 'fef9f7ec' }
+  it('sums up, always in view, what decides whether to take part', () => {
+    for (const words of ['research practices, which machines run', 'up to you', 'nothing is sent until you have seen your answers', 'anonymous', 'open data', 'batches of five', 'cannot be taken back', '16 or older']) {
+      expect(CONSENT_SUMMARY).toContain(words)
+    }
+  })
+
   it('names who asks, the work and the frame, what is kept and not, where it goes, why it cannot be taken back, and who is responsible', () => {
     expect(CONSENT_LINES.map((l) => l.label)).toEqual([
       'Who asks',
@@ -46,8 +54,9 @@ describe('the house consent text for studies', () => {
     ])
     const all = CONSENT_LINES.map((l) => l.text).join(' ')
     for (const word of [
-      'approved',
-      'the operator approved the questions, not the code',
+      'No person approved them',
+      'the house’s machine check read this version',
+      'no person reviews that code',
       'the house could not tell if a work broke that rule',
       'which version of the questions',
       'how long you took',
@@ -56,7 +65,6 @@ describe('the house consent text for studies', () => {
       'without the day',
       '30 days',
       'this frame sends none of your answers and starts no bot check',
-      '16 or older',
       'privacy policy',
       'material',
     ]) {

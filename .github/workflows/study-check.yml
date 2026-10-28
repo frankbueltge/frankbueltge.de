@@ -1,0 +1,77 @@
+# .github/workflows/study-check.yml — the house reads every new study before it may ask (2026-10-28).
+#
+# A practice's work may ask the people who see it (docs/design/2026-10-27-practice-studies.md). No
+# person approves a study (Frank's decision of 2026-10-28, wording private; it replaced the operator's
+# approval of the day before). The `study.json` arrives with its work through the practice's
+# integrate; this workflow then asks the house's check (src/lib/study/check.ts: the model of the seed
+# and the reception gates, a prompt published word for word on /studies, hard exclusion grounds only)
+# about every version of a study's file it has not read yet, and commits the verdicts to
+# src/data/studies/checks.json. Only then does it start the deploy, which opens a study that passed: a
+# push with the built-in token starts no other workflow, so it asks for the deploy itself, and a run
+# that found nothing new deploys nothing. A refused version waits for the practice to change its file;
+# the practice reads why in its feedback folder the next night.
+#
+# When it runs: after an integrate of the Atelier, the Field or the Studio that succeeded. An integrate
+# that another workflow started with the built-in token ends without a workflow_run event, so such an
+# integrate starts this workflow itself (its "when another workflow started it" step). And every night
+# at 03:40 UTC.
+#
+# Fail-closed: no key, an unreachable gate or an unreadable verdict records nothing, and the next run
+# asks again.
+name: Study check
+
+on:
+  workflow_run:
+    workflows:
+      - Atelier integrate
+      - Field integrate
+      - Studio integrate
+    types: [completed]
+  schedule:
+    - cron: '40 3 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: study-check
+
+jobs:
+  check:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Read every version of a study the check has not read yet
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: npx tsx scripts/study/check.ts
+
+      - name: Commit the verdicts and deploy them (only when there is a new one)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "$(git status --porcelain src/data/studies/checks.json)" ]; then
+            git config user.name "Study-Check"
+            git config user.email "study-check@frankbueltge.de"
+            git add src/data/studies/checks.json
+            git commit -m "studies: the house's check of $(date -u +%F)"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase --autostash origin main && git push && break
+              git rebase --abort 2>/dev/null || true
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts" >&2; exit 1; }
+              sleep $((attempt * 5))
+            done
+            gh workflow run deploy-cf.yml --ref main
+          else
+            echo "no new verdict"
+          fi

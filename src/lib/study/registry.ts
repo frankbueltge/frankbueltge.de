@@ -1,15 +1,18 @@
-// src/lib/study/registry.ts — which studies exist, and which of them the architect has approved (2026-10-27).
+// src/lib/study/registry.ts — which studies exist, and what the house's check made of each (2026-10-27;
+// the check replaced the architect's approval on 2026-10-28).
 //
 // A study exists where a published work of the Atelier, the Field or the Studio carries a `study.json`
 // beside its `index.html`: in `werke-html/<slug>/`, or in the open cycle's folders while a cycle is in
 // its working phase (src/lib/engines/publication.mjs). The same layout stands in the mirrors under
-// public/ and in the built site under dist/, so one walk serves the build step, the approval workflow
-// and the /studies page.
+// public/ and in the built site under dist/, so one walk serves the build step, the check workflow and
+// the /studies page.
 //
-// A study takes answers only when src/data/studies/approved.json holds an approval for exactly its
-// file: the same id, the same work, and the SHA-256 of the manifest's bytes. A practice that changes
-// its manifest changes the hash, and the study waits for a new approval; the approval workflow opens a
-// pull request for it, and Frank's merge is the approval (his decision of 2026-10-27, wording private).
+// A study takes answers only when src/data/studies/checks.json holds a passing check for exactly its
+// file: the same id, the same work, and the SHA-256 of the manifest's bytes (src/lib/study/check.ts). A
+// practice that changes its manifest changes the hash, and the study waits until the check has read
+// the new version. No person approves a study (Frank's decision of 2026-10-28, wording private); the
+// architect, or a session that finds a study breaking the rules, can stop one in
+// src/data/studies/stopped.json, whatever its file.
 //
 // A study's id begins with the practice whose work asks (`studio-…`), so no practice can take, or
 // stop, another's study by using its id. Within a practice an id names one work: two works with the
@@ -22,35 +25,66 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { openCycleFolders } from '../engines/publication.mjs'
 import { readOpenCycle } from '../engines/publication-prune.mjs'
-import { LIMITS, manifestProblems, STUDY_ID, type StudyManifest } from './manifest'
+import { CHECK_REASONS, type CheckReason } from './check'
+import { isClosed, LIMITS, manifestProblems, STUDY_ID, type StudyManifest } from './manifest'
 
 export const STUDY_PRACTICES = ['atelier', 'field', 'studio'] as const
 export type StudyPractice = (typeof STUDY_PRACTICES)[number]
 
-export const APPROVALS_FILE = 'src/data/studies/approved.json'
+export const CHECKS_FILE = 'src/data/studies/checks.json'
+export const STOPS_FILE = 'src/data/studies/stopped.json'
 export const REGISTRY_FILE = 'study/studies.json'
-export const APPROVALS_CONTRACT = 'study-approvals/1'
+export const CHECKS_CONTRACT = 'study-checks/1'
+export const STOPS_CONTRACT = 'study-stops/1'
 
 const SLUG = /^[a-z0-9][a-z0-9-]{0,119}$/
 const WORK = /^(atelier|field|studio):[a-z0-9][a-z0-9-]{0,119}$/
+const OWN_ID = /^(atelier|field|studio)-/
 const SHA256 = /^[0-9a-f]{64}$/
+const DIGEST = /^[0-9a-f]{12}$/
 const DAY = /^\d{4}-\d{2}-\d{2}$/
 
-export interface Approval {
+/** One reading of one version of a study's file by the house's check (./check.ts). */
+export interface Check {
   id: string
   /** the work, as the reception names it: `<practice>:<slug>` */
   work: string
   sha256: string
-  /** the day the architect merged it */
-  approved: string
+  /** the UTC day of the check */
+  checked: string
+  model: string
+  /** the first 12 hex digits of the SHA-256 of the prompt it ran under */
+  prompt: string
+  verdict: 'pass' | 'block'
+  /** a refusal's reason */
+  reason?: CheckReason
+  /** the question a refusal concerns, 0 for the study's own text, null when the check named none */
+  question?: number | null
 }
 
-export interface ApprovalsFile {
-  $contract: typeof APPROVALS_CONTRACT
-  approvals: Approval[]
+export interface ChecksFile {
+  $contract: typeof CHECKS_CONTRACT
+  checks: Check[]
 }
 
-export type StudyState = 'approved' | 'closed' | 'changed' | 'proposed' | 'invalid'
+/** A study that takes no answers, whatever its file, until the stop is removed. It names the study's
+ *  id and its work, and holds for either: a practice that renames its study does not lift the stop. */
+export interface Stop {
+  id: string
+  /** the work, `<practice>:<slug>` */
+  work: string
+  /** the day it was stopped */
+  stopped: string
+  /** what was found, in a sentence */
+  why: string
+}
+
+export interface StopsFile {
+  $contract: typeof STOPS_CONTRACT
+  stopped: Stop[]
+}
+
+export type StudyState = 'open' | 'closed' | 'stopped' | 'unchecked' | 'refused' | 'invalid'
 
 export interface FoundStudy {
   practice: StudyPractice
@@ -68,7 +102,9 @@ export interface FoundStudy {
 
 export interface ResolvedStudy extends FoundStudy {
   state: StudyState
-  approval: Approval | null
+  /** the check of exactly this file, if there is one */
+  check: Check | null
+  stop: Stop | null
 }
 
 const dirs = (p: string): string[] => (existsSync(p) ? readdirSync(p, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name).sort() : [])
@@ -116,69 +152,110 @@ export function findStudies(base: string, root: string): FoundStudy[] {
   return out
 }
 
-/** The committed approvals, refused whole if one is malformed or a study is approved twice: the
- *  registry is then not written, and the endpoints stand by rather than guess which one holds. */
-export function readApprovals(root: string): Approval[] {
-  const p = join(root, APPROVALS_FILE)
+const readJson = (p: string): unknown => JSON.parse(readFileSync(p, 'utf8'))
+
+/** The committed checks, refused whole if one is malformed or a file is checked twice: the registry is
+ *  then not written, and the endpoints stand by rather than guess which verdict holds. */
+export function readChecks(root: string): Check[] {
+  const p = join(root, CHECKS_FILE)
   if (!isFile(p)) return []
-  const f = JSON.parse(readFileSync(p, 'utf8')) as ApprovalsFile
-  if (f.$contract !== APPROVALS_CONTRACT || !Array.isArray(f.approvals)) throw new Error(`${APPROVALS_FILE}: not a ${APPROVALS_CONTRACT} file`)
-  const ids = new Set<string>()
-  for (const a of f.approvals) {
-    const ok =
-      a && typeof a.id === 'string' && STUDY_ID.test(a.id) && typeof a.work === 'string' && WORK.test(a.work) && a.id.startsWith(`${a.work.split(':')[0]}-`) &&
-      typeof a.sha256 === 'string' && SHA256.test(a.sha256) && typeof a.approved === 'string' && DAY.test(a.approved)
-    if (!ok) throw new Error(`${APPROVALS_FILE}: a malformed approval (${JSON.stringify(a?.id ?? null)})`)
-    if (ids.has(a.id)) throw new Error(`${APPROVALS_FILE}: the study ${a.id} is approved twice`)
-    ids.add(a.id)
+  const f = readJson(p) as ChecksFile
+  if (f?.$contract !== CHECKS_CONTRACT || !Array.isArray(f.checks)) throw new Error(`${CHECKS_FILE}: not a ${CHECKS_CONTRACT} file`)
+  const seen = new Set<string>()
+  for (const c of f.checks) {
+    const head =
+      c && typeof c.id === 'string' && STUDY_ID.test(c.id) && typeof c.work === 'string' && WORK.test(c.work) && c.id.startsWith(`${c.work.split(':')[0]}-`) &&
+      typeof c.sha256 === 'string' && SHA256.test(c.sha256) && typeof c.checked === 'string' && DAY.test(c.checked) &&
+      typeof c.model === 'string' && c.model.length > 0 && c.model.length <= 80 && typeof c.prompt === 'string' && DIGEST.test(c.prompt)
+    const verdict =
+      c?.verdict === 'pass'
+        ? c.reason === undefined && c.question === undefined
+        : c?.verdict === 'block' && (CHECK_REASONS as readonly string[]).includes(c.reason ?? '') &&
+          (c.question === undefined || c.question === null || (Number.isInteger(c.question) && c.question >= 0))
+    if (!head || !verdict) throw new Error(`${CHECKS_FILE}: a malformed check (${JSON.stringify(c?.id ?? null)})`)
+    const key = `${c.id} ${c.work} ${c.sha256}`
+    if (seen.has(key)) throw new Error(`${CHECKS_FILE}: the same file of ${c.id} is checked twice`)
+    seen.add(key)
   }
-  return f.approvals
+  return f.checks
+}
+
+/** The committed stops, refused whole if one is malformed or a study is stopped twice. */
+export function readStops(root: string): Stop[] {
+  const p = join(root, STOPS_FILE)
+  if (!isFile(p)) return []
+  const f = readJson(p) as StopsFile
+  if (f?.$contract !== STOPS_CONTRACT || !Array.isArray(f.stopped)) throw new Error(`${STOPS_FILE}: not a ${STOPS_CONTRACT} file`)
+  const ids = new Set<string>()
+  for (const x of f.stopped) {
+    const ok =
+      x && typeof x.id === 'string' && STUDY_ID.test(x.id) && OWN_ID.test(x.id) && typeof x.work === 'string' && WORK.test(x.work) &&
+      x.id.startsWith(`${x.work.split(':')[0]}-`) && typeof x.stopped === 'string' && DAY.test(x.stopped) &&
+      typeof x.why === 'string' && x.why.trim().length > 0 && x.why.length <= 500
+    if (!ok) throw new Error(`${STOPS_FILE}: a malformed stop (${JSON.stringify(x?.id ?? null)})`)
+    if (ids.has(x.id)) throw new Error(`${STOPS_FILE}: the study ${x.id} is stopped twice`)
+    ids.add(x.id)
+  }
+  return f.stopped
+}
+
+/** Each study that ever passed the check, with the last version that passed: the ones that may have
+ *  answers, so their record stays readable after their work has gone. */
+export function answerable(checks: readonly Check[]): Check[] {
+  const last = new Map<string, Check>()
+  for (const c of checks) if (c.verdict === 'pass') last.set(c.id, c)
+  return [...last.values()].sort((x, y) => x.id.localeCompare(y.id))
 }
 
 const ownPrefix = (s: FoundStudy): boolean => Boolean(s.manifest?.id.startsWith(`${s.practice}-`))
 
 /** Each found study with its state. An id must begin with its practice; one used by two works of
- *  that practice stops both. */
-export function resolveStudies(found: readonly FoundStudy[], approvals: readonly Approval[], today: string): ResolvedStudy[] {
+ *  that practice stops both. A stop outranks every verdict, and a refusal outranks the calendar. */
+export function resolveStudies(found: readonly FoundStudy[], checks: readonly Check[], stops: readonly Stop[], today: string): ResolvedStudy[] {
   const byId = new Map<string, number>()
   for (const s of found) if (s.manifest && ownPrefix(s)) byId.set(s.manifest.id, (byId.get(s.manifest.id) ?? 0) + 1)
-  return found.map((s) => {
-    if (!s.manifest) return { ...s, state: 'invalid' as const, approval: null }
-    if (!ownPrefix(s)) return { ...s, problems: [`id: begin it with "${s.practice}-", the practice whose work asks`], state: 'invalid' as const, approval: null }
-    if ((byId.get(s.manifest.id) ?? 0) > 1) return { ...s, problems: [`id ${s.manifest.id} is used by more than one of your works`], state: 'invalid' as const, approval: null }
-    const approval = approvals.find((a) => a.id === s.manifest!.id && a.work === s.work) ?? null
-    if (!approval) return { ...s, state: 'proposed' as const, approval: null }
-    if (approval.sha256 !== s.sha256) return { ...s, state: 'changed' as const, approval }
-    if (s.manifest.closes !== undefined && today > s.manifest.closes) return { ...s, state: 'closed' as const, approval }
-    return { ...s, state: 'approved' as const, approval }
+  return found.map((s): ResolvedStudy => {
+    if (!s.manifest) return { ...s, state: 'invalid', check: null, stop: null }
+    if (!ownPrefix(s)) return { ...s, problems: [`id: begin it with "${s.practice}-", the practice whose work asks`], state: 'invalid', check: null, stop: null }
+    if ((byId.get(s.manifest.id) ?? 0) > 1) return { ...s, problems: [`id ${s.manifest.id} is used by more than one of your works`], state: 'invalid', check: null, stop: null }
+    const id = s.manifest.id
+    const check = checks.find((c) => c.id === id && c.work === s.work && c.sha256 === s.sha256) ?? null
+    const stop = stops.find((x) => x.id === id || x.work === s.work) ?? null
+    if (stop) return { ...s, state: 'stopped', check, stop }
+    if (check?.verdict === 'block') return { ...s, state: 'refused', check, stop }
+    if (isClosed(s.manifest, today)) return { ...s, state: 'closed', check, stop }
+    return { ...s, state: check ? 'open' : 'unchecked', check, stop }
   })
 }
 
-/** What the endpoint may know: every approval, with its state today, and the manifest of each
- *  approved one. Only `approved` takes answers; the record of every listed study can be read. */
+/** What the endpoints and the frame may know: every readable study with its state today, the manifest
+ *  of each open one (and of a closed one that had passed), and every study that once passed and no
+ *  longer stands beside its work. Only `open` takes answers; the record of every listed study can be
+ *  read. */
 export interface RegistryEntry {
   id: string
   work: string
   href: string | null
-  state: 'approved' | 'closed' | 'changed' | 'gone'
+  state: Exclude<StudyState, 'invalid'> | 'gone'
+  /** the SHA-256 of the file that stands now, or, once gone, of the last one that passed */
   sha256: string
-  approved: string
   manifest: StudyManifest | null
 }
 
-export function registryOf(resolved: readonly ResolvedStudy[], approvals: readonly Approval[]): { schema: 1; known: RegistryEntry[] } {
-  const known = approvals.map((a): RegistryEntry => {
-    const s = resolved.find((r) => r.manifest?.id === a.id && r.work === a.work)
-    const state = !s ? 'gone' : s.state === 'approved' || s.state === 'closed' ? s.state : 'changed'
-    return {
-      id: a.id,
-      work: a.work,
-      href: s?.href ?? null,
-      state,
-      sha256: a.sha256,
-      approved: a.approved,
-      manifest: state === 'approved' || state === 'closed' ? s!.manifest : null,
-    }
-  })
+/** Whether the house may repeat a study's own words, in the frame or on /studies: only once the check
+ *  has passed exactly this file, and only while the study is open or closed — never for one that waits,
+ *  was refused or was stopped. */
+export const wordsShown = (s: ResolvedStudy): boolean => s.check?.verdict === 'pass' && (s.state === 'open' || s.state === 'closed')
+
+export function registryOf(resolved: readonly ResolvedStudy[], checks: readonly Check[]): { schema: 1; known: RegistryEntry[] } {
+  const known: RegistryEntry[] = []
+  for (const s of resolved) {
+    if (s.state === 'invalid' || !s.manifest) continue
+    known.push({ id: s.manifest.id, work: s.work, href: s.href, state: s.state, sha256: s.sha256, manifest: wordsShown(s) ? s.manifest : null })
+  }
+  for (const c of answerable(checks)) {
+    if (known.some((k) => k.id === c.id)) continue
+    known.push({ id: c.id, work: c.work, href: null, state: 'gone', sha256: c.sha256, manifest: null })
+  }
   return { schema: 1, known: known.sort((x, y) => x.id.localeCompare(y.id)) }
 }

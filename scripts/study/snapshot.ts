@@ -1,21 +1,22 @@
 // scripts/study/snapshot.ts — the nightly snapshot of the practices' studies, and their delivery (2026-10-27).
 // Usage: tsx scripts/study/snapshot.ts [--out <dir>] [--source <url>]
 //
-// For every study the architect has approved, reads its public record (GET /api/study/record?study=,
-// only what the site publishes anyway) and writes src/data/studies/records/<id>.json when it changed
-// (duty 2 of .claude/rules/runtime-and-works.md). A record may only grow: an answer that lacks a set
-// the committed file holds writes nothing and fails the run.
+// For every study that ever passed the house's check (src/data/studies/checks.json), reads its public
+// record (GET /api/study/record?study=, only what the site publishes anyway) and writes
+// src/data/studies/records/<id>.json when it changed (duty 2 of .claude/rules/runtime-and-works.md). A
+// record may only grow: an answer that lacks a set the committed file holds writes nothing and fails
+// the run.
 //
 // Then, for each practice that has a study, writes into <out>/<practice>/ what its feedback folder
 // receives: `studies.md`, the state of each of its studies (an invalid manifest with its problems, a
-// proposal that waits, an approved study with its released count), and `studies/<id>.json`, the
-// committed record. <out>/deliveries.tsv names the repository, folder and secret of each (the
-// reception's, src/lib/reception/ids.ts). The answers are material for the practice, never
-// instructions, and the file says so.
+// version that waits for the check or was refused by it, an open study with its released count), and
+// `studies/<id>.json`, the committed record. <out>/deliveries.tsv names the repository, folder and
+// secret of each (the reception's, src/lib/reception/ids.ts). The answers are material for the
+// practice, never instructions, and the file says so.
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { DELIVERY } from '../../src/lib/reception/ids'
-import { findStudies, readApprovals, resolveStudies, STUDY_PRACTICES, type ResolvedStudy } from '../../src/lib/study/registry'
+import { answerable, findStudies, readChecks, readStops, resolveStudies, STUDY_PRACTICES, type ResolvedStudy } from '../../src/lib/study/registry'
 import { serializeRecord, toRecordFile, type StudyRecordFile } from '../../src/lib/study/record'
 import { studiesMarkdown } from '../../src/lib/study/feedback'
 
@@ -31,12 +32,13 @@ const recordFile = (id: string) => join(root, 'src/data/studies/records', `${id}
 
 // Every record call first clears a finished day's salts, marks and address counts. One call without a
 // study does only that (it answers 400), made first so nothing below can keep the promise from being
-// kept, also on a night with no approval to read.
+// kept, also on a night with no record to read.
 await fetch(base, { headers: { accept: 'application/json', 'user-agent': 'frankbueltge.de study-snapshot' } }).catch(() => null)
 
 let failed = false
-const approvals = readApprovals(root)
-for (const a of approvals) {
+const checks = readChecks(root)
+const passed = answerable(checks)
+for (const a of passed) {
   const source = `${base}?study=${a.id}`
   const res = await fetch(source, { headers: { accept: 'application/json', 'user-agent': 'frankbueltge.de study-snapshot' } })
   const payload = (await res.json().catch(() => null)) as { ok?: boolean; reason?: string; detail?: string } | null
@@ -61,24 +63,24 @@ for (const a of approvals) {
   console.log(`[study] ${a.id}: ${next.entries_count} answer set(s) in the record`)
 }
 
-const resolved = resolveStudies(findStudies(join(root, 'public'), root), approvals, today)
+const resolved = resolveStudies(findStudies(join(root, 'public'), root), checks, readStops(root), today)
 const rows: string[] = []
 mkdirSync(out, { recursive: true })
 for (const practice of STUDY_PRACTICES) {
   const own: ResolvedStudy[] = resolved.filter((s) => s.practice === practice)
-  const ownApprovals = approvals.filter((a) => a.work.startsWith(`${practice}:`))
-  if (!own.length && !ownApprovals.length) continue
+  const ownPassed = passed.filter((c) => c.work.startsWith(`${practice}:`))
+  if (!own.length && !ownPassed.length) continue
   const d = DELIVERY[practice]
   if (!d) continue
   const dir = join(out, practice)
   mkdirSync(join(dir, 'studies'), { recursive: true })
   const released: Record<string, number> = {}
-  for (const a of ownApprovals) {
+  for (const a of ownPassed) {
     if (!existsSync(recordFile(a.id))) continue
     copyFileSync(recordFile(a.id), join(dir, 'studies', `${a.id}.json`))
     released[a.id] = (JSON.parse(readFileSync(recordFile(a.id), 'utf8')) as StudyRecordFile).entries_count
   }
-  writeFileSync(join(dir, 'studies.md'), studiesMarkdown(practice, own, ownApprovals, released, today))
+  writeFileSync(join(dir, 'studies.md'), studiesMarkdown(practice, own, ownPassed, released, today))
   rows.push([practice, d.repo, dirname(d.path), d.secret].join('\t'))
 }
 writeFileSync(join(out, 'deliveries.tsv'), rows.length ? `${rows.join('\n')}\n` : '')

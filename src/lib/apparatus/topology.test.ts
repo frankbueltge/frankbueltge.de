@@ -81,8 +81,8 @@ const commitsSiteData = (source: string): boolean =>
 const NOT_A_MAIN_COMMITTER: Record<string, string> = {
   'engine-site-pr.yml':
     'pushes to a pull-request branch and to the engine repositories, never to main — the human merge fires on:push normally',
-  'study-approval.yml':
-    'pushes only the branch of a study-approval pull request, never main — the approval is the architect’s merge, a human push that fires on:push normally',
+  'study-check.yml':
+    'starts the deploy itself (workflow_dispatch, which the built-in token may trigger) after it committed a verdict, so its many runs that find nothing new deploy nothing',
 }
 
 describe('the apparatus map describes the workflows this repository actually has', () => {
@@ -134,6 +134,12 @@ describe('every workflow that commits to main reaches production', () => {
       'this workflow pushes to the repository but is not in deploy-cf.yml — pushes made with the ' +
         "built-in token do not fire on:push, so its data would only go live on someone else's deploy",
     ).toEqual([])
+  })
+
+  it('the study check, excused above, starts the deploy itself once it has committed a verdict', () => {
+    const source = readFileSync(`${WORKFLOW_DIR}/study-check.yml`, 'utf8')
+    expect(source).toMatch(/actions: write/)
+    expect(source.indexOf('gh workflow run deploy-cf.yml')).toBeGreaterThan(source.indexOf('git push'))
   })
 
   it('names a reason for every workflow excused from the trigger list', () => {

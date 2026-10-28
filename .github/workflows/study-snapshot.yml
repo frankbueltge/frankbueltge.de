@@ -1,6 +1,6 @@
 # .github/workflows/study-snapshot.yml — the practices' studies: nightly snapshot and delivery (2026-10-27).
 #
-# Every night this reads the public record of each study the architect has approved (GET
+# Every night this reads the public record of each study that ever passed the house's check (GET
 # /api/study/record: only what the site publishes, so no Cloudflare token is needed), commits it as
 # src/data/studies/records/<id>.json when it changed (duty 2 of .claude/rules/runtime-and-works.md;
 # a record may only grow), and writes `studies.md` and `studies/<id>.json` into the feedback folder of

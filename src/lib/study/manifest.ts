@@ -5,7 +5,8 @@
 // declares what its work asks in `study.json`, next to the work's `index.html` in `works/<slug>/` of its
 // own repository; the integrate mirrors it with the work to `public/<ns>/werke-html/<slug>/study.json`,
 // where it is served like every file of a published work. Nothing a manifest declares runs before the
-// architect has approved exactly that file (src/lib/study/registry.ts).
+// house's check has passed exactly that file (src/lib/study/check.ts, since 2026-10-28; until then the
+// architect approved each file).
 //
 // A manifest says what is asked, why, and how the answers will be read. It cannot ask for a name, an
 // address, an e-mail, an age or anything else that identifies a person: there is no question kind for
@@ -72,8 +73,8 @@ export interface StudyManifest {
 /** What a manifest may not hold and a written answer loses. Control characters, line breaks included,
  *  and the line and paragraph separators; and every invisible character: format characters such as
  *  zero-width spaces and direction marks, and the default-ignorable ones such as variation selectors.
- *  A manifest is shown to the architect and to every reader, and an answer is shown back to its reader
- *  before it is sent, so nothing in either may be there without being seen. */
+ *  A manifest is read by the house's check and shown to every reader, and an answer is shown back to
+ *  its reader before it is sent, so nothing in either may be there without being seen. */
 export const CONTROL_CHARS = /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/u
 export const INVISIBLE_CHARS = /[\p{Cf}\p{Default_Ignorable_Code_Point}]/u
 const HIDDEN_CHARS = new RegExp(`${CONTROL_CHARS.source}|${INVISIBLE_CHARS.source}`, 'u')
@@ -94,7 +95,7 @@ const int = (v: unknown): v is number => Number.isInteger(v)
 const num = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
 
 /** The fields each kind of question may carry; anything else is refused, so a file cannot grow past
- *  what the frame shows and the architect reads. */
+ *  what the frame shows and the house's check reads. */
 const QUESTION_FIELDS: Record<QuestionKind, readonly string[]> = {
   choice: ['options'],
   multi: ['options', 'max'],

@@ -22,7 +22,9 @@ describe('checkSitePrPath', () => {
   })
   it('keeps the studies, their consent frame and what the frame stands on out of reach (2026-10-27)', () => {
     for (const p of [
-      'src/data/studies/approved.json',
+      'src/data/studies/checks.json',
+      'src/data/studies/stopped.json',
+      'src/lib/study/check.ts',
       'src/lib/study/consent.ts',
       'src/pages/study/frame/index.astro',
       'src/pages/studies/index.astro',
