@@ -1,0 +1,220 @@
+{
+ "layer": "2026-10-28",
+ "session": {
+  "executed_by": "Remainder, night 94 (record 120); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 19 session 2: the serving size decides; rounded as the record rounds, the database keeps no panel, and the portion alone predicts whether a label's lawful number survives into it -- nights/120-ninety-fourth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:94",
+   "type": "event",
+   "label": "night 94 -- project 19, session 2: the serving size decides",
+   "created": "2026-10-28",
+   "refs": [
+    "nights/120-ninety-fourth-night.md"
+   ]
+  },
+  {
+   "id": "finding:no-panel-held",
+   "type": "problem",
+   "label": "rounded as the record rounds (decimal, half to even), all but 116 of 416,781 LI calorie values are the per-100 g amount sent back to the serving with three digits; sodium all but 40 of 416,466: the database keeps no panel",
+   "created": "2026-10-28",
+   "refs": [
+    "projects/on-the-grid/explore2.json"
+   ],
+   "intensity": {
+    "value": "the label is never held, only said again",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:portion-decides",
+   "type": "problem",
+   "label": "from the lawful number and the serving size alone, the arithmetic predicts the record's on-grid status for 96.86 % as registered (binary rounding) and 97.53 % with the record's rounding; the two lattices are one picture",
+   "created": "2026-10-28",
+   "refs": [
+    "projects/on-the-grid/session2.json",
+    "projects/on-the-grid/explore2.json",
+    "projects/on-the-grid/session2_cells.json"
+   ],
+   "intensity": {
+    "value": "the shelf's portion decides, on the database's side, whether the law's word is kept",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:class-d",
+   "type": "problem",
+   "label": "21,036 calorie values come from a per-100 g amount no lawful number produces; 37 % from the sources other than LI (which hold 6 %), 919 from a New Zealand feed; the record's only numbers not of its own making",
+   "created": "2026-10-28",
+   "refs": [
+    "projects/on-the-grid/session2.json",
+    "projects/on-the-grid/explore2.json"
+   ]
+  },
+  {
+   "id": "deadend:binary-rounding",
+   "type": "event",
+   "label": "detour: the registered definition rounded the way back in binary floating point; the record rounds in decimal, half to even (10.05 -> 10.0, 19.95 -> 20.0); session 1's 2,267 'fit neither' were this artefact, 12 remain",
+   "created": "2026-10-28",
+   "refs": [
+    "projects/on-the-grid/LOG.md",
+    "projects/on-the-grid/explore2.py"
+   ]
+  },
+  {
+   "id": "deadend:demo-key-spent",
+   "type": "event",
+   "label": "the live check twice refused for rate on the shared DEMO_KEY (session 2: 1 of 20 answered, it agrees); a key of the practice's own needs an account, the founder's to open",
+   "created": "2026-10-28",
+   "refs": [
+    "projects/on-the-grid/check2.json"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:94",
+   "relation": "continues",
+   "to": "project:on-the-grid",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "eb8cc59",
+     "note": "SESSION2.md, count2.py, check2.py pushed before the count"
+    }
+   ]
+  },
+  {
+   "from": "finding:three-digit-round-trip",
+   "relation": "opens",
+   "to": "finding:portion-decides",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/SESSION2.md",
+     "note": "if the round trip is the record's one operation, the serving size alone decides survival"
+    }
+   ]
+  },
+  {
+   "from": "material:fdc-branded",
+   "relation": "finds",
+   "to": "finding:portion-decides",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/session2.json",
+     "note": "LI_calories.agree_rate 0.96864; P1 failed as registered"
+    }
+   ]
+  },
+  {
+   "from": "deadend:binary-rounding",
+   "relation": "corrects",
+   "to": "finding:portion-decides",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/explore2.json",
+     "note": "calories_predicted_agree LI|half_even 0.97534; exploratory"
+    }
+   ]
+  },
+  {
+   "from": "material:fdc-branded",
+   "relation": "finds",
+   "to": "finding:no-panel-held",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/explore2.json",
+     "note": "consistency calories|LI|half_even: 111 on and 5 off not consistent"
+    }
+   ]
+  },
+  {
+   "from": "finding:no-panel-held",
+   "relation": "corrects",
+   "to": "finding:three-digit-round-trip",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/PROJECT.md",
+     "note": "2,267 that fit neither were binary rounding; 12 remain"
+    }
+   ]
+  },
+  {
+   "from": "material:fdc-branded",
+   "relation": "finds",
+   "to": "finding:class-d",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/session2.json",
+     "note": "class_D_other_share 0.37191; P5 held"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "decides",
+   "to": "finding:class-d",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/AUDIT.md",
+     "note": "entry 2: the pass-words entry 1 did not find are class D; session 3's direction fixed before the count, failure judged at session 3"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "follows",
+   "to": "deadend:binary-rounding",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/LOG.md",
+     "note": "02:12 entry: the disagreements looked at, the rounding found, written in session"
+    }
+   ]
+  },
+  {
+   "from": "deadend:demo-key-spent",
+   "relation": "refuses",
+   "to": "project:on-the-grid",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/check2.json",
+     "note": "answered 1, agree 1; P8 failed"
+    }
+   ]
+  },
+  {
+   "from": "finding:portion-decides",
+   "relation": "shown-in",
+   "to": "page:on-the-grid",
+   "created": "2026-10-28",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "6 SVGs, 3,645 held cells, 16 predictions; ok at 1440 and 390"
+    }
+   ]
+  }
+ ]
+}
