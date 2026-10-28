@@ -43,6 +43,25 @@ describe('findStudies', () => {
     expect(found.map((f) => [f.work, f.href])).toEqual([['studio:long-work', '/studio/werke-html/long-work/']])
   })
 
+  it('finds the nightly line’s studies beside a work’s face and beside a work that is only a stage (2026-10-29)', () => {
+    fresh()
+    work('error-as-method', 'told-the-half', { ...MANIFEST, id: 'error-as-method-told-the-half' }, true, 'works-html')
+    work('error-as-method', 'a-stage', { ...MANIFEST, id: 'error-as-method-a-stage' }, true, '')
+    // a text work's figure stands at the work's own route, without a page of its own
+    mkdirSync(join(root, 'public/error-as-method/told-the-half'), { recursive: true })
+    writeFileSync(join(root, 'public/error-as-method/told-the-half/figure.svg'), '<svg/>')
+    work('error-as-method', 'borrowed', { ...MANIFEST, id: 'studio-borrowed' }, true, '')
+    const found = findStudies(join(root, 'public'), root)
+    expect(found.map((f) => [f.work, f.href])).toEqual([
+      ['error-as-method:told-the-half', '/error-as-method/works-html/told-the-half/'],
+      ['error-as-method:a-stage', '/error-as-method/a-stage/'],
+      ['error-as-method:borrowed', '/error-as-method/borrowed/'],
+    ])
+    const r = resolveStudies(found, [], [], '2026-10-29')
+    expect(r.map((s) => s.state)).toEqual(['unchecked', 'unchecked', 'invalid'])
+    expect(r[2]!.problems).toEqual(['id: begin it with "error-as-method-", the practice whose work asks'])
+  })
+
   it('refuses a file larger than the limit before reading it', () => {
     fresh()
     work('studio', 'big', JSON.stringify({ ...MANIFEST, purpose: 'x' }).replace('"purpose"', `${' '.repeat(LIMITS.bytes)}"purpose"`))

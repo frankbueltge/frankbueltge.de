@@ -11,7 +11,8 @@
 # that found nothing new deploys nothing. A refused version waits for the practice to change its file;
 # the practice reads why in its feedback folder the next night.
 #
-# When it runs: after an integrate of the Atelier, the Field or the Studio that succeeded. An integrate
+# When it runs: after an integrate of the Atelier, the Field, the Studio or the nightly line (since
+# 2026-10-29) that succeeded. An integrate
 # that another workflow started with the built-in token ends without a workflow_run event, so such an
 # integrate starts this workflow itself (its "when another workflow started it" step). And every night
 # at 03:40 UTC.
@@ -26,6 +27,7 @@ on:
       - Atelier integrate
       - Field integrate
       - Studio integrate
+      - Nightly line integrate
     types: [completed]
   schedule:
     - cron: '40 3 * * *'

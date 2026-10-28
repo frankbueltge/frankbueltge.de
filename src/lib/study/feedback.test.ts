@@ -46,6 +46,14 @@ describe('studiesMarkdown', () => {
     expect(studiesMarkdown('studio', [study('unchecked')], [], {}, '2026-10-30')).toContain('waiting — the house’s check has not read this version yet')
   })
 
+  it('names the file in the nightly line’s own repository, whether the work is a face or a stage', () => {
+    const face = study('unchecked', { practice: 'error-as-method', work: 'error-as-method:told-the-half', slug: 'told-the-half', href: '/error-as-method/works-html/told-the-half/', file: 'error-as-method/works-html/told-the-half/study.json', manifest: { ...MANIFEST, id: 'error-as-method-told-the-half' } })
+    const stage = study('unchecked', { practice: 'error-as-method', work: 'error-as-method:a-stage', slug: 'a-stage', href: '/error-as-method/a-stage/', file: 'error-as-method/a-stage/study.json', manifest: { ...MANIFEST, id: 'error-as-method-a-stage' } })
+    const md = studiesMarkdown('error-as-method', [face, stage], [], {}, '2026-10-29')
+    expect(md).toContain('`works/told-the-half/study.json`')
+    expect(md).toContain('`works/a-stage/study.json`')
+  })
+
   it('names the open cycle’s folder for a study that asks from there', () => {
     const s = study('unchecked', { href: '/studio/artifacts/cycle-011/long-work/', file: 'studio/artifacts/cycle-011/long-work/study.json', slug: 'long-work', work: 'studio:long-work' })
     expect(studiesMarkdown('studio', [s], [], {}, '2026-10-29')).toContain('`artifacts/cycle-011/long-work/study.json`')

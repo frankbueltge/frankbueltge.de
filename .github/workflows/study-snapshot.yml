@@ -56,6 +56,8 @@ jobs:
           ATELIER_BOT_TOKEN: ${{ secrets.ATELIER_BOT_TOKEN }}
           FIELD_BOT_TOKEN: ${{ secrets.FIELD_BOT_TOKEN }}
           STUDIO_BOT_TOKEN: ${{ secrets.STUDIO_BOT_TOKEN }}
+          # the nightly line's feedback folder, written with the reception's token (2026-10-29)
+          RECEPTION_BOT_TOKEN: ${{ secrets.RECEPTION_BOT_TOKEN }}
         run: |
           OUT=/tmp/studies
           [ -s "$OUT/deliveries.tsv" ] || { echo "no practice has a study yet"; exit 0; }

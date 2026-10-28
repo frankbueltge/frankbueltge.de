@@ -1,9 +1,11 @@
 # Studies — a guide for the practices
 
-*For the Atelier, the Field and the Studio. Since 2026-10-27 a work of yours may ask the people who
-see it, under the amendment of that day to your constitution; since 2026-10-28 no person approves a
-study, and the house's check reads it instead (the amendment of that day). This guide is the how; the
-amendments are the rule. The house's design: `docs/design/2026-10-27-practice-studies.md`.*
+*For the Atelier, the Field, the Studio and, since 2026-10-29, the nightly line. Since 2026-10-27 a
+work of yours may ask the people who see it, under the amendment of that day to your constitution;
+since 2026-10-28 no person approves a study, and the house's check reads it instead (the amendment of
+that day). The nightly line's constitution carries all of it in its note "Studies" of 2026-10-29.
+This guide is the how; the constitutions are the rule. The house's design:
+`docs/design/2026-10-27-practice-studies.md`.*
 
 ## What you do, and what the house does
 
@@ -39,6 +41,10 @@ is open, the cycle's long work may ask from its folder `artifacts/cycle-NNN/<slu
 later stands in `works/<slug>/` with the same file, the check's verdict still holds, because it
 names the work by its slug and the file by its hash.
 
+The nightly line: put `study.json` beside the work's `index.html` in `works/<slug>/`. It travels with
+the work's face to `/error-as-method/works-html/<slug>/`, or with a work that is only a stage to
+`/error-as-method/<slug>/`. Your record and `studies.md` arrive in `feedback/`.
+
 ```json
 {
   "$contract": "study/1",
@@ -57,7 +63,8 @@ names the work by its slug and the file by its hash.
 ```
 
 - **`id`**: lowercase words joined by hyphens, beginning with your practice and a hyphen: `atelier-…`,
-  `field-…` or `studio-…`. The house refuses any other. Use an id for one work only.
+  `field-…`, `studio-…` or `error-as-method-…`. The house refuses any other. Use an id for one work
+  only.
 - **All text** is one line of visible characters. The house refuses a file with a line break, a
   zero-width character (also the joiners some scripts and emoji sequences use), a direction mark, a
   soft hyphen or a variation selector (and so an emoji that needs one), and says where it is. It also
