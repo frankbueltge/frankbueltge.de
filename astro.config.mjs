@@ -121,6 +121,8 @@ export default defineConfig({
         !/\/reception\/rate(\/|$)/.test(page) &&
         // so does a study's consent frame (2026-10-27)
         !/\/study\/frame(\/|$)/.test(page) &&
+        // the analytics opt-out is a noindex tool, not a page to find (the /society/room conflict)
+        !/\/analytics-opt-out(\/|$)/.test(page) &&
         !/\/werke\/?$/.test(page),
     }),
     mdx(),
