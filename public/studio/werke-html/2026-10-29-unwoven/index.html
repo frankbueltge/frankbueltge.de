@@ -15,9 +15,10 @@ h1{font:600 clamp(40px,8vw,84px)/1 Georgia,serif;letter-spacing:.12em;margin:28p
 .mono{font-family:ui-monospace,Menlo,monospace;font-size:13px}
 #loom{position:relative;overflow-x:auto;overflow-y:hidden;border-top:6px solid #3b2f22;border-radius:2px;background:radial-gradient(ellipse at 50% 45%,var(--light) 0%,var(--glow) 55%,#d9b86a 100%);transition:background .6s}
 #loom.lit{background:radial-gradient(ellipse at 50% 45%,#fffef8 0%,#fff3c4 50%,#f2cf72 100%)}
+#rod{display:block;width:100%;min-width:820px;height:70px;background:linear-gradient(#5a4430,#3b2f22 30%,#2c2219);cursor:crosshair}
 #cloth{display:block;width:100%;min-width:820px;height:min(72vh,720px);cursor:crosshair}
 #ticks{position:relative;height:18px;min-width:820px}
-#ticks span{position:absolute;top:2px;font:11px ui-monospace,Menlo,monospace;color:var(--mute);transform:translateX(-50%)}
+#ticks span{position:absolute;top:2px;font:11px ui-monospace,Menlo,monospace;color:var(--mute);padding-left:2px;border-left:1px solid var(--mute)}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
 button{font:14px Georgia,serif;background:var(--ink);color:var(--paper);border:0;padding:8px 14px;border-radius:2px;cursor:pointer}
 button.off{background:transparent;color:var(--ink);outline:1px solid var(--ink)}
@@ -53,18 +54,21 @@ a{color:var(--accent)}
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__wall">The IPC's open area table, Jan 2021 to Sep 2026, is woven into 813 threads covering 60,652 area-periods. Where people were written with no phase, the weave leaves 1,041 holes holding 236,123,689 people.</p><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
-<div class="wip">IN PROGRESS · increment 1 of 3–4 · 2026-10-29 · cycle 011 · the work changes in the sessions to come</div>
+<div class="wip">IN PROGRESS · increment 2 of 3–4 · 2026-10-29 · cycle 011 · the work changes in the sessions to come</div>
 <main>
 <h1>UNWOVEN</h1>
 <p class="lede">Every area the IPC has written into its open table, from January 2021 to September 2026, hung as one cloth.
 Each of the 813 threads is one analysis of one country for one period, the people of each area woven in the colours of the phases they were put in.
 Where an area was left without a phase, the cloth has no thread. The light behind it comes through.</p>
+<p class="lede">The cloth hangs from a rod that carries the cuts. Above each thread, a bead holds what the country's appeal received that year as a share of what it asked (OCHA FTS), and a lamp says whether the famine monitor FEWS NET filed an analysis of that country in that month. From January to June 2025 every lamp is out.</p>
 
 <div class="count" id="count"></div>
 
-<div id="loom"><canvas id="cloth" aria-label="A cloth of 813 vertical threads, one per IPC analysis and period, with holes where areas were left unclassified"></canvas><div id="ticks"></div></div>
+<div id="loom"><canvas id="rod" aria-label="The rod: for each thread, the share of its country's appeal that was funded that year, and whether FEWS NET filed an analysis that month"></canvas><canvas id="cloth" aria-label="A cloth of 813 vertical threads, one per IPC analysis and period, with holes where areas were left unclassified"></canvas><div id="ticks"></div></div>
 <div class="bar">
   <button id="lightBtn" class="off">Hold it to the light</button>
+  <button id="hangBtn" class="off">Hang it by what was given</button>
+  <button id="darkBtn" class="off">Pick out the months the monitor was dark</button>
   <button id="sudanBtn" class="off">The one hole whose reason was written</button>
   <span class="mono" id="hint">Point at a thread to read it. Click to lay it out below.</span>
 </div>
@@ -72,6 +76,11 @@ Where an area was left without a phase, the cloth has no thread. The light behin
   <span><i style="background:var(--p1)"></i>Phase 1</span><span><i style="background:var(--p2)"></i>2</span><span><i style="background:var(--p3)"></i>3</span><span><i style="background:var(--p4)"></i>4</span><span><i style="background:var(--p5)"></i>5</span>
   <span><i style="background:var(--light)"></i>hole: people written, no phase (C)</span>
   <span><i style="background:#2a2017;border-radius:50%"></i>knot: a place written with no people and no phase (A, B)</span>
+</div>
+<div class="key">
+  <span><i style="background:#c9a46a"></i>bead on the rod: share of the appeal funded that year (full bead = fully funded; no bead = no single-country appeal)</span>
+  <span><i style="background:#ffd56a;border-radius:50%"></i>lamp lit: FEWS NET filed an analysis that month</span>
+  <span><i style="background:#111;border-radius:50%;border-color:#ffd56a88"></i>lamp out: FEWS NET watched the country that year, but filed none that month (no lamp: not watched)</span>
 </div>
 <div id="read">Point at the cloth.</div>
 
@@ -107,6 +116,9 @@ Where an area was left without a phase, the cloth has no thread. The light behin
   One thread per analysis date × country × validity period (current, first projection, second projection), ordered by date of analysis, then country, then period. Every thread has the same width and the same length: an area's share of the length is its share of the thread's people, so a small country and a large one hang alike. Inside an area, the phases stand in the shares the table gives.
   Every count is asserted in <code>build.py</code> against the Field's <code>summary.json</code> (60,652 area-periods; A 6,352, B 16, C 1,041; 236,123,689 person-periods in C; 402 analyses). The Field's note says "since 2017"; the open table's earliest analysis is January 2021.
   The six threads whose areas all carry population 0 hang as bare strings of knots.</p>
+  <p class="mono"><b>The rod (increment 2, 2026-10-29).</b> Money: OCHA's Financial Tracking Service, <a href="https://api.hpc.tools/v2/public/plan/overview/2025">plan overview</a> for each year 2021–2026 (CC BY-IGO), fetched 2026-10-29. For a thread's country and the year of its analysis, every plan FTS lists with that country alone (response plans, flash appeals) is summed, revised requirements against total funding; regional and refugee plans are left out, so a country with only a regional plan has no bead. A bead's height is the share funded, capped at full. Sudan 2025 comes to US$ 4,162.5 m asked and US$ 1,664.7 m received, the same as this practice's flow-by-flow count in <i>The Remainder</i> (asserted in <code>build_rod.py</code>). 2025 and 2026 appeals can still receive money.
+  Monitor: FEWS NET's own <a href="https://fews.net/sitemap.xml">sitemap</a>, read 2026-10-29. A country-month is lit when the archive files an analysis (alert, outlook, outlook update, key message update, remote monitoring report, special or targeted report) under that month; price bulletins and calendars do not count. A country is watched in a year when any month of it is lit. Of the 26 IPC countries FEWS NET watched in 2025, none has an analysis filed under January to June 2025. The archive does not say why. NPR reported that the system went offline in January 2025 under the US government's stop-work orders and that its website was back up at the end of June (<a href="https://www.npr.org/2025/08/11/nx-s1-5475193/u-s-famine-warning-system-comes-back-but-questions-loom">NPR, 2025-08-11</a>); this page does not test that account.
+  The lamp reads the month the IPC's analysis is dated, not the months it covers. Neither source writes why a bead is short or a lamp is out, and a short bead does not make a hole: the rod hangs beside the cloth so a visitor can look for one under the other.</p>
 </section>
 
 <section>
@@ -118,15 +130,18 @@ Where an area was left without a phase, the cloth has no thread. The light behin
 <p class="mono" style="margin-top:40px;color:var(--mute)">UNWOVEN · The Studio (Ensemble) · cycle 011 · begun 2026-10-29 · in progress</p>
 </main>
 <script src="data.js"></script>
+<script src="rod.js"></script>
 <script>
 (() => {
-const D = window.UNWOVEN, N = D.names, T = D.threads, S = D.summary;
+const D = window.UNWOVEN, N = D.names, T = D.threads, S = D.summary, R = window.ROD.rod, RS = window.ROD.summary;
 const VP = ['current', 'first projection', 'second projection'];
 const PC = ['#cdfacd', '#fae61e', '#e67800', '#c80000', '#640000'];
 const fmt = n => n.toLocaleString('en-US');
 const cv = document.getElementById('cloth'), cx = cv.getContext('2d');
 const loom = document.getElementById('loom');
-let lit = false, pinned = -1, mark = -1;
+let lit = false, pinned = -1, mark = -1, byMoney = false, shadeDark = false;
+let ord = T.map((_, k) => k), inv = ord.slice();
+const rv = document.getElementById('rod'), rx = rv.getContext('2d');
 const sudan = T.findIndex(t => t.c === 'SDN' && t.d === 'Sep 2025' && t.v === 2);
 
 // per-thread geometry, computed once in thread units (0..1 along its length)
@@ -153,9 +168,9 @@ function draw() {
   cx.clearRect(0, 0, W, H);
   cw = W / T.length;
   const tw = Math.max(.6, cw * .82);
-  T.forEach((t, k) => {
-    const x0 = k * cw + (cw - tw) / 2, g = G[k];
-    const dim = lit ? .32 : 1;
+  ord.forEach((k, pos) => {
+    const t = T[k], x0 = pos * cw + (cw - tw) / 2, g = G[k];
+    const dim = (lit ? .32 : 1) * (shadeDark && R[k][3] === 0 ? 1 : shadeDark ? .45 : 1);
     if (!g.tot) { // a bare string of knots
       cx.fillStyle = lit ? 'rgba(40,30,20,.5)' : 'rgba(60,45,30,.55)'; cx.fillRect(x0 + tw / 2 - .3, 0, .6, H);
     }
@@ -191,20 +206,51 @@ function draw() {
   [pinned, mark].forEach((m, i) => {
     if (m < 0) return;
     cx.strokeStyle = i ? '#8a1c12' : '#1d1b18'; cx.lineWidth = 1.2;
-    cx.strokeRect(m * cw - 1, .6, cw + 2, H - 1.2);
+    cx.strokeRect(inv[m] * cw - 1, .6, cw + 2, H - 1.2);
   });
+  drawRod();
   ticks();
+}
+
+// the rod: a bead per thread (share of the appeal funded) and a lamp (did the monitor file that month)
+function drawRod() {
+  const dpr = window.devicePixelRatio || 1, w = rv.clientWidth, h = rv.clientHeight;
+  rv.width = w * dpr; rv.height = h * dpr; rx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  rx.clearRect(0, 0, w, h);
+  const c = w / T.length, bw = Math.max(.6, c * .82), top = 8, bh = h - 30;
+  ord.forEach((k, pos) => {
+    const r = R[k], x0 = pos * c + (c - bw) / 2;
+    if (r[0] !== null) {
+      const f = Math.min(1, r[0]);
+      rx.fillStyle = 'rgba(255,240,210,.10)'; rx.fillRect(x0, top, bw, bh);
+      const j = .88 + .24 * hash(k * 3 + 1);
+      rx.fillStyle = `rgb(${201 * j | 0},${164 * j | 0},${106 * j | 0})`; rx.fillRect(x0, top + bh * (1 - f), bw, bh * f);
+    } else { rx.fillStyle = 'rgba(255,240,210,.18)'; rx.fillRect(x0 + bw / 2 - .25, top, .5, bh); }
+    if (r[3] !== null) {
+      const cy = h - 11, rr = Math.max(1, Math.min(4, c * .42));
+      rx.beginPath(); rx.arc(x0 + bw / 2, cy, rr, 0, 7);
+      if (r[3]) { rx.fillStyle = '#ffd56a'; rx.fill(); }
+      else { rx.fillStyle = '#0b0806'; rx.fill(); rx.strokeStyle = 'rgba(255,213,106,.45)'; rx.lineWidth = .6; rx.stroke(); }
+    }
+  });
+  [pinned, mark].forEach((m, i) => { if (m < 0) return; rx.strokeStyle = i ? '#ff8b7a' : '#fff3c4'; rx.lineWidth = 1.2; rx.strokeRect(inv[m] * c - 1, 1, c + 2, h - 2); });
 }
 
 function ticks() {
   const el = document.getElementById('ticks'); el.innerHTML = '';
   let last = '';
-  T.forEach((t, k) => { const y = t.d.slice(-4); if (y !== last) { last = y; const s = document.createElement('span'); s.style.left = (k * cw / W * 100) + '%'; s.textContent = y; el.appendChild(s); } });
+  let px = -99;
+  const put = (pos, txt) => { if (pos * cw - px < 52) return; px = pos * cw; const s = document.createElement('span'); s.style.left = (pos * cw / W * 100) + '%'; s.textContent = txt; el.appendChild(s); };
+  ord.forEach((k, pos) => {
+    const r = R[k];
+    const lab = byMoney ? (r[0] === null ? 'no appeal' : Math.min(100, 25 * Math.floor(Math.min(1, r[0]) * 4)) + ' %') : T[k].d.slice(-4);
+    if (lab !== last) { last = lab; put(pos, lab); }
+  });
 }
 
 function at(ev) {
   const r = cv.getBoundingClientRect();
-  const k = Math.min(T.length - 1, Math.max(0, Math.floor((ev.clientX - r.left) / r.width * T.length)));
+  const k = ord[Math.min(T.length - 1, Math.max(0, Math.floor((ev.clientX - r.left) / r.width * T.length)))];
   const fy = (ev.clientY - r.top) / r.height;
   const g = G[k];
   let s = null;
@@ -228,10 +274,19 @@ function readout(k, s) {
   const knots = g.segs.filter(q => q.knot).length, holes = g.segs.filter(q => q.hole).length;
   document.getElementById('read').innerHTML = `${name(t)} · ${t.a.length} areas, ${fmt(g.tot)} people` +
     (holes ? ` · <b>${holes} hole${holes > 1 ? 's' : ''}, ${fmt(g.holePeople)} people in no phase</b>` : '') +
-    (knots ? ` · ${knots} knot${knots > 1 ? 's' : ''}` : '') + (s ? `<br>${areaLine(t, t.a[s.i])}` : '');
+    (knots ? ` · ${knots} knot${knots > 1 ? 's' : ''}` : '') + (s ? `<br>${areaLine(t, t.a[s.i])}` : '') + `<br>${rodLine(k)}`;
+}
+function rodLine(k) {
+  const r = R[k], t = T[k], y = t.d.slice(-4);
+  const m = r[0] === null ? `No single-country appeal for ${t.c} in ${y} in FTS.` :
+    `Appeal ${y}: US$ ${fmt(Math.round(r[1] / 1e6))} m asked, US$ ${fmt(Math.round(r[2] / 1e6))} m received, <b>${Math.round(100 * r[0])} % funded</b>.`;
+  const f = r[3] === null ? 'FEWS NET did not watch this country that year.' : r[3] ? `FEWS NET filed an analysis in ${t.d}.` : `<b>FEWS NET filed no analysis in ${t.d}.</b>`;
+  return `<span class="mono">${m} ${f}</span>`;
 }
 cv.addEventListener('pointermove', ev => { const { k, s } = at(ev); readout(k, s); });
 cv.addEventListener('click', ev => { const { k } = at(ev); pin(k); });
+rv.addEventListener('pointermove', ev => { const { k } = at(ev); readout(k, null); });
+rv.addEventListener('click', ev => { const { k } = at(ev); pin(k); });
 
 function pin(k) {
   pinned = k; draw();
@@ -256,9 +311,18 @@ function pin(k) {
 }
 
 document.getElementById('lightBtn').onclick = e => { lit = !lit; loom.classList.toggle('lit', lit); e.target.classList.toggle('off', !lit); e.target.textContent = lit ? 'Let it hang' : 'Hold it to the light'; draw(); };
+document.getElementById('hangBtn').onclick = e => {
+  byMoney = !byMoney; e.target.classList.toggle('off', !byMoney);
+  e.target.textContent = byMoney ? 'Hang it by time' : 'Hang it by what was given';
+  ord = T.map((_, k) => k);
+  if (byMoney) ord.sort((a, b) => (R[a][0] === null) - (R[b][0] === null) || (R[a][0] ?? 0) - (R[b][0] ?? 0) || a - b);
+  ord.forEach((k, pos) => { inv[k] = pos; });
+  draw();
+};
+document.getElementById('darkBtn').onclick = e => { shadeDark = !shadeDark; e.target.classList.toggle('off', !shadeDark); draw(); };
 document.getElementById('sudanBtn').onclick = e => {
   mark = mark < 0 ? sudan : -1; e.target.classList.toggle('off', mark < 0);
-  if (mark >= 0) { pin(sudan); loom.scrollLeft = Math.max(0, sudan * cw - loom.clientWidth / 2); readout(sudan, null); }
+  if (mark >= 0) { pin(sudan); loom.scrollLeft = Math.max(0, inv[sudan] * cw - loom.clientWidth / 2); readout(sudan, null); }
   draw();
 };
 
@@ -276,7 +340,7 @@ const ol = document.getElementById('top');
 G.map((g, k) => [g.holePeople, k]).filter(x => x[0]).sort((a, b) => b[0] - a[0]).slice(0, 10).forEach(([p, k]) => {
   const t = T[k], n = t.a.filter(x => x[8] === 'C').length, li = document.createElement('li');
   li.innerHTML = `<a href="#one">${name(t)}</a>: ${fmt(p)} people in ${n} hole${n > 1 ? 's' : ''}, ${Math.round(100 * p / G[k].tot)} % of the thread`;
-  li.querySelector('a').onclick = () => { pin(k); loom.scrollLeft = Math.max(0, k * cw - loom.clientWidth / 2); };
+  li.querySelector('a').onclick = () => { pin(k); loom.scrollLeft = Math.max(0, inv[k] * cw - loom.clientWidth / 2); };
   ol.appendChild(li);
 });
 
