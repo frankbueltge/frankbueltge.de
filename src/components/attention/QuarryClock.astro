@@ -1,0 +1,95 @@
+---
+// Planetary Listening, drawn (Frank's decision, 2026-10-29, wording private). A seismometer of the
+// GEOFON network, GE.RUE in Rüdersdorf east of Berlin, stands beside a limestone quarry. Every
+// night the practice reads the day before and keeps the strongest impulses. On working days one
+// impulse stands far above the rest at the same wall-clock time; when Germany left summer time on
+// 2026-10-25 it moved by an hour in UTC. Geometry: src/lib/attention/views.ts (tested).
+import { CLOCK_CHANGE, clockFigure, type PlanetaryNight, waveforms } from '@/lib/attention/views'
+
+interface Props { nights: PlanetaryNight[] }
+const { nights } = Astro.props
+const fig = clockFigure(nights)
+const waves = waveforms(nights)
+const W = 720
+const WH = 44
+const fg = 'var(--color-fg)'
+const muted = 'var(--color-fg-muted)'
+const faint = 'var(--color-fg-faint)'
+const line = 'var(--color-line)'
+---
+<figure class="mb-4">
+  <figcaption class="mb-3 max-w-[62ch] text-sm leading-relaxed text-fg-muted">
+    Every impulse the seismometer at the Rüdersdorf quarry stood out with, night by night. Filled
+    dots are the strong ones (more than fifty times the background). On working days one strong
+    blast comes at the same wall-clock time:
+    {fig.medians.before && fig.medians.after
+      ? <> {fig.medians.before} UTC before the clocks went back on {CLOCK_CHANGE}, {fig.medians.after} UTC after, {fig.medians.shiftMinutes} minutes later. The quarry keeps local time; the machine hears it.</>
+      : null}
+  </figcaption>
+  <svg viewBox={`0 0 ${fig.width} ${fig.height}`} class="h-auto w-full font-mono" role="img"
+       aria-label={`Impulses per day at the Rüdersdorf seismometer, ${fig.columns[0]?.day} to ${fig.columns.at(-1)?.day}`}>
+    {fig.columns.filter((c) => c.weekend).map((c) => (
+      <rect x={c.x - 9} y={fig.plot.top} width="18" height={fig.plot.bottom - fig.plot.top} fill={line} opacity="0.55" />
+    ))}
+    {fig.hours.map((h) => (
+      <g>
+        <line x1={fig.plot.left} x2={fig.plot.right} y1={h.y} y2={h.y} stroke={line} stroke-width="1" />
+        <text x={fig.plot.left - 8} y={h.y + 3.5} text-anchor="end" font-size="10" fill={faint}>{h.label}</text>
+      </g>
+    ))}
+    {fig.change && (
+      <g>
+        <line x1={fig.change.x} x2={fig.change.x} y1={fig.plot.top} y2={fig.plot.bottom} stroke={muted} stroke-width="1" stroke-dasharray="3 3" />
+        <text x={fig.change.x + 5} y={fig.plot.top + 10} font-size="10" fill={muted}>clocks go back</text>
+      </g>
+    )}
+    {fig.dots.map((d) => (
+      <circle cx={d.x} cy={d.y} r={d.r} fill={d.strong ? fg : 'none'} stroke={d.strong ? 'none' : muted} stroke-width="1" opacity={d.strong ? 1 : 0.8}>
+        <title>{`${d.day} · ${d.utc} UTC (${d.local} in Berlin) · ${Math.round(d.ratio)}× background${d.strong ? ' · strong' : ''}`}</title>
+      </circle>
+    ))}
+    {fig.columns.map((c) => (
+      <text x={c.x} y={fig.plot.bottom + 16} text-anchor="middle" font-size="10" fill={c.weekend ? faint : muted}>{c.label}</text>
+    ))}
+    <text x={fig.plot.right} y={fig.plot.bottom + 32} text-anchor="end" font-size="10" fill={faint}>day of October 2026 · time of day in UTC · shaded: weekend</text>
+  </svg>
+</figure>
+
+{waves.length > 0 && (
+  <figure class="mb-4">
+    <figcaption class="mb-3 max-w-[62ch] text-sm leading-relaxed text-fg-muted">
+      The strong impulses themselves: each excerpt the machine kept, decoded from the publisher&rsquo;s
+      original bytes and drawn to its own peak, so the shapes compare, not the sizes.
+    </figcaption>
+    <div class="space-y-1">
+      {waves.map((w) => (
+        <div class="grid grid-cols-[5.5rem_1fr] items-center gap-3">
+          <span class="text-[11px] leading-tight text-fg-faint">{w.day.slice(5)}<br />{w.local} Berlin</span>
+          <svg viewBox={`0 0 ${W} ${WH}`} preserveAspectRatio="none" class="h-10 w-full" role="img" aria-label={`Waveform of the impulse on ${w.day} at ${w.utc} UTC`}>
+            <line x1="0" x2={W} y1={WH / 2} y2={WH / 2} stroke={line} stroke-width="1" />
+            <path d={w.area} fill={fg} />
+            <line x1={w.onsetX} x2={w.onsetX} y1="0" y2={WH} stroke={muted} stroke-width="1" stroke-dasharray="2 2" />
+          </svg>
+        </div>
+      ))}
+    </div>
+    <p class="mt-2 text-[11px] text-fg-faint">{waves[0].seconds.toFixed(0)} seconds per row; the dashed line is the detected onset.</p>
+  </figure>
+)}
+
+<details class="mb-2 text-xs text-fg-muted">
+  <summary class="cursor-pointer text-fg-faint hover:text-fg">The strong impulses as a table</summary>
+  <table class="mt-2 w-full text-left">
+    <thead><tr class="text-fg-faint"><th class="pr-3 font-normal">day</th><th class="pr-3 font-normal">UTC</th><th class="pr-3 font-normal">Berlin</th><th class="font-normal">× background</th></tr></thead>
+    <tbody>
+      {fig.dots.filter((d) => d.strong).sort((a, b) => a.day.localeCompare(b.day)).map((d) => (
+        <tr><td class="pr-3">{d.day}</td><td class="pr-3">{d.utc}</td><td class="pr-3">{d.local}</td><td>{Math.round(d.ratio)}</td></tr>
+      ))}
+    </tbody>
+  </table>
+</details>
+<p class="text-[11px] leading-relaxed text-fg-faint">
+  Data: GEOFON, GE.RUE..HHZ, <a class="underline hover:text-fg" href="https://doi.org/10.14470/TR560404">doi:10.14470/TR560404</a>, CC BY 4.0. Read nightly by
+  <a class="underline hover:text-fg" href="https://github.com/frankbueltge/machine-attention/tree/main/planetary">Planetary Listening</a>,
+  in its acceptance window until 2026-11-03.
+</p>

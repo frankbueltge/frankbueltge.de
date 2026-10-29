@@ -1,0 +1,77 @@
+---
+// The Interval, drawn (Frank's decision, 2026-10-29, wording private). For every episode the
+// practice found — a country whose projected share in IPC phase 4 or worse crossed its line after a
+// quiet stretch — the monthly food-security funding reported to OCHA FTS in the twelve months
+// before and after, and the month in which it first reached twice its baseline. Geometry:
+// src/lib/attention/views.ts (tested).
+import { intervalPanel, type IntervalEpisode, monthLabel, usd } from '@/lib/attention/views'
+
+interface Props { episodes: IntervalEpisode[] }
+const { episodes } = Astro.props
+const panels = [...episodes].sort((a, b) => a.t0.localeCompare(b.t0)).map((e) => ({ e, p: intervalPanel(e) }))
+const fg = 'var(--color-fg)'
+const muted = 'var(--color-fg-muted)'
+const faint = 'var(--color-fg-faint)'
+const line = 'var(--color-line)'
+---
+<figure class="mb-4">
+  <figcaption class="mb-4 max-w-[62ch] text-sm leading-relaxed text-fg-muted">
+    When a food crisis is projected, how long until the money moves? Each panel is one warning: the
+    vertical line is the month the projection crossed its line, the bars are food-security funding
+    per month, the dashed line is twice the money of a usual month before. The shaded stretch is
+    the interval until funding first reached it.
+  </figcaption>
+  <div class="grid gap-x-6 gap-y-6 sm:grid-cols-2">
+    {panels.map(({ e, p }) => (
+      <div>
+        <p class="font-sans text-sm font-semibold text-fg">{p.title}</p>
+        <p class="mb-1 text-[11px] leading-snug text-fg-faint">{p.subtitle}</p>
+        <svg viewBox={`0 0 ${p.width} ${p.height}`} class="h-auto w-full font-mono" role="img"
+             aria-label={`${p.title}: food-security funding by month, ${p.gapMonths === null ? 'no doubling yet' : `${p.gapMonths} months to doubling`}`}>
+          {p.t1x !== null && p.t1x > p.t0x && (
+            <rect x={p.t0x} y={p.plot.top} width={p.t1x - p.t0x} height={p.plot.bottom - p.plot.top} fill={line} opacity="0.9" />
+          )}
+          {p.bars.map((b) => (
+            <rect x={b.x} y={b.y} width={b.w} height={b.h} fill={b.after ? fg : muted} opacity={b.after ? 1 : 0.55}>
+              <title>{`${monthLabel(b.month)}: ${usd(b.usd)}`}</title>
+            </rect>
+          ))}
+          {p.threshold && (
+            <line x1={p.plot.left} x2={p.plot.right} y1={p.threshold.y} y2={p.threshold.y} stroke={fg} stroke-width="1" stroke-dasharray="4 3">
+              <title>{`twice the baseline: ${usd(p.threshold.usd)} a month`}</title>
+            </line>
+          )}
+          <line x1={p.t0x} x2={p.t0x} y1={p.plot.top - 6} y2={p.plot.bottom} stroke={fg} stroke-width="1.5" />
+          <line x1={p.plot.left} x2={p.plot.right} y1={p.plot.bottom} y2={p.plot.bottom} stroke={muted} stroke-width="1" />
+          {p.ticks.map((t) => (
+            <text x={t.x} y={p.plot.bottom + 14} font-size="10" fill={faint}>{t.label}</text>
+          ))}
+        </svg>
+        <p class="text-xs text-fg-muted">
+          {p.gapMonths === null
+            ? 'Funding has not doubled yet.'
+            : p.gapMonths === 0
+              ? 'Funding doubled in the month of the warning.'
+              : `${p.gapMonths} month${p.gapMonths === 1 ? '' : 's'} until funding doubled.`}
+          {' '}<span class="text-fg-faint">peak {usd(p.max)}</span>
+        </p>
+      </div>
+    ))}
+  </div>
+</figure>
+<details class="mb-2 text-xs text-fg-muted">
+  <summary class="cursor-pointer text-fg-faint hover:text-fg">The episodes as a table</summary>
+  <table class="mt-2 w-full text-left">
+    <thead><tr class="text-fg-faint"><th class="pr-3 font-normal">country</th><th class="pr-3 font-normal">warning</th><th class="pr-3 font-normal">share</th><th class="pr-3 font-normal">baseline</th><th class="font-normal">months to 2×</th></tr></thead>
+    <tbody>
+      {panels.map(({ e, p }) => (
+        <tr><td class="pr-3">{p.title.split(' · ')[0]}</td><td class="pr-3">{monthLabel(e.t0)}</td><td class="pr-3">{(e.w * 100).toFixed(1)} %</td><td class="pr-3">{e.money.fsc.baseline_usd === null ? '—' : usd(e.money.fsc.baseline_usd)}</td><td>{p.gapMonths ?? '—'}</td></tr>
+      ))}
+    </tbody>
+  </table>
+</details>
+<p class="text-[11px] leading-relaxed text-fg-faint">
+  Data: IPC national analyses via HDX (CC0) and OCHA Financial Tracking Service, food security cluster,
+  paid and committed flows by date. Computed by <a class="underline hover:text-fg" href="https://github.com/frankbueltge/machine-attention/tree/main/interval">The Interval</a>,
+  in its acceptance window until 2026-11-15; its drivers are not yet assigned.
+</p>
