@@ -1,0 +1,66 @@
+:root {
+  --paper: #f6f2ea; --ink: #1f1c18; --muted: #6b645a; --rule: #d8d0c2;
+  --p1: #efe6c8; --p2: #e2c37a; --p3: #d08a3c; --p4: #a8432a; --p5: #5a1714;
+  --blank: #1f1c18; --us: #2b2a27; --other: #c9bfae; --lit: #8a7f6c; --accent: #a8432a;
+  --cell: #fffdf8;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font: 17px/1.55 Georgia, "Iowan Old Style", "Palatino Linotype", serif; }
+header, main, footer { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+header { padding-top: 40px; }
+.kicker { font: 13px/1.4 ui-monospace, Menlo, monospace; color: var(--muted); letter-spacing: .04em; }
+h1 { font-size: 54px; line-height: 1.05; margin: 8px 0 16px; font-weight: normal; letter-spacing: -.01em; }
+h2 { font-weight: normal; font-size: 26px; margin: 48px 0 12px; border-top: 1px solid var(--rule); padding-top: 18px; }
+h2 .num { font: 14px ui-monospace, Menlo, monospace; color: var(--accent); margin-right: 10px; vertical-align: middle; }
+.lede { font-size: 20px; max-width: 46em; }
+p { max-width: 46em; }
+a { color: var(--accent); }
+code { font: 13px ui-monospace, Menlo, monospace; }
+.small { font-size: 14.5px; }
+.small li { margin-bottom: 8px; }
+.slider { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; max-width: 640px;
+  font-size: 20px; padding: 18px; background: var(--cell); border: 1px solid var(--rule); }
+.slider input { grid-column: 1; width: 100%; accent-color: var(--accent); }
+.slider output { grid-column: 2; font: 28px ui-monospace, Menlo, monospace; min-width: 4.5ch; text-align: right; }
+.hint { color: var(--muted); font-size: 15px; }
+.figure { width: 100%; overflow-x: auto; background: var(--cell); border: 1px solid var(--rule); }
+.figure svg { display: block; min-width: 760px; }
+.tip { position: fixed; z-index: 10; max-width: 300px; padding: 8px 10px; background: var(--ink); color: var(--paper);
+  font: 13px/1.4 ui-monospace, Menlo, monospace; pointer-events: none; }
+.finding { font-size: 19px; border-left: 3px solid var(--accent); padding-left: 14px; }
+.declare { border: 1px solid var(--rule); background: var(--cell); margin: 14px 0; padding: 10px 16px 12px; max-width: 46em; }
+.declare legend { padding: 0 6px; font-weight: bold; }
+.declare label { display: block; margin: 6px 0; font-size: 15.5px; }
+.grid { display: grid; grid-template-columns: 9em 1fr 1fr; gap: 8px; margin-top: 18px; }
+.grid .h { font: 13px/1.35 ui-monospace, Menlo, monospace; color: var(--muted); align-self: end; padding: 4px; }
+.grid .rh { align-self: center; }
+.world { background: var(--cell); border: 1px solid var(--rule); padding: 12px; min-height: 150px; position: relative; transition: border-color .3s; }
+.world .tag { font: 11px ui-monospace, Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.world.record { border: 2px solid var(--ink); }
+.world.unwritten { border: 2px dashed var(--accent); }
+.world .what { font-size: 15px; margin: 6px 0 10px; min-height: 3em; }
+.world .bar { height: 26px; border: 1px solid var(--ink); position: relative; background: var(--p2); overflow: hidden; }
+.world .bar .fill { position: absolute; left: 0; top: 0; bottom: 0;
+  background: repeating-linear-gradient(135deg, var(--blank) 0 2px, transparent 2px 7px); transition: width .35s; }
+.world .bar .range { position: absolute; top: 0; bottom: 0; background: rgba(120,120,120,.35); }
+.world .n { font: 13px ui-monospace, Menlo, monospace; margin-top: 6px; }
+.rulebars { display: grid; gap: 14px; margin-top: 12px; }
+.rule { display: grid; grid-template-columns: minmax(8em, 15em) 1fr 8.5em; gap: 12px; align-items: center; }
+.rule .name { font-size: 15.5px; }
+.rule .track { height: 22px; background: var(--cell); border: 1px solid var(--rule); position: relative; }
+.rule .track .span { position: absolute; top: 2px; bottom: 2px; background: var(--accent); opacity: .85; min-width: 3px; transition: left .35s, width .35s; }
+.rule .track .span.wide { opacity: .35; }
+.rule .track .tick { position: absolute; top: -4px; bottom: -4px; width: 1px; background: var(--muted); }
+.rule .val { font: 14px ui-monospace, Menlo, monospace; text-align: right; }
+blockquote { margin: 22px 0; padding: 14px 18px; background: var(--cell); border-left: 3px solid var(--ink); max-width: 44em; font-size: 18px; }
+blockquote cite { display: block; margin-top: 8px; font-size: 14px; color: var(--muted); font-style: normal; }
+footer { margin-top: 48px; padding-bottom: 40px; color: var(--muted); font-size: 14px; }
+@media (max-width: 640px) {
+  h1 { font-size: 40px; }
+  .grid { grid-template-columns: 1fr 1fr; }
+  .grid .corner { display: none; }
+  .grid .rh { grid-column: 1 / -1; padding-top: 10px; }
+  .rule { grid-template-columns: 1fr; gap: 4px; }
+  .rule .val { text-align: left; }
+}

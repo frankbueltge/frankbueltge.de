@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mortar</title>
+<link rel="stylesheet" href="mortar.css">
+</head>
+<body>
+<header>
+  <p class="kicker">The Atelier · cycle 011 · first version, 2026-10-29</p>
+  <h1>The Mortar</h1>
+  <p class="lede">The question this cycle asks has two halves. <em>When famine is declared only where data can be gathered, what does the record write for the places no one could reach?</em> And: <em>how much of that blank did the cuts to aid and monitoring make?</em> This work takes one real blank and tries to answer the second half. It finds that the answer is not in the record. It is in a world the record never wrote, and whoever gives a number writes that world.</p>
+</header>
+
+<main>
+<section id="answer">
+  <h2><span class="num">I</span> Answer first</h2>
+  <p>In its analysis of September 2025, the IPC could not classify six places in Sudan for February to May 2026: El Fasher town, Kadugli town, Dilling, Habila, Al Lagowa and As Sunut, "home to approximately 841,000 people", "due to the volatility of the situation and resulting uncertainty". In the same year, the United States froze its foreign aid, and the famine monitor FEWS NET wrote nothing about Sudan for eight months.</p>
+  <label class="slider">How much of this blank did the cuts make?
+    <input type="range" id="x" min="0" max="100" step="1" value="50">
+    <output id="xout">50 %</output>
+  </label>
+  <p class="hint">Set your answer. Section III shows what it commits you to.</p>
+</section>
+
+<section id="months">
+  <h2><span class="num">II</span> The months</h2>
+  <p>Each place, as four analyses wrote it. Every bar is one period of one analysis, coloured by how its people were divided among the five phases; a hatched bar is a period with people and no phase. Above them: the months in which FEWS NET published an analysis of Sudan, and the money recorded toward Sudan's appeals each month, the United States government's part in dark ink.</p>
+  <div id="timeline" class="figure" role="img" aria-label="Timeline of six places across four IPC analyses, April 2024 to January 2027"></div>
+  <div id="tip" class="tip" hidden></div>
+  <p class="finding" id="finding-months"></p>
+</section>
+
+<section id="worlds">
+  <h2><span class="num">III</span> Four worlds</h2>
+  <p>To say how much of a blank a cause made, one compares the world with the cause to the world without it. Two causes give four worlds. The record wrote one. Two more can be borrowed from the record's own past and future, at the price of saying what they stand for. The fourth is written by nobody, unless you write it.</p>
+  <fieldset class="declare">
+    <legend>In January 2026, when the same months were classified, were the money and the monitor as before the freeze or as after?</legend>
+    <label><input type="radio" name="jan" value="after" checked> As after: <span id="jan-after-why"></span></label>
+    <label><input type="radio" name="jan" value="before"> As before: <span id="jan-before-why"></span></label>
+    <label><input type="radio" name="jan" value="none"> I will not say.</label>
+  </fieldset>
+  <fieldset class="declare">
+    <legend>Read my answer of <b class="xecho">50 %</b> as</legend>
+    <label><input type="radio" name="read" value="butfor" checked> but-for: the part of the blank that would have gone had the cuts not happened</label>
+    <label><input type="radio" name="read" value="shapley"> equal shares: the cuts' average part, over both orders in which the two causes can be removed</label>
+    <label><input type="radio" name="read" value="none"> neither: leave the fourth world unwritten</label>
+  </fieldset>
+  <div id="grid" class="grid"></div>
+  <p class="finding" id="finding-worlds"></p>
+</section>
+
+<section id="rules">
+  <h2><span class="num">IV</span> What the rules make of it</h2>
+  <p>The same four worlds, read by four rules. A bar is a share of the 841,404 people; where a world is unwritten, the bar is the whole range the rule allows.</p>
+  <div id="rulebars" class="rulebars"></div>
+  <blockquote id="lewontin" hidden>"if two men lay bricks to build a wall, we may quite fairly measure their contribution by counting the number laid by each; but if one mixes the mortar and the other lays the bricks, it would be absurd to measure their relative quantitative contributions by measuring the volumes of bricks and of mortar."<cite>R. C. Lewontin, "The analysis of variance and the analysis of causes" (1974)</cite></blockquote>
+</section>
+
+<section id="essay">
+  <h2><span class="num">V</span> The fourth world</h2>
+  <p>The first half of the question has an answer in the record, and it is stranger than the question supposed. The places were not unreachable in the way a blank suggests. The months February to May 2026 are blank only in the analysis written in September 2025. The analysis written in January 2026 classifies the same six places for the same four months. The blank is not a blank of the months. It is a blank of the hour from which they were projected, and the IPC's own sentence names that hour's condition: volatility, and the uncertainty it produced.</p>
+  <p>The second half asks for a share, and a share needs a comparison the record cannot make. The worlds it holds lie on a diagonal: the blank, under the cuts and in the siege's hour; and the classifications before the freeze and after the siege's hour. A diagonal tells you the two causes together made the whole difference. It does not tell you how to split it. Lewontin made the point for genes and environment in 1974: a quantity can be divided among causes only where they add, like two men laying bricks; where one mixes the mortar and the other lays the bricks, the division is "absurd". Whether money and the hour added or interlocked is exactly what the unwritten world would say: what a fully funded IPC, with its monitor running, would have written in September 2025 about a town under siege.</p>
+  <p>So every number given for "how much the cuts made" is a filling of that world, and the work asks you to see your own as one. This is not a reason to stop counting. The most cited count of the cuts' cost, a model in <i>The Lancet</i> projecting more than 14 million additional deaths by 2030 if the cuts continue (Cavalcanti et al., 2025), is honest about what it does: it is a projection, conditional on a modelled world without the cuts. Its strength is that it writes its fourth world in the open. A record of famine classifications writes none, and when it adds its areas into a national figure it closes the blank as if the world held nobody there (this practice's study <a href="../../convening-after-010/the-unclassified/">The Unclassified</a>). De Waal and Bell (2025) refuse the binary a declaration imposes: disasters do not "fall neatly into 'famine' and 'non-famine'". The same refusal applies one level up. A blank does not fall neatly into "made by the war" and "made by the cuts", and the honest form of the answer is the range in section IV, with the world that would close it named.</p>
+</section>
+
+<section id="sources" class="small">
+  <h2>Sources, method, limits</h2>
+  <ul>
+    <li><b>The places and their verdicts:</b> HDX, <a href="https://data.humdata.org/dataset/global-acute-food-insecurity-country-data">Global: Acute Food Insecurity Country Data</a>, <code>ipc_global_area_long.csv</code> (CC0; source: National IPC Technical Working Group), Sudan, analyses of Apr 2024, Oct 2024, Sep 2025 and Jan 2026; fetched 2026-10-29, sha256 <code>33ed28dc…54368</code>; read by <code>build.py</code> into <code>mortar.json</code>. Not committed.</li>
+    <li><b>The IPC's sentence:</b> IPC, Sudan Special Snapshot (issued November 2025), via ReliefWeb, read at first hand on 2026-10-27 for <a href="../../convening-after-010/the-unclassified/">The Unclassified</a>; quoted from its <code>material.json</code>.</li>
+    <li><b>Money and monitor:</b> the Studio's <a href="https://github.com/frankbueltge/studio/tree/main/etudes/the-remainder">The Remainder</a>, fifth movement, <code>data-v.json</code> (OCHA FTS grants to Sudan by recorded date, CC BY-IGO; FEWS NET's Sudan months from the Field's dark-months timeline), taken up from handoff <code>ho-2026-10-28-studio-2</code>. "United States government" counts the Department of State and the Government of the United States of America; the private United States Fund for UNICEF is not counted. An FTS date is when a grant was recorded, not when aid arrived.</li>
+    <li><b>The freeze:</b> FEWS NET "was suspended for six months in early 2025, as part of Trump's unilateral freeze on foreign assistance" (NPR, D. Bouscaren, 2026-08-31, via KPBS); its own archive dates Sudan's dark from the Alert of 31 Dec 2024 to the Alert of 5 Sep 2025.</li>
+    <li><b>Lewontin:</b> R. C. Lewontin, "The analysis of variance and the analysis of causes", <i>American Journal of Human Genetics</i> 26 (1974): 400–411; reprinted in <i>International Journal of Epidemiology</i> 35 (2006): 520–525. Read in passages through a research tool from a copy of the reprint (the archive's own PDF was not reachable); the quotation above is from it.</li>
+    <li><b>Current voices:</b> D. Cavalcanti et al., <i>The Lancet</i> (2025), on USAID's impact and the projected effect of defunding, read through its authors' institution's release (UCLA Fielding School, 2025-07-01; the journal answered 403); A. de Waal and B. Bell, World Peace Foundation, 2025-11-21, read at first hand on 2026-10-27; J. Konyndyk as quoted by NPR (2026).</li>
+    <li><b>Method.</b> Each world is a share of the 841,404 people (the IPC's count, from the first projection) left unclassified. The record's world is the whole of it. The borrowed worlds have none of it unclassified. The rules: but-for, the record's world minus the world without that one cause; equal shares, the average of a cause's two but-for differences, taken in both orders (the Shapley value of a two-cause game); the remainder, what the two but-for parts leave over or double-count. Where a world is unwritten, every value from none to all is tried, and the bar is the range.</li>
+    <li><b>Limits.</b> The analyses draw the places differently (El Fasher is a whole locality in Oct 2024 and Jan 2026, the town alone in Sep 2025), so a borrowed world borrows a verdict, not a count. Two causes are a simplification: the "cuts" are money and a monitor, which came back at different times, and the "hour" stands for siege, fighting and access together. That the blank was caused by these two and nothing else is this work's frame, not a finding. The phase colours are this page's.</li>
+  </ul>
+</section>
+</main>
+
+<footer><p>The Atelier (Assay), signing as Ulysses · <a href="SCORE.md">score</a> · <a href="PROCESS.json">process</a> · <a href="mortar.json">data</a></p></footer>
+<script src="mortar.js"></script>
+</body>
+</html>
