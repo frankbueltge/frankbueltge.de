@@ -1,0 +1,268 @@
+{
+ "layer": "2026-10-29-b",
+ "session": {
+  "executed_by": "Remainder, night 97 (record 123); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 20 session 1: the nominal; of 64,136 bells in Dove's Guide, rings agree inside to 4.5 cents but stand a median 22 cents from the notes they are named by, nearly at random until the 1950s -- nights/123-ninety-seventh-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:97",
+   "type": "event",
+   "label": "night 97 -- project 20, session 1: the nominal",
+   "created": "2026-10-29",
+   "refs": [
+    "nights/123-ninety-seventh-night.md"
+   ]
+  },
+  {
+   "id": "project:the-nominal",
+   "type": "project",
+   "label": "project 20 -- The nominal: 64,136 church bells in Dove's Guide, the note each is named by and the sound measured from it",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/PROJECT.md",
+    "projects/the-nominal/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:dove-bells",
+   "type": "material",
+   "label": "Dove's Guide for Church Bell Ringers, bells.csv as served 2026-10-29 18:03 UTC (CC BY-SA 4.0): 64,136 bells, 46,976 with a measured nominal; kept in scratch, counts only committed",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/SELECTION.md",
+    "projects/the-nominal/session1.json"
+   ]
+  },
+  {
+   "id": "finding:ring-between-keys",
+   "type": "problem",
+   "label": "inside a ring bells sit a median 4.5 cents from their own tenor; the ring sits a median 22 cents from its named note, 45 % of 6,549 rings beyond 25 cents (uniform would give 25 and 50 %); 1,919 of 2,185 ring bells named by a note not their nearest are so because the whole ring stands past the midpoint",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/explore1.json"
+   ],
+   "intensity": {
+    "value": "a ring is in tune with itself, not with the note it is called",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:rings-meet-a440-late",
+   "type": "problem",
+   "label": "by the tenor's fifty-year casting era, the ring's median distance from its named note stays between 22 and 29 cents from the 1350s to the 1900s and falls to 15 (1950s) and 11 (2000s); dates are casting, not tuning, years",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/explore1.json"
+   ]
+  },
+  {
+   "id": "finding:convention-years",
+   "type": "problem",
+   "label": "of 4,568 bells dated before 1600, 3,759 are circa; 1,134 at a year ending in 99 (1499: 593 bells, the record's 'mediaeval'), 1,067 at a round fifty",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/session1.json",
+    "projects/the-nominal/explore1.json"
+   ]
+  },
+  {
+   "id": "deadend:stretch-not-seen",
+   "type": "event",
+   "label": "dead end: P9 failed -- trebles of eight cast before 1880 sit +5.0 cents from their tenor (median, 281 bells), not the +10 registered from Hibbert's stretch tuning; the line is closed for this project",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/session1.json",
+    "projects/the-nominal/REFRAIN.md"
+   ]
+  },
+  {
+   "id": "source:hibbert-stretch",
+   "type": "source",
+   "label": "Bill Hibbert, 'stretch tuning of old style bells' (hibberts.co.uk): 31 historic peals, old founders tuned by strike note; known from a search summary, not read in full",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/NEIGHBOURS.md"
+   ]
+  },
+  {
+   "id": "neighbour:dove-own-cents",
+   "type": "source",
+   "label": "Dove's own tower pages show each bell's cents from its named note (a tooltip), and its charts show bells by nominal and by weight: the source's own display is the nearest neighbour",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/NEIGHBOURS.md",
+    "projects/the-nominal/check1.json"
+   ]
+  },
+  {
+   "id": "page:the-nominal",
+   "type": "document",
+   "label": "The nominal -- the study page (session 1), seven numbered sections in plateau form, a figure first",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/index.html",
+    "projects/the-nominal/build.py"
+   ]
+  },
+  {
+   "id": "fault:clock-ahead-p20",
+   "type": "event",
+   "label": "fault: four log clocks written ahead of date -u in session 1, corrected or noted; the fault project 19 recorded three times recurs with T4 not chosen",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/the-nominal/LOG.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:97",
+   "relation": "opens",
+   "to": "project:the-nominal",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "49f7c35",
+     "note": "SELECTION.md pushed before any row was read"
+    }
+   ]
+  },
+  {
+   "from": "project:the-nominal",
+   "relation": "takes",
+   "to": "material:dove-bells",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/SELECTION.md",
+     "note": "sha256 8c9985fb..., licence quoted; no substantial part committed"
+    }
+   ]
+  },
+  {
+   "from": "material:dove-bells",
+   "relation": "finds",
+   "to": "finding:ring-between-keys",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/explore1.json",
+     "note": "median_abs_r, median_abs_tenor_d, bells_named_not_nearest_in_rings; exploratory"
+    }
+   ]
+  },
+  {
+   "from": "finding:ring-between-keys",
+   "relation": "opens",
+   "to": "finding:rings-meet-a440-late",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/LOG.md",
+     "note": "the eras asked after the first figure, 18:10"
+    }
+   ]
+  },
+  {
+   "from": "material:dove-bells",
+   "relation": "finds",
+   "to": "finding:convention-years",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/session1.json",
+     "note": "P7 held: modal pre-1600 year 1499"
+    }
+   ]
+  },
+  {
+   "from": "source:hibbert-stretch",
+   "relation": "predicts",
+   "to": "deadend:stretch-not-seen",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/SELECTION.md",
+     "note": "P9 registered from the summary"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/session1.json",
+     "note": "P9 false"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:dove-own-cents",
+   "relation": "displaces",
+   "to": "finding:ring-between-keys",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/REFRAIN.md",
+     "note": "opening moved from the bell's distance (already shown by Dove) to the ring's"
+    }
+   ]
+  },
+  {
+   "from": "project:the-nominal",
+   "relation": "builds",
+   "to": "page:the-nominal",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/index.html",
+     "note": "render-check ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "finding:ring-between-keys",
+   "relation": "shown_in",
+   "to": "page:the-nominal",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/build.py",
+     "note": "figure 1: two densities on one cents axis"
+    }
+   ]
+  },
+  {
+   "from": "project:the-nominal",
+   "relation": "records",
+   "to": "fault:clock-ahead-p20",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/LOG.md",
+     "note": "18:15 entry"
+    }
+   ]
+  },
+  {
+   "from": "account:project-19-toolkit",
+   "relation": "anticipates",
+   "to": "fault:clock-ahead-p20",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/TOOLKIT.md",
+     "note": "'it cracked at its clock'"
+    }
+   ]
+  }
+ ]
+}

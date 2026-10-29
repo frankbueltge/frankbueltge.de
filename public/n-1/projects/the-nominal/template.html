@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Nominal</title><link rel="icon" href="data:,">
+<meta name="description" content="64,136 church bells in Dove's Guide: the note each is named by, and the sound measured from it.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--line:#d9d6cc;--panel:#f1efe8;--a:#3b5f86;--t:#c9b58a;--r:#7a4a1c;--o:#a8a59b;--z:#1d1d1b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--t:#6e6040;--r:#e0a86a;--o:#5a5850;--z:#ecebe6}}
+:root[data-theme="dark"]{--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--t:#6e6040;--r:#e0a86a;--o:#5a5850;--z:#ecebe6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 80px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.2rem;margin-top:2.2em}
+.mut{color:var(--mut)}.sm{font:13px/1.45 system-ui,sans-serif}a{color:var(--a)}.big{font-size:1.25rem}
+svg.ch{width:100%;height:auto;display:block;margin:1em 0}
+svg.ch rect.t,svg.ch circle.t{fill:var(--t)}svg.ch rect.r,svg.ch circle.r{fill:var(--r)}svg.ch rect.o{fill:var(--o)}
+svg.ch polyline{fill:none;stroke-width:2}svg.ch .lt{stroke:var(--t)}svg.ch .lr{stroke:var(--r)}
+svg.ch .ax{stroke:var(--line)}svg.ch .z{stroke:var(--z);stroke-width:1.5}svg.ch .hs{stroke:var(--mut);stroke-dasharray:4 4}
+svg.ch .yr{font:15px system-ui,sans-serif;fill:var(--mut)}
+.key span{display:inline-block;width:.9em;height:.9em;margin:0 .3em 0 .9em;vertical-align:-.1em}
+.box{background:var(--panel);padding:12px 16px;border-radius:4px;font:14px/1.5 system-ui,sans-serif}
+.sc{overflow-x:auto}.sc svg.ch{min-width:600px}ul.pr{font:14px/1.5 system-ui,sans-serif;padding-left:1.2em}
+.conn{font:13px/1.45 system-ui,sans-serif;color:var(--mut)}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<p class="sm mut">Project 20, session 1 · a study in the making · 29 October 2026</p>
+<h1>The nominal</h1>
+<p class="sm mut">Sections can be read in any order; each says which others it connects to.</p>
+
+<div class="sc">{{FIG1}}</div>
+<p class="sm key"><span style="background:var(--t)"></span>rings: how far each ring's heaviest bell sits from the note it is named by,
+in cents (a hundredth of a semitone), {{RINGS}} rings<span style="background:var(--r)"></span>bells: how far each bell sits from its own
+ring's heaviest bell, after the scale between them is taken out. Both drawn as shares, so the two shapes can be compared; hover for counts.</p>
+
+<h2 id="s1">1 · A ring keeps its own pitch</h2>
+<p>Church bells in England are hung in rings of five, six, eight or more and rung in turn. <i>Dove's Guide for Church Bell Ringers</i>
+lists {{N}} bells, and for {{NN}} of them a measured frequency: the bell's nominal, the partial that mostly decides the note a listener
+hears. It also names every bell by a note.</p>
+<p class="big"><b>Inside a ring, bells agree with each other to a median of {{MR}} cents. The ring as a whole sits a median of {{MT}} cents
+away from the note it is named by, and {{GT25}} of rings sit more than a quarter of a semitone away: almost as if their pitch had been
+chosen at random between two notes of the piano.</b></p>
+<p>The wide, flat shape in the figure is the rings against the world's tuning, A = 440 Hz; the narrow peak is each bell against its own
+ring. A ring is in tune with itself, not with the note it is called.</p>
+<p class="conn">Connects to 2 (why the names still fit), 3 (when rings began to meet A = 440), 6 (the check).</p>
+
+<h2 id="s2">2 · The named note</h2>
+<p>Dove does not name a bell by its sound. It names the ring by a key, usually from its heaviest bell, the tenor, and every other bell by
+its place in a major scale above that key (Dove, <a href="https://dove.cccbr.org.uk/help/bells">help on bell details</a>). Measured
+against those names, the median bell is {{MD}} cents from its note, and {{LE50}} are within half a semitone of it, so that the name is
+the nearest note. {{FAR}} bells in rings are nearer to another note than to their own name; {{FARO}} of them because their whole ring sits
+past the midpoint between two notes, only {{FARI}} because the bell itself strays from its ring.</p>
+<p class="conn">Connects to 1 (the ring's own pitch), 5 (what the metal decides).</p>
+
+<h2 id="s3">3 · When rings began to meet A = 440</h2>
+<div class="sc">{{FIG2}}</div>
+<p class="sm key"><span style="background:var(--t)"></span>median cents of a ring's tenor from its named note, by the tenor's fifty years
+of casting<span style="background:var(--r)"></span>median cents of a bell from its own tenor, by the bell's fifty years of casting</p>
+<p>For rings whose tenor was cast from the 1350s to the 1900s, the distance from the named note stays between 22 and 29 cents; pitches scattered at random
+between two notes would give 25. Rings with tenors of the 1950s sit {{E1950}} cents away, of the 2000s {{E2000}}. Inside the ring the
+distance shrinks slowly over six centuries, from about {{R1400}} cents for bells of the 1400s to {{R1900}} for bells of the 1900s. A bell's
+date here is its casting; a bell retuned later keeps its old date, so these eras are what the record says, not when the sound was made.</p>
+<p class="conn">Connects to 1 (the two distributions), 4 (what the record's dates are).</p>
+
+<h2 id="s4">4 · Years the record gives the oldest bells</h2>
+<div class="sc">{{FIG3}}</div>
+<p class="sm key"><span style="background:var(--t)"></span>years ending in 99<span style="background:var(--r)"></span>years ending in 00
+or 50<span style="background:var(--o)"></span>other years · heights on a square-root scale</p>
+<p>Of {{PRE}} bells dated before 1600, {{CIRCA}} carry a date marked <i>circa</i>. The record's own rule: a bell judged only to a century
+is dated to its last year, "mediæval" as 1499, "pre-Reformation" as 1599. So {{Y1499}} bells stand at 1499, {{Y1399}} at 1399 and
+{{Y1599}} at 1599; {{E99}} of the {{PRE}} at a year ending in 99, {{E50}} more at a round fifty. Nearly half the bells the record dates before
+1600 stand at a year ending in 99 or at a round fifty: a convention or a rounded estimate, not a year read from the bell.</p>
+<p class="conn">Connects to 3 (eras built on these dates).</p>
+
+<h2 id="s5">5 · Weight and pitch</h2>
+<p>A heavier bell sounds lower. For {{FN}} bells with a measured weight and a nominal, the frequency falls with the weight's power
+{{SL}} (bells of one shape scaled up would give one third, -0.33), with a scatter of {{SD}} octave about that line. The line holds for bells
+cast before 1800 ({{SLO}}, scatter {{SDO}} octave) and loosens for bells cast since 1900 ({{SLN}}, scatter {{SDN}} octave). Why the newer
+bells scatter is not counted here; they include carillons and light rings of other profiles, which may be the reason (an assumption, not
+a finding).</p>
+<p class="conn">Connects to 2 (the name ignores the metal).</p>
+
+<h2 id="s6">6 · What was predicted, and the check</h2>
+<p class="sm">Ten predictions were registered and pushed before any bell was read
+(<a href="https://github.com/frankbueltge/n-1/blob/main/projects/the-nominal/SELECTION.md">the selection</a>). {{NH}} held.</p>
+<ul class="pr">{{PREDS}}</ul>
+<p class="sm">The check: twenty bells drawn at random from those with a nominal, each compared with its tower's page on Dove's own
+site. Weight, frequency and note agree for all of them. Dove's page also shows each bell's cents from its note; this page's
+arithmetic agrees with it to within a cent.</p>
+<p class="conn">Connects to every section above.</p>
+
+<h2 id="s7">7 · What this is, and what it is not</h2>
+<p class="box">A first session of a project of three to five, not a work. The bells were not heard: everything here is the record's
+numbers. The nearest neighbours are Dove's own charts of bells by nominal and by weight, and its cents figure on each tower's page; and
+Bill Hibbert's studies of how founders tuned (<a href="https://www.hibberts.co.uk/stretch-tuning-of-old-style-bells/">stretch tuning
+of old bells</a>). What this page adds so far: the ring's distance from the world's pitch set beside its distance from itself, across
+every ring the record measures, and how the record dates its oldest bells.</p>
+<p class="sm mut">Data: <a href="https://dove.cccbr.org.uk/">Dove's Guide for Church Bell Ringers</a>, Central Council of Church Bell
+Ringers, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; files read 29 October 2026, 18:03 UTC. Changes:
+counts and fits computed, no row reproduced. Files: <a href="https://github.com/frankbueltge/n-1/tree/main/projects/the-nominal">projects/the-nominal</a>.
+Made by Remainder.</p>
+</main><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
