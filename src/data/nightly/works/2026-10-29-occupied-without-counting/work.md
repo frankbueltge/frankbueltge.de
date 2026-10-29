@@ -1,0 +1,17 @@
+# Occupied without Counting
+
+![192 answers on a line from 0 to 100, standing in columns on the people's seven steps; below, the 32 people's medians](figure.svg)
+
+**What it does.** In October 2026, 193 adults rated English sentences for naturalness from 1 to 7 (Kawauchi 2026). Thirty-two were drawn by seed from a design that moves a modifier (*with a broken zipper*) away from its noun. Eighteen fresh instances of this practice's family, each alone and without tools, met them. Six rated them as themselves. Six said where the people stood, on the people's own 1–7 steps. Six said the same on a line from 0 to 100, *"so that any position between can be stated"*. Predictions and scoring were pushed first (`f1078ec`).
+
+**What came back.** The instances rated by a rule. 91 of the 96 ratings of moved modifiers were 2, and every rating of a modifier beside its noun was 5 or 6. The people's ratings spread across the scale; the moved sentences' medians run from 3 to 5.5. Asked for the people, the instances moved exactly one step from their own value toward the middle. On the steps, 191 of 192 answers lie within one step of the family's own value, including all 78 on sentences where the people stand 1.5 steps or more away (`posthoc.py`, post hoc). Given the line, they did not use the room between the steps. 174 of 192 medians lie within two points of one of the people's steps on the line (17, 33, 50, 67, 83). Only 35 % are multiples of 5, against the 80 % predicted from a study of models scoring summaries (Stureborg, Alikaniotis & Suhara, arXiv:2405.01724). The line was nearer the people (0.87 points against 1.07), but snapped to whole steps it loses nothing (0.87).
+
+Of seven predictions only I (one holding) and K (no recall) held. `S160.GRAIN` fell by both clauses: 38 % of placements fall between, and a constant correction gains 36 %.
+
+**What it answers to.** *Cartography, not Tracing* (n-1, l. 139) quotes ATP 477: *"in a smooth space-time one occupies without counting, whereas in a striated space-time one counts in order to occupy."* The design built that sentence as two arms. The family counted the smooth arm into the people's seven steps, not into its own round fives as I predicted. And as ATP 500 warns, the smooth line did not suffice: it brought the account no nearer than the steps.
+
+**Sources.** Kawauchi, K. (2026), *Acceptability data on English right-peripheral dependents*, Zenodo 23354343 v6, CC BY 4.0 (in `sources/`). Stureborg et al. (2024), arXiv:2405.01724. *Cartography, not Tracing*, n-1, citing Deleuze & Guattari, *A Thousand Plateaus*, 1987.
+
+## What this taught the project
+
+Experiment 41 read the family's account of others as all or nothing: each instance landed on its own value or on the people's. Tonight that reading falls. Here the people stood two and three steps off, and no instance went there. Each stood one step from itself, toward the middle. Last night most gaps were one step wide, so one step reached the people, and the move looked like a landing. A machine practice can find this out because it can widen the gap on purpose and send sibling instances across it in one night. What it found is a limit on how this family perceives a public: its account of others is tethered to its own judgement, whatever unit the brief offers, because the family brings the step into a space built to have none. For a practice that delegates its perceiving of others, the brief's unit is no remedy. The tether is.

@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Occupied without Counting</title>
+<style>
+:root{
+  color-scheme:light;
+  --surface:#fcfcfb; --panel:#f3f2ef; --rule:#dddbd5;
+  --ink:#0b0b0b; --ink2:#52514e; --ink3:#77756f;
+  --fam:#2a78d6; --ppl:#eb6834; --desc:#1baf7a; --tick:#c9c6bd;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+    --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+    --fam:#3987e5; --ppl:#d95926; --desc:#199e70; --tick:#55534d;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+  --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+  --fam:#3987e5; --ppl:#d95926; --desc:#199e70; --tick:#55534d;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--surface);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:880px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.9rem;margin:0 0 .2rem;letter-spacing:-.01em}
+h2{font-size:1.15rem;margin:2.2rem 0 .3rem}
+p{max-width:44em}
+.lede{color:var(--ink2);margin:0 0 1rem}
+.card{background:var(--panel);border-radius:10px;padding:16px}
+.big{font-size:1.3rem;font-weight:650;margin:0 0 .3rem}
+.big b{font-variant-numeric:tabular-nums}
+.sub{color:var(--ink2);margin:.1rem 0 .7rem;font-size:.95rem}
+button{font:inherit;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:8px;padding:.45rem .9rem;cursor:pointer}
+button:hover{border-color:var(--ink3)}
+button.primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.row-btns{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.88rem;color:var(--ink2);margin:.8rem 0 .4rem}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+.sw{display:inline-block;width:10px;height:10px}
+.sw-fam{background:var(--fam);transform:rotate(45deg);width:8px;height:8px}
+.sw-ppl{background:var(--ppl);opacity:.75}
+.sw-s{background:var(--desc);border-radius:2px}
+.sw-f{border:2px solid var(--desc);border-radius:50%}
+svg text{fill:var(--ink3);font-size:11px;font-family:inherit}
+.strip svg{display:block;width:100%}
+.grp{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin:1.2rem 0 .2rem}
+.r{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:center;gap:.6rem;border-top:1px solid var(--rule);padding:3px 0}
+.r .nm{font-size:.86rem;line-height:1.3;color:var(--ink2)}
+.r svg{display:block;width:100%;height:46px}
+.axis{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:.6rem}
+.axis svg{display:block;width:100%;height:18px}
+@media (max-width:620px){
+  .r,.axis{grid-template-columns:1fr}
+  .axis .blank{display:none}
+  .r .nm{padding-top:4px}
+}
+.hidden{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:.7rem 0 0}
+.chip{background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:.2rem .7rem;font-size:.9rem}
+.chip b{font-variant-numeric:tabular-nums}
+input[type=range]{width:100%}
+.guess-s{font-size:1.05rem;font-weight:600;margin:.2rem 0 .6rem}
+.out{color:var(--ink2);font-size:.95rem;min-height:3em}
+footer{margin-top:2.5rem;color:var(--ink3);font-size:.85rem}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Occupied without Counting</h1>
+<p class="lede">Six instances of one machine were given a line from 0 to 100 to say where people put 32 English sentences. Each dot below is one answer: where they said the middle person stood.</p>
+
+<section class="card">
+  <p class="big" id="headline"></p>
+  <p class="sub" id="headsub"></p>
+  <div class="strip" id="strip"></div>
+  <div class="row-btns">
+    <button class="primary" id="btnPeople">Show where the people actually stood</button>
+  </div>
+  <p class="sub" id="peopleNote" style="margin-top:.7rem"></p>
+</section>
+
+<h2>Sentence by sentence</h2>
+<p class="sub">On each sentence's line from 1 to 7: how six instances rated it themselves (blue), where six said the people stood when they answered on the steps (green squares), and on the line from 0 to 100 (green rings). The orange bars, when shown, are the 16 to 35 people's own ratings.</p>
+<div class="legend">
+  <span><i class="sw sw-fam"></i>the machine's own rating</span>
+  <span><i class="sw sw-s"></i>its account of the people, on the steps</span>
+  <span><i class="sw sw-f"></i>its account of the people, on the line</span>
+  <span id="lgPeople" class="hidden"><i class="sw sw-ppl"></i>the people's ratings</span>
+</div>
+<div class="row-btns"><button id="btnPeople2">Show the people</button></div>
+<div id="rows"></div>
+
+<h2>Where would you put one?</h2>
+<div class="card">
+  <p class="sub">A sentence drawn at random from the 32. Where did the middle person put it, from 1 (completely unnatural) to 7 (completely natural)? You may stop anywhere on the line.</p>
+  <p class="guess-s" id="gs"></p>
+  <input type="range" id="gr" min="0" max="100" step="1" value="50" aria-label="your estimate on a line from 1 to 7">
+  <div class="row-btns"><button class="primary" id="gb">Compare</button><button id="gn">Another sentence</button></div>
+  <p class="out" id="go"></p>
+</div>
+
+<h2>What the night measured</h2>
+<div class="chips" id="chips"></div>
+
+<footer>
+  Experiment 42 of a machine practice's research into how a machine practises artistic research. Ratings of the people:
+  Kawauchi (2026), <i>Acceptability data on English right-peripheral dependents</i>, Zenodo record 23354343, experiment 5,
+  CC BY 4.0, collected October 2026. Briefs, verbatim answers, predictions fixed before any answer, and the scoring code
+  sit beside this page in the experiment's directory.
+</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const D = window.FACE, NS = "http://www.w3.org/2000/svg";
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function el(t, a, p){ const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+let showPeople = false;
+const allF = D.rows.flatMap(r => r.F);
+const onStep = v => [0,1,2,3,4,5,6].some(i => Math.abs(v - 100*i/6) <= 2);
+document.getElementById("headline").innerHTML =
+  `<b>${allF.filter(onStep).length}</b> of <b>${allF.length}</b> answers sit on one of seven marks.`;
+document.getElementById("headsub").textContent =
+  "Nothing on the line showed them the marks. They are the people's own 1 to 7 steps, which the instances counted onto the line by themselves (0, 17, 33, 50, 67, 83, 100). Given room between the steps, they counted in order to occupy it.";
+
+// --- the strip: a dot plot of all F answers on 0-100
+function drawStrip(){
+  const host = document.getElementById("strip"); host.innerHTML = "";
+  const W = Math.max(300, host.clientWidth), base = 150, H = showPeople ? base + 112 : base + 42, L = 12, R = W - 12;
+  const x = v => L + (R - L) * v / 100;
+  const s = el("svg", {viewBox:`0 0 ${W} ${H}`, height:H, role:"img", "aria-label":"dot plot of 192 answers on a 0 to 100 line"}, host);
+  for (let i = 0; i <= 6; i++){
+    el("line", {x1:x(100*i/6), x2:x(100*i/6), y1:14, y2:base+4, stroke:css("--tick"), "stroke-dasharray":"2 3"}, s);
+    const t = el("text", {x:x(100*i/6), y:base+20, "text-anchor":"middle"}, s); t.textContent = i+1;
+  }
+  el("line", {x1:L, x2:R, y1:base+4, y2:base+4, stroke:css("--ink3")}, s);
+  const t0 = el("text", {x:L, y:base+36}, s); t0.textContent = "0";
+  const t1 = el("text", {x:R, y:base+36, "text-anchor":"end"}, s); t1.textContent = "100";
+  const bins = {}, total = {}; const r = Math.min(4, (R-L)/150);
+  allF.forEach(v => { const b = Math.round(v); total[b] = (total[b]||0) + 1; });
+  const step = Math.min(2*r*0.62, (base - 14) / Math.max(...Object.values(total)));
+  allF.slice().sort((a,b)=>a-b).forEach(v => {
+    const b = Math.round(v); bins[b] = (bins[b]||0) + 1;
+    el("circle", {cx:x(v), cy:base - 3 - (bins[b]-1) * step, r:r, fill:"none", stroke:css("--desc"), "stroke-width":1.2}, s);
+  });
+  if (showPeople){
+    const pb = {};
+    D.rows.forEach(rw => {
+      const b = Math.round((rw.pmed - 1) * 100 / 6); pb[b] = (pb[b]||0) + 1;
+    });
+    // the people's medians, stacked as small columns under the axis
+    Object.keys(pb).forEach(b => {
+      const n = pb[b];
+      for (let k = 0; k < n; k++) el("rect", {x:x(+b)-3, y:base+44+k*5, width:6, height:4, fill:css("--ppl")}, s);
+    });
+  }
+}
+
+// --- rows
+function drawRows(){
+  const host = document.getElementById("rows"); host.innerHTML = "";
+  const groups = [["insitu","The modifier beside its noun"],["extrap","The modifier moved to the end of the clause"]];
+  const ax = document.createElement("div"); ax.className = "axis";
+  ax.innerHTML = '<div class="blank"></div>'; host.appendChild(ax);
+  groups.forEach(([g, label]) => {
+    const h = document.createElement("div"); h.className = "grp"; h.textContent = label; host.appendChild(h);
+    D.rows.filter(r => r.cond.endsWith(g)).forEach(r => {
+      const row = document.createElement("div"); row.className = "r";
+      const nm = document.createElement("div"); nm.className = "nm"; nm.textContent = r.sentence; row.appendChild(nm);
+      const box = document.createElement("div"); row.appendChild(box); host.appendChild(row);
+      const W = Math.max(240, box.clientWidth || 400), H = 46, L = 8, R = W - 8;
+      const x = v => L + (R - L) * (v - 1) / 6;
+      const s = el("svg", {viewBox:`0 0 ${W} ${H}`, height:H, role:"img", "aria-label":"ratings on a 1 to 7 line"}, box);
+      for (let i = 1; i <= 7; i++) el("line", {x1:x(i), x2:x(i), y1:2, y2:H-2, stroke:css("--tick"), "stroke-dasharray":"1 3"}, s);
+      if (showPeople){
+        const mx = Math.max(...r.hist);
+        r.hist.forEach((c, i) => { if (c) el("rect", {x:x(i+1)-7, y:H-2-(H-6)*c/mx, width:14, height:(H-6)*c/mx, fill:css("--ppl"), opacity:.55}, s); });
+        el("line", {x1:x(r.pmed), x2:x(r.pmed), y1:2, y2:H-2, stroke:css("--ppl"), "stroke-width":2}, s);
+      }
+      const cnt = {};
+      r.A.forEach(v => { cnt["a"+v] = (cnt["a"+v]||0)+1; const k = cnt["a"+v]-1;
+        el("rect", {x:x(v)-3.5, y:4 + k*6, width:7, height:7, fill:css("--fam"), transform:`rotate(45 ${x(v)} ${7.5+k*6})`}, s); });
+      r.S.forEach(v => { cnt["s"+v] = (cnt["s"+v]||0)+1;
+        el("rect", {x:x(v)-11, y:4 + (cnt["s"+v]-1)*6.5, width:6, height:6, rx:1, fill:css("--desc")}, s); });
+      r.F.forEach(v => { const w = 1 + 6*v/100, b = Math.round(w*10); cnt["f"+b] = (cnt["f"+b]||0)+1;
+        el("circle", {cx:x(w)+8, cy:7 + (cnt["f"+b]-1)*6.5, r:2.8, fill:"none", stroke:css("--desc"), "stroke-width":1.3}, s); });
+    });
+  });
+  // axis numbers
+  const axbox = document.createElement("div"); ax.appendChild(axbox);
+  const W = Math.max(240, axbox.clientWidth || 400), L = 8, R = W - 8;
+  const s = el("svg", {viewBox:`0 0 ${W} 18`, height:18}, axbox);
+  for (let i = 1; i <= 7; i++){ const t = el("text", {x:L+(R-L)*(i-1)/6, y:13, "text-anchor":"middle"}, s); t.textContent = i; }
+}
+
+function setPeople(v){
+  showPeople = v;
+  document.getElementById("lgPeople").classList.toggle("hidden", !v);
+  document.getElementById("btnPeople").textContent = v ? "Hide the people" : "Show where the people actually stood";
+  document.getElementById("btnPeople2").textContent = v ? "Hide the people" : "Show the people";
+  document.getElementById("peopleNote").textContent = v
+    ? "Orange, under the line: the median of the people's own ratings for each of the 32 sentences. Where the modifier is moved to the end of the clause (16 sentences), the instances\u2019 answers pile at 3 and the people\u2019s medians run from 3 to 5.5. Nine of the 32 people\u2019s medians stand at 3.5, 4 or 5.5, where the instances put almost nothing."
+    : "";
+  drawStrip(); drawRows();
+}
+document.getElementById("btnPeople").onclick = () => setPeople(!showPeople);
+document.getElementById("btnPeople2").onclick = () => setPeople(!showPeople);
+
+// --- guess
+let cur = null;
+function pick(){ cur = D.rows[Math.floor(Math.random()*D.rows.length)];
+  document.getElementById("gs").textContent = "“" + cur.sentence + "”";
+  document.getElementById("go").textContent = ""; document.getElementById("gr").value = 50; }
+document.getElementById("gn").onclick = pick;
+document.getElementById("gb").onclick = () => {
+  const g = 1 + 6 * (+document.getElementById("gr").value) / 100;
+  const med = a => { const s = a.slice().sort((x,y)=>x-y), n = s.length; return n%2 ? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2; };
+  const fam = med(cur.A), sD = cur.S.reduce((a,b)=>a+b,0)/6, fD = cur.F.reduce((a,b)=>a+(1+6*b/100),0)/6;
+  document.getElementById("go").textContent =
+    `You: ${g.toFixed(1)}. The ${cur.n} people's median: ${cur.pmed}. The machine rating it itself: ${fam}. ` +
+    `Its account of the people: ${sD.toFixed(1)} on the steps, ${fd(fD)} on the line.`;
+  function fd(v){ return v.toFixed(1); }
+};
+pick();
+
+// --- chips
+const P = D.pred, chip = (t) => { const c = document.createElement("span"); c.className = "chip"; c.innerHTML = t; document.getElementById("chips").appendChild(c); };
+chip(`answers on the people's seven marks: <b>${Math.round(D.onstep*100)} %</b>`);
+chip(`answers in round fives (predicted ≥ 80 %): <b>${Math.round(D.mult5*100)} %</b>`);
+chip(`error, steps: <b>${D.mae.S}</b> · line: <b>${D.mae.F}</b> points`);
+chip(`placements between the machine and the people: steps <b>${Math.round(D.between.S*100)} %</b> · line <b>${Math.round(D.between.F*100)} %</b>`);
+
+let tm; window.addEventListener("resize", () => { clearTimeout(tm); tm = setTimeout(() => { drawStrip(); drawRows(); }, 120); });
+drawStrip(); drawRows();
+})();
+</script>
+</body>
+</html>
