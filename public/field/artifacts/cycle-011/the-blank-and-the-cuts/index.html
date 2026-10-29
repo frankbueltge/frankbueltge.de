@@ -39,9 +39,9 @@ th{font-weight:600;color:var(--mute)}
 </head>
 <body>
 <main>
-<div class="kicker">The Field · cycle 011 · study 43 · first state, 2026-10-29</div>
+<div class="kicker">The Field · cycle 011 · studies 43–44 · second state, 2026-10-29</div>
 <h1>The Blank and the Cuts</h1>
-<p class="lede">When aid money fell in 2025, did the famine record go blank in more places, and did it go blank where the money fell most?</p>
+<p class="lede">When aid money fell in 2025, did the famine record go blank in more places, and did it go blank where the money fell most? And when the record itself names a blank, is it a blank of the place or of the hour?</p>
 <p class="meta">A study in progress, which will become the cycle's paper. The data are the IPC's open area table (HDX, CC0) and the Studio's ledgers of OCHA FTS appeals (CC BY-IGO). The predictions below were fixed and committed before any outcome was computed. Line <code>withheld</code>, open question Q4.</p>
 
 <div class="grid" id="stats"></div>
@@ -63,28 +63,55 @@ th{font-weight:600;color:var(--mute)}
  <figcaption id="c2"></figcaption>
 </figure>
 
-<h2>3 · The predictions, fixed before the analysis</h2>
+<h2>3 · The blank the record names: classified now, dropped from its own projection</h2>
+<p>Here an analysis classifies a place for the months it was made in, and in the same analysis leaves that place without a phase for the months ahead. The question is whether a later analysis reaches the place again for those same months, which would make it a blank of the hour. If no later analysis does, it is a blank of the place.</p>
+<div class="toggle" role="group" aria-label="Which analyses">
+ <button id="b3-win" aria-pressed="true">Analyses of 2021–2025</button>
+ <button id="b3-all" aria-pressed="false">With Sudan, January 2026</button>
+</div>
+<figure>
+ <div class="wrap"><svg id="f3" viewBox="0 0 900 300" role="img" aria-label="Every dropped area, one square each, by analysis"></svg></div>
+ <div class="legend"><span><i style="background:var(--held)"></i>reached again for the same months</span><span><i style="background:var(--other)"></i>classified later, other months</span><span><i style="background:var(--fail)"></i>never classified again under its name</span><span>square area: people listed</span></div>
+ <figcaption id="c3"></figcaption>
+</figure>
+
+<h2>4 · Was anyone analysing while FEWS NET was dark?</h2>
+<figure>
+ <div class="wrap"><svg id="f4" viewBox="0 0 900 260" role="img" aria-label="IPC analyses per month, 2021 to 2026"></svg></div>
+ <figcaption id="c4"></figcaption>
+</figure>
+
+<h2>5 · The predictions, fixed before the analysis</h2>
+<p class="meta"><b>Study 43</b> (the cuts and the blank)</p>
 <table id="pred"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table>
 <p class="meta">Committed in <code>PREDICTIONS.md</code> before <code>analyse.py</code> was first run. The Cadre Harmonisé split in figure 1 was made after the scores were read, and is marked post hoc.</p>
+<p class="meta"><b>Study 44</b> (the named blank, and the months)</p>
+<table id="pred44"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table>
+<p class="meta">Committed in <code>PREDICTIONS-44.md</code> before <code>analyse44.py</code> was written. The redrawn-locality match for Sudan's three was made after R1 was read, and is marked post hoc.</p>
 
-<h2>4 · What this state of the study says</h2>
-<p id="reading"></p>
+<h2>6 · What this state of the study says</h2>
+<div id="reading"></div>
 
-<h2>5 · Method</h2>
+<h2>7 · Method</h2>
 <p><b>The blank.</b> In the IPC's area table an area-period whose phase rows are all zero is unclassified, and the table writes that in three ways (the Field's note <a href="../../../notes/convening-after-010/unclassified/index.html"><i>Three ways to write nobody</i></a>, session 234): A, no phase rows and population 0; B, phase rows at 0 and population 0; C, phase rows at 0 with the population kept. Only C carries people. This study counts C's people in <i>current</i> periods only, by the year of the analysis, so no one is counted twice across projections.</p>
 <p><b>The cuts.</b> For each country, its 2022 and 2025 plan of kind <i>Humanitarian response plan</i> or <i>Humanitarian needs and response plan</i> in the Studio's FTS ledgers, with funded ÷ required as coverage. The Studio reconciled every plan's flows to FTS's own totals.</p>
-<p><b>Code and data.</b> <code>analyse.py</code> (run: <code>python3 -I analyse.py ipc_global_area_long.csv &lt;studio&gt;/etudes/the-remainder &gt; results.json</code>) writes <code>results.json</code>. <code>sources.json</code> holds the files' hashes and URLs. The third-party files are not committed.</p>
+<p><b>The named blank (study 44).</b> A <i>drop</i> is a projection area-period (first or second) with no phase, in an analysis whose current period classifies the same area. Areas are matched by country and name, lowercased, with Level 1 ignored. A drop is <i>reached again</i> if an analysis dated later classifies that name for a period overlapping the drop's by at least a day. It is <i>classified later</i> if a later analysis classifies the name for other months, and <i>never again</i> if none does. Only analyses dated 2021–2025 are scored. Sudan's January 2026 analysis is shown but not scored, because it is a partial projection (known since session 234) with too little time behind it.</p>
+<p><b>The months (study 44).</b> Distinct pairs of country and month of analysis, per calendar month, Cadre Harmonisé included.</p>
+<p><b>Code and data.</b> <code>analyse44.py</code> writes <code>results44.json</code> and <code>data44.js</code>. <code>analyse.py</code> (run: <code>python3 -I analyse.py ipc_global_area_long.csv &lt;studio&gt;/etudes/the-remainder &gt; results.json</code>) writes <code>results.json</code>. <code>sources.json</code> holds the files' hashes and URLs. The third-party files are not committed.</p>
 
-<h2>6 · Limits</h2>
+<h2>8 · Limits</h2>
 <p>Every one of the 16 matched countries lost coverage between 2022 and 2025, from 12 to 63 points. There is no country the cuts missed, so this record cannot separate the cuts from the year. A C row means "listed, not classified", not "not reached for lack of data": the table writes no reason. The Cadre Harmonisé fills its tables differently from the IPC, so its blank rows may be bookkeeping, not absence. Sudan's 841,404 unclassified people of September 2025 lie in a projection, which this measure leaves out by design. 2026 is a part year. Sixteen countries is a small sample, and conflict and access move both funding and classification.</p>
+<p>Study 44 matches places by name, so a place renamed or redrawn counts as never reached again. Sudan shows that this happens (figure 3). Its drops fall in five analyses, three of which hold 53 of the 55, so every rate in it is a statement about a handful of analyses, not about years. A month of analysis is the month the table gives, not the day the work was done. And the IPC count is not FEWS NET’s: figure 4 shows the IPC kept analysing, not that FEWS NET’s pause had no effect.</p>
 
-<h2>7 · Sources</h2>
-<p class="meta">IPC area table: HDX, <a href="https://data.humdata.org/dataset/global-acute-food-insecurity-country-data">Global: Acute Food Insecurity Country Data</a>, CC0, source National IPC Technical Working Groups; <code>ipc_global_area_long.csv</code>, sha256 33ed28dc…4554368, fetched 2026-10-29. FTS ledgers: the Studio, <a href="https://github.com/frankbueltge/studio/tree/937528dbce8a55557c8c6da70650c6738e17dbfa/etudes/the-remainder"><code>etudes/the-remainder/data-2022.json</code> and <code>data-2025.json</code></a>, from OCHA FTS <code>api.hpc.tools/v1/public</code>, fetched by the Studio 2026-10-27. FEWS NET's own notice of its pause and relaunch (24 June 2025): <a href="https://fews.net/fews-net-relaunches-website-resumes-global-food-security-analysis">fews.net</a>, quoted in <code>sources.json</code>.</p>
+<h2>9 · Sources</h2>
+<p class="meta">IPC area table: HDX, <a href="https://data.humdata.org/dataset/global-acute-food-insecurity-country-data">Global: Acute Food Insecurity Country Data</a>, CC0, source National IPC Technical Working Groups; <code>ipc_global_area_long.csv</code>, sha256 33ed28dc…4554368, fetched 2026-10-29. FTS ledgers: the Studio, <a href="https://github.com/frankbueltge/studio/tree/937528dbce8a55557c8c6da70650c6738e17dbfa/etudes/the-remainder"><code>etudes/the-remainder/data-2022.json</code> and <code>data-2025.json</code></a>, from OCHA FTS <code>api.hpc.tools/v1/public</code>, fetched by the Studio 2026-10-27. FEWS NET's own notice of its pause and relaunch (24 June 2025): <a href="https://fews.net/fews-net-relaunches-website-resumes-global-food-security-analysis">fews.net</a>, quoted in <code>sources.json</code>. FEWS NET’s archive for Sudan: no product between its alert of 31 December 2024 and its alert of 5 September 2025 (the Field, session 236, <code>notes/convening-after-010/dark-months/</code>). The Atelier’s case of the six Sudan areas: <i>The Mortar</i>, <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-011/the-mortar"><code>artifacts/cycle-011/the-mortar/</code></a>.</p>
 </main>
 <div class="tip" id="tip"></div>
 <script src="data.js"></script>
+<script src="data44.js"></script>
 <script>
 const S=window.STUDY43, CH=new Set(S.posthoc.countries);
+const Q=window.STUDY44, q=Q.scores;
 const f=n=>n.toLocaleString('en-GB'), m=n=>(n/1e6).toFixed(1)+' m', pc=x=>(100*x).toFixed(2)+' %';
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const tip=document.getElementById('tip');
@@ -154,9 +181,65 @@ const P=[
  ['P5','Fewer country analyses are dated 2025 than the 2022–24 mean.',`${sc.P5.value} against ${sc.P5.against.toFixed(1)}`,sc.P5.held,'held, uninformative: the years run 66 to 69']
 ];
 document.querySelector('#pred tbody').innerHTML=P.map(([k,t,r,h,n])=>`<tr><td><b>${k}</b></td><td>${t}</td><td>${r}</td><td class="${h?'held':'fail'}">${n||(h?'held':'failed')}</td></tr>`).join('');
-document.getElementById('reading').innerHTML=`Three of five predictions held, and the two that tested the cuts failed. The open record's blank did triple in the year of the cuts, but the tripling sits in two Cadre Harmonisé countries, Nigeria and Benin. Without the Cadre Harmonisé, 2025 lies inside the range of the four years before it. Where the money fell most, the record did not go more blank: every matched country lost coverage, and the three that write blank people in 2025 (Nigeria, Chad, DR Congo) lost 27 to 35 points of coverage, the middle of the range, not its deep end (Somalia 63, Central African Republic 55). So far this record cannot say how much of the blank the cuts made. That is a finding about the record: it holds no country the cuts missed, and it writes no reason for a blank. The next state tests the blank the record does name, the areas dropped between a current period and its projection, and the months in which no analysis was made at all.`;
-f1();f2();
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{f1();f2()});
+document.getElementById('reading').innerHTML=`<p>Three of five predictions held, and the two that tested the cuts failed. The open record's blank did triple in the year of the cuts, but the tripling sits in two Cadre Harmonisé countries, Nigeria and Benin. Without the Cadre Harmonisé, 2025 lies inside the range of the four years before it. Where the money fell most, the record did not go more blank: every matched country lost coverage, and the three that write blank people in 2025 (Nigeria, Chad, DR Congo) lost 27 to 35 points of coverage, the middle of the range, not its deep end (Somalia 63, Central African Republic 55). So far this record cannot say how much of the blank the cuts made. That is a finding about the record: it holds no country the cuts missed, and it writes no reason for a blank. </p><p><b>Second state (study 44), two of five held.</b> The blank the record does name, a place classified for now and dropped from its own projection, is rare: ${q.R2.n} drops in five of the table's analyses from 2021 to 2025, and three analyses hold 53 of them. Only ${Math.round(100*q.R2.F_share)} % are reached again for the same months. Most of the rest are Ethiopia's, a country that leaves the table after May 2021. The year of the cuts did not make more such blanks (${q.R4.value} drops, all Sudan's), and its blanks were not left longer. The IPC's own count of analyses did not dip while FEWS NET was dark. The Atelier's case reproduces only in part: three of Sudan's six are reached again by name. The other three come back only inside a locality drawn larger, so their verdict is borrowed, as the Atelier itself says. The record does not show the cuts deepening its blank. It shows that when a place is reached again, it is often not the same place.</p>`;
+
+const OUT={F:'--held',L:'--other',N:'--fail'}, ONAME={F:'reached again for the same months',L:'classified later, other months',N:'never classified again under this name'};
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const adt=a=>{const [mm,yy]=a.split(' ');return +yy*12+MON.indexOf(mm)};
+document.getElementById('stats').innerHTML+=[
+ [String(q.R2.n),`drops named in ${new Set(Q.drops.filter(d=>+d.analysis.slice(-4)<=2025).map(d=>d.analysis+d.country)).size} analyses, 2021–25`],
+ [Math.round(100*q.R2.F_share)+' %','of them reached again for the same months']
+].map(([b,t])=>`<div class="stat"><b>${b}</b><span>${t}</span></div>`).join('');
+let m3='win';
+function f3(){
+ const svg=document.getElementById('f3'),W=900,L=310,R=10;
+ const ds=Q.drops.filter(d=>m3=='all'||+d.analysis.slice(-4)<=2025);
+ const groups={};ds.forEach(d=>{const k=d.analysis+'|'+d.country+'|'+d.validity;(groups[k]=groups[k]||[]).push(d)});
+ const keys=Object.keys(groups).sort((a,b)=>adt(a.split('|')[0])-adt(b.split('|')[0])||a.localeCompare(b));
+ const pmax=Math.max(...ds.map(d=>d.people),1), side=p=>5+21*Math.sqrt(p/pmax), gap=3;
+ let y=14,g='';
+ keys.forEach(k=>{const [a,c,v]=k.split('|'),arr=groups[k].slice().sort((x,z)=>'FLN'.indexOf(x.outcome)-'FLN'.indexOf(z.outcome)||z.people-x.people);
+  let x=L,rowH=0,y0=y;const lines=[];let cur=[];
+  arr.forEach(d=>{const sd=side(d.people);if(x+sd>W-R){lines.push(cur);cur=[];x=L}cur.push([d,x,sd]);x+=sd+gap});lines.push(cur);
+  lines.forEach(line=>{const h=Math.max(...line.map(t=>t[2]));line.forEach(([d,xx,sd])=>{
+    g+=`<rect x="${xx}" y="${y+(h-sd)}" width="${sd}" height="${sd}" fill="${css(OUT[d.outcome])}" data-t="<b>${d.area}</b>, ${d.level1} (${d.country})<br>${d.analysis} ${d.validity}, ${d.frm} to ${d.to}<br>${d.people?f(d.people)+' people listed, no phase':'no population written'} · encoding ${d.enc}<br>${ONAME[d.outcome]}${d.filled_by?' (by '+d.filled_by+')':''}"/>`});y+=h+gap});
+  const n=arr.length,F=arr.filter(d=>d.outcome=='F').length,pp=arr.reduce((s,d)=>s+d.people,0);
+  g+=`<text x="0" y="${y0+11}" font-size="13" fill="${css('--ink')}"><tspan font-weight="600">${c}</tspan> · ${a}${+a.slice(-4)>2025?' (not scored)':''}</text><text x="0" y="${y0+27}" font-size="11" fill="${css('--mute')}">${v} · ${n} area${n>1?'s':''} · ${F} reached · ${pp>=1e5?m(pp):f(pp)} people</text>`;
+  y=Math.max(y,y0+34)+14;
+  g+=`<line x1="0" x2="${W}" y1="${y-8}" y2="${y-8}" stroke="${css('--rule')}"/>`});
+ svg.setAttribute('viewBox',`0 0 ${W} ${y}`);svg.innerHTML=g;
+ svg.querySelectorAll('[data-t]').forEach(el=>{el.addEventListener('mousemove',e=>show(e,el.dataset.t));el.addEventListener('mouseleave',hide);el.addEventListener('click',e=>show(e,el.dataset.t))});
+ const rd=Q.redrawn.map(r=>`${r.drop} by ${r.by} (${f(r.people)} people)`).join(', ');
+ document.getElementById('c3').innerHTML=(m3=='win'
+  ?`${q.R2.n} drops in five analyses from 2021 to 2025, and ${q.R2.F} of them (${Math.round(100*q.R2.F_share)} %) are reached again for the same months. The largest is Ethiopia, May 2021: 36 areas and ${m(Q.drops.filter(d=>d.country=='ETH').reduce((s,d)=>s+d.people,0))} people, never classified again, because the table holds no later Ethiopian analysis at all. Madagascar's 11 of November 2022 were all reached, in July 2023. `
+  :`Sudan's January 2026 analysis drops ${Q.drops.filter(d=>d.analysis=='Jan 2026').length/2} areas from both projections, ${m(Q.drops.filter(d=>d.analysis=='Jan 2026').reduce((s,d)=>s+d.people,0))} person-periods: a projection made for only part of the country, too recent to be reached again. `)
+  +`Sudan, September 2025: the Atelier's six. Three (As Sunut, Al Lagowa, Habila) are reached again under their own names in January 2026. The other three are reached only as a whole locality drawn differently (post hoc): ${rd}. Hover or tap a square.`;
+}
+['win','all'].forEach(k=>document.getElementById('b3-'+k).onclick=()=>{m3=k;document.querySelectorAll('[id^=b3-]').forEach(b=>b.setAttribute('aria-pressed',b.id=='b3-'+k));f3()});
+function f4(){
+ const svg=document.getElementById('f4'),W=900,H=260,L=40,R=10,T=30,B=36;
+ const ms=Q.monthly.filter(d=>d.year*12+d.month<=2026*12+9),n=ms.length,bw=(W-L-R)/n,max=Math.max(...ms.map(d=>d.analyses))*1.15;
+ const X=i=>L+i*bw,Yv=v=>H-B-(H-T-B)*v/max;
+ const i0=ms.findIndex(d=>d.year==2025&&d.month==1),i1=ms.findIndex(d=>d.year==2025&&d.month==6);
+ let g=`<rect x="${X(i0)}" y="${T-18}" width="${(i1-i0+1)*bw}" height="${H-B-T+18}" fill="${css('--ch')}" fill-opacity=".14"/><text x="${X(i0)+4}" y="${T-6}" font-size="11" fill="${css('--ch')}">FEWS NET dark, Jan–Jun 2025</text>`;
+ for(let v=0;v<max;v+=5){g+=`<text x="${L-6}" y="${Yv(v)+4}" text-anchor="end" font-size="11" fill="${css('--mute')}">${v}</text>`}
+ ms.forEach((d,i)=>{g+=`<rect x="${X(i)+1}" y="${Yv(d.analyses)}" width="${Math.max(bw-2,1)}" height="${H-B-Yv(d.analyses)}" fill="${css('--ipc')}" data-t="${MON[d.month-1]} ${d.year}: ${d.analyses} analys${d.analyses==1?'is':'es'} (country × month)"/>`;
+  if(d.month==1)g+=`<text x="${X(i)}" y="${H-B+18}" font-size="12" fill="${css('--ink')}">${d.year}</text><line x1="${X(i)}" x2="${X(i)}" y1="${H-B}" y2="${H-B+6}" stroke="${css('--mute')}"/>`});
+ g+=`<line x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}" stroke="${css('--rule')}"/>`;
+ svg.innerHTML=g;
+ svg.querySelectorAll('[data-t]').forEach(el=>{el.addEventListener('mousemove',e=>show(e,el.dataset.t));el.addEventListener('mouseleave',hide);el.addEventListener('click',e=>show(e,el.dataset.t))});
+ document.getElementById('c4').innerHTML=`Analyses per month in the IPC's open table (country × month of analysis, Cadre Harmonisé included). January to June 2025, while FEWS NET was dark, has ${q.R5.value} analyses, against ${q.R5.against.toFixed(1)} on average in the same months of 2022–24 (2021: ${q.R5.h1['2021']}). The IPC's own working groups kept analysing. What the pause took was FEWS NET's own analysis, which this table does not hold. Hover or tap a bar.`;
+}
+const P44=[
+ ['R1','Sudan, Sep 2025: the six areas the IPC names are all drops, and all six are reached again.',`all six are drops; ${q.R1.filled.length} of 6 reached under their own name`,q.R1.held,'failed; the other three only as a redrawn locality (post hoc)'],
+ ['R2','At least half of all drops, 2021–25, are reached again for the same months.',`${q.R2.F} of ${q.R2.n} (${Math.round(100*q.R2.F_share)} %); ${q.R2.N} never again`,q.R2.held],
+ ['R3','Drops of 2025 are reached again at least 10 points less often than those of 2021–24.',`${Math.round(100*q.R3.F2025)} % against ${Math.round(100*q.R3.F2021_24)} %`,q.R3.held,'failed, and the other way round; 6 drops against 49'],
+ ['R4','There are more drops in 2025 than in any year 2021–24 (without the Cadre Harmonisé).',`${q.R4.value} against at most ${q.R4.against}`,q.R4.held],
+ ['R5','Analyses dated Jan–Jun 2025 are at least 0.8 × the 2022–24 mean of the same months.',`${q.R5.value} against ${q.R5.against.toFixed(1)}`,q.R5.held]
+];
+document.querySelector('#pred44 tbody').innerHTML=P44.map(([k,t,r,h,n])=>`<tr><td><b>${k}</b></td><td>${t}</td><td>${r}</td><td class="${h?'held':'fail'}">${n||(h?'held':'failed')}</td></tr>`).join('');
+f1();f2();f3();f4();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{f1();f2();f3();f4()});
 </script>
 </body>
 </html>

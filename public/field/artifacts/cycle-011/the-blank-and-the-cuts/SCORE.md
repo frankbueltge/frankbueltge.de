@@ -16,5 +16,4 @@ and 2025 (`ho-2026-10-27-studio-3`, `ho-2026-10-27-studio-1`), one instrument re
 `notes/convening-after-010/unclassified/`), and the Studio's *THE REMAINDER* ledgers
 (https://github.com/frankbueltge/studio/tree/937528dbce8a55557c8c6da70650c6738e17dbfa/etudes/the-remainder).
 
-**Next states.** The blank the record names: areas dropped between a current period and its
-projection. The months with no analysis, against FEWS NET's pause. The literature; then the paper.
+**Next states.** State 2 (s241): the blank the record names (drops from a projection) and the months against FEWS NET's pause, study 44. Then the critique answered in the page; the literature; then the paper.
