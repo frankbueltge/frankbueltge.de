@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Blank and the Cuts</title>
+<style>
+:root{--bg:#f6f4ee;--ink:#1d1d1b;--mute:#6b6a64;--rule:#d9d5cb;--card:#fffdf8;--ch:#c0612b;--ipc:#3f6f8f;--other:#b9b3a5;--held:#2f6b3a;--fail:#9a3a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--ink:#ecebe6;--mute:#a19f97;--rule:#3a3935;--card:#1d1d1b;--ch:#e98a52;--ipc:#79a9c9;--other:#5c584f;--held:#7fc28c;--fail:#ee8a76}}
+:root[data-theme="dark"]{--bg:#151514;--ink:#ecebe6;--mute:#a19f97;--rule:#3a3935;--card:#1d1d1b;--ch:#e98a52;--ipc:#79a9c9;--other:#5c584f;--held:#7fc28c;--fail:#ee8a76}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:980px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:44px;line-height:1.1;margin:0 0 6px;font-weight:normal}
+h2{font:600 13px/1.3 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.09em;color:var(--mute);margin:48px 0 12px;border-top:1px solid var(--rule);padding-top:14px}
+.kicker{font:600 12px system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--ch)}
+.lede{font-size:21px;max-width:760px}
+.meta{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+p{max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:22px 0}
+.stat{background:var(--card);border:1px solid var(--rule);padding:12px 14px}
+.stat b{display:block;font:600 28px/1.1 system-ui,sans-serif}
+.stat span{font:13px/1.35 system-ui,sans-serif;color:var(--mute)}
+figure{margin:18px 0 8px;background:var(--card);border:1px solid var(--rule);padding:14px}
+figcaption{font:14px/1.45 system-ui,sans-serif;color:var(--mute);margin-top:8px}
+svg{display:block;width:100%;height:auto;font-family:system-ui,sans-serif}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font:13px/1.4 system-ui,sans-serif;padding:7px 9px;max-width:280px;opacity:0;transition:opacity .1s;z-index:5}
+table{border-collapse:collapse;width:100%;font:14px/1.4 system-ui,sans-serif}
+td,th{border-bottom:1px solid var(--rule);padding:7px 6px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--mute)}
+.held{color:var(--held);font-weight:600}.fail{color:var(--fail);font-weight:600}
+.toggle{font:13px system-ui,sans-serif;margin:0 0 8px;display:flex;gap:6px;flex-wrap:wrap}
+.toggle button{font:inherit;background:none;border:1px solid var(--rule);color:var(--ink);padding:5px 11px;cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font:13px system-ui,sans-serif;color:var(--mute);margin:6px 0}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px}
+.wrap{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+<div class="kicker">The Field · cycle 011 · study 43 · first state, 2026-10-29</div>
+<h1>The Blank and the Cuts</h1>
+<p class="lede">When aid money fell in 2025, did the famine record go blank in more places, and did it go blank where the money fell most?</p>
+<p class="meta">A study in progress, which will become the cycle's paper. The data are the IPC's open area table (HDX, CC0) and the Studio's ledgers of OCHA FTS appeals (CC BY-IGO). The predictions below were fixed and committed before any outcome was computed. Line <code>withheld</code>, open question Q4.</p>
+
+<div class="grid" id="stats"></div>
+
+<h2>1 · People the record lists and gives no phase, by year</h2>
+<div class="toggle" role="group" aria-label="Which countries">
+ <button id="b-all" aria-pressed="true">All analyses in the table</button>
+ <button id="b-ipc" aria-pressed="false">Without the Cadre Harmonisé</button>
+</div>
+<figure>
+ <div class="wrap"><svg id="f1" viewBox="0 0 900 380" role="img" aria-label="Bar chart of blank people per year"></svg></div>
+ <div class="legend"><span><i style="background:var(--ch)"></i>Cadre Harmonisé countries (West Africa and the Sahel)</span><span><i style="background:var(--ipc)"></i>IPC countries</span><span>— line: share of all listed people</span></div>
+ <figcaption id="c1"></figcaption>
+</figure>
+
+<h2>2 · Did the blank grow where the money fell most?</h2>
+<figure>
+ <div class="wrap"><svg id="f2" viewBox="0 0 900 440" role="img" aria-label="Scatter of change in funding coverage against change in blank share"></svg></div>
+ <figcaption id="c2"></figcaption>
+</figure>
+
+<h2>3 · The predictions, fixed before the analysis</h2>
+<table id="pred"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table>
+<p class="meta">Committed in <code>PREDICTIONS.md</code> before <code>analyse.py</code> was first run. The Cadre Harmonisé split in figure 1 was made after the scores were read, and is marked post hoc.</p>
+
+<h2>4 · What this state of the study says</h2>
+<p id="reading"></p>
+
+<h2>5 · Method</h2>
+<p><b>The blank.</b> In the IPC's area table an area-period whose phase rows are all zero is unclassified, and the table writes that in three ways (the Field's note <a href="../../../notes/convening-after-010/unclassified/index.html"><i>Three ways to write nobody</i></a>, session 234): A, no phase rows and population 0; B, phase rows at 0 and population 0; C, phase rows at 0 with the population kept. Only C carries people. This study counts C's people in <i>current</i> periods only, by the year of the analysis, so no one is counted twice across projections.</p>
+<p><b>The cuts.</b> For each country, its 2022 and 2025 plan of kind <i>Humanitarian response plan</i> or <i>Humanitarian needs and response plan</i> in the Studio's FTS ledgers, with funded ÷ required as coverage. The Studio reconciled every plan's flows to FTS's own totals.</p>
+<p><b>Code and data.</b> <code>analyse.py</code> (run: <code>python3 -I analyse.py ipc_global_area_long.csv &lt;studio&gt;/etudes/the-remainder &gt; results.json</code>) writes <code>results.json</code>. <code>sources.json</code> holds the files' hashes and URLs. The third-party files are not committed.</p>
+
+<h2>6 · Limits</h2>
+<p>Every one of the 16 matched countries lost coverage between 2022 and 2025, from 12 to 63 points. There is no country the cuts missed, so this record cannot separate the cuts from the year. A C row means "listed, not classified", not "not reached for lack of data": the table writes no reason. The Cadre Harmonisé fills its tables differently from the IPC, so its blank rows may be bookkeeping, not absence. Sudan's 841,404 unclassified people of September 2025 lie in a projection, which this measure leaves out by design. 2026 is a part year. Sixteen countries is a small sample, and conflict and access move both funding and classification.</p>
+
+<h2>7 · Sources</h2>
+<p class="meta">IPC area table: HDX, <a href="https://data.humdata.org/dataset/global-acute-food-insecurity-country-data">Global: Acute Food Insecurity Country Data</a>, CC0, source National IPC Technical Working Groups; <code>ipc_global_area_long.csv</code>, sha256 33ed28dc…4554368, fetched 2026-10-29. FTS ledgers: the Studio, <a href="https://github.com/frankbueltge/studio/tree/937528dbce8a55557c8c6da70650c6738e17dbfa/etudes/the-remainder"><code>etudes/the-remainder/data-2022.json</code> and <code>data-2025.json</code></a>, from OCHA FTS <code>api.hpc.tools/v1/public</code>, fetched by the Studio 2026-10-27. FEWS NET's own notice of its pause and relaunch (24 June 2025): <a href="https://fews.net/fews-net-relaunches-website-resumes-global-food-security-analysis">fews.net</a>, quoted in <code>sources.json</code>.</p>
+</main>
+<div class="tip" id="tip"></div>
+<script src="data.js"></script>
+<script>
+const S=window.STUDY43, CH=new Set(S.posthoc.countries);
+const f=n=>n.toLocaleString('en-GB'), m=n=>(n/1e6).toFixed(1)+' m', pc=x=>(100*x).toFixed(2)+' %';
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const tip=document.getElementById('tip');
+function show(e,h){tip.innerHTML=h;tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-290);tip.style.left=x+'px';tip.style.top=(e.clientY+14)+'px'}
+function hide(){tip.style.opacity=0}
+const Y={};S.by_year.forEach(y=>Y[y.year]=y);
+const sc=S.scores;
+document.getElementById('stats').innerHTML=[
+ [m(Y[2025].blank),'listed in 2025 with no phase, current periods'],
+ ['×'+sc.P2.ratio.toFixed(1),'2025 blank share against 2021–24 pooled'],
+ [m(S.posthoc.by_year.find(y=>y.year==2025).blank),'of 2025’s blank outside the Cadre Harmonisé'],
+ ['ρ '+sc.P3.rho.toFixed(2),'funding loss against blank growth, 16 countries']
+].map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('');
+
+let mode='all';
+function f1(){
+ const svg=document.getElementById('f1'),W=900,H=380,L=70,R=60,T=20,B=40;
+ const yrs=S.by_year.map(y=>y.year);
+ const stacks=S.by_year.map(y=>{const parts=y.blank_countries.filter(([c])=>mode=='all'||!CH.has(c));return {y,parts,tot:parts.reduce((a,[,v])=>a+v,0)}});
+ const max=Math.max(...stacks.map(s=>s.tot))*1.1||1;
+ const shares=S.by_year.map(y=>{if(mode=='all')return y.share;const p=S.posthoc.by_year.find(z=>z.year==y.year);return p.share});
+ const smax=Math.max(...shares.filter(x=>x!=null))*1.15||1;
+ const bw=(W-L-R)/yrs.length;
+ let g=`<line x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}" stroke="${css('--rule')}"/>`;
+ for(let k=0;k<=4;k++){const v=max*k/4,yy=H-B-(H-T-B)*k/4;g+=`<text x="${L-8}" y="${yy+4}" text-anchor="end" font-size="12" fill="${css('--mute')}">${m(v)}</text>`;if(k)g+=`<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" stroke="${css('--rule')}" stroke-dasharray="2 4"/>`}
+ stacks.forEach((s,i)=>{let base=H-B;const x=L+i*bw+bw*.2,w=bw*.6;
+  s.parts.slice().sort((a,b)=>CH.has(b[0])-CH.has(a[0])||b[1]-a[1]).forEach(([c,v])=>{const h=(H-T-B)*v/max;base-=h;
+   g+=`<rect x="${x}" y="${base}" width="${w}" height="${Math.max(h,0)}" fill="${CH.has(c)?css('--ch'):css('--ipc')}" stroke="${css('--card')}" stroke-width="1" data-t="${s.y.year} · ${c}${CH.has(c)?' (Cadre Harmonisé)':''}<br>${f(v)} people listed, no phase"/>`;
+   if(h>16)g+=`<text x="${x+w/2}" y="${base+h/2+4}" text-anchor="middle" font-size="11" fill="#fff" pointer-events="none">${c}</text>`});
+  g+=`<text x="${x+w/2}" y="${H-B+18}" text-anchor="middle" font-size="13" fill="${css('--ink')}">${s.y.year}${s.y.year==2026?' (part)':''}</text>`;
+  g+=`<text x="${x+w/2}" y="${base-6}" text-anchor="middle" font-size="12" fill="${css('--mute')}">${s.tot?m(s.tot):'0'}</text>`});
+ let pts=shares.map((v,i)=>v==null?null:[L+i*bw+bw/2,H-B-(H-T-B)*v/smax]).filter(Boolean);
+ g+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${css('--ink')}" stroke-width="1.5"/>`;
+ pts.forEach((p,i)=>g+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${css('--ink')}" data-t="${yrs[i]}: ${pc(shares[i])} of all listed people"/>`);
+ g+=`<text x="${W-R-4}" y="${T+4}" text-anchor="end" font-size="11" fill="${css('--mute')}">line: share, top of scale ${pc(smax)}</text>`;
+ svg.innerHTML=g;
+ svg.querySelectorAll('[data-t]').forEach(el=>{el.addEventListener('mousemove',e=>show(e,el.dataset.t));el.addEventListener('mouseleave',hide);el.addEventListener('click',e=>show(e,el.dataset.t))});
+ const p25=S.posthoc.by_year.find(y=>y.year==2025);
+ document.getElementById('c1').innerHTML=mode=='all'
+  ?`Every analysis in the table. In 2025, ${f(Y[2025].blank)} people (${pc(Y[2025].share)}) sit in current area rows with no phase, ${sc.P2.ratio.toFixed(1)} times the pooled share of 2021–24. Nigeria and Benin, both analysed by the Cadre Harmonisé, hold ${m(Y[2025].blank_countries.filter(([c])=>CH.has(c)).reduce((a,[,v])=>a+v,0))} of it. Hover or tap a block.`
+  :`Without the ${S.posthoc.countries.length} Cadre Harmonisé countries (post hoc). In 2025, ${f(p25.blank)} people (${pc(p25.share)}): inside the range of 2021–24 (${pc(Math.min(...S.posthoc.by_year.filter(y=>y.year<2025).map(y=>y.share)))} to ${pc(Math.max(...S.posthoc.by_year.filter(y=>y.year<2025).map(y=>y.share)))}). In the IPC's own countries the year of the cuts is not a year of more blank.`;
+}
+['all','ipc'].forEach(k=>document.getElementById('b-'+k).onclick=()=>{mode=k;document.querySelectorAll('.toggle button').forEach(b=>b.setAttribute('aria-pressed',b.id=='b-'+k));f1()});
+
+function f2(){
+ const svg=document.getElementById('f2'),W=900,H=440,L=80,R=30,T=20,B=60;
+ const M=S.matched,xs=M.map(d=>d.dcov),ys=M.map(d=>d.dshare);
+ const x0=-0.7,x1=0,y0=Math.min(-0.01,...ys)-0.005,y1=Math.max(...ys)+0.008;
+ const X=v=>L+(W-L-R)*(v-x0)/(x1-x0),Yy=v=>H-B-(H-T-B)*(v-y0)/(y1-y0);
+ let g='';
+ for(let v=-0.7;v<=0.001;v+=0.1){g+=`<line x1="${X(v)}" x2="${X(v)}" y1="${T}" y2="${H-B}" stroke="${css('--rule')}" stroke-dasharray="2 4"/><text x="${X(v)}" y="${H-B+18}" text-anchor="middle" font-size="12" fill="${css('--mute')}">${Math.round(v*100)}</text>`}
+ [y0,0,y1].forEach(v=>g+=`<line x1="${L}" x2="${W-R}" y1="${Yy(v)}" y2="${Yy(v)}" stroke="${css(v==0?'--mute':'--rule')}"/><text x="${L-8}" y="${Yy(v)+4}" text-anchor="end" font-size="12" fill="${css('--mute')}">${(v*100).toFixed(1)}</text>`);
+ g+=`<text x="${(L+W-R)/2}" y="${H-14}" text-anchor="middle" font-size="13" fill="${css('--ink')}">change in funding coverage, 2022 → 2025 (points; left = deeper cut)</text>`;
+ g+=`<text transform="translate(18 ${(T+H-B)/2}) rotate(-90)" text-anchor="middle" font-size="13" fill="${css('--ink')}">change in blank share (points)</text>`;
+ M.forEach(d=>{const cx=X(d.dcov),cy=Yy(d.dshare);
+  g+=`<circle cx="${cx}" cy="${cy}" r="7" fill="${CH.has(d.country)?css('--ch'):css('--ipc')}" fill-opacity=".85" data-t="<b>${d.country}</b><br>coverage ${pc(d.cov2022)} → ${pc(d.cov2025)}<br>blank share ${pc(d.share2022)} → ${pc(d.share2025)}<br>blank people 2025: ${f(d.blank2025)}"/><text x="${cx+10}" y="${cy-6}" font-size="11" fill="${css('--mute')}" pointer-events="none">${d.country}</text>`});
+ svg.innerHTML=g;
+ svg.querySelectorAll('[data-t]').forEach(el=>{el.addEventListener('mousemove',e=>show(e,el.dataset.t));el.addEventListener('mouseleave',hide);el.addEventListener('click',e=>show(e,el.dataset.t))});
+ document.getElementById('c2').innerHTML=`The ${M.length} countries with a country plan in FTS in 2022 and 2025 and an IPC or Cadre Harmonisé analysis in both years. Every one lost coverage. Spearman ρ = ${sc.P3.rho.toFixed(2)} (95 % bootstrap ${sc.P3.ci95.map(v=>v.toFixed(2)).join(' to ')}): no relation this sample can see. ${M.filter(d=>!d.blank2025).length} of the ${M.length} write no blank people in 2025 at all.`;
+}
+
+const P=[
+ ['P1','Blank people in 2025 exceed every year 2021–24.',`${m(sc.P1.value)} against at most ${m(sc.P1.against)}`,sc.P1.held],
+ ['P2','The 2025 blank share is at least twice the 2021–24 pooled share.',`${pc(sc.P2.value)} against ${pc(sc.P2.against)} (×${sc.P2.ratio.toFixed(2)})`,sc.P2.held,'held; the rise is the Cadre Harmonisé’s (figure 1, post hoc)'],
+ ['P3','Across matched countries, ρ(Δcoverage, Δblank share) ≤ −0.30.',`ρ = ${sc.P3.rho.toFixed(2)}, n = ${sc.P3.n}, 95 % ${sc.P3.ci95.map(v=>v.toFixed(2)).join(' to ')}`,sc.P3.held,'failed; the interval spans 0'],
+ ['P4','The top half of coverage loss holds ≥ 75 % of the matched 2025 blank.',`${pc(sc.P4.share)} (${sc.P4.top_half.join(', ')})`,sc.P4.held],
+ ['P5','Fewer country analyses are dated 2025 than the 2022–24 mean.',`${sc.P5.value} against ${sc.P5.against.toFixed(1)}`,sc.P5.held,'held, uninformative: the years run 66 to 69']
+];
+document.querySelector('#pred tbody').innerHTML=P.map(([k,t,r,h,n])=>`<tr><td><b>${k}</b></td><td>${t}</td><td>${r}</td><td class="${h?'held':'fail'}">${n||(h?'held':'failed')}</td></tr>`).join('');
+document.getElementById('reading').innerHTML=`Three of five predictions held, and the two that tested the cuts failed. The open record's blank did triple in the year of the cuts, but the tripling sits in two Cadre Harmonisé countries, Nigeria and Benin. Without the Cadre Harmonisé, 2025 lies inside the range of the four years before it. Where the money fell most, the record did not go more blank: every matched country lost coverage, and the three that write blank people in 2025 (Nigeria, Chad, DR Congo) lost 27 to 35 points of coverage, the middle of the range, not its deep end (Somalia 63, Central African Republic 55). So far this record cannot say how much of the blank the cuts made. That is a finding about the record: it holds no country the cuts missed, and it writes no reason for a blank. The next state tests the blank the record does name, the areas dropped between a current period and its projection, and the months in which no analysis was made at all.`;
+f1();f2();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{f1();f2()});
+</script>
+</body>
+</html>
