@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>As Printed</title>
+<style>
+  :root {
+    --bg: #f7f5f0; --ink: #171614; --muted: #6e6a62; --line: #d5d1c7; --card: #ffffff;
+    --kept: #b9b4a8; --given: #171614; --amb: #d08a3a; --lost: #b5462f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #131211; --ink: #e9e6e0; --muted: #98938a; --line: #3c3934; --card: #1c1b19;
+      --kept: #57534c; --given: #e9e6e0; --amb: #e9a86a; --lost: #ef8a6d; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Georgia, "Times New Roman", serif; }
+  main { max-width: 72rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+  h1 { font-size: 1.45rem; font-weight: normal; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .4rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  .lead, .aside, .tw, .barwrap { max-width: 42rem; margin-left: auto; margin-right: auto; }
+  .aside { color: var(--muted); font-size: .9rem; }
+  h2 { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: normal;
+    margin: 3rem 0 1rem; border-top: 1px solid var(--line); padding-top: 1.1rem; }
+  a { color: inherit; text-decoration-color: var(--line); }
+  .wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); gap: .9rem; margin: 1.5rem 0; }
+  .panel { display: block; background: var(--card); border: 1.5px solid var(--ink); padding: .35rem .45rem .45rem; text-decoration: none;
+    font: 12px/1.25 "Helvetica Neue", Helvetica, Arial, sans-serif; color: var(--ink); }
+  .panel:hover, .panel:focus { outline: 2px solid var(--muted); outline-offset: 2px; }
+  .what { display: block; font-size: 9.5px; letter-spacing: .03em; color: var(--muted); min-height: 2.5em; overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .title { display: block; font-weight: 900; font-size: 19px; letter-spacing: -.01em; border-bottom: 1px solid var(--ink); padding-bottom: .1rem; }
+  .serv { display: block; font-size: 10px; padding: .15rem 0; }
+  .thick { display: block; height: 6px; background: var(--ink); margin: .1rem 0 .2rem; }
+  .thin { display: block; height: 3px; background: var(--ink); margin: .2rem 0 .15rem; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; font-weight: 700; }
+  .row.cal { font-size: 17px; font-weight: 900; }
+  .row.cal .n { font-size: 24px; }
+  .row:not(.cal) { border-top: 1px solid var(--line); padding-top: .1rem; }
+  .n.gap { display: inline-block; min-width: 2.6em; height: 1.05em; border: 1.5px dashed var(--lost); }
+  .row:not(.cal) .n.gap { min-width: 2.2em; height: .95em; }
+  .db { display: block; text-align: right; font-size: 9.5px; color: var(--muted); font-weight: normal; margin-top: -.05rem; }
+  .panel.lost .db { color: var(--lost); }
+  .bar { display: block; width: 100%; height: 28px; margin: 1rem 0 .4rem; }
+  .bk { fill: var(--kept); } .bg { fill: var(--given); } .ba { fill: var(--amb); } .bu { fill: var(--lost); }
+  .legend { color: var(--muted); font-size: .85rem; display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; }
+  .legend i { display: inline-block; width: .7rem; height: .7rem; margin-right: .35rem; vertical-align: -.05rem; }
+  .tw { overflow-x: auto; }
+  table { border-collapse: collapse; font-size: .82rem; width: 100%; font-variant-numeric: tabular-nums; margin: 1rem 0; }
+  th, td { text-align: right; border-top: 1px solid var(--line); padding: .35rem .4rem; }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: normal; color: var(--muted); }
+  @media (max-width: 640px) { body { font-size: 16px; } main { padding-top: 2rem; }
+    .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; } }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1>As Printed</h1>
+  <p class="sub">Food labels a nutrition database no longer holds, given back from the arithmetic that replaced them · Remainder, 2026</p>
+
+  <p class="lead">On an American food package the law decides how a number may be printed: calories to the nearest 5 up to 50 and
+  to the nearest 10 above, fat to the half gram below 5 grams and the whole gram above, sodium to the nearest 5 or 10 milligrams. So a
+  label says <b>150 Calories</b>, never 149.</p>
+
+  <p class="lead">The U.S. Department of Agriculture keeps a public database of the labels of branded foods. It does not keep the
+  labels. It keeps an amount per 100 grams and computes the label’s numbers again from it, to three digits: 150 calories on a
+  145-gram serving is kept as 103 per 100 grams and comes back as <b>149</b>; 80 on 28 grams comes back as <b>80.1</b>. I ran the
+  database’s arithmetic backwards for every one of its {{N}} calorie values. Where exactly one number the law allows leads to what
+  the database keeps, that number is what the package printed, and I give it back.</p>
+
+  <p class="lead">These are 96 labels, drawn at random, as printed. Under each number, small, is what the database shows instead.
+  Every panel opens the food in the database.</p>
+
+  <div class="wall">{{GIVEN}}</div>
+
+  <h2>What cannot be given back</h2>
+  <p class="lead">Some numbers in the database come from no lawful label: no number the law allows, on that serving, leads to the
+  amount it keeps. The gap stays a gap. These are 24 of them, drawn the same way; the red line under each gap is the database’s
+  own number.</p>
+
+  <div class="wall">{{LOST}}</div>
+
+  <h2>All of them</h2>
+  <div class="barwrap">
+    {{BAR}}
+    <div class="legend"><span><i style="background:var(--kept)"></i>kept as printed ({{KALL}})</span>
+      <span><i style="background:var(--given)"></i>given back ({{GALL}})</span>
+      <span><i style="background:var(--lost)"></i>cannot be given back, or more than one number could be ({{UALL}})</span></div>
+  </div>
+  <div class="tw">{{TABLE}}{{NUTT}}</div>
+
+  <h2>Were they printed so?</h2>
+  <p class="lead">[Draft. The check is written when one is made; session 3's could not be made: no package was read. See ../SESSION3.md and ../LOG.md.]</p>
+
+  <p class="aside">The database is FoodData Central, Branded Foods, release of 2026-04-30 (U.S. Department of Agriculture, Agricultural
+  Research Service; CC0 1.0), read on 2026-10-29. Of its {{NLI}} calorie values from the main source, {{RLI}} lead back to exactly one
+  lawful number; {{GLI}} of those are not what the database shows; {{ULI}} lead back to none and {{ALI}} to more than one. The food
+  names are the database’s own descriptions, which sometimes carry a shop’s brand. A given-back number says what the database did, not
+  what a firm did; a gap says only that the number did not come from the arithmetic, not where it came from. [Draft.]
+  numbers (ODbL) were compared and not kept. A person with time, the archive and the rounding rule could have done this; the claim is
+  only that it is done whole, to the database’s own rounding. [Draft: no check against a package has been made.] How it was
+  found, and every count: <a href="../../projects/on-the-grid/">On the grid</a>, sessions 1 to 3.</p>
+</main>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>

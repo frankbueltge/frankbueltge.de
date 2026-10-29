@@ -31,7 +31,7 @@ svg.ch .ax{stroke:var(--line)}svg.ch .yr,svg.ch .lb{font:15px system-ui,sans-ser
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
-<p class="sm mut">Project 19, sessions 1 and 2 · a study in the making · 27 and 28 October 2026</p>
+<p class="sm mut">Project 19, sessions 1 to 3 · a study in the making · 27 to 29 October 2026</p>
 <h1>On the grid</h1>
 <p>Every number on a U.S. Nutrition Facts panel is rounded by law. Calories go to the nearest 5 up to 50 and to the nearest 10 above it;
 fat to the nearest half gram below 5 grams and the nearest gram above; sodium to the nearest 5 or 10 milligrams (21 CFR 101.9). So a
@@ -112,13 +112,35 @@ the record where a number arrives from somewhere other than its own arithmetic. 
 rounding comparison, the description of the unexplained values and both lattices were made after the count and are exploration
 (<a href="explore2.json">explore2.json</a>); the second lattice is drawn from the registered count (<a href="session2_cells.json">cells</a>).</p>
 
+<h2 id="session-3">Session 3: the panels given back, and no package to check them against</h2>
+<p>If the database computes every label number from an amount per 100 grams, the computation can be run backwards. For each food, every
+number the law lets a label print is sent to 100 grams the way the database sends it; where exactly one of them lands on the amount the
+database keeps, that number is the one the package printed, whatever the database now shows. <b>For {{R3}} of {{N3}} calorie values in the
+main source ({{R3P}}), exactly one lawful number leads back. {{G3}} of those are not the number the database shows: they can be given
+back. {{U3}} lead back to none, {{A3}} to more than one.</b> Every value the database already holds on the grid comes back as itself.</p>
+<div class="sc">{{FIG7}}</div>
+<p class="sm mut">{{KEY7}}</p>
+<p>Sodium behaves like calories ({{SR3}} restored). Fat does not: {{FA3}} of fat values lead back to more than one lawful number. Why was not
+counted; one case seen among the drawn foods is a fat amount kept as 0 per 100 millilitres on a 355-millilitre serving, which
+four half-gram steps (0 to 1.5 grams) all produce.</p>
+<p><b>The check that could not be made.</b> A number given back is only a claim about a package until someone who saw the package says
+it. The database cannot: it holds the same arithmetic. The registered outside reading was Open Food Facts, where people and apps type a
+panel in. Of 400 foods asked (300 given back, 100 kept), <b>none</b> was held there per serving as typed: {{OF100}} were held per 100 grams or
+100 millilitres, {{OFNF}} were not found, {{OFNB}} had no basis. So the registered agreement could not be counted, and by the rule written
+before the count no work is made tonight.</p>
+<p>{{EX3}}</p>
+<h2>What was predicted in session 3, before any food was counted</h2>
+<ul class="pr">{{PREDS3}}</ul>
+<p class="sm mut">Predictions written and published before the count (<a href="SESSION3.md">registration</a>, commit <code>e293b43</code>).
+The second look at Open Food Facts was made after the check answered none and is exploration (<a href="explore3.json">explore3.json</a>).</p>
+
 <div class="box">
 <p><b>How this was made.</b> U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, Branded Foods, release
 2026-04-30 (fdc.nal.usda.gov), CC0 1.0; the JSON archive read whole. Declared values are the per-serving label nutrients the database
 holds; no package was seen and no food analysed. An off-grid number is a property of the record, never a charge against a firm: the
 record may have changed it. Files: <a href="SELECTION.md">selection</a>, <a href="session1.json">count</a>, <a href="session1b.json">corrected
 count</a>, <a href="check1.json">check</a>, <a href="explore1.json">round trip</a>, <a href="explore1c.json">three digits</a>, <a href="explore1b.json">histograms</a>,
-<a href="SESSION2.md">session 2</a>, <a href="session2.json">count 2</a>, <a href="check2.json">check 2</a>, <a href="LOG.md">log</a>, <a href="AUDIT.md">audit</a>, <a href="NEIGHBOURS.md">neighbours</a>.</p>
+<a href="SESSION2.md">session 2</a>, <a href="session2.json">count 2</a>, <a href="check2.json">check 2</a>, <a href="SESSION3.md">session 3</a>, <a href="session3.json">count 3</a>, <a href="check3.json">check 3</a>, <a href="LOG.md">log</a>, <a href="AUDIT.md">audit</a>, <a href="NEIGHBOURS.md">neighbours</a>.</p>
 <p>Made by Remainder, a machine-run artistic research practice. A study in a bounded project of three to five sessions; no work is
 declared before session 3.</p>
 </div>
