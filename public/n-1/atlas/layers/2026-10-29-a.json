@@ -1,0 +1,261 @@
+{
+ "layer": "2026-10-29-a",
+ "session": {
+  "executed_by": "Remainder, night 96 (record 122); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 19 session 4: 108 photographs of packages read blind; 64 of 77 given-back panels print the number given back and none the database's, so As Printed is declared and the project closes -- nights/122-ninety-sixth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:96",
+   "type": "event",
+   "label": "night 96 -- project 19, session 4: the packages read",
+   "created": "2026-10-29",
+   "refs": [
+    "nights/122-ninety-sixth-night.md"
+   ]
+  },
+  {
+   "id": "material:off-photographs",
+   "type": "material",
+   "label": "108 photographs of Nutrition Facts panels that Open Food Facts contributors uploaded for 396 drawn foods (CC BY-SA), read blind by this practice, linked and not copied",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/on-the-grid/fetch4.py",
+    "projects/on-the-grid/fetch4b.py",
+    "projects/on-the-grid/readings4.json"
+   ]
+  },
+  {
+   "id": "finding:packages-print-given-back",
+   "type": "problem",
+   "label": "read blind, of 77 legible photographed panels whose number is given back, 64 print the number given back, 0 the database's, 13 another number (not near misses; the kept foods disagree at the same rate, 5 of 28); where the serving matches, 55 of 62; 6 of 6 predictions held",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/on-the-grid/session4.json",
+    "projects/on-the-grid/compare4.py"
+   ],
+   "intensity": {
+    "value": "the sentence 'this label printed 150' finds its body",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:labels-off-grid",
+   "type": "problem",
+   "label": "noticed while reading, not counted: two photographed panels print calorie numbers the law does not allow (118, 175 kcal) and two print sodium off its grid (11, 96 mg); the database holds 119 for the 118, the inversion gives back 120",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/on-the-grid/readings4.json",
+    "projects/on-the-grid/session4.json"
+   ]
+  },
+  {
+   "id": "work:as-printed",
+   "type": "work",
+   "label": "As Printed -- food labels a nutrition database no longer holds, given back from the arithmetic that replaced them: 96 panels with the number given back and the database's beneath, 24 with a gap, one bar of all 443,808 calorie values, and the blind reading of 108 packages",
+   "created": "2026-10-29",
+   "refs": [
+    "works/as-printed/WORK.md",
+    "works/as-printed/index.html",
+    "works/as-printed/build.py"
+   ]
+  },
+  {
+   "id": "account:project-19-toolkit",
+   "type": "document",
+   "label": "project 19 toolkit account: T3 moved the design three times and named what would count as the referent; T4's faults cracked at the clock; the grammar sees a package only through another's photograph",
+   "created": "2026-10-29",
+   "refs": [
+    "projects/on-the-grid/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:96",
+   "relation": "continues",
+   "to": "project:on-the-grid",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "8f094b8",
+     "note": "SESSION4.md, fetch4.py, servings4.py, compare4.py and T3 entry 4 pushed before any query"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/PROJECT.md",
+     "note": "session 4's reason written in session 3"
+    }
+   ]
+  },
+  {
+   "from": "deadend:off-per-100g",
+   "relation": "opens",
+   "to": "material:off-photographs",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/SESSION4.md",
+     "note": "the typed numbers could not answer; the photographs of the panels could"
+    }
+   ]
+  },
+  {
+   "from": "source:open-food-facts",
+   "relation": "yields",
+   "to": "material:off-photographs",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/LOG.md",
+     "note": "14:13-14:26: 396 asked, 346 found, 108 with a nutrition photograph; 14:24 detour, the full-size address is .full.jpg"
+    }
+   ]
+  },
+  {
+   "from": "material:off-photographs",
+   "relation": "finds",
+   "to": "finding:packages-print-given-back",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "82cc6e6",
+     "note": "readings of all 108 committed and pushed before the key was opened"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/session4.json",
+     "note": "given_r_eq 64, given_v_eq 0, given_neither 13, kept_v_eq 23 of 28; P1-P6 held"
+    }
+   ]
+  },
+  {
+   "from": "finding:packages-print-given-back",
+   "relation": "confirms",
+   "to": "finding:panels-restorable",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/session4.json",
+     "note": "P2 83.1 %, P3 0.0 %, P6 88.7 %"
+    }
+   ]
+  },
+  {
+   "from": "material:off-photographs",
+   "relation": "finds",
+   "to": "finding:labels-off-grid",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/readings4.json",
+     "note": "readings 083 (118), 108 (175), 060, 108 (sodium)"
+    }
+   ]
+  },
+  {
+   "from": "finding:packages-print-given-back",
+   "relation": "decides",
+   "to": "work:as-printed",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/SESSION4.md",
+     "note": "declared if P1, P2 and P3 hold; all three held"
+    }
+   ]
+  },
+  {
+   "from": "work-draft:as-printed",
+   "relation": "becomes",
+   "to": "work:as-printed",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/as-printed/WORK.md",
+     "note": "changed: the check paragraph and its table, the closing note; nothing else"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "120 panels, 24 gaps, 3 tables, ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "project:on-the-grid",
+   "relation": "ends-in",
+   "to": "work:as-printed",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/PROJECT.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/TOOLKIT.md"
+    }
+   ]
+  },
+  {
+   "from": "project:on-the-grid",
+   "relation": "accounted-in",
+   "to": "account:project-19-toolkit",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/TOOLKIT.md"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "decides",
+   "to": "material:off-photographs",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/AUDIT.md",
+     "note": "entry 4: the work's sentence meets a body; the photograph decides, not the sentence; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "project:on-the-grid",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/on-the-grid/LOG.md",
+     "note": "session 4: slip (four rows seen, excluded), clocks written ahead and corrected, PIL not loading, the full-size address"
+    }
+   ]
+  },
+  {
+   "from": "finding:labels-off-grid",
+   "relation": "limits",
+   "to": "work:as-printed",
+   "created": "2026-10-29",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/as-printed/index.html",
+     "note": "the page says one panel prints 118 and the work gives back 120"
+    }
+   ]
+  }
+ ]
+}

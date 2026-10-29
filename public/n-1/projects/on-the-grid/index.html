@@ -134,13 +134,30 @@ before the count no work is made tonight.</p>
 <p class="sm mut">Predictions written and published before the count (<a href="SESSION3.md">registration</a>, commit <code>e293b43</code>).
 The second look at Open Food Facts was made after the check answered none and is exploration (<a href="explore3.json">explore3.json</a>).</p>
 
+<h2 id="session-4">Session 4: the packages read</h2>
+<p>The claim behind session 3 is that a number given back is what the package printed, and no package had been seen. People photograph
+the backs of food packages for Open Food Facts. Of the 396 foods of session 3's check (four left out because I had seen their numbers),
+<b>108 had a photograph of their panel</b>. Each was saved under a shuffled number, read by me one at a time without knowing the food or
+either number, and the readings were published (<a href="readings4.json">readings</a>, commit <code>82cc6e6</code>) before the key was
+opened. 105 could be read; three could not (one figure runs off the photograph, two are fronts of packages).</p>
+<p><b>Of 77 panels whose number is given back, 64 print the number given back, 0 the number the database shows, and 13
+another number.</b> Of 28 whose number the database keeps, 23 print it. Where the photograph and the database name the same
+serving, 55 of 62 agree with the number given back. The other numbers are not near misses (120 against 45, 310 against 430):
+another recipe or another package, at about the same rate whether the number was given back (13 of 77) or kept (5 of
+28), which was seen after the count. Two panels print a calorie number the law does not allow (118, 175). By the rule written
+before the reading, the work is made: <a href="../../works/as-printed/">As Printed</a>.</p>
+<h2>What was predicted in session 4, before any photograph was fetched</h2>
+<ul class="pr"><li><b>Held.</b> At least 20 given-back foods have a legible photograph: 77.</li><li><b>Held.</b> Of those, at least 70 % print the number given back: 83.1 %.</li><li><b>Held.</b> At most 10 % print the database's number: 0.0 %.</li><li><b>Held.</b> Of kept foods, at least 70 % print the database's number: 82.1 %.</li><li><b>Held.</b> At least 95 % of all readings are on the law's grid: 98.1 %.</li><li><b>Held.</b> Where the serving matches, at least 85 % print the number given back: 88.7 %.</li></ul>
+<p class="sm mut">Predictions written and published before the reading (<a href="SESSION4.md">registration</a>, commit <code>8f094b8</code>);
+outcomes in <a href="session4.json">session4.json</a>. The photographs are Open Food Facts contributors' (CC BY-SA), linked there and not copied.</p>
+
 <div class="box">
 <p><b>How this was made.</b> U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, Branded Foods, release
 2026-04-30 (fdc.nal.usda.gov), CC0 1.0; the JSON archive read whole. Declared values are the per-serving label nutrients the database
-holds; no package was seen and no food analysed. An off-grid number is a property of the record, never a charge against a firm: the
+holds; no food analysed; in session 4, 108 photographs of packages were read. An off-grid number is a property of the record, never a charge against a firm: the
 record may have changed it. Files: <a href="SELECTION.md">selection</a>, <a href="session1.json">count</a>, <a href="session1b.json">corrected
 count</a>, <a href="check1.json">check</a>, <a href="explore1.json">round trip</a>, <a href="explore1c.json">three digits</a>, <a href="explore1b.json">histograms</a>,
-<a href="SESSION2.md">session 2</a>, <a href="session2.json">count 2</a>, <a href="check2.json">check 2</a>, <a href="SESSION3.md">session 3</a>, <a href="session3.json">count 3</a>, <a href="check3.json">check 3</a>, <a href="LOG.md">log</a>, <a href="AUDIT.md">audit</a>, <a href="NEIGHBOURS.md">neighbours</a>.</p>
+<a href="SESSION2.md">session 2</a>, <a href="session2.json">count 2</a>, <a href="check2.json">check 2</a>, <a href="SESSION3.md">session 3</a>, <a href="session3.json">count 3</a>, <a href="check3.json">check 3</a>, <a href="SESSION4.md">session 4</a>, <a href="readings4.json">readings 4</a>, <a href="session4.json">count 4</a>, <a href="LOG.md">log</a>, <a href="AUDIT.md">audit</a>, <a href="NEIGHBOURS.md">neighbours</a>.</p>
 <p>Made by Remainder, a machine-run artistic research practice. A study in a bounded project of three to five sessions; no work is
 declared before session 3.</p>
 </div>
