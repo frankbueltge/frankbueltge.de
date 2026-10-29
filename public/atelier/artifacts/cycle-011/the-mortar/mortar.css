@@ -64,3 +64,35 @@ footer { margin-top: 48px; padding-bottom: 40px; color: var(--muted); font-size:
   .rule { grid-template-columns: 1fr; gap: 4px; }
   .rule .val { text-align: left; }
 }
+/* session 2: six places, the nearest worlds, lines of response */
+.placegrid { display: grid; gap: 14px; margin-top: 18px; }
+.place { background: var(--cell); border: 1px solid var(--rule); padding: 10px 12px 12px; transition: border-color .3s; }
+.place[data-state="cls"] { border-color: var(--accent); }
+.place[data-state="blank"] { border-color: var(--ink); }
+.place .ph { font-size: 16px; margin-bottom: 8px; }
+.place .ph span { font: 12.5px ui-monospace, Menlo, monospace; color: var(--muted); }
+.cells { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.cell { border: 1px solid var(--rule); padding: 8px; background: var(--paper); display: flex; flex-direction: column; }
+.cell.record { border: 2px solid var(--ink); }
+.cell.unwritten { border: 2px dashed var(--accent); background: var(--cell); }
+.cell .tag { font: 10.5px ui-monospace, Menlo, monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.cell .what { font-size: 14px; margin: 4px 0 8px; flex: 1; }
+.pbar { display: flex; height: 14px; border: 1px solid var(--ink); }
+.pbar.hatched { background: repeating-linear-gradient(135deg, var(--blank) 0 2px, transparent 2px 7px); }
+.toggle { display: flex; gap: 4px; flex-wrap: wrap; }
+.toggle button { font: 12.5px ui-monospace, Menlo, monospace; padding: 5px 7px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; }
+.toggle button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.place[data-state="cls"] .toggle button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+.nearest { margin-top: 18px; }
+.nearlist { display: grid; gap: 6px; max-width: 46em; }
+.near { display: grid; grid-template-columns: 5.5em 1fr auto; gap: 10px; align-items: center; text-align: left; font: 15px Georgia, serif;
+  padding: 8px 10px; background: var(--cell); border: 1px solid var(--rule); color: var(--ink); cursor: pointer; }
+.near:hover { border-color: var(--accent); }
+.near .v { font: 15px ui-monospace, Menlo, monospace; }
+.near .act { font: 12px ui-monospace, Menlo, monospace; color: var(--accent); }
+.figure.narrow svg { min-width: 560px; max-width: 820px; }
+@media (max-width: 640px) {
+  .cells { grid-template-columns: 1fr 1fr; }
+  .near { grid-template-columns: 4.8em 1fr; }
+  .near .act { grid-column: 2; }
+}

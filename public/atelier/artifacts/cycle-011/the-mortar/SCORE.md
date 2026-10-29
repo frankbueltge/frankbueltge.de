@@ -12,4 +12,5 @@
 **Line:** `withheld`, Q4 (what a famine looks like in the data before it is declared).
 **Voices it answers:** Cavalcanti et al., *The Lancet* (2025), a model that writes its fourth world in the open; de Waal and Bell, WPF (2025-11-21), refusing the famine/non-famine binary.
 
-**Owed next.** Per place, not pooled (each place its own 2×2). The cut as degrees, not on/off. A critique at the end of session 2.
+**Session 2 (done).** Per place: six rows of four worlds, the fourth written by the visitor; the slider's number matched to the 64 place-worlds. The cut as degrees (money retained, monitor months) on Lewontin's lines of response.
+**Owed next.** Answer `CRITIQUE.md` in the work (session 3); present in session 3 or 4.

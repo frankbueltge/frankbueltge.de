@@ -4,6 +4,7 @@
   const $ = (s) => document.querySelector(s);
   const fmt = (n) => Math.round(n).toLocaleString("en-US");
   const pct = (f) => Math.round(f * 100) + " %";
+  const pct1 = (f) => (Math.round(f * 1000) / 10).toFixed(1) + " %";
   const SVGNS = "http://www.w3.org/2000/svg";
   const el = (tag, attrs, parent) => {
     const e = document.createElementNS(SVGNS, tag);
@@ -124,31 +125,74 @@
     node.addEventListener("pointerleave", () => { t.hidden = true; });
   }
 
-  // ---------- III and IV ----------
+  // ---------- III. Six places ----------
+  // t[i]: the visitor's fourth world for place i: "cls" (classified: the cuts made its blank), "blank", or "unsaid".
+  let T;
+  const NAMES = () => D.places.map((p) => p.name);
   function declareTexts() {
-    const sum = (a, b) => D.money.filter((m) => m.month >= a && m.month <= b).reduce((s, m) => s + m.us, 0);
-    const before = sum("2024-07", "2024-12"), after = sum("2025-09", "2025-12");
-    $("#jan-after-why").textContent = `the United States government recorded US$ ${fmt(after / 1e6)} m toward Sudan's appeals in Sep–Dec 2025, against US$ ${fmt(before / 1e6)} m in Jul–Dec 2024.`;
-    $("#jan-before-why").textContent = "FEWS NET had been publishing on Sudan again since its Alert of 5 September 2025.";
+    T = D.places.map(() => "unsaid");
+    const g = $("#placegrid"); g.textContent = "";
+    D.places.forEach((pl, i) => {
+      const row = document.createElement("div"); row.className = "place"; row.id = "place-" + i;
+      const hd = document.createElement("div"); hd.className = "ph";
+      const nm = document.createElement("b"); nm.textContent = pl.name; hd.appendChild(nm);
+      const sm = document.createElement("span");
+      sm.textContent = ` · ${pl.level1} · ${fmt(pl.weight)} people · ${pct(pl.weight / P)} of the blank`; hd.appendChild(sm);
+      row.appendChild(hd);
+      const cells = document.createElement("div"); cells.className = "cells";
+      const seg = (an, per) => pl.lanes[an].find((s) => s.period === per);
+      cells.appendChild(cell("record", "the record · Sep 2025", "Feb–May 2026: no phase. " + (pl.blank_row_people ? `The row keeps its ${fmt(pl.blank_row_people)} people.` : "The row writes zero people."), null));
+      cells.appendChild(cell("borrowed", "borrowed · Oct 2024", "Dec 2024–May 2025, before the freeze: Phase " + pl.verdicts["Oct 2024"] + ".", seg("Oct 2024", "second projection").phases));
+      cells.appendChild(cell("borrowed", "borrowed · Jan 2026", "The same Feb–May 2026, another hour: Phase " + pl.verdicts["Jan 2026"] + ".", seg("Jan 2026", "current").phases));
+      const fw = document.createElement("div"); fw.className = "cell unwritten";
+      const tg = document.createElement("div"); tg.className = "tag"; tg.textContent = "the fourth world · yours"; fw.appendChild(tg);
+      const q = document.createElement("div"); q.className = "what"; q.textContent = "No cuts, projected from Sep 2025:"; fw.appendChild(q);
+      const bs = document.createElement("div"); bs.className = "toggle";
+      [["cls", "classified"], ["blank", "still blank"], ["unsaid", "unsaid"]].forEach(([v, lab]) => {
+        const btn = document.createElement("button"); btn.type = "button"; btn.dataset.v = v; btn.textContent = lab;
+        btn.addEventListener("click", () => { T[i] = v; update(); });
+        bs.appendChild(btn);
+      });
+      fw.appendChild(bs); cells.appendChild(fw);
+      row.appendChild(cells); g.appendChild(row);
+    });
+  }
+
+  function cell(cls, tag, what, phases) {
+    const c = document.createElement("div"); c.className = "cell " + cls;
+    const t = document.createElement("div"); t.className = "tag"; t.textContent = tag; c.appendChild(t);
+    const w = document.createElement("div"); w.className = "what"; w.textContent = what; c.appendChild(w);
+    const bar = document.createElement("div"); bar.className = "pbar";
+    if (phases) {
+      const tot = phases.reduce((a, b) => a + b, 0);
+      phases.forEach((v, k) => { const s = document.createElement("span"); s.style.width = (100 * v / tot) + "%"; s.style.background = PHASE[k]; s.title = `Phase ${k + 1}: ${fmt(v)}`; bar.appendChild(s); });
+    } else bar.classList.add("hatched");
+    c.appendChild(bar);
+    return c;
   }
 
   const radio = (n) => document.querySelector(`input[name=${n}]:checked`).value;
   const GRID = Array.from({ length: 101 }, (_, i) => i / 100);
+  const listNames = (set) => set.length ? set.map((i) => D.places[i].name).join(", ") : "no place";
+
+  function writeWorld(set) {
+    T = D.places.map((_, i) => (set.includes(i) ? "cls" : "blank"));
+    update();
+  }
 
   function update() {
     const x = +$("#x").value / 100;
     $("#xout").textContent = pct(x);
     document.querySelectorAll(".xecho").forEach((e) => (e.textContent = pct(x)));
-    const jan = radio("jan"), read = radio("read");
-    const Bknown = jan === "after" ? 0 : null; // blank share in the world after the freeze, at another hour
-    // Collect every (B, C) pair the declarations allow; C is the unwritten world (before the freeze, the siege's hour).
+    const cut = radio("cut");
+    // The fourth world's blank share C, as a range over the unsaid places.
+    const wsum = (st) => D.places.reduce((s, p, i) => s + (T[i] === st ? p.weight : 0), 0) / P;
+    const Cr = [wsum("blank"), wsum("blank") + wsum("unsaid")];
+    // B: the blank share in the world with the cut, at another hour. Borrowable from Jan 2026 only if the cut is the money.
+    const Br = cut === "money" ? [0, 0] : [0, 1];
     const pairs = [];
-    for (const B of Bknown === null ? GRID : [Bknown]) {
-      if (read === "butfor") pairs.push([B, 1 - x]);
-      else if (read === "shapley") { const C = 1 + B - 2 * x; if (C >= -1e-9 && C <= 1 + 1e-9) pairs.push([B, Math.min(1, Math.max(0, C))]); }
-      else for (const C of GRID) pairs.push([B, C]);
-    }
-    const feasible = pairs.length > 0;
+    for (const B of Br[0] === Br[1] ? [Br[0]] : GRID)
+      for (const C of Cr[0] === Cr[1] ? [Cr[0]] : GRID.filter((c) => c >= Cr[0] - 1e-9 && c <= Cr[1] + 1e-9)) pairs.push([B, C]);
     const rules = [
       { name: "But-for the cuts", f: (B, C) => 1 - C, lo: 0 },
       { name: "But-for the siege's hour", f: (B, C) => 1 - B, lo: 0 },
@@ -156,57 +200,102 @@
       { name: "Remainder (what the but-for parts double-count, or leave)", f: (B, C) => 1 - B - C, lo: -1 },
     ];
     const ranges = rules.map((r) => {
-      if (!feasible) return null;
       let mn = Infinity, mx = -Infinity;
       for (const [B, C] of pairs) { const v = r.f(B, C); mn = Math.min(mn, v); mx = Math.max(mx, v); }
       return [mn, mx];
     });
-    const Brange = feasible ? [Math.min(...pairs.map((p) => p[0])), Math.max(...pairs.map((p) => p[0]))] : null;
-    const Crange = feasible ? [Math.min(...pairs.map((p) => p[1])), Math.max(...pairs.map((p) => p[1]))] : null;
-    drawGrid(jan, read, x, Brange, Crange, feasible);
-    drawRules(rules, ranges, feasible);
-    words(jan, read, x, Brange, Crange, ranges, feasible);
+    drawPlaces(x, Cr);
+    drawReaction(cut, Cr);
+    drawRules(rules, ranges);
+    words(cut, x, Cr, ranges);
   }
 
-  function world(cls, tag, what, range, note) {
-    const w = document.createElement("div");
-    w.className = "world " + cls;
-    const t = document.createElement("div"); t.className = "tag"; t.textContent = tag; w.appendChild(t);
-    const p = document.createElement("div"); p.className = "what"; p.textContent = what; w.appendChild(p);
-    const bar = document.createElement("div"); bar.className = "bar";
-    const n = document.createElement("div"); n.className = "n";
-    if (range && Math.abs(range[1] - range[0]) < 1e-6) {
-      const f = document.createElement("div"); f.className = "fill"; f.style.width = range[0] * 100 + "%"; bar.appendChild(f);
-      n.textContent = `${fmt(range[0] * P)} of ${fmt(P)} without a phase`;
-    } else if (range) {
-      const f = document.createElement("div"); f.className = "fill"; f.style.width = range[0] * 100 + "%"; bar.appendChild(f);
-      const r = document.createElement("div"); r.className = "range"; r.style.left = range[0] * 100 + "%"; r.style.width = (range[1] - range[0]) * 100 + "%"; bar.appendChild(r);
-      n.textContent = `anywhere from ${fmt(range[0] * P)} to ${fmt(range[1] * P)} without a phase`;
-    } else {
-      bar.style.background = "#e8e2d6";
-      n.textContent = "no world fits";
+  function drawPlaces(x, Cr) {
+    D.places.forEach((pl, i) => {
+      const row = $("#place-" + i);
+      row.dataset.state = T[i];
+      row.querySelectorAll(".toggle button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === T[i]));
+    });
+    // The visitor's number, at the grain of places: the worlds nearest it.
+    const near = D.worlds.map((w) => ({ ...w, d: Math.abs(w.share - x) })).sort((a, b) => a.d - b.d).slice(0, 4);
+    const exact = near[0].d < 0.005;
+    const written = T.every((t) => t !== "unsaid");
+    const butfor = 1 - Cr[1], butforHi = 1 - Cr[0];
+    let s = exact
+      ? `At the grain of places, your ${pct(x)} names one world: the cuts made the blank of ${listNames(near[0].set)}.`
+      : `At the grain of places, your ${pct(x)} names no world. A place is classified or it is not, so the cuts' share can take only 64 values. The four nearest are below, each a list of towns, and neighbouring values can share no town at all.`;
+    s += written
+      ? ` The world you have written gives the cuts ${pct1(butfor)} of the blank.`
+      : ` With ${T.filter((t) => t === "unsaid").length} of six places unsaid, the worlds you have written allow the cuts ${pct1(butfor)} to ${pct1(butforHi)}.`;
+    $("#finding-places").textContent = s;
+    const box = $("#nearlist"); box.textContent = "";
+    near.forEach((w) => {
+      const b = document.createElement("button"); b.type = "button"; b.className = "near";
+      const v = document.createElement("span"); v.className = "v"; v.textContent = (w.share * 100).toFixed(1) + " %"; b.appendChild(v);
+      const n = document.createElement("span"); n.textContent = listNames(w.set); b.appendChild(n);
+      const a = document.createElement("span"); a.className = "act"; a.textContent = "write this world"; b.appendChild(a);
+      b.addEventListener("click", () => writeWorld(w.set));
+      box.appendChild(b);
+    });
+  }
+
+  // ---------- IV. The cut as degrees: Lewontin's lines of response ----------
+  function drawReaction(cut, Cr) {
+    const box = $("#reaction"); box.textContent = "";
+    const key = cut === "monitor" ? "monitor" : "money";
+    const g = D.degrees, nocut = key === "money" ? 1 : g["Oct 2024"].monitor;
+    const Wd = 760, H = 390, L = 70, R = 30, Tp = 44, Bt = 70;
+    const xmax = key === "money" ? 1.35 : 1;
+    const X = (v) => L + (v / xmax) * (Wd - L - R), Y = (v) => Tp + (1 - v) * (H - Tp - Bt);
+    const svg = el("svg", { viewBox: `0 0 ${Wd} ${H}`, width: "100%" });
+    const txt = (s, x, y, o) => { const t = el("text", Object.assign({ x, y, "font-size": 11, fill: "#6b645a", "font-family": "ui-monospace, Menlo, monospace" }, o || {}), svg); t.textContent = s; return t; };
+    // axes
+    el("line", { x1: L, y1: Y(0), x2: Wd - R, y2: Y(0), stroke: "#1f1c18" }, svg);
+    el("line", { x1: L, y1: Y(0), x2: L, y2: Y(1), stroke: "#1f1c18" }, svg);
+    [0, 0.5, 1].forEach((v) => { txt(pct(v), L - 8, Y(v) + 4, { "text-anchor": "end" }); el("line", { x1: L, y1: Y(v), x2: Wd - R, y2: Y(v), stroke: "#e8e2d6" }, svg); });
+    const ticks = key === "money" ? [0, 0.25, 0.5, 0.75, 1, 1.25] : [0, 1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6, 1];
+    ticks.forEach((v) => txt(key === "money" ? pct(v) : Math.round(v * 6) + "/6", X(v), Y(0) + 16, { "text-anchor": "middle" }));
+    txt(key === "money" ? "money retained: US government per month, against its Jul–Dec 2024 rate" : "monitor: months of the six before the analysis in which FEWS NET published on Sudan", (L + Wd - R) / 2, H - 28, { "text-anchor": "middle", "font-size": 12, fill: "#1f1c18" });
+    txt("share of the 841,404 without a phase", 14, 16, { "font-size": 12, fill: "#1f1c18" });
+    // no-cut line
+    el("line", { x1: X(nocut), y1: Y(0) + 4, x2: X(nocut), y2: Y(1) - 6, stroke: "#a8432a", "stroke-dasharray": "2 3" }, svg);
+    txt("no cut", X(nocut) + 4, Y(1) - 10, { fill: "#a8432a" });
+    const pt = (an) => g[an][key];
+    // another hour: the line through Oct 2024 and Jan 2026
+    const janBorrow = cut === "money" || cut === "monitor";
+    const ox = X(pt("Oct 2024")), jx = X(pt("Jan 2026"));
+    if (janBorrow) el("line", { x1: Math.min(ox, jx), y1: Y(0), x2: Math.max(ox, jx), y2: Y(0), stroke: "#8a7f6c", "stroke-width": 5, "stroke-linecap": "round", opacity: 0.6 }, svg);
+    // the siege's hour: from Sep 2025 to the visitor's fourth world
+    const sx = X(pt("Sep 2025")), fx = X(nocut);
+    const mid = (Cr[0] + Cr[1]) / 2;
+    if (Cr[1] - Cr[0] > 1e-6) {
+      el("polygon", { points: `${sx},${Y(1)} ${fx},${Y(Cr[1])} ${fx},${Y(Cr[0])}`, fill: "#a8432a", opacity: 0.12 }, svg);
+      el("line", { x1: fx, y1: Y(Cr[0]), x2: fx, y2: Y(Cr[1]), stroke: "#a8432a", "stroke-width": 6, opacity: 0.45 }, svg);
     }
-    w.appendChild(bar); w.appendChild(n);
-    if (note) { const q = document.createElement("div"); q.className = "n"; q.style.color = "var(--muted)"; q.textContent = note; w.appendChild(q); }
-    return w;
+    el("line", { x1: sx, y1: Y(1), x2: fx, y2: Y(mid), stroke: "#a8432a", "stroke-width": 2, "stroke-dasharray": "6 4" }, svg);
+    el("circle", { cx: fx, cy: Y(mid), r: 6, fill: "#fffdf8", stroke: "#a8432a", "stroke-width": 2, "stroke-dasharray": "3 2" }, svg);
+    txt("the fourth world, yours", fx + 10, Y(mid) + 4, { fill: "#a8432a" });
+    // record points
+    const dot = (an, y, label, hollow, dy) => {
+      const cx = X(pt(an));
+      const c = el("circle", { cx, cy: Y(y), r: 7, fill: hollow ? "#fffdf8" : "#1f1c18", stroke: "#1f1c18", "stroke-width": 2 }, svg);
+      txt(label, cx + (dy && dy.dx || 10), Y(y) + (dy && dy.dy || -10), { fill: "#1f1c18", "text-anchor": dy && dy.anchor || "start" });
+      tip(c, `Analysis of ${an}: money ${pct(g[an].money)} of the 2024 rate (months held ${g[an].months_held.join(" to ")}), FEWS NET on Sudan in ${g[an].monitor_months} of ${g[an].n} months`);
+    };
+    const same = key === "monitor" && Math.abs(pt("Oct 2024") - pt("Jan 2026")) < 1e-6;
+    dot("Sep 2025", 1, "Sep 2025 · the siege's hour · blank", false, { dx: 12, dy: 4 });
+    dot("Oct 2024", 0, same ? "Oct 2024 and Jan 2026 · another hour" : "Oct 2024 · another hour", false, same ? { dx: 0, dy: -14, anchor: "middle" } : { dx: 0, dy: -14, anchor: "end" });
+    if (!same) dot("Jan 2026", 0, cut === "both" ? "Jan 2026 · money as after, monitor as before" : "Jan 2026 · another hour", cut === "both", { dx: 0, dy: -14, anchor: "middle" });
+    box.appendChild(svg);
+    const dm = g["Sep 2025"].money, jm = g["Jan 2026"].money;
+    let s;
+    if (cut === "money") s = `Between the blank and its closing the money did not move: ${pct(dm)} of its 2024 rate before September 2025, ${pct(jm)} before January 2026. So the record holds the same cut in two hours, and in the other hour it wrote no blank. The grey line is flat at zero. The red line is parallel to it only if your fourth world is all blank, that is, only if the cuts made none of it. Any share above zero for the money says that the cuts and the hour interlocked.`;
+    else if (cut === "monitor") s = `The monitor moved with the hour: dark in all six months before September 2025, lit in ${g["Jan 2026"].monitor_months} of six before January 2026, as it was in ${g["Oct 2024"].monitor_months} of three before October 2024. Both classified worlds stand at the same setting, so the record never shows the monitor dark at another hour. It cannot tell the monitor's part from the hour's, and the rules in V stay open on both sides.`;
+    else s = `As one cut, money and monitor disagree about January 2026: by the money it stood after the freeze, by the monitor before it. The record then holds no world of the cut at another hour, the hollow point cannot be borrowed, and the rules in V stay open on both sides.`;
+    $("#finding-degrees").textContent = s;
   }
 
-  function drawGrid(jan, read, x, Br, Cr, feasible) {
-    const g = $("#grid"); g.textContent = "";
-    const h = (txt, cls) => { const d = document.createElement("div"); d.className = "h " + (cls || ""); d.textContent = txt; g.appendChild(d); };
-    h("", "corner"); h("The siege's hour: projected from Sep 2025"); h("Another hour");
-    h("Money and monitor as after the freeze", "rh");
-    g.appendChild(world("record", "the record", "Analysis of Sep 2025, second projection, Feb–May 2026: the six places with people and no phase.", [1, 1]));
-    g.appendChild(jan === "after"
-      ? world("borrowed", "borrowed from Jan 2026", "Analysis of Jan 2026, current period, the same Feb–May 2026: every place classified.", [0, 0], "Borrowed on your word that January 2026 stood after the freeze.")
-      : world("unwritten", "unwritten", "No analysis written after the freeze from another hour, on your declaration.", Br));
-    h("Money and monitor as before the freeze", "rh");
-    const cw = read === "none" ? "Nobody wrote it. Every value is tried." : read === "butfor" ? "Written by your answer, read as but-for." : "Written by your answer, read as equal shares.";
-    g.appendChild(world("unwritten", "unwritten — the fourth world", "A fully funded IPC, its monitor running, projecting from September 2025. " + cw, feasible ? Cr : null));
-    g.appendChild(world("borrowed", jan === "before" ? "borrowed from Oct 2024 and Jan 2026" : "borrowed from Oct 2024", "Analysis of Oct 2024, second projection, Dec 2024–May 2025: every place classified." + (jan === "before" ? " And Jan 2026, on your word." : ""), [0, 0], "The places are drawn differently; a verdict is borrowed, not a count."));
-  }
-
-  function drawRules(rules, ranges, feasible) {
+  function drawRules(rules, ranges) {
     const box = $("#rulebars"); box.textContent = "";
     rules.forEach((r, i) => {
       const row = document.createElement("div"); row.className = "rule";
@@ -216,33 +305,22 @@
       if (r.lo < 0) { const t = document.createElement("div"); t.className = "tick"; t.style.left = span(0) + "%"; tr.appendChild(t); }
       const val = document.createElement("div"); val.className = "val";
       const rg = ranges[i];
-      if (rg) {
-        const s = document.createElement("div"); s.className = "span" + (rg[1] - rg[0] > 0.01 ? " wide" : "");
-        s.style.left = span(rg[0]) + "%"; s.style.width = Math.max(span(rg[1]) - span(rg[0]), 0.4) + "%";
-        tr.appendChild(s);
-        val.textContent = rg[1] - rg[0] > 0.005 ? `${pct(rg[0])} to ${pct(rg[1])}` : pct(rg[0]);
-      } else val.textContent = "no world";
+      const s = document.createElement("div"); s.className = "span" + (rg[1] - rg[0] > 0.01 ? " wide" : "");
+      s.style.left = span(rg[0]) + "%"; s.style.width = Math.max(span(rg[1]) - span(rg[0]), 0.4) + "%";
+      tr.appendChild(s);
+      val.textContent = rg[1] - rg[0] > 0.005 ? `${pct(rg[0])} to ${pct(rg[1])}` : pct(rg[0]);
       row.appendChild(tr); row.appendChild(val); box.appendChild(row);
     });
   }
 
-  function words(jan, read, x, Br, Cr, ranges, feasible) {
+  function words(cut, x, Cr, ranges) {
+    const I = ranges[3], bf = ranges[0];
     let s;
-    const people = (f) => fmt(f * P);
-    if (!feasible) {
-      s = `Read as equal shares, no world fits ${pct(x)}. With January 2026 counted as after the freeze, the cuts' equal share of this blank can be at most 50 %: the record already holds a world with the cuts and without the blank.`;
-    } else if (read === "none") {
-      s = `With the fourth world unwritten, the record allows the cuts any but-for share from ${pct(ranges[0][0])} to ${pct(ranges[0][1])}. That is the record's whole answer to the question's second half.`;
-    } else if (read === "butfor") {
-      s = `Read as but-for, your ${pct(x)} writes the fourth world: had there been no cuts, ${people(1 - x)} of the ${people(1)} people would still have stood without a phase, projected from September 2025. No record holds that world. You wrote it.`;
-      if (jan === "after" && x > 0) s += " And since January 2026 already shows the cuts without the blank, any share above zero says the two causes interlocked: mortar, not bricks.";
-    } else {
-      s = Cr[1] - Cr[0] < 1e-6
-        ? `Read as equal shares, your ${pct(x)} writes the fourth world: had there been no cuts, ${people(Cr[0])} people would still have stood without a phase. No record holds that world. You wrote it.`
-        : `Read as equal shares, your ${pct(x)} fits fourth worlds from ${people(Cr[0])} to ${people(Cr[1])} people without a phase, depending on the world you declined to borrow from January 2026.`;
-    }
-    $("#finding-worlds").textContent = s;
-    const I = ranges && ranges[3];
-    $("#lewontin").hidden = !(I && (I[0] > 0.005 || I[1] < -0.005 || (read !== "none" && Math.abs(I[0]) > 0.005)));
+    if (cut === "money" && bf[0] > 0.005) s = `With the cut read as the money, every world you have left open gives the cuts a part, and the record already holds the cut without the blank. So the remainder stands above zero throughout: the two but-for parts together claim more than the whole. That is the mark of causes that interlock, and Lewontin's sentence applies.`;
+    else if (cut === "money" && bf[1] < 0.005) s = `You have written a world in which the cuts made none of the blank: every place would still have stood blank without them. Only here do the lines run parallel, and the hour takes the whole.`;
+    else if (cut === "money") s = `With the cut read as the money, the cuts' but-for part runs from ${pct(bf[0])} to ${pct(bf[1])} over the places you left unsaid. Above zero, the causes interlock.`;
+    else s = `With this cut the record borrows no world of the cut at another hour, so even a fourth world written town by town leaves the equal share open from ${pct(ranges[2][0])} to ${pct(ranges[2][1])}. The record's whole answer here is a range, and the town you name decides less than the world you cannot borrow.`;
+    $("#finding-rules").textContent = s;
+    $("#lewontin").hidden = !(I[0] > 0.005 || I[1] < -0.005);
   }
 })();

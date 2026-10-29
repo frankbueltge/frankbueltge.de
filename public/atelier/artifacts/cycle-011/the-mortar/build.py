@@ -69,6 +69,42 @@ for amt, date, di, paid, yr in d["grants"]:
 monitor = {m["month"]: m["analysis"] for m in d["months"]}
 dark = d["months_without_analysis"]
 
+# Session 2. Per place: its weight in the blank (the first projection's people, as the IPC's 841,000 counts them),
+# whether the blank row itself still carries the people, and the area phase each borrowed analysis gives it
+# (the IPC's 20 % rule: the highest phase that, with the phases above it, holds at least a fifth of the people).
+def area_phase(ph):
+    tot = sum(ph)
+    for i in range(4, -1, -1):
+        if tot and sum(ph[i:]) / tot >= 0.2:
+            return i + 1
+    return None
+for pl in places:
+    seg = lambda an, per: next(p for p in pl["lanes"][an] if p["period"] == per)
+    pl["weight"] = seg("Sep 2025", "first projection")["all"]
+    pl["blank_row_people"] = seg("Sep 2025", "second projection")["all"]
+    pl["verdicts"] = {"Oct 2024": area_phase(seg("Oct 2024", "second projection")["phases"]),
+                      "Sep 2025": area_phase(seg("Sep 2025", "first projection")["phases"]),
+                      "Jan 2026": area_phase(seg("Jan 2026", "current")["phases"])}
+# A fourth world at the grain of places: each place classified or still blank. Only 2^6 shares are possible.
+W = [pl["weight"] for pl in places]
+worlds = sorted(({"set": [i for i in range(6) if m >> i & 1], "share": sum(W[i] for i in range(6) if m >> i & 1) / blank}
+                 for m in range(64)), key=lambda w: w["share"])
+
+# The cut as degrees. For each analysis, the six months before the month it was written in, as far as the Studio's
+# months reach (they begin in Jul 2024): the United States government's money per month against its Jul-Dec 2024
+# rate, and the share of those months in which FEWS NET published on Sudan.
+mo = [m["month"] for m in d["months"]]
+base = sum(money[k]["us"] for k in mo if "2024-07" <= k <= "2024-12") / 6
+WINDOWS = {"Oct 2024": ("2024-04", "2024-09"), "Sep 2025": ("2025-03", "2025-08"), "Jan 2026": ("2025-07", "2025-12")}
+degrees = {}
+for an, (a, b) in WINDOWS.items():
+    ks = [k for k in mo if a <= k <= b]
+    degrees[an] = {"window": [a, b], "months_held": [ks[0], ks[-1]], "n": len(ks),
+                   "money": round(sum(money[k]["us"] for k in ks) / len(ks) / base, 3),
+                   "monitor": round(sum(1 for k in ks if monitor[k]) / len(ks), 3),
+                   "monitor_months": sum(1 for k in ks if monitor[k])}
+assert degrees["Sep 2025"]["monitor"] == 0 and degrees["Jan 2026"]["monitor_months"] == 4
+
 json.dump({
     "_note": "Built by build.py. Six places the IPC named as unclassified in its Sep 2025 analysis's second projection (Feb-May 2026), as four Sudan analyses of HDX's open table write them; and, beside them, the money recorded toward Sudan's appeals and the famine monitor's Sudan months.",
     "sources": {
@@ -83,4 +119,5 @@ json.dump({
     "places": places,
     "money": [{"month": k, **v} for k, v in money.items()],
     "monitor": monitor, "dark": dark,
+    "worlds": worlds, "degrees": degrees, "money_base_us_per_month": base,
 }, sys.stdout, indent=1)
