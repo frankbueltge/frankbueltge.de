@@ -50,7 +50,8 @@ policy needed nothing new (`frame-src https:`).
 6. Turnstile.
 7. A daily cap of 400 entries, which switches to standby.
 8. One rating per work per visitor per day, by an HMAC of IP and user agent under a salt that lives
-   for one UTC day; the hashes are deleted after 24 hours.
+   for one UTC day; the hashes are kept with their day and go with the salt once the day is over
+   (amended 2026-10-27, see duty 3).
 9. For a note, the text gate. It uses the seed's model, with its own published prompt, and refuses
    spam, abuse, personal data of third parties and injection, each with a public code. It has its own
    daily cap of 300.
@@ -82,6 +83,15 @@ owner note stands first on `/reception`, where a forged one would be seen and re
   `src/data/reception/latest.json` and `snapshots/<date>.json` when they changed. It then writes
   `reception.md` into each practice's feedback folder, only where the bytes differ.
 * **Duty 3, counting, not identifying.** No address and no cookie are kept for visitors.
+  *Amended 2026-10-27.* The first build broke two promises of the form. Salts and marks were
+  deleted only by the next rating or report, so a quiet day kept them indefinitely; and a mark kept
+  the second it was written, the same second as its entry's `created_at`, so while the salt lived a
+  hash could be tied to its entry. Now `reception_day_marks` (WITHOUT ROWID) keeps the UTC day, not
+  the second; the old table is dropped on first use; and the finished days' salts and marks are
+  deleted by every rating, report and record request, and by the first work view of a day in each
+  isolate. The nightly snapshot's record request makes that daily. D1's point-in-time recovery keeps
+  earlier states for up to 30 days (7 on the free plan), for the account owner only; the form and
+  the privacy notice now say so.
 * **Duty 4, mortality.** The reception ends when its store ends; the snapshots remain.
 * **Duty 5, the cost limit.** Standby at either cap.
 * **Duty 6, fail-closed.** Everything above, and no secret in any answer.

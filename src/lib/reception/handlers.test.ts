@@ -142,8 +142,8 @@ describe.skipIf(!hasSqlite)('the reception endpoints', () => {
       await rate(env, { work: 'studio:2026-10-16-filed-under', score: 4 })
       const raw = (env.RECEPTION_DB as any).raw
       expect(raw.prepare('SELECT day FROM reception_salts').all().map((r: any) => r.day)).toEqual(['2026-10-19'])
-      const marks = raw.prepare('SELECT subject, at FROM reception_marks').all()
-      expect(marks.map((m: any) => m.subject)).toEqual(['studio:2026-10-16-filed-under'])
+      const marks = raw.prepare('SELECT subject, day FROM reception_day_marks').all()
+      expect(marks.map((m: any) => [m.subject, m.day])).toEqual([['studio:2026-10-16-filed-under', '2026-10-19']])
       const columns = raw.prepare('PRAGMA table_info(reception_entries)').all().map((c: any) => c.name)
       expect(columns).not.toContain('hash')
       expect(columns).not.toContain('ip')
@@ -193,6 +193,88 @@ describe.skipIf(!hasSqlite)('the reception endpoints', () => {
       const env = await makeEnv()
       expect(await read(await rate(env, { work: 'lab:consensus', score: 5, text: 'Yes.' }))).toMatchObject({ status: 422, body: { reason: 'consent' } })
       expect(gate).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('what is kept of a visitor, and for how long', () => {
+    const rows = (env: ReceptionEnv, table: string): number => (env.RECEPTION_DB as any).raw.prepare(`SELECT COUNT(*) AS n FROM ${table}`).get().n
+
+    it('clears the finished day’s salt and marks on a day without a single rating, when the record is read', async () => {
+      const env = await makeEnv()
+      const note = (await read(await rate(env, { work: 'lab:consensus', score: 1, text: 'Dull.', consent: true }))).body.entry
+      await handleReport(post('/api/reception/report', { id: note.id }, { 'cf-connecting-ip': '192.0.2.1' }), env, deps)
+      // a record read the same day leaves the running day alone, so the limit still holds
+      await handleRecord(get('/api/reception/record'), env, deps)
+      expect([rows(env, 'reception_salts'), rows(env, 'reception_day_marks')]).toEqual([1, 2])
+      expect((await rate(env, { work: 'lab:consensus', score: 5 })).status).toBe(429)
+
+      // the next day nobody rates, reports or opens a work; only the nightly snapshot reads the record
+      now = new Date('2026-10-19T02:20:00Z')
+      const record = (await read(await handleRecord(get('/api/reception/record'), env, deps))).body
+      expect([rows(env, 'reception_salts'), rows(env, 'reception_day_marks')]).toEqual([0, 0])
+      // what stands stays: the note, its total and the day's counts
+      expect(record.notes).toMatchObject([{ id: note.id, text: 'Dull.' }])
+      expect(record.works).toMatchObject([{ id: 'lab:consensus', count: 1 }])
+      expect(record.counts['2026-10-18']).toEqual({ entries: 1, gate: 1, reports: 1 })
+    })
+
+    it('clears them on the first work view of the next day, and spends no write on the views after it', async () => {
+      const env = await makeEnv()
+      await rate(env, { work: 'lab:consensus', score: 4 })
+      now = new Date('2026-10-19T00:05:00Z')
+      await view(env)
+      expect([rows(env, 'reception_salts'), rows(env, 'reception_day_marks')]).toEqual([0, 0])
+      const writes = vi.spyOn(env.RECEPTION_DB!, 'batch')
+      await view(env, 'studio:2026-10-16-filed-under')
+      await view(env)
+      expect(writes).not.toHaveBeenCalled()
+      now = new Date('2026-10-20T00:05:00Z')
+      await view(env)
+      expect(writes).toHaveBeenCalledTimes(1)
+    })
+
+    it('keeps the day in a mark, never the second, and no order of writing', async () => {
+      const env = await makeEnv()
+      const note = (await read(await rate(env, { work: 'lab:consensus', score: 2, text: 'Flat.', consent: true }))).body.entry
+      await handleReport(post('/api/reception/report', { id: note.id }, { 'cf-connecting-ip': '192.0.2.9' }), env, deps)
+      const raw = (env.RECEPTION_DB as any).raw
+      const marks = raw.prepare('SELECT * FROM reception_day_marks ORDER BY kind').all()
+      expect(marks.map((m: any) => Object.keys(m).sort())).toEqual([
+        ['day', 'hash', 'kind', 'subject'],
+        ['day', 'hash', 'kind', 'subject'],
+      ])
+      expect(marks.map((m: any) => [m.kind, m.subject, m.day])).toEqual([
+        ['rate', 'lab:consensus', '2026-10-18'],
+        ['report', note.id, '2026-10-18'],
+      ])
+      // nothing in a mark carries its entry's moment, in seconds or as a time of day
+      const second = String(Math.floor(Date.parse(note.at) / 1000))
+      expect(note.at).toBe('2026-10-18T10:00:00.000Z')
+      expect(JSON.stringify(marks)).not.toContain(second)
+      expect(JSON.stringify(marks)).not.toMatch(/\d{2}:\d{2}/)
+      // a rowid would keep the order marks and entries were written in, and pair them
+      expect(() => raw.prepare('SELECT rowid FROM reception_day_marks').all()).toThrow()
+    })
+
+    it('drops the first build’s marks table, seconds and all, and limits on the new one', async () => {
+      const env = await makeEnv()
+      const raw = (env.RECEPTION_DB as any).raw
+      // the store as 2026-10-17 created it, after a quiet day: a mark with its second, a salt of a past day
+      raw.exec(`
+        CREATE TABLE reception_salts (day TEXT PRIMARY KEY, salt TEXT NOT NULL);
+        CREATE TABLE reception_marks (hash TEXT NOT NULL, subject TEXT NOT NULL, kind TEXT NOT NULL, at INTEGER NOT NULL, PRIMARY KEY (hash, subject, kind));
+        CREATE INDEX reception_marks_at ON reception_marks (at);
+        INSERT INTO reception_salts VALUES ('2026-10-17', '${'5a'.repeat(32)}');
+        INSERT INTO reception_marks VALUES ('${'0f'.repeat(32)}', 'lab:consensus', 'rate', ${Math.floor(Date.parse('2026-10-17T21:14:09Z') / 1000)});
+      `)
+      await view(env)
+      const names = raw.prepare("SELECT name FROM sqlite_master WHERE name LIKE 'reception%' ORDER BY name").all().map((r: any) => r.name)
+      expect(names).not.toContain('reception_marks')
+      expect(names).not.toContain('reception_marks_at')
+      expect(names).toContain('reception_day_marks')
+      expect(rows(env, 'reception_salts')).toBe(0)
+      expect((await rate(env, { work: 'lab:consensus', score: 4 })).status).toBe(200)
+      expect(await read(await rate(env, { work: 'lab:consensus', score: 3 }))).toMatchObject({ status: 429, body: { reason: 'rate-limit' } })
     })
   })
 

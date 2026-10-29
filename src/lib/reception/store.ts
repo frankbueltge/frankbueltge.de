@@ -6,11 +6,19 @@
 //     architect wrote it, when, and how often it was reported. No address, no hash, no cookie.
 //     Kept as long as the store exists; the nightly snapshot commits what is public of it to git.
 //   · reception_totals  — the count of each score per work, so a page reads one row, not every rating.
-//   · reception_salts   — one random salt per UTC day; deleted when the day is over.
-//   · reception_marks   — "this day hash has rated this work / reported this note", deleted after
-//     24 hours. They count, they never identify.
+//   · reception_salts   — one random salt per UTC day.
+//   · reception_day_marks — "this day hash has rated this work / reported this note today": the hash,
+//     the subject and the UTC day, never the hour. They count, they never identify.
 //   · reception_counts  — per day: how many entries were stored, how many gate calls were made, and
 //     how many notes were refused for each reason. Counts only.
+// Salts and marks of a finished day are deleted by the first rating, report, work view or record
+// request of the next day; the nightly snapshot makes a record request every night. "Deleted" means
+// from the running database: D1's point-in-time recovery keeps earlier states for up to 30 days (7 on
+// the free plan), for the account owner only, and the form and the privacy notice say so.
+//
+// The marks table is WITHOUT ROWID and keeps no time of day: a mark written with the second of its
+// entry's created_at, or in a rowid order that follows the entries', would pair a hash with its entry
+// while the salt lives. Keyed by the hash, its order says nothing about who wrote what.
 //
 // Created on first use, so the database needs no console step: an empty D1 bound as RECEPTION_DB is
 // enough.
@@ -54,21 +62,23 @@ export const SCHEMA: readonly string[] = [
     last_at TEXT NOT NULL
   )`,
   'CREATE TABLE IF NOT EXISTS reception_salts (day TEXT PRIMARY KEY, salt TEXT NOT NULL)',
-  `CREATE TABLE IF NOT EXISTS reception_marks (
+  `CREATE TABLE IF NOT EXISTS reception_day_marks (
     hash TEXT NOT NULL,
     subject TEXT NOT NULL,
     kind TEXT NOT NULL,
-    at INTEGER NOT NULL,
+    day TEXT NOT NULL,
     PRIMARY KEY (hash, subject, kind)
-  )`,
-  'CREATE INDEX IF NOT EXISTS reception_marks_at ON reception_marks (at)',
+  ) WITHOUT ROWID`,
+  'CREATE INDEX IF NOT EXISTS reception_day_marks_day ON reception_day_marks (day)',
   'CREATE TABLE IF NOT EXISTS reception_counts (day TEXT NOT NULL, key TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, key))',
+  // Until 2026-10-27 the marks kept the second they were written, the same second as their entry's
+  // created_at, and were deleted only when someone rated or reported. That table goes, with whatever
+  // it still holds; nothing reads it any more.
+  'DROP TABLE IF EXISTS reception_marks',
 ]
 
 /** Three reports from three different day hashes hide a note. */
 export const REPORTS_TO_HIDE = 3
-/** How long a mark ("rated", "reported") is kept, in seconds. */
-export const MARK_TTL_S = 24 * 3600
 
 const ready = new WeakSet<object>()
 
@@ -79,21 +89,27 @@ export async function ensureSchema(db: D1Like): Promise<void> {
   ready.add(db)
 }
 
-/** Today's salt, created if the day has none yet; every earlier day's salt is deleted in the same
- *  breath, together with the marks older than a day. */
-export async function todaysSalt(db: D1Like, day: string, freshSalt: string, nowS: number): Promise<string> {
-  await db.batch([
-    db.prepare('INSERT OR IGNORE INTO reception_salts (day, salt) VALUES (?, ?)').bind(day, freshSalt),
-    db.prepare('DELETE FROM reception_salts WHERE day < ?').bind(day),
-    db.prepare('DELETE FROM reception_marks WHERE at < ?').bind(nowS - MARK_TTL_S),
-  ])
+/** Everything of a finished day that could tie a visitor to an entry: the salts and the marks. */
+const cleanupStmts = (db: D1Like, day: string): D1Stmt[] => [
+  db.prepare('DELETE FROM reception_salts WHERE day < ?').bind(day),
+  db.prepare('DELETE FROM reception_day_marks WHERE day < ?').bind(day),
+]
+
+/** Deletes the salts and marks of every day before `day`. Writes nothing when there is nothing to go. */
+export async function cleanup(db: D1Like, day: string): Promise<void> {
+  await db.batch(cleanupStmts(db, day))
+}
+
+/** Today's salt, created if the day has none yet; the finished days go in the same breath. */
+export async function todaysSalt(db: D1Like, day: string, freshSalt: string): Promise<string> {
+  await db.batch([db.prepare('INSERT OR IGNORE INTO reception_salts (day, salt) VALUES (?, ?)').bind(day, freshSalt), ...cleanupStmts(db, day)])
   const row = await db.prepare('SELECT salt FROM reception_salts WHERE day = ?').bind(day).first<{ salt: string }>()
   if (!row?.salt) throw new Error('no salt for the day')
   return row.salt
 }
 
 export async function hasMark(db: D1Like, hash: string, subject: string, kind: 'rate' | 'report'): Promise<boolean> {
-  const row = await db.prepare('SELECT 1 AS hit FROM reception_marks WHERE hash = ? AND subject = ? AND kind = ?').bind(hash, subject, kind).first()
+  const row = await db.prepare('SELECT 1 AS hit FROM reception_day_marks WHERE hash = ? AND subject = ? AND kind = ?').bind(hash, subject, kind).first()
   return row !== null
 }
 
@@ -131,7 +147,7 @@ export interface NewEntry {
  * whole batch: the rate limit holds even against two requests that arrive together. Returns false
  * when that happened.
  */
-export async function insertEntry(db: D1Like, e: NewEntry, opts: { hash: string | null; nowS: number; day: string }): Promise<boolean> {
+export async function insertEntry(db: D1Like, e: NewEntry, opts: { hash: string | null; day: string }): Promise<boolean> {
   const c = col(e.score)
   const statements = [
     db
@@ -142,7 +158,7 @@ export async function insertEntry(db: D1Like, e: NewEntry, opts: { hash: string 
       .bind(e.work, e.createdAt),
     bumpStmt(db, opts.day, 'entries'),
   ]
-  if (opts.hash) statements.push(db.prepare('INSERT INTO reception_marks (hash, subject, kind, at) VALUES (?, ?, ?, ?)').bind(opts.hash, e.work, 'rate', opts.nowS))
+  if (opts.hash) statements.push(db.prepare('INSERT INTO reception_day_marks (hash, subject, kind, day) VALUES (?, ?, ?, ?)').bind(opts.hash, e.work, 'rate', opts.day))
   try {
     await db.batch(statements)
     return true
@@ -245,13 +261,13 @@ const entryState = (db: D1Like, id: string): Promise<EntryState | null> =>
 export async function reportEntry(
   db: D1Like,
   id: string,
-  opts: { hash: string; nowS: number; day: string; at: string },
+  opts: { hash: string; day: string; at: string },
 ): Promise<'not-found' | 'already' | 'counted' | 'hidden'> {
   const e = await entryState(db, id)
   if (!e || e.text === null || e.owner === 1 || e.hidden_at !== null) return 'not-found'
   const mark = await db
-    .prepare('INSERT OR IGNORE INTO reception_marks (hash, subject, kind, at) VALUES (?, ?, ?, ?)')
-    .bind(opts.hash, id, 'report', opts.nowS)
+    .prepare('INSERT OR IGNORE INTO reception_day_marks (hash, subject, kind, day) VALUES (?, ?, ?, ?)')
+    .bind(opts.hash, id, 'report', opts.day)
     .run()
   if (!mark.meta?.changes) return 'already'
   const reports = e.reports + 1

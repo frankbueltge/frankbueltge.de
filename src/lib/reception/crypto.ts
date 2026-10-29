@@ -10,7 +10,9 @@
 // THE DAY HASH. A visitor is counted, never identified (duty 3 of .claude/rules/runtime-and-works.md):
 // one rating per work per visitor per day is enforced with an HMAC of IP and user agent under a
 // random salt that exists for one UTC day and is then deleted, so yesterday's hashes cannot be
-// recomputed by anyone, the house included. The hashes themselves are deleted after 24 hours.
+// recomputed from the running database. The hashes go with their day (./store.ts). D1's
+// point-in-time recovery keeps earlier states, salts included, for up to 30 days, for the account
+// owner only; the form and the privacy notice say so.
 
 import { constantTimeEqual } from '../zentrale/auth'
 
