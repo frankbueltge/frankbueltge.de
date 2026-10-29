@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UNWOVEN</title>
+<style>
+:root{--paper:#f3efe6;--ink:#1d1b18;--mute:#6b655b;--rule:#cfc7b8;--light:#fff8e4;--glow:#ffe9a8;--p1:#cdfacd;--p2:#fae61e;--p3:#e67800;--p4:#c80000;--p5:#640000;--accent:#8a1c12}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1180px;margin:0 auto;padding:0 16px 64px}
+.wip{font:12px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.04em;background:var(--ink);color:var(--paper);padding:6px 16px;text-align:center}
+h1{font:600 clamp(40px,8vw,84px)/1 Georgia,serif;letter-spacing:.12em;margin:28px 0 6px}
+.lede{max-width:760px;font-size:18px;margin:0 0 18px}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:13px}
+#loom{position:relative;overflow-x:auto;overflow-y:hidden;border-top:6px solid #3b2f22;border-radius:2px;background:radial-gradient(ellipse at 50% 45%,var(--light) 0%,var(--glow) 55%,#d9b86a 100%);transition:background .6s}
+#loom.lit{background:radial-gradient(ellipse at 50% 45%,#fffef8 0%,#fff3c4 50%,#f2cf72 100%)}
+#cloth{display:block;width:100%;min-width:820px;height:min(72vh,720px);cursor:crosshair}
+#ticks{position:relative;height:18px;min-width:820px}
+#ticks span{position:absolute;top:2px;font:11px ui-monospace,Menlo,monospace;color:var(--mute);transform:translateX(-50%)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+button{font:14px Georgia,serif;background:var(--ink);color:var(--paper);border:0;padding:8px 14px;border-radius:2px;cursor:pointer}
+button.off{background:transparent;color:var(--ink);outline:1px solid var(--ink)}
+#read{min-height:3.2em;border-left:3px solid var(--ink);padding:4px 10px;margin:8px 0 18px}
+#read b{font-weight:600}
+.key{display:flex;flex-wrap:wrap;gap:14px;font-size:14px;color:var(--mute);margin:6px 0 4px}
+.key i{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:5px;border:1px solid #0002}
+#strip{width:100%;height:84px;display:block;margin:6px 0}
+#holes{columns:2 320px;font-size:14px;padding-left:18px}
+#holes li{break-inside:avoid;margin-bottom:4px}
+section{margin-top:34px;max-width:820px}
+h2{font:600 20px Georgia,serif;letter-spacing:.06em;margin:0 0 8px}
+.q{border-left:3px solid var(--accent);padding-left:10px;color:#3a332b}
+a{color:var(--accent)}
+.count{display:flex;flex-wrap:wrap;gap:26px;margin:8px 0 18px}
+.count div{font-size:13px;color:var(--mute)}
+.count b{display:block;font:600 26px Georgia,serif;color:var(--ink)}
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div class="wip">IN PROGRESS · increment 1 of 3–4 · 2026-10-29 · cycle 011 · the work changes in the sessions to come</div>
+<main>
+<h1>UNWOVEN</h1>
+<p class="lede">Every area the IPC has written into its open table, from January 2021 to September 2026, hung as one cloth.
+Each of the 813 threads is one analysis of one country for one period, the people of each area woven in the colours of the phases they were put in.
+Where an area was left without a phase, the cloth has no thread. The light behind it comes through.</p>
+
+<div class="count" id="count"></div>
+
+<div id="loom"><canvas id="cloth" aria-label="A cloth of 813 vertical threads, one per IPC analysis and period, with holes where areas were left unclassified"></canvas><div id="ticks"></div></div>
+<div class="bar">
+  <button id="lightBtn" class="off">Hold it to the light</button>
+  <button id="sudanBtn" class="off">The one hole whose reason was written</button>
+  <span class="mono" id="hint">Point at a thread to read it. Click to lay it out below.</span>
+</div>
+<div class="key">
+  <span><i style="background:var(--p1)"></i>Phase 1</span><span><i style="background:var(--p2)"></i>2</span><span><i style="background:var(--p3)"></i>3</span><span><i style="background:var(--p4)"></i>4</span><span><i style="background:var(--p5)"></i>5</span>
+  <span><i style="background:var(--light)"></i>hole: people written, no phase (C)</span>
+  <span><i style="background:#2a2017;border-radius:50%"></i>knot: a place written with no people and no phase (A, B)</span>
+</div>
+<div id="read">Point at the cloth.</div>
+
+<section id="one" hidden>
+  <h2 id="oneT"></h2>
+  <canvas id="strip"></canvas>
+  <ul id="holes"></ul>
+</section>
+
+<section>
+  <h2>Where the light comes through most</h2>
+  <p>The threads with the most people left in no phase. The table gives no reason for any of them.</p>
+  <ol id="top"></ol>
+  <p class="mono">Caution: the Field found that the projections of Ethiopia (May 2021), Madagascar (Nov 2022) and Sudan (Jan 2026) were published for only part of the country. Their holes may be areas outside the projection, not areas no one could reach.</p>
+</section>
+
+<section>
+  <h2>What the record writes, and what it does not</h2>
+  <p>The table has no field for why an area has no phase. It writes the absence in three ways, which the Field named A, B and C
+  (<a href="https://github.com/frankbueltge/field-research/tree/main/notes/convening-after-010/unclassified">Three ways to write nobody</a>, 2026-10-27):
+  a place with population 0 and no phase rows (A), a place with population 0 and its phase rows at 0 (B), and a place whose people are kept while every phase is 0 (C).
+  Here C is a hole as wide as the people it holds; A and B have no width, so they are knots.
+  A hole may be an area no one could reach, or an area outside an analysis, or a projection made for only part of a country: the table cannot tell these apart, and neither can this cloth.
+  Most knots (encoding A) are placeholders in the Cadre Harmonisé analyses the same file carries.</p>
+  <p>Only one hole has its reason in the IPC's own words. In Sudan's analysis of September 2025, six areas holding 841,404 people were given a phase for the current period; in the second projection none of the six has one (the table writes three of them as holes and three as knots, and a seventh, Dilling Urban, as a knot too):</p>
+  <p class="q">“…the inability to classify several high-concern areas—home to approximately 841,000 people—including El Fasher town (inclusive of Abu Shouk and Al Salam camps), Kadugli town, as well as Dilling, As Sunut, Al Lagowa, and Habila (South Kordofan) localities, due to the volatility of the situation and resulting uncertainty.”<br>
+  <span class="mono">IPC, Sudan: Acute Food Insecurity Analysis, Sep 2025 – May 2026 (issued Nov 2025), <a href="https://reliefweb.int/report/sudan/sudan-ipc-acute-food-insecurity-analysis-september-2025-may-2026-issued-november-2025">ReliefWeb</a>; passage as read by the Field, session 234.</span></p>
+</section>
+
+<section>
+  <h2>Material and method</h2>
+  <p class="mono">HDX, <a href="https://data.humdata.org/dataset/global-acute-food-insecurity-country-data">Global: Acute Food Insecurity Country Data</a> (CC0; source: National IPC Technical Working Groups), file <code>ipc_global_area_long.csv</code>, fetched 2026-10-29, sha256 33ed28dc…54368, the same file as the Field's fetch of 2026-10-27.
+  One thread per analysis date × country × validity period (current, first projection, second projection), ordered by date of analysis, then country, then period. Every thread has the same width and the same length: an area's share of the length is its share of the thread's people, so a small country and a large one hang alike. Inside an area, the phases stand in the shares the table gives.
+  Every count is asserted in <code>build.py</code> against the Field's <code>summary.json</code> (60,652 area-periods; A 6,352, B 16, C 1,041; 236,123,689 person-periods in C; 402 analyses). The Field's note says "since 2017"; the open table's earliest analysis is January 2021.
+  The six threads whose areas all carry population 0 hang as bare strings of knots.</p>
+</section>
+
+<section>
+  <h2>Neighbours in the Atlas of Data Art</h2>
+  <p><b>Mimi Ọnụọha, <i>The Library of Missing Datasets</i>.</b> There, data no one collects is a labelled, empty folder. Here the record exists and has a name and a number of people for each blank; what is missing is the one field the famine count turns on.<br>
+  <b>Jaime Black, <i>The REDress Project</i>.</b> There, an empty dress stands for a person a count leaves out. Here no figure stands in for anyone: the cloth is woven from the count itself, and the gap is the count's own.<br>
+  <b>Raqs Media Collective, <i>The Great Bare Mat and Constellation</i>.</b> There, a carpet's pattern is plotted from the collective's traffic. Here the weave is the IPC's ledger at its full scale, and the pattern that matters is where it is not woven.</p>
+</section>
+<p class="mono" style="margin-top:40px;color:var(--mute)">UNWOVEN · The Studio (Ensemble) · cycle 011 · begun 2026-10-29 · in progress</p>
+</main>
+<script src="data.js"></script>
+<script>
+(() => {
+const D = window.UNWOVEN, N = D.names, T = D.threads, S = D.summary;
+const VP = ['current', 'first projection', 'second projection'];
+const PC = ['#cdfacd', '#fae61e', '#e67800', '#c80000', '#640000'];
+const fmt = n => n.toLocaleString('en-US');
+const cv = document.getElementById('cloth'), cx = cv.getContext('2d');
+const loom = document.getElementById('loom');
+let lit = false, pinned = -1, mark = -1;
+const sudan = T.findIndex(t => t.c === 'SDN' && t.d === 'Sep 2025' && t.v === 2);
+
+// per-thread geometry, computed once in thread units (0..1 along its length)
+const G = T.map(t => {
+  const tot = t.a.reduce((s, x) => s + x[2], 0);
+  let y = 0; const segs = [];
+  t.a.forEach((x, i) => {
+    const h = tot ? x[2] / tot : 0;
+    segs.push({ i, y, h, knot: !!x[8] && x[8] !== 'C', hole: x[8] === 'C' });
+    y += h;
+  });
+  if (!tot) segs.forEach((s, k) => { s.y = (k + .5) / segs.length; });
+  return { tot, segs, holePeople: t.a.reduce((s, x) => s + (x[8] === 'C' ? x[2] : 0), 0) };
+});
+
+function hash(n) { n = (n ^ 61) ^ (n >>> 16); n = n + (n << 3); n = n ^ (n >>> 4); n = Math.imul(n, 0x27d4eb2d); return ((n ^ (n >>> 15)) >>> 0) / 4294967296; }
+function shade(hex, k) { const v = parseInt(hex.slice(1), 16); let r = v >> 16, g = v >> 8 & 255, b = v & 255; r = Math.max(0, Math.min(255, r * k)); g = Math.max(0, Math.min(255, g * k)); b = Math.max(0, Math.min(255, b * k)); return `rgb(${r|0},${g|0},${b|0})`; }
+
+let W, H, cw;
+function draw() {
+  const dpr = window.devicePixelRatio || 1;
+  W = cv.clientWidth; H = cv.clientHeight;
+  cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  cx.clearRect(0, 0, W, H);
+  cw = W / T.length;
+  const tw = Math.max(.6, cw * .82);
+  T.forEach((t, k) => {
+    const x0 = k * cw + (cw - tw) / 2, g = G[k];
+    const dim = lit ? .32 : 1;
+    if (!g.tot) { // a bare string of knots
+      cx.fillStyle = lit ? 'rgba(40,30,20,.5)' : 'rgba(60,45,30,.55)'; cx.fillRect(x0 + tw / 2 - .3, 0, .6, H);
+    }
+    g.segs.forEach(s => {
+      const x = t.a[s.i];
+      if (s.hole || s.knot) return;
+      const sum = x[3] + x[4] + x[5] + x[6] + x[7];
+      let y = s.y * H; const h = s.h * H;
+      for (let p = 0; p < 5; p++) {
+        if (!x[3 + p]) continue;
+        const ph = h * x[3 + p] / sum;
+        const j = .9 + .2 * hash(k * 7919 + s.i * 31 + p);
+        cx.fillStyle = shade(PC[p], j * dim);
+        cx.fillRect(x0, y, tw, ph + .35); y += ph;
+      }
+      if (h > 2) { cx.fillStyle = lit ? 'rgba(0,0,0,.35)' : 'rgba(40,25,10,.18)'; cx.fillRect(x0, s.y * H, tw, .5); }
+    });
+    // holes: nothing is drawn, the light shows; fray their edges
+    g.segs.forEach(s => {
+      if (!s.hole) return;
+      const y = s.y * H, h = s.h * H;
+      cx.fillStyle = lit ? 'rgba(255,250,225,.9)' : 'rgba(255,248,220,.0)';
+      if (lit) cx.fillRect(x0 - (cw - tw) / 2, y, cw, Math.max(h, .8));
+      cx.fillStyle = 'rgba(70,45,20,.55)';
+      for (let f = 0; f < 3; f++) { cx.fillRect(x0 + hash(k * 13 + f + s.i) * tw, y - 1.5 * hash(k + f), .5, 1.5); cx.fillRect(x0 + hash(k * 17 + f + s.i) * tw, y + h, .5, 1.5 * hash(k * 3 + f)); }
+    });
+    g.segs.forEach(s => {
+      if (!s.knot) return;
+      cx.fillStyle = '#2a2017';
+      cx.beginPath(); cx.arc(x0 + tw / 2, Math.max(1.2, Math.min(H - 1.2, s.y * H)), Math.max(.9, tw * .55), 0, 7); cx.fill();
+    });
+  });
+  [pinned, mark].forEach((m, i) => {
+    if (m < 0) return;
+    cx.strokeStyle = i ? '#8a1c12' : '#1d1b18'; cx.lineWidth = 1.2;
+    cx.strokeRect(m * cw - 1, .6, cw + 2, H - 1.2);
+  });
+  ticks();
+}
+
+function ticks() {
+  const el = document.getElementById('ticks'); el.innerHTML = '';
+  let last = '';
+  T.forEach((t, k) => { const y = t.d.slice(-4); if (y !== last) { last = y; const s = document.createElement('span'); s.style.left = (k * cw / W * 100) + '%'; s.textContent = y; el.appendChild(s); } });
+}
+
+function at(ev) {
+  const r = cv.getBoundingClientRect();
+  const k = Math.min(T.length - 1, Math.max(0, Math.floor((ev.clientX - r.left) / r.width * T.length)));
+  const fy = (ev.clientY - r.top) / r.height;
+  const g = G[k];
+  let s = null;
+  if (g.tot) s = g.segs.find(q => fy >= q.y && fy < q.y + q.h) || null;
+  else s = g.segs.reduce((b, q) => Math.abs(q.y - fy) < Math.abs(b.y - fy) ? q : b, g.segs[0]);
+  const knots = g.segs.filter(q => q.knot);
+  if (g.tot && (!s || s.h * H < 3)) { const near = knots.find(q => Math.abs(q.y - fy) * r.height < 4); if (near) s = near; }
+  return { k, s };
+}
+
+function name(t) { return `${t.c}, analysis of ${t.d}, ${VP[t.v]} (${t.f} to ${t.t})`; }
+function areaLine(t, x) {
+  const nm = `${N[x[1]]}, ${N[x[0]]}`;
+  if (x[8] === 'C') return `<b>${nm}</b>: ${fmt(x[2])} people written, <b>no phase</b>. A hole.`;
+  if (x[8]) return `<b>${nm}</b>: written with no people and no phase (${x[8]}). A knot.`;
+  const sum = x[3] + x[4] + x[5] + x[6] + x[7];
+  return `<b>${nm}</b>: ${fmt(x[2])} people; ` + [0, 1, 2, 3, 4].filter(p => x[3 + p]).map(p => `Phase ${p + 1} ${Math.round(100 * x[3 + p] / sum)} %`).join(', ');
+}
+function readout(k, s) {
+  const t = T[k], g = G[k];
+  const knots = g.segs.filter(q => q.knot).length, holes = g.segs.filter(q => q.hole).length;
+  document.getElementById('read').innerHTML = `${name(t)} · ${t.a.length} areas, ${fmt(g.tot)} people` +
+    (holes ? ` · <b>${holes} hole${holes > 1 ? 's' : ''}, ${fmt(g.holePeople)} people in no phase</b>` : '') +
+    (knots ? ` · ${knots} knot${knots > 1 ? 's' : ''}` : '') + (s ? `<br>${areaLine(t, t.a[s.i])}` : '');
+}
+cv.addEventListener('pointermove', ev => { const { k, s } = at(ev); readout(k, s); });
+cv.addEventListener('click', ev => { const { k } = at(ev); pin(k); });
+
+function pin(k) {
+  pinned = k; draw();
+  const t = T[k], g = G[k], sec = document.getElementById('one'); sec.hidden = false;
+  document.getElementById('oneT').textContent = 'One thread laid out: ' + name(t);
+  const sc = document.getElementById('strip'), c = sc.getContext('2d'), dpr = window.devicePixelRatio || 1;
+  const w = sc.clientWidth, h = sc.clientHeight; sc.width = w * dpr; sc.height = h * dpr; c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  c.fillStyle = '#fff3c4'; c.fillRect(0, 0, w, h);
+  g.segs.forEach(s => {
+    const x = t.a[s.i], X = s.y * w, Wd = s.h * w;
+    if (s.knot) { c.fillStyle = '#2a2017'; c.beginPath(); c.arc(Math.min(w - 4, Math.max(4, X)), h / 2, 3.2, 0, 7); c.fill(); return; }
+    if (s.hole) { c.strokeStyle = '#8a1c12'; c.setLineDash([3, 3]); c.strokeRect(X + .5, 6.5, Math.max(1, Wd - 1), h - 13); c.setLineDash([]); return; }
+    const sum = x[3] + x[4] + x[5] + x[6] + x[7]; let yy = 10;
+    for (let p = 0; p < 5; p++) { if (!x[3 + p]) continue; const ph = (h - 20) * x[3 + p] / sum; c.fillStyle = PC[p]; c.fillRect(X, yy, Wd, ph); yy += ph; }
+    c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(X, 10, .6, h - 20);
+  });
+  const ul = document.getElementById('holes'); ul.innerHTML = '';
+  const blanks = t.a.filter(x => x[8]).sort((a, b) => b[2] - a[2]);
+  if (!blanks.length) ul.innerHTML = '<li>Every area of this thread was given a phase.</li>';
+  blanks.slice(0, 60).forEach(x => { const li = document.createElement('li'); li.innerHTML = areaLine(t, x); ul.appendChild(li); });
+  if (blanks.length > 60) { const li = document.createElement('li'); li.textContent = `… and ${blanks.length - 60} more knots`; ul.appendChild(li); }
+}
+
+document.getElementById('lightBtn').onclick = e => { lit = !lit; loom.classList.toggle('lit', lit); e.target.classList.toggle('off', !lit); e.target.textContent = lit ? 'Let it hang' : 'Hold it to the light'; draw(); };
+document.getElementById('sudanBtn').onclick = e => {
+  mark = mark < 0 ? sudan : -1; e.target.classList.toggle('off', mark < 0);
+  if (mark >= 0) { pin(sudan); loom.scrollLeft = Math.max(0, sudan * cw - loom.clientWidth / 2); readout(sudan, null); }
+  draw();
+};
+
+// counts
+const tot = S.totals;
+document.getElementById('count').innerHTML = [
+  [fmt(S.threads), 'threads · ' + S.analyses + ' analyses · ' + S.countries + ' countries'],
+  [fmt(tot.area_periods), 'areas written, every period'],
+  [fmt(tot.C), 'holes: areas with people and no phase'],
+  [fmt(tot.C_people), 'people in them, counted once per period'],
+  [fmt(tot.A + tot.B), 'knots: places with no people and no phase']].map(([a, b]) => `<div><b>${a}</b>${b}</div>`).join('');
+
+// the threads with the most people in holes
+const ol = document.getElementById('top');
+G.map((g, k) => [g.holePeople, k]).filter(x => x[0]).sort((a, b) => b[0] - a[0]).slice(0, 10).forEach(([p, k]) => {
+  const t = T[k], n = t.a.filter(x => x[8] === 'C').length, li = document.createElement('li');
+  li.innerHTML = `<a href="#one">${name(t)}</a>: ${fmt(p)} people in ${n} hole${n > 1 ? 's' : ''}, ${Math.round(100 * p / G[k].tot)} % of the thread`;
+  li.querySelector('a').onclick = () => { pin(k); loom.scrollLeft = Math.max(0, k * cw - loom.clientWidth / 2); };
+  ol.appendChild(li);
+});
+
+draw();
+let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { draw(); if (pinned >= 0) pin(pinned); }, 120); });
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>

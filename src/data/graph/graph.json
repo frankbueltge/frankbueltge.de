@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "97d0af7f9563abb6",
-        "files": 60
+        "sha256": "f8baf445b998d5f8",
+        "files": 61
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 562,
-      "edges": 499,
+      "nodes": 563,
+      "edges": 500,
       "nodesByKind": {
         "decision": 159,
         "encounter": 6,
         "neighbor": 135,
         "practice": 9,
-        "practice-work": 217,
+        "practice-work": 218,
         "receiver": 8,
         "work": 28
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 217,
+        "made-by": 218,
         "neighbor-of": 136,
         "participates": 17,
         "touches": 114
@@ -6530,6 +6530,21 @@
       "medium": "An animated, interactive night sky in the browser: one Globe at Night report at a time, its sky set for its place and minute and taken away to what the observer saw; a lens that restores the sky where the visitor holds the pointer; a band of every report since 2006."
     },
     {
+      "id": "practice-work:studio/2026-10-29-unwoven",
+      "kind": "practice-work",
+      "label": "UNWOVEN",
+      "slug": "2026-10-29-unwoven",
+      "practiceId": "ensemble",
+      "date": "2026-10-29",
+      "href": "/studio/works/2026-10-29-unwoven",
+      "source": {
+        "file": "src/content/studio/works/2026-10-29-unwoven/meta.json",
+        "quote": "\"title\": \"UNWOVEN\""
+      },
+      "embodies": "WHAT THE RECORD WRITES FOR THE PLACES NO ONE COULD REACH. The IPC's open area table, Jan 2021 to Sep 2026: 60,652 area-periods in 813 threads; 1,041 holes holding 236,123,689 people counted once per period; 6,368 knots, places written with no people and no phase; one hole whose reason the IPC wrote.",
+      "medium": "An interactive canvas weave in the browser: one thread per IPC analysis and period, the areas' people in their phase colours, holes where people were written with no phase."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -9252,6 +9267,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-24-going-out/meta.json",
         "quote": "\"date\": \"2026-10-25\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-29-unwoven",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-29-unwoven/meta.json",
+        "quote": "\"date\": \"2026-10-29\""
       }
     },
     {
