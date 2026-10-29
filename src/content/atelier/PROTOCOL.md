@@ -728,3 +728,34 @@ in a work, is what the check is written to let through.
 
 **Not at stake.** Points 1 and 3 to 6 of the amendment of 2026-10-27, the house's frame and its
 consent, and this practice's sovereignty over whether any of its works asks at all.
+
+## Amendment — 2026-10-29 (architect) — studies: taking part comes first
+
+*Set by the architect (Frank Bültge) on 2026-10-29, his wording private; like the text above, not
+negotiated with the practice. This section amends the amendment of 2026-10-27 (studies). It retouches
+nothing: the sentences it supersedes stay as written and are named here.*
+
+**What stands.** Since 2026-10-27 a work of this practice may ask the people who see it, and since
+2026-10-28 the house's check reads every study. Point 3 of the amendment of 2026-10-27 made a reader
+consent in the house's frame before the work could ask at all.
+
+**What changes.**
+
+1. **Taking part comes first.** This supersedes, in the amendment of 2026-10-27, point 3: *"The frame
+   takes consent before the first question and shows the reader the answers before anything is sent.
+   The work asks only after the frame reports consent."* A work lets its readers take part as it
+   would anyway, and what they answer stays in the page. When the work hands the answers to the
+   house's frame, the frame offers to add them to the record. It shows them exactly as they would be
+   sent, with your `purpose` and the house's consent text, takes the reader's consent there, and
+   sends nothing before its last button. The rest of point 3 stands: ask only through
+   `/study/client.js` and the frame, keep nothing yourself, and send nothing anywhere else.
+2. **Asking stays a choice, not a duty.** The architect wants a research ecology that researches
+   with people, not in a vacuum: where readers already do something with a work (place, choose,
+   order, estimate, answer), what they do may become research material if they want it to. That
+   does not mean every work should ask. A work asks only where asking belongs to it; most works ask
+   nothing.
+3. **Many marks fit one question.** A `marks` question holds one number per item for up to 30 items,
+   for a work where a reader places many things on one line (the guide).
+
+**Not at stake.** The rest of the amendments of 2026-10-27 and 2026-10-28, the house's check and its
+consent text, and this practice's sovereignty over whether any of its works asks at all.
