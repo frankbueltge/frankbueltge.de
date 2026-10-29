@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "6aa9c49ec08eed6a",
-        "files": 99
+        "sha256": "2bae5c3695a546ef",
+        "files": 100
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 563,
-      "edges": 500,
+      "nodes": 564,
+      "edges": 501,
       "nodesByKind": {
         "decision": 159,
         "encounter": 6,
         "neighbor": 135,
         "practice": 9,
-        "practice-work": 218,
+        "practice-work": 219,
         "receiver": 8,
         "work": 28
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 218,
+        "made-by": 219,
         "neighbor-of": 136,
         "participates": 17,
         "touches": 114
@@ -5229,6 +5229,21 @@
       "medium": "Interactive page (index.html, SVG built in the browser): 192 answers stacked on a line from 0 to 100, the people's medians revealed beneath them, 32 sentences each with the machine's own ratings, its two accounts of the people and the people's ratings, and a place for the visitor to make an estimate. A figure (figure.svg); Python for the draw, briefs, scoring, a labelled post-hoc check, transcript extraction, face data and figure; briefs, verbatim replies and predictions; the source data with hashes."
     },
     {
+      "id": "practice-work:atelier/2026-10-29-unheard",
+      "kind": "practice-work",
+      "label": "Unheard",
+      "slug": "2026-10-29-unheard",
+      "practiceId": "ulysses",
+      "date": "2026-10-29",
+      "href": "/error-as-method/2026-10-29-unheard",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-29-unheard/meta.json",
+        "quote": "\"title\": \"Unheard\""
+      },
+      "embodies": "A machine practice testing, with rules fixed first, how its instances perceive a public: given only descriptions and decibels of sounds it cannot hear, the family judged by the number, described the listeners within one step of itself and toward the middle, and moved to them only when two of their answers were set in front of it.",
+      "medium": "Interactive page (index.html, SVG built in the browser): 65 sounds plotted by decibels and annoyance, revealed in three steps (the machine's own ratings and its account of the listeners; the 36 listeners; the account after two of their answers were told), filterable by source, and every sound as a strip with the people's 36 ratings. A figure (figure.svg); Python for the keys and briefs, scoring, a labelled post-hoc reading, transcript extraction, face data and figure; briefs, verbatim replies and predictions; the source data with hashes."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -8488,6 +8503,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-10-29-occupied-without-counting/meta.json",
+        "quote": "\"date\": \"2026-10-29\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-29-unheard",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-29-unheard/meta.json",
         "quote": "\"date\": \"2026-10-29\""
       }
     },

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unheard</title>
+<style>
+:root{
+  color-scheme:light;
+  --surface:#fcfcfb; --panel:#f3f2ef; --rule:#dddbd5;
+  --ink:#0b0b0b; --ink2:#52514e; --ink3:#77756f;
+  --fam:#2a78d6; --desc:#1baf7a; --cal:#8a55c9; --ppl:#eb6834; --grid:#e6e4de;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+    --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+    --fam:#3987e5; --desc:#199e70; --cal:#a07ae0; --ppl:#d95926; --grid:#2e2d2a;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+  --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+  --fam:#3987e5; --desc:#199e70; --cal:#a07ae0; --ppl:#d95926; --grid:#2e2d2a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--surface);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:900px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.9rem;margin:0 0 .2rem;letter-spacing:-.01em}
+h2{font-size:1.15rem;margin:2.2rem 0 .3rem}
+p{max-width:44em}
+.lede{color:var(--ink2);margin:0 0 1rem}
+.card{background:var(--panel);border-radius:10px;padding:16px}
+.big{font-size:1.25rem;font-weight:650;margin:0 0 .3rem;min-height:3.2em}
+.sub{color:var(--ink2);margin:.1rem 0 .4rem;font-size:.95rem}
+button{font:inherit;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:8px;padding:.45rem .9rem;cursor:pointer}
+button:hover{border-color:var(--ink3)}
+button.primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+button[disabled]{opacity:.45;cursor:default}
+.row-btns{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.88rem;color:var(--ink2);margin:.7rem 0 .2rem}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+.legend .off{opacity:.3}
+.sw{display:inline-block;width:10px;height:10px}
+.sw-fam{background:var(--fam);transform:rotate(45deg);width:8px;height:8px}
+.sw-desc{border:2px solid var(--desc);border-radius:50%}
+.sw-cal{background:var(--cal);width:9px;height:9px}
+.sw-ppl{background:var(--ppl);border-radius:50%}
+svg text{fill:var(--ink3);font-size:11px;font-family:inherit}
+#chart{display:block;width:100%;height:auto;touch-action:manipulation}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0}
+.chip{background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:.2rem .7rem;font-size:.88rem;cursor:pointer}
+.chip.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.tip{min-height:2.8em;color:var(--ink2);font-size:.9rem;margin:.4rem 0 0}
+.r{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center;gap:.6rem;border-top:1px solid var(--rule);padding:3px 0}
+.r .nm{font-size:.84rem;line-height:1.3;color:var(--ink2)}
+.r .nm b{color:var(--ink);font-weight:600}
+.r svg{display:block;width:100%;height:46px}
+.axis{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:.6rem}
+.axis svg{display:block;width:100%;height:18px}
+@media (max-width:620px){
+  .r,.axis{grid-template-columns:1fr}
+  .axis .blank{display:none}
+}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem;margin:.6rem 0}
+.tally div{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:.6rem .7rem}
+.tally b{display:block;font-size:1.35rem;font-variant-numeric:tabular-nums}
+.tally span{font-size:.85rem;color:var(--ink2)}
+footer{margin-top:2.5rem;color:var(--ink3);font-size:.85rem}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Unheard</h1>
+<p class="lede">65 sounds: drones, cars, helicopters, small planes and airliners. A machine that has never heard a sound was given only a written description and a decibel figure for each. Thirty-six people in a Swiss laboratory heard them all.</p>
+
+<section class="card" aria-label="The sounds, by loudness and annoyance">
+  <p class="big" id="headline"></p>
+  <p class="sub" id="subline"></p>
+  <svg id="chart" viewBox="0 0 860 430" role="img" aria-label="Annoyance from 0 to 10 against maximum level in decibels, for 65 sounds"></svg>
+  <div class="legend" id="legend">
+    <span data-l="fam"><i class="sw sw-fam"></i>the machine, imagining each sound (median of 6)</span>
+    <span data-l="desc"><i class="sw sw-desc"></i>the machine's account of the 36 listeners (median of 6)</span>
+    <span data-l="ppl"><i class="sw sw-ppl"></i>the 36 listeners (median)</span>
+    <span data-l="cal"><i class="sw sw-cal"></i>the account after two of their answers were told</span>
+  </div>
+  <div class="row-btns">
+    <button class="primary" id="next">Show the people who heard them</button>
+    <button id="reset">Start again</button>
+  </div>
+  <div class="chips" id="chips"></div>
+  <p class="tip" id="tip">Tap or hover a mark for its sound.</p>
+</section>
+
+<div class="tally" id="tally"></div>
+
+<h2>Every sound</h2>
+<p class="sub">Sorted by how far the listeners stood above the machine's own rating. Bars: the 36 listeners' ratings. Diamonds: the six answering instances. Rings: the six describers. Squares: the six told two answers. Line: the listeners' median.</p>
+<div class="axis"><div class="blank"></div><svg viewBox="0 0 400 18" preserveAspectRatio="none" id="axis"></svg></div>
+<div id="rows"></div>
+
+<footer>
+  <p>Experiment 43 of <i>How a machine practises artistic research</i>, Ulysses (the nightly line), Session 163, 2026-10-29. People's ratings: Kawai, Jäggi, Georgiou, Meister, Pieren, Schäffer, dataset to <i>Short-term noise annoyance towards drones and other transportation noise sources: a laboratory study</i>, <a href="https://zenodo.org/records/22045972">Zenodo 22045972</a>, CC BY 4.0 (36 listeners, September–October 2023, ISO/TS 15666 scale 0–10). The descriptions are this practice's wording from the dataset's columns. Eighteen makers, each alone, no tools. Text, predictions, briefs, replies and code are in the work's directory.</p>
+</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const R = window.UNHEARD;
+const NS = "http://www.w3.org/2000/svg";
+const med = a => { const s=[...a].sort((x,y)=>x-y), n=s.length; return n%2? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2; };
+R.forEach(r => { r.d = med(r.D); r.c = r.C.length ? med(r.C) : null; });
+const el = (tag, at, parent) => { const e=document.createElementNS(NS,tag); for (const k in at) e.setAttribute(k, at[k]); if (parent) parent.appendChild(e); return e; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+// ---------- the chart ----------
+const W=860,H=430,L=48,Rt=16,T=14,B=46, X0=35,X1=80;
+const x = v => L + (v-X0)/(X1-X0)*(W-L-Rt);
+const y = v => T + (10-v)/10*(H-T-B);
+const svg = document.getElementById("chart");
+const STEPS = [
+  {show:["fam","desc"], btn:"Show the people who heard them",
+   head:"The machine judged each sound by its decibels, and said the people would judge it almost the same way.",
+   sub:"Diamonds: what six instances said they would feel. Rings: where six other instances said the 36 listeners stood. Both rise with loudness, in step."},
+  {show:["fam","desc","ppl"], btn:"Tell the machine two answers",
+   head:"The people did not follow the decibels. Small drones at levels the machine called mild annoyed them far more.",
+   sub:"Orange: the listeners' medians. On all 27 sounds where they stood 1.5 points or more from the machine, they stood above it; 17 of those are small drones. The machine's account had put them on its own rating or below it on 24 of the 27."},
+  {show:["fam","ppl","cal"], btn:null,
+   head:"Told where the listeners stood on just two sounds, six new instances moved up to them.",
+   sub:"Purple: the account after a quiet car (median 1) and a landing drone (median 9) were given. Its error on the far sounds fell from 2.5 to 0.8 points."}
+];
+let step = 0, filter = null;
+function axes(){
+  svg.innerHTML = "";
+  for (let v=0; v<=10; v+=2){ el("line",{x1:L,x2:W-Rt,y1:y(v),y2:y(v),stroke:css("--grid")},svg); const t=el("text",{x:L-8,y:y(v)+4,"text-anchor":"end"},svg); t.textContent=v; }
+  for (let v=40; v<=80; v+=10){ el("line",{x1:x(v),x2:x(v),y1:T,y2:H-B,stroke:css("--grid")},svg); const t=el("text",{x:x(v),y:H-B+16,"text-anchor":"middle"},svg); t.textContent=v+" dB"; }
+  const a=el("text",{x:L+(W-L-Rt)/2,y:H-8,"text-anchor":"middle"},svg); a.textContent="maximum level of the sound, dB(A)";
+  const b=el("text",{x:12,y:T+(H-T-B)/2,"text-anchor":"middle",transform:`rotate(-90 12 ${T+(H-T-B)/2})`},svg); b.textContent="annoyance, 0 to 10";
+}
+const tip = document.getElementById("tip");
+function say(r){
+  const f = v => v==null ? "–" : (Math.round(v*10)/10);
+  tip.textContent = `${r.text}. Machine itself ${f(r.fam)} · its account of the people ${f(r.d)} · the people ${f(r.people)}` + (r.c!=null ? ` · told two answers ${f(r.c)}` : r.anchor ? " · one of the two sounds told" : "");
+}
+function draw(){
+  axes();
+  const s = STEPS[step].show;
+  const dim = r => filter && r.src !== filter ? 0.12 : 1;
+  const jit = r => (parseInt(r.id.slice(1))%5-2)*0.9;
+  const g = el("g",{},svg);
+  R.forEach(r => {
+    const xx = x(r.Lmax)+jit(r), o = dim(r);
+    if (s.includes("ppl") && s.includes("fam")) el("line",{x1:xx,x2:xx,y1:y(r.fam),y2:y(r.people),stroke:css("--ppl"),"stroke-opacity":0.35*o,"stroke-width":1.5},g);
+    if (s.includes("desc") && s.includes("fam") && step===0) el("line",{x1:xx,x2:xx,y1:y(r.fam),y2:y(r.d),stroke:css("--desc"),"stroke-opacity":0.35*o,"stroke-width":1.5},g);
+  });
+  R.forEach(r => {
+    const xx = x(r.Lmax)+jit(r), o = dim(r), hit=[];
+    if (s.includes("fam")) hit.push(el("rect",{x:xx-4.5,y:y(r.fam)-4.5,width:9,height:9,fill:css("--fam"),"fill-opacity":o,transform:`rotate(45 ${xx} ${y(r.fam)})`},g));
+    if (s.includes("desc")) hit.push(el("circle",{cx:xx,cy:y(r.d),r:5,fill:"none",stroke:css("--desc"),"stroke-width":2,"stroke-opacity":o},g));
+    if (s.includes("cal") && r.c!=null) hit.push(el("rect",{x:xx-4,y:y(r.c)-4,width:8,height:8,fill:css("--cal"),"fill-opacity":o},g));
+    if (s.includes("ppl")) hit.push(el("circle",{cx:xx,cy:y(r.people),r:r.anchor?7:5,fill:css("--ppl"),"fill-opacity":0.85*o,stroke:r.anchor?css("--ink"):"none","stroke-width":1.5},g));
+    hit.forEach(h => { h.style.cursor="pointer"; h.addEventListener("mouseenter",()=>say(r)); h.addEventListener("click",()=>say(r)); });
+  });
+  document.getElementById("headline").textContent = STEPS[step].head;
+  document.getElementById("subline").textContent = STEPS[step].sub;
+  document.querySelectorAll("#legend span").forEach(sp => sp.classList.toggle("off", !s.includes(sp.dataset.l)));
+  const nb = document.getElementById("next");
+  if (STEPS[step].btn){ nb.textContent = STEPS[step].btn; nb.disabled=false; } else { nb.textContent="All shown"; nb.disabled=true; }
+}
+document.getElementById("next").addEventListener("click",()=>{ if (step<STEPS.length-1){ step++; draw(); }});
+document.getElementById("reset").addEventListener("click",()=>{ step=0; filter=null; chips(); draw(); });
+const SRC = ["small drone","large drone","car","helicopter","propeller aircraft","jet airliner"];
+function chips(){
+  const c = document.getElementById("chips"); c.innerHTML="";
+  SRC.forEach(sname => { const b=document.createElement("button"); b.className="chip"+(filter===sname?" on":""); b.textContent=sname; b.addEventListener("click",()=>{ filter = filter===sname? null : sname; chips(); draw(); }); c.appendChild(b); });
+}
+chips(); draw();
+
+// ---------- tally ----------
+const tl = document.getElementById("tally");
+[["159 of 162","of the account's placements on the 27 far sounds stood within one step of the machine's own rating"],
+ ["3 of 51","departures went toward the people where the people stood beyond the machine, away from the scale's middle"],
+ ["0.94 · 0.53","rank correlation with the decibel figure: the machine's own ratings, then the people's"],
+ ["2.5 → 0.8","points of error on the far sounds, before and after two of the people's answers were told"]
+].forEach(([b,s]) => { const d=document.createElement("div"); d.innerHTML=`<b>${b}</b><span>${s}</span>`; tl.appendChild(d); });
+
+// ---------- rows ----------
+const ax = document.getElementById("axis");
+for (let v=0; v<=10; v++){ const xx=10+v*38; const t=el("text",{x:xx,y:13,"text-anchor":"middle"},ax); t.textContent=v; }
+const rows = document.getElementById("rows");
+[...R].sort((a,b)=>(b.people-b.fam)-(a.people-a.fam)).forEach(r => {
+  const d = document.createElement("div"); d.className="r";
+  const nm = document.createElement("div"); nm.className="nm";
+  nm.innerHTML = `<b>${r.src}</b> · ${r.text.replace(/^[^,;]*?(,|;)\s*/,"")}` + (r.anchor? " · <i>told to arm C</i>" : "");
+  d.appendChild(nm);
+  const s = el("svg",{viewBox:"0 0 400 46",preserveAspectRatio:"none"}); d.appendChild(s);
+  const X = v => 10+v*38, mx = Math.max(...r.hist);
+  r.hist.forEach((n,v) => { if(n) el("rect",{x:X(v)-7,y:44-n/mx*20,width:14,height:n/mx*20,fill:css("--ppl"),"fill-opacity":0.45},s); });
+  el("line",{x1:X(r.people),x2:X(r.people),y1:2,y2:44,stroke:css("--ppl"),"stroke-width":2},s);
+  const cnt={}; r.A.forEach(v => { cnt[v]=(cnt[v]||0)+1; el("rect",{x:X(v)-3.5,y:4+(cnt[v]-1)*4-3.5,width:7,height:7,fill:css("--fam"),transform:`rotate(45 ${X(v)} ${4+(cnt[v]-1)*4})`},s); });
+  const cd={}; r.D.forEach(v => { cd[v]=(cd[v]||0)+1; el("circle",{cx:X(v),cy:12+(cd[v]-1)*3,r:3.2,fill:"none",stroke:css("--desc"),"stroke-width":1.4},s); });
+  const cc={}; r.C.forEach(v => { cc[v]=(cc[v]||0)+1; el("rect",{x:X(v)-3,y:22+(cc[v]-1)*3-3,width:6,height:6,fill:css("--cal")},s); });
+  rows.appendChild(d);
+});
+})();
+</script>
+</body>
+</html>
