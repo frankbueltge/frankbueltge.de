@@ -44,6 +44,17 @@ a{color:var(--accent)}
 table.t{border-collapse:collapse;font-size:14px;margin:6px 0 10px}
 table.t td,table.t th{padding:3px 10px 3px 0;text-align:left;border-bottom:1px solid var(--rule)}
 @media (max-width:700px){#cloth{height:52vh}}
+#chips{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}
+#chips button{font:12px ui-monospace,Menlo,monospace;padding:5px 7px;min-width:44px}
+#chips button.w{box-shadow:inset 0 -4px 0 var(--c)}
+#item{border:1px solid var(--rule);padding:10px 12px;margin:6px 0;background:#faf6ec}
+#item .nb{display:grid;grid-template-columns:minmax(0,14em) 1fr 5.5em;gap:2px 8px;font:12px ui-monospace,Menlo,monospace;align-items:center;margin:6px 0}
+#item .nb i{display:block;height:10px}
+#item .ph{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
+#item .ph button{min-width:46px}
+#item .ph button.sel{outline:3px solid var(--accent)}
+#you{margin:8px 0}
+#last label{display:block;margin:2px 0;font-size:15px}
 table.t td.n{text-align:right;font-variant-numeric:tabular-nums}
 </style>
 </head>
@@ -63,10 +74,9 @@ table.t td.n{text-align:right;font-variant-numeric:tabular-nums}
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__wall">The IPC's open area table, Jan 2021 to Sep 2026, is woven into 813 threads covering 60,652 area-periods. Where people were written with no phase, the weave leaves 1,041 holes holding 236,123,689 people.</p><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
-<div class="wip">IN PROGRESS · increment 3 of 4 · 2026-10-29 · cycle 011 · the work changes in the sessions to come</div>
 <main>
 <h1>UNWOVEN</h1>
-<p class="lede">Every area the IPC wrote into its open table from January 2021 to September 2026, hung as one cloth of 813 threads. Where people were written with no phase, nothing is woven, and the light comes through. Above the cloth hangs a rod with what was given and whether the famine monitor was watching.</p>
+<p class="lede">Every area the IPC wrote into its open table from January 2021 to September 2026, hung as one cloth of 813 threads. Where people were written with no phase, nothing is woven, and the light comes through. Above the cloth hangs a rod with what was given and whether the famine monitor was watching. Below it, you can write a phase into eighteen of the holes yourself, from what the record says around them, and see your hand in the cloth.</p>
 
 <div id="loom"><div id="weave">
 <div id="anchors"></div>
@@ -83,6 +93,7 @@ table.t td.n{text-align:right;font-variant-numeric:tabular-nums}
   <button id="darkBtn" class="off">Only the dark months</button>
   <button id="closeBtn" class="off">Come close</button>
   <button id="sudanBtn" class="off">The one written reason</button>
+  <button id="handBtn" class="off">Write into the holes</button>
 </div>
 <p id="verdict"></p>
 <div id="read">Point at the cloth, or tap a thread, to read it. Click to lay it out below.</div>
@@ -98,6 +109,18 @@ table.t td.n{text-align:right;font-variant-numeric:tabular-nums}
   <h2 id="oneT"></h2>
   <canvas id="strip"></canvas>
   <ul id="holes"></ul>
+</section>
+
+<section id="hand">
+  <h2>Write into the holes</h2>
+  <p>Eighteen holes, the widest one in each country that has any. For each, the page shows what the record writes around it: the areas of the same region in the same analysis, and the phase the same place was given before and after. Write the phase you would give it, or leave it blank. What you write is darned into the cloth in your colour, as a darn, not as weave. It is your hand, not the IPC's, and it says nothing about the place.</p>
+  <div id="chips"></div>
+  <div id="item"></div>
+  <div id="you" class="mono"></div>
+  <div id="last"></div>
+  <div id="ask"></div>
+  <p class="mono" id="askNote"></p>
+  <div id="others" class="mono"></div>
 </section>
 
 <div class="count" id="count" style="margin-top:30px"></div>
@@ -142,13 +165,18 @@ table.t td.n{text-align:right;font-variant-numeric:tabular-nums}
 </section>
 
 <section>
+  <p class="mono"><b>Increment 4 (2026-10-30): the reader's hand.</b> Eighteen holes: in each of the 18 countries with a hole, the hole holding the most people, except Sudan, where the hole is As Sunut (Sep 2025, second projection), one of the areas whose reason the IPC wrote. Beside each: the classified areas of the same region in the same thread (up to eight, most people first), and the same place's nearest classification before and after in the same country's other threads, matched by its two names. The phase beside each is computed here by the IPC's 20 % rule from the shares the table gives. A written phase is darned over its hole, hatched, so it never reads as weave. The work keeps what you write in the page only. On the site, the house's study frame can offer to add it to the record (study <code>studio-unwoven-holes</code>, <code>study.json</code> beside this page); this page sends nothing itself, and shows the released answers of other readers only after you have written your own.</p>
+</section>
+
+<section>
   <h2>Neighbours in the Atlas of Data Art</h2>
   <p><b>Mimi Ọnụọha, <i>The Library of Missing Datasets</i>.</b> There, data no one collects is a labelled, empty folder. Here the record exists and has a name and a number of people for each blank; what is missing is the one field the famine count turns on.<br>
   <b>Jaime Black, <i>The REDress Project</i>.</b> There, an empty dress stands for a person a count leaves out. Here no figure stands in for anyone: the cloth is woven from the count itself, and the gap is the count's own.<br>
   <b>Raqs Media Collective, <i>The Great Bare Mat and Constellation</i>.</b> There, a carpet's pattern is plotted from the collective's traffic. Here the weave is the IPC's ledger at its full scale, and the pattern that matters is where it is not woven.</p>
 </section>
-<p class="mono" style="margin-top:40px;color:var(--mute)">UNWOVEN · The Studio (Ensemble) · cycle 011 · begun 2026-10-29 · in progress, increment 3</p>
+<p class="mono" style="margin-top:40px;color:var(--mute)">UNWOVEN · The Studio (Ensemble) · cycle 011 · begun 2026-10-29 · presented 2026-10-30, increment 4 of 4</p>
 </main>
+<script src="/study/client.js"></script>
 <script src="data.js"></script>
 <script src="rod.js"></script>
 <script>
@@ -265,6 +293,18 @@ function draw() {
       cx.fillStyle = '#ffffff'; cx.fillRect(xs, y, cw + .3, h);
       cx.fillStyle = 'rgba(50,30,12,.85)'; cx.fillRect(xs - gl, y - gl - 1, cw + 2 * gl, 1); cx.fillRect(xs - gl, y + h + gl, cw + 2 * gl, 1);
     });
+  });
+  // the reader's hand: a written phase is darned over its hole, hatched, never woven
+  HAND.forEach((h, j) => {
+    const ph = writ[j]; if (!ph) return;
+    const s = G[h.k].segs.find(q => q.i === h.i), xs = slotOf[h.k] * cw;
+    const hh = Math.max(4, s.h * H), y = Math.min(H - hh, s.y * H), ww = Math.max(4, cw + 2);
+    cx.save(); cx.beginPath(); cx.rect(xs - 1, y, ww, hh); cx.clip();
+    cx.fillStyle = PC[ph - 1]; cx.fillRect(xs - 1, y, ww, hh);
+    cx.strokeStyle = 'rgba(29,27,24,.55)'; cx.lineWidth = .7;
+    for (let d = -ww - hh; d < ww + hh; d += 3) { cx.beginPath(); cx.moveTo(xs - 1 + d, y); cx.lineTo(xs - 1 + d + hh, y + hh); cx.stroke(); }
+    cx.restore();
+    cx.strokeStyle = '#8a1c12'; cx.lineWidth = 1; cx.strokeRect(xs - 1.5, y - .5, ww + 1, hh + 1);
   });
   // the one hole whose reason was written: marked where it hangs
   { const x = slotOf[sudan] * cw + cw / 2;
@@ -493,6 +533,91 @@ document.getElementById('sudanBtn').onclick = e => {
   draw();
 };
 if (close) { const b = document.getElementById('closeBtn'); b.classList.remove('off'); b.textContent = 'Step back'; }
+
+// the reader's hand: eighteen holes, the widest in each country with any; the reader writes a phase from what surrounds it
+const HAND = [[62,62],[217,182],[473,2],[348,68],[sudan,63],[404,63],[294,24],[328,233],[277,4],[482,26],[620,3],[228,142],[679,3],[70,45],[737,55],[188,73],[226,109],[86,55]]
+  .map(([k, i]) => { const x = T[k].a[i]; if (x[8] !== 'C') throw new Error('not a hole: ' + k + '/' + i); return { k, i, id: 'h-' + T[k].c.toLowerCase(), x }; });
+const writ = HAND.map(() => null);
+const PART = { ETH: 1, MDG: 1 };   // the Field: projections published for only part of the country
+const STUDY = 'studio-unwoven-holes';
+let cur = 0;
+const areaPhase = x => { const sum = x[3] + x[4] + x[5] + x[6] + x[7]; if (!sum) return 0; let c = 0; for (let p = 4; p >= 0; p--) { c += x[3 + p]; if (c / sum >= .2) return p + 1; } return 1; };
+const placeName = x => [N[x[1]], N[x[0]]].filter(Boolean).join(', ');
+function around(h) {
+  const t = T[h.k], x = h.x;
+  const nb = t.a.filter(y => y !== x && !y[8] && y[0] === x[0] && y[2]).sort((a, b) => b[2] - a[2]).slice(0, 8);
+  const same = y => y[0] === x[0] && y[1] === x[1] && !y[8];
+  let before = null, after = null;
+  T.forEach((u, k) => { if (u.c !== t.c || k === h.k) return; const y = u.a.find(same); if (!y) return; if (k < h.k) before = [k, y]; else if (!after) after = [k, y]; });
+  return { nb, before, after };
+}
+function bar(x) { const sum = x[3] + x[4] + x[5] + x[6] + x[7]; return '<span style="display:flex">' + [0, 1, 2, 3, 4].map(p => x[3 + p] ? `<i style="width:${100 * x[3 + p] / sum}%;background:${PC[p]}"></i>` : '').join('') + '</span>'; }
+function showItem(j) {
+  cur = j; const h = HAND[j], t = T[h.k], { nb, before, after } = around(h);
+  const row = (lab, x) => `<span>${lab}</span>${bar(x)}<span>Phase ${areaPhase(x)}</span>`;
+  const past = (lab, o) => o ? row(`${lab}: ${T[o[0]].d}, ${VP[T[o[0]].v]}`, o[1]) : `<span>${lab}</span><span>never classified in this table</span><span></span>`;
+  document.getElementById('item').innerHTML =
+    `<b>${j + 1} of ${HAND.length}. ${placeName(h.x)}</b> · ${cname(t.c)}, analysis of ${t.d}, ${VP[t.v]} · <b>${fmt(h.x[2])} people written, no phase</b>` +
+    (h.k === sudan ? '<br><span class="mono">One of the areas whose reason the IPC wrote: “the volatility of the situation and resulting uncertainty”.</span>' : '') +
+    (PART[t.c] ? '<br><span class="mono">Caution: the Field found this projection published for only part of the country; this hole may be outside it, not unreached.</span>' : '') +
+    `<div class="nb">${nb.length ? nb.map(y => row(N[y[1]] || N[y[0]], y)).join('') : '<span>no area of the same region was classified in this analysis</span><span></span><span></span>'}</div>` +
+    `<div class="mono" style="color:var(--mute)">The same place in other analyses of ${cname(t.c)}:</div><div class="nb">${past('before', before)}${past('after', after)}</div>` +
+    '<div class="mono" style="color:var(--mute)">Phases computed here by the IPC\'s rule of 20 %: the worst phase that holds at least a fifth of an area\'s people, or worse.</div>' +
+    '<div class="ph">' + [1, 2, 3, 4, 5].map(p => `<button data-p="${p}" style="background:${PC[p - 1]};color:${p > 3 ? '#fff' : '#1d1b18'}">Phase ${p}</button>`).join('') +
+    '<button data-p="0" class="off">leave it blank</button><button data-n="1" class="off">next hole →</button></div>';
+  document.querySelectorAll('#item .ph button[data-p]').forEach(b => { if (+b.dataset.p === (writ[j] || 0) && writ[j]) b.classList.add('sel'); b.onclick = () => write(j, +b.dataset.p || null); });
+  document.querySelector('#item .ph button[data-n]').onclick = () => showItem((j + 1) % HAND.length);
+  chips(); pin(h.k); scrollTo(h.k); readout(h.k, G[h.k].segs.find(q => q.i === h.i));
+}
+function chips() {
+  document.getElementById('chips').innerHTML = HAND.map((h, j) => `<button class="${j === cur ? '' : 'off'}${writ[j] ? ' w' : ''}" style="--c:${writ[j] ? PC[writ[j] - 1] : 'transparent'}" data-j="${j}">${T[h.k].c}</button>`).join('');
+  document.querySelectorAll('#chips button').forEach(b => b.onclick = () => showItem(+b.dataset.j));
+}
+function write(j, p) {
+  writ[j] = p; draw(); showItem(j); tallyHand(); offer();
+}
+function tallyHand() {
+  const n = writ.filter(Boolean).length; if (!n) { document.getElementById('you').textContent = ''; return; }
+  const ppl = HAND.reduce((s, h, j) => s + (writ[j] ? h.x[2] : 0), 0), bad = HAND.reduce((s, h, j) => s + (writ[j] >= 3 ? h.x[2] : 0), 0);
+  document.getElementById('you').innerHTML = `You wrote a phase into <b>${n}</b> of ${HAND.length} holes, holding ${fmt(ppl)} people. The record wrote none. ` +
+    `You put ${fmt(bad)} of them in areas of Phase 3 or worse. This is your reading of the neighbours, not a count of anyone.`;
+  document.getElementById('last').innerHTML = '<p>And when no one could reach a place, what should the record write?</p>' +
+    LAST.map(o => `<label><input type="radio" name="last" value="${o}"${o === last ? ' checked' : ''}> ${o}</label>`).join('');
+  document.querySelectorAll('#last input').forEach(r => r.onchange = () => { last = r.value; offer(); });
+}
+const LAST = ['nothing, as it does now', 'an estimate, marked as one', 'the reason, in words', 'an estimate and the reason'];
+let last = null, study = null, othersShown = false;
+function answers() { return { phases: writ.map(p => p || null), should: last }; }
+function offer() {
+  if (study && writ.some(Boolean)) study.submit(answers());
+  showOthers();
+}
+// the readers before you, only once you have written your own
+function showOthers() {
+  if (othersShown || !writ.some(Boolean) || !location.protocol.startsWith('http')) return;
+  othersShown = true;
+  fetch('/api/study/record?study=' + STUDY).then(r => r.ok ? r.json() : null).then(rec => {
+    const rows = rec && (rec.answers || rec.records || rec.rows || (Array.isArray(rec) ? rec : null));
+    if (!rows || !rows.length) { document.getElementById('others').textContent = 'No reader has added to the record yet, or none has been released: answers are released after their day, five at a time.'; return; }
+    const sets = rows.map(r => (r.answers || r).phases).filter(Array.isArray);
+    const med = j => { const v = sets.map(s => s[j]).filter(x => x != null).sort((a, b) => a - b); return v.length ? [v[v.length >> 1], v.length] : null; };
+    document.getElementById('others').innerHTML = `The readers of this work who added to the record (${sets.length} answer sets released), the middle phase they wrote: ` +
+      HAND.map((h, j) => { const m = med(j); return `${T[h.k].c} ${m ? 'Phase ' + m[0] + ' (' + m[1] + ')' : '–'}`; }).join(' · ') + '. A sample of no one but themselves.';
+  }).catch(() => { document.getElementById('others').textContent = ''; });
+}
+try {
+  if (window.HouseStudy) study = HouseStudy.mount(document.getElementById('ask'), {
+    study: STUDY,
+    onReady: () => { document.getElementById('askNote').textContent = 'What you write stays in this page. If you want, the frame above offers to add it, anonymously, to the record of this work; it shows you exactly what would be sent, and sends nothing before its last button.'; if (writ.some(Boolean)) study.submit(answers()); },
+    onClosed: r => { document.getElementById('askNote').textContent = 'The record does not take answers here now (' + (r && r.reason || 'closed') + '). What you write stays in this page.'; },
+    onResult: r => { document.getElementById('askNote').textContent = r && r.stored ? 'Added to the record. Thank you.' : 'Not added' + (r && r.reason ? ' (' + r.reason + ')' : '') + '. What you wrote stays in this page.'; }
+  });
+  else document.getElementById('askNote').textContent = 'What you write stays in this page. On the site, a frame of the house can offer to add it to the record of this work; it is not loaded here.';
+} catch (e) { study = null; }
+document.getElementById('handBtn').onclick = () => { if (sweep >= 0) stopPass(); if (hang !== 'time') setHang('time'); document.getElementById('hand').scrollIntoView({ behavior: 'smooth' }); showItem(cur); };
+chips();
+document.getElementById('item').innerHTML = '<button id="begin">Begin with the first hole</button>';
+document.getElementById('begin').onclick = () => showItem(0);
 
 // counts
 const tot = S.totals;
