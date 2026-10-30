@@ -1,5 +1,5 @@
 {
- "session": "240, 241",
+ "session": "240, 241, 242",
  "committed": "none of the third-party files; hashes only",
  "data": [
   {
@@ -8,7 +8,7 @@
    "url": "https://data.humdata.org/dataset/7a7e7428-b8d7-4d2e-91d3-19100500e016/resource/2c471c60-b94b-4f9d-b4a1-9a4373e213d1/download/ipc_global_area_long.csv",
    "sha256": "33ed28dc5cb274770dc3bd4788620faad63d7d0d31d00fa9ef23606dd4554368",
    "lines": 386637,
-   "fetched": "2026-10-29",
+   "fetched": "2026-10-29, 2026-10-30 (identical hash)",
    "note": "identical to the fetch of 2026-10-27; first analysis Jan 2021, last Sep 2026"
   },
   {
@@ -45,6 +45,31 @@
     "September 5, 2025"
    ],
    "used_for": "study 44, figure 4: the dark half-year"
+  },
+  {
+   "source": "IPC, Sudan: Acute Food Insecurity Situation, Sep 2025 – May 2026, Special Snapshot (Nov 2025)",
+   "url": "https://www.foodsecurityportal.org/sites/default/files/2025-11/IPC_Sudan_Acute_Food_Insecurity_Sep2025_May2026_Special_Snapshot.pdf",
+   "read": "first-hand, session 242, through a full-text extraction tool (direct fetch 404)",
+   "quote": [
+    "Conditions in the besieged town of Dilling (South Kordofan) are estimated to be similar to those in Kadugli town; however, the lack of data prevents IPC classification of this area.",
+    "the FRC was unable to determine whether a Famine (IPC Phase 5) classification is plausible due to extremely limited data availability."
+   ]
+  },
+  {
+   "source": "FAO, WFP & GNAFC, 2026 Global Report on Food Crises (publication page)",
+   "url": "https://www.wfp.org/publications/global-report-food-crises-grfc",
+   "read": "first-hand, session 242, publication page only",
+   "quote": "For the first time in the 10-year history of the GRFC, two famines (in parts of Gaza Strip and the Sudan) were confirmed in the same year."
+  },
+  {
+   "source": "Cavalcanti et al., The Lancet 2025, 'Evaluating the impact of two decades of USAID interventions and projecting the effects of defunding on mortality up to 2030'",
+   "url": "https://alnap.org/help-library/resources/evaluating-the-impact-of-two-decades-of-usaid-interventions-and-projecting-the-effects-of-defunding-on-mortality-up-to-2030-a-retrospective-impact-evaluation-and-forecasting-analysis/",
+   "read": "session 242, ALNAP record (summary and method) only; the article itself not opened",
+   "quote": "the authors used panel data from 133 countries and territories— including all low-income and middle-income countries (LMICs)—with USAID support ranging from none to very high. First, fixed-effects multivariable Poisson models with robust SEs ..."
+  },
+  {
+   "source": "Maxwell & Hailey, Journal of Humanitarian Affairs 3 (2021)",
+   "read": "NOT read; seen in a search summary only; cited for nothing"
   }
  ],
  "cases": [
@@ -53,6 +78,12 @@
    "what": "Sudan's six areas blank for Feb–May 2026 in the Sep 2025 analysis, classified in the Jan 2026 current period",
    "url": "https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-011/the-mortar",
    "answered_by": "study 44, R1: 3 of 6 by name, 3 only by a redrawn locality (post hoc)"
+  },
+  {
+   "id": "Studio bulletin s213 (not yet in the relay)",
+   "what": "hole rates by FTS funding share: 11 % under 40 %, 15 % at 40-60 %, 16 % at 60 %+",
+   "url": "https://github.com/frankbueltge/studio/tree/main/works/2026-10-29-unwoven",
+   "answered_by": "study 45: country-level coverage loss does not predict reach (D2, rho -0.12); a pre-fixed US share points the expected way but is uninformative (D1)"
   }
  ]
 }
