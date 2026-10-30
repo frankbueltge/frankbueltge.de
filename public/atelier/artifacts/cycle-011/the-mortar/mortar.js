@@ -26,17 +26,28 @@
     D = d; P = d.blank.people;
     drawTimeline();
     declareTexts();
-    for (const i of document.querySelectorAll("input")) i.addEventListener("input", update);
+    for (const i of document.querySelectorAll("input[name=cut]")) i.addEventListener("input", () => update());
+    // The slider is the visitor's one answer: it writes the nearest world into III, and III moves it back.
+    $("#x").addEventListener("input", () => setShare(+$("#x").value / 100, true));
+    $("#x").addEventListener("change", () => update());
+    let rz, mode = narrow();
+    window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { if (narrow() !== mode) { mode = narrow(); drawTimeline(); } update(); }, 150); });
     update();
   });
+  const narrow = () => $("#timeline").clientWidth < 640;
 
   // ---------- II. The months ----------
   function drawTimeline() {
-    const L = 150, W = 940, cw = (W - L - 10) / MONTHS.length;
-    const x = (k) => L + MONTHS.indexOf(k) * cw;
-    const xEnd = (iso) => { const k = iso.slice(0, 7); return x(k) + cw; };
+    // At a phone's width only the two analyses around the blank are drawn, Mar 2025 to Sep 2026.
+    const nw = narrow();
+    const MS = nw ? MONTHS.filter((k) => k >= "2025-03" && k <= "2026-09") : MONTHS;
+    const L = nw ? 74 : 150, W = nw ? Math.max(340, $("#timeline").clientWidth) : 940, cw = (W - L - 10) / MS.length;
+    const ix = (k) => (k < MS[0] ? 0 : k > MS[MS.length - 1] ? -1 : MS.indexOf(k));
+    const x = (k) => L + ix(k) * cw;
+    const xEnd = (iso) => { const k = iso.slice(0, 7); return k > MS[MS.length - 1] ? L + MS.length * cw : x(k) + cw; };
+    $("#timeline").textContent = "";
     const laneH = 9, laneGap = 2, placeGap = 14;
-    const top = 92, placeH = 4 * (laneH + laneGap) + placeGap;
+    const top = 92, placeH = (nw ? 2 : 4) * (laneH + laneGap) + placeGap + (nw ? 4 : 0);
     const H = top + D.places.length * placeH + 26;
     const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%" });
     const defs = el("defs", {}, svg);
@@ -51,7 +62,7 @@
     bl.textContent = "Feb–May 2026";
 
     // month axis
-    MONTHS.forEach((k, i) => {
+    MS.forEach((k, i) => {
       if (k.endsWith("-01") || i === 0) {
         el("line", { x1: x(k), y1: 6, x2: x(k), y2: H - 20, stroke: "#d8d0c2", "stroke-width": 1 }, svg);
         const t = el("text", { x: x(k) + 2, y: 14, "font-size": 10.5, fill: "#6b645a", "font-family": "ui-monospace, Menlo, monospace" }, svg);
@@ -61,8 +72,8 @@
 
     // monitor lane
     const lab = (txt, y, size, color) => { const t = el("text", { x: 4, y, "font-size": size || 11, fill: color || "#1f1c18" }, svg); t.textContent = txt; return t; };
-    lab("FEWS NET on Sudan", 31, 11);
-    MONTHS.forEach((k) => {
+    lab(nw ? "FEWS NET" : "FEWS NET on Sudan", 31, nw ? 9.5 : 11);
+    MS.forEach((k) => {
       if (!(k in D.monitor)) return;
       const lit = D.monitor[k].length > 0;
       const r = el("rect", { x: x(k) + 0.5, y: 22, width: cw - 1, height: 12, fill: lit ? "#8a7f6c" : "url(#hatch)", stroke: lit ? "none" : "#1f1c18", "stroke-width": 0.5 }, svg);
@@ -70,10 +81,15 @@
     });
 
     // money lane
-    lab("Money recorded", 60, 11);
-    lab("US gov. in dark", 74, 10, "#6b645a");
+    lab(nw ? "Money" : "Money recorded", 60, nw ? 9.5 : 11);
+    if (!nw) lab("US gov. in dark", 74, 10, "#6b645a");
     const mx = Math.max(...D.money.map((m) => m.all));
+    // the money's scale: one gridline at US$ 200 m a month
+    const sc = 200e6, sy = 84 - (sc / mx) * 40;
+    el("line", { x1: L, y1: sy, x2: W - 10, y2: sy, stroke: "#a39a8a", "stroke-width": 0.7, "stroke-dasharray": "2 2" }, svg);
+    el("text", { x: W - 12, y: sy - 2, "text-anchor": "end", "font-size": 9, fill: "#6b645a", "font-family": "ui-monospace, Menlo, monospace" }, svg).textContent = "US$ 200 m a month";
     D.money.forEach((m) => {
+      if (ix(m.month) < 0 || m.month < MS[0]) return;
       const h = (m.all / mx) * 40, hu = (m.us / mx) * 40, base = 84;
       const g = el("g", {}, svg);
       el("rect", { x: x(m.month) + 1, y: base - h, width: cw - 2, height: h, fill: "#c9bfae" }, g);
@@ -82,17 +98,19 @@
     });
 
     // places
-    const ANS = ["Apr 2024", "Oct 2024", "Sep 2025", "Jan 2026"];
+    const ANS = nw ? ["Sep 2025", "Jan 2026"] : ["Apr 2024", "Oct 2024", "Sep 2025", "Jan 2026"];
     D.places.forEach((pl, pi) => {
       const y0 = top + pi * placeH + 8;
-      lab(pl.name, y0 + 12, 13);
+      lab(pl.name, y0 + (nw ? -2 : 12), nw ? 11.5 : 13);
       ANS.forEach((an, ai) => {
-        const y = y0 + ai * (laneH + laneGap);
+        const y = y0 + ai * (laneH + laneGap) + (nw ? 4 : 0);
         const al = el("text", { x: L - 6, y: y + laneH - 1, "text-anchor": "end", "font-size": 9, fill: "#6b645a", "font-family": "ui-monospace, Menlo, monospace" }, svg);
         al.textContent = an;
         (pl.lanes[an] || []).forEach((s) => {
-          const sx = x(s.from.slice(0, 7)), ex = xEnd(s.to), w = ex - sx;
-          if (sx < L) return;
+          const k0 = s.from.slice(0, 7);
+          if (k0 > MS[MS.length - 1] || s.to.slice(0, 7) < MS[0]) return;
+          const sx = x(k0), ex = xEnd(s.to), w = ex - sx;
+          if (sx < L || w <= 1) return;
           const g = el("g", {}, svg);
           if (!s.classified) {
             el("rect", { x: sx + 0.5, y, width: w - 1, height: laneH, fill: "url(#hatch)", stroke: "#1f1c18", "stroke-width": 0.8 }, g);
@@ -146,14 +164,16 @@
       cells.appendChild(cell("borrowed", "borrowed · Jan 2026", "The same Feb–May 2026, another hour: Phase " + pl.verdicts["Jan 2026"] + ".", seg("Jan 2026", "current").phases));
       const fw = document.createElement("div"); fw.className = "cell unwritten";
       const tg = document.createElement("div"); tg.className = "tag"; tg.textContent = "the fourth world · yours"; fw.appendChild(tg);
-      const q = document.createElement("div"); q.className = "what"; q.textContent = "No cuts, projected from Sep 2025:"; fw.appendChild(q);
+      const q = document.createElement("div"); q.className = "what"; q.textContent = "Projected from Sep 2025 with full money and the monitor running, would this place have had a phase?"; fw.appendChild(q);
       const bs = document.createElement("div"); bs.className = "toggle";
-      [["cls", "classified"], ["blank", "still blank"], ["unsaid", "unsaid"]].forEach(([v, lab]) => {
+      [["cls", "yes: the cuts made its blank"], ["blank", "no: blank anyway, the hour made it"], ["unsaid", "unsaid"]].forEach(([v, lab]) => {
         const btn = document.createElement("button"); btn.type = "button"; btn.dataset.v = v; btn.textContent = lab;
         btn.addEventListener("click", () => { T[i] = v; update(); });
         bs.appendChild(btn);
       });
-      fw.appendChild(bs); cells.appendChild(fw);
+      fw.appendChild(bs);
+      const ct = document.createElement("div"); ct.className = "contrib"; fw.appendChild(ct);
+      cells.appendChild(fw);
       row.appendChild(cells); g.appendChild(row);
     });
   }
@@ -179,15 +199,24 @@
     T = D.places.map((_, i) => (set.includes(i) ? "cls" : "blank"));
     update();
   }
+  // Any number the visitor gives (slider, or the hollow point in IV) is written as the nearest world of places.
+  const nearestWorld = (x) => D.worlds.reduce((a, w) => (Math.abs(w.share - x) < Math.abs(a.share - x) ? w : a));
+  function setShare(x, sliding) {
+    const w = nearestWorld(x);
+    T = D.places.map((_, i) => (w.set.includes(i) ? "cls" : "blank"));
+    update(sliding ? x : null);
+  }
 
-  function update() {
-    const x = +$("#x").value / 100;
-    $("#xout").textContent = pct(x);
-    document.querySelectorAll(".xecho").forEach((e) => (e.textContent = pct(x)));
+  function update(sliding) {
     const cut = radio("cut");
     // The fourth world's blank share C, as a range over the unsaid places.
     const wsum = (st) => D.places.reduce((s, p, i) => s + (T[i] === st ? p.weight : 0), 0) / P;
     const Cr = [wsum("blank"), wsum("blank") + wsum("unsaid")];
+    // The slider shows the cuts' share of the world written; while it is being dragged, it keeps the hand's number.
+    const lo = 1 - Cr[1], hi = 1 - Cr[0];
+    const x = sliding != null ? sliding : (lo + hi) / 2;
+    if (sliding == null) $("#x").value = Math.round(x * 100);
+    $("#xout").textContent = hi - lo < 1e-6 ? pct1(lo) : `${pct(lo)}–${pct(hi)}`;
     // B: the blank share in the world with the cut, at another hour. Borrowable from Jan 2026 only if the cut is the money.
     const Br = cut === "money" ? [0, 0] : [0, 1];
     const pairs = [];
@@ -215,15 +244,18 @@
       const row = $("#place-" + i);
       row.dataset.state = T[i];
       row.querySelectorAll(".toggle button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === T[i]));
+      const w = pl.weight / P;
+      row.querySelector(".contrib").textContent = T[i] === "cls" ? `adds ${pct1(w)} to the cuts' share` : T[i] === "blank" ? "adds nothing to the cuts' share" : `adds 0 to ${pct1(w)}, as you decide`;
     });
+    drawTally();
     // The visitor's number, at the grain of places: the worlds nearest it.
     const near = D.worlds.map((w) => ({ ...w, d: Math.abs(w.share - x) })).sort((a, b) => a.d - b.d).slice(0, 4);
-    const exact = near[0].d < 0.005;
+    const exact = near[0].d < 0.0005;
     const written = T.every((t) => t !== "unsaid");
     const butfor = 1 - Cr[1], butforHi = 1 - Cr[0];
     let s = exact
-      ? `At the grain of places, your ${pct(x)} names one world: the cuts made the blank of ${listNames(near[0].set)}.`
-      : `At the grain of places, your ${pct(x)} names no world. A place is classified or it is not, so the cuts' share can take only 64 values. The four nearest are below, each a list of towns, and neighbouring values can share no town at all.`;
+      ? `At the grain of places, ${pct1(x)} names one world: the cuts made the blank of ${listNames(near[0].set)}.`
+      : `At the grain of places, ${pct(x)} names no world. A place is classified or it is not, so the cuts' share can take only 64 values. The four nearest are below, each a list of towns, and neighbouring values can share no town at all.`;
     s += written
       ? ` The world you have written gives the cuts ${pct1(butfor)} of the blank.`
       : ` With ${T.filter((t) => t === "unsaid").length} of six places unsaid, the worlds you have written allow the cuts ${pct1(butfor)} to ${pct1(butforHi)}.`;
@@ -239,12 +271,26 @@
     });
   }
 
+  // The running total: one bar of the 841,404, each town a segment, coloured by what the visitor wrote.
+  function drawTally() {
+    const box = $("#tally"); box.textContent = "";
+    D.places.forEach((pl, i) => {
+      const sg = document.createElement("span"); sg.className = "seg " + T[i];
+      sg.style.width = (100 * pl.weight / P) + "%";
+      sg.title = `${pl.name}: ${fmt(pl.weight)} people, ${T[i] === "cls" ? "the cuts made its blank" : T[i] === "blank" ? "blank anyway" : "unsaid"}`;
+      const t = document.createElement("i"); t.textContent = pl.weight / P > 0.09 ? pl.name.replace(" town", "") : ""; sg.appendChild(t);
+      box.appendChild(sg);
+    });
+  }
+
   // ---------- IV. The cut as degrees: Lewontin's lines of response ----------
   function drawReaction(cut, Cr) {
     const box = $("#reaction"); box.textContent = "";
     const key = cut === "monitor" ? "monitor" : "money";
     const g = D.degrees, nocut = key === "money" ? 1 : g["Oct 2024"].monitor;
-    const Wd = 760, H = 390, L = 70, R = 30, Tp = 44, Bt = 70;
+    // drawn at the reader's own width, so a phone gets the whole chart and readable labels
+    const Wd = Math.min(760, Math.max(330, box.clientWidth || 760)), nw = Wd < 560;
+    const H = nw ? 360 : 390, L = nw ? 46 : 70, R = nw ? 14 : 30, Tp = 44, Bt = nw ? 84 : 70;
     const xmax = key === "money" ? 1.35 : 1;
     const X = (v) => L + (v / xmax) * (Wd - L - R), Y = (v) => Tp + (1 - v) * (H - Tp - Bt);
     const svg = el("svg", { viewBox: `0 0 ${Wd} ${H}`, width: "100%" });
@@ -254,8 +300,10 @@
     el("line", { x1: L, y1: Y(0), x2: L, y2: Y(1), stroke: "#1f1c18" }, svg);
     [0, 0.5, 1].forEach((v) => { txt(pct(v), L - 8, Y(v) + 4, { "text-anchor": "end" }); el("line", { x1: L, y1: Y(v), x2: Wd - R, y2: Y(v), stroke: "#e8e2d6" }, svg); });
     const ticks = key === "money" ? [0, 0.25, 0.5, 0.75, 1, 1.25] : [0, 1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6, 1];
-    ticks.forEach((v) => txt(key === "money" ? pct(v) : Math.round(v * 6) + "/6", X(v), Y(0) + 16, { "text-anchor": "middle" }));
-    txt(key === "money" ? "money retained: US government per month, against its Jul–Dec 2024 rate" : "monitor: months of the six before the analysis in which FEWS NET published on Sudan", (L + Wd - R) / 2, H - 28, { "text-anchor": "middle", "font-size": 12, fill: "#1f1c18" });
+    ticks.forEach((v, i) => { if (!nw || i % 2 === 0) txt(key === "money" ? pct(v) : Math.round(v * 6) + "/6", X(v), Y(0) + 16, { "text-anchor": "middle" }); });
+    const xl = key === "money" ? ["money retained: US government per month,", "against its Jul–Dec 2024 rate"] : ["monitor: months of the six before the analysis", "in which FEWS NET published on Sudan"];
+    if (nw) xl.forEach((l, i) => txt(l, (L + Wd - R) / 2, H - 46 + i * 15, { "text-anchor": "middle", "font-size": 11, fill: "#1f1c18" }));
+    else txt(xl.join(" "), (L + Wd - R) / 2, H - 28, { "text-anchor": "middle", "font-size": 12, fill: "#1f1c18" });
     txt("share of the 841,404 without a phase", 14, 16, { "font-size": 12, fill: "#1f1c18" });
     // no-cut line
     el("line", { x1: X(nocut), y1: Y(0) + 4, x2: X(nocut), y2: Y(1) - 6, stroke: "#a8432a", "stroke-dasharray": "2 3" }, svg);
@@ -273,8 +321,16 @@
       el("line", { x1: fx, y1: Y(Cr[0]), x2: fx, y2: Y(Cr[1]), stroke: "#a8432a", "stroke-width": 6, opacity: 0.45 }, svg);
     }
     el("line", { x1: sx, y1: Y(1), x2: fx, y2: Y(mid), stroke: "#a8432a", "stroke-width": 2, "stroke-dasharray": "6 4" }, svg);
-    el("circle", { cx: fx, cy: Y(mid), r: 6, fill: "#fffdf8", stroke: "#a8432a", "stroke-width": 2, "stroke-dasharray": "3 2" }, svg);
-    txt("the fourth world, yours", fx + 10, Y(mid) + 4, { fill: "#a8432a" });
+    // The hollow point is the visitor's answer and can be dragged: up is more blank left, so less for the cuts.
+    const hp = el("circle", { cx: fx, cy: Y(mid), r: 9, fill: "#fffdf8", stroke: "#a8432a", "stroke-width": 2.5, "stroke-dasharray": "3 2", class: "drag" }, svg);
+    const hit = el("rect", { x: fx - 22, y: Y(1) - 8, width: 44, height: Y(0) - Y(1) + 16, fill: "transparent", class: "drag" }, svg);
+    const ylab = txt(nw ? "yours · drag" : "the fourth world, yours · drag it", fx - 12, Y(mid) + 4, { fill: "#a8432a", "text-anchor": "end" });
+    const toC = (e) => { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; const q = p.matrixTransform(svg.getScreenCTM().inverse()); return Math.min(1, Math.max(0, 1 - (q.y - Tp) / (H - Tp - Bt))); };
+    let dragging = false;
+    const move = (e) => { if (!dragging) return; e.preventDefault(); const C = toC(e); hp.setAttribute("cy", Y(C)); ylab.setAttribute("y", Y(C) + 4); const w = nearestWorld(1 - C); $("#x").value = Math.round(w.share * 100); $("#xout").textContent = pct1(w.share); };
+    const up = (e) => { if (!dragging) return; dragging = false; setShare(1 - toC(e)); };
+    [hp, hit].forEach((n) => n.addEventListener("pointerdown", (e) => { dragging = true; n.setPointerCapture(e.pointerId); move(e); }));
+    [hp, hit].forEach((n) => { n.addEventListener("pointermove", move); n.addEventListener("pointerup", up); });
     // record points
     const dot = (an, y, label, hollow, dy) => {
       const cx = X(pt(an));
@@ -283,9 +339,10 @@
       tip(c, `Analysis of ${an}: money ${pct(g[an].money)} of the 2024 rate (months held ${g[an].months_held.join(" to ")}), FEWS NET on Sudan in ${g[an].monitor_months} of ${g[an].n} months`);
     };
     const same = key === "monitor" && Math.abs(pt("Oct 2024") - pt("Jan 2026")) < 1e-6;
-    dot("Sep 2025", 1, "Sep 2025 · the siege's hour · blank", false, { dx: 12, dy: 4 });
-    dot("Oct 2024", 0, same ? "Oct 2024 and Jan 2026 · another hour" : "Oct 2024 · another hour", false, same ? { dx: 0, dy: -14, anchor: "middle" } : { dx: 0, dy: -14, anchor: "end" });
-    if (!same) dot("Jan 2026", 0, cut === "both" ? "Jan 2026 · money as after, monitor as before" : "Jan 2026 · another hour", cut === "both", { dx: 0, dy: -14, anchor: "middle" });
+    const hr = nw ? "" : " · another hour";
+    dot("Sep 2025", 1, nw ? "Sep 2025 · blank" : "Sep 2025 · the siege's hour · blank", false, { dx: 12, dy: 4 });
+    dot("Oct 2024", 0, same ? "Oct 2024 and Jan 2026" + hr : "Oct 2024" + hr, false, same ? { dx: 0, dy: -14, anchor: nw ? "end" : "middle" } : { dx: 0, dy: -14, anchor: "end" });
+    if (!same) dot("Jan 2026", 0, cut === "both" ? (nw ? "Jan 2026" : "Jan 2026 · money as after, monitor as before") : "Jan 2026" + hr, cut === "both", { dx: 0, dy: -14, anchor: "middle" });
     box.appendChild(svg);
     const dm = g["Sep 2025"].money, jm = g["Jan 2026"].money;
     let s;

@@ -25,7 +25,7 @@ code { font: 13px ui-monospace, Menlo, monospace; }
 .slider output { grid-column: 2; font: 28px ui-monospace, Menlo, monospace; min-width: 4.5ch; text-align: right; }
 .hint { color: var(--muted); font-size: 15px; }
 .figure { width: 100%; overflow-x: auto; background: var(--cell); border: 1px solid var(--rule); }
-.figure svg { display: block; min-width: 760px; }
+.figure svg { display: block; }
 .tip { position: fixed; z-index: 10; max-width: 300px; padding: 8px 10px; background: var(--ink); color: var(--paper);
   font: 13px/1.4 ui-monospace, Menlo, monospace; pointer-events: none; }
 .finding { font-size: 19px; border-left: 3px solid var(--accent); padding-left: 14px; }
@@ -90,9 +90,27 @@ footer { margin-top: 48px; padding-bottom: 40px; color: var(--muted); font-size:
 .near:hover { border-color: var(--accent); }
 .near .v { font: 15px ui-monospace, Menlo, monospace; }
 .near .act { font: 12px ui-monospace, Menlo, monospace; color: var(--accent); }
-.figure.narrow svg { min-width: 560px; max-width: 820px; }
+.figure.narrow svg { max-width: 820px; margin: 0 auto; }
 @media (max-width: 640px) {
   .cells { grid-template-columns: 1fr 1fr; }
   .near { grid-template-columns: 4.8em 1fr; }
   .near .act { grid-column: 2; }
 }
+/* session 3: one answer, a key, a tally, a draggable point */
+.key { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 8px 0 0; font: 12.5px ui-monospace, Menlo, monospace; color: var(--muted); }
+.key .sw { display: inline-block; width: 14px; height: 10px; margin-right: 5px; vertical-align: -1px; border: 1px solid var(--ink); }
+.key .sw.hatch { background: repeating-linear-gradient(135deg, var(--blank) 0 2px, var(--cell) 2px 5px); }
+.contrib { font: 12px ui-monospace, Menlo, monospace; color: var(--accent); margin-top: 6px; }
+.place[data-state="blank"] .contrib { color: var(--muted); }
+.toggle button { text-align: left; }
+.tallybox { margin-top: 18px; max-width: 46em; }
+.tallyhead { font-size: 15px; margin-bottom: 6px; }
+.tallyhead .k { font-weight: normal; padding: 0 4px; color: var(--paper); }
+.tallyhead .k.cls { background: var(--accent); } .tallyhead .k.blank { background: var(--ink); } .tallyhead .k.unsaid { background: #b9b1a3; }
+.tally { display: flex; height: 34px; border: 1px solid var(--ink); }
+.tally .seg { position: relative; overflow: hidden; border-right: 1px solid var(--paper); transition: background .3s; }
+.tally .seg.cls { background: var(--accent); } .tally .seg.blank { background: var(--ink); } .tally .seg.unsaid { background: #b9b1a3; }
+.tally .seg i { position: absolute; left: 4px; top: 8px; font: 11px ui-monospace, Menlo, monospace; font-style: normal; color: var(--paper); white-space: nowrap; }
+.built { font-size: 15.5px; color: var(--ink); background: var(--cell); border: 1px solid var(--rule); padding: 12px 14px; }
+svg .drag { cursor: ns-resize; touch-action: none; }
+@media (max-width: 640px) { .cell.unwritten { order: -1; grid-column: 1 / -1; } }

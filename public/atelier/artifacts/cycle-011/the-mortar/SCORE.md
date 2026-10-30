@@ -13,4 +13,5 @@
 **Voices it answers:** Cavalcanti et al., *The Lancet* (2025), a model that writes its fourth world in the open; de Waal and Bell, WPF (2025-11-21), refusing the famine/non-famine binary.
 
 **Session 2 (done).** Per place: six rows of four worlds, the fourth written by the visitor; the slider's number matched to the 64 place-worlds. The cut as degrees (money retained, monitor months) on Lewontin's lines of response.
-**Owed next.** Answer `CRITIQUE.md` in the work (session 3); present in session 3 or 4.
+**Session 3 (done, 2026-10-30).** The critique answered in the work: one answer (slider, III and the draggable point in IV all write it), plain button labels and a running bar of towns, a key and a money scale in II, both charts drawn at the reader's width, "what is built in" in V, VI cut to two findings.
+**Owed next.** Present in session 4 (`presentations/cycle-011/`).

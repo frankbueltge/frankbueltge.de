@@ -8,7 +8,7 @@
 </head>
 <body>
 <header>
-  <p class="kicker">The Atelier · cycle 011 · second version, 2026-10-29</p>
+  <p class="kicker">The Atelier · cycle 011 · third version, 2026-10-30</p>
   <h1>The Mortar</h1>
   <p class="lede">The question this cycle asks has two halves. <em>When famine is declared only where data can be gathered, what does the record write for the places no one could reach?</em> And: <em>how much of that blank did the cuts to aid and monitoring make?</em> This work takes one real blank and tries to answer the second half. It finds that the answer is not in the record. It is in a world the record never wrote, and whoever gives a number writes that world.</p>
 </header>
@@ -21,13 +21,19 @@
     <input type="range" id="x" min="0" max="100" step="1" value="50">
     <output id="xout">50 %</output>
   </label>
-  <p class="hint">Set your answer. Section III shows which towns it names; sections IV and V show what it commits you to.</p>
+  <p class="hint">This is your one answer, and the whole page reads it. The slider snaps to a world of towns and writes it into III; whatever you change in III, or drag in IV, moves it back.</p>
 </section>
 
 <section id="months">
   <h2><span class="num">II</span> The months</h2>
   <p>Each place, as four analyses wrote it. Every bar is one period of one analysis, coloured by how its people were divided among the five phases; a hatched bar is a period with people and no phase. Above them: the months in which FEWS NET published an analysis of Sudan, and the money recorded toward Sudan's appeals each month, the United States government's part in dark ink.</p>
   <div id="timeline" class="figure" role="img" aria-label="Timeline of six places across four IPC analyses, April 2024 to January 2027"></div>
+  <div class="key" aria-label="Key">
+    <span><i class="sw" style="background:var(--p1)"></i>Phase 1</span><span><i class="sw" style="background:var(--p2)"></i>2</span><span><i class="sw" style="background:var(--p3)"></i>3</span><span><i class="sw" style="background:var(--p4)"></i>4</span><span><i class="sw" style="background:var(--p5)"></i>5 (catastrophe)</span>
+    <span><i class="sw hatch"></i>people, no phase</span>
+    <span><i class="sw" style="background:var(--lit)"></i>FEWS NET published</span>
+    <span><i class="sw" style="background:var(--other)"></i>money, all donors</span><span><i class="sw" style="background:var(--us)"></i>US government</span>
+  </div>
   <div id="tip" class="tip" hidden></div>
   <p class="finding" id="finding-months"></p>
 </section>
@@ -36,6 +42,10 @@
   <h2><span class="num">III</span> Six places, six fourth worlds</h2>
   <p>To say how much of a blank a cause made, one compares the world with the cause to the world without it. The record wrote one world for each place: the blank. Two more can be borrowed from the record's past and future. The fourth, the place projected from September 2025 by a fully funded IPC with its monitor running, nobody wrote. In this section you write it, place by place: would the place have been classified, or would it still have stood blank?</p>
   <div id="placegrid" class="placegrid"></div>
+  <div class="tallybox">
+    <div class="tallyhead">The 841,404 people, town by town: <b class="k cls">red</b>, the cuts made its blank; <b class="k blank">black</b>, blank anyway; <b class="k unsaid">grey</b>, unsaid.</div>
+    <div id="tally" class="tally"></div>
+  </div>
   <div class="nearest">
     <p class="finding" id="finding-places"></p>
     <div id="nearlist" class="nearlist"></div>
@@ -60,15 +70,14 @@
   <p>The worlds you wrote in III and the cut you named in IV, read by four rules. A bar is a share of the 841,404 people; where a place or a world is left unwritten, the bar is the whole range the rule allows.</p>
   <div id="rulebars" class="rulebars"></div>
   <p class="finding" id="finding-rules"></p>
+  <p class="built"><b>What is built in.</b> Part of this result comes from the scale, not from Sudan. In the other hour the blank was already zero: there was nothing there for the money's cut to make or unmake. A place is classified or it is not, and an outcome resting on its floor cannot show a cause adding the same amount in both hours. So for the money, lines of response can run parallel only at zero, and every share above zero reads as interlock. The record's own claim is narrower than Lewontin's sentence: the money's cut, at the depth it had, did not blank these places in a calmer hour. Whether it mattered in this one is the fourth world, and the floor is why that world cannot be borrowed.</p>
   <blockquote id="lewontin" hidden>"if two men lay bricks to build a wall, we may quite fairly measure their contribution by counting the number laid by each; but if one mixes the mortar and the other lays the bricks, it would be absurd to measure their relative quantitative contributions by measuring the volumes of bricks and of mortar."<cite>R. C. Lewontin, "The analysis of variance and the analysis of causes" (1974)</cite></blockquote>
 </section>
 
 <section id="essay">
-  <h2><span class="num">VI</span> The fourth world</h2>
-  <p>The first half of the question has an answer in the record, and it is stranger than the question supposed. The places were not unreachable in the way a blank suggests. The months February to May 2026 are blank only in the analysis written in September 2025. The analysis written in January 2026 classifies the same six places for the same four months. The blank is not a blank of the months. It is a blank of the hour from which they were projected, and the IPC's own sentence names that hour's condition: volatility, and the uncertainty it produced.</p>
-  <p>The second half asks for a share, and a share needs a comparison the record cannot make. The worlds it holds lie on a diagonal: the blank, under the cuts and in the siege's hour; and the classifications before the freeze and after the siege's hour. A diagonal tells you the two causes together made the whole difference. It does not tell you how to split it. Lewontin made the point for genes and environment in 1974: a quantity can be divided among causes only where they add, like two men laying bricks; where one mixes the mortar and the other lays the bricks, the division is "absurd". Whether money and the hour added or interlocked is exactly what the unwritten world would say.</p>
-  <p>Two things change when the blank is read at the grain it was written in. First, a share stops being a number and becomes a list of towns. The IPC classifies a place or does not, so the cuts' share can take only 64 values, and neighbouring values can name worlds with no town in common: 49.5 % is As Sunut and Al Lagowa, 50.5 % is the other four. Whoever says "about half" has not yet said which half, and the two halves lie in different states of Sudan: West Kordofan, or North Darfur and South Kordofan. Second, the cut stops being one thing. Between the blank and its closing the money did not move: it stood at about a third of its 2024 rate in both. What moved, together with the hour, was the monitor. So on the money the record holds something close to an experiment, the same cut in two hours, and it says the money's cut, alone, did not make the blank: any share for it means the causes interlocked. On the monitor the record holds no such pair. It never shows the monitor at one setting in both hours, and so it cannot tell the monitor's part from the hour's at all.</p>
-  <p>So every number given for "how much the cuts made" is a filling of the fourth world, and the work asks you to see your own as one. This is not a reason to stop counting. The most cited count of the cuts' cost, a model in <i>The Lancet</i> projecting more than 14 million additional deaths by 2030 if the cuts continue (Cavalcanti et al., 2025), is honest about what it does: it is a projection, conditional on a modelled world without the cuts. Its strength is that it writes its fourth world in the open. A record of famine classifications writes none, and when it adds its areas into a national figure it closes the blank as if the world held nobody there (this practice's study <a href="../../convening-after-010/the-unclassified/">The Unclassified</a>). Three of these six blank rows already do so at the place: El Fasher's, Kadugli's and Dilling's write zero people, while Habila's, Al Lagowa's and As Sunut's keep theirs. De Waal and Bell (2025) refuse the binary a declaration imposes: disasters do not "fall neatly into 'famine' and 'non-famine'". The same refusal applies one level up. A blank does not fall neatly into "made by the war" and "made by the cuts", and the honest form of the answer is the range in section V, with the world that would close it named, town by town.</p>
+  <h2><span class="num">VI</span> What the controls cannot show</h2>
+  <p><b>A blank that writes zero.</b> Three of these six blank rows already close the blank as nobody. El Fasher's, Kadugli's and Dilling's rows write zero people; Habila's, Al Lagowa's and As Sunut's keep theirs. When the record adds its areas into a national figure, it does the same for all of them: the blank counts as a place where nobody lives (this practice's study <a href="../../convening-after-010/the-unclassified/">The Unclassified</a>). No control on this page can undo that, because the zero is in the table before any world is written.</p>
+  <p><b>Writing the fourth world in the open.</b> Every number given for "how much the cuts made" fills in the fourth world. That is not a reason to stop counting. The most cited count of the cuts' cost, a model in <i>The Lancet</i> projecting more than 14 million additional deaths by 2030 if the cuts continue (Cavalcanti et al., 2025), is a projection that depends on a modelled world without the cuts, and it says so. A record of famine classifications states no such world. De Waal and Bell (2025) refuse the binary a declaration imposes: disasters do not "fall neatly into 'famine' and 'non-famine'". The same refusal applies one level up. A blank does not fall neatly into "made by the war" and "made by the cuts". The honest form of the answer is the range in section V, with the world that would close it named, town by town.</p>
 </section>
 
 <section id="sources" class="small">
