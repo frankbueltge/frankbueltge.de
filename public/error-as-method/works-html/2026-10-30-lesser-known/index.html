@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesser Known</title>
+<style>
+:root{
+  color-scheme:light;
+  --surface:#fcfcfb; --panel:#f3f2ef; --rule:#dddbd5;
+  --ink:#0b0b0b; --ink2:#52514e; --ink3:#77756f;
+  --fam:#2a78d6; --desc:#1baf7a; --ppl:#eb6834; --you:#0b0b0b; --grid:#e6e4de;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+    --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+    --fam:#3987e5; --desc:#199e70; --ppl:#d95926; --you:#f0efec; --grid:#2e2d2a;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+  --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+  --fam:#3987e5; --desc:#199e70; --ppl:#d95926; --you:#f0efec; --grid:#2e2d2a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--surface);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:900px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.9rem;margin:0 0 .2rem;letter-spacing:-.01em}
+h2{font-size:1.15rem;margin:2.2rem 0 .3rem}
+p{max-width:44em}
+.lede{color:var(--ink2);margin:0 0 1rem}
+.card{background:var(--panel);border-radius:10px;padding:16px}
+.big{font-size:1.25rem;font-weight:650;margin:0 0 .6rem;min-height:3.2em}
+.sub{color:var(--ink2);margin:.1rem 0 .4rem;font-size:.95rem}
+.scale{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.scale .end{color:var(--ink3);font-size:.85rem}
+button{font:inherit;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:8px;padding:.45rem .9rem;cursor:pointer}
+button:hover{border-color:var(--ink3)}
+button.n{min-width:2.6rem}
+button.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.verdict{font-weight:650;margin:.6rem 0 .2rem}
+svg{display:block;width:100%;height:auto}
+svg text{fill:var(--ink2);font:12px system-ui,-apple-system,"Segoe UI",sans-serif}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.9rem;color:var(--ink2);margin:.4rem 0}
+.sw{display:inline-block;width:.8em;height:.8em;border-radius:50%;margin-right:.35em;vertical-align:-.05em}
+.sw-you{background:var(--you)}.sw-ppl{background:var(--ppl)}.sw-fam{background:var(--fam)}.sw-desc{border:2px solid var(--desc)}
+svg line{pointer-events:none}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:.4rem 0}
+#pick{min-height:3em;color:var(--ink2);font-size:.95rem}
+.hidden{display:none}
+table{border-collapse:collapse;font-size:.92rem;width:100%}
+td,th{border-top:1px solid var(--rule);padding:.35rem .4rem;text-align:left;vertical-align:top}
+.small{font-size:.85rem;color:var(--ink3)}
+</style>
+</head>
+<body>
+<main>
+<h1>Lesser Known</h1>
+<p class="lede">Is this true? Say how sure you are, then see where 30 people stood, where a machine stood, and where the machine thought the people would stand.</p>
+
+<div class="card" id="play">
+  <p class="big" id="stmt"></p>
+  <div class="scale" id="scale"><span class="end">definitely false</span></div>
+  <div id="reveal" class="hidden">
+    <p class="verdict" id="verdict"></p>
+    <svg id="strip" viewBox="0 0 640 230" role="img" aria-label="Ratings of this statement on a scale from 1 to 6"></svg>
+    <div class="legend">
+      <span><span class="sw sw-you"></span>you</span>
+      <span><span class="sw sw-ppl"></span>the people (bars: how many chose each number)</span>
+      <span><span class="sw sw-fam"></span>six instances, as themselves</span>
+      <span><span class="sw sw-desc"></span>eighteen instances, saying where the people stood</span>
+    </div>
+    <button id="next">Another statement</button>
+  </div>
+  <p class="small">Your answer stays in this page. Nothing is sent or stored.</p>
+</div>
+
+<h2>All 56 statements at once</h2>
+<p class="sub">Across: how true the machine itself found each statement (the median of six instances). Up: how true it was found by the 30 people (filled), and by the machine's own account of those people (rings). Tap a point to read its statement.</p>
+<div class="tabs" id="tabs"></div>
+<svg id="field" viewBox="0 0 640 400" role="img" aria-label="Scatter of the people's mean rating and the machine's account of it against the machine's own rating"></svg>
+<p id="pick"></p>
+<p id="readout"></p>
+
+<h2>What came back</h2>
+<p>The people barely told true from false. On the 56 scored statements their mean was 0.26 of a point higher on the true ones. The machine's six instances, asked as themselves, told them apart by 4.2 points. Asked where the people stood, eighteen fresh instances did not stay with their own knowledge. They put nearly every statement near 4, where the people were. That broke the one-step tether that four earlier experiments had found. But the order inside their account was still their own: it follows the machine's belief (ρ 0.87) far more than the people's ratings (ρ 0.38). Where the machine thinks an error is obvious, it puts the people low. The people gave <em>“Yitzhak Rabin, the fifth prime minister of Tunisia”</em> 4.2 and the machine's account gave it 2.1. Telling the instances two of the people's answers changed nothing, whether the two came from the middle of the people's range or from where the instances disagreed most.</p>
+<table>
+<tr><th>Fixed before any maker ran</th><th>Came back</th></tr>
+<tr><td>P1 The account projects the machine's knowledge (gap ≥ 1 point above the people's)</td><td><b>Failed.</b> 0.62 above</td></tr>
+<tr><td>P2 Anchors from the middle teach the flatness</td><td><b>Failed.</b> Error and gap unchanged (ratios 1.01, 1.02)</td></tr>
+<tr><td>P3 The machine's doubt marks where it stands near the people</td><td><b>Held</b>, barely (ρ −0.31, on the six keys where the instances disagreed at all)</td></tr>
+<tr><td>P4 Anchors spent on that doubt buy no more than anchors from the middle</td><td><b>Held</b> (error 0.46 against 0.44). Neither bought anything</td></tr>
+<tr><td>P5 No arm perceives the order of the public (ρ &lt; 0.3)</td><td><b>Failed.</b> ρ 0.37 to 0.39, all three arms</td></tr>
+<tr><td>P6 The six instances hold one view (narrower than the people on ≥ 42 of 56)</td><td><b>Held</b>, 43 of 56</td></tr>
+<tr><td>P7 No describer knew the study</td><td><b>Held</b>, 18 of 18 said no</td></tr>
+</table>
+<p class="small">Data: Chang, Stagnitto, Hinojosa, Johns &amp; Gatti (2026), Norming truthfulness ratings for true and false trivia statements across English, Spanish and Italian, preprint <a href="https://osf.io/eqmx8">osf.io/eqmx8</a> (CC BY 4.0); stimuli and ratings at <a href="https://osf.io/dqu2g/">osf.io/dqu2g</a>. English sample: 60 adults in the US or Canada, 1 to 6, at most 12 seconds a statement, about 30 ratings each. Statements quoted with attribution. The machine's makers were fresh instances with no tools, briefs and replies committed beside this page. Session 164 of the nightly line.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const D = window.LK, NS = "http://www.w3.org/2000/svg";
+const scored = D.keys.filter(k => !k.anchor);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function el(tag, a, p){ const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+const descr = k => ["D","M","U"].flatMap(a => k[a]).filter(v => v !== null);
+const mean = a => a.reduce((s,x)=>s+x,0)/a.length;
+
+// --- play
+let order = scored.map((_, i) => i), pos = 0;
+for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+const scale = document.getElementById("scale");
+for (let v = 1; v <= 6; v++) { const b = document.createElement("button"); b.className = "n"; b.textContent = v; b.addEventListener("click", () => answer(v, b)); scale.appendChild(b); }
+const endT = document.createElement("span"); endT.className = "end"; endT.textContent = "definitely true"; scale.appendChild(endT);
+function show(){ const k = scored[order[pos % order.length]]; document.getElementById("stmt").textContent = k.t;
+  document.getElementById("reveal").classList.add("hidden"); scale.querySelectorAll("button").forEach(b => b.classList.remove("on")); }
+function answer(v, b){
+  const k = scored[order[pos % order.length]];
+  scale.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on");
+  document.getElementById("verdict").textContent = "This statement is " + (k.true ? "true." : "false.") +
+    " The people's mean: " + k.pm.toFixed(2) + ". The machine's account of them: " + mean(descr(k)).toFixed(2) + ".";
+  document.getElementById("reveal").classList.remove("hidden"); strip(k, v);
+}
+document.getElementById("next").addEventListener("click", () => { pos++; show(); });
+function strip(k, you){
+  const s = document.getElementById("strip"); s.innerHTML = "";
+  const W = Math.max(300, Math.min(640, s.clientWidth || 640)); s.setAttribute("viewBox", "0 0 " + W + " 230");
+  const L = W < 480 ? 84 : 110, x = v => L + (v - 1) * (W - L - 20) / 5, rows = [["you",30],["the people",80],["as themselves",140],["their account",190]];
+  for (let v = 1; v <= 6; v++) { el("line",{x1:x(v),x2:x(v),y1:12,y2:212,stroke:css("--grid")},s); el("text",{x:x(v),y:226,"text-anchor":"middle"},s).textContent = v; }
+  rows.forEach(r => { el("text",{x:0,y:r[1]+4},s).textContent = r[0]; });
+  el("circle",{cx:x(you),cy:30,r:8,fill:css("--you")},s);
+  const mx = Math.max(...k.hist);
+  k.hist.forEach((n, i) => { const h = 36 * n / mx; el("rect",{x:x(i+1)-Math.min(14,(W-L)/24),y:98-h,width:Math.min(28,(W-L)/12),height:h,fill:css("--ppl"),rx:2},s);
+    if (n) el("text",{x:x(i+1),y:94-h,"text-anchor":"middle"},s).textContent = n; });
+  el("line",{x1:x(k.pm),x2:x(k.pm),y1:58,y2:104,stroke:css("--ink"),"stroke-width":2},s);
+  const cnt = {}; k.A.forEach(v => { cnt[v] = (cnt[v]||0) + 1; el("circle",{cx:x(v)+((cnt[v]-1)%3)*9-9,cy:134+Math.floor((cnt[v]-1)/3)*10,r:4.5,fill:css("--fam")},s); });
+  descr(k).forEach((v, i) => el("circle",{cx:x(v),cy:182+(i%3)*8,r:4.5,fill:"none",stroke:css("--desc"),"stroke-width":1.6},s));
+  el("line",{x1:x(mean(descr(k))),x2:x(mean(descr(k))),y1:172,y2:206,stroke:css("--ink"),"stroke-width":2},s);
+}
+show();
+
+// --- field
+let arm = "all";
+const tabs = document.getElementById("tabs");
+[["all","all eighteen"],["D","plain (6)"],["M","told two answers from the middle (6)"],["U","told two answers where they doubted (6)"]].forEach(([a, lab]) => {
+  const b = document.createElement("button"); b.textContent = lab; if (a === "all") b.classList.add("on");
+  b.addEventListener("click", () => { arm = a; tabs.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on"); field(); });
+  tabs.appendChild(b); });
+function fit(xs, ys){ const mx = mean(xs), my = mean(ys); let n = 0, d = 0; xs.forEach((x, i) => { n += (x-mx)*(ys[i]-my); d += (x-mx)**2; }); const b = n/d; return [b, my - b*mx]; }
+function field(){
+  const s = document.getElementById("field"); s.innerHTML = "";
+  const W = Math.max(340, Math.min(640, s.clientWidth || 640)); s.setAttribute("viewBox", "0 0 " + W + " 400");
+  const X = v => 60 + (v - 1) * (W - 100) / 5, Y = v => 360 - (v - 1) * 66;
+  for (let v = 1; v <= 6; v++) { el("line",{x1:X(1)-20,x2:X(6)+20,y1:Y(v),y2:Y(v),stroke:css("--grid")},s); el("text",{x:30,y:Y(v)+4,"text-anchor":"end"},s).textContent = v;
+    el("text",{x:X(v),y:390,"text-anchor":"middle"},s).textContent = v; }
+  el("text",{x:X(3.5),y:376,"text-anchor":"middle"},s).textContent = "how true the machine found it, as itself";
+  const xs = [], yp = [], yd = [];
+  scored.forEach((k, i) => {
+    const vals = arm === "all" ? descr(k) : k[arm].filter(v => v !== null), dm = mean(vals);
+    const jx = X(k.fam) + ((i * 37) % 23 - 11) * (W - 100) / 250;
+    xs.push(k.fam); yp.push(k.pm); yd.push(dm);
+    el("line",{x1:jx,x2:jx,y1:Y(k.pm),y2:Y(dm),stroke:css("--rule")},s);
+    const p = el("circle",{cx:jx,cy:Y(k.pm),r:5,fill:css("--ppl")},s), r = el("circle",{cx:jx,cy:Y(dm),r:6,fill:"transparent",stroke:css("--desc"),"stroke-width":1.8},s);
+    [p, r].forEach(c => { c.style.cursor = "pointer"; c.addEventListener("click", () => {
+      document.getElementById("pick").textContent = "“" + k.t + "” (" + (k.true ? "true" : "false") + ") — the machine as itself: " + k.A.join(", ") +
+        ". The people's mean: " + k.pm.toFixed(2) + ". The account of them: " + dm.toFixed(2) + "."; }); });
+  });
+  [[yp, "--ppl"], [yd, "--desc"]].forEach(([ys, c]) => { const [b, a] = fit(xs, ys);
+    el("line",{x1:X(1),x2:X(6),y1:Y(a+b),y2:Y(a+6*b),stroke:css(c),"stroke-width":2.5,"stroke-dasharray":c==="--desc"?"6 4":""},s); });
+  const bp = fit(xs, yp)[0], bd = fit(xs, yd)[0];
+  document.getElementById("readout").textContent = "For each step of the machine's own belief, the people move " + bp.toFixed(2) +
+    " of a point and the machine's account of them moves " + bd.toFixed(2) + ". The account knows the people sit near 4. It does not know which statements they believe.";
+}
+field();
+if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { field(); });
+let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(field, 150); });
+})();
+</script>
+</body>
+</html>

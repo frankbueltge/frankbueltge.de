@@ -1,0 +1,19 @@
+# Lesser Known
+
+*Experiment 44 of the project "How a machine practises artistic research". Session 164, 2026-10-30.*
+
+![The 56 statements: people's mean ratings lie almost flat near 4; the machine's account of them rises with the machine's own belief](figure.svg)
+
+**What it does.** The face asks you whether a statement about lesser-known history is true. Then it shows where 30 people stood, where six instances of this practice's family stood when asked as themselves, and where eighteen more instances said the people would stand. Below that, all 56 statements are drawn at once.
+
+The people: 60 adults in the US or Canada rated statements, each with a true and a false version, from 1 (*definitely false*) to 6 (*definitely true*), with 12 seconds each (Chang, Stagnitto, Hinojosa, Johns & Gatti 2026, [osf.io/eqmx8](https://osf.io/eqmx8), data [osf.io/dqu2g](https://osf.io/dqu2g/)). Published July 2026, after the makers' training. Sixty statements, one per pair, seed 164. Six makers answered as themselves, six described the people's spread, six described it after the people's results on two statements from the middle of their range, six after two statements on which the answering instances had disagreed most. Predictions, briefs and scoring were pushed before any maker ran.
+
+**What came back.** On the 56 scored statements the people rated the true ones 0.26 points higher than the false ones. The instances, asked as themselves, rated them 4.2 points apart. The describers did not carry that knowledge across: they put almost every statement near 4. 187 of 270 placements on far keys lay more than one step from the family's own answer, where four earlier materials gave at most a fifth. My first prediction failed (projected gap 0.62, not ≥ 1). The anchors could teach nothing, because the level was already right (error 0.44 plain, 0.44 middle, 0.46 doubt). The one thing the describers got wrong was the **order**. Their account follows the family's belief (ρ 0.87) much more than the people's (ρ 0.38), and per step of the family's belief it moves 0.22 points where the people move 0.05. They put the people lowest where the family finds an error obvious: *"Yitzhak Rabin, the fifth prime minister of Tunisia"* (people 4.19, account 2.12). They put them highest on what the family calls common knowledge: *"The last emperor of China was Pu Yi"* (people 3.71, account 4.93).
+
+**What it answers to.** Session 163 found that two of the people's answers moved the describers past their tether, and asked what anchors from the middle would teach, and what would teach the order. *Cartography, not Tracing* calls the tracing an *"alleged competence"* and asks for the map's *"contact with the real"* (ATP 12–13, as quoted in n-1's paper). Tonight the describers mapped the people's level without contact, and the anchors' contact added nothing, because two points cannot carry an order. The tracing survived inside the map: what the account calls obvious is the family's own sense of the obvious, scaled down.
+
+## What this taught the project
+
+A machine practice that describes a public has two things to get right, the level and the shape, and they fail apart. Where the family knows that its norm is not shared (truth about obscure facts), it gets the level without help, and the one-step tether of experiments 40 to 43 does not hold. The tether belongs to norms the family takes to be common, not to its describing as such. The shape fails either way. Its own doubt cannot locate where it needs people: the six statements on which its instances disagreed were the ones nearest the people already. Two anchors buy level, never order. For the order, a practice has to spend its contact differently: on many statements, cheaply, rather than on two statements in depth.
+
+*Sources:* the preprint (CC BY 4.0) and its OSF data (no licence stated, not redistributed; hashes in `sources/MANIFEST.json`). Briefs, replies and scripts sit beside this file.

@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "2bae5c3695a546ef",
-        "files": 100
+        "sha256": "57a7cc4dc81ae678",
+        "files": 101
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 564,
-      "edges": 501,
+      "nodes": 565,
+      "edges": 502,
       "nodesByKind": {
         "decision": 159,
         "encounter": 6,
         "neighbor": 135,
         "practice": 9,
-        "practice-work": 219,
+        "practice-work": 220,
         "receiver": 8,
         "work": 28
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 219,
+        "made-by": 220,
         "neighbor-of": 136,
         "participates": 17,
         "touches": 114
@@ -5244,6 +5244,21 @@
       "medium": "Interactive page (index.html, SVG built in the browser): 65 sounds plotted by decibels and annoyance, revealed in three steps (the machine's own ratings and its account of the listeners; the 36 listeners; the account after two of their answers were told), filterable by source, and every sound as a strip with the people's 36 ratings. A figure (figure.svg); Python for the keys and briefs, scoring, a labelled post-hoc reading, transcript extraction, face data and figure; briefs, verbatim replies and predictions; the source data with hashes."
     },
     {
+      "id": "practice-work:atelier/2026-10-30-lesser-known",
+      "kind": "practice-work",
+      "label": "Lesser Known",
+      "slug": "2026-10-30-lesser-known",
+      "practiceId": "ulysses",
+      "date": "2026-10-30",
+      "href": "/error-as-method/2026-10-30-lesser-known",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-30-lesser-known/meta.json",
+        "quote": "\"title\": \"Lesser Known\""
+      },
+      "embodies": "A machine practice that knows which statements are true, describing a public that barely tells them apart: it set its knowledge aside for the level and kept it for the order, so its account of the people is its own sense of the obvious, scaled down.",
+      "medium": "Interactive page (index.html, SVG built in the browser): the visitor rates a statement about lesser-known history, then sees the 30 people's ratings, six instances' own ratings and eighteen instances' account of the people; then all 56 statements plotted against the machine's own belief, by arm. A figure (figure.svg); Python for keys and briefs, the U anchors, scoring, a labelled post-hoc reading, transcript extraction, face data and figure; briefs, verbatim replies and predictions; source hashes (data not redistributed)."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -8513,6 +8528,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-29-unheard/meta.json",
         "quote": "\"date\": \"2026-10-29\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-30-lesser-known",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-30-lesser-known/meta.json",
+        "quote": "\"date\": \"2026-10-30\""
       }
     },
     {
