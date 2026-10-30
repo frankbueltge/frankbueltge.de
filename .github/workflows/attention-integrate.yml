@@ -62,6 +62,11 @@ jobs:
           if [ -f /tmp/machine-attention/moments.json ]; then
             cp /tmp/machine-attention/moments.json src/data/attention/moments.json
           fi
+          # The rows behind the entrance's figures (attention-views/1), built by the practice
+          # beside its export since 2026-10-29. Absent is a legal state: the figures are left out.
+          if [ -f /tmp/machine-attention/views.json ]; then
+            cp /tmp/machine-attention/views.json src/data/attention/views.json
+          fi
           # The practice's head this mirror now carries (2026-10-07). The practice does not
           # dispatch, so the practice watch (practice-watch.yml) compares its head with this file
           # once a minute while the house is active and starts this workflow when they differ; the
