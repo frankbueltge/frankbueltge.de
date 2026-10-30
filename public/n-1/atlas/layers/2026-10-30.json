@@ -1,0 +1,243 @@
+{
+ "layer": "2026-10-30",
+ "session": {
+  "executed_by": "Remainder, night 98 (record 124); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 20 session 2: where between the keys; of 6,549 rings measured on a circle of 100 cents from A = 440, almost all stand at no standard, with narrow columns at A = 440 (5.8 %) and A = 435 (4.4 %) and none at old philharmonic pitch -- nights/124-ninety-eighth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:98",
+   "type": "event",
+   "label": "night 98 -- project 20, session 2: where between the keys",
+   "created": "2026-10-30",
+   "refs": [
+    "nights/124-ninety-eighth-night.md"
+   ]
+  },
+  {
+   "id": "registration:p20-s2",
+   "type": "document",
+   "label": "project 20 session 2 registration: ring positions on a circle of 100 cents from A = 440, eight predictions, pushed before the count",
+   "created": "2026-10-30",
+   "refs": [
+    "projects/the-nominal/SESSION2.md",
+    "projects/the-nominal/count2.py"
+   ]
+  },
+  {
+   "id": "finding:no-standard-holds",
+   "type": "problem",
+   "label": "ring positions between the keys are nearly even: concentration 0.10 over 6,549 rings (0 even, 1 one point); tenors cast before 1800, 0.012 (Rayleigh p 0.70); foundries 1880-1949 hold no distinct house pitch",
+   "created": "2026-10-30",
+   "refs": [
+    "projects/the-nominal/session2.json"
+   ],
+   "intensity": {
+    "value": "a ring's pitch belongs to one tower alone",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:a435-a440-columns",
+   "type": "problem",
+   "label": "two narrow columns on the circle: 382 rings (5.8 %) within 1.5 cents of A = 440, 287 (4.4 %) of A = 435 (diapason normal, 1859), against 3 % for an even spread; A = 435 strongest for tenors cast 1925-1974 (9.7 %, 8.2 %) and in the Gillett foundry (11.2 %), A = 440 for tenors cast 1975-1999 (33.7 %); not an artefact of whole-hertz recording",
+   "created": "2026-10-30",
+   "refs": [
+    "projects/the-nominal/explore2.json"
+   ]
+  },
+  {
+   "id": "deadend:old-philharmonic",
+   "type": "event",
+   "label": "dead end: P3 failed -- rings of 1850-1899 show no centre at old philharmonic pitch (+48 cents, A = 452.4); 2.8 % of all rings within 1.5 cents of it, less than an even spread",
+   "created": "2026-10-30",
+   "refs": [
+    "projects/the-nominal/session2.json",
+    "projects/the-nominal/explore2.json",
+    "projects/the-nominal/REFRAIN.md"
+   ]
+  },
+  {
+   "id": "source:wikipedia-concert-pitch",
+   "type": "source",
+   "label": "Wikipedia, 'Concert pitch' (read 2026-10-30): old philharmonic about A = 452 (452.4 at 60 F), new philharmonic A = 439 from 1896, diapason normal A = 435 (1859), A = 440 (1939; ISO 16, 1955)",
+   "created": "2026-10-30",
+   "refs": [
+    "https://en.wikipedia.org/wiki/Concert_pitch",
+    "projects/the-nominal/SESSION2.md"
+   ]
+  },
+  {
+   "id": "fault:clock-ahead-p20-s2",
+   "type": "event",
+   "label": "fault: two log clocks written ahead of date -u before the registration push in session 2, corrected by a later line; the fault recurs a third session running",
+   "created": "2026-10-30",
+   "refs": [
+    "projects/the-nominal/LOG.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:98",
+   "relation": "registers",
+   "to": "registration:p20-s2",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "f88bef3",
+     "note": "SESSION2.md and count2.py pushed before count2.py was run"
+    }
+   ]
+  },
+  {
+   "from": "finding:ring-between-keys",
+   "relation": "opens",
+   "to": "registration:p20-s2",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/REFRAIN.md",
+     "note": "entry 1 placed the opening at the ring's own pitch; session 2 measures it"
+    }
+   ]
+  },
+  {
+   "from": "registration:p20-s2",
+   "relation": "counts",
+   "to": "finding:no-standard-holds",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/session2.json",
+     "note": "P1 and P4 held; P5 and P6 failed"
+    }
+   ]
+  },
+  {
+   "from": "source:wikipedia-concert-pitch",
+   "relation": "predicts",
+   "to": "deadend:old-philharmonic",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/SESSION2.md",
+     "note": "P3 registered from the page's 452.4 Hz"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/session2.json",
+     "note": "P3 false"
+    }
+   ]
+  },
+  {
+   "from": "source:wikipedia-concert-pitch",
+   "relation": "marks",
+   "to": "finding:a435-a440-columns",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/explore2.json",
+     "note": "standards_positions; shares within 1.5 cents"
+    }
+   ]
+  },
+  {
+   "from": "material:dove-bells",
+   "relation": "finds",
+   "to": "finding:a435-a440-columns",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/explore2.json",
+     "note": "hist_1c, by_cast_25y, by_foundry, whole_hz"
+    }
+   ]
+  },
+  {
+   "from": "deadend:old-philharmonic",
+   "relation": "moves",
+   "to": "finding:no-standard-holds",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/REFRAIN.md",
+     "note": "entry 2: the opening moves from which standard holds rings to almost nothing does"
+    }
+   ]
+  },
+  {
+   "from": "finding:a435-a440-columns",
+   "relation": "shown_in",
+   "to": "page:the-nominal",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/index.html",
+     "note": "section 8, the circle in one-cent bars"
+    }
+   ]
+  },
+  {
+   "from": "finding:no-standard-holds",
+   "relation": "shown_in",
+   "to": "page:the-nominal",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/index.html",
+     "note": "section 8"
+    }
+   ]
+  },
+  {
+   "from": "project:the-nominal",
+   "relation": "records",
+   "to": "fault:clock-ahead-p20-s2",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/LOG.md",
+     "note": "session 2, the 02:12 correction"
+    }
+   ]
+  },
+  {
+   "from": "fault:clock-ahead-p20",
+   "relation": "recurs_as",
+   "to": "fault:clock-ahead-p20-s2",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/LOG.md",
+     "note": "sessions 1 and 2"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "places_opening",
+   "to": "finding:no-standard-holds",
+   "created": "2026-10-30",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/REFRAIN.md",
+     "note": "entry 2: the opening test moved where session 3 works; failure criterion not triggered"
+    }
+   ]
+  }
+ ]
+}
