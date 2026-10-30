@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-30",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-30T11:36:20Z",
+    "counts": {
+      "botwall": 16,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 281,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 282,
+    "excluded_unverifiable": 18,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0198
+    ],
+    "gone_rate": 0.0035,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0134
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-28",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "webindia123.com",
+        "first_seen": "20261028010000",
+        "http_code": 404,
+        "title": "Indian nationals travelling to UAE advised to take adequate medical insurance with repatriation cover",
+        "url": "https://news.webindia123.com/news/Articles/World/20261028/4516024.html"
+      }
+    ],
+    "sample_drawn_at": "2026-10-29T11:41:23Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5916,
+      "replaced": 5132,
+      "trivial": 1083,
+      "update": 489
+    },
+    "day": "2026-10-29",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Rickshaw",
+          "Price",
+          "Tamil",
+          "Nadu"
+        ],
+        "after": "Tamil Nadu Auto Rickshaw Price: Tamil Nadu autorickshaw fares revised after 13 years: Minimum fare set at Rs 50; check full fare list",
+        "before": "Minimum auto fare: Tamil Nadu autorickshaw fares revised after 13 years: Minimum fare set at Rs 50; check full fare list",
+        "detected": "2026-10-29T06:03:58Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Minimum",
+          "fare"
+        ],
+        "similarity": 0.9,
+        "url": "https://economictimes.indiatimes.com/news/new-updates/tamil-nadu-autorickshaw-fares-revised-after-13-years-minimum-fare-set-at-rs-50-check-full-fare-list/articleshow/135252708.cms",
+        "weight": 11,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "IFP"
+        ],
+        "after": "Keerthy Suresh, Radhika Apte, Rana Daggubati, Huma Qureshi and Vetrimaaran: IFP announces its celeb lineup for Season 16",
+        "before": "Keerthy Suresh, Radhika Apte, Rana Daggubati, Huma Qureshi and Vetrimaaran: Indian Film Project announces its celeb lineup for Season 16",
+        "detected": "2026-10-29T10:33:41Z",
+        "domain": "hindustantimes.com",
+        "removed": [
+          "Indian",
+          "Film",
+          "Project"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.hindustantimes.com/entertainment/bollywood/keerthy-suresh-radhika-apte-rana-daggubati-huma-qureshi-and-vetrimaaran-indian-film-project-announces-its-celeb-lineup-for-season-16-101792658514240.html",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Big",
+          "Brother"
+        ],
+        "after": "Big Brother auditions: Think you've got what it takes to be cast on reality TV? So did I",
+        "before": "Reality TV auditions: Think you've got what it takes to be cast on reality TV? So did I",
+        "detected": "2026-10-29T19:19:33Z",
+        "domain": "brisbanetimes.com.au",
+        "removed": [
+          "reality",
+          "TV"
+        ],
+        "similarity": 0.895,
+        "url": "https://www.brisbanetimes.com.au/culture/tv-and-radio/think-you-ve-got-what-it-takes-to-be-cast-on-reality-tv-so-did-i-20261029-p618zr.html",
+        "weight": 7,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 15335,
+      "PAGE_TEXTCHANGE": 132697,
+      "PAGE_TITLECHANGE": 51386,
+      "UNCHANGED_CONTENT": 750436
+    },
+    "title_changes_en": 12620,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1793359934486",
+        "job_id": "world_gdg_counts_20261029",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 240123904,
+        "created": "1793359940212",
+        "job_id": "world_gdg_titles_20261029",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-30T11:36:20Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-29.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
