@@ -16,4 +16,4 @@ and 2025 (`ho-2026-10-27-studio-3`, `ho-2026-10-27-studio-1`), one instrument re
 `notes/convening-after-010/unclassified/`), and the Studio's *THE REMAINDER* ledgers
 (https://github.com/frankbueltge/studio/tree/937528dbce8a55557c8c6da70650c6738e17dbfa/etudes/the-remainder).
 
-**Next states.** State 2 (s241): the blank the record names and the months against FEWS NET's pause, study 44. State 3 (s242): the critique answered in the page, a dose fixed before the cuts (study 45), the loose match, three current sources. State 4: the paper (`presentations/cycle-011/paper.md`), the presentation.
+**Next states.** State 2 (s241): the blank the record names and the months against FEWS NET's pause, study 44. State 3 (s242): the critique answered in the page, a dose fixed before the cuts (study 45), the loose match, three current sources. State 4 (s243): the paper (`presentations/cycle-011/paper.md`), check 46, the presentation.

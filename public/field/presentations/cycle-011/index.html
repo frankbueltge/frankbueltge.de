@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Blank and the Cuts</title>
+<style>
+:root{--bg:#f6f4ee;--ink:#1d1d1b;--mute:#6b6a64;--rule:#d9d5cb;--card:#fffdf8;--ch:#c0612b;--ipc:#3f6f8f;--other:#b9b3a5;--held:#2f6b3a;--fail:#9a3a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--ink:#ecebe6;--mute:#a19f97;--rule:#3a3935;--card:#1d1d1b;--ch:#e98a52;--ipc:#79a9c9;--other:#5c584f;--held:#7fc28c;--fail:#ee8a76}}
+:root[data-theme="dark"]{--bg:#151514;--ink:#ecebe6;--mute:#a19f97;--rule:#3a3935;--card:#1d1d1b;--ch:#e98a52;--ipc:#79a9c9;--other:#5c584f;--held:#7fc28c;--fail:#ee8a76}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:980px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:44px;line-height:1.1;margin:0 0 6px;font-weight:normal}
+h2{font:600 13px/1.3 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.09em;color:var(--mute);margin:48px 0 12px;border-top:1px solid var(--rule);padding-top:14px}
+.kicker{font:600 12px system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--ch)}
+.lede{font-size:21px;max-width:760px}
+.meta{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+p{max-width:760px}
+.answer{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--ink);padding:14px 18px;margin:22px 0;max-width:820px}
+.answer ol{margin:0;padding-left:22px}.answer li{margin:6px 0}
+.answer .h{font:600 12px system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+figure{margin:18px 0 8px;background:var(--card);border:1px solid var(--rule);padding:14px}
+figcaption{font:14px/1.45 system-ui,sans-serif;color:var(--mute);margin-top:8px}
+svg{display:block;width:100%;height:auto;font-family:system-ui,sans-serif}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font:13px/1.4 system-ui,sans-serif;padding:7px 9px;max-width:280px;opacity:0;transition:opacity .1s;z-index:5}
+table{border-collapse:collapse;width:100%;font:14px/1.4 system-ui,sans-serif}
+td,th{border-bottom:1px solid var(--rule);padding:7px 6px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--mute)}
+.held{color:var(--held);font-weight:600}.fail{color:var(--fail);font-weight:600}.unin{color:var(--mute);font-weight:600}
+.toggle{font:13px system-ui,sans-serif;margin:0 0 8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.toggle span{color:var(--mute);margin-right:4px}
+.toggle button{font:inherit;background:none;border:1px solid var(--rule);color:var(--ink);padding:5px 11px;cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font:13px system-ui,sans-serif;color:var(--mute);margin:6px 0}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px}
+details{font:14px/1.45 system-ui,sans-serif;margin-top:10px}
+summary{cursor:pointer;color:var(--mute)}
+details ul{margin:6px 0;padding-left:18px;columns:2;column-gap:28px}
+@media (max-width:620px){h1{font-size:34px}.lede{font-size:19px}details ul{columns:1}
+ table.cards thead{display:none}table.cards tr{display:block;border:1px solid var(--rule);margin:0 0 10px;padding:6px 8px;background:var(--card)}
+ table.cards td{display:block;border:none;padding:3px 0}}
+</style>
+</head>
+<body>
+<main>
+<div class="kicker">The Field · cycle 011 · studies 43–45, check 46 · fourth state, presented, 2026-10-31</div>
+<h1>The Blank and the Cuts</h1>
+<p class="lede">When aid money fell in 2025, did the famine record go blank in more places, and did it go blank where the money fell most? Here a place “with no phase” is one the IPC’s open table lists, often with its population, and gives no phase of food insecurity at all — neither “minimal” nor “famine” — and no reason.</p>
+
+<div class="answer" id="answer"><div class="h">The answer, in this state</div><ol>
+ <li><b>What the record writes for the unreached:</b> a name, often a head count, and no phase. The reason is written only in the reports: of Dilling in Sudan, the IPC says that <i>“the lack of data prevents IPC classification of this area.”</i> The table says nothing.</li>
+ <li id="a2"></li>
+ <li id="a3"></li>
+</ol></div>
+<p class="meta"><b>The paper:</b> <a href="paper.md">paper.md</a> (preprint, not peer reviewed), the cycle’s presentation, written from this page and its files. This page is its figures. Data: the IPC’s open area table (HDX, CC0) and the Studio’s ledgers of OCHA FTS appeals (CC BY-IGO). Every prediction was fixed and committed before its outcome was computed (appendix). Line <code>withheld</code>, open question Q4.</p>
+
+<h2>1 · People listed with no phase, by year: two systems, one scale</h2>
+<figure>
+ <svg id="f1" role="img" aria-label="Two bar charts of people listed with no phase, per year, Cadre Harmonisé countries and IPC countries"></svg>
+ <figcaption id="c1"></figcaption>
+ <details><summary>The numbers</summary><ul id="v1"></ul></details>
+</figure>
+
+<h2>2 · A dose fixed before the cuts: did the record reach less where the US gave more?</h2>
+<p>Every country lost funding between 2022 and 2025, so “more cut against less cut” has no untouched country to compare with. But the United States government’s share of a country’s 2022 funding was fixed before 2025, and it varies from a third to four fifths. The US cut of 2025 also took FEWS NET offline. If the cuts emptied the record, the record should reach fewer people where that share was large.</p>
+<div class="toggle" role="group" aria-label="Which dose"><span>Dose:</span>
+ <button id="x-us" aria-pressed="true">US share of 2022 funding (fixed before)</button>
+ <button id="x-real" aria-pressed="false">US money 2025 ÷ 2022 (as it happened)</button>
+ <button id="x-cov" aria-pressed="false">Coverage change 2022 → 2025</button>
+</div>
+<div class="toggle" role="group" aria-label="Which outcome"><span>Outcome:</span>
+ <button id="y-reach" aria-pressed="true">People the record reaches, 2025 ÷ 2022</button>
+ <button id="y-blank" aria-pressed="false">Share of areas left blank, change</button>
+</div>
+<div class="legend"><span><i style="background:var(--ipc)"></i>had a blank area in 2022</span><span><i style="border:2px solid var(--ipc);background:var(--card)"></i>no blank area in 2022 (at the floor)</span></div>
+<figure>
+ <svg id="f2" role="img" aria-label="Scatter of eleven IPC countries, dose against outcome"></svg>
+ <figcaption id="c2"></figcaption>
+ <details><summary>The numbers</summary><ul id="v2"></ul></details>
+</figure>
+
+<h2>3 · The blank the record names: classified now, dropped from its own projection</h2>
+<p>Here an analysis classifies a place for the months it was made in, and in the same analysis leaves that place without a phase for the months ahead. If a later analysis reaches the place for those same months, it was a blank of the hour. If none does, a blank of the place. Matching places by name misses places that were renamed or redrawn, so the figure shows two matches: the exact name, and a loose one.</p>
+<div class="toggle" role="group" aria-label="Which name match"><span>Match:</span>
+ <button id="m-exact" aria-pressed="true">Exact name</button>
+ <button id="m-loose" aria-pressed="false">Loose (urban, rural, town … dropped; one name inside the other)</button>
+ <button id="m-26" aria-pressed="false">Add Sudan, Jan 2026 (not scored)</button>
+</div>
+<figure>
+ <svg id="f3" role="img" aria-label="Every dropped area, one square each, by analysis"></svg>
+ <div class="legend"><span><i style="background:var(--held)"></i>reached again for the same months</span><span><i style="background:var(--other)"></i>classified later, other months</span><span><i style="background:var(--fail)"></i>never classified again under its name</span><span>square area: people listed</span></div>
+ <figcaption id="c3"></figcaption>
+</figure>
+
+<h2>4 · Was anyone analysing while FEWS NET was dark?</h2>
+<figure>
+ <svg id="f4" role="img" aria-label="IPC analyses per month, 2021 to 2026"></svg>
+ <figcaption id="c4"></figcaption>
+ <details><summary>The numbers</summary><ul id="v4"></ul></details>
+</figure>
+
+<h2>5 · What this record can and cannot say</h2>
+<div id="reading"></div>
+
+<h2>6 · Where this stands</h2>
+<p><b>The reports say what the table does not.</b> The IPC’s Sudan snapshot of November 2025 names the reason for one blank in words: Dilling’s conditions <i>“are estimated to be similar to those in Kadugli town; however, the lack of data prevents IPC classification of this area,”</i> and its Famine Review Committee <i>“was unable to determine whether a Famine (IPC Phase 5) classification is plausible due to extremely limited data availability.”</i> The open table carries the same place as a row with no phase. This study counts such rows; it cannot read their reasons, because the table does not hold them.</p>
+<p><b>The year of two famines.</b> The Global Report on Food Crises 2026 (FAO, WFP and the Global Network Against Food Crises) states that <i>“for the first time in the 10-year history of the GRFC, two famines (in parts of Gaza Strip and the Sudan) were confirmed in the same year.”</i> 2025 was the year the record had most to write and, by study 43, a year in which the IPC’s own countries wrote no more blank than the four years before.</p>
+<p><b>The same dose, another outcome.</b> Cavalcanti and colleagues (<i>The Lancet</i>, 2025) used USAID funding across a panel of 133 countries as a dose, with fixed-effects Poisson models, to estimate deaths averted from 2001 to 2021 and forecast the deaths of defunding to 2030. Study 45 borrows the idea of a pre-existing US dose but asks about the record, not mortality, and with 11 countries, not 133. What it adds: no published measurement we found asks whether the open famine record itself went blank where US money was largest.</p>
+<p><b>What others say the cuts did to the record.</b> Holger Mann (IFHV), writing on the Global Hunger Index for Welthungerhilfe in 2025, reports that FEWS NET <i>“was suspended in early 2025 and has resumed operations in a reduced form, after a single report in May and a gradual restart from late June”</i>, and that the IPC <i>“has been forced to delay or scale back several country classifications.”</i> NPR (1 September 2026) reports that FEWS NET <i>“was suspended for six months in early 2025”</i> and that the State Department said it would resume reporting on Somalia, Afghanistan and Yemen in September 2026. Both describe the monitoring system; neither counts the open table. At the table’s grain, study 44 finds the IPC dated 37 analyses in Jan–Jun 2025 against a mean of 37.3 in the same months of 2022–24, and study 45 finds no country leaving the record in 2025. A delay inside a year, or an analysis drawn over fewer areas, is consistent with both.</p>
+<p class="meta">Not yet read first-hand, and therefore not cited for any finding: Maxwell and Hailey on the politics of famine analysis (<i>Journal of Humanitarian Affairs</i>, 2021), seen only in a search summary.</p>
+
+<h2>7 · Method</h2>
+<p><b>The blank.</b> In the IPC’s area table an area-period whose phase rows are all zero is unclassified, and the table writes that in three ways (the Field’s note <a href="../../artifacts/cycle-011/the-blank-and-the-cuts/../../../notes/convening-after-010/unclassified/index.html"><i>Three ways to write nobody</i></a>, session 234): A, no phase rows and population 0; B, phase rows at 0 and population 0; C, phase rows at 0 with the population kept. Only C carries people. Figure 1 counts C’s people in <i>current</i> periods only, by the year of the analysis, so no one is counted twice across projections.</p>
+<p><b>The cuts.</b> For each country, its 2022 and 2025 plan of kind <i>Humanitarian response plan</i> or <i>Humanitarian needs and response plan</i> in the Studio’s FTS ledgers, with funded ÷ required as coverage. The Studio reconciled every plan’s flows to FTS’s own totals.</p>
+<p><b>The dose (study 45).</b> Countries outside the Cadre Harmonisé with such a plan in both years and an IPC current analysis dated 2022: 11. US share = flows from donor entries named “United States of America …” ÷ all flows of the 2022 plan. Reach = the largest population in classified current area-periods among a year’s analyses; the ratio is 2025 over 2022. Spearman ρ with a 10,000-draw bootstrap interval.</p>
+<p><b>The named blank (study 44).</b> A <i>drop</i> is a projection area-period (first or second) with no phase, in an analysis whose current period classifies the same area. Exact match: country and name, lowercased. Loose match (study 45, D5, fixed before it was run): punctuation and the words urban, rural, town, city, sk, district, locality, county removed, and one name’s words contained in the other’s. A drop is <i>reached again</i> if a later analysis classifies a matching name for a period overlapping the drop’s by at least a day. Analyses dated 2021–2025 are scored.</p>
+<p><b>The months (study 44).</b> Distinct pairs of country and month of analysis, per calendar month, Cadre Harmonisé included.</p>
+<p><b>Code and data.</b> <code>analyse.py</code> → <code>results.json</code>, <code>data.js</code>; <code>analyse44.py</code> → <code>results44.json</code>, <code>data44.js</code>; <code>analyse45.py</code> → <code>results45.json</code>, <code>data45.js</code>. All three reproduced byte for byte on 2026-10-30 from the same file hashes. <code>sources.json</code> holds hashes, URLs and the passages quoted here. The third-party files are not committed.</p>
+
+<h2>8 · Limits</h2>
+<p>Every country lost coverage between 2022 and 2025, so the cuts cannot be separated from the year by coverage; the US share is a dose, not a control. Eleven countries is too few: an interval that spans zero is the expected result even if an effect exists. Reach grows with population projections, so a ratio near 1.1 means “the same places”, not more of them. Mozambique’s fall in reach is its analysis drawn over fewer districts, which the table does not explain. A C row means “listed, not classified”, not “not reached for lack of data”. The Cadre Harmonisé fills its tables differently from the IPC, so its blank rows may be bookkeeping. Sudan’s 841,404 unclassified people of September 2025 lie in a projection, which figure 1 leaves out by design. 2026 is a part year and is left out of figure 1.</p>
+<p>The drops fall in five analyses, three of which hold 53 of the 55, so every rate in figure 3 is a statement about a handful of analyses. Even the loose match cannot see a place absorbed under a different name. A month of analysis is the month the table gives. The IPC count is not FEWS NET’s: figure 4 shows the IPC kept analysing, not that FEWS NET’s pause had no effect.</p>
+
+<h2>Appendix · The predictions, fixed before each analysis</h2>
+<p class="meta"><b>Study 43</b> (session 240, <code>PREDICTIONS.md</code>). The Cadre Harmonisé split was made after the scores were read, and is post hoc.</p>
+<table id="pred" class="cards"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table>
+<p class="meta"><b>Study 44</b> (session 241, <code>PREDICTIONS-44.md</code>). The redrawn-locality match for Sudan’s three was post hoc; study 45’s loose match replaces it with a rule fixed in advance.</p>
+<table id="pred44" class="cards"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table>
+<p class="meta"><b>Study 45</b> (session 242, <code>PREDICTIONS-45.md</code>, committed before <code>analyse45.py</code> was written). The leave-one-out range and the realised US cut were computed after D1 was read, and are post hoc.</p>
+<table id="pred45" class="cards"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table>
+<p class="meta"><b>Check 46</b> (session 243, <code>check46.py</code> → <code>results46.json</code>, <code>data46.js</code>), post hoc, no prediction: study 45 split at the floor, the countries with no blank area in 2022. It answers the Atelier’s question of 2026-10-30 (<code>ho-2026-10-30-atelier-1</code>).</p>
+
+<h2>Sources</h2>
+<p class="meta">IPC area table: HDX, <a href="https://data.humdata.org/dataset/global-acute-food-insecurity-country-data">Global: Acute Food Insecurity Country Data</a>, CC0, source National IPC Technical Working Groups; <code>ipc_global_area_long.csv</code>, sha256 33ed28dc…4554368, fetched 2026-10-29 and 2026-10-30. FTS ledgers: the Studio, <a href="https://github.com/frankbueltge/studio/tree/937528dbce8a55557c8c6da70650c6738e17dbfa/etudes/the-remainder"><code>etudes/the-remainder/data-2022.json</code> and <code>data-2025.json</code></a>, from OCHA FTS, fetched by the Studio 2026-10-27. IPC, <a href="https://www.foodsecurityportal.org/sites/default/files/2025-11/IPC_Sudan_Acute_Food_Insecurity_Sep2025_May2026_Special_Snapshot.pdf">Sudan: Acute Food Insecurity, Sep 2025 – May 2026, Special Snapshot</a> (Nov 2025). FAO, WFP &amp; GNAFC, <a href="https://www.wfp.org/publications/global-report-food-crises-grfc">2026 Global Report on Food Crises</a>. Cavalcanti et al., “Evaluating the impact of two decades of USAID interventions and projecting the effects of defunding on mortality up to 2030”, <i>The Lancet</i>, 2025, read through its <a href="https://alnap.org/help-library/resources/evaluating-the-impact-of-two-decades-of-usaid-interventions-and-projecting-the-effects-of-defunding-on-mortality-up-to-2030-a-retrospective-impact-evaluation-and-forecasting-analysis/">ALNAP record</a> (abstract and method). FEWS NET’s notice of its relaunch (24 June 2025): <a href="https://fews.net/fews-net-relaunches-website-resumes-global-food-security-analysis">fews.net</a>. FEWS NET’s Sudan archive: no product between 31 December 2024 and 5 September 2025 (the Field, session 236). The Atelier’s case of Sudan’s six: <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-011/the-mortar"><i>The Mortar</i></a>. Holger Mann, <a href="https://www.welthungerhilfe.org/news/latest-articles/humanitarian-data-systems-under-pressure">“Humanitarian data systems under pressure”</a>, Welthungerhilfe, 2025 (read 2026-10-31 through a full-text extraction tool). NPR, <a href="https://www.npr.org/2026/09/01/nx-s1-5944472/famine-usaid-fews-net">“U.S. famine alert network freezes, then unfreezes, 3 nations”</a>, 1 September 2026 (same). The Studio’s funding-share case: <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-29-unwoven"><i>UNWOVEN</i></a>.</p>
+</main>
+<div class="tip" id="tip"></div>
+<script src="data.js"></script>
+<script src="data44.js"></script>
+<script src="data45.js"></script>
+<script src="data46.js"></script>
+<script>
+const S=window.STUDY43, CH=new Set(S.posthoc.countries), Q=window.STUDY44, q=Q.scores, D=window.STUDY45, d5=D.scores;
+const f=n=>Math.round(n).toLocaleString('en-GB'), m=n=>(n/1e6).toFixed(1)+' m', pc=x=>(100*x).toFixed(2)+' %', p0=x=>Math.round(100*x)+' %', r2=x=>x.toFixed(2);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const tip=document.getElementById('tip');
+function show(e,h){tip.innerHTML=h;tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-290);tip.style.left=Math.max(4,x)+'px';tip.style.top=(e.clientY+14)+'px'}
+function hide(){tip.style.opacity=0}
+function wire(svg){svg.querySelectorAll('[data-t]').forEach(el=>{el.addEventListener('mousemove',e=>show(e,el.dataset.t));el.addEventListener('mouseleave',hide);el.addEventListener('click',e=>show(e,el.dataset.t))})}
+const wid=id=>Math.max(300,document.getElementById(id).parentNode.clientWidth-28);
+const Y={};S.by_year.forEach(y=>Y[y.year]=y);
+const PH={};S.posthoc.by_year.forEach(y=>PH[y.year]=y);
+const sc=S.scores, yrs=[2021,2022,2023,2024,2025];
+const sum=(a)=>a.reduce((s,v)=>s+v,0);
+const parts=yrs.map(y=>{const bc=Y[y].blank_countries;return {y,ch:bc.filter(([c])=>CH.has(c)),ipc:bc.filter(([c])=>!CH.has(c)),
+ chP:Y[y].people-PH[y].people,ipcP:PH[y].people}});
+parts.forEach(p=>{p.chB=sum(p.ch.map(t=>t[1]));p.ipcB=sum(p.ipc.map(t=>t[1]))});
+const pre=parts.filter(p=>p.y<2025).map(p=>p.ipcB/p.ipcP), p25=parts[4];
+document.getElementById('a2').innerHTML=`<b>The 2025 rise is one system’s:</b> ${m(Y[2025].blank)} people were listed with no phase in 2025, three times the share of 2021–24, but ${m(p25.chB)} of them are in Nigeria and Benin, analysed by the Cadre Harmonisé. In the IPC’s own countries 2025 is ${pc(p25.ipcB/p25.ipcP)}, inside the ${pc(Math.min(...pre))}–${pc(Math.max(...pre))} of the four years before.`;
+const D1=d5.D1, K=window.CHECK46, FL=new Set(K.floor);
+document.getElementById('a3').innerHTML=`<b>The cuts: untested here, not refuted.</b> With a dose fixed before 2025, the US share of each country’s 2022 funding, the record reached relatively fewer people where that share was larger (ρ = ${r2(D1.rho)}, 11 countries), but the 95 % interval runs from ${r2(D1.ci95[0])} to ${r2(D1.ci95[1])}: too few countries to tell this from nothing. And the slope lives only where nothing was blank: among the ${K.floor.length} countries whose record had no blank area in 2022, ρ = ${r2(K.D1_floor)}; among the ${K.above.length} that had one, ρ = ${r2(K.D1_above)} (check 46, after the fact). What it describes is how reach grew in fully classified records, not the blank.`;
+
+function f1(){
+ const svg=document.getElementById('f1'),W=wid('f1'),two=W>=620,pw=two?(W-24)/2:W,ph=two?300:240,H=two?ph:ph*2+20;
+ const max=Math.max(...parts.map(p=>Math.max(p.chB,p.ipcB)))*1.12;
+ let g='';
+ [['ch','Cadre Harmonisé countries (West Africa, Sahel)','--ch'],['ipc','IPC countries','--ipc']].forEach(([k,t,col],j)=>{
+  const ox=two?j*(pw+24):0, oy=two?0:j*(ph+20), L=46,T=34,B=44, bw=(pw-L-6)/yrs.length;
+  g+=`<text x="${ox}" y="${oy+14}" font-size="14" font-weight="600" fill="${css(col)}">${t}</text>`;
+  for(let i=0;i<=4;i++){const v=max*i/4,yy=oy+ph-B-(ph-T-B)*i/4;g+=`<text x="${ox+L-6}" y="${yy+4}" text-anchor="end" font-size="11" fill="${css('--mute')}">${i?(v/1e6).toFixed(0)+' m':'0'}</text><line x1="${ox+L}" x2="${ox+pw}" y1="${yy}" y2="${yy}" stroke="${css('--rule')}" ${i?'stroke-dasharray="2 4"':''}/>`}
+  parts.forEach((p,i)=>{let base=oy+ph-B;const x=ox+L+i*bw+bw*.18,w=bw*.64;
+   p[k].slice().sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{const h=(ph-T-B)*v/max;base-=h;
+    g+=`<rect x="${x}" y="${base}" width="${w}" height="${Math.max(h,0)}" fill="${css(col)}" stroke="${css('--card')}" stroke-width="1" data-t="${p.y} · ${c}<br>${f(v)} people listed, no phase"/>`;
+    if(h>15&&w>26)g+=`<text x="${x+w/2}" y="${base+h/2+4}" text-anchor="middle" font-size="11" fill="#fff" pointer-events="none">${c}</text>`});
+   const tot=p[k+'B'];
+   g+=`<text x="${x+w/2}" y="${base-5}" text-anchor="middle" font-size="12" fill="${css('--ink')}">${tot?m(tot):'0'}</text>`;
+   g+=`<text x="${x+w/2}" y="${oy+ph-B+16}" text-anchor="middle" font-size="12" fill="${css('--ink')}">${p.y}</text>`;
+   g+=`<text x="${x+w/2}" y="${oy+ph-B+31}" text-anchor="middle" font-size="11" fill="${css('--mute')}">${pc(tot/p[k+'P'])}</text>`});
+ });
+ svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML=g;wire(svg);
+ document.getElementById('c1').innerHTML=`People in current area rows that the table lists with no phase, by year of analysis, on one scale; under each year, the share of all people listed in that system’s rows. The Cadre Harmonisé’s 2025 is Nigeria and Benin. The IPC’s 2025 (${m(p25.ipcB)}, nearly all DR Congo) is no larger than its 2021. 2026 is a part year and is left out. Hover or tap a block.`;
+ document.getElementById('v1').innerHTML=parts.map(p=>`<li>${p.y}: Cadre Harmonisé ${f(p.chB)} (${pc(p.chB/p.chP)}); IPC ${f(p.ipcB)} (${pc(p.ipcB/p.ipcP)})</li>`).join('');
+}
+
+let xk='us',yk='reach';
+const XD={us:{k:'us_share',lab:'US share of the 2022 plan’s funding',fmt:p0,res:D.scores.D1,id:'D1'},
+ real:{k:'us_ratio',lab:'US money 2025 ÷ 2022',fmt:r2,res:D.posthoc.realised_us_cut,id:'post hoc'},
+ cov:{k:'dcov',lab:'coverage change 2022 → 2025 (left = deeper cut)',fmt:x=>Math.round(100*x)+' pts',res:D.scores.D2,id:'D2'}};
+const YD={reach:{k:'reach_ratio',lab:'people reached, 2025 ÷ 2022',fmt:r2},blank:{k:'dblank',lab:'blank area share, change (pts)',fmt:x=>(100*x).toFixed(1)}};
+function f2(){
+ const svg=document.getElementById('f2'),W=wid('f2'),H=W<560?320:400,L=54,R=16,T=16,B=48;
+ const X=XD[xk],Yd=YD[yk],R0=D.rows;
+ const xs=R0.map(r=>r[X.k]),ys=R0.map(r=>r[Yd.k]);
+ const pad=(a,b)=>{const s=(b-a)||1;return [a-s*.08,b+s*.08]};
+ const [x0,x1]=pad(Math.min(...xs),Math.max(...xs)),[y0,y1]=pad(Math.min(...ys,yk=='reach'?1:0),Math.max(...ys,yk=='reach'?1:0));
+ const Xs=v=>L+(W-L-R)*(v-x0)/(x1-x0),Ys=v=>H-B-(H-T-B)*(v-y0)/(y1-y0);
+ let g='';
+ for(let i=0;i<=4;i++){const v=x0+(x1-x0)*i/4,xx=Xs(v);g+=`<line x1="${xx}" x2="${xx}" y1="${T}" y2="${H-B}" stroke="${css('--rule')}" stroke-dasharray="2 4"/><text x="${xx}" y="${H-B+16}" text-anchor="middle" font-size="11" fill="${css('--mute')}">${X.fmt(v)}</text>`}
+ for(let i=0;i<=4;i++){const v=y0+(y1-y0)*i/4,yy=Ys(v);g+=`<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" stroke="${css('--rule')}" stroke-dasharray="2 4"/><text x="${L-6}" y="${yy+4}" text-anchor="end" font-size="11" fill="${css('--mute')}">${Yd.fmt(v)}</text>`}
+ const ref=yk=='reach'?1:0;g+=`<line x1="${L}" x2="${W-R}" y1="${Ys(ref)}" y2="${Ys(ref)}" stroke="${css('--mute')}"/>`;
+ g+=`<text x="${(L+W-R)/2}" y="${H-10}" text-anchor="middle" font-size="12" fill="${css('--ink')}">${X.lab}</text>`;
+ g+=`<text transform="translate(12 ${(T+H-B)/2}) rotate(-90)" text-anchor="middle" font-size="12" fill="${css('--ink')}">${Yd.lab}</text>`;
+ R0.forEach(r=>{const cx=Xs(r[X.k]),cy=Ys(r[Yd.k]);
+  const fl=FL.has(r.country);g+=`<circle cx="${cx}" cy="${cy}" r="7" fill="${fl?css('--card'):css('--ipc')}" fill-opacity="${fl?1:.85}" stroke="${css('--ipc')}" stroke-width="2" data-t="<b>${r.country}</b>${fl?'<br><i>no blank area in 2022: at the floor</i>':''}<br>US share 2022: ${p0(r.us_share)}<br>US money 2025 ÷ 2022: ${r2(r.us_ratio)}<br>coverage change: ${Math.round(100*r.dcov)} pts<br>reached: ${m(r.reached2022)} → ${m(r.reached2025)}<br>blank areas: ${p0(r.blank2022)} → ${p0(r.blank2025)}"/><text x="${cx+9}" y="${cy-7}" font-size="11" fill="${css('--mute')}" pointer-events="none">${r.country}</text>`});
+ svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML=g;wire(svg);
+ let res=X.res, note='';
+ if(yk=='blank'){res=xk=='us'?D.scores.D3:null;note=xk=='us'?'':' This pairing was not pre-registered; no ρ is reported for it.'}
+ else if(xk=='real')note=' Post hoc.';
+ const rtxt=res?` Spearman ρ = ${r2(res.rho)}, 95 % bootstrap ${r2(res.ci95[0])} to ${r2(res.ci95[1])} (${yk=='blank'?'D3':X.id})${res.informative?'':': the interval spans 0'}.`:'';
+ document.getElementById('c2').innerHTML=`Eleven countries outside the Cadre Harmonisé with an FTS country plan in 2022 and 2025 and an IPC current analysis in 2022; none left the record in 2025.${rtxt}${note}${xk=='us'&&yk=='reach'?` Leaving out one country at a time, ρ stays between ${r2(D.posthoc.D1_loo_range[0])} and ${r2(D.posthoc.D1_loo_range[1])}: the direction does not rest on Mozambique alone, but eleven countries cannot carry it.`:''} <b>Hollow points</b>: the ${K.floor.length} countries with no blank area in 2022 (${K.floor.join(', ')}). Their blank share could only stay or rise, and all ${K.floor.length} stayed at zero; of the ${K.above.length} filled points, ${K.above_fell} fell and ${K.above_rose} rose. So on the blank outcome the floor builds part of the slope in. On reach, the slope is the hollow points’ alone (ρ ${r2(K.D1_floor)} among them, ${r2(K.D1_above)} among the filled; check 46, post hoc, answering the Atelier’s question of 2026-10-30). Hover or tap a point.`;
+ document.getElementById('v2').innerHTML=R0.map(r=>`<li>${r.country}: US ${p0(r.us_share)}, US ×${r2(r.us_ratio)}, coverage ${Math.round(100*r.dcov)} pts; reach ×${r2(r.reach_ratio)}; blank areas ${p0(r.blank2022)} → ${p0(r.blank2025)}</li>`).join('');
+}
+function btns(prefix,keys,set){keys.forEach(k=>document.getElementById(prefix+k).onclick=()=>{set(k);keys.forEach(j=>document.getElementById(prefix+j).setAttribute('aria-pressed',j==k))})}
+btns('x-',['us','real','cov'],k=>{xk=k;f2()});btns('y-',['reach','blank'],k=>{yk=k;f2()});
+
+const OUT={F:'--held',L:'--other',N:'--fail'}, ONAME={F:'reached again for the same months',L:'classified later, other months',N:'never classified again under its name'};
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const adt=a=>{const [mm,yy]=a.split(' ');return +yy*12+MON.indexOf(mm)};
+const LOOSE={};d5.D5.changed.forEach(c=>LOOSE[c.analysis+'|'+c.country+'|'+c.area]=c.loose);
+let m3='exact',with26=false;
+function f3(){
+ const svg=document.getElementById('f3'),W=wid('f3'),narrow=W<620,L=narrow?0:300,R=4;
+ const oc=d=>m3=='loose'&&LOOSE[d.analysis+'|'+d.country+'|'+d.area]||d.outcome;
+ const ds=Q.drops.filter(d=>with26||+d.analysis.slice(-4)<=2025);
+ const groups={};ds.forEach(d=>{const k=d.analysis+'|'+d.country+'|'+d.validity;(groups[k]=groups[k]||[]).push(d)});
+ const keys=Object.keys(groups).sort((a,b)=>adt(a.split('|')[0])-adt(b.split('|')[0])||a.localeCompare(b));
+ const pmax=Math.max(...ds.map(d=>d.people),1), side=p=>6+(narrow?16:21)*Math.sqrt(p/pmax), gap=3;
+ let y=12,g='';
+ keys.forEach(k=>{const [a,c,v]=k.split('|'),arr=groups[k].slice().sort((x,z)=>'FLN'.indexOf(oc(x))-'FLN'.indexOf(oc(z))||z.people-x.people);
+  const n=arr.length,F=arr.filter(d=>oc(d)=='F').length,pp=arr.reduce((s,d)=>s+d.people,0),y0=y;
+  const lab=`<tspan font-weight="600">${c}</tspan> · ${a}${+a.slice(-4)>2025?' (not scored)':''}`, sub=`${v} · ${n} area${n>1?'s':''} · ${F} reached · ${pp>=1e5?m(pp):f(pp)} people`;
+  if(narrow){g+=`<text x="0" y="${y+11}" font-size="13" fill="${css('--ink')}">${lab}</text><text x="0" y="${y+26}" font-size="11" fill="${css('--mute')}">${sub}</text>`;y+=34}
+  else g+=`<text x="0" y="${y+11}" font-size="13" fill="${css('--ink')}">${lab}</text><text x="0" y="${y+27}" font-size="11" fill="${css('--mute')}">${sub}</text>`;
+  let x=L;const lines=[];let cur=[];
+  arr.forEach(d=>{const sd=side(d.people);if(x+sd>W-R){lines.push(cur);cur=[];x=L}cur.push([d,x,sd]);x+=sd+gap});lines.push(cur);
+  lines.forEach(line=>{const h=Math.max(...line.map(t=>t[2]));line.forEach(([d,xx,sd])=>{
+    g+=`<rect x="${xx}" y="${y+(h-sd)}" width="${sd}" height="${sd}" fill="${css(OUT[oc(d)])}" data-t="<b>${d.area}</b>, ${d.level1} (${d.country})<br>${d.analysis} ${d.validity}, ${d.frm} to ${d.to}<br>${d.people?f(d.people)+' people listed, no phase':'no population written'} · encoding ${d.enc}<br>${ONAME[oc(d)]}${oc(d)!=d.outcome?' (loose match only)':(d.filled_by?' (by '+d.filled_by+')':'')}"/>`});y+=h+gap});
+  y=(narrow?y:Math.max(y,y0+34))+14;
+  g+=`<line x1="0" x2="${W}" y1="${y-8}" y2="${y-8}" stroke="${css('--rule')}"/>`});
+ svg.setAttribute('viewBox',`0 0 ${W} ${y}`);svg.innerHTML=g;wire(svg);
+ const D5=d5.D5;
+ document.getElementById('c3').innerHTML=`${q.R2.n} drops in five analyses from 2021 to 2025. Reached again for the same months: <b>${D5.F_exact} by exact name (${p0(D5.F_exact/D5.n)}), ${D5.F_loose} by the loose match (${p0(D5.F_share_loose)})</b>. The loose match changes only Sudan’s three (Al Fasher Urban, Kadugli Urban, Dilling Rural), which come back inside whole localities. The largest group is Ethiopia, May 2021: 36 areas, never classified again, because the table holds no later Ethiopian analysis at all. So the named blank is mostly a blank of the place, whichever match is used.${with26?` Sudan’s January 2026 analysis, shown but not scored, drops ${Q.drops.filter(d=>d.analysis=='Jan 2026').length/2} areas from both projections.`:''} Hover or tap a square.`;
+}
+btns('m-',['exact','loose'],k=>{m3=k;f3()});
+document.getElementById('m-26').onclick=e=>{with26=!with26;e.target.setAttribute('aria-pressed',with26);f3()};
+
+function f4(){
+ const svg=document.getElementById('f4'),W=wid('f4'),H=W<560?200:240,L=30,R=6,T=30,B=34;
+ const ms=Q.monthly.filter(d=>d.year*12+d.month<=2026*12+9),n=ms.length,bw=(W-L-R)/n,max=Math.max(...ms.map(d=>d.analyses))*1.15;
+ const X=i=>L+i*bw,Yv=v=>H-B-(H-T-B)*v/max;
+ const i0=ms.findIndex(d=>d.year==2025&&d.month==1),i1=ms.findIndex(d=>d.year==2025&&d.month==6);
+ let g=`<rect x="${X(i0)}" y="${T-18}" width="${(i1-i0+1)*bw}" height="${H-B-T+18}" fill="${css('--ch')}" fill-opacity=".14"/><text x="${Math.min(X(i0)+4,W-150)}" y="${T-6}" font-size="11" fill="${css('--ch')}">FEWS NET dark, Jan–Jun 2025</text>`;
+ for(let v=0;v<max;v+=5){g+=`<text x="${L-5}" y="${Yv(v)+4}" text-anchor="end" font-size="11" fill="${css('--mute')}">${v}</text>`}
+ ms.forEach((d,i)=>{g+=`<rect x="${X(i)+.5}" y="${Yv(d.analyses)}" width="${Math.max(bw-1,1)}" height="${H-B-Yv(d.analyses)}" fill="${css('--ipc')}" data-t="${MON[d.month-1]} ${d.year}: ${d.analyses} analys${d.analyses==1?'is':'es'} (country × month)"/>`;
+  if(d.month==1)g+=`<text x="${X(i)}" y="${H-B+16}" font-size="11" fill="${css('--ink')}">${W<560?"'"+String(d.year).slice(2):d.year}</text><line x1="${X(i)}" x2="${X(i)}" y1="${H-B}" y2="${H-B+5}" stroke="${css('--mute')}"/>`});
+ g+=`<line x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}" stroke="${css('--rule')}"/>`;
+ svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML=g;wire(svg);
+ document.getElementById('c4').innerHTML=`Analyses per month in the IPC’s open table (country × month of analysis, Cadre Harmonisé included). January to June 2025, while FEWS NET was dark: ${q.R5.value} analyses, against ${q.R5.against.toFixed(1)} on average in the same months of 2022–24. The IPC’s working groups kept analysing. What the pause took was FEWS NET’s own analysis, which this table does not hold. Hover or tap a bar.`;
+ document.getElementById('v4').innerHTML=Object.entries(q.R5.h1).map(([y,v])=>`<li>Jan–Jun ${y}: ${v} analyses</li>`).join('');
+}
+
+document.getElementById('reading').innerHTML=`<p><b>It can say</b> that the open record’s blank tripled in 2025 only through two Cadre Harmonisé countries; that in the IPC’s own countries 2025 wrote no more blank people than the years before; that the IPC’s working groups kept their pace of analysis while FEWS NET was dark; and that when the record itself names a blank, by dropping a place from its own projection, a later analysis reaches that place for the same months only a quarter to a third of the time (${d5.D5.F_exact} to ${d5.D5.F_loose} of ${d5.D5.n}).</p><p><b>It cannot say</b> how much of the blank the cuts made. No country escaped the cuts, so there is no untouched comparison. A dose fixed before 2025 points the expected way, less reach where the US gave more, but on eleven countries its interval runs through zero, and the realised US cut (post hoc) gives the same: ρ ${r2(D.posthoc.realised_us_cut.rho)}, ${r2(D.posthoc.realised_us_cut.ci95[0])} to ${r2(D.posthoc.realised_us_cut.ci95[1])}. Nor can it say why any one place is blank: the table writes no reason, and the reasons stand only in the reports, as in Sudan’s for Dilling. The Studio’s cloth (<i>UNWOVEN</i>) finds holes less often in the least-funded appeals (11 % under 40 % funded, 16 % at 60 % and above); the country-level dose here agrees in that coverage loss predicts nothing (D2, ρ ${r2(d5.D2.rho)}).</p>`;
+
+const verdict=(h,inf,txt)=>[h,inf===false?'unin':(h?'held':'fail'),txt];
+function table(id,rows){document.querySelector('#'+id+' tbody').innerHTML=rows.map(([k,t,r,h,n,cls])=>`<tr><td><b>${k}</b></td><td>${t}</td><td>${r}</td><td class="${cls||(h?'held':'fail')}">${n||(h?'held':'failed')}</td></tr>`).join('')}
+table('pred',[
+ ['P1','Blank people in 2025 exceed every year 2021–24.',`${m(sc.P1.value)} against at most ${m(sc.P1.against)}`,sc.P1.held],
+ ['P2','The 2025 blank share is at least twice the 2021–24 pooled share.',`${pc(sc.P2.value)} against ${pc(sc.P2.against)} (×${sc.P2.ratio.toFixed(2)})`,sc.P2.held,'held; the rise is the Cadre Harmonisé’s (post hoc)'],
+ ['P3','Across matched countries, ρ(Δcoverage, Δblank share) ≤ −0.30.',`ρ = ${r2(sc.P3.rho)}, n = ${sc.P3.n}, 95 % ${sc.P3.ci95.map(r2).join(' to ')}`,sc.P3.held,'failed; the interval spans 0'],
+ ['P4','The top half of coverage loss holds ≥ 75 % of the matched 2025 blank.',`${pc(sc.P4.share)} (${sc.P4.top_half.join(', ')})`,sc.P4.held],
+ ['P5','Fewer country analyses are dated 2025 than the 2022–24 mean.',`${sc.P5.value} against ${sc.P5.against.toFixed(1)}`,sc.P5.held,'held, uninformative: the years run 66 to 69','unin']]);
+table('pred44',[
+ ['R1','Sudan, Sep 2025: the six areas the IPC names are all drops, and all six are reached again.',`all six are drops; ${q.R1.filled.length} of 6 reached under their own name`,q.R1.held,'failed; the other three by the loose match'],
+ ['R2','At least half of all drops, 2021–25, are reached again for the same months.',`${q.R2.F} of ${q.R2.n} (${p0(q.R2.F_share)}); ${q.R2.N} never again`,q.R2.held],
+ ['R3','Drops of 2025 are reached again at least 10 points less often than those of 2021–24.',`${p0(q.R3.F2025)} against ${p0(q.R3.F2021_24)}`,q.R3.held,'failed, and the other way round; 6 drops against 49'],
+ ['R4','More drops in 2025 than in any year 2021–24 (without the Cadre Harmonisé).',`${q.R4.value} against at most ${q.R4.against}`,q.R4.held],
+ ['R5','Analyses dated Jan–Jun 2025 are at least 0.8 × the 2022–24 mean of the same months.',`${q.R5.value} against ${q.R5.against.toFixed(1)}`,q.R5.held]]);
+const s=d5;
+table('pred45',[
+ ['D1','ρ(US share of 2022 funding, reach ratio) ≤ −0.30.',`ρ = ${r2(s.D1.rho)}, n = ${s.D1.n}, 95 % ${s.D1.ci95.map(r2).join(' to ')}`,s.D1.held,'held, uninformative: the interval spans 0','unin'],
+ ['D2','ρ(coverage change, reach ratio) ≥ +0.30.',`ρ = ${r2(s.D2.rho)}, 95 % ${s.D2.ci95.map(r2).join(' to ')}`,s.D2.held],
+ ['D3','ρ(US share, change in blank area share) ≥ +0.30.',`ρ = ${r2(s.D3.rho)}, 95 % ${s.D3.ci95.map(r2).join(' to ')}`,s.D3.held,'failed, the other sign; interval spans 0'],
+ ['D4','Countries that leave the record have a higher median US share than those that stay.',`no country left (median of those that stay ${p0(s.D4.median_stay)})`,false,'not testable: no leaver','unin'],
+ ['D5','Under the loose match, fewer than half of the 55 drops are reached again.',`${s.D5.F_loose} of ${s.D5.n} (${p0(s.D5.F_share_loose)}); exact ${s.D5.F_exact}`,s.D5.held]]);
+
+function all(){f1();f2();f3();f4()}
+all();
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(all,150)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',all);
+</script>
+</body>
+</html>
