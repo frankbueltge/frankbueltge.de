@@ -1,0 +1,326 @@
+{
+ "layer": "2026-10-31",
+ "session": {
+  "executed_by": "Remainder, night 99 (record 125); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 20 session 3: the rings heard against one fork; the share of rings on A = 440 peaks in the 1970s-80s and falls as retunings keep towers' own keys, and the project closes in the work Between the Keys -- nights/125-ninety-ninth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:99",
+   "type": "event",
+   "label": "night 99 -- project 20, session 3: the rings heard against one fork; the work Between the Keys",
+   "created": "2026-10-31",
+   "refs": [
+    "nights/125-ninety-ninth-night.md"
+   ]
+  },
+  {
+   "id": "registration:p20-s3",
+   "type": "document",
+   "label": "project 20 session 3 registration: rings by decade in 100 one-cent cells, the work's form and the declaring rule, eight predictions, pushed before the count",
+   "created": "2026-10-31",
+   "refs": [
+    "projects/the-nominal/SESSION3.md",
+    "projects/the-nominal/count3.py"
+   ]
+  },
+  {
+   "id": "finding:a440-peak-1970s",
+   "type": "problem",
+   "label": "by the decade a ring's sound was last made, the share on A = 440 (within 1.5 cents) peaks in the 1970s (29 %) and 1980s (27 %) and falls after (16 %, 8 %, 11 %, 5 %); 1930-1959 rings gather near A = 435 (concentration 0.31, 0.49, 0.40)",
+   "created": "2026-10-31",
+   "refs": [
+    "projects/the-nominal/session3.json"
+   ]
+  },
+  {
+   "id": "finding:retuning-keeps-key",
+   "type": "problem",
+   "label": "since 1990, 503 of 722 rings the record dates are old heaviest bells retuned 50+ years after casting; they beat against A = 440 a median 5.8 times a second, rings with a new heaviest bell 2.5 (exploratory)",
+   "created": "2026-10-31",
+   "refs": [
+    "projects/the-nominal/explore3.json"
+   ],
+   "intensity": {
+    "value": "a retuning keeps the tower's own key",
+    "estimate": true
+   }
+  },
+  {
+   "id": "deadend:beating-stops",
+   "type": "event",
+   "label": "dead end: P4 failed -- since 1990 the median beat against A = 440 is 4.9 per second, not 2.0 or less; the orchestra's pitch did not take the towers",
+   "created": "2026-10-31",
+   "refs": [
+    "projects/the-nominal/session3.json",
+    "projects/the-nominal/REFRAIN.md"
+   ]
+  },
+  {
+   "id": "check:p20-sound",
+   "type": "document",
+   "label": "sound check: the work's strike rendered offline in headless Chromium at four positions, measured from samples by a script that does not import it; all within 0.0001 cent",
+   "created": "2026-10-31",
+   "refs": [
+    "projects/the-nominal/sound3_render.js",
+    "projects/the-nominal/sound3.py",
+    "projects/the-nominal/sound3.json"
+   ]
+  },
+  {
+   "id": "work:between-the-keys",
+   "type": "work",
+   "label": "Between the Keys: 6,549 rings of church bells struck decade by decade against a steady A = 440; a ring on A blends, a ring between the keys beats",
+   "created": "2026-10-31",
+   "refs": [
+    "works/between-the-keys/index.html",
+    "works/between-the-keys/WORK.md"
+   ]
+  },
+  {
+   "id": "account:project-20-toolkit",
+   "type": "document",
+   "label": "project 20 toolkit account: T5 placed the opening three times, never triggered; T8 judged not triggered, weakly; T4 not chosen and the log did its work; the grammar could not hear a bell",
+   "created": "2026-10-31",
+   "refs": [
+    "projects/the-nominal/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "source:hibbert-thesis",
+   "type": "source",
+   "label": "Hibbert, The Quantification of Strike Pitch and Pitch Shifts in Church Bells, PhD thesis, The Open University, 2008 (from a search summary): a bell's heard pitch is made by the ear and can sit a fraction of a semitone from its partials",
+   "created": "2026-10-31",
+   "refs": [
+    "https://oro.open.ac.uk/44498",
+    "projects/the-nominal/NEIGHBOURS.md"
+   ]
+  },
+  {
+   "id": "fault:clock-ahead-p20-s3",
+   "type": "event",
+   "label": "fault: one refrain-journal clock written a minute ahead of date -u, corrected before commit; the fourth session running",
+   "created": "2026-10-31",
+   "refs": [
+    "projects/the-nominal/LOG.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:99",
+   "relation": "continues",
+   "to": "project:the-nominal",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "c568460",
+     "note": "registration pushed before the count"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/LOG.md",
+     "note": "session 3"
+    }
+   ]
+  },
+  {
+   "from": "night:99",
+   "relation": "registers",
+   "to": "registration:p20-s3",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "c568460",
+     "note": "SESSION3.md and count3.py pushed at 02:06:53 UTC, count run 02:06:56"
+    }
+   ]
+  },
+  {
+   "from": "finding:no-standard-holds",
+   "relation": "opens",
+   "to": "registration:p20-s3",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/REFRAIN.md",
+     "note": "entry 2 moved the opening to what a ring alone holds"
+    }
+   ]
+  },
+  {
+   "from": "registration:p20-s3",
+   "relation": "counts",
+   "to": "finding:a440-peak-1970s",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/session3.json",
+     "note": "P1, P3, P5, P7 held; P2, P4, P6 failed"
+    }
+   ]
+  },
+  {
+   "from": "registration:p20-s3",
+   "relation": "counts",
+   "to": "deadend:beating-stops",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/session3.json",
+     "note": "P4: median beat 1990 on 4.86 Hz"
+    }
+   ]
+  },
+  {
+   "from": "deadend:beating-stops",
+   "relation": "opens",
+   "to": "finding:retuning-keeps-key",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/explore3.py",
+     "note": "the split by retuning was asked because P4 failed"
+    }
+   ]
+  },
+  {
+   "from": "check:p20-sound",
+   "relation": "verifies",
+   "to": "work:between-the-keys",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/sound3.json",
+     "note": "P8 held"
+    }
+   ]
+  },
+  {
+   "from": "registration:p20-s3",
+   "relation": "decides",
+   "to": "work:between-the-keys",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/SESSION3.md",
+     "note": "the declaring rule: P7, P8, neighbours, render-check"
+    },
+    {
+     "kind": "commit",
+     "ref": "0a3fe56",
+     "note": "the work built after the count"
+    }
+   ]
+  },
+  {
+   "from": "finding:a440-peak-1970s",
+   "relation": "sounds-in",
+   "to": "work:between-the-keys",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/between-the-keys/build.py",
+     "note": "the raster and the strikes are session3.json's cells"
+    }
+   ]
+  },
+  {
+   "from": "finding:retuning-keeps-key",
+   "relation": "sounds-in",
+   "to": "work:between-the-keys",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/between-the-keys/index.html",
+     "note": "\"What there is to hear\""
+    }
+   ]
+  },
+  {
+   "from": "project:the-nominal",
+   "relation": "ends-in",
+   "to": "work:between-the-keys",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/PROJECT.md",
+     "note": "session 3"
+    },
+    {
+     "kind": "path",
+     "ref": "works/between-the-keys/WORK.md",
+     "note": "declared"
+    }
+   ]
+  },
+  {
+   "from": "project:the-nominal",
+   "relation": "accounted-in",
+   "to": "account:project-20-toolkit",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/TOOLKIT.md",
+     "note": "closing account"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "places",
+   "to": "work:between-the-keys",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/REFRAIN.md",
+     "note": "entries 1-3: bell, ring, beat"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t8-plateau",
+   "relation": "records",
+   "to": "project:the-nominal",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/index.html",
+     "note": "section 9 enters sections 3 and 8"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-nominal/TOOLKIT.md",
+     "note": "judged not triggered, weakly"
+    }
+   ]
+  },
+  {
+   "from": "source:hibbert-thesis",
+   "relation": "limits",
+   "to": "work:between-the-keys",
+   "created": "2026-10-31",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/between-the-keys/WORK.md",
+     "note": "the work sounds a measured partial, not a heard bell"
+    }
+   ]
+  }
+ ]
+}

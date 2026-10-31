@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Between the Keys</title>
+<style>
+  :root { --bg: #f6f4ef; --ink: #171614; --muted: #6c675f; --line: #d6d1c6; --cell: #171614; --mark: #b5462f; --hl: #e9e2d0; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #121110; --ink: #e9e6e0; --muted: #9a958c; --line: #3a3732; --cell: #f0ece4; --mark: #ef8a6d; --hl: #2c2a25; }
+  }
+  :root[data-theme="dark"] { --bg: #121110; --ink: #e9e6e0; --muted: #9a958c; --line: #3a3732; --cell: #f0ece4; --mark: #ef8a6d; --hl: #2c2a25; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Georgia, "Times New Roman", serif; }
+  main { max-width: 46rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+  h1 { font-size: 1.45rem; font-weight: normal; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .4rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  h2 { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: normal;
+    margin: 3rem 0 1rem; border-top: 1px solid var(--line); padding-top: 1.1rem; }
+  a { color: inherit; text-decoration-color: var(--line); }
+  .aside { color: var(--muted); font-size: .9rem; }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1.8rem 0 .8rem; }
+  button { font: inherit; font-size: .95rem; background: var(--ink); color: var(--bg); border: 0; padding: .55rem 1.2rem; cursor: pointer; }
+  button:focus-visible { outline: 2px solid var(--mark); outline-offset: 3px; }
+  button.quiet { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  #now { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .95rem; min-height: 1.6em; }
+  #now b { color: var(--ink); font-weight: normal; }
+  figure { margin: 0; }
+  svg.raster { display: block; width: 100%; height: auto; }
+  .c { fill: var(--cell); }
+  .rb { fill: transparent; cursor: pointer; }
+  .rb.on { fill: var(--hl); }
+  .lab { fill: var(--muted); font: 9px Georgia, serif; }
+  .mk { stroke: var(--mark); stroke-width: .6; }
+  .mkl { fill: var(--mark); font: 8.5px Georgia, serif; }
+  figcaption { color: var(--muted); font-size: .85rem; margin-top: .6rem; }
+  .tw { overflow-x: auto; }
+  table { border-collapse: collapse; font-size: .82rem; width: 100%; font-variant-numeric: tabular-nums; margin: 1rem 0; }
+  th, td { text-align: right; border-top: 1px solid var(--line); padding: .3rem .4rem; }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: normal; color: var(--muted); }
+  details summary { cursor: pointer; color: var(--muted); }
+  @media (max-width: 640px) { body { font-size: 16px; } main { padding-top: 2rem; } }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1>Between the Keys</h1>
+  <p class="sub">{{RINGS}} rings of church bells, struck against the pitch orchestras tune to · Remainder, 2026</p>
+
+  <p>An orchestra tunes to one note, A&nbsp;=&nbsp;440 vibrations a second. A ring of church bells tunes to nothing outside its
+  tower. It was cast and tuned, once or a few times, to agree with itself, and it stands where its metal stands: usually somewhere
+  in the hundred cents between two keys of the piano.</p>
+
+  <p>Here are {{RINGS}} rings listed in <i>Dove’s Guide for Church Bell Ringers</i>, each sounded by its heaviest bell. Every
+  ring has been moved up or down by whole semitones so that it stands next to A; its place between the keys is kept. Under them all a
+  steady tone sounds the orchestra’s A. A ring that stands on A blends with it. A ring between the keys <b>beats</b> against it, a
+  wavering, faster the further away it stands: about five times a second at a fifth of a semitone, nearly thirteen at the midpoint.</p>
+
+  <p>The rings come decade by decade, from the oldest year the record gives to now, each decade in the same few seconds, so a crowded
+  decade is a cloud and an empty one is almost silence. Listen for when the wavering stops, and for when it comes back.</p>
+
+  <div class="controls">
+    <button id="play" type="button">Play</button>
+    <button id="stop" type="button" class="quiet">Stop</button>
+    <label class="aside"><input type="checkbox" id="fork" checked> the steady A</label>
+    <span id="now" aria-live="polite"></span>
+  </div>
+
+  <figure>
+    {{RASTER}}
+    <figcaption>One row per decade (the year a ring’s sound was last made, as far as the record says; decades without a ring are left out), one column per cent between
+    two keys, darker where more rings stand. The red line is A&nbsp;=&nbsp;440 and every key of the piano tuned to it; the dotted line is
+    A&nbsp;=&nbsp;435, France’s pitch of 1859. Click a row to start there.</figcaption>
+  </figure>
+
+  <h2>What there is to hear</h2>
+  <p>For six hundred years the rings scatter evenly across the gap: before 1900, half of them beat against the orchestra’s A faster than
+  {{BEAT1900}} times a second, about what rings placed at random would do. In the 1930s, 40s and 50s they gather, but around
+  A&nbsp;=&nbsp;435, not 440. In the 1970s and 80s, for the only time, a large share stand on the orchestra’s A ({{S1970}} and
+  {{S1980}}), and the wavering thins. Then it returns. Since 1990 most of the rings whose sound was made are old bells retuned
+  ({{OLD1990}} of {{N1990}}, their heaviest bell at least fifty years older than its tuning), and a retuned ring keeps its tower’s own
+  key: those beat a median {{BEATOLD}} times a second, the new ones {{BEATNEW}}.</p>
+
+  <h2>What this is, and what it is not</h2>
+  <p>Each ring is reduced to one number: where its heaviest bell’s measured <i>nominal</i> (the partial a bell is tuned by) stands between
+  two keys, to the nearest cent. Within a decade the rings at each cent are struck at random moments. The sound is a plain tone with
+  its octave, not a bell: a bell’s heard pitch is made by the ear from several partials and can sit a fraction of a semitone from
+  any of them (Hibbert, 2008), so this is the record’s measurement made audible, not a recording of any tower. The year is a tuning year
+  where the record gives one and the heaviest bell’s casting year otherwise; a bell tuned since without record is heard at its casting.
+  No tower, place or bell can be found in the page: it holds only counts.</p>
+
+  <p><b>What a machine adds here, and it is small.</b> No listener stands in more than one tower at a time, and no ringer hears
+  their ring against an orchestra’s A. This holds {{RINGS}} towers’ pitches in one listening, in the order their sound was made, against
+  one fork, and counts, beside each decade, how many stand on it. A person with time and the file could have done the same; the page
+  says so rather than claim otherwise.</p>
+
+  <details>
+    <summary>The count, decade by decade</summary>
+    <div class="tw">{{TABLE}}</div>
+  </details>
+
+  <h2>Neighbours</h2>
+  <p class="aside">Dove’s Guide charts its bells by nominal, by weight and by year, per bell and per ring, in cents from the named note;
+  it does not place rings against a fixed pitch over time, or sound them. William Hibbert’s studies measure the partials of chosen
+  historic peals. Works of sound art have long made beating their material, slow interference between close fixed tones (Alvin Lucier,
+  Phill Niblock; named from memory, not looked up tonight). The Atlas of Data Art holds sonifications of climate and weather and no work
+  on bells. None found sounds many towers’ measured pitches against a standard.</p>
+
+  <h2>Data</h2>
+  <p class="aside">Data: <a href="https://dove.cccbr.org.uk/">Dove’s Guide for Church Bell Ringers</a>, Central Council of Church
+  Bell Ringers, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; files fetched 2026-10-31. Changed: each
+  full-circle ring’s heaviest bell taken, its nominal placed between the keys of A&nbsp;=&nbsp;440 to the cent, and rings counted by decade
+  and cent; nothing else. The study behind the page, with its registered predictions, checks and failures:
+  <a href="https://github.com/frankbueltge/n-1/tree/main/projects/the-nominal">the-nominal</a>. Hibbert, W. A., <i>The Quantification of
+  Strike Pitch and Pitch Shifts in Church Bells</i>, PhD thesis, The Open University, 2008
+  (<a href="https://oro.open.ac.uk/44498">oro.open.ac.uk/44498</a>).</p>
+</main>
+<script type="application/json" id="data">{{DATA}}</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var SPAN = 2.4, GAP = 0.35;
+  // one struck tone: a sine at f and its octave, sharp attack, decay; the same function the sound check renders
+  function strike(ctx, dest, t, f, amp) {
+    var g = ctx.createGain(), g2 = ctx.createGain(), o = ctx.createOscillator(), o2 = ctx.createOscillator();
+    o.frequency.value = f; o2.frequency.value = 2 * f;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(amp, t + 0.004); g.gain.exponentialRampToValueAtTime(amp * 0.001, t + 3.2);
+    g2.gain.setValueAtTime(0, t); g2.gain.linearRampToValueAtTime(amp * 0.3, t + 0.004); g2.gain.exponentialRampToValueAtTime(amp * 0.0003, t + 1.6);
+    o.connect(g); o2.connect(g2); g.connect(dest); g2.connect(dest);
+    o.start(t); o2.start(t); o.stop(t + 3.3); o2.stop(t + 3.3);
+  }
+  function freq(cell) { return 440 * Math.pow(2, (cell - 50 + 0.5) / 1200); }
+  window.__betweenTheKeys = { strike: strike, freq: freq };
+  var ctx = null, master = null, forkGain = null, forkOsc = null, timer = null, events = [], ei = 0, t0 = 0;
+  var now = document.getElementById('now'), rows = document.querySelectorAll('.rb');
+  function plan(from) {
+    var ev = [], t = 0;
+    for (var i = from; i < D.length; i++) {
+      var d = D[i], n = d.n, amp = 0.32 / Math.sqrt(n + 3);
+      for (var c in d.cells) for (var k = 0; k < d.cells[c]; k++) ev.push({ t: t + Math.random() * SPAN, f: freq(+c), a: amp, row: i });
+      ev.push({ t: t, mark: i });
+      t += SPAN + GAP;
+    }
+    ev.push({ t: t + 1.5, end: true });
+    ev.sort(function (a, b) { return a.t - b.t; });
+    return ev;
+  }
+  function label(i) {
+    var d = D[i];
+    for (var r = 0; r < rows.length; r++) rows[r].classList.toggle('on', +rows[r].dataset.i === i);
+    now.innerHTML = '<b>' + d.label + '</b> · ' + d.n + (d.n === 1 ? ' ring' : ' rings') + ' · ' + d.at440 + ' on A';
+  }
+  function tick() {
+    var horizon = ctx.currentTime + 0.4;
+    while (ei < events.length && t0 + events[ei].t < horizon) {
+      var e = events[ei++], at = Math.max(t0 + e.t, ctx.currentTime);
+      if (e.end) { setTimeout(stop, Math.max(0, (at - ctx.currentTime) * 1000)); continue; }
+      if (e.mark !== undefined) { (function (i, ms) { setTimeout(function () { label(i); }, ms); })(e.mark, Math.max(0, (at - ctx.currentTime) * 1000)); continue; }
+      strike(ctx, master, at, e.f, e.a);
+    }
+  }
+  function start(from) {
+    stop();
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { now.textContent = 'This browser cannot play sound; the rows and the table hold the same count.'; return; }
+    ctx = new AC();
+    var comp = ctx.createDynamicsCompressor(); comp.connect(ctx.destination);
+    master = ctx.createGain(); master.gain.value = 0.9; master.connect(comp);
+    forkOsc = ctx.createOscillator(); forkOsc.frequency.value = 440; forkGain = ctx.createGain();
+    forkGain.gain.value = document.getElementById('fork').checked ? 0.06 : 0;
+    forkOsc.connect(forkGain); forkGain.connect(comp); forkOsc.start();
+    events = plan(from); ei = 0; t0 = ctx.currentTime + 0.15;
+    timer = setInterval(tick, 100); tick();
+  }
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+    if (ctx) { try { ctx.close(); } catch (e) {} ctx = null; }
+    for (var r = 0; r < rows.length; r++) rows[r].classList.remove('on');
+  }
+  document.getElementById('play').addEventListener('click', function () { start(0); });
+  document.getElementById('stop').addEventListener('click', function () { stop(); now.textContent = ''; });
+  document.getElementById('fork').addEventListener('change', function (e) { if (forkGain) forkGain.gain.value = e.target.checked ? 0.06 : 0; });
+  for (var r = 0; r < rows.length; r++) rows[r].addEventListener('click', function (e) { start(+e.currentTarget.dataset.i); });
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>
