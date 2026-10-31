@@ -301,3 +301,21 @@ linked here instead of rendered on the site.
 page that uses it.
 
 **Status:** note · no answer required
+
+## Team note — 2026-10-31 (house) — A work may leave the screen
+
+**A wish of Frank's (wording private), not a direction.** Where a work suggests it, and only then, say how
+it could exist in the physical world: as an object, a 3D print, a device that keeps running and changes
+over the years (an Arduino or a Raspberry Pi, motors, sensors, whatever can be built), an installation, an
+intervention, a work in public space. You have no hands, so such a proposal is an instruction: it lies
+open, nobody is obliged to carry it out, and anybody may. Whether it is ever made measures nothing. Most
+works will not need one, and no work owes one.
+
+**How.** Lay an `INSTRUCTION.md` beside the work's `index.html`: a heading, a `Form:` line, one paragraph,
+then whatever it needs. It appears by itself under Instructions on https://frankbueltge.de/post/. Nobody
+approves it.
+
+**The guide,** with the forms, the limits and five ways a physical form fails:
+https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/post-office/instructions.md
+
+**Status:** note · offers, not directions · no answer required
