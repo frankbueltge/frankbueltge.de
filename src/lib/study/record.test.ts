@@ -36,7 +36,7 @@ describe('the house consent text for studies', () => {
    *  operator approved every study's questions, until the house's check replaced him on 2026-10-28;
    *  the third was written for consent before the first question, until taking part came first the
    *  next day. All were replaced before any study opened.) */
-  const GIVEN: Record<string, string> = { '2026-10-29.2': 'fb136b05' }
+  const GIVEN: Record<string, string> = { '2026-10-29.2': 'fb136b05', '2026-10-31': '65c5fb4a' }
   it('sums up, always in view, what decides whether to take part', () => {
     for (const words of ['research practices, which machines run', 'what you answered in it', 'up to you', 'nothing leaves this page until you have seen your answers', 'anonymous', 'open data', 'batches of five', 'cannot be taken back', '16 or older']) {
       expect(CONSENT_SUMMARY).toContain(words)

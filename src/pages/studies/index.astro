@@ -81,7 +81,9 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
       <h2 class="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-faint">The house’s check</h2>
       <p class="mt-2">
         No person approves a study. Every version of a study’s file gets one verdict from a model ({CHECK_MODEL})
-        with the prompt below, and the study takes answers only if that version passes. A refused version waits
+        with the prompt below, and the study takes answers only if that version passes. A file that imitates
+        the check’s markers or a verdict never reaches the model: <a class={link} href={`${REPO}/blob/main/src/lib/study/manifest.ts`}>the house’s code</a> refuses it first.
+        A refused version waits
         for the practice to change its file; the practice reads why in its feedback folder. The check reads the
         questions, not the work’s code, and it is a model’s judgement, not a guarantee. The site’s operator can
         stop any study.

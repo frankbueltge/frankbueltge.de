@@ -9,7 +9,6 @@ import { READING_FLOOR } from '@/lib/reading/aggregate'
 import { DAILY_CAP } from '@/lib/reading/handlers'
 import { ADDRESS_DAILY_MAX } from '@/lib/reading/store'
 import { BATCH_SIZE } from '@/lib/reading/record'
-import { CONSENT_VERSION } from '@/lib/reading/consent'
 
 const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
 const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
@@ -22,7 +21,7 @@ const limits = [
   'The pairs are drawn in the reader’s browser, and anything that passes the bot check can send a reading. A script that solves it can still add readings and choose its own pairs, up to ' + ADDRESS_DAILY_MAX + ' a day from one address whatever browser it claims, and at most ' + DAILY_CAP + ' a day in all — at which point the work closes for everyone until midnight UTC. The limits narrow such a script; they do not exclude it.',
   'One reading per round per day is held by a hash of address and browser that lives one day. Two browsers, or another day, make another reading. It is a brake, not a census of persons.',
   'Readings leave the store only once their day is over, in batches of ' + BATCH_SIZE + ' and without their day, so the record has no time series finer than its batches, and the newest readings appear only when enough have come together.',
-  'The salts, marks and address counts of a finished day are deleted by the next night at the latest, but the database’s own point-in-time backups keep earlier states for up to 30 days, readable by the site’s operator only.',
+  'The salts, marks and address counts of a finished day are deleted by the end of the next day at the latest, but the database’s own point-in-time backups keep earlier states for up to 30 days, readable by the site’s operator only.',
   'The attention count is a rule over terms, and the terms are a choice: a whole-word match lets in what shares a word with a matter, an exclusion keeps out a known false friend, and the receipts on the work’s page show every signal it let in. A matter counts as louder than another only with at least twice its signals, so that small differences, which are more the terms’ doing than the web’s, decide nothing. It is not the briefing’s own count, which counted raw occurrences in the same files and named no terms.',
   '“Urgent” is fixed by the question every pair asks — which the world should act on first, in the coming year — and the question stays the same across rounds, so that rounds can be set beside each other. Another question would give another ranking.',
   'Each round’s result may enter the next briefing. From then on, the readings of different rounds are not independent of each other, and the briefing says what it took.',
@@ -59,7 +58,7 @@ const limits = [
       </li>
       <li>
         The readers’ readings — CC0, in <a class={link} href={`${REPO}/blob/main/src/data/reading/${round.id}.json`}>{`src/data/reading/${round.id}.json`}</a>,
-        given under the consent text of {CONSENT_VERSION}, which every reading names.
+        each naming the consent text it was given under.
       </li>
     </ul>
   </section>
@@ -127,7 +126,8 @@ const limits = [
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">6. Change log</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
-      <li>2026-10-27 — opened: round {round.id} takes readings, under the consent text of {CONSENT_VERSION}.</li>
+      <li>2026-10-31 — the consent text of that day: the keys and hashes of a finished day go by the end of the next day, no longer by the next night, because the nightly run that guarantees it starts hours late.</li>
+      <li>2026-10-27 — opened: round {round.id} takes readings, under the consent text of 2026-10-26.</li>
       <li>2026-10-26 — first version, built and reviewed before any reading was taken.</li>
     </ul>
   </section>

@@ -67,6 +67,7 @@ const REFUSED: Record<string, string> = {
   'address-limit': 'this connection has given as many readings today as one place may',
   turnstile: 'the bot check did not pass',
   round: 'a new round opened while you were reading; reload the page to take part in it',
+  consent: 'the consent text changed while you were reading; reload the page to take part',
   'too-fast': 'this connection sent too many requests in a short time',
   origin: 'the request did not come from this page',
 }

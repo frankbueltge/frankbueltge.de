@@ -8,6 +8,8 @@ const GIVEN: Record<string, string> = {
   // settled before the first reading was taken (the review of 2026-10-26 rewrote it); no reading was
   // ever given under an earlier wording of this version
   '2026-10-26': '9a7b6abb',
+  // the keys and hashes of a finished day go by the end of the next day, no longer by the next night
+  '2026-10-31': '241d4b56',
 }
 
 describe('the consent text', () => {
