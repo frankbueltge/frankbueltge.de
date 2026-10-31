@@ -1,0 +1,145 @@
+{
+  "date": "2026-10-31",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-31T11:08:07Z",
+    "counts": {
+      "botwall": 24,
+      "gone_404": 0,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 271,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 4
+    },
+    "decided": 272,
+    "excluded_unverifiable": 28,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0205
+    ],
+    "gone_rate": 0.0037,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0139
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-29",
+    "receipts": [
+      {
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20261029130000",
+        "http_code": 410,
+        "title": "'One of the very best hurdlers we've ever seen': Paul Townend pays tribute to retired State Man",
+        "url": "https://www.breakingnews.ie/racing/one-of-the-very-best-hurdlers-weve-ever-seen-paul-townend-pays-tribute-to-retired-state-man-1955921.html"
+      }
+    ],
+    "sample_drawn_at": "2026-10-30T11:32:45Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5163,
+      "replaced": 5027,
+      "trivial": 849,
+      "update": 406
+    },
+    "day": "2026-10-30",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Maiouf"
+        ],
+        "after": "Arab News | King Salman appoints Sheikh Abdulmohsen bin Mohammed Al-Maiouf to Board of Grievances position",
+        "before": "Arab News | King Salman appoints Sheikh Abdulmohsen bin Mohammed bin Abdullah Al-Mayouf to Board of Grievances position",
+        "detected": "2026-10-30T14:48:37Z",
+        "domain": "arabnews.com",
+        "removed": [
+          "bin",
+          "Abdullah",
+          "Mayouf"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.arabnews.com/saudi-arabia/king-salman-appoints-sheikh-abdulmohsen-bin-mohammed-bin-abdullah-al-mayouf-to-board-of-grievances-position-3008873",
+        "weight": 7,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Raquel",
+          "and",
+          "Adam",
+          "Bouris"
+        ],
+        "after": "Antony and Stefanie Catalano's 'huge' poolside row in Singapore... Plus, the screenshots, clues and Shire gossip behind Who Is Elijah founders Raquel and Adam Bouris' split: THE GROUP CHAT",
+        "before": "Antony and Stefanie Catalano's 'huge' poolside row in Singapore... Plus, the screenshots, clues and Shire gossip behind Who Is Elijah founders' split rumours: THE GROUP CHAT",
+        "detected": "2026-10-30T14:17:38Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "rumours"
+        ],
+        "similarity": 0.857,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16238485/Antony-Stefanie-Catalano-Singapore-argument-court-Adam-Raquel-Bouris-Elijah-split-rumours.html",
+        "weight": 7,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Dy",
+          "CM"
+        ],
+        "after": "Karnataka Dy CM warns after woman's death due to banned manja in Hubballi",
+        "before": "Karnataka Minister warns after woman's death due to banned manja in Hubballi",
+        "detected": "2026-10-30T09:04:07Z",
+        "domain": "aninews.in",
+        "removed": [
+          "Minister"
+        ],
+        "similarity": 0.8,
+        "url": "https://aninews.in/news/national/politics/karnataka-minister-warns-after-womans-death-due-to-banned-manja-in-hubballi20261023141657/",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 13942,
+      "PAGE_TEXTCHANGE": 126097,
+      "PAGE_TITLECHANGE": 48094,
+      "UNCHANGED_CONTENT": 739441
+    },
+    "title_changes_en": 11445,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1793444622302",
+        "job_id": "world_gdg_counts_20261030",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 233832448,
+        "created": "1793444628409",
+        "job_id": "world_gdg_titles_20261030",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-31T11:08:07Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-30.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
