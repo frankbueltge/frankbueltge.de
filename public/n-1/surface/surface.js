@@ -219,7 +219,7 @@
       '<h3>' + esc(proj.title) + '</h3><div class="mat">' + esc(proj.material) + '</div>' +
       '<div class="chips">' + proj.instruments.map(c => '<span>' + esc(c) + ' ' + esc(instrument(c).name) + '</span>').join('') + '</div>' +
       '<ol class="sess">' + sess + '</ol>' +
-      (proj.couldNot || []).map(t => '<p class="cnot"><span>' + esc(t) + '</span></p>').join('') +
+      [].concat(proj.couldNot || []).map(t => '<p class="cnot"><span>' + esc(t) + '</span></p>').join('') +
       (proj.note ? '<p class="note">' + esc(proj.note) + '</p>' : '') +
       '<div class="refs">' + refLinks(proj.pages) + '<a href="' + TREE + esc(proj.dir) + '">The project’s record →</a></div>';
 
@@ -230,7 +230,7 @@
     let ticks = '';
     for (let d = T0; d < T1; d++) {
       const dt = new Date(d * 86400000);
-      if (d !== T0 && dt.getUTCDay() !== 1 && dt.getUTCDate() !== 1) continue;
+      if (d !== T0 && (d - T0 < 4 || (dt.getUTCDay() !== 1 && dt.getUTCDate() !== 1))) continue;
       ticks += '<i class="at tick" style="--f:' + f(d) + '"></i><span class="at tick-l" style="--f:' + f(d) + '">' + fmt(d) + '</span>';
     }
     const rows = P.map((p, i) => {
