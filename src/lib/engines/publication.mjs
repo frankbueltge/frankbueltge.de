@@ -218,6 +218,11 @@ export const BUILD_READS = [
   // The long work (src/lib/studio/long-work.ts): a Studio work is a long work when its score stands
   // beside it.
   'studio/werke-html/*/SCORE.md',
+  // The post office (src/lib/post/instructions.ts): a work's instruction for the physical world stands
+  // beside it. The page links the text in the practice's repository, so nothing here is served.
+  '*/werke-html/*/INSTRUCTION.md',
+  'error-as-method/works-html/*/INSTRUCTION.md',
+  '*/artifacts/*/*/INSTRUCTION.md',
   // n-1 (src/lib/n1/shelf.ts and works.ts, src/lib/ecology/n1-line.ts, the station and the gallery):
   // the record's nights (the gallery draws their thumbnails), the dowry and the window file, every
   // page the shelf walks and the FORM.md or WORK.md that dates a work.

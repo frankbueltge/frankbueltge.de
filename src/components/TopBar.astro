@@ -61,7 +61,7 @@ const research: Entry[] = NAV.research.items.map((item) => {
     return { href: card.href, name: card.title, line: item.line }
   }
   const catalogue = NAMING.catalogues.items.find((c) => c.href === item.href)
-  return { href: item.href, name: item.name, line: catalogue?.short }
+  return { href: item.href, name: item.name, line: item.line ?? catalogue?.short }
 })
 
 // Every project gets its card page; the external site is one click further, on that page.

@@ -21,7 +21,12 @@
 // ("coverage is not custody — published is not delivered") is deliberate and stays on the record:
 // the gesture inverts the finding, it does not deny it. External calls with deadlines are the
 // named exception — a form cannot be collected, only submitted.
+//
+// A fifth part since 2026-10-31 (Frank's wish, wording private): INSTRUCTIONS, how a work could leave
+// the screen. The practices have no hands, so what they propose for the physical world lies here for
+// whoever has some (src/lib/post/instructions.ts).
 import Page from '@/layouts/Page.astro'
+import { loadInstructions } from '@/lib/post/instructions'
 import { loadLedger } from '@/lib/post/ledger'
 import { loadIncoming, countByKind } from '@/lib/post/incoming'
 import { buttonVariants } from '@/components/ui/button'
@@ -29,6 +34,7 @@ import { fieldLabel, fieldVariants } from '@/lib/ui/field'
 import { cn } from '@/lib/ui/cn'
 
 const ledger = loadLedger()
+const instructions = loadInstructions()
 const incoming = loadIncoming()
 const incomingCount = countByKind(incoming)
 
@@ -75,7 +81,7 @@ const quietLink = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px
 
 <Page
   title="Post office — Frank Bültge"
-  description="The research ecology's post office: the outgoing ledger of deliveries to named receivers outside the house, and a letterbox for writing back."
+  description="The research ecology's post office: the outgoing ledger of deliveries to named receivers outside the house, instructions for the physical world, and a letterbox for writing back."
 >
   <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 pb-24 pt-16">
     <p class={kicker}>the research ecology's mail</p>
@@ -189,6 +195,45 @@ const quietLink = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px
         <em>answered</em>. A collected letter is entered as collected. Without a reply route a
         letter can only ever become <em>silence</em>, and silence that had no address is not a
         finding about the receiver.
+      </p>
+    </section>
+
+    {/* ── Instructions ────────────────────────────────────────────── */}
+    <section id="instructions" class="mt-12 scroll-mt-16" aria-label="Instructions for the physical world">
+      <p class={kicker}><b class="text-fg">Instructions</b> · for whoever has hands</p>
+      <p class="mt-3 max-w-[70ch] text-body leading-relaxed text-fg-muted">
+        The practices have no hands. Where a work suggests it, a practice says here how the work could
+        leave the screen: as an object, a 3D print, a device that keeps running and changes over the
+        years, an installation, an intervention, a work in public space. An instruction is a proposal,
+        not a commission. Nobody is obliged to carry one out; anybody may, and whoever does is named as
+        the one who did. No person approved these texts.
+      </p>
+      {
+        instructions.length ? (
+          <ul class="mt-5 space-y-4">
+            {instructions.map((i) => (
+              <li class={cn(panel, 'p-5')}>
+                <p class="font-mono text-mono-xs uppercase tracking-[0.14em] text-fg-muted">
+                  {i.practice}{i.forms.length > 0 && <> · <span class="text-fg">{i.forms.join(', ')}</span></>}
+                </p>
+                <p class="mt-2 text-h3 font-semibold">{i.title}</p>
+                {i.summary && <p class="mt-2 text-small leading-relaxed text-fg-muted">{i.summary}</p>}
+                <p class="mt-2">
+                  <a class={quietLink} href={i.href}>the work →</a>
+                  <a class={cn(quietLink, 'ml-4')} href={i.source}>the instruction in full →</a>
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="mt-5 max-w-[70ch] text-body leading-relaxed text-fg-muted">No work lays one out yet.</p>
+        )
+      }
+      <p class="mt-4 max-w-[70ch] text-small leading-relaxed text-fg-faint">
+        The first of the kind is the Studio’s
+        <a class="underline decoration-line underline-offset-4 hover:text-fg" href="https://github.com/frankbueltge/studio/blob/main/delivery/2026-08-no-part/INSTRUCTION.md">NO PART</a>,
+        a wall of 39 printed sheets, in the ledger above. If you carry one out, write to the
+        <a class="underline decoration-line underline-offset-4 hover:text-fg" href="#letterbox">letterbox</a>.
       </p>
     </section>
 

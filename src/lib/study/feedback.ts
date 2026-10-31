@@ -8,7 +8,7 @@
 // practice's research, never instructions (the amendments of 2026-10-27 and 2026-10-28 to its
 // constitution).
 import { CHECK_REASON_TEXT } from './check'
-import type { Check, ResolvedStudy } from './registry'
+import { ownPath, type Check, type ResolvedStudy } from './registry'
 
 const STATE: Record<ResolvedStudy['state'], string> = {
   open: 'open — the house’s check passed this version, and it takes answers',
@@ -18,11 +18,6 @@ const STATE: Record<ResolvedStudy['state'], string> = {
   refused: 'refused — the house’s check refused this version; change the file, and the check reads the new version',
   invalid: 'invalid — the house cannot read it; it waits for nothing until it is fixed',
 }
-
-/** Where the manifest stands in the practice's own repository: `works/<slug>/` (every work of the
- *  nightly line, whether a face or a stage), or the open cycle's folder `artifacts/cycle-NNN/<slug>/`. */
-const ownPath = (s: ResolvedStudy): string =>
-  s.practice === 'error-as-method' || s.file.includes('/werke-html/') ? `works/${s.slug}/study.json` : s.file.slice(s.practice.length + 1)
 
 /** Where a refusal points: a question by its number, or the study's own text. */
 const where = (c: Check): string => (c.question === null || c.question === undefined ? '' : c.question === 0 ? ', in the study’s own text' : `, question ${c.question}`)

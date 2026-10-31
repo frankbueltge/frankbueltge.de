@@ -135,34 +135,61 @@ export function studyFolders(root: string): { practice: StudyPractice; parent: s
   return out
 }
 
-/** Every `study.json` beside a published work's index.html under `base`. werke-html is walked first,
- *  so a work that also still stands in the open cycle's folder is found once, where it is published. */
-export function findStudies(base: string, root: string): FoundStudy[] {
-  const out: FoundStudy[] = []
+/** A file that stands beside a published work. */
+export interface WorkFile {
+  practice: StudyPractice
+  /** `<practice>:<slug>` */
+  work: string
+  slug: string
+  /** the work's page */
+  href: string
+  /** relative to the base it was found under */
+  file: string
+}
+
+/** Every file called `name` beside a published work's index.html under `base`. werke-html is walked
+ *  first, so a work that also still stands in the open cycle's folder is found once, where it is
+ *  published. */
+export function filesBesideWorks(base: string, root: string, name: string): WorkFile[] {
+  const out: WorkFile[] = []
   const seen = new Set<string>()
   for (const { practice, parent } of studyFolders(root)) {
     for (const slug of dirs(join(base, parent))) {
       if (!SLUG.test(slug) || seen.has(`${practice}:${slug}`) || CONTAINERS.has(`${parent}/${slug}`)) continue
-      const file = `${parent}/${slug}/study.json`
+      const file = `${parent}/${slug}/${name}`
       if (!isFile(join(base, file)) || !isFile(join(base, parent, slug, 'index.html'))) continue
       seen.add(`${practice}:${slug}`)
-      const bytes = readFileSync(join(base, file))
-      let manifest: StudyManifest | null = null
-      let problems: string[]
-      if (bytes.length > LIMITS.bytes) problems = [`the file is ${bytes.length} bytes; at most ${LIMITS.bytes}`]
-      else {
-        try {
-          const parsed = JSON.parse(bytes.toString('utf8'))
-          problems = manifestProblems(parsed)
-          if (!problems.length) manifest = parsed as StudyManifest
-        } catch {
-          problems = ['not valid JSON']
-        }
-      }
-      out.push({ practice, work: `${practice}:${slug}`, slug, href: `/${parent}/${slug}/`, file, sha256: sha256(bytes), manifest, problems })
+      out.push({ practice, work: `${practice}:${slug}`, slug, href: `/${parent}/${slug}/`, file })
     }
   }
   return out
+}
+
+/** Where a file beside a work stands in the practice's own repository: `works/<slug>/` (every work of
+ *  the nightly line, whether a face or a stage), or the open cycle's folder `artifacts/cycle-NNN/<slug>/`. */
+export const ownPath = (f: Pick<WorkFile, 'practice' | 'slug' | 'file'>): string =>
+  f.practice === 'error-as-method' || f.file.includes('/werke-html/')
+    ? `works/${f.slug}/${f.file.slice(f.file.lastIndexOf('/') + 1)}`
+    : f.file.slice(f.practice.length + 1)
+
+/** Every `study.json` beside a published work's index.html under `base`. */
+export function findStudies(base: string, root: string): FoundStudy[] {
+  return filesBesideWorks(base, root, 'study.json').map((f) => {
+    const bytes = readFileSync(join(base, f.file))
+    let manifest: StudyManifest | null = null
+    let problems: string[]
+    if (bytes.length > LIMITS.bytes) problems = [`the file is ${bytes.length} bytes; at most ${LIMITS.bytes}`]
+    else {
+      try {
+        const parsed = JSON.parse(bytes.toString('utf8'))
+        problems = manifestProblems(parsed)
+        if (!problems.length) manifest = parsed as StudyManifest
+      } catch {
+        problems = ['not valid JSON']
+      }
+    }
+    return { ...f, sha256: sha256(bytes), manifest, problems }
+  })
 }
 
 const readJson = (p: string): unknown => JSON.parse(readFileSync(p, 'utf8'))
