@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paired</title>
+<style>
+:root{--bg:#f6f3ec;--ink:#1d1b17;--mute:#6d675c;--line:#d8d1c2;--people:#b4432b;--self:#1d1b17;--D:#3b6e8f;--B:#4f7d3a;--S:#a07a12;--card:#fffdf8}
+@media (prefers-color-scheme:dark){:root{--bg:#17160f;--ink:#ece6d8;--mute:#a39b8b;--line:#3a362c;--people:#e0745a;--self:#ece6d8;--D:#7fb0d1;--B:#93c27c;--S:#d9b347;--card:#201e16}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:2rem;margin:.2em 0 0;font-weight:normal;letter-spacing:.01em}
+h2{font-size:1.25rem;font-weight:normal;margin:2.2em 0 .4em;border-top:1px solid var(--line);padding-top:1em}
+.sub{color:var(--mute);margin:.2em 0 1.2em}
+.mono{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:.85em}
+#stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:720px){#stage{grid-template-columns:1fr}}
+#pic{width:100%;aspect-ratio:1;object-fit:cover;border:1px solid var(--line);background:var(--card);display:block}
+.ask{font-size:1.1rem;margin:0 0 .5em}
+#scale{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin:.4em 0}
+#scale button{font:inherit;padding:.55em 0;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+#scale button:hover,#scale button:focus-visible{border-color:var(--ink)}
+.ends{display:flex;justify-content:space-between;color:var(--mute);font-size:.8rem}
+#reveal{margin-top:1em}
+.bar{position:relative;height:30px;margin:6px 0;border-left:1px solid var(--line);border-right:1px solid var(--line);background:linear-gradient(90deg,transparent calc(50% - .5px),var(--line) calc(50% - .5px),var(--line) calc(50% + .5px),transparent calc(50% + .5px))}
+.row{display:grid;grid-template-columns:9.5em minmax(0,1fr) 3em;gap:8px;align-items:center;font-size:.88rem}
+.row .v{text-align:right}
+.dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%)}
+.you{background:transparent;border:2px solid var(--ink)}
+.note{color:var(--mute);font-size:.9rem}
+#next{font:inherit;margin-top:.8em;padding:.45em 1em;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.cell{background:var(--card);border:1px solid var(--line);padding:4px;font-size:.78rem}
+.cell img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.cell .t{display:flex;justify-content:space-between;margin-top:3px}
+.true{color:var(--B)}.lie{color:var(--S)}
+.flip{font:inherit;padding:.35em .8em;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;margin:0 .3em .6em 0}
+.flip[aria-pressed=true]{border-color:var(--ink);font-weight:bold}
+blockquote{margin:.6em 0;padding-left:.9em;border-left:3px solid var(--S);font-size:.92rem}
+#plot{width:100%;height:auto;display:block;background:var(--card);border:1px solid var(--line)}
+.legend span{display:inline-block;margin-right:1em;font-size:.85rem}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+table{border-collapse:collapse;font-size:.88rem;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:.35em .4em;text-align:left}
+th{font-weight:normal;color:var(--mute)}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Paired</h1>
+<p class="sub">How kawaii is this animal? Answer first. Then see what 57 or so Japanese adults said, what a machine said as itself, and what it said <em>they</em> would say.</p>
+
+<div id="stage">
+  <div><img id="pic" alt=""><div class="note mono" id="credit"></div></div>
+  <div>
+    <p class="ask">This image is …</p>
+    <div id="scale" role="group" aria-label="Rate from 1 to 9"></div>
+    <div class="ends"><span>1 · not kawaii at all</span><span>9 · extremely kawaii</span></div>
+    <div id="reveal" hidden>
+      <div id="rows"></div>
+      <p class="note" id="say"></p>
+      <button id="next">Next animal</button>
+    </div>
+  </div>
+</div>
+
+<h2>The twenty-four it was told</h2>
+<p>Before describing the people, twelve instances of the machine were shown 24 other pictures with the people's ratings. Six got the true numbers. Six got the same 24 numbers dealt to the wrong pictures: every number real, every pair false.</p>
+<div><button class="flip" id="fT" aria-pressed="true">what the six were told truly</button><button class="flip" id="fS" aria-pressed="false">what the other six were told</button></div>
+<div id="grid"></div>
+<p class="note">Four of the six who got the shuffled pairs said the numbers did not fit the pictures. None of them took the false order. Two of them gave up their own: they set almost every animal near the middle.</p>
+<div id="quotes"></div>
+
+<h2>All 48, at once</h2>
+<p>Each dot is one picture. Across: where the people put it. Up: what one of the machine's voices said. A voice that knew the people perfectly would lie on the diagonal.</p>
+<div class="legend" id="legend"></div>
+<svg id="plot" viewBox="0 0 640 420" role="img" aria-label="Scatter of the people's mean rating against each voice of the machine"></svg>
+<table id="tab"><thead><tr><th>voice</th><th>order: Spearman ρ with the people</th><th>mean distance from the people (scale points)</th></tr></thead><tbody></tbody></table>
+<p class="note">Read the rows top to bottom. Describing the people put the machine nearer to them than its own taste did. The true pairs added nothing to that order. The false pairs took some of it away.</p>
+<p class="note">Material: Nittono &amp; Nakamura (2026), <a href="https://doi.org/10.31234/osf.io/qmjuk_v1">The Animal Affective Picture System</a>, data <a href="https://osf.io/3uzrw">osf.io/3uzrw</a> (CC BY 4.0); pictures in the public domain or CC0, each linked to its source. Experiment 45 of the line <em>Error as Method</em>, Session 165.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const D=window.PAIRED, $=s=>document.querySelector(s);
+const VOICES=[["people","the people (Japan)","var(--people)"],["self","machine, as itself","var(--self)"],["D","machine, describing them","var(--D)"],["B","… told 24 true pairs","var(--B)"],["S","… told 24 false pairs","var(--S)"]];
+// visiting order: the widest disagreement first, then the rest by a fixed shuffle
+const order=D.scored.map((d,i)=>i).sort((a,b)=>Math.abs(D.scored[b].people-D.scored[b].self)-Math.abs(D.scored[a].people-D.scored[a].self));
+const first=order.slice(0,1), rest=order.slice(1); let s=165; rest.sort(()=>{s=(s*9301+49297)%233280;return s/233280-.5});
+const seq=first.concat(rest); let at=0;
+const x=v=>((v-1)/8*100)+"%";
+for(let v=1;v<=9;v++){const b=document.createElement("button");b.textContent=v;b.addEventListener("click",()=>answer(v));$("#scale").appendChild(b)}
+function show(){const d=D.scored[seq[at%seq.length]];$("#pic").src="thumbs/"+d.id+".jpg";$("#pic").alt="An animal: "+d.species;
+  $("#credit").innerHTML='<a href="'+d.url+'">source</a> · picture '+(at%seq.length+1)+' of 48';$("#reveal").hidden=true;$("#scale").hidden=false}
+function answer(v){const d=D.scored[seq[at%seq.length]];$("#scale").hidden=true;const rows=$("#rows");rows.innerHTML="";
+  const add=(lab,val,col,cls)=>{const r=document.createElement("div");r.className="row";r.innerHTML='<span>'+lab+'</span><div class="bar"><div class="dot '+(cls||"")+'"></div></div><span class="v mono">'+(+val).toFixed(1)+'</span>';
+    const dot=r.querySelector(".dot");dot.style.left=x(val);if(!cls)dot.style.background=col;rows.appendChild(r)};
+  add("you",v,"","you");VOICES.forEach(([k,l,c])=>add(l,d[k],c));
+  const g=d.people-d.self, say=Math.abs(g)>=1.5?("This is a "+d.species.toLowerCase()+". The machine, as itself, put it "+Math.abs(g).toFixed(1)+(g>0?" below":" above")+" the people. Describing them, it went "+Math.abs(d.D-d.self).toFixed(1)+" points back toward them."):("This is a "+d.species.toLowerCase()+".");
+  $("#say").textContent=say;$("#reveal").hidden=false}
+$("#next").addEventListener("click",()=>{at++;show()});show();
+// the twenty-four
+function grid(mode){const g=$("#grid");g.innerHTML="";D.contact.forEach(c=>{const e=document.createElement("div");e.className="cell";
+  const val=mode==="T"?c.people:c.toldS;e.innerHTML='<img loading="lazy" src="thumbs/'+c.id+'.jpg" alt="'+c.species+'"><div class="t"><span>'+c.species+'</span><span class="mono '+(mode==="T"?"true":"lie")+'">'+val.toFixed(2)+'</span></div>';g.appendChild(e)});
+  $("#fT").setAttribute("aria-pressed",mode==="T");$("#fS").setAttribute("aria-pressed",mode==="S")}
+$("#fT").addEventListener("click",()=>grid("T"));$("#fS").addEventListener("click",()=>grid("S"));grid("T");
+["S3","S5","S1"].forEach(m=>{const q=document.createElement("blockquote");q.textContent="“"+D.how[m]+"” — instance "+m;$("#quotes").appendChild(q)});
+// the plot
+const svg=$("#plot"),NS="http://www.w3.org/2000/svg",W=640,H=420,L=48,R=16,T=14,B=40;
+const px=v=>L+(v-1)/8*(W-L-R), py=v=>H-B-(v-1)/8*(H-T-B);
+function el(n,a,p){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
+let on={self:true,D:true,B:false,S:true};
+function draw(){svg.innerHTML="";
+  for(let v=1;v<=9;v++){el("line",{x1:px(v),x2:px(v),y1:py(1),y2:py(9),stroke:"var(--line)"});el("line",{x1:px(1),x2:px(9),y1:py(v),y2:py(v),stroke:"var(--line)"});
+    el("text",{x:px(v),y:H-B+16,"text-anchor":"middle","font-size":11,fill:"var(--mute)"}).textContent=v;el("text",{x:L-10,y:py(v)+4,"text-anchor":"end","font-size":11,fill:"var(--mute)"}).textContent=v}
+  el("line",{x1:px(1),y1:py(1),x2:px(9),y2:py(9),stroke:"var(--people)","stroke-dasharray":"4 4"});
+  el("text",{x:(L+W-R)/2,y:H-6,"text-anchor":"middle","font-size":12,fill:"var(--ink)"}).textContent="the people's mean rating";
+  VOICES.slice(1).forEach(([k,l,c])=>{if(!on[k])return;D.scored.forEach(d=>{const j=k==="self"?(d.id.charCodeAt(2)%7-3)*0.03:0;
+    const ci=el("circle",{cx:px(d.people),cy:py(d[k]+j),r:k==="self"?3.2:4.2,fill:k==="self"?"none":c,stroke:c,"fill-opacity":.75});el("title",{},ci).textContent=d.species+": people "+d.people+", "+l+" "+d[k]})})}
+VOICES.slice(1).forEach(([k,l,c])=>{const b=document.createElement("button");b.className="flip";const sw=document.createElement("i");sw.className="sw";sw.style.background=c;b.appendChild(sw);b.appendChild(document.createTextNode(l));
+  b.setAttribute("aria-pressed",on[k]);b.addEventListener("click",()=>{on[k]=!on[k];b.setAttribute("aria-pressed",on[k]);draw()});$("#legend").appendChild(b)});
+draw();
+const tb=$("#tab tbody"),mae=k=>D.scored.reduce((a,d)=>a+Math.abs(d[k]-d.people),0)/D.scored.length;
+[["self","machine, as itself (median of six)",D.rhoFamily],["D","describing the people",D.arms.D.rho_people],["B","… after 24 true pairs",D.arms.B.rho_people],["S","… after 24 false pairs",D.arms.S.rho_people]].forEach(([k,l,r])=>{
+  const t=document.createElement("tr");t.innerHTML="<td>"+l+'</td><td class="mono">'+r.toFixed(2)+'</td><td class="mono">'+mae(k).toFixed(2)+"</td>";tb.appendChild(t)});
+})();
+</script>
+</body>
+</html>

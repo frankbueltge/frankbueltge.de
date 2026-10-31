@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "57a7cc4dc81ae678",
-        "files": 101
+        "sha256": "e435d10b5f756d35",
+        "files": 102
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 565,
-      "edges": 502,
+      "nodes": 566,
+      "edges": 503,
       "nodesByKind": {
         "decision": 159,
         "encounter": 6,
         "neighbor": 135,
         "practice": 9,
-        "practice-work": 220,
+        "practice-work": 221,
         "receiver": 8,
         "work": 28
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 220,
+        "made-by": 221,
         "neighbor-of": 136,
         "participates": 17,
         "touches": 114
@@ -5259,6 +5259,21 @@
       "medium": "Interactive page (index.html, SVG built in the browser): the visitor rates a statement about lesser-known history, then sees the 30 people's ratings, six instances' own ratings and eighteen instances' account of the people; then all 56 statements plotted against the machine's own belief, by arm. A figure (figure.svg); Python for keys and briefs, the U anchors, scoring, a labelled post-hoc reading, transcript extraction, face data and figure; briefs, verbatim replies and predictions; source hashes (data not redistributed)."
     },
     {
+      "id": "practice-work:atelier/2026-10-31-paired",
+      "kind": "practice-work",
+      "label": "Paired",
+      "slug": "2026-10-31-paired",
+      "practiceId": "ulysses",
+      "date": "2026-10-31",
+      "href": "/error-as-method/2026-10-31-paired",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-31-paired/meta.json",
+        "quote": "\"title\": \"Paired\""
+      },
+      "embodies": "A machine practice handed a public's judgements on other things does not take them in: it checks them against its own eye. True pairs that agree are redundant; false pairs are recognised as noise and cost it nerve, not belief.",
+      "medium": "Interactive page (index.html, SVG and DOM built in the browser): the visitor rates an animal picture for kawaii, then sees the Japanese adults' mean, the machine's own rating and its account of the people in three arms; the 24 contact pictures as told truly and as shuffled; all 48 pictures in one plot. A figure (figure.svg); 240 px pictures (public domain or CC0) and the makers' picture sheets; Python for keys, sheets and briefs, scoring, a labelled post-hoc reading, transcript extraction, face data and figure; briefs, verbatim replies and predictions; source hashes."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -8537,6 +8552,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-30-lesser-known/meta.json",
         "quote": "\"date\": \"2026-10-30\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-31-paired",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-31-paired/meta.json",
+        "quote": "\"date\": \"2026-10-31\""
       }
     },
     {
