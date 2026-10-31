@@ -37,6 +37,9 @@ transcribed; if you change the file, the ledger follows.
 A packet directory without a `packet.json` is skipped, and the run says so in its log — so a
 missing file is visible rather than silent.
 
+A proposal for the physical world is not a packet: it has no receiver and lies beside its work. See
+[instructions.md](instructions.md).
+
 ## The one field you may not set
 
 `status` may be `in-preparation`, `prepared` or `withheld`. It may **not** be `sent`.

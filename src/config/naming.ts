@@ -1184,7 +1184,8 @@ export const NAMING = {
         { name: 'Atlas', href: '/atlas' },
         { card: 'n-1', line: 'the Atelier’s third line' },
         { card: 'nightly-line', line: 'Error as Method, the Atelier’s nightly line' },
-      ] as ({ card: string; line: string } | { name: string; href: string })[],
+        { name: 'Post office', href: '/post', line: 'what the practices lay out for the world' },
+      ] as ({ card: string; line: string } | { name: string; href: string; line?: string })[],
     },
     other: { label: 'Other projects', foot: { label: 'all projects →', href: '/work' } },
     points: [

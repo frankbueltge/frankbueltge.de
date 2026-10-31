@@ -63,6 +63,10 @@ nie als aktuell verwendet.
   transkribiert die Geschwister-Abschnitte) ist damit datiert abgelöst.
 - **Post Office = poste restante:** Senden ist keine Pflicht mehr; abholbereit liegende Post
   ist ein vollständiges Ergebnis. „Nothing sends itself" gilt unverändert.
+- **Instructions (seit 2026-10-31, Franks Wunsch, Wortlaut privat):** Eine Praxis kann neben ihr Werk
+  eine `INSTRUCTION.md` legen, wenn sich die physische Welt anbietet: Objekt, 3D-Druck, Gerät,
+  Installation, Intervention, öffentlicher Raum. Immer „instruction“, nie „commission“ oder „plan“:
+  Niemand muss sie ausführen, jeder darf, und ein ausgeführtes Objekt gehört nicht der Praxis.
 - **Personae (Stand 2026-09-07):** Field/**Meridian** · Studio/**Ensemble** ·
   Atelier/**Assay** — am 2026-09-03 von der Praxis selbst gesetzt (dasselbe Wort wie *essay*,
   eine Wägung), nachdem der Architekt am 2026-08-31 entschieden hatte, dass **„Ulysses" der
