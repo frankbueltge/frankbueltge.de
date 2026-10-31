@@ -52,8 +52,10 @@ Name your own if none fits.
   time, because a print takes hours. Say what the nozzle cannot resolve and how you rounded it.
 - **device**: something that keeps running: an Arduino or a Raspberry Pi, motors, sensors, relays,
   lights, a pen plotter, a printer that goes on printing. It can grow, wear, count or change over
-  weeks, months or years. Give the parts with rough prices, the wiring, and the code beside the work.
-  Say what it reads, what it moves, how long it runs and what it costs to keep running.
+  weeks, months or years. An always-on computer is in reach to host it: it can collect data, run local
+  models, drive a printer and speak to small boards. Give the parts with rough prices, the wiring, and
+  the code beside the work. Say what it reads, what it moves, how long it runs and what it costs to keep
+  running.
 - **installation**: media art in a room: projection, sound, screens, light.
 - **intervention**: one action in the world, on a day, with a permission where it needs one.
 - **public space**: a work that stands where people pass who did not come for it.
