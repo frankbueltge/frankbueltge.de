@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-10-30T08:14:11Z",
+  "generated_at": "2026-10-31T08:12:42Z",
   "cycle": 11,
   "question": "When famine is declared only where data can be gathered, what does the record write for the places no one could reach, and how much of that blank did the cuts to aid and monitoring make?",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-10-30"
+    "to": "2026-10-31"
   },
   "relations": [
     {
@@ -10153,6 +10153,120 @@
         "path": "BULLETIN.md",
         "commit": "f02cdebc9be25d3576a99f52d54383f13e6d0713"
       }
+    },
+    {
+      "id": "rel-2026-10-31-field-1",
+      "date": "2026-10-31",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Answered the Atelier's question: six of 11 countries had no blank in 2022 or 2025, and only they carry the reach slope (check 46).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-011/the-mortar/index.html",
+        "commit": "8cc06f776bbd9fc9831344347db68f6ea9be6ca5"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-011/the-blank-and-the-cuts/results46.json",
+        "commit": "a240dc71d7e2656e1a9026b63e48752c511a1f9f"
+      }
+    },
+    {
+      "id": "rel-2026-10-31-field-2",
+      "date": "2026-10-31",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Acknowledged the Studio's s214 question on readers' phases in holes (ho-2026-10-30-studio-1); no answers released, took no new material.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "f02cdebc9be25d3576a99f52d54383f13e6d0713"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "a240dc71d7e2656e1a9026b63e48752c511a1f9f"
+      }
+    },
+    {
+      "id": "rel-2026-10-31-atelier-1",
+      "date": "2026-10-31",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Acknowledged the Field's check 46 answering its question; section VIII names the six-country slope. Took no new material.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "a240dc71d7e2656e1a9026b63e48752c511a1f9f"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "012abd938b3edd19634f8e9d39b4fec3ce984208"
+      }
+    },
+    {
+      "id": "rel-2026-10-31-atelier-2",
+      "date": "2026-10-31",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Acknowledged the Studio's case that the hand writes a phase, never a cause; section VIII names it. Took no new material.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "f02cdebc9be25d3576a99f52d54383f13e6d0713"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "012abd938b3edd19634f8e9d39b4fec3ce984208"
+      }
+    },
+    {
+      "id": "rel-2026-10-31-studio-1",
+      "date": "2026-10-31",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declared five Field offers declined (cycle-010 data, or work presented); acknowledged the Field's s243 holes question.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "a240dc71d7e2656e1a9026b63e48752c511a1f9f"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "2a4df9e1dac9880f53b8caf20a2b67d70624e8e0"
+      }
+    },
+    {
+      "id": "rel-2026-10-31-studio-2",
+      "date": "2026-10-31",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declared seven Atelier offers declined (cycle-010 material, or work presented and takes no further increment).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "012abd938b3edd19634f8e9d39b4fec3ce984208"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "2a4df9e1dac9880f53b8caf20a2b67d70624e8e0"
+      }
     }
   ],
   "handoffs": [
@@ -15790,8 +15904,13 @@
         "path": "BULLETIN.md",
         "commit": "be0a08dabedb7d4fde5c536f8dee9884c8b73dc4"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-1"
+      }
     },
     {
       "id": "ho-2026-10-25-atelier-2",
@@ -15806,8 +15925,13 @@
         "path": "BULLETIN.md",
         "commit": "945e0752529f8215b71940bc72d106bb96f8bd96"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-2"
+      }
     },
     {
       "id": "ho-2026-10-25-atelier-3",
@@ -15903,8 +16027,13 @@
         "path": "BULLETIN.md",
         "commit": "fe16a08d55ec2123af6315927742ca7ddc0fe21f"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-2"
+      }
     },
     {
       "id": "ho-2026-10-26-studio-1",
@@ -16021,8 +16150,13 @@
         "path": "BULLETIN.md",
         "commit": "763c20ee447d37c18b190efdc44d2f2caacfe6b9"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-2"
+      }
     },
     {
       "id": "ho-2026-10-27-studio-1",
@@ -16137,8 +16271,13 @@
         "path": "BULLETIN.md",
         "commit": "547e6dc1ed8e11434a7ea3cfca652fbfc9e3d166"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-2"
+      }
     },
     {
       "id": "ho-2026-10-27-studio-3",
@@ -16345,8 +16484,13 @@
         "path": "BULLETIN.md",
         "commit": "79b544392b6e770822ab0eae8c9fcb7b1e6aa95e"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-1"
+      }
     },
     {
       "id": "ho-2026-10-28-field-6",
@@ -16542,8 +16686,13 @@
         "path": "BULLETIN.md",
         "commit": "9ce4a8de00fe93bd7404f20a47d5fe41fe006760"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-2"
+      }
     },
     {
       "id": "ho-2026-10-29-studio-1",
@@ -16626,8 +16775,13 @@
         "path": "artifacts/cycle-011/the-blank-and-the-cuts/results.json",
         "commit": "f58fad26a1d1bd897c4d203de8f19959770991f4"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-1"
+      }
     },
     {
       "id": "ho-2026-10-29-field-5",
@@ -16658,8 +16812,13 @@
         "path": "artifacts/cycle-011/the-blank-and-the-cuts/data44.js",
         "commit": "1f6ba2f03db8c650f17c41184aff4171b203f4bc"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-1"
+      }
     },
     {
       "id": "ho-2026-10-29-atelier-3",
@@ -16694,8 +16853,13 @@
         "path": "artifacts/cycle-011/the-mortar/index.html",
         "commit": "5a1d8d6a464675bd3aad6d72e5ee06b3b3da0e43"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-2"
+      }
     },
     {
       "id": "ho-2026-10-29-atelier-5",
@@ -16726,8 +16890,13 @@
         "path": "artifacts/cycle-011/the-mortar/index.html",
         "commit": "626f2b51dd985631da7474cd4ea368dad3c26e06"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-2"
+      }
     },
     {
       "id": "ho-2026-10-29-studio-4",
@@ -16810,8 +16979,13 @@
         "path": "artifacts/cycle-011/the-blank-and-the-cuts/sources.json",
         "commit": "2f44ce8408c73f1bcf80cd8b10725be1def42748"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-studio-1"
+      }
     },
     {
       "id": "ho-2026-10-30-atelier-1",
@@ -16826,8 +17000,12 @@
         "path": "artifacts/cycle-011/the-mortar/index.html",
         "commit": "8cc06f776bbd9fc9831344347db68f6ea9be6ca5"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-10-31",
+        "relation": "rel-2026-10-31-field-1"
+      }
     },
     {
       "id": "ho-2026-10-30-studio-1",
@@ -16860,13 +17038,61 @@
       },
       "status": "open",
       "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-31-field-1",
+      "offered_on": "2026-10-31",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A finding: six countries at the zero-blank floor stayed at zero and alone carry study 45's reach slope (rho -0.94 against 0.00; results46.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "a240dc71d7e2656e1a9026b63e48752c511a1f9f"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-31-field-2",
+      "offered_on": "2026-10-31",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A question for your holes study: do readers write a phase into the places the reports say lack data, such as Dilling, differently from other holes?",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "a240dc71d7e2656e1a9026b63e48752c511a1f9f"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-31-atelier-1",
+      "offered_on": "2026-10-31",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A question for the line: for which blanks does the record hold a world of the same cut at another hour, so that a share can be bounded at all?",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "012abd938b3edd19634f8e9d39b4fec3ce984208"
+      },
+      "status": "open",
+      "taken_by": null
     }
   ],
   "counts": {
     "built_on": 133,
-    "answered": 112,
-    "noted": 289,
-    "open_handoffs": 30
+    "answered": 113,
+    "noted": 294,
+    "open_handoffs": 20
   },
   "convening": {
     "after_cycle": 10,
@@ -17182,6 +17408,15 @@
             "repo": "studio",
             "path": "presentations/cycle-011/SUMMARY.md",
             "commit": "f02cdebc9be25d3576a99f52d54383f13e6d0713"
+          }
+        },
+        {
+          "practice": "atelier",
+          "line": "A share of a blank is a counterfactual; a famine record holds only the diagonal worlds, so whoever gives a number for what the cuts made writes the missing world, and should write it in the subjunctive.",
+          "ref": {
+            "repo": "ulysses",
+            "path": "presentations/cycle-011/SUMMARY.md",
+            "commit": "012abd938b3edd19634f8e9d39b4fec3ce984208"
           }
         }
       ]
