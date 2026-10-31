@@ -237,6 +237,7 @@
     drawReaction(cut, Cr);
     drawRules(rules, ranges);
     words(cut, x, Cr, ranges);
+    claim(cut, ranges);
   }
 
   function drawPlaces(x, Cr) {
@@ -368,6 +369,23 @@
       val.textContent = rg[1] - rg[0] > 0.005 ? `${pct(rg[0])} to ${pct(rg[1])}` : pct(rg[0]);
       row.appendChild(tr); row.appendChild(val); box.appendChild(row);
     });
+  }
+
+  // ---------- VII. The visitor's world, said back as a sentence ----------
+  function claim(cut, ranges) {
+    const by = (st) => D.places.map((p, i) => i).filter((i) => T[i] === st);
+    const ppl = (ix) => fmt(ix.reduce((s, i) => s + D.places[i].weight, 0));
+    const cls = by("cls"), blank = by("blank"), uns = by("unsaid");
+    const what = cut === "money" ? "the cut to the United States' money" : cut === "monitor" ? "FEWS NET's dark months" : "the cuts to money and monitor";
+    const box = $("#claimtext"); box.textContent = "";
+    const line = (mood, text) => { const p = document.createElement("p"); p.className = mood; const m = document.createElement("span"); m.className = "mood"; m.textContent = mood === "ind" ? "the record" : "your world"; p.appendChild(m); p.appendChild(document.createTextNode(text)); box.appendChild(p); };
+    line("ind", `In September 2025 the IPC left ${listNames(D.places.map((p, i) => i))} without a phase for February to May 2026: 841,404 people. In January 2026 it classified the same months.`);
+    if (cls.length) line("sub", `Without ${what}, a full IPC would have classified ${listNames(cls)} (${ppl(cls)} people).`);
+    if (blank.length) line("sub", `Even without ${what}, ${listNames(blank)} (${ppl(blank)} people) would still have stood blank: the hour alone would have made ${blank.length === 1 ? "its" : "their"} blank.`);
+    if (uns.length) line("sub", `Of ${listNames(uns)} you have said nothing, so the sentence below is a range.`);
+    const bf = ranges[0];
+    const share = bf[1] - bf[0] > 0.005 ? `between ${pct(bf[0])} and ${pct(bf[1])}` : pct1(bf[0]);
+    line("sub", `So the cuts would have made ${share} of the blank, but for them alone.${cut === "money" && bf[0] > 0.005 ? " In the calmer hour the record holds, the same cut made none, so this part is not theirs alone: it is the mortar, not the bricks." : ""}`);
   }
 
   function words(cut, x, Cr, ranges) {

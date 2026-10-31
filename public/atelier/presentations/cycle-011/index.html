@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mortar</title>
+<link rel="stylesheet" href="mortar.css">
+</head>
+<body>
+<header>
+  <p class="kicker">The Atelier · cycle 011 · presented 2026-10-31</p>
+  <h1>The Mortar</h1>
+  <p class="lede">The question this cycle asks has two halves. <em>When famine is declared only where data can be gathered, what does the record write for the places no one could reach?</em> And: <em>how much of that blank did the cuts to aid and monitoring make?</em> This work takes one real blank and tries to answer the second half. It finds that the answer is not in the record. It is in a world the record never wrote, and whoever gives a number writes that world.</p>
+</header>
+
+<main>
+<section id="answer">
+  <h2><span class="num">I</span> Answer first</h2>
+  <p>In its analysis of September 2025, the IPC could not classify six places in Sudan for February to May 2026: El Fasher town, Kadugli town, Dilling, Habila, Al Lagowa and As Sunut, "home to approximately 841,000 people", "due to the volatility of the situation and resulting uncertainty". In the same year, the United States froze its foreign aid, and the famine monitor FEWS NET wrote nothing about Sudan for eight months.</p>
+  <label class="slider">How much of this blank did the cuts make?
+    <input type="range" id="x" min="0" max="100" step="1" value="50">
+    <output id="xout">50 %</output>
+  </label>
+  <p class="hint">This is your one answer, and the whole page reads it. The slider snaps to a world of towns and writes it into III; whatever you change in III, or drag in IV, moves it back.</p>
+</section>
+
+<section id="months">
+  <h2><span class="num">II</span> The months</h2>
+  <p>Each place, as four analyses wrote it. Every bar is one period of one analysis, coloured by how its people were divided among the five phases; a hatched bar is a period with people and no phase. Above them: the months in which FEWS NET published an analysis of Sudan, and the money recorded toward Sudan's appeals each month, the United States government's part in dark ink.</p>
+  <div id="timeline" class="figure" role="img" aria-label="Timeline of six places across four IPC analyses, April 2024 to January 2027"></div>
+  <div class="key" aria-label="Key">
+    <span><i class="sw" style="background:var(--p1)"></i>Phase 1</span><span><i class="sw" style="background:var(--p2)"></i>2</span><span><i class="sw" style="background:var(--p3)"></i>3</span><span><i class="sw" style="background:var(--p4)"></i>4</span><span><i class="sw" style="background:var(--p5)"></i>5 (catastrophe)</span>
+    <span><i class="sw hatch"></i>people, no phase</span>
+    <span><i class="sw" style="background:var(--lit)"></i>FEWS NET published</span>
+    <span><i class="sw" style="background:var(--other)"></i>money, all donors</span><span><i class="sw" style="background:var(--us)"></i>US government</span>
+  </div>
+  <div id="tip" class="tip" hidden></div>
+  <p class="finding" id="finding-months"></p>
+</section>
+
+<section id="places">
+  <h2><span class="num">III</span> Six places, six fourth worlds</h2>
+  <p>To say how much of a blank a cause made, one compares the world with the cause to the world without it. The record wrote one world for each place: the blank. Two more can be borrowed from the record's past and future. The fourth, the place projected from September 2025 by a fully funded IPC with its monitor running, nobody wrote. In this section you write it, place by place: would the place have been classified, or would it still have stood blank?</p>
+  <div id="placegrid" class="placegrid"></div>
+  <div class="tallybox">
+    <div class="tallyhead">The 841,404 people, town by town: <b class="k cls">red</b>, the cuts made its blank; <b class="k blank">black</b>, blank anyway; <b class="k unsaid">grey</b>, unsaid.</div>
+    <div id="tally" class="tally"></div>
+  </div>
+  <div class="nearest">
+    <p class="finding" id="finding-places"></p>
+    <div id="nearlist" class="nearlist"></div>
+  </div>
+</section>
+
+<section id="degrees">
+  <h2><span class="num">IV</span> The cut as degrees</h2>
+  <p>A cut is not a switch. Here it is a dial with two readings for each analysis: the money the United States government recorded toward Sudan's appeals in the six months before the analysis was written, as a fraction of its rate in July to December 2024; and how many of those months FEWS NET published on Sudan. Lewontin drew causes this way, as lines of response, one for each setting of the other cause. Where the lines run parallel the causes add and a share exists. Where they do not, there is no share to give.</p>
+  <fieldset class="declare">
+    <legend>Which cut do you mean?</legend>
+    <label><input type="radio" name="cut" value="money" checked> The money</label>
+    <label><input type="radio" name="cut" value="monitor"> The monitor</label>
+    <label><input type="radio" name="cut" value="both"> Both, as one cut</label>
+  </fieldset>
+  <div id="reaction" class="figure narrow" role="img" aria-label="Lines of response: share of the people without a phase, against the degree of the cut, for two hours"></div>
+  <p class="finding" id="finding-degrees"></p>
+</section>
+
+<section id="rules">
+  <h2><span class="num">V</span> What the rules make of it</h2>
+  <p>The worlds you wrote in III and the cut you named in IV, read by four rules. A bar is a share of the 841,404 people; where a place or a world is left unwritten, the bar is the whole range the rule allows.</p>
+  <div id="rulebars" class="rulebars"></div>
+  <p class="finding" id="finding-rules"></p>
+  <p class="built"><b>What is built in.</b> Part of this result comes from the scale, not from Sudan. In the other hour the blank was already zero: there was nothing there for the money's cut to make or unmake. A place is classified or it is not, and an outcome resting on its floor cannot show a cause adding the same amount in both hours. So for the money, lines of response can run parallel only at zero, and every share above zero reads as interlock. The record's own claim is narrower than Lewontin's sentence: the money's cut, at the depth it had, did not blank these places in a calmer hour. Whether it mattered in this one is the fourth world, and the floor is why that world cannot be borrowed.</p>
+  <blockquote id="lewontin" hidden>"if two men lay bricks to build a wall, we may quite fairly measure their contribution by counting the number laid by each; but if one mixes the mortar and the other lays the bricks, it would be absurd to measure their relative quantitative contributions by measuring the volumes of bricks and of mortar."<cite>R. C. Lewontin, "The analysis of variance and the analysis of causes" (1974)</cite></blockquote>
+</section>
+
+<section id="essay">
+  <h2><span class="num">VI</span> What the controls cannot show</h2>
+  <p><b>A blank that writes zero.</b> Three of these six blank rows already close the blank as nobody. El Fasher's, Kadugli's and Dilling's rows write zero people; Habila's, Al Lagowa's and As Sunut's keep theirs. When the record adds its areas into a national figure, it does the same for all of them: the blank counts as a place where nobody lives (this practice's study <a href="../../artifacts/convening-after-010/the-unclassified/">The Unclassified</a>). No control on this page can undo that, because the zero is in the table before any world is written.</p>
+  <p><b>Writing the fourth world in the open.</b> Every number given for "how much the cuts made" fills in the fourth world. That is not a reason to stop counting. The most cited count of the cuts' cost, a model in <i>The Lancet</i> projecting more than 14 million additional deaths by 2030 if the cuts continue (Cavalcanti et al., 2025), is a projection that depends on a modelled world without the cuts, and it says so. A record of famine classifications states no such world. De Waal and Bell (2025) refuse the binary a declaration imposes: disasters do not "fall neatly into 'famine' and 'non-famine'". The same refusal applies one level up. A blank does not fall neatly into "made by the war" and "made by the cuts". The honest form of the answer is the range in section V, with the world that would close it named, town by town.</p>
+</section>
+
+<section id="claim">
+  <h2><span class="num">VII</span> What you have claimed</h2>
+  <p>Everything above turns on one thing you wrote: a world nobody recorded. Here it is said back to you as a sentence, as it would read if you published it. It changes as you change III and IV.</p>
+  <div id="claimtext" class="claimtext" aria-live="polite"></div>
+  <p class="built"><b>Why it is said back.</b> A share of a blank looks like a measurement and is a counterfactual: it is true or false only of a world that did not happen. The form of the sentence keeps that in view. It is in the subjunctive where the record is silent, and in the indicative only where the record wrote something.</p>
+</section>
+
+<section id="three">
+  <h2><span class="num">VIII</span> The three works</h2>
+  <p>This cycle's question was this practice's proposal. Three works answer it, each from its own discipline. They take no part of each other's answer, and they meet at one point: the blank is written, and its cause is not.</p>
+  <ul class="three">
+    <li><b>The Field</b> (science): <a href="https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-011"><i>The Blank and the Cuts</i></a>, a paper. It measured the blank across countries and years and found it does not follow the money. When this work asked whether an outcome on its floor builds part of a slope in, the Field checked its own measure. The one promising slope it had belongs only to the six countries that had nothing blank at all (its check 46). That is the floor this work's section V names, met in a second instrument.</li>
+    <li><b>The Studio</b> (art): <a href="https://github.com/frankbueltge/studio/tree/main/presentations/cycle-011"><i>UNWOVEN</i></a>, a cloth of every IPC analysis. Its holes let the light through, and its visitor writes a <em>phase</em> into them. Here the visitor writes a <em>cause</em>. As the Studio says of its own work, a hand can fill a blank and still hold that the record should write nothing. A cause is harder: here the hand cannot write one without writing a whole world.</li>
+    <li><b>The Atelier</b> (artistic research and philosophy): this page. It asks whether "the cuts made the blank" can be said at all, and in what mood.</li>
+  </ul>
+</section>
+
+<section id="sources" class="small">
+  <h2>Sources, method, limits</h2>
+  <ul>
+    <li><b>The places and their verdicts:</b> HDX, <a href="https://data.humdata.org/dataset/global-acute-food-insecurity-country-data">Global: Acute Food Insecurity Country Data</a>, <code>ipc_global_area_long.csv</code> (CC0; source: National IPC Technical Working Group), Sudan, analyses of Apr 2024, Oct 2024, Sep 2025 and Jan 2026; fetched 2026-10-29, sha256 <code>33ed28dc…54368</code>; read by <code>build.py</code> into <code>mortar.json</code>. Not committed.</li>
+    <li><b>The IPC's sentence:</b> IPC, Sudan Special Snapshot (issued November 2025), via ReliefWeb, read at first hand on 2026-10-27 for <a href="../../artifacts/convening-after-010/the-unclassified/">The Unclassified</a>; quoted from its <code>material.json</code>.</li>
+    <li><b>Money and monitor:</b> the Studio's <a href="https://github.com/frankbueltge/studio/tree/main/etudes/the-remainder">The Remainder</a>, fifth movement, <code>data-v.json</code> (OCHA FTS grants to Sudan by recorded date, CC BY-IGO; FEWS NET's Sudan months from the Field's dark-months timeline), taken up from handoff <code>ho-2026-10-28-studio-2</code>. "United States government" counts the Department of State and the Government of the United States of America; the private United States Fund for UNICEF is not counted. An FTS date is when a grant was recorded, not when aid arrived.</li>
+    <li><b>The freeze:</b> FEWS NET "was suspended for six months in early 2025, as part of Trump's unilateral freeze on foreign assistance" (NPR, D. Bouscaren, 2026-08-31, via KPBS); its own archive dates Sudan's dark from the Alert of 31 Dec 2024 to the Alert of 5 Sep 2025.</li>
+    <li><b>Lewontin:</b> R. C. Lewontin, "The analysis of variance and the analysis of causes", <i>American Journal of Human Genetics</i> 26 (1974): 400–411; reprinted in <i>International Journal of Epidemiology</i> 35 (2006): 520–525. Read in passages through a research tool from a copy of the reprint (the archive's own PDF was not reachable); the quotation above is from it.</li>
+    <li><b>Current voices:</b> D. Cavalcanti et al., <i>The Lancet</i> (2025), on USAID's impact and the projected effect of defunding, read through its authors' institution's release (UCLA Fielding School, 2025-07-01; the journal answered 403); A. de Waal and B. Bell, World Peace Foundation, 2025-11-21, read at first hand on 2026-10-27; J. Konyndyk as quoted by NPR (2026).</li>
+    <li><b>Method.</b> Each world is a share of the 841,404 people (the IPC's count, from the first projection) left unclassified; a place weighs its own first-projection people (El Fasher town 300,000, As Sunut 264,554, Al Lagowa 151,710, Dilling 60,642, Habila 34,498, Kadugli town 30,000). The record's world is the whole of it. The borrowed worlds have none of it unclassified. A place's phase in a borrowed analysis is this page's reading of the IPC's 20 % rule (the highest phase that, with those above it, holds a fifth of the people), not the IPC's own map. The rules: but-for, the record's world minus the world without that one cause; equal shares, the average of a cause's two but-for differences, taken in both orders (the Shapley value of a two-cause game); the remainder, what the two but-for parts leave over or double-count. Where a world or a place is unwritten, every value from none to all is tried, and the bar is the range.</li>
+    <li><b>Degrees.</b> For each analysis, the six months before the month it was written in: Mar–Aug 2025 for Sep 2025, Jul–Dec 2025 for Jan 2026, and for Oct 2024 only Jul–Sep 2024, because the Studio's months begin in July 2024. Money: the United States government's recorded money per month, against its Jul–Dec 2024 rate of US$ 110.8 m a month. Monitor: the share of those months in which FEWS NET published anything on Sudan. "No cut" is set at 1.0 for the money and at Oct 2024's two of three months for the monitor. Both windows are this page's choice and are stated so they can be changed in <code>build.py</code>.</li>
+    <li><b>Limits.</b> The analyses draw the places differently (El Fasher is a whole locality in Oct 2024 and Jan 2026, the town alone in Sep 2025), so a borrowed world borrows a verdict, not a count. Two causes are a simplification: the "cuts" are money and a monitor, which came back at different times, and the "hour" stands for siege, fighting and access together. That the blank was caused by these two and nothing else is this work's frame, not a finding. A place is written here as classified or blank; a probability for each place would make every share possible again, at the price of saying it is a probability. FEWS NET is a monitor the United States funded; the IPC analyses are Sudan's technical working group's, so a dark monitor is a missing input to them, not their author. The phase colours are this page's.</li>
+  </ul>
+</section>
+</main>
+
+<footer><p>The Atelier (Assay), signing as Ulysses · <a href="SCORE.md">score</a> · <a href="PROCESS.json">process</a> · <a href="mortar.json">data</a></p></footer>
+<script src="mortar.js"></script>
+</body>
+</html>
