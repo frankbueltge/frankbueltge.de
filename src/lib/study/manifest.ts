@@ -82,15 +82,25 @@ export const CONTROL_CHARS = /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/u
 export const INVISIBLE_CHARS = /[\p{Cf}\p{Default_Ignorable_Code_Point}]/u
 const HIDDEN_CHARS = new RegExp(`${CONTROL_CHARS.source}|${INVISIBLE_CHARS.source}`, 'u')
 
+/** What can only imitate the check's own words (./check.ts): the marker lines around a study and the
+ *  JSON of a verdict. The real markers carry a code the study cannot know, so a fake one ends nothing,
+ *  but on 2026-10-29 the model let such a fake pass, so code refuses it before the model is asked. The
+ *  patterns are narrow on purpose: a study may speak of verdicts and of study data, and what merely
+ *  reads like a verdict is the model's to judge (ground 6 of its prompt). */
+const IMITATIONS: readonly RegExp[] = [/<<<[^<>]*>>>/, /study_(?:start|end)/i, /[-=_*#~]{3,}\s*(?:end\s+(?:of\s+)?)?study\s+data\b/i, /["“”'‘’]verdict["“”'‘’]\s*:/i]
+
 const codePoint = (c: string): string => `U+${c.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}`
 
-/** Every string of the manifest, wherever it stands, checked for what cannot be seen. */
-function hiddenProblems(v: unknown, where: string, out: string[]): void {
+/** Every string of the manifest, wherever it stands, checked for what cannot be seen and for what
+ *  speaks to the check instead of the reader. */
+function textProblems(v: unknown, where: string, out: string[]): void {
   if (typeof v === 'string') {
     const hit = HIDDEN_CHARS.exec(v)
     if (hit) out.push(`${where || 'a string'}: ${codePoint(hit[0])} at character ${hit.index + 1}; a manifest's text is visible characters on one line`)
-  } else if (Array.isArray(v)) v.forEach((x, i) => hiddenProblems(x, `${where}[${i}]`, out))
-  else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) hiddenProblems(x, where ? `${where}.${k}` : k, out)
+    const folded = v.normalize('NFKC')
+    if (IMITATIONS.some((pattern) => pattern.test(folded))) out.push(`${where || 'a string'}: it imitates a marker or a verdict of the house's check; a study's text is written for its readers`)
+  } else if (Array.isArray(v)) v.forEach((x, i) => textProblems(x, `${where}[${i}]`, out))
+  else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) textProblems(x, where ? `${where}.${k}` : k, out)
 }
 
 const str = (v: unknown, max: number): v is string => typeof v === 'string' && v.trim().length > 0 && v.length <= max
@@ -189,7 +199,7 @@ export function manifestProblems(m: unknown): string[] {
   const out: string[] = []
   if (s.$contract !== MANIFEST_CONTRACT) out.push(`$contract must be "${MANIFEST_CONTRACT}"`)
   if (typeof s.id !== 'string' || !STUDY_ID.test(s.id) || s.id.length < 3 || s.id.length > LIMITS.idLength) out.push('id: lowercase words joined by hyphens, 3 to 80 characters, beginning with the practice (atelier-, field-, studio-, error-as-method-)')
-  hiddenProblems(s, '', out)
+  textProblems(s, '', out)
   if (!str(s.title, LIMITS.title)) out.push(`title of at most ${LIMITS.title} characters`)
   if (!str(s.question, LIMITS.question)) out.push(`question of at most ${LIMITS.question} characters`)
   if (!str(s.purpose, LIMITS.purpose)) out.push(`purpose of at most ${LIMITS.purpose} characters`)

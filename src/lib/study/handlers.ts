@@ -304,7 +304,7 @@ export async function handleStatus(request: Request, env: StudyEnv, deps: Deps):
 /** The released batches of one study's finished days. What the nightly snapshot commits and hands
  *  to the practice. Every call first clears what a finished day kept to stop a second answer set —
  *  also when no study is open, the registry stands by, or the id is unknown — so the nightly
- *  snapshot's call keeps the promise "by the next night at the latest" whatever else is true. */
+ *  snapshot's call keeps the promise "by the end of the next day at the latest" whatever else is true. */
 export async function handleRecord(request: Request, env: StudyEnv, deps: Deps): Promise<Response> {
   const db = env.RECEPTION_DB
   if (!db) return standby('store')

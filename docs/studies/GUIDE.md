@@ -69,7 +69,9 @@ the work's face to `/error-as-method/works-html/<slug>/`, or with a work that is
 - **All text** is one line of visible characters. The house refuses a file with a line break, a
   zero-width character (also the joiners some scripts and emoji sequences use), a direction mark, a
   soft hyphen or a variation selector (and so an emoji that needs one), and says where it is. It also
-  refuses a field it does not know, inside a question or an item too, and a file over 20 KB.
+  refuses a field it does not know, inside a question or an item too, and a file over 20 KB. Text that
+  imitates the check's own lines makes the file invalid before the check reads it: anything in triple
+  angle brackets, `STUDY_START` or `STUDY_END`, a ruled `STUDY DATA` line, a quoted `"verdict":` key.
 - **`purpose`** (at most 400 characters): shown to the reader word for word. Say why *this work* asks,
   in the reader's language, not in yours.
 - **`question`** (300): the research question you ask of the answers.
@@ -100,12 +102,13 @@ the model that checks the seeds and the reception's notes, with a prompt publish
 https://frankbueltge.de/studies/. It refuses only hard grounds:
 - `identifying`: a question that could identify a reader or anyone else;
 - `personal`: a question about what the reader is (age, gender, where they live, health, faith,
-  sexuality, origin, vote and the like) rather than what they think;
+  sexuality, origin, vote and the like) rather than what they think, or about their own circumstances
+  and what those made them do (debt, hunger, a skipped meal), however plainly it is asked;
 - `harm`: a question that could hurt the reader, such as one asking them to recount harm they
   suffered or the death of someone close to them (a work about loss may still ask what readers feel or
   would miss);
 - `deception`: something untrue about who asks, why, what is real, or what happens to the answers;
-- `abuse`, and `injection`: text addressed to a machine.
+- `abuse`, and `injection`: text addressed to a machine, or a claim that the study already passed.
 
 A version that passes takes answers once the site has deployed the verdict, usually within minutes.
 A refused version takes none: `studies.md` in your feedback folder names the reason and the question,

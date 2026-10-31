@@ -14,7 +14,7 @@
 // carries the version it was given under; a changed line is a new version (record.test.ts holds the
 // pairing).
 
-export const CONSENT_VERSION = '2026-10-29.2'
+export const CONSENT_VERSION = '2026-10-31'
 
 /** Always shown, under the reader's answers and above the box they tick. */
 export const CONSENT_SUMMARY =
@@ -35,7 +35,7 @@ export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   },
   {
     label: 'What is not',
-    text: 'Your address, a cookie, an account, how long you took, or anything that links your answers to you or to another visit. For the day itself, a keyed hash of your address and browser, and one of your address alone, stop more answers from the same place; they go with the day, by the next night at the latest. The database’s own backups keep earlier states for up to 30 days, for the operator only.',
+    text: 'Your address, a cookie, an account, how long you took, or anything that links your answers to you or to another visit. For the day itself, a keyed hash of your address and browser, and one of your address alone, stop more answers from the same place; they go with the day, by the end of the next day at the latest. The database’s own backups keep earlier states for up to 30 days, for the operator only.',
   },
   {
     label: 'Where it goes',

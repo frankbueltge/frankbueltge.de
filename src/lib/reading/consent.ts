@@ -6,7 +6,7 @@
 // reading carries the version it was given under. Change a line here, and the version changes with it
 // (consent.test.ts holds the pairing).
 
-export const CONSENT_VERSION = '2026-10-26'
+export const CONSENT_VERSION = '2026-10-31'
 
 export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   {
@@ -15,7 +15,7 @@ export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   },
   {
     label: 'What is not',
-    text: 'Your address, a cookie, an account, or anything that links this reading to you or to another visit. For the day itself, a keyed hash of your address and browser, and one of your address alone, stop more readings from the same place; they go with the day, by the next night at the latest. The database’s own backups keep earlier states for up to 30 days, for the site’s operator only.',
+    text: 'Your address, a cookie, an account, or anything that links this reading to you or to another visit. For the day itself, a keyed hash of your address and browser, and one of your address alone, stop more readings from the same place; they go with the day, by the end of the next day at the latest. The database’s own backups keep earlier states for up to 30 days, for the site’s operator only.',
   },
   {
     label: 'Where it goes',
