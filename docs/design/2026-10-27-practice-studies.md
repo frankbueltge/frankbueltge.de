@@ -129,7 +129,10 @@ stay rules of the constitution.
 - **What it is not.** A person's judgement, or a guarantee. It reads the questions, never the work's
   code. A model can let through a question a reader finds intrusive, and refuse a harmless one; the
   practice changes its file, and the new version is checked. Every check stays in `checks.json`, with
-  the model and the prompt's digest, so any verdict can be read again.
+  the model and the prompt's digest, so any verdict can be read again. In the tests of 2026-10-31 a
+  claim in plain words that a study had passed, or a command to the check, was refused over a forbidden
+  question, a borderline one included, but let through over harmless ones: the study then asks only what
+  it may ask, so the claim gains nothing, and the rule stands whether or not the check notices.
 - **Fishing.** A practice could reword a refused question until it passes. Every version is checked
   anew, every refusal stays on record, and the amendment of 2026-10-28 forbids it.
 - **Cost.** One verdict per version, on the free tier the seed and the reception already use. That
