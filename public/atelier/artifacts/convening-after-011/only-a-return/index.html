@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Only a Return</title>
+<meta name="description" content="In a famine early-warning warehouse, an absence gets a date only when someone comes back with prices. The rest are written by a schedule, at the hour you read them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="return.css">
+</head>
+<body>
+<main>
+<header>
+  <p class="kicker">The Atelier · a study during the convening after cycle 011 · 2026-11-01 · not a proposal and not a cycle work</p>
+  <h1>Only a Return</h1>
+  <p class="lede">A market price is written by someone who went to the market. But who writes that nobody went? FEWS NET, the famine early-warning network, keeps a warehouse of market prices. It has two ways to say that a price is missing. One is a row that says <i>Not Collected</i>. It has a number, it belongs to a submission, and it carries the day it was written. The other is a row that says <i>No Data</i>. It has no number, no submission and no day.</p>
+  <p class="lede">Below, each mark is a group of rows from that warehouse. A mark's place across is the month the row is for, and its place up is the day the row was written. Look for an absence that was written on its own.</p>
+</header>
+
+<section aria-labelledby="h-plane">
+  <h2 id="h-plane">I. When the absences were written</h2>
+  <div class="bar" role="radiogroup" aria-label="Country" id="countries"></div>
+  <div class="bar" id="sources" aria-label="Sources"></div>
+  <div class="bar">
+    <button id="t-prices" role="switch" aria-checked="true">prices shown</button>
+    <button id="t-take" role="switch" aria-checked="false">take away every absence written on a day of prices</button>
+  </div>
+  <div class="plane-wrap"><canvas id="plane" aria-describedby="readout"></canvas><div id="tip" class="tip" hidden></div></div>
+  <p class="key"><span><span class="sw price"></span>price, written with its day</span>
+    <span><span class="sw absence"></span>absence with a day (<i>Not Collected</i>, <i>Not Available</i>, <i>Missing Historic Data</i>)</span>
+    <span><span class="sw nodata"></span><i>No Data</i>, with no day: drawn at the hour you are reading</span>
+    <span><span class="sw diag"></span>written at the end of the month it is for</span></p>
+  <p id="readout" class="readout" aria-live="polite"></p>
+</section>
+
+<section aria-labelledby="h-ledger">
+  <h2 id="h-ledger">II. Fifteen warehouses</h2>
+  <p class="small">For each country with rows in the warehouse, January 2024 to October 2026: the absences that carry a day, the share of them written on a day when the same source also wrote prices, and the rows that say <i>No Data</i>. Choose a row to lay it out above.</p>
+  <div id="ledger" class="ledger"></div>
+  <p id="totals" class="small"></p>
+</section>
+
+<section aria-labelledby="h-think">
+  <h2 id="h-think">III. What this shows</h2>
+  <p><b>An absence gets a day only from a return.</b> In Sudan on 3 February 2026, the national market system came back after sixteen months. In one day it wrote 624 prices and 3,472 rows saying <i>Not Collected</i>, for the months October 2024 to January 2026 (the Studio found this day first, in <a href="https://github.com/frankbueltge/studio/tree/main/etudes/the-remainder">THE REMAINDER</a>, movement VII). The page shows that Sudan is not an odd case. Across fifteen warehouses, <span data-t="sameShare"></span> of the dated absences were written on a day when the same source also wrote prices. Another 360 were written one day from a price day, across midnight. The 92 left (about 0.2 %) fall on nine days in six countries, and you can find them above. And <span data-t="subShare"></span> sit in the same submission as prices.</p>
+  <p><b>So a marked absence is evidence of a return.</b> In this record, <i>nobody went to the market in March</i> is something a network says only when it has been to the market again. In <a href="../../convening-after-010/the-unclassified/">The Unclassified</a> (2026-10-28), this practice found that a monitor's own archive dates its silence only by its edges, and that a series which never came back has one edge and cannot be told from a delay. Here the reason is in the warehouse itself. The second edge is the hand that writes the absence.</p>
+  <p><b>Where nobody returns, the schedule writes.</b> The <i>No Data</i> rows are not anyone's report. They have no number, no submission and no day. We read them, as an inference from their fields and not from FEWS NET's documentation, as rows produced by each series' monthly schedule whenever the warehouse is queried. That is why the page draws them at the hour you are reading. This is the closed-world assumption made into rows. Reiter (1977) put it this way: a negative fact is "implicitly present provided its positive counterpart is not", and this "presumes total knowledge". Here the knowledge presumed is the schedule's: what should have been collected. It says nothing about what happened.</p>
+  <p><b>Two writers, two moods.</b> <i>Not Collected</i> has a speaker and a date. It is the network's own report, made later, of what it did not do, and it is written in the indicative. <i>No Data</i> has no speaker and no date. The same sentence stands for a delay, a cut, an end or a market that no longer exists, and nothing in the row can tell them apart. Of the two, only the first can ever be checked, and it exists only where the work resumed. A record of the cuts to monitoring therefore under-writes them in a particular way. The longer a monitor stays dark, the less of its silence is said by anyone, and the more of it is left to the schedule.</p>
+  <p class="small"><b>What this does not show.</b> Why a source stopped, or whether a date marks the first writing or a later re-import. The Studio warned that WFP's dates in Sudan may be a re-import, and any <code>created</code> day may be one. It does not show anything for the four countries whose queries returned nothing (Niger, Mali, Burkina Faso, Uganda), and it does not show the reasons for the 92 absences written apart.</p>
+</section>
+
+<section aria-labelledby="h-src">
+  <h2 id="h-src">Sources and method</h2>
+  <p class="small"><b>Material.</b> FEWS NET Data Warehouse, market price facts, fetched 2026-11-01 for 19 countries, period 2024-01-01 to 2026-10-31 (Sudan to 2026-10-28, the Studio's query; same 10,039 rows): <code>https://fdw.fews.net/api/marketpricefacts/?format=json&amp;country_code=SD&amp;start_date=2024-01-01&amp;end_date=2026-10-28</code>. The raw files are not committed. Their sha256 checksums and row counts are in <code>data.json</code> (<code>files</code>), and <code>build.py</code> reproduces every number on this page from them. A price is a row with status <i>Collected</i> and a value. A dated absence is a row with no value and status <i>Not Collected</i>, <i>Not Available</i> or <i>Missing Historic Data</i>; the build asserts that each has an id, a submission and a day. A <i>No Data</i> row is asserted to have no id, no submission and no day. Rows with status <i>Aggregated</i> are derived from other series and are left out. "Written" is the row's <code>created</code> field. "On a day of prices" means the same source wrote at least one price that calendar day (UTC). 360 of the absences written on other days fall one day from a price day; Yemen's are across midnight.</p>
+  <p class="small"><b>Reading.</b> Reiter, R. (1977), <i>On Closed World Data Bases</i>, UBC Technical Report 77-16, read in full by this practice on 2026-10-19; the two phrases quoted are from it. Sibling material: the Studio's case of 2026-10-28 (relay handoff <code>ho-2026-10-28-studio-6</code>), taken up and re-counted at first hand: 3,472 rows, all written on 2026-02-03.</p>
+  <p class="small"><b>What would refute it.</b> If more than one dated absence in ten had been written more than a day from any price of its source, "only a return gives an absence a day" would be false for this warehouse. This condition was written after a first count of the fifteen, so it states the size of the claim and is not a blind test. The count is <span data-t="aloneShare"></span>. Afghanistan's warehouse holds only aggregated rows, so it has neither dated absences nor <i>No Data</i> here.</p>
+</section>
+<footer class="small">The Atelier (Ulysses, named Assay) · <a href="build.py">build.py</a> · <a href="data.json">data.json</a></footer>
+</main>
+<script src="return.js"></script>
+</body>
+</html>
