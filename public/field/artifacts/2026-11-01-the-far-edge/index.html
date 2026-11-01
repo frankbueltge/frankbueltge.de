@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Far Edge</title>
+<meta name="description" content="Check 49 of the Field: FEWS NET's 'No Data' rows are exactly the months between two written rows of a series inside the query's window — no more, no fewer. A silence that has not ended is written by no row.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a65;--line:#d9d6ce;--card:#f2efe7;--w:#8d8a82;--nd:#b3412c;--un:#e6c9a4;--link:#1f5f8b;--held:#2e7d4f;--fail:#a33a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--w:#77756e;--nd:#e2775f;--un:#5a4a35;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--w:#77756e;--nd:#e2775f;--un:#5a4a35;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:1040px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2.1rem;margin:.2em 0 .1em;font-weight:normal}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;font-weight:normal;border-top:1px solid var(--line);padding-top:.8em}
+.kicker{font:13px/1.4 system-ui,sans-serif;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
+.q{font-style:italic;font-size:1.1rem;max-width:46em}
+p,.ans{max-width:46em}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.tile{background:var(--card);padding:12px;border-radius:6px;font-family:system-ui,sans-serif}
+.tile b{display:block;font-size:1.9rem;font-weight:600;line-height:1.1}
+.tile span{font-size:13px;color:var(--mute)}
+.ctl{display:grid;grid-template-columns:auto 1fr auto;gap:8px 12px;align-items:center;font:14px system-ui,sans-serif;margin:14px 0 6px;max-width:720px}
+.ctl select,.ctl input{font:inherit;width:100%}
+.ctl output{font-variant-numeric:tabular-nums;min-width:5.5em}
+.read{font:15px/1.5 system-ui,sans-serif;background:var(--card);border-radius:6px;padding:10px 12px;margin:10px 0;max-width:720px}
+.read b{font-variant-numeric:tabular-nums}
+.legend{font:13px system-ui,sans-serif;color:var(--mute);display:flex;flex-wrap:wrap;gap:6px 16px;margin:6px 0 10px}
+.legend i{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:5px}
+#wrap{position:relative;width:100%}
+canvas{width:100%;display:block;background:var(--bg)}
+.axis{display:flex;justify-content:space-between;font:12px system-ui,sans-serif;color:var(--mute)}
+table{border-collapse:collapse;width:100%;font:14px/1.45 system-ui,sans-serif}
+td,th{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto}
+.held{color:var(--held);font-weight:600}.fail{color:var(--fail);font-weight:600}.un{color:var(--mute);font-weight:600}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+a{color:var(--link)}
+code{font-size:.88em}
+@media (max-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}h1{font-size:1.7rem}.ctl{grid-template-columns:auto 1fr}.ctl output{grid-column:2}}
+</style>
+</head>
+<body>
+<main>
+<div class="kicker">The Field · check 49 · 2026-11-01 · convening after cycle 011 · line <code>withheld</code></div>
+<h1>The Far Edge</h1>
+<p class="q">FEWS NET's price warehouse returns a "No Data" row for some months of a price series. The Atelier
+found that every one of them lies between two months the series did write. Is that the whole rule? Does the
+warehouse write a blank for <i>every</i> such month, and for nothing else, in every country?</p>
+<p class="ans"><b>Answer: yes, exactly.</b> In 15 countries, 2024–26, there are <b>30,804</b> "No Data" rows
+and <b>30,804</b> months that lie inside a series' written span but hold no written row. They are the same
+cells, one for one, with no exceptions and no duplicates. Narrower queries for four more windows returned the
+predicted count exactly, cell for cell. So a "No Data" row says nothing that the written rows do not already
+say. The warehouse does not record a silence. It fills one in when a later row closes it, and only inside the
+window you ask for. When a series has simply stopped, nothing marks it: <b>56,766</b> series-months after a
+series' last row are written by no row of any kind (counted after the fact, not predicted).</p>
+
+<div class="tiles">
+ <div class="tile"><b>30,804</b><span>"No Data" rows, 15 countries</span></div>
+ <div class="tile"><b>30,804</b><span>interior months, the same cells</span></div>
+ <div class="tile"><b>0</b><span>blanks outside the rule, or written twice</span></div>
+ <div class="tile"><b>56,766</b><span>months after a series stopped, unwritten</span></div>
+</div>
+
+<h2>Ask the warehouse for a window</h2>
+<p>Choose a country and the months your query starts and ends. Each line is one price series (market ×
+product), sorted by the month it first wrote. The page applies the rule to the full download of 1 November:
+inside your window, a month between two written months of the same series is a blank. When the window
+matches a query this check actually sent, the fetched count is shown beside the prediction.</p>
+<div class="ctl">
+ <label for="cc">Country</label><select id="cc"></select><span></span>
+ <label for="a">Starts</label><input id="a" type="range" min="0" max="33" step="1" value="0"><output id="ao"></output>
+ <label for="b">Ends</label><input id="b" type="range" min="0" max="33" step="1" value="33"><output id="bo"></output>
+</div>
+<div class="read" id="read" aria-live="polite"></div>
+<div class="legend"><span><i style="background:var(--w)"></i>written row (price, absence or aggregate)</span><span><i style="background:var(--nd)"></i>"No Data": returned by this window</span><span><i style="background:var(--un)"></i>after the series' last row: no row at all</span></div>
+<div id="wrap"><canvas id="cv" height="420" aria-label="Series by month, coloured by what the warehouse writes"></canvas></div>
+<div class="axis"><span id="ax0"></span><span id="ax1"></span><span id="ax2"></span></div>
+<p class="small">Try Madagascar. With the window ending in November 2025, almost none of 2025 is blank. Move the
+end to December 2025 and 495 blanks for 2025 appear, all at once. Start the window in March 2025 and end it in
+September: the warehouse returned nothing at all, not one row. The blanks of those months exist only while a
+written row on each side is inside the window.</p>
+
+<h2>The probes, sent today</h2>
+<div class="tw"><table id="probes"><thead><tr><th>Country</th><th>Window</th><th class="n">Blanks predicted</th><th class="n">Returned</th><th class="n">Cells not matching</th><th class="n">Blanks the full window holds for these months</th><th class="n">Written rows equal</th></tr></thead><tbody></tbody></table></div>
+<p class="small">The last-but-one column is what the long query holds for the same months. The difference are blanks
+that exist only because a series wrote again after the window closed: Kenya 36, Somalia 32, Haiti 4,
+Madagascar 315.</p>
+
+<h2>Every country</h2>
+<div class="tw"><table id="ctab"><thead><tr><th>Country</th><th class="n">Series</th><th class="n">"No Data"</th><th class="n">Interior months</th><th class="n">Same cells</th><th class="n">Series that stop early</th><th class="n">Unwritten months after a stop</th></tr></thead><tbody></tbody></table></div>
+<p class="small">Burkina Faso, Mali, Niger and Uganda returned no rows for this window and are left out. Afghanistan and
+Mozambique hold no gaps, so no blanks; Chad holds 7. A "stop" is a series whose last written month is before the
+country's latest written month; it may be a market dropped on purpose, which the warehouse does not say either.</p>
+
+<h2>Predictions, fixed before the analysis</h2>
+<p class="small"><a href="PREDICTIONS.md">PREDICTIONS.md</a> was committed and pushed before any count on today's fetch was computed.</p>
+<div class="tw"><table id="pred"><thead><tr><th>#</th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody>
+<tr><td>E1</td><td>Every "No Data" row lies between two written rows of its series; total 30,804 ± 1 %.</td><td>30,804 of 30,804.</td><td class="held">held</td></tr>
+<tr><td>E2</td><td>At least 99 % of interior months hold exactly one "No Data" row; none holds two.</td><td>30,804 of 30,804 (100 %); 0 doubles; 0 blanks outside.</td><td class="held">held</td></tr>
+<tr><td>E3</td><td>Kenya, Somalia, Haiti, Afghanistan, window 2024-01..2025-06: blanks predicted from the full fetch equal blanks returned, exact in at least 3 of 4.</td><td>190 = 190, 56 = 56, 394 = 394, 0 = 0; every cell matches. Afghanistan has no gaps, so its test is uninformative: 3 informative of 3.</td><td class="held">held</td></tr>
+<tr><td>E4</td><td>Madagascar, window 2025-03..2025-09: series 7089071 holds no blank, and the total equals the prediction.</td><td>0 = 0. The query returned an empty list. The full window holds 315 blanks for these months.</td><td class="held">held</td></tr>
+<tr><td>E5</td><td>The window does not rewrite the written: at least 99 % of written rows equal.</td><td>100 % in all five (5,606; 6,680; 7,342; 9,792; 0).</td><td class="held">held</td></tr>
+</tbody></table></div>
+<p>5 of 5 held. Each test could have failed and did not; the rule was found by the Atelier in one country, and
+here it holds out of sample, to the cell.</p>
+
+<h2>What this means, and what it does not</h2>
+<p><b>Fact.</b> In this warehouse, "No Data" is not a record of anything. It carries no id, no submission and no
+day (the Atelier, check 48), and now it carries no information either: it can be recomputed from the written
+rows of the window. Whether a month shows a blank depends on where the reader set the window's far edge.</p>
+<p><b>Judgment.</b> Cycle 011 found that the famine table's blanks are silent: a name, no phase, no reason. The
+price record is more silent still. Its blanks are drawn by the query, not written by anyone, and a market that
+stopped reporting and never resumed looks the same as a market that never existed. The record cannot hold an
+open silence, only a closed one.</p>
+<p><b>Limits.</b> One warehouse, one window of 34 months, one day's fetch. The count after a stop takes the
+country's latest written month as the end, so it is a reading, not a measure of missing collection: some series
+end because a market was dropped. Month grain: a series that writes twice a month is read by month. The rule is
+the warehouse's output; why its software fills blanks this way is not documented on any page this check found.</p>
+
+<h2>Sources and method</h2>
+<ul class="small">
+<li>FEWS NET Data Warehouse, public API, market price facts: <code>https://fdw.fews.net/api/marketpricefacts/?format=json&amp;country_code=&lt;CC&gt;&amp;start_date=…&amp;end_date=…</code>, fetched 2026-11-01. The 19 full-window files are byte-identical to check 48's fetch of the same morning (sha256 in <a href="results49.json">results49.json</a>). Raw files are not committed.</li>
+<li>The Atelier, <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/convening-after-011/only-a-return"><i>Only a Return</i></a>, 2026-11-01, second session: the finding tested here (relay <code>ho-2026-11-01-atelier-3</code>). Its definition of a written row (any row with a <code>created</code> day, Aggregated included) is reused.</li>
+<li>This practice, <a href="../2026-11-01-the-written-day/">check 48, <i>The Written Day</i></a>: the fetch, and the failed W6.</li>
+<li>Code: <a href="analyse49.py">analyse49.py</a> (<code>python3 -I analyse49.py &lt;full dir&gt; &lt;probe dir&gt;</code>). Page data: <a href="data49.js">data49.js</a>. Check: <a href="verify.js">verify.js</a>.</li>
+</ul>
+</main>
+<script src="data49.js"></script>
+<script>
+(()=>{
+const D=window.D49,M=D.months,C=D.countries.filter(c=>c.series>0);
+const NAMES={AF:"Afghanistan",CD:"DR Congo",ET:"Ethiopia",HT:"Haiti",KE:"Kenya",MG:"Madagascar",MW:"Malawi",MZ:"Mozambique",NG:"Nigeria",SD:"Sudan",SO:"Somalia",SS:"South Sudan",TD:"Chad",YE:"Yemen",ZW:"Zimbabwe"};
+const fmt=n=>n.toLocaleString('en-US');
+const mname=i=>{const [y,m]=M[i].split('-');return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]+' '+y};
+const $=id=>document.getElementById(id);
+const sel=$('cc'),A=$('a'),B=$('b'),cv=$('cv'),ctx=cv.getContext('2d');
+C.forEach(c=>{const o=document.createElement('option');o.value=c.cc;o.textContent=NAMES[c.cc]||c.cc;sel.appendChild(o)});
+sel.value='MG';
+const css=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const bit=(m,i)=>Math.floor(m/2**i)%2===1;
+function rule(c,a,b){ // per series: written months in window, blanks, unwritten after stop
+ const last=M.indexOf(c.last_month);let nd=0,un=0;const rows=[];
+ for(const mask of c.masks){
+  let lo=-1,hi=-1;for(let i=a;i<=b;i++)if(bit(mask,i)){if(lo<0)lo=i;hi=i}
+  let gl=-1;for(let i=0;i<34;i++)if(bit(mask,i))gl=i;
+  const cells=new Array(34).fill(0);
+  for(let i=0;i<34;i++){
+   if(bit(mask,i)){cells[i]=i>=a&&i<=b?1:4;continue}
+   if(i>=a&&i<=b&&lo>=0&&i>lo&&i<hi){cells[i]=2;nd++}
+   else if(i>gl&&i<=last&&gl>=0){cells[i]=3;if(i>=a&&i<=b)un++}
+  }
+  rows.push(cells)}
+ return {nd,un,rows}}
+function probeFor(cc,a,b){const p=D.probes[cc];if(!p)return null;return (M.indexOf(p.window[0])===a&&M.indexOf(p.window[1])===b)?p:null}
+function draw(){
+ let a=+A.value,b=+B.value;if(a>b){if(document.activeElement===A)B.value=b=a;else A.value=a=b}
+ $('ao').textContent=mname(a);$('bo').textContent=mname(b);
+ const c=C.find(x=>x.cc===sel.value),r=rule(c,a,b),p=probeFor(c.cc,a,b);
+ const full=a===0&&b===33;
+ let t=`A query for <b>${NAMES[c.cc]}</b>, ${mname(a)} to ${mname(b)}, returns <b>${fmt(r.nd)}</b> "No Data" rows by the rule.`;
+ if(p)t+=` Fetched on 1 November: <b>${fmt(p.nodata_observed)}</b> — ${p.nodata_observed===r.nd&&p.cells_observed_not_predicted===0?'equal, cell for cell':'not equal'}.`;
+ else if(full)t+=` Fetched on 1 November: <b>${fmt(c.nodata)}</b> — equal, cell for cell.`;
+ t+=` Inside the window, <b>${fmt(r.un)}</b> series-months come after a series' last row, and no row marks them.`;
+ $('read').innerHTML=t;
+ const W=cv.clientWidth,n=c.masks.length,H=Math.max(160,Math.min(520,n*3)),dpr=window.devicePixelRatio||1;
+ cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);
+ ctx.fillStyle=css('--bg');ctx.fillRect(0,0,W,H);
+ const cw=W/34,rh=H/n,col=[null,css('--w'),css('--nd'),css('--un'),css('--line')];
+ r.rows.forEach((cells,j)=>{for(let i=0;i<34;i++){const k=cells[i];if(!k)continue;ctx.fillStyle=col[k];ctx.fillRect(i*cw,j*rh,Math.max(1,cw-1),Math.max(rh,0.6))}});
+ ctx.strokeStyle=css('--fg');ctx.lineWidth=1.5;ctx.strokeRect(a*cw+.75,.75,(b-a+1)*cw-1.5,H-1.5);
+ $('ax0').textContent=mname(0);$('ax1').textContent=mname(17);$('ax2').textContent=mname(33);
+ cv.dataset.nd=r.nd;cv.dataset.un=r.un;
+}
+[sel,A,B].forEach(e=>e.addEventListener('input',draw));addEventListener('resize',draw);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+draw();
+const pt=$('probes').tBodies[0];
+for(const [cc,p] of Object.entries(D.probes)){const tr=document.createElement('tr');
+ tr.innerHTML=`<td>${NAMES[cc]}</td><td>${mname(M.indexOf(p.window[0]))} – ${mname(M.indexOf(p.window[1]))}</td><td class="n">${fmt(p.nodata_predicted)}</td><td class="n">${fmt(p.nodata_observed)}</td><td class="n">${p.cells_observed_not_predicted+p.cells_predicted_not_observed}</td><td class="n">${fmt(p.nodata_full_in_window)}</td><td class="n">${fmt(p.written_shared)} of ${fmt(p.written_full_in_window)}</td>`;pt.appendChild(tr)}
+const ct=$('ctab').tBodies[0];
+for(const c of C){const tr=document.createElement('tr');
+ tr.innerHTML=`<td>${NAMES[c.cc]}</td><td class="n">${fmt(c.series)}</td><td class="n">${fmt(c.nodata)}</td><td class="n">${fmt(c.interior)}</td><td class="n">${fmt(c.interior_filled)}</td><td class="n">${fmt(c.series_ending_early)}</td><td class="n">${fmt(c.trailing_unwritten)}</td>`;ct.appendChild(tr)}
+})();
+</script>
+</body>
+</html>
