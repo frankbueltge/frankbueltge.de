@@ -2,7 +2,7 @@
 
 Status: **resting** since 2026-10-24 (the architect's objection to a fourth cycle on warnings, wording
 private). It returns only when a briefing matter calls for it, for instance a forecast that many people
-must act on. · Opened: 2026-10-25, from cycles 007–009 · Kept after cycle: 010 (no presentation of cycle 010 named it)
+must act on. · Opened: 2026-10-25, from cycles 007–009 · Kept after cycle: 011 (no presentation of cycles 010–011 named it)
 
 ## 1. Question
 

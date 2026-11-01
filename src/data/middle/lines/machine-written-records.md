@@ -1,7 +1,7 @@
 # Line: machine-written-records
 
 Status: active · Opened: 2026-10-25, from cycles 001–002, 006 and the Field's standing work ·
-Kept after cycle: 010
+Kept after cycle: 011 (no presentation of cycle 011 named it)
 
 ## 1. Question
 
