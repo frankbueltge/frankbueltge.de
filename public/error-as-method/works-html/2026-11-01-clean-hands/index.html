@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clean Hands</title>
+<style>
+:root{--bg:#eef0ec;--ink:#1a1d1b;--mute:#5f6862;--line:#c9cfc9;--card:#fbfcfa;--people:#b0302a;--self:#1a1d1b;--D:#2f6690;--B:#2e7d4f;--S:#9a6b00;--you:#6b4fa0}
+@media (prefers-color-scheme:dark){:root{--bg:#121513;--ink:#e3e8e3;--mute:#9aa49d;--line:#333a35;--card:#1a1e1b;--people:#ec6c5f;--self:#e3e8e3;--D:#7fb3dc;--B:#7cc99b;--S:#e0b04a;--you:#b59ae6}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:2rem;margin:.2em 0 0;font-weight:normal}
+h2{font-size:1.2rem;font-weight:normal;margin:2.2em 0 .4em;border-top:1px solid var(--line);padding-top:1em}
+.sub{color:var(--mute);margin:.2em 0 1.2em}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.84em}
+.note{color:var(--mute);font-size:.9rem}
+#pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:.6em 0}
+#pick button{font:inherit;padding:.8em .5em;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;text-align:left}
+#pick button:hover,#pick button:focus-visible{border-color:var(--ink)}
+#pick button[disabled]{opacity:.45;cursor:default}
+#pick button b{display:inline-block;min-width:1.4em;color:var(--you)}
+.ctl{font:inherit;padding:.4em .9em;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;margin:.3em .4em 0 0}
+#lw{overflow-x:auto;margin-top:.8em;border:1px solid var(--line)}
+#ladder{width:100%;min-width:720px;height:auto;display:block;background:var(--card)}
+#say{margin:.8em 0 0}
+.flip{font:inherit;padding:.35em .8em;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;margin:0 .3em .5em 0;font-size:.9rem}
+.flip[aria-pressed=true]{border-color:var(--ink);font-weight:bold}
+#told{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.t{background:var(--card);border:1px solid var(--line);padding:.35em .5em;font-size:.85rem;display:flex;justify-content:space-between;gap:.5em}
+.t .c{color:var(--mute);font-size:.75rem;display:block}
+#strip{width:100%;height:auto;display:block;background:var(--card);border:1px solid var(--line)}
+#obj{min-height:1.6em;margin:.4em 0}
+blockquote{margin:.5em 0;padding-left:.9em;border-left:3px solid var(--line);font-size:.9rem}
+blockquote.B{border-color:var(--B)}blockquote.S{border-color:var(--S)}
+table{border-collapse:collapse;font-size:.88rem;width:100%;margin-top:.6em}
+td,th{border-bottom:1px solid var(--line);padding:.35em .4em;text-align:left}
+th{font-weight:normal;color:var(--mute)}
+a{color:inherit}
+.legend .note{margin-right:1em}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}
+</style>
+</head>
+<body>
+<main>
+<h1>Clean Hands</h1>
+<p class="sub">Everyday things, each photographed held in a pair of clean hands. Which of them would you call a disease risk? Tap the six kinds, <strong>riskiest first</strong>.</p>
+
+<div id="pick"></div>
+<div><button class="ctl" id="reset" hidden>start again</button></div>
+
+<div id="after" hidden>
+  <div id="lw"><svg id="ladder" viewBox="0 0 900 380" role="img" aria-label="Six rankings of the six kinds of object, side by side"></svg></div>
+  <p id="say"></p>
+  <p class="note">Each column ranks the six kinds by the mean risk given to the objects of that kind (48 objects in all). Riskiest at the top. Lines join the same kind across columns.</p>
+</div>
+
+<h2>What contact did</h2>
+<p>107 Turkish-speaking adults rated 126 such objects for perceived disease risk, 1 (not at all risky) to 7 (very risky), in a study published in September 2026. Twenty-four instances of a machine were asked about 48 of them. Six rated them as themselves. Six said how the Turkish adults would rate them. Six said so after being told the adults' true means for 24 other objects. Six were told the same 24 means, each moved to the wrong object.</p>
+<div><button class="flip" id="fT" aria-pressed="true">the 24 as told truly</button><button class="flip" id="fS" aria-pressed="false">the same 24, shuffled</button></div>
+<div id="told"></div>
+<p class="note">Neither group of six said anything did not fit. The six told the truth took the adults' order of the kinds, and gave up their own. The six told the shuffle learned the level and nothing of the order.</p>
+
+<h2>All 48 objects</h2>
+<p>Each row is one voice; each dot one object, from low to high risk along the row. Touch or hover a dot to follow that object through every voice.</p>
+<div class="legend" id="legend"></div>
+<svg id="strip" viewBox="0 0 900 330" role="img" aria-label="The 48 objects placed by each voice"></svg>
+<p id="obj" class="mono"></p>
+<table id="tab"><thead><tr><th>voice</th><th>order: Spearman ρ with the Turkish adults</th><th>mean distance (scale points)</th></tr></thead><tbody></tbody></table>
+
+<h2>How they said they did it</h2>
+<div id="quotes"></div>
+
+<p class="note">Material: S. Rengiiyiler &amp; M. Tekozel, <em>Turkish Norms for the Objects-on-Hands Picture Database</em>, <a href="https://osf.io/9zfsu">osf.io/9zfsu</a> (per-object means, cited; no licence is stated on the release, so its file is not republished). Pictures: Fernandes et al. (2019), <a href="https://doi.org/10.1371/journal.pone.0219615">The Objects-on-Hands Picture Database</a>, available on request; not shown here, and not shown to the machine either: it had the objects' names. Experiment 46 of the line <em>Error as Method</em>, Session 166.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const D=window.CLEAN,$=s=>document.querySelector(s),NS="http://www.w3.org/2000/svg";
+const KINDS=["Fruit","Vegetable","Kitchen Utensils","Office Supplies","Toys","Women's Accessories"];
+const LABEL={"Fruit":"fruit","Vegetable":"vegetables","Kitchen Utensils":"kitchen utensils","Office Supplies":"office supplies","Toys":"toys","Women's Accessories":"women's accessories"};
+const COLS=[["you","you","var(--you)"],["family","machine, as itself","var(--self)"],["D","describing the adults","var(--D)"],["S","… told 24, shuffled","var(--S)"],["B","… told 24, true","var(--B)"],["people","the Turkish adults","var(--people)"]];
+const KCOL={"Fruit":"#c2702a","Vegetable":"#5c8a2e","Kitchen Utensils":"#7a6a58","Office Supplies":"#3f6f9c","Toys":"#b03a6e","Women's Accessories":"#7d55a8"};
+function el(n,a,p){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+let mine=[];
+function buttons(){const p=$("#pick");p.innerHTML="";KINDS.forEach(k=>{const b=document.createElement("button");const i=mine.indexOf(k);
+  b.innerHTML="<b>"+(i>=0?i+1:"")+"</b> "+LABEL[k];b.disabled=i>=0;b.addEventListener("click",()=>{mine.push(k);
+  if(mine.length===5)mine.push(KINDS.find(x=>!mine.includes(x)));buttons();if(mine.length===6)reveal()});p.appendChild(b)});$("#reset").hidden=!mine.length}
+$("#reset").addEventListener("click",()=>{mine=[];$("#after").hidden=true;buttons()});
+function rankOf(key){if(key==="you")return mine.slice();return KINDS.slice().sort((a,b)=>D.cats[b][key]-D.cats[a][key])}
+function reveal(){const svg=$("#ladder");svg.innerHTML="";const W=900,H=380,L=76,R=76,T=66,B=16,cw=(W-L-R)/(COLS.length-1),rh=(H-T-B)/5;
+  const ranks=COLS.map(c=>rankOf(c[0]));
+  COLS.forEach((c,i)=>{const t=el("text",{x:L+i*cw,y:20,"text-anchor":"middle","font-size":13,fill:c[2]},svg);t.textContent=c[1];
+    el("text",{x:L+i*cw,y:34,"text-anchor":"middle","font-size":10,fill:"var(--mute)"},svg).textContent=i===0?"your order":"by mean risk"});
+  KINDS.forEach(k=>{let d="";ranks.forEach((r,i)=>{const x=L+i*cw,y=T+r.indexOf(k)*rh;d+=(i?"L":"M")+x+" "+y});
+    el("path",{d,fill:"none",stroke:KCOL[k],"stroke-width":3,"stroke-opacity":.75},svg)});
+  ranks.forEach((r,i)=>r.forEach((k,j)=>{const x=L+i*cw,y=T+j*rh;el("rect",{x:x-64,y:y-11,width:128,height:22,rx:3,fill:"var(--card)",stroke:KCOL[k]},svg);
+    el("text",{x,y:y+4,"text-anchor":"middle","font-size":11,fill:"var(--ink)"},svg).textContent=LABEL[k]}));
+  
+  const top=rankOf("people")[0],ftop=rankOf("family")[0];
+  $("#say").textContent="Your riskiest: "+LABEL[mine[0]]+". The machine, rating as itself, put "+LABEL[ftop]+" first (raw produce, it said, is eaten unwashed). The Turkish adults put "+LABEL[top]+" first and fruit last. Asked to describe them, the machine kept vegetables near the top. Told 24 of their true means, it took the adults\' order of the kinds.";
+  $("#after").hidden=false}
+buttons();
+function told(mode){const g=$("#told");g.innerHTML="";D.contact.slice().sort((a,b)=>(mode==="T"?b.people-a.people:b.toldS-a.toldS)).forEach(c=>{
+  const e=document.createElement("div");e.className="t";e.innerHTML='<span>'+c.name+'<span class="c">'+LABEL[c.cat]+'</span></span><span class="mono v"></span>';const v=e.querySelector(".v");v.textContent=(mode==="T"?c.people:c.toldS).toFixed(2);v.style.color=mode==="T"?"var(--B)":"var(--S)";g.appendChild(e)});
+  $("#fT").setAttribute("aria-pressed",mode==="T");$("#fS").setAttribute("aria-pressed",mode==="S")}
+$("#fT").addEventListener("click",()=>told("T"));$("#fS").addEventListener("click",()=>told("S"));told("T");
+// strip
+const V=[["people","the Turkish adults","var(--people)"],["B","told 24, true","var(--B)"],["S","told 24, shuffled","var(--S)"],["D","describing them","var(--D)"],["self","machine, as itself","var(--self)"]];
+const svg=$("#strip"),W=900,L=150,R=20,T=24,rh=60;
+function rankPos(key){const s=D.objects.map((o,i)=>[o[key],i]).sort((a,b)=>a[0]-b[0]);const pos=[];let i=0;
+  while(i<s.length){let j=i;while(j+1<s.length&&s[j+1][0]===s[i][0])j++;for(let t=i;t<=j;t++)pos[s[t][1]]=(i+j)/2;i=j+1}return pos}
+const P=V.map(v=>rankPos(v[0]));let hi=-1;
+function draw(){svg.innerHTML="";V.forEach((v,r)=>{const y=T+r*rh;el("text",{x:L-10,y:y+4,"text-anchor":"end","font-size":12,fill:v[2]},svg).textContent=v[1];
+    el("line",{x1:L,x2:W-R,y1:y,y2:y,stroke:"var(--line)"},svg)});
+  el("text",{x:L,y:T+5*rh-10,"font-size":10,fill:"var(--mute)"},svg).textContent="← lowest risk in this voice";
+  el("text",{x:W-R,y:T+5*rh-10,"text-anchor":"end","font-size":10,fill:"var(--mute)"},svg).textContent="highest →";
+  const x=p=>L+p/47*(W-L-R);
+  if(hi>=0){let d="";V.forEach((v,r)=>{d+=(r?"L":"M")+x(P[r][hi])+" "+(T+r*rh)});el("path",{d,fill:"none",stroke:"var(--ink)","stroke-width":1.5},svg)}
+  D.objects.forEach((o,i)=>V.forEach((v,r)=>{const c=el("circle",{cx:x(P[r][i]),cy:T+r*rh,r:i===hi?7:5,fill:KCOL[o.cat],"fill-opacity":i===hi?1:.8,stroke:i===hi?"var(--ink)":"none"},svg);
+    c.style.cursor="pointer";const f=()=>{hi=i;draw();info(i)};c.addEventListener("mouseenter",f);c.addEventListener("click",f)}))}
+function info(i){const o=D.objects[i];$("#obj").textContent=o.name+" ("+LABEL[o.cat]+") · adults "+o.people.toFixed(2)+" · as itself "+o.self+" · describing "+o.D.toFixed(2)+" · true contact "+o.B.toFixed(2)+" · shuffled "+o.S.toFixed(2)}
+draw();
+const lg=$("#legend");KINDS.forEach(k=>{const s=document.createElement("span");s.className="note";const w=document.createElement("span");w.className="sw";w.style.background=KCOL[k];s.appendChild(w);s.appendChild(document.createTextNode(LABEL[k]));lg.appendChild(s)});
+const tb=$("#tab tbody"),mae=k=>D.objects.reduce((a,o)=>a+Math.abs(o[k]-o.people),0)/D.objects.length;
+[["self","machine, as itself (median of six)",D.rhoFamily],["D","describing the adults",D.arms.D.rho_people],["S","… after 24 shuffled means",D.arms.S.rho_people],["B","… after 24 true means",D.arms.B.rho_people]].forEach(([k,l,r])=>{
+  const t=document.createElement("tr");t.innerHTML="<td>"+l+'</td><td class="mono">'+r.toFixed(2)+'</td><td class="mono">'+mae(k).toFixed(2)+"</td>";tb.appendChild(t)});
+[["A1","A"],["D2","D"],["B5","B"],["B3","B"],["S1","S"],["S4","S"]].forEach(([m,a])=>{const q=document.createElement("blockquote");q.className=a;q.textContent="“"+D.how[m]+"” — instance "+m;$("#quotes").appendChild(q)});
+})();
+</script>
+</body>
+</html>
