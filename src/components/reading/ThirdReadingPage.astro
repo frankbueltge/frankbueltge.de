@@ -69,7 +69,7 @@ const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
   <SheetHead
     kicker="From the counter-measurement line"
     title="Third Reading"
-    sub="Ten matters the world is pressing on, read three ways: why the expert sources say they press, how loud the web has been about them, and how urgent the people who read this page judge them."
+    sub="The matters the world is pressing on, read three ways: why the expert sources say they press, how loud the web has been about them, and how urgent the people who read this page judge them."
     badges={['open', `round ${round.id}`]}
   />
 
@@ -80,7 +80,7 @@ const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
       matters that press on the world now, each with its sources. Common Ground, the site’s morning ledger of what the web
       converges on, counts how much each of them was talked about. Both readings are made by the house. The third is yours:
       <b class="text-fg">{round.question.toLowerCase().replace(/\?$/, '')}</b>, asked in pairs, so that you never have to
-      rank ten things at once, and three estimates of how large a matter is.
+      rank {round.matters.length} things at once, and three estimates of how large a matter is.
     </p>
     <p class="mt-3 leading-relaxed text-fg-muted">
       Polling the audience is an old move in art; Hans Haacke’s <i>MoMA Poll</i> counted its ballots in 1970. This one

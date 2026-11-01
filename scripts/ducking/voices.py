@@ -17,8 +17,9 @@ Run:
   python scripts/ducking/voices.py after-cycle-011             # all channels
   python scripts/ducking/voices.py after-cycle-011 ebola rest  # only these
 
-macOS only as it stands: it encodes with afconvert. Writes public/ducking/<round>/, and the page's
-guard (src/lib/ducking/voices.test.ts) turns red if a line changes without a new render.
+It encodes with afconvert on a Mac and with ffmpeg anywhere else. Writes public/ducking/<round>/, and
+the page's guard (src/lib/ducking/voices.test.ts) turns red if a line changes without a new render.
+A new briefing renders itself: .github/workflows/briefing-round.yml runs this with a round's id.
 """
 import glob
 import hashlib
@@ -26,6 +27,7 @@ import json
 import os
 import random
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -105,7 +107,10 @@ def encode(pcm, out, kbps):
     with tempfile.TemporaryDirectory() as tmp:
         wav = Path(tmp) / 'x.wav'
         sf.write(wav, pcm, RATE, subtype='PCM_24')
-        subprocess.run(['afconvert', '-f', 'm4af', '-d', 'aac', '-b', str(kbps * 1000), '-q', '127', str(wav), str(out)], check=True)
+        if shutil.which('afconvert'):
+            subprocess.run(['afconvert', '-f', 'm4af', '-d', 'aac', '-b', str(kbps * 1000), '-q', '127', str(wav), str(out)], check=True)
+        else:
+            subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(wav), '-c:a', 'aac', '-b:a', f'{kbps}k', str(out)], check=True)
 
 
 def lang_of(voice):
@@ -208,6 +213,8 @@ def main():
     k = Kokoro(os.environ.get('KOKORO_MODEL', str(home / 'models/kokoro-v1.0.onnx')),
                os.environ.get('KOKORO_VOICES', str(home / 'voices/voices-v1.0.bin')))
     out = ROOT / f'public/ducking/{round_id}'
+    if not only:
+        shutil.rmtree(out, ignore_errors=True)  # a full render leaves no recording of a channel that is gone
     out.mkdir(parents=True, exist_ok=True)
     book = out / 'voices.json'
     state = json.load(open(book)) if book.exists() else {'round': round_id, 'model': 'Kokoro-82M v1.0', 'channels': {}}

@@ -1,0 +1,108 @@
+name: Briefing round
+
+# A checked briefing reaches the site by itself (docs/design/2026-11-01-the-checked-briefing.md).
+# When research-ecology holds a newer `briefings/after-cycle-NNN.json` than the site has rounds for,
+# this writes a round of Third Reading, a round of Ducking and the watchlist, records the desk's
+# voices and commits it all. Until 2026-11-01 each of those was done by hand, and Third Reading stood
+# a briefing behind.
+#
+# What can stop it, on purpose:
+#   · the file breaks a rule (src/lib/briefing/briefing.ts), among them that a second session must
+#     have checked it: nothing is written, the old rounds stay up, the run is red;
+#   · a test turns red on the new rounds: nothing is committed, the same.
+# The page says when its words are behind a newer briefing (roundBehind), so a red run is visible there.
+#
+# It costs nothing: the voices are Kokoro-82M, open weights, on the runner's CPU. The first run after
+# the cache expires downloads about 350 MB from the model's own release.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - src/data/ecology/cycle.json # a checked briefing has just been linked
+  schedule:
+    - cron: '20 19 * * *' # the safety net, after the day's second check
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: briefing-round
+  cancel-in-progress: false
+
+jobs:
+  round:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history, so git pull --rebase works in the commit step
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Derive the rounds from the newest briefing
+        id: derive
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npx tsx scripts/briefing/derive.ts
+      - uses: actions/setup-python@v5
+        if: steps.derive.outputs.round != ''
+        with:
+          python-version: '3.12'
+      - name: Install the voices
+        if: steps.derive.outputs.round != ''
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install --quiet kokoro-onnx==0.6.1 soundfile==0.14.0
+      - name: Restore the model
+        id: model
+        if: steps.derive.outputs.round != ''
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/kokoro
+          key: kokoro-v1.0
+      - name: Download the model
+        if: steps.derive.outputs.round != '' && steps.model.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/.cache/kokoro
+          BASE=https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0
+          curl -sSfL -o ~/.cache/kokoro/kokoro-v1.0.onnx "$BASE/kokoro-v1.0.onnx"
+          curl -sSfL -o ~/.cache/kokoro/voices-v1.0.bin "$BASE/voices-v1.0.bin"
+      - name: Record the desk
+        if: steps.derive.outputs.round != ''
+        env:
+          ROUND: ${{ steps.derive.outputs.round }}
+        run: |
+          KOKORO_MODEL=~/.cache/kokoro/kokoro-v1.0.onnx KOKORO_VOICES=~/.cache/kokoro/voices-v1.0.bin \
+            python scripts/ducking/voices.py "$ROUND"
+          # The page plays one round; older recordings live on in the history.
+          find public/ducking -mindepth 1 -maxdepth 1 -type d ! -name "$ROUND" -exec rm -rf {} +
+      - name: Hold the site to the new rounds
+        if: steps.derive.outputs.round != ''
+        run: |
+          # What a round touches, not the whole suite: a timing flake elsewhere must not hold a briefing back.
+          if ! npx vitest run src/lib/ducking src/lib/reading src/lib/briefing src/lib/experiments src/data; then
+            echo "::error::The new rounds turn a test red (named above). Nothing is committed, and the old rounds stay up."
+            exit 1
+          fi
+      - name: Commit
+        if: steps.derive.outputs.round != ''
+        env:
+          ROUND: ${{ steps.derive.outputs.round }}
+        run: |
+          git config user.name "Gegenmessung"
+          git config user.email "gegenmessung@frankbueltge.de"
+          git add public/ducking src/data/ducking src/data/reading src/data/trending/watchlist.json src/lib/reading/rounds.ts
+          git commit -m "briefing: the rounds of $ROUND"
+          # Against push races (parallel cron and repository commits): rebase and retry.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Pushed."; exit 0
+            fi
+            echo "Push attempt $i failed, retrying …"; sleep 5
+          done
+          echo "::error::Push failed after 5 attempts"; exit 1
