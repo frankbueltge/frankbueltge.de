@@ -24,8 +24,10 @@ def ctx_factory():
 @pytest.fixture(autouse=True)
 def _no_sleep(monkeypatch):
     import trending.fetch as fetch_mod
+    import trending.sources.google_news as gn
     import trending.sources.google_trends as gt
     import trending.sources.hackernews as hn
     monkeypatch.setattr(fetch_mod.time, "sleep", lambda s: None)
     monkeypatch.setattr(gt.time, "sleep", lambda s: None)
+    monkeypatch.setattr(gn.time, "sleep", lambda s: None)
     monkeypatch.setattr(hn.time, "sleep", lambda s: None)

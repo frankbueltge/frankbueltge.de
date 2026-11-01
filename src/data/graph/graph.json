@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "6ae826191ac28dbd"
+        "sha256": "66b40505f9f0fff6"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 586,
-      "edges": 521,
+      "nodes": 587,
+      "edges": 522,
       "nodesByKind": {
-        "decision": 163,
+        "decision": 164,
         "encounter": 6,
         "neighbor": 149,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 222,
         "neighbor-of": 150,
         "participates": 17,
-        "touches": 117
+        "touches": 118
       }
     }
   },
@@ -1683,6 +1683,16 @@
     {
       "id": "decision:2026-11-01-1",
       "kind": "decision",
+      "label": "The briefing opens with a fixed map of eleven fields, and Common Ground widens with it",
+      "date": "2026-11-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The briefing opens with a fixed map of eleven fields, and Common Ground widens with it"
+      }
+    },
+    {
+      "id": "decision:2026-11-01-2",
+      "kind": "decision",
       "label": "A briefing is checked by a second session before it is linked, and everything downstream follows from it",
       "date": "2026-11-01",
       "source": {
@@ -1691,7 +1701,7 @@
       }
     },
     {
-      "id": "decision:2026-11-01-2",
+      "id": "decision:2026-11-01-3",
       "kind": "decision",
       "label": "The practices are told what the decision of 2026-10-05 allows, and the policy lets 3D models load",
       "date": "2026-11-01",
@@ -1701,7 +1711,7 @@
       }
     },
     {
-      "id": "decision:2026-11-01-3",
+      "id": "decision:2026-11-01-4",
       "kind": "decision",
       "label": "Ducking joins the lab on the counter-measurement line",
       "date": "2026-11-01",
@@ -12425,6 +12435,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-11-01-1",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/trending/src/trending/sources/google_news.py"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-01-2",
       "to": "work:round-number",
       "source": {
         "file": "docs/decision-log.md",
@@ -12433,7 +12452,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-01-2",
+      "from": "decision:2026-11-01-3",
       "to": "work:praemie",
       "source": {
         "file": "docs/decision-log.md",
@@ -12442,7 +12461,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-01-3",
+      "from": "decision:2026-11-01-4",
       "to": "work:ducking",
       "source": {
         "file": "docs/decision-log.md",

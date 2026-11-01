@@ -8,8 +8,10 @@
 //
 // `briefingProblems` is the part of that check a machine can do. It cannot say that a figure is true.
 // It can refuse a file that does not record who checked it, that names no original source, or that
-// would hand a voice a digit to guess at.
+// would hand a voice a digit to guess at. Since 2026-11-01 a briefing also opens with the map of the
+// world's state and takes its matters from it (./map.ts), from cycle 012 on, contract `briefing/2`.
 import { ESTIMATE_RANGE, SHORT_MAX, type EstimateItem } from '@/lib/reading/round'
+import { MAP_FROM_CYCLE, mapProblems, spreadProblems, type FieldId, type MapLine } from './map'
 
 export type SourceKind = 'primary' | 'report'
 
@@ -36,6 +38,8 @@ export interface BriefingMatter {
   strip: string
   /** one line for Third Reading; it may not give away what an estimate asks */
   gist: string
+  /** its field on the map; every matter has one from cycle 012 on */
+  field?: FieldId
   /** place in "Urgent but quiet", best first; null when the briefing does not list it */
   quiet_rank: number | null
   /** what the one attention count matches (src/lib/reading/attention.ts) */
@@ -56,10 +60,12 @@ export interface BriefingCheck {
 }
 
 export interface Briefing {
-  $contract: 'briefing/1'
+  $contract: 'briefing/1' | 'briefing/2'
   id: string
   written: string
   checked: BriefingCheck
+  /** one line per field, from cycle 012 on */
+  map?: MapLine[]
   matters: BriefingMatter[]
   estimates: EstimateItem[]
   fallback: string
@@ -77,10 +83,12 @@ const ROUND_ID = /^after-cycle-\d{3}$/
 const DAY = /^\d{4}-\d{2}-\d{2}$/
 const SPOKEN_HINT = /\b(quiet|loud|trend\w*|attention)\b/i
 
-/** Every rule a briefing's data must keep, as a list of complaints (empty = valid). */
-export function briefingProblems(b: Briefing): string[] {
+/** Every rule a briefing's data must keep, as a list of complaints (empty = valid). `earlier` holds the
+ *  fields of the two briefings before it, newest first, for the rule that no field stays empty for long. */
+export function briefingProblems(b: Briefing, earlier: readonly (readonly FieldId[])[] = []): string[] {
   const out: string[] = []
-  if (b.$contract !== 'briefing/1') out.push('contract')
+  const mapped = Number(b.id?.slice(-3)) >= MAP_FROM_CYCLE
+  if (b.$contract !== (mapped ? 'briefing/2' : 'briefing/1')) out.push('contract')
   if (!ROUND_ID.test(b.id ?? '')) out.push(`id ${b.id}`)
   if (!DAY.test(b.written ?? '')) out.push('written')
   if (!b.fallback?.trim().endsWith('?')) out.push('fallback is not a question')
@@ -111,6 +119,7 @@ export function briefingProblems(b: Briefing): string[] {
     if (sources.some((s) => s.kind !== 'primary' && s.kind !== 'report')) out.push(`${m.id}: source kind`)
     if (!sources.some((s) => s.kind === 'primary')) out.push(`${m.id}: no primary source`)
   }
+  if (mapped) out.push(...mapProblems(b.map ?? [], b.written), ...spreadProblems(matters, earlier))
   const quiet = matters.map((m) => m.quiet_rank).filter((q): q is number => q !== null).sort((x, y) => x - y)
   if (quiet.length === 0 || quiet.some((q, i) => q !== i + 1)) out.push('quiet ranks are not 1..n')
 

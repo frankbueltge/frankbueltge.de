@@ -101,10 +101,17 @@ def test_the_caps_hold_per_run_and_over_the_whole_list():
     got = wl.promote(candidates=cands, prior_records=prior, entries=_entries(), today=TODAY,
                      rules={"promote_max_per_run": 2})
     assert [p["term"] for p in got] == ["one thing", "two thing"]  # ranked by platforms, ratio
-    full = _entries(*[f"term {i}" for i in range(35)])
-    assert wl.promote(candidates=cands, prior_records=prior, entries=full, today=TODAY) == []
-    nearly = _entries(*[f"term {i}" for i in range(34)])
-    assert len(wl.promote(candidates=cands, prior_records=prior, entries=nearly, today=TODAY)) == 1
+    found = lambda n: wl.normalise([{"term": f"term {i}", "origin": "discovered"} for i in range(n)])
+    assert wl.promote(candidates=cands, prior_records=prior, entries=found(35), today=TODAY) == []
+    assert len(wl.promote(candidates=cands, prior_records=prior, entries=found(34), today=TODAY)) == 1
+
+
+def test_the_seeds_of_the_briefing_leave_the_machine_its_room():
+    names = ["one thing", "two thing"]
+    cands = [_cand(n, ("hackernews", "github", "reddit")) for n in names]
+    prior = [{"candidates": cands}] * 2
+    seeds = _entries(*[f"seed {i}" for i in range(60)])
+    assert len(wl.promote(candidates=cands, prior_records=prior, entries=seeds, today=TODAY)) == 2
 
 
 def test_a_young_archive_promotes_nothing():

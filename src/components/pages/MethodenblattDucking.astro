@@ -43,8 +43,8 @@ const sample = book.rest.sample
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">2. Cadence</h2>
     <p class="leading-relaxed text-fg-muted">
-      The faders move with Common Ground’s morning ledger: every nightly build counts the new day, and the page shows the week
-      to the newest committed day. The voices do not. A round is rendered once, by hand, by
+      The faders move with Common Ground’s ledger: the build after each day’s ledger counts the new day, and the page shows the
+      week to the newest committed day. The voices do not. A round is recorded once, when a checked briefing arrives, by
       <a class={link} href={`${REPO}/blob/main/scripts/ducking/voices.py`}>scripts/ducking/voices.py</a>, so its readings stay at
       the briefing’s date until the next round says otherwise, and the page gives that date.
     </p>
@@ -122,6 +122,7 @@ const sample = book.rest.sample
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">6. Change log</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>2026-11-01, later — the ledger under the faders changes: from the day file of 2026-11-02 Google News is read in ten English-language editions instead of the American one alone, because news was about three per cent of the signals. The record shows a step on that day, and shares from before and after it are not the same measure. Committed days are not rewritten.</li>
       <li>2026-11-01, the same day — a check of the briefing against its sources found 27 of 69 claims wrong, out of date, overstated or not on the linked page. The readings were corrected and recorded again, among them the state of the Strait of Hormuz, which a voice had stated as of early September.</li>
       <li>2026-11-01 — first version, round {round.id}. Over the 61 days at launch the ten matters held 0.99 % of the ledger. This line stays as it is; the work’s page goes on counting.</li>
     </ul>
