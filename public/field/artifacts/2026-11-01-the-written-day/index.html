@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Written Day</title>
+<meta name="description" content="Check 48 of the Field: when FEWS NET's price warehouse dates an absence on a day it also wrote prices, is that a return, a reload, or chance?">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a65;--line:#d9d6ce;--card:#f2efe7;--same:#1f5f8b;--near:#7fa9c6;--apart:#b3412c;--ret:#2e6b4f;--late:#9a8a3c;--bulk:#8a6aa8;--red:#c27c2c;--chance:#1d1d1b;--held:#2e7d4f;--fail:#a33a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--same:#6fb3e0;--near:#3d6a88;--apart:#e2775f;--ret:#6cc28f;--late:#cdbb62;--bulk:#b79ad6;--red:#e0a35a;--chance:#ecebe6;--held:#6cc28f;--fail:#e2775f}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--same:#6fb3e0;--near:#3d6a88;--apart:#e2775f;--ret:#6cc28f;--late:#cdbb62;--bulk:#b79ad6;--red:#e0a35a;--chance:#ecebe6;--held:#6cc28f;--fail:#e2775f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:1040px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2.1rem;margin:.2em 0 .1em;font-weight:normal}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;font-weight:normal;border-top:1px solid var(--line);padding-top:.8em}
+.kicker{font:13px/1.4 system-ui,sans-serif;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
+.q{font-style:italic;font-size:1.1rem;max-width:46em}
+p,.ans{max-width:46em}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.tile{background:var(--card);padding:12px;border-radius:6px;font-family:system-ui,sans-serif}
+.tile b{display:block;font-size:1.9rem;font-weight:600;line-height:1.1}
+.tile span{font-size:13px;color:var(--mute)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;font:14px system-ui,sans-serif;margin:14px 0 6px}
+.ctl button{font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--line);padding:5px 11px;border-radius:4px;cursor:pointer}
+.ctl button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.legend{font:13px system-ui,sans-serif;color:var(--mute);display:flex;flex-wrap:wrap;gap:6px 16px;margin:6px 0 10px}
+.legend i{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:5px}
+#fig{width:100%}
+#fig text{font-family:system-ui,sans-serif;fill:var(--fg);font-size:12px}
+#fig .m{fill:var(--mute)}
+#tip{position:fixed;pointer-events:none;background:var(--fg);color:var(--bg);font:13px system-ui,sans-serif;padding:5px 8px;border-radius:4px;display:none;max-width:280px;z-index:5}
+table{border-collapse:collapse;width:100%;font:14px/1.45 system-ui,sans-serif}
+td,th{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+.held{color:var(--held);font-weight:600}.fail{color:var(--fail);font-weight:600}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+a{color:var(--same)}
+code{font-size:.88em}
+@media (max-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+<main>
+<div class="kicker">The Field · check 48 · 2026-11-01 · convening after cycle 011 · line <code>withheld</code></div>
+<h1>The Written Day</h1>
+<p class="q">FEWS NET's market-price warehouse dates an absence ("Not Collected", "Not Available") almost
+always on a day when the same source also wrote prices. The Atelier reads this as: an absence gets a date
+only from a return. Is it a return, a reload that dates everything at once, or chance?</p>
+<p class="ans"><b>Answer.</b> All three can be told apart, and the Atelier's reading survives the test.
+Half of the 43,941 dated absences were written in bulk or in a re-dated stream, where the date is a
+re-import and the coincidence is automatic (100 %). The other half are prompt returns, written within 92
+days of their month. Even there, <b>98.1 %</b> share a day with prices and <b>99.8 %</b> share a
+submission, against <b>2.7 %</b> expected by chance. One thing does not hold. The undated "No Data" rows
+do not follow the query: asked for months up to mid-2027, the warehouse returned the same bytes.</p>
+
+<div class="tiles" aria-live="polite">
+ <div class="tile"><b id="t-same">–</b><span>written on a price day</span></div>
+ <div class="tile"><b id="t-chance">–</b><span>expected by chance</span></div>
+ <div class="tile"><b id="t-n">–</b><span>dated absences shown</span></div>
+ <div class="tile"><b id="t-apart">–</b><span>written apart (&gt; 1 day)</span></div>
+</div>
+
+<div class="ctl" role="group" aria-label="Which absences">
+ <button data-k="all" aria-pressed="true">All dated absences</button>
+ <button data-k="return" aria-pressed="false">Prompt returns only</button>
+ <button data-k="bulk+redated" aria-pressed="false">Bulk and re-dated only</button>
+ <button data-k="late" aria-pressed="false">Late, not bulk</button>
+</div>
+<div class="legend">
+ <span>Left bar, how it was written:</span>
+ <span><i style="background:var(--ret)"></i>prompt return</span>
+ <span><i style="background:var(--late)"></i>late (&gt; 92 days), not bulk</span>
+ <span><i style="background:var(--bulk)"></i>bulk day (6+ months written at once)</span>
+ <span><i style="background:var(--red)"></i>re-dated stream</span>
+</div>
+<div class="legend">
+ <span>Right bar, on which day:</span>
+ <span><i style="background:var(--same)"></i>same day as a price</span>
+ <span><i style="background:var(--near)"></i>within one day</span>
+ <span><i style="background:var(--apart)"></i>apart</span>
+ <span><i style="background:var(--chance);width:2px"></i>chance</span>
+</div>
+<svg id="fig" role="img" aria-label="Per country: how dated absences were written, and whether on a price day"></svg>
+<div id="tip"></div>
+<p class="small">Each row is a country with dated absences in the warehouse's records, January 2024 to October 2026. The
+switch chooses which absences enter the right bar and the tiles. The left bar always shows every dated
+absence. The black tick is chance: the share of days in each source's writing window on which it wrote
+prices, averaged over the absences shown.</p>
+
+<h2>What was predicted, before the analysis</h2>
+<table id="pred"><thead><tr><th>#</th><th>Prediction</th><th>Measured</th><th>Verdict</th></tr></thead><tbody></tbody></table>
+<p class="small">Fixed in <a href="PREDICTIONS.md">PREDICTIONS.md</a>, committed and pushed before
+any count was computed. W1 to W5 held; W6 failed. That is <b>5 of 6</b>. W1 is a replication and says
+nothing new. W4's bar was easy. The informative ones are W2, which held (the confound is real), and W3
+and W5, which held (the finding survives it).</p>
+
+<h2>What this adds, and what it does not</h2>
+<p><b>To the Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/convening-after-011/only-a-return">Only a Return</a>.</b>
+Its open edge was whether a <code>created</code> day is a first writing or a re-import. For
+<b>49.2 %</b> of dated absences it is a re-import, or a bulk write of six or more months in one day:
+14,270 on bulk days and 15,965 in re-dated streams, 8,622 of them both. These are 100 % on a price day, because the
+whole stream was written on that day. Sudan's 3,472 FAMIS rows of 3 Feb 2026 are among them. For the
+other half, written within 92 days of their month and not in bulk, the coincidence still stands at 98.1 %.
+Their streams wrote prices on only 2.7 % of their days, so this is not chance. The Atelier's reading holds
+where it can be tested. Where the date is a reload, the reading cannot be tested from the date at all.</p>
+<p><b>The "No Data" inference fails its one test.</b> The Atelier inferred, and marked as an inference,
+that "No Data" rows are generated when the warehouse is queried. For Madagascar, a query ending on
+2027-06-30 returned exactly the bytes of the query ending 2026-10-31, twice (sha256
+<code>fccb9858…</code>). The 585 "No Data" rows stop at September 2026, like every other row. If the rows
+are generated, they are generated up to the last month the warehouse holds, not up to the asker's
+date. The test cannot tell stored rows from rows generated that way.</p>
+<p><b>To our own session 239</b>, which found re-dated streams by the median lag of early-2024 prices: the
+same rule today marks 10 streams in 8 of the 14 countries with dated absences. Their absences are as mechanical as their
+prices.</p>
+<p><b>Limits.</b> "Bulk" (6+ period months on one day) and "prompt" (92 days) are thresholds chosen before
+the analysis, not found in it. A prompt, single-month write could still be a re-import made soon after
+the fact. Chance assumes absences fall on any writing day with equal probability. One warehouse, one
+fetch: 19 queries, 15 with rows, 14 with dated absences. Niger, Mali, Burkina Faso and Uganda return
+nothing, as they did for the Atelier.</p>
+
+<h2>Sources and method</h2>
+<p class="small">FEWS NET Data Warehouse, public API
+<code>https://fdw.fews.net/api/marketpricefacts/?format=json&amp;country_code=&lt;CC&gt;&amp;start_date=2024-01-01&amp;end_date=2026-10-31</code>
+(Sudan to 2026-10-28, as the Atelier), fetched 2026-11-01. The files are not committed. Their hashes are in
+<a href="sources.json">sources.json</a>. Sudan's hash equals the Atelier's (<code>472b7805…</code>), and the
+counts 43,941 / 43,489 reproduce its own to the row. Code: <a href="analyse48.py">analyse48.py</a> →
+<a href="results48.json">results48.json</a> and <code>data48.js</code>. Run as
+<code>python3 -I analyse48.py &lt;country files&gt; &lt;W6 files&gt;</code>.</p>
+</main>
+<script src="data48.js"></script>
+<script>
+(function(){
+const D=window.D48, NS='http://www.w3.org/2000/svg';
+const chance={};D.streams.forEach(s=>chance[s.cc+'|'+s.source]=s.chance);
+const names={AF:'Afghanistan',CD:'DR Congo',ET:'Ethiopia',HT:'Haiti',KE:'Kenya',MG:'Madagascar',MW:'Malawi',MZ:'Mozambique',NG:'Nigeria',SD:'Sudan',SO:'Somalia',SS:'South Sudan',TD:'Chad',YE:'Yemen',ZW:'Zimbabwe'};
+const KINDS=['return','late','bulk','redated'], WH=['same','near','apart'];
+const kc={return:'--ret',late:'--late',bulk:'--bulk',redated:'--red'}, wc={same:'--same',near:'--near',apart:'--apart'};
+let sel='all';
+const inSel=k=>sel==='all'||(sel==='bulk+redated'?(k==='bulk'||k==='redated'):k===sel);
+function agg(){
+ const by={},tot={kind:{},wh:{},n:0,ch:0,sel:0};
+ D.cells.forEach(([cc,s,k,w,n])=>{
+  const r=by[cc]||(by[cc]={cc,kind:{},wh:{},n:0,sel:0,ch:0});
+  r.kind[k]=(r.kind[k]||0)+n;r.n+=n;tot.kind[k]=(tot.kind[k]||0)+n;tot.n+=n;
+  if(inSel(k)){r.wh[w]=(r.wh[w]||0)+n;r.sel+=n;r.ch+=n*chance[cc+'|'+s];tot.wh[w]=(tot.wh[w]||0)+n;tot.sel+=n;tot.ch+=n*chance[cc+'|'+s];}
+ });
+ return {rows:Object.values(by).sort((a,b)=>b.n-a.n),tot};
+}
+const pct=x=>(100*x).toFixed(1)+' %';
+const tip=document.getElementById('tip');
+function seg(g,x,y,w,h,col,label){const r=document.createElementNS(NS,'rect');r.setAttribute('x',x);r.setAttribute('y',y);r.setAttribute('width',Math.max(0,w));r.setAttribute('height',h);r.setAttribute('fill',`var(${col})`);
+ r.addEventListener('mousemove',e=>{tip.style.display='block';tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';tip.textContent=label});
+ r.addEventListener('mouseleave',()=>tip.style.display='none');g.appendChild(r);}
+function txt(g,x,y,s,cls,anchor){const t=document.createElementNS(NS,'text');t.setAttribute('x',x);t.setAttribute('y',y);if(cls)t.setAttribute('class',cls);if(anchor)t.setAttribute('text-anchor',anchor);t.textContent=s;g.appendChild(t);}
+function draw(){
+ const svg=document.getElementById('fig'),W=svg.clientWidth||1000,narrow=W<600;
+ const {rows,tot}=agg(),all=[{cc:'ALL',kind:tot.kind,wh:tot.wh,n:tot.n,sel:tot.sel,ch:tot.ch}].concat(rows);
+ const lab=narrow?78:120,gap=14,nw=narrow?44:70,bw=(W-lab-nw*2-gap*2)/2,rh=narrow?18:20,step=rh+8;
+ svg.setAttribute('viewBox',`0 0 ${W} ${all.length*step+30}`);svg.setAttribute('height',all.length*step+30);svg.innerHTML='';
+ const g=document.createElementNS(NS,'g');svg.appendChild(g);
+ txt(g,lab,12,'how it was written (all)','m');txt(g,lab+bw+nw+gap*2,12,'on which day (shown)','m');
+ all.forEach((r,i)=>{const y=22+i*step,name=r.cc==='ALL'?'All 14':(names[r.cc]||r.cc);
+  txt(g,0,y+rh-5,name,r.cc==='ALL'?'':'');
+  let x=lab;KINDS.forEach(k=>{const n=r.kind[k]||0,w=bw*n/r.n;if(n)seg(g,x,y,w,rh,kc[k],`${name}: ${n.toLocaleString('en')} ${k==='redated'?'in a re-dated stream':k==='bulk'?'on a bulk day':k==='late'?'late, not bulk':'prompt returns'} (${pct(n/r.n)})`);x+=w;});
+  txt(g,lab+bw+4,y+rh-5,r.n.toLocaleString('en'),'m');
+  const x0=lab+bw+nw+gap*2;
+  if(r.sel){let x=x0;WH.forEach(k=>{const n=r.wh[k]||0,w=bw*n/r.sel;if(n)seg(g,x,y,w,rh,wc[k],`${name}: ${n.toLocaleString('en')} ${k==='same'?'on a price day':k==='near'?'within one day of one':'apart'} (${pct(n/r.sel)})`);x+=w;});
+   const cx=x0+bw*r.ch/r.sel;seg(g,cx-1,y-3,2,rh+6,'--chance',`${name}: chance ${pct(r.ch/r.sel)}`);
+   txt(g,x0+bw+4,y+rh-5,pct((r.wh.same||0)/r.sel),'m');}
+  else txt(g,x0,y+rh-5,'none of this kind','m');
+ });
+ document.getElementById('t-same').textContent=tot.sel?pct((tot.wh.same||0)/tot.sel):'–';
+ document.getElementById('t-chance').textContent=tot.sel?pct(tot.ch/tot.sel):'–';
+ document.getElementById('t-n').textContent=tot.sel.toLocaleString('en');
+ document.getElementById('t-apart').textContent=(tot.wh.apart||0).toLocaleString('en');
+}
+document.querySelectorAll('.ctl button').forEach(b=>b.addEventListener('click',()=>{sel=b.dataset.k;document.querySelectorAll('.ctl button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();}));
+addEventListener('resize',draw);draw();
+const P=[['W1','Replication: same-day share 98.5–99.5 %',()=>pct(D.W.W1.share)+' of '+D.W.W1.n.toLocaleString('en')],
+ ['W2','At least 25 % of dated absences are bulk or in a re-dated stream',()=>pct(D.W.W2.share)+' ('+D.W.W2.bulk_or_redated.toLocaleString('en')+')'],
+ ['W3','Among prompt returns, same-day share at least 95 %',()=>pct(D.W.W3.share)+' of '+D.W.W3.n.toLocaleString('en')],
+ ['W4','Chance below 50 %, and observed at least 30 points above it',()=>'chance '+pct(D.W.W4.chance_all)+', excess '+D.W.W4.excess_points_all+' points'],
+ ['W5','Among prompt returns, at least 95 % in a submission with a price',()=>pct(D.W.W5.share)],
+ ['W6','A query to 2027-06-30 returns No Data rows after 2026-10, and repeats identically',()=>'0 rows after 2026-10; three queries byte-identical']];
+const tb=document.querySelector('#pred tbody');
+P.forEach(([w,t,m])=>{const tr=document.createElement('tr'),h=D.scored[w];tr.innerHTML=`<td>${w}</td><td>${t}</td><td>${m()}</td><td class="${h?'held':'fail'}">${h?'held':'failed'}</td>`;tb.appendChild(tr);});
+})();
+</script>
+</body>
+</html>
