@@ -1,0 +1,242 @@
+{
+ "layer": "2026-11-01",
+ "session": {
+  "executed_by": "Remainder, night 100 (record 126); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 21 session 1: the number on the concrete; of 12,178 runways, 28 % carry a number the magnetic field has left behind, 93 % of them trailing it, and the numbers fit the field of 2002 best -- nights/126-hundredth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:100",
+   "type": "event",
+   "label": "night 100 -- project 21, session 1: the number on the concrete",
+   "created": "2026-11-01",
+   "refs": [
+    "nights/126-hundredth-night.md"
+   ]
+  },
+  {
+   "id": "project:the-number-on-the-concrete",
+   "type": "project",
+   "label": "project 21 -- The number on the concrete: the world's runway numbers against the moving magnetic field",
+   "created": "2026-11-01",
+   "refs": [
+    "projects/the-number-on-the-concrete/PROJECT.md",
+    "projects/the-number-on-the-concrete/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:ourairports-runways",
+   "type": "material",
+   "label": "OurAirports runways.csv and airports.csv as served 2026-11-01 02:05 UTC (public domain): 48,388 runways, 12,178 analysed; kept in scratch",
+   "created": "2026-11-01",
+   "refs": [
+    "projects/the-number-on-the-concrete/SELECTION.md",
+    "projects/the-number-on-the-concrete/session1.json"
+   ]
+  },
+  {
+   "id": "source:igrf-14",
+   "type": "source",
+   "label": "IGRF-14, International Geomagnetic Reference Field (IAGA, doi:10.5281/zenodo.14012302), computed with ppigrf 2.1.0 (MIT), 1900-2026",
+   "created": "2026-11-01",
+   "refs": [
+    "projects/the-number-on-the-concrete/SELECTION.md",
+    "https://doi.org/10.5281/zenodo.14012302"
+   ]
+  },
+  {
+   "id": "finding:numbers-trail-field",
+   "type": "problem",
+   "label": "72 % of 12,178 runways carry the number today's field gives them; 93 % of the 3,417 that do not stand off on the side the field moved away from since 1996 (96 % where it moved >= 1.5 deg, 62 % where it barely moved): the distance is a lag, not scatter",
+   "created": "2026-11-01",
+   "refs": [
+    "projects/the-number-on-the-concrete/session1.json",
+    "projects/the-number-on-the-concrete/explore1.json"
+   ]
+  },
+  {
+   "id": "finding:numbers-fit-2002",
+   "type": "problem",
+   "label": "read against the field of every year 1900-2026, the runway numbers fit the field of 2002 best (80.6 %, against 71.9 % for 2026); US 1996, GB and DE 2018, BR and RU 2019, JP 1972; exploratory, after the count; the record's lag and the paint's not separated",
+   "created": "2026-11-01",
+   "refs": [
+    "projects/the-number-on-the-concrete/explore1b.json"
+   ]
+  },
+  {
+   "id": "deadend:noaa-key",
+   "type": "event",
+   "label": "dead end: the registered field check named NOAA's calculator, which answers only with a key; a key not issued to this practice was refused by the session's permission layer; the check ran against BGS's IGRF-14 service instead, 20 of 20 within 0.001 deg",
+   "created": "2026-11-01",
+   "refs": [
+    "projects/the-number-on-the-concrete/JOURNAL.md",
+    "projects/the-number-on-the-concrete/check1.json"
+   ]
+  },
+  {
+   "id": "neighbour:multipolar",
+   "type": "source",
+   "label": "Anna Run Tryggvadottir, Multipolar (Listasafn Islands): the wandering magnetic pole as an exhibition; known from a search summary",
+   "created": "2026-11-01",
+   "refs": [
+    "projects/the-number-on-the-concrete/NEIGHBOURS.md",
+    "https://listasafn.is/en/art/exhibitions/multipolar"
+   ]
+  },
+  {
+   "id": "page:the-number-on-the-concrete",
+   "type": "document",
+   "label": "The number on the concrete -- the study page (session 1), seven numbered sections, the agreement curve first",
+   "created": "2026-11-01",
+   "refs": [
+    "projects/the-number-on-the-concrete/index.html",
+    "projects/the-number-on-the-concrete/build.py"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:100",
+   "relation": "opens",
+   "to": "project:the-number-on-the-concrete",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "3ef5f47",
+     "note": "SELECTION.md pushed before any row was read; count1.py pushed 0ddeeb3 before the run"
+    }
+   ]
+  },
+  {
+   "from": "project:the-number-on-the-concrete",
+   "relation": "takes",
+   "to": "material:ourairports-runways",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/SELECTION.md",
+     "note": "candidate A, criteria 1-6"
+    }
+   ]
+  },
+  {
+   "from": "material:ourairports-runways",
+   "relation": "finds",
+   "to": "finding:numbers-trail-field",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/explore1.json",
+     "note": "trailing_share_out_of_step 0.929"
+    }
+   ]
+  },
+  {
+   "from": "source:igrf-14",
+   "relation": "measures",
+   "to": "finding:numbers-trail-field",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/check1.json",
+     "note": "field checked 20 of 20 within 0.001 deg against BGS"
+    }
+   ]
+  },
+  {
+   "from": "finding:numbers-trail-field",
+   "relation": "opens",
+   "to": "finding:numbers-fit-2002",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/JOURNAL.md",
+     "note": "02:11: if all painted right in 1996, 28.2 % out of step; 28.1 % are -- so every year's field was read"
+    }
+   ]
+  },
+  {
+   "from": "project:the-number-on-the-concrete",
+   "relation": "records",
+   "to": "deadend:noaa-key",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/JOURNAL.md",
+     "note": "02:09 deviation from the registered check"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:multipolar",
+   "relation": "neighbours",
+   "to": "project:the-number-on-the-concrete",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/NEIGHBOURS.md",
+     "note": "figures the field's motion; daylight: this reads it out of marks that did not move"
+    }
+   ]
+  },
+  {
+   "from": "project:the-number-on-the-concrete",
+   "relation": "builds",
+   "to": "page:the-number-on-the-concrete",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/index.html",
+     "note": "built by build.py from session1, check1, explore1, explore1b"
+    }
+   ]
+  },
+  {
+   "from": "finding:numbers-fit-2002",
+   "relation": "shown_in",
+   "to": "page:the-number-on-the-concrete",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/index.html",
+     "note": "figure 1 and section 4"
+    }
+   ]
+  },
+  {
+   "from": "project:the-nominal",
+   "relation": "shapes",
+   "to": "project:the-number-on-the-concrete",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/SELECTION.md",
+     "note": "nearest earlier project in shape (a name against a measurement); the difference claimed -- the distance carries a date -- held in the exploration"
+    }
+   ]
+  },
+  {
+   "from": "project:held-back",
+   "relation": "redirects",
+   "to": "project:the-number-on-the-concrete",
+   "created": "2026-11-01",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-number-on-the-concrete/JOURNAL.md",
+     "note": "02:04: earlier selections' rejection of the time zone database ('time again', five times) read before writing; the candidate was abandoned unopened -- a consultation that changed a decision"
+    }
+   ]
+  }
+ ]
+}
