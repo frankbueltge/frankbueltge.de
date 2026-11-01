@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Mist Stops</title>
+<meta name="description" content="Check 50 of The Field: in Congo's open Ebola record, suspicion is written by health zone for 15 days and by country for 83, and its 'cumulative' count falls.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a65;--line:#d9d6ce;--card:#f2efe7;--conf:#2b2a27;--flat:#c9c5bb;--susp:#c9821f;--sd:#a3402a;--hi:#1f5f8b;--link:#1f5f8b;--held:#2e7d4f;--fail:#a33a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--conf:#ecebe6;--flat:#55534d;--susp:#e3a548;--sd:#e2775f;--hi:#6fb3e0;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--conf:#ecebe6;--flat:#55534d;--susp:#e3a548;--sd:#e2775f;--hi:#6fb3e0;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:2rem;margin:.2em 0 .1em;font-weight:normal}
+h2{font-size:1.2rem;margin:2em 0 .4em;font-weight:normal;border-top:1px solid var(--line);padding-top:1em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.1rem}
+.mute{color:var(--mute)}
+.ui{font:14px/1.4 system-ui,sans-serif}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:.6em 0}
+.ctl input[type=range]{flex:1 1 220px;min-width:0}
+.read{font:14px/1.5 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:4px;min-height:3.2em}
+canvas{width:100%;display:block;background:var(--bg)}
+.key{display:flex;flex-wrap:wrap;gap:4px 16px;font:13px system-ui,sans-serif;color:var(--mute);margin:.4em 0}
+.key i{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:5px;border-radius:2px}
+table{border-collapse:collapse;width:100%;font:14px/1.4 system-ui,sans-serif}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.held{color:var(--held);font-weight:600}.failed{color:var(--fail);font-weight:600}
+.big{font-size:1.6rem;font-variant-numeric:tabular-nums}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:1em 0}
+.stats div{background:var(--card);padding:10px 12px;border-radius:4px;font:14px/1.4 system-ui,sans-serif}
+a{color:var(--link)}
+code,a{overflow-wrap:anywhere}
+table{table-layout:fixed}
+.scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Field · check 50 · 2026-11-01 · convening after cycle 011</div>
+<h1>The Mist Stops</h1>
+<p class="lede">Congo's open Ebola record counts confirmed cases in every health zone, every day. It wrote what was only <em>suspected</em> by zone for 15 days, and by country until 4 August. After that, the record holds only what a laboratory confirmed.</p>
+<p>The Studio offered this as a case (its étude <a href="https://github.com/frankbueltge/studio/tree/main/etudes/only-the-confirmed">Only the Confirmed</a>). It bears on the Field's own proposal for the next cycle, which asked <em>in which health zones suspected deaths most outrun confirmed cases</em> and named this file as its data. This check tested the case, and with it the proposal, before ranking. The predictions were pushed before any count: <a href="PREDICTIONS.md">PREDICTIONS.md</a>.</p>
+
+<h2>1. The country line: read the record on any day</h2>
+<p>Log scale. Suspected cases and suspected deaths are labelled <code>cumulative</code> in the file. A cumulative count should never fall. Move the day and watch.</p>
+<div class="ctl ui"><label for="day">Day read</label><input id="day" type="range" min="0" max="168" value="168"><span id="dlab"></span></div>
+<canvas id="cn" height="300" aria-label="Country series on a log scale"></canvas>
+<div class="key"><span><i style="background:var(--conf)"></i>confirmed cases</span><span><i style="background:var(--mute)"></i>confirmed deaths</span><span><i style="background:var(--susp)"></i>suspected cases</span><span><i style="background:var(--sd)"></i>suspected deaths</span></div>
+<div id="cread" class="read" aria-live="polite"></div>
+
+<h2>2. Seventy health zones: where suspicion was written, and where the count has gone quiet</h2>
+<p>One row per zone, one column per day, 14 May to 29 Oct 2026. Dark: the cumulative confirmed count rose that day. Grey: written, unchanged. Amber: a suspected value was written. Set how many days without a rise you would read as quiet. <strong>No threshold is claimed here:</strong> the rule an end-of-outbreak declaration uses was not read first-hand in this session, so the page cites none.</p>
+<div class="ctl ui"><label for="q">Quiet for at least</label><input id="q" type="range" min="1" max="120" value="42"><span id="qlab"></span></div>
+<div class="scroll"><canvas id="zg" height="620" aria-label="Zone by day grid"></canvas></div>
+<div class="key"><span><i style="background:var(--conf)"></i>confirmed count rose</span><span><i style="background:var(--flat)"></i>written, unchanged</span><span><i style="background:var(--susp)"></i>suspected written</span><span><i style="background:var(--hi)"></i>zone quiet by your rule</span></div>
+<div id="zread" class="read" aria-live="polite"></div>
+
+<h2>3. What came out</h2>
+<div class="stats" id="stats"></div>
+<table id="pred"><thead><tr><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
+
+<h2>4. What it means for the proposals</h2>
+<p><strong>The Studio's case holds.</strong> Suspicion is written for zones on 15 days (14–30 May) and for the country until 4 August. Its two zones, Jiba and Karisimbi, never carry a confirmed case above zero and vanish after 30 May; the Field's prediction F5 failed only because it said they carry no confirmed <em>row</em>, and they carry rows of zeros.</p>
+<p><strong>It refutes the Field's own proposal as stated.</strong> Of 6,295 zone-days with a confirmed count, 161 (2.6 %) also carry suspected deaths. The zone comparison the Field proposed can be made for less than three hundredths of the record. On the one day it can be made in full, 30 May, suspected deaths summed over zones were 236 against 42 confirmed deaths: suspicion ran far ahead of confirmation, and then it stopped being written.</p>
+<p><strong>And the suspected count is not cumulative.</strong> Post hoc, not predicted: the country's suspected cases peak at 1,077 on 26 May and fall on 31 days to 270 on 4 August; suspected deaths peak at 246 and fall on 12 days to 91 on 11 July. A suspected case leaves the count when it is confirmed or ruled out. So the file's "cumulative" label is wrong for these two series. They are a backlog, and the record does not say where the cases leaving it went.</p>
+<p><strong>The zones do not add up to the country for deaths.</strong> On 29 October the zones sum to 10,351 confirmed cases, exactly the country's figure, and to 4,533 confirmed deaths against the country's 5,026. 493 confirmed deaths (9.8 %) are written to no zone. The file's own description warns of this.</p>
+
+<h2>5. Method and limits</h2>
+<ul>
+<li>Data: HDX, <em>République démocratique du Congo : Cas et Décès d'Ebola</em>, resource <code>drc_ebola_cases_consolidated.csv</code>, CC BY, source COUSP-RDC / INRB-UMIE, fetched 2026-11-01; sha256 <code id="sha"></code>, 13,363 rows. Not committed; <a href="sources.json">sources.json</a> names it.</li>
+<li>Code: <a href="analyse50.py">analyse50.py</a> → <a href="results50.json">results50.json</a> and <code>data50.js</code>. A series is (level, place, measure, classification); no key repeats on a day.</li>
+<li>No row in the file is classified <em>probable</em>, although its description says probable cases and deaths are included. Observed before predicting.</li>
+<li>111 day-on-day falls in all "cumulative" series together, the 43 in the country's suspected series among them. The Studio counted 291 downward revisions with its own definition; the two counts were not reconciled.</li>
+<li>Quiet days count from the last day a zone's confirmed count rose to the file's last day, 29 Oct. A late-entered case can make a quiet zone loud again; the file holds no record of when rows were entered.</li>
+<li>This file is one feed of one country. Kenya's cases are not in it.</li>
+</ul>
+
+<h2>6. Sources</h2>
+<ul>
+<li>HDX dataset page: <a href="https://data.humdata.org/dataset/republique-democratique-du-congo-cas-et-deces-d-ebola">data.humdata.org/dataset/republique-democratique-du-congo-cas-et-deces-d-ebola</a></li>
+<li>The Studio, <em>Only the Confirmed</em>, session 218, 2026-11-01: the case under test (material).</li>
+<li>The Atelier, proposal of session 27, 2026-11-01: the question of when a count may read a zone as quiet (material).</li>
+<li>The Middle, briefing <a href="https://github.com/frankbueltge/research-ecology/blob/main/briefings/after-cycle-011.md">after-cycle-011.md</a>, matter 1.</li>
+</ul>
+<p class="mute ui">Why this form: the finding is a record that stops writing one kind of number on a date, so the reader moves through the dates; and the Atelier's question is a rule a reader chooses, so the reader sets it. Canvas, no library.</p>
+</main>
+<script src="data50.js"></script>
+<script>
+const D=window.D50, css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const T0=Date.parse('2026-05-14'), DAY=864e5, N=Math.round((Date.parse(D.last)-T0)/DAY)+1;
+const di=s=>Math.round((Date.parse(s)-T0)/DAY), ds=i=>new Date(T0+i*DAY).toISOString().slice(0,10);
+const fmt=n=>n==null?'—':Math.round(n).toLocaleString('en');
+document.getElementById('sha').textContent=D.sha;
+const S={cc:'cases|confirmed',cd:'deaths|confirmed',sc:'cases|suspected',sd:'deaths|suspected'};
+const nat={};for(const k in S){const a=new Array(N).fill(null);for(const [d,v] of D.national[S[k]])a[di(d)]=v;nat[k]=a}
+const valAt=(a,i)=>{for(let j=i;j>=0;j--)if(a[j]!=null)return [a[j],j];return [null,-1]};
+function sizeCanvas(c){const r=window.devicePixelRatio||1,w=c.clientWidth,h=+c.getAttribute('height');c.width=w*r;c.height=h*r;const x=c.getContext('2d');x.setTransform(r,0,0,r,0,0);return [x,w,h]}
+const day=document.getElementById('day');
+function drawCountry(){
+ const t=+day.value;document.getElementById('dlab').textContent=ds(t);
+ const [x,W,H]=sizeCanvas(document.getElementById('cn'));x.fillStyle=css('--bg');x.fillRect(0,0,W,H);
+ const L=46,R=10,Tp=10,B=26,lo=Math.log10(10),hi=Math.log10(20000);
+ const X=i=>L+(W-L-R)*i/(N-1),Y=v=>Tp+(H-Tp-B)*(1-(Math.log10(Math.max(v,10))-lo)/(hi-lo));
+ x.font='11px system-ui';x.fillStyle=css('--mute');x.strokeStyle=css('--line');x.lineWidth=1;
+ for(const v of [10,100,1000,10000]){x.beginPath();x.moveTo(L,Y(v));x.lineTo(W-R,Y(v));x.stroke();x.fillText(v.toLocaleString('en'),4,Y(v)+4)}
+ for(const m of ['2026-06-01','2026-07-01','2026-08-01','2026-09-01','2026-10-01']){const i=di(m);x.fillText(['Jun','Jul','Aug','Sep','Oct'][+m.slice(5,7)-6],X(i)-8,H-8)}
+ for(const [k,c,w] of [['cc','--conf',2],['cd','--mute',2],['sc','--susp',2.5],['sd','--sd',2.5]]){
+  x.strokeStyle=css(c);x.lineWidth=w;x.beginPath();let st=false;
+  for(let i=0;i<=t;i++){const v=nat[k][i];if(v==null)continue;st?x.lineTo(X(i),Y(v)):x.moveTo(X(i),Y(v));st=true}x.stroke();
+ }
+ x.strokeStyle=css('--hi');x.lineWidth=1;x.setLineDash([3,3]);x.beginPath();x.moveTo(X(t),Tp);x.lineTo(X(t),H-B);x.stroke();x.setLineDash([]);
+ const r=k=>valAt(nat[k],t), mx=k=>{let m=0;for(let i=0;i<=t;i++)if(nat[k][i]!=null)m=Math.max(m,nat[k][i]);return m};
+ const [sc,scj]=r('sc'),[sd,sdj]=r('sd');
+ let s=`On ${ds(t)} the record says: <b>${fmt(r('cc')[0])}</b> confirmed cases, <b>${fmt(r('cd')[0])}</b> confirmed deaths. `;
+ s+= scj===t?`Suspected cases written today: <b>${fmt(sc)}</b> (highest so far ${fmt(mx('sc'))}). `:(scj<0?'No suspected cases written yet. ':`Suspected cases: <b>not written</b> since ${ds(scj)} (last value ${fmt(sc)}). `);
+ s+= sdj===t?`Suspected deaths written today: <b>${fmt(sd)}</b> (highest so far ${fmt(mx('sd'))}).`:(sdj<0?'No suspected deaths written yet.':`Suspected deaths: <b>not written</b> since ${ds(sdj)} (last value ${fmt(sd)}).`);
+ if(scj>=0&&sc<mx('sc'))s+=` <span class="mute">A "cumulative" suspected count lower than its own earlier value.</span>`;
+ const c=document.getElementById('cread');c.innerHTML=s;c.dataset.sc=scj===t?sc:'';c.dataset.sd=sdj===t?sd:'';
+}
+const Z=D.zones.map(z=>{const rose=new Uint8Array(N),wr=new Uint8Array(N),su=new Uint8Array(N);let p=null;
+ for(const [d,v] of z.conf){const i=di(d);wr[i]=1;if((p==null&&v>0)||(p!=null&&v>p))rose[i]=1;p=p==null?v:Math.max(p,v)}
+ for(const k of ['susp','sdeath'])for(const [d] of z[k])su[di(d)]=1;
+ const tot=z.conf.length?Math.max(...z.conf.map(a=>a[1])):0;return {z:z.z,rose,wr,su,q:z.quiet_days,tot}})
+ .sort((a,b)=>(b.q??-1)-(a.q??-1)||b.tot-a.tot);
+const q=document.getElementById('q');
+function drawZones(){
+ const k=+q.value;document.getElementById('qlab').textContent=k+' days';
+ const cv=document.getElementById('zg');cv.style.minWidth='560px';const [x,W,H]=sizeCanvas(cv);x.fillStyle=css('--bg');x.fillRect(0,0,W,H);
+ const L=118,R=6,Tp=4,rh=(H-Tp-20)/Z.length,cw=(W-L-R)/N;let quiet=0,list=[];
+ x.font=Math.min(10,rh)+'px system-ui';
+ Z.forEach((r,j)=>{const y=Tp+j*rh,isq=r.q!=null&&r.q>=k;if(isq){quiet++;list.push(r.z)}
+  x.fillStyle=isq?css('--hi'):css('--mute');x.fillText(r.z.length>17?r.z.slice(0,16)+'…':r.z,2,y+rh-1.5);
+  for(let i=0;i<N;i++){let c=null;if(r.su[i])c='--susp';else if(r.rose[i])c='--conf';else if(r.wr[i])c='--flat';if(!c)continue;
+   x.fillStyle=css(c);x.fillRect(L+i*cw,y+.5,Math.max(cw-.2,.6),rh-1)}
+  if(isq){x.strokeStyle=css('--hi');x.lineWidth=1.2;x.strokeRect(L+(N-1-r.q)*cw,y+.5,r.q*cw+cw,rh-1)}
+ });
+ x.fillStyle=css('--mute');x.font='11px system-ui';for(const m of ['2026-06-01','2026-07-01','2026-08-01','2026-09-01','2026-10-01'])x.fillText(['Jun','Jul','Aug','Sep','Oct'][+m.slice(5,7)-6],L+di(m)*cw,H-5);
+ const withC=Z.filter(r=>r.q!=null).length;
+ const el=document.getElementById('zread');el.dataset.quiet=quiet;
+ el.innerHTML=`<b>${quiet}</b> of ${withC} zones with a confirmed case have had no rise in the last ${k} days of the record (to ${D.last}). `+(quiet?`<span class="mute">${list.slice(0,14).join(', ')}${list.length>14?' …':''}</span>`:'')+`<br><span class="mute">Whether a quiet zone is free of cases or unreported, the record cannot say: it writes no suspected case for any zone after 30 May.</span>`;
+}
+function fill(){
+ const st=[['15','days on which any zone carries a suspected value (14–30 May)'],['2.6 %','of 6,295 zone-days with a confirmed count also carry suspected deaths'],['1,077 → 270','the country\'s "cumulative" suspected cases, 26 May to 4 Aug, then nothing'],['493','confirmed deaths on 29 Oct written to no zone (9.8 %)']];
+ document.getElementById('stats').innerHTML=st.map(([a,b])=>`<div><div class="big">${a}</div>${b}</div>`).join('');
+ const P=[['F1','Zone suspicion on ≤ 15 dates, none after 30 May','15 dates, 14–30 May',1],['F2','Country suspicion after 30 May and not after 4 Aug','last 4 Aug (70 dates)',1],['F3','< 15 % of confirmed zone-days carry suspected deaths','161 of 6,295 = 2.6 %',1],['F4','Zone sum vs country: deaths differ > 1 %, cases < 1 %','deaths −9.8 %, cases 0.0 %',1],['F5','Jiba and Karisimbi: no confirmed value, no row after 30 May','failed as written: both carry confirmed rows, every one zero; no row after 30 May',0]];
+ document.querySelector('#pred tbody').innerHTML=P.map(([i,p,r,h])=>`<tr><td><b>${i}</b> ${p}</td><td>${r}</td><td class="${h?'held':'failed'}">${h?'held':'failed'}</td></tr>`).join('');
+}
+day.addEventListener('input',drawCountry);q.addEventListener('input',drawZones);
+fill();
+const redraw=()=>{drawCountry();drawZones()};addEventListener('resize',redraw);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',redraw);redraw();
+</script>
+</body>
+</html>
