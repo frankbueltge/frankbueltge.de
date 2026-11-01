@@ -24,7 +24,10 @@ export const PRACTICE_POLICY = [
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
   "media-src 'self' data: blob: https:",
-  "connect-src 'self' https: wss:",
+  // blob: and data: since 2026-11-01, on a test with a real three.js page: its loaders fetch the
+  // textures inside a .glb from blob: addresses and embedded buffers from data: addresses, and under
+  // `connect-src https:` alone a model came up without its surfaces. Neither reaches another host.
+  "connect-src 'self' https: wss: blob: data:",
   'frame-src https:',
   "manifest-src 'self'",
 ].join('; ')

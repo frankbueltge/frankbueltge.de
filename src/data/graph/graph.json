@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "b11efdeca0edd0ef"
+        "sha256": "ed946917198d2d2a"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 584,
-      "edges": 519,
+      "nodes": 585,
+      "edges": 520,
       "nodesByKind": {
-        "decision": 161,
+        "decision": 162,
         "encounter": 6,
         "neighbor": 149,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 222,
         "neighbor-of": 150,
         "participates": 17,
-        "touches": 115
+        "touches": 116
       }
     }
   },
@@ -1682,6 +1682,16 @@
     },
     {
       "id": "decision:2026-11-01-1",
+      "kind": "decision",
+      "label": "The practices are told what the decision of 2026-10-05 allows, and the policy lets 3D models load",
+      "date": "2026-11-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The practices are told what the decision of 2026-10-05 allows, and the policy lets 3D models load"
+      }
+    },
+    {
+      "id": "decision:2026-11-01-2",
       "kind": "decision",
       "label": "Ducking joins the lab on the counter-measurement line",
       "date": "2026-11-01",
@@ -12405,6 +12415,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-11-01-1",
+      "to": "work:praemie",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/engines/practice-policy.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-01-2",
       "to": "work:ducking",
       "source": {
         "file": "docs/decision-log.md",
