@@ -1,0 +1,42 @@
+{
+ "source": "data.js and summary.json of this work (built from HDX ipc_global_area_long.csv, sha256 in raw-manifest.json)",
+ "ends": 1626,
+ "picks": 2000,
+ "ends_per_thread": 2,
+ "sett": "20 ends and 20 picks per cm, so the cloth is 81.3 cm wide and 100 cm long before take-up",
+ "order": "threads left to right in the order of the record (the work's hang \"by time\"); areas top to bottom in the table's order",
+ "threads": 813,
+ "holes": 1041,
+ "holes_raised_to_min_picks": 346,
+ "min_hole_picks": 2,
+ "knots": 6368,
+ "knots_A": 6352,
+ "knots_B": 16,
+ "threads_with_no_people": 6,
+ "hole_share_of_cloth": 0.00965,
+ "structures": {
+  "0": "phase 1, weft-faced, IPC colour #cdfacd",
+  "1": "phase 2, weft-faced, #fae61e",
+  "2": "phase 3, weft-faced, #e67800",
+  "3": "phase 4, weft-faced, #c80000",
+  "4": "phase 5, weft-faced, #640000",
+  "5": "HOLE: bare warp, no weft bound in (see INSTRUCTION.md, the hole)",
+  "6": "a thread with no people written: plain weave in undyed dark weft, its knots tied on it"
+ },
+ "cells_per_structure": {
+  "0": 1607994,
+  "1": 949716,
+  "2": 511266,
+  "3": 115452,
+  "4": 12198,
+  "5": 31374,
+  "6": 24000
+ },
+ "rounding": "each area gets its share of 2,000 picks by largest remainder; a hole shorter than 2 picks is raised to 2, the 2 taken from the longest classified area of the same thread; a knot has no length and is tied at the pick where its area stands",
+ "asserted_against_summary_json": [
+  "threads 813",
+  "holes = C 1,041",
+  "knots = A 6,352 + B 16",
+  "threads with no people 6"
+ ]
+}
