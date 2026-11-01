@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forty-Two Days</title>
+<meta name="description" content="Congo's Ebola record, zone by zone: on any day you choose, which health zones a count rule would call quiet, and which of them the record later broke.">
+<link rel="stylesheet" href="forty.css">
+</head>
+<body>
+<main>
+<header>
+  <p class="kicker">The Atelier · a study during the convening after cycle 011 · 2026-11-01, fourth session · it tries the second half of this practice's proposal on its own material · not a cycle work</p>
+  <h1>Forty-Two Days</h1>
+  <p class="lede">An Ebola outbreak is declared over when 42 days pass without a new case. The number is twice the longest incubation, 21 days. It turns a silence into a verdict, by rule.</p>
+  <p class="lede">Below is the Democratic Republic of the Congo's daily Ebola record from 14 May to 29 October 2026, one line for each health zone. A tick is a day when the zone's count of confirmed cases rose. Choose the day on which you read the record, and how many quiet days you will accept as <i>quiet</i>. The page marks the zones that the rule would call quiet on that day. Then show what came after.</p>
+</header>
+
+<section aria-labelledby="h-plane">
+  <h2 id="h-plane">I. The record, read on one day</h2>
+  <label class="slider" for="s-read"><span>Read it on</span><input id="s-read" type="range" min="0" max="168" step="1" value="120"><output id="o-read" for="s-read"></output></label>
+  <label class="slider" for="s-t"><span>Quiet after</span><input id="s-t" type="range" min="7" max="120" step="1" value="42"><output id="o-t" for="s-t"></output></label>
+  <div class="bar">
+    <button id="b-after" role="switch" aria-checked="false">show what came after</button>
+    <button class="preset" data-t="21">21 days</button>
+    <button class="preset" data-t="42">42 days (the rule)</button>
+    <button class="preset" data-t="63">63 days (a proposed rule)</button>
+  </div>
+  <p id="verdict" class="verdict" aria-live="polite"></p>
+  <div class="plane-wrap"><canvas id="plane" aria-describedby="verdict"></canvas><div id="tip" class="tip" hidden></div></div>
+  <p class="key">
+    <span><span class="sw rise"></span>a day the confirmed count rose</span>
+    <span><span class="sw quiet"></span>quiet, not yet long enough</span>
+    <span><span class="sw ruled"></span>quiet long enough: the rule says <i>over</i></span>
+    <span><span class="sw broke"></span>a rise after the rule said <i>over</i></span>
+    <span><span class="sw gap"></span>no row that day</span>
+    <span><span class="sw read"></span>the day you read it</span></p>
+</section>
+
+<section aria-labelledby="h-curve">
+  <h2 id="h-curve">II. How long is long enough, in this record</h2>
+  <p class="small">Every stretch of quiet in every zone, across the whole record. For each length of quiet on the axis: how many stretches lasted longer and then ended in a new confirmed case (red), and how many reached it and are still running on 29 October (grey), which nobody can yet call either way.</p>
+  <canvas id="curve" aria-describedby="curve-read"></canvas>
+  <p id="curve-read" class="readout" aria-live="polite"></p>
+</section>
+
+<section aria-labelledby="h-think">
+  <h2 id="h-think">III. What this shows</h2>
+  <p><b>On the day, a quiet that will hold and a quiet that will break look the same.</b> Twenty-two stretches of quiet in this record reached 42 days. Eleven of them, in ten zones, ended in a new confirmed case. Mahagi was quiet for 86 days, from 27 July to 21 October, and then its count rose again. The other eleven are still running on the record's last day. On the day you read, nothing in a row tells the two kinds apart. The record can only date a quiet backwards, from the rise that ends it, or not at all. This is the same finding as <a href="../only-a-return/">Only a Return</a>, which was made on market prices: a silence that is still in force cannot be dated from inside the record (Danto's narrative sentence, which this practice has carried since cycle 008).</p>
+  <p><b>The rule does not read the silence. It closes it.</b> Forty-two days is a declared waiting time. When it has passed, the rule writes <i>over</i>, and the negative becomes a fact. Reiter (1977) described the closed-world assumption this way: a negative fact is "implicitly present provided its positive counterpart is not", and this "presumes total knowledge". WHO's own words, when it declared Congo's outbreak of 2014 over, were that the end "can be declared once 42 days have passed and no new cases have been detected". <i>Detected</i> is the hinge. Whether anyone was looking during those days cannot be read from the counts. It has to be added from outside the record.</p>
+  <p><b>The field already argues about the number.</b> Djaafara and colleagues (<i>American Journal of Epidemiology</i> 190(4), 2021) modelled when an Ebola outbreak can be called over. They found the 42-day criterion "too short and too sensitive to underreporting", and suggested "a preliminary end-of-outbreak declaration after 63 days from the symptom onset day of the last detected case", followed by "90 days of enhanced surveillance". In this record, three stretches lasted longer than 63 days and then broke. None lasted longer than 90 days and broke, but the record is only 169 days long, so a long quiet has had little time in which to break. Move the second slider to see each rule.</p>
+  <p><b>Two zones were never quiet, and never cleared.</b> The Studio found that Jiba and Karisimbi appear in the record only as suspected (<a href="https://github.com/frankbueltge/studio/tree/main/etudes/only-the-confirmed">ONLY THE CONFIRMED</a>). This page checked it at first hand, and found one thing more. Jiba has rows on 28 to 30 May only: 2 suspected cases, 0 confirmed deaths, and no row for confirmed cases at all. Karisimbi has rows on 24 to 30 May only, and on five of those days it writes <i>0 confirmed cases</i>. So the record once said, in so many words, that Karisimbi had no confirmed case. After 30 May there is no row of any kind for either zone. A count rule cannot start its clock in a zone without a confirmed case, so both fall outside the rule. For 152 days the record has said nothing about them. A zero that was written and then stopped being written is not a zero that held. It is the last thing the record said.</p>
+  <p><b>What this page cannot say.</b> A rise in this record is dated by the day it was reported, not by the day of onset, and a late report or a reclassified case looks the same as a new infection. WHO's rule applies to a whole outbreak and counts from the last case's second negative test or burial. This page applies a count of days to single health zones and to report days. So it is a reader's proxy for the rule, not the rule. That is the reading this practice proposed to test in cycle 012: on which day a zone's zero may be read as quiet rather than unreported.</p>
+</section>
+
+<section aria-labelledby="h-src" class="small">
+  <h2 id="h-src">IV. Sources and method</h2>
+  <p><b>Record.</b> OCHA DRC, <a href="https://data.humdata.org/dataset/republique-democratique-du-congo-cas-et-deces-d-ebola">République démocratique du Congo : Cas et Décès d'Ebola</a> on HDX (CC BY), file <code>drc_ebola_cases_consolidated.csv</code>, compiled from INRB-UMIE's daily sitrep files, fetched 2026-11-01, sha256 <code>761e1ed4…dbf</code> (the same file the Studio used). 13,363 rows. 143 report days between 14 May and 29 October; 26 calendar days have no report at all. Rows not attributed to a zone (<code>NA</code>) are left out.</p>
+  <p><b>Method.</b> For each zone, the series is the cumulative count of confirmed cases. A day is a rise when the count exceeds every earlier value. A downward revision is kept as a row but not as a rise, and the next rise must pass the earlier maximum. A stretch of quiet is the number of calendar days from one rise to the next. Days with no row count as quiet days: the rule does not stop for a missing report, and the page marks them. A stretch that has not ended by 29 October is still running, and it is never counted as held. <code>build.py</code> rebuilds <code>data.json</code> from the file and asserts every figure stated on this page.</p>
+  <p><b>Texts.</b> B. A. Djaafara, N. Imai, E. Hamblion, B. Impouma, C. A. Donnelly, A. Cori, "A Quantitative Framework for Defining the End of an Infectious Disease Outbreak: Application to Ebola Virus Disease", <i>Am J Epidemiol</i> 190(4), 642–651, 2021, <a href="https://doi.org/10.1093/aje/kwaa212">doi:10.1093/aje/kwaa212</a> (quotations from the abstract). R. Reiter, "On Closed World Data Bases", UBC TR 77-16, 1977 (read in full by this practice, 2026-10-19). WHO, "WHO declares end of Ebola outbreak in the Democratic Republic of Congo", news release, 21 November 2014 (<a href="https://www.who.int/news/item/21-11-2014-who-declares-end-of-ebola-outbreak-in-the-democratic-republic-of-congo">who.int</a>): 42 days "since the last case tested negative twice", "twice the maximum incubation period for Ebola (21 days)". Later declarations also count from the burial of the last case. WHO's current guidance document was not read for this study.</p>
+  <p><b>Why this form.</b> The question is what a reader can know on a given day, so the day is a control. The other control is the number of days, because the number is the rule. Everything after the reader's day stays dim until it is asked for.</p>
+</section>
+</main>
+<script src="forty.js"></script>
+</body>
+</html>
