@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { TrendingDay } from '@/lib/trending/types'
 import { capY, FADER, inkOf, INK_FLOOR, lanePath, positionAt, scaleY, SCALE } from './figure'
-import { countLedger, FLOOR_DB, fmtCount, fmtShare, shareAt, solve, spanOf, standing, toDb, toGain, toPosition, toShare, trailingShares } from './mix'
+import { captionOf, countLedger, crowdCutoff, fmtCount, fmtShare, focusOf, shareAt, solve, spanOf, standing, toDb, toGain, toPosition, toShare, trailingShares } from './mix'
 
 const signal = (label: string, links: string[] = []) => ({
   source: 'x',
@@ -74,11 +74,11 @@ describe('the fader', () => {
     expect(toPosition(0)).toBe(0)
   })
 
-  it('is logarithmic: every mark ten times the one below, at equal steps', () => {
-    const step = 10 / -FLOOR_DB
-    expect(toPosition(0.1)).toBeCloseTo(1 - step, 10)
-    expect(toPosition(0.01)).toBeCloseTo(1 - 2 * step, 10)
-    expect(toPosition(0.001)).toBeCloseTo(1 - 3 * step, 10)
+  it('climbs without a step, and stretches the top, where a channel can be heard', () => {
+    const marks = [0.0001, 0.001, 0.01, 0.1, 1].map(toPosition)
+    for (let i = 1; i < marks.length; i++) expect(marks[i]!).toBeGreaterThan(marks[i - 1]!)
+    expect(marks[4]! - marks[3]!).toBeGreaterThan(marks[3]! - marks[2]!)
+    expect(1 - toPosition(0.5)).toBeGreaterThan(0.1)
   })
 
   it('keeps zero apart from the quietest thing a week can hold', () => {
@@ -87,7 +87,7 @@ describe('the fader', () => {
   })
 
   it('reads back what it was set to, and only the very floor is zero', () => {
-    for (const share of [1, 0.4, 0.05, 0.003, 0.0002]) expect(toShare(toPosition(share))).toBeCloseTo(share, 10)
+    for (const share of [1, 0.4, 0.05, 0.003, 0.0002, 0.00005]) expect(toShare(toPosition(share))).toBeCloseTo(share, 10)
     expect(toShare(0)).toBe(0)
     expect(toShare(0.01)).toBeGreaterThan(0)
   })
@@ -130,6 +130,36 @@ describe('holding', () => {
   it('scales hands that ask for more than the whole', () => {
     const mix = solve(base, [1, 1, null, null])
     expect(mix).toEqual([0.5, 0.5, 0, 0])
+  })
+})
+
+describe('the ear', () => {
+  it('leaves the crowd open with no hand, or a hand low on a fader', () => {
+    expect(focusOf([])).toBe(0)
+    expect(focusOf([0.1])).toBe(0)
+    expect(crowdCutoff(0)).toBeGreaterThan(4000)
+  })
+
+  it('closes on the crowd as a matter comes up, and follows the highest hand', () => {
+    expect(focusOf([0.5])).toBeGreaterThan(focusOf([0.3]))
+    expect(focusOf([0.3, 0.9])).toBe(1)
+    expect(crowdCutoff(1)).toBeLessThan(crowdCutoff(0.5))
+  })
+})
+
+describe('the caption', () => {
+  it('says what the crowd is, with its share', () => {
+    expect(captionOf([], false, 0.9934)).toBe('The crowd is the rest of the web: 99.3 % of what its charts held this week.')
+  })
+
+  it('names the hands', () => {
+    const ebola = { strip: 'EBOLA', share: 0.6 }
+    expect(captionOf([ebola], false, 0.4)).toBe('You are holding EBOLA at 60.0 %. The crowd gives way to 40.0 %.')
+    expect(captionOf([ebola, { strip: 'COP31', share: 0.1 }], false, 0.3)).toBe('You are holding EBOLA and COP31. The crowd gives way to 30.0 %.')
+  })
+
+  it('says where the room goes when the crowd itself is held', () => {
+    expect(captionOf([], true, 0.03)).toContain('what was already loud')
   })
 })
 
@@ -182,10 +212,10 @@ describe('the geometry', () => {
     expect(positionAt(FADER.height + 50)).toBe(0)
   })
 
-  it('spaces the scale evenly, top to floor', () => {
+  it('gives the top of the scale the most room, and keeps zero apart', () => {
     const ys = SCALE.filter((s) => s.share > 0).map((s) => scaleY(s.share))
     const steps = ys.slice(1).map((y, i) => y - ys[i]!)
-    for (const s of steps) expect(s).toBeCloseTo(steps[0]!, 0)
+    for (let i = 1; i < steps.length; i++) expect(steps[i]!).toBeLessThan(steps[i - 1]!)
     expect(ys[0]).toBe(FADER.capHeight / 2)
     expect(scaleY(0)).toBeGreaterThan(ys.at(-1)!)
   })

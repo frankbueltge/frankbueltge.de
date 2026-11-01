@@ -61,11 +61,11 @@ const sample = book.rest.sample
       </li>
       <li>
         <b class="text-fg">Share.</b> A channel’s signals over all signals in the trailing {WINDOW_DAYS} days. The first days of the
-        record have shorter windows. Everything else is the remainder, so the sum is the whole ledger.
+        record have shorter windows. The crowd is the remainder, so the sum is the whole ledger.
       </li>
       <li>
         <b class="text-fg">Level.</b> The share as a power ratio: ten times its logarithm, in decibels. The fader’s travel runs from
-        0 dB, the whole, to −{Math.abs(FLOOR_DB)} dB, and each printed mark is ten times the one below. A channel at zero rests on the floor. Each
+        0 dB, the whole, to −{Math.abs(FLOOR_DB)} dB, stretched at the top as on any desk, and each printed mark is ten times the one below. A channel at zero rests on the floor. Each
         channel’s amplitude is the square root of its share, and every recording is levelled to the same speech loudness, so a
         fader’s position means the same on every channel.
       </li>
@@ -75,7 +75,7 @@ const sample = book.rest.sample
         scaled down to it. Holding changes the sound for the person holding, and no count. Nothing done at the desk is sent or kept.
       </li>
       <li>
-        <b class="text-fg">Everything else.</b> Several voices read a seeded random sample of the labels of the week the round ends,
+        <b class="text-fg">The crowd.</b> Several voices read a seeded random sample of the labels of the week the round ends,
         each label once. Of {fmtCount(sample.labels)} distinct labels that name no matter, {fmtCount(sample.long)} are left out as too
         long to read in passing and {fmtCount(sample.unreadable)} because they carry a non-Latin script or an emoji the voices cannot
         say, so the crowd is more Latin-script than the charts are. {fmtCount(sample.stopped)} more fall to a stop list of words for sex,
@@ -85,8 +85,12 @@ const sample = book.rest.sample
         once per round, and it loops.
       </li>
       <li>
-        <b class="text-fg">The room.</b> One thing is added to the voices: a small synthetic room, in which a quiet channel stands further
-        away than a loud one. It changes distance, not level. There is no other sound.
+        <b class="text-fg">What is added.</b> Two things. A small synthetic room, in which a quiet channel stands further away than a
+        loud one; it changes distance, not level. And a lowpass filter on the crowd, which closes as a hand raises a matter, so that a
+        voice can be understood before it has taken most of the mix. That one does change what you hear: a fader shows the level going
+        into the filter, and the blurred crowd is quieter than its fader says. Measured on 2026-11-01 by transcribing three readings
+        against the crowd: with the crowd open, a voice at 10 % of the mix could not be made out at all and took about 80 % to be
+        recovered fully; through the closed filter it was recovered at 10 %. There is no other sound.
       </li>
     </ul>
   </section>
