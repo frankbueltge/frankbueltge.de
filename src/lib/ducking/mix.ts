@@ -95,6 +95,23 @@ export function toShare(position: number): number {
   return 10 ** ((FLOOR_DB * (1 - Math.min(1, position))) / 10)
 }
 
+/** Between two days of the record: the shares a fader glides through while the record plays. These
+ *  are the path of the motion, not measurements; the desk prints the nearest real day instead. */
+export function shareAt(shares: readonly (readonly number[])[], at: number): number[] {
+  const last = shares.length - 1
+  const i = Math.max(0, Math.min(Math.floor(at), last))
+  const j = Math.min(i + 1, last)
+  const f = Math.max(0, at - i)
+  return shares[i]!.map((v, c) => v + (shares[j]![c]! - v) * f)
+}
+
+/** Closer than this, in fader travel, a moving fader has arrived. */
+const ARRIVED = 0.004
+
+/** What a fader stands for right now: where it is, until it has arrived at what the mix says. */
+export const standing = (position: number, target: number): number =>
+  Math.abs(toPosition(target) - position) < ARRIVED ? target : toShare(position)
+
 /** The level of a share in dB, for the page's prose and table; minus infinity at zero. */
 export const toDb = (share: number): number => (share > 0 ? 10 * Math.log10(share) : -Infinity)
 

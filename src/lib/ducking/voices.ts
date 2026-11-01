@@ -20,6 +20,8 @@ export interface VoiceFile {
   period: number
   /** a hash of the lines it was rendered from */
   digest?: string
+  /** the power of its speech as rendered, in dB, the same on every channel */
+  level: number
   cues: Cue[]
 }
 
@@ -29,6 +31,8 @@ export interface RestFile extends VoiceFile {
   from: string
   to: string
   voices: number
+  /** what became of the week's distinct labels that name no matter */
+  sample: { labels: number; long: number; stopped: number; unreadable: number; spoken: number }
 }
 
 export interface VoiceBook {

@@ -42,7 +42,7 @@ RATE = 24000
 GAP = 0.55            # seconds between two sentences of a reading
 TAIL = 3.2            # seconds of silence before a reading starts again
 TAIL_STEP = 0.43      # each channel a little longer, so the loops never line up
-TARGET_DB = -20.0     # every channel at the same speech level, so a fader's gain means the same on each
+TARGET_DB = -24.0     # every channel at the same speech power, low enough that none meets the peak limit
 PEAK = 0.84
 REST_PERIOD = 150.0   # seconds before everything else repeats
 REST_MARGIN = 0.3     # audio kept on both sides of the loop, so encoder padding never falls inside it
@@ -52,10 +52,11 @@ REST_SPEEDS = (0.94, 1.06)
 
 # Reads as a chart entry, not as anything a person should hear said about someone by a machine.
 STOP = re.compile(
-    r'porn|xxx|xhamster|xvideos|onlyfans|nude|naked|sex|rape|murder|kill|shoot|stabb|suicide|fuck|shit|'
+    r'porn|xxx|xhamster|xvideos|onlyfans|nude|naked|sex|titty|titties|boob|zoofil|bestial|incest|rape|'
+    r'murder|kill|shoot|stabb|suicide|fuck|shit|'
     r'\bass\b|bitch|dies\b|dead\b|death|obituar|arrest|victim|abuse|violence|attack|bundy|nazi|hitler|'
     r'atentado|fusillade|attentat|accident|unfall|anschlag|affaire|massacre|tohopesate|crash|disaster|'
-    r'messerangriff|assassinat|collision|collide|ramming|harass|bowels|hospital|claude|anthropic|'
+    r'messerangriff|assassinat|collision|collide|ramming|harass|bowels|hospital|'
     r'http|www\.|\.com|\$|\\\\|\{|\}|\^',
     re.I,
 )
@@ -83,15 +84,21 @@ def trimmed(x):
 
 
 def speech_rms(x, frame=2400):
-    frames = x[: len(x) // frame * frame].reshape(-1, frame)
-    energy = (frames ** 2).mean(axis=1)
-    return float(np.sqrt(energy[energy > energy.max() * 0.02].mean()))
+    """The power of the speech, all channels of it together, leaving out the pauses."""
+    power = x ** 2 if x.ndim == 1 else (x ** 2).sum(axis=1)
+    frames = power[: len(power) // frame * frame].reshape(-1, frame).mean(axis=1)
+    return float(np.sqrt(frames[frames > frames.max() * 0.02].mean()))
+
+
+def to_db(rms):
+    return round(20 * float(np.log10(rms)), 2)
 
 
 def levelled(x):
-    x = x * 10 ** (TARGET_DB / 20) / speech_rms(x if x.ndim == 1 else x.mean(axis=1))
-    peak = float(np.abs(x).max())
-    return x * (PEAK / peak) if peak > PEAK else x
+    x = x * 10 ** (TARGET_DB / 20) / speech_rms(x)
+    if float(np.abs(x).max()) > PEAK:
+        sys.exit(f'a recording reaches the peak limit at {TARGET_DB} dB, lower TARGET_DB')
+    return x
 
 
 def encode(pcm, out, kbps):
@@ -118,7 +125,8 @@ def channel(k, ch, index, out):
     pcm = levelled(np.concatenate(parts))
     encode(pcm, out / f"{ch['id']}.m4a", 48)
     print(ch['id'], ch['voice'], f'{len(pcm) / RATE:.1f} s')
-    return {'file': f"{ch['id']}.m4a", 'period': round(len(pcm) / RATE, 3), 'digest': digest(ch['lines']), 'cues': cues}
+    return {'file': f"{ch['id']}.m4a", 'period': round(len(pcm) / RATE, 3), 'level': to_db(speech_rms(pcm)),
+            'digest': digest(ch['lines']), 'cues': cues}
 
 
 def sample_labels(rnd):
@@ -126,7 +134,7 @@ def sample_labels(rnd):
     end = date.fromisoformat(rnd['briefing']['written'])
     week = {(end - timedelta(days=i)).isoformat() for i in range(REST_WEEK)}
     names = [namer(c['terms']) for c in rnd['channels']]
-    pool, seen = [], set()
+    pool, seen, tally = [], set(), {'labels': 0, 'long': 0, 'stopped': 0, 'unreadable': 0}
     for path in sorted(glob.glob(str(ROOT / 'src/data/trending/20*.json'))):
         if Path(path).stem not in week:
             continue
@@ -138,17 +146,23 @@ def sample_labels(rnd):
                     continue
                 label = re.sub(r'\s*\([^)]*\)\s*$', '', s['label']).strip()
                 key = fold(label)
-                if key in seen or len(label) > REST_MAX_CHARS or len(label) < 3 or STOP.search(label):
-                    continue
-                if any((ord(c) > 0x24f and c.isalpha()) or unicodedata.category(c) == 'So' for c in label):
+                if key in seen or len(label) < 3:
                     continue
                 seen.add(key)
-                pool.append(label)
+                tally['labels'] += 1
+                if len(label) > REST_MAX_CHARS:
+                    tally['long'] += 1
+                elif any((ord(c) > 0x24f and c.isalpha()) or unicodedata.category(c) == 'So' for c in label):
+                    tally['unreadable'] += 1
+                elif STOP.search(label):
+                    tally['stopped'] += 1
+                else:
+                    pool.append(label)
     random.Random(rnd['rest']['seed']).shuffle(pool)
-    return pool, sorted(week)
+    return pool, sorted(week), tally
 
 
-def rest(k, rnd, out, labels, week):
+def rest(k, rnd, out, labels, week, tally):
     voices = rnd['rest']['voices']
     period = int(REST_PERIOD * RATE)
     left, right = np.zeros(period, dtype=np.float64), np.zeros(period, dtype=np.float64)
@@ -171,21 +185,23 @@ def rest(k, rnd, out, labels, week):
             cues.append({'t': round(t / RATE, 2), 'd': round(len(x) / RATE, 2), 'text': label, 'v': track})
             t += len(x) + int(rng.uniform(0.25, 1.1) * RATE)
     pcm = levelled(np.stack([left, right], axis=1).astype(np.float32))
+    level = to_db(speech_rms(pcm))
     margin = int(REST_MARGIN * RATE)
     pcm = np.concatenate([pcm[-margin:], pcm, pcm[:margin]])
     encode(pcm, out / 'rest.m4a', 72)
     cues.sort(key=lambda c: c['t'])
     print('rest', len(voices), 'voices', len(cues), 'labels', f'{REST_PERIOD:.0f} s')
-    return {'file': 'rest.m4a', 'period': REST_PERIOD, 'margin': REST_MARGIN, 'from': week[0], 'to': week[-1], 'voices': len(voices), 'cues': cues}
+    return {'file': 'rest.m4a', 'period': REST_PERIOD, 'margin': REST_MARGIN, 'level': level, 'from': week[0], 'to': week[-1],
+            'voices': len(voices), 'sample': {**tally, 'spoken': used}, 'cues': cues}
 
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     round_id, only = args[0], set(args[1:])
     rnd = json.load(open(ROOT / f'src/data/ducking/rounds/{round_id}.json'))
-    labels, week = sample_labels(rnd)
+    labels, week, tally = sample_labels(rnd)
     if '--labels' in sys.argv:
-        print(len(labels), 'labels', week[0], week[-1])
+        print(len(labels), 'labels', week[0], week[-1], tally)
         print('\n'.join(labels))
         return
     home = Path.home() / '.cache/hyperframes/tts'
@@ -199,7 +215,7 @@ def main():
         if not only or ch['id'] in only:
             state['channels'][ch['id']] = channel(k, ch, i, out)
     if not only or 'rest' in only:
-        state['rest'] = rest(k, rnd, out, labels, week)
+        state['rest'] = rest(k, rnd, out, labels, week, tally)
     json.dump(state, open(book, 'w'), ensure_ascii=False, separators=(',', ':'))
     print('wrote', book.relative_to(ROOT), f'{book.stat().st_size // 1024} KB')
 

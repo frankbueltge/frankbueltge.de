@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { TrendingDay } from '@/lib/trending/types'
-import { capY, FADER, lanePath, positionAt, scaleY, SCALE } from './figure'
-import { countLedger, FLOOR_DB, fmtCount, fmtShare, solve, spanOf, toDb, toGain, toPosition, toShare, trailingShares } from './mix'
+import { capY, FADER, inkOf, INK_FLOOR, lanePath, positionAt, scaleY, SCALE } from './figure'
+import { countLedger, FLOOR_DB, fmtCount, fmtShare, shareAt, solve, spanOf, standing, toDb, toGain, toPosition, toShare, trailingShares } from './mix'
 
 const signal = (label: string, links: string[] = []) => ({
   source: 'x',
@@ -133,6 +133,30 @@ describe('holding', () => {
   })
 })
 
+describe('a fader in motion', () => {
+  const shares = [
+    [0.1, 0.9],
+    [0.3, 0.7],
+  ]
+
+  it('glides between two real days, and stands on them at whole days', () => {
+    expect(shareAt(shares, 0)).toEqual([0.1, 0.9])
+    expect(shareAt(shares, 1)).toEqual([0.3, 0.7])
+    expect(shareAt(shares, 0.5)[0]).toBeCloseTo(0.2, 10)
+  })
+
+  it('stays on the record outside it', () => {
+    expect(shareAt(shares, 9)).toEqual([0.3, 0.7])
+    expect(shareAt(shares, -1)).toEqual([0.1, 0.9])
+  })
+
+  it('reads where it stands until it has arrived', () => {
+    expect(standing(toPosition(0.01), 0.5)).toBeCloseTo(0.01, 10)
+    expect(standing(toPosition(0.5) + 0.001, 0.5)).toBe(0.5)
+    expect(standing(0, 0)).toBe(0)
+  })
+})
+
 describe('the print', () => {
   it('does not round a quiet matter away', () => {
     expect(fmtShare(0.9934)).toBe('99.3 %')
@@ -164,6 +188,12 @@ describe('the geometry', () => {
     for (const s of steps) expect(s).toBeCloseTo(steps[0]!, 0)
     expect(ys[0]).toBe(FADER.capHeight / 2)
     expect(scaleY(0)).toBeGreaterThan(ys.at(-1)!)
+  })
+
+  it('keeps words off the floor and at full strength at the top', () => {
+    expect(inkOf(1)).toBe(1)
+    expect(inkOf(toPosition(0.0003))).toBeLessThan(INK_FLOOR)
+    expect(inkOf(toPosition(0.5))).toBeGreaterThan(0.7)
   })
 
   it('draws the lane to its own peak, and nothing from one day', () => {

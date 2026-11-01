@@ -11,8 +11,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Pause, Play, Volume2, VolumeX } from 'lucide-react'
 import { reducedMotion, setVars } from '@/lib/dataviz/runtime'
-import { capY, FADER, lanePath, positionAt, SCALE, scaleY } from '@/lib/ducking/figure'
-import { fmtShare, solve, toGain, toPosition, toShare } from '@/lib/ducking/mix'
+import { capY, FADER, inkOf, INK_FLOOR, lanePath, positionAt, SCALE, scaleY } from '@/lib/ducking/figure'
+import { fmtShare, shareAt, solve, standing, toGain, toPosition, toShare } from '@/lib/ducking/mix'
 import { cueAt, cueEnvelope, placeOf, type Cue, type VoiceBook } from '@/lib/ducking/voices'
 import { Desk, type Loaded } from './sound'
 
@@ -48,16 +48,14 @@ const HOLD_NOTE_MS = 500
 const LANE = { width: 1000, height: 40 } as const
 /** How close everything else may stand, 0 to 1. */
 const REST_NEAR = 0.45
+/** Lifts speech into the meter's range. */
+const METER_GAIN = 4.5
 
 const clock = (ms: number): string => {
   const s = Math.floor(ms / 1000)
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 }
 
-/** Text as faint as the voice is quiet. A little steeper than the fader, so the floor is empty. */
-const inkOf = (position: number): number => position ** 3.2
-/** Under this a channel's words leave the screen altogether, so the quiet ones do not pile up. */
-const INK_FLOOR = 0.03
 
 export default function DuckingDesk({ round, channels, days, shares, totals, windowDays }: DuckingDeskProps) {
   const count = channels.length
@@ -105,6 +103,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
 
     const shownLine: (string | null)[] = lines.map(() => null)
     const shownPrint: string[] = prints.map(() => '')
+    const shownMeter: number[] = meters.map(() => 0)
     const shownWord: (Cue | null)[] = words.map(() => null)
     const restTracks: Cue[][] = []
     let rafId = 0
@@ -126,13 +125,6 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         for (const cue of book.rest.cues) (restTracks[cue.v ?? 0] ??= []).push(cue)
       })
       .catch(() => setSound('failed'))
-
-    const baseAt = (at: number): number[] => {
-      const i = Math.min(Math.floor(at), last)
-      const j = Math.min(i + 1, last)
-      const f = at - i
-      return shares[i]!.map((v, c) => v + (shares[j]![c]! - v) * f)
-    }
 
     const paintScreen = (now: number) => {
       const t = now / 1000
@@ -179,20 +171,22 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
     }
 
     const paintDesk = () => {
-      const mix = solve(baseAt(e.head), e.held)
+      // The faders glide between days; what is printed is always a real day of the record.
+      const exact = solve(shares[Math.round(e.head)]!, e.held)
       for (let c = 0; c < count; c++) {
         caps[c]!.setAttribute('transform', `translate(0 ${capY(e.pos[c]!)})`)
         strips[c]!.toggleAttribute('data-held', e.held[c] !== null)
-        const print = fmtShare(e.held[c] !== null ? mix[c]! : toShareOf(e.pos[c]!, mix[c]!))
+        const print = fmtShare(e.held[c] !== null || e.playing ? exact[c]! : standing(e.pos[c]!, exact[c]!))
         if (print !== shownPrint[c]) {
           shownPrint[c] = print
           prints[c]!.textContent = print
           sliders[c]!.setAttribute('aria-valuenow', String(Math.round(e.pos[c]! * 100)))
           sliders[c]!.setAttribute('aria-valuetext', `${channels[c]!.strip}: ${print}`)
         }
-        if (e.desk) {
-          const level = Math.min(1, e.desk.level(c) * 4.5)
-          const height = Math.round(level ** 0.5 * (FADER.height - 8))
+        const level = e.desk && !still ? Math.min(1, e.desk.level(c) * METER_GAIN) : 0
+        const height = Math.round(level ** 0.5 * (FADER.height - 8))
+        if (height !== shownMeter[c]) {
+          shownMeter[c] = height
           meters[c]!.setAttribute('height', String(height))
           meters[c]!.setAttribute('y', String(FADER.height - 4 - height))
         }
@@ -209,9 +203,6 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
       head.setAttribute('x2', x.toFixed(1))
     }
 
-    // Between measured levels a moving fader prints where it stands, not where it is going.
-    const toShareOf = (position: number, target: number): number => (Math.abs(toPosition(target) - position) < 0.004 ? target : toShare(position))
-
     const frame = (now: number) => {
       const dt = Math.min(0.05, (now - lastFrame) / 1000)
       lastFrame = now
@@ -227,7 +218,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
           setPlaying(false)
         }
       }
-      const mix = solve(baseAt(e.head), e.held)
+      const mix = solve(shareAt(shares, e.head), e.held)
       const near = new Array<number>(count)
       for (let c = 0; c < count; c++) {
         const goal = toPosition(mix[c]!)
@@ -239,7 +230,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         // Everything else is a crowd in the room, however loud it gets; a voice can come close.
         near[c] = c === rest ? e.pos[c]! * REST_NEAR : e.pos[c]!
       }
-      if (e.desk) e.desk.set(e.pos.map((p, c) => toGain(Math.abs(toPosition(mix[c]!) - p) < 0.004 ? mix[c]! : toShare(p))), near)
+      if (e.desk) e.desk.set(e.pos.map((p, c) => toGain(standing(p, mix[c]!))), near)
       paintDesk()
       paintScreen(now)
       if (e.note && now > e.note) {
@@ -271,6 +262,8 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
 
       const down = (ev: PointerEvent) => {
         ev.preventDefault()
+        // One fader, one finger: a second one would fight the first for the cap.
+        if (e.grips[c]!.size > 0) return
         slider.setPointerCapture(ev.pointerId)
         const y = readY(ev.clientY)
         const middle = capY(e.pos[c]!) + FADER.capHeight / 2
@@ -285,13 +278,16 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         }
       }
       const move = (ev: PointerEvent) => {
-        if (e.grips[c]!.has(ev.pointerId)) e.held[c] = toShare(positionFrom(ev))
+        if (!e.grips[c]!.has(ev.pointerId)) return
+        // A release can get lost to the system. Nothing latches here, so no button means no hold.
+        if (ev.buttons === 0) up(ev)
+        else e.held[c] = toShare(positionFrom(ev))
       }
       const up = (ev: PointerEvent) => {
         if (e.grips[c]!.delete(ev.pointerId) && e.grips[c]!.size === 0) {
           e.held[c] = null
           if (performance.now() - since > HOLD_NOTE_MS) {
-            say(`${channels[c]!.strip} falls back to ${fmtShare(baseAt(e.head)[c]!)}`)
+            say(`${channels[c]!.strip} falls back to ${fmtShare(shares[Math.round(e.head)]![c]!)}`)
           }
         }
       }
@@ -302,15 +298,18 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         e.held[c] = toShare(Math.min(1, Math.max(0, e.pos[c]! + step)))
         window.clearTimeout(e.keyTimers[c])
         e.keyTimers[c] = window.setTimeout(() => {
-          e.held[c] = null
+          if (e.grips[c]!.size === 0) e.held[c] = null
         }, KEY_HOLD_MS)
       }
+      // A long press must stay a press: no menu, on a phone or under a right click.
+      const menu = (ev: Event) => ev.preventDefault()
       slider.addEventListener('pointerdown', down)
       slider.addEventListener('pointermove', move)
       slider.addEventListener('pointerup', up)
       slider.addEventListener('pointercancel', up)
       slider.addEventListener('lostpointercapture', up)
       slider.addEventListener('keydown', key)
+      slider.addEventListener('contextmenu', menu)
       return [
         () => {
           slider.removeEventListener('pointerdown', down)
@@ -319,6 +318,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
           slider.removeEventListener('pointercancel', up)
           slider.removeEventListener('lostpointercapture', up)
           slider.removeEventListener('keydown', key)
+          slider.removeEventListener('contextmenu', menu)
         },
       ]
     })
@@ -346,10 +346,11 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
     setSound('loading')
     const desk = new Desk()
     try {
-      const t = performance.now() / 1000
       const base = `/ducking/${round}`
       const voices = channels.map((channel, c) => (c === rest ? book.rest : book.channels[channel.id]!))
       const buffers = await Promise.all(voices.map((v) => desk.decode(`${base}/${v.file}`)))
+      // Read after the downloads, or the words on the screen run ahead of the voices.
+      const t = performance.now() / 1000
       const loaded: Loaded[] = buffers.map((buffer, c) => {
         const margin = c === rest ? book.rest.margin : 0
         const period = voices[c]!.period
@@ -370,6 +371,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
     const e = engine.current
     if (!e.playing && e.head >= last) e.head = 0
     e.playing = !e.playing
+    if (!e.playing) e.head = Math.round(e.head)
     setPlaying(e.playing)
   }
 
@@ -468,7 +470,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
             type="range"
             min={0}
             max={last}
-            step="any"
+            step={1}
             defaultValue={last}
             aria-label="Day of the record"
             aria-valuetext={days[day]}

@@ -2,11 +2,12 @@
 // Method sheet — Ducking (2026-11-01). The six parts of the method-sheet duty (werkgruppe spec §3.5).
 import MethodSheet from '@/components/experiments/MethodSheet.astro'
 import { readDesk } from '@/lib/ducking/desk-data'
-import { FLOOR_DB, fmtCount, fmtShare, WINDOW_DAYS } from '@/lib/ducking/mix'
+import { FLOOR_DB, fmtCount, WINDOW_DAYS } from '@/lib/ducking/mix'
 
 const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
 const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
-const { round, ledger, sources, whole } = readDesk()
+const { round, ledger, sources, whole, book } = readDesk()
+const sample = book.rest.sample
 ---
 
 <MethodSheet title="Method sheet — Ducking" workHref="/ducking" workLabel="To the work">
@@ -71,13 +72,17 @@ const { round, ledger, sources, whole } = readDesk()
       <li>
         <b class="text-fg">Holding.</b> A held channel takes the share its fader says. Everything not held takes what is left, in its
         measured proportions; a channel at zero gets nothing from the room that opens. Hands asking for more than the whole are
-        scaled down to it. Holding changes the sound for the person holding, and no count. Nothing a visitor does is sent or kept.
+        scaled down to it. Holding changes the sound for the person holding, and no count. Nothing done at the desk is sent or kept.
       </li>
       <li>
         <b class="text-fg">Everything else.</b> Several voices read a seeded random sample of the labels of the week the round ends,
-        each label once, leaving out whatever names a matter, and leaving out a stop list: sexual terms, violence, deaths and named
-        crimes, because a machine reading those aloud out of context would be a statement the ledger does not make. The stop list is
-        in the script. The sample is drawn once per round, and it loops.
+        each label once. Of {fmtCount(sample.labels)} distinct labels that name no matter, {fmtCount(sample.long)} are left out as too
+        long to read in passing and {fmtCount(sample.unreadable)} because they carry a non-Latin script or an emoji the voices cannot
+        say, so the crowd is more Latin-script than the charts are. {fmtCount(sample.stopped)} more fall to a stop list of words for sex,
+        killing, death, crime and accidents, a few swear words and web addresses, because a machine reading those aloud out of
+        context would be a statement the ledger does not make. It is a blunt list: it can catch the innocent and miss the rest, and
+        war headlines without those words stay in. It is in the script. {fmtCount(sample.spoken)} labels are spoken; the sample is drawn
+        once per round, and it loops.
       </li>
       <li>
         <b class="text-fg">The room.</b> One thing is added to the voices: a small synthetic room, in which a quiet channel stands further
@@ -112,7 +117,7 @@ const { round, ledger, sources, whole } = readDesk()
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">6. Change log</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
-      <li>2026-11-01 — first version, round {round.id}. Over the record at launch the {round.channels.length} matters hold {fmtShare(whole.share)}, a figure this line will not update: the page does.</li>
+      <li>2026-11-01 — first version, round {round.id}. Over the 61 days at launch the ten matters held 0.99 % of the ledger. This line stays as it is; the work’s page goes on counting.</li>
     </ul>
   </section>
 </MethodSheet>

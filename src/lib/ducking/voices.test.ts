@@ -63,6 +63,11 @@ describe('the recordings', () => {
     }
   })
 
+  it('levels every channel to the same power, so a fader means the same on each', () => {
+    const levels = [...Object.values(book.channels), book.rest].map((f) => f.level)
+    expect(Math.max(...levels) - Math.min(...levels)).toBeLessThan(0.1)
+  })
+
   it('keeps cues in order and inside the loop', () => {
     for (const file of [...Object.values(book.channels), book.rest]) {
       for (const q of file.cues) {
@@ -79,6 +84,12 @@ describe('the recordings', () => {
     expect(book.rest.to).toBe(round.briefing.written)
     expect(new Set(book.rest.cues.map((q) => q.v)).size).toBe(round.rest.voices.length)
     expect(existsSync(join(dir, book.rest.file))).toBe(true)
+  })
+
+  it('accounts for every label of the sample', () => {
+    const { labels, long, stopped, unreadable, spoken } = book.rest.sample
+    expect(spoken).toBe(book.rest.cues.length)
+    expect(spoken).toBeLessThanOrEqual(labels - long - stopped - unreadable)
   })
 
   it('leaves a matter out of everything else', () => {

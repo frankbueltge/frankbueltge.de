@@ -24,6 +24,13 @@ export const SCALE: readonly { share: number; label: string }[] = [
 
 export const scaleY = (share: number): number => capY(toPosition(share)) + FADER.capHeight / 2
 
+/** How strongly a channel's words show for a fader position: as faint as the voice is quiet, and a
+ *  little steeper than the fader, so that the floor is empty. */
+export const inkOf = (position: number): number => position ** 3.2
+
+/** Under this a channel's words leave the screen altogether, so the quiet ones do not pile up. */
+export const INK_FLOOR = 0.03
+
 /** A filled lane across the record: the ten matters' joint share, day by day, scaled to its own peak. */
 export function lanePath(shares: readonly number[], width: number, height: number): string {
   if (shares.length < 2) return ''

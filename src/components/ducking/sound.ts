@@ -14,6 +14,8 @@ const ROOM_SECONDS = 1.7
 const WET_FAR = 0.65
 const WET_NEAR = 0.05
 const FADE_IN = 0.8
+/** Makes up for the headroom the recordings are rendered with. The compressor catches the peaks. */
+const MASTER = 1.8
 const SMOOTHING = 0.035
 
 interface Strip {
@@ -108,7 +110,7 @@ export class Desk {
       this.sources.push(source)
       this.strips.push({ gain, dry, wet, meter, samples: new Float32Array(meter.fftSize) })
     }
-    this.master.gain.setTargetAtTime(1, this.ctx.currentTime, FADE_IN / 3)
+    this.master.gain.setTargetAtTime(MASTER, this.ctx.currentTime, FADE_IN / 3)
   }
 
   /** One frame of the mix: an amplitude per channel, and how near it stands (0 far … 1 close). */

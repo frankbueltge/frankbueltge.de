@@ -1,9 +1,12 @@
 // src/lib/ducking/desk-data.ts — the desk read from the committed files, once per build (2026-11-01).
 // Server only: it pulls in the whole ledger, which is why it is not part of mix.ts, which the island imports.
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { readAttention, type AttentionReading } from '@/lib/reading/attention'
 import { getTrendingDays } from '@/lib/trending/data'
 import { CURRENT_ROUND, type Round } from './round'
 import { countLedger, spanOf, trailingShares, WINDOW_DAYS, type Ledger } from './mix'
+import type { VoiceBook } from './voices'
 
 /** How many counted signals the page shows for a channel. */
 const RECEIPTS = 8
@@ -26,6 +29,8 @@ export interface DeskRecord {
   /** every counted signal, for the receipts */
   attention: AttentionReading
   receiptsShown: number
+  /** the recordings of the round, as rendered */
+  book: VoiceBook
 }
 
 let cached: DeskRecord | null = null
@@ -56,6 +61,7 @@ export function readDesk(): DeskRecord {
       days,
     ),
     receiptsShown: RECEIPTS,
+    book: JSON.parse(readFileSync(join(process.cwd(), 'public/ducking', round.id, 'voices.json'), 'utf8')) as VoiceBook,
   }
   return cached
 }
