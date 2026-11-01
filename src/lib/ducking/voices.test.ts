@@ -6,7 +6,7 @@ import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { CURRENT_ROUND as round, roundBehind } from './round'
-import { cueAt, cueEnvelope, placeOf, type VoiceBook } from './voices'
+import { cueAt, cueEnvelope, cueOrNext, placeOf, type VoiceBook } from './voices'
 
 const dir = join(process.cwd(), 'public/ducking', round.id)
 const book = JSON.parse(readFileSync(join(dir, 'voices.json'), 'utf8')) as VoiceBook
@@ -68,6 +68,13 @@ describe('the recordings', () => {
     expect(Math.max(...levels) - Math.min(...levels)).toBeLessThan(0.1)
   })
 
+  it('never leaves a held channel silent for long', () => {
+    for (const file of Object.values(book.channels)) {
+      const last = file.cues.at(-1)!
+      expect(file.period - (last.t + last.d)).toBeLessThan(4)
+    }
+  })
+
   it('keeps cues in order and inside the loop', () => {
     for (const file of [...Object.values(book.channels), book.rest]) {
       for (const q of file.cues) {
@@ -114,6 +121,13 @@ describe('reading the book', () => {
     expect(cueAt(cues, 3.5)).toBeNull()
     expect(cueAt(cues, 4.5)?.text).toBe('two')
     expect(cueAt(cues, 9)).toBeNull()
+  })
+
+  it('shows what comes next in a pause, round the end of the loop', () => {
+    expect(cueOrNext(cues, 1.5)?.text).toBe('one')
+    expect(cueOrNext(cues, 3.5)?.text).toBe('two')
+    expect(cueOrNext(cues, 9)?.text).toBe('one')
+    expect(cueOrNext([], 1)).toBeNull()
   })
 
   it('brings a cue up and takes it away', () => {

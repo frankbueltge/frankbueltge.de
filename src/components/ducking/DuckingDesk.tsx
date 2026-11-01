@@ -13,7 +13,7 @@ import { Pause, Play, Volume2, VolumeX } from 'lucide-react'
 import { reducedMotion, setVars } from '@/lib/dataviz/runtime'
 import { capY, FADER, inkOf, INK_FLOOR, lanePath, positionAt, SCALE, scaleY } from '@/lib/ducking/figure'
 import { fmtShare, shareAt, solve, standing, toGain, toPosition, toShare } from '@/lib/ducking/mix'
-import { cueAt, cueEnvelope, placeOf, type Cue, type VoiceBook } from '@/lib/ducking/voices'
+import { cueAt, cueEnvelope, cueOrNext, placeOf, type Cue, type VoiceBook } from '@/lib/ducking/voices'
 import { Desk, type Loaded } from './sound'
 
 export interface DeskChannel {
@@ -143,8 +143,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
           }
           return
         }
-        const cue = cueAt(file.cues, (t + e.phase[c]!) % file.period)
-        const text = cue?.text ?? shownLine[c] ?? ''
+        const text = cueOrNext(file.cues, (t + e.phase[c]!) % file.period)?.text ?? ''
         if (text !== shownLine[c]) {
           shownLine[c] = text
           line.textContent = text
