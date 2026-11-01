@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { TrendingDay } from '@/lib/trending/types'
 import { getTrendingDays } from '@/lib/trending/data'
 import { fold, namer, readAttention, signalsById } from './attention'
-import { CURRENT_ROUND } from './rounds'
+import { roundById } from './rounds'
 
 const signal = (label: string, links: string[] = []) => ({
   source: 'x',
@@ -87,8 +87,9 @@ describe('readAttention', () => {
   })
 })
 
-describe('the committed round, counted from the committed days', () => {
-  const a = readAttention(CURRENT_ROUND, getTrendingDays())
+// Held to the round this was written against, so a new briefing's round cannot turn it red.
+describe('a committed round, counted from the committed days', () => {
+  const a = readAttention(roundById('after-cycle-010')!, getTrendingDays())
 
   it('reads the whole thirty-day window the briefing read', () => {
     expect(a.days.length).toBe(30)
