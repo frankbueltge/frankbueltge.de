@@ -37,3 +37,17 @@ export interface Round {
 }
 
 export const CURRENT_ROUND = raw as Round
+
+/** What of the ecology's cycle file says which briefing is the newest. */
+export interface CycleState {
+  cycle: number
+  convening?: { after_cycle: number; briefing?: unknown } | null
+}
+
+/** True once the ecology has written a briefing newer than the one a round seats. A round is written
+ *  and rendered by hand, so the page has to be able to say that its words have fallen behind. */
+export function roundBehind(roundId: string, state: CycleState): boolean {
+  const seated = Number(/(\d+)$/.exec(roundId)?.[1])
+  const newest = state.convening?.briefing ? state.convening.after_cycle : state.cycle - 1
+  return newest > seated
+}

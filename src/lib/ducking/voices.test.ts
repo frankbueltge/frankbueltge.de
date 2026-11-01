@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { CURRENT_ROUND as round } from './round'
+import { CURRENT_ROUND as round, roundBehind } from './round'
 import { cueAt, cueEnvelope, placeOf, type VoiceBook } from './voices'
 
 const dir = join(process.cwd(), 'public/ducking', round.id)
@@ -36,6 +36,19 @@ describe('the round', () => {
     for (const c of round.channels) {
       for (const l of c.lines) expect(l.say ?? l.text, c.id).not.toMatch(/\d/)
     }
+  })
+})
+
+describe('a round and the briefings after it', () => {
+  it('stays current through the convening that wrote its briefing and the cycle after', () => {
+    expect(roundBehind('after-cycle-011', { cycle: 11, convening: { after_cycle: 11, briefing: {} } })).toBe(false)
+    expect(roundBehind('after-cycle-011', { cycle: 12 })).toBe(false)
+  })
+
+  it('falls behind once the next briefing stands, and not before', () => {
+    expect(roundBehind('after-cycle-011', { cycle: 12, convening: { after_cycle: 12 } })).toBe(false)
+    expect(roundBehind('after-cycle-011', { cycle: 12, convening: { after_cycle: 12, briefing: {} } })).toBe(true)
+    expect(roundBehind('after-cycle-011', { cycle: 13 })).toBe(true)
   })
 })
 

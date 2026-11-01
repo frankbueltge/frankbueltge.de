@@ -9,7 +9,9 @@ import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 import DuckingDesk from './DuckingDesk'
+import cycle from '@/data/ecology/cycle.json'
 import { readDesk } from '@/lib/ducking/desk-data'
+import { roundBehind, type CycleState } from '@/lib/ducking/round'
 import { fmtCount, fmtShare, toDb, WINDOW_DAYS } from '@/lib/ducking/mix'
 import '@/styles/experiment-sheet.css'
 import '@/styles/ducking.css'
@@ -20,6 +22,7 @@ const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 const desk = readDesk()
 const { round, week, whole, latest, sources, shares, totals, ledger, attention, receiptsShown } = desk
 const matters = round.channels.length
+const behind = roundBehind(round.id, cycle as CycleState)
 const last = ledger.days.length - 1
 const deskChannels = [
   ...round.channels.map(({ id, strip, title }) => ({ id, strip, title })),
@@ -67,8 +70,8 @@ const rows = round.channels.map((channel, c) => {
     <p class="kicker mb-3">What you are hearing</p>
     <p class="leading-relaxed text-fg-muted">
       Ducking is what a mixing desk does when one signal pushes the others down. This desk seats the {matters} matters of the
-      ecology’s <a class={link} href={round.briefing.url}>newest briefing</a>, each with a fader and a voice reading its
-      evidence. The last channel is everything else on the web’s charts, read aloud by several voices at once, from a
+      ecology’s <a class={link} href={round.briefing.url}>briefing of {round.briefing.written}</a>, each with a fader and a voice
+      reading its evidence. The last channel is everything else on the web’s charts, read aloud by several voices at once, from a
       sample of the entries themselves. All of them run all the time, heard or not. A fader stands at its channel’s share of
       the last {WINDOW_DAYS} days of <a class={link} href="/trending">Common Ground</a>, so the first thing you hear is what
       the charts held.
@@ -130,8 +133,9 @@ const rows = round.channels.map((channel, c) => {
     <p class="kicker mb-3">What the voices read</p>
     <p class="mb-3 leading-relaxed text-fg-muted">
       Every voice here is synthetic, made with an open model on one machine. The figures are the briefing’s, as of
-      {round.briefing.written}, and each comes from the pages linked beside it. The faders move every night; the words
-      change with the next briefing.
+      {round.briefing.written}, and each comes from the pages linked beside it. The faders move every night; the words stay
+      until the next round is recorded.
+      {behind && <b class="text-fg">The ecology has written a newer briefing since. These are still the words of {round.briefing.written}.</b>}
     </p>
     {
       round.channels.map((channel) => (
