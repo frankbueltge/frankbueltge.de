@@ -72,6 +72,47 @@ def test_google_news_publisher_split(ctx_factory):
     assert res.signals[1].rank == 2 and res.signals[1].magnitude_unit == "rank"
 
 
+def _edition_rss(*titles):
+    items = "".join(f"<item><title>{t} - Paper</title><link>https://n.example/{i}</link></item>"
+                    for i, t in enumerate(titles))
+    return f"<rss><channel>{items}</channel></rss>"
+
+
+def test_google_news_reads_ten_editions_and_counts_a_shared_story_once(ctx_factory):
+    def handler(req):
+        geo = req.url.params["gl"]
+        return httpx.Response(200, text=_edition_rss("Shared story", f"Story from {geo}"))
+    res = google_news.fetch_source(ctx_factory(handler))
+    assert len(google_news.EDITIONS) == 10 and len(res.signals) == 11
+    shared = [s for s in res.signals if s.label == "Shared story"]
+    assert [s.geo for s in shared] == ["US"]  # the first edition keeps it
+    kenya = next(s for s in res.signals if s.label == "Story from KE")
+    assert kenya.geo == "KE" and kenya.rank == 2 and kenya.meta["geo"] == "KE"
+
+
+def test_google_news_keeps_its_rank_past_a_story_already_seen(ctx_factory):
+    def handler(req):
+        first = "First" if req.url.params["gl"] == "US" else "Shared"
+        return httpx.Response(200, text=_edition_rss(first, "Shared", f"Own {req.url.params['gl']}"))
+    res = google_news.fetch_source(ctx_factory(handler))
+    assert next(s for s in res.signals if s.label == "Own GB").rank == 3
+
+
+def test_google_news_stops_at_the_top_of_each_edition(ctx_factory):
+    many = [f"Story {i}" for i in range(38)]
+    res = google_news.fetch_source(ctx_factory(lambda req: httpx.Response(200, text=_edition_rss(*many))))
+    assert len(res.signals) == google_news.TOP_N  # the same feed ten times: one top, counted once
+
+
+def test_google_news_survives_an_edition_that_fails(ctx_factory):
+    def handler(req):
+        if req.url.params["gl"] == "NG":
+            return httpx.Response(200, text="not xml")
+        return httpx.Response(200, text=_edition_rss(f"Story from {req.url.params['gl']}"))
+    res = google_news.fetch_source(ctx_factory(handler))
+    assert len(res.signals) == 9 and res.notes == ["NG: XML parse error"]
+
+
 def test_reddit_atom_and_failure(ctx_factory):
     atom = ('<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>A post</title>'
             '<link href="https://www.reddit.com/r/pics/x"/><category term="r/pics" label="r/pics"/></entry></feed>')

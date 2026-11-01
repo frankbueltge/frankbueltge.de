@@ -6,7 +6,9 @@
 // stand. A file that breaks a rule writes nothing and fails the run, and the old rounds stay up.
 // Prints `round=<id>` to GITHUB_OUTPUT when it wrote one: the workflow then renders the voices.
 import { appendFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
 import { briefingProblems, type Briefing } from '../../src/lib/briefing/briefing'
+import { earlierIds, FIELDS_BEFORE_THE_MAP, type FieldId } from '../../src/lib/briefing/map'
 import { toDuckingRound, toReadingRound, withMatters, type WatchEntry } from '../../src/lib/briefing/derive'
 import type { Round as DuckingRound } from '../../src/lib/ducking/round'
 import type { Round as ReadingRound } from '../../src/lib/reading/round'
@@ -33,6 +35,18 @@ async function newest(): Promise<{ briefing: Briefing; sha: string }> {
   return { briefing: await json<Briefing>(raw), sha: commit!.sha }
 }
 
+/** The fields of an earlier briefing, for the rule that no field stays empty for long. */
+async function fieldsOf(id: string, sha: string, beside: string | null): Promise<readonly FieldId[] | null> {
+  const known = FIELDS_BEFORE_THE_MAP[id]
+  if (known) return known
+  if (beside) {
+    const path = join(beside, `${id}.json`)
+    return existsSync(path) ? read<Briefing>(path).matters.flatMap((m) => m.field ?? []) : null
+  }
+  const res = await fetch(`https://raw.githubusercontent.com/${REPO}/${sha}/briefings/${id}.json`, { headers })
+  return res.ok ? ((await res.json()) as Briefing).matters.flatMap((m) => m.field ?? []) : null
+}
+
 const fromFlag = process.argv.indexOf('--from')
 const { briefing, sha } = fromFlag > 0
   ? { briefing: read<Briefing>(process.argv[fromFlag + 1]!), sha: 'main' }
@@ -44,7 +58,9 @@ if (existsSync(readingPath) && existsSync(duckingPath)) {
   console.log(`[briefing] ${briefing.id} stands on the site, nothing to do`)
   process.exit(0)
 }
-const problems = briefingProblems(briefing)
+const beside = fromFlag > 0 ? dirname(process.argv[fromFlag + 1]!) : null
+const earlier = await Promise.all(earlierIds(briefing.id).map((id) => fieldsOf(id, sha, beside)))
+const problems = briefingProblems(briefing, earlier.filter((f): f is readonly FieldId[] => f !== null))
 if (problems.length) {
   for (const p of problems) console.error(`[briefing] ${p}`)
   throw new Error(`${briefing.id} breaks ${problems.length} rule(s); the old rounds stay up`)

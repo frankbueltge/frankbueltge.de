@@ -10,8 +10,10 @@ promote it again.
 
 The rule, all of it thresholded in `rules.json`: a proposal is taken onto the list when it
 appeared among the candidates on `promote_days` consecutive runs including today, carried at
-least `promote_min_platforms` platforms each of those times, was never struck, and the list
-has room (`promote_max_terms`); at most `promote_max_per_run` terms enter in one night. A
+least `promote_min_platforms` platforms each of those times, was never struck, and the machine
+has room (`promote_max_terms`, its own terms only: seeds from the briefing and its map filled
+the shared list and stopped every promotion from 2026-09-09 to 2026-11-01); at most
+`promote_max_per_run` terms enter in one night. A
 promoted term is tracked from the next run, not retroactively: nothing is ever backfilled.
 """
 from __future__ import annotations
@@ -119,7 +121,7 @@ def promote(*, candidates: Sequence[dict[str, Any]], prior_records: Sequence[dic
     max_per_run = int(rules.get("promote_max_per_run", 3))
     max_terms = int(rules.get("promote_max_terms", 35))
 
-    room = max_terms - len(tracked(entries))
+    room = max_terms - sum(1 for e in tracked(entries) if e.get("origin") == "discovered")
     if room <= 0:
         return []
     known_slugs = {e["slug"] for e in entries}

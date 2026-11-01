@@ -48,7 +48,7 @@ The day's broad publics first: `google_trends` (daily search trends RSS, US · G
 IN · DE · BR · FR · JP · MX), `wikipedia` (most-read articles of the day before, `en` · `de` ·
 `fr` · `es` · `ja` · `pt`, with a four-day lookback for the publication lag), `hackernews`
 (front page), `bluesky` (trending topics), `mastodon` (trending tags and links),
-`google_news` (top stories), `reddit` (r/popular, optional), `github` (most-starred
+`google_news` (top stories of ten English-language editions: US, GB, AU, IN, PK, PH, NG, KE, ET, ZA; a story two editions carry counts once; since 2026-11-02, the American edition alone before that), `reddit` (r/popular, optional), `github` (most-starred
 repositories created in the last seven days), `github_trending` (the trending page itself —
 GitHub's own daily ranking, read from the HTML because no API exists for it, optional; since
 2026-09-04). The two GitHub lists are **one platform** for the convergence rule and the

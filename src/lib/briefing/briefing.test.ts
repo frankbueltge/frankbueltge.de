@@ -3,6 +3,7 @@ import { roundProblems, type Round as ReadingRound } from '@/lib/reading/round'
 import type { Round as DuckingRound } from '@/lib/ducking/round'
 import { attentionWord, briefingProblems, QUIET_FROM, type Briefing, type BriefingMatter } from './briefing'
 import { ATTENTION_DAYS, DESK_VOICES, toDuckingRound, toReadingRound, withMatters, type WatchEntry } from './derive'
+import { FIELD_IDS, type MapLine } from './map'
 
 const matter = (i: number): BriefingMatter => ({
   id: `matter-${i}`,
@@ -10,6 +11,7 @@ const matter = (i: number): BriefingMatter => ({
   short: `Matter ${String.fromCharCode(96 + i)}`,
   strip: `MATTER ${String.fromCharCode(64 + i)}`,
   gist: 'Something presses on the world, and here is why.',
+  field: FIELD_IDS[i - 1]!,
   quiet_rank: i <= 3 ? i : null,
   terms: [`term${String.fromCharCode(96 + i)}`, 'other name'],
   lines: [
@@ -34,11 +36,22 @@ const estimate = (i: number) => ({
   source: { label: 'The agency', url: 'https://example.org/agency' },
 })
 
+const line = (field: MapLine['field']): MapLine => ({
+  field,
+  state: 'A figure of 1,200 as of 2026.',
+  as_of: '2026-10',
+  direction: 'worse',
+  compared_with: '1,000 in 2025',
+  signals: 7,
+  sources: [{ label: 'The agency', url: 'https://example.org/agency', kind: 'primary' }],
+})
+
 const briefing = (): Briefing => ({
-  $contract: 'briefing/1',
+  $contract: 'briefing/2',
   id: 'after-cycle-012',
   written: '2026-11-07',
   checked: { on: '2026-11-07', claims: 60, held: 50, corrected: 8, dropped: 2 },
+  map: FIELD_IDS.map(line),
   matters: Array.from({ length: 9 }, (_, i) => matter(i + 1)),
   estimates: [estimate(1), estimate(2), estimate(3)],
   fallback: 'What is the first question?',
@@ -60,6 +73,30 @@ const duckingTemplate = {
 describe('a briefing as data', () => {
   it('passes when every rule is kept', () => {
     expect(briefingProblems(briefing())).toEqual([])
+  })
+
+  it('holds a briefing to the map from cycle 012 on, and the two before it not', () => {
+    const b = briefing()
+    delete b.map
+    expect(briefingProblems(b).join()).toContain('eleven fields')
+    expect(briefingProblems({ ...briefing(), $contract: 'briefing/1' })).toContain('contract')
+    const old = { ...b, id: 'after-cycle-011', $contract: 'briefing/1' as const }
+    old.matters = old.matters.map(({ field: _, ...m }) => m)
+    expect(briefingProblems(old)).toEqual([])
+  })
+
+  it('refuses a third matter in one field', () => {
+    const b = briefing()
+    for (const m of b.matters.slice(0, 3)) m.field = 'ai'
+    expect(briefingProblems(b)).toContain('3 matters in ai, at most 2')
+  })
+
+  it('refuses a briefing that leaves out a field for the third time', () => {
+    const b = briefing()
+    b.matters = b.matters.filter((m) => m.field !== 'inequality')
+    const earlier = [FIELD_IDS.filter((f) => f !== 'inequality'), FIELD_IDS.filter((f) => f !== 'inequality')]
+    expect(briefingProblems(b, earlier)).toContain('inequality stayed empty twice and has to have a matter now')
+    expect(briefingProblems(b, [earlier[0]!, FIELD_IDS])).toEqual([])
   })
 
   it('refuses a file nobody checked', () => {
