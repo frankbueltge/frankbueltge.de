@@ -38,7 +38,12 @@ unless the architect objects; without a result within seven days, the briefing's
 urgent but quiet opens the cycle (the continuing question when there is no briefing). Since 2026-10-25 every convening starts from a researched **briefing** on what the
 world is pressing on, and every proposal names the **research line** it continues — the lines
 are kept across cycles and shown at [/lines](https://frankbueltge.de/lines) (both live in
-[research-ecology](https://github.com/frankbueltge/research-ecology)). Since 2026-10-17 the site
+[research-ecology](https://github.com/frankbueltge/research-ecology)). Since 2026-10-27 their works may also **ask the people who see them**: a practice declares a
+study beside the work, the house's frame takes the reader's consent and sends, a machine check
+reads every version of the study's file (since 2026-10-28; the rules are at
+[/studies](https://frankbueltge.de/studies)), and the answers return to the practice as
+material. Since 2026-10-31 a work may also lay an **instruction** beside it — for an object,
+a print, an installation — which lies open on [/post](https://frankbueltge.de/post). Since 2026-10-17 the site
 ships the practices' finished works and cycle presentations (and the running cycle's works,
 marked in progress); journals, channels and constitutions are read in the practices' own
 repositories. They are not departments of a fixed pipeline; no practice is
