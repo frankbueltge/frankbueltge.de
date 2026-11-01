@@ -134,9 +134,9 @@ const rows = round.channels.map((channel, c) => {
   <section class="mb-12 max-w-3xl">
     <p class="kicker mb-3">What the voices read</p>
     <p class="mb-3 leading-relaxed text-fg-muted">
-      Every voice here is synthetic, made with an open model on one machine. The figures are the briefing’s, as of
-      {round.briefing.written}, and each comes from the pages linked beside it. The faders move every night; the words stay
-      until the next round is recorded.
+      Every voice here is synthetic, made with an open model on one machine. The matters are the briefing’s. Every figure was
+      checked against its source on {round.checked}, and where the briefing was out of date or wrong, the voice says what the
+      source says. The faders move every night; the words stay until the next round is recorded.
       {behind && <b class="text-fg">The ecology has written a newer briefing since. These are still the words of {round.briefing.written}.</b>}
     </p>
     {
