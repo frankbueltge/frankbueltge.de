@@ -19,6 +19,8 @@ const FADE_IN = 0.8
 /** Makes up for the headroom the recordings are rendered with. The compressor catches the peaks. */
 const MASTER = 1.8
 const SMOOTHING = 0.035
+/** Below this a change of gain or room is not sent: a desk at rest asks nothing of the audio thread. */
+const MOVED = 0.002
 
 interface Strip {
   gain: GainNode
@@ -26,6 +28,9 @@ interface Strip {
   wet: GainNode
   meter: AnalyserNode
   samples: Float32Array<ArrayBuffer>
+  /** what was last sent to the audio thread */
+  sentGain: number
+  sentWet: number
 }
 
 export interface Loaded {
@@ -63,6 +68,7 @@ export class Desk {
   private readonly strips: Strip[] = []
   private readonly sources: AudioBufferSourceNode[] = []
   private muffler: BiquadFilterNode | null = null
+  private sentCutoff = -1
 
   /** Must be built inside the click that turned sound on, or a phone keeps it muted. */
   constructor() {
@@ -70,7 +76,8 @@ export class Desk {
     const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession
     if (session) session.type = 'playback'
     const Context = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
-    this.ctx = new Context({ latencyHint: 'interactive' })
+    // A fader is smoothed anyway, so a little latency costs nothing and buys a margin against crackle.
+    this.ctx = new Context({ latencyHint: 'playback' })
     void this.ctx.resume()
     const squeeze = this.ctx.createDynamicsCompressor()
     squeeze.threshold.value = -12
@@ -121,7 +128,7 @@ export class Desk {
       gain.connect(meter)
       source.start(0, channel.at)
       this.sources.push(source)
-      this.strips.push({ gain, dry, wet, meter, samples: new Float32Array(meter.fftSize) })
+      this.strips.push({ gain, dry, wet, meter, samples: new Float32Array(meter.fftSize), sentGain: 0, sentWet: -1 })
     }
     this.master.gain.setTargetAtTime(MASTER, this.ctx.currentTime, FADE_IN / 3)
   }
@@ -130,12 +137,23 @@ export class Desk {
    *  the crowd's filter is, in Hz. */
   set(gains: readonly number[], near: readonly number[], cutoff: number): void {
     const now = this.ctx.currentTime
-    this.muffler?.frequency.setTargetAtTime(cutoff, now, SMOOTHING * 3)
+    if (Math.abs(cutoff - this.sentCutoff) > 1) {
+      this.sentCutoff = cutoff
+      this.muffler?.frequency.setTargetAtTime(cutoff, now, SMOOTHING * 3)
+    }
     this.strips.forEach((strip, c) => {
-      strip.gain.gain.setTargetAtTime(gains[c]!, now, SMOOTHING)
+      const gain = gains[c]!
+      // Zero always goes through: a channel that fell to the floor has to end up silent.
+      if (Math.abs(gain - strip.sentGain) > MOVED || (gain === 0 && strip.sentGain !== 0)) {
+        strip.sentGain = gain
+        strip.gain.gain.setTargetAtTime(gain, now, SMOOTHING)
+      }
       const wet = WET_NEAR + (WET_FAR - WET_NEAR) * (1 - near[c]!)
-      strip.wet.gain.setTargetAtTime(wet, now, SMOOTHING * 3)
-      strip.dry.gain.setTargetAtTime(Math.sqrt(1 - wet * wet), now, SMOOTHING * 3)
+      if (Math.abs(wet - strip.sentWet) > MOVED) {
+        strip.sentWet = wet
+        strip.wet.gain.setTargetAtTime(wet, now, SMOOTHING * 3)
+        strip.dry.gain.setTargetAtTime(Math.sqrt(1 - wet * wet), now, SMOOTHING * 3)
+      }
     })
   }
 
