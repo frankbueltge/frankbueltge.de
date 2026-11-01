@@ -49,6 +49,24 @@
   border-bottom: 1px solid var(--du-line);
 }
 
+/* ── the caption: what the crowd is ───────────────────────────────────────────────────────── */
+
+.du-caption {
+  min-height: 2.9em;
+  margin: 0;
+  padding: 0.45rem 0.75rem;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--du-muted);
+  border-bottom: 1px solid var(--du-line);
+}
+
+@media (min-width: 720px) {
+  .du-caption {
+    min-height: 0;
+  }
+}
+
 /* ── the screen: the mix, to read ─────────────────────────────────────────────────────────── */
 
 .du-screen {
@@ -157,7 +175,7 @@
 }
 
 .du-name {
-  height: 6.1rem;
+  height: 5.1rem;
   margin: 0 0 0.25rem;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -187,13 +205,10 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* A narrow strip has no room for it: the caption says the same of whatever is held. */
 @media (max-width: 719px) {
   .du-print {
-    visibility: hidden;
-  }
-  .du-strip[data-held] .du-print {
-    visibility: visible;
-    overflow: visible;
+    display: none;
   }
 }
 
@@ -265,6 +280,8 @@
 
 .du-key {
   display: inline-flex;
+  flex: none;
+  white-space: nowrap;
   align-items: center;
   gap: 0.4rem;
   height: 2rem;
@@ -340,6 +357,12 @@
 
 .du-faint {
   color: var(--du-faint);
+}
+
+@media (max-width: 399px) {
+  .du-count {
+    display: none;
+  }
 }
 
 .du-spent {

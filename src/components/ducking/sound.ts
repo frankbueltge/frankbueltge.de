@@ -4,9 +4,11 @@
 // channels keep running with their faders down. Tuning in means arriving in the middle of a sentence.
 // The only thing that moves is gain, and the gain comes from the share (toGain in src/lib/ducking/mix.ts).
 //
-// One thing is added: a small room. A quiet channel sits further away in it than a loud one, which
+// Two things are added. A small room: a quiet channel sits further away in it than a loud one, which
 // is what makes a voice seem to walk towards you as its fader comes up. It is generated here so no
-// recording of anybody's room ships with the page. There is no other sound: no motor, no noise.
+// recording of anybody's room ships with the page. And a filter on the crowd, which closes as a hand
+// raises a matter, the way a room blurs when you listen closely to one person. There is no other
+// sound: no motor, no noise.
 
 const ROOM_SECONDS = 1.7
 /** How much of a channel reaches the room, far away and close up. Dry takes the rest of the power,
@@ -35,6 +37,8 @@ export interface Loaded {
   at: number
   /** −1 left … 1 right */
   pan: number
+  /** heard through the filter that closes as a hand raises a matter */
+  muffled?: boolean
 }
 
 function room(ctx: AudioContext): AudioBuffer {
@@ -58,6 +62,7 @@ export class Desk {
   private readonly master: GainNode
   private readonly strips: Strip[] = []
   private readonly sources: AudioBufferSourceNode[] = []
+  private muffler: BiquadFilterNode | null = null
 
   /** Must be built inside the click that turned sound on, or a phone keeps it muted. */
   constructor() {
@@ -102,7 +107,15 @@ export class Desk {
       const wet = this.ctx.createGain()
       const meter = this.ctx.createAnalyser()
       meter.fftSize = 512
-      source.connect(gain).connect(pan)
+      if (channel.muffled) {
+        this.muffler = this.ctx.createBiquadFilter()
+        this.muffler.type = 'lowpass'
+        this.muffler.Q.value = 0.5
+        source.connect(this.muffler).connect(gain)
+      } else {
+        source.connect(gain)
+      }
+      gain.connect(pan)
       pan.connect(dry).connect(this.master)
       pan.connect(wet).connect(hall)
       gain.connect(meter)
@@ -113,9 +126,11 @@ export class Desk {
     this.master.gain.setTargetAtTime(MASTER, this.ctx.currentTime, FADE_IN / 3)
   }
 
-  /** One frame of the mix: an amplitude per channel, and how near it stands (0 far … 1 close). */
-  set(gains: readonly number[], near: readonly number[]): void {
+  /** One frame of the mix: an amplitude per channel, how near it stands (0 far … 1 close), and where
+   *  the crowd's filter is, in Hz. */
+  set(gains: readonly number[], near: readonly number[], cutoff: number): void {
     const now = this.ctx.currentTime
+    this.muffler?.frequency.setTargetAtTime(cutoff, now, SMOOTHING * 3)
     this.strips.forEach((strip, c) => {
       strip.gain.gain.setTargetAtTime(gains[c]!, now, SMOOTHING)
       const wet = WET_NEAR + (WET_FAR - WET_NEAR) * (1 - near[c]!)

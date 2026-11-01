@@ -26,7 +26,7 @@ const behind = roundBehind(round.id, cycle as CycleState)
 const last = ledger.days.length - 1
 const deskChannels = [
   ...round.channels.map(({ id, strip, title }) => ({ id, strip, title })),
-  { id: 'rest', strip: round.rest.strip, title: 'Everything else on the charts' },
+  { id: 'rest', strip: round.rest.strip, title: 'The crowd: everything else on the charts' },
 ]
 
 const receiptsOf = new Map(attention.matters.map((m) => [m.matter, m]))
@@ -71,14 +71,15 @@ const rows = round.channels.map((channel, c) => {
     <p class="leading-relaxed text-fg-muted">
       Ducking is what a mixing desk does when one signal pushes the others down. This desk seats the {matters} matters of the
       ecology’s <a class={link} href={round.briefing.url}>briefing of {round.briefing.written}</a>, each with a fader and a voice
-      reading its evidence. The last channel is everything else on the web’s charts, read aloud by several voices at once, from a
-      sample of the entries themselves. All of them run all the time, heard or not. A fader stands at its channel’s share of
-      the last {WINDOW_DAYS} days of <a class={link} href="/trending">Common Ground</a>, so the first thing you hear is what
-      the charts held.
+      reading its evidence. The last channel is the crowd: everything else on the web’s charts, the football, film stars, apps and
+      code that no matter named, read aloud by several voices at once from a sample of the entries themselves. All of them run
+      all the time, heard or not. A fader stands at its channel’s share of the last {WINDOW_DAYS} days of
+      <a class={link} href="/trending">Common Ground</a>, so the first thing you hear is the crowd drowning out everything else.
+      That is the measurement.
     </p>
     <p class="mt-3 leading-relaxed text-fg-muted">
-      Push a fader up and hold it. The whole stays a hundred percent, so the room comes from everything else, and the voice
-      walks out of the crowd towards you. Two thumbs can hold two matters. Let go and the fader falls back to where the week
+      Push a fader up and hold it. The whole stays a hundred percent, so the room comes from the crowd, and the voice walks out
+      of it towards you. The higher you push, the clearer it gets. Two thumbs can hold two matters. Let go and the fader falls back to where the week
       put it. Nothing on this desk stays where you leave it.
     </p>
   </section>
@@ -101,7 +102,7 @@ const rows = round.channels.map((channel, c) => {
   <section class="mb-12 max-w-3xl">
     <p class="kicker mb-3">Why the sum is fixed</p>
     <p class="leading-relaxed text-fg-muted">
-      Everything else is whatever no matter named, so the hundred percent of this desk is not a setting: it is the whole
+      The crowd is whatever no matter named, so the hundred percent of this desk is not a setting: it is the whole
       ledger. That the channels add up is arithmetic, true of any shares, and it proves nothing. That attention outside this
       page behaves the same way is a claim, and there is evidence for it. Jian-Hua Zhu called agenda-setting
       <a class={link} href="https://scholars.cityu.edu.hk/en/publications/issue-competition-and-attention-distraction-a-zero-sum-theory-of-">a zero-sum process</a>
@@ -122,10 +123,11 @@ const rows = round.channels.map((channel, c) => {
   <section class="mb-12 max-w-3xl">
     <p class="kicker mb-3">How to read a fader</p>
     <p class="leading-relaxed text-fg-muted">
-      The scale is logarithmic, like any desk’s: each mark is ten times the one below, and the numbers are percent. A channel’s
-      share is its share of the power of the mix, so what you see is what you hear: a matter at one percent stands twenty
-      decibels under the whole. That is why most of the fader’s travel is silent, and why you have to push nearly to the top
-      before the words come clear.
+      The scale is logarithmic, with the top of the travel stretched, as on any desk, because that is where a channel can be
+      heard. Each mark is ten times the one below, and the numbers are percent. A channel’s share is its share of the power of
+      the mix: a matter at one percent stands twenty decibels under the whole. That is why the lower part of a fader’s travel is
+      silent. One thing cannot be read off a fader: as your hand raises a matter, the crowd also blurs, the way a room does when
+      you listen closely to one person.
     </p>
   </section>
 
@@ -205,7 +207,7 @@ const rows = round.channels.map((channel, c) => {
         and to English. It says what those charts held, never what anyone cares about. A matter can be everything to the people
         living it and still sit on this floor.</li>
       <li><b class="text-fg">The list is one briefing’s.</b> The matters and their order on the desk are the briefing’s, not this
-        page’s. Another reading of the world would seat other channels, and everything else would hold what they left.</li>
+        page’s. Another reading of the world would seat other channels, and the crowd would hold what they left.</li>
       <li><b class="text-fg">A week is a choice.</b> So is a term. Both move a fader. With narrower and with wider lists of terms,
         tried when this was built, the matters together stayed near a hundredth of the whole.</li>
     </ul>

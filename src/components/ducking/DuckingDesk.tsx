@@ -11,8 +11,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Pause, Play, Volume2, VolumeX } from 'lucide-react'
 import { reducedMotion, setVars } from '@/lib/dataviz/runtime'
-import { capY, FADER, inkOf, INK_FLOOR, lanePath, positionAt, SCALE, scaleY } from '@/lib/ducking/figure'
-import { fmtShare, shareAt, solve, standing, toGain, toPosition, toShare } from '@/lib/ducking/mix'
+import { capY, FADER, INK_BESIDE_A_HAND, inkOf, INK_FLOOR, lanePath, positionAt, SCALE, scaleY } from '@/lib/ducking/figure'
+import { captionOf, crowdCutoff, fmtShare, focusOf, shareAt, solve, standing, toGain, toPosition, toShare } from '@/lib/ducking/mix'
 import { cueAt, cueEnvelope, cueOrNext, placeOf, type Cue, type VoiceBook } from '@/lib/ducking/voices'
 import { Desk, type Loaded } from './sound'
 
@@ -24,10 +24,10 @@ export interface DeskChannel {
 
 export interface DuckingDeskProps {
   round: string
-  /** the matters, then everything else */
+  /** the matters, then the crowd */
   channels: DeskChannel[]
   days: string[]
-  /** day → share per channel, everything else last */
+  /** day → share per channel, the crowd last */
   shares: number[][]
   /** day → signals in the trailing window */
   totals: number[]
@@ -46,8 +46,8 @@ const NOTE_MS = 4800
 /** A grip shorter than this was a touch, not a hold. */
 const HOLD_NOTE_MS = 500
 const LANE = { width: 1000, height: 40 } as const
-/** How close everything else may stand, 0 to 1. */
-const REST_NEAR = 0.45
+/** How close the crowd may stand, 0 to 1. */
+const REST_NEAR = 0.2
 /** Lifts speech into the meter's range. */
 const METER_GAIN = 4.5
 
@@ -97,6 +97,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
     const noteEl = box.querySelector<HTMLElement>('[data-note]')!
     const dateEl = box.querySelector<HTMLElement>('[data-date]')!
     const hintEl = box.querySelector<HTMLElement>('[data-hint]')!
+    const captionEl = box.querySelector<HTMLElement>('[data-caption]')!
     const scrub = box.querySelector<HTMLInputElement>('[data-scrub]')!
     const head = box.querySelector<SVGLineElement>('[data-head]')!
     const still = reducedMotion()
@@ -110,6 +111,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
     let lastFrame = performance.now()
     let shownDay = last
     let shownSpent = ''
+    let shownCaption = ''
     let touched = false
     let inView = true
 
@@ -130,12 +132,13 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
       const t = now / 1000
       const book = e.book
       if (!book) return
+      const aHand = e.held.some((h, c) => h !== null && c !== rest)
       channels.forEach((channel, c) => {
         if (c === rest) return
         const file = book.channels[channel.id]
         const line = lines[c]
         if (!file || !line) return
-        const ink = inkOf(e.pos[c]!)
+        const ink = inkOf(e.pos[c]!) * (aHand && e.held[c] === null ? INK_BESIDE_A_HAND : 1)
         if (ink < INK_FLOOR) {
           if (shownLine[c] !== '') {
             shownLine[c] = ''
@@ -190,6 +193,12 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
           meters[c]!.setAttribute('y', String(FADER.height - 4 - height))
         }
       }
+      const holding = channels.flatMap((channel, c) => (c !== rest && e.held[c] !== null ? [{ strip: channel.strip, share: exact[c]! }] : []))
+      const caption = captionOf(holding, e.held[rest] !== null, exact[rest]!)
+      if (caption !== shownCaption) {
+        shownCaption = caption
+        captionEl.textContent = caption
+      }
       const at = Math.round(e.head)
       if (at !== shownDay) {
         shownDay = at
@@ -226,10 +235,11 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         const limit = dt * (hand ? CATCH_PER_SECOND : FALL_PER_SECOND)
         const gap = goal - e.pos[c]!
         e.pos[c]! += still ? gap : Math.max(-limit, Math.min(limit, gap))
-        // Everything else is a crowd in the room, however loud it gets; a voice can come close.
+        // The crowd stands off in the room, however loud it gets; a voice can come close.
         near[c] = c === rest ? e.pos[c]! * REST_NEAR : e.pos[c]!
       }
-      if (e.desk) e.desk.set(e.pos.map((p, c) => toGain(standing(p, mix[c]!))), near)
+      const focus = focusOf(e.pos.filter((_, c) => c !== rest && e.held[c] !== null))
+      if (e.desk) e.desk.set(e.pos.map((p, c) => toGain(standing(p, mix[c]!))), near, crowdCutoff(focus))
       paintDesk()
       paintScreen(now)
       if (e.note && now > e.note) {
@@ -355,7 +365,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         const period = voices[c]!.period
         const end = Math.min(buffer.duration, margin + period)
         const at = (t + e.phase[c]!) % (end - margin)
-        return { buffer, from: margin, to: end, at: margin + at, pan: c === rest ? 0 : -0.62 + (1.24 * c) / Math.max(1, rest - 1) }
+        return { buffer, from: margin, to: end, at: margin + at, pan: c === rest ? 0 : -0.62 + (1.24 * c) / Math.max(1, rest - 1), muffled: c === rest }
       })
       desk.start(loaded)
       e.desk = desk
@@ -392,9 +402,13 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         </button>
         <p className="du-date">
           <span className="du-faint">week to</span> <span data-date>{days[last]}</span>
-          <span className="du-faint"> · {totals[day]?.toLocaleString('en-GB')} signals</span>
+          <span className="du-faint du-count"> · {totals[day]?.toLocaleString('en-GB')} signals</span>
         </p>
       </div>
+
+      <p className="du-caption" data-caption>
+        {captionOf([], false, shares[last]![rest]!)}
+      </p>
 
       <div className="du-screen" aria-hidden="true">
         <div className="du-words">
@@ -404,7 +418,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
           {channels.map((channel, c) => (c === rest ? null : <p key={channel.id} className="du-line" data-line />))}
         </div>
         <p className="du-hint" data-hint>
-          Push a fader up and hold it.
+          Push a matter up and hold it. The higher, the clearer.
         </p>
         <p className="du-note" data-note />
       </div>
@@ -430,7 +444,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
               role="slider"
               tabIndex={0}
               aria-orientation="vertical"
-              aria-label={c === rest ? 'Everything else on the charts' : channel.title}
+              aria-label={channel.title}
               aria-valuemin={0}
               aria-valuemax={100}
               aria-valuenow={Math.round(restingPositions[c]! * 100)}
