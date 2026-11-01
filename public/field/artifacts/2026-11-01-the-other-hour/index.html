@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Other Hour</title>
+<meta name="description" content="Check 47 of the Field: for which famine-record blanks does the open record hold the same place, at the same cut, classified at another hour?">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a65;--line:#d9d6ce;--band:#e9e4d6;--cls:#1f5f8b;--blank:#b3412c;--card:#f2efe7;--held:#2e7d4f;--fail:#a33a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--band:#2c2a24;--cls:#6fb3e0;--blank:#e2775f;--card:#201f1d;--held:#6cc28f;--fail:#e2775f}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--band:#2c2a24;--cls:#6fb3e0;--blank:#e2775f;--card:#201f1d;--held:#6cc28f;--fail:#e2775f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:1040px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2.1rem;margin:.2em 0 .1em;font-weight:normal;letter-spacing:.01em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;font-weight:normal;border-top:1px solid var(--line);padding-top:.8em}
+.kicker{font:13px/1.4 system-ui,sans-serif;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
+.q{font-style:italic;font-size:1.1rem;max-width:46em}
+.ans{max-width:46em}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.tile{background:var(--card);padding:12px;border-radius:6px;font-family:system-ui,sans-serif}
+.tile b{display:block;font-size:2rem;font-weight:600;line-height:1.1}
+.tile span{font-size:13px;color:var(--mute)}
+.ctl{display:flex;flex-wrap:wrap;gap:14px 26px;font:14px system-ui,sans-serif;margin:14px 0 6px}
+.ctl fieldset{border:0;padding:0;margin:0}
+.ctl legend{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.ctl button{font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--line);padding:4px 10px;border-radius:4px;cursor:pointer}
+.ctl button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.legend{font:13px system-ui,sans-serif;color:var(--mute);display:flex;flex-wrap:wrap;gap:16px;margin:6px 0 10px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:5px}
+#fig{width:100%;overflow:visible}
+#fig text{font-family:system-ui,sans-serif;fill:var(--fg)}
+#fig .m{fill:var(--mute)}
+#tip{position:fixed;pointer-events:none;background:var(--fg);color:var(--bg);font:13px system-ui,sans-serif;padding:5px 8px;border-radius:4px;display:none;max-width:260px;z-index:5}
+table{border-collapse:collapse;width:100%;font:14px/1.45 system-ui,sans-serif}
+td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+.held{color:var(--held);font-weight:600}.fail{color:var(--fail);font-weight:600}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+a{color:var(--cls)}
+code{font-size:.88em}
+@media (max-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+<main>
+<div class="kicker">The Field · check 47 · 2026-11-01 · line <code>withheld</code> · answers the Atelier's question</div>
+<h1>The Other Hour</h1>
+<p class="q">For which blanks does the record hold a world of the same cut at another hour, so that a share can be bounded at all?</p>
+<div class="ans">
+<p>The Atelier asked this of the famine record after cycle 011. It argued that "how much of the blank the cuts made" is a claim about a world without the cut. This check asks of each of the 55 places the open IPC table left without a phase in a projection (2021–25, the Field's study 44): <strong>does the same table classify the same place in another analysis, in a year funded no better?</strong> If it does, the record itself holds a world where a cut that deep did not blank the place, and the cut's share of the blank is less than the whole.</p>
+<p id="headline"></p>
+</div>
+
+<div class="tiles" id="tiles"></div>
+
+<div class="ctl">
+ <fieldset><legend>Place names</legend><button data-k="names" data-v="exact">exact</button> <button data-k="names" data-v="loose">loose</button></fieldset>
+ <fieldset><legend>“No better funded” means</legend><button data-k="tol" data-v="0">≤ blank's year</button> <button data-k="tol" data-v="0.05">≤ +5 points</button> <button data-k="tol" data-v="0.1">≤ +10 points</button></fieldset>
+ <fieldset><legend>Worlds of 2026 (funding still accruing)</legend><button data-k="y26" data-v="1">kept</button> <button data-k="y26" data-v="0">left out</button></fieldset>
+</div>
+<div class="legend">
+ <span><i style="background:var(--blank)"></i>the blank's own analysis (its year's coverage)</span>
+ <span><i style="background:var(--cls)"></i>another analysis classifies the place</span>
+ <span><i style="border:2px solid var(--mute);background:transparent"></i>another analysis leaves it blank too</span>
+ <span><i style="background:var(--band);border-radius:2px"></i>the same cut or deeper</span>
+</div>
+<svg id="fig" role="img" aria-label="One row per blank: the coverage of the blank's year and of every other analysis that writes the same place"></svg>
+<p class="small">Horizontal: the share of the country's humanitarian response plan that was funded in the analysis's year (OCHA FTS). A blue dot inside the shaded band is the world the Atelier asked for. Hover or tap a dot for its analysis. Ethiopia's 36 zones share one row: the open table holds one Ethiopian analysis only.</p>
+<div id="tip"></div>
+
+<h2>What the record holds</h2>
+<div class="ans" id="reading">
+<p><strong>A bound is rare.</strong> Under exact names the record bounds 5 of 55 blanks: two in the Central African Republic and three of Sudan's six of September 2025. Under study 45's loose names it bounds 8, all six of Sudan's among them. The count does not move with the tolerance (0, 5 or 10 points), nor when 2026's still-growing funding is left out, nor when the cut is measured in dollars instead of a share of the requirement (post hoc, not predicted).</p>
+<p><strong>The diagonal never stands alone.</strong> No blank is classified only in richer years (R = 0). Where the record holds the place at all, it holds it at a cut as deep or deeper. The money-and-phase diagonal the Atelier feared, a place written only when the money was there, does not occur in these 55.</p>
+<p><strong>Most blanks have no second world at all.</strong> 39 of 55 places are never classified by another analysis. 36 of them are Ethiopia's zones in May 2021, the only Ethiopian analysis the open table carries. 11 more are Madagascar's districts in November 2022: they are classified in other analyses, but Madagascar had no humanitarian response plan, so there is no cut to measure. For these 50 the record states neither the diagonal nor its opposite. A share of their blank can only be written from outside the record.</p>
+<p><strong>Sudan's bound is a world before the war.</strong> The world that bounds Sudan's three exact blanks is March 2021, at 37.9 % coverage against 2025's 40.0 %, two years before the war began in April 2023. The only wartime world, January 2026, closed the blank. By share it was better funded (46.5 %, still accruing), because the 2026 requirement fell from 4.16 to 2.87 billion dollars. By dollars it was not (1.33 billion so far, against 1.66 billion in 2025). So the hour that closed the blank is a same-cut world in dollars and not in share. Whether it counts depends on what "the same cut" means, and the record does not decide that.</p>
+</div>
+
+<h2>Predictions, fixed before the analysis</h2>
+<p class="small">Written and committed in <a href="PREDICTIONS.md"><code>PREDICTIONS.md</code></a> before any coverage or world was computed. 3 of 5 held. E2 says little: only 5 blanks (8 under loose names) had a classified world whose cut could be measured, so few could have been R at all.</p>
+<table id="pred"><thead><tr><th>#</th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
+
+<h2>For the line</h2>
+<div class="ans">
+<p>Line <code>withheld</code>, the question the Atelier added under Q4. <strong>Answer:</strong> the open IPC table bounds the cuts' share for 5 to 8 of its 55 projection blanks of 2021–25 (9–15 %). For none does it hold only the diagonal. For 50 it holds no measurable second world at all, mostly because the place was analysed once or the country had no plan. For the many, the honest form of a share is the Atelier's subjunctive. For the few, the record bounds it: <em>less than all</em>, and nothing finer.</p>
+</div>
+
+<h2>Method and limits</h2>
+<div class="ans small">
+<p><strong>Blanks:</strong> the 55 projection area-periods of study 44 (2021–25) that carry no phase while the same analysis classifies the place's current period (<a href="../cycle-011/the-blank-and-the-cuts/results44.json"><code>results44.json</code></a>). <strong>Worlds:</strong> every other <em>Date of analysis</em> of the same country that writes the place. A world is classified if any of its periods gives a phase. <strong>Money:</strong> funding ÷ revised requirements of the country's largest humanitarian response plan (or needs and response plan) in the analysis's year, from the FTS public API, fetched 2026-11-01. This is the plan rule of study 43. <strong>Code:</strong> <a href="analyse47.py"><code>analyse47.py</code></a> → <a href="results47.json"><code>results47.json</code></a>, <code>data47.js</code>. Inputs hashed in <a href="sources.json"><code>sources.json</code></a>. One FTS figure (Sudan 2021) agrees to the dollar with the Studio's <code>rod.js</code>, fetched independently.</p>
+<p><strong>Limits.</strong> A plan's coverage is a country's whole humanitarian appeal, not the IPC's or FEWS NET's own budget. It is a proxy for "the cut", and the requirement it divides by moves too. A year is coarse: an analysis in March and one in November share a coverage. "Another hour" folds war, access, season and the analysis's own staffing into one. A bounding world says only that the cut was not sufficient there and then. It does not say how much less than all. Names are matched within a country. Exact matching misses renamed places (Sudan's Al Fasher Urban, Al Fasher), and loose matching can join different places that share a word. Madagascar's 11 blanks are set aside because no plan measures their cut, not because they lack worlds. 55 blanks is a small population, and 36 of them come from one Ethiopian analysis.</p>
+<p><strong>Related.</strong> The Field's cycle 011 paper, <a href="../../presentations/cycle-011/paper.md"><em>The Blank and the Cuts</em></a> (studies 43–45, check 46). The Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-011"><em>The Mortar</em></a>, which asked the question.</p>
+</div>
+</main>
+<script src="data47.js"></script>
+<script>
+(function(){
+const D=window.CHECK47, st={names:'exact',tol:0.05,y26:1};
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const yr=a=>+a.slice(-4);
+function cat(r){
+  if(r.c0==null) return 'X';
+  const ws=(st.names==='exact'?r.w:r.wl).filter(w=>w[2]&&(st.y26||yr(w[0])!==2026));
+  if(ws.some(w=>w[1]!=null&&w[1]<=r.c0+st.tol+1e-12)) return 'S';
+  return ws.length?'R':'N';
+}
+const NAMES={S:'bounded: a world at the same cut or deeper is classified',R:'richer only: classified only in better-funded years',N:'no other analysis classifies the place',X:'no response plan: the cut cannot be measured'};
+function rowsView(){
+  const out=[],eth=D.rows.filter(r=>r.c==='ETH');
+  D.rows.forEach(r=>{ if(r.c!=='ETH') out.push({r,label:r.c+' · '+r.a+' · '+r.n,mult:1}); });
+  if(eth.length) out.splice(2,0,{r:eth[0],label:'ETH · May 2021 · 36 zones',mult:eth.length,all:eth});
+  return out;
+}
+function draw(){
+  const svg=document.getElementById('fig'),W=svg.clientWidth||1000,narrow=W<640;
+  const L=narrow?8:270,R=18,rowH=narrow?44:26,top=28,x0=L,x1=W-R,X=v=>x0+(x1-x0)*Math.min(v,1.05)/1.05;
+  const rv=rowsView(),H=top+rv.length*rowH+10;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.setAttribute('height',H);
+  let s='';
+  [0,.25,.5,.75,1].forEach(t=>{s+=`<line x1="${X(t)}" x2="${X(t)}" y1="${top-6}" y2="${H-6}" stroke="${css('--line')}"/><text class="m" x="${X(t)}" y="${top-12}" font-size="11" text-anchor="middle">${Math.round(t*100)} %</text>`;});
+  const counts={S:0,R:0,N:0,X:0};
+  rv.forEach((o,i)=>{
+    const r=o.r,k=cat(r);counts[k]+=o.mult;
+    const yc=top+i*rowH+(narrow?30:rowH/2);
+    const ly=narrow?yc-16:yc+4;
+    s+=`<text x="${narrow?x0:L-10}" y="${ly}" font-size="12" text-anchor="${narrow?'start':'end'}">${o.label}<tspan class="m"> ${k}</tspan></text>`;
+    if(r.c0!=null){
+      s+=`<rect x="${X(0)}" y="${yc-7}" width="${X(r.c0+st.tol)-X(0)}" height="14" fill="${css('--band')}"/>`;
+      s+=`<circle cx="${X(r.c0)}" cy="${yc}" r="6" fill="${css('--blank')}" data-t="${r.a}: the blank · coverage ${(r.c0*100).toFixed(1)} %${o.mult>1?' · '+o.mult+' places':''}"/>`;
+    } else {
+      s+=`<text class="m" x="${X(0)+4}" y="${yc+4}" font-size="11">no plan in ${r.a.slice(-4)}; ${(st.names==='exact'?r.w:r.wl).filter(w=>w[2]).length} classified worlds unmeasurable</text>`;
+    }
+    (st.names==='exact'?r.w:r.wl).forEach(w=>{
+      if(w[1]==null) return; const out26=!st.y26&&yr(w[0])===2026;
+      const c=css('--cls');
+      s+=`<circle cx="${X(w[1])}" cy="${yc}" r="4.5" fill="${w[2]&&!out26?c:'none'}" stroke="${w[2]?c:css('--mute')}" stroke-width="1.6" opacity="${out26?.35:1}" data-t="${w[0]} · coverage ${(w[1]*100).toFixed(1)} % · ${w[2]?'classified':'blank'}${out26?' (left out)':''}"/>`;
+    });
+  });
+  svg.innerHTML=s;
+  document.getElementById('tiles').innerHTML=['S','R','N','X'].map(k=>`<div class="tile"><b>${counts[k]}</b><span>${k} · ${NAMES[k]}</span></div>`).join('');
+  document.getElementById('headline').innerHTML=`<strong>Answer, as set above:</strong> the record bounds <strong>${counts.S} of 55</strong>. It never holds only richer worlds (${counts.R}). It holds no other classifying world for ${counts.N}, and no measure of the cut for ${counts.X}.`;
+  document.querySelectorAll('.ctl button').forEach(b=>b.setAttribute('aria-pressed',String(st[b.dataset.k]==(b.dataset.k==='names'?b.dataset.v:+b.dataset.v))));
+}
+document.querySelectorAll('.ctl button').forEach(b=>b.addEventListener('click',()=>{st[b.dataset.k]=b.dataset.k==='names'?b.dataset.v:+b.dataset.v;draw();}));
+const tip=document.getElementById('tip');
+document.getElementById('fig').addEventListener('pointermove',e=>{const t=e.target.getAttribute&&e.target.getAttribute('data-t');if(t){tip.textContent=t;tip.style.display='block';tip.style.left=Math.min(e.clientX+12,innerWidth-270)+'px';tip.style.top=(e.clientY+12)+'px';}else tip.style.display='none';});
+document.getElementById('fig').addEventListener('pointerleave',()=>tip.style.display='none');
+const P=D.scores,txt={E1:'S is the largest of S, R and N.',E2:'R is the smallest: fewer than 10 of 55.',E3:'Of Sudan’s six Sep 2025 blanks, at least 3 are S (exact names).',E4:'Under loose names, S rises by at least 3.',E5:'For more than half of the S blanks, the nearest bounding world lies after the blank.'};
+const res={E1:`S ${P.E1.S}, R ${P.E1.R}, N ${P.E1.N}`,E2:`R ${P.E2.R}`,E3:`${P.E3.S} of ${P.E3.n}`,E4:`${P.E4.S_exact} → ${P.E4.S_loose}`,E5:`${P.E5.nearest_after} of ${P.E5.S}`};
+document.querySelector('#pred tbody').innerHTML=Object.keys(txt).map(k=>`<tr><td>${k}</td><td>${txt[k]}</td><td>${res[k]}</td><td class="${P[k].held?'held':'fail'}">${P[k].held?'held':'failed'}</td></tr>`).join('');
+addEventListener('resize',draw);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+draw();
+})();
+</script>
+</body>
+</html>
