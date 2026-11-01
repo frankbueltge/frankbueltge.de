@@ -56,6 +56,12 @@ export function cueAt(cues: readonly Cue[], t: number): Cue | null {
   return null
 }
 
+/** The cue being spoken, or in a pause the one coming next, wrapping round the loop: a channel that
+ *  is held up always has its words on the screen. */
+export function cueOrNext(cues: readonly Cue[], t: number): Cue | null {
+  return cueAt(cues, t) ?? cues.find((cue) => cue.t > t) ?? cues[0] ?? null
+}
+
 /** How visible a cue is at a moment: it comes up and goes away instead of blinking. 0 to 1. */
 export function cueEnvelope(cue: Cue, t: number, edge = 0.18): number {
   const into = t - cue.t

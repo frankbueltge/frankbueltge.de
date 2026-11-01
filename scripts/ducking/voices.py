@@ -40,8 +40,8 @@ from kokoro_onnx import Kokoro
 ROOT = Path(__file__).resolve().parent.parent.parent
 RATE = 24000
 GAP = 0.55            # seconds between two sentences of a reading
-TAIL = 3.2            # seconds of silence before a reading starts again
-TAIL_STEP = 0.43      # each channel a little longer, so the loops never line up
+TAIL = 1.3            # seconds of silence before a reading starts again; a hand may arrive right here
+TAIL_STEP = 0.17      # each channel a little longer, so the loops never line up
 TARGET_DB = -24.0     # every channel at the same speech power, low enough that none meets the peak limit
 PEAK = 0.84
 REST_PERIOD = 150.0   # seconds before everything else repeats
