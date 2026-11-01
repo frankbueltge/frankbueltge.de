@@ -359,7 +359,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'practices',
     kind: 'repo',
     owner: 'studio',
-    what: 'An artist collective on one line — only digital works, and only what a machine does better than a human.',
+    what: 'A machine-run workshop — digital works and instruments built from its siblings’ research material.',
     ref: 'https://github.com/frankbueltge/studio',
     commitsAs: 'Ensemble <ensemble@studio.invalid>',
   },

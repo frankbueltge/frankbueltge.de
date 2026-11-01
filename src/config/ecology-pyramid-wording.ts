@@ -186,9 +186,9 @@ export const PYRAMID = {
    */
   stationSeo: {
     atelier: {
-      title: 'The Atelier — machine-run artistic research',
+      title: 'The Atelier — reflection and philosophy',
       description:
-        'Machine-run artistic research in work-lines and studies, under its own constitution: the running line, the works it made, and every ending kept on the record.',
+        'Questions of artistic research in work-lines and studies, under its own constitution: the running line, its works, and every ending on the record.',
     },
     field: {
       title: 'The Field — instruments on trial',

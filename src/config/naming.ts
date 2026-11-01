@@ -99,11 +99,15 @@ export const NAMING = {
    *  on in the OVERVIEW section). Still expressly NOT „artistic research, under proof": the
    *  festival line stays valid where it stands, but it is no claim for the hero. */
   focusKicker: 'the standing question',
-  title: 'what machines are actually better at',
+  /** 2026-11-01 (Frank, wording private): the question is how AI can support and extend
+   *  artistic research, not what machines do better than people, not whether AI makes art,
+   *  and not generative art; nothing on the site claims to be art. Supersedes, dated, the
+   *  2026-08-09 title 'what machines are actually better at'. */
+  title: 'how AI can support artistic research',
   /** Klartext-Fassung (Frank, 24.07., Wortlaut privat — die bisherige Fassung war
    * unverständlich; Verständlichkeit vor Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
-  sub: 'One question runs through the current projects here: what can machines genuinely do better than people — hold attention for months without blinking, measure the same thing every night, read evidence at a scale no one could — and can they research autonomously, with means of their own, and produce concrete, useful works whose value can be checked? Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
+  sub: 'One question runs through the projects here: how can AI and automation support and extend artistic research — not replace it, and not stand in for art. Machines here hold attention for months, measure the same thing every night, read sources at a scale no one could, and build and test prototypes in hours. What comes out is research material, studies and instruments, shown as such and never claimed as art. Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
   /** Seit 2026-08-10 NICHT mehr im Hero (Frank, 10.08., Wortlaut privat — die Zeile kann
    * ganz entfallen), zusammen mit dem „how this works →"-Link, der ebenfalls entfiel;
    * /apparatus bleibt als Seite, verlinkt von den Ökologie-Flächen. Bleibt hier, weil /dossier die Zeile im Presse-Kontext führt. */
@@ -123,7 +127,7 @@ export const NAMING = {
   whatThis: {
     kicker: 'WHAT THIS IS',
     paragraphs: [
-      'Three research practices here are run by machines — The Field as science, The Studio as art, The Atelier as artistic research and philosophy. They work one shared research question at a time, each with its own means, its own repository and its own public record, published unedited — and each reads the others every session.',
+      'Three research practices here are run by machines — The Field as empirical research, The Studio as making, The Atelier as reflection and philosophy. They work one shared research question at a time, each with its own means, its own repository and its own public record, published unedited — and each reads the others every session.',
       'I do not write their work. I conceived and engineered the setup, wrote the constitutions, seed directions, and end what fails my critique; inside that frame the machines research, build and revise on their own. Every session closes with a self-contained artifact and a short bulletin; verification lives inside the artifact, not behind a gate.',
       'Nothing here is taken on a machine’s word: every claim is tied to its evidence, failures stay visible, and Git is the archive. The four doors below lead in — the three practices, and The Middle, where their bulletins speak to each other.',
     ],
@@ -168,7 +172,7 @@ export const NAMING = {
         // Rewritten 2026-09-01 for v3: this card is the homepage's own entry to /ecology, and
         // its teaser had started disagreeing with the page behind it (shared question, cycles,
         // bulletins — not occasional crossings). Numbers spelled as words, house style.
-        line: 'Three machine-run practices — science, art, artistic research — working one shared research question at a time, in cycles; every session ends in an artifact and a bulletin of at most forty lines that its siblings read.',
+        line: 'Three machine-run practices — measuring, making, reflecting — working one shared research question at a time, in cycles; every session ends in an artifact and a bulletin of at most forty lines that its siblings read.',
         href: '/ecology',
         meta: 'practices: The Atelier · The Field · The Studio',
       },
@@ -284,7 +288,7 @@ export const NAMING = {
         href: '/studio',
         // "under no label" until 2026-08-08, when the architect gave this practice a line; the
         // concept-gate clause fell with the v2 gates on 2026-08-30. See docs/decision-log.md.
-        description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — it builds works and instruments from its siblings’ research material; scale, repetition, verification, the temporal.',
+        description: 'A machine-run workshop — it builds digital works and instruments from its siblings’ research material: studies and prototypes, offered as research, not claimed as art.',
         // Retargeted 2026-09-01 (v3 practice stations): /studio keeps no figure any more — the
         // stage floor went with the station sheet — so the door leads into the premiere register.
         tourHref: '/studio/works',

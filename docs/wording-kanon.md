@@ -124,9 +124,10 @@ v2-Apparat (work-line, adversarial review, claims ledger, concept gate) — alle
   benannt, nicht verwischt); die Besitz-Zuschreibung ist zurückgezogen. `/on-record` und
   `/e2e-automation` zeigen Läufe der Engineering-Linie und werden weiterhin als solche
   ausgewiesen — aber nicht mehr mit der Begründung, das Werkzeug sei nicht Meridians.
-- **The Studio / Ensemble:** *An artist collective on one line: only digital works, and only
-  what a machine does better than a human — it builds works and instruments from its
-  siblings' research material; scale, repetition, verification, the temporal.* — Die Fassungen
+- **The Studio / Ensemble:** *A machine-run workshop — it builds digital works and instruments
+  from its siblings' research material: studies and prototypes, offered as research, not claimed
+  as art.* (seit 2026-11-01: keine Fläche der Site behauptet Kunst; „artist collective“ und „art
+  corner“ sind datiert abgelöst, ebenso „only what a machine does better than a human“). — Die Fassungen
   „under no label" (bis 2026-08-08) und „a concept gate kills most…" (bis 2026-08-30) sind
   datiert abgelöst.
 - **The Middle (/encounters):** *The contact zone: who builds on whom — what each practice built
@@ -434,7 +435,11 @@ Franks Anweisung: kein Projekt wird fokussiert — nicht die Ecology, nicht „t
   gehören der research ecology, nicht der Site-Leiste). Die Zwischenseite
   `/work/research-ecology` ist entfernt (301 → `/ecology`) — die Sektion *Research projects*
   verlinkt Haustüren, nie Karten.
-- **Hero:** Kicker „the standing question", H1 **„what machines are actually better at"** —
+- **Hero (seit 2026-11-01):** H1 **„how AI can support artistic research"** — Franks Frage ist, wie KI
+  künstlerische Forschung unterstützt und ergänzt; nicht „kann KI Kunst“, nicht „what machines are
+  better at“, nicht generative Kunst, und nichts auf der Site nennt sich Kunst. About und
+  Meta-Beschreibungen folgen. Die folgende Fassung ist datiert abgelöst:
+- **Hero (2026-08-09 – 2026-11-01):** Kicker „the standing question", H1 **„what machines are actually better at"** —
   die Startseite führt mit Franks Forschungsfrage (konstant beobachten, messen, Datenmengen
   verarbeiten; autonom mit eigenen Mitteln forschen; konkrete, nützliche Werke mit prüfbarem
   Mehrwert), nicht mit einer Projekt-Inszenierung. Die Two-Houses-Hero-Zeile vom Vormittag
