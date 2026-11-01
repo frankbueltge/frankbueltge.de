@@ -37,11 +37,18 @@ describe('the practices\' shared policy', () => {
     for (const d of [
       "'wasm-unsafe-eval'",
       "worker-src 'self' blob:",
-      "connect-src 'self' https: wss:",
+      "connect-src 'self' https: wss: blob: data:",
       "media-src 'self' data: blob: https:",
       "img-src 'self' data: blob: https:",
       'frame-src https:',
     ]) expect(PRACTICE_POLICY).toContain(d)
+  })
+
+  it('lets a loader read what a model carries inside itself', () => {
+    // three.js fetches a .glb's embedded textures from blob: and its embedded buffers from data:.
+    // A page under the policy of 2026-10-05 drew such a model with no surfaces at all.
+    const connect = PRACTICE_POLICY.split(';').map((d) => d.trim()).find((d) => d.startsWith('connect-src '))!
+    expect(connect.split(/\s+/)).toEqual(expect.arrayContaining(['blob:', 'data:']))
   })
 })
 
