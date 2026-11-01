@@ -32,6 +32,8 @@ export interface Round {
   $contract: 'ducking-round/1'
   id: string
   briefing: { title: string; written: string; url: string }
+  /** the day every figure of the readings was last checked against its source */
+  checked: string
   channels: Channel[]
   rest: { strip: string; voices: string[]; seed: number }
 }

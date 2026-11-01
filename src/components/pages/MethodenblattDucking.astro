@@ -26,7 +26,8 @@ const sample = book.rest.sample
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
       <li>
         The briefing — <a class={link} href={round.briefing.url}>{round.briefing.title}</a>, written {round.briefing.written}, pinned
-        to its commit. Its matters, its order, and the figures the voices read, each with the page it comes from.
+        to its commit. Its matters and its order. The figures the voices read start from it, were checked one by one against their
+        sources on {round.checked}, and were corrected where the briefing was out of date or wrong. Each has the page it comes from.
       </li>
       <li>
         Common Ground’s day files, {ledger.days[0]} to {ledger.days.at(-1)} — open data (CC0) in
@@ -104,7 +105,7 @@ const sample = book.rest.sample
       <li>The terms are a choice, wide on purpose, in English only. They let in false friends, which the receipts on the work’s page show, and they miss a matter discussed in other words or other languages. The receipts cannot show what was missed.</li>
       <li>A matter is named by its symptoms: Iran’s channel also counts oil and cost-of-living terms, because the briefing frames the matter as an energy shock. The AI-in-the-vote channel does not count the elections themselves, only synthetic media and political ads, so most of the attention on those elections sits in everything else.</li>
       <li>The list of matters is one briefing’s, written by one of the ecology’s machines from the sources it links. It is not a ranking and the desk does not treat it as one.</li>
-      <li>The readings are short and they stop at the briefing’s date. Most figures in them are themselves estimates, and some reach the briefing second-hand; each source is linked.</li>
+      <li>The readings are short and they stop at the day they were checked. Most figures in them are themselves estimates, and where a primary source could not be used a report on it is linked.</li>
       <li>A desk invites the idea that the mix could be set otherwise by someone at a desk. Nobody sets this one. The metaphor is the work’s, not a finding.</li>
     </ul>
   </section>
@@ -121,6 +122,7 @@ const sample = book.rest.sample
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">6. Change log</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>2026-11-01, the same day — a check of the briefing against its sources found 27 of 69 claims wrong, out of date, overstated or not on the linked page. The readings were corrected and recorded again, among them the state of the Strait of Hormuz, which a voice had stated as of early September.</li>
       <li>2026-11-01 — first version, round {round.id}. Over the 61 days at launch the ten matters held 0.99 % of the ledger. This line stays as it is; the work’s page goes on counting.</li>
     </ul>
   </section>
