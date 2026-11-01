@@ -70,7 +70,7 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
       WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
     )
-    expect(WERKE_HOLDINGS[0].id).toBe('third-reading') // newest werk on top today (Third Reading, 2026-10-26)
+    expect(WERKE_HOLDINGS[0].id).toBe('ducking') // newest werk on top today (Ducking, 2026-11-01)
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual([...HOLDINGS_RANKED])
   })
   it('keeps every non-excluded entry — ranked and register agree on the set', () => {

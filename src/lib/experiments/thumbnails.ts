@@ -42,6 +42,8 @@ import { readAttention } from '@/lib/reading/attention'
 import { committedRecord } from '@/lib/reading/record-data'
 import { readAudience, type AudienceReading } from '@/lib/reading/aggregate'
 import { gapFigure } from '@/lib/reading/figure'
+import { readDesk } from '@/lib/ducking/desk-data'
+import { fmtShare, toPosition } from '@/lib/ducking/mix'
 import type { InvokedData } from '@/lib/invoked/types'
 import type { BalanceCountry } from '@/lib/balance/types'
 
@@ -542,6 +544,21 @@ function thirdReadingMarks(audience: AudienceReading, signals: Record<string, nu
   return [rule, ...dots]
 }
 
+/** The desk at rest: one cap per channel at its height on the desk's own scale, everything else marked. */
+function duckingMarks(shares: readonly number[]): ThumbMark[] {
+  const y = (p: number) => r1(H - P - p * (H - 2 * P))
+  const step = (W - 2 * P) / shares.length
+  const floor: ThumbMark = { t: 'rule', x1: P, y1: y(0), x2: W - P, y2: y(0) }
+  const caps = shares.map((share, c): ThumbMark => {
+    const x = r1(P + step * c + step * 0.2)
+    const top = y(toPosition(share))
+    return c === shares.length - 1
+      ? { t: 'bar', x, y: top - 1.5, w: r1(step * 0.6), h: 3, on: true }
+      : { t: 'bar', x, y: top - 1.5, w: r1(step * 0.6), h: 3 }
+  })
+  return [floor, ...caps]
+}
+
 // ── the practices beside the lab ──────────────────────────────────────────────────────────
 /**
  * The three houses listed beside the lab keep no instrument and publish no reading, so there is
@@ -761,6 +778,15 @@ function buildThumbnails(): Thumbnail[] {
     readout: R['third-reading'](count(audience.readings), count(CURRENT_ROUND.matters.length)),
     // the readers' record once the first night has committed one; until then the round the dots are drawn from
     source: record ? `src/data/reading/${CURRENT_ROUND.id}.json` : `src/data/reading/rounds/${CURRENT_ROUND.id}.json`,
+  })
+
+  const desk = readDesk()
+  out.push({
+    id: 'ducking',
+    marks: duckingMarks(desk.shares.at(-1)!),
+    draws: D.ducking!,
+    readout: R.ducking(count(desk.round.channels.length), fmtShare(desk.week.share)),
+    source: `src/data/trending/${desk.latest}.json`,
   })
 
   return out
