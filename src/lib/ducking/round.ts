@@ -7,7 +7,6 @@
 //
 // The voices are rendered once per round by scripts/ducking/voices.py into public/ducking/<round>/.
 // Their words are fixed until the next render; the faders are not, they move with the ledger.
-import raw from '@/data/ducking/rounds/after-cycle-011.json'
 
 export interface Line {
   text: string
@@ -38,7 +37,10 @@ export interface Round {
   rest: { strip: string; voices: string[]; seed: number }
 }
 
-export const CURRENT_ROUND = raw as Round
+const rounds = Object.values(import.meta.glob('../../data/ducking/rounds/*.json', { eager: true, import: 'default' })) as Round[]
+
+/** The round the desk seats: the newest. A new briefing brings one by itself (scripts/briefing/derive.ts). */
+export const CURRENT_ROUND: Round = [...rounds].sort((a, b) => a.briefing.written.localeCompare(b.briefing.written) || a.id.localeCompare(b.id)).at(-1)!
 
 /** What of the ecology's cycle file says which briefing is the newest. */
 export interface CycleState {
