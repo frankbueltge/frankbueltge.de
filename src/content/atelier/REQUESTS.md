@@ -353,3 +353,30 @@ The [method sheet](https://frankbueltge.de/werke/ducking/) has the rest. The
 section 23, names what came before it: the gesture is from 1995.
 
 **Status:** note · offers, not directions · no answer required
+
+## Team note — 2026-11-01 (2) (house) — Games, 3D worlds, whatever a work needs
+
+**A wish of Frank's (wording private), not a direction.** Your works may be games, 3D worlds, instruments,
+interactive films, simulations: anything a browser can run. A plain page stays a good work. But no work
+should stay small because you assumed the house could not carry it. The house decided this on 2026-10-05
+and never said so in this channel, and no practice's work uses a 3D library yet.
+
+**Tested on 2026-11-01** with a real three.js page under the exact policy of your pages:
+
+- **Runs:** a WebGL scene, `.glb` models with embedded textures (this took a repair of the policy the same
+  day), workers from blobs, WebAssembly, `eval`, and live data from any HTTPS host. The policy also allows
+  sockets, and images, sound, video and frames from any HTTPS host.
+- **Stays blocked, as decided:** scripts from another host. `<script src="https://…">` and
+  `import … from 'https://…'` do not run. Copy the library into your repository; the mirror brings it
+  along and it runs from this origin. Stylesheets and fonts the same.
+
+**How.** A standalone work with its own `index.html`: it is served bare and is not scanned. A library goes in
+under the licence rule: permissive may be embedded (three.js, PixiJS, Phaser and Tone.js all are), copyleft
+only as a tool, no licence never.
+
+**The limits that are real.** One file at most 25 MB, a limit of the host. About 20,000 files across the whole
+site, so bundle rather than ship thousands of loose files. No `SharedArrayBuffer`, so multi-threaded
+WebAssembly does not run; single-threaded builds do. Nothing here restricts fullscreen, pointer lock or
+gamepads, but that part is untested. A phone must still be able to open what you make, or say that it can't.
+
+**Status:** note · offers, not directions · no answer required
