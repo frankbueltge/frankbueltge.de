@@ -1,0 +1,228 @@
+---
+// DUCKING — a mixing desk for the world's attention (2026-11-01; docs/design/2026-11-01-ducking.md).
+//
+// The desk comes first and the page explains it afterwards, because the point of it is in the hand
+// and the ear. Every number below is derived at build time by src/lib/ducking/* from the round and
+// the committed ledger, and none is typed into a sentence. What is typed is the readings, which are
+// the briefing's figures in spoken form, each with its sources.
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import DuckingDesk from './DuckingDesk'
+import cycle from '@/data/ecology/cycle.json'
+import { readDesk } from '@/lib/ducking/desk-data'
+import { roundBehind, type CycleState } from '@/lib/ducking/round'
+import { fmtCount, fmtShare, toDb, WINDOW_DAYS } from '@/lib/ducking/mix'
+import '@/styles/experiment-sheet.css'
+import '@/styles/ducking.css'
+
+const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+
+const desk = readDesk()
+const { round, week, whole, latest, sources, shares, totals, ledger, attention, receiptsShown } = desk
+const matters = round.channels.length
+const behind = roundBehind(round.id, cycle as CycleState)
+const last = ledger.days.length - 1
+const deskChannels = [
+  ...round.channels.map(({ id, strip, title }) => ({ id, strip, title })),
+  { id: 'rest', strip: round.rest.strip, title: 'Everything else on the charts' },
+]
+
+const receiptsOf = new Map(attention.matters.map((m) => [m.matter, m]))
+const rows = round.channels.map((channel, c) => {
+  const share = whole.total ? whole.counts[c]! / whole.total : 0
+  const db = toDb(share)
+  return {
+    channel: channel.title,
+    week: fmtCount(week.counts[c]!),
+    whole: fmtCount(whole.counts[c]!),
+    share: fmtShare(share),
+    level: Number.isFinite(db) ? `${db.toFixed(1).replace('-', '−')} dB` : '−∞',
+  }
+})
+---
+
+<main id="main" class="sheet mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">
+  <SheetHead
+    kicker="From the counter-measurement line"
+    title="Ducking"
+    sub="A mixing desk for the world’s attention. What sits low cannot be heard, and it stays up only while you hold it."
+    badges={['LIVE DATA', `round ${round.id}`]}
+  />
+
+  <section class="mb-12" aria-label="The desk">
+    <DuckingDesk
+      client:load
+      round={round.id}
+      channels={deskChannels}
+      days={ledger.days}
+      shares={shares}
+      totals={totals}
+      windowDays={WINDOW_DAYS}
+    />
+    <noscript>
+      <p class="mt-4 text-sm text-fg-muted">The desk needs JavaScript to move and to sound. The record and every reading are below.</p>
+    </noscript>
+  </section>
+
+  <section class="mb-12 max-w-3xl">
+    <p class="kicker mb-3">What you are hearing</p>
+    <p class="leading-relaxed text-fg-muted">
+      Ducking is what a mixing desk does when one signal pushes the others down. This desk seats the {matters} matters of the
+      ecology’s <a class={link} href={round.briefing.url}>briefing of {round.briefing.written}</a>, each with a fader and a voice
+      reading its evidence. The last channel is everything else on the web’s charts, read aloud by several voices at once, from a
+      sample of the entries themselves. All of them run all the time, heard or not. A fader stands at its channel’s share of
+      the last {WINDOW_DAYS} days of <a class={link} href="/trending">Common Ground</a>, so the first thing you hear is what
+      the charts held.
+    </p>
+    <p class="mt-3 leading-relaxed text-fg-muted">
+      Push a fader up and hold it. The whole stays a hundred percent, so the room comes from everything else, and the voice
+      walks out of the crowd towards you. Two thumbs can hold two matters. Let go and the fader falls back to where the week
+      put it. Nothing on this desk stays where you leave it.
+    </p>
+  </section>
+
+  <section class="mb-12 max-w-3xl">
+    <p class="kicker mb-3">What the record shows</p>
+    <p class="leading-relaxed text-fg-muted">
+      In the {WINDOW_DAYS} days to {latest}, Common Ground logged <b class="tabular-nums text-fg">{fmtCount(week.total)}</b> signals
+      from {sources} charts and platforms. <b class="tabular-nums text-fg">{fmtCount(week.named)}</b> of them named one of these
+      matters, which puts all {matters} together at <b class="tabular-nums text-fg">{fmtShare(week.share)}</b> of the mix.
+      {week.silent > 0 && <>{week.silent} of the {matters} had no signal at all this week, and their faders are on the floor. </>}
+      Over the whole record, {ledger.days.length} days, the {matters} hold {fmtShare(whole.share)}.
+    </p>
+    <p class="mt-3 leading-relaxed text-fg-muted">
+      The terms that count a matter are wide on purpose, and the receipts below show what they let in that does not belong.
+      Narrowing them could only lower the matters’ faders.
+    </p>
+  </section>
+
+  <section class="mb-12 max-w-3xl">
+    <p class="kicker mb-3">Why the sum is fixed</p>
+    <p class="leading-relaxed text-fg-muted">
+      Everything else is whatever no matter named, so the hundred percent of this desk is not a setting: it is the whole
+      ledger. That the channels add up is arithmetic, true of any shares, and it proves nothing. That attention outside this
+      page behaves the same way is a claim, and there is evidence for it. Jian-Hua Zhu called agenda-setting
+      <a class={link} href="https://scholars.cityu.edu.hk/en/publications/issue-competition-and-attention-distraction-a-zero-sum-theory-of-">a zero-sum process</a>
+      in 1992. Thomas Eisensee and David Strömberg followed about 5,000 natural disasters from 1968 to 2002 and found that
+      <a class={link} href="https://doi.org/10.1162/qjec.122.2.693">US relief depended on what else was in the news</a>: at the
+      highest news pressure, a disaster needed six times the casualties for the same chance of relief. Matthew Sisco and
+      colleagues draw the limit: as concern about COVID-19 grew,
+      <a class={link} href="https://collaborate.princeton.edu/en/publications/examining-evidence-for-the-finite-pool-of-worry-and-finite-pool-o">attention to climate fell and worry about it did not</a>.
+      What runs out, on that reading, is attention, not care.
+    </p>
+    <p class="mt-3 leading-relaxed text-fg-muted">
+      Try it the other way round. Pull <b class="text-fg">{round.rest.strip}</b> down and hold it. The room it frees goes to
+      the matters in the proportions they already have, so the loud get louder. A channel at zero stays at zero. Attention
+      that comes free does not go to what was ignored; only a hand lifts that.
+    </p>
+  </section>
+
+  <section class="mb-12 max-w-3xl">
+    <p class="kicker mb-3">How to read a fader</p>
+    <p class="leading-relaxed text-fg-muted">
+      The scale is logarithmic, like any desk’s: each mark is ten times the one below, and the numbers are percent. A channel’s
+      share is its share of the power of the mix, so what you see is what you hear: a matter at one percent stands twenty
+      decibels under the whole. That is why most of the fader’s travel is silent, and why you have to push nearly to the top
+      before the words come clear.
+    </p>
+  </section>
+
+  <section class="mb-12 max-w-3xl">
+    <p class="kicker mb-3">What the voices read</p>
+    <p class="mb-3 leading-relaxed text-fg-muted">
+      Every voice here is synthetic, made with an open model on one machine. The figures are the briefing’s, as of
+      {round.briefing.written}, and each comes from the pages linked beside it. The faders move every night; the words stay
+      until the next round is recorded.
+      {behind && <b class="text-fg">The ecology has written a newer briefing since. These are still the words of {round.briefing.written}.</b>}
+    </p>
+    {
+      round.channels.map((channel) => (
+        <article class="du-reading">
+          <h3>{channel.title}</h3>
+          <p class="leading-relaxed text-fg-muted">{channel.lines.map((l) => l.text).join(' ')}</p>
+          <p class="mt-1 font-mono text-mono-sm text-fg-faint">
+            {channel.sources.map((s, i) => (
+              <>
+                {i > 0 && ' · '}
+                <a class={link} href={s.url}>{s.label}</a>
+              </>
+            ))}
+          </p>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="mb-12 max-w-3xl">
+    <p class="kicker mb-3">The record</p>
+    <TableFallback
+      summary="The desk as a table"
+      open
+      caption="Signals naming each matter, this week and over the whole record, with the share and level of the whole record"
+      columns={[
+        { key: 'channel', label: 'Matter' },
+        { key: 'week', label: `Last ${WINDOW_DAYS} days`, align: 'right', nowrap: true },
+        { key: 'whole', label: 'Whole record', align: 'right', nowrap: true },
+        { key: 'share', label: 'Share', align: 'right', nowrap: true },
+        { key: 'level', label: 'Level', align: 'right', nowrap: true },
+      ]}
+      rows={rows}
+    />
+    <details class="mt-4">
+      <summary class="cursor-pointer text-fg-muted">What was counted: the newest signals per matter</summary>
+      {
+        round.channels.map((channel) => {
+          const counted = receiptsOf.get(channel.id)
+          return (
+            <div class="mt-4">
+              <h3 class="font-semibold">{channel.strip}</h3>
+              <p class="font-mono text-mono-sm text-fg-faint">{channel.terms.join(' · ')}</p>
+              {counted && counted.receipts.length > 0 ? (
+                <ul class="mt-1 list-disc space-y-0.5 pl-5 text-sm text-fg-muted">
+                  {counted.receipts.slice(0, receiptsShown).map((r) => (
+                    <li>
+                      {r.url ? <a class={link} href={r.url}>{r.label}</a> : r.label}{' '}
+                      <span class="font-mono text-mono-sm text-fg-faint">{r.source}, {r.date}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="mt-1 text-sm text-fg-muted">No signal in the whole record.</p>
+              )}
+            </div>
+          )
+        })
+      }
+    </details>
+  </section>
+
+  <section class="mb-12 max-w-3xl">
+    <p class="kicker mb-3">What this cannot say</p>
+    <ul class="list-disc space-y-2 pl-5 leading-relaxed text-fg-muted">
+      <li><b class="text-fg">A chart is not a mind.</b> The desk reads the tops of public charts and feeds, leaning to technology
+        and to English. It says what those charts held, never what anyone cares about. A matter can be everything to the people
+        living it and still sit on this floor.</li>
+      <li><b class="text-fg">The list is one briefing’s.</b> The matters and their order on the desk are the briefing’s, not this
+        page’s. Another reading of the world would seat other channels, and everything else would hold what they left.</li>
+      <li><b class="text-fg">A week is a choice.</b> So is a term. Both move a fader. With narrower and with wider lists of terms,
+        tried when this was built, the matters together stayed near a hundredth of the whole.</li>
+    </ul>
+  </section>
+
+  <SheetFoot links={[
+    { href: '/werke/ducking', label: 'method sheet' },
+    { href: `${REPO}/blob/main/src/data/ducking/rounds/${round.id}.json`, label: 'the round', external: true },
+    { href: `${REPO}/tree/main/src/data/trending`, label: 'the ledger', external: true },
+    { href: '/third-reading', label: 'a reading you can give' },
+    { href: '/experiments/neighbors', label: 'neighbours' },
+    { href: '/experiments', label: 'the lab' },
+  ]}>
+    <p class="max-w-2xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+      {ledger.days.length} days, {ledger.days[0]} to {ledger.days[last]}, {fmtCount(whole.total)} signals, read from the committed
+      day files of Common Ground at build time. Open data, CC0. Count: <code>src/lib/ducking/mix.ts</code>. Every level and count on
+      this page is derived from those files; the figures in the readings are the briefing’s.
+    </p>
+  </SheetFoot>
+</main>

@@ -4,15 +4,15 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "20ad7a3127c3a0ef"
+        "sha256": "af3dd560b30996ce"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "fcd6bd82ffb837af"
+        "sha256": "cc5e46fe8dbc4f13"
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "7fb8ef085857231f"
+        "sha256": "b11efdeca0edd0ef"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,25 +57,25 @@
       }
     ],
     "counts": {
-      "nodes": 568,
-      "edges": 504,
+      "nodes": 584,
+      "edges": 519,
       "nodesByKind": {
-        "decision": 160,
+        "decision": 161,
         "encounter": 6,
-        "neighbor": 135,
+        "neighbor": 149,
         "practice": 9,
         "practice-work": 222,
         "receiver": 8,
-        "work": 28
+        "work": 29
       },
       "edgesByKind": {
         "addresses": 8,
         "concerns": 2,
         "door": 5,
         "made-by": 222,
-        "neighbor-of": 136,
+        "neighbor-of": 150,
         "participates": 17,
-        "touches": 114
+        "touches": 115
       }
     }
   },
@@ -1681,6 +1681,16 @@
       }
     },
     {
+      "id": "decision:2026-11-01-1",
+      "kind": "decision",
+      "label": "Ducking joins the lab on the counter-measurement line",
+      "date": "2026-11-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Ducking joins the lab on the counter-measurement line"
+      }
+    },
+    {
       "id": "encounter:enc-2026-001-calibration-gap-travels",
       "kind": "encounter",
       "label": "The Calibration Gap travels: Instrument 001 → Native Speaker → correction upstream",
@@ -1854,6 +1864,16 @@
       "url": "https://arstechnica.com/information-technology/2013/04/churnalism-tracker-catches-journalists-copying-press-releases-wikipedia"
     },
     {
+      "id": "neighbor:artangel-org-uk-project-witness",
+      "kind": "neighbor",
+      "label": "Susan Hiller, *Witness* (2000)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Susan Hiller, *Witness* (2000)](https://www.artangel.org.uk/project/witness/) — the nearest in the body: hundreds of voices in a low murmur, and one is singled out only by going to its speaker. Stronger as an experience than anything on a page can be. Eyewitness accounts, not data, and nothing ducks."
+      },
+      "url": "https://www.artangel.org.uk/project/witness/"
+    },
+    {
       "id": "neighbor:arxiv-org-abs-1607-05946",
       "kind": "neighbor",
       "label": "Living Globe (Cardoso et al., arXiv 1607.05946)",
@@ -2013,6 +2033,26 @@
       }
     },
     {
+      "id": "neighbor:cardiffmiller-com-installations-the-forty-part-motet",
+      "kind": "neighbor",
+      "label": "Janet Cardiff, *The Forty Part Motet* (2001)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Janet Cardiff, *The Forty Part Motet* (2001)](https://cardiffmiller.com/installations/the-forty-part-motet/) — one voice per channel, and walking is the mixing. No data, no argument."
+      },
+      "url": "https://cardiffmiller.com/installations/the-forty-part-motet/"
+    },
+    {
+      "id": "neighbor:care-org-news-and-stories-the-10-most-under-reported-humanit",
+      "kind": "neighbor",
+      "label": "CARE, *The 10 most under-reported humanitarian crises*",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[CARE, *The 10 most under-reported humanitarian crises*](https://www.care.org/news-and-stories/the-10-most-under-reported-humanitarian-crises-of-2025/), with [NRC's method](https://www.nrc.no/resources/reports/neglected-displacement-crises-report-methodology) and [Our World in Data](https://ourworldindata.org/does-the-news-reflect-what-we-die-from) — the measurement of neglect, done better than a ledger of charts can: millions of articles, funding and politics, coverage against deaths. All of it is to be read."
+      },
+      "url": "https://www.care.org/news-and-stories/the-10-most-under-reported-humanitarian-crises-of-2025/"
+    },
+    {
       "id": "neighbor:care-org-resources-the-10-most-under-reported-crises-of-2025",
       "kind": "neighbor",
       "label": "CARE, *The 10 most under-reported humanitarian crises*",
@@ -2031,6 +2071,16 @@
         "quote": "[changedetection.io](https://changedetection.io) — free/open-source, off-the-shelf scheduled-capture + diff + notification tool explicitly marketed for monitoring government pages."
       },
       "url": "https://changedetection.io"
+    },
+    {
+      "id": "neighbor:chi1995-chistatic-hosting-acm-org-proceedings-shortppr-cs-bd",
+      "kind": "neighbor",
+      "label": "AudioStreamer — Schmandt and Mullins, CHI 1995",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[AudioStreamer — Schmandt and Mullins, CHI 1995](https://chi1995.chistatic.hosting.acm.org/proceedings/shortppr/cs_bdy.htm) — the strongest neighbour, and it holds the gesture: three news programmes at once, turning towards one raises it 10 dB, the gain decays, and the highest attention level silences the others until the next story. Thirty-one years older than this. A listening tool: its levels are nobody's measurement, it claims nothing, and the others fall silent only at the very top."
+      },
+      "url": "https://chi1995.chistatic.hosting.acm.org/proceedings/shortppr/cs_bdy.htm"
     },
     {
       "id": "neighbor:climate-conflict-org",
@@ -2081,6 +2131,26 @@
         "quote": "[Deep Sky Research — \"Insuring against climate risk is becoming unaffordable\"](https://www.deepskyclimate.com/data-dashboard-charts/price-of-home-insurance) — a live, quarterly-updated public dashboard whose chart is literally \"Percent Increase in the Price of Home Insurance Premiums since 1998,\" sourced from the *same* BLS PPI series, same 1998 base year, same \"climate is unaffordable\" framing."
       },
       "url": "https://www.deepskyclimate.com/data-dashboard-charts/price-of-home-insurance"
+    },
+    {
+      "id": "neighbor:doi-org-10-1162-qjec-122-2-693",
+      "kind": "neighbor",
+      "label": "Eisensee and Strömberg, *News Droughts, News Floods, and U.S. Disaster Relief*, QJE 122(2), 2007",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Eisensee and Strömberg, *News Droughts, News Floods, and U.S. Disaster Relief*, QJE 122(2), 2007](https://doi.org/10.1162/qjec.122.2.693) — not a neighbour but the load-bearing citation: about 5,000 natural disasters, 1968 to 2002, and US relief depending on what else was in the news. Beside it [Zhu (1992)](https://scholars.cityu.edu.hk/en/publications/issue-competition-and-attention-distraction-a-zero-sum-theory-of-) on agenda-setting as a zero-sum process, and the limit, [Sisco and others (2023)](https://collaborate.princeton.edu/en/publications/examining-evidence-for-the-finite-pool-of-worry-and-finite-pool-o): attention to climate fell as attention to COVID-19 rose, and worry did not."
+      },
+      "url": "https://doi.org/10.1162/qjec.122.2.693"
+    },
+    {
+      "id": "neighbor:earstudio-com-projects-project-page-listening-post",
+      "kind": "neighbor",
+      "label": "Mark Hansen and Ben Rubin, *Listening Post* (2001)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Mark Hansen and Ben Rubin, *Listening Post* (2001)](https://www.earstudio.com/projects/project-page/listening-post) — the canonical work on the sound of the web: live public text voiced and composed in six movements. No shares, and no visitor control is described."
+      },
+      "url": "https://www.earstudio.com/projects/project-page/listening-post"
     },
     {
       "id": "neighbor:earth-nullschool-net",
@@ -2311,6 +2381,16 @@
       "url": "https://globalfishingwatch.org/research-project-dark-vessels"
     },
     {
+      "id": "neighbor:grandtextauto-soe-ucsc-edu-p-265",
+      "kind": "neighbor",
+      "label": "Gonzalo Frasca, *Madrid* (2004)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Gonzalo Frasca, *Madrid* (2004)](https://grandtextauto.soe.ucsc.edu/?p=265) — candles for a news event stay lit only while you keep clicking: attention as sustained effort, twenty-two years ago. Second-hand, from the authors' blog comments; the game page would not open. One matter, nothing competing."
+      },
+      "url": "https://grandtextauto.soe.ucsc.edu/?p=265"
+    },
+    {
       "id": "neighbor:hanson-2019-user-tracking-on-academic-publisher-platforms",
       "kind": "neighbor",
       "label": "Hanson (2019), \"User Tracking on Academic Publisher Platforms\"",
@@ -2510,6 +2590,16 @@
       }
     },
     {
+      "id": "neighbor:mfru-org-projects-newsmap",
+      "kind": "neighbor",
+      "label": "Newsmap — Marcos Weskamp and Dan Albritton (2004)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Newsmap — Marcos Weskamp and Dan Albritton (2004)](https://www.mfru.org/projects/newsmap) — coverage as a space-constrained treemap of Google News, readable in a second and honest about its bias; that size stands for coverage is second-hand here. No sound, and it costs the viewer nothing."
+      },
+      "url": "https://www.mfru.org/projects/newsmap"
+    },
+    {
       "id": "neighbor:moodglobe-com",
       "kind": "neighbor",
       "label": "Global Mood (moodglobe.com)",
@@ -2567,6 +2657,16 @@
         "quote": "[News Sniffer](https://www.newssniffer.co.uk) — world chamber's strongest living neighbour (found in the 2026-08-14 §2 seal; the 2026-08-13 pass had only declared NewsDiffs dead): actively monitoring 2.7M news articles with 5.25M captured versions, minute-fresh, open source — but a browsable per-article revision archive of a handful of UK feeds (BBC, Guardian), not a metric instrument: no daily rate, no triviality classification, no global/multilingual scale, no deletion measurement, no receipts."
       },
       "url": "https://www.newssniffer.co.uk"
+    },
+    {
+      "id": "neighbor:nomoreradiosilence-com",
+      "kind": "neighbor",
+      "label": "No More Radio Silence, Oxfam GB (2026)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[No More Radio Silence, Oxfam GB (2026)](https://www.nomoreradiosilence.com/) — the metaphor is taken: a track and a site about turning up overlooked crises, with crisis updates and a petition. No measurement, and no level per crisis."
+      },
+      "url": "https://www.nomoreradiosilence.com/"
     },
     {
       "id": "neighbor:nytimes-com-interactive-2024-07-08-climate-home-insurance-cl",
@@ -2796,6 +2896,16 @@
       "url": "https://www.slate.com/articles/technology/copenhagen_consensus_2012/2012/05/copenhagen_consensus_readers_vote_for_family_planning_better_nutrition_and_tobacco_taxes_.html"
     },
     {
+      "id": "neighbor:sonificationart-wordpress-com-2013-11-03-tweetscapes-sonifyi",
+      "kind": "neighbor",
+      "label": "Tweetscapes — Hermann, Nehls and others (about 2012)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Tweetscapes — Hermann, Nehls and others (about 2012)](https://sonificationart.wordpress.com/2013/11/03/tweetscapes-sonifying-germanys-twitterscape/) — the closest mapping from data to loudness found: live German Twitter as sound, follower count setting volume. No speech, no control, and now offline."
+      },
+      "url": "https://sonificationart.wordpress.com/2013/11/03/tweetscapes-sonifying-germanys-twitterscape/"
+    },
+    {
       "id": "neighbor:sparc-navigating-risk-in-vendor-data-privacy-practices",
       "kind": "neighbor",
       "label": "SPARC, \"Navigating Risk in Vendor Data Privacy Practices\"",
@@ -2824,6 +2934,16 @@
       "url": "https://stoptrackingscience.eu"
     },
     {
+      "id": "neighbor:store-steampowered-com-app-1147550-not-for-broadcast",
+      "kind": "neighbor",
+      "label": "Not For Broadcast, NotGames (2022)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Not For Broadcast, NotGames (2022)](https://store.steampowered.com/app/1147550/Not_For_Broadcast/) — the nearest in subject: a broadcast desk as the interface to the news, with censorship, advertising and branching endings, far richer as a game. Fiction, and it chooses shots and items, not levels."
+      },
+      "url": "https://store.steampowered.com/app/1147550/Not_For_Broadcast/"
+    },
+    {
       "id": "neighbor:sunlightfoundation-com-gov404",
       "kind": "neighbor",
       "label": "Sunlight Foundation / Berkman Klein — Web Integrity Project (\"Gov404\")",
@@ -2832,6 +2952,16 @@
         "quote": "[Sunlight Foundation / Berkman Klein — Web Integrity Project (\"Gov404\")](https://sunlightfoundation.com/gov404) — monitors/catalogs federal website changes/removals since 2016 with detailed before/after documentation, feeding congressional oversight and FOIA investigations."
       },
       "url": "https://sunlightfoundation.com/gov404"
+    },
+    {
+      "id": "neighbor:support-biamp-com-tesira-programming-gain-sharing-vs-gating-",
+      "kind": "neighbor",
+      "label": "Dan Dugan's gain-sharing automixer (patented 1975, second-hand)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Dan Dugan's gain-sharing automixer (patented 1975, second-hand)](https://support.biamp.com/Tesira/Programming/Gain_Sharing_vs._Gating_Automixer) — the arithmetic as a product: total gain constant, in everyday use in meeting rooms. It means nothing there, which is the difference."
+      },
+      "url": "https://support.biamp.com/Tesira/Programming/Gain_Sharing_vs._Gating_Automixer"
     },
     {
       "id": "neighbor:support-google-com-trends-answer-4355000",
@@ -2899,6 +3029,16 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "The fifteen Atlas entries whose text carries time or clock vocabulary (Digital Terraforming, Tellurian Drama, Vigil, PacketWeather, One Minute of Ass, and others) — returned by the machine search over `decisive_move`, and dismissed on reading: not one is about timekeeping. **The Atlas holds no work on the second, the leap second, or the divergence of Earth time from atomic time.**"
       }
+    },
+    {
+      "id": "neighbor:theboxplymouth-com-past-projects-making-it-christopher-baker",
+      "kind": "neighbor",
+      "label": "Christopher Baker, *Hello World!* (about 2008; sources differ)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Christopher Baker, *Hello World!* (about 2008; sources differ)](https://www.theboxplymouth.com/past-projects/making-it/christopher-baker-hello-world) — five thousand video diaries speaking at once, the sound moving between one person and the crowd, so going unheard is already its subject. No ranking, no hand."
+      },
+      "url": "https://www.theboxplymouth.com/past-projects/making-it/christopher-baker-hello-world"
     },
     {
       "id": "neighbor:thenewstack-io-cloud-pue-comparing-aws-azure-and-gcp-global-",
@@ -3027,6 +3167,16 @@
         "quote": "[Walter R. Mebane Jr., \"Inappropriate Applications of Benford's Law Regularities to Some Data from the 2020 Presidential Election\"](https://websites.umich.edu/~wmebane/inapB.pdf) (2020) — direct, citable academic debunking of Benford-as-election-fraud-proof."
       },
       "url": "https://websites.umich.edu/~wmebane/inapB.pdf"
+    },
+    {
+      "id": "neighbor:whitney-org-exhibitions-jonah-brucker-cohen",
+      "kind": "neighbor",
+      "label": "Jonah Brucker-Cohen, *BumpList* (2003)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Jonah Brucker-Cohen, *BumpList* (2003)](https://whitney.org/exhibitions/jonah-brucker-cohen) — zero-sum attention as the whole work: six places on a mailing list, each joiner bumps the oldest. No subject beyond itself."
+      },
+      "url": "https://whitney.org/exhibitions/jonah-brucker-cohen"
     },
     {
       "id": "neighbor:wikicompare",
@@ -6742,7 +6892,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'balance'"
       },
-      "rank": 7,
+      "rank": 8,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "UNIQUE",
@@ -6764,7 +6914,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 10,
+      "rank": 11,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -6784,7 +6934,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'consensus'"
       },
-      "rank": 16,
+      "rank": 17,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "ADDED VALUE",
@@ -6806,7 +6956,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 17,
+      "rank": 18,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -6815,6 +6965,28 @@
       "auditSource": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "REDUNDANT (weak added value)."
+      }
+    },
+    {
+      "id": "work:ducking",
+      "kind": "work",
+      "label": "Ducking",
+      "werkId": "ducking",
+      "href": "/ducking",
+      "since": "2026-11-01",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'ducking'"
+      },
+      "rank": 1,
+      "tier": "experiment",
+      "line": "From the counter-measurement line.",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (thin — a new combination, pre-ship, 2026-11-01).",
+      "daylight": "Keep it, and answer the third kill condition first. The one thing that would make this an instrument and not only a thing to play is a second record: what readers chose to hold, summed per channel, with consent and nothing else kept, set against what the charts held. The study frame's `marks` kind holds exactly that shape, one number per channel, though the frame so far serves only the practices; the design note says what it would take. After that, carry a broader denominator beside the charts if a press measure can be kept up reliably: GDELT's document API gave a thin series on the day this was built. A round goes stale with its briefing and is rendered by hand, which the page states.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE (thin — a new combination, pre-ship, 2026-11-01)."
       }
     },
     {
@@ -6840,7 +7012,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 11,
+      "rank": 12,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -6862,7 +7034,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'globe'"
       },
-      "rank": 4,
+      "rank": 5,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -6884,7 +7056,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'invoked-past'"
       },
-      "rank": 6,
+      "rank": 7,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (as a living instrument).",
@@ -6938,7 +7110,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'parallaxe'"
       },
-      "rank": 19,
+      "rank": 20,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT-leaning.",
       "daylight": "The plausible surviving differentiator is *process*, not method: a committed, versioned, git-archived daily register with a fixed non-selected topic set, never retconned — none of the neighbors offer that as a public, continuously-dated artifact (INFOGAP is a paper/dataset; Omnipedia/Manypedia are dead demos). Name this explicitly as the point, and cite INFOGAP/Omnipedia/Manypedia openly rather than let a visitor discover the overlap unassisted.",
@@ -6958,7 +7130,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 15,
+      "rank": 16,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -6979,7 +7151,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'praemie'"
       },
-      "rank": 18,
+      "rank": 19,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
       "daylight": "Either build on genuinely under-covered instruments — actual cat-bond spread/ROL data (Swiss Re index, Artemis.bm) rather than the BLS homeowner PPI others already use — or make the legal-document framing itself the explicit differentiator, citing Deep Sky/BLS/FRED openly rather than implying proprietary discovery.",
@@ -6999,7 +7171,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'protokoll'"
       },
-      "rank": 20,
+      "rank": 21,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, driven by the literary form, not the data aggregation.",
       "daylight": "Stop positioning \"twelve open sources, daily\" as the value proposition (invites a losing comparison to OWID); foreground the deterministic/no-LLM/ test-locked-template mechanism and the \"adjourned\" bureaucratic-literary device as the explicit claim — an art piece about administrative language applied to planetary indicators, not a data-aggregation competitor to Our World in Data.",
@@ -7019,7 +7191,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'redaction'"
       },
-      "rank": 12,
+      "rank": 13,
       "tier": "instrument",
       "line": "From the “Counter-Measurement” line, in two chambers.",
       "verdict": "ADDED VALUE",
@@ -7041,7 +7213,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 13,
+      "rank": 14,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -7062,7 +7234,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'sawtooth'"
       },
-      "rank": 3,
+      "rank": 4,
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE.",
@@ -7083,7 +7255,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'society'"
       },
-      "rank": 8,
+      "rank": 9,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (provisional).",
@@ -7104,7 +7276,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 9,
+      "rank": 10,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -7126,7 +7298,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spread'"
       },
-      "rank": 2,
+      "rank": 3,
       "tier": "experiment",
       "line": "From the counter-measurement line, and the house’s first live, real-time work: an asset does not have one price, it has several, disagreeing by fractions of a second across venues nobody can watch all at once."
     },
@@ -7153,7 +7325,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 14,
+      "rank": 15,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -7174,7 +7346,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'third-reading'"
       },
-      "rank": 1,
+      "rank": 2,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -7196,7 +7368,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'trending'"
       },
-      "rank": 5,
+      "rank": 6,
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (provisional — sealed before ship).",
@@ -7217,7 +7389,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 21,
+      "rank": 22,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -9716,6 +9888,160 @@
     },
     {
       "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:artangel-org-uk-project-witness",
+      "note": "the nearest in the body: hundreds of voices in a low murmur, and one is singled out only by going to its speaker. Stronger as an experience than anything on a page can be. Eyewitness accounts, not data, and nothing ducks.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Susan Hiller, *Witness* (2000)](https://www.artangel.org.uk/project/witness/) — the nearest in the body: hundreds of voices in a low murmur, and one is singled out only by going to its speaker. Stronger as an experience than anything on a page can be. Eyewitness accounts, not data, and nothing ducks."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:cardiffmiller-com-installations-the-forty-part-motet",
+      "note": "one voice per channel, and walking is the mixing. No data, no argument.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Janet Cardiff, *The Forty Part Motet* (2001)](https://cardiffmiller.com/installations/the-forty-part-motet/) — one voice per channel, and walking is the mixing. No data, no argument."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:care-org-news-and-stories-the-10-most-under-reported-humanit",
+      "note": "the measurement of neglect, done better than a ledger of charts can: millions of articles, funding and politics, coverage against deaths. All of it is to be read.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[CARE, *The 10 most under-reported humanitarian crises*](https://www.care.org/news-and-stories/the-10-most-under-reported-humanitarian-crises-of-2025/), with [NRC's method](https://www.nrc.no/resources/reports/neglected-displacement-crises-report-methodology) and [Our World in Data](https://ourworldindata.org/does-the-news-reflect-what-we-die-from) — the measurement of neglect, done better than a ledger of charts can: millions of articles, funding and politics, coverage against deaths. All of it is to be read."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:chi1995-chistatic-hosting-acm-org-proceedings-shortppr-cs-bd",
+      "note": "the strongest neighbour, and it holds the gesture: three news programmes at once, turning towards one raises it 10 dB, the gain decays, and the highest attention level silences the others until the next story. Thirty-one years older than this. A listening tool: its levels are nobody's measurement, it claims nothing, and the others fall silent only at the very top.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[AudioStreamer — Schmandt and Mullins, CHI 1995](https://chi1995.chistatic.hosting.acm.org/proceedings/shortppr/cs_bdy.htm) — the strongest neighbour, and it holds the gesture: three news programmes at once, turning towards one raises it 10 dB, the gain decays, and the highest attention level silences the others until the next story. Thirty-one years older than this. A listening tool: its levels are nobody's measurement, it claims nothing, and the others fall silent only at the very top."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:doi-org-10-1162-qjec-122-2-693",
+      "note": "not a neighbour but the load-bearing citation: about 5,000 natural disasters, 1968 to 2002, and US relief depending on what else was in the news. Beside it [Zhu (1992)](https://scholars.cityu.edu.hk/en/publications/issue-competition-and-attention-distraction-a-zero-sum-theory-of-) on agenda-setting as a zero-sum process, and the limit, [Sisco and others (2023)](https://collaborate.princeton.edu/en/publications/examining-evidence-for-the-finite-pool-of-worry-and-finite-pool-o): attention to climate fell as attention to COVID-19 rose, and worry did not.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Eisensee and Strömberg, *News Droughts, News Floods, and U.S. Disaster Relief*, QJE 122(2), 2007](https://doi.org/10.1162/qjec.122.2.693) — not a neighbour but the load-bearing citation: about 5,000 natural disasters, 1968 to 2002, and US relief depending on what else was in the news. Beside it [Zhu (1992)](https://scholars.cityu.edu.hk/en/publications/issue-competition-and-attention-distraction-a-zero-sum-theory-of-) on agenda-setting as a zero-sum process, and the limit, [Sisco and others (2023)](https://collaborate.princeton.edu/en/publications/examining-evidence-for-the-finite-pool-of-worry-and-finite-pool-o): attention to climate fell as attention to COVID-19 rose, and worry did not."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:earstudio-com-projects-project-page-listening-post",
+      "note": "the canonical work on the sound of the web: live public text voiced and composed in six movements. No shares, and no visitor control is described.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Mark Hansen and Ben Rubin, *Listening Post* (2001)](https://www.earstudio.com/projects/project-page/listening-post) — the canonical work on the sound of the web: live public text voiced and composed in six movements. No shares, and no visitor control is described."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:grandtextauto-soe-ucsc-edu-p-265",
+      "note": "candles for a news event stay lit only while you keep clicking: attention as sustained effort, twenty-two years ago. Second-hand, from the authors' blog comments; the game page would not open. One matter, nothing competing.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Gonzalo Frasca, *Madrid* (2004)](https://grandtextauto.soe.ucsc.edu/?p=265) — candles for a news event stay lit only while you keep clicking: attention as sustained effort, twenty-two years ago. Second-hand, from the authors' blog comments; the game page would not open. One matter, nothing competing."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:mfru-org-projects-newsmap",
+      "note": "coverage as a space-constrained treemap of Google News, readable in a second and honest about its bias; that size stands for coverage is second-hand here. No sound, and it costs the viewer nothing.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Newsmap — Marcos Weskamp and Dan Albritton (2004)](https://www.mfru.org/projects/newsmap) — coverage as a space-constrained treemap of Google News, readable in a second and honest about its bias; that size stands for coverage is second-hand here. No sound, and it costs the viewer nothing."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:nomoreradiosilence-com",
+      "note": "the metaphor is taken: a track and a site about turning up overlooked crises, with crisis updates and a petition. No measurement, and no level per crisis.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[No More Radio Silence, Oxfam GB (2026)](https://www.nomoreradiosilence.com/) — the metaphor is taken: a track and a site about turning up overlooked crises, with crisis updates and a petition. No measurement, and no level per crisis."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:sonificationart-wordpress-com-2013-11-03-tweetscapes-sonifyi",
+      "note": "the closest mapping from data to loudness found: live German Twitter as sound, follower count setting volume. No speech, no control, and now offline.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Tweetscapes — Hermann, Nehls and others (about 2012)](https://sonificationart.wordpress.com/2013/11/03/tweetscapes-sonifying-germanys-twitterscape/) — the closest mapping from data to loudness found: live German Twitter as sound, follower count setting volume. No speech, no control, and now offline."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:store-steampowered-com-app-1147550-not-for-broadcast",
+      "note": "the nearest in subject: a broadcast desk as the interface to the news, with censorship, advertising and branching endings, far richer as a game. Fiction, and it chooses shots and items, not levels.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Not For Broadcast, NotGames (2022)](https://store.steampowered.com/app/1147550/Not_For_Broadcast/) — the nearest in subject: a broadcast desk as the interface to the news, with censorship, advertising and branching endings, far richer as a game. Fiction, and it chooses shots and items, not levels."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:support-biamp-com-tesira-programming-gain-sharing-vs-gating-",
+      "note": "the arithmetic as a product: total gain constant, in everyday use in meeting rooms. It means nothing there, which is the difference.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Dan Dugan's gain-sharing automixer (patented 1975, second-hand)](https://support.biamp.com/Tesira/Programming/Gain_Sharing_vs._Gating_Automixer) — the arithmetic as a product: total gain constant, in everyday use in meeting rooms. It means nothing there, which is the difference."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:theboxplymouth-com-past-projects-making-it-christopher-baker",
+      "note": "five thousand video diaries speaking at once, the sound moving between one person and the crowd, so going unheard is already its subject. No ranking, no hand.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Christopher Baker, *Hello World!* (about 2008; sources differ)](https://www.theboxplymouth.com/past-projects/making-it/christopher-baker-hello-world) — five thousand video diaries speaking at once, the sound moving between one person and the crowd, so going unheard is already its subject. No ranking, no hand."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ducking",
+      "to": "neighbor:whitney-org-exhibitions-jonah-brucker-cohen",
+      "note": "zero-sum attention as the whole work: six places on a mailing list, each joiner bumps the oldest. No subject beyond itself.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Jonah Brucker-Cohen, *BumpList* (2003)](https://whitney.org/exhibitions/jonah-brucker-cohen) — zero-sum attention as the whole work: six places on a mailing list, each joiner bumps the oldest. No subject beyond itself."
+      }
+    },
+    {
+      "kind": "neighbor-of",
       "from": "work:ghost-fleet",
       "to": "neighbor:c4ads-org-reports-oil-and-water",
       "note": "commercial/NGO maritime intelligence tracking sanctioned shadow-fleet tankers with named case studies, regularly updated.",
@@ -12074,6 +12400,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "docs/design/2026-10-26-third-reading.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-01-1",
+      "to": "work:ducking",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "docs/design/2026-11-01-ducking.md"
       }
     }
   ]

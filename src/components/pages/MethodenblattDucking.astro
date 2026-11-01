@@ -1,0 +1,123 @@
+---
+// Method sheet — Ducking (2026-11-01). The six parts of the method-sheet duty (werkgruppe spec §3.5).
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
+import { readDesk } from '@/lib/ducking/desk-data'
+import { FLOOR_DB, fmtCount, WINDOW_DAYS } from '@/lib/ducking/mix'
+
+const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+const { round, ledger, sources, whole, book } = readDesk()
+const sample = book.rest.sample
+---
+
+<MethodSheet title="Method sheet — Ducking" workHref="/ducking" workLabel="To the work">
+  <section class="sheet-reveal mb-10">
+    <h2 class="kicker mb-2">What this is</h2>
+    <p class="leading-relaxed">
+      A share of attention, set as a mix. The matters of one of the ecology’s briefings and everything else on Common Ground’s
+      charts are channels on one desk; each channel’s level is its share of the trailing week, and each is a voice. The claim is
+      checkable from the committed files: how little of what the charts held named any of these matters. The desk adds no finding
+      to that count. It makes the count something you have to hold up.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">1. Sources &amp; licences</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>
+        The briefing — <a class={link} href={round.briefing.url}>{round.briefing.title}</a>, written {round.briefing.written}, pinned
+        to its commit. Its matters, its order, and the figures the voices read, each with the page it comes from.
+      </li>
+      <li>
+        Common Ground’s day files, {ledger.days[0]} to {ledger.days.at(-1)} — open data (CC0) in
+        <a class={link} href={`${REPO}/tree/main/src/data/trending`}>src/data/trending</a>, {sources} sources on the newest day.
+      </li>
+      <li>
+        The voices — Kokoro-82M, open weights under Apache 2.0, run locally on one machine, at no cost and through no service.
+        The recordings are CC BY 4.0 with the rest of the lab’s works.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">2. Cadence</h2>
+    <p class="leading-relaxed text-fg-muted">
+      The faders move with Common Ground’s morning ledger: every nightly build counts the new day, and the page shows the week
+      to the newest committed day. The voices do not. A round is rendered once, by hand, by
+      <a class={link} href={`${REPO}/blob/main/scripts/ducking/voices.py`}>scripts/ducking/voices.py</a>, so its readings stay at
+      the briefing’s date until the next round says otherwise, and the page gives that date.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">3. Processing</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>
+        <b class="text-fg">Count.</b> A signal is one entry on one chart on one day. It names a matter when its label or a link title
+        contains one of the matter’s terms as a whole word, case and accents folded, by the rule of
+        <a class={link} href="/werke/third-reading">Third Reading</a>. A signal naming two matters counts half for each, so the
+        channels and everything else always add up to the day’s signals. This differs from the briefing’s own count, which counted
+        raw occurrences in the files; a signal here is a chart entry, not a mention.
+      </li>
+      <li>
+        <b class="text-fg">Share.</b> A channel’s signals over all signals in the trailing {WINDOW_DAYS} days. The first days of the
+        record have shorter windows. Everything else is the remainder, so the sum is the whole ledger.
+      </li>
+      <li>
+        <b class="text-fg">Level.</b> The share as a power ratio: ten times its logarithm, in decibels. The fader’s travel runs from
+        0 dB, the whole, to −{Math.abs(FLOOR_DB)} dB, and each printed mark is ten times the one below. A channel at zero rests on the floor. Each
+        channel’s amplitude is the square root of its share, and every recording is levelled to the same speech loudness, so a
+        fader’s position means the same on every channel.
+      </li>
+      <li>
+        <b class="text-fg">Holding.</b> A held channel takes the share its fader says. Everything not held takes what is left, in its
+        measured proportions; a channel at zero gets nothing from the room that opens. Hands asking for more than the whole are
+        scaled down to it. Holding changes the sound for the person holding, and no count. Nothing done at the desk is sent or kept.
+      </li>
+      <li>
+        <b class="text-fg">Everything else.</b> Several voices read a seeded random sample of the labels of the week the round ends,
+        each label once. Of {fmtCount(sample.labels)} distinct labels that name no matter, {fmtCount(sample.long)} are left out as too
+        long to read in passing and {fmtCount(sample.unreadable)} because they carry a non-Latin script or an emoji the voices cannot
+        say, so the crowd is more Latin-script than the charts are. {fmtCount(sample.stopped)} more fall to a stop list of words for sex,
+        killing, death, crime and accidents, a few swear words and web addresses, because a machine reading those aloud out of
+        context would be a statement the ledger does not make. It is a blunt list: it can catch the innocent and miss the rest, and
+        war headlines without those words stay in. It is in the script. {fmtCount(sample.spoken)} labels are spoken; the sample is drawn
+        once per round, and it loops.
+      </li>
+      <li>
+        <b class="text-fg">The room.</b> One thing is added to the voices: a small synthetic room, in which a quiet channel stands further
+        away than a loud one. It changes distance, not level. There is no other sound.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">4. Limits of the method</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>The denominator is the tops of {sources} public charts and feeds: encyclopaedia pages, search trends, app stores, code hosts, social and news sources, each with its own fixed length. It leans to technology and to English, and a longer chart weighs more. Its shares are shares of those charts, not of the world’s attention, however the desk feels.</li>
+      <li>A chart measures what rose, was clicked or was posted, by whoever those platforms reach. It says nothing about what anyone thinks or cares about, and nothing about the people a matter happens to.</li>
+      <li>A signal is counted the same whatever its size: the top of an encyclopaedia’s list and the bottom of a feed weigh one each.</li>
+      <li>The terms are a choice, wide on purpose, in English only. They let in false friends, which the receipts on the work’s page show, and they miss a matter discussed in other words or other languages. The receipts cannot show what was missed.</li>
+      <li>A matter is named by its symptoms: Iran’s channel also counts oil and cost-of-living terms, because the briefing frames the matter as an energy shock. The AI-in-the-vote channel does not count the elections themselves, only synthetic media and political ads, so most of the attention on those elections sits in everything else.</li>
+      <li>The list of matters is one briefing’s, written by one of the ecology’s machines from the sources it links. It is not a ranking and the desk does not treat it as one.</li>
+      <li>The readings are short and they stop at the briefing’s date. Most figures in them are themselves estimates, and some reach the briefing second-hand; each source is linked.</li>
+      <li>A desk invites the idea that the mix could be set otherwise by someone at a desk. Nobody sets this one. The metaphor is the work’s, not a finding.</li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">5. Compute footprint</h2>
+    <p class="leading-relaxed text-fg-muted">
+      The count runs inside the site’s build, over {fmtCount(whole.total)} signals to date, and costs no service. The voices were
+      rendered in a few minutes on one desktop machine, once per round. All audio plays in the visitor’s browser, and loads only
+      after the visitor asks for sound.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">6. Change log</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>2026-11-01 — first version, round {round.id}. Over the 61 days at launch the ten matters held 0.99 % of the ledger. This line stays as it is; the work’s page goes on counting.</li>
+    </ul>
+  </section>
+</MethodSheet>

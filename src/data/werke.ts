@@ -108,6 +108,31 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    // Built 2026-11-01 on Frank's word of that day (wording private): the idea had been proposed the
+    // night before as a motorised desk for two Raspberry Pis, and he asked for it as a lab experiment
+    // instead, without hardware. Design doc docs/design/2026-11-01-ducking.md. Marked `live` because
+    // the faders move with Common Ground's nightly ledger; the voices stay until the next round.
+    id: 'ducking',
+    line: 'counter-measurement',
+    title: 'Ducking',
+    subtitle: {
+      de: 'A mixing desk for the world’s attention: what sits low cannot be heard, and it stays up only while you hold it',
+      en: 'A mixing desk for the world’s attention: what sits low cannot be heard, and it stays up only while you hold it',
+    },
+    status: 'live',
+    since: '2026-11-01',
+    live: true,
+    href: '/ducking',
+    description: {
+      // No digit (the currency doctrine): the number of matters, the window and the shares are all
+      // rendered on the page from the round and the ledger, and the shares move every night.
+      de: 'From the counter-measurement line. Ducking is what a mixing desk does when one signal pushes the others down. This desk seats every matter of one of the ecology’s briefings, plus one channel for everything else on the web’s charts; each fader stands at its channel’s share of the last week of Common Ground, on a logarithmic scale, and each channel is a synthetic voice reading its evidence, all at once. At rest you hear the charts, because the charts are nearly all there is. Push a matter up and hold it and it rises out of the crowd; the sum stays whole, so the room comes from everything else; let go and it falls back to where the week put it. Every level is derived from the committed ledger, and the whole record can be played back day by day.',
+      en: 'From the counter-measurement line. Ducking is what a mixing desk does when one signal pushes the others down. This desk seats every matter of one of the ecology’s briefings, plus one channel for everything else on the web’s charts; each fader stands at its channel’s share of the last week of Common Ground, on a logarithmic scale, and each channel is a synthetic voice reading its evidence, all at once. At rest you hear the charts, because the charts are nearly all there is. Push a matter up and hold it and it rises out of the crowd; the sum stays whole, so the room comes from everything else; let go and it falls back to where the week put it. Every level is derived from the committed ledger, and the whole record can be played back day by day.',
+    },
+    methodHref: '/werke/ducking',
+    tier: 'experiment',
+  },
+  {
     // Built 2026-10-26 as a prototype on Frank's commission and opened on his go of 2026-10-27
     // (wording private; design doc docs/design/2026-10-26-third-reading.md, decision log of that
     // day). The first work of the house that asks its readers and keeps their answers. Not marked

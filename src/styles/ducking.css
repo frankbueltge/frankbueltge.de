@@ -1,0 +1,373 @@
+/* src/styles/ducking.css — the desk of Ducking (/ducking, 2026-11-01).
+ *
+ * The desk is one dark instrument on either theme of the page: it is an object in a room, not a
+ * panel of the frame. Everything on it is neutral ink but the thing a hand is on, because that is
+ * the only thing here that is not the record.
+ *
+ * PALETTE: globe-voices — --du-held is the room's live ink, the dark step of the record `globe-voices`
+ * (#7fd0e8), with the same meaning it has on /globe and /spread: the live thing standing in front of
+ * the record. The desk's surface is the sea it was validated on or darker, so no new hue enters
+ * the house. The neutrals are tones of that surface; none carries an identity.
+ */
+
+.du-desk {
+  --du-panel: #0d0e10;
+  --du-floor: #070809;
+  --du-line: #26282c;
+  --du-tick: #3a3c42;
+  --du-ink: #ecedf0;
+  --du-muted: #9a9ca3;
+  --du-faint: #70727a;
+  --du-held: #7fd0e8;
+  --du-travel: clamp(214px, 38vh, 340px);
+  --du-screen: clamp(150px, 24vh, 270px);
+
+  margin-inline: -1rem;
+  padding: 0 0 0.75rem;
+  background: var(--du-panel);
+  color: var(--du-ink);
+  font-family: var(--font-mono);
+  border-block: 1px solid var(--du-line);
+}
+
+@media (min-width: 720px) {
+  .du-desk {
+    margin-inline: 0;
+    border: 1px solid var(--du-line);
+    border-radius: 6px;
+  }
+}
+
+/* ── the bar: sound, and which week ───────────────────────────────────────────────────────── */
+
+.du-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--du-line);
+}
+
+/* ── the screen: the mix, to read ─────────────────────────────────────────────────────────── */
+
+.du-screen {
+  position: relative;
+  height: var(--du-screen);
+  overflow: hidden;
+  background: var(--du-floor);
+  border-bottom: 1px solid var(--du-line);
+}
+
+.du-words {
+  position: absolute;
+  inset: 0.5rem 0.75rem;
+}
+
+.du-word {
+  position: absolute;
+  left: var(--du-x, 0);
+  top: var(--du-y, 0);
+  max-width: 50%;
+  font-size: clamp(11.5px, 1.5vw, 16px);
+  line-height: 1.25;
+  color: var(--du-muted);
+  opacity: var(--du-ink-a, 0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.du-lines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem clamp(1rem, 5vw, 3rem);
+  pointer-events: none;
+}
+
+.du-line {
+  margin: 0;
+  max-width: 44rem;
+  font-family: var(--font-sans);
+  font-size: clamp(19px, 3.1vw, 32px);
+  font-weight: 500;
+  line-height: 1.22;
+  color: var(--du-ink);
+  opacity: var(--du-ink-a, 0);
+}
+
+.du-line:empty {
+  display: none;
+}
+
+.du-hint,
+.du-note {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.55rem;
+  margin: 0;
+  font-size: 12px;
+  color: var(--du-muted);
+}
+
+.du-note {
+  color: var(--du-held);
+}
+
+/* ── the strips ───────────────────────────────────────────────────────────────────────────── */
+
+.du-strips {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 22px;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: end;
+  padding: 0.6rem 0.25rem 0.5rem;
+}
+
+@media (min-width: 720px) {
+  .du-strips {
+    grid-template-columns: 36px;
+    padding-inline: 0.75rem;
+  }
+}
+
+.du-scale svg {
+  display: block;
+  width: 100%;
+  height: var(--du-travel);
+  overflow: visible;
+}
+
+.du-scale text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--du-faint);
+}
+
+.du-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.du-name {
+  height: 6.1rem;
+  margin: 0 0 0.25rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: clamp(11px, 1.15vw, 13px);
+  letter-spacing: 0.06em;
+  color: var(--du-muted);
+  white-space: nowrap;
+}
+
+.du-strip[data-rest] .du-name {
+  color: var(--du-ink);
+  white-space: normal;
+  line-height: 1.15;
+}
+
+.du-strip[data-held] .du-name,
+.du-strip[data-held] .du-print {
+  color: var(--du-held);
+}
+
+.du-print {
+  height: 1.1rem;
+  margin: 0 0 0.3rem;
+  font-size: 10px;
+  color: var(--du-faint);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 719px) {
+  .du-print {
+    visibility: hidden;
+  }
+  .du-strip[data-held] .du-print {
+    visibility: visible;
+    overflow: visible;
+  }
+}
+
+.du-fader {
+  width: 100%;
+  touch-action: none;
+  cursor: grab;
+  outline-offset: 2px;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.du-fader:active {
+  cursor: grabbing;
+}
+
+.du-fader:focus {
+  outline: none;
+}
+
+.du-fader:focus-visible {
+  outline: 1px solid var(--du-held);
+}
+
+.du-fader svg {
+  display: block;
+  width: 100%;
+  height: var(--du-travel);
+  overflow: visible;
+}
+
+.du-slot {
+  fill: #000;
+}
+
+.du-tick {
+  stroke: var(--du-tick);
+  stroke-width: 1;
+}
+
+.du-meter {
+  fill: var(--du-muted);
+}
+
+.du-cap {
+  fill: var(--du-ink);
+}
+
+.du-cap-line {
+  fill: var(--du-panel);
+}
+
+.du-strip[data-held] .du-cap,
+.du-strip[data-held] .du-meter {
+  fill: var(--du-held);
+}
+
+/* ── the transport ────────────────────────────────────────────────────────────────────────── */
+
+.du-transport {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  padding: 0.5rem 0.75rem 0.25rem;
+  border-top: 1px solid var(--du-line);
+}
+
+.du-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2rem;
+  padding: 0 0.7rem;
+  background: transparent;
+  border: 1px solid var(--du-tick);
+  border-radius: 4px;
+  color: var(--du-ink);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.du-key:hover:not(:disabled) {
+  border-color: var(--du-muted);
+}
+
+.du-key:focus-visible {
+  outline: 1px solid var(--du-held);
+  outline-offset: 2px;
+}
+
+.du-key:disabled {
+  color: var(--du-faint);
+  cursor: default;
+}
+
+.du-key[data-primary] {
+  background: var(--du-ink);
+  border-color: var(--du-ink);
+  color: var(--du-panel);
+}
+
+.du-record {
+  position: relative;
+  flex: 1 1 10rem;
+  height: 2rem;
+  min-width: 8rem;
+}
+
+.du-record svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.du-lane {
+  fill: var(--du-tick);
+}
+
+.du-head {
+  stroke: var(--du-ink);
+  stroke-width: 1.5;
+}
+
+.du-scrub {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+
+.du-date {
+  margin: 0;
+  font-size: 12px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.du-faint {
+  color: var(--du-faint);
+}
+
+.du-spent {
+  min-height: 1.1rem;
+  margin: 0.15rem 0.75rem 0;
+  font-size: 11px;
+  color: var(--du-faint);
+}
+
+/* ── the page around it ───────────────────────────────────────────────────────────────────── */
+
+.du-reading {
+  border-top: 1px solid var(--color-line);
+  padding-block: 0.9rem;
+}
+
+.du-reading h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.du-reading p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .du-word {
+    display: none;
+  }
+}
