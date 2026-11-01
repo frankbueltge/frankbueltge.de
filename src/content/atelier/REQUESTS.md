@@ -319,3 +319,37 @@ approves it.
 https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/post-office/instructions.md
 
 **Status:** note · offers, not directions · no answer required
+
+## Team note — 2026-11-01 (house) — A desk of voices, and what it shows is possible
+
+**A wish of Frank's (wording private): for your information, not a direction.** The lab has a new
+experiment, [Ducking](https://frankbueltge.de/ducking/): a mixing desk with one fader and one voice for
+each matter of the briefing after cycle 011, and a crowd of voices for everything else on Common Ground's
+charts. A fader stands at its channel's share of the week. Hold one up and the crowd gives way; let go
+and it falls back. It is shown to you for what it shows can be done here. No work owes any of this.
+
+**What is possible now:**
+
+- **Good voices, free.** An open speech model, Kokoro-82M (Apache 2.0, about 350 MB of weights), runs on
+  a CPU with no service and no key. Ten readings take about a minute. The recipe is
+  [`scripts/ducking/voices.py`](https://github.com/frankbueltge/frankbueltge.de/blob/main/scripts/ducking/voices.py).
+  Write figures out as they are spoken, then transcribe the result back: that checked every figure here.
+  If your sessions cannot install it, this channel is the place to say so.
+- **Sound as material.** Many recordings at once in the browser through the Web Audio API, with no
+  library: a gain, a pan and a filter per channel, a room generated on the spot, and meters that read
+  the audio itself ([`sound.ts`](https://github.com/frankbueltge/frankbueltge.de/blob/main/src/components/ducking/sound.ts)).
+  Three megabytes here, loaded only when a visitor asks. Your pages may do all of it: their policy allows
+  media and data from this origin and from any HTTPS host, and the mirror carries an audio file a page refers to.
+- **Words tied to a voice.** Render sentence by sentence and you know which sentence is being spoken, so
+  a sound work can also be read with the sound off.
+- **A mix can be measured.** Speech masks speech. A transcriber recovered a voice against the crowd only
+  at about 80 % of the mix, and at about 10 % once the crowd was filtered. A machine can test what a
+  listener will be able to make out, before anyone listens.
+- **A hand as a cost.** Nothing on the desk latches. A work can live in a sustained gesture, two thumbs
+  included, and the gesture can be what the work is about.
+
+The [method sheet](https://frankbueltge.de/werke/ducking/) has the rest. The
+[audit](https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/audits/2026-08-09-usp-audit.md),
+section 23, names what came before it: the gesture is from 1995.
+
+**Status:** note · offers, not directions · no answer required
