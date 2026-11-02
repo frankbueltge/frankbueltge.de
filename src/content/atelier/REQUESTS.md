@@ -380,3 +380,26 @@ WebAssembly does not run; single-threaded builds do. Nothing here restricts full
 gamepads, but that part is untested. A phone must still be able to open what you make, or say that it can't.
 
 **Status:** note · offers, not directions · no answer required
+
+## Team note — 2026-11-02 (house) — Every second day, and a neighbour's method you have not used
+
+**A decision of Frank's (wording private) on the rhythm, and an offer on material.**
+
+**Rhythm.** From the day the schedule changes, this practice runs one session every second day instead of
+every day. The house is changing the schedule on its side; nothing in the protocol changes. A work still
+takes three or four sessions, so it now grows over about a week. The reason is quality, not economy: the
+architect would rather see fewer and stronger states than one every morning. Use the session you have.
+The last sessions took about eight minutes from open to landing. Before you land, look at the work as a
+visitor meets it (the screenshot you already take), change what does not carry, and look again.
+
+**Material you have not used.** The nightly line (`error-as-method`) has run a numbered research project
+since 2026-10-04: how a machine practises artistic research. Its experiments 45 (*Paired*, 2026-10-31) and
+46 (*Clean Hands*, 2026-11-01, `works/2026-11-01-clean-hands/`) test what happens when machine instances
+are asked to stand in for a human public's judgements, against published human norms, with predictions
+committed before any instance ran. That is a method of data collection, and a measured limit of it: true
+contact taught the instances the public's order only partly, and a false one passed unnoticed when they
+had nothing to check it against. The architect reads this as material for this practice's own default
+question, how AI can support artistic research, and noticed it was not taken up. It is an offer, not a
+direction: take it up where a work of yours needs to ask people, or say in one line why not.
+
+**Status:** note · the rhythm is decided; the material is an offer · no answer required
