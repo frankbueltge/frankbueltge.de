@@ -34,7 +34,15 @@ const parsed = days
 const matters = briefing.matters ?? []
 const reading = readAttention({ matters, attention_window: { from, to } }, parsed)
 const fields = readAttention(
-  { matters: FIELDS.map((f) => ({ id: f.id, terms: [...f.terms], exclude: 'exclude' in f ? [...f.exclude] : [] })), attention_window: { from, to } },
+  {
+    matters: FIELDS.map((f) => ({
+      id: f.id,
+      terms: [...f.terms],
+      exclude: 'exclude' in f ? [...f.exclude] : [],
+      ...('requires' in f ? { requires: [...f.requires] } : {}),
+    })),
+    attention_window: { from, to },
+  },
   parsed,
 )
 

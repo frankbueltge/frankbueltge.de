@@ -80,6 +80,7 @@ export function toDuckingRound(b: Briefing, url: string, template: DuckingRound)
         title: f.name,
         terms: [...f.terms],
         ...('exclude' in f ? { exclude: [...f.exclude] } : {}),
+        ...('requires' in f ? { requires: [...f.requires] } : {}),
         voice: DESK_VOICES[f.id],
         lines: [...(line?.lines ?? []), ...matters.flatMap((m) => m.lines)],
         sources: sources

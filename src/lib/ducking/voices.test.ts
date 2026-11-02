@@ -62,6 +62,7 @@ describe('the record', () => {
       const channel = round.channels[q.c]!
       expect(namer(channel.terms)(q.text), q.text).toBe(true)
       expect(namer(channel.exclude ?? [])(q.text), q.text).toBe(false)
+      if (channel.requires) expect(namer(channel.requires)(q.text), q.text).toBe(true)
     }
   })
 

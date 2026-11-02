@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { namer } from '@/lib/reading/attention'
+import { countTest } from '@/lib/reading/attention'
 import { STRIP_MAX } from './briefing'
 import { earlierIds, FIELD_IDS, FIELDS, FIELDS_BEFORE_THE_MAP, FIRST_MAP_FIELDS, mapProblems, overdueFields, spreadProblems, type MapLine } from './map'
 
@@ -29,15 +29,18 @@ describe('the map', () => {
   })
 
   it('counts by the one rule, and keeps the false friends out', () => {
-    const names = (id: string, text: string): boolean => {
-      const f = FIELDS.find((x) => x.id === id)!
-      return namer(f.terms)(text) && !namer('exclude' in f ? f.exclude : [])(text)
-    }
+    const names = (id: string, text: string): boolean => countTest(FIELDS.find((x) => x.id === id)!)(text)
     expect(names('war', 'Sudan: the siege of El Fasher')).toBe(true)
     expect(names('war', 'South Sudan vs Egypt')).toBe(false)
     expect(names('power', 'Temu: Shop Like a Billionaire')).toBe(false)
     expect(names('hunger', 'The Hunger Games')).toBe(false)
-    expect(names('ai', 'Ai Weiwei opens a show')).toBe(true) // the rule folds case: a known limit of the count
+    // AI counts beside a harm only (2026-11-02): the warning, the job, the data centre; not the app or the tutorial
+    expect(names('ai', 'OpenAI safety leader quits')).toBe(true)
+    expect(names('ai', 'Barclays plans to cut 5,000 jobs as part of AI-driven cost cutting')).toBe(true)
+    expect(names('ai', 'Data center community impacts')).toBe(true)
+    expect(names('ai', 'My brief romance with an AI bird feeder')).toBe(false)
+    expect(names('ai', 'OpenAI DevDay unveils new models')).toBe(false)
+    expect(names('ai', 'MadsLorentzen/ai-job-search')).toBe(false)
     // the fields of 2026-11-02, with the false friends the audit found
     expect(names('economy', 'Kenya’s inflation trends from October 2025 to October 2026')).toBe(true)
     expect(names('economy', 'Counter-Strike: G2 vs PARIVISION - Map 2 Winner')).toBe(false)
