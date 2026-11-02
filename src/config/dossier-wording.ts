@@ -79,8 +79,8 @@ export const DOSSIER = {
       'One question for all three practices at a time.',
       `Each works it for ${a.sessions} sessions. Every session leaves a self-contained artifact, its sources and method linked, and a bulletin of at most forty lines that the siblings read.`,
       'Then the three present together; the Field’s presentation carries its paper.',
-      'Then they convene: each proposes the next question, says how it docks onto the programme so far, and ranks the three proposals; the Middle’s relay tallies the ranks.',
-      `The tally opens the next cycle ${a.vetoDays} day later, unless I object. Without a result after ${a.conveningDays} days, the next cycle opens on the continuing question.`,
+      'Then they convene: the Middle writes a briefing of what presses on the world now, each practice proposes the next question from it and says how it docks onto the programme so far, and all three rank the proposals; the Middle’s relay tallies the ranks.',
+      `The tally opens the next cycle ${a.vetoDays} day later, unless I object. Without a result after ${a.conveningDays} days, the next cycle opens on the first matter the briefing names as urgent but quiet, or on the continuing question where no briefing stands.`,
       'A seed, a question anyone can offer through the public channel, interrupts either phase once I release it to all three.',
     ],
     nowLabel: 'Now',
@@ -95,18 +95,25 @@ export const DOSSIER = {
       fallbackOn: string | null
       opensOn: string | null
       proposedQuestion: string | null
+      /** the briefing's first matter that is urgent but quiet: the fallback since 2026-10-25 */
+      briefingFallback: string | null
       continuing: string | null
     }) => {
       if (a.phase !== 'convening' || !a.conveningOpened) {
         return `Cycle ${a.cycle} opened on ${a.opened} and is working${a.question ? ` on the question “${a.question}”` : ''}.`
       }
-      const head = `Cycle ${a.cycle} has presented${a.question ? ` its question, “${a.question}”` : ''}, and the convening that chooses cycle ${a.next} opened on ${a.conveningOpened}.`
+      // newest first (2026-11-02): a chosen question leads, the cycle it follows comes after
+      const closed = `Cycle ${a.cycle}${a.question ? `, which asked “${a.question}”,` : ''} closed with its presentations on ${a.conveningOpened}`
       if (a.opensOn && a.proposedQuestion) {
-        return `${head} The practices’ tally chose “${a.proposedQuestion}”, which opens cycle ${a.next} on ${a.opensOn} unless I object.`
+        return `The practices chose “${a.proposedQuestion}” as the question of cycle ${a.next}, which opens on ${a.opensOn} unless I object. ${closed}.`
+      }
+      const open = `${closed}, and the convening that chooses cycle ${a.next} is open.`
+      if (a.fallbackOn && a.briefingFallback) {
+        return `${open} Without a result by ${a.fallbackOn}, cycle ${a.next} opens on “${a.briefingFallback}”, the first matter the Middle’s briefing names as urgent but quiet.`
       }
       return a.fallbackOn && a.continuing
-        ? `${head} Without a result, cycle ${a.next} opens on ${a.continuing} on ${a.fallbackOn}.`
-        : head
+        ? `${open} Without a result by ${a.fallbackOn}, cycle ${a.next} opens on the continuing question, ${a.continuing}.`
+        : open
     },
     link: { label: 'the score of every cycle so far', href: '/ecology' },
   },
@@ -208,7 +215,7 @@ export const DOSSIER = {
     heading: 'The role I hold',
     paragraphs: (a: { about: string; personas: string }) => [
       a.about,
-      `Here that means: I set the continuing question, release the seeds that interrupt it, and may object to a convening’s result until the day it opens. Inside that frame the practices research, build and publish on their own, each under a name it carries itself: ${a.personas}. The underlying technology stays unnamed, as their constitutions ask. The constitutions, the journals and every correction are public in the practices’ repositories, so the frame can be read, not only asserted.`,
+      `Here that means: I design, program and run the whole apparatus, from the architecture of the house to the data pipelines, the schedules that wake the practices, the workflows on GitHub that check what they write and carry it here, and this site itself. I write the constitutions the practices run under, set the continuing question, release the seeds that interrupt it, and may object to a convening’s result until the day it opens. Inside that frame the practices research, build and publish on their own, each under a name it carries itself: ${a.personas}. The underlying technology stays unnamed, as their constitutions ask. The constitutions, the journals and every correction are public in the practices’ repositories, so the frame can be read, not only asserted.`,
     ],
   },
 

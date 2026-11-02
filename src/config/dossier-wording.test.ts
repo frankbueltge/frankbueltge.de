@@ -36,6 +36,15 @@ const called: { path: string; text: string }[] = [
   { path: 'attention.admittedHeading', text: D.attention.admittedHeading('X') },
   { path: 'attention.retiredOn', text: D.attention.retiredOn('X') },
   ...D.role.paragraphs({ about: 'X', personas: 'X' }).map((text, i) => ({ path: `role[${i}]`, text })),
+  ...[
+    { phase: 'convening', opensOn: 'X', proposedQuestion: 'X', briefingFallback: null },
+    { phase: 'convening', opensOn: null, proposedQuestion: null, briefingFallback: 'X' },
+    { phase: 'convening', opensOn: null, proposedQuestion: null, briefingFallback: null },
+    { phase: 'working', opensOn: null, proposedQuestion: null, briefingFallback: null },
+  ].map((v, i) => ({
+    path: `ecology.now[${i}]`,
+    text: D.ecology.now({ cycle: 'X', next: 'X', question: 'X', opened: 'X', conveningOpened: 'X', fallbackOn: 'X', continuing: 'X', ...v }),
+  })),
 ]
 
 const words = (s: string) => s.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length
@@ -101,6 +110,21 @@ describe('the dossier’s facts', () => {
     expect(lead).toContain('is my own')
     expect(lead).toContain('the practices chose two themselves, in convening')
     expect(D.questions.setBy.convening).toContain('the practices')
+  })
+
+  it('puts a chosen question before the cycle it follows, and takes the fallback from the briefing', () => {
+    const base = { cycle: 'eleven', next: 'twelve', question: 'Old?', phase: 'convening', opened: 'o', conveningOpened: 'c', fallbackOn: 'f', opensOn: null, proposedQuestion: null, briefingFallback: null, continuing: 'Missing Data Art' }
+    const chosen = D.ecology.now({ ...base, opensOn: 'n', proposedQuestion: 'New?' })
+    expect(chosen.indexOf('New?')).toBeLessThan(chosen.indexOf('Old?'))
+    expect(chosen).toContain('which opens on n unless I object')
+    expect(D.ecology.now({ ...base, briefingFallback: 'Quiet?' })).toContain('opens on “Quiet?”, the first matter the Middle’s briefing names as urgent but quiet')
+    expect(D.ecology.now(base)).toContain('opens on the continuing question, Missing Data Art')
+  })
+
+  it('says that I build and run the apparatus, not only set its questions', () => {
+    const here = D.role.paragraphs({ about: 'X', personas: 'X' })[1]
+    expect(here).toContain('design, program and run the whole apparatus')
+    expect(here).toContain('data pipelines')
   })
 
   it('leads its table of contents to sections the page has', () => {

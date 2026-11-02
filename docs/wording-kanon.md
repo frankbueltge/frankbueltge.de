@@ -506,7 +506,11 @@ Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-1
   neighbours section is gone; *The role I hold* replaces *Who answers for it* and takes /about's
   paragraph from `src/data/about.ts`; *Ways in and out* lists what leaves the screen (letters that
   lie open, instructions for whoever has hands) and what anyone can do. The press bio under Contact
-  stays in the third person, for others to quote.
+  stays in the third person, for others to quote. The role's second paragraph says what the role
+  means here, the building first: I design, program and run the whole apparatus (the architecture,
+  the data pipelines, the workflows on GitHub, the site), and inside it set the continuing
+  question, release seeds and may object (same day, wording private). *Now* leads with a chosen
+  question; the cycle it follows comes after, and the fallback is the briefing's, as on `/ecology`.
 - **What the carousel and the dossier show** (2026-11-02, wording private): the carousel leaves out
   Headroom, Editorial Deadline, Iceberg Theory and Society (`EDITION.lab.leave`), which `/experiments`
   keeps listing. On `/dossier` Ducking stands among the selected works instead of The Foreknown and
