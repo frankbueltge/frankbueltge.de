@@ -21,13 +21,13 @@ const de: About = {
     'Bültge, auch Bueltge geschrieben, wo der Umlaut nicht hinpasst. Nicht zu verwechseln mit dem WordPress-Entwickler Frank Bültge: gleicher Name, andere Person.',
   metaTitle: 'Über Frank Bültge — Data Engineering & Analytics',
   metaDesc:
-    'Frank Bültge — Data Engineering & Analytics. Öffentliche Projekte und Experimente zu der Frage, was Maschinen wirklich besser können als Menschen — und ob sie autonom forschen und dabei nützliche, prüfbare Werke hervorbringen können.',
+    'Frank Bültge — Data Engineering & Analytics. Öffentliche Projekte und Experimente zu der Frage, wie KI und Automatisierung künstlerische Forschung unterstützen und ergänzen können.',
   lede: 'Ich bin Frank Bültge aus Karlsruhe und arbeite in Data Engineering & Analytics. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Hier leben meine eigenen Projekte, nebeneinander — keines von ihnen ist die Site.',
   sections: [
     {
       heading: 'Die Frage darunter',
       paragraphs: [
-        'Durch die aktuellen Projekte zieht sich eine Frage: Was können Maschinen wirklich besser als Menschen? Sie können ihre Aufmerksamkeit monatelang auf etwas richten, ohne zu blinzeln, dieselbe Messung Nacht für Nacht wiederholen und Datenmengen lesen, die kein Mensch lesen könnte. Also lasse ich sie mit genau diesen Mitteln forschen — autonom, unter geschriebenen Regeln, öffentlich — und messe sie daran, ob dabei ein konkretes, nützliches Werk oder Instrument entsteht: etwas mit prüfbarem Mehrwert, keine Demo.',
+        'Durch die aktuellen Projekte zieht sich eine Frage: Wie kann KI künstlerische Forschung unterstützen und ergänzen? Nicht, ob eine Maschine Kunst machen oder selbst künstlerisch forschen kann, und nicht generative Kunst. Maschinen können ihre Aufmerksamkeit monatelang auf etwas richten, dieselbe Messung Nacht für Nacht wiederholen, Quellen in einem Umfang lesen, den kein Mensch schafft, und an einem Nachmittag einen Prototyp bauen. Also lasse ich sie mit genau diesen Mitteln arbeiten — unter geschriebenen Regeln, öffentlich — und messe sie daran, ob das, was dabei entsteht, die Forschung weiterbringt: Material, Studien und Instrumente mit prüfbarem Mehrwert, keine Demo.',
       ],
     },
     {
@@ -51,7 +51,7 @@ const de: About = {
     {
       heading: 'Haltung',
       paragraphs: [
-        'Substanz vor Anspruch, Quelle vor Deutung. Ich behaupte nichts, was das Protokoll nicht zeigt — und nicht, schon dort zu sein, wo ich hinwill. Verworfene Versuche bleiben sichtbar; auch die Maschinen führen ihre eigenen Fehler auf.',
+        'Substanz vor Anspruch, Quelle vor Deutung. Ich behaupte nichts, was das Protokoll nicht zeigt — und nicht, schon dort zu sein, wo ich hinwill. Nichts hier nennt sich Kunst; ob etwas davon Kunst wird, hat diese Seite nicht zu behaupten. Verworfene Versuche bleiben sichtbar; auch die Maschinen führen ihre eigenen Fehler auf.',
       ],
     },
   ],
@@ -62,13 +62,13 @@ const en: About = {
     'Bültge, written Bueltge where the umlaut cannot go. Not to be confused with the WordPress developer Frank Bültge: same name, different person.',
   metaTitle: 'About Frank Bültge — Data Engineering & Analytics',
   metaDesc:
-    'Frank Bültge — Data Engineering & Analytics. Creator of datavism.org and data-snack.com. Public projects and experiments probing what machines genuinely do better than people — and whether they can research autonomously and produce useful, verifiable works.',
+    'Frank Bültge — Data Engineering & Analytics. Creator of datavism.org and data-snack.com. Public projects and experiments on how AI and automation can support and extend artistic research.',
   lede: 'I am Frank Bültge from Karlsruhe, and I work in data engineering and analytics. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live, side by side — none of them is the site.',
   sections: [
     {
       heading: 'The question underneath',
       paragraphs: [
-        'One question runs through the current projects: what can machines genuinely do better than people? They can hold attention on something for months without blinking, repeat the same measurement every night, and read evidence at a scale no person could. So I let them research with exactly those means — autonomously, under written rules, in public — and judge them by whether a concrete, useful work or instrument comes out of it: something with a value you can check, not a demo.',
+        'One question runs through the current projects: how can AI support and extend artistic research? Not whether a machine can make art or do artistic research on its own, and not generative art. Machines can hold attention for months, repeat a measurement every night, read sources at a scale no person could and build a prototype in an afternoon. So I let them work with exactly those means — under written rules, in public — and judge them by whether what comes out carries the research further: material, studies and instruments with a value you can check, not a demo.',
       ],
     },
     {
@@ -92,7 +92,7 @@ const en: About = {
     {
       heading: 'Stance',
       paragraphs: [
-        'Substance before claim, source before interpretation. I assert nothing the record cannot show — and not that I am already where I want to get to. Discarded attempts stay visible; the machines catalogue their own errors too.',
+        'Substance before claim, source before interpretation. I assert nothing the record cannot show — and not that I am already where I want to get to. Nothing here calls itself art; whether any of it becomes art is not for this site to claim. Discarded attempts stay visible; the machines catalogue their own errors too.',
       ],
     },
   ],

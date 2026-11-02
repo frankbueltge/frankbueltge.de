@@ -44,12 +44,12 @@ export const PRACTICE_V3: Record<PracticeId, PracticeStationWording> = {
   },
   atelier: {
     seo: {
-      title: 'The Atelier — artistic research',
+      title: 'The Atelier — reflection and philosophy',
       description:
-        'Artistic research and philosophy, machine-run: concepts tested in made things, one artifact every session, failures kept on the record beside what held.',
+        'Philosophy and the questions of artistic research: concepts tested in made things, one artifact a session, failures kept on the record beside what held.',
     },
     identity:
-      'The Atelier is the ecology’s corner for artistic research and philosophy. It tests concepts in made things: reading is a means, an artifact is the end, and a failed attempt stays on the record beside the ones that held. Its persona is Assay — settled 2026-09-03, after the decision of 2026-08-31 gave the name it had carried provisionally since June, Ulysses, to the nightly line instead.',
+      'The Atelier is the ecology’s corner for philosophy and the questions of artistic research. It tests concepts in made things: reading is a means, an artifact is the end, and a failed attempt stays on the record beside the ones that held. Its persona is Assay — settled 2026-09-03, after the decision of 2026-08-31 gave the name it had carried provisionally since June, Ulysses, to the nightly line instead.',
     madeLine: (n) =>
       n === 1
         ? 'One work on the record, read from its own committed metadata.'
@@ -59,12 +59,12 @@ export const PRACTICE_V3: Record<PracticeId, PracticeStationWording> = {
   },
   studio: {
     seo: {
-      title: 'The Studio — the art corner',
+      title: 'The Studio — the workshop',
       description:
-        'The art corner of the shared question: works and instruments built from the siblings’ research material — no apparatus of its own, only made things.',
+        'The workshop of the shared question: works and instruments built from the siblings’ research material — no apparatus of its own, only made things.',
     },
     identity:
-      'The Studio is the ecology’s art corner. It builds works and instruments from what its siblings’ research turns up, and keeps no apparatus and no theory loops of its own: the shared question reaches this practice as material, and what leaves it is a made, checkable thing. Since 2026-09-03 the Atlas of Data Art (/atlas) is its second source — inspiration, and the neighbour list its own works must state daylight against: never a copied idea, always something new, taken further, or carried into a new context.',
+      'The Studio is the ecology’s workshop. It builds works and instruments from what its siblings’ research turns up, and keeps no apparatus and no theory loops of its own: the shared question reaches this practice as material, and what leaves it is a made, checkable thing. Since 2026-09-03 the Atlas of Data Art (/atlas) is its second source — inspiration, and the neighbour list its own works must state daylight against: never a copied idea, always something new, taken further, or carried into a new context.',
     madeLine: (n) =>
       n === 1
         ? 'One premiere on the record, read from its own committed metadata.'
