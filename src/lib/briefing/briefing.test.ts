@@ -3,7 +3,8 @@ import { roundProblems, type Round as ReadingRound } from '@/lib/reading/round'
 import type { Round as DuckingRound } from '@/lib/ducking/round'
 import { attentionWord, briefingProblems, QUIET_FROM, type Briefing, type BriefingMatter } from './briefing'
 import { ATTENTION_DAYS, DESK_VOICES, toDuckingRound, toReadingRound, withMatters, type WatchEntry } from './derive'
-import { FIELD_IDS, type MapLine } from './map'
+import { FIELD_IDS, type FieldId, type MapLine } from './map'
+import round011 from '@/data/ducking/rounds/after-cycle-011.json'
 
 const matter = (i: number): BriefingMatter => ({
   id: `matter-${i}`,
@@ -79,7 +80,7 @@ describe('a briefing as data', () => {
   it('holds a briefing to the map from cycle 012 on, and the two before it not', () => {
     const b = briefing()
     delete b.map
-    expect(briefingProblems(b).join()).toContain('eleven fields')
+    expect(briefingProblems(b).join()).toContain('fields in order')
     expect(briefingProblems({ ...briefing(), $contract: 'briefing/1' })).toContain('contract')
     const old = { ...b, id: 'after-cycle-011', $contract: 'briefing/1' as const }
     old.matters = old.matters.map(({ field: _, ...m }) => m)
@@ -176,7 +177,7 @@ describe('what the site makes of a briefing', () => {
   it('seats every matter on the desk with a voice of its own, primary sources first', () => {
     const r = toDuckingRound(briefing(), url, duckingTemplate)
     expect(r.channels.map((c) => c.id)).toEqual(FIELD_IDS)
-    expect(new Set(r.channels.map((c) => c.voice)).size).toBe(11)
+    expect(new Set(r.channels.map((c) => c.voice)).size).toBe(FIELD_IDS.length)
     expect(r.channels[0]!.lines.map((l) => l.text)).toEqual(['A figure of 1,200.', 'A count of 1,200 by 3 May.', 'A sentence with no figure in it.'])
     expect(r.channels.at(-1)!.lines).toHaveLength(1) // a field with no matter still reads where it stands
     expect(r.channels[0]!.sources[0]!.label).toBe('The agency')
@@ -184,8 +185,10 @@ describe('what the site makes of a briefing', () => {
     expect(r.rest.seed).toBe(12)
   })
 
-  it('has a voice for the largest briefing there may be', () => {
-    expect(new Set(DESK_VOICES).size).toBe(12)
+  it('gives every field a voice of its own, and the eleven the voices they had', () => {
+    expect(Object.keys(DESK_VOICES).sort()).toEqual([...FIELD_IDS].sort())
+    expect(new Set(Object.values(DESK_VOICES)).size).toBe(FIELD_IDS.length)
+    for (const c of round011.channels) expect(DESK_VOICES[c.id as FieldId], c.id).toBe(c.voice)
   })
 
   it('adds a new matter to the watchlist and leaves a known one alone', () => {

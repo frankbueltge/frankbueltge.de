@@ -1,6 +1,6 @@
 // src/lib/ducking/round.ts — a round of Ducking (2026-11-01; docs/design/2026-11-01-ducking.md).
 //
-// A round seats the eleven fields of the map (src/lib/briefing/map.ts) with the words of one briefing of
+// A round seats the fields of the map (src/lib/briefing/map.ts) with the words of one briefing of
 // the Middle (research-ecology `briefings/`), pinned to the commit it was written in. It is committed
 // data, never fetched: each channel's strip label, the terms the count matches, what its voice reads
 // and where that comes from. The channels are the same from round to round, so a fader can be read

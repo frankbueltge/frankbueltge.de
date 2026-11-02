@@ -6,16 +6,19 @@
 import type { Round as ReadingRound } from '@/lib/reading/round'
 import type { Round as DuckingRound } from '@/lib/ducking/round'
 import type { Briefing } from './briefing'
-import { FIELDS } from './map'
+import { FIELDS, type FieldId } from './map'
 
 /** The days of Common Ground a round of Third Reading reads attention over. */
 export const ATTENTION_DAYS = 30
 
-/** One voice per channel, in this order, each used once. */
-export const DESK_VOICES = [
-  'af_heart', 'bm_george', 'af_nicole', 'bf_emma', 'am_michael', 'af_bella',
-  'am_puck', 'af_aoede', 'am_fenrir', 'bm_fable', 'af_sarah', 'bf_lily',
-] as const
+/** One voice per field, each used once. By field since 2026-11-02, when two fields joined the map: given by
+ *  place, the voice of every field after them would have moved, and a fader is to sound the same from round to
+ *  round. The eleven keep the voices of the round after cycle 011. */
+export const DESK_VOICES: Readonly<Record<FieldId, string>> = {
+  war: 'af_heart', hunger: 'bm_george', poverty: 'af_nicole', economy: 'bf_lily', inequality: 'bf_emma', power: 'am_michael',
+  climate: 'af_bella', nature: 'bm_daniel', health: 'am_puck', displacement: 'af_aoede', democracy: 'am_fenrir',
+  information: 'bm_fable', ai: 'af_sarah',
+}
 
 export interface WatchEntry {
   added: string
@@ -67,7 +70,7 @@ export function toDuckingRound(b: Briefing, url: string, template: DuckingRound)
     id: b.id,
     briefing: { title: title(b), written: b.written, url },
     checked: b.checked.on,
-    channels: FIELDS.map((f, i) => {
+    channels: FIELDS.map((f) => {
       const line = b.map?.find((l) => l.field === f.id)
       const matters = b.matters.filter((m) => m.field === f.id)
       const sources = [...(line?.sources ?? []), ...matters.flatMap((m) => m.sources)]
@@ -77,7 +80,7 @@ export function toDuckingRound(b: Briefing, url: string, template: DuckingRound)
         title: f.name,
         terms: [...f.terms],
         ...('exclude' in f ? { exclude: [...f.exclude] } : {}),
-        voice: DESK_VOICES[i]!,
+        voice: DESK_VOICES[f.id],
         lines: [...(line?.lines ?? []), ...matters.flatMap((m) => m.lines)],
         sources: sources
           .filter((s, n) => sources.findIndex((o) => o.url === s.url) === n)

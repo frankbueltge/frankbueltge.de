@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { namer } from '@/lib/reading/attention'
 import { STRIP_MAX } from './briefing'
-import { earlierIds, FIELD_IDS, FIELDS, FIELDS_BEFORE_THE_MAP, mapProblems, overdueFields, spreadProblems, type MapLine } from './map'
+import { earlierIds, FIELD_IDS, FIELDS, FIELDS_BEFORE_THE_MAP, FIRST_MAP_FIELDS, mapProblems, overdueFields, spreadProblems, type MapLine } from './map'
 
 const line = (field: MapLine['field']): MapLine => ({
   field,
@@ -16,9 +16,11 @@ const line = (field: MapLine['field']): MapLine => ({
 const map = (): MapLine[] => FIELD_IDS.map(line)
 
 describe('the map', () => {
-  it('has eleven fields, each with what a fader needs', () => {
-    expect(FIELDS).toHaveLength(11)
-    expect(new Set(FIELD_IDS).size).toBe(11)
+  it('has thirteen fields, each with what a fader needs, and the first edition’s eleven among them', () => {
+    expect(FIELDS).toHaveLength(13)
+    expect(new Set(FIELD_IDS).size).toBe(13)
+    expect(FIRST_MAP_FIELDS).toHaveLength(11)
+    for (const f of FIRST_MAP_FIELDS) expect(FIELD_IDS).toContain(f)
     for (const f of FIELDS) {
       expect(f.strip.length).toBeLessThanOrEqual(STRIP_MAX)
       expect(f.strip).toBe(f.strip.toUpperCase())
@@ -36,6 +38,15 @@ describe('the map', () => {
     expect(names('power', 'Temu: Shop Like a Billionaire')).toBe(false)
     expect(names('hunger', 'The Hunger Games')).toBe(false)
     expect(names('ai', 'Ai Weiwei opens a show')).toBe(true) // the rule folds case: a known limit of the count
+    // the fields of 2026-11-02, with the false friends the audit found
+    expect(names('economy', 'Kenya’s inflation trends from October 2025 to October 2026')).toBe(true)
+    expect(names('economy', 'Counter-Strike: G2 vs PARIVISION - Map 2 Winner')).toBe(false)
+    expect(names('economy', 'New constraints on cosmic inflation from the CMB')).toBe(false)
+    expect(names('nature', "Lahore's air quality index crosses 530 as pollution reaches hazardous levels")).toBe(true)
+    expect(names('climate', 'Monitored wildlife populations down 73 % on average')).toBe(false)
+    expect(names('nature', 'Monitored wildlife populations down 73 % on average')).toBe(true)
+    expect(names('war', 'Taxi violence in Cape Town')).toBe(true)
+    expect(names('war', 'A shooting star over the Alps')).toBe(false)
   })
 
   it('passes a map that keeps every rule', () => {
@@ -43,8 +54,14 @@ describe('the map', () => {
   })
 
   it('refuses a field missing or out of order', () => {
-    expect(mapProblems(map().slice(1), '2026-11-01').join()).toContain('eleven fields')
-    expect(mapProblems(map().reverse(), '2026-11-01').join()).toContain('eleven fields')
+    expect(mapProblems(map().slice(1), '2026-11-01').join()).toContain('13 fields in order')
+    expect(mapProblems(map().reverse(), '2026-11-01').join()).toContain('13 fields in order')
+  })
+
+  it('holds a file of the first edition to its eleven fields', () => {
+    const first = FIRST_MAP_FIELDS.map(line)
+    expect(mapProblems(first, '2026-11-01', FIRST_MAP_FIELDS)).toEqual([])
+    expect(mapProblems(first, '2026-11-01').join()).toContain('13 fields in order')
   })
 
   it('refuses a line with no figure, no date, no original or too old a date', () => {

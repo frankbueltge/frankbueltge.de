@@ -5,11 +5,11 @@
 // second session's work. It runs before the second session links a briefing, and again before the site
 // derives anything from it. A file of the two earlier briefings is looked for beside this one and one
 // folder up, because a draft stands in `briefings/drafts/`. A map on its own (`briefing-map/1`, the map's
-// first edition) is held to the map's rules.
+// first edition) is held to the map's rules, with the eleven fields that edition had.
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { briefingProblems, type Briefing } from '../../src/lib/briefing/briefing'
-import { earlierIds, FIELDS_BEFORE_THE_MAP, mapProblems, type FieldId } from '../../src/lib/briefing/map'
+import { earlierIds, FIELDS_BEFORE_THE_MAP, FIRST_MAP_FIELDS, mapProblems, type FieldId } from '../../src/lib/briefing/map'
 
 const file = process.argv[2]
 if (!file) throw new Error('usage: check.ts <briefing.json>')
@@ -24,7 +24,7 @@ function fieldsOf(id: string): readonly FieldId[] | null {
 
 const data = read<Omit<Briefing, '$contract'> & { $contract: string }>(file)
 const problems = data.$contract === 'briefing-map/1'
-  ? mapProblems(data.map ?? [], data.written)
+  ? mapProblems(data.map ?? [], data.written, FIRST_MAP_FIELDS)
   : briefingProblems(data as Briefing, earlierIds(data.id).map(fieldsOf).filter((f): f is readonly FieldId[] => f !== null))
 for (const p of problems) console.error(`[briefing] ${p}`)
 if (problems.length) process.exit(1)
