@@ -200,6 +200,27 @@
 /*template.html
   X-Robots-Tag: noindex, follow
 
+# The nightly line's works keep their parts below their own page: makers' drafts, rooms, lineages,
+# renders, some 500 pages, dozens sharing one title (2026-11-02). The work's own page at
+# /error-as-method/works-html/<slug>/ stays indexable and stands in the practices' sitemap: the
+# second placeholder needs a folder below the slug, so the rule never reaches the work itself.
+/error-as-method/works-html/:slug/:part/*
+  X-Robots-Tag: noindex, follow
+
+# The same site under other addresses (2026-11-02): the Pages address and its preview deployments
+# serve every page with the canonical pointing at frankbueltge.de, but nothing stopped a search
+# engine from indexing them as well. The www host has redirected to frankbueltge.de since the same
+# day, by a redirect rule in the Cloudflare dashboard; its block here is the fallback should that
+# rule ever go. Indexed is frankbueltge.de alone.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://www.frankbueltge.de/*
+  X-Robots-Tag: noindex
+
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
