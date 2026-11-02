@@ -4,8 +4,8 @@
 // Reads the terms of a briefing's data file and counts them in Common Ground's committed day files by
 // Third Reading's rule (src/lib/reading/attention.ts), over the thirty days to the briefing. Prints a
 // Markdown table the briefing copies. There is one count in this house now, so that a number in a
-// briefing, on Third Reading and on Ducking is the same number. Then the same count for the eleven fields
-// of the map (src/lib/briefing/map.ts), whose `signals` the map copies.
+// briefing, on Third Reading and on Ducking is the same number. Then the same count for the fields of
+// the map (src/lib/briefing/map.ts), whose `signals` the map copies.
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { readAttention } from '../../src/lib/reading/attention'

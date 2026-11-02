@@ -12,6 +12,13 @@
 // goes when most of what it catches is something else ("displacement" was mostly arXiv, "flooding" mostly
 // bots, "manipulation" mostly robot arms), and an exclusion stands for a known false friend. A signal can
 // name two fields, and then it counts in both.
+//
+// On 2026-11-02 the map grew to thirteen fields (Frank's decision, wording private). Read against the
+// rankings it names, it gave the environment one field for four subjects and the economy none, and it read
+// none of the largest measured harms: air pollution, unsafe water, homicide. Climate gave nature, air and
+// water a field of its own, debt, work and the cost of living joined, war took in the violence beyond it,
+// and the concentration of money and power reads control while inequality reads how the whole is shared.
+// The ids stayed, so a fader keeps its history.
 import type { BriefingLine, BriefingSource } from './briefing'
 
 export interface MapField {
@@ -27,19 +34,25 @@ export interface MapField {
 /** A match report is not a war: "ukraine vs" is football. */
 const fixtures = (...countries: string[]): string[] => countries.flatMap((c) => [`${c} vs`, `vs ${c}`, `${c} v`, `v ${c}`])
 
-/** In the order of the map. */
+/** In the order of the map: thirteen since 2026-11-02 (docs/design/2026-11-01-the-map.md, "Thirteen fields"). */
 export const FIELDS = [
   {
     id: 'war',
-    name: 'War and armed conflict',
-    strip: 'WAR',
+    name: 'War and violence',
+    strip: 'WAR & VIOLENCE',
     terms: [
       'Ukraine', 'Ukrainian', 'Kyiv', 'Gaza', 'West Bank', 'Sudan', 'Darfur', 'El Fasher', 'Myanmar', 'Yemen', 'Lebanon',
       'Iran', 'Iranian', 'Tehran', 'Hormuz', 'Tigray', 'Houthi', 'Houthis', 'Hezbollah', 'Hamas',
       'airstrike', 'airstrikes', 'air strike', 'air strikes', 'ceasefire', 'war crimes', 'nuclear weapons',
       'missile strike', 'missile strikes',
+      // the violence beyond war (2026-11-02): homicide kills more people than armed conflict in most years
+      'violence', 'murder', 'homicide', 'homicides', 'shooting', 'mass shooting', 'mass shootings', 'gun violence',
+      'gangs', 'gang violence', 'cartels', 'nuclear arsenal', 'warheads',
     ],
-    exclude: ['star wars', ...fixtures('ukraine', 'sudan', 'myanmar', 'yemen', 'lebanon', 'iran', 'gaza')],
+    exclude: [
+      'star wars', ...fixtures('ukraine', 'sudan', 'myanmar', 'yemen', 'lebanon', 'iran', 'gaza'),
+      'shooting star', 'shooting stars', 'shooting guard', 'murder mystery', 'murder drones',
+    ],
   },
   {
     id: 'hunger',
@@ -55,10 +68,26 @@ export const FIELDS = [
     terms: ['poverty', 'poorest', 'homeless', 'homelessness', 'food bank', 'food banks', 'destitute', 'slums'],
   },
   {
+    id: 'economy',
+    name: 'Debt, work and cost of living',
+    strip: 'DEBT & WORK',
+    terms: [
+      'debt crisis', 'sovereign debt', 'public debt', 'debt relief', 'debt distress', 'IMF', 'austerity',
+      'inflation', 'cost of living', 'food prices', 'recession', 'tariff', 'tariffs', 'trade war',
+      'unemployment', 'jobless', 'layoffs', 'job cuts', 'minimum wage', 'eviction', 'evictions', 'child labour', 'child labor',
+    ],
+    // audited 2026-11-02: "strike" is mostly a missile or Counter-Strike, "wages" a war, "labour" a party,
+    // "default" a setting and "debt" a takeover, so they stay out; cosmology's inflation is no price
+    exclude: ['cosmic inflation', 'inflaton', 'grade inflation', 'mission impossible'],
+  },
+  {
     id: 'inequality',
     name: 'Inequality',
     strip: 'INEQUALITY',
-    terms: ['inequality', 'inequalities', 'wealth gap', 'income gap', 'wealth tax', 'tax the rich', 'racism', 'sexism', 'gender pay gap', 'femicide'],
+    terms: [
+      'inequality', 'inequalities', 'wealth gap', 'income gap', 'wealth tax', 'tax the rich', 'racism', 'sexism', 'gender pay gap',
+      'femicide', 'gender gap', 'gender equality', 'gender based violence', 'domestic violence',
+    ],
   },
   {
     id: 'power',
@@ -66,19 +95,30 @@ export const FIELDS = [
     strip: 'POWER & MONEY',
     terms: [
       'billionaire', 'billionaires', 'oligarch', 'oligarchs', 'oligarchy', 'antitrust', 'monopolies', 'market concentration',
-      'tax haven', 'tax havens', 'tax evasion', 'money laundering', 'corruption', 'bribery', 'lobbying', 'lobbyists', 'private equity',
+      'tax haven', 'tax havens', 'tax evasion', 'money laundering', 'corruption', 'bribery', 'lobbying', 'lobbyists', 'private equity', 'big tech',
     ],
     exclude: ['shop like a billionaire'],
   },
   {
     id: 'climate',
-    name: 'Climate, nature and disasters',
+    name: 'Climate and disasters',
     strip: 'CLIMATE',
     terms: [
       'climate', 'global warming', 'heatwave', 'heat wave', 'wildfire', 'wildfires', 'drought', 'floods', 'flash flooding',
       'hurricane', 'typhoon', 'cyclone', 'El Nino', 'COP31', 'emissions', 'fossil fuel', 'fossil fuels', 'sea level',
-      'biodiversity', 'deforestation', 'pollution', 'microplastics',
     ],
+  },
+  {
+    id: 'nature',
+    name: 'Nature, air and water',
+    strip: 'NATURE',
+    terms: [
+      'biodiversity', 'deforestation', 'rainforest', 'wildlife', 'endangered species', 'overfishing', 'coral reef', 'coral reefs',
+      'coral bleaching', 'pollution', 'air pollution', 'air quality', 'smog', 'PM2.5', 'microplastics', 'plastic pollution',
+      'oil spill', 'pesticide', 'pesticides', 'drinking water', 'groundwater', 'water crisis', 'water shortage', 'water scarcity',
+      'sanitation',
+    ],
+    // audited 2026-11-02: "coral", "species", "plastic", "ocean", "toxic" and "extinction" caught mostly something else
   },
   {
     id: 'health',
@@ -134,6 +174,12 @@ export type FieldId = (typeof FIELDS)[number]['id']
 
 export const FIELD_IDS: readonly FieldId[] = FIELDS.map((f) => f.id)
 
+/** The eleven fields of the map's first edition (2026-11-01). A file of that edition is held to them, and the
+ *  round of Ducking after cycle 011, the last with eleven channels, seats them. */
+export const FIRST_MAP_FIELDS: readonly FieldId[] = [
+  'war', 'hunger', 'poverty', 'inequality', 'power', 'climate', 'health', 'displacement', 'democracy', 'information', 'ai',
+]
+
 /** The first briefing the map binds. The two before it stand as they were written. */
 export const MAP_FROM_CYCLE = 12
 
@@ -170,11 +216,12 @@ export interface MapLine {
 
 const AS_OF = /^\d{4}(-\d{2}(-\d{2})?)?$/
 
-/** Every rule a map must keep, as a list of complaints (empty = valid). */
-export function mapProblems(lines: readonly MapLine[], written: string): string[] {
+/** Every rule a map must keep, as a list of complaints (empty = valid). A file of the first edition is checked
+ *  against FIRST_MAP_FIELDS. */
+export function mapProblems(lines: readonly MapLine[], written: string, fields: readonly FieldId[] = FIELD_IDS): string[] {
   const out: string[] = []
   const order = lines.map((l) => l.field)
-  if (order.join() !== FIELD_IDS.join()) out.push(`the map must hold the eleven fields in order, found: ${order.join(', ') || 'none'}`)
+  if (order.join() !== fields.join()) out.push(`the map must hold its ${fields.length} fields in order, found: ${order.join(', ') || 'none'}`)
   const year = Number(written?.slice(0, 4))
   for (const l of lines) {
     if (!l.state?.trim() || l.state.length > STATE_MAX) out.push(`${l.field}: state empty or over ${STATE_MAX} characters`)
@@ -197,10 +244,12 @@ export function mapProblems(lines: readonly MapLine[], written: string): string[
   return out
 }
 
-/** The fields of the two briefings written before the map, read off them on 2026-11-01. */
+/** The fields of the two briefings written before the map, read off them on 2026-11-01 and again on 2026-11-02
+ *  for the thirteen fields: 010's energy shock as a cost-of-living crisis is debt, work and the cost of living,
+ *  011's monitored wildlife is nature. */
 export const FIELDS_BEFORE_THE_MAP: Readonly<Record<string, readonly FieldId[]>> = {
-  'after-cycle-010': ['war', 'war', 'hunger', 'climate', 'climate', 'war', 'health', 'ai', 'information', 'climate'],
-  'after-cycle-011': ['health', 'climate', 'climate', 'climate', 'health', 'displacement', 'information', 'ai', 'ai', 'war'],
+  'after-cycle-010': ['war', 'economy', 'hunger', 'climate', 'climate', 'war', 'health', 'ai', 'information', 'climate'],
+  'after-cycle-011': ['health', 'climate', 'climate', 'nature', 'health', 'displacement', 'information', 'ai', 'ai', 'war'],
 }
 
 /** The ids of the two briefings before this one, newest first. */
