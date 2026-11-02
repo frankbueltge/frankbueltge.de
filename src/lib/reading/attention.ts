@@ -66,13 +66,28 @@ export function namer(terms: readonly string[]): (text: string) => boolean {
 
 const textsOf = (label: string, links: readonly { title: string }[] | undefined): string[] => [label, ...(links ?? []).map((l) => l.title)]
 
+/** What a field or matter is counted by: its terms, its false friends and, where it has them, the words a text
+ *  must ALSO name (2026-11-02, for AI and its harms: a mention of AI counts only beside a harm). */
+export interface CountRule {
+  terms: readonly string[]
+  exclude?: readonly string[]
+  requires?: readonly string[]
+}
+
+/** The one test of "this text names it": one of the terms as a whole word, one of `requires` too where there are
+ *  any, and none of the exclusions — all in the same text. Ducking's ledger and its voice script use this rule. */
+export function countTest(rule: CountRule): (text: string) => boolean {
+  const includes = namer(rule.terms)
+  const excludes = namer(rule.exclude ?? [])
+  const required = rule.requires?.length ? namer(rule.requires) : null
+  return (text) => includes(text) && (!required || required(text)) && !excludes(text)
+}
+
 /** What the count needs of a matter. */
-type Counted = Pick<Matter, 'id' | 'terms' | 'exclude'>
+type Counted = Pick<Matter, 'id' | 'terms' | 'exclude'> & { requires?: readonly string[] }
 
 function readMatter(m: Counted, days: readonly TrendingDay[]): MatterAttention {
-  const includes = namer(m.terms)
-  const excludes = namer(m.exclude ?? [])
-  const names = (text: string): boolean => includes(text) && !excludes(text)
+  const names = countTest(m)
   const receipts: AttentionReceipt[] = []
   let converged = 0
   for (const day of days) {

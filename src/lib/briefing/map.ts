@@ -28,6 +28,8 @@ export interface MapField {
   /** what would stand on a fader */
   strip: string
   terms: readonly string[]
+  /** words a text must also name to count, beside a term (src/lib/reading/attention.ts, countTest) */
+  requires?: readonly string[]
   exclude?: readonly string[]
 }
 
@@ -162,10 +164,30 @@ export const FIELDS = [
     id: 'ai',
     name: 'AI and its harms',
     strip: 'AI',
-    terms: [
-      'AI', 'artificial intelligence', 'ChatGPT', 'OpenAI', 'Anthropic', 'AGI', 'superintelligence', 'chatbot', 'chatbots',
-      'data center', 'data centers', 'data centre', 'data centres',
+    // Since 2026-11-02 (Frank's decision, wording private) a text names this field only when it names AI AND a harm:
+    // work lost, risk and control, misuse, accountability, the bubble, energy and water, people, slop. Until then
+    // every mention of AI counted, and the field was mostly app-store entries, product news and developer posts —
+    // about one in seven of those signals named a harm. A data centre counts by itself: it is the energy question.
+    requires: [
+      'AI', 'A.I.', 'artificial intelligence', 'ChatGPT', 'OpenAI', 'Anthropic', 'AGI', 'superintelligence', 'chatbot', 'chatbots',
+      'LLM', 'LLMs', 'deepfake', 'deepfakes', 'data center', 'data centers', 'data centre', 'data centres',
     ],
+    terms: [
+      'jobs', 'job losses', 'job cuts', 'layoffs', 'laid off', 'unemployment', 'replace', 'replaced', 'replaces', 'replacing', 'automation',
+      'their job', 'your job',
+      'risk', 'risks', 'danger', 'dangerous', 'threat', 'threats', 'warning', 'warn', 'warns', 'warned', 'safety', 'unsafe', 'existential',
+      'extinction', 'superintelligence', 'loss of control', 'rogue', 'concerning', 'harm', 'harms', 'harmful', 'afraid', 'fear', 'fears',
+      'concern', 'concerns', 'concerned', 'worry', 'worries', 'alarm', 'doom', 'catastrophe', 'catastrophic',
+      'misuse', 'abuse', 'scam', 'scams', 'scammers', 'fraud', 'deepfake', 'deepfakes', 'misinformation', 'disinformation', 'propaganda',
+      'surveillance', 'facial recognition', 'weapons', 'weapon', 'warfare', 'military', 'drones', 'cyberattack', 'cyberattacks', 'hackers', 'hacked',
+      'lawsuit', 'lawsuits', 'sued', 'sues', 'suing', 'investigation', 'investigating', 'regulation', 'regulate', 'regulated', 'regulators',
+      'ban', 'bans', 'banned', 'protest', 'protests', 'boycott', 'fined', 'bubble', 'crash', 'bailout',
+      'energy', 'electricity', 'power grid', 'power bills', 'emissions', 'water', 'pollution', 'pfas', 'nuclear',
+      'data center', 'data centers', 'data centre', 'data centres',
+      'suicide', 'psychosis', 'mental health', 'addiction', 'children', 'teens', 'teenagers', 'loneliness', 'slop', 'copyright', 'plagiarism',
+    ],
+    // audited 2026-11-02: "job" alone is a job-search tool, "hiring" a job advert, "grid" a benchmark, "probe" a method,
+    // "cameras" a product sheet, "incidents" an outage report, "fine" a fine-tune; they stay out
     exclude: ['artificial superintelligence alliance', 'nex agi'],
   },
 ] as const satisfies readonly MapField[]

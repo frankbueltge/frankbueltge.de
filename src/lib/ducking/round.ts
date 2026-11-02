@@ -24,6 +24,8 @@ export interface Channel {
   terms: string[]
   /** what a matching signal must not name to count — a term's known false friends */
   exclude?: string[]
+  /** where set, a text counts only if it ALSO names one of these (2026-11-02: AI together with a harm) */
+  requires?: string[]
   voice: string
   lines: Line[]
   sources: { label: string; url: string }[]
