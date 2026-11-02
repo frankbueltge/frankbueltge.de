@@ -491,6 +491,16 @@ Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-1
   everything current from the records; its wording lives in `src/config/dossier-wording.ts`, with
   the same no-digit guard (`dossier-wording.test.ts`).
 
+### Addendum 2026-11-02: the entrance leads with the lab
+
+- **"From the lab"** opens the entrance under the masthead (Frank's decision of 2026-11-02, wording
+  private): a carousel of every experiment `/experiments` lists from the register, Ducking and Common
+  Ground first (`EDITION.lab.lead`), then the rest newest first by `since`; retired experiments stay
+  on `/experiments`. Wording in `EDITION.lab`, no digit typed.
+- **Selected works** follows it and holds the practices' pieces only ("finished pieces from the
+  machine-run practices"); the lab's picks keep their place on `/dossier`. The pulse, the since bar
+  and everything that says what is running follow the two bands.
+
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 
 | Phrase | Status |

@@ -47,6 +47,38 @@ export const EDITION = {
   },
 
   /**
+   * FROM THE LAB (2026-11-02): the band the entrance opens with since Frank's decision of that day
+   * (wording private; paraphrased: the homepage leads with the lab's experiments). A carousel of
+   * every experiment /experiments lists from the register, the retired ones excepted; the order is
+   * src/lib/ops/lab-carousel.ts, the island src/components/ops/LabCarousel.tsx. The island writes
+   * no word of its own: the templates below carry {placeholders} it fills.
+   */
+  lab: {
+    /** The works that lead the band, in this order. Every other experiment follows by the day it
+     *  opened (the register's `since`), newest first. */
+    lead: ['ducking', 'trending'],
+    title: 'From the lab',
+    sub: 'the lab’s own experiments, one at a time',
+    all: { label: 'Every experiment, by research line →', href: '/experiments' },
+    /** what a screen reader calls the band and each of its cards (aria-roledescription) */
+    carousel: 'carousel',
+    slide: 'slide',
+    /** a card's name to a screen reader */
+    position: '{n} of {total}',
+    /** the counter between the two buttons */
+    count: '{n} / {total}',
+    prev: 'Previous experiment',
+    next: 'Next experiment',
+    /** said, politely, after a button or an arrow key has moved the row — never on a plain scroll */
+    announce: '{title}, {n} of {total}',
+    /** the last line of a card: what opening it leads to */
+    open: 'open the {kind} →',
+    /** the frame of a work whose page has no still yet, which shows the miniature /experiments
+     *  draws from the work's own record instead */
+    mini: 'no still yet · its record, drawn small',
+  },
+
+  /**
    * THE SINCE BAR. Two sentences, and the script may have to write either: the default one is
    * rendered at build time from the same templates, so what a reader without JavaScript sees
    * is word for word what the script would have written for "since yesterday".

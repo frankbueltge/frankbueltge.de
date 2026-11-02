@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "94b87d4215b514c3"
+        "sha256": "201ccf24e27ef958"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 589,
-      "edges": 524,
+      "nodes": 590,
+      "edges": 526,
       "nodesByKind": {
-        "decision": 166,
+        "decision": 167,
         "encounter": 6,
         "neighbor": 149,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 222,
         "neighbor-of": 150,
         "participates": 17,
-        "touches": 120
+        "touches": 122
       }
     }
   },
@@ -1723,6 +1723,16 @@
     {
       "id": "decision:2026-11-02-1",
       "kind": "decision",
+      "label": "The entrance leads with the lab's experiments",
+      "date": "2026-11-02",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The entrance leads with the lab's experiments"
+      }
+    },
+    {
+      "id": "decision:2026-11-02-2",
+      "kind": "decision",
       "label": "A clock of the house starts Common Ground at 06:40 UTC",
       "date": "2026-11-02",
       "source": {
@@ -1731,7 +1741,7 @@
       }
     },
     {
-      "id": "decision:2026-11-02-2",
+      "id": "decision:2026-11-02-3",
       "kind": "decision",
       "label": "Ducking takes its channels from the map, and its play button speaks",
       "date": "2026-11-02",
@@ -12491,6 +12501,24 @@
     {
       "kind": "touches",
       "from": "decision:2026-11-02-1",
+      "to": "work:ducking",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/ducking"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-02-1",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/trending"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-02-2",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -12499,7 +12527,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-02-2",
+      "from": "decision:2026-11-02-3",
       "to": "work:ducking",
       "source": {
         "file": "docs/decision-log.md",

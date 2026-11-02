@@ -50,6 +50,10 @@ export interface ShelfCard {
   href: string
   /** shown on every visit of the edition, whatever the draw (SELECTED_WORKS.pinned) */
   pinned?: boolean
+  /** A piece of the lab's own register (src/data/werke.ts) that no other house claims. Since
+   *  2026-11-02 the entrance shows these in the lab's carousel and never on the shelf below it,
+   *  which holds the practices' pieces (src/lib/ops/shelf-pool.ts, withoutLab). */
+  lab: boolean
   /** the crop of the maker's own still, or null where the maker committed none */
   still: { src: string; alt: string; source: string } | null
 }
@@ -77,6 +81,8 @@ interface FromRecord {
   href: string
   /** the register's own line, where the record carries one a card may use */
   line?: string
+  /** read from the lab's register and claimed by no other house (ShelfCard.lab) */
+  lab?: boolean
 }
 
 const readText = (root: string, path: string) => readFileSync(join(root, path), 'utf8')
@@ -140,6 +146,15 @@ function fieldPaper(cycle: number, shelf: readonly PresentationEntry[], root: st
   }
 }
 
+/**
+ * Whether Machine Attention's own export names a stage at this address. The register files the
+ * practice's instrument (The State Before the Interface, /observatory) beside the lab's own pieces,
+ * and says in as many words that it is not an experiment of the lab; the practice's export is the
+ * maker's own record of it, so where it claims the address, the piece is the practice's.
+ */
+export const claimedByAttention = (href: string): boolean =>
+  (exportFile.projects as ExportProject[]).some((p) => p.site_route !== null && p.site_route.replace(/\/$/, '') === href.replace(/\/$/, ''))
+
 function experiment(id: string, work: ShelfWork): FromRecord {
   const werk: Werk | undefined = WERKE.find((w) => w.id === id)
   if (!werk) return fail(work, `src/data/werke.ts holds no entry "${id}"`)
@@ -151,15 +166,17 @@ function experiment(id: string, work: ShelfWork): FromRecord {
         : werk.tier === 'project'
           ? W.kinds.project
           : W.kinds.experiment
+  const attention = claimedByAttention(werk.href)
   return {
     title: typeof werk.title === 'string' ? werk.title : werk.title.en,
-    maker: NAMING.opsRoom.signal.houseFallback.lab,
+    maker: attention ? cardTitle('attention', NAMING.opsRoom.signal.houseFallback.attention) : NAMING.opsRoom.signal.houseFallback.lab,
     voice: null,
     kind,
     when: (werk.live ? W.when.daily : W.when.started)(dayMonthYear(werk.since)),
     day: werk.since,
     href: werk.href,
     line: werk.subtitle.en,
+    lab: !attention,
   }
 }
 
@@ -280,6 +297,7 @@ export function readPick(pick: ShelfPick, root: string = process.cwd(), shelf: r
     day: record.day,
     sentence,
     reason: pick.reason,
+    lab: record.lab ?? false,
     href: pieceHref(record.href, root),
     // a still shows only once its crop is committed (npm run shelf:stills): the full screenshot is
     // never loaded in its place
