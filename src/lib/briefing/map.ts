@@ -174,8 +174,7 @@ export type FieldId = (typeof FIELDS)[number]['id']
 
 export const FIELD_IDS: readonly FieldId[] = FIELDS.map((f) => f.id)
 
-/** The eleven fields of the map's first edition (2026-11-01). A file of that edition is held to them, and the
- *  round of Ducking after cycle 011, the last with eleven channels, seats them. */
+/** The eleven fields of the map's first edition (2026-11-01). A file of that edition is held to them. */
 export const FIRST_MAP_FIELDS: readonly FieldId[] = [
   'war', 'hunger', 'poverty', 'inequality', 'power', 'climate', 'health', 'displacement', 'democracy', 'information', 'ai',
 ]

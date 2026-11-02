@@ -6,7 +6,7 @@ import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { namer } from '@/lib/reading/attention'
-import { FIELD_IDS, FIRST_MAP_FIELDS, MAP_FROM_CYCLE } from '@/lib/briefing/map'
+import { FIELD_IDS } from '@/lib/briefing/map'
 import { CURRENT_ROUND as round, roundBehind } from './round'
 import { cueAt, cueEnvelope, cueOrNext, placeOf, type VoiceBook } from './voices'
 
@@ -43,9 +43,8 @@ describe('the round', () => {
 
 describe('the channels', () => {
   it('are the fields of the map, in its order, so that a fader means the same from round to round', () => {
-    // the round after cycle 011 seats the first edition's eleven; a round from cycle 012 on all thirteen
-    const fields = Number(round.id.slice(-3)) >= MAP_FROM_CYCLE ? FIELD_IDS : FIRST_MAP_FIELDS
-    expect(round.channels.map((c) => c.id)).toEqual(fields)
+    // the round after cycle 011 took the two fields that joined the map on 2026-11-02 the same evening
+    expect(round.channels.map((c) => c.id)).toEqual(FIELD_IDS)
   })
 })
 
