@@ -52,6 +52,11 @@ PEAK = 0.84
 KNEE = 0.7            # a rare plosive above this is rounded off towards PEAK: at this level nobody hears it
 REST_PERIOD = 150.0   # seconds before everything else repeats
 REST_MARGIN = 0.3     # audio kept on both sides of the loop, so encoder padding never falls inside it
+# AAC bitrates, in kbps. A voice is mono speech at 24 kHz; the crowd and the record carry more at once.
+# Lowered on 2026-11-02 from 48 and 72, when the desk grew from eleven channels to thirteen and a round no
+# longer fitted the six megabytes a phone is asked to load (src/lib/ducking/voices.test.ts).
+VOICE_KBPS = 40
+MIX_KBPS = 64
 REST_WEEK = 7
 REST_MAX_CHARS = 64
 REST_SPEEDS = (0.94, 1.06)
@@ -140,7 +145,7 @@ def channel(k, ch, index, out):
         t += (len(x) + len(gap)) / RATE
     parts.append(np.zeros(int((TAIL + index * TAIL_STEP) * RATE), dtype=np.float32))
     pcm = levelled(np.concatenate(parts))
-    encode(pcm, out / f"{ch['id']}.m4a", 48)
+    encode(pcm, out / f"{ch['id']}.m4a", VOICE_KBPS)
     print(ch['id'], ch['voice'], f'{len(pcm) / RATE:.1f} s')
     return {'file': f"{ch['id']}.m4a", 'period': round(len(pcm) / RATE, 3), 'level': to_db(speech_rms(pcm)),
             'digest': digest(ch['lines']), 'cues': cues}
@@ -205,7 +210,7 @@ def rest(k, rnd, out, labels, week, tally):
     level = to_db(speech_rms(pcm))
     margin = int(REST_MARGIN * RATE)
     pcm = np.concatenate([pcm[-margin:], pcm, pcm[:margin]])
-    encode(pcm, out / 'rest.m4a', 72)
+    encode(pcm, out / 'rest.m4a', MIX_KBPS)
     cues.sort(key=lambda c: c['t'])
     print('rest', len(voices), 'voices', len(cues), 'labels', f'{REST_PERIOD:.0f} s')
     return {'file': 'rest.m4a', 'period': REST_PERIOD, 'margin': REST_MARGIN, 'level': level, 'from': week[0], 'to': week[-1],
@@ -276,7 +281,7 @@ def record(k, rnd, out):
         cues.append({'t': round(t, 2), 'd': round(d, 2), 'text': label, 'c': c})
     end = int((cues[-1]['t'] + cues[-1]['d'] + 1) * RATE)
     pcm = levelled(np.stack([left[:end], right[:end]], axis=1).astype(np.float32))
-    encode(pcm, out / 'record.m4a', 72)
+    encode(pcm, out / 'record.m4a', MIX_KBPS)
     print('record', len(cues), 'headlines', f'{len(pcm) / RATE:.0f} s', {channels[c]['id']: sum(1 for q in cues if q['c'] == c) for c in range(len(channels))})
     return {'file': 'record.m4a', 'from': days[0], 'to': days[-1], 'day': DAY_SECONDS, 'level': to_db(speech_rms(pcm)), 'cues': cues,
             'sample': {'signals': sum(counted), 'readable': sum(len(p) for p in pools), 'spoken': len(cues)}}
