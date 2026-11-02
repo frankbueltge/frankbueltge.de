@@ -1,0 +1,59 @@
+name: Morning clock
+
+# Starts the house's morning runs when they are due, because GitHub's schedule does not:
+# scripts/clock/morning.mjs. This file only says when it runs.
+#
+# Measured on 2026-11-02: all 60 scheduled runs of Common Ground (cron 06:40 UTC) from 2026-09-03
+# to 2026-11-01 began between 10:54 and 16:05 UTC. The integrates below are started on time by the
+# practices' own landings, from about 00:20 UTC on through the morning, so the end of each one is a
+# tick the clock can count on. A tick before a due time waits for it, one after starts the run.
+
+on:
+  workflow_run:
+    workflows:
+      - Ecology integrate
+      - Field integrate
+      - Atelier integrate
+      - Studio integrate
+      - Attention integrate
+      - n-1 integrate
+      - Nightly line integrate
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Decide and say what would start; wait for nothing and start nothing'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  # to start the morning runs
+  actions: write
+
+concurrency:
+  group: morning-clock
+  # A clock that waits for a due time is never cancelled; a newer tick waits behind it (GitHub keeps
+  # one pending, the older pending ones are cancelled) and then finds the run started or done.
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    # The script waits at most 330 minutes for a due time (WAIT_MAX_MIN); this is the backstop.
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            scripts/clock
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Start what is due
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+        run: node scripts/clock/morning.mjs
