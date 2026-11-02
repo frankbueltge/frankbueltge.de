@@ -7,6 +7,6 @@ import LegalPageView from '@/components/pages/LegalPage.astro'
 import { datenschutz } from '@/data/legal'
 const page = datenschutz.de
 ---
-<Page title={`${page.metaTitle} | Frank Bültge`} description={page.metaTitle}>
+<Page title={`${page.metaTitle} | Frank Bültge`} description={page.metaTitle} lang="de">
   <LegalPageView page={page} andereFassung={{ href: '/privacy', label: 'English version →' }} />
 </Page>
