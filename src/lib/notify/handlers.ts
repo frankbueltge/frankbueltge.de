@@ -41,16 +41,40 @@ const standby = (detail: string): Response => json(503, { ok: false, reason: 'st
 
 const missingOf = (env: NotifyEnv): string[] => operatorMissing(env as Record<string, unknown>)
 
+/**
+ * What Brevo said to one bell: its HTTP status and, on a refusal, its error code (`unauthorized`,
+ * `permission_denied` …). Never Brevo's message, which may quote an address. Status 0: no answer.
+ */
+export interface Sent {
+  ok: boolean
+  status: number
+  code: string | null
+}
+
+/** Sends one bell and keeps Brevo's verdict. Never throws. */
+export async function send(env: NotifyEnv, deps: Deps, mail: OperatorMail): Promise<Sent> {
+  const req = operatorRequest(env as Record<string, unknown>, mail)
+  if (!req) return { ok: false, status: 0, code: 'unarmed' }
+  let res: Response
+  try {
+    res = await deps.fetch(req.url, req.init)
+  } catch {
+    return { ok: false, status: 0, code: null }
+  }
+  if (res.status === 201) return { ok: true, status: 201, code: null }
+  let code: string | null = null
+  try {
+    const body = (await res.json()) as { code?: unknown }
+    if (typeof body?.code === 'string' && /^[a-z_]{1,40}$/.test(body.code)) code = body.code
+  } catch {
+    // no JSON body: the status alone has to do
+  }
+  return { ok: false, status: res.status, code }
+}
+
 /** Sends one bell; true when Brevo accepted it. Never throws. */
 export async function ring(env: NotifyEnv, deps: Deps, mail: OperatorMail | null): Promise<boolean> {
-  if (!mail) return false
-  const req = operatorRequest(env as Record<string, unknown>, mail)
-  if (!req) return false
-  try {
-    return (await deps.fetch(req.url, req.init)).status === 201
-  } catch {
-    return false
-  }
+  return mail ? (await send(env, deps, mail)).ok : false
 }
 
 /** The bell after a visitor's rating, which the store already holds; the day's count includes it. */
@@ -101,11 +125,22 @@ async function claim(db: D1Like, key: string, at: string): Promise<boolean> {
   return Number(res.meta?.changes ?? 0) > 0
 }
 
+/** Gives a claimed key back, so the next call tries again. */
+async function giveBack(db: D1Like, key: string): Promise<void> {
+  try {
+    await db.prepare('DELETE FROM notify_log WHERE key = ?').bind(key).run()
+  } catch {
+    // the day stays claimed; tomorrow's call reports tomorrow
+  }
+}
+
 // ── POST /api/notify/daily ────────────────────────────────────────────────────────────────────────
 //
 // Body `{}` for the previous day's mail, `{"test": true}` for the test mail; each goes out at most once
 // per UTC day. A quiet day sends nothing and stays done. A mail Brevo refuses gives its key back, so
-// the next call tries again.
+// the next call tries again, and the answer names Brevo's status and error code. Failures answer 424,
+// not 502: Cloudflare replaces a function's 502 with its own error page, so the reason never arrived
+// (seen on the first test, 2026-11-02).
 export async function handleDaily(request: Request, env: NotifyEnv, deps: Deps): Promise<Response> {
   const raw = await request.text()
   if (raw.length > MAX_BODY_BYTES) return json(413, { ok: false, reason: 'too-large' })
@@ -128,21 +163,20 @@ export async function handleDaily(request: Request, env: NotifyEnv, deps: Deps):
     await db.prepare(LOG_SCHEMA).run()
     if (!(await claim(db, key, now.toISOString()))) return json(200, { ok: true, sent: false, reason: 'already', day })
   } catch {
-    return json(502, { ok: false, reason: 'upstream' })
+    return json(424, { ok: false, reason: 'store' })
   }
+  let mail: OperatorMail | null
   try {
-    const mail = test ? testMail(now) : dailyMail(day, await countsOf(db, day))
-    if (!mail) return json(200, { ok: true, sent: false, reason: 'quiet', day })
-    if (await ring(env, deps, mail)) return json(200, { ok: true, sent: true, day })
+    mail = test ? testMail(now) : dailyMail(day, await countsOf(db, day))
   } catch {
-    // falls through: the key goes back
+    await giveBack(db, key)
+    return json(424, { ok: false, reason: 'store' })
   }
-  try {
-    await db.prepare('DELETE FROM notify_log WHERE key = ?').bind(key).run()
-  } catch {
-    // the day stays claimed; tomorrow's call reports tomorrow
-  }
-  return json(502, { ok: false, reason: 'send-failed' })
+  if (!mail) return json(200, { ok: true, sent: false, reason: 'quiet', day })
+  const sent = await send(env, deps, mail)
+  if (sent.ok) return json(200, { ok: true, sent: true, day })
+  await giveBack(db, key)
+  return json(424, { ok: false, reason: 'send-failed', upstream: sent.status, code: sent.code })
 }
 
 /** GET: whether the bells are armed, naming what is missing (the house's standby honesty). */

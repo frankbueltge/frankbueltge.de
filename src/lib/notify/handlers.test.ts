@@ -3,7 +3,7 @@ import { fakeD1, sqliteAvailable } from '../reception/fake-d1'
 import { ensureSchema as ensureReception, insertEntry, type D1Like } from '../reception/store'
 import { ensureSchema as ensureReading } from '../reading/store'
 import { ensureSchema as ensureStudy } from '../study/store'
-import { countsOf, handleDaily, handleDailyStatus, ring, ringRating, type Deps, type NotifyEnv } from './handlers'
+import { countsOf, handleDaily, handleDailyStatus, ring, ringRating, send, type Deps, type NotifyEnv } from './handlers'
 import { RATING_MAILS_PER_DAY } from './operator'
 
 const ARMED = { BREVO_API_KEY: 'key-for-tests', BREVO_SENDER_EMAIL: 'hello@example.org', BREVO_NOTIFY_TO: 'operator@example.org' }
@@ -16,7 +16,8 @@ const network = vi.fn(async (url: string | URL | Request, init?: RequestInit) =>
   if (String(url) !== BREVO) throw new Error(`unexpected fetch ${String(url)}`)
   const body = JSON.parse(String(init?.body))
   sent.push({ subject: body.subject, text: body.textContent, to: body.to[0].email })
-  return new Response('{"messageId":"<test>"}', { status: brevoStatus })
+  if (brevoStatus === 201) return new Response('{"messageId":"<test>"}', { status: 201 })
+  return new Response('{"code":"unauthorized","message":"a message that may quote an address"}', { status: brevoStatus })
 })
 const deps: Deps = { fetch: network as unknown as typeof fetch, now: () => now }
 
@@ -57,6 +58,13 @@ describe('ring', () => {
     brevoStatus = 400
     expect(await ring(ARMED, deps, { subject: 's', text: 't' })).toBe(false)
     expect(sent.map((m) => m.to)).toEqual(['operator@example.org', 'operator@example.org'])
+  })
+
+  it('keeps Brevo’s status and error code on a refusal, never its message', async () => {
+    brevoStatus = 401
+    expect(await send(ARMED, deps, { subject: 's', text: 't' })).toEqual({ ok: false, status: 401, code: 'unauthorized' })
+    const unreachable: Deps = { fetch: (async () => { throw new Error('offline') }) as unknown as typeof fetch, now: () => now }
+    expect(await send(ARMED, unreachable, { subject: 's', text: 't' })).toEqual({ ok: false, status: 0, code: null })
   })
 })
 
@@ -119,11 +127,14 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/notify/daily', () => {
     expect(network).not.toHaveBeenCalled()
   })
 
-  it('gives the day back when Brevo refuses the mail, so the next call tries again', async () => {
+  it('gives the day back when Brevo refuses the mail, says why, and the next call tries again', async () => {
     const env = await makeEnv()
     await rating(env.RECEPTION_DB, 'lab:ducking', 4, '2026-11-01T09:00:00.000Z')
     brevoStatus = 401
-    expect((await post(env)).status).toBe(502)
+    const refused = await post(env)
+    // 424, not 502: Cloudflare would put its own error page in place of a function's 502
+    expect(refused.status).toBe(424)
+    expect(await refused.json()).toEqual({ ok: false, reason: 'send-failed', upstream: 401, code: 'unauthorized' })
     brevoStatus = 201
     expect(await (await post(env)).json()).toMatchObject({ sent: true })
   })
