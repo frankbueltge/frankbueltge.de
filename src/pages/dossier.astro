@@ -101,6 +101,8 @@ const honest = D.questions.lead({
 })
 
 // ── Machine Attention, from its own export ────────────────────────────────────────────────────
+// Its projects are named, not linked: the section's one link is the house's own page,
+// /machine-attention/ (Frank's choice of 2026-11-02, wording private; The Foreknown is not linked).
 interface Project {
   id: string
   title: string
@@ -115,8 +117,6 @@ const projects = (exportFile.projects as Project[]).map((p) => {
     title: p.title,
     status: retired ? D.attention.retiredOn(dayMonthYear(retired)) : (D.attention.status[p.status] ?? p.status),
     since: D.attention.since(dayMonthYear(p.since)),
-    href: p.site_route,
-    linkLabel: p.status === 'retired' ? D.attention.archiveLink : D.attention.stageLink,
   }
 })
 const known = new Set(projects.map((p) => p.title))
@@ -214,7 +214,6 @@ const shelf = readShelf()
             <li>
               <span class="ds-project-name">{p.title}</span>
               <span class="ds-project-status">{p.since} · {p.status}</span>
-              {p.href && <a class="ds-link" href={`${p.href}/`}>{p.linkLabel} →</a>}
             </li>
           ))}
         </ul>

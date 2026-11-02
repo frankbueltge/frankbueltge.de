@@ -124,15 +124,10 @@ export const SELECTED_WORKS = {
       reason: 'A machine practice finding a hole in a record everybody uses, and drawing it as a map anyone can read.',
     },
     {
-      work: { kind: 'attention-experiment', id: 'foreknown' },
-      sentence:
-        'A machine preserved the world’s public warnings the moment they were issued, until its own record showed it could not measure what it was built for.',
-      reason: 'A retirement kept in public: the stage, every dossier and every verdict stay, beside the reason it stopped.',
-    },
-    {
-      work: { kind: 'experiment', id: 'society' },
+      // Ducking in, The Foreknown and Society out (Frank's choice of 2026-11-02, wording private)
+      work: { kind: 'experiment', id: 'ducking' },
       reason:
-        'The lab’s most singular piece by its own audit: a book of the eighties performed as machinery, every agent small enough to read whole.',
+        'The lab’s piece most woven into the house: the briefing’s fields, Common Ground’s counts and real headlines on one desk, and only a held fader keeps a matter audible.',
     },
     {
       work: { kind: 'experiment', id: 'balance' },

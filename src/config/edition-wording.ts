@@ -57,6 +57,9 @@ export const EDITION = {
     /** The works that lead the band, in this order. Every other experiment follows by the day it
      *  opened (the register's `since`), newest first. */
     lead: ['ducking', 'trending'],
+    /** Experiments the band leaves out although /experiments lists them, where they stay: Headroom,
+     *  Editorial Deadline, Iceberg Theory and Society (Frank's choice of 2026-11-02, wording private). */
+    leave: ['spielraum', 'redaction', 'parallaxe', 'society'],
     title: 'From the lab',
     sub: 'the lab’s own experiments, one at a time',
     all: { label: 'Every experiment, by research line →', href: '/experiments' },

@@ -501,6 +501,11 @@ Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-1
 - **Selected works** follows it and holds the practices' pieces only ("finished pieces from the
   machine-run practices"); the lab's picks keep their place on `/dossier`. The lead and everything
   below it follow the two bands.
+- **What the carousel and the dossier show** (2026-11-02, wording private): the carousel leaves out
+  Headroom, Editorial Deadline, Iceberg Theory and Society (`EDITION.lab.leave`), which `/experiments`
+  keeps listing. On `/dossier` Ducking stands among the selected works instead of The Foreknown and
+  Society, and the Machine Attention section names its projects without links and links only to
+  `/machine-attention/`.
 - **The dossier's link carries the page's own name** (2026-11-02, wording private): the label For
   curators & press seemed too lofty, so both footers, the page's kicker and its title say Dossier.
   The page itself is unchanged; the lab's picks keep their place on it.

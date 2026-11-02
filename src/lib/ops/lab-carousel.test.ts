@@ -2,7 +2,8 @@
 //
 // Frank's decision of 2026-11-02 (wording private, paraphrased): the homepage leads with the lab's
 // experiments — Ducking first, Common Ground second, then every other experiment by the day it
-// opened, newest first; the retired ones stay on /experiments. These tests hold that order on the
+// opened, newest first; the retired ones stay on /experiments, and since that afternoon so do the
+// four EDITION.lab.leave names (his choice, wording private). These tests hold that order on the
 // register as it stands and on lists made up for the purpose, so the rule is checked apart from
 // whatever the register happens to hold tonight.
 import { existsSync } from 'node:fs'
@@ -47,6 +48,10 @@ describe('the order of the carousel', () => {
     expect(ids(carouselOrder(withRetired, ['s', 'c']))).toEqual(['c', 'd', 'b', 'a'])
   })
 
+  it('leaves out what it is told to leave, a lead among them', () => {
+    expect(ids(carouselOrder(list, ['c'], ['c', 'a']))).toEqual(['d', 'b'])
+  })
+
   it('passes over a lead the list does not hold, and a lead named twice', () => {
     expect(ids(carouselOrder(list, ['nowhere', 'b', 'b']))).toEqual(['b', 'd', 'c', 'a'])
   })
@@ -76,10 +81,22 @@ describe('the carousel the edition shows', () => {
     }
   })
 
-  it('holds every experiment /experiments groups under a line, once, and none it keeps as retired', () => {
-    const listed = WERKE_BY_LINE.flatMap((g) => g.werke.map((w) => `lab-${w.id}`))
+  it('holds every experiment /experiments groups under a line, once, but the ones it leaves and none it keeps as retired', () => {
+    const leave: readonly string[] = EDITION.lab.leave
+    const listed = WERKE_BY_LINE.flatMap((g) => g.werke.filter((w) => !leave.includes(w.id)).map((w) => `lab-${w.id}`))
     expect([...cards.map((c) => c.key)].sort()).toEqual([...listed].sort())
     for (const w of WERKE_RETIRED) expect(cards.map((c) => c.key)).not.toContain(`lab-${w.id}`)
+  })
+
+  it('leaves out Headroom, Editorial Deadline, Iceberg Theory and Society, which /experiments still lists', () => {
+    const leave: readonly string[] = EDITION.lab.leave
+    expect([...leave].sort()).toEqual(['parallaxe', 'redaction', 'society', 'spielraum'])
+    for (const id of leave) {
+      const entry = WERKE_HOLDINGS.find((w) => w.id === id)
+      expect(entry, `EDITION.lab.leave names "${id}", which /experiments does not list`).toBeDefined()
+      expect(lead, `"${id}" cannot both lead and be left out`).not.toContain(id)
+      expect(cards.map((c) => c.key)).not.toContain(`lab-${id}`)
+    }
   })
 
   it('follows the lead with every other experiment by the day it opened, newest first', () => {
