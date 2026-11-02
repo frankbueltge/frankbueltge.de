@@ -62,6 +62,7 @@ const now = D.ecology.now({
   fallbackOn: convening ? dayMonthYear(convening.fallbackOn) : null,
   opensOn: convening?.opensOn ? dayMonthYear(convening.opensOn) : null,
   proposedQuestion: convening?.stands && convening.result ? convening.result.question : null,
+  briefingFallback: convening ? (cycle.convening?.briefing?.fallback ?? null) : null,
   continuing,
 })
 
