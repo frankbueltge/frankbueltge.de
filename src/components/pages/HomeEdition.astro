@@ -11,11 +11,12 @@
 // cycle as the lead beside a timetable of who worked when, then the other houses, the live
 // readings, the arrivals, and an index.
 //
-// 2026-11-02: THE PAGE LEADS WITH THE LAB (Frank's decision of that day, wording private). Under
-// the masthead now stand, first, the lab's experiments as a carousel (LabCarousel.tsx, the order
-// in src/lib/ops/lab-carousel.ts) and, second, the selected works, which hold the practices'
-// pieces only (withoutLab). Everything that says what is running follows them unchanged: the
-// pulse, the since bar, the lead and the timetable, the houses, the readings, the arrivals.
+// 2026-11-02: THE LAB LEADS THE WORK (Frank's decision of that day, wording private). Under the
+// masthead the pulse and the since bar stay where they were (his word of the same afternoon,
+// wording private); under them stand, first, the lab's experiments as a carousel
+// (LabCarousel.tsx, the order in src/lib/ops/lab-carousel.ts) and, second, the selected works,
+// which hold the practices' pieces only (withoutLab). Then, unchanged: the lead and the
+// timetable, the houses, the readings, the arrivals.
 //
 // The three properties the ops room was built to keep are kept, and the page's tests hold them
 // (src/lib/ops/front-door.test.ts, src/config/edition-wording.test.ts):
@@ -278,36 +279,6 @@ const forScript = {
       </div>
     </header>
 
-    {/* ── 1a · from the lab (2026-11-02) ──────────────────────────────────────────────────── */}
-    {/* The page leads with the lab's experiments (Frank's decision of 2026-11-02, wording
-        private). Server-rendered whole: without a script it is a row of cards the browser scrolls
-        and snaps by itself, every experiment reachable; the island adds the buttons, the count, the
-        arrow keys and what a screen reader hears when they move the row. */}
-    <section class="ed-section ed-section--double ed-lab-section" aria-roledescription={E.lab.carousel} aria-labelledby="ed-lab-title">
-      <LabCarousel
-        client:idle
-        slides={labCards}
-        wording={labWords}
-        headingId="ed-lab-title"
-        trackId="ed-lab-track"
-        box={{ width: THUMB_BOX.width, height: THUMB_BOX.height }}
-        frame={{ width: STILL_FRAME.width, height: STILL_FRAME.height }}
-      />
-    </section>
-
-    {/* ── 1b · the selected works (2026-10-17; under the lab's band since 2026-11-02) ────── */}
-    {/* Everything below says what is running; this band and the lab's above it say what has been
-        made, for a reader who has never been here. Since 2026-11-02 it holds the practices'
-        pieces only — the lab's lead the page above it. The dossier shows the shelf of record, the
-        lab's picks among them, with each pick's reason. */}
-    <section class="ed-section ed-section--double ed-shelf-section" aria-labelledby="ed-shelf-title">
-      <div class="ed-sechead">
-        <h2 id="ed-shelf-title">{SELECTED_WORKS.title}</h2>
-        <span>{SELECTED_WORKS.sub}</span>
-      </div>
-      <SelectedWorks cards={pool} shown={shelf.length} link={url} />
-    </section>
-
     {/* ── 2 · the pulse ───────────────────────────────────────────────────────────────────── */}
     <figure class="ed-pulse">
       <div class="ed-pulse-strip ed-pulse-strip--head">
@@ -345,6 +316,36 @@ const forScript = {
         </div>
       </div>
     </div>
+
+    {/* ── 3a · from the lab (2026-11-02) ──────────────────────────────────────────────────── */}
+    {/* The lab's experiments lead what the page shows of the house's work (Frank's decision of
+        2026-11-02, wording private); the pulse and the since bar stay above them, as before (his
+        word of the same day, wording private). Server-rendered whole: without a script it is a row of cards the browser scrolls
+        and snaps by itself, every experiment reachable; the island adds the buttons, the count, the
+        arrow keys and what a screen reader hears when they move the row. */}
+    <section class="ed-section ed-section--double ed-lab-section" aria-roledescription={E.lab.carousel} aria-labelledby="ed-lab-title">
+      <LabCarousel
+        client:idle
+        slides={labCards}
+        wording={labWords}
+        headingId="ed-lab-title"
+        trackId="ed-lab-track"
+        box={{ width: THUMB_BOX.width, height: THUMB_BOX.height }}
+        frame={{ width: STILL_FRAME.width, height: STILL_FRAME.height }}
+      />
+    </section>
+
+    {/* ── 3b · the selected works (2026-10-17; under the lab's band since 2026-11-02) ────── */}
+    {/* Everything below says what is running; this band and the lab's above it say what has been
+        made, for a reader who has never been here. Since 2026-11-02 it holds the practices'
+        pieces only — the lab's stand in the band above it. */}
+    <section class="ed-section ed-section--double ed-shelf-section" aria-labelledby="ed-shelf-title">
+      <div class="ed-sechead">
+        <h2 id="ed-shelf-title">{SELECTED_WORKS.title}</h2>
+        <span>{SELECTED_WORKS.sub}</span>
+      </div>
+      <SelectedWorks cards={pool} shown={shelf.length} link={url} />
+    </section>
 
     {/* ── 4 · the lead, and the timetable ─────────────────────────────────────────────────── */}
     <section class="ed-front">

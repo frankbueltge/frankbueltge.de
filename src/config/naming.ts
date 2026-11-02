@@ -104,9 +104,11 @@ export const NAMING = {
    * unverständlich; Verständlichkeit vor Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
   sub: 'One question runs through the current projects here: what can machines genuinely do better than people — hold attention for months without blinking, measure the same thing every night, read evidence at a scale no one could — and can they research autonomously, with means of their own, and produce concrete, useful works whose value can be checked? Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
-  /** Seit 2026-08-10 NICHT mehr im Hero (Frank, 10.08., Wortlaut privat — die Zeile kann
-   * ganz entfallen), zusammen mit dem „how this works →"-Link, der ebenfalls entfiel;
-   * /apparatus bleibt als Seite, verlinkt von den Ökologie-Flächen. Bleibt hier, weil /dossier die Zeile im Presse-Kontext führt. */
+  /** Not in the hero since 2026-08-10 (Frank's decision of that day, wording private: the line
+   * can go entirely), together with the "how this works →" link, which went too; /apparatus stays
+   * a page, linked from the ecology's surfaces. It stayed here because /dossier carried the line in
+   * the press context, and that page left the site on 2026-11-02 (Frank's decision, wording
+   * private). */
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   /** „What this is" — Klartext-Block direkt nach dem Puls, vor den Türen (Frank, 25.07.:
@@ -691,7 +693,7 @@ export const NAMING = {
     },
 
     hero: {
-      /** condensed from NAMING.sub, per the handoff — the long form still stands on /dossier */
+      /** condensed from NAMING.sub, per the handoff — the long form stood on /dossier until that page left the site on 2026-11-02 */
       sub: 'Constant attention, nightly measurement, evidence at scale — and whether machines can research on their own and produce work that holds up. Every claim leads back to its evidence. Git is the archive.',
       primary: { label: 'enter the ecology →', href: '/ecology' },
       secondary: { label: 'tonight’s works →', href: '/ecology#register' },

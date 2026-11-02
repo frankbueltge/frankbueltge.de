@@ -3,8 +3,7 @@
 // The edition shows eight cards, drawn at random on every visit from all the finished work the
 // site publishes, not only from the hand-chosen picks (Frank's request of 2026-10-22, wording
 // private). The picks of src/config/selected-works.ts stay the shelf of record: they are the eight
-// a reader without JavaScript sees, the cards /dossier prints with their reasons, and they lead the
-// pool with their own sentences. Everything else is listed here from its record, read by the same
+// a reader without JavaScript sees, and they lead the pool with their own sentences. Everything else is listed here from its record, read by the same
 // reader as a pick (readPick), so a pool card can say nothing a pick could not:
 //
 //   · every Studio work the site mirrors (src/content/studio/works/<slug>/ with its page),

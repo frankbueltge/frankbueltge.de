@@ -9,6 +9,8 @@
 // it was (see the style block): the footer is black under both themes.
 // 2026-10-17: a seventh link, "For curators & press" → /dossier, the page's only door (Frank's
 // decision of that day, wording private: public, indexable, linked quietly from the footer).
+// 2026-11-02: the dossier left the site, and its link with it (Frank's decision of that day,
+// wording private); /dossier redirects to the front page (public/_redirects).
 import { SITE } from '@/lib/site'
 import { NAMING } from '@/config/naming'
 import { buttonVariants } from '@/components/ui/button'
@@ -32,7 +34,6 @@ const link = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px-2 te
       <a href="/seed" class={link}>Offer a seed</a>
       <a href="/post#digest" class={link}>Digest</a>
       <a href="/contact" class={link}>Contact</a>
-      <a href="/dossier" class={link}>For curators &amp; press</a>
       <a href="/impressum" class={link}>Impressum</a>
       <a href="/datenschutz" class={link}>Datenschutz</a>
       <a href={SITE.social.github} target="_blank" rel="noreferrer" class={link}>GitHub</a>
