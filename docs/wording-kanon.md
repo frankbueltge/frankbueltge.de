@@ -499,10 +499,11 @@ Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-1
   Ground first (`EDITION.lab.lead`), then the rest newest first by `since`; retired experiments stay
   on `/experiments`. Wording in `EDITION.lab`, no digit typed.
 - **Selected works** follows it and holds the practices' pieces only ("finished pieces from the
-  machine-run practices"). The lead and everything below it follow the two bands.
-- **`/dossier` is off the site** (Frank's decision of 2026-11-02, wording private): the page, its
-  wording file and both footer links are gone, and `/dossier` redirects to the front page. The
-  addendum of 2026-10-17 above is history.
+  machine-run practices"); the lab's picks keep their place on `/dossier`. The lead and everything
+  below it follow the two bands.
+- **The dossier's link carries the page's own name** (2026-11-02, wording private): the label For
+  curators & press seemed too lofty, so both footers, the page's kicker and its title say Dossier.
+  The page itself is unchanged; the lab's picks keep their place on it.
 
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 

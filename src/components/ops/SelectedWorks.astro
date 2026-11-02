@@ -1,10 +1,11 @@
 ---
 // The selected-works shelf (2026-10-17): the list of cards, without a heading of its own, because
-// the edition heads it in its own voice as one of its sections (HomeEdition.astro). The dossier for
-// curators and press showed it too, with each pick's reason, until it left the site on 2026-11-02.
+// the two pages that show it head it in their own voice — the edition as one of its sections
+// (HomeEdition.astro), the dossier as its shelf of record with each pick's reason (/dossier).
 //
 // What stands here is src/config/selected-works.ts, read through src/lib/ops/selected-works.ts:
-// nothing on a card is typed in this file. A card is one link, as the edition's briefs are.
+// nothing on a card is typed in this file. A card is one link, as the edition's briefs are; on the
+// dossier the reason follows it, outside the link, so the link's name stays the work's own.
 //
 // A card without a still gets a plate that says so, never a picture made for it (the rule of the
 // score's newest-piece card, src/components/ecology/score/PracticePart.astro). The plate is hidden
@@ -22,23 +23,26 @@ import { STILL_FRAME } from '@/lib/ops/shelf-stills'
 
 interface Props {
   cards: ShelfCard[]
+  /** 'edition': the entrance's band; 'dossier': rows with the reason beside each card */
+  variant?: 'edition' | 'dossier'
   /** an internal address as the page links it (the edition's locale helper), external ones as they are */
   link?: (href: string) => string
   /** the edition: how many of the cards stand without JavaScript; the rest are the pool's */
   shown?: number
 }
 
-const { cards, link = (href: string) => href, shown = cards.length } = Astro.props
+const { cards, variant = 'edition', link = (href: string) => href, shown = cards.length } = Astro.props
 const W = SELECTED_WORKS
 const to = (href: string) => (href.startsWith('/') ? link(href) : href)
 ---
 
-<ul class="ed-shelf ed-shelf--edition" data-ed-shelf-shown={shown}>
+<ul class={`ed-shelf ed-shelf--${variant}`} data-ed-shelf-shown={variant === 'edition' ? shown : undefined}>
   {cards.map((card, i) => (
     <li
       class={['ed-shelf-card', card.voice ? `pp-voice-${card.voice}` : 'ed-shelf-card--house'].join(' ')}
-      hidden={i >= shown}
-      data-ed-shelf-pinned={card.pinned ? '' : undefined}
+      id={variant === 'dossier' ? `pick-${card.key}` : undefined}
+      hidden={variant === 'edition' && i >= shown}
+      data-ed-shelf-pinned={variant === 'edition' && card.pinned ? '' : undefined}
     >
       <a class="ed-shelf-link" href={to(card.href)}>
         <span class={['ed-shelf-frame', card.still ? '' : 'ed-shelf-frame--plate'].filter(Boolean).join(' ')}>
@@ -56,6 +60,12 @@ const to = (href: string) => (href.startsWith('/') ? link(href) : href)
         {card.sentence && <span class="ed-shelf-line">{card.sentence}</span>}
         <span class="ed-shelf-meta">{card.kind} · {card.when}</span>
       </a>
+      {variant === 'dossier' && (
+        <p class="ed-shelf-reason">
+          <span class="ed-shelf-reason-label">{W.reasonLabel}</span>
+          {card.reason}
+        </p>
+      )}
     </li>
   ))}
 </ul>

@@ -2,9 +2,8 @@
 //
 // The entrance shows what is running — the cycle, the timetable, the night's arrivals — and a
 // first-time visitor learns from it that much is happening here, never what has been made. The
-// shelf answers that in one band near the top of the edition (HomeEdition.astro). Each pick keeps
-// the reason it was chosen; the dossier for curators and press printed it beside the card until
-// that page left the site on 2026-11-02 (Frank's decision, wording private).
+// shelf answers that in one band near the top of the edition (HomeEdition.astro), and the dossier
+// for curators and press shows the same shelf with each pick's reason (/dossier).
 //
 // HOW TO SWAP A PICK. Edit `picks` below; nothing else. A pick names where its piece's record lives
 // (`work`), says in one sentence what the piece is to someone who has never been here, and gives
@@ -12,7 +11,7 @@
 // record (src/lib/ops/selected-works.ts), so they cannot drift from it. When the new pick's maker
 // committed a still, run `npm run shelf:stills` once: it crops the maker's own picture to the
 // shelf's frame (scripts/shelf-stills.ts), and src/lib/ops/selected-works.test.ts turns red until
-// that file exists. The order here is the page's order without JavaScript. With
+// that file exists. The order here is the page's order without JavaScript and on /dossier. With
 // JavaScript the edition draws eight at random on every visit from every finished piece the site
 // publishes, these picks among them (src/lib/ops/shelf-pool.ts, since 2026-10-22).
 //
@@ -20,7 +19,7 @@
 // private: the homepage leads with the lab's experiments). There the lab's experiments have a
 // carousel of their own, and the shelf under it holds the practices' pieces only
 // (src/lib/ops/shelf-pool.ts, withoutLab). A lab experiment among the picks therefore shows on the
-// edition in the carousel.
+// edition in the carousel, and on /dossier as a pick with its reason, as before.
 //
 // A PICK THAT STOPS READING never takes the page down: the shelf leaves it out and the build says
 // which and why. The test holds every pick strictly where a person changes the shelf (locally and
@@ -65,7 +64,7 @@ export interface ShelfPick {
    *  experiment may leave it out and carry its register line (werke.ts `subtitle`); every other
    *  pick says it here. */
   sentence?: string
-  /** Why it stands on the shelf: one line, no digit. The curation's own record; no page prints it since 2026-11-02. */
+  /** Why it stands on the shelf: one line, no digit. /dossier prints it beside the card. */
   reason: string
   /** For a still taller than its frame: where the frame sits on it, from the top (0) to the
    *  bottom (1). Read by scripts/shelf-stills.ts only. */
@@ -76,6 +75,8 @@ export const SELECTED_WORKS = {
   title: 'Selected works',
   /** the edition's shelf holds the practices' pieces since 2026-11-02; the lab's lead the page above it */
   sub: 'finished pieces from the machine-run practices, drawn anew on every visit',
+  /** what /dossier sets before each pick's reason */
+  reasonLabel: 'why it is here',
 
   /** Pieces the edition shows on every visit, whatever the draw: the other cards are drawn at
    *  random from the pool around them (Frank's request of 2026-10-23, wording private). A pinned

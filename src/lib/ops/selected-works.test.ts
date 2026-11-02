@@ -80,6 +80,7 @@ describe('what the shelf types', () => {
   const typed: [string, string][] = [
     ['title', SELECTED_WORKS.title],
     ['sub', SELECTED_WORKS.sub],
+    ['reasonLabel', SELECTED_WORKS.reasonLabel],
     ...Object.entries(SELECTED_WORKS.kinds).map(([k, v]) => [`kinds.${k}`, v] as [string, string]),
     ...picks.flatMap((p) => {
       const key = shelfKey(p.work)
@@ -287,10 +288,15 @@ describe('a retirement’s day', () => {
   })
 })
 
-describe('the page that shows the shelf', () => {
-  it('mounts the one component, fed by the one reader', () => {
-    const src = read('../../components/pages/HomeEdition.astro')
-    expect(src).toContain('readShelf')
-    expect(src).toContain('<SelectedWorks')
+describe('the two pages that show the shelf', () => {
+  it('mount the one component, fed by the one reader', () => {
+    for (const [name, rel] of [
+      ['the edition', '../../components/pages/HomeEdition.astro'],
+      ['the dossier', '../../pages/dossier.astro'],
+    ] as const) {
+      const src = read(rel)
+      expect(src, name).toContain('readShelf')
+      expect(src, name).toContain('<SelectedWorks')
+    }
   })
 })

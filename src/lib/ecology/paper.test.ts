@@ -176,8 +176,10 @@ describe('the index of the papers', () => {
     expect(index).toContain('papers.map(')
   })
 
-  it('is a door on the Field’s page', async () => {
+  it('is a door on the Field’s page and a link under the dossier’s shelf', async () => {
     const { DOORS } = await import('./pyramid/station')
     expect(DOORS.field.map((d) => d.href)).toContain('/field/papers')
+    const { DOSSIER } = await import('@/config/dossier-wording')
+    expect(DOSSIER.works.papers.href).toBe('/field/papers/')
   })
 })

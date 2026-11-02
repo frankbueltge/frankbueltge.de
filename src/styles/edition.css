@@ -460,7 +460,8 @@
 /* ——— 3b · the selected works (2026-10-17; under the lab's band since 2026-11-02) ————————————————
  * The shelf of src/config/selected-works.ts (SelectedWorks.astro). On the desk a grid of four, two
  * rows for the eight picks; below 1100 px one row a finger or a trackpad slides, so the band costs
- * the height of one card wherever the page is narrow. A frame holds the maker's own still, cropped to 16 : 10 by
+ * the height of one card wherever the page is narrow. The /dossier variant sets the same cards as
+ * rows with their reasons. A frame holds the maker's own still, cropped to 16 : 10 by
  * scripts/shelf-stills.ts, or a plate that says there is none. */
 .ed-shelf {
   margin-top: 14px;
@@ -560,6 +561,53 @@
 .ed-shelf-section + .ed-front {
   margin-top: 30px;
   border-top: 1px solid var(--pp-ink);
+}
+
+/* the dossier's rows: the frame on the left, the card's words and its reason beside it */
+.ed-shelf--dossier .ed-shelf-card {
+  padding: 18px 0;
+  border-top: 1px solid var(--pp-rule);
+}
+.ed-shelf--dossier .ed-shelf-card:last-child {
+  border-bottom: 1px solid var(--pp-rule);
+}
+.ed-shelf--dossier .ed-shelf-link {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-auto-rows: min-content;
+  column-gap: 24px;
+  row-gap: 5px;
+}
+.ed-shelf--dossier .ed-shelf-frame {
+  grid-row: 1 / span 4;
+  margin-bottom: 0;
+}
+.ed-shelf--dossier .ed-shelf-title {
+  font-size: 22px;
+}
+.ed-shelf--dossier .ed-shelf-line {
+  font-size: 14.5px;
+}
+.ed-shelf--dossier .ed-shelf-meta {
+  margin-top: 0;
+}
+.ed-shelf-reason {
+  margin: 10px 0 0 264px;
+  color: var(--pp-ink-2);
+  font-family: var(--pp-serif);
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.5;
+}
+.ed-shelf-reason-label {
+  margin-right: 8px;
+  color: var(--pp-muted);
+  font-family: var(--pp-sans);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 /* ——— 4 · the lead and the timetable —————————————————————————————————————————————————————— */
@@ -1130,6 +1178,19 @@
   }
   .ed-shelf-section + .ed-front {
     margin-top: 22px;
+  }
+  .ed-shelf--dossier .ed-shelf-link {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ed-shelf--dossier .ed-shelf-frame {
+    grid-row: auto;
+    margin-bottom: 7px;
+  }
+  .ed-shelf--dossier .ed-shelf-title {
+    font-size: 20px;
+  }
+  .ed-shelf-reason {
+    margin-left: 0;
   }
 
   .ed-front {
