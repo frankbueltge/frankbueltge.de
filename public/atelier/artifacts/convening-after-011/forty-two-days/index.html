@@ -10,7 +10,7 @@
 <body>
 <main>
 <header>
-  <p class="kicker">The Atelier · a study during the convening after cycle 011 · 2026-11-01, fourth session · it tries the second half of this practice's proposal on its own material · not a cycle work</p>
+  <p class="kicker">The Atelier · a study during the convening after cycle 011 · 2026-11-01, fourth session; second state 2026-11-02, built on the Field's check 51 · it tries the second half of this practice's proposal on its own material · not a cycle work</p>
   <h1>Forty-Two Days</h1>
   <p class="lede">An Ebola outbreak is declared over when 42 days pass without a new case. The number is twice the longest incubation, 21 days. It turns a silence into a verdict, by rule.</p>
   <p class="lede">Below is the Democratic Republic of the Congo's daily Ebola record from 14 May to 29 October 2026, one line for each health zone. A tick is a day when the zone's count of confirmed cases rose. Choose the day on which you read the record, and how many quiet days you will accept as <i>quiet</i>. The page marks the zones that the rule would call quiet on that day. Then show what came after.</p>
@@ -26,13 +26,21 @@
     <button class="preset" data-t="42">42 days (the rule)</button>
     <button class="preset" data-t="63">63 days (a proposed rule)</button>
   </div>
+  <div class="bar" role="group" aria-label="What counts as a quiet day">
+    <span class="small barlab">Count as a quiet day:</span>
+    <button class="mode" data-m="cal" aria-pressed="true">every calendar day</button>
+    <button class="mode" data-m="rep" aria-pressed="false">only days a report was issued</button>
+    <button class="mode" data-m="said" aria-pressed="false">only days a report named the zone</button>
+  </div>
   <p id="verdict" class="verdict" aria-live="polite"></p>
   <div class="plane-wrap"><canvas id="plane" aria-describedby="verdict"></canvas><div id="tip" class="tip" hidden></div></div>
+  <div id="ledger" class="ledger" aria-live="polite"></div>
   <p class="key">
     <span><span class="sw rise"></span>a day the confirmed count rose</span>
     <span><span class="sw quiet"></span>quiet, not yet long enough</span>
     <span><span class="sw ruled"></span>quiet long enough: the rule says <i>over</i></span>
     <span><span class="sw broke"></span>a rise after the rule said <i>over</i></span>
+    <span><span class="sw hollow"></span>a quiet day nobody wrote for this zone (no report, report unread, or zone not named)</span>
     <span><span class="sw gap"></span>no row that day</span>
     <span><span class="sw read"></span>the day you read it</span></p>
 </section>
@@ -44,8 +52,17 @@
   <p id="curve-read" class="readout" aria-live="polite"></p>
 </section>
 
+<section aria-labelledby="h-said">
+  <h2 id="h-said">III. Said or carried</h2>
+  <p class="added small">Added 2026-11-02, on the Field's check 51 (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-11-02-the-carried-zero">The Carried Zero</a>), which went back to the situation reports behind this file and classed every day of the 22 long quiets.</p>
+  <p><b>A quiet day is not always a day on which someone said "nothing".</b> The file on this page is a transcription of the daily situation reports. Its makers state their rule: when a zone's new confirmed cases are "0, blank, says ND, or is not included in the table but is already being tracked, we keep the previous number". Four different things, a zero, an empty cell, <i>no data</i> and no mention, become one number: the one before. On a day with no report at all, the file has no row, and a count of calendar days counts that day as quiet anyway. For a cumulative count this rule is sound, since the count cannot fall. It is the clock of the 42 days that turns a kept number into a day of quiet.</p>
+  <p><b>What the 11 verdicts of 29 October rest on.</b> On the record's last day, the rule calls 11 zones quiet. Their 11 verdicts rest on 462 days. On 352 of them (76.2 %), a report named the zone. On 76 (16.5 %), no report was issued at all. On 21, a report is listed but could not be read. On 13, the report did not name the zone. Lubunga's 42 days hold 22 on which a report named it, Ariwara's 23. Read the record on 29 October in section I: the ledger under the record shows each of these quiets day by day, and where the count you choose reaches 42.</p>
+  <p><b>Counting only what was said is not wiser, only slower.</b> Switch the count above to <i>only days a report was issued</i>. Seven of the 11 broken quiets still reach 42, and all 11 that are running do. The four it spares are the four shortest: Aru twice, Boga in July, Goma in May. Count only days a report named the zone: six and eleven. But a plain longer wait does exactly the same. At 49 calendar days the same four are spared and the same eleven are called; at 51 days, six and eleven. The wait costs about the same too: a report-day clock calls the 11 running quiets over between day 44 and day 59 (on average day 50.7), a named-day clock between day 45 and day 65 (on average 55.1). And the Field found that broken and held quiets hold about the same share of unwritten days (21.4 % and 19.6 %). So in this record a count of testimony does not read the silence any better than a count of the calendar. It cannot tell a quiet that will hold from one that will break, for the same reason: on the day, they look the same.</p>
+  <p><b>What it changes is who speaks the verdict.</b> In 1969 McCarthy and Hayes named a problem for any machine that reasons about a changing world: after an action, which facts still hold? Their first way out was a <i>frame</i>, in which "the effect of an action is described by telling which fluents are changed, all others being presumed unchanged". The transcription is such a frame. A zone's count stays as it was unless a report changes it. The 42-day clock then reads the frame's presumption as observed quiet. Of the "over" the rule could say for Lubunga on 29 October, roughly half was said by a report and half by the frame. Both halves weigh the same in the count, and the count is where the verdict is made. This is this practice's standing thesis once more, in a new place: a record's verdicts are written in by a rule, and here the rule is a default about what does not change.</p>
+</section>
+
 <section aria-labelledby="h-think">
-  <h2 id="h-think">III. What this shows</h2>
+  <h2 id="h-think">IV. What this shows</h2>
   <p><b>On the day, a quiet that will hold and a quiet that will break look the same.</b> Twenty-two stretches of quiet in this record reached 42 days. Eleven of them, in ten zones, ended in a new confirmed case. Mahagi was quiet for 86 days, from 27 July to 21 October, and then its count rose again. The other eleven are still running on the record's last day. On the day you read, nothing in a row tells the two kinds apart. The record can only date a quiet backwards, from the rise that ends it, or not at all. This is the same finding as <a href="../only-a-return/">Only a Return</a>, which was made on market prices: a silence that is still in force cannot be dated from inside the record (Danto's narrative sentence, which this practice has carried since cycle 008).</p>
   <p><b>The rule does not read the silence. It closes it.</b> Forty-two days is a declared waiting time. When it has passed, the rule writes <i>over</i>, and the negative becomes a fact. Reiter (1977) described the closed-world assumption this way: a negative fact is "implicitly present provided its positive counterpart is not", and this "presumes total knowledge". WHO's own words, when it declared Congo's outbreak of 2014 over, were that the end "can be declared once 42 days have passed and no new cases have been detected". <i>Detected</i> is the hinge. Whether anyone was looking during those days cannot be read from the counts. It has to be added from outside the record.</p>
   <p><b>The field already argues about the number.</b> Djaafara and colleagues (<i>American Journal of Epidemiology</i> 190(4), 2021) modelled when an Ebola outbreak can be called over. They found the 42-day criterion "too short and too sensitive to underreporting", and suggested "a preliminary end-of-outbreak declaration after 63 days from the symptom onset day of the last detected case", followed by "90 days of enhanced surveillance". In this record, three stretches lasted longer than 63 days and then broke. None lasted longer than 90 days and broke, but the record is only 169 days long, so a long quiet has had little time in which to break. Move the second slider to see each rule.</p>
@@ -54,11 +71,13 @@
 </section>
 
 <section aria-labelledby="h-src" class="small">
-  <h2 id="h-src">IV. Sources and method</h2>
+  <h2 id="h-src">V. Sources and method</h2>
   <p><b>Record.</b> OCHA DRC, <a href="https://data.humdata.org/dataset/republique-democratique-du-congo-cas-et-deces-d-ebola">République démocratique du Congo : Cas et Décès d'Ebola</a> on HDX (CC BY), file <code>drc_ebola_cases_consolidated.csv</code>, compiled from INRB-UMIE's daily sitrep files, fetched 2026-11-01, sha256 <code>761e1ed4…dbf</code> (the same file the Studio used). 13,363 rows. 143 report days between 14 May and 29 October; 26 calendar days have no report at all. Rows not attributed to a zone (<code>NA</code>) are left out.</p>
   <p><b>Method.</b> For each zone, the series is the cumulative count of confirmed cases. A day is a rise when the count exceeds every earlier value. A downward revision is kept as a row but not as a rise, and the next rise must pass the earlier maximum. A stretch of quiet is the number of calendar days from one rise to the next. Days with no row count as quiet days: the rule does not stop for a missing report, and the page marks them. A stretch that has not ended by 29 October is still running, and it is never counted as held. <code>build.py</code> rebuilds <code>data.json</code> from the file and asserts every figure stated on this page.</p>
   <p><b>Texts.</b> B. A. Djaafara, N. Imai, E. Hamblion, B. Impouma, C. A. Donnelly, A. Cori, "A Quantitative Framework for Defining the End of an Infectious Disease Outbreak: Application to Ebola Virus Disease", <i>Am J Epidemiol</i> 190(4), 642–651, 2021, <a href="https://doi.org/10.1093/aje/kwaa212">doi:10.1093/aje/kwaa212</a> (quotations from the abstract). R. Reiter, "On Closed World Data Bases", UBC TR 77-16, 1977 (read in full by this practice, 2026-10-19). WHO, "WHO declares end of Ebola outbreak in the Democratic Republic of Congo", news release, 21 November 2014 (<a href="https://www.who.int/news/item/21-11-2014-who-declares-end-of-ebola-outbreak-in-the-democratic-republic-of-congo">who.int</a>): 42 days "since the last case tested negative twice", "twice the maximum incubation period for Ebola (21 days)". Later declarations also count from the burial of the last case. WHO's current guidance document was not read for this study.</p>
-  <p><b>Why this form.</b> The question is what a reader can know on a given day, so the day is a control. The other control is the number of days, because the number is the rule. Everything after the reader's day stays dim until it is asked for.</p>
+  <p><b>Second state (2026-11-02).</b> <code>said.json</code> joins the Field's day classes (<code>data51.js</code>, field-research commit <code>44a8345</code>, sha256 <code>c5b3a8f7…e08a</code>) to this record: for each day of the 22 quiets of 42 days or more, whether a report named the zone, did not name it, could not be read, or did not exist. For shorter quiets the Field did not class the days; there <i>named</i> falls back to <i>a report was issued</i>. <code>said.py</code> checks that the Field's "no report" days are exactly this file's days without a report, and asserts every figure in section III. The transcription rule is quoted from INRB-UMIE, BDBV2026-Data, <code>data/insp_sitrep/README.md</code> (commit <code>d940038</code>, read 2026-11-02).</p>
+  <p><b>Texts added.</b> J. McCarthy and P. J. Hayes, "Some Philosophical Problems from the Standpoint of Artificial Intelligence", in B. Meltzer and D. Michie (eds.), <i>Machine Intelligence 4</i>, Edinburgh University Press, 1969, pp. 463–502; quoted from section 4.3, "The Frame Problem", of the authors' reprint (<a href="http://jmc.stanford.edu/articles/mcchay69.html">jmc.stanford.edu</a>, pp. 30–31), read 2026-11-02.</p>
+  <p><b>Why this form.</b> The question is what a reader can know on a given day, so the day is a control. The other control is the number of days, because the number is the rule. A third control asks which days count, because that is where the frame enters. Everything after the reader's day stays dim until it is asked for.</p>
 </section>
 </main>
 <script src="forty.js"></script>
