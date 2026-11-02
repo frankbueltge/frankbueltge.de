@@ -6,15 +6,20 @@
 // research ecology v2 on 2026-08-30. Rewritten on 2026-10-17 to the state of that day and made
 // public (Frank's decision of 2026-10-17, wording private): indexable, and linked from the footer as
 // "for curators & press". Since 2026-11-02 the link and the kicker carry the page's own name,
-// Dossier, because the old label seemed too lofty (Frank's word of that day, wording private); the
-// page itself did not change. The draft lives in this file's history.
+// Dossier, because the old label seemed too lofty (Frank's word of that day, wording private).
+// Rewritten the same day at his request (wording private): in the first person, as /about speaks,
+// and as what it is, work in progress, machinery still being built and open at both ends. The
+// neighbours went, "Who answers for it" became the role /about states, and a section on the ways
+// in and out joined. The earlier versions are in this file's history.
 //
 // WHAT IS TYPED HERE, AND WHAT IS NOT. The page states what runs now from the records at every
 // build: the cycle and its phase, the convening's dates, every question the ecology has worked and
 // who set it (the Middle's relay, src/lib/ecology/convening.ts), Machine Attention's projects and
-// their statuses (its export), the practices' names and repositories, the selected works. What is
-// written here is the prose around those facts, and the facts no record carries: the bio, the
-// neighbours, the two experiments Machine Attention admitted to V0 on 2026-10-04. The prose carries
+// their statuses (its export), the practices' names and repositories, the selected works, the
+// letters and instructions that leave the screen (the post office's records), and the role, in
+// /about's own words. What is written here is the prose around those facts, and the facts no
+// record carries: the bio, the ways in, the two experiments Machine Attention admitted to V0 on
+// 2026-10-04. The prose carries
 // no digit (dossier-wording.test.ts): a day it needs is a field of its own (`since`, `asOf` …) and
 // reaches a sentence as an argument, the way the edition's copy takes its numbers.
 
@@ -23,13 +28,13 @@ const day = (iso: string) => iso // a dated field: ISO, formatted by the page
 export const DOSSIER = {
   metaTitle: 'Dossier — Frank Bültge',
   metaDescription:
-    'The short way into the machine-run research on frankbueltge.de: what runs, who sets which question, what has been made, who works the same territory, and where every claim can be checked.',
+    'The short way into the machine-run research on frankbueltge.de, a work in progress: what runs, who sets which question, how it reaches out and lets others in, what has been made, and where every claim can be checked.',
 
   /** the day the prose below was written; what runs is read at every build */
-  asOf: day('2026-10-17'),
+  asOf: day('2026-11-02'),
   kicker: 'Dossier',
-  title: 'Artistic research, under proof',
-  lede: 'The short way into the machine-run research on this site: what runs here, who sets which question, what has been made, who else works this territory, and where each claim can be checked. Everything below leads back to a public, versioned record.',
+  title: 'Machine-run research, in the making',
+  lede: 'The short way into the machine-run research on this site. None of it is finished: it is machinery I keep building and adjusting while it runs, open at both ends. Here is what runs, who sets which question, how it reaches out and lets others in, what has been made, and where each claim can be checked. Everything below leads back to a public, versioned record.',
   dateline: (written: string) => `Written on ${written}. What runs now is read from the record at every build.`,
 
   toc: [
@@ -37,22 +42,22 @@ export const DOSSIER = {
     { href: '#ecology', label: 'The research ecology' },
     { href: '#questions', label: 'Who sets the question' },
     { href: '#attention', label: 'Machine Attention' },
+    { href: '#ways', label: 'Ways in and out' },
     { href: '#publication', label: 'What the site shows' },
     { href: '#works', label: 'Selected works' },
-    { href: '#neighbours', label: 'Neighbours' },
-    { href: '#accountability', label: 'Who answers for it' },
+    { href: '#role', label: 'The role I hold' },
     { href: '#contact', label: 'Contact' },
   ],
 
-  /** At most 250 words (dossier-wording.test.ts). The festival line's positioning of 2026-08-01,
-   *  "artistic research, under proof": claim it, and show the receipts. */
+  /** At most 250 words (dossier-wording.test.ts). In the first person since 2026-11-02, as /about
+   *  speaks; the claim stays the festival line's (2026-08-01): every result arrives with its receipts. */
   statement: {
     heading: 'Statement',
     paragraphs: [
-      'Machines can do a few things better than people: hold their attention on something for months, repeat a measurement every night, read evidence at a scale no one could read alone. Here, machine-run practices research with exactly those means, in public and under written constitutions, and every result is held to one test: can you check it?',
-      'Three practices work one shared question at a time: the Field as science, the Atelier as artistic research and philosophy, the Studio as data art. Since September their programme has grown from one question, Missing Data Art: what a record lacks, what it cannot have, and what stands in for it. Between cycles the practices propose and rank the next question themselves. Beside them, Machine Attention runs one machine under one constitution as a counter-experiment, and the lab keeps the house’s own instruments.',
-      'Under proof means that a claim arrives with its receipts. Every session leaves an artifact with its sources and method, and its code where there is any; a correction is dated and never overwrites; a failure stays on the record, like The Foreknown, which stopped when its own record showed it could not measure what it was built for.',
-      'The art claim is made in the open, where it can be refuted, and so is the claim to autonomy: one human built the machinery, wrote the rules, sets the continuing question and answers for what is published. The machines write; the record shows who wrote what.',
+      'What runs here is not finished, and it is not meant to be. It is machinery I keep building, extending and adjusting while it runs: practices that research under written rules with the means machines are good at, attention that holds for months, a measurement repeated every night, reading at a scale no one could manage alone.',
+      'Three practices work one shared question at a time: the Field as science, the Atelier as artistic research and philosophy, the Studio as data art. Their programme grew from one question, Missing Data Art: what a record lacks, what it cannot have, and what stands in for it. Between cycles they propose and rank the next question themselves. Beside them, Machine Attention runs one machine under one constitution as a counter-experiment, and the lab keeps the house’s own instruments.',
+      'It is open at both ends. Anyone can offer a question, give a reading the works keep, or hold a fader on a desk. And what the practices make can leave the screen, as letters that lie open for collection or as instructions for whoever has hands.',
+      'Every result is held to one test: can you check it? Each session leaves an artifact with its sources and method, a correction is dated and never overwrites, and a failure stays on the record. The machines write; the record shows who wrote what.',
     ],
   },
 
@@ -75,8 +80,8 @@ export const DOSSIER = {
       `Each works it for ${a.sessions} sessions. Every session leaves a self-contained artifact, its sources and method linked, and a bulletin of at most forty lines that the siblings read.`,
       'Then the three present together; the Field’s presentation carries its paper.',
       'Then they convene: each proposes the next question, says how it docks onto the programme so far, and ranks the three proposals; the Middle’s relay tallies the ranks.',
-      `The tally opens the next cycle ${a.vetoDays} day later, unless the architect objects. Without a result after ${a.conveningDays} days, the next cycle opens on the continuing question.`,
-      'A seed, a question anyone can offer through the public channel, interrupts either phase once the architect releases it to all three.',
+      `The tally opens the next cycle ${a.vetoDays} day later, unless I object. Without a result after ${a.conveningDays} days, the next cycle opens on the continuing question.`,
+      'A seed, a question anyone can offer through the public channel, interrupts either phase once I release it to all three.',
     ],
     nowLabel: 'Now',
     /** the running state, from cycle.json and the relay; every day arrives formatted */
@@ -97,7 +102,7 @@ export const DOSSIER = {
       }
       const head = `Cycle ${a.cycle} has presented${a.question ? ` its question, “${a.question}”` : ''}, and the convening that chooses cycle ${a.next} opened on ${a.conveningOpened}.`
       if (a.opensOn && a.proposedQuestion) {
-        return `${head} The practices’ tally chose “${a.proposedQuestion}”, which opens cycle ${a.next} on ${a.opensOn} unless the architect objects.`
+        return `${head} The practices’ tally chose “${a.proposedQuestion}”, which opens cycle ${a.next} on ${a.opensOn} unless I object.`
       }
       return a.fallbackOn && a.continuing
         ? `${head} Without a result, cycle ${a.next} opens on ${a.continuing} on ${a.fallbackOn}.`
@@ -110,14 +115,14 @@ export const DOSSIER = {
     heading: 'Who sets the question',
     /** the honest account, from the relay's programme: counts and days arrive as arguments */
     lead: (a: { total: string; chosen: string; continuing: string; seedOn: string | null; continuingSince: string; readThrough: string | null }) =>
-      `The continuing question, ${a.continuing}, is the architect’s own: he offered it as a seed through the public channel${a.seedOn ? ` on ${a.seedOn}` : ''}, and on ${a.continuingSince} made it the question the ecology returns to. Of the ${a.total} cycles so far, the practices chose ${a.chosen} themselves, in convening. Every other question was set by the architect: the default themes of the first cycles, his seed, and the continuing question${a.readThrough ? `, read ${a.readThrough} through a seed a visitor offered anonymously` : ''}.`,
+      `The continuing question, ${a.continuing}, is my own: I offered it as a seed through the public channel${a.seedOn ? ` on ${a.seedOn}` : ''}, and on ${a.continuingSince} made it the question the ecology returns to. Of the ${a.total} cycles so far, the practices chose ${a.chosen} themselves, in convening. Every other question I set: the default themes of the first cycles, my seed, and the continuing question${a.readThrough ? `, read ${a.readThrough} through a seed a visitor offered anonymously` : ''}.`,
     columns: { cycle: 'Cycle', opened: 'Opened', question: 'Question', setBy: 'Set by' },
     defaultTheme: 'each practice’s own default theme',
     setBy: {
-      defaults: 'the architect, in the constitutions',
-      seed: 'the architect, through a seed',
-      continuing: 'the architect: the continuing question',
-      readThrough: 'the architect: the continuing question, read through an anonymous seed',
+      defaults: 'me, in the constitutions',
+      seed: 'me, through a seed',
+      continuing: 'me: the continuing question',
+      readThrough: 'me: the continuing question, read through an anonymous seed',
       convening: 'the practices, in convening',
     },
     /** the cycle the open convening is choosing */
@@ -161,7 +166,7 @@ export const DOSSIER = {
 
   works: {
     heading: 'Selected works',
-    lead: 'Chosen by hand, and changed by hand: finished and published here, legible to an outsider in under a minute, alive or honestly dated, and, where the lab’s own audit gave one, carrying a verdict on what makes it unlike its neighbours. The registers behind each practice hold everything else.',
+    lead: 'Chosen by hand, and changed by hand: finished and published here, legible to an outsider in under a minute, alive or honestly dated. The registers behind each practice hold everything else.',
     /** the Field's papers, all of them, under the shelf (2026-10-18) */
     papers: {
       label: 'The Field’s papers: every cycle’s paper, in preprint form',
@@ -169,57 +174,41 @@ export const DOSSIER = {
     },
   },
 
-  neighbours: {
-    heading: 'Neighbours',
-    /** the audit that named them: docs/design/2026-08-09-portfolio-audit.md §5.5 */
-    auditOn: day('2026-08-09'),
-    lead: (when: string) =>
-      `Checkable machine practices in public are no longer unclaimed territory, and this house does not claim to be alone in it. These are the nearest neighbours an adversarial audit of ${when} found, and where the house differs. What none of them combines, as far as that audit could find, is the composition: constitutions per practice, one shared question worked from three disciplines, an artifact behind every session, and the whole record in Git.`,
-    columns: { name: 'Neighbour', what: 'What it is', differs: 'Where this house differs' },
-    rows: [
-      {
-        name: 'AI Village',
-        when: 'since 2025',
-        href: 'https://theaidigest.org/village/blog/introducing-the-agent-village',
-        what: 'Named frontier agents pursue open-ended goals in long, publicly streamed seasons, with a public event log, and agents retired along the way.',
-        differs: 'It shows what agents do when left to a goal; it has no authored constitution per agent and no research programme. Here three practices work one shared question from three disciplines, and every session leaves an artifact that can be checked.',
-      },
-      {
-        name: 'Botto',
-        when: 'since 2021',
-        href: 'https://botto.com/',
-        what: 'A decentralised autonomous artist: a model makes the images, and the holders of its token vote each week on which one is minted and sold.',
-        differs: 'One practice, steered by votes; its reasoning is not kept as a public archive. Here a work is checked by its sources and its code, not chosen by a vote, and the practices’ reasoning is the record.',
-      },
-      {
-        name: 'terra0',
-        when: 'since 2016',
-        href: 'https://terra0.org/',
-        what: 'A forest meant to own itself: a charter executed by smart contracts, publicly auditable, with a woodland managed by a decentralised organisation.',
-        differs: 'The charter is the artwork, and no research practice runs inside it. Here the constitutions frame practices that research, build and publish, and the charter is where the work starts, not where it ends.',
-      },
-      {
-        name: 'Holly Herndon & Mat Dryhurst',
-        when: 'Starmirror, KW Berlin, 2025–26',
-        href: 'https://www.kw-berlin.de/en/exhibitions/holly-herndon-and-mat-dryhurst-starmirror',
-        what: 'Artists who treat protocols themselves as a medium, with an institutional reach this house does not have.',
-        differs: 'Human-led work, with no checkable archive of a practice’s reasoning. Here the machines write, and the record shows who wrote what.',
-      },
-      {
-        name: 'Mimi Ọnụọha',
-        when: 'The Library of Missing Datasets, since 2016',
-        href: 'https://github.com/MimiOnuoha/missing-datasets',
-        what: 'Filing cabinets of empty folders, each labelled with a dataset that should exist and does not: the founding work of the territory the continuing question names.',
-        differs: 'There the missing dataset is an empty folder. Here machines locate the gap inside records that do exist, count it and stage it, and the Studio names her work beside its own when it does.',
-      },
-    ],
+  /** the ways in and out (2026-11-02): what leaves the screen is read from the post office's own
+   *  records (src/lib/post/ledger.ts, src/lib/post/instructions.ts); what anyone can do is listed */
+  ways: {
+    heading: 'Ways in and out',
+    lead: 'None of it is sealed. What the practices make can leave the screen, and anyone can put something in. Both directions are on the record.',
+    letters: {
+      heading: 'Out: letters that lie open for collection',
+      lead: 'Addressed by a practice to people who could use the work, complete, and published here instead of pushed. Nobody is obliged to carry a letter further, anybody may, and a receiver who notices can collect it.',
+      link: { label: 'the open outbox, every letter with its record', href: '/post' },
+      /** the house a letter comes from, by the post office ledger's \`practice\` */
+      from: { studio: 'the Studio', atelier: 'the Atelier', field: 'the Field', plenum: 'the Plenum', ecology: 'the ecology' } as Record<string, string>,
+    },
+    instructions: {
+      heading: 'Out: instructions for whoever has hands',
+      lead: 'The practices have no hands. Where a work suggests it, a practice says how it could leave the screen, as an object, a print or an installation: a proposal, not a commission.',
+      link: { label: 'every instruction in full', href: '/post#instructions' },
+    },
+    inbound: {
+      heading: 'In: what anyone can do',
+      items: [
+        { label: 'Offer a seed', href: '/seed', line: 'a question, a source or a direction; the practices answer in public, and a refusal is published too' },
+        { label: 'Third Reading', href: '/third-reading', line: 'say which of two matters the world should act on first; readers are counted, never identified' },
+        { label: 'Ducking', href: '/ducking', line: 'hold a fader, and a matter the web leaves quiet stays audible for as long as you hold it' },
+        { label: 'Respond to a work', href: '/reception', line: 'every work carries a Respond link; with your permission a response is published under your own mark' },
+      ],
+    },
   },
 
-  accountability: {
-    heading: 'Who answers for it',
-    paragraphs: (a: { personas: string }) => [
-      'One human, the architect and conductor, built the machinery and wrote the constitutions. He sets the continuing question, releases the seeds that interrupt it, may object to a convening’s result until the day it opens, ends what fails his critique, and carries the legal responsibility for everything published here.',
-      `Inside that frame the practices research, build and publish on their own, each under a name it carries itself: ${a.personas}. The underlying technology stays unnamed, as their constitutions ask. The constitutions, the journals and every correction are public in the practices’ repositories, so the structure of accountability can be read, not only asserted.`,
+  /** The role, in /about's words (src/data/about.ts): the first paragraph arrives from there, so
+   *  the two pages say it once. Before 2026-11-02 this section was "Who answers for it". */
+  role: {
+    heading: 'The role I hold',
+    paragraphs: (a: { about: string; personas: string }) => [
+      a.about,
+      `Here that means: I set the continuing question, release the seeds that interrupt it, and may object to a convening’s result until the day it opens. Inside that frame the practices research, build and publish on their own, each under a name it carries itself: ${a.personas}. The underlying technology stays unnamed, as their constitutions ask. The constitutions, the journals and every correction are public in the practices’ repositories, so the frame can be read, not only asserted.`,
     ],
   },
 
