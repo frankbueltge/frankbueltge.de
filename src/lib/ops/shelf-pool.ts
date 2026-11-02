@@ -10,7 +10,9 @@
 //   · every Studio work the site mirrors (src/content/studio/works/<slug>/ with its page),
 //   · every cycle presentation of the three practices, and every Field paper,
 //   · every experiment, study and instrument of the lab (src/data/werke.ts), retired ones as
-//     their archives, but not the doors of the practices and houses, which are rooms, not pieces,
+//     their archives, but not the doors of the practices and houses, which are rooms, not pieces
+//     (since 2026-11-02 the edition's shelf leaves the lab's own out, withoutLab below: they lead
+//     the page in a carousel of their own; the pool keeps them, so their stills stay kept),
 //   · every work n-1 declares (public/n-1/surface/margin.json),
 //   · every experiment of Machine Attention that has a stage on this site.
 //
@@ -162,4 +164,16 @@ export function readPoolEntries(
 /** The pool's cards, the pinned pieces and the picks first. */
 export function readPool(root: string = process.cwd(), picks: readonly ShelfPick[] = SELECTED_WORKS.picks): ShelfCard[] {
   return readPoolEntries(root, picks).map((e) => e.card)
+}
+
+/**
+ * The shelf the edition shows since 2026-11-02: the pool without the lab's own pieces. Frank's
+ * decision of that day (wording private, paraphrased) has the entrance lead with the lab's
+ * experiments in a carousel of their own (src/lib/ops/lab-carousel.ts), and the selected works
+ * below it hold the practices' pieces only — the Atelier's, the Field's and the Studio's, n-1's and
+ * Machine Attention's. The order is kept, so the practices' picks still lead. The pool itself keeps
+ * every piece: npm run shelf:stills and shelf:shots read it, and the carousel's stills are its.
+ */
+export function withoutLab(cards: readonly ShelfCard[]): ShelfCard[] {
+  return cards.filter((card) => !card.lab)
 }

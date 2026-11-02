@@ -15,6 +15,12 @@
 // JavaScript the edition draws eight at random on every visit from every finished piece the site
 // publishes, these picks among them (src/lib/ops/shelf-pool.ts, since 2026-10-22).
 //
+// THE LAB'S PICKS STAND ABOVE THE SHELF ON THE EDITION (since 2026-11-02, Frank's decision, wording
+// private: the homepage leads with the lab's experiments). There the lab's experiments have a
+// carousel of their own, and the shelf under it holds the practices' pieces only
+// (src/lib/ops/shelf-pool.ts, withoutLab). A lab experiment among the picks therefore shows on the
+// edition in the carousel, and on /dossier as a pick with its reason, as before.
+//
 // A PICK THAT STOPS READING never takes the page down: the shelf leaves it out and the build says
 // which and why. The test holds every pick strictly where a person changes the shelf (locally and
 // in the pull request's CI); in the nightly integrate and deploy runs it only asks that five still
@@ -67,14 +73,19 @@ export interface ShelfPick {
 
 export const SELECTED_WORKS = {
   title: 'Selected works',
-  sub: 'finished pieces from across the house, drawn anew on every visit',
+  /** the edition's shelf holds the practices' pieces since 2026-11-02; the lab's lead the page above it */
+  sub: 'finished pieces from the machine-run practices, drawn anew on every visit',
   /** what /dossier sets before each pick's reason */
   reasonLabel: 'why it is here',
 
   /** Pieces the edition shows on every visit, whatever the draw: the other cards are drawn at
    *  random from the pool around them (Frank's request of 2026-10-23, wording private). A pinned
-   *  piece is read like any pick, from its record, and needs no words of its own here. */
-  pinned: [{ kind: 'experiment', id: 'trending' }] satisfies ShelfWork[],
+   *  piece is read like any pick, from its record, and needs no words of its own here.
+   *
+   *  Empty since 2026-11-02: the one piece pinned here, Common Ground, now stands second in the
+   *  lab's carousel at the top of the edition (EDITION.lab.lead), on every visit as before, and the
+   *  shelf below the carousel holds no lab piece. The mechanism stays for a practice's piece. */
+  pinned: [] as ShelfWork[],
 
   picks: [
     {

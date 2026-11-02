@@ -233,7 +233,231 @@
   outline-offset: 2px;
 }
 
-/* ——— 3a · the selected works (2026-10-17) ———————————————————————————————————————————————————
+/* ——— 1a · from the lab (2026-11-02) ——————————————————————————————————————————————————————————
+ * The band the page opens with since Frank's decision of 2026-11-02 (wording private): the lab's
+ * experiments, one card at a time, in a row the browser scrolls and snaps by itself
+ * (src/components/ops/LabCarousel.tsx). On the desk a card is the still beside its words and stops
+ * one gutter short of the page's edge, so the next card shows in the right margin and the row says
+ * that there is more; on a phone the still stands over the words and the next card shows beside
+ * it. The row bleeds into the right margin only: on the left it ends where the page's text begins
+ * (less the room a focus ring needs), so a card that has passed never shows half a sentence in the
+ * margin. It scrolls, never the page. Inks are the paper's tokens, as everywhere on this sheet. */
+.ed-lab-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+}
+.ed-lab-head h2 {
+  font-family: var(--pp-serif);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.2;
+}
+.ed-lab-sub {
+  color: var(--pp-muted);
+  font-size: 13px;
+}
+.ed-lab-controls {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  gap: 10px;
+  margin-left: auto;
+}
+/* until the island has run, the controls hold their place but cannot be seen, focused or read */
+.ed-lab:not([data-ready]) .ed-lab-controls {
+  visibility: hidden;
+}
+.ed-lab-button {
+  border-color: var(--pp-rule-firm);
+}
+.ed-lab-count {
+  min-width: 6ch;
+  color: var(--pp-muted);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.ed-lab-track {
+  --ed-lab-ring: 8px; /* room for a card's focus ring (outline + offset) where the row is cut */
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc(100% - var(--ed-gutter));
+  /* a gap as wide as the gutter: the next card shows a gutter's width in the right margin, and
+     the last card, which cannot scroll to the left edge, leaves the one before it out of sight */
+  gap: var(--ed-gutter);
+  margin: 12px calc(-1 * var(--ed-gutter)) 0 calc(-1 * var(--ed-lab-ring));
+  padding: var(--ed-lab-ring) var(--ed-gutter) 16px var(--ed-lab-ring);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--ed-lab-ring) var(--ed-gutter);
+  scrollbar-width: thin;
+  scrollbar-color: var(--pp-rule-firm) transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ed-lab-track {
+    scroll-behavior: smooth;
+  }
+}
+.ed-lab-slide {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  align-items: center;
+  gap: 36px;
+  scroll-snap-align: start;
+}
+.ed-lab-frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--pp-rule);
+  background: var(--pp-ground-2);
+}
+.ed-lab-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ed-lab-slide:hover .ed-lab-frame,
+.ed-lab-slide:focus-within .ed-lab-frame {
+  border-color: var(--pp-ink);
+}
+/* a page with no still yet: the miniature /experiments draws from the work's own record, on a
+   plate that says so, under the same ink edge as the shelf's plates */
+.ed-lab-frame--plate {
+  border-top: 3px solid var(--pp-ink);
+}
+.ed-lab-plate {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 20px 18px;
+}
+.ed-lab-plate-kind {
+  color: var(--pp-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ed-lab-plate-reading {
+  color: var(--pp-ink-2);
+  font-family: var(--pp-serif);
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.35;
+}
+.ed-lab-mini {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+/* the miniature's marks (ThumbMarkShape.tsx): the record at rest in muted ink, the mark the
+   reading is about in the paper's one accent, a hole the record could not fill as an outline */
+.ed-lab-mini :is(.tm-bar, .tm-dot) {
+  fill: var(--pp-muted);
+}
+.ed-lab-mini :is(.tm-line, .tm-seg) {
+  fill: none;
+  stroke: var(--pp-muted);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ed-lab-mini .tm-area {
+  fill: var(--pp-ink);
+  fill-opacity: 0.08;
+}
+.ed-lab-mini .tm-rule {
+  fill: none;
+  stroke: var(--pp-rule-firm);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 3;
+}
+.ed-lab-mini .tm-gap {
+  fill: none;
+  stroke: var(--pp-faint);
+  stroke-width: 0.8;
+  stroke-dasharray: 1.5 2;
+}
+.ed-lab-mini :is(.tm-bar, .tm-dot).tm-on {
+  fill: var(--pp-accent);
+}
+.ed-lab-mini :is(.tm-line, .tm-seg).tm-on {
+  stroke: var(--pp-accent);
+  stroke-width: 1.4;
+}
+.ed-lab-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.ed-lab-kicker {
+  color: var(--pp-accent-ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ed-lab-title {
+  font-family: var(--pp-serif);
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+/* the card's one link, spread over the whole card: the picture and the words open the work too,
+   and the focus ring goes round the card rather than round the title alone */
+.ed-lab-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.ed-lab-link:focus-visible {
+  outline: none;
+}
+.ed-lab-link:focus-visible::after {
+  outline: 2px solid var(--pp-ink);
+  outline-offset: 4px;
+}
+.ed-lab-sentence {
+  color: var(--pp-ink-2);
+  font-family: var(--pp-serif);
+  font-size: 20px;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+.ed-lab-meta {
+  color: var(--pp-muted);
+  font-size: 13px;
+}
+.ed-lab-open {
+  margin-top: 2px;
+  font-size: 14px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.ed-lab-slide:hover .ed-lab-open {
+  color: var(--pp-accent-ink);
+}
+.ed-lab-foot {
+  font-size: 13px;
+}
+
+/* ——— 1b · the selected works (2026-10-17; under the lab's band since 2026-11-02) ————————————————
  * The shelf of src/config/selected-works.ts (SelectedWorks.astro). On the desk a grid of four, two
  * rows for the eight picks; below 1100 px one row a finger or a trackpad slides, so the band costs
  * the height of one card wherever the page is narrow. The /dossier variant sets the same cards as
@@ -332,10 +556,10 @@
   color: var(--pp-muted);
   font-size: 12.5px;
 }
-/* the lead follows the shelf under a single rule: the shelf is the house's, the lead today's */
-.ed-shelf-section + .ed-front {
+/* Since 2026-11-02 the pulse follows the shelf, and with it everything that says what is running;
+   it keeps a section's distance from the band above, as the lead did when it followed the shelf. */
+.ed-shelf-section + .ed-pulse {
   margin-top: 30px;
-  border-top: 1px solid var(--pp-ink);
 }
 
 /* the dossier's rows: the frame on the left, the card's words and its reason beside it */
@@ -738,6 +962,17 @@
 
 /* ——— between the desk and the phone: the desk's type, the paired columns stacked ————————— */
 @media (max-width: 1099.98px) {
+  /* the lab's cards keep the still beside the words, in narrower measure */
+  .ed-lab-slide {
+    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    gap: 26px;
+  }
+  .ed-lab-title {
+    font-size: clamp(30px, 4.2vw, 44px);
+  }
+  .ed-lab-sentence {
+    font-size: 17px;
+  }
   /* The shelf becomes one row that slides, bleeding to the window's edges so a card can travel
      to the edge and the next one shows that there is more. The row scrolls, never the page. */
   .ed-shelf--edition {
@@ -884,6 +1119,49 @@
     letter-spacing: 0;
   }
 
+  /* the lab's cards: the still over the words, the next card showing beside */
+  .ed-lab-head h2 {
+    font-size: 22px;
+  }
+  .ed-lab-sub {
+    display: none;
+  }
+  .ed-lab-button {
+    width: 40px;
+    height: 40px;
+  }
+  .ed-lab-track {
+    grid-auto-columns: 86%;
+    margin-top: 10px;
+    padding-bottom: 12px;
+  }
+  .ed-lab-slide {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    align-content: start;
+    gap: 12px;
+  }
+  .ed-lab-text {
+    gap: 8px;
+  }
+  .ed-lab-title {
+    font-size: 28px;
+    line-height: 1.1;
+  }
+  .ed-lab-sentence {
+    font-size: 16px;
+  }
+  .ed-lab-plate {
+    padding: 12px 14px;
+  }
+  .ed-lab-plate-kind {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+  .ed-lab-plate-reading {
+    font-size: 15px;
+  }
+
   .ed-shelf {
     margin-top: 10px;
   }
@@ -897,7 +1175,7 @@
   .ed-shelf-plate-kind {
     font-size: 26px;
   }
-  .ed-shelf-section + .ed-front {
+  .ed-shelf-section + .ed-pulse {
     margin-top: 22px;
   }
   .ed-shelf--dossier .ed-shelf-link {
