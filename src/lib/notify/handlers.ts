@@ -29,6 +29,8 @@ export interface Deps {
 
 const MAX_BODY_BYTES = 256
 
+const BREVO_ACCOUNT = 'https://api.brevo.com/v3/account'
+
 const LOG_SCHEMA = 'CREATE TABLE IF NOT EXISTS notify_log (key TEXT PRIMARY KEY, at TEXT NOT NULL)'
 
 const json = (status: number, body: unknown): Response =>
@@ -51,17 +53,9 @@ export interface Sent {
   code: string | null
 }
 
-/** Sends one bell and keeps Brevo's verdict. Never throws. */
-export async function send(env: NotifyEnv, deps: Deps, mail: OperatorMail): Promise<Sent> {
-  const req = operatorRequest(env as Record<string, unknown>, mail)
-  if (!req) return { ok: false, status: 0, code: 'unarmed' }
-  let res: Response
-  try {
-    res = await deps.fetch(req.url, req.init)
-  } catch {
-    return { ok: false, status: 0, code: null }
-  }
-  if (res.status === 201) return { ok: true, status: 201, code: null }
+/** Brevo's verdict on one response: ok on the status that means success, else its status and code. */
+async function verdictOf(res: Response, success: number): Promise<Sent> {
+  if (res.status === success) return { ok: true, status: success, code: null }
   let code: string | null = null
   try {
     const body = (await res.json()) as { code?: unknown }
@@ -70,6 +64,32 @@ export async function send(env: NotifyEnv, deps: Deps, mail: OperatorMail): Prom
     // no JSON body: the status alone has to do
   }
   return { ok: false, status: res.status, code }
+}
+
+/** Sends one bell and keeps Brevo's verdict. Never throws. */
+export async function send(env: NotifyEnv, deps: Deps, mail: OperatorMail): Promise<Sent> {
+  const req = operatorRequest(env as Record<string, unknown>, mail)
+  if (!req) return { ok: false, status: 0, code: 'unarmed' }
+  try {
+    return await verdictOf(await deps.fetch(req.url, req.init), 201)
+  } catch {
+    return { ok: false, status: 0, code: null }
+  }
+}
+
+/**
+ * Asks Brevo whose key this is: a read that sends nothing. It proves the key still works, and it keeps
+ * the key in use. Brevo marks a key unused for three months inactive; on 2026-10-31 that silenced every
+ * bell of the house, and the site learned of it only when the first test mail failed. Never throws.
+ */
+export async function railCheck(env: NotifyEnv, deps: Deps): Promise<Sent> {
+  if (missingOf(env).length > 0) return { ok: false, status: 0, code: 'unarmed' }
+  try {
+    const res = await deps.fetch(BREVO_ACCOUNT, { headers: { 'api-key': env.BREVO_API_KEY as string, accept: 'application/json' } })
+    return await verdictOf(res, 200)
+  } catch {
+    return { ok: false, status: 0, code: null }
+  }
 }
 
 /** Sends one bell; true when Brevo accepted it. Never throws. */
@@ -137,7 +157,8 @@ async function giveBack(db: D1Like, key: string): Promise<void> {
 // ── POST /api/notify/daily ────────────────────────────────────────────────────────────────────────
 //
 // Body `{}` for the previous day's mail, `{"test": true}` for the test mail; each goes out at most once
-// per UTC day. A quiet day sends nothing and stays done. A mail Brevo refuses gives its key back, so
+// per UTC day. A quiet day sends no mail and stays done, but asks Brevo whether the key still works
+// (railCheck), so a dead rail cannot go unnoticed again. A mail Brevo refuses gives its key back, so
 // the next call tries again, and the answer names Brevo's status and error code. Failures answer 424,
 // not 502: Cloudflare replaces a function's 502 with its own error page, so the reason never arrived
 // (seen on the first test, 2026-11-02).
@@ -172,7 +193,13 @@ export async function handleDaily(request: Request, env: NotifyEnv, deps: Deps):
     await giveBack(db, key)
     return json(424, { ok: false, reason: 'store' })
   }
-  if (!mail) return json(200, { ok: true, sent: false, reason: 'quiet', day })
+  if (!mail) {
+    // A quiet day still asks Brevo once, so the key stays in use and a dead rail turns the workflow red.
+    const rail = await railCheck(env, deps)
+    if (rail.ok) return json(200, { ok: true, sent: false, reason: 'quiet', day })
+    await giveBack(db, key)
+    return json(424, { ok: false, reason: 'rail', upstream: rail.status, code: rail.code })
+  }
   const sent = await send(env, deps, mail)
   if (sent.ok) return json(200, { ok: true, sent: true, day })
   await giveBack(db, key)
