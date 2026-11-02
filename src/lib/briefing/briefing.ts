@@ -11,7 +11,7 @@
 // would hand a voice a digit to guess at. Since 2026-11-01 a briefing also opens with the map of the
 // world's state and takes its matters from it (./map.ts), from cycle 012 on, contract `briefing/2`.
 import { ESTIMATE_RANGE, SHORT_MAX, type EstimateItem } from '@/lib/reading/round'
-import { MAP_FROM_CYCLE, mapProblems, spreadProblems, type FieldId, type MapLine } from './map'
+import { LINE_MAX, MAP_FROM_CYCLE, mapProblems, spreadProblems, type FieldId, type MapLine } from './map'
 
 export type SourceKind = 'primary' | 'report'
 
@@ -34,8 +34,8 @@ export interface BriefingMatter {
   title: string
   /** a name short enough to label a mark in a figure */
   short: string
-  /** what stands on a fader */
-  strip: string
+  /** what stood on a fader until the desk took its channels from the map; not asked of a briefing from cycle 012 on */
+  strip?: string
   /** one line for Third Reading; it may not give away what an estimate asks */
   gist: string
   /** its field on the map; every matter has one from cycle 012 on */
@@ -76,7 +76,6 @@ export const MATTERS_MAX = 12
 export const STRIP_MAX = 14
 const LINES_MIN = 2
 const LINES_MAX = 6
-const LINE_MAX = 200
 
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const ROUND_ID = /^after-cycle-\d{3}$/
@@ -105,7 +104,7 @@ export function briefingProblems(b: Briefing, earlier: readonly (readonly FieldI
     ids.add(m.id)
     if (!m.title?.trim() || !m.gist?.trim()) out.push(`${m.id}: text`)
     if (!m.short || m.short.length > SHORT_MAX) out.push(`${m.id}: short name`)
-    if (!m.strip || m.strip.length > STRIP_MAX || m.strip !== m.strip.toUpperCase()) out.push(`${m.id}: strip`)
+    if (!mapped && (!m.strip || m.strip.length > STRIP_MAX || m.strip !== m.strip.toUpperCase())) out.push(`${m.id}: strip`)
     if (SPOKEN_HINT.test(`${m.title} ${m.gist}`)) out.push(`${m.id}: title or gist says how loud the web was`)
     if (!m.terms?.length || m.terms.some((t) => t.trim().length < 2)) out.push(`${m.id}: terms`)
     const lines = m.lines ?? []

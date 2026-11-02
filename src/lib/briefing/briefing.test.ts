@@ -43,6 +43,7 @@ const line = (field: MapLine['field']): MapLine => ({
   direction: 'worse',
   compared_with: '1,000 in 2025',
   signals: 7,
+  lines: [{ text: 'A figure of 1,200.', say: 'A figure of twelve hundred.' }],
   sources: [{ label: 'The agency', url: 'https://example.org/agency', kind: 'primary' }],
 })
 
@@ -174,8 +175,10 @@ describe('what the site makes of a briefing', () => {
 
   it('seats every matter on the desk with a voice of its own, primary sources first', () => {
     const r = toDuckingRound(briefing(), url, duckingTemplate)
-    expect(r.channels).toHaveLength(9)
-    expect(new Set(r.channels.map((c) => c.voice)).size).toBe(9)
+    expect(r.channels.map((c) => c.id)).toEqual(FIELD_IDS)
+    expect(new Set(r.channels.map((c) => c.voice)).size).toBe(11)
+    expect(r.channels[0]!.lines.map((l) => l.text)).toEqual(['A figure of 1,200.', 'A count of 1,200 by 3 May.', 'A sentence with no figure in it.'])
+    expect(r.channels.at(-1)!.lines).toHaveLength(1) // a field with no matter still reads where it stands
     expect(r.channels[0]!.sources[0]!.label).toBe('The agency')
     expect(r.checked).toBe('2026-11-07')
     expect(r.rest.seed).toBe(12)

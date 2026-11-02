@@ -31,10 +31,10 @@ export const inkOf = (position: number): number => position ** 2.6
 /** Under this a channel's words leave the screen altogether, so the quiet ones do not pile up. */
 export const INK_FLOOR = 0.03
 
-/** What a hand on a matter leaves of the other channels' words: it clears the screen for the one held. */
+/** What a hand on a field leaves of the other channels' words: it clears the screen for the one held. */
 export const INK_BESIDE_A_HAND = 0.3
 
-/** A filled lane across the record: the ten matters' joint share, day by day, scaled to its own peak. */
+/** A filled lane across the record: the fields' joint share, day by day, scaled to its own peak. */
 export function lanePath(shares: readonly number[], width: number, height: number): string {
   if (shares.length < 2) return ''
   const peak = Math.max(...shares) || 1

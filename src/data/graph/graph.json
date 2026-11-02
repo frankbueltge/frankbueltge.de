@@ -4,15 +4,15 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "749732c6f97f958c"
+        "sha256": "91a3a631adbbac3c"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "cc5e46fe8dbc4f13"
+        "sha256": "9dec3a447ece52c6"
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "0e17eef360825029"
+        "sha256": "868235493553d2f6"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 588,
-      "edges": 523,
+      "nodes": 591,
+      "edges": 527,
       "nodesByKind": {
-        "decision": 165,
+        "decision": 168,
         "encounter": 6,
         "neighbor": 149,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 222,
         "neighbor-of": 150,
         "participates": 17,
-        "touches": 119
+        "touches": 123
       }
     }
   },
@@ -1728,6 +1728,36 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "Ducking joins the lab on the counter-measurement line"
+      }
+    },
+    {
+      "id": "decision:2026-11-02-1",
+      "kind": "decision",
+      "label": "The entrance leads with the lab's experiments",
+      "date": "2026-11-02",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The entrance leads with the lab's experiments"
+      }
+    },
+    {
+      "id": "decision:2026-11-02-2",
+      "kind": "decision",
+      "label": "A clock of the house starts Common Ground at 06:40 UTC",
+      "date": "2026-11-02",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "A clock of the house starts Common Ground at 06:40 UTC"
+      }
+    },
+    {
+      "id": "decision:2026-11-02-3",
+      "kind": "decision",
+      "label": "Ducking takes its channels from the map, and its play button speaks",
+      "date": "2026-11-02",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Ducking takes its channels from the map, and its play button speaks"
       }
     },
     {
@@ -12481,6 +12511,42 @@
     {
       "kind": "touches",
       "from": "decision:2026-11-01-5",
+      "to": "work:ducking",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "docs/design/2026-11-01-ducking.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-02-1",
+      "to": "work:ducking",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/ducking"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-02-1",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/trending"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-02-2",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": ".github/workflows/trending.yml"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-02-3",
       "to": "work:ducking",
       "source": {
         "file": "docs/decision-log.md",

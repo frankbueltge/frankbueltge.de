@@ -41,7 +41,9 @@ import { createReadout, type ReadoutHandle } from '@/lib/dataviz/readout'
 import { reducedMotion, setVars } from '@/lib/dataviz/runtime'
 import { cn } from '@/lib/ui/cn'
 import type { Facet } from '@/lib/experiments/shelf'
-import type { ThumbMark, Thumbnail } from '@/lib/experiments/thumbnails'
+import type { Thumbnail } from '@/lib/experiments/thumbnails'
+
+import { ThumbMarkShape } from './ThumbMarkShape'
 
 /* The frame's recipe, the same cuts the shelf wore as a list (re-skin 2c): a filter chip, a
    quiet link, a stamp. Named once here so the gallery re-dresses nothing by hand. */
@@ -123,28 +125,6 @@ const ALL: Selection = { group: 'all', kind: 'all', live: 'all' }
 /** How long a thumbnail's entrance runs and how far apart two of them start. */
 const STAGGER_MS = 60
 const STAGGER_MAX = 8
-
-/** One mark of the miniature. Geometry only — every appearance decision is a class. */
-function Mark({ mark }: { mark: ThumbMark }): React.ReactElement | null {
-  switch (mark.t) {
-    case 'bar':
-      return <rect className={mark.on ? 'tm-bar tm-on' : 'tm-bar'} x={mark.x} y={mark.y} width={mark.w} height={mark.h} />
-    case 'gap':
-      return <rect className="tm-gap" x={mark.x} y={mark.y} width={mark.w} height={mark.h} />
-    case 'line':
-      return <path className={mark.on ? 'tm-line tm-on' : 'tm-line'} d={mark.d} />
-    case 'area':
-      return <path className="tm-area" d={mark.d} />
-    case 'dot':
-      return <circle className={mark.on ? 'tm-dot tm-on' : 'tm-dot'} cx={mark.x} cy={mark.y} r={mark.r} />
-    case 'seg':
-      return <line className={mark.on ? 'tm-seg tm-on' : 'tm-seg'} x1={mark.x1} y1={mark.y1} x2={mark.x2} y2={mark.y2} />
-    case 'rule':
-      return <line className="tm-rule" x1={mark.x1} y1={mark.y1} x2={mark.x2} y2={mark.y2} />
-    default:
-      return null
-  }
-}
 
 export default function ExperimentGallery({
   sections,
@@ -361,7 +341,7 @@ export default function ExperimentGallery({
                       <title id={`tm-t-${card.id}`}>{`${card.title} — ${card.thumb.draws}`}</title>
                       <desc>{card.thumb.readout}</desc>
                       {card.thumb.marks.map((mark, i) => (
-                        <Mark key={i} mark={mark} />
+                        <ThumbMarkShape key={i} mark={mark} />
                       ))}
                     </svg>
                   </div>

@@ -7,12 +7,15 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
+import { NAMING } from '@/config/naming'
 import { SELECTED_WORKS, type ShelfPick } from '@/config/selected-works'
+import exportFile from '@/data/attention/export.json'
 import { WERKE } from '@/data/werke'
 import { loadCycle, loadFieldPapers } from '@/lib/ecology/v3'
 import { pieceHref } from '@/lib/engines/publication-links'
-import { readPick, readShelfReport, retirementDay } from './selected-works'
-import { pageSentence, readPoolEntries } from './shelf-pool'
+import { readLabCarousel } from './lab-carousel'
+import { claimedByAttention, readPick, readShelfReport, retirementDay } from './selected-works'
+import { pageSentence, readPoolEntries, withoutLab } from './shelf-pool'
 import { makerStill, pageShotSource, SHELF_STILL_DIR, shelfCrop, shelfKey } from './shelf-stills'
 import { dayMonthYear } from './since'
 
@@ -188,6 +191,49 @@ describe('the pool the edition draws from', () => {
     if (cycle.phase !== 'working') return
     const pad = String(cycle.cycle).padStart(3, '0')
     expect(pool.filter((c) => c.key.endsWith(`cycle-${pad}`)).map((c) => c.key)).toEqual([])
+  })
+})
+
+describe('the shelf under the lab’s carousel (2026-11-02)', () => {
+  // Frank's decision of 2026-11-02 (wording private): the entrance leads with the lab's experiments
+  // in a carousel of their own, and the selected works below it hold the practices' pieces only.
+  const pool = poolEntries.map((e) => e.card)
+  const shelf = withoutLab(pool)
+  // the maker's name as the card reads it: the overview card's title, else the house's fallback
+  const attention = NAMING.overview.items.find((i) => i.id === 'attention')?.title ?? NAMING.opsRoom.signal.houseFallback.attention
+
+  it('holds no piece of the lab’s own register, and none the carousel shows', () => {
+    expect(shelf.filter((c) => c.lab).map((c) => c.key)).toEqual([])
+    const carousel = new Set(readLabCarousel().map((c) => c.href.replace(/\/$/, '')))
+    expect(shelf.filter((c) => carousel.has(c.href.replace(/\/$/, ''))).map((c) => c.key)).toEqual([])
+  })
+
+  it('marks as the lab’s exactly the register’s pieces no other house claims', () => {
+    for (const { pick, card } of poolEntries) {
+      expect(card.lab, card.key).toBe(pick.work.kind === 'experiment' && !claimedByAttention(card.href))
+    }
+  })
+
+  it('keeps Machine Attention’s instrument as the practice’s piece, named for its maker', () => {
+    // the register files it beside the lab's pieces; the practice's own export names its stage
+    const stages = (exportFile.projects as { site_route: string | null }[]).flatMap((p) => (p.site_route ? [p.site_route] : []))
+    const observatory = pool.find((c) => c.href.replace(/\/$/, '') === '/observatory')
+    expect(stages).toContain('/observatory')
+    expect(observatory?.maker).toBe(attention)
+    expect(observatory?.lab).toBe(false)
+    expect(shelf).toContain(observatory)
+  })
+
+  it('keeps every practice of the pool, the practices’ picks leading in their order', () => {
+    expect(shelf).toEqual(pool.filter((c) => !c.lab))
+    const makers = new Set(shelf.map((c) => c.voice ?? c.maker))
+    for (const voice of ['studio', 'atelier', 'field', attention]) expect(makers.has(voice), voice).toBe(true)
+    // n-1 is named by the title its own window declares, which the practice may change
+    expect(shelf.some((c) => c.key.startsWith('n-1-'))).toBe(true)
+    const practicePicks = cards.filter((c) => !c.lab).map((c) => c.key)
+    expect(shelf.slice(0, practicePicks.length).map((c) => c.key)).toEqual(practicePicks)
+    // the band keeps the size of the shelf of record, and the pool has far more to draw from
+    expect(shelf.length).toBeGreaterThan(cards.length * 3)
   })
 })
 
