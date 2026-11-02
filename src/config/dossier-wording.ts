@@ -136,8 +136,6 @@ export const DOSSIER = {
     } as Record<string, string>,
     retiredOn: (when: string) => `retired on ${when}, the record kept`,
     since: (when: string) => `since ${when}`,
-    archiveLink: 'the archive',
-    stageLink: 'its page',
     /** two experiments the export does not list yet: admitted to V0 on that day (the practice's
      *  README, "Where the practice stands") */
     admittedOn: day('2026-10-04'),
@@ -152,7 +150,7 @@ export const DOSSIER = {
         line: 'one named site held against its own public declaration and against the public catalogues; next in line for the discovery pass.',
       },
     ],
-    link: { label: 'how Machine Attention works', href: '/machine-attention/about' },
+    link: { label: 'Machine Attention’s own page', href: '/machine-attention/' },
   },
 
   publication: {

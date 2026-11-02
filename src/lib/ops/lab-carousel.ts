@@ -9,7 +9,9 @@
 //   · then every other experiment by the day it opened, the register's `since` (the field
 //     /experiments sorts by), newest first; a tie keeps the register's own order, as /experiments
 //     keeps it;
-//   · the retired ones stay out: they stopped, and /experiments keeps them on a shelf of their own.
+//   · the retired ones stay out: they stopped, and /experiments keeps them on a shelf of their own;
+//   · and so do the ones EDITION.lab.leave names (Frank's choice of 2026-11-02, wording private:
+//     Headroom, Editorial Deadline, Iceberg Theory, Society), which /experiments keeps listing.
 //
 // A card is read the way a pick of the selected works is read (readPick): title, kind, the day in
 // words, the register's one line, the address through the publication rule, and the still — for a
@@ -29,11 +31,12 @@ import { readPick, type ShelfCard } from './selected-works'
 
 /**
  * The order of the carousel: the `lead` works first, in the order given, then every other work
- * newest first by `since`. Retired works are left out, and so is a lead id the list does not hold
+ * newest first by `since`. Retired works and the ids in `leave` are left out, and so is a lead id
+ * the list does not hold
  * (src/lib/ops/lab-carousel.test.ts holds the edition's own lead to works that are there).
  */
-export function carouselOrder(werke: readonly Werk[], lead: readonly string[]): Werk[] {
-  const running = werke.filter((w) => !w.retired)
+export function carouselOrder(werke: readonly Werk[], lead: readonly string[], leave: readonly string[] = []): Werk[] {
+  const running = werke.filter((w) => !w.retired && !leave.includes(w.id))
   const leads = [...new Set(lead)]
   const first = leads.flatMap((id) => running.filter((w) => w.id === id))
   // Array.prototype.sort is stable: works opened on the same day keep the order they were given in
@@ -53,8 +56,9 @@ export function readLabCarousel(
   root: string = process.cwd(),
   lead: readonly string[] = EDITION.lab.lead,
   werke: readonly Werk[] = WERKE_HOLDINGS,
+  leave: readonly string[] = EDITION.lab.leave,
 ): LabCard[] {
-  return carouselOrder(werke, lead).map((werk) => {
+  return carouselOrder(werke, lead, leave).map((werk) => {
     // a lab experiment needs no presentation shelf to be read, hence the empty one
     const card = readPick({ work: { kind: 'experiment', id: werk.id }, reason: '' }, root, [])
     return {
