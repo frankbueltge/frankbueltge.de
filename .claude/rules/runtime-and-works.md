@@ -22,6 +22,7 @@ Cloudflare Pages Functions, same-origin, keine CORS-Header, alle fail-closed:
 | `/api/zentrale/*` (5) | authentifizierte Ops-API: Status, Antworten, Saat-Review, Site-PRs | `ZENTRALE_SECRET`, `ZENTRALE_GITHUB_TOKEN` |
 | `POST /api/subscribe`, `/api/brevo-hook` | Double-Opt-in-Mailstrecke und ihr Webhook | Brevo-Keys, `BREVO_WEBHOOK_SECRET` |
 | `/stats/*` | First-Party-Proxy auf selbst gehostetes Umami (Vercel + Neon-Postgres) | — |
+| `POST /api/notify/daily` (seit 2026-11-02) | Tagesmail an den Betreiber: Bewertungen, Lesungen und Studienantworten des Vortags, nur gezählt, höchstens eine am Tag; Saat und Bewertung melden sich zusätzlich sofort (`src/lib/notify/`) | `RECEPTION_DB`, Brevo-Keys, `BREVO_NOTIFY_TO` |
 
 **Unverhandelbare Invarianten** (so schon in `functions/api/seed.js` dokumentiert, hier
 für alle geltend): fail-closed überall; nie ein Secret, Token oder eine Key-URL in

@@ -5,7 +5,7 @@
 //
 //   · COUNT. Every signal in Common Ground's day files is one unit of attention. A signal names a
 //     field by Third Reading's rule (whole word in its label or a link title, none of the field's
-//     exclusions). A signal naming two fields counts half for each, so the channels and the rest
+//     exclusions, and where the field has required words one of those in the same text). A signal naming two fields counts half for each, so the channels and the rest
 //     always add up to the day's signals, and nothing is counted twice.
 //   · SHARE. A channel's share is its signals over all signals in the trailing week. The crowd is
 //     what no field named. The sum is the whole ledger, so the 100 % of the desk is not a setting:
@@ -16,7 +16,7 @@
 //
 // Holding a fader (solve) changes no count. It changes the mix for as long as the hand stays. The
 // one thing a hand does that no fader shows is focusOf: the crowd is muffled as a field comes up.
-import { namer } from '@/lib/reading/attention'
+import { countTest } from '@/lib/reading/attention'
 import type { TrendingDay } from '@/lib/trending/types'
 import type { Channel } from './round'
 
@@ -54,15 +54,11 @@ export interface Ledger {
   counts: number[][]
 }
 
-type Counted = Pick<Channel, 'terms' | 'exclude'>
+type Counted = Pick<Channel, 'terms' | 'exclude' | 'requires'>
 
 /** One row per committed day, read once. */
 export function countLedger(channels: readonly Counted[], days: readonly TrendingDay[]): Ledger {
-  const tests = channels.map((c) => {
-    const includes = namer(c.terms)
-    const excludes = namer(c.exclude ?? [])
-    return (text: string) => includes(text) && !excludes(text)
-  })
+  const tests = channels.map(countTest)
   const sorted = [...days].sort((a, b) => a.date.localeCompare(b.date))
   const totals: number[] = []
   const counts = sorted.map((day) => {

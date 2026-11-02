@@ -52,6 +52,11 @@ PEAK = 0.84
 KNEE = 0.7            # a rare plosive above this is rounded off towards PEAK: at this level nobody hears it
 REST_PERIOD = 150.0   # seconds before everything else repeats
 REST_MARGIN = 0.3     # audio kept on both sides of the loop, so encoder padding never falls inside it
+# AAC bitrates, in kbps. A voice is mono speech at 24 kHz; the crowd and the record carry more at once.
+# Lowered on 2026-11-02 from 48 and 72, when the desk grew from eleven channels to thirteen and a round no
+# longer fitted the six megabytes a phone is asked to load (src/lib/ducking/voices.test.ts).
+VOICE_KBPS = 40
+MIX_KBPS = 64
 REST_WEEK = 7
 REST_MAX_CHARS = 64
 REST_SPEEDS = (0.94, 1.06)
@@ -85,6 +90,14 @@ def fold(s):
 def namer(terms):
     patterns = [re.compile(r'(?<![^\W_])' + re.escape(fold(t)) + r'(?![^\W_])') for t in terms]
     return lambda text: any(p.search(fold(text)) for p in patterns)
+
+
+def field_test(c):
+    """The site's rule (src/lib/reading/attention.ts, countTest): a term as a whole word, one of the channel's
+    `requires` too where it has any, none of its exclusions, all in the same text."""
+    inc, exc = namer(c['terms']), namer(c.get('exclude', []))
+    req = namer(c['requires']) if c.get('requires') else None
+    return lambda t: inc(t) and (req is None or req(t)) and not exc(t)
 
 
 def digest(lines):
@@ -140,7 +153,7 @@ def channel(k, ch, index, out):
         t += (len(x) + len(gap)) / RATE
     parts.append(np.zeros(int((TAIL + index * TAIL_STEP) * RATE), dtype=np.float32))
     pcm = levelled(np.concatenate(parts))
-    encode(pcm, out / f"{ch['id']}.m4a", 48)
+    encode(pcm, out / f"{ch['id']}.m4a", VOICE_KBPS)
     print(ch['id'], ch['voice'], f'{len(pcm) / RATE:.1f} s')
     return {'file': f"{ch['id']}.m4a", 'period': round(len(pcm) / RATE, 3), 'level': to_db(speech_rms(pcm)),
             'digest': digest(ch['lines']), 'cues': cues}
@@ -150,7 +163,7 @@ def sample_labels(rnd):
     """A seeded random sample of the week's signals that name no matter of the round."""
     end = date.fromisoformat(rnd['briefing']['written'])
     week = {(end - timedelta(days=i)).isoformat() for i in range(REST_WEEK)}
-    names = [(namer(c['terms']), namer(c.get('exclude', []))) for c in rnd['channels']]
+    tests = [field_test(c) for c in rnd['channels']]
     pool, seen, tally = [], set(), {'labels': 0, 'long': 0, 'stopped': 0, 'unreadable': 0}
     for path in sorted(glob.glob(str(ROOT / 'src/data/trending/20*.json'))):
         if Path(path).stem not in week:
@@ -159,7 +172,7 @@ def sample_labels(rnd):
         for source, signals in sorted(day['signals'].items()):
             for s in signals:
                 texts = [s['label']] + [l['title'] for l in (s.get('links') or [])]
-                if any(inc(t) and not exc(t) for inc, exc in names for t in texts):
+                if any(test(t) for test in tests for t in texts):
                     continue
                 label = re.sub(r'\s*\([^)]*\)\s*$', '', s['label']).strip()
                 key = fold(label)
@@ -205,7 +218,7 @@ def rest(k, rnd, out, labels, week, tally):
     level = to_db(speech_rms(pcm))
     margin = int(REST_MARGIN * RATE)
     pcm = np.concatenate([pcm[-margin:], pcm, pcm[:margin]])
-    encode(pcm, out / 'rest.m4a', 72)
+    encode(pcm, out / 'rest.m4a', MIX_KBPS)
     cues.sort(key=lambda c: c['t'])
     print('rest', len(voices), 'voices', len(cues), 'labels', f'{REST_PERIOD:.0f} s')
     return {'file': 'rest.m4a', 'period': REST_PERIOD, 'margin': REST_MARGIN, 'level': level, 'from': week[0], 'to': week[-1],
@@ -221,8 +234,8 @@ def record_pools(rnd):
     """Per channel, in the order of the days: the headlines of the record's weeks that name its field themselves."""
     end = date.fromisoformat(rnd['briefing']['written'])
     days = [(end - timedelta(days=i)).isoformat() for i in range(RECORD_WEEKS * 7 - 1, -1, -1)]
-    names = [(namer(c['terms']), namer(c.get('exclude', []))) for c in rnd['channels']]
-    counted, pools, seen = [0] * len(names), [[] for _ in names], set()
+    tests = [field_test(c) for c in rnd['channels']]
+    counted, pools, seen = [0] * len(tests), [[] for _ in tests], set()
     for d, day in enumerate(days):
         path = ROOT / f'src/data/trending/{day}.json'
         if not path.exists():
@@ -231,11 +244,11 @@ def record_pools(rnd):
             for s in signals:
                 texts = [s['label']] + [l['title'] for l in (s.get('links') or [])]
                 label = re.sub(r'\s*\([^)]*\)\s*$', '', s['label']).strip()
-                for c, (inc, exc) in enumerate(names):
-                    if not any(inc(t) and not exc(t) for t in texts):
+                for c, test in enumerate(tests):
+                    if not any(test(t) for t in texts):
                         continue
                     counted[c] += 1
-                    if source not in RECORD_SILENT and fold(label) not in seen and inc(label) and readable(label):
+                    if source not in RECORD_SILENT and fold(label) not in seen and test(label) and readable(label):
                         seen.add(fold(label))
                         pools[c].append((d, label))
     return days, counted, pools
@@ -276,7 +289,7 @@ def record(k, rnd, out):
         cues.append({'t': round(t, 2), 'd': round(d, 2), 'text': label, 'c': c})
     end = int((cues[-1]['t'] + cues[-1]['d'] + 1) * RATE)
     pcm = levelled(np.stack([left[:end], right[:end]], axis=1).astype(np.float32))
-    encode(pcm, out / 'record.m4a', 72)
+    encode(pcm, out / 'record.m4a', MIX_KBPS)
     print('record', len(cues), 'headlines', f'{len(pcm) / RATE:.0f} s', {channels[c]['id']: sum(1 for q in cues if q['c'] == c) for c in range(len(channels))})
     return {'file': 'record.m4a', 'from': days[0], 'to': days[-1], 'day': DAY_SECONDS, 'level': to_db(speech_rms(pcm)), 'cues': cues,
             'sample': {'signals': sum(counted), 'readable': sum(len(p) for p in pools), 'spoken': len(cues)}}

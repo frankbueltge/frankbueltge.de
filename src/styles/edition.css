@@ -26,9 +26,7 @@
   color: var(--pp-accent-ink);
 }
 .ed-link {
-  text-decoration: underline !important;
-  text-decoration-thickness: 1px !important;
-  text-underline-offset: 2px;
+  text-decoration-line: underline !important;
 }
 
 /* ——— 1 · the masthead ——————————————————————————————————————————————————————————————————— */
@@ -233,9 +231,9 @@
   outline-offset: 2px;
 }
 
-/* ——— 1a · from the lab (2026-11-02) ——————————————————————————————————————————————————————————
- * The band the page opens with since Frank's decision of 2026-11-02 (wording private): the lab's
- * experiments, one card at a time, in a row the browser scrolls and snaps by itself
+/* ——— 3a · from the lab (2026-11-02) ——————————————————————————————————————————————————————————
+ * The band under the pulse and the since bar since Frank's decision of 2026-11-02 (wording
+ * private): the lab's experiments, one card at a time, in a row the browser scrolls and snaps by itself
  * (src/components/ops/LabCarousel.tsx). On the desk a card is the still beside its words and stops
  * one gutter short of the page's edge, so the next card shows in the right margin and the row says
  * that there is more; on a phone the still stands over the words and the next card shows beside
@@ -446,9 +444,7 @@
 .ed-lab-open {
   margin-top: 2px;
   font-size: 14px;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+  text-decoration-line: underline;
 }
 .ed-lab-slide:hover .ed-lab-open {
   color: var(--pp-accent-ink);
@@ -457,7 +453,7 @@
   font-size: 13px;
 }
 
-/* ——— 1b · the selected works (2026-10-17; under the lab's band since 2026-11-02) ————————————————
+/* ——— 3b · the selected works (2026-10-17; under the lab's band since 2026-11-02) ————————————————
  * The shelf of src/config/selected-works.ts (SelectedWorks.astro). On the desk a grid of four, two
  * rows for the eight picks; below 1100 px one row a finger or a trackpad slides, so the band costs
  * the height of one card wherever the page is narrow. The /dossier variant sets the same cards as
@@ -556,10 +552,11 @@
   color: var(--pp-muted);
   font-size: 12.5px;
 }
-/* Since 2026-11-02 the pulse follows the shelf, and with it everything that says what is running;
-   it keeps a section's distance from the band above, as the lead did when it followed the shelf. */
-.ed-shelf-section + .ed-pulse {
+/* the lead follows the shelf under a single rule: the shelf is the house's, the lead today's (the
+   pulse, which followed the shelf for an hour on 2026-11-02, stands above both again) */
+.ed-shelf-section + .ed-front {
   margin-top: 30px;
+  border-top: 1px solid var(--pp-ink);
 }
 
 /* the dossier's rows: the frame on the left, the card's words and its reason beside it */
@@ -1175,7 +1172,7 @@
   .ed-shelf-plate-kind {
     font-size: 26px;
   }
-  .ed-shelf-section + .ed-pulse {
+  .ed-shelf-section + .ed-front {
     margin-top: 22px;
   }
   .ed-shelf--dossier .ed-shelf-link {

@@ -31,8 +31,12 @@ interface Props {
    *  own (src/pages/og/papers/, 2026-10-18). Extra head matter (citation tags) goes into the
    *  `head` slot. */
   ogImage?: string
+  /** The language of the page's own text where it is not the site's: the German legal texts
+   *  (Impressum, Datenschutz), which stay German while the frame around them stays English
+   *  (2026-11-02). It sets <html lang> and og:locale only, never the frame's strings. */
+  lang?: 'de'
 }
-const { title, description, noindex, analytics = true, canonicalPath, surface, ogImage: ownOgImage } = Astro.props
+const { title, description, noindex, analytics = true, canonicalPath, surface, ogImage: ownOgImage, lang } = Astro.props
 const locale = (Astro.currentLocale ?? 'en') as Locale
 
 // canonical URL via Astro's config-aware locale URL (single locale, en, unprefixed — site-v2
@@ -111,7 +115,7 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     [data-theme='light'|'dark'], and an unstamped page rendered their SVGs black-on-black
     (WP8 finding, 2026-08-01). The anti-FOUC script below still resolves the real theme
     before first paint and overrides this default. */}
-<html lang={locale} data-skin="mono" data-theme="dark" data-surface={surface}>
+<html lang={lang ?? locale} data-skin="mono" data-theme="dark" data-surface={surface}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
@@ -158,7 +162,7 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />

@@ -20,7 +20,7 @@ import {
   resetPanelRegistry,
   type PanelKeyHandlers,
 } from '@/lib/dataviz/stepper'
-import type { GlobeManifest } from '@/lib/globe/feeds'
+import type { GlobeManifest, LayerFeed } from '@/lib/globe/feeds'
 import { LAYERS } from '@/lib/globe/layers'
 import type { LayerRecord } from '@/lib/globe/layers/types'
 import LivingGlobe, {
@@ -30,11 +30,13 @@ import LivingGlobe, {
   dayIndexOf,
   emphasisFor,
   layersToFetch,
-  layersToUpgrade,
   mayFly,
+  mergeFeeds,
+  monthsToFetch,
   mountsOnSight,
   NARROW_PX,
   newestDayIndex,
+  nextMonth,
   parseInk,
   playAdvances,
   scrubberYields,
@@ -64,6 +66,7 @@ const MANIFEST: GlobeManifest = {
       newestBytes: 256,
       href: '/globe/layers/sky.json',
       newestHref: '/globe/layers/sky.newest.json',
+      monthHrefs: { '2026-09': '/globe/layers/sky/2026-09.json' },
     },
     {
       id: 'ghost-fleet',
@@ -79,6 +82,7 @@ const MANIFEST: GlobeManifest = {
       newestBytes: 128,
       href: '/globe/layers/ghost-fleet.json',
       newestHref: '/globe/layers/ghost-fleet.newest.json',
+      monthHrefs: { '2026-09': '/globe/layers/ghost-fleet/2026-09.json' },
     },
   ],
 }
@@ -265,7 +269,8 @@ describe('the drawing half is handed arrays, never a URL', () => {
 
   it('does the fetching in the island, same-origin, from the manifest’s own hrefs', () => {
     const source = read('./LivingGlobe.tsx')
-    expect(source).toContain('fetch(entry.href)')
+    expect(source).toContain('fetch(entry.newestHref)')
+    expect(source).toContain('byId.get(id)?.monthHrefs[month]')
     expect(source).toContain("fetch('/globe/land.json')")
   })
 
@@ -543,24 +548,50 @@ describe('what a first paint costs, and when the archive follows', () => {
   // archive — fifty-seven frames of sky and seventy nights of the fleet — to draw ONE night. Both
   // surfaces open on the newest day, so that is what a first paint fetches; the archive behind it
   // is worth its kilobytes exactly when the visitor leaves that day.
+  // Since 2026-11-02 the archive comes a month at a time: the balance layer's whole archive had
+  // outgrown the data budget (src/lib/globe/feeds.test.ts).
+  const holds = () => ['2026-10', '2026-11']
+
   it('asks for no archive while the newest day is on screen', () => {
-    expect(layersToUpgrade(new Set(), ['sky', 'ghost-fleet'], true)).toEqual([])
+    expect(monthsToFetch(new Set(), ['sky', 'balance'], '2026-11-02', true, holds)).toEqual([])
   })
 
-  it('asks for it the moment the day moves', () => {
-    expect(layersToUpgrade(new Set(), ['sky', 'ghost-fleet'], false)).toEqual(['sky', 'ghost-fleet'])
+  it('asks for the month of the day on screen the moment the day moves', () => {
+    expect(monthsToFetch(new Set(), ['sky', 'balance'], '2026-10-12', false, holds)).toEqual([
+      { id: 'sky', month: '2026-10' },
+      { id: 'balance', month: '2026-10' },
+    ])
   })
 
-  it('asks once, for what is on, and never again', () => {
-    const had = new Set(['sky'])
-    expect(layersToUpgrade(had, ['sky', 'ghost-fleet'], false)).toEqual(['ghost-fleet'])
-    expect(layersToUpgrade(new Set(['sky', 'ghost-fleet']), ['sky', 'ghost-fleet'], false)).toEqual([])
+  it('asks for the next month too in a month’s last days, so a walk does not stall at the turn', () => {
+    expect(monthsToFetch(new Set(), ['balance'], '2026-10-27', false, holds)).toEqual([
+      { id: 'balance', month: '2026-10' },
+      { id: 'balance', month: '2026-11' },
+    ])
+    expect(nextMonth('2026-12')).toBe('2027-01')
+    expect(nextMonth('2026-09')).toBe('2026-10')
   })
 
-  it('fetches the newest feed first and the whole one only in the second stage', () => {
+  it('asks once, and only for a month the layer holds', () => {
+    expect(monthsToFetch(new Set(['balance:2026-10']), ['balance'], '2026-10-12', false, holds)).toEqual([])
+    expect(monthsToFetch(new Set(), ['balance'], '2026-07-12', false, holds)).toEqual([])
+  })
+
+  it('merges a month into what was fetched, the newest day and its instant kept', () => {
+    const head = { id: 'sky', title: 'Sky', kind: 'points', asOf: '2026-11-02', source: LAYERS[0]!.source, days: ['2026-10-31', '2026-11-01', '2026-11-02'] }
+    const newest = { ...head, frames: [{ day: '2026-11-02', records: [] }], instant: { day: '2026-11-02' } } as unknown as LayerFeed
+    const month = { ...head, frames: [{ day: '2026-10-31', records: [] }] } as LayerFeed
+    const merged = mergeFeeds(newest, month)
+    expect(merged.frames.map((f) => f.day)).toEqual(['2026-10-31', '2026-11-02'])
+    expect(merged.instant).toEqual(newest.instant)
+    expect(mergeFeeds(month, newest).frames.map((f) => f.day)).toEqual(['2026-10-31', '2026-11-02'])
+    expect(mergeFeeds(undefined, month)).toBe(month)
+  })
+
+  it('fetches the newest feed first and a month only in the second stage, never the whole archive', () => {
     const source = read('./LivingGlobe.tsx')
     expect(source).toContain('fetch(entry.newestHref)')
-    expect(source).toContain('fetch(entry.href)')
-    expect(source).toContain('layersToUpgrade(wholeRef.current, active, onNewestDay)')
+    expect(source).not.toContain('fetch(entry.href)')
+    expect(source).toContain('monthsToFetch(monthsRef.current, active, day, onNewestDay')
   })
 })

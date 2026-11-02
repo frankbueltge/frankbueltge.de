@@ -10,8 +10,8 @@
   "channels": [
     {
       "id": "war",
-      "strip": "WAR",
-      "title": "War and armed conflict",
+      "strip": "WAR & VIOLENCE",
+      "title": "War and violence",
       "terms": [
         "Ukraine",
         "Ukrainian",
@@ -41,7 +41,20 @@
         "war crimes",
         "nuclear weapons",
         "missile strike",
-        "missile strikes"
+        "missile strikes",
+        "violence",
+        "murder",
+        "homicide",
+        "homicides",
+        "shooting",
+        "mass shooting",
+        "mass shootings",
+        "gun violence",
+        "gangs",
+        "gang violence",
+        "cartels",
+        "nuclear arsenal",
+        "warheads"
       ],
       "exclude": [
         "star wars",
@@ -72,7 +85,12 @@
         "gaza vs",
         "vs gaza",
         "gaza v",
-        "v gaza"
+        "v gaza",
+        "shooting star",
+        "shooting stars",
+        "shooting guard",
+        "murder mystery",
+        "murder drones"
       ],
       "voice": "af_heart",
       "lines": [
@@ -83,6 +101,10 @@
         {
           "text": "SIPRI put world military spending at $2,887 billion in 2025, up 2.9% in real terms.",
           "say": "SIPRI put world military spending at two thousand eight hundred and eighty-seven billion dollars in twenty twenty-five, up two point nine percent in real terms."
+        },
+        {
+          "text": "UNODC puts the world's homicide rate at 5.1 per 100,000 people in 2024, down from 5.9 in 2015.",
+          "say": "The United Nations Office on Drugs and Crime puts the world's homicide rate at five point one per hundred thousand people in twenty twenty-four, down from five point nine in twenty fifteen."
         },
         {
           "text": "Iran announced a prohibited zone around the Strait of Hormuz on 5 September.",
@@ -117,6 +139,10 @@
         {
           "label": "SIPRI, Trends in World Military Expenditure, 2025, fact sheet, April 2026",
           "url": "https://www.sipri.org/publications/2026/sipri-fact-sheets/trends-world-military-expenditure-2025"
+        },
+        {
+          "label": "UN, SDG Extended Report 2026, Goal 16 (UNODC estimates)",
+          "url": "https://unstats.un.org/sdgs/report/2026/extended-report/Extended-Report-2026_Goal-16.pdf"
         },
         {
           "label": "IMF WEO, October 2026",
@@ -233,6 +259,67 @@
       ]
     },
     {
+      "id": "economy",
+      "strip": "DEBT & WORK",
+      "title": "Debt, work and cost of living",
+      "terms": [
+        "debt crisis",
+        "sovereign debt",
+        "public debt",
+        "debt relief",
+        "debt distress",
+        "IMF",
+        "austerity",
+        "inflation",
+        "cost of living",
+        "food prices",
+        "recession",
+        "tariff",
+        "tariffs",
+        "trade war",
+        "unemployment",
+        "jobless",
+        "layoffs",
+        "job cuts",
+        "minimum wage",
+        "eviction",
+        "evictions",
+        "child labour",
+        "child labor"
+      ],
+      "exclude": [
+        "cosmic inflation",
+        "inflaton",
+        "grade inflation",
+        "mission impossible"
+      ],
+      "voice": "bf_lily",
+      "lines": [
+        {
+          "text": "UN Trade and Development counts 3.7 billion people in 51 developing countries that spend more on interest than on either health or education.",
+          "say": "UN Trade and Development counts three point seven billion people, in fifty-one developing countries, that spend more on interest than on either health or education."
+        },
+        {
+          "text": "Developing countries paid $995 billion in net interest on public debt in 2025.",
+          "say": "Developing countries paid nine hundred and ninety-five billion dollars in net interest on public debt in twenty twenty-five."
+        },
+        {
+          "text": "The ILO counts nearly 300 million workers in extreme working poverty and 2.1 billion in informal work.",
+          "say": "The International Labour Organization counts nearly three hundred million workers in extreme working poverty, and two point one billion in informal work."
+        }
+      ],
+      "sources": [
+        {
+          "label": "UN Trade and Development, A World of Debt, 2026 edition",
+          "url": "https://unctad.org/publication/world-of-debt"
+        },
+        {
+          "label": "ILO, Employment and Social Trends 2026, 2026-01-14",
+          "url": "https://www.ilo.org/publications/flagship-reports/employment-and-social-trends-2026"
+        }
+      ]
+    },
+    {
       "id": "inequality",
       "strip": "INEQUALITY",
       "title": "Inequality",
@@ -246,7 +333,11 @@
         "racism",
         "sexism",
         "gender pay gap",
-        "femicide"
+        "femicide",
+        "gender gap",
+        "gender equality",
+        "gender based violence",
+        "domestic violence"
       ],
       "voice": "bf_emma",
       "lines": [
@@ -261,6 +352,10 @@
         {
           "text": "Average income in North America & Oceania is about 13 times Sub-Saharan Africa's.",
           "say": "Average income in North America and Oceania is about thirteen times Sub-Saharan Africa's."
+        },
+        {
+          "text": "About 50,000 women and girls were killed by partners or family members in 2024, UN Women and UNODC estimate.",
+          "say": "About fifty thousand women and girls were killed by partners or family members in twenty twenty-four, UN Women and UNODC estimate."
         }
       ],
       "sources": [
@@ -271,6 +366,10 @@
         {
           "label": "World Inequality Lab, World Inequality Report 2026, full report",
           "url": "https://wir2026.wid.world/www-site/uploads/2026/09/World_Inequality_Report_2026.pdf"
+        },
+        {
+          "label": "UN Women and UNODC, Femicides in 2024, 2025-11-24",
+          "url": "https://www.unwomen.org/sites/default/files/2025-11/femicides-in-2024-global-estimates-of-intimate-partner-family-member-femicides-en.pdf"
         }
       ]
     },
@@ -295,7 +394,8 @@
         "bribery",
         "lobbying",
         "lobbyists",
-        "private equity"
+        "private equity",
+        "big tech"
       ],
       "exclude": [
         "shop like a billionaire"
@@ -329,7 +429,7 @@
     {
       "id": "climate",
       "strip": "CLIMATE",
-      "title": "Climate, nature and disasters",
+      "title": "Climate and disasters",
       "terms": [
         "climate",
         "global warming",
@@ -348,11 +448,7 @@
         "emissions",
         "fossil fuel",
         "fossil fuels",
-        "sea level",
-        "biodiversity",
-        "deforestation",
-        "pollution",
-        "microplastics"
+        "sea level"
       ],
       "voice": "af_bella",
       "lines": [
@@ -398,25 +494,6 @@
         },
         {
           "text": "As of July, finance and adaptation remained stalled."
-        },
-        {
-          "text": "The Living Planet Index records an average decline of 73 percent since 1970.",
-          "say": "The Living Planet Index records an average decline of seventy-three percent since nineteen seventy."
-        },
-        {
-          "text": "It rests on 35,803 population trends of 5,790 vertebrate species.",
-          "say": "It rests on thirty-five thousand, eight hundred and three population trends, of five thousand, seven hundred and ninety vertebrate species."
-        },
-        {
-          "text": "95 percent in Latin America and the Caribbean.",
-          "say": "Ninety-five percent in Latin America and the Caribbean."
-        },
-        {
-          "text": "85 percent in fresh water.",
-          "say": "Eighty-five percent in fresh water."
-        },
-        {
-          "text": "That is what is monitored."
         }
       ],
       "sources": [
@@ -445,16 +522,88 @@
           "url": "https://unfccc.int/cop31"
         },
         {
-          "label": "WWF, Living Planet Report 2026",
-          "url": "https://wwf.panda.org/wwf_news/press_releases/?16359466"
-        },
-        {
           "label": "PBL on the UNEP Emissions Gap Report",
           "url": "https://www.pbl.nl/en/publications/unep-emissions-gap-report-2026"
         },
         {
           "label": "Böll Foundation",
           "url": "https://www.boell.de/en/cop-climate-change-conference"
+        }
+      ]
+    },
+    {
+      "id": "nature",
+      "strip": "NATURE",
+      "title": "Nature, air and water",
+      "terms": [
+        "biodiversity",
+        "deforestation",
+        "rainforest",
+        "wildlife",
+        "endangered species",
+        "overfishing",
+        "coral reef",
+        "coral reefs",
+        "coral bleaching",
+        "pollution",
+        "air pollution",
+        "air quality",
+        "smog",
+        "PM2.5",
+        "microplastics",
+        "plastic pollution",
+        "oil spill",
+        "pesticide",
+        "pesticides",
+        "drinking water",
+        "groundwater",
+        "water crisis",
+        "water shortage",
+        "water scarcity",
+        "sanitation"
+      ],
+      "voice": "bm_daniel",
+      "lines": [
+        {
+          "text": "Air pollution contributed to about 7.9 million deaths in 2023, the State of Global Air estimates.",
+          "say": "Air pollution contributed to about seven point nine million deaths in twenty twenty-three, the State of Global Air estimates."
+        },
+        {
+          "text": "In 2024, 2.1 billion people lacked safely managed drinking water and 3.4 billion safely managed sanitation.",
+          "say": "In twenty twenty-four, two point one billion people lacked safely managed drinking water, and three point four billion, safely managed sanitation."
+        },
+        {
+          "text": "The Living Planet Index records an average decline of 73 percent since 1970.",
+          "say": "The Living Planet Index records an average decline of seventy-three percent since nineteen seventy."
+        },
+        {
+          "text": "It rests on 35,803 population trends of 5,790 vertebrate species.",
+          "say": "It rests on thirty-five thousand, eight hundred and three population trends, of five thousand, seven hundred and ninety vertebrate species."
+        },
+        {
+          "text": "95 percent in Latin America and the Caribbean.",
+          "say": "Ninety-five percent in Latin America and the Caribbean."
+        },
+        {
+          "text": "85 percent in fresh water.",
+          "say": "Eighty-five percent in fresh water."
+        },
+        {
+          "text": "That is what is monitored."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Health Effects Institute, State of Global Air 2025, 2025-10-22",
+          "url": "https://www.stateofglobalair.org/news-events/2025/new-state-global-air-2025-report-shows-nearly-nine-ten-global-air-pollution-deaths"
+        },
+        {
+          "label": "WHO and UNICEF, Joint Monitoring Programme, 2025-08-26",
+          "url": "https://www.who.int/news/item/26-08-2025-1-in-4-people-globally-still-lack-access-to-safe-drinking-water---who--unicef"
+        },
+        {
+          "label": "WWF, Living Planet Report 2026",
+          "url": "https://wwf.panda.org/wwf_news/press_releases/?16359466"
         },
         {
           "label": "ATTA on the WWF report",
@@ -760,7 +909,127 @@
       "strip": "AI",
       "title": "AI and its harms",
       "terms": [
+        "jobs",
+        "job losses",
+        "job cuts",
+        "layoffs",
+        "laid off",
+        "unemployment",
+        "replace",
+        "replaced",
+        "replaces",
+        "replacing",
+        "automation",
+        "their job",
+        "your job",
+        "risk",
+        "risks",
+        "danger",
+        "dangerous",
+        "threat",
+        "threats",
+        "warning",
+        "warn",
+        "warns",
+        "warned",
+        "safety",
+        "unsafe",
+        "existential",
+        "extinction",
+        "superintelligence",
+        "loss of control",
+        "rogue",
+        "concerning",
+        "harm",
+        "harms",
+        "harmful",
+        "afraid",
+        "fear",
+        "fears",
+        "concern",
+        "concerns",
+        "concerned",
+        "worry",
+        "worries",
+        "alarm",
+        "doom",
+        "catastrophe",
+        "catastrophic",
+        "misuse",
+        "abuse",
+        "scam",
+        "scams",
+        "scammers",
+        "fraud",
+        "deepfake",
+        "deepfakes",
+        "misinformation",
+        "disinformation",
+        "propaganda",
+        "surveillance",
+        "facial recognition",
+        "weapons",
+        "weapon",
+        "warfare",
+        "military",
+        "drones",
+        "cyberattack",
+        "cyberattacks",
+        "hackers",
+        "hacked",
+        "lawsuit",
+        "lawsuits",
+        "sued",
+        "sues",
+        "suing",
+        "investigation",
+        "investigating",
+        "regulation",
+        "regulate",
+        "regulated",
+        "regulators",
+        "ban",
+        "bans",
+        "banned",
+        "protest",
+        "protests",
+        "boycott",
+        "fined",
+        "bubble",
+        "crash",
+        "bailout",
+        "energy",
+        "electricity",
+        "power grid",
+        "power bills",
+        "emissions",
+        "water",
+        "pollution",
+        "pfas",
+        "nuclear",
+        "data center",
+        "data centers",
+        "data centre",
+        "data centres",
+        "suicide",
+        "psychosis",
+        "mental health",
+        "addiction",
+        "children",
+        "teens",
+        "teenagers",
+        "loneliness",
+        "slop",
+        "copyright",
+        "plagiarism"
+      ],
+      "exclude": [
+        "artificial superintelligence alliance",
+        "nex agi"
+      ],
+      "requires": [
         "AI",
+        "A.I.",
         "artificial intelligence",
         "ChatGPT",
         "OpenAI",
@@ -769,14 +1038,14 @@
         "superintelligence",
         "chatbot",
         "chatbots",
+        "LLM",
+        "LLMs",
+        "deepfake",
+        "deepfakes",
         "data center",
         "data centers",
         "data centre",
         "data centres"
-      ],
-      "exclude": [
-        "artificial superintelligence alliance",
-        "nex agi"
       ],
       "voice": "af_sarah",
       "lines": [

@@ -55,6 +55,14 @@ const limits = [
 
 const changelog = [
   {
+    date: '2026-11-02',
+    what:
+      'The archive behind the newest day comes a month at a time. A layer grows by one day every night, and that ' +
+      'night the balance layer’s whole archive passed the data budget of 150 kilobytes gzipped per request, which ' +
+      'stopped every deploy of the site. The page fetches the month a visitor walks into, and the next one in a ' +
+      'month’s last days; the whole feed stays at its address, as data.',
+  },
+  {
     date: '2026-10-17',
     what:
       'Ghost Fleet was retired, its archive kept (src/data/werke.ts). Its layer still draws every night that ' +

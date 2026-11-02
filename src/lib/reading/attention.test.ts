@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { TrendingDay } from '@/lib/trending/types'
 import { getTrendingDays } from '@/lib/trending/data'
-import { fold, namer, readAttention, signalsById } from './attention'
+import { countTest, fold, namer, readAttention, signalsById } from './attention'
 import { roundById } from './rounds'
 
 const signal = (label: string, links: string[] = []) => ({
@@ -45,6 +45,17 @@ describe('fold and namer', () => {
   it('reads a multi-word term across a hyphen', () => {
     expect(namer(['cost of living'])('The cost-of-living squeeze')).toBe(true)
     expect(namer(['entry-level'])('entry level hiring')).toBe(true)
+  })
+})
+
+describe('countTest', () => {
+  it('asks for a required word beside a term, in the same text, where a rule has any', () => {
+    const ai = countTest({ terms: ['jobs', 'safety'], requires: ['AI'], exclude: ['job search'] })
+    expect(ai('AI will cost jobs')).toBe(true)
+    expect(ai('Jobs report beats estimates')).toBe(false)
+    expect(ai('AI model launch')).toBe(false)
+    expect(ai('AI jobs board: the best job search')).toBe(false)
+    expect(countTest({ terms: ['famine'] })('Famine declared')).toBe(true)
   })
 })
 

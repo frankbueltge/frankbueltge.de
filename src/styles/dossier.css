@@ -18,9 +18,7 @@
   padding-inline: var(--pp-gutter);
 }
 .ds-link {
-  text-decoration: underline !important;
-  text-decoration-thickness: 1px !important;
-  text-underline-offset: 2px;
+  text-decoration-line: underline !important;
 }
 
 /* ——— the masthead —————————————————————————————————————————————————————————————————————————— */
@@ -260,21 +258,6 @@
   box-shadow: inset 3px 0 0 var(--pp-ink);
   padding-left: 10px;
 }
-.ds-table--neighbours tbody th {
-  width: 200px;
-  font-family: var(--pp-serif);
-  font-size: 16px;
-}
-.ds-table--neighbours td {
-  color: var(--pp-ink-2);
-}
-.ds-when {
-  display: block;
-  margin-top: 3px;
-  color: var(--pp-muted);
-  font-family: var(--pp-sans);
-  font-size: 12px;
-}
 
 /* ——— Machine Attention, the repositories, the contact ———————————————————————————————————— */
 .ds-projects {
@@ -291,8 +274,15 @@
   padding: 9px 0;
   border-bottom: 1px solid var(--pp-rule-light);
 }
-.ds-projects--admitted li {
+.ds-projects--admitted li,
+.ds-projects--ways li {
   grid-template-columns: 240px minmax(0, 1fr);
+}
+/* a work that leaves the screen links its own page; a letter is named, the post office holds it;
+   each way in links the page where it can be done */
+.ds-projects a.ds-project-name,
+.ds-ways-in dt a {
+  text-decoration-line: underline;
 }
 .ds-project-name {
   font-family: var(--pp-serif);
@@ -320,9 +310,7 @@
 .ds-channels a {
   display: inline-block;
   padding-block: 4px;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  text-decoration-line: underline;
 }
 .ds-conductor,
 .ds-licence {
@@ -364,7 +352,8 @@
     grid-template-columns: minmax(0, 1fr);
   }
   .ds-projects li,
-  .ds-projects--admitted li {
+  .ds-projects--admitted li,
+  .ds-projects--ways li {
     grid-template-columns: minmax(0, 1fr);
   }
   /* a table row becomes a block; each cell names its column */

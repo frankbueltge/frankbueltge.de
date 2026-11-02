@@ -11,8 +11,6 @@ export const SITE = {
   /** Where Frank works from; visible on /about and in the Person data (name-query disambiguation). */
   city: 'Karlsruhe',
   email: 'hello@frankbueltge.de',
-  /** Open-source repository of the lab's measurement instruments. */
-  sourceCode: 'https://github.com/frankbueltge/lab-pipelines',
   /** Frank's personal profiles (used as Person.sameAs). Instagram is owned but empty → schema only. */
   social: {
     linkedin: 'https://www.linkedin.com/in/frankbueltge/',

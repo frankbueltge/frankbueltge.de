@@ -626,6 +626,8 @@ export const NODES: readonly ApparatusNode[] = [
       // 2026-10-27 (docs/design/2026-10-26-third-reading.md, docs/design/2026-10-27-practice-studies.md).
       { label: '/api/reading/*', what: 'Third Reading: a reader’s reading of the briefing’s matters, anonymous, released only after its day in batches of five, without the day', ref: 'functions/api/reading/submit.js', secrets: ['RECEPTION_DB', 'TURNSTILE_SECRET_KEY'] },
       { label: '/api/study/*', what: 'the practices’ studies: answers to a study whose file the house’s machine check passed, sent from the house’s consent frame inside its work; anonymous, released after their day in batches of five, and back to the practice each night as material', ref: 'functions/api/study/submit.js', secrets: ['RECEPTION_DB', 'TURNSTILE_SECRET_KEY', 'GEMINI_API_KEY'] },
+      // 2026-11-02 (src/lib/notify/operator.ts).
+      { label: 'POST /api/notify/daily', what: 'the operator’s bell: a seed or a visitor’s rating rings at once and names what came, never what was written; the day’s readings and study answers are counted once, the day after, so no mail keeps their hour', ref: 'functions/api/notify/daily.js', secrets: ['RECEPTION_DB', 'BREVO_API_KEY', 'BREVO_NOTIFY_TO'] },
     ],
   },
   {

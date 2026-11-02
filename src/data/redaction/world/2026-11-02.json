@@ -1,0 +1,134 @@
+{
+  "date": "2026-11-02",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-02T13:51:05Z",
+    "counts": {
+      "botwall": 4,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 292,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 4
+    },
+    "decided": 292,
+    "excluded_unverifiable": 8,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.013
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.013
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-31",
+    "receipts": [],
+    "sample_drawn_at": "2026-11-01T11:58:36Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 2964,
+      "replaced": 3561,
+      "trivial": 504,
+      "update": 230
+    },
+    "day": "2026-11-01",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Vijay"
+        ],
+        "after": "Vijay: Celebrity MasterChef Tamil: Samantha Opens Up About Her Admiration for Vijay, Calls Him an 'Inspirational Person'",
+        "before": "Samantha Ruth Prabhu: Celebrity MasterChef Tamil: Samantha Opens Up About Her Admiration for Vijay, Calls Him an 'Inspirational Person'",
+        "detected": "2026-11-01T08:17:56Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Ruth",
+          "Prabhu",
+          "Samantha"
+        ],
+        "similarity": 0.889,
+        "url": "https://timesofindia.indiatimes.com/tv/news/tamil/celebrity-masterchef-tamil-samantha-opens-up-about-her-admiration-for-vijay-calls-him-an-inspirational-person/articleshow/135186065.cms",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Utd"
+        ],
+        "after": "Man Utd's latest abject display spells the end for Carrick after huge call backfires",
+        "before": "Man United's latest abject display spells the end for Michael Carrick after huge call backfires",
+        "detected": "2026-11-01T17:04:28Z",
+        "domain": "aol.co.uk",
+        "removed": [
+          "United",
+          "Michael"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.aol.co.uk/articles/man-united-latest-abject-display-162153000.html",
+        "weight": 6,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Shift"
+        ],
+        "after": "CJI Chandrachud Asked Me To Take 'Middle Path' In PMLA Case; Was Under Pressure To Shift Judges Matter From Me : Justice Kaul",
+        "before": "CJI Chandrachud Asked Me To Take 'Middle Path' In PMLA Case; Was Under Pressure To Remove Judges Appointment Matter From Me : Justice Kaul",
+        "detected": "2026-11-01T12:16:38Z",
+        "domain": "livelaw.in",
+        "removed": [
+          "Remove",
+          "Appointment"
+        ],
+        "similarity": 0.864,
+        "url": "https://www.livelaw.in/top-stories/j-kaul-555859",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 9644,
+      "PAGE_TEXTCHANGE": 78840,
+      "PAGE_TITLECHANGE": 33536,
+      "UNCHANGED_CONTENT": 503390
+    },
+    "title_changes_en": 7259,
+    "trace": [
+      {
+        "bytes_billed": 16777216,
+        "created": "1793627189518",
+        "job_id": "world_gdg_counts_20261101",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 157286400,
+        "created": "1793627195355",
+        "job_id": "world_gdg_titles_20261101",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-02T13:51:05Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-01.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

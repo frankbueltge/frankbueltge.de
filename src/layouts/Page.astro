@@ -18,11 +18,13 @@ interface Props {
   ogImage?: string
   /** see Base.astro — false keeps the page out of the visitor count (the analytics opt-out) */
   analytics?: boolean
+  /** see Base.astro — the language of a page whose own text is not English */
+  lang?: 'de'
 }
-const { title, description, noindex, canonicalPath, surface, ogImage, analytics } = Astro.props
+const { title, description, noindex, canonicalPath, surface, ogImage, analytics, lang } = Astro.props
 ---
 
-<Base title={title} description={description} noindex={noindex} analytics={analytics} canonicalPath={canonicalPath} surface={surface} ogImage={ogImage}>
+<Base title={title} description={description} noindex={noindex} analytics={analytics} canonicalPath={canonicalPath} surface={surface} ogImage={ogImage} lang={lang}>
   <slot name="head" slot="head" />
   <TopBar />
   <slot />

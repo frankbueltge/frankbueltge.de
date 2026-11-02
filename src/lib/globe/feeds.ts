@@ -8,6 +8,12 @@
 // time axis and every table under the plate can be built without downloading a single record, and
 // a visitor who never opens a layer never pays for it.
 //
+// Since 2026-11-02 the page never fetches a whole feed. A layer grows by one day every night, and
+// that night the balance layer's archive passed the per-layer ceiling of the data budget
+// (feeds.test.ts), which stopped every deploy of the site. So the records come in pieces: the
+// newest day when a layer is switched on, and a MONTH of the archive when a visitor walks into it.
+// The whole feed stays at its address, as data for whoever wants the archive in one file.
+//
 // Both are built at build time, from the same model the floor is drawn from — the plate a visitor
 // sees without JavaScript and the data an island would fetch cannot drift apart, because there is
 // one model behind both.
@@ -56,6 +62,9 @@ export interface ManifestLayer {
    *  a visitor walks the days. (Added 2026-09-03 after the entrance's mobile audit: the hero was
    *  pulling seventy-six kilobytes of archive to draw a single night.) */
   newestHref: string
+  /** where each month of the archive is, by `YYYY-MM`: the page fetches the month a visitor walks
+   *  into, never the whole archive (2026-11-02). A static layer holds no day and so no month. */
+  monthHrefs: Record<string, string>
 }
 
 export interface GlobeManifest {
@@ -109,6 +118,33 @@ export function feedBytes(layer: GlobeLayer): number {
   return encoder.encode(feedJson(layer)).length
 }
 
+/** The month a day belongs to, `YYYY-MM`. */
+export const monthOf = (day: string): string => day.slice(0, 7)
+
+/** The months a layer holds days in, ascending. */
+export function layerMonths(layer: GlobeLayer): string[] {
+  return [...new Set(layer.days.map(monthOf))]
+}
+
+export const monthHref = (id: string, month: string): string => `/globe/layers/${id}/${month}.json`
+
+/** The feed with one month's frames in it. `days` is left whole, as in the newest feed, so a piece
+ *  still says what the layer holds; the island merges the pieces it has fetched, day by day. The
+ *  newest day's `instant` stays with the newest feed, which every visitor of the layer has. */
+export function monthFeed(layer: GlobeLayer, month: string): LayerFeed {
+  return {
+    id: layer.id,
+    title: layer.title,
+    kind: layer.kind,
+    asOf: layer.asOf,
+    source: layer.source,
+    days: layer.days,
+    frames: layer.days.filter((day) => monthOf(day) === month).map((day) => frameOf(layer, day)),
+  }
+}
+
+export const monthJson = (layer: GlobeLayer, month: string): string => JSON.stringify(monthFeed(layer, month))
+
 export function buildManifest(model: LivingGlobe = buildLivingGlobe(), layers: readonly GlobeLayer[] = LAYERS): GlobeManifest {
   return {
     _:
@@ -132,6 +168,7 @@ export function buildManifest(model: LivingGlobe = buildLivingGlobe(), layers: r
       newestBytes: newestBytes(layer),
       href: `/globe/layers/${layer.id}.json`,
       newestHref: `/globe/layers/${layer.id}.newest.json`,
+      monthHrefs: Object.fromEntries(layerMonths(layer).map((month) => [month, monthHref(layer.id, month)])),
     })),
   }
 }

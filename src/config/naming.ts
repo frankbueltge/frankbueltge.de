@@ -108,11 +108,6 @@ export const NAMING = {
    * unverständlich; Verständlichkeit vor Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
   sub: 'One question runs through the projects here: how can AI and automation support and extend artistic research — not replace it, and not stand in for art. Machines here hold attention for months, measure the same thing every night, read sources at a scale no one could, and build and test prototypes in hours. What comes out is research material, studies and instruments, shown as such and never claimed as art. Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
-  /** Seit 2026-08-10 NICHT mehr im Hero (Frank, 10.08., Wortlaut privat — die Zeile kann
-   * ganz entfallen), zusammen mit dem „how this works →"-Link, der ebenfalls entfiel;
-   * /apparatus bleibt als Seite, verlinkt von den Ökologie-Flächen. Bleibt hier, weil /dossier die Zeile im Presse-Kontext führt. */
-  conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
-
   /** „What this is" — Klartext-Block direkt nach dem Puls, vor den Türen (Frank, 25.07.:
    * die Startseite war zu abstrakt und holte neue Besucher nicht ab). Sagt in einfacher
    * Sprache, was die Ökologie konkret IST, bevor die abstrakten Türen kommen. Erste Person

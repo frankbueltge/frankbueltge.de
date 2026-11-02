@@ -8,11 +8,14 @@
 //      (src/lib/engines/frame-dist.ts says why that wait had become a deadlock);
 //   2. since 2026-10-18, gives every published work, presentation and closing report of the
 //      practices what a shared link needs — preview tags and a preview image — and a line back to
-//      the site where no frame stands (src/lib/engines/share-dist.ts).
+//      the site where no frame stands (src/lib/engines/share-dist.ts);
+//   3. since 2026-11-02, names the same pages to search engines in a sitemap of their own, which
+//      Astro's sitemap cannot do because it lists only Astro's routes (src/lib/engines/search-dist.ts).
 //
 // It prints one line per step and never fails the build: every practice's integrate runs this
 // build as its gate, and a page these steps cannot finish is served as Astro built it.
 import { frameDist } from '../../src/lib/engines/frame-dist'
+import { searchDist } from '../../src/lib/engines/search-dist'
 import { shareDist } from '../../src/lib/engines/share-dist'
 
 const dist = process.argv[2] ?? 'dist'
@@ -35,4 +38,12 @@ try {
   if (r.failed.length) console.warn(`[share-dist] ${r.failed.length} problem(s): ${r.failed.join('; ')}`)
 } catch (e) {
   console.error(`[share-dist] the practice pages are served as built, without preview tags: ${(e as Error).message}`)
+}
+
+try {
+  const r = searchDist({ dist, publicDir: 'public' })
+  const held = r.held.length ? `; ${r.held.length} kept out by a noindex rule: ${r.held.join(', ')}` : ''
+  console.log(`[search-dist] ${r.listed} practice page(s) in the sitemap, ${r.registered ? 'registered in' : 'NOT in'} the sitemap index${held}`)
+} catch (e) {
+  console.error(`[search-dist] the practice pages stay out of the sitemap: ${(e as Error).message}`)
 }

@@ -43,6 +43,7 @@ describe('the round', () => {
 
 describe('the channels', () => {
   it('are the fields of the map, in its order, so that a fader means the same from round to round', () => {
+    // the round after cycle 011 took the two fields that joined the map on 2026-11-02 the same evening
     expect(round.channels.map((c) => c.id)).toEqual(FIELD_IDS)
   })
 })
@@ -61,6 +62,7 @@ describe('the record', () => {
       const channel = round.channels[q.c]!
       expect(namer(channel.terms)(q.text), q.text).toBe(true)
       expect(namer(channel.exclude ?? [])(q.text), q.text).toBe(false)
+      if (channel.requires) expect(namer(channel.requires)(q.text), q.text).toBe(true)
     }
   })
 

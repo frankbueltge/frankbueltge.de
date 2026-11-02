@@ -3,10 +3,13 @@
 // and gets slower for a visitor on a phone, one night at a time. So the ceiling is a test — each
 // layer's feed is serialised and gzipped HERE, at the size a browser would actually receive it,
 // and a layer that outgrows the budget fails the suite. The escape is not a bigger number: it is
-// sharding the feed per day, which the manifest already carries the counts for.
+// sharding. On 2026-11-02 the balance layer's whole archive passed the ceiling and stopped every
+// deploy, so since then the page fetches a layer's newest day and then a month at a time, and the
+// ceiling holds for each of those requests. A month that ever outgrows it is to be split per day,
+// which the manifest already carries the counts for — never answered with a bigger number.
 import { gzipSync } from 'node:zlib'
 import { describe, expect, it } from 'vitest'
-import { buildManifest, feedBytes, feedJson, layerFeed } from './feeds'
+import { buildManifest, feedBytes, feedJson, layerFeed, layerMonths, monthFeed, monthJson, newestJson } from './feeds'
 import { LAYERS } from './layers'
 import { buildLivingGlobe } from './living'
 
@@ -16,14 +19,39 @@ const MAX_GZ = 150 * 1024
 const model = buildLivingGlobe()
 const manifest = buildManifest(model)
 
+const gzipped = (json: string): number => gzipSync(Buffer.from(json, 'utf8')).length
+
 describe('the data budget', () => {
-  it.each(LAYERS.map((l) => [l.id, l] as const))('%s fits in the per-layer ceiling, gzipped', (id, layer) => {
-    const gz = gzipSync(Buffer.from(feedJson(layer), 'utf8')).length
-    expect(
-      gz,
-      `${id}'s feed is ${(gz / 1024).toFixed(1)} KB gzipped, over the ${MAX_GZ / 1024} KB ceiling — ` +
-        `shard it per day (the manifest already carries the per-day counts), do not raise the budget`,
-    ).toBeLessThanOrEqual(MAX_GZ)
+  it.each(LAYERS.map((l) => [l.id, l] as const))('%s: its newest day fits in the per-request ceiling, gzipped', (id, layer) => {
+    const gz = gzipped(newestJson(layer))
+    expect(gz, `${id}'s newest feed is ${(gz / 1024).toFixed(1)} KB gzipped, over the ${MAX_GZ / 1024} KB ceiling`).toBeLessThanOrEqual(MAX_GZ)
+  })
+
+  it.each(LAYERS.flatMap((l) => layerMonths(l).map((month) => [`${l.id} ${month}`, l, month] as const)))(
+    '%s fits in the per-request ceiling, gzipped',
+    (name, layer, month) => {
+      const gz = gzipped(monthJson(layer, month))
+      expect(
+        gz,
+        `${name} is ${(gz / 1024).toFixed(1)} KB gzipped, over the ${MAX_GZ / 1024} KB ceiling — ` +
+          `split the month per day (the manifest already carries the per-day counts), do not raise the budget`,
+      ).toBeLessThanOrEqual(MAX_GZ)
+    },
+  )
+
+  it('cuts every archive into months that together are the whole of it, and names them in the manifest', () => {
+    for (const layer of LAYERS) {
+      expect(layerMonths(layer).flatMap((month) => monthFeed(layer, month).frames), layer.id).toEqual(layerFeed(layer).frames)
+      const entry = buildManifest().layers.find((l) => l.id === layer.id)!
+      expect(Object.keys(entry.monthHrefs)).toEqual(layerMonths(layer))
+      for (const [month, href] of Object.entries(entry.monthHrefs)) expect(href).toBe(`/globe/layers/${layer.id}/${month}.json`)
+    }
+  })
+
+  it('leaves the newest day’s instant with the newest feed, out of every month', () => {
+    const sky = LAYERS.find((l) => l.id === 'sky')!
+    expect(newestJson(sky)).toContain('"instant"')
+    for (const month of layerMonths(sky)) expect(monthJson(sky, month)).not.toContain('"instant"')
   })
 })
 

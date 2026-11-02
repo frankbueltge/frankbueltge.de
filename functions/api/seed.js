@@ -40,6 +40,9 @@ import {
 } from '../../src/lib/saat/saat'
 import { GATE_MODEL, buildGateRequest, parseGateVerdict } from '../../src/lib/saat/gate'
 import { readRegister } from '../../src/lib/saat/publish'
+import { ring } from '../../src/lib/notify/handlers'
+import { seedMail } from '../../src/lib/notify/operator'
+import { deps } from './reception/_deps'
 
 // Body-Deckel ~4 KB (Spec: kurzer Impuls, Text max 500 Zeichen — 4 KB ist großzügig).
 const MAX_BODY_BYTES = 4096
@@ -310,6 +313,10 @@ export async function onRequestPost(context) {
     return json(502, { ok: false, reason: 'upstream' })
   }
   probeCache = { at: 0, pending: 0, pending_review: 0, daily_used: 0 } // GET-Probe invalidieren
+
+  // The operator's bell (2026-11-02): kind, addressee and the writer's mark, never the text, the
+  // letterbox's measure. Sent after the answer, so a slow mail never holds the writer up.
+  context.waitUntil(ring(env, deps, seedMail({ id: seed.id, kind: v.kind, addressedTo: v.addressedTo, authorMark: v.authorMark })))
 
   // 10. Antwort — der claim_token erscheint HIER EINMALIG. status: pending_review, weil der Seed
   //     privat wartet, bis Frank ihn freigibt (dann erscheint er im öffentlichen Register).

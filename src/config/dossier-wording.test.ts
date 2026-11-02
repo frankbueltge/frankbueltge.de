@@ -5,13 +5,13 @@
 // parts a test can hold: the statement's length, no digit in the prose (a day is a dated field,
 // handed to a sentence by the page), none of the retired vocabulary, and no address of the wrong
 // person.
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { DOSSIER } from './dossier-wording'
 
 /** Dated or addressed fields: data, not prose. Everything else is walked. */
-const DATA_KEYS = new Set(['asOf', 'since', 'admittedOn', 'auditOn', 'href', 'when'])
+const DATA_KEYS = new Set(['asOf', 'since', 'admittedOn', 'href', 'when'])
 
 const strings: { path: string; text: string }[] = []
 const walk = (value: unknown, path: string): void => {
@@ -33,10 +33,18 @@ const called: { path: string; text: string }[] = [
     text: D.questions.lead({ total: 'X', chosen: 'X', continuing: 'X', seedOn: 'X', continuingSince: 'X', readThrough: 'X' }),
   },
   { path: 'publication.lead', text: D.publication.lead('X') },
-  { path: 'neighbours.lead', text: D.neighbours.lead('X') },
   { path: 'attention.admittedHeading', text: D.attention.admittedHeading('X') },
   { path: 'attention.retiredOn', text: D.attention.retiredOn('X') },
-  ...D.accountability.paragraphs({ personas: 'X' }).map((text, i) => ({ path: `accountability[${i}]`, text })),
+  ...D.role.paragraphs({ about: 'X', personas: 'X' }).map((text, i) => ({ path: `role[${i}]`, text })),
+  ...[
+    { phase: 'convening', opensOn: 'X', proposedQuestion: 'X', briefingFallback: null },
+    { phase: 'convening', opensOn: null, proposedQuestion: null, briefingFallback: 'X' },
+    { phase: 'convening', opensOn: null, proposedQuestion: null, briefingFallback: null },
+    { phase: 'working', opensOn: null, proposedQuestion: null, briefingFallback: null },
+  ].map((v, i) => ({
+    path: `ecology.now[${i}]`,
+    text: D.ecology.now({ cycle: 'X', next: 'X', question: 'X', opened: 'X', conveningOpened: 'X', fallbackOn: 'X', continuing: 'X', ...v }),
+  })),
 ]
 
 const words = (s: string) => s.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length
@@ -80,18 +88,43 @@ describe('the dossier’s prose', () => {
 
 describe('the dossier’s facts', () => {
   it('dates what it cannot read, as ISO days', () => {
-    for (const day of [D.asOf, D.ecology.since, D.attention.admittedOn, D.neighbours.auditOn]) expect(day).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    for (const day of [D.asOf, D.ecology.since, D.attention.admittedOn]) expect(day).toMatch(/^\d{4}-\d{2}-\d{2}$/)
   })
 
-  it('links every neighbour to a source of its own', () => {
-    for (const n of D.neighbours.rows) expect(n.href, n.name).toMatch(/^https:\/\//)
+  it('leads every way in to a page of this site', () => {
+    for (const w of D.ways.inbound.items) {
+      expect(w.href, w.label).toMatch(/^\/[a-z-]+$/)
+      expect(existsSync(fileURLToPath(new URL(`../pages${w.href}`, import.meta.url))) || existsSync(fileURLToPath(new URL(`../pages${w.href}.astro`, import.meta.url))), w.href).toBe(true)
+    }
   })
 
-  it('says who chose a question, and that the continuing question is the architect’s', () => {
+  it('states the role in /about’s own words, once', async () => {
+    const { aboutContent } = await import('@/data/about')
+    const about = aboutContent.en.sections.find((s) => s.heading === D.role.heading)
+    expect(about, 'src/data/about.ts has no section headed like the dossier’s role').toBeDefined()
+    expect(D.role.paragraphs({ about: about!.paragraphs[0], personas: 'X' })[0]).toBe(about!.paragraphs[0])
+  })
+
+  it('says who chose a question, and that the continuing question is mine', () => {
     const lead = D.questions.lead({ total: 'eight', chosen: 'two', continuing: 'Missing Data Art', seedOn: 'day', continuingSince: 'day', readThrough: 'twice' })
-    expect(lead).toContain('is the architect’s own')
+    expect(lead).toContain('is my own')
     expect(lead).toContain('the practices chose two themselves, in convening')
     expect(D.questions.setBy.convening).toContain('the practices')
+  })
+
+  it('puts a chosen question before the cycle it follows, and takes the fallback from the briefing', () => {
+    const base = { cycle: 'eleven', next: 'twelve', question: 'Old?', phase: 'convening', opened: 'o', conveningOpened: 'c', fallbackOn: 'f', opensOn: null, proposedQuestion: null, briefingFallback: null, continuing: 'Missing Data Art' }
+    const chosen = D.ecology.now({ ...base, opensOn: 'n', proposedQuestion: 'New?' })
+    expect(chosen.indexOf('New?')).toBeLessThan(chosen.indexOf('Old?'))
+    expect(chosen).toContain('which opens on n unless I object')
+    expect(D.ecology.now({ ...base, briefingFallback: 'Quiet?' })).toContain('opens on “Quiet?”, the first matter the Middle’s briefing names as urgent but quiet')
+    expect(D.ecology.now(base)).toContain('opens on the continuing question, Missing Data Art')
+  })
+
+  it('says that I build and run the apparatus, not only set its questions', () => {
+    const here = D.role.paragraphs({ about: 'X', personas: 'X' })[1]
+    expect(here).toContain('design, program and run the whole apparatus')
+    expect(here).toContain('data pipelines')
   })
 
   it('leads its table of contents to sections the page has', () => {
