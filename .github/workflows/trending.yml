@@ -16,10 +16,16 @@ name: Trending nightly
 #
 # A committed day file is never rewritten (the archive rule): the pipeline refuses to overwrite
 # an existing src/data/trending/<date>.json and exits 0.
+#
+# WHEN IT RUNS (2026-11-02). The cron below is the ledger's documented time, but GitHub starts this
+# repository's schedules hours late: all 60 scheduled runs from 2026-09-03 to 2026-11-01 began
+# between 10:54 and 16:05 UTC. Since 2026-11-02 the morning clock (morning-clock.yml,
+# scripts/clock/morning.mjs) starts this run at 06:40 UTC from the practices' on-time landings; the
+# cron stays as the fallback, and whichever run comes second finds the day written.
 
 on:
   schedule:
-    - cron: '40 6 * * *' # daily 06:40 UTC — after Gegenmessung (06:00) and the morning digest
+    - cron: '40 6 * * *' # daily 06:40 UTC, the documented time; the morning clock keeps it, GitHub does not
   workflow_dispatch:
     inputs:
       probe_day:
@@ -34,6 +40,8 @@ on:
 
 permissions:
   contents: write
+  # to start the deploy of a run the morning clock started (the last step)
+  actions: write
 
 concurrency:
   group: trending
@@ -125,6 +133,7 @@ jobs:
           CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
         run: python -m trending.run --repo-root .
       - name: Commit
+        id: commit
         if: ${{ inputs.probe_day == '' && !inputs.rehearsal }}
         run: |
           git config user.name "Morgenlese"
@@ -137,8 +146,19 @@ jobs:
           # Against push races (several nightly cron commits): rebase and retry.
           for i in 1 2 3 4 5; do
             if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
               echo "Pushed."; exit 0
             fi
             echo "Push attempt $i failed, retrying …"; sleep 5
           done
           echo "::error::Push failed after 5 attempts"; exit 1
+      # A run the morning clock started (with the built-in token) ends without a workflow_run
+      # event, because GitHub creates none for a run the built-in token started, so deploy-cf.yml
+      # would never hear of the day it committed. Such a run starts the deploy itself; a scheduled
+      # run, or one a person started, still reaches deploy-cf.yml through workflow_run and does not
+      # ask twice. The pattern of the integrates and the cycle sentinel (PR #1049).
+      - name: Deploy the ledger (when another workflow started this run)
+        if: success() && steps.commit.outputs.pushed == 'true' && github.triggering_actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
