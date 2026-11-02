@@ -207,9 +207,11 @@
 /error-as-method/works-html/:slug/:part/*
   X-Robots-Tag: noindex, follow
 
-# The same site under other addresses (2026-11-02): the Pages address, its preview deployments and
-# the www host all serve every page with the canonical pointing at frankbueltge.de, but nothing
-# stopped a search engine from indexing them as well. Indexed is frankbueltge.de alone.
+# The same site under other addresses (2026-11-02): the Pages address and its preview deployments
+# serve every page with the canonical pointing at frankbueltge.de, but nothing stopped a search
+# engine from indexing them as well. The www host has redirected to frankbueltge.de since the same
+# day, by a redirect rule in the Cloudflare dashboard; its block here is the fallback should that
+# rule ever go. Indexed is frankbueltge.de alone.
 https://:project.pages.dev/*
   X-Robots-Tag: noindex
 
