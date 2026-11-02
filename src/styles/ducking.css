@@ -184,7 +184,10 @@
 }
 
 .du-name {
-  height: 6.7rem;
+  /* The longest name a strip may carry (STRIP_MAX, fourteen characters) on one line at the largest size:
+     14 × (0.6 + 0.06) em × 13 px ≈ 120 px. At 6.7rem POWER & MONEY broke in two on wide screens, and the
+     map's WAR & VIOLENCE would have too (2026-11-02). */
+  height: 7.6rem;
   margin: 0 0 0.25rem;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
