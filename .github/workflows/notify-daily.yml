@@ -4,7 +4,8 @@
 # as one mail to the operator (POST /api/notify/daily; what the mail carries and why so little:
 # src/lib/notify/operator.ts). The endpoint sends at most one mail a day and none on a quiet day, so a
 # late, repeated or manual run is harmless. No secret is needed here: the site holds the mail key, and
-# the request carries nothing. A run turns red when the site cannot send (standby or a refused mail).
+# the request carries nothing. A run turns red when the site cannot send: standby, a refused mail, or a
+# key Brevo no longer accepts (asked even on a quiet day, which also keeps the key in use).
 name: Notify daily
 
 on:

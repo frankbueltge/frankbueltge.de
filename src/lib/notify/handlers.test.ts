@@ -8,11 +8,19 @@ import { RATING_MAILS_PER_DAY } from './operator'
 
 const ARMED = { BREVO_API_KEY: 'key-for-tests', BREVO_SENDER_EMAIL: 'hello@example.org', BREVO_NOTIFY_TO: 'operator@example.org' }
 const BREVO = 'https://api.brevo.com/v3/smtp/email'
+const ACCOUNT = 'https://api.brevo.com/v3/account'
 
 let now = new Date('2026-11-02T05:00:00Z')
 let brevoStatus = 201
+let accountStatus = 200
 const sent: { subject: string; text: string; to: string }[] = []
+const accountReads: string[] = []
 const network = vi.fn(async (url: string | URL | Request, init?: RequestInit) => {
+  if (String(url) === ACCOUNT) {
+    accountReads.push(String(new Headers(init?.headers).get('api-key')))
+    if (accountStatus === 200) return new Response('{"plan":[]}', { status: 200 })
+    return new Response('{"code":"unauthorized","message":"Key not found"}', { status: accountStatus })
+  }
   if (String(url) !== BREVO) throw new Error(`unexpected fetch ${String(url)}`)
   const body = JSON.parse(String(init?.body))
   sent.push({ subject: body.subject, text: body.textContent, to: body.to[0].email })
@@ -46,7 +54,9 @@ async function counter(db: D1Like, table: 'reading_counts' | 'study_counts', day
 beforeEach(() => {
   now = new Date('2026-11-02T05:00:00Z')
   brevoStatus = 201
+  accountStatus = 200
   sent.length = 0
+  accountReads.length = 0
   network.mockClear()
 })
 
@@ -120,11 +130,22 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/notify/daily', () => {
     expect(sent).toHaveLength(1)
   })
 
-  it('sends nothing on a quiet day, and keeps the day done', async () => {
+  it('sends no mail on a quiet day, keeps the day done, and asks Brevo once whether the key works', async () => {
     const env = await makeEnv()
     expect(await (await post(env)).json()).toEqual({ ok: true, sent: false, reason: 'quiet', day: '2026-11-01' })
     expect(await (await post(env)).json()).toMatchObject({ sent: false, reason: 'already' })
-    expect(network).not.toHaveBeenCalled()
+    expect(sent).toEqual([])
+    expect(accountReads).toEqual(['key-for-tests'])
+  })
+
+  it('turns a quiet day red when Brevo no longer accepts the key, and gives the day back', async () => {
+    const env = await makeEnv()
+    accountStatus = 401
+    const dead = await post(env)
+    expect(dead.status).toBe(424)
+    expect(await dead.json()).toEqual({ ok: false, reason: 'rail', upstream: 401, code: 'unauthorized' })
+    accountStatus = 200
+    expect(await (await post(env)).json()).toMatchObject({ sent: false, reason: 'quiet' })
   })
 
   it('gives the day back when Brevo refuses the mail, says why, and the next call tries again', async () => {
