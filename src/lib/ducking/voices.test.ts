@@ -5,6 +5,8 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { namer } from '@/lib/reading/attention'
+import { FIELD_IDS } from '@/lib/briefing/map'
 import { CURRENT_ROUND as round, roundBehind } from './round'
 import { cueAt, cueEnvelope, cueOrNext, placeOf, type VoiceBook } from './voices'
 
@@ -36,6 +38,45 @@ describe('the round', () => {
     for (const c of round.channels) {
       for (const l of c.lines) expect(l.say ?? l.text, c.id).not.toMatch(/\d/)
     }
+  })
+})
+
+describe('the channels', () => {
+  it('are the fields of the map, in its order, so that a fader means the same from round to round', () => {
+    expect(round.channels.map((c) => c.id)).toEqual(FIELD_IDS)
+  })
+})
+
+describe('the record', () => {
+  const { record } = book
+
+  it('is there, and ends on the day of the round', () => {
+    expect(existsSync(join(dir, record.file))).toBe(true)
+    expect(record.to).toBe(round.briefing.written)
+    expect(record.cues.length).toBeGreaterThan(20)
+  })
+
+  it('reads headlines that name their field, on channels of the desk', () => {
+    for (const q of record.cues) {
+      const channel = round.channels[q.c]!
+      expect(namer(channel.terms)(q.text), q.text).toBe(true)
+      expect(namer(channel.exclude ?? [])(q.text), q.text).toBe(false)
+    }
+  })
+
+  it('reads each headline once, and no voice over itself', () => {
+    expect(new Set(record.cues.map((q) => q.text)).size).toBe(record.cues.length)
+    for (const c of round.channels.keys()) {
+      const own = record.cues.filter((q) => q.c === c)
+      for (let i = 1; i < own.length; i++) expect(own[i]!.t).toBeGreaterThanOrEqual(own[i - 1]!.t + own[i - 1]!.d)
+    }
+  })
+
+  it('counts what it could read, and says so', () => {
+    const { signals, readable, spoken } = record.sample
+    expect(spoken).toBe(record.cues.length)
+    expect(readable).toBeGreaterThanOrEqual(spoken)
+    expect(signals).toBeGreaterThanOrEqual(readable)
   })
 })
 
@@ -99,14 +140,14 @@ describe('the recordings', () => {
     expect(spoken).toBeLessThanOrEqual(labels - long - stopped - unreadable)
   })
 
-  it('leaves a matter out of everything else', () => {
+  it('leaves a field out of everything else', () => {
     const all = book.rest.cues.map((q) => q.text.toLowerCase()).join(' | ')
-    for (const word of ['ebola', 'hormuz', 'cop31', 'unhcr', 'wildlife']) expect(all).not.toContain(word)
+    for (const word of ['ebola', 'hormuz', 'cop31', 'ukraine', 'chatgpt']) expect(all).not.toContain(word)
   })
 
   it('stays small enough to load on a phone', () => {
-    const bytes = [...Object.values(book.channels), book.rest].reduce((n, f) => n + statSync(join(dir, f.file)).size, 0)
-    expect(bytes).toBeLessThan(4_000_000)
+    const bytes = [...Object.values(book.channels), book.rest, book.record].reduce((n, f) => n + statSync(join(dir, f.file)).size, 0)
+    expect(bytes).toBeLessThan(6_000_000)
   })
 })
 

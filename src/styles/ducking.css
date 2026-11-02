@@ -122,6 +122,15 @@
   display: none;
 }
 
+/* The record speaks in headlines, sometimes three at once: smaller, so that they fit the screen. */
+.du-desk[data-playing] .du-line {
+  font-size: clamp(14px, 1.9vw, 21px);
+}
+
+.du-desk[data-playing] .du-hint {
+  display: none;
+}
+
 .du-hint,
 .du-note {
   position: absolute;
@@ -175,20 +184,18 @@
 }
 
 .du-name {
-  height: 5.1rem;
+  height: 6.7rem;
   margin: 0 0 0.25rem;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: clamp(11px, 1.15vw, 13px);
+  line-height: 1.15;
   letter-spacing: 0.06em;
   color: var(--du-muted);
-  white-space: nowrap;
 }
 
 .du-strip[data-rest] .du-name {
   color: var(--du-ink);
-  white-space: normal;
-  line-height: 1.15;
 }
 
 .du-strip[data-held] .du-name,

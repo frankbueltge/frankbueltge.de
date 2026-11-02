@@ -4,7 +4,7 @@
 // The desk comes first and the page explains it afterwards, because the point of it is in the hand
 // and the ear. Every number below is derived at build time by src/lib/ducking/* from the round and
 // the committed ledger, and none is typed into a sentence. What is typed is the readings, which are
-// the briefing's figures in spoken form, each with its sources.
+// the figures of the map and the briefing in spoken form, each with its sources.
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
@@ -20,8 +20,9 @@ const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
 const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 
 const desk = readDesk()
-const { round, week, whole, latest, sources, shares, totals, ledger, attention, receiptsShown } = desk
-const matters = round.channels.length
+const { round, week, whole, latest, sources, shares, totals, ledger, attention, receiptsShown, book } = desk
+const fields = round.channels.length
+const ai = week.counts[round.channels.findIndex((c) => c.id === 'ai')]! / week.total
 const behind = roundBehind(round.id, cycle as CycleState)
 const last = ledger.days.length - 1
 const deskChannels = [
@@ -69,18 +70,27 @@ const rows = round.channels.map((channel, c) => {
   <section class="mb-12 max-w-3xl">
     <p class="kicker mb-3">What you are hearing</p>
     <p class="leading-relaxed text-fg-muted">
-      Ducking is what a mixing desk does when one signal pushes the others down. This desk seats the {matters} matters of the
-      ecology’s <a class={link} href={round.briefing.url}>briefing of {round.briefing.written}</a>, each with a fader and a voice
-      reading its evidence. The last channel is the crowd: everything else on the web’s charts, the football, film stars, apps and
-      code that no matter named, read aloud by several voices at once from a sample of the entries themselves. All of them run
+      Ducking is what a mixing desk does when one signal pushes the others down. This desk seats the {fields} standing fields of
+      the ecology’s <a class={link} href="https://github.com/frankbueltge/research-ecology/blob/main/briefings/MAP.md">map</a>, from
+      war to AI, each with a fader and a voice reading where the field stands and what the
+      <a class={link} href={round.briefing.url}>briefing of {round.briefing.written}</a> says presses in it. The last channel is the
+      crowd: everything else on the web’s charts, the football, film stars, apps and code that no field named, read aloud by
+      several voices at once from a sample of the entries themselves. All of them run
       all the time, heard or not. A fader stands at its channel’s share of the last {WINDOW_DAYS} days of
       <a class={link} href="/trending">Common Ground</a>, so the first thing you hear is the crowd drowning out everything else.
       That is the measurement.
     </p>
     <p class="mt-3 leading-relaxed text-fg-muted">
       Push a fader up and hold it. The whole stays a hundred percent, so the room comes from the crowd, and the voice walks out
-      of it towards you. The higher you push, the clearer it gets. Two thumbs can hold two matters. Let go and the fader falls back to where the week
+      of it towards you. The higher you push, the clearer it gets. Two thumbs can hold two fields. Let go and the fader falls back to where the week
       put it. Nothing on this desk stays where you leave it.
+    </p>
+    <p class="mt-3 leading-relaxed text-fg-muted">
+      Press play and the desk runs back through the record, {book.record.day} seconds a day from {book.record.from}. The faders move
+      as the weeks moved them, and the record speaks: real headlines that named a field, each on about the day it was counted, read
+      by that field’s voice. A field gets as many of them as its share of those weeks gave it, so you hear it by how often it speaks.
+      The crowd is held back for this, because under it you could not hear anything change. It is the one thing on this desk that a
+      machine holds for you, and it lets go when the record ends or when your hand touches a fader.
     </p>
   </section>
 
@@ -89,20 +99,22 @@ const rows = round.channels.map((channel, c) => {
     <p class="leading-relaxed text-fg-muted">
       In the {WINDOW_DAYS} days to {latest}, Common Ground logged <b class="tabular-nums text-fg">{fmtCount(week.total)}</b> signals
       from {sources} charts and platforms. <b class="tabular-nums text-fg">{fmtCount(week.named)}</b> of them named one of these
-      matters, which puts all {matters} together at <b class="tabular-nums text-fg">{fmtShare(week.share)}</b> of the mix.
-      {week.silent > 0 && <>{week.silent} of the {matters} had no signal at all this week, and their faders are on the floor. </>}
-      Over the whole record, {ledger.days.length} days, the {matters} hold {fmtShare(whole.share)}.
+      fields, which puts all {fields} together at <b class="tabular-nums text-fg">{fmtShare(week.share)}</b> of the mix. AI alone
+      holds <b class="tabular-nums text-fg">{fmtShare(ai)}</b>, and the other {fields - 1} together hold
+      <b class="tabular-nums text-fg">{fmtShare(week.share - ai)}</b>.
+      {week.silent > 0 && <>{week.silent} of the {fields} had no signal at all this week, and their faders are on the floor. </>}
+      Over the whole record, {ledger.days.length} days, the {fields} hold {fmtShare(whole.share)}.
     </p>
     <p class="mt-3 leading-relaxed text-fg-muted">
-      The terms that count a matter are wide on purpose, and the receipts below show what they let in that does not belong.
-      Narrowing them could only lower the matters’ faders.
+      The terms that count a field are wide on purpose, and the receipts below show what they let in that does not belong.
+      Narrowing them could only lower the faders.
     </p>
   </section>
 
   <section class="mb-12 max-w-3xl">
     <p class="kicker mb-3">Why the sum is fixed</p>
     <p class="leading-relaxed text-fg-muted">
-      The crowd is whatever no matter named, so the hundred percent of this desk is not a setting: it is the whole
+      The crowd is whatever no field named, so the hundred percent of this desk is not a setting: it is the whole
       ledger. That the channels add up is arithmetic, true of any shares, and it proves nothing. That attention outside this
       page behaves the same way is a claim, and there is evidence for it. Jian-Hua Zhu called agenda-setting
       <a class={link} href="https://scholars.cityu.edu.hk/en/publications/issue-competition-and-attention-distraction-a-zero-sum-theory-of-">a zero-sum process</a>
@@ -115,7 +127,7 @@ const rows = round.channels.map((channel, c) => {
     </p>
     <p class="mt-3 leading-relaxed text-fg-muted">
       Try it the other way round. Pull <b class="text-fg">{round.rest.strip}</b> down and hold it. The room it frees goes to
-      the matters in the proportions they already have, so the loud get louder. A channel at zero stays at zero. Attention
+      the fields in the proportions they already have, so the loud get louder. A channel at zero stays at zero. Attention
       that comes free does not go to what was ignored; only a hand lifts that.
     </p>
   </section>
@@ -125,8 +137,8 @@ const rows = round.channels.map((channel, c) => {
     <p class="leading-relaxed text-fg-muted">
       The scale is logarithmic, with the top of the travel stretched, as on any desk, because that is where a channel can be
       heard. Each mark is ten times the one below, and the numbers are percent. A channel’s share is its share of the power of
-      the mix: a matter at one percent stands twenty decibels under the whole. That is why the lower part of a fader’s travel is
-      silent. One thing cannot be read off a fader: as your hand raises a matter, the crowd also blurs, the way a room does when
+      the mix: a field at one percent stands twenty decibels under the whole. That is why the lower part of a fader’s travel is
+      silent. One thing cannot be read off a fader: as your hand raises a field, the crowd also blurs, the way a room does when
       you listen closely to one person.
     </p>
   </section>
@@ -134,9 +146,10 @@ const rows = round.channels.map((channel, c) => {
   <section class="mb-12 max-w-3xl">
     <p class="kicker mb-3">What the voices read</p>
     <p class="mb-3 leading-relaxed text-fg-muted">
-      Every voice here is synthetic, made with an open model on one machine. The matters are the briefing’s. Every figure was
-      checked against its source on {round.checked}, and where the briefing was out of date or wrong, the voice says what the
-      source says. The faders move every day; the words stay until the next round is recorded.
+      Every voice here is synthetic, made with an open model on one machine. Each reads where its field stands, from the map, then
+      the briefing’s matters in that field. Every figure was checked against its source on {round.checked}, and where the briefing
+      was out of date or wrong, the voice says what the source says. The faders move every day; the words stay until the next round
+      is recorded.
       {behind && <b class="text-fg">The ecology has written a newer briefing since. These are still the words of {round.briefing.written}.</b>}
     </p>
     {
@@ -162,9 +175,9 @@ const rows = round.channels.map((channel, c) => {
     <TableFallback
       summary="The desk as a table"
       open
-      caption="Signals naming each matter, this week and over the whole record, with the share and level of the whole record"
+      caption="Signals naming each field, this week and over the whole record, with the share and level of the whole record"
       columns={[
-        { key: 'channel', label: 'Matter' },
+        { key: 'channel', label: 'Field' },
         { key: 'week', label: `Last ${WINDOW_DAYS} days`, align: 'right', nowrap: true },
         { key: 'whole', label: 'Whole record', align: 'right', nowrap: true },
         { key: 'share', label: 'Share', align: 'right', nowrap: true },
@@ -173,7 +186,7 @@ const rows = round.channels.map((channel, c) => {
       rows={rows}
     />
     <details class="mt-4">
-      <summary class="cursor-pointer text-fg-muted">What was counted: the newest signals per matter</summary>
+      <summary class="cursor-pointer text-fg-muted">What was counted: the newest signals per field</summary>
       {
         round.channels.map((channel) => {
           const counted = receiptsOf.get(channel.id)
@@ -206,10 +219,13 @@ const rows = round.channels.map((channel, c) => {
       <li><b class="text-fg">A chart is not a mind.</b> The desk reads the tops of public charts and feeds, leaning to technology
         and to English. It says what those charts held, never what anyone cares about. A matter can be everything to the people
         living it and still sit on this floor.</li>
-      <li><b class="text-fg">The list is one briefing’s.</b> The matters and their order on the desk are the briefing’s, not this
-        page’s. Another reading of the world would seat other channels, and the crowd would hold what they left.</li>
-      <li><b class="text-fg">A week is a choice.</b> So is a term. Both move a fader. With narrower and with wider lists of terms,
-        tried when this was built, the matters together stayed near a hundredth of the whole.</li>
+      <li><b class="text-fg">AI stands where it stands partly because of who is counted.</b> More than a quarter of the ledger’s
+        signals come from developer platforms. A field’s fader is its place on these charts, and not its place in the world.</li>
+      <li><b class="text-fg">The fields are one map’s.</b> Another reading of the world would seat other channels, and the crowd
+        would hold what they left.</li>
+      <li><b class="text-fg">A week is a choice.</b> So is a term. Both move a fader.</li>
+      <li><b class="text-fg">The record has a step in it.</b> From 2026-11-02 the ledger reads ten editions of Google News instead
+        of one, so a field can rise on that day without anyone having turned to it.</li>
     </ul>
   </section>
 

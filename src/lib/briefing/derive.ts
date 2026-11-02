@@ -2,10 +2,11 @@
 //
 // A new briefing reaches three places by itself: a round of Third Reading, a round of Ducking and new
 // seeds on Common Ground's watchlist. Each keeps what is its own: Third Reading its question and its
-// consent, Ducking its crowd, the watchlist everything already on it.
+// consent, Ducking its crowd and its fixed channels, the watchlist everything already on it.
 import type { Round as ReadingRound } from '@/lib/reading/round'
 import type { Round as DuckingRound } from '@/lib/ducking/round'
 import type { Briefing } from './briefing'
+import { FIELDS } from './map'
 
 /** The days of Common Ground a round of Third Reading reads attention over. */
 export const ATTENTION_DAYS = 30
@@ -58,25 +59,32 @@ export function toReadingRound(b: Briefing, url: string, template: ReadingRound)
   }
 }
 
-/** A round of Ducking: the same matters as channels, primary sources first. */
+/** A round of Ducking: one channel per field of the map, the same from round to round, so that a fader can be
+ *  read across time. Its voice reads where the field stands, then the briefing's matters in it. Primary sources first. */
 export function toDuckingRound(b: Briefing, url: string, template: DuckingRound): DuckingRound {
   return {
     $contract: template.$contract,
     id: b.id,
     briefing: { title: title(b), written: b.written, url },
     checked: b.checked.on,
-    channels: b.matters.map((m, i) => ({
-      id: m.id,
-      strip: m.strip,
-      title: m.title,
-      terms: m.terms,
-      ...(m.exclude ? { exclude: m.exclude } : {}),
-      voice: DESK_VOICES[i]!,
-      lines: m.lines,
-      sources: [...m.sources]
-        .sort((x, y) => (x.kind === y.kind ? 0 : x.kind === 'primary' ? -1 : 1))
-        .map(({ label, url: href }) => ({ label, url: href })),
-    })),
+    channels: FIELDS.map((f, i) => {
+      const line = b.map?.find((l) => l.field === f.id)
+      const matters = b.matters.filter((m) => m.field === f.id)
+      const sources = [...(line?.sources ?? []), ...matters.flatMap((m) => m.sources)]
+      return {
+        id: f.id,
+        strip: f.strip,
+        title: f.name,
+        terms: [...f.terms],
+        ...('exclude' in f ? { exclude: [...f.exclude] } : {}),
+        voice: DESK_VOICES[i]!,
+        lines: [...(line?.lines ?? []), ...matters.flatMap((m) => m.lines)],
+        sources: sources
+          .filter((s, n) => sources.findIndex((o) => o.url === s.url) === n)
+          .sort((x, y) => (x.kind === y.kind ? 0 : x.kind === 'primary' ? -1 : 1))
+          .map(({ label, url: href }) => ({ label, url: href })),
+      }
+    }),
     rest: { ...template.rest, seed: Number(b.id.slice(-3)) },
   }
 }

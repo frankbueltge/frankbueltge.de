@@ -125,7 +125,7 @@ export const GALLERY = {
     /* the corrections and the years since the last one — both handed over already formatted by
        src/lib/experiments/thumbnails.ts, per rule 1 of this file */
     sawtooth: (leaps: string, years: string) => `${leaps} leap seconds; none for ${years} years`,
-    ducking: (matters: string, share: string) => `${matters} matters hold ${share} of the week`,
+    ducking: (fields: string, share: string) => `${fields} fields hold ${share} of the week`,
     'third-reading': (readings: string, matters: string) => `${readings} readings of ${matters} matters on the record`,
     pattern: (a: string, b: string, r: string) => `${a} against ${b}, correlation ${r}`,
     praemie: (base: string, change: string) => `since ${base} the premium has moved ${change}`,

@@ -3,7 +3,9 @@
 
 Each channel is one voice reading its lines, sentence by sentence, so the page knows which sentence
 is being spoken at any moment. Everything else is several voices at once, reading a random sample
-of the labels on Common Ground's charts in the week the round ends. Nothing here calls a service
+of the labels on Common Ground's charts in the week the round ends. The record is one recording of
+the last weeks: headlines that named a field, read by that field's voice on about the day they were
+counted, as many from each field as its share of those days gives it. Nothing here calls a service
 and nothing is paid for: the voices are Kokoro-82M (open weights, Apache 2.0), run locally.
 
 Setup, once:
@@ -13,9 +15,10 @@ Setup, once:
   # KOKORO_MODEL and KOKORO_VOICES
 
 Run:
-  python scripts/ducking/voices.py after-cycle-011 --labels    # print the sample and stop
+  python scripts/ducking/voices.py after-cycle-011 --labels    # print the crowd's sample and stop
+  python scripts/ducking/voices.py after-cycle-011 --record    # print the record's headlines and stop
   python scripts/ducking/voices.py after-cycle-011             # all channels
-  python scripts/ducking/voices.py after-cycle-011 ebola rest  # only these
+  python scripts/ducking/voices.py after-cycle-011 war rest    # only these
 
 It encodes with afconvert on a Mac and with ffmpeg anywhere else. Writes public/ducking/<round>/, and
 the page's guard (src/lib/ducking/voices.test.ts) turns red if a line changes without a new render.
@@ -46,11 +49,20 @@ TAIL = 1.3            # seconds of silence before a reading starts again; a hand
 TAIL_STEP = 0.17      # each channel a little longer, so the loops never line up
 TARGET_DB = -24.0     # every channel at the same speech power, low enough that none meets the peak limit
 PEAK = 0.84
+KNEE = 0.7            # a rare plosive above this is rounded off towards PEAK: at this level nobody hears it
 REST_PERIOD = 150.0   # seconds before everything else repeats
 REST_MARGIN = 0.3     # audio kept on both sides of the loop, so encoder padding never falls inside it
 REST_WEEK = 7
 REST_MAX_CHARS = 64
 REST_SPEEDS = (0.94, 1.06)
+RECORD_WEEKS = 8
+DAY_SECONDS = 2.0     # how long a day of the record takes to play
+RECORD_LABELS = 48    # headlines over the whole record: about as many as one voice can read in that time
+RECORD_MAX_CHARS = 96
+RECORD_MIN_WORDS = 3
+RECORD_STEP = 0.15    # seconds between two headlines of one voice
+# These charts name things. They hold nothing a voice could read as a sentence.
+RECORD_SILENT = {'appstore', 'coingecko', 'github', 'github_trending', 'huggingface', 'pypi', 'steam'}
 
 # Reads as a chart entry, not as anything a person should hear said about someone by a machine.
 STOP = re.compile(
@@ -98,8 +110,8 @@ def to_db(rms):
 
 def levelled(x):
     x = x * 10 ** (TARGET_DB / 20) / speech_rms(x)
-    if float(np.abs(x).max()) > PEAK:
-        sys.exit(f'a recording reaches the peak limit at {TARGET_DB} dB, lower TARGET_DB')
+    over = np.abs(x) > KNEE
+    x[over] = np.sign(x[over]) * (KNEE + (PEAK - KNEE) * np.tanh((np.abs(x[over]) - KNEE) / (PEAK - KNEE)))
     return x
 
 
@@ -138,7 +150,7 @@ def sample_labels(rnd):
     """A seeded random sample of the week's signals that name no matter of the round."""
     end = date.fromisoformat(rnd['briefing']['written'])
     week = {(end - timedelta(days=i)).isoformat() for i in range(REST_WEEK)}
-    names = [namer(c['terms']) for c in rnd['channels']]
+    names = [(namer(c['terms']), namer(c.get('exclude', []))) for c in rnd['channels']]
     pool, seen, tally = [], set(), {'labels': 0, 'long': 0, 'stopped': 0, 'unreadable': 0}
     for path in sorted(glob.glob(str(ROOT / 'src/data/trending/20*.json'))):
         if Path(path).stem not in week:
@@ -147,7 +159,7 @@ def sample_labels(rnd):
         for source, signals in sorted(day['signals'].items()):
             for s in signals:
                 texts = [s['label']] + [l['title'] for l in (s.get('links') or [])]
-                if any(n(t) for n in names for t in texts):
+                if any(inc(t) and not exc(t) for inc, exc in names for t in texts):
                     continue
                 label = re.sub(r'\s*\([^)]*\)\s*$', '', s['label']).strip()
                 key = fold(label)
@@ -200,6 +212,76 @@ def rest(k, rnd, out, labels, week, tally):
             'voices': len(voices), 'sample': {**tally, 'spoken': used}, 'cues': cues}
 
 
+def readable(label):
+    return (len(label) <= RECORD_MAX_CHARS and len(label.split()) >= RECORD_MIN_WORDS and not STOP.search(label)
+            and not any((ord(c) > 0x24f and c.isalpha()) or unicodedata.category(c) == 'So' for c in label))
+
+
+def record_pools(rnd):
+    """Per channel, in the order of the days: the headlines of the record's weeks that name its field themselves."""
+    end = date.fromisoformat(rnd['briefing']['written'])
+    days = [(end - timedelta(days=i)).isoformat() for i in range(RECORD_WEEKS * 7 - 1, -1, -1)]
+    names = [(namer(c['terms']), namer(c.get('exclude', []))) for c in rnd['channels']]
+    counted, pools, seen = [0] * len(names), [[] for _ in names], set()
+    for d, day in enumerate(days):
+        path = ROOT / f'src/data/trending/{day}.json'
+        if not path.exists():
+            continue
+        for source, signals in sorted(json.load(open(path))['signals'].items()):
+            for s in signals:
+                texts = [s['label']] + [l['title'] for l in (s.get('links') or [])]
+                label = re.sub(r'\s*\([^)]*\)\s*$', '', s['label']).strip()
+                for c, (inc, exc) in enumerate(names):
+                    if not any(inc(t) and not exc(t) for t in texts):
+                        continue
+                    counted[c] += 1
+                    if source not in RECORD_SILENT and fold(label) not in seen and inc(label) and readable(label):
+                        seen.add(fold(label))
+                        pools[c].append((d, label))
+    return days, counted, pools
+
+
+def record_picks(counted, pools):
+    """Every field gets its share of the headlines, at least one if it has any, spread as its signals are."""
+    total = sum(counted) or 1
+    picks = []
+    for c, pool in enumerate(pools):
+        quota = min(len(pool), max(1, round(RECORD_LABELS * counted[c] / total))) if pool else 0
+        picks += [(*pool[int((i + 0.5) * len(pool) / quota)], c) for i in range(quota)]
+    return picks
+
+
+def record(k, rnd, out):
+    days, counted, pools = record_pools(rnd)
+    picks = record_picks(counted, pools)
+    channels = rnd['channels']
+    rng = random.Random(rnd['rest']['seed'] + 2)
+    timed = sorted(((d + rng.random()) * DAY_SECONDS, c, label) for d, label, c in picks)
+    length = int((len(days) * DAY_SECONDS + 8) * RATE)
+    left, right = np.zeros(length, dtype=np.float64), np.zeros(length, dtype=np.float64)
+    free, cues = [0.0] * len(channels), []
+    for t, c, label in timed:
+        voice = channels[c]['voice']
+        samples, _ = k.create(label, voice=voice, speed=1.0, lang=lang_of(voice))
+        x = trimmed(np.asarray(samples, dtype=np.float32))
+        t = max(t, free[c])
+        d = len(x) / RATE
+        free[c] = t + d + RECORD_STEP
+        at = int(t * RATE)
+        if at + len(x) > length:
+            continue  # the last days of a dense field would run past the end
+        pan = -0.62 + 1.24 * c / max(1, len(channels) - 1)
+        left[at:at + len(x)] += x * np.cos((pan + 1) * np.pi / 4)
+        right[at:at + len(x)] += x * np.sin((pan + 1) * np.pi / 4)
+        cues.append({'t': round(t, 2), 'd': round(d, 2), 'text': label, 'c': c})
+    end = int((cues[-1]['t'] + cues[-1]['d'] + 1) * RATE)
+    pcm = levelled(np.stack([left[:end], right[:end]], axis=1).astype(np.float32))
+    encode(pcm, out / 'record.m4a', 72)
+    print('record', len(cues), 'headlines', f'{len(pcm) / RATE:.0f} s', {channels[c]['id']: sum(1 for q in cues if q['c'] == c) for c in range(len(channels))})
+    return {'file': 'record.m4a', 'from': days[0], 'to': days[-1], 'day': DAY_SECONDS, 'level': to_db(speech_rms(pcm)), 'cues': cues,
+            'sample': {'signals': sum(counted), 'readable': sum(len(p) for p in pools), 'spoken': len(cues)}}
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     round_id, only = args[0], set(args[1:])
@@ -208,6 +290,11 @@ def main():
     if '--labels' in sys.argv:
         print(len(labels), 'labels', week[0], week[-1], tally)
         print('\n'.join(labels))
+        return
+    if '--record' in sys.argv:
+        days, counted, pools = record_pools(rnd)
+        for d, label, c in sorted(record_picks(counted, pools)):
+            print(days[d], rnd['channels'][c]['strip'], '|', label)
         return
     home = Path.home() / '.cache/hyperframes/tts'
     k = Kokoro(os.environ.get('KOKORO_MODEL', str(home / 'models/kokoro-v1.0.onnx')),
@@ -223,6 +310,8 @@ def main():
             state['channels'][ch['id']] = channel(k, ch, i, out)
     if not only or 'rest' in only:
         state['rest'] = rest(k, rnd, out, labels, week, tally)
+    if not only or 'record' in only:
+        state['record'] = record(k, rnd, out)
     json.dump(state, open(book, 'w'), ensure_ascii=False, separators=(',', ':'))
     print('wrote', book.relative_to(ROOT), f'{book.stat().st_size // 1024} KB')
 

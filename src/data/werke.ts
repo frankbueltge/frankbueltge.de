@@ -111,7 +111,7 @@ export const WERKE: Werk[] = [
     // Built 2026-11-01 on Frank's word of that day (wording private): the idea had been proposed the
     // night before as a motorised desk for two Raspberry Pis, and he asked for it as a lab experiment
     // instead, without hardware. Design doc docs/design/2026-11-01-ducking.md. Marked `live` because
-    // the faders move with Common Ground's nightly ledger; the voices stay until the next round.
+    // the faders move with Common Ground's daily ledger; the voices stay until the next round.
     id: 'ducking',
     line: 'counter-measurement',
     title: 'Ducking',
@@ -124,10 +124,10 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/ducking',
     description: {
-      // No digit (the currency doctrine): the number of matters, the window and the shares are all
-      // rendered on the page from the round and the ledger, and the shares move every night.
-      de: 'From the counter-measurement line. Ducking is what a mixing desk does when one signal pushes the others down. This desk seats every matter of one of the ecology’s briefings, plus one channel for everything else on the web’s charts; each fader stands at its channel’s share of the last week of Common Ground, on a logarithmic scale, and each channel is a synthetic voice reading its evidence, all at once. At rest you hear the charts, because the charts are nearly all there is. Push a matter up and hold it and it rises out of the crowd; the sum stays whole, so the room comes from everything else; let go and it falls back to where the week put it. Every level is derived from the committed ledger, and the whole record can be played back day by day.',
-      en: 'From the counter-measurement line. Ducking is what a mixing desk does when one signal pushes the others down. This desk seats every matter of one of the ecology’s briefings, plus one channel for everything else on the web’s charts; each fader stands at its channel’s share of the last week of Common Ground, on a logarithmic scale, and each channel is a synthetic voice reading its evidence, all at once. At rest you hear the charts, because the charts are nearly all there is. Push a matter up and hold it and it rises out of the crowd; the sum stays whole, so the room comes from everything else; let go and it falls back to where the week put it. Every level is derived from the committed ledger, and the whole record can be played back day by day.',
+      // No digit (the currency doctrine): the number of fields, the window and the shares are all
+      // rendered on the page from the round and the ledger, and the shares move every day.
+      de: 'From the counter-measurement line. Ducking is what a mixing desk does when one signal pushes the others down. This desk seats the standing fields of the ecology’s map, from war to AI, plus one channel for everything else on the web’s charts; each fader stands at its channel’s share of the last week of Common Ground, on a logarithmic scale, and each channel is a synthetic voice reading where its field stands, all at once. At rest you hear the charts, because the charts are nearly all there is. Push a field up and hold it and it rises out of the crowd; the sum stays whole, so the room comes from everything else; let go and it falls back to where the week put it. Press play and the last weeks run back, the faders moving as they moved and real headlines read out by field. Every level is derived from the committed ledger.',
+      en: 'From the counter-measurement line. Ducking is what a mixing desk does when one signal pushes the others down. This desk seats the standing fields of the ecology’s map, from war to AI, plus one channel for everything else on the web’s charts; each fader stands at its channel’s share of the last week of Common Ground, on a logarithmic scale, and each channel is a synthetic voice reading where its field stands, all at once. At rest you hear the charts, because the charts are nearly all there is. Push a field up and hold it and it rises out of the crowd; the sum stays whole, so the room comes from everything else; let go and it falls back to where the week put it. Press play and the last weeks run back, the faders moving as they moved and real headlines read out by field. Every level is derived from the committed ledger.',
     },
     methodHref: '/werke/ducking',
     tier: 'experiment',

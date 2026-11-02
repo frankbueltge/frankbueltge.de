@@ -12,7 +12,7 @@
 // goes when most of what it catches is something else ("displacement" was mostly arXiv, "flooding" mostly
 // bots, "manipulation" mostly robot arms), and an exclusion stands for a known false friend. A signal can
 // name two fields, and then it counts in both.
-import type { BriefingSource } from './briefing'
+import type { BriefingLine, BriefingSource } from './briefing'
 
 export interface MapField {
   id: string
@@ -143,6 +143,9 @@ export const MATTERS_PER_FIELD = 2
 /** A figure older than this many calendar years is no statement of where a field stands. */
 const STALE_AFTER_YEARS = 2
 const STATE_MAX = 280
+/** What one sentence of a voice may hold. */
+export const LINE_MAX = 200
+const SPOKEN_MAX = 3
 
 export const DIRECTIONS = ['worse', 'better', 'steady', 'unclear'] as const
 export type Direction = (typeof DIRECTIONS)[number]
@@ -160,6 +163,8 @@ export interface MapLine {
   compared_with: string
   /** by the one count, over the briefing's thirty days */
   signals: number
+  /** what the field's voice on the desk reads: the state, sentence by sentence, with `say` where a line holds a digit */
+  lines: BriefingLine[]
   sources: BriefingSource[]
 }
 
@@ -179,6 +184,12 @@ export function mapProblems(lines: readonly MapLine[], written: string): string[
     if (!DIRECTIONS.includes(l.direction)) out.push(`${l.field}: direction`)
     if (l.direction !== 'unclear' && !l.compared_with?.trim()) out.push(`${l.field}: a direction with nothing to compare it with`)
     if (!Number.isInteger(l.signals) || l.signals < 0) out.push(`${l.field}: signals`)
+    const spoken = l.lines ?? []
+    if (spoken.length < 1 || spoken.length > SPOKEN_MAX) out.push(`${l.field}: ${spoken.length} lines for the voice`)
+    for (const s of spoken) {
+      if (!s.text?.trim() || s.text.length > LINE_MAX) out.push(`${l.field}: line too long or empty`)
+      if (/\d/.test(s.say ?? s.text ?? '')) out.push(`${l.field}: a digit in what the voice is given: ${(s.say ?? s.text).slice(0, 40)}`)
+    }
     const sources = l.sources ?? []
     if (sources.some((s) => !s.url?.startsWith('https://') || !s.label?.trim())) out.push(`${l.field}: source`)
     if (!sources.some((s) => s.kind === 'primary')) out.push(`${l.field}: no primary source`)
