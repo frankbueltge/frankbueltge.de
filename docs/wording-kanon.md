@@ -493,13 +493,17 @@ Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-1
 
 ### Addendum 2026-11-02: the entrance leads with the lab
 
-- **"From the lab"** opens the entrance under the masthead (Frank's decision of 2026-11-02, wording
-  private): a carousel of every experiment `/experiments` lists from the register, Ducking and Common
+- **"From the lab"** opens the entrance's account of the house's work, under the pulse and the since
+  bar (Frank's decision of 2026-11-02, wording private; the pulse stayed on top by his word of the
+  same day): a carousel of every experiment `/experiments` lists from the register, Ducking and Common
   Ground first (`EDITION.lab.lead`), then the rest newest first by `since`; retired experiments stay
   on `/experiments`. Wording in `EDITION.lab`, no digit typed.
 - **Selected works** follows it and holds the practices' pieces only ("finished pieces from the
-  machine-run practices"); the lab's picks keep their place on `/dossier`. The pulse, the since bar
-  and everything that says what is running follow the two bands.
+  machine-run practices"); the lab's picks keep their place on `/dossier`. The lead and everything
+  below it follow the two bands.
+- **The dossier's link carries the page's own name** (2026-11-02, wording private): the label For
+  curators & press seemed too lofty, so both footers, the page's kicker and its title say Dossier.
+  The page itself is unchanged; the lab's picks keep their place on it.
 
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 

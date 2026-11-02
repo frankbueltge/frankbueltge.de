@@ -3,9 +3,11 @@
 // LINEAGE. Commissioned by the festival line (docs/superpowers/specs/2026-08-01-festival-line.md
 // §5.6) and drafted on 2026-08-01: noindex, unlinked, approval 'draft'. By October the draft
 // described a house that no longer existed — gated publication and evidence tiers, retired with
-// research ecology v2 on 2026-08-30. Rewritten on 2026-10-17 to the state of that day, and made
-// public: indexable, and linked from the footer as "for curators & press" (Frank's decision of
-// 2026-10-17, wording private). The draft lives in this file's history.
+// research ecology v2 on 2026-08-30. Rewritten on 2026-10-17 to the state of that day and made
+// public (Frank's decision of 2026-10-17, wording private): indexable, and linked from the footer as
+// "for curators & press". Since 2026-11-02 the link and the kicker carry the page's own name,
+// Dossier, because the old label seemed too lofty (Frank's word of that day, wording private); the
+// page itself did not change. The draft lives in this file's history.
 //
 // WHAT IS TYPED HERE, AND WHAT IS NOT. The page states what runs now from the records at every
 // build: the cycle and its phase, the convening's dates, every question the ecology has worked and
@@ -19,13 +21,13 @@
 const day = (iso: string) => iso // a dated field: ISO, formatted by the page
 
 export const DOSSIER = {
-  metaTitle: 'Dossier for curators & press — Frank Bültge',
+  metaTitle: 'Dossier — Frank Bültge',
   metaDescription:
     'The short way into the machine-run research on frankbueltge.de: what runs, who sets which question, what has been made, who works the same territory, and where every claim can be checked.',
 
   /** the day the prose below was written; what runs is read at every build */
   asOf: day('2026-10-17'),
-  kicker: 'Dossier · for curators & press',
+  kicker: 'Dossier',
   title: 'Artistic research, under proof',
   lede: 'The short way into the machine-run research on this site: what runs here, who sets which question, what has been made, who else works this territory, and where each claim can be checked. Everything below leads back to a public, versioned record.',
   dateline: (written: string) => `Written on ${written}. What runs now is read from the record at every build.`,
