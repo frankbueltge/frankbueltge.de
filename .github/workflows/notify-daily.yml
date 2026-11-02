@@ -1,0 +1,32 @@
+# .github/workflows/notify-daily.yml — the operator's daily mail (2026-11-02).
+#
+# Once a day this asks the site for the previous UTC day's ratings, readings and study answers, counted,
+# as one mail to the operator (POST /api/notify/daily; what the mail carries and why so little:
+# src/lib/notify/operator.ts). The endpoint sends at most one mail a day and none on a quiet day, so a
+# late, repeated or manual run is harmless. No secret is needed here: the site holds the mail key, and
+# the request carries nothing. A run turns red when the site cannot send (standby or a refused mail).
+name: Notify daily
+
+on:
+  schedule:
+    - cron: '20 4 * * *'
+  workflow_dispatch: {}
+
+permissions: {}
+
+concurrency:
+  group: notify-daily
+
+jobs:
+  bell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ask the site for yesterday's mail
+        run: |
+          status=$(curl -sS --max-time 60 -o response.json -w '%{http_code}' -X POST \
+            -H 'content-type: application/json' -d '{}' https://frankbueltge.de/api/notify/daily)
+          echo "HTTP $status"
+          cat response.json
+          echo
+          test "$status" = "200"

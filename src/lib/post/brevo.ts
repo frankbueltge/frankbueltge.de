@@ -114,7 +114,8 @@ export function brevoId(v: unknown): number | null {
 // Two rails share these helpers: the Brevo marketing webhook (a confirmed subscription) and
 // the letterbox (a new letter in the queue). Both send TO the operator — they are duty
 // notifications to the person who must act, not outbound mail to anyone outside, so the
-// "nothing sends itself" rule is untouched.
+// "nothing sends itself" rule is untouched. The bells for seeds, ratings and the day's
+// participation (2026-11-02) ride the same rail: src/lib/notify/operator.ts.
 
 /** The webhook URL carries a shared secret as ?k= — Brevo does not sign its webhooks, so the
  * secret in the URL is the whole authentication. Constant-time comparison is deliberately not
