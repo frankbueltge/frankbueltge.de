@@ -97,6 +97,17 @@ export const EDITION = {
     /** what stands as the headline while no shared question is set */
     noQuestion: 'No shared question: each practice works its own default theme.',
     /**
+     * A convening whose tally stands (2026-11-02). Between the tally and the day the cycle clock
+     * turns, the lead shows the question the practices chose and the day it opens, not the question
+     * they just presented. Until then the front page kept saying they were still proposing and
+     * ranking, while /ecology already showed the result. Same dates and same veto as /ecology.
+     */
+    chosenKicker: (p: { next: number; opens: string }) => `${cycleLabel(p.next)} opens ${p.opens}`,
+    chosenStandfirst: (p: { after: number; next: number; opens: string; practices: number }): string =>
+      `The ${inWords(p.practices)} machine-run practices proposed and ranked the next question in the convening ` +
+      `after ${cycleLabel(p.after)}, and this one won the tally. It opens ${cycleLabel(p.next)} on ${p.opens} ` +
+      'unless the architect objects.',
+    /**
      * Two sentences under the question: where it came from, and where the work on it stands.
      * `pieces` is how many of the `practices` have landed something since the cycle opened;
      * `previous` is the cycle before, for the convening that chose this one.

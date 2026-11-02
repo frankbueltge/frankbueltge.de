@@ -110,6 +110,14 @@ describe('the lead follows the cycle’s own state', () => {
     expect(L.standfirst({ ...base, phase: 'presenting' })).toContain('presentation')
     expect(L.standfirst({ ...base, phase: 'convening' })).toContain('proposing and ranking the next question')
   })
+
+  it('names the chosen question’s cycle and day once the tally stands, as /ecology does', () => {
+    expect(L.chosenKicker({ next: 12, opens: '2026-11-03' })).toBe('cycle 012 opens 2026-11-03')
+    expect(L.chosenStandfirst({ after: 11, next: 12, opens: '2026-11-03', practices: 3 })).toBe(
+      'The three machine-run practices proposed and ranked the next question in the convening after cycle 011, ' +
+        'and this one won the tally. It opens cycle 012 on 2026-11-03 unless the architect objects.',
+    )
+  })
 })
 
 describe('house by house', () => {
