@@ -10,6 +10,22 @@
    nothing here would ever add. (visual layer, 2026-09-02) */
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
+/* Links (2026-11-02): a line of one pixel, or the font's own hairline, read as hardly any line
+   under the serif. Wherever a link is underlined, by whichever sheet, the line is at least two
+   pixels and stands clear of the descenders. Whether a link is underlined stays with each page;
+   this decides only what the line looks like. Important on purpose: the surface sheets reset the
+   thickness through the text-decoration shorthand, and a link's own words inside it (a card's
+   title underlined on hover) draw their line themselves. */
+:root {
+  --link-line: max(2px, 0.1em);
+  --link-offset: 0.22em;
+}
+a,
+a * {
+  text-decoration-thickness: var(--link-line) !important;
+  text-underline-offset: var(--link-offset) !important;
+}
+
 /* ── Design tokens (Tailwind v4 @theme → utilities like bg-bg, text-fg, text-accent) ── */
 @theme {
   /* Monochrome: neutral greyscale on near-black. "accent"/"cyan" survive as
