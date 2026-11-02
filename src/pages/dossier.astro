@@ -3,10 +3,10 @@
 //
 // The ten-minute version of the house the festival line asked for (docs/superpowers/specs/
 // 2026-08-01-festival-line.md §5.6): what runs, who sets which question, what Machine Attention
-// retired and admitted, what the site publishes, the selected works with their reasons, the
-// neighbours, who answers for it, and how to reach him. Public and indexable since 2026-10-17, and
-// linked from both footers as "for curators & press" (Frank's decision of 2026-10-17, wording
-// private); the draft of 2026-08-01 is in this file's history.
+// runs, the ways in and out, what the site publishes, the selected works with their reasons, the
+// role I hold, and how to reach me. Public and indexable since 2026-10-17, linked from both footers
+// as Dossier; in the first person, as work in progress, since 2026-11-02 (Frank's word of that
+// day, wording private). The neighbours of the 2026-10-17 version are in this file's history.
 //
 // It stands on the paper ground the entrance stands on, because a curator who arrives from the
 // front page should not change houses on the way. Every current fact is read here at build time —
@@ -18,11 +18,14 @@ import SelectedWorks from '@/components/ops/SelectedWorks.astro'
 import { DOSSIER } from '@/config/dossier-wording'
 import { inWords } from '@/config/edition-wording'
 import { NAMING } from '@/config/naming'
+import { aboutContent } from '@/data/about'
 import exportFile from '@/data/attention/export.json'
 import { buildProgramme, CONVENING_DAYS, conveningView, loadRelayExtras, VETO_DAYS } from '@/lib/ecology/convening'
 import { loadCycle, loadPresentations } from '@/lib/ecology/v3'
 import { PUBLICATION_RULE_SINCE, REPOS } from '@/lib/engines/publication.mjs'
 import { readShelf, retirementDay } from '@/lib/ops/selected-works'
+import { loadInstructions } from '@/lib/post/instructions'
+import { loadLedger } from '@/lib/post/ledger'
 import { dayMonthYear } from '@/lib/ops/since'
 import { SITE } from '@/lib/site'
 import '@fontsource-variable/literata/opsz-italic.css'
@@ -133,6 +136,19 @@ const practiceRepos = [
 
 // ── the selected works, with their reasons ────────────────────────────────────────────────────
 const shelf = readShelf()
+
+// ── the ways in and out: what lies open in the post office, newest first, and its instructions ─
+// A letter's piece and receiver are long records; the dossier names them up to their first dash
+// and links the post office, which carries each in full.
+const first = (s: string) => s.split(' — ')[0].trim()
+const letters = loadLedger()
+  .filter((d) => d.status === 'prepared')
+  .sort((a, b) => b.as_of.localeCompare(a.as_of))
+  .map((d) => ({ piece: first(d.piece), receiver: first(d.receiver), from: D.ways.letters.from[d.practice] ?? d.practice, day: d.as_of }))
+const instructions = loadInstructions()
+
+// ── the role, in /about's own words ───────────────────────────────────────────────────────────
+const aboutRole = aboutContent.en.sections.find((s) => s.heading === D.role.heading)?.paragraphs[0] ?? ''
 ---
 
 <Page title={D.metaTitle} description={D.metaDescription} surface="paper">
@@ -233,6 +249,47 @@ const shelf = readShelf()
         <p class="ds-more"><a class="ds-link" href={D.attention.link.href}>{D.attention.link.label} →</a></p>
       </section>
 
+      {/* ── the ways in and out (2026-11-02) ────────────────────────────────────────────────── */}
+      <section id="ways" class="ds-section" aria-labelledby="ds-ways-h">
+        <h2 id="ds-ways-h">{D.ways.heading}</h2>
+        <p class="ds-prose">{D.ways.lead}</p>
+        <h3>{D.ways.letters.heading}</h3>
+        <p class="ds-prose">{D.ways.letters.lead}</p>
+        <ul class="ds-projects ds-projects--ways">
+          {letters.map((l) => (
+            <li>
+              <span class="ds-project-name">{l.piece}</span>
+              <span class="ds-project-line">→ {l.receiver} · {l.from}, {dayMonthYear(l.day)}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="ds-more"><a class="ds-link" href={D.ways.letters.link.href}>{D.ways.letters.link.label} →</a></p>
+        {instructions.length > 0 && (
+          <>
+            <h3>{D.ways.instructions.heading}</h3>
+            <p class="ds-prose">{D.ways.instructions.lead}</p>
+            <ul class="ds-projects ds-projects--ways">
+              {instructions.map((i) => (
+                <li>
+                  <a class="ds-project-name" href={i.href}>{i.title}</a>
+                  <span class="ds-project-line">{i.practice}{i.forms.length > 0 ? ` · ${i.forms.join(', ')}` : ''}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="ds-more"><a class="ds-link" href={D.ways.instructions.link.href}>{D.ways.instructions.link.label} →</a></p>
+          </>
+        )}
+        <h3>{D.ways.inbound.heading}</h3>
+        <dl class="ds-practices ds-ways-in">
+          {D.ways.inbound.items.map((w) => (
+            <div>
+              <dt><a href={w.href}>{w.label}</a></dt>
+              <dd>{w.line}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
       {/* ── what the site shows: the publication rule of 2026-10-17 ─────────────────────────── */}
       <section id="publication" class="ds-section" aria-labelledby="ds-publication-h">
         <h2 id="ds-publication-h">{D.publication.heading}</h2>
@@ -252,38 +309,10 @@ const shelf = readShelf()
         <p class="ds-more"><a class="ds-link" href={D.works.papers.href}>{D.works.papers.label} →</a></p>
       </section>
 
-      {/* ── the neighbours ──────────────────────────────────────────────────────────────────── */}
-      <section id="neighbours" class="ds-section ds-section--wide" aria-labelledby="ds-neighbours-h">
-        <h2 id="ds-neighbours-h">{D.neighbours.heading}</h2>
-        <p class="ds-prose">{D.neighbours.lead(dayMonthYear(D.neighbours.auditOn))}</p>
-        <table class="ds-table ds-table--neighbours">
-          <thead>
-            <tr>
-              <th scope="col">{D.neighbours.columns.name}</th>
-              <th scope="col">{D.neighbours.columns.what}</th>
-              <th scope="col">{D.neighbours.columns.differs}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {D.neighbours.rows.map((n) => (
-              <tr>
-                <th scope="row" data-label={D.neighbours.columns.name}>
-                  <a href={n.href} target="_blank" rel="noreferrer">{n.name} ↗</a>
-                  <span class="ds-when">{n.when}</span>
-                </th>
-                <td data-label={D.neighbours.columns.what}>{n.what}</td>
-                <td data-label={D.neighbours.columns.differs}>{n.differs}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
-
-      {/* ── who answers for it ──────────────────────────────────────────────────────────────── */}
-      <section id="accountability" class="ds-section" aria-labelledby="ds-accountability-h">
-        <h2 id="ds-accountability-h">{D.accountability.heading}</h2>
-        {D.accountability.paragraphs({ personas }).map((p) => <p class="ds-prose">{p}</p>)}
-        <p class="ds-conductor">{NAMING.conductorLine}</p>
+      {/* ── the role I hold, in /about's words (until 2026-11-02 "Who answers for it") ──────────── */}
+      <section id="role" class="ds-section" aria-labelledby="ds-role-h">
+        <h2 id="ds-role-h">{D.role.heading}</h2>
+        {D.role.paragraphs({ about: aboutRole, personas }).map((p) => <p class="ds-prose">{p}</p>)}
       </section>
 
       {/* ── contact, and the short bio ──────────────────────────────────────────────────────── */}
