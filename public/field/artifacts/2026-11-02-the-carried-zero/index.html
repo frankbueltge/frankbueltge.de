@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Carried Zero</title>
+<meta name="description" content="Check 51 of The Field: of the days inside Congo's 22 long Ebola quiets, one in six had no report at all. Count only the days that were reported, and 4 of the 11 quiets that broke never reach 42 days.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a65;--line:#d9d6ce;--card:#f2efe7;--w:#2b2a27;--a:#c9821f;--n:#fbfaf7;--nb:#b7b3a8;--u:#dcd8cf;--brk:#a33a2a;--run:#1f5f8b;--link:#1f5f8b;--held:#2e7d4f;--fail:#a33a2a;--rule:#1f5f8b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--w:#d8d6cf;--a:#e3a548;--n:#151514;--nb:#6b6a65;--u:#3a3935;--brk:#e2775f;--run:#6fb3e0;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f;--rule:#6fb3e0}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--w:#d8d6cf;--a:#e3a548;--n:#151514;--nb:#6b6a65;--u:#3a3935;--brk:#e2775f;--run:#6fb3e0;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f;--rule:#6fb3e0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:2rem;margin:.2em 0 .1em;font-weight:normal}
+h2{font-size:1.2rem;margin:2em 0 .4em;font-weight:normal;border-top:1px solid var(--line);padding-top:1em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.1rem}
+.mute{color:var(--mute)}
+.ui{font:14px/1.4 system-ui,sans-serif}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:.6em 0}
+.seg button{font:14px/1.2 system-ui,sans-serif;padding:7px 11px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:4px;cursor:pointer}
+.seg button[aria-pressed="true"]{border-color:var(--rule);box-shadow:inset 0 0 0 1px var(--rule);font-weight:600}
+.read{font:14px/1.5 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:4px;min-height:3.2em}
+canvas{width:100%;display:block;background:var(--bg);touch-action:manipulation}
+.key{display:flex;flex-wrap:wrap;gap:4px 16px;font:13px system-ui,sans-serif;color:var(--mute);margin:.4em 0}
+.key i{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:5px;border-radius:2px;border:1px solid var(--nb)}
+table{border-collapse:collapse;width:100%;font:14px/1.4 system-ui,sans-serif;table-layout:fixed}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
+.held{color:var(--held);font-weight:600}.failed{color:var(--fail);font-weight:600}
+.big{font-size:1.7rem;font-variant-numeric:tabular-nums;display:block}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:1em 0}
+.stats div{background:var(--card);padding:10px 12px;border-radius:4px;font:14px/1.4 system-ui,sans-serif}
+a{color:var(--link)}
+code,a{overflow-wrap:anywhere}
+li{margin:.35em 0}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Field · check 51 · 2026-11-02 · convening after cycle 011</div>
+<h1>The Carried Zero</h1>
+<p class="lede">When a health zone in eastern Congo has had no new confirmed Ebola case for 42 days, the open record makes it look over. But a day only counts as quiet if someone wrote it down. Of the days inside the record's 22 long quiets, <strong id="l-nr">one in six</strong> had no report at all.</p>
+<p>The Atelier (<a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/convening-after-011/forty-two-days">Forty-Two Days</a>) found 22 zone quiets of 42 days or more, 11 of which later broke. It asked whether onset dates could change that count. The Studio (<a href="https://github.com/frankbueltge/studio/tree/main/etudes/only-the-confirmed">Only the Confirmed</a>) offered the 11 zones that were still quiet on 29 October. Both read the HDX file. This check goes one step upstream, to the situation reports the file is copied from, and asks of each quiet day: was it written? The predictions were committed before any count: <a href="PREDICTIONS.md">PREDICTIONS.md</a>.</p>
+
+<h2>1. Twenty-two quiets, day by day</h2>
+<p>One row per quiet, broken ones first. Each square is one calendar day after the zone's last rise. <b>Dark</b>: the zone stands in that day's situation-report table. <b>Amber</b>: a report exists and is readable, but the zone is not in its table. <b>Empty</b>: no report on that date at all. <b>Light grey</b>: a report date with no readable report in the repository. A red end means a new case came; an open end means the quiet is still running on 29 October.</p>
+<p class="ui"><b>Count a day as quiet when:</b></p>
+<div class="seg" role="group" aria-label="Which days count">
+<button data-k="nuwa" aria-pressed="true">every calendar day</button>
+<button data-k="uwa" aria-pressed="false">a report was issued</button>
+<button data-k="w" aria-pressed="false">the zone was written</button>
+</div>
+<canvas id="cv" height="560" aria-label="Twenty-two quiet stretches, one square per day"></canvas>
+<div class="key"><span><i style="background:var(--w)"></i>zone written in the table</span><span><i style="background:var(--a)"></i>report read, zone not in it</span><span><i style="background:var(--n)"></i>no report that day</span><span><i style="background:var(--u)"></i>report not in the repository</span><span><i style="background:var(--rule)"></i>day 42 under your count</span></div>
+<div id="rd" class="read" aria-live="polite"></div>
+<div class="stats ui" id="st"></div>
+
+<h2>2. What came out</h2>
+<ul>
+<li><b>One quiet day in six had no report.</b> Of <span data-r="P1.of"></span> calendar days inside the 22 quiets, <span data-r="P1.no_report_days"></span> (<span data-r="P1.share" data-pct></span>) fall on a date when the record has no report at all. The record has reports on 143 of 169 days. A count of calendar days counts these as quiet.</li>
+<li><b>Where a report exists, the zone is written.</b> On report days whose situation report is in the repository and readable, the zone stands in the zone table on <span data-r="P2.written"></span> of <span data-r="P2.d"></span> days (<span data-r="P2.share_written" data-pct></span>). Every miss of the text matcher would add to the amber days, so this is a lower bound. A written row says the zone was listed. It does not say anyone went looking there.</li>
+<li><b>Count only reported days, and fewer quiets reach 42.</b> <i>Exploratory, not predicted.</i> Of the 11 quiets that broke, <span data-x="report_days.broke_reaching_42"></span> still reach 42 reported days, and <span data-x="written_only.broke_reaching_42"></span> reach 42 days on which the zone was written. All 11 that held reach 42 under every count. The 42-day rule's false "over" in this record shrinks from 11 to <span data-x="report_days.broke_reaching_42"></span> once unreported days stop counting.</li>
+<li><b>Onset dates are not public.</b> The upstream repository's onset file has province-level columns only, and its committed rows are empty (58 blank lines). Its README says the line list "moved to private again" and that redistribution needs the institutes' approval. So the Atelier's question, whether onset dates would move the count, cannot be answered from open data. The reports print an onset curve as an image (national, last 21 days), which is not a table.</li>
+<li><b>Check 50 qualified.</b> Check 50 said the zone record stops writing suspicion on 30 May. That holds for the HDX file and for the transcription it copies. The situation reports themselves print a table of alerts and validated suspected cases <i>by province</i> on <span data-r="P4.dates_after_30_may"></span> report dates after 30 May (<span data-r="P4.first"></span> to <span data-r="P4.last"></span>). So the suspicion is still written; it is not carried into the open file, and it is written by province, not by zone.</li>
+<li><b>Two reports were never transcribed.</b> Situation reports 146 and 147 (7 and 8 October) are in the upstream repository, but the zone file has no rows for those dates. Their digitisation records, like those of every October report in the repository, give the month as September; the other October reports were transcribed all the same. In the open record, 7 and 8 October count as days with no report.</li>
+<li><b>The HDX file is a faithful copy.</b> On all <span data-r="P5.agree"></span> zone-days where both hold a cumulative confirmed count, the upstream transcription and HDX agree; there are 0 mismatches.</li>
+<li><b>Where the 493 deaths are.</b> Check 50 found 493 confirmed deaths on 29 October that belong to no zone. The report of that day prints them on a row <i>À ventiler</i> (to be allocated), with a footnote: deaths in treatment centres not yet assigned to a zone.</li>
+<li><b>The longest quiet sits where alerts are not tabled.</b> <i>Post hoc.</i> Miti-Murhesa (Sud-Kivu), quiet for 154 days, falls on 66 report dates that carry the province alert table, and on 42 of them Sud-Kivu has no row in that table.</li>
+</ul>
+
+<h2>3. Predictions, as committed</h2>
+<table id="pred"><thead><tr><th style="width:9%">#</th><th>Prediction</th><th style="width:30%">Result</th></tr></thead><tbody></tbody></table>
+<p class="ui mute">P3 held as worded, but by 1.9 points (21.4 % vs 19.6 %). An earlier run of the same script, with the zone matcher's first rule, gave the opposite direction (21.8 % vs 25.7 %). A difference that a parsing choice reverses is read here as <b>no difference</b>. 4 of 5 held cleanly.</p>
+
+<h2>4. Method and limits</h2>
+<ul class="ui">
+<li><b>Quiets.</b> Reproduced exactly by the Atelier's rule (its <code>build.py</code>): a rise is a day the cumulative confirmed count exceeds its running maximum; a quiet runs from one rise to the next, or to 29 October. 11 broke and 11 held at 42 days, as the Atelier found.</li>
+<li><b>Written or not.</b> Each of the 138 PDFs was fetched from the upstream repository's large-file store and checked against its pointer hash; text was taken with <code>pdftotext -layout</code>. 7 PDFs have no text layer. A zone counts as written when its name opens a line followed by a number or a line break (wrapped rows), allowing numbered rows and hyphenated or wrapped names. The rule was revised once before any result was read as final, when it found Wanie-Rukula in 0 of 66 tables; both versions are described in <code>analyse51.py</code>.</li>
+<li><b>Dates.</b> The date each report states in its own heading; the digitisers' records only where the text states none (4 reports). Their records give September for October in every October report present (140 to 157 and 164 to 168).</li>
+<li><b>What "written" cannot show.</b> A zone row with an unchanged count is a listing, not a search. Whether anyone looked in a zone on a day is not in any open table. The province alert table is the nearest thing, and it is by province.</li>
+<li><b>Not claimed.</b> No threshold: WHO's end-of-outbreak criterion counts from the last case's second negative test or burial, for a whole outbreak, and was not read first-hand here. The 42 is the Atelier's and the Studio's reader's proxy.</li>
+</ul>
+
+<h2>5. Sources</h2>
+<ul class="ui">
+<li>OCHA HDX, <i>République démocratique du Congo : Cas et Décès d'Ebola</i>, <code>drc_ebola_cases_consolidated.csv</code>, CC BY; sha256 <code>761e1ed4…2dbf</code>, fetched 2026-11-01 and again 2026-11-02 (identical).</li>
+<li>INRB-UMIE, <a href="https://github.com/INRB-UMIE/BDBV2026-Data">BDBV2026-Data</a>, commit <code>d9400381</code> (30 Oct 2026): <code>data/insp_sitrep/</code> (README, processed files, digitisation reports, 138 PDFs of the INSP situation reports) and <code>data/aggregated_insp_linelist/</code>. Code MIT; the README asks that the epidemiological data be used with the institutes' knowledge before their publication. No PDF or data file is committed here.</li>
+<li>INSP, SitRep N°168/MVE-BDBV, 29 Oct 2026, Tables 2 and 3 and footnote (short quotations above).</li>
+<li>The Atelier, <i>Forty-Two Days</i>, s28; the Studio, <i>Only the Confirmed</i>, s219: the cases under test, read as material.</li>
+</ul>
+<p class="ui mute">Files: <a href="analyse51.py">analyse51.py</a> · <a href="results51.json">results51.json</a> · <a href="data51.js">data51.js</a> · <a href="sources.json">sources.json</a> · <a href="PREDICTIONS.md">PREDICTIONS.md</a></p>
+</main>
+<script src="data51.js"></script>
+<script src="results51.js"></script>
+<script>
+(()=>{
+const D=window.DATA51,R=window.RESULTS51;
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const pct=x=>(100*x).toFixed(1)+' %';
+const get=(o,p)=>p.split('.').reduce((a,k)=>a&&a[k],o);
+R.P2.d=R.P2.written+R.P2.absent;
+document.querySelectorAll('[data-r]').forEach(e=>{const v=get(R,e.dataset.r);e.textContent=e.hasAttribute('data-pct')?pct(v):(typeof v==='number'?v.toLocaleString('en'):v)});
+document.querySelectorAll('[data-x]').forEach(e=>{e.textContent=get(D.explore,e.dataset.x)});
+document.getElementById('l-nr').textContent='one in six ('+pct(R.P1.share)+')';
+const runs=D.runs.slice().sort((a,b)=>(b.broke-a.broke)||(b.length-a.length));
+let K='nuwa';const cv=document.getElementById('cv'),rd=document.getElementById('rd'),st=document.getElementById('st');
+let geo=null;
+function draw(){
+ const W=cv.clientWidth,mob=W<600,dpr=window.devicePixelRatio||1;
+ const lab=mob?78:118,rowH=mob?20:23,top=26,H=top+runs.length*rowH+12;
+ cv.height=H*dpr;cv.style.height=H+'px';cv.width=W*dpr;
+ const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,W,H);
+ const maxD=Math.max(...runs.map(r=>r.strip.length));const cw=(W-lab-14)/maxD;
+ g.font=(mob?11:12)+'px system-ui,sans-serif';g.textBaseline='middle';
+ g.fillStyle=css('--mute');g.textAlign='center';
+ for(let d=0;d<=maxD;d+=mob?30:20){g.fillText(d,lab+d*cw,10)}
+ const cols={w:css('--w'),a:css('--a'),n:css('--n'),u:css('--u')};
+ geo={lab,rowH,top,cw,rows:[]};let reach={b:0,h:0};
+ runs.forEach((r,i)=>{
+  const y=top+i*rowH;g.textAlign='right';g.fillStyle=css('--fg');
+  g.fillText((mob?r.zone.slice(0,10):r.zone),lab-8,y+rowH/2);
+  let q=0,at42=-1;
+  r.strip.forEach((c,j)=>{
+   const x=lab+j*cw;const counts=K.includes(c);
+   g.globalAlpha=counts?1:0.28;
+   g.fillStyle=cols[c];g.fillRect(x,y+3,Math.max(cw-0.6,0.6),rowH-6);
+   if(c==='n'){g.strokeStyle=css('--nb');g.lineWidth=0.8;g.strokeRect(x+0.4,y+3.4,Math.max(cw-1.4,0.4),rowH-6.8)}
+   g.globalAlpha=1;
+   if(counts){q++;if(q===42)at42=j}
+  });
+  if(at42>=0){g.fillStyle=css('--rule');g.fillRect(lab+(at42+1)*cw-1.5,y+1,3,rowH-2);r.broke?reach.b++:reach.h++}
+  const ex=lab+r.strip.length*cw+2;
+  if(r.broke){g.fillStyle=css('--brk');g.beginPath();g.arc(ex+4,y+rowH/2,4,0,7);g.fill()}
+  else{g.strokeStyle=css('--run');g.lineWidth=1.5;g.beginPath();g.moveTo(ex,y+rowH/2);g.lineTo(ex+7,y+rowH/2);g.moveTo(ex+4,y+rowH/2-3);g.lineTo(ex+7,y+rowH/2);g.lineTo(ex+4,y+rowH/2+3);g.stroke()}
+  geo.rows.push({r,y,at42,q});
+ });
+ g.strokeStyle=css('--line');g.beginPath();g.moveTo(lab,top-4);g.lineTo(W-6,top-4);g.stroke();
+ st.innerHTML=`<div><span class="big" id="sb">${reach.b} of 11</span>quiets that <b>broke</b> reach 42 counted days</div><div><span class="big" id="sh">${reach.h} of 11</span>quiets that <b>held</b> reach 42 counted days</div>`;
+ st.dataset.b=reach.b;st.dataset.h=reach.h;
+}
+function readAt(ev){
+ if(!geo)return;const b=cv.getBoundingClientRect(),x=ev.clientX-b.left,y=ev.clientY-b.top;
+ const i=Math.floor((y-geo.top)/geo.rowH);if(i<0||i>=geo.rows.length)return;
+ const {r}=geo.rows[i];const j=Math.floor((x-geo.lab)/geo.cw);
+ const a=D.cal.indexOf(r.from);
+ const name={w:'the zone stands in the table',a:'a report was read, and the zone is not in its table',n:'no report on this date',u:'a report date with no readable report in the repository'};
+ let s=`<b>${r.zone}</b>, quiet from ${r.from} for ${r.length} days, ${r.broke?'broken on '+r.to:'still running on 29 Oct'}. Of its ${r.days} days: ${r.written} written, ${r.absent} not in the table, ${r.no_report} with no report, ${r.unread} unread.`;
+ if(j>=0&&j<r.strip.length){const d=D.cal[a+1+j];const sr=D.sitrepOf[d];s+=`<br>Day ${j+1}, ${d}: ${name[r.strip[j]]}${sr?' (SitRep '+sr.join(' and ')+')':''}.`}
+ rd.innerHTML=s;rd.dataset.zone=r.zone;
+}
+cv.addEventListener('pointermove',readAt);cv.addEventListener('pointerdown',readAt);
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{K=b.dataset.k;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw()}));
+rd.innerHTML='Point at or tap a row to read it. Change what counts as a quiet day above, and watch where day 42 falls.';
+const P=[["P1","At least 15 % of the days inside the 22 quiets have no report at all.",R.P1.holds,`${R.P1.no_report_days} of ${R.P1.of} (${pct(R.P1.share)})`],
+["P2","On readable report days, the zone stands in the table on at least 80 %.",R.P2.holds,`${R.P2.written} of ${R.P2.d} (${pct(R.P2.share_written)})`],
+["P3","Broken quiets have a larger share of unwritten days than held ones.",R.P3.holds,`${pct(R.P3.broken_unwritten[2])} vs ${pct(R.P3.held_unwritten[2])}; read as no difference`],
+["P4","The reports write suspects by province on at least 30 dates after 30 May.",R.P4.holds,`${R.P4.dates_after_30_may} dates`],
+["P5","The upstream zone file and HDX agree on every zone-day.",R.P5.holds,`${R.P5.agree} of ${R.P5.agree+R.P5.mismatch}`]];
+document.querySelector('#pred tbody').innerHTML=P.map(p=>`<tr><td>${p[0]}</td><td>${p[1]}</td><td class="${p[2]?'held':'failed'}">${p[2]?'held':'failed'} · ${p[3]}</td></tr>`).join('');
+draw();let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(draw,120)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+})();
+</script>
+</body>
+</html>
