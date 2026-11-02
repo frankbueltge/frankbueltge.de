@@ -1,81 +1,24 @@
 ---
-// Die Quellen-Byline unter jeder Seite. Bis 16.07. zeigte sie pauschal auf lab-pipelines —
-// richtig nur für die Instrumente der Holdings-Ära (Franks Entscheid, Wortlaut privat:
-// entweder die passenden Repos korrekt verlinken oder die Zeile ganz streichen).
-// Jetzt pfadbasiert: jede
-// Fläche verlinkt IHR öffentliches Repo; wo keines passt (About, Atlas, Projects, Recht),
-// entfällt die Zeile — kein falscher Beleg ist besser als ein bequemer.
-import { SITE } from '@/lib/site'
+// The source line under a page. Until 2026-07-16 it pointed every page at lab-pipelines; Frank's
+// decision that day (wording private: link the right repository or drop the line) made it
+// path-based. Since 2026-11-02 the paths come from the register instead of a list kept here:
+// src/lib/source-code.ts names each work's code, its page and its method sheet both link it, and
+// a page with no code of its own (the hub, About, the legal pages) renders no line at all.
+//
+// The line used to open with "An instrument —". The wording canon keeps that word for what runs
+// quietly and feeds a project (the Observatory); most pages carrying the line are experiments or
+// practices, so the line now says only what holds for all of them.
+import { sourceFor } from '@/lib/source-code'
 
-const REPOS = {
-  atelier: 'https://github.com/frankbueltge/ulysses',
-  field: 'https://github.com/frankbueltge/field-research',
-  studio: 'https://github.com/frankbueltge/studio',
-  ecology: 'https://github.com/frankbueltge/research-ecology',
-  // Common Ground's pipeline lives in THIS repository, not in lab-pipelines — the byline links
-  // the directory that actually produces the nightly ledger.
-  trending: 'https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/trending',
-  meridian: 'https://github.com/frankbueltge/meridian-runtime', // On Record — seit 24.07. öffentlich
-  instruments: SITE.sourceCode, // lab-pipelines — die Messinstrumente der Holdings-Ära
-} as const
-
-/** Pfad-Präfix → Quell-Repo (Präfixe überschneiden sich nicht). */
-const BY_PREFIX: ReadonlyArray<readonly [string, string]> = [
-  // On Record is fed from meridian-runtime — now PUBLIC. These must precede the generic
-  // '/werke' mapping below so /werke/on-record resolves to the runtime, not lab-pipelines.
-  ['/werke/on-record', REPOS.meridian],
-  ['/on-record', REPOS.meridian],
-  // Same reason as On Record: both must precede the generic '/werke' mapping below, so
-  // /werke/trending resolves to the trending pipeline and not to lab-pipelines.
-  ['/werke/trending', REPOS.trending],
-  ['/trending', REPOS.trending],
-  ['/atelier', REPOS.atelier],
-  ['/field', REPOS.field],
-  ['/studio', REPOS.studio],
-  ['/encounters', REPOS.ecology],
-  ['/apparatus', REPOS.ecology],
-  // Holdings-Ära: die Instrumente, deren öffentlicher Quellcode in lab-pipelines liegt
-  ['/protocol', REPOS.instruments],
-  ['/parallax', REPOS.instruments],
-  ['/policy', REPOS.instruments],
-  ['/consensus', REPOS.instruments],
-  ['/balance', REPOS.instruments],
-  ['/invoked-past', REPOS.instruments],
-  ['/ghost-fleet', REPOS.instruments],
-  ['/redaction', REPOS.instruments],
-  ['/round-number', REPOS.instruments],
-  ['/headroom', REPOS.instruments],
-  ['/bycatch', REPOS.instruments],
-  ['/tell', REPOS.instruments],
-  ['/pattern', REPOS.instruments],
-  ['/correction', REPOS.instruments],
-  ['/plenum', REPOS.instruments],
-  ['/werke', REPOS.instruments],
-  ['/experiments', REPOS.instruments],
-  ['/lab', REPOS.instruments],
-]
-
-const path = Astro.url.pathname
-
-// On Record (/on-record, /werke/on-record) is fed from meridian-runtime, which became PUBLIC
-// on 2026-07-24 — it now claims the same "source code open" byline as every other instrument,
-// pointing at the runtime repo (mapped explicitly in BY_PREFIX above, ahead of the generic /werke).
-// The hub ('/') carries NO byline (Frank, 2026-07-25): the homepage is not "an instrument" —
-// its source-openness is stated in the footer instead. Only pages that ARE a surface of a
-// specific repo get the line; everything else (About, Atlas, Projects, the hub, legal) omits it.
-const sourceUrl =
-  BY_PREFIX.find(([p]) => path === p || path.startsWith(p + '/'))?.[1] ?? null
+const sourceUrl = sourceFor(Astro.url.pathname)
 ---
 
 {
   sourceUrl && (
     <aside class="mx-auto max-w-3xl px-4 pb-6 text-xs text-fg-faint">
       <p>
-        An instrument — method and sources disclosed,{' '}
-        <a href={sourceUrl} target="_blank" rel="noreferrer" class="underline transition-colors hover:text-fg">
-          source code open
-        </a>
-        .
+        Method and sources disclosed,{' '}
+        <a href={sourceUrl} target="_blank" rel="noreferrer" class="underline transition-colors hover:text-fg">source code open</a>.
       </p>
     </aside>
   )

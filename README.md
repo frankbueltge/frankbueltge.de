@@ -111,10 +111,13 @@ is shown on the page itself). The full, current index is
 ### The pipelines
 
 Nightly workflows (`.github/workflows/`) fetch primary sources, verify, and commit the day's
-measurements into the archive. The measurement code itself is public and documented in
-[lab-pipelines](https://github.com/frankbueltge/lab-pipelines) — every step open to
-inspection, keys and secrets only in Actions secrets, source failures recorded honestly
-("Feststellung entfällt") instead of bridged silently.
+measurements into the archive. The measurement code lives in [`pipelines/`](pipelines/) of
+this repository — every step open to inspection, keys and secrets only in Actions secrets,
+source failures recorded honestly ("Feststellung entfällt") instead of bridged silently.
+Works the site computes itself keep their code in `src/lib/`; each work's page links its own
+directory ([`src/lib/source-code.ts`](src/lib/source-code.ts)). The earlier mirror
+[lab-pipelines](https://github.com/frankbueltge/lab-pipelines) was a hand-made export, last
+taken on 2026-07-05, and is no longer kept.
 
 ## Development
 
