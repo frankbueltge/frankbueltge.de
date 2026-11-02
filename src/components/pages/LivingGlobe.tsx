@@ -16,10 +16,12 @@
 //     aria-hidden. Where WebGL is missing, or the module fails, the plate stands and a line says
 //     so.
 //   · A LAYER'S RECORDS ARE FETCHED ONCE. The manifest ships with the page and carries provenance
-//     only — id, title, source, days, counts, bytes. A layer's records are fetched from its own
-//     feed the first time it is switched on, and never again, not on a re-toggle and not on a day
-//     change; a visitor who never opens a layer never pays for one. Fetch-then-parse: deck.gl is
-//     never handed a URL.
+//     only — id, title, source, days, counts, bytes. A layer's records are fetched in pieces and no
+//     piece twice: its newest day the first time it is switched on, and a month of its archive the
+//     first time a visitor walks into that month (since 2026-11-02, when the balance layer's whole
+//     archive outgrew the data budget) — not on a re-toggle and not again on a day change; a
+//     visitor who never opens a layer never pays for one. Fetch-then-parse: deck.gl is never
+//     handed a URL.
 //   · TIME COMES FROM THE DATA. The scrubber walks the manifest's day union — the days the archive
 //     itself holds — and starts at the newest of them. It never reads a clock. The sky is the ONE
 //     declared exception and it declares itself: on the day its elements were taken it hands over
@@ -157,18 +159,47 @@ export function mountsOnSight(width: number): boolean {
   return width >= NARROW_PX
 }
 
-/** Which layers still owe their WHOLE archive. Both surfaces open on the newest day and fetch
- *  only that day's records; the archive behind it is worth its kilobytes exactly when a visitor
- *  leaves the newest day — by dragging the scrubber, by pressing play, or by a story that names an
- *  older day. Pure, so the rule is a test: nothing upgrades while the newest day is on screen, and
- *  a layer upgrades once. */
-export function layersToUpgrade(
-  upgraded: ReadonlySet<string>,
+/** From this day of a month on, a walk asks for the next month as well. */
+const TURN_FROM_DAY = 25
+
+/** `YYYY-MM` → the month after it. */
+export function nextMonth(month: string): string {
+  const [year, m] = month.split('-').map(Number) as [number, number]
+  return m === 12 ? `${year + 1}-01` : `${year}-${String(m + 1).padStart(2, '0')}`
+}
+
+/** Which months of the archive the day on screen still owes, as `{ id, month }`. Both surfaces
+ *  open on the newest day and fetch only that day's records; the archive behind it is worth its
+ *  kilobytes exactly when a visitor leaves the newest day — by dragging the scrubber, by pressing
+ *  play, or by a story that names an older day — and then only the month that day falls in, and in
+ *  a month's last days the next one too, so a walk does not stall at the turn. Until 2026-11-02
+ *  the whole archive came at once; a layer grows by a day every night, and the balance layer's had
+ *  outgrown the data budget (src/lib/globe/feeds.test.ts). Pure, so the rule is a test: nothing is
+ *  asked while the newest day is on screen, and a month is asked once. */
+export function monthsToFetch(
+  asked: ReadonlySet<string>,
   active: readonly string[],
+  day: string,
   onNewestDay: boolean,
-): string[] {
+  monthsOf: (id: string) => readonly string[],
+): { id: string; month: string }[] {
   if (onNewestDay) return []
-  return active.filter((id) => !upgraded.has(id))
+  const month = day.slice(0, 7)
+  const wanted = Number(day.slice(8, 10)) >= TURN_FROM_DAY ? [month, nextMonth(month)] : [month]
+  return active.flatMap((id) => {
+    const held = monthsOf(id)
+    return wanted.filter((m) => held.includes(m) && !asked.has(`${id}:${m}`)).map((m) => ({ id, month: m }))
+  })
+}
+
+/** Two pieces of one layer's feed as one: the frames by day, each day once and in order, and
+ *  everything else from the piece fetched first, so the newest day's `instant` survives a month
+ *  that arrives after it, and a month that arrives first is not erased by the newest day. Pure. */
+export function mergeFeeds(had: LayerFeed | undefined, got: LayerFeed): LayerFeed {
+  if (!had) return got
+  const frames = new Map(had.frames.map((f) => [f.day, f]))
+  for (const f of got.frames) frames.set(f.day, f)
+  return { ...got, ...had, frames: [...frames.values()].sort((a, b) => a.day.localeCompare(b.day)) }
 }
 
 /** Where the day axis starts: at the newest day the archive holds, which is the last of them. */
@@ -302,7 +333,15 @@ export default function LivingGlobe({
   const handleRef = React.useRef<GlobeHandle | null>(null)
   const startedRef = React.useRef(false)
   const askedRef = React.useRef<Set<string>>(new Set())
-  const wholeRef = React.useRef<Set<string>>(new Set())
+  const monthsRef = React.useRef<Set<string>>(new Set())
+  // a month fetched while the walk moves on is still wanted: only an unmounted island drops one
+  const aliveRef = React.useRef(true)
+  React.useEffect(
+    () => () => {
+      aliveRef.current = false
+    },
+    [],
+  )
 
   const [phase, setPhase] = React.useState<Phase>('floor')
   const [ready, setReady] = React.useState(false)
@@ -344,7 +383,7 @@ export default function LivingGlobe({
         .then((res) => (res.ok ? (res.json() as Promise<LayerFeed>) : Promise.reject(new Error(String(res.status)))))
         .then((feed) => {
           if (cancelled) return
-          setFeeds((was) => ({ ...was, [id]: feed }))
+          setFeeds((was) => ({ ...was, [id]: mergeFeeds(was[id], feed) }))
           setFetches((was) => ({ ...was, [id]: 'ready' }))
         })
         .catch(() => {
@@ -356,33 +395,25 @@ export default function LivingGlobe({
     }
   }, [active, armed, byId, gated])
 
-  // ── stage two: the archive behind the newest day, the moment a visitor leaves it ───────────
+  // ── stage two: a month of the archive, the moment a visitor walks into it ───────────────────
   React.useEffect(() => {
     if (gated !== false && !armed) return
     const onNewestDay = dayIndex === newestDayIndex(manifest.days)
-    const wanted = layersToUpgrade(wholeRef.current, active, onNewestDay)
-    if (wanted.length === 0) return
-    for (const id of wanted) wholeRef.current.add(id)
-    setFetches((was) => ({ ...was, ...Object.fromEntries(wanted.map((id) => [id, 'loading' as FetchState])) }))
-    let cancelled = false
-    for (const id of wanted) {
-      const entry = byId.get(id)
-      if (!entry) continue
-      fetch(entry.href)
+    const wanted = monthsToFetch(monthsRef.current, active, day, onNewestDay, (id) => Object.keys(byId.get(id)?.monthHrefs ?? {}))
+    for (const { id, month } of wanted) {
+      const href = byId.get(id)?.monthHrefs[month]
+      if (!href) continue
+      monthsRef.current.add(`${id}:${month}`)
+      fetch(href)
         .then((res) => (res.ok ? (res.json() as Promise<LayerFeed>) : Promise.reject(new Error(String(res.status)))))
         .then((feed) => {
-          if (cancelled) return
-          setFeeds((was) => ({ ...was, [id]: feed }))
-          setFetches((was) => ({ ...was, [id]: 'ready' }))
+          if (aliveRef.current) setFeeds((was) => ({ ...was, [id]: mergeFeeds(was[id], feed) }))
         })
         .catch(() => {
-          if (!cancelled) setFetches((was) => ({ ...was, [id]: 'failed' }))
+          if (aliveRef.current) setFetches((was) => ({ ...was, [id]: 'failed' }))
         })
     }
-    return () => {
-      cancelled = true
-    }
-  }, [active, armed, byId, dayIndex, gated, manifest.days])
+  }, [active, armed, byId, day, dayIndex, gated, manifest.days])
 
   /** One layer's frame for the day on screen, out of what has been fetched. */
   const frameOf = React.useCallback((id: string): LayerFrame | null => frameForDay(feeds[id], day), [feeds, day])
