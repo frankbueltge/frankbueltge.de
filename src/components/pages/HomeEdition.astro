@@ -58,6 +58,7 @@ import {
 } from '@/lib/ops/edition'
 import { arrivedAfter, counted, DAY_MS, dayOf, dayReaches, fill, longDate, longDay, shortDay, startOf } from '@/lib/ops/since'
 import { loadCycle } from '@/lib/ecology/v3'
+import { conveningView, loadRelayExtras } from '@/lib/ecology/convening'
 import { getLatestProtokoll } from '@/lib/protokoll/data'
 import { SELECTED_WORKS } from '@/config/selected-works'
 import { readShelf } from '@/lib/ops/selected-works'
@@ -81,6 +82,13 @@ const pulse = withoutRepos(pulseData as PulseSnapshot, RETIRED_REPOS)
 const stackSvg = buildStackSvg(pulse, { dot: { rx: 2, ry: 2.4 } })
 const feed = buildHouseFeed()
 const cycle = loadCycle()
+// A convening whose tally stands leads with the question it chose and the day that question opens,
+// read the way /ecology reads it (src/lib/ecology/convening.ts), so the two never disagree.
+const convening = conveningView(cycle, loadRelayExtras())
+const chosen =
+  convening?.stands && convening.result && convening.opensOn
+    ? { question: convening.result.question, next: convening.next, opens: convening.opensOn }
+    : null
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
 // The selected works (2026-10-17): chosen by hand in src/config/selected-works.ts, every field a
 // card shows read from the piece's own record.
@@ -307,17 +315,21 @@ const forScript = {
     {/* ── 4 · the lead, and the timetable ─────────────────────────────────────────────────── */}
     <section class="ed-front">
       <article class="ed-lead">
-        <p class="ed-lead-kicker">{E.lead.house} · {E.lead.kicker({ cycle: cycle.cycle, phase: cycle.phase, age })}</p>
-        <h2>{cycle.question ?? E.lead.noQuestion}</h2>
+        <p class="ed-lead-kicker">
+          {E.lead.house} · {chosen ? E.lead.chosenKicker(chosen) : E.lead.kicker({ cycle: cycle.cycle, phase: cycle.phase, age })}
+        </p>
+        <h2>{chosen ? chosen.question : (cycle.question ?? E.lead.noQuestion)}</h2>
         <p class="ed-lead-stand">
-          {E.lead.standfirst({
-            source: cycle.source,
-            phase: cycle.phase,
-            age,
-            pieces: landed,
-            practices: PRACTICES.length,
-            previous: cycle.cycle - 1,
-          })}
+          {chosen
+            ? E.lead.chosenStandfirst({ after: cycle.cycle, next: chosen.next, opens: chosen.opens, practices: PRACTICES.length })
+            : E.lead.standfirst({
+                source: cycle.source,
+                phase: cycle.phase,
+                age,
+                pieces: landed,
+                practices: PRACTICES.length,
+                previous: cycle.cycle - 1,
+              })}
         </p>
         <div class="ed-briefs">
           {briefs.map((b) =>
