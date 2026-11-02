@@ -1,12 +1,14 @@
 // src/lib/ducking/round.ts — a round of Ducking (2026-11-01; docs/design/2026-11-01-ducking.md).
 //
-// A round seats the matters of one briefing of the Middle (research-ecology `briefings/`), pinned to
-// the commit it was written in. It is committed data, never fetched: each matter's strip label, the
-// terms the count matches, what its voice reads and where that comes from. `say` is what the voice
-// is given when the written line would be read wrongly ("9,277"); the page always shows `text`.
+// A round seats the eleven fields of the map (src/lib/briefing/map.ts) with the words of one briefing of
+// the Middle (research-ecology `briefings/`), pinned to the commit it was written in. It is committed
+// data, never fetched: each channel's strip label, the terms the count matches, what its voice reads
+// and where that comes from. The channels are the same from round to round, so a fader can be read
+// across time; the words are not. `say` is what the voice is given when the written line would be read
+// wrongly ("9,277"); the page always shows `text`.
 //
-// The voices are rendered once per round by scripts/ducking/voices.py into public/ducking/<round>/.
-// Their words are fixed until the next render; the faders are not, they move with the ledger.
+// The voices are recorded once per round by scripts/ducking/voices.py into public/ducking/<round>/.
+// Their words are fixed until the next recording; the faders are not, they move with the ledger.
 
 export interface Line {
   text: string
@@ -48,8 +50,8 @@ export interface CycleState {
   convening?: { after_cycle: number; briefing?: unknown } | null
 }
 
-/** True once the ecology has written a briefing newer than the one a round seats. A round is written
- *  and rendered by hand, so the page has to be able to say that its words have fallen behind. */
+/** True once the ecology has written a briefing newer than the one a round seats. A round is recorded
+ *  after its briefing is checked, so the page has to be able to say that its words have fallen behind. */
 export function roundBehind(roundId: string, state: CycleState): boolean {
   const seated = Number(/(\d+)$/.exec(roundId)?.[1])
   const newest = state.convening?.briefing ? state.convening.after_cycle : state.cycle - 1

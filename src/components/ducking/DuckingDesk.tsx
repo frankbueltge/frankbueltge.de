@@ -5,15 +5,15 @@
  *  day, as plain SVG, so the page says what it says before a script runs.
  *
  *  Nothing is latched. A fader stays up only while something holds it, and that is the work: there
- *  is deliberately no way to leave a matter loud and walk off. A keyboard holds for as long as the
+ *  is deliberately no way to leave a field loud and walk off. A keyboard holds for as long as the
  *  key keeps being pressed, and a moment longer. No style attribute anywhere (CSP): caps move by SVG
  *  attribute, and the screen by setVars. */
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Pause, Play, Volume2, VolumeX } from 'lucide-react'
 import { reducedMotion, setVars } from '@/lib/dataviz/runtime'
 import { capY, FADER, INK_BESIDE_A_HAND, inkOf, INK_FLOOR, lanePath, positionAt, SCALE, scaleY } from '@/lib/ducking/figure'
-import { captionOf, crowdCutoff, fmtShare, focusOf, shareAt, solve, standing, toGain, toPosition, toShare } from '@/lib/ducking/mix'
-import { cueAt, cueEnvelope, cueOrNext, placeOf, type Cue, type VoiceBook } from '@/lib/ducking/voices'
+import { captionOf, crowdCutoff, fmtShare, focusOf, PLAY_CAPTION, shareAt, solve, standing, toGain, toPosition, toShare } from '@/lib/ducking/mix'
+import { cueAt, cueEnvelope, cueOrNext, placeOf, type Cue, type RecordCue, type VoiceBook } from '@/lib/ducking/voices'
 import { Desk, type Loaded } from './sound'
 
 export interface DeskChannel {
@@ -24,7 +24,7 @@ export interface DeskChannel {
 
 export interface DuckingDeskProps {
   round: string
-  /** the matters, then the crowd */
+  /** the fields of the map, then the crowd */
   channels: DeskChannel[]
   days: string[]
   /** day → share per channel, the crowd last */
@@ -40,7 +40,10 @@ const CATCH_PER_SECOND = 7
 /** A key press holds for this long, so a keyboard can do what a hand does. */
 const KEY_HOLD_MS = 1600
 const KEY_STEP = 0.03
-const PLAY_SECONDS = 50
+/** Seconds a day takes to play, until the book says how long its record gives a day. */
+const DAY_SECONDS = 2
+/** What the crowd keeps of its level while the record sounds. */
+const PLAY_CROWD = 0.14
 /** How long a note under the screen stays. */
 const NOTE_MS = 4800
 /** A grip shorter than this was a touch, not a hold. */
@@ -66,6 +69,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
   const [sound, setSound] = useState<'off' | 'loading' | 'on' | 'failed'>('off')
   const [playing, setPlaying] = useState(false)
   const [day, setDay] = useState(last)
+  const [from, setFrom] = useState(0)
   const [spent, setSpent] = useState<{ id: string; strip: string; time: string }[]>([])
 
   // All of the moving state lives outside React: it changes every frame.
@@ -81,8 +85,22 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
     playing: false,
     book: null as VoiceBook | null,
     desk: null as Desk | null,
+    /** the day the record starts */
+    from: 0,
+    recording: null as AudioBuffer | null,
+    /** when the record's start sounded on the audio clock; null while it is not sounding */
+    clock: null as number | null,
     note: 0,
   })
+
+  const stopPlay = useCallback(() => {
+    const e = engine.current
+    e.playing = false
+    e.head = Math.round(e.head)
+    e.clock = null
+    e.desk?.stopRecord()
+    setPlaying(false)
+  }, [])
 
   useEffect(() => {
     const e = engine.current
@@ -107,6 +125,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
     const shownMeter: number[] = meters.map(() => 0)
     const shownWord: (Cue | null)[] = words.map(() => null)
     const restTracks: Cue[][] = []
+    const recordTracks: RecordCue[][] = []
     let rafId = 0
     let lastFrame = performance.now()
     let shownDay = last
@@ -125,20 +144,44 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
       .then((book: VoiceBook) => {
         e.book = book
         for (const cue of book.rest.cues) (restTracks[cue.v ?? 0] ??= []).push(cue)
+        for (const cue of book.record.cues) (recordTracks[cue.c] ??= []).push(cue)
+        e.from = Math.max(0, days.findIndex((d) => d >= book.record.from))
+        setFrom(e.from)
       })
       .catch(() => setSound('failed'))
+
+    /** Seconds into the record at the day the head stands on. */
+    const recordAt = (book: VoiceBook): number => (e.head - e.from) * book.record.day
+
+    const paintRecord = (book: VoiceBook) => {
+      const at = recordAt(book)
+      channels.forEach((channel, c) => {
+        const line = lines[c]
+        if (c === rest || !line) return
+        const cue = cueAt(recordTracks[c] ?? [], at)
+        const text = cue ? `${channel.strip} · ${cue.text}` : ''
+        if (text !== shownLine[c]) {
+          shownLine[c] = text
+          line.textContent = text
+        }
+        if (cue) setVars(line, { '--du-ink-a': cueEnvelope(cue, at).toFixed(3) })
+      })
+    }
 
     const paintScreen = (now: number) => {
       const t = now / 1000
       const book = e.book
       if (!book) return
       const aHand = e.held.some((h, c) => h !== null && c !== rest)
-      channels.forEach((channel, c) => {
+      if (e.playing) paintRecord(book)
+      else channels.forEach((channel, c) => {
         if (c === rest) return
         const file = book.channels[channel.id]
         const line = lines[c]
         if (!file || !line) return
-        const ink = inkOf(e.pos[c]!) * (aHand && e.held[c] === null ? INK_BESIDE_A_HAND : 1)
+        // Only what a hand has raised is written out: at rest the screen belongs to the crowd.
+        const raised = Math.max(0, inkOf(e.pos[c]!) - inkOf(toPosition(shareAt(shares, e.head)[c]!)))
+        const ink = raised * (aHand && e.held[c] === null ? INK_BESIDE_A_HAND : 1)
         if (ink < INK_FLOOR) {
           if (shownLine[c] !== '') {
             shownLine[c] = ''
@@ -154,7 +197,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         setVars(line, { '--du-ink-a': ink.toFixed(3) })
       })
       if (still) return
-      const ink = inkOf(e.pos[rest]!)
+      const ink = inkOf(e.pos[rest]!) * (e.playing ? INK_BESIDE_A_HAND : 1)
       words.forEach((word, v) => {
         const cues = restTracks[v]
         if (!cues) return
@@ -185,7 +228,9 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
           sliders[c]!.setAttribute('aria-valuenow', String(Math.round(e.pos[c]! * 100)))
           sliders[c]!.setAttribute('aria-valuetext', `${channels[c]!.strip}: ${print}`)
         }
-        const level = e.desk && !still ? Math.min(1, e.desk.level(c) * METER_GAIN) : 0
+        // The record is one recording, so while it sounds a channel's meter reads whether its voice is speaking.
+        const speaking = e.clock !== null && c !== rest && e.book ? (cueAt(recordTracks[c] ?? [], recordAt(e.book)) ? 0.08 : 0) : null
+        const level = e.desk && !still ? Math.min(1, (speaking ?? e.desk.level(c)) * METER_GAIN) : 0
         const height = Math.round(level ** 0.5 * (FADER.height - 8))
         if (height !== shownMeter[c]) {
           shownMeter[c] = height
@@ -194,7 +239,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         }
       }
       const holding = channels.flatMap((channel, c) => (c !== rest && e.held[c] !== null ? [{ strip: channel.strip, share: exact[c]! }] : []))
-      const caption = captionOf(holding, e.held[rest] !== null, exact[rest]!)
+      const caption = e.playing ? PLAY_CAPTION : captionOf(holding, e.held[rest] !== null, exact[rest]!)
       if (caption !== shownCaption) {
         shownCaption = caption
         captionEl.textContent = caption
@@ -220,10 +265,17 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         return
       }
       if (e.playing) {
-        e.head = Math.min(last, e.head + (dt * last) / PLAY_SECONDS)
+        const seconds = e.book?.record.day ?? DAY_SECONDS
+        if (e.clock !== null && e.desk) {
+          e.head = e.from + (e.desk.now - e.clock) / seconds
+          // Days the record does not hold yet play on without it, and the crowd comes back for them.
+          if (e.recording && e.desk.now - e.clock >= e.recording.duration) e.clock = null
+        } else {
+          e.head += dt / seconds
+        }
         if (e.head >= last) {
-          e.playing = false
-          setPlaying(false)
+          e.head = last
+          stopPlay()
         }
       }
       const mix = solve(shareAt(shares, e.head), e.held)
@@ -239,7 +291,11 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         near[c] = c === rest ? e.pos[c]! * REST_NEAR : e.pos[c]!
       }
       const focus = focusOf(e.pos.filter((_, c) => c !== rest && e.held[c] !== null))
-      if (e.desk) e.desk.set(e.pos.map((p, c) => toGain(standing(p, mix[c]!))), near, crowdCutoff(focus))
+      if (e.desk) {
+        const hearing = e.clock !== null
+        const gains = e.pos.map((p, c) => toGain(standing(p, mix[c]!)) * (hearing ? (c === rest ? PLAY_CROWD : 0) : 1))
+        e.desk.set(gains, near, crowdCutoff(hearing ? 1 : focus))
+      }
       paintDesk()
       paintScreen(now)
       if (e.note && now > e.note) {
@@ -273,6 +329,8 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         ev.preventDefault()
         // One fader, one finger: a second one would fight the first for the cap.
         if (e.grips[c]!.size > 0) return
+        // A hand on the desk ends the record: the two would pull one fader two ways.
+        if (e.playing) stopPlay()
         slider.setPointerCapture(ev.pointerId)
         const y = readY(ev.clientY)
         const middle = capY(e.pos[c]!) + FADER.capHeight / 2
@@ -304,6 +362,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
         const step = { ArrowUp: KEY_STEP, ArrowDown: -KEY_STEP, PageUp: KEY_STEP * 5, PageDown: -KEY_STEP * 5 }[ev.key]
         if (!step) return
         ev.preventDefault()
+        if (e.playing) stopPlay()
         e.held[c] = toShare(Math.min(1, Math.max(0, e.pos[c]! + step)))
         window.clearTimeout(e.keyTimers[c])
         e.keyTimers[c] = window.setTimeout(() => {
@@ -340,13 +399,15 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
       e.desk?.close()
       e.desk = null
     }
-  }, [channels, count, days, last, rest, round, shares])
+  }, [channels, count, days, last, rest, round, shares, stopPlay])
 
   const toggleSound = async () => {
     const e = engine.current
     if (e.desk) {
       e.desk.close()
       e.desk = null
+      e.recording = null
+      e.clock = null
       setSound('off')
       return
     }
@@ -357,7 +418,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
     try {
       const base = `/ducking/${round}`
       const voices = channels.map((channel, c) => (c === rest ? book.rest : book.channels[channel.id]!))
-      const buffers = await Promise.all(voices.map((v) => desk.decode(`${base}/${v.file}`)))
+      const [recording, ...buffers] = await Promise.all([book.record, ...voices].map((v) => desk.decode(`${base}/${v.file}`)))
       // Read after the downloads, or the words on the screen run ahead of the voices.
       const t = performance.now() / 1000
       const loaded: Loaded[] = buffers.map((buffer, c) => {
@@ -369,6 +430,8 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
       })
       desk.start(loaded)
       e.desk = desk
+      e.recording = recording!
+      if (e.playing) soundRecord()
       setSound('on')
     } catch {
       desk.close()
@@ -376,25 +439,35 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
     }
   }
 
+  const soundRecord = () => {
+    const e = engine.current
+    if (!e.desk || !e.recording || !e.book) return
+    const at = (e.head - e.from) * e.book.record.day
+    if (at < e.recording.duration) e.clock = e.desk.playRecord(e.recording, at)
+  }
+
   const togglePlay = () => {
     const e = engine.current
-    if (!e.playing && e.head >= last) e.head = 0
-    e.playing = !e.playing
-    if (!e.playing) e.head = Math.round(e.head)
-    setPlaying(e.playing)
+    if (e.playing) {
+      stopPlay()
+      return
+    }
+    if (e.head >= last || e.head < e.from) e.head = e.from
+    e.playing = true
+    setPlaying(true)
+    soundRecord()
   }
 
   const onScrub = (value: number) => {
     const e = engine.current
+    if (e.playing) stopPlay()
     e.head = value
-    e.playing = false
-    setPlaying(false)
   }
 
   const lane = useMemo(() => lanePath(shares.map((row) => 1 - row[rest]!), LANE.width, LANE.height), [shares, rest])
 
   return (
-    <div ref={root} className="du-desk" data-sound={sound}>
+    <div ref={root} className="du-desk" data-sound={sound} data-playing={playing ? '' : undefined}>
       <div className="du-bar">
         <button type="button" className="du-key" data-primary={sound === 'off' ? '' : undefined} onClick={toggleSound} disabled={sound === 'loading' || sound === 'failed'}>
           {sound === 'on' ? <VolumeX aria-hidden="true" size={15} /> : <Volume2 aria-hidden="true" size={15} />}
@@ -418,7 +491,7 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
           {channels.map((channel, c) => (c === rest ? null : <p key={channel.id} className="du-line" data-line />))}
         </div>
         <p className="du-hint" data-hint>
-          Push a matter up and hold it. The higher, the clearer.
+          Push a fader up and hold it. The higher, the clearer.
         </p>
         <p className="du-note" data-note />
       </div>
@@ -468,9 +541,9 @@ export default function DuckingDesk({ round, channels, days, shares, totals, win
       </div>
 
       <div className="du-transport">
-        <button type="button" className="du-key" onClick={togglePlay} aria-label={playing ? 'Stop the record' : `Play the ${days.length} days of the record`}>
+        <button type="button" className="du-key" onClick={togglePlay} aria-label={playing ? 'Stop the record' : `Play the last ${days.length - from} days of the record`}>
           {playing ? <Pause aria-hidden="true" size={15} /> : <Play aria-hidden="true" size={15} />}
-          {days.length} days
+          {days.length - from} days
         </button>
         <div className="du-record">
           <svg viewBox={`0 0 ${LANE.width} ${LANE.height}`} preserveAspectRatio="none" aria-hidden="true">

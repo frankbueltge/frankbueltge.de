@@ -35,11 +35,31 @@ export interface RestFile extends VoiceFile {
   sample: { labels: number; long: number; stopped: number; unreadable: number; spoken: number }
 }
 
+/** One headline of the record, spoken by the voice of channel `c`. */
+export interface RecordCue extends Cue {
+  c: number
+}
+
+/** The last weeks of the ledger as one recording: real headlines, each on about the day it was counted. */
+export interface RecordFile {
+  file: string
+  /** the first and last day it covers */
+  from: string
+  to: string
+  /** seconds a day takes to play */
+  day: number
+  level: number
+  cues: RecordCue[]
+  /** of the signals that named a field in those days: how many could be read aloud, how many were */
+  sample: { signals: number; readable: number; spoken: number }
+}
+
 export interface VoiceBook {
   round: string
   model: string
   channels: Record<string, VoiceFile>
   rest: RestFile
+  record: RecordFile
 }
 
 /** The cue spoken at a moment of a loop, or null in a pause. Cues are in order. */

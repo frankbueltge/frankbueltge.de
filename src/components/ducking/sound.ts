@@ -8,7 +8,7 @@
 // is what makes a voice seem to walk towards you as its fader comes up. It is generated here so no
 // recording of anybody's room ships with the page. And a filter on the crowd, which closes as a hand
 // raises a matter, the way a room blurs when you listen closely to one person. There is no other
-// sound: no motor, no noise.
+// sound: no motor, no noise. The record is one recording of its own, laid over the desk while it plays.
 
 const ROOM_SECONDS = 1.7
 /** How much of a channel reaches the room, far away and close up. Dry takes the rest of the power,
@@ -21,6 +21,9 @@ const MASTER = 1.8
 const SMOOTHING = 0.035
 /** Below this a change of gain or room is not sent: a desk at rest asks nothing of the audio thread. */
 const MOVED = 0.002
+const RECORD_FADE = 0.12
+/** A little of the room around the record, so that it stands in the same place as the voices. */
+const RECORD_WET = 0.16
 
 interface Strip {
   gain: GainNode
@@ -42,7 +45,7 @@ export interface Loaded {
   at: number
   /** −1 left … 1 right */
   pan: number
-  /** heard through the filter that closes as a hand raises a matter */
+  /** heard through the filter that closes as a hand raises a field */
   muffled?: boolean
 }
 
@@ -69,6 +72,8 @@ export class Desk {
   private readonly sources: AudioBufferSourceNode[] = []
   private muffler: BiquadFilterNode | null = null
   private sentCutoff = -1
+  private hall: ConvolverNode | null = null
+  private record: { source: AudioBufferSourceNode; gain: GainNode } | null = null
 
   /** Must be built inside the click that turned sound on, or a phone keeps it muted. */
   constructor() {
@@ -99,6 +104,7 @@ export class Desk {
     const hall = this.ctx.createConvolver()
     hall.buffer = room(this.ctx)
     hall.connect(this.master)
+    this.hall = hall
     for (const channel of channels) {
       const source = this.ctx.createBufferSource()
       source.buffer = channel.buffer
@@ -131,6 +137,40 @@ export class Desk {
       this.strips.push({ gain, dry, wet, meter, samples: new Float32Array(meter.fftSize), sentGain: 0, sentWet: -1 })
     }
     this.master.gain.setTargetAtTime(MASTER, this.ctx.currentTime, FADE_IN / 3)
+  }
+
+  /** The audio clock, in seconds. The record's day is read off it, so the faders cannot drift from the voices. */
+  get now(): number {
+    return this.ctx.currentTime
+  }
+
+  /** Plays the record from `at` seconds in, and says on the audio clock when its start would have sounded. */
+  playRecord(buffer: AudioBuffer, at: number): number {
+    this.stopRecord()
+    const now = this.ctx.currentTime
+    const source = this.ctx.createBufferSource()
+    source.buffer = buffer
+    const gain = this.ctx.createGain()
+    gain.gain.value = 0
+    gain.gain.setTargetAtTime(1, now, RECORD_FADE)
+    source.connect(gain).connect(this.master)
+    if (this.hall) {
+      const wet = this.ctx.createGain()
+      wet.gain.value = RECORD_WET
+      gain.connect(wet).connect(this.hall)
+    }
+    source.start(now, at)
+    this.record = { source, gain }
+    return now - at
+  }
+
+  stopRecord(): void {
+    if (!this.record) return
+    const { source, gain } = this.record
+    this.record = null
+    const now = this.ctx.currentTime
+    gain.gain.setTargetAtTime(0, now, RECORD_FADE)
+    source.stop(now + RECORD_FADE * 6)
   }
 
   /** One frame of the mix: an amplitude per channel, how near it stands (0 far … 1 close), and where
@@ -168,6 +208,7 @@ export class Desk {
   }
 
   close(): void {
+    this.record?.source.stop()
     for (const source of this.sources) source.stop()
     void this.ctx.close()
   }

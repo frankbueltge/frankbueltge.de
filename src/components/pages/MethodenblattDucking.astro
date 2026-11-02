@@ -8,15 +8,16 @@ const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
 const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 const { round, ledger, sources, whole, book } = readDesk()
 const sample = book.rest.sample
+const record = book.record
 ---
 
 <MethodSheet title="Method sheet — Ducking" workHref="/ducking" workLabel="To the work">
   <section class="sheet-reveal mb-10">
     <h2 class="kicker mb-2">What this is</h2>
     <p class="leading-relaxed">
-      A share of attention, set as a mix. The matters of one of the ecology’s briefings and everything else on Common Ground’s
+      A share of attention, set as a mix. The eleven fields of the ecology’s map and everything else on Common Ground’s
       charts are channels on one desk; each channel’s level is its share of the trailing week, and each is a voice. The claim is
-      checkable from the committed files: how little of what the charts held named any of these matters. The desk adds no finding
+      checkable from the committed files: how little of what the charts held named any of these fields. The desk adds no finding
       to that count. It makes the count something you have to hold up.
     </p>
   </section>
@@ -25,9 +26,11 @@ const sample = book.rest.sample
     <h2 class="mb-2 font-semibold">1. Sources &amp; licences</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
       <li>
-        The briefing — <a class={link} href={round.briefing.url}>{round.briefing.title}</a>, written {round.briefing.written}, pinned
-        to its commit. Its matters and its order. The figures the voices read start from it, were checked one by one against their
-        sources on {round.checked}, and were corrected where the briefing was out of date or wrong. Each has the page it comes from.
+        The map and the briefing — the fields and where they stand are the ecology’s
+        <a class={link} href="https://github.com/frankbueltge/research-ecology/blob/main/briefings/MAP.md">map</a>, what presses in them
+        is <a class={link} href={round.briefing.url}>{round.briefing.title}</a>, written {round.briefing.written}, pinned to its commit.
+        The figures the voices read were checked one by one against their sources, last on {round.checked}, and were corrected where
+        the source said otherwise. Each has the page it comes from.
       </li>
       <li>
         Common Ground’s day files, {ledger.days[0]} to {ledger.days.at(-1)} — open data (CC0) in
@@ -54,9 +57,10 @@ const sample = book.rest.sample
     <h2 class="mb-2 font-semibold">3. Processing</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
       <li>
-        <b class="text-fg">Count.</b> A signal is one entry on one chart on one day. It names a matter when its label or a link title
-        contains one of the matter’s terms as a whole word, case and accents folded, by the rule of
-        <a class={link} href="/werke/third-reading">Third Reading</a>. A signal naming two matters counts half for each, so the
+        <b class="text-fg">Count.</b> A signal is one entry on one chart on one day. It names a field when its label or a link title
+        contains one of the field’s terms as a whole word, case and accents folded, by the rule of
+        <a class={link} href="/werke/third-reading">Third Reading</a>. The terms are fixed in
+        <a class={link} href={`${REPO}/blob/main/src/lib/briefing/map.ts`}>src/lib/briefing/map.ts</a>. A signal naming two fields counts half for each, so the
         channels and everything else always add up to the day’s signals. This differs from the briefing’s own count, which counted
         raw occurrences in the files; a signal here is a chart entry, not a mention.
       </li>
@@ -77,7 +81,7 @@ const sample = book.rest.sample
       </li>
       <li>
         <b class="text-fg">The crowd.</b> Several voices read a seeded random sample of the labels of the week the round ends,
-        each label once. Of {fmtCount(sample.labels)} distinct labels that name no matter, {fmtCount(sample.long)} are left out as too
+        each label once. Of {fmtCount(sample.labels)} distinct labels that name no field, {fmtCount(sample.long)} are left out as too
         long to read in passing and {fmtCount(sample.unreadable)} because they carry a non-Latin script or an emoji the voices cannot
         say, so the crowd is more Latin-script than the charts are. {fmtCount(sample.stopped)} more fall to a stop list of words for sex,
         killing, death, crime and accidents, a few swear words and web addresses, because a machine reading those aloud out of
@@ -86,8 +90,19 @@ const sample = book.rest.sample
         once per round, and it loops.
       </li>
       <li>
+        <b class="text-fg">The record.</b> One recording of the {Math.round((Date.parse(record.to) - Date.parse(record.from)) / 86400000) + 1} days from {record.from} to {record.to}, played at {record.day} seconds
+        a day. Of {fmtCount(record.sample.signals)} signals that named a field in those days, {fmtCount(record.sample.readable)} distinct headlines can be
+        read aloud: the label itself names the field, it has at least three words, it is not too long, and it passes the crowd’s
+        stop list, so the record is more Latin-script and less violent than the ledger. App stores, code hosts and coin charts are left
+        out, because they name things and say nothing. {fmtCount(record.sample.spoken)} headlines are spoken. Each field gets a number of them in proportion to
+        its signals in those days, at least one if it has any, spread evenly along its own signals, so that a dense week stays dense.
+        Each is read once at the same level by its field’s voice, on about the day it was counted, later if that voice is still speaking.
+        So on the record a field is heard by how often it speaks, not by how loud. The crowd is held at a seventh of its amplitude behind the closed filter while it plays. The faders go on showing
+        the measured shares. Days after {record.to} have no words until the next round.
+      </li>
+      <li>
         <b class="text-fg">What is added.</b> Two things. A small synthetic room, in which a quiet channel stands further away than a
-        loud one; it changes distance, not level. And a lowpass filter on the crowd, which closes as a hand raises a matter, so that a
+        loud one; it changes distance, not level. And a lowpass filter on the crowd, which closes as a hand raises a field, so that a
         voice can be understood before it has taken most of the mix. That one does change what you hear: a fader shows the level going
         into the filter, and the blurred crowd is quieter than its fader says. Measured on 2026-11-01 by transcribing three readings
         against the crowd: with the crowd open, a voice at 10 % of the mix could not be made out at all and took about 80 % to be
@@ -100,11 +115,11 @@ const sample = book.rest.sample
     <h2 class="mb-2 font-semibold">4. Limits of the method</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
       <li>The denominator is the tops of {sources} public charts and feeds: encyclopaedia pages, search trends, app stores, code hosts, social and news sources, each with its own fixed length. It leans to technology and to English, and a longer chart weighs more. Its shares are shares of those charts, not of the world’s attention, however the desk feels.</li>
-      <li>A chart measures what rose, was clicked or was posted, by whoever those platforms reach. It says nothing about what anyone thinks or cares about, and nothing about the people a matter happens to.</li>
+      <li>A chart measures what rose, was clicked or was posted, by whoever those platforms reach. It says nothing about what anyone thinks or cares about, and nothing about the people a field’s harm happens to.</li>
       <li>A signal is counted the same whatever its size: the top of an encyclopaedia’s list and the bottom of a feed weigh one each.</li>
-      <li>The terms are a choice, wide on purpose, in English only. They let in false friends, which the receipts on the work’s page show, and they miss a matter discussed in other words or other languages. The receipts cannot show what was missed.</li>
-      <li>A matter is named by its symptoms: Iran’s channel also counts oil and cost-of-living terms, because the briefing frames the matter as an energy shock. The AI-in-the-vote channel does not count the elections themselves, only synthetic media and political ads, so most of the attention on those elections sits in everything else.</li>
-      <li>The list of matters is one briefing’s, written by one of the ecology’s machines from the sources it links. It is not a ranking and the desk does not treat it as one.</li>
+      <li>The terms are a choice, wide on purpose, in English only. They let in false friends, which the receipts on the work’s page show, and they miss a field discussed in other words or other languages. The receipts cannot show what was missed.</li>
+      <li>AI’s fader is the highest partly because of who is counted: more than a quarter of the signals come from developer platforms, where AI is the subject of the day’s work. Its terms also catch ordinary product news, and they count a person named Ai. The field is about the harms of AI; the count is of talk about AI.</li>
+      <li>The eleven fields are one map’s, drawn from what serious bodies measure. They are not a ranking, and the desk does not treat them as one. One signal can name two fields and then counts half in each.</li>
       <li>The readings are short and they stop at the day they were checked. Most figures in them are themselves estimates, and where a primary source could not be used a report on it is linked.</li>
       <li>A desk invites the idea that the mix could be set otherwise by someone at a desk. Nobody sets this one. The metaphor is the work’s, not a finding.</li>
     </ul>
@@ -122,6 +137,7 @@ const sample = book.rest.sample
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">6. Change log</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>2026-11-02 — the channels are now the eleven fields of the ecology’s map instead of the ten matters of one briefing, so that a fader means the same from round to round and the record can be read across time. Each voice reads where its field stands, then the briefing’s matters in it. The play button became the record: real headlines, read by field, with the crowd held back. The first version’s lines below stay as they were.</li>
       <li>2026-11-01, later — the ledger under the faders changes: from the day file of 2026-11-02 Google News is read in ten English-language editions instead of the American one alone, because news was about three per cent of the signals. The record shows a step on that day, and shares from before and after it are not the same measure. Committed days are not rewritten.</li>
       <li>2026-11-01, the same day — a check of the briefing against its sources found 27 of 69 claims wrong, out of date, overstated or not on the linked page. The readings were corrected and recorded again, among them the state of the Strait of Hormuz, which a voice had stated as of early September.</li>
       <li>2026-11-01 — first version, round {round.id}. Over the 61 days at launch the ten matters held 0.99 % of the ledger. This line stays as it is; the work’s page goes on counting.</li>

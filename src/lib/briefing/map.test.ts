@@ -10,6 +10,7 @@ const line = (field: MapLine['field']): MapLine => ({
   direction: 'steady',
   compared_with: '1,190 in 2025',
   signals: 0,
+  lines: [{ text: 'A figure of 1,200 as of 2026.', say: 'A figure of twelve hundred as of twenty twenty-six.' }],
   sources: [{ label: 'The agency', url: 'https://example.org/agency', kind: 'primary' }],
 })
 const map = (): MapLine[] => FIELD_IDS.map(line)
@@ -57,6 +58,18 @@ describe('the map', () => {
     expect(broken({ as_of: '2023' })).toContain('stale')
     expect(broken({ sources: [{ label: 'A paper', url: 'https://example.org/p', kind: 'report' }] })).toContain('no primary source')
     expect(broken({ state: 'x1'.repeat(150) })).toContain('over 280')
+  })
+
+  it('gives the voice no digit, and no more than it can read at once', () => {
+    const broken = (patch: Partial<MapLine>) => {
+      const m = map()
+      m[3] = { ...m[3]!, ...patch }
+      return mapProblems(m, '2026-11-01').join()
+    }
+    expect(broken({ lines: [{ text: 'A figure of 1,200.' }] })).toContain('a digit in what the voice is given')
+    expect(broken({ lines: [] })).toContain('0 lines for the voice')
+    expect(broken({ lines: Array.from({ length: 4 }, () => ({ text: 'A sentence.' })) })).toContain('4 lines for the voice')
+    expect(broken({ lines: [{ text: 'x'.repeat(201) }] })).toContain('line too long')
   })
 
   it('wants a comparison behind every direction but unclear', () => {
