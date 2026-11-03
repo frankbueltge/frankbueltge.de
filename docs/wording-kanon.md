@@ -1,7 +1,7 @@
 # Wording-Kanon — frankbueltge.de & Ökologie
 
-**Stand: 2026-09-07** (Persona des Ateliers: Assay; davor 2026-09-01 v3-Sektion und
-Türen-Spiegel, davor 2026-07-31).
+**Stand: 2026-11-03** (Rollen-Zeile; davor 2026-09-07 Persona des Ateliers: Assay,
+2026-09-01 v3-Sektion und Türen-Spiegel, 2026-07-31).
 Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
 Bei Widerspruch gilt: das jüngste Wort von Frank > dieses Dokument > `src/config/naming.ts`
 (Hub-Wortlaute) > alles andere. **Engine-READMEs, alte Configs und Design-Mockups sind KEINE
@@ -11,8 +11,11 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 
 ## Person
 
-- Rollen-Zeile überall: **„Data Engineering & Analytics"** (Franks Entscheidung 24.07. —
-  bewusst GEGEN „Data & AI Engineer", zu buzzy; niemals „data artist"/„Datenkünstler").
+- Rollen-Zeile überall: **„Data & AI Platform Manager"**, Franks Berufstitel (seine
+  Entscheidung vom 2026-11-03, Wortlaut privat). Im Code steht sie einmal, `SITE.role` in
+  `src/lib/site.ts`; Eyebrow, Titel, Person-Daten, llms.txt und die Texte über ihn folgen.
+  Davor, seit 24.07.: „Data Engineering & Analytics" (gewählt gegen „Data & AI Engineer",
+  zu buzzy). Niemals „data artist"/„Datenkünstler".
 - Name/Identität: Frank Bültge, `f.bueltge@gmail.com`. Niemals `frank@bueltge.de`
   (gehört einer anderen realen Person).
 

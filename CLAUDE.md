@@ -1,7 +1,7 @@
 # CLAUDE.md — frankbueltge.de
 
-Persönliche Website von Frank Bültge (Rollen-Zeile: „Data Engineering & Analytics",
-Franks Entscheidung 2026-07-24 — nicht „Data & AI Engineer", nicht „data artist") —
+Persönliche Website von Frank Bültge (Rollen-Zeile: „Data & AI Platform Manager", sein
+Berufstitel seit 2026-11-03, Franks Entscheidung — Verlauf im Wording-Kanon; nie „data artist") —
 öffentlicher Eingang zu **zwei Häusern** (Frank, 2026-08-09 — die Startseite inszeniert
 nicht mehr die Ökologie, sondern beide gleichrangig; Begriffsstaffel House · Practice ·
 Project · Instrument · Experiment im Wording-Kanon):

@@ -88,7 +88,7 @@ export interface TriptychCard {
 export const NAMING = {
   approval: 'approved' as 'draft' | 'approved',
 
-  eyebrow: 'FRANK BÜLTGE · DATA ENGINEERING & ANALYTICS',
+  eyebrow: 'FRANK BÜLTGE · DATA & AI PLATFORM MANAGER',
   /** The research question instead of the houses (Frank, 2026-08-09, late; wording private: the
    *  hero had centred on the two houses, and the H1 made no sense that way) — no project is put
    *  in focus, not even two. What the current projects share is Frank's question: what can
