@@ -7,9 +7,9 @@ export const SITE = {
   givenName: 'Frank',
   familyName: 'Bültge',
   url: 'https://frankbueltge.de',
-  /** Frank's job title, the role line on every surface (his decision of 2026-11-03, wording
-   *  private; its history stands in docs/wording-kanon.md). */
-  role: { de: 'Data & AI Platform Manager', en: 'Data & AI Platform Manager' },
+  /** The role line on every surface: what Frank does, not a job title (his decision of
+   *  2026-11-03, wording private; its history stands in docs/wording-kanon.md). */
+  role: { de: 'Data & AI Engineer', en: 'Data & AI Engineer' },
   /** Where Frank works from; visible on /about and in the Person data (name-query disambiguation). */
   city: 'Karlsruhe',
   email: 'hello@frankbueltge.de',

@@ -17,8 +17,8 @@ names (gates, review roles, evidence tiers) were retired with research ecology v
 **Status.** Direction decided by Frank (wording private): the line is cleared, end to end.
 Site-wording changes stay behind the wording gate (`src/config/naming.ts`, wording-kanon);
 changes to practice constitutions travel as **seeds/offers** under each constitution, never
-as decrees. Frank's role line stays his profession ("Data Engineering & Analytics" then; his
-job title "Data & AI Platform Manager" since 2026-11-03); "data artist" stays
+as decrees. Frank's role line stays his profession ("Data Engineering & Analytics" then,
+"Data & AI Engineer" since 2026-11-03); "data artist" stays
 blacklisted — the candidate for festivals is **the ecology and its works**, not a person
 rebranded as artist.
 

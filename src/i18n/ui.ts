@@ -11,10 +11,10 @@ export const ui = {
     'nav.menu': 'Menü öffnen',
     'theme.toggle': 'Design: Auto / Hell / Dunkel',
 
-    'meta.home.title': 'Frank Bültge — Data & AI Platform Manager',
-    'meta.home.desc': 'Frank Bültge — Data & AI Platform Manager. Ein öffentliches Experimentierfeld mit Daten, Code und KI: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
+    'meta.home.title': 'Frank Bültge — Data & AI Engineer',
+    'meta.home.desc': 'Frank Bültge — Data & AI Engineer. Ein öffentliches Experimentierfeld mit Daten, Code und KI: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
 
-    'hero.roleLead': 'Data & AI Platform Manager',
+    'hero.roleLead': 'Data & AI Engineer',
     'hero.roleRest': ' — ich baue Dateninfrastruktur und experimentiere mit Daten, Code und KI.',
     'home.protokollLink': 'Vollständiges Protokoll',
     'home.beruflich': 'Eigene Projekte',
@@ -147,10 +147,10 @@ export const ui = {
     'nav.menu': 'Open menu',
     'theme.toggle': 'Theme: Auto / Light / Dark',
 
-    'meta.home.title': 'Frank Bültge — Data & AI Platform Manager',
-    'meta.home.desc': 'Frank Bültge — Data & AI Platform Manager. Currently conducting a federated research ecology: three machine-run research practices, each under its own constitution, and a contact zone where they meet and take up shared questions — claims and revisions stay versioned, Git is the archive.',
+    'meta.home.title': 'Frank Bültge — Data & AI Engineer',
+    'meta.home.desc': 'Frank Bültge — Data & AI Engineer. Currently conducting a federated research ecology: three machine-run research practices, each under its own constitution, and a contact zone where they meet and take up shared questions — claims and revisions stay versioned, Git is the archive.',
 
-    'hero.roleLead': 'Data & AI Platform Manager',
+    'hero.roleLead': 'Data & AI Engineer',
     'hero.roleRest': ' — I build data infrastructure and experiment with data, code and AI.',
     'home.protokollLink': 'Full minutes',
     'home.beruflich': 'Side projects',
