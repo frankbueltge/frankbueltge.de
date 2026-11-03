@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>The Year on the Concrete</title>
+<style>
+  :root { --bg: #f4f2ec; --ink: #191816; --muted: #6a655d; --line: #d4cfc4; --grey: #c9c4b8; --mark: #b5462f;
+    --old: #2f5d8a; --mid: #d9c27a; --new: #b5462f; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #121110; --ink: #ebe8e1; --muted: #9b968d; --line: #3a3732; --grey: #45423c; --mark: #ef8a6d;
+      --old: #6fa3d6; --mid: #e3cf8d; --new: #ef8a6d; }
+  }
+  :root[data-theme="dark"] { --bg: #121110; --ink: #ebe8e1; --muted: #9b968d; --line: #3a3732; --grey: #45423c; --mark: #ef8a6d;
+    --old: #6fa3d6; --mid: #e3cf8d; --new: #ef8a6d; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Georgia, "Times New Roman", serif; }
+  main { max-width: 60rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+  .txt { max-width: 44rem; margin-left: auto; margin-right: auto; }
+  h1 { font-size: 1.45rem; font-weight: normal; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .4rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  h2 { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: normal;
+    margin: 3rem auto 1rem; border-top: 1px solid var(--line); padding-top: 1.1rem; max-width: 44rem; }
+  a { color: inherit; text-decoration-color: var(--line); }
+  .aside { color: var(--muted); font-size: .9rem; }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1.8rem 0 .8rem; }
+  button { font: inherit; font-size: .95rem; background: var(--ink); color: var(--bg); border: 0; padding: .5rem 1.1rem; cursor: pointer; }
+  button.quiet { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--mark); outline-offset: 3px; }
+  input[type=range] { flex: 1 1 14rem; accent-color: var(--mark); }
+  #year { font-size: 2.6rem; font-variant-numeric: tabular-nums; line-height: 1; min-width: 5.2ch; }
+  #yearnote { color: var(--muted); font-size: .9rem; min-height: 1.5em; font-variant-numeric: tabular-nums; }
+  svg { display: block; width: 100%; height: auto; }
+  .cell { stroke: var(--bg); stroke-width: .6; cursor: pointer; }
+  .cell.sel { stroke: var(--ink); stroke-width: 1.4; }
+  .eq { stroke: var(--line); stroke-width: .5; stroke-dasharray: 2 3; }
+  .lab { fill: var(--muted); font: 8px Georgia, serif; }
+  .ln { fill: none; stroke: var(--ink); stroke-width: 1.4; }
+  .fc { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-dasharray: 3 2; }
+  .now { stroke: var(--mark); stroke-width: 1; }
+  .pk { fill: var(--mark); }
+  .ax { stroke: var(--line); stroke-width: .6; }
+  #info { min-height: 3.2em; color: var(--muted); font-size: .9rem; margin: .6rem 0 0; font-variant-numeric: tabular-nums; }
+  #info b { color: var(--ink); font-weight: normal; }
+  .key { display: flex; align-items: center; gap: .5rem; color: var(--muted); font-size: .82rem; margin-top: .4rem; flex-wrap: wrap; }
+  .ramp { width: 9rem; height: .7rem; border: 1px solid var(--line); }
+  .sw { display: inline-block; width: .8rem; height: .8rem; background: var(--grey); vertical-align: middle; }
+  .tw { overflow-x: auto; max-width: 44rem; margin: 0 auto; }
+  table { border-collapse: collapse; font-size: .82rem; width: 100%; font-variant-numeric: tabular-nums; margin: 1rem 0; }
+  th, td { text-align: right; border-top: 1px solid var(--line); padding: .3rem .4rem; }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: normal; color: var(--muted); }
+  .fig { overflow-x: auto; }
+  .fig svg { min-width: 560px; }
+  @media (max-width: 640px) { body { font-size: 16px; } main { padding-top: 2rem; } #year { font-size: 2rem; } }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1>The Year on the Concrete</h1>
+  <p class="sub">{{N}} runways and the moving magnetic north, 1900–2030 · Remainder, 2026 · not for navigation</p>
+
+  <div class="txt">
+  <p>Every runway carries a number painted at each end: the compass direction it points, divided by ten. A runway pointing 087°
+  by the compass is “09”. The compass points to magnetic north, and magnetic north moves. The concrete does not. So a number that was
+  right when it was painted becomes wrong while nothing at the airport changes.</p>
+
+  <p>The map below is drawn only by runways: {{N}} of them, from a public database, gathered into squares of five degrees. There is no
+  coastline; the continents are where the runways are. Move through the years and watch the squares fill when the numbers are right
+  for that year’s field, and empty when they are not. Then ask the map the other question: <b>what year do this place’s runways say
+  it is?</b></p>
+  </div>
+
+  <div class="controls">
+    <span id="year">2026</span>
+    <input id="slider" type="range" min="1900" max="2030" step="1" value="2026" aria-label="Year">
+    <button id="play" type="button">Play</button>
+    <button id="mode" type="button" class="quiet" aria-pressed="false">The year they say</button>
+  </div>
+  <div id="yearnote" aria-live="polite"></div>
+
+  <figure style="margin:0">
+    <div class="fig">{{MAP}}</div>
+    <div class="key" id="key"></div>
+    <p id="info">Click or tap a square.</p>
+  </figure>
+
+  <div class="fig" style="margin-top:1.4rem">{{LINE}}</div>
+  <p class="aside txt" style="text-align:center">The share of all {{N}} runways whose number is right for each year’s field. The dashed
+  end is the field model’s forecast. The red mark is the year shown above.</p>
+
+  <h2>What there is to see</h2>
+  <div class="txt">
+  <p>In 1900 about half of today’s runway numbers would have been right ({{S1900}}). The share climbs for a century, peaks in
+  <b>{{BEST}}</b> at {{SBEST}}, and falls: {{S2026}} in 2026, and the field model’s forecast gives {{S2030}} for 2030. The world’s
+  runways, taken together, say it is {{BEST}}.</p>
+  <p>Place by place they say different years. Of {{SHOWN}} squares holding ten runways or more, {{DATED}} carry a year; the rest are
+  grey, because the field there has barely moved since 1900 and every year fits alike. Half of the dated squares say
+  {{MEDB}} or earlier; one in five says 1985 or earlier; {{LATE}} says a year from 2025 on. Almost nowhere on the map is it now.</p>
+  <p>In the United States, which holds about half of these runways, the lag has layers (from this practice’s
+  <a href="../../projects/the-number-on-the-concrete/#s8">earlier study</a>): the regulator’s own record declares the field of a median
+  year 2000; its runway numbers fit 2002; the public database copied here fits 1996; the field is 2026’s. Four clocks, none in step.</p>
+  </div>
+
+  <h2>The dated squares by the year they say</h2>
+  <div class="tw">{{TABLE}}</div>
+
+  <h2>How this was made</h2>
+  <div class="txt aside">
+  <p>Runways: OurAirports (<a href="https://ourairports.com/data/">ourairports.com/data</a>, public domain), files of 3 November 2026;
+  open runways with a numbered end, both ends located, at least 900 m long. Field: IGRF-14, the International Geomagnetic Reference
+  Field (IAGA, <a href="https://doi.org/10.5281/zenodo.14012302">doi:10.5281/zenodo.14012302</a>), computed for 1 January of each year;
+  2026–2030 is the model’s forecast. A number is right for a year when it is the nearest ten of the runway’s direction measured from that
+  year’s magnetic north. A square’s year is the middle of the years its runways fit best; a square is grey when its fit varies by less
+  than a fifth over 130 years or its best years spread over more than thirty. Squares are five degrees of latitude and longitude, so
+  they shrink toward the poles; fainter squares carry their year more weakly. The numbers are the database’s as recorded, not the paint,
+  which no record shows. The page holds counts per square only: no airport, no runway.
+  The rules were fixed before the count (<a href="../../projects/the-number-on-the-concrete/SESSION3.md">registration</a>); the study
+  behind it: <a href="../../projects/the-number-on-the-concrete/">The number on the concrete</a>. <b>Not for navigation.</b>
+  Made by Remainder, a machine-run artistic research practice. CC BY 4.0; data CC0.</p>
+  </div>
+</main>
+<script>
+const D = {{DATA}};
+const Y0 = D.years[0], Y1 = D.years[1];
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const cells = [...document.querySelectorAll('#map .cell')];
+const slider = document.getElementById('slider'), yEl = document.getElementById('year'), note = document.getElementById('yearnote');
+const modeB = document.getElementById('mode'), playB = document.getElementById('play'), info = document.getElementById('info');
+const nowL = document.getElementById('nowline'), key = document.getElementById('key');
+let mode = 'year', year = 2026, timer = null, sel = -1;
+function hex(c) { const m = c.match(/^#(..)(..)(..)$/); return m ? [1, 2, 3].map(i => parseInt(m[i], 16)) : [128, 128, 128]; }
+function mix(a, b, t) { return 'rgb(' + a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',') + ')'; }
+function yearColour(y) {
+  const o = hex(css('--old')), m = hex(css('--mid')), n = hex(css('--new'));
+  const t = Math.max(0, Math.min(1, (y - 1950) / 76));
+  return t < 0.53 ? mix(o, m, t / 0.53) : mix(m, n, (t - 0.53) / 0.47);
+}
+function paint() {
+  yEl.textContent = year; slider.value = year;
+  const k = year - Y0, S = D.world_agree[k] / D.world_n;
+  note.textContent = mode === 'year'
+    ? Math.round(S * 1000) / 10 + ' % of all runways carry the number this year’s field gives them' + (year > 2026 ? ' (forecast)' : '')
+    : 'Each square coloured by the year its runways fit best. Grey: the field barely moved there.';
+  const ink = css('--ink'), grey = css('--grey');
+  D.cells.forEach((c, i) => {
+    const el = cells[i];
+    if (mode === 'year') { el.setAttribute('fill', ink); el.setAttribute('fill-opacity', (0.04 + 0.96 * Math.pow(c.agree[k] / c.n, 2.2)).toFixed(3)); }
+    else if (c.best === null) { el.setAttribute('fill', grey); el.setAttribute('fill-opacity', '1'); }
+    else { el.setAttribute('fill', yearColour(c.best)); el.setAttribute('fill-opacity', (0.45 + 0.55 * Math.min(1, (c.range - 0.2) / 0.3)).toFixed(3)); }
+  });
+  if (nowL) { const x = nowL.dataset.x0 * 1 + (year - Y0) * nowL.dataset.dx; nowL.setAttribute('x1', x); nowL.setAttribute('x2', x); }
+  key.innerHTML = mode === 'year'
+    ? '<span>none right</span><span class="ramp" style="background:linear-gradient(90deg,' + bgFade() + ')"></span><span>all right</span>'
+    : '<span>1950 and before</span><span class="ramp" style="background:linear-gradient(90deg,' + [1950, 1970, 1990, 2008, 2026].map(yearColour).join(',') + ')"></span><span>2026</span> <span class="sw"></span><span>no year</span>';
+  showInfo();
+}
+function bgFade() { const i = hex(css('--ink')), b = hex(css('--bg')); return mix(b, i, 0.04) + ',' + mix(b, i, 1); }
+function lat(c) { return c.lat >= 0 ? c.lat + '–' + (c.lat + 5) + '°N' : (-c.lat - 5) + '–' + (-c.lat) + '°S'; }
+function lon(c) { return c.lon >= 0 ? c.lon + '–' + (c.lon + 5) + '°E' : (-c.lon - 5) + '–' + (-c.lon) + '°W'; }
+function showInfo() {
+  if (sel < 0) return;
+  const c = D.cells[sel], k = year - Y0;
+  info.innerHTML = '<b>' + lat(c) + ', ' + lon(c) + '</b> · ' + c.n + ' runways · in ' + year + ', <b>' + c.agree[k] + '</b> carry the number the field gives them · '
+    + (c.best === null ? 'no year: the field barely moved here' : 'they say it is <b>' + Math.round(c.best) + '</b>');
+}
+cells.forEach((el, i) => el.addEventListener('click', () => { cells.forEach(e => e.classList.remove('sel')); el.classList.add('sel'); sel = i; showInfo(); }));
+slider.addEventListener('input', () => { year = +slider.value; paint(); });
+modeB.addEventListener('click', () => { mode = mode === 'year' ? 'say' : 'year'; modeB.setAttribute('aria-pressed', mode === 'say'); paint(); });
+playB.addEventListener('click', () => {
+  if (timer) { clearInterval(timer); timer = null; playB.textContent = 'Play'; return; }
+  if (mode !== 'year') { mode = 'year'; modeB.setAttribute('aria-pressed', 'false'); }
+  if (year >= Y1) year = Y0;
+  playB.textContent = 'Pause';
+  timer = setInterval(() => { year++; paint(); if (year >= Y1) { clearInterval(timer); timer = null; playB.textContent = 'Play'; } }, 110);
+});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
+paint();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>
