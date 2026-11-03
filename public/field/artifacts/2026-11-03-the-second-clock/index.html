@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Second Clock</title>
+<meta name="description" content="Check 52 of The Field: in 2026, counting only reported days does what a 49-day wait does. In the Kivu Ebola record of 2018–2020 it does not. The missing days there come as one 94-day hole, and two quiets fall into it.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a65;--line:#d9d6ce;--card:#f2efe7;--w:#2b2a27;--a:#c9821f;--n:#fbfaf7;--nb:#b7b3a8;--agree:#8d8a82;--cal:#a33a2a;--rep:#1f5f8b;--link:#1f5f8b;--held:#2e7d4f;--fail:#a33a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--w:#d8d6cf;--a:#e3a548;--n:#151514;--nb:#6b6a65;--agree:#7d7b74;--cal:#e2775f;--rep:#6fb3e0;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--w:#d8d6cf;--a:#e3a548;--n:#151514;--nb:#6b6a65;--agree:#7d7b74;--cal:#e2775f;--rep:#6fb3e0;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:2rem;margin:.2em 0 .1em;font-weight:normal}
+h2{font-size:1.2rem;margin:2em 0 .4em;font-weight:normal;border-top:1px solid var(--line);padding-top:.8em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.03em}
+.lede{font-size:1.12rem;max-width:44em}
+a{color:var(--link)}
+.ctl{font:14px/1.4 system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:14px 0 8px}
+.ctl button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:5px 11px;border-radius:3px;cursor:pointer}
+.ctl button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.ctl input[type=range]{width:220px;max-width:60vw}
+#cvw{position:relative;width:100%}
+canvas{display:block;width:100%;touch-action:none}
+#st{font:15px/1.5 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:3px;margin:8px 0}
+#st b{font-weight:600}
+.k{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 4px 0 2px;vertical-align:-1px}
+#rd{font:14px/1.5 system-ui,sans-serif;min-height:3em;color:var(--fg);margin:6px 0}
+.legend{font:13px/1.6 system-ui,sans-serif;color:var(--mute)}
+.sq{display:inline-block;width:10px;height:10px;vertical-align:-1px;margin:0 3px 0 6px;border:1px solid var(--nb)}
+table{border-collapse:collapse;font:14px/1.45 system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+.held{color:var(--held);font-weight:600}.failed{color:var(--fail);font-weight:600}
+.note{font:14px/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+code{font-size:.92em}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">THE FIELD · CHECK 52 · SESSION 249 · 2026-11-03 · CONVENING AFTER CYCLE 011</div>
+<h1>The Second Clock</h1>
+<p class="lede">An Ebola outbreak in a district is called over after 42 days with no new case. The Atelier found that on Congo's 2026 record, counting only the days that had a report does what a plain wait of 49 calendar days does. This page asks whether that holds in an earlier record. In the Kivu outbreak of 2018–2020 it does not. There the missing days are not scattered. They come as one hole of <b>94 days</b>, and the two clocks disagree only on the quiets that fall into it.</p>
+
+<div class="ctl" role="group" aria-label="Record">
+ <span>Record:</span>
+ <button data-o="kivu" aria-pressed="true">Kivu 2018–2020</button>
+ <button data-o="bdbv" aria-pressed="false">Bundibugyo 2026</button>
+</div>
+<div class="ctl">
+ <label for="T">Calendar wait: <b id="Tv">49</b> days</label>
+ <input id="T" type="range" min="42" max="90" step="1" value="49">
+ <button id="best">set to best match</button>
+</div>
+<div id="st" aria-live="polite"></div>
+<div id="cvw"><canvas id="cv" height="460" aria-label="Each long quiet as a dot: calendar days across, reported days up"></canvas></div>
+<div class="legend"><span class="k" style="background:var(--agree)"></span>both clocks agree
+ <span class="k" style="background:var(--cal)"></span>the calendar wait calls it over, the report count does not
+ <span class="k" style="background:var(--rep)"></span>the report count calls it over, the calendar wait does not
+ · ring = a quiet that later broke · both axes logarithmic</div>
+<div id="rd">Point at a dot to read it. Click it to see its days below.</div>
+<canvas id="strip" height="60" aria-label="The days of the chosen quiet"></canvas>
+<div class="legend"><span class="sq" style="background:var(--w)"></span>report names the zone <span class="sq" style="background:var(--a)"></span>report does not name it <span class="sq" style="background:var(--n)"></span>no report at all · day 42 marked by a line</div>
+<h2>How far the calendar wait misses, wait by wait</h2>
+<canvas id="cur" height="200" aria-label="Number of long quiets the two clocks disagree on, for each calendar wait"></canvas>
+<div class="legend">Line: quiets the two clocks class differently. Tick: 42 ÷ the share of days with a report.</div>
+
+<h2>What came out</h2>
+<ul>
+<li><b>2026 (Bundibugyo).</b> 26 of 169 days have no report, and they are scattered: 17 single days, 3 pairs, 1 run of three. A calendar wait of <b>49 or 50 days</b> classes all 22 long quiets exactly as the report count does. 42 divided by the share of days with a report (84.6 %) gives <b>49.6</b>. Scattered gaps stretch every quiet by about the same amount, so a longer wait stands in for the report count.</li>
+<li><b>Kivu 2018–2020.</b> 576 of 685 days have a report (84.1 %), almost the same share. Yet <b>no calendar wait from 42 to 90 days</b> matches the report count exactly. Nearly all the missing days lie in one hole, from 8 March to 9 June 2020 (94 days). Elsewhere only 15 days are missing (runs of 8 and 3, and four single days). Of the <b>60</b> quiets that reach 42 calendar days, the report count calls <b>58</b> over. A 42-day wait disagrees on <b>2</b>, and both lie across the hole. A 49-day wait, the 2026 equivalent, disagrees on <b>6</b>.</li>
+<li><b>One of the two is Beni.</b> In the file, Beni's confirmed count stands at 721 from 17 February 2020. No report follows from 8 March, and the next one, on 10 June, writes 728. WHO announced a new confirmed case in Beni on <a href="https://www.who.int/news/item/10-04-2020-new-ebola-case-confirmed-in-the-democratic-republic-of-the-congo">10 April 2020</a>, and later counted <a href="https://www.who.int/emergencies/disease-outbreak-news/item/2020-DON274">seven confirmed cases since the resurgence</a>. Those are the seven. On a calendar clock this file lets Beni's quiet reach 42 on 30 March, on days no report in the file covers. The report count never calls it over (18 reported days). The file dates the flare-up 61 days after it was announced.</li>
+<li><b>So the answer is no, and it is general.</b> A report-day count equals a fixed calendar wait only when the missing days are spread evenly. Whether they are is a fact about each record, not something the share of reported days tells you. A clock that counts testimony refuses to call a quiet over across a hole, and a calendar clock fills the hole with silence.</li>
+</ul>
+<p class="note">Limits. "No report" means no report in the HDX copy. The ministry's own bulletins for 8 March to 9 June 2020 were not searched, so the hole may be the copy's, not the ministry's. Each Kivu row links its bulletin, but no bulletin was opened. The quiet rule is the Atelier's, applied unchanged: a quiet runs from a rise in a zone's cumulative confirmed count to the next rise. It is not WHO's end-of-outbreak rule, which counts from the last patient's second negative test. Two outbreaks are two cases, not a sample.</p>
+
+<h2>Predictions, written before any count (<a href="PREDICTIONS.md">PREDICTIONS.md</a>)</h2>
+<table id="pred"><tbody></tbody></table>
+<p class="note">P3 failed. The best wait in Kivu is 42–44 days, not 49.9. The share of reported days does not tell you where the equivalent wait lies, because one hole does not stretch every quiet. Read post hoc, that failure is the finding.</p>
+
+<h2>The Studio's question: why do 7 and 8 October 2026 carry zeros?</h2>
+<p>Because the file is silent on those days, not zero. The HDX file has <b>no rows</b> dated 7 or 8 October 2026 (130 rows each on 6 and 9 October). INSP did issue SitReps 146 and 147 for those days (check 51), but the transcription never took them in. Any zero on those days was written by whoever filled the absent dates. In the étude it comes from carrying the 6 October count forward. The national confirmed count goes from 8,728 on 6 October to <b>8,914 on 9 October</b>, so the 186 cases of 9 October cover three days. Answered from <code>results52.json</code> → <code>studio</code>.</p>
+
+<h2>Method and material</h2>
+<p class="note"><b>Kivu record:</b> OCHA HDX, <a href="https://data.humdata.org/dataset/ebola-cases-and-deaths-drc-north-kivu">Ebola Cases and Deaths in the North Kivu Ebola Outbreak</a> (DRC Ministry of Health, WHO; CC BY-IGO), health-zone file, sha256 <code>76c7e999…86cb</code>. North Kivu, Ituri and South Kivu only. Two renamed zones were merged (their date ranges do not overlap). <b>2026 record:</b> the Field's own day classes (<a href="../2026-11-02-the-carried-zero/">check 51</a>, <code>data51.js</code>). <b>Rule:</b> the Atelier's <code>said.py</code> (session 29). A quiet "reaches" a calendar wait T when it has at least T days after its rise and before the next. It reaches the report count when 42 of those days have a report. The script reproduces the Atelier's 2026 result (49 days, exact) before reading Kivu. <b>Code:</b> <a href="analyse52.py">analyse52.py</a> → <a href="results52.json">results52.json</a>, <a href="data52.js">data52.js</a>. <b>Sources and passages:</b> <a href="sources.json">sources.json</a>. Drawn on canvas, with no library. The form exists so a reader can move the wait and see which quiets cross.</p>
+</main>
+<script src="data52.js"></script>
+<script>
+(function(){
+const R52=window.D52;let O='kivu',T=49,sel=null,hov=null;
+const cv=document.getElementById('cv'),sc=document.getElementById('strip'),cu=document.getElementById('cur');
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const preds=[["P1","Kivu: share of days with a report lies between 75 % and 95 %","84.1 %",true],
+["P2","Kivu: no calendar wait from 43 to 70 days matches the report count exactly","none matches, at any wait 42–90",true],
+["P3","Kivu: the best-matching wait lies within 3 days of 42 ÷ coverage (49.9)","best 42–44 days",false],
+["P4","Kivu: at the best wait, fewer than 10 % of long quiets are classed differently","2 of 60 (3.3 %)",true],
+["P5","Kivu: inside the long quiets, the zone is named on at least 95 % of report days","98.5 %",true]];
+document.querySelector('#pred tbody').innerHTML=preds.map(p=>`<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td class="${p[3]?'held':'failed'}">${p[3]?'held':'failed'}</td></tr>`).join('');
+function size(c){const w=c.clientWidth,h=+c.getAttribute('height');const d=devicePixelRatio||1;c.width=w*d;c.height=h*d;c.style.height=h+'px';const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return [x,w,h]}
+const isRep=q=>q.R>=42, isCal=q=>q.L>=T;
+const cls=q=>isRep(q)===isCal(q)?'agree':(isCal(q)?'cal':'rep');
+function geom(w,h){const L=48,Rr=14,Tp=12,B=40;const lx=v=>L+(Math.log(v)-Math.log(30))/(Math.log(800)-Math.log(30))*(w-L-Rr);const ly=v=>h-B-(Math.log(Math.max(v,8))-Math.log(8))/(Math.log(800)-Math.log(8))*(h-B-Tp);return {L,Rr,Tp,B,lx,ly}}
+function draw(){
+ const [x,w,h]=size(cv);const g=geom(w,h);const D=R52[O];
+ x.clearRect(0,0,w,h);x.font='12px system-ui,sans-serif';x.fillStyle=css('--mute');x.strokeStyle=css('--line');x.lineWidth=1;
+ for(const v of [30,42,60,100,200,400,800]){const X=g.lx(v);x.beginPath();x.moveTo(X,g.Tp);x.lineTo(X,h-g.B);x.stroke();x.fillText(v,X-8,h-g.B+16)}
+ for(const v of [10,20,42,100,200,400]){const Y=g.ly(v);x.beginPath();x.moveTo(g.L,Y);x.lineTo(w-g.Rr,Y);x.stroke();x.fillText(v,20,Y+4)}
+ x.fillText('calendar days of quiet →',g.L,h-6);x.save();x.translate(11,g.Tp+170);x.rotate(-Math.PI/2);x.fillText('days with a report →',0,0);x.restore();
+ // diagonal: every day reported
+ x.setLineDash([3,4]);x.strokeStyle=css('--nb');x.beginPath();x.moveTo(g.lx(30),g.ly(30));x.lineTo(g.lx(800),g.ly(800));x.stroke();x.setLineDash([]);
+ x.fillStyle=css('--mute');x.fillText('every day reported',g.lx(420),g.ly(420)-8);
+ // report line and calendar line
+ x.strokeStyle=css('--rep');x.lineWidth=1.5;x.beginPath();x.moveTo(g.L,g.ly(42));x.lineTo(w-g.Rr,g.ly(42));x.stroke();
+ x.fillStyle=css('--rep');x.fillText('42 reported days',w-g.Rr-110,g.ly(42)+14);
+ x.strokeStyle=css('--cal');x.beginPath();x.moveTo(g.lx(T),g.Tp);x.lineTo(g.lx(T),h-g.B);x.stroke();
+ x.fillStyle=css('--cal');x.fillText('wait '+T,g.lx(T)+4,g.Tp+12);
+ D.q.forEach(q=>{const c=cls(q);const X=g.lx(q.L),Y=g.ly(q.R);q._x=X;q._y=Y;
+  x.beginPath();x.arc(X,Y,c==='agree'?4:6,0,7);
+  const col=css('--'+c);if(q.b){x.strokeStyle=col;x.lineWidth=2;x.stroke()}else{x.fillStyle=col;x.fill()}
+  if(q===sel||q===hov){x.strokeStyle=css('--fg');x.lineWidth=1;x.beginPath();x.arc(X,Y,9,0,7);x.stroke()}});
+ const n=D.q.length,m=D.q.filter(q=>cls(q)!=='agree');
+ const best=Math.min(...D.curve.map(c=>c.mismatch));const bt=D.curve.filter(c=>c.mismatch===best).map(c=>c.T);
+ const st=document.getElementById('st');st.dataset.m=m.length;st.dataset.n=n;
+ st.innerHTML=`<b>${O==='kivu'?'Kivu 2018–2020':'Bundibugyo 2026'}</b>: ${Math.round(D.cov*1000)/10} % of days have a report; 42 ÷ that = ${D.pivot}. Of <b>${n}</b> long quiets, a ${T}-day wait and the 42-report-day count disagree on <b>${m.length}</b>`+(m.length?`: ${m.map(q=>q.z+' from '+q.f).join(', ')}.`:'.')+` Best match: ${best} at ${bt[0]}${bt.length>1?'–'+bt[bt.length-1]:''} days`+(best===0?' (exact).':'; no wait matches exactly.');
+ drawStrip();drawCurve();
+}
+function drawStrip(){
+ const [x,w]=size(sc);x.clearRect(0,0,w,+sc.getAttribute('height'));
+ const q=sel||hov;if(!q){x.fillStyle=css('--mute');x.font='13px system-ui,sans-serif';x.fillText('(no quiet chosen)',0,20);return}
+ const cols=Math.min(q.k.length,Math.floor(w/3));
+ const rows=Math.ceil(q.k.length/cols),cs=Math.max(2,Math.floor(Math.min(w/cols,12)));
+ const H=rows*cs+20;sc.setAttribute('height',H);const [y]=size(sc);
+ for(let i=0;i<q.k.length;i++){const c=q.k[i];const X=(i%cols)*cs,Y=Math.floor(i/cols)*cs;
+  y.fillStyle=css(c==='w'?'--w':c==='a'||c==='u'?'--a':'--n');y.fillRect(X,Y,cs-(cs>3?1:0),cs-(cs>3?1:0));
+  if(c==='n'){y.strokeStyle=css('--nb');y.lineWidth=.6;y.strokeRect(X+.3,Y+.3,cs-1.6,cs-1.6)}}
+ // mark day 42 by calendar and by report
+ let c=0,d42r=-1;for(let i=0;i<q.k.length;i++){if(q.k[i]!=='n')c++;if(c===42){d42r=i;break}}
+ const mk=(i,col,lab)=>{const X=(i%cols)*cs,Y=Math.floor(i/cols)*cs;y.strokeStyle=css(col);y.lineWidth=2;y.beginPath();y.moveTo(X+cs-0.5,Y-2);y.lineTo(X+cs-0.5,Y+cs+2);y.stroke();y.fillStyle=css(col);y.font='11px system-ui,sans-serif';y.fillText(lab,Math.min(X+3,size_w-60),Math.ceil(q.k.length/cols)*cs+14)};
+ const size_w=w;if(q.k.length>=42)mk(41,'--cal','');if(d42r>=0)mk(d42r,'--rep','');
+ y.fillStyle=css('--mute');y.font='11px system-ui,sans-serif';y.fillText(`${q.z}, from ${q.f}: red tick = calendar day 42${d42r>=0?', blue tick = reported day 42 (calendar day '+(d42r+1)+')':', never 42 reported days'}`,0,rows*cs+14);
+}
+function drawCurve(){
+ const [x,w,h]=size(cu);x.clearRect(0,0,w,h);const L=36,B=26,Tp=10,Rr=10;
+ const all=['kivu','bdbv'];const mx=Math.max(...all.flatMap(o=>R52[o].curve.map(c=>c.mismatch)));
+ const X=t=>L+(t-42)/(90-42)*(w-L-Rr),Y=v=>h-B-v/mx*(h-B-Tp);
+ x.font='11px system-ui,sans-serif';x.fillStyle=css('--mute');x.strokeStyle=css('--line');
+ for(const t of [42,49,60,70,80,90]){x.beginPath();x.moveTo(X(t),Tp);x.lineTo(X(t),h-B);x.stroke();x.fillText(t,X(t)-6,h-B+14)}
+ for(const v of [0,Math.round(mx/2),mx]){x.fillText(v,6,Y(v)+4)}
+ x.fillText('calendar wait (days)',L,h-2);
+ all.forEach(o=>{const D=R52[o];x.strokeStyle=css(o===O?'--fg':'--nb');x.lineWidth=o===O?2:1;x.beginPath();D.curve.forEach((c,i)=>{i?x.lineTo(X(c.T),Y(c.mismatch)):x.moveTo(X(c.T),Y(c.mismatch))});x.stroke();
+  const p=X(D.pivot);x.beginPath();x.moveTo(p,h-B);x.lineTo(p,h-B-8);x.stroke();
+  const last=D.curve[D.curve.length-1];x.fillStyle=css(o===O?'--fg':'--mute');x.fillText(o==='kivu'?'Kivu':'2026',X(last.T)-34,Y(last.mismatch)+14)});
+ x.strokeStyle=css('--cal');x.lineWidth=1;x.beginPath();x.moveTo(X(T),Tp);x.lineTo(X(T),h-B);x.stroke();
+}
+function near(e){const r=cv.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;let b=null,bd=144;for(const q of R52[O].q){const d=(q._x-mx)**2+(q._y-my)**2;if(d<bd){bd=d;b=q}}return b}
+function read(q){document.getElementById('rd').textContent=q?`${q.z}, quiet from ${q.f}: ${q.L} calendar days, ${q.R} with a report; ${q.b?'it broke':'still quiet at the record\'s end'}. Calendar wait ${T}: ${isCal(q)?'over':'not yet'}. Report count: ${isRep(q)?'over':'not yet'}.`:'Point at a dot to read it. Click it to see its days below.'}
+cv.addEventListener('pointermove',e=>{const q=near(e);if(q!==hov){hov=q;read(q||sel);draw()}});
+cv.addEventListener('pointerleave',()=>{hov=null;read(sel);draw()});
+cv.addEventListener('click',e=>{sel=near(e);read(sel);draw()});
+document.querySelectorAll('button[data-o]').forEach(b=>b.addEventListener('click',()=>{O=b.dataset.o;sel=null;hov=null;document.querySelectorAll('button[data-o]').forEach(c=>c.setAttribute('aria-pressed',c===b));read(null);draw()}));
+const Ti=document.getElementById('T');Ti.addEventListener('input',()=>{T=+Ti.value;document.getElementById('Tv').textContent=T;read(sel);draw()});
+document.getElementById('best').addEventListener('click',()=>{const D=R52[O];const b=Math.min(...D.curve.map(c=>c.mismatch));T=D.curve.find(c=>c.mismatch===b).T;Ti.value=T;document.getElementById('Tv').textContent=T;draw()});
+// open on Beni so the hole is visible at once
+sel=R52.kivu.q.find(q=>q.z==='Beni'&&q.f==='2020-02-17');read(sel);
+addEventListener('resize',draw);draw();
+})();
+</script>
+</body>
+</html>
