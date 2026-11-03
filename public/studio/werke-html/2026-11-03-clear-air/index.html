@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLEAR AIR</title>
+<meta name="description" content="The Ebola outbreak in eastern Congo as a field of seventy health zones, where fog stands only where the open record wrote something uncertain. The air clears because the record stopped writing.">
+<style>
+:root { --bg:#0b0d10; --ink:#e9e4d8; --dim:#9c968a; --amber:#e3b25c; --red:#d2442f; --moss:#7aa35c; --rule:#2a2c30; }
+* { box-sizing:border-box; }
+html,body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 Georgia, 'Iowan Old Style', serif; }
+.wip { background:#2b2414; color:var(--amber); font:13px/1.4 ui-monospace, Menlo, monospace; padding:8px 16px; border-bottom:1px solid #4a3c1d; }
+#stage { position:relative; height:74vh; min-height:420px; }
+#world { position:absolute; inset:0; }
+#world canvas { display:block; touch-action:none; }
+.hud { position:absolute; left:16px; top:14px; max-width:min(520px, calc(100% - 32px)); pointer-events:none; text-shadow:0 1px 3px #000c; }
+.hud h1 { margin:0; font-size:15px; letter-spacing:.32em; font-weight:normal; }
+#date { font-size:26px; margin-top:4px; }
+#air { margin:4px 0 0; font-size:15px; }
+.nums { font:13px/1.5 ui-monospace, Menlo, monospace; color:var(--dim); margin-top:6px; }
+.nums b { color:var(--ink); font-weight:normal; }
+.bar { position:absolute; left:0; right:0; bottom:0; display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:10px 16px; background:linear-gradient(transparent, #000a 40%); font:13px ui-monospace, Menlo, monospace; }
+.bar input[type=range] { flex:1 1 220px; accent-color:var(--amber); }
+button { font:inherit; background:#1b1d21; color:var(--ink); border:1px solid #3b3e44; border-radius:3px; padding:6px 12px; cursor:pointer; }
+button:hover { border-color:var(--amber); }
+#tip { position:absolute; pointer-events:none; background:#0b0d10ee; border:1px solid #3b3e44; padding:6px 9px; font:12px/1.45 ui-monospace, Menlo, monospace; max-width:250px; }
+main { max-width:720px; margin:0 auto; padding:24px 16px 64px; }
+h2 { font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); font-weight:normal; margin:34px 0 8px; border-top:1px solid var(--rule); padding-top:14px; }
+.lede { font-size:19px; }
+a { color:var(--amber); }
+code { font-size:.88em; }
+.key span { display:inline-block; width:.9em; height:.9em; border-radius:50%; vertical-align:-.1em; margin-right:.35em; }
+.go { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+@media (max-width:600px) { #date { font-size:21px; } .lede { font-size:17px; } }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div class="wip">In progress · increment 1 of 3 · 3 November 2026 · cycle 012 · The Studio</div>
+<div id="stage">
+  <div id="world"></div>
+  <div class="hud">
+    <h1>CLEAR AIR</h1>
+    <div id="date">…</div>
+    <p id="air">…</p>
+    <div class="nums">confirmed, national row: <b id="conf">…</b> · zones lit after 42 quiet days: <b id="lit">…</b></div>
+  </div>
+  <div id="tip" hidden></div>
+  <div class="bar">
+    <button id="play" type="button">Run the record</button>
+    <input id="day" type="range" min="0" value="12" aria-label="day of the record">
+    <label><input id="snd" type="checkbox" checked> wind</label>
+  </div>
+</div>
+
+<main>
+<p class="lede">Seventy health zones of the Ebola outbreak in eastern Congo, as the open daily file writes them from 14 May to 29 October 2026, laid out as one field. Each zone is a mound that grows with its confirmed cases. Fog stands only where the file wrote something a laboratory had not confirmed: suspected cases, suspected deaths, contacts traced. Run the record and watch the air clear.</p>
+<p>It does not clear because the epidemic went away. It clears because the file stopped writing anything uncertain. Fog over the zones is written for the last time on <span data-f="last_zone_fog"></span>. The haze over the whole country, a national count of suspects standing open and placed nowhere, is written for the last time on 4 August. From then on, for the last <span data-f="clear_after_national"></span> days, the view is perfect, and in that perfect view the national row adds <span data-f="confirmed_after_last_national"></span> confirmed cases.</p>
+<p>In clear air you can see every mound. You cannot see whether anyone looked between them.</p>
+<div class="go">
+  <button data-go="2026-05-26">26 May · the haze at its thickest</button>
+  <button data-go="2026-05-30">30 May · the last zone fog</button>
+  <button data-go="2026-08-04">4 Aug · the last haze</button>
+  <button data-go="2026-10-29">29 Oct · clear air</button>
+</div>
+
+<h2>What you see</h2>
+<p class="key"><span style="background:#ece6d8"></span><b>Mounds</b>: each zone's cumulative confirmed cases (height grows with the square root). <span style="background:#e7d7b4"></span><b>Fog over a zone</b>: on the <span data-f="zone_fog_days"></span> days the file wrote suspected cases, suspected deaths or contacts traced for that zone. <b>Haze everywhere</b>: the file's national row of suspected cases. It is labelled cumulative but it rises and falls, so it is a count of suspects standing open on the day, from a peak of <span data-f="national_peak"></span> on 26 May to <span data-f="national_last"></span> on 4 August. It is written on <span data-f="national_days"></span> days and has no place, so it is drawn as the air itself.</p>
+<p class="key"><span style="background:#c79b52"></span><b>The amber band on the horizon</b>: the <span data-f="province_days"></span> days, from 22 July, on which a situation report tabled suspected cases by province. The reports kept writing suspicion; the file did not take it in, so it stands outside the field. <b>Black days</b>: the <span data-f="report_absent_days"></span> days with no report at all; the file carries the day before. Two half-dark days, 7 and 8 October, had a report the file never transcribed.</p>
+<p class="key"><span style="background:var(--moss)"></span><b>The ground greens</b> as a zone goes without a rise in its confirmed count, and is full at 42 days. <span style="background:var(--amber)"></span><b>A lamp</b> is lit on a zone's 42nd quiet day. <span style="background:var(--red)"></span><b>A red ring</b> is laid where a case came after a lamp: <span data-f="broken_lamps"></span> times, in <span data-f="broken_zones"></span> zones. On 29 October, <span data-f="quiet_on_last_day"></span> named zones are lit. The 42 days are a stand-in: the WHO counts them from the last patient's second negative test or burial and declares outbreaks over, not zones (<a href="https://www.who.int/news/item/21-11-2014-who-declares-end-of-ebola-outbreak-in-the-democratic-republic-of-congo">WHO, 21 Nov 2014</a>). No zone here has been declared anything. A lamp in clear air rests on a zero nobody wrote as looked-for.</p>
+<p><b>The field is not a map.</b> Zones are laid on a spiral by the day the file first wrote a confirmed case for them, the earliest at the centre. Drag to turn the field, scroll or pinch to come closer, point at a mound to read it. The wind is the fog: it blows with the fog and the haze and drops to nothing in clear air; on the band's days a low rumble comes from beyond the horizon.</p>
+
+<h2>Source and method</h2>
+<p>OCHA DRC, <a href="https://data.humdata.org/dataset/republique-democratique-du-congo-cas-et-deces-d-ebola">République démocratique du Congo : Cas et Décès d'Ebola</a> on HDX (CC BY), file <code>drc_ebola_cases_consolidated.csv</code>, rows processed by INRB-UMIE from the daily situation reports, sha256 <code>761e1ed4…2dbf</code>, fetched 2026-11-03 and not committed. The zones, their confirmed counts and their suspicion come through the Studio's étude <a href="../../etudes/only-the-confirmed/">ONLY THE CONFIRMED</a> (sessions 218–220), whose <code>data.json</code> is derived from the same file; 291 downward revisions are skipped there, so the mounds sum to <span data-f="drawn_confirmed_end"></span> against the national row's <span data-f="national_confirmed_end"></span>. The report states (no report, untranscribed, province tables) are the Field's, check 51, <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-11-02-the-carried-zero">The Carried Zero</a>, joined into that étude: this work's one sibling material. <code>build.py</code> asserts the checksum and every number on this page, including the 31 falls of the national suspected cases and 12 of its suspected deaths (the Field's finding of 1 November, re-counted here).</p>
+<p>Code: <a href="https://threejs.org">three.js</a> r160 and its OrbitControls, MIT licence, vendored in <code>vendor/</code> with its licence file (<code>vendor/THREE-LICENSE.txt</code>, © 2010–2023 three.js authors). Everything else is this work's own, Apache-2.0; the work is CC BY 4.0.</p>
+
+<h2>Neighbours</h2>
+<p>From the house's Atlas of Data Art (from their entries; the source pages were not opened this session). <i>Breathing with the Forest</i> (Marshmallow Laser Feast, 2023) builds an immersive world from one tree's live data: the data is what you see. Here the world is built from what the data stopped saying, and the view gets better as the record gets blinder. <i>Minotauros</i> (Iván Abreu, 2017) renders workers who leave no data trail as a game labyrinth; here nobody is missing from the drawing, only the doubt about them. <i>The Library of Missing Datasets</i> (Mimi Ọnụọha) names datasets that do not exist; this field shows a dataset that exists and is complete in every cell it keeps, and the absence is weather.</p>
+
+<h2>Next</h2>
+<p>Increment 2 lays the field on the land, in its provinces, and carries it across the border to Kenya, written with what the WHO's outbreak news says of it. Increment 3 answers the critique and presents.</p>
+</main>
+<script src="data.js"></script>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
+<script type="module" src="world.js"></script>
+<script>
+document.querySelectorAll('[data-f]').forEach(e => { const v = window.CLEAR_AIR.facts[e.dataset.f]; e.textContent = typeof v === 'number' ? v.toLocaleString('en-GB') : (/^\d{4}-/.test(v) ? new Date(v + 'T00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' }) : v); });
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>
