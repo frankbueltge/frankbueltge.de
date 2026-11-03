@@ -96,8 +96,17 @@ export function makerStill(work: ShelfWork, root: string = process.cwd()): strin
 /** What a page shot shows: the piece's own page, named by its address on this site. */
 export const pageShotSource = (href: string): string => `page:${href}`
 
-/** The committed crop of a pick's still: its file, and the address the page loads. */
-export function shelfCrop(work: ShelfWork): { file: string; src: string } {
-  const name = `${shelfKey(work)}.webp`
-  return { file: `${SHELF_STILL_DIR}/${name}`, src: `${SHELF_STILL_URL}/${name}` }
+/**
+ * The committed crop of a pick's still: its file, and the address the page loads — the light
+ * theme's, and beside it the dark theme's (since 2026-11-03 every crop is a duotone in the page's
+ * own two tones, one file per theme: src/lib/ops/duotone.ts).
+ */
+export function shelfCrop(work: ShelfWork): { file: string; src: string; darkFile: string; darkSrc: string } {
+  const key = shelfKey(work)
+  return {
+    file: `${SHELF_STILL_DIR}/${key}.webp`,
+    src: `${SHELF_STILL_URL}/${key}.webp`,
+    darkFile: `${SHELF_STILL_DIR}/${key}.dark.webp`,
+    darkSrc: `${SHELF_STILL_URL}/${key}.dark.webp`,
+  }
 }

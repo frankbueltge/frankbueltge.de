@@ -45,8 +45,9 @@ export interface LabSlide {
   /** the kind word alone, for the card's last line */
   kind: string
   href: string
-  /** a shot of the work's own page, cut to the frame */
-  still: { src: string; alt: string } | null
+  /** a shot of the work's own page, cut to the frame, in the light theme's two tones and, where
+   *  the dark one's file is committed, in the dark theme's */
+  still: { src: string; alt: string; dark: string | null } | null
   /** where the page has no still yet: the miniature /experiments draws from the work's own record */
   mini: { marks: ThumbMark[]; draws: string; readout: string } | null
   /** where there is neither: the line the plate says */
@@ -69,9 +70,13 @@ export interface LabWording {
   /** 'open the {kind} →' */
   open: string
   mini: string
+  /** what a screen reader calls the lead card above the carousel */
+  leadLabel: string
 }
 
 export interface LabCarouselProps {
+  /** the band's lead (since 2026-11-03: Ducking), shown large above the carousel, outside its count */
+  lead?: LabSlide[]
   slides: LabSlide[]
   wording: LabWording
   /** the id of the band's heading, which the section around the island is labelled by */
@@ -84,7 +89,91 @@ export interface LabCarouselProps {
   frame: { width: number; height: number }
 }
 
-export default function LabCarousel({ slides, wording, headingId, trackId, box, frame }: LabCarouselProps): React.ReactElement {
+/** A card's picture: the still in the two tones of the page's two themes, else the miniature, else
+ *  the plate. Both tones are in the HTML; the stylesheet shows the one of the theme the page renders
+ *  in (src/styles/edition.css, .ed-duo), and a lazy picture the theme hides is never fetched. */
+function Picture({
+  slide,
+  wording,
+  box,
+  frame,
+  eager,
+}: {
+  slide: LabSlide
+  wording: LabWording
+  box: LabCarouselProps['box']
+  frame: LabCarouselProps['frame']
+  eager: boolean
+}): React.ReactElement {
+  if (slide.still) {
+    return (
+      <>
+        <img
+          className="ed-duo ed-duo--light"
+          src={slide.still.src}
+          alt={slide.still.alt}
+          width={frame.width}
+          height={frame.height}
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+        {slide.still.dark && (
+          <img
+            className="ed-duo ed-duo--dark"
+            src={slide.still.dark}
+            alt={slide.still.alt}
+            width={frame.width}
+            height={frame.height}
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+      </>
+    )
+  }
+  if (slide.mini) {
+    return (
+      <span className="ed-lab-plate">
+        <span className="ed-lab-plate-kind">{wording.mini}</span>
+        <svg className="ed-lab-mini" viewBox={`0 0 ${box.width} ${box.height}`} role="img" aria-label={`${slide.title}: ${slide.mini.draws}`}>
+          {slide.mini.marks.map((mark, k) => (
+            <ThumbMarkShape key={k} mark={mark} />
+          ))}
+        </svg>
+        <span className="ed-lab-plate-reading">{slide.mini.readout}</span>
+      </span>
+    )
+  }
+  return (
+    <span className="ed-lab-plate" aria-hidden="true">
+      <span className="ed-lab-plate-kind">{slide.kind}</span>
+      <span className="ed-lab-plate-reading">{slide.plate}</span>
+    </span>
+  )
+}
+
+/** A card's words: line, title (the card's one link), sentence, meta, and where it leads. */
+function Words({ slide, wording }: { slide: LabSlide; wording: LabWording }): React.ReactElement {
+  return (
+    <div className="ed-lab-text">
+      {slide.line && <p className="ed-lab-kicker">{slide.line}</p>}
+      <h3 className="ed-lab-title">
+        {/* one link per card, named by the work's title; its ::after spreads it over the
+            whole card, so the picture and the words open the work too */}
+        <a className="ed-lab-link" href={slide.href}>
+          {slide.title}
+        </a>
+      </h3>
+      <p className="ed-lab-sentence">{slide.sentence}</p>
+      <p className="ed-lab-meta">{slide.meta}</p>
+      <p className="ed-lab-open" aria-hidden="true">
+        {fill(wording.open, { kind: slide.kind })}
+      </p>
+    </div>
+  )
+}
+
+export default function LabCarousel({ lead = [], slides, wording, headingId, trackId, box, frame }: LabCarouselProps): React.ReactElement {
   const trackRef = React.useRef<HTMLDivElement>(null)
   const [ready, setReady] = React.useState(false)
   const [current, setCurrent] = React.useState(0)
@@ -189,6 +278,15 @@ export default function LabCarousel({ slides, wording, headingId, trackId, box, 
         </div>
       </div>
 
+      {lead.map((slide) => (
+        <div key={slide.id} className="ed-lab-lead" role="group" aria-label={wording.leadLabel}>
+          <div className={cn('ed-lab-frame', 'ed-lab-frame--lead', !slide.still && 'ed-lab-frame--plate')}>
+            <Picture slide={slide} wording={wording} box={box} frame={frame} eager />
+          </div>
+          <Words slide={slide} wording={wording} />
+        </div>
+      ))}
+
       <div id={trackId} ref={trackRef} className="ed-lab-track" onKeyDown={onKeyDown}>
         {slides.map((slide, i) => (
           <div
@@ -200,47 +298,9 @@ export default function LabCarousel({ slides, wording, headingId, trackId, box, 
             data-slide={i}
           >
             <div className={cn('ed-lab-frame', !slide.still && 'ed-lab-frame--plate')}>
-              {slide.still ? (
-                <img
-                  src={slide.still.src}
-                  alt={slide.still.alt}
-                  width={frame.width}
-                  height={frame.height}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  decoding="async"
-                />
-              ) : slide.mini ? (
-                <span className="ed-lab-plate">
-                  <span className="ed-lab-plate-kind">{wording.mini}</span>
-                  <svg className="ed-lab-mini" viewBox={`0 0 ${box.width} ${box.height}`} role="img" aria-label={`${slide.title}: ${slide.mini.draws}`}>
-                    {slide.mini.marks.map((mark, k) => (
-                      <ThumbMarkShape key={k} mark={mark} />
-                    ))}
-                  </svg>
-                  <span className="ed-lab-plate-reading">{slide.mini.readout}</span>
-                </span>
-              ) : (
-                <span className="ed-lab-plate" aria-hidden="true">
-                  <span className="ed-lab-plate-kind">{slide.kind}</span>
-                  <span className="ed-lab-plate-reading">{slide.plate}</span>
-                </span>
-              )}
+              <Picture slide={slide} wording={wording} box={box} frame={frame} eager={false} />
             </div>
-            <div className="ed-lab-text">
-              {slide.line && <p className="ed-lab-kicker">{slide.line}</p>}
-              <h3 className="ed-lab-title">
-                {/* one link per card, named by the work's title; its ::after spreads it over the
-                    whole card, so the picture and the words open the work too */}
-                <a className="ed-lab-link" href={slide.href}>
-                  {slide.title}
-                </a>
-              </h3>
-              <p className="ed-lab-sentence">{slide.sentence}</p>
-              <p className="ed-lab-meta">{slide.meta}</p>
-              <p className="ed-lab-open" aria-hidden="true">
-                {fill(wording.open, { kind: slide.kind })}
-              </p>
-            </div>
+            <Words slide={slide} wording={wording} />
           </div>
         ))}
       </div>
