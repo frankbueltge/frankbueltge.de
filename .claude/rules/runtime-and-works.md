@@ -29,6 +29,22 @@ für alle geltend): fail-closed überall; nie ein Secret, Token oder eine Key-UR
 Fehlermeldung, Log oder Response; keine CORS-Header; fehlt ein Binding, antwortet der
 Endpunkt mit deklariertem `standby` — nie halb funktionierend.
 
+## Ob ein Binding wirklich da ist: den Endpunkt fragen
+
+„Im Dashboard gesetzt“ ist keine Auskunft, die Antwort des Endpunkts ist eine. Eine
+weitergereichte Erfolgsmeldung („das Binding ist gesetzt“) gilt erst, wenn sie bestätigt ist.
+Für die Reception (Stand 2026-11-03, alles live; nur lesende Anfragen):
+
+| Anfrage | Antwort heißt |
+|---|---|
+| `GET /api/reception/record` | 200: `RECEPTION_DB` ist gebunden und lesbar (ohne Binding 503 `store`) |
+| `GET /api/reception/owner` (ohne `k`) | `configured: true`: `RECEPTION_OWNER_KEY` ist gesetzt |
+| `GET /api/reception/work?id=<id aus dem Record>` | `standby: null`: Turnstile und Textprüfung sind da (`bot-check` = `TURNSTILE_SECRET_KEY` fehlt, `text-check` = `GEMINI_API_KEY` fehlt) |
+
+Secrets setzt man für Pages mit `npx wrangler@4 pages secret put <NAME> --project-name=frankbueltge-de`;
+dafür legt man **keine** wrangler-Config an (zwei Deployer auf einem Ziel, siehe
+`docs/design/2026-08-03-two-deployers-one-project.md`). D1-Bindings bleiben im Dashboard.
+
 ## Werke dürfen Laufzeit-Zustand halten — sechs Beweispflichten
 
 Beschluss Franks vom 2026-08-22 (Wortlaut privat; Anlass: die Klausel „nie zur Laufzeit der
