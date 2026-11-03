@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Last Case</title>
+<meta name="description" content="Listen to a quiet in an Ebola record, one day per beat, and say when it is over. The Atelier, cycle 012.">
+<link rel="stylesheet" href="last.css">
+</head>
+<body>
+<main>
+<div class="kick">THE ATELIER · CYCLE 012 · FIRST STATE · 2026-11-03</div>
+<h1>The Last Case</h1>
+<p class="lede">A health zone in eastern Congo has just written a new confirmed case of Ebola, and then nothing more. From here, every beat is one day. A clear tick: that day's report named the zone and had nothing new. A dull tick: a report came out and did not name it. Silence: no report at all. <b>When you are sure the zone has gone quiet, say so.</b></p>
+
+<section id="stage" aria-live="polite">
+  <div class="top">
+    <div class="count"><span id="day">0</span><small>days since the last confirmed case</small></div>
+    <div class="tally" id="tally">named 0 · not named 0 · no report 0</div>
+  </div>
+  <canvas id="strip" height="200" aria-label="The days of this quiet, one square per day"></canvas>
+  <div class="legend"><span class="sq w"></span>report named the zone <span class="sq a"></span>report did not name it <span class="sq n"></span>no report</div>
+  <div class="controls">
+    <button id="go" class="primary">Listen</button>
+    <button id="over" disabled>It is over</button>
+    <button id="next" hidden>Next quiet</button>
+    <label><input type="checkbox" id="snd" checked> sound</label>
+    <label>pace <select id="pace"><option value="5">slow</option><option value="9" selected>steady</option><option value="16">fast</option></select></label>
+  </div>
+  <p id="verdict" class="verdict"></p>
+</section>
+
+<section id="ledger" hidden>
+  <h2>What you said, and what came</h2>
+  <table><thead><tr><th>#</th><th>zone</th><th>you said over on day</th><th>what came</th></tr></thead><tbody id="rows"></tbody></table>
+</section>
+
+<section id="clock" hidden>
+  <h2>Your clock</h2>
+  <p id="clocktext"></p>
+  <canvas id="wall" height="420" aria-label="All 82 quiets side by side, first 120 days"></canvas>
+  <div class="controls"><label><input type="checkbox" id="reveal"> show what came</label></div>
+  <p class="legend" id="walllegend">All 82 quiets of both records, as a listener heard their first 120 days, in a fixed shuffled order. Your median day is the line. Can you tell, before you tick the box, which ones will break?</p>
+</section>
+
+<section class="text">
+<h2>What this tries</h2>
+<p>To say a zone is quiet is to say something about a case: that the last one has been. But which case was the last is not written on the day it happens. Robert Northcott, summarising the philosopher Arthur Danto: <q>Danto defines a narrative sentence to be a description of an event that includes reference to later events.</q> “The last case” is such a sentence. Only what comes after can make it true. A declaration of the end speaks it in the present tense, and can do so only by a rule about waiting.</p>
+<p>The field's current answer is to price the wait. Plank and colleagues (<i>Proc. R. Soc. B</i> 292, 2025) estimate the probability that no further case will come, allowing for reporting that is late and incomplete, and suggest using the day it passes 95 % alongside other evidence. Ogi-Gittins and colleagues (<i>Infectious Disease Modelling</i> 10, 2025), on the Ebola outbreak in Équateur in 2018: <q>the lower the level of case reporting, the longer it is necessary to wait.</q> Both make the wait honest. Neither changes what kind of sentence is spoken at its end. The probability is a stated price for speaking a narrative sentence early, and the threshold is a choice about risk, not a reading of the zone.</p>
+<p>The Field's second record shows where the prescription “wait longer” stops working. In Kivu, 2018 to 2020, the missing reports are not a level but one hole of 94 days, and a longer wait fills the hole with silence (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-11-03-the-second-clock">check 52</a>). You can hear that hole above, if a Kivu quiet from early 2020 comes up: it is the long silence.</p>
+<p><b>What the listening could not hear.</b> <span id="auc"></span></p>
+</section>
+
+<section class="text small">
+<h2>Sources and method</h2>
+<p><b>Material.</b> Every quiet of 42 days or more in two Ebola records, each day classed by the Field (<a href="https://github.com/frankbueltge/field-research/blob/82f80ea995aabc1b5fe154c9e446e96372a94572/artifacts/2026-11-03-the-second-clock/data52.js">data52.js</a>, check 52, commit 82f80ea, sha256 checked by <a href="build.py">build.py</a>): 22 from the 2026 Bundibugyo epidemic (HDX copy of the INRB-UMIE transcription of the ministry's situation reports, 14 May to 29 Oct 2026; the Field's check 51) and 60 from North Kivu and Ituri, 2018 to 2020 (OCHA HDX, ministry and WHO, CC BY-IGO). A quiet runs from a day the zone's cumulative confirmed count rose to the next rise, or to the record's end. Day 1 is the day after the rise.</p>
+<p><b>What it is not.</b> WHO declares an outbreak over 42 days after the last case's second negative test or burial. This work counts days after a rise in a zone's reported count, a reader's proxy. A rise can be a late report or a reclassification, not a new infection. “Held” means only that the record ends without a rise: for 2026 the record stops on 29 October, so those quiets cannot yet be called.</p>
+<p><b>Quotations</b> checked word for word: Northcott, “What did Danto show?” (PhilSci-archive 29862, 2026; checked in this practice's session of 2026-10-11); Ogi-Gittins et al., doi:10.1016/j.idm.2025.03.009 (abstract, read 2026-11-03). Plank et al., doi:10.1098/rspb.2024.2825 (abstract read 2026-11-03 in Europe PMC), paraphrased: a declaration balances its benefits against the risk of a resurgence, and the day the probability reached 95 % held across their assumptions. Built on this practice's study <a href="../../convening-after-011/forty-two-days/">Forty-Two Days</a> (2026-11-01 and 11-02).</p>
+<p><b>Form.</b> A quiet is something you can only wait through, so the work makes you wait through it, one day per beat, without the 42-day mark in view. Canvas and Web Audio, no library. Sound is optional; the squares carry the same days.</p>
+</section>
+</main>
+<script src="last.js"></script>
+</body>
+</html>
