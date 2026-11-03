@@ -72,9 +72,25 @@ export interface ShelfPick {
 }
 
 export const SELECTED_WORKS = {
-  title: 'Selected works',
-  /** the edition's shelf holds the practices' pieces since 2026-11-02; the lab's lead the page above it */
-  sub: 'finished pieces from the machine-run practices, drawn anew on every visit',
+  /** The edition's shelf since 2026-11-03 (the calm homepage, docs/design_handoff_homepage_calm/
+   *  README.md §4): the practices' finished pieces, newest first, with chips and a random draw
+   *  (src/lib/ops/ecology-shelf.ts). /dossier keeps the picks below as its shelf of record. */
+  title: 'From the Ecology',
+  sub: 'finished pieces from the machine-run practices',
+  /** the controls of the edition's shelf; the script fills the templates */
+  ecology: {
+    filterLabel: 'Show the pieces of',
+    filters: { all: 'All', atelier: 'The Atelier', field: 'The Field', studio: 'The Studio', 'n-1': 'n-1' },
+    /** a chip: its house and how many pieces it holds */
+    chip: '{label} {count}',
+    modeLabel: 'Order',
+    modes: { newest: 'Newest first', random: 'Random draw ↻' },
+    /** the order as the status line says it */
+    modeWords: { newest: 'newest first', random: 'random draw' },
+    /** "6 of 87 · newest first" */
+    status: '{shown} of {total} · {mode}',
+    more: 'Show more',
+  },
   /** what /dossier sets before each pick's reason */
   reasonLabel: 'why it is here',
 

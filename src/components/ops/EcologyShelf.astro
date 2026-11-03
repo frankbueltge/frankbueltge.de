@@ -1,0 +1,97 @@
+---
+// "From the Ecology" (2026-11-03): the entrance's shelf of the practices' finished pieces —
+// docs/design_handoff_homepage_calm/README.md §4. It was "Selected works", eight drawn at random
+// on every visit (2026-10-17 to 2026-11-02); the pool is the same (src/lib/ops/shelf-pool.ts,
+// withoutLab), the default is now newest first.
+//
+// THE SERVER RENDER IS THE FLOOR. Every piece of the pool is in the HTML, newest first; the first
+// six stand, the rest are hidden, and the controls are hidden too, so a reader without JavaScript
+// meets the six newest pieces and no dead button. The edition's script (HomeEdition.astro) unhides
+// the controls and moves the cards — by house, newest first or in a random draw, six more at a
+// time — by the pure rules of src/lib/ops/ecology-shelf.ts. It never builds a card.
+//
+// A card: the picture at 16 : 10 in the page's two tones (one file per theme, the stylesheet
+// shows the theme's), the house in its voice, kind and day, the title. No sentence on the card.
+// A card without a still gets a plate that says so, never a picture made for it.
+import { SELECTED_WORKS } from '@/config/selected-works'
+import type { ShelfCard } from '@/lib/ops/selected-works'
+import { ECOLOGY_STEP, ecologyChips, houseOfCard, newestFirst } from '@/lib/ops/ecology-shelf'
+import { STILL_FRAME } from '@/lib/ops/shelf-stills'
+import { fill } from '@/lib/ops/since'
+
+interface Props {
+  cards: ShelfCard[]
+  /** an internal address as the page links it (the edition's locale helper) */
+  link?: (href: string) => string
+}
+
+const { cards, link = (href: string) => href } = Astro.props
+const W = SELECTED_WORKS
+const E = W.ecology
+const to = (href: string) => (href.startsWith('/') ? link(href) : href)
+const ordered = newestFirst(cards)
+const houses = ordered.map(houseOfCard)
+const chips = ecologyChips(houses, E.filters)
+const status = fill(E.status, { shown: Math.min(ECOLOGY_STEP, ordered.length), total: ordered.length, mode: E.modeWords.newest })
+const carried = { step: ECOLOGY_STEP, status: E.status, modeWords: E.modeWords }
+---
+
+<div class="ed-eco" data-ed-eco={JSON.stringify(carried)}>
+  {/* Hidden until the script has run: without it these would be dead buttons. */}
+  <div class="ed-eco-tools" data-ed-eco-tools hidden>
+    <div class="ed-eco-chips" role="group" aria-label={E.filterLabel}>
+      {chips.map((chip) => (
+        <button
+          type="button"
+          class={chip.id === 'all' ? 'ed-eco-chip' : `ed-eco-chip pp-voice-${chip.id === 'n-1' ? 'middle' : chip.id}`}
+          data-ed-eco-filter={chip.id}
+          aria-pressed={chip.id === 'all' ? 'true' : 'false'}
+        >
+          {fill(E.chip, { label: chip.label, count: chip.count })}
+        </button>
+      ))}
+    </div>
+    <div class="ed-eco-modes" role="group" aria-label={E.modeLabel}>
+      <button type="button" class="ed-eco-mode" data-ed-eco-mode="newest" aria-pressed="true">{E.modes.newest}</button>
+      <button type="button" class="ed-eco-mode" data-ed-eco-mode="random" aria-pressed="false">{E.modes.random}</button>
+    </div>
+  </div>
+
+  <ul class="ed-shelf ed-eco-grid" data-ed-eco-grid>
+    {ordered.map((card, i) => (
+      <li
+        class={['ed-shelf-card', card.voice ? `pp-voice-${card.voice}` : 'ed-shelf-card--house'].join(' ')}
+        hidden={i >= ECOLOGY_STEP}
+        data-house={houses[i] ?? undefined}
+        data-day={card.day}
+      >
+        <a class="ed-shelf-link" href={to(card.href)}>
+          <span class={['ed-shelf-frame', card.still ? '' : 'ed-shelf-frame--plate'].filter(Boolean).join(' ')}>
+            {card.still ? (
+              <>
+                <img class="ed-duo ed-duo--light" src={card.still.src} alt={card.still.alt} width={STILL_FRAME.width} height={STILL_FRAME.height} loading="lazy" decoding="async" />
+                {card.still.dark && (
+                  <img class="ed-duo ed-duo--dark" src={card.still.dark} alt={card.still.alt} width={STILL_FRAME.width} height={STILL_FRAME.height} loading="lazy" decoding="async" />
+                )}
+              </>
+            ) : (
+              <span class="ed-shelf-plate" aria-hidden="true">
+                <span class="ed-shelf-plate-kind">{card.kind}</span>
+                <span class="ed-shelf-plate-note">{W.plate(card.kind)}</span>
+              </span>
+            )}
+          </span>
+          <span class="ed-shelf-maker">{card.maker}</span>
+          <span class="ed-shelf-meta">{card.kind} · {card.when}</span>
+          <span class="ed-shelf-title">{card.title}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <div class="ed-eco-foot">
+    <p class="ed-eco-status" data-ed-eco-status aria-live="polite">{status}</p>
+    {/* hidden until the script has run, like the chips: it is the script that shows more */}
+    <button type="button" class="ed-eco-more" data-ed-eco-more hidden>{E.more}</button>
+  </div>
+</div>

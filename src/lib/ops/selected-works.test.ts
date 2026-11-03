@@ -288,15 +288,17 @@ describe('a retirement’s day', () => {
   })
 })
 
-describe('the two pages that show the shelf', () => {
-  it('mount the one component, fed by the one reader', () => {
-    for (const [name, rel] of [
-      ['the edition', '../../components/pages/HomeEdition.astro'],
-      ['the dossier', '../../pages/dossier.astro'],
-    ] as const) {
-      const src = read(rel)
-      expect(src, name).toContain('readShelf')
-      expect(src, name).toContain('<SelectedWorks')
-    }
+describe('the two pages that show the practices’ pieces', () => {
+  it('the dossier mounts the shelf of record, fed by its reader', () => {
+    const src = read('../../pages/dossier.astro')
+    expect(src).toContain('readShelf')
+    expect(src).toContain('<SelectedWorks')
+  })
+
+  it('the edition mounts From the Ecology, fed by the pool without the lab (since 2026-11-03)', () => {
+    const src = read('../../components/pages/HomeEdition.astro')
+    expect(src).toContain('withoutLab(readPool())')
+    expect(src).toContain('<EcologyShelf')
+    expect(src).not.toContain('<SelectedWorks')
   })
 })

@@ -135,3 +135,20 @@ describe('the arrivals', () => {
     expect(EDITION.arrivals.dayHead('Friday, 9 October', 1)).toBe('Friday, 9 October · 1 arrival')
   })
 })
+
+describe('the calm homepage (2026-11-03)', () => {
+  it('fits the standing question to one line, up to the handoff’s largest size', () => {
+    expect(EDITION.masthead.titleMax).toBe(150)
+  })
+
+  it('names the side column for a screen reader', () => {
+    expect(EDITION.aside.label.length).toBeGreaterThan(0)
+  })
+
+  it('leads the lab’s band with one work and carries nine under it', () => {
+    expect(EDITION.lab.lead).toHaveLength(1)
+    expect(EDITION.lab.picks).toHaveLength(9)
+    expect(EDITION.lab.picks).not.toContain(EDITION.lab.lead[0])
+    expect(EDITION.lab).not.toHaveProperty('leave')
+  })
+})
