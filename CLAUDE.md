@@ -264,6 +264,14 @@ und es nicht kann. Blockiert nichts (`main` hat keinen Branch-Schutz). **Nicht d
 wrangler-Config „grün machen"** — Diagnose und der Ein-Klick-Fix:
 `docs/design/2026-08-03-two-deployers-one-project.md`.
 
+**Vor dem Merge und danach** (viele Sessions mergen gleichzeitig nach `main`): `git fetch` und auf
+`origin/main` rebasen, danach Tests und Typprüfung neu laufen lassen und die CI auf dem rebasten
+Stand abwarten. Die Squash-Nachricht prüfen, bevor `gh pr merge --squash` läuft: Der Guard
+`scripts/guards/check-commit-credits.mjs` liest in der CI die Commits jedes Pushs und PRs, ein
+Credit in der Squash-Nachricht fiele sonst erst auf `main` rot auf. Springt die CI auf einem
+Fix-Commit nicht an, lokal prüfen und das im PR-Kommentar sagen. Nach dem Merge den Deploy
+abwarten und die geänderten Seiten live ansehen, schmal (390 px) und breit.
+
 **Merge-Vollmacht (Frank, 2026-08-03; am 2026-08-14 auf die ganze Familie erweitert):** Frank
 hat das Mergen nach `main` dauerhaft mündlich delegiert (Wortlaute privat; Kern: er gibt ohnehin
 immer das Merge-Go und will nicht mehr gefragt werden). PRs werden also selbst gemergt,
