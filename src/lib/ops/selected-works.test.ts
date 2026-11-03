@@ -139,7 +139,7 @@ describe('the stills', () => {
     // piece's crop goes stray when a mirror drops the piece, which only a person tidies, so the
     // nightly runs do not ask
     if (!STRICT) return
-    const wanted = new Set([...picks.map((p) => p.work), ...poolEntries.map((e) => e.pick.work)].map((w) => shelfCrop(w).file))
+    const wanted = new Set([...picks.map((p) => p.work), ...poolEntries.map((e) => e.pick.work)].flatMap((w) => [shelfCrop(w).file, shelfCrop(w).darkFile]))
     const present = existsSync(SHELF_STILL_DIR) ? readdirSync(SHELF_STILL_DIR).map((f) => `${SHELF_STILL_DIR}/${f}`) : []
     expect(present.filter((f) => !wanted.has(f)), 'a stray crop — run npm run shelf:stills').toEqual([])
   })
@@ -288,15 +288,17 @@ describe('a retirement’s day', () => {
   })
 })
 
-describe('the two pages that show the shelf', () => {
-  it('mount the one component, fed by the one reader', () => {
-    for (const [name, rel] of [
-      ['the edition', '../../components/pages/HomeEdition.astro'],
-      ['the dossier', '../../pages/dossier.astro'],
-    ] as const) {
-      const src = read(rel)
-      expect(src, name).toContain('readShelf')
-      expect(src, name).toContain('<SelectedWorks')
-    }
+describe('the two pages that show the practices’ pieces', () => {
+  it('the dossier mounts the shelf of record, fed by its reader', () => {
+    const src = read('../../pages/dossier.astro')
+    expect(src).toContain('readShelf')
+    expect(src).toContain('<SelectedWorks')
+  })
+
+  it('the edition mounts From the Ecology, fed by the pool without the lab (since 2026-11-03)', () => {
+    const src = read('../../components/pages/HomeEdition.astro')
+    expect(src).toContain('withoutLab(readPool())')
+    expect(src).toContain('<EcologyShelf')
+    expect(src).not.toContain('<SelectedWorks')
   })
 })

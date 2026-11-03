@@ -1,17 +1,16 @@
 // src/lib/ops/lab-carousel.ts — the lab's experiments as the band the entrance opens with
-// (2026-11-02).
+// (2026-11-02; a fixed selection since 2026-11-03).
 //
 // Frank's decision of 2026-11-02 (wording private, paraphrased): the homepage leads with the lab's
-// experiments. The band is a carousel of every work /experiments lists from the register
-// (src/data/werke.ts, WERKE_HOLDINGS), in one order:
+// experiments. Since 2026-11-03 (the calm homepage, docs/design_handoff_homepage_calm/README.md §3)
+// the band is a fixed selection from the register (src/data/werke.ts, WERKE_HOLDINGS), in one order:
 //
-//   · the works EDITION.lab.lead names, in that order — Ducking, then Common Ground;
-//   · then every other experiment by the day it opened, the register's `since` (the field
-//     /experiments sorts by), newest first; a tie keeps the register's own order, as /experiments
-//     keeps it;
-//   · the retired ones stay out: they stopped, and /experiments keeps them on a shelf of their own;
-//   · and so do the ones EDITION.lab.leave names (Frank's choice of 2026-11-02, wording private:
-//     Headroom, Editorial Deadline, Iceberg Theory, Society), which /experiments keeps listing.
+//   · the work EDITION.lab.lead names stands first and large, as the band's lead — Ducking;
+//   · then exactly the works EDITION.lab.picks names, in that order, as the carousel under it;
+//   · a retired work, or an id the register does not hold, is passed over rather than shown;
+//     the test holds the edition's own lists to works that are there and running.
+//
+// /experiments keeps listing every experiment; the band is a selection, not the index.
 //
 // A card is read the way a pick of the selected works is read (readPick): title, kind, the day in
 // words, the register's one line, the address through the publication rule, and the still — for a
@@ -25,23 +24,21 @@
 import type { LabSlide, LabWording } from '@/components/ops/LabCarousel'
 import { EDITION } from '@/config/edition-wording'
 import { SELECTED_WORKS } from '@/config/selected-works'
-import { byRecency, EXPERIMENT_LINES, WERKE_HOLDINGS, type Werk } from '@/data/werke'
+import { EXPERIMENT_LINES, WERKE_HOLDINGS, type Werk } from '@/data/werke'
 import { THUMBNAILS, type Thumbnail } from '@/lib/experiments/thumbnails'
 import { readPick, type ShelfCard } from './selected-works'
 
 /**
- * The order of the carousel: the `lead` works first, in the order given, then every other work
- * newest first by `since`. Retired works and the ids in `leave` are left out, and so is a lead id
- * the list does not hold
- * (src/lib/ops/lab-carousel.test.ts holds the edition's own lead to works that are there).
+ * The order of the band: the `lead` works first, then the `picks`, each in the order given. A work
+ * is shown once, and a retired work or an id the register does not hold is passed over
+ * (src/lib/ops/lab-carousel.test.ts holds the edition's own lists to works that are there).
  */
-export function carouselOrder(werke: readonly Werk[], lead: readonly string[], leave: readonly string[] = []): Werk[] {
-  const running = werke.filter((w) => !w.retired && !leave.includes(w.id))
-  const leads = [...new Set(lead)]
-  const first = leads.flatMap((id) => running.filter((w) => w.id === id))
-  // Array.prototype.sort is stable: works opened on the same day keep the order they were given in
-  const rest = running.filter((w) => !leads.includes(w.id)).sort(byRecency)
-  return [...first, ...rest]
+export function carouselOrder(werke: readonly Werk[], lead: readonly string[], picks: readonly string[]): Werk[] {
+  const running = new Map(werke.filter((w) => !w.retired).map((w) => [w.id, w]))
+  return [...new Set([...lead, ...picks])].flatMap((id) => {
+    const werk = running.get(id)
+    return werk ? [werk] : []
+  })
 }
 
 export interface LabCard extends ShelfCard {
@@ -51,14 +48,14 @@ export interface LabCard extends ShelfCard {
   mini: Thumbnail | null
 }
 
-/** The carousel's cards, in its order. */
+/** The band's cards, in its order: the lead first, then the carousel's. */
 export function readLabCarousel(
   root: string = process.cwd(),
   lead: readonly string[] = EDITION.lab.lead,
   werke: readonly Werk[] = WERKE_HOLDINGS,
-  leave: readonly string[] = EDITION.lab.leave,
+  picks: readonly string[] = EDITION.lab.picks,
 ): LabCard[] {
-  return carouselOrder(werke, lead, leave).map((werk) => {
+  return carouselOrder(werke, lead, picks).map((werk) => {
     // a lab experiment needs no presentation shelf to be read, hence the empty one
     const card = readPick({ work: { kind: 'experiment', id: werk.id }, reason: '' }, root, [])
     return {
@@ -81,7 +78,7 @@ export function labSlides(cards: readonly LabCard[], link: (href: string) => str
     meta: `${card.kind} · ${card.when}`,
     kind: card.kind,
     href: link(card.href),
-    still: card.still && { src: card.still.src, alt: card.still.alt },
+    still: card.still && { src: card.still.src, alt: card.still.alt, dark: card.still.dark },
     mini: card.mini && { marks: card.mini.marks, draws: card.mini.draws, readout: card.mini.readout },
     plate: SELECTED_WORKS.plate(card.kind),
   }))
@@ -103,5 +100,12 @@ export function labWording(link: (href: string) => string = (href) => href): Lab
     announce: L.announce,
     open: L.open,
     mini: L.mini,
+    leadLabel: L.leadLabel,
   }
+}
+
+/** The band split as the edition shows it: the lead work large, the rest in the carousel. */
+export function labBand<T>(slides: readonly T[], lead: readonly string[] = EDITION.lab.lead): { lead: T[]; carousel: T[] } {
+  const n = Math.min(lead.length, slides.length)
+  return { lead: slides.slice(0, n), carousel: slides.slice(n) }
 }

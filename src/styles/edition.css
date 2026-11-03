@@ -45,11 +45,16 @@
   font-family: var(--pp-serif);
   font-style: italic;
   font-weight: 500;
-  /* 72 px at the handoff's 1440, where the question is one line of about 1170 px; a narrower
-     desk scales it by the same ratio so it stays one line down to the phone's breakpoint. */
-  font-size: min(72px, calc((100vw - 2 * var(--ed-gutter)) / 16.6));
   line-height: 1;
   letter-spacing: -0.015em;
+}
+/* The standing question on ONE line at every width (the calm homepage, 2026-11-03): the script
+   measures the line and fits its size to the width it has (src/lib/ops/fit-title.ts), up to
+   EDITION.masthead.titleMax, through --ed-mast-size. Before it runs, and without it, the size is
+   an estimate of the same fit from the window's width, which errs on the small side. */
+.ed-mast-q {
+  display: inline-block;
+  font-size: var(--ed-mast-size, min(150px, calc((100vw - 2 * var(--ed-gutter)) / 13)));
   white-space: nowrap;
 }
 /* The name line inside the heading (2026-10-17): it wears the kicker's look, not the heading's,
@@ -231,15 +236,147 @@
   outline-offset: 2px;
 }
 
-/* ——— 3a · from the lab (2026-11-02) ——————————————————————————————————————————————————————————
- * The band under the pulse and the since bar since Frank's decision of 2026-11-02 (wording
- * private): the lab's experiments, one card at a time, in a row the browser scrolls and snaps by itself
- * (src/components/ops/LabCarousel.tsx). On the desk a card is the still beside its words and stops
- * one gutter short of the page's edge, so the next card shows in the right margin and the row says
- * that there is more; on a phone the still stands over the words and the next card shows beside
- * it. The row bleeds into the right margin only: on the left it ends where the page's text begins
- * (less the room a focus ring needs), so a card that has passed never shows half a sentence in the
- * margin. It scrolls, never the page. Inks are the paper's tokens, as everywhere on this sheet. */
+/* ——— under the head: the main column and the side column (the calm homepage, 2026-11-03) ———————
+ * docs/design_handoff_homepage_calm/README.md §2. From 900 px the side column stands beside the
+ * main one on a ground of its own; under 900 px it stands under it. */
+.ed-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 36px;
+  align-items: start;
+}
+.ed-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 30px;
+  padding: 16px 18px 20px;
+  background: var(--pp-ground-2);
+}
+.ed-aside .ed-colhead h2 {
+  font-size: 20px;
+}
+.ed-aside .ed-colhead-sub {
+  font-size: 11.5px;
+}
+/* overnight, as a list */
+.ed-aside .ed-houses {
+  display: block;
+  margin-top: 0;
+}
+.ed-aside .ed-house {
+  gap: 3px;
+  margin-right: 0;
+  padding: 10px 0;
+  border-right: 0;
+  border-bottom: 1px solid var(--pp-rule);
+}
+.ed-aside .ed-house-top {
+  font-size: 10.5px;
+}
+.ed-aside .ed-house-last {
+  font-size: 15.5px;
+}
+.ed-aside .ed-house-meta {
+  font-size: 11.5px;
+}
+/* the arrivals, house over line */
+.ed-aside .ed-arrival {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 5px 0;
+}
+.ed-aside .ed-arrival-house {
+  font-size: 11px;
+}
+.ed-aside .ed-arrival-text {
+  font-size: 14px;
+}
+/* the timetable, compact: every cell a strip of bars, the numbers in the readout under it */
+.ed-aside .ed-tt {
+  padding-top: 0;
+  border-top: 0;
+}
+.ed-aside .ed-tt col.ed-tt-namecol {
+  width: 92px;
+}
+.ed-aside .ed-tt thead th {
+  font-size: 9.5px;
+  letter-spacing: 0;
+}
+.ed-aside .ed-tt tbody th {
+  padding: 5px 0 6px;
+  font-size: 11.5px;
+  vertical-align: bottom;
+}
+.ed-aside .ed-tt td {
+  padding: 5px 1px;
+  vertical-align: bottom;
+  cursor: pointer;
+}
+.ed-aside .ed-tt-val {
+  display: none;
+}
+.ed-aside .ed-tt-strip {
+  display: block;
+  width: 100%;
+  height: 18px;
+  border-bottom: 1px solid var(--pp-rule);
+  fill: var(--pp-ink);
+}
+.ed-aside .ed-tt-read {
+  min-height: 18px;
+  padding: 0;
+  background: none;
+  color: var(--pp-accent-ink);
+  font-size: 12px;
+}
+.ed-aside .ed-tt-read:empty {
+  display: block;
+}
+.ed-aside .ed-tt-foot {
+  font-size: 11.5px;
+}
+/* the readings: a name and its number */
+.ed-aside .ed-reading {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 7px 0;
+}
+.ed-aside .ed-reading-name {
+  font-size: 12.5px;
+  letter-spacing: 0;
+}
+.ed-aside .ed-reading-big {
+  font-size: 18px;
+}
+@media (max-width: 899.98px) {
+  .ed-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+
+/* the two tones of a still: one file per theme, the theme's shown (src/lib/ops/duotone.ts). A
+   lazy picture the theme hides is never fetched. */
+.ed-duo--dark {
+  display: none !important;
+}
+:root[data-theme='dark'] .ed-duo--dark {
+  display: block !important;
+}
+:root[data-theme='dark'] .ed-duo--light:has(+ .ed-duo--dark) {
+  display: none !important;
+}
+
+/* ——— 3a · from the lab (2026-11-02; the calm homepage since 2026-11-03) ——————————————————————
+ * The first band of the main column (docs/design_handoff_homepage_calm/README.md §3): the lead
+ * experiment large — its still at 16 : 9 beside its words — and under it the carousel, three
+ * cards to a view on the desk, in a row the browser scrolls and snaps by itself
+ * (src/components/ops/LabCarousel.tsx). The row stays inside the column, which has the side column
+ * beside it; it scrolls, never the page. A lab still is a shot of the experiment's own page, so
+ * it is cut from the bottom: the page's top bar, which every shot carries, falls out of the frame. */
 .ed-lab-head {
   display: flex;
   flex-wrap: wrap;
@@ -282,16 +419,16 @@
   position: relative;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc(100% - var(--ed-gutter));
-  /* a gap as wide as the gutter: the next card shows a gutter's width in the right margin, and
-     the last card, which cannot scroll to the left edge, leaves the one before it out of sight */
-  gap: var(--ed-gutter);
-  margin: 12px calc(-1 * var(--ed-gutter)) 0 calc(-1 * var(--ed-lab-ring));
-  padding: var(--ed-lab-ring) var(--ed-gutter) 16px var(--ed-lab-ring);
+  --ed-lab-gap: 22px;
+  /* three cards to a view, so a fourth is one press away */
+  grid-auto-columns: calc((100% - 2 * var(--ed-lab-gap)) / 3);
+  gap: var(--ed-lab-gap);
+  margin: 6px calc(-1 * var(--ed-lab-ring)) 0;
+  padding: var(--ed-lab-ring) var(--ed-lab-ring) 14px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--ed-lab-ring) var(--ed-gutter);
+  scroll-padding-inline: var(--ed-lab-ring);
   scrollbar-width: thin;
   scrollbar-color: var(--pp-rule-firm) transparent;
 }
@@ -300,18 +437,28 @@
     scroll-behavior: smooth;
   }
 }
-.ed-lab-slide {
+/* the lead: the still beside its words, as the handoff draws it */
+.ed-lab-lead {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   align-items: center;
-  gap: 36px;
+  gap: 32px;
+  margin-top: 14px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--pp-rule);
+}
+.ed-lab-slide {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   scroll-snap-align: start;
 }
 .ed-lab-frame {
   position: relative;
   display: block;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid var(--pp-rule);
   background: var(--pp-ground-2);
@@ -321,9 +468,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* cut from the bottom: the top bar every shot of a page carries falls out of the frame */
+  object-position: center bottom;
 }
-.ed-lab-slide:hover .ed-lab-frame,
-.ed-lab-slide:focus-within .ed-lab-frame {
+:is(.ed-lab-slide, .ed-lab-lead):hover .ed-lab-frame,
+:is(.ed-lab-slide, .ed-lab-lead):focus-within .ed-lab-frame {
   border-color: var(--pp-ink);
 }
 /* a page with no still yet: the miniature /experiments draws from the work's own record, on a
@@ -398,12 +547,15 @@
 .ed-lab-text {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
   min-width: 0;
+}
+.ed-lab-lead .ed-lab-text {
+  gap: 12px;
 }
 .ed-lab-kicker {
   color: var(--pp-accent-ink);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -411,10 +563,14 @@
 .ed-lab-title {
   font-family: var(--pp-serif);
   font-weight: 500;
-  font-size: 50px;
+  font-size: 21px;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.ed-lab-lead .ed-lab-title {
+  font-size: 42px;
   line-height: 1.04;
   letter-spacing: -0.015em;
-  text-wrap: balance;
 }
 /* the card's one link, spread over the whole card: the picture and the words open the work too,
    and the focus ring goes round the card rather than round the title alone */
@@ -432,21 +588,30 @@
 }
 .ed-lab-sentence {
   color: var(--pp-ink-2);
-  font-family: var(--pp-serif);
-  font-size: 20px;
-  line-height: 1.4;
+  font-size: 13.5px;
+  line-height: 1.45;
   text-wrap: pretty;
+}
+.ed-lab-lead .ed-lab-sentence {
+  font-family: var(--pp-serif);
+  font-size: 18px;
+  line-height: 1.4;
 }
 .ed-lab-meta {
   color: var(--pp-muted);
-  font-size: 13px;
+  font-size: 12.5px;
 }
+/* the carousel's cards are calm: what opening one leads to is said on the lead only */
 .ed-lab-open {
+  display: none;
   margin-top: 2px;
   font-size: 14px;
   text-decoration-line: underline;
 }
-.ed-lab-slide:hover .ed-lab-open {
+.ed-lab-lead .ed-lab-open {
+  display: block;
+}
+.ed-lab-lead:hover .ed-lab-open {
   color: var(--pp-accent-ink);
 }
 .ed-lab-foot {
@@ -552,11 +717,114 @@
   color: var(--pp-muted);
   font-size: 12.5px;
 }
-/* the lead follows the shelf under a single rule: the shelf is the house's, the lead today's (the
-   pulse, which followed the shelf for an hour on 2026-11-02, stands above both again) */
-.ed-shelf-section + .ed-front {
-  margin-top: 30px;
-  border-top: 1px solid var(--pp-ink);
+
+/* ——— 3b · from the ecology (2026-11-03): chips, the order, six at a time ———————————————————— */
+.ed-eco-tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px 20px;
+  margin-top: 12px;
+}
+.ed-eco-chips,
+.ed-eco-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ed .ed-eco-chip,
+.ed .ed-eco-mode,
+.ed .ed-eco-more {
+  min-height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--pp-rule-firm);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pp-ink);
+  font-size: 12.5px;
+  cursor: pointer;
+}
+/* a chip carries its house as a dot, its words stay in ink */
+.ed-eco-chip.pp-voice-atelier::before,
+.ed-eco-chip.pp-voice-field::before,
+.ed-eco-chip.pp-voice-studio::before,
+.ed-eco-chip.pp-voice-middle::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--pp-voice);
+  vertical-align: 1px;
+}
+.ed .ed-eco-chip[aria-pressed='true'],
+.ed .ed-eco-mode[aria-pressed='true'] {
+  border-color: var(--pp-ink);
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
+}
+.ed .ed-eco-chip:focus-visible,
+.ed .ed-eco-mode:focus-visible,
+.ed .ed-eco-more:focus-visible {
+  outline: 2px solid var(--pp-ink);
+  outline-offset: 2px;
+}
+.ed-eco-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px 22px;
+}
+.ed-eco-grid .ed-shelf-link {
+  gap: 4px;
+}
+.ed-eco-grid .ed-shelf-meta {
+  margin-top: 0;
+  padding-top: 0;
+}
+.ed-eco-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  margin-top: 16px;
+}
+.ed-eco-status {
+  color: var(--pp-muted);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 1099.98px) {
+  .ed-eco-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ed-lab-track {
+    grid-auto-columns: calc((100% - var(--ed-lab-gap)) / 2);
+  }
+}
+@media (max-width: 899.98px) {
+  .ed-lab-track {
+    grid-auto-columns: calc((100% - 2 * var(--ed-lab-gap)) / 3);
+  }
+  .ed-eco-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 759.98px) {
+  .ed-eco-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 14px;
+  }
+  .ed-eco-tools {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ed .ed-eco-chip,
+  .ed .ed-eco-mode,
+  .ed .ed-eco-more {
+    min-height: 40px;
+  }
 }
 
 /* the dossier's rows: the frame on the left, the card's words and its reason beside it */
@@ -959,16 +1227,16 @@
 
 /* ——— between the desk and the phone: the desk's type, the paired columns stacked ————————— */
 @media (max-width: 1099.98px) {
-  /* the lab's cards keep the still beside the words, in narrower measure */
-  .ed-lab-slide {
+  /* the lab's lead keeps the still beside the words, in narrower measure */
+  .ed-lab-lead {
     grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
-    gap: 26px;
+    gap: 24px;
   }
-  .ed-lab-title {
-    font-size: clamp(30px, 4.2vw, 44px);
+  .ed-lab-lead .ed-lab-title {
+    font-size: clamp(28px, 3.6vw, 40px);
   }
-  .ed-lab-sentence {
-    font-size: 17px;
+  .ed-lab-lead .ed-lab-sentence {
+    font-size: 16px;
   }
   /* The shelf becomes one row that slides, bleeding to the window's edges so a card can travel
      to the edge and the next one shows that there is more. The row scrolls, never the page. */
@@ -1051,9 +1319,7 @@
   }
   .ed-mast h1 {
     margin: 0 0 14px;
-    font-size: 40px;
     line-height: 1.02;
-    white-space: normal;
   }
   .ed-dateline {
     padding: 7px 0;
@@ -1116,7 +1382,7 @@
     letter-spacing: 0;
   }
 
-  /* the lab's cards: the still over the words, the next card showing beside */
+  /* the lab's lead: the still over the words; the carousel's cards, the next one showing beside */
   .ed-lab-head h2 {
     font-size: 22px;
   }
@@ -1128,24 +1394,22 @@
     height: 40px;
   }
   .ed-lab-track {
-    grid-auto-columns: 86%;
-    margin-top: 10px;
+    grid-auto-columns: 78%;
+    margin-top: 4px;
     padding-bottom: 12px;
   }
-  .ed-lab-slide {
+  .ed-lab-lead {
     grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    align-content: start;
     gap: 12px;
   }
-  .ed-lab-text {
+  .ed-lab-lead .ed-lab-text {
     gap: 8px;
   }
-  .ed-lab-title {
-    font-size: 28px;
+  .ed-lab-lead .ed-lab-title {
+    font-size: 30px;
     line-height: 1.1;
   }
-  .ed-lab-sentence {
+  .ed-lab-lead .ed-lab-sentence {
     font-size: 16px;
   }
   .ed-lab-plate {
@@ -1171,9 +1435,6 @@
   }
   .ed-shelf-plate-kind {
     font-size: 26px;
-  }
-  .ed-shelf-section + .ed-front {
-    margin-top: 22px;
   }
   .ed-shelf--dossier .ed-shelf-link {
     grid-template-columns: minmax(0, 1fr);

@@ -10,14 +10,16 @@ import { describe, expect, it } from 'vitest'
 
 import { EDITION } from '@/config/edition-wording'
 import { THUMB_BOX } from '@/lib/experiments/thumbnails'
-import { labSlides, labWording, readLabCarousel } from '@/lib/ops/lab-carousel'
+import { labBand, labSlides, labWording, readLabCarousel } from '@/lib/ops/lab-carousel'
 import { STILL_FRAME } from '@/lib/ops/shelf-stills'
 
 import LabCarousel from './LabCarousel'
 
-const slides = labSlides(readLabCarousel())
+const all = labSlides(readLabCarousel())
+const { lead, carousel: slides } = labBand(all)
 const html = renderToStaticMarkup(
   <LabCarousel
+    lead={lead}
     slides={slides}
     wording={labWording()}
     headingId="ed-lab-title"
@@ -35,9 +37,18 @@ describe('the carousel’s server render', () => {
     expect(html).toContain(`<h2 id="ed-lab-title">${escaped(EDITION.lab.title)}</h2>`)
   })
 
-  it('carries every experiment’s link, in the carousel’s order', () => {
+  it('shows the lead large above the carousel, outside its count', () => {
+    expect(lead.length).toBe(1)
+    const leadAt = html.indexOf('class="ed-lab-lead"')
+    expect(leadAt).toBeGreaterThan(-1)
+    expect(leadAt).toBeLessThan(html.indexOf('id="ed-lab-track"'))
+    expect(html).toContain(`aria-label="${escaped(EDITION.lab.leadLabel)}"`)
+    expect(html).toContain(`href="${lead[0].href}"`)
+  })
+
+  it('carries every experiment’s link, the lead’s first, then the carousel’s order', () => {
     let from = -1
-    for (const slide of slides) {
+    for (const slide of all) {
       const at = html.indexOf(`href="${slide.href}"`, from + 1)
       expect(at, `${slide.id} is missing or out of order`).toBeGreaterThan(from)
       from = at
@@ -59,11 +70,14 @@ describe('the carousel’s server render', () => {
     }
   })
 
-  it('loads the first picture at once and the others only when the row brings them near', () => {
+  it('loads the lead’s picture at once and every other only when it is near and its theme shows it', () => {
     const images = [...html.matchAll(/<img [^>]*>/g)].map((m) => m[0])
-    expect(images.length).toBe(slides.filter((s) => s.still).length)
-    const firstStill = slides.findIndex((s) => s.still)
-    images.forEach((img, i) => expect(img).toContain(i === 0 && firstStill === 0 ? 'loading="eager"' : 'loading="lazy"'))
+    const light = images.filter((img) => img.includes('ed-duo--light'))
+    const dark = images.filter((img) => img.includes('ed-duo--dark'))
+    expect(light.length).toBe(all.filter((s) => s.still).length)
+    expect(dark.length).toBe(all.filter((s) => s.still?.dark).length)
+    expect(light[0]).toContain('loading="eager"')
+    for (const img of [...light.slice(1), ...dark]) expect(img).toContain('loading="lazy"')
   })
 
   it('draws the miniature of its own record for a work whose page has no still yet', () => {

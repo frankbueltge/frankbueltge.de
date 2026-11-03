@@ -12,6 +12,9 @@
 // a whole page. Crops no piece uses any more are deleted, so the folder holds exactly the pool.
 // src/lib/ops/selected-works.test.ts fails while a pick's crop is missing or a stray one remains.
 //
+// Since 2026-11-03 every crop is written twice, in the page's two duotones (src/lib/ops/duotone.ts,
+// scripts/shelf-duotone.ts): <key>.webp for the light theme, <key>.dark.webp for the dark one.
+//
 // The crop is made from the image libvips reads through sharp, which ships with Astro's image
 // service; nothing here is fetched.
 
@@ -19,6 +22,7 @@ import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { readPoolEntries } from '../src/lib/ops/shelf-pool.ts'
 import { makerStill, shelfCrop, SHELF_STILL_DIR, STILL_FRAME } from '../src/lib/ops/shelf-stills.ts'
+import { writeDuotones } from './shelf-duotone.ts'
 
 const root = process.cwd()
 const sharp = (await import('sharp').catch(() => null))?.default
@@ -37,10 +41,12 @@ for (const { pick } of readPoolEntries(root)) {
   // a piece without a still of its maker's keeps the shot of its page (scripts/shelf-shots.ts)
   if (!source) {
     kept.add(shelfCrop(pick.work).file)
+    kept.add(shelfCrop(pick.work).darkFile)
     continue
   }
   const crop = shelfCrop(pick.work)
   kept.add(crop.file)
+  kept.add(crop.darkFile)
   const image = sharp(join(root, source))
   const { width = 0, height = 0 } = await image.metadata()
   // the largest 16 : 10 window the picture holds, centred across, placed down it by `focus`
@@ -49,11 +55,8 @@ for (const { pick } of readPoolEntries(root)) {
   const focus = 'focus' in pick && typeof pick.focus === 'number' ? Math.min(1, Math.max(0, pick.focus)) : 0
   const left = Math.round((width - w) / 2)
   const top = Math.round((height - h) * focus)
-  await image
-    .extract({ left, top, width: w, height: h })
-    .resize(STILL_FRAME.width, STILL_FRAME.height)
-    .webp({ quality: 72 })
-    .toFile(join(root, crop.file))
+  const cut = await image.extract({ left, top, width: w, height: h }).resize(STILL_FRAME.width, STILL_FRAME.height).png().toBuffer()
+  await writeDuotones(sharp, cut, crop, root)
   console.log(`shelf-stills: ${crop.file} ← ${source} (${w} × ${h} from ${left}, ${top})`)
 }
 

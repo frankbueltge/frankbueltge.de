@@ -7,17 +7,23 @@
 //   npm run build && npm run shelf:shots            # shots for pieces that have none yet
 //   npm run shelf:shots -- --all                    # retake every shot
 //
+// Since 2026-11-03 every shot is written twice, in the page's two duotones (src/lib/ops/duotone.ts,
+// scripts/shelf-duotone.ts): <key>.webp for the light theme, <key>.dark.webp for the dark one. A
+// shot taken before then has no dark file; it is toned from the committed picture without being
+// retaken, so the shelf keeps the pictures it had.
+//
 // The built site in dist/ is served on a local port; the browser is Chromium through playwright-core
 // (CHROMIUM_PATH, else the cloud image's /opt/pw-browsers/chromium, else playwright's own). A page
 // that reads live data shows what it shows on load; one that will not load in time is left without
 // a shot and keeps its plate. Run npm run shelf:stills afterwards only to crop a maker's new still;
 // it keeps these shots.
 
-import { createReadStream, existsSync, statSync } from 'node:fs'
+import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs'
 import { createServer } from 'node:http'
 import { extname, join, normalize } from 'node:path'
 import { readPoolEntries } from '../src/lib/ops/shelf-pool.ts'
 import { makerStill, shelfCrop, STILL_FRAME } from '../src/lib/ops/shelf-stills.ts'
+import { writeDuotones } from './shelf-duotone.ts'
 
 const root = process.cwd()
 const dist = join(root, 'dist')
@@ -68,17 +74,27 @@ const browser = await pw.chromium.launch(executablePath ? { executablePath } : {
 const context = await browser.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1, reducedMotion: 'no-preference' })
 
 let taken = 0
+let toned = 0
 for (const { pick, card } of readPoolEntries(root)) {
   if (makerStill(pick.work, root)) continue
   const crop = shelfCrop(pick.work)
-  if (!all && existsSync(join(root, crop.file))) continue
+  if (!all && existsSync(join(root, crop.file))) {
+    // a shot from before the duotones: tone the committed picture rather than retake it
+    if (!existsSync(join(root, crop.darkFile))) {
+      await writeDuotones(sharp, readFileSync(join(root, crop.file)), crop, root)
+      toned++
+      console.log(`shelf-shots: ${crop.file} toned in both themes`)
+    }
+    continue
+  }
   const page = await context.newPage()
   try {
     await page.goto(`http://127.0.0.1:${port}${card.href}`, { waitUntil: 'load', timeout: 20000 })
     await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {})
     await page.waitForTimeout(1500)
     const png = await page.screenshot({ type: 'png' })
-    await sharp(png).resize(STILL_FRAME.width, STILL_FRAME.height, { fit: 'cover', position: 'top' }).webp({ quality: 72 }).toFile(join(root, crop.file))
+    const cut = await sharp(png).resize(STILL_FRAME.width, STILL_FRAME.height, { fit: 'cover', position: 'top' }).png().toBuffer()
+    await writeDuotones(sharp, cut, crop, root)
     taken++
     console.log(`shelf-shots: ${crop.file} ← ${card.href}`)
   } catch (e) {
@@ -89,4 +105,4 @@ for (const { pick, card } of readPoolEntries(root)) {
 }
 await browser.close()
 server.close()
-console.log(`shelf-shots: ${taken} shot(s) taken`)
+console.log(`shelf-shots: ${taken} shot(s) taken, ${toned} earlier shot(s) toned`)

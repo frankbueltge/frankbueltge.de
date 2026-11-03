@@ -33,6 +33,14 @@ export const EDITION = {
     clock: 'now {clock}',
     /** what stands there before the script has run — a build-time clock would be a stopped one */
     clockIdle: 'UTC',
+    /** the largest size, in px, the standing question is fitted to on its one line (the calm
+     *  homepage, 2026-11-03: docs/design_handoff_homepage_calm/README.md §1) */
+    titleMax: 150,
+  },
+
+  /** the side column beside the main one (the calm homepage, 2026-11-03), as a landmark */
+  aside: {
+    label: 'What is running',
   },
 
   pulse: {
@@ -48,18 +56,18 @@ export const EDITION = {
 
   /**
    * FROM THE LAB (2026-11-02): the band the entrance opens with since Frank's decision of that day
-   * (wording private; paraphrased: the homepage leads with the lab's experiments). A carousel of
-   * every experiment /experiments lists from the register, the retired ones excepted; the order is
+   * (wording private; paraphrased: the homepage leads with the lab's experiments). Since 2026-11-03
+   * a lead work, large, over a carousel of a fixed selection; the order is
    * src/lib/ops/lab-carousel.ts, the island src/components/ops/LabCarousel.tsx. The island writes
    * no word of its own: the templates below carry {placeholders} it fills.
    */
   lab: {
-    /** The works that lead the band, in this order. Every other experiment follows by the day it
-     *  opened (the register's `since`), newest first. */
-    lead: ['ducking', 'trending'],
-    /** Experiments the band leaves out although /experiments lists them, where they stay: Headroom,
-     *  Editorial Deadline, Iceberg Theory and Society (Frank's choice of 2026-11-02, wording private). */
-    leave: ['spielraum', 'redaction', 'parallaxe', 'society'],
+    /** The work that leads the band, large, above the carousel (the calm homepage, 2026-11-03:
+     *  docs/design_handoff_homepage_calm/README.md §3). */
+    lead: ['ducking'],
+    /** The carousel under the lead: exactly these, in this order (same README §3). /experiments
+     *  keeps listing every other experiment. */
+    picks: ['trending', 'third-reading', 'balance', 'consensus', 'tell', 'ueberflug', 'spielraum', 'redaction', 'invoked-past'],
     title: 'From the lab',
     sub: 'the lab’s own experiments, one at a time',
     all: { label: 'Every experiment, by research line →', href: '/experiments' },
@@ -79,6 +87,8 @@ export const EDITION = {
     /** the frame of a work whose page has no still yet, which shows the miniature /experiments
      *  draws from the work's own record instead */
     mini: 'no still yet · its record, drawn small',
+    /** what a screen reader calls the lead card above the carousel */
+    leadLabel: 'the lab’s lead experiment',
   },
 
   /**

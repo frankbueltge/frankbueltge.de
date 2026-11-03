@@ -68,12 +68,11 @@ import { loadCycle } from '@/lib/ecology/v3'
 import { conveningView, loadRelayExtras } from '@/lib/ecology/convening'
 import { getLatestProtokoll } from '@/lib/protokoll/data'
 import { SELECTED_WORKS } from '@/config/selected-works'
-import { readShelf } from '@/lib/ops/selected-works'
 import { readPool, withoutLab } from '@/lib/ops/shelf-pool'
 import { STILL_FRAME } from '@/lib/ops/shelf-stills'
-import { labSlides, labWording, readLabCarousel } from '@/lib/ops/lab-carousel'
+import { labBand, labSlides, labWording, readLabCarousel } from '@/lib/ops/lab-carousel'
 import { THUMB_BOX } from '@/lib/experiments/thumbnails'
-import SelectedWorks from '@/components/ops/SelectedWorks.astro'
+import EcologyShelf from '@/components/ops/EcologyShelf.astro'
 import LabCarousel from '@/components/ops/LabCarousel'
 import '@fontsource-variable/literata/opsz-italic.css'
 import '@/styles/paper.css'
@@ -101,19 +100,14 @@ const chosen =
     ? { question: convening.result.question, next: convening.next, opens: convening.opensOn }
     : null
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
-// The lab's experiments (2026-11-02), the band the page opens with: every experiment /experiments
-// lists, Ducking and Common Ground first (EDITION.lab.lead), then the newest; each card read from
-// the register and its still, or its miniature where the page has no still yet.
-const labCards = labSlides(readLabCarousel(), url)
+// The lab's experiments (2026-11-02), the band the page's work opens with: since 2026-11-03 Ducking
+// large (EDITION.lab.lead) over a carousel of exactly the nine EDITION.lab.picks names; each card
+// read from the register and its still, or its miniature where the page has no still yet.
+const labCards = labBand(labSlides(readLabCarousel(), url))
 const labWords = labWording(url)
-// The selected works (2026-10-17): chosen by hand in src/config/selected-works.ts, every field a
-// card shows read from the piece's own record.
-const shelf = readShelf()
-// Since 2026-10-22 the band draws eight at random on every visit from every finished piece the
-// site publishes (src/lib/ops/shelf-pool.ts); the picks lead the pool and are what stands without
-// JavaScript. Since 2026-11-02 it draws from the practices' pieces only: the lab's stand in the
-// carousel above it. It keeps the size of the shelf of record, so the practices' picks lead and
-// the pool fills the band.
+// From the Ecology (2026-11-03; the selected works before): every finished piece of the practices
+// the site publishes (src/lib/ops/shelf-pool.ts, without the lab's own, which lead the page in the
+// band above), newest first, six at a time (src/components/ops/EcologyShelf.astro).
 const pool = withoutLab(readPool())
 
 // ── the edition: its instant, its day, and the default reference point a day before ─────────
@@ -175,8 +169,8 @@ const footParts = (template: string) => {
   const [before, after = ''] = template.split('{shade}')
   return { before, after }
 }
-const footDesk = footParts(E.timetable.foot({ blockHours: table.blockHours }))
-const footPhone = footParts(E.timetable.footStrip({ perDay: table.blocksPerDay, blockHours: table.blockHours }))
+// the side column draws every cell as a strip of bars (the calm homepage, 2026-11-03)
+const footStrip = footParts(E.timetable.footStrip({ perDay: table.blocksPerDay, blockHours: table.blockHours }))
 
 // ── the lead ──────────────────────────────────────────────────────────────────────────────────
 const names = houseNames()
@@ -269,7 +263,8 @@ const forScript = {
           look, so the page reads as before; naming.test.ts holds the name in this heading. */}
       <h1>
         <span class="ed-mast-kicker ed-mast-name">{SITE.name} · {NAMING.focusKicker}</span>
-        <span class="ed-mast-q">{NAMING.title}</span>
+        {/* one line at every width: data-ed-fit is the largest size the script may fit it to */}
+        <span class="ed-mast-q" data-ed-fit={E.masthead.titleMax}>{NAMING.title}</span>
       </h1>
       <div class="ed-dateline">
         <time datetime={editionDay}>{longDate(editionDay)}</time>
@@ -317,203 +312,206 @@ const forScript = {
       </div>
     </div>
 
-    {/* ── 3a · from the lab (2026-11-02) ──────────────────────────────────────────────────── */}
-    {/* The lab's experiments lead what the page shows of the house's work (Frank's decision of
-        2026-11-02, wording private); the pulse and the since bar stay above them, as before (his
-        word of the same day, wording private). Server-rendered whole: without a script it is a row of cards the browser scrolls
-        and snaps by itself, every experiment reachable; the island adds the buttons, the count, the
-        arrow keys and what a screen reader hears when they move the row. */}
-    <section class="ed-section ed-section--double ed-lab-section" aria-roledescription={E.lab.carousel} aria-labelledby="ed-lab-title">
-      <LabCarousel
-        client:idle
-        slides={labCards}
-        wording={labWords}
-        headingId="ed-lab-title"
-        trackId="ed-lab-track"
-        box={{ width: THUMB_BOX.width, height: THUMB_BOX.height }}
-        frame={{ width: STILL_FRAME.width, height: STILL_FRAME.height }}
-      />
-    </section>
+    {/* ── under the head: the main column and the side column (the calm homepage, 2026-11-03) ── */}
+    {/* docs/design_handoff_homepage_calm/README.md §2. The main column holds what has been made
+        and what is being asked — the lab, the ecology's pieces, the running question; the side
+        column what is running — since yesterday, overnight, the timetable, the readings. Under
+        900 px the side column stands under the main one. */}
+    <div class="ed-body">
+      <div class="ed-main">
+        {/* ── 3a · from the lab ───────────────────────────────────────────────────────────── */}
+        {/* The lab's lead experiment large, and under it the carousel (Frank's decision of
+            2026-11-02, wording private; the selection since 2026-11-03). Server-rendered whole:
+            without a script the carousel is a row the browser scrolls and snaps by itself, every
+            experiment reachable; the island adds the buttons, the count, the arrow keys and what a
+            screen reader hears when they move the row. */}
+        <section class="ed-section ed-section--double ed-lab-section" aria-roledescription={E.lab.carousel} aria-labelledby="ed-lab-title">
+          <LabCarousel
+            client:idle
+            lead={labCards.lead}
+            slides={labCards.carousel}
+            wording={labWords}
+            headingId="ed-lab-title"
+            trackId="ed-lab-track"
+            box={{ width: THUMB_BOX.width, height: THUMB_BOX.height }}
+            frame={{ width: STILL_FRAME.width, height: STILL_FRAME.height }}
+          />
+        </section>
 
-    {/* ── 3b · the selected works (2026-10-17; under the lab's band since 2026-11-02) ────── */}
-    {/* Everything below says what is running; this band and the lab's above it say what has been
-        made, for a reader who has never been here. Since 2026-11-02 it holds the practices'
-        pieces only — the lab's stand in the band above it. The dossier shows the shelf of record,
-        the lab's picks among them, with each pick's reason. */}
-    <section class="ed-section ed-section--double ed-shelf-section" aria-labelledby="ed-shelf-title">
-      <div class="ed-sechead">
-        <h2 id="ed-shelf-title">{SELECTED_WORKS.title}</h2>
-        <span>{SELECTED_WORKS.sub}</span>
-      </div>
-      <SelectedWorks cards={pool} shown={shelf.length} link={url} />
-    </section>
+        {/* ── 3b · from the ecology (the selected works until 2026-11-03) ─────────────────── */}
+        {/* The practices' finished pieces, newest first (src/components/ops/EcologyShelf.astro).
+            The dossier keeps the hand-chosen shelf of record, with each pick's reason. */}
+        <section class="ed-section ed-section--double ed-shelf-section" aria-labelledby="ed-shelf-title">
+          <div class="ed-sechead">
+            <h2 id="ed-shelf-title">{SELECTED_WORKS.title}</h2>
+            <span>{SELECTED_WORKS.sub}</span>
+          </div>
+          <EcologyShelf cards={pool} link={url} />
+        </section>
 
-    {/* ── 4 · the lead, and the timetable ─────────────────────────────────────────────────── */}
-    <section class="ed-front">
-      <article class="ed-lead">
-        <p class="ed-lead-kicker">
-          {E.lead.house} · {chosen ? E.lead.chosenKicker(chosen) : E.lead.kicker({ cycle: cycle.cycle, phase: cycle.phase, age })}
-        </p>
-        <h2>{chosen ? chosen.question : (cycle.question ?? E.lead.noQuestion)}</h2>
-        <p class="ed-lead-stand">
-          {chosen
-            ? E.lead.chosenStandfirst({ after: cycle.cycle, next: chosen.next, opens: chosen.opens, practices: PRACTICES.length })
-            : E.lead.standfirst({
-                source: cycle.source,
-                phase: cycle.phase,
-                age,
-                pieces: landed,
-                practices: PRACTICES.length,
-                previous: cycle.cycle - 1,
-              })}
-        </p>
-        <div class="ed-briefs">
-          {briefs.map((b) =>
-            b.piece ? (
-              <a class={`ed-brief pp-voice-${b.practice}`} href={url(b.piece.href)}>
-                <span class="ed-brief-house">{b.house}<span class="ed-phone"> · {b.piece.kind}</span></span>
-                <span class="ed-brief-title">{b.piece.title}</span>
-                <span class="ed-brief-meta">{b.piece.kind} · {b.piece.when}</span>
-              </a>
-            ) : (
-              <div class={`ed-brief ed-brief--absent pp-voice-${b.practice}`}>
-                <span class="ed-brief-house">{b.house}</span>
-                <span class="ed-brief-title">{E.lead.absent}</span>
-              </div>
-            ),
-          )}
-        </div>
-        <p class="ed-lead-links">
-          {E.lead.links.map((l) => (
-            <a class="ed-link" href={url(l.href)}>{l.label}</a>
-          ))}
-        </p>
-      </article>
-
-      <div class="ed-front-rule" aria-hidden="true"></div>
-
-      <aside class="ed-tt" data-ed-tt>
-        <div class="ed-colhead">
-          <h2>{E.timetable.title}</h2>
-          <span class="ed-colhead-sub">{E.timetable.sub}</span>
-        </div>
-        {/* A real table: a row is a system, a column a day, and a cell reads — to a screen
-            reader as to the eye — as that system on that day. The sentence with the counts is
-            the readout under it, shown for the cell under the pointer or the finger. */}
-        <table>
-          <colgroup>
-            <col class="ed-tt-namecol" />
-            {table.days.map(() => <col />)}
-          </colgroup>
-          <thead>
-            <tr>
-              <td></td>
-              {table.days.map((d) => (
-                <th scope="col" class={d === newestDay ? 'is-newest' : undefined}>
-                  <time datetime={d}>{shortDay(d)}</time>
-                </th>
+        {/* ── 4 · the running question, and the three answers to it ───────────────────────── */}
+        <section class="ed-section ed-section--double ed-cycle" aria-labelledby="ed-cycle-title">
+          <article class="ed-lead">
+            <p class="ed-lead-kicker">
+              {E.lead.house} · {chosen ? E.lead.chosenKicker(chosen) : E.lead.kicker({ cycle: cycle.cycle, phase: cycle.phase, age })}
+            </p>
+            <h2 id="ed-cycle-title">{chosen ? chosen.question : (cycle.question ?? E.lead.noQuestion)}</h2>
+            <p class="ed-lead-stand">
+              {chosen
+                ? E.lead.chosenStandfirst({ after: cycle.cycle, next: chosen.next, opens: chosen.opens, practices: PRACTICES.length })
+                : E.lead.standfirst({
+                    source: cycle.source,
+                    phase: cycle.phase,
+                    age,
+                    pieces: landed,
+                    practices: PRACTICES.length,
+                    previous: cycle.cycle - 1,
+                  })}
+            </p>
+            <div class="ed-briefs">
+              {briefs.map((b) =>
+                b.piece ? (
+                  <a class={`ed-brief pp-voice-${b.practice}`} href={url(b.piece.href)}>
+                    <span class="ed-brief-house">{b.house}<span class="ed-phone"> · {b.piece.kind}</span></span>
+                    <span class="ed-brief-title">{b.piece.title}</span>
+                    <span class="ed-brief-meta">{b.piece.kind} · {b.piece.when}</span>
+                  </a>
+                ) : (
+                  <div class={`ed-brief ed-brief--absent pp-voice-${b.practice}`}>
+                    <span class="ed-brief-house">{b.house}</span>
+                    <span class="ed-brief-title">{E.lead.absent}</span>
+                  </div>
+                ),
+              )}
+            </div>
+            <p class="ed-lead-links">
+              {E.lead.links.map((l) => (
+                <a class="ed-link" href={url(l.href)}>{l.label}</a>
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {timetable.map((sys) => (
+            </p>
+          </article>
+        </section>
+      </div>
+
+      <aside class="ed-aside" aria-label={E.aside.label}>
+        {/* ── 5 · since yesterday (or since the reader's own last visit) ─────────────────── */}
+        <section class="ed-aside-part">
+          <div class="ed-colhead">
+            <h2 data-ed-since-title>{E.since.title.yesterday}</h2>
+            <a class="ed-colhead-sub ed-link" href={url(E.arrivals.link.href)}>{E.arrivals.link.label}</a>
+          </div>
+          {/* Two weeks of days are in the document; the ones before the reference point are
+              hidden (the attribute, so they are hidden from assistive technology and from
+              find-in-page too) and the script moves which ones show. */}
+          {days.map((day) => (
+            <div class="ed-day" data-ed-day={day.date} hidden={!day.isNew}>
+              <p class="ed-day-head">{E.arrivals.dayHead(longDay(day.date), day.count)}</p>
+              {day.rows.map((entry) => (
+                <a class="ed-arrival" href={url(entry.href)}>
+                  <span class="ed-arrival-house">{entry.houseName}</span>
+                  <span class="ed-arrival-text">
+                    {lineOf(entry)}
+                    {entry.withdrawn && <> · {NAMING.worksRegister.withdrawnLabel}</>}
+                  </span>
+                </a>
+              ))}
+              {day.more > 0 && (
+                <a class="ed-arrival" href={url(E.arrivals.link.href)}>
+                  <span class="ed-arrival-house"></span>
+                  <span class="ed-arrival-text">{E.arrivals.more(day.more)}</span>
+                </a>
+              )}
+            </div>
+          ))}
+          <p class="ed-arrivals-note" data-ed-none hidden={arrivedSinceYesterday > 0}>{E.arrivals.none}</p>
+          <p class="ed-arrivals-note" data-ed-earlier hidden>{E.arrivals.earlier}</p>
+        </section>
+
+        {/* ── 6 · overnight, house by house ───────────────────────────────────────────────── */}
+        <section class="ed-aside-part">
+          <div class="ed-colhead">
+            <h2>{E.overnight.title}</h2>
+          </div>
+          <div class="ed-houses">
+            {houses.map((h) => (
+              <a class="ed-house" href={url(h.href)}>
+                <span class="ed-house-top">
+                  <span>{h.name}</span>
+                  <span class="ed-house-status" data-status={h.status}>{h.status}</span>
+                </span>
+                <span class="ed-house-last">{h.last?.text ?? E.overnight.absent}</span>
+                <span class="ed-house-meta">{h.meta}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 7 · the timetable, as bars ──────────────────────────────────────────────────── */}
+        <section class="ed-aside-part ed-tt" data-ed-tt>
+          <div class="ed-colhead">
+            <h2>{E.timetable.title}</h2>
+            <span class="ed-colhead-sub">{E.timetable.sub}</span>
+          </div>
+          {/* A real table: a row is a system, a column a day, and a cell reads — to a screen
+              reader as to the eye — as that system on that day. The sentence with the counts is
+              the readout under it, shown for the cell under the pointer or the finger. */}
+          <table>
+            <colgroup>
+              <col class="ed-tt-namecol" />
+              {table.days.map(() => <col />)}
+            </colgroup>
+            <thead>
               <tr>
-                <th scope="row"><a href={url(sys.href)}>{sys.name}</a></th>
-                {sys.cells.map((cell) => (
-                  <td
-                    class={[cell.none && 'is-none', cell.date === newestDay && 'is-newest'].filter(Boolean).join(' ') || undefined}
-                    data-day={cell.date}
-                    data-new={cell.isNew ? '' : undefined}
-                    data-ed-read={cell.readout}
-                  >
-                    <span class="ed-tt-val">{cell.text}</span>
-                    <svg class="ed-tt-strip" viewBox={`0 0 ${table.blocksPerDay} 16`} preserveAspectRatio="none" aria-hidden="true">
-                      <path d={cell.strip} />
-                    </svg>
-                  </td>
+                <td></td>
+                {table.days.map((d) => (
+                  <th scope="col" class={d === newestDay ? 'is-newest' : undefined}>
+                    <time datetime={d}>{shortDay(d)}</time>
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <p class="ed-tt-foot ed-desk">{footDesk.before}<span data-ed-shade>{E.since.shade.yesterday}</span>{footDesk.after}</p>
-        <p class="ed-tt-foot ed-phone">{footPhone.before}<span data-ed-shade>{E.since.shade.yesterday}</span>{footPhone.after}</p>
-        <p class="ed-tt-read" data-ed-tt-read aria-live="polite"></p>
-      </aside>
-    </section>
+            </thead>
+            <tbody>
+              {timetable.map((sys) => (
+                <tr>
+                  <th scope="row"><a href={url(sys.href)}>{sys.name}</a></th>
+                  {sys.cells.map((cell) => (
+                    <td
+                      class={[cell.none && 'is-none', cell.date === newestDay && 'is-newest'].filter(Boolean).join(' ') || undefined}
+                      data-day={cell.date}
+                      data-new={cell.isNew ? '' : undefined}
+                      data-ed-read={cell.readout}
+                    >
+                      <span class="ed-tt-val">{cell.text}</span>
+                      <svg class="ed-tt-strip" viewBox={`0 0 ${table.blocksPerDay} 16`} preserveAspectRatio="none" aria-hidden="true">
+                        <path d={cell.strip} />
+                      </svg>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="ed-tt-read" data-ed-tt-read aria-live="polite"></p>
+          <p class="ed-tt-foot">{footStrip.before}<span data-ed-shade>{E.since.shade.yesterday}</span>{footStrip.after}</p>
+        </section>
 
-    {/* ── 5 · overnight, house by house ───────────────────────────────────────────────────── */}
-    <section class="ed-section ed-section--double">
-      <div class="ed-sechead">
-        <h2>{E.overnight.title}</h2>
-        <span>{E.overnight.sub}</span>
-      </div>
-      <div class="ed-houses">
-        {houses.map((h) => (
-          <a class="ed-house" href={url(h.href)}>
-            <span class="ed-house-top">
-              <span>{h.name}</span>
-              <span class="ed-house-status" data-status={h.status}>{h.status}</span>
-            </span>
-            <span class="ed-house-last">{h.last?.text ?? E.overnight.absent}</span>
-            <span class="ed-house-meta">{h.meta}</span>
-          </a>
-        ))}
-      </div>
-    </section>
-
-    {/* ── 6 · readings, and what arrived ──────────────────────────────────────────────────── */}
-    <section class="ed-section ed-section--single ed-pair">
-      <div>
-        <div class="ed-colhead">
-          <h2>{E.readings.title}</h2>
-          <span class="ed-colhead-sub">
-            <span class="ed-desk">{E.readings.sub} · </span><a class="ed-link" href={url(E.readings.link.href)}>{E.readings.link.label}</a>
-          </span>
-        </div>
-        {tiles.map((tile) => (
-          <a class="ed-reading" href={url(tile.href)}>
-            <span class="ed-reading-name">{tile.name}</span>
-            <span class="ed-reading-sub">{tile.sub}</span>
-            <span class="ed-reading-big">{tile.big}</span>
-          </a>
-        ))}
-      </div>
-
-      <div>
-        <div class="ed-colhead">
-          <h2 data-ed-since-title>{E.since.title.yesterday}</h2>
-          <a class="ed-colhead-sub ed-link" href={url(E.arrivals.link.href)}>{E.arrivals.link.label}</a>
-        </div>
-        {/* Two weeks of days are in the document; the ones before the reference point are
-            hidden (the attribute, so they are hidden from assistive technology and from
-            find-in-page too) and the script moves which ones show. */}
-        {days.map((day) => (
-          <div class="ed-day" data-ed-day={day.date} hidden={!day.isNew}>
-            <p class="ed-day-head">{E.arrivals.dayHead(longDay(day.date), day.count)}</p>
-            {day.rows.map((entry) => (
-              <a class="ed-arrival" href={url(entry.href)}>
-                <span class="ed-arrival-house">{entry.houseName}</span>
-                <span class="ed-arrival-text">
-                  {lineOf(entry)}
-                  {entry.withdrawn && <> · {NAMING.worksRegister.withdrawnLabel}</>}
-                </span>
-              </a>
-            ))}
-            {day.more > 0 && (
-              <a class="ed-arrival" href={url(E.arrivals.link.href)}>
-                <span class="ed-arrival-house"></span>
-                <span class="ed-arrival-text">{E.arrivals.more(day.more)}</span>
-              </a>
-            )}
+        {/* ── 8 · the readings: each live experiment's name and number ────────────────────── */}
+        <section class="ed-aside-part">
+          <div class="ed-colhead">
+            <h2>{E.readings.title}</h2>
+            <a class="ed-colhead-sub ed-link" href={url(E.readings.link.href)}>{E.readings.link.label}</a>
           </div>
-        ))}
-        <p class="ed-arrivals-note" data-ed-none hidden={arrivedSinceYesterday > 0}>{E.arrivals.none}</p>
-        <p class="ed-arrivals-note" data-ed-earlier hidden>{E.arrivals.earlier}</p>
-      </div>
-    </section>
+          {tiles.map((tile) => (
+            <a class="ed-reading" href={url(tile.href)}>
+              <span class="ed-reading-name">{tile.name}</span>
+              <span class="ed-reading-big">{tile.big}</span>
+            </a>
+          ))}
+        </section>
+      </aside>
+    </div>
 
-    {/* ── 7 · the index: the four catalogues, and the two other houses ────────────────────── */}
+    {/* ── 9 · the index: the four catalogues, and the two other houses ────────────────────── */}
     <nav class="ed-index" aria-label={E.index.label}>
       {index.map((item) => (
         <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined}>
@@ -553,6 +551,9 @@ const forScript = {
     type Visits,
   } from '@/lib/ops/since'
   import { shuffledOrder } from '@/lib/ops/shelf-order'
+  import { ecologyView, type EcologyFilter, type EcologyHouse } from '@/lib/ops/ecology-shelf'
+  import { fitFontSize } from '@/lib/ops/fit-title'
+  import { setVars } from '@/lib/dataviz/runtime'
 
   interface Words {
     clock: string
@@ -602,23 +603,76 @@ const forScript = {
     const $ = <T extends Element>(sel: string) => root.querySelector<T>(sel)
     const $$ = <T extends Element>(sel: string) => [...root.querySelectorAll<T>(sel)]
 
-    // ── the selected works, a new draw from every finished piece on every visit ───────────
-    // The build renders the whole pool and shows the hand-chosen picks (SelectedWorks.astro);
-    // here as many cards as it shows are drawn from all of them, unhidden and set first. The
-    // cards are moved, never rebuilt, so links, stills and lazy loading stay as the server made them.
-    const shelf = $<HTMLElement>('.ed-shelf--edition')
-    if (shelf) {
-      const cards = [...shelf.children] as HTMLElement[]
-      const shown = Math.min(cards.length, Number(shelf.dataset.edShelfShown) || cards.length)
-      // a pinned piece stands in every draw (SELECTED_WORKS.pinned); the rest fill the band
-      const pinned = cards.filter((c) => c.dataset.edShelfPinned !== undefined)
-      const free = cards.filter((c) => c.dataset.edShelfPinned === undefined)
-      const chosen = [...pinned, ...shuffledOrder(free.length).slice(0, Math.max(0, shown - pinned.length)).map((i) => free[i])]
-      for (const card of cards) card.hidden = true
-      for (const i of shuffledOrder(chosen.length)) {
-        chosen[i].hidden = false
-        shelf.append(chosen[i])
+    // ── the title on one line: its size fitted to the width of the line ─────────────────────
+    // The standing question stands on one line at every width (the calm homepage, 2026-11-03).
+    // The stylesheet sets a size that fits without a script; here the line is measured and the
+    // size set through a custom property (setVars, the CSSOM — never a style attribute).
+    const fitted = $<HTMLElement>('[data-ed-fit]')
+    const fitTitle = () => {
+      if (!fitted || !fitted.parentElement) return
+      const size = parseFloat(getComputedStyle(fitted).fontSize)
+      const next = fitFontSize({ width: fitted.scrollWidth, size, available: fitted.parentElement.clientWidth, max: Number(fitted.dataset.edFit) })
+      if (next !== null && Math.abs(next - size) > 0.5) setVars(fitted, { '--ed-mast-size': `${next}px` })
+    }
+    fitTitle()
+    // the web font may land after the first measure, and a window may be resized
+    document.fonts?.ready.then(fitTitle).catch(() => {})
+    const fitObserver = typeof ResizeObserver === 'function' && fitted?.parentElement ? new ResizeObserver(fitTitle) : null
+    if (fitObserver && fitted?.parentElement) fitObserver.observe(fitted.parentElement)
+
+    // ── from the ecology: by house, newest first or a random draw, six more at a time ──────
+    // The build renders every piece newest first, the first six showing (EcologyShelf.astro);
+    // which cards a view shows is ecologyView (src/lib/ops/ecology-shelf.ts). The cards are moved
+    // and unhidden, never rebuilt, so links, pictures and lazy loading stay as the server made them.
+    const eco = $<HTMLElement>('[data-ed-eco]')
+    const grid = eco?.querySelector<HTMLElement>('[data-ed-eco-grid]')
+    if (eco && grid) {
+      const E = JSON.parse(eco.dataset.edEco ?? '{}') as { step: number; status: string; modeWords: { newest: string; random: string } }
+      const ecoCards = [...grid.children] as HTMLElement[]
+      const houses = ecoCards.map((c) => (c.dataset.house ?? null) as EcologyHouse | null)
+      const newest = ecoCards.map((_, i) => i)
+      const filters = [...eco.querySelectorAll<HTMLButtonElement>('[data-ed-eco-filter]')]
+      const modes = [...eco.querySelectorAll<HTMLButtonElement>('[data-ed-eco-mode]')]
+      const more = eco.querySelector<HTMLButtonElement>('[data-ed-eco-more]')
+      const status = eco.querySelector<HTMLElement>('[data-ed-eco-status]')
+      let filter: EcologyFilter = 'all'
+      let mode: 'newest' | 'random' = 'newest'
+      let order = newest
+      let shown = E.step
+      const show = () => {
+        const view = ecologyView(order, houses, filter, shown)
+        for (const card of ecoCards) card.hidden = true
+        for (const i of view.visible) {
+          ecoCards[i].hidden = false
+          grid.append(ecoCards[i])
+        }
+        if (status) status.textContent = fill(E.status, { shown: view.visible.length, total: view.total, mode: E.modeWords[mode] })
+        if (more) more.hidden = view.visible.length >= view.total
+        for (const b of filters) b.setAttribute('aria-pressed', String(b.dataset.edEcoFilter === filter))
+        for (const b of modes) b.setAttribute('aria-pressed', String(b.dataset.edEcoMode === mode))
       }
+      for (const b of filters) {
+        b.addEventListener('click', () => {
+          filter = (b.dataset.edEcoFilter ?? 'all') as EcologyFilter
+          shown = E.step
+          show()
+        })
+      }
+      for (const b of modes) {
+        b.addEventListener('click', () => {
+          mode = b.dataset.edEcoMode === 'random' ? 'random' : 'newest'
+          // a press on "random draw" draws anew every time
+          order = mode === 'random' ? shuffledOrder(ecoCards.length) : newest
+          shown = E.step
+          show()
+        })
+      }
+      more?.addEventListener('click', () => {
+        shown += E.step
+        show()
+      })
+      eco.querySelector<HTMLElement>('[data-ed-eco-tools]')?.removeAttribute('hidden')
+      show()
     }
 
     // ── the clock and the dots ────────────────────────────────────────────────────────────
@@ -654,7 +708,10 @@ const forScript = {
       }
     }
     frame = requestAnimationFrame(step)
-    stop = () => cancelAnimationFrame(frame)
+    stop = () => {
+      cancelAnimationFrame(frame)
+      fitObserver?.disconnect()
+    }
 
     // ── the pulse answers the pointer ─────────────────────────────────────────────────────
     // The ridge under the pointer is the one in front (they are filled, and paint order is

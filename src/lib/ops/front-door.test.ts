@@ -214,3 +214,65 @@ describe('the log’s links land where its rows say', () => {
     expect(buildHouseFeed().some((e) => e.href.includes('#'))).toBe(true)
   })
 })
+
+describe('the calm homepage (2026-11-03): a main column and a side column under the head', () => {
+  // docs/design_handoff_homepage_calm/README.md §1–§2: the head stays as it was; under it the main
+  // column holds the lab, the ecology's pieces and the running question, the side column what is
+  // running. The order is the handoff's, and the source holds it.
+  const edition = read('../../components/pages/HomeEdition.astro')
+  const markup = edition.slice(0, edition.indexOf('<script>'))
+  const at = (needle: string) => {
+    const i = markup.indexOf(needle)
+    expect(i, `${needle} is missing from the edition`).toBeGreaterThan(-1)
+    return i
+  }
+
+  it('keeps the head in its order: masthead, pulse, since bar, then the two columns', () => {
+    const order = ['class="ed-mast"', 'class="ed-pulse"', 'class="ed-since"', 'class="ed-body"', 'class="ed-index"'].map(at)
+    expect(order).toEqual([...order].sort((a, b) => a - b))
+  })
+
+  it('sets the main column: from the lab, from the ecology, the running question', () => {
+    const order = ['class="ed-main"', 'aria-labelledby="ed-lab-title"', '<EcologyShelf', 'id="ed-cycle-title"', 'class="ed-aside"'].map(at)
+    expect(order).toEqual([...order].sort((a, b) => a - b))
+  })
+
+  it('sets the side column: since yesterday, overnight, the timetable, the readings', () => {
+    const order = ['class="ed-aside"', 'data-ed-since-title', 'E.overnight.title', 'E.timetable.title', 'E.readings.title', 'class="ed-index"'].map(at)
+    expect(order).toEqual([...order].sort((a, b) => a - b))
+  })
+
+  it('gives the readings a name and a number only', () => {
+    const readings = markup.slice(at('E.readings.title'), at('class="ed-index"'))
+    expect(readings).toContain('tile.name')
+    expect(readings).toContain('tile.big')
+    expect(readings).not.toContain('tile.sub')
+  })
+
+  it('stacks the side column under the main one below nine hundred pixels', () => {
+    const css = read('../../styles/edition.css')
+    expect(css).toMatch(/@media \(max-width: 899\.98px\) \{\s*\.ed-body \{\s*grid-template-columns: minmax\(0, 1fr\);/)
+  })
+
+  it('fits the standing question to one line, through a custom property and never a style attribute', () => {
+    expect(markup).toContain('data-ed-fit={E.masthead.titleMax}')
+    const script = edition.slice(edition.indexOf('<script>'))
+    expect(script).toContain('fitFontSize')
+    expect(script).toContain("setVars(fitted, { '--ed-mast-size'")
+    expect(script).not.toMatch(/\.style\.(?!setProperty)|setAttribute\('style'/)
+    expect(read('../../styles/edition.css')).toMatch(/\.ed-mast-q \{[^}]*white-space: nowrap;/)
+  })
+
+  it('keeps the introduction off the front page', () => {
+    expect(edition).not.toMatch(/I am Frank B/)
+  })
+
+  it('hides the ecology’s controls until the script has run, and shows six pieces without it', () => {
+    const shelf = read('../../components/ops/EcologyShelf.astro')
+    expect(shelf).toContain('data-ed-eco-tools hidden')
+    expect(shelf).toContain('data-ed-eco-more hidden')
+    expect(shelf).toContain('hidden={i >= ECOLOGY_STEP}')
+    expect(shelf).toContain('newestFirst(cards)')
+    expect(shelf).not.toMatch(/\sstyle=/)
+  })
+})

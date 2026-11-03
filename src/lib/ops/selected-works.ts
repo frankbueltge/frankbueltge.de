@@ -54,8 +54,9 @@ export interface ShelfCard {
    *  2026-11-02 the entrance shows these in the lab's carousel and never on the shelf below it,
    *  which holds the practices' pieces (src/lib/ops/shelf-pool.ts, withoutLab). */
   lab: boolean
-  /** the crop of the maker's own still, or null where the maker committed none */
-  still: { src: string; alt: string; source: string } | null
+  /** the crop of the maker's own still, or null where the maker committed none; `dark` is the
+   *  dark theme's duotone of it, null until that file is committed */
+  still: { src: string; alt: string; source: string; dark: string | null } | null
 }
 
 const W = SELECTED_WORKS
@@ -301,7 +302,14 @@ export function readPick(pick: ShelfPick, root: string = process.cwd(), shelf: r
     href: pieceHref(record.href, root),
     // a still shows only once its crop is committed (npm run shelf:stills): the full screenshot is
     // never loaded in its place
-    still: existsSync(join(root, crop.file)) ? { src: crop.src, alt: (maker ? W.stillAlt : W.shotAlt)(record.title), source } : null,
+    still: existsSync(join(root, crop.file))
+      ? {
+          src: crop.src,
+          alt: (maker ? W.stillAlt : W.shotAlt)(record.title),
+          source,
+          dark: existsSync(join(root, crop.darkFile)) ? crop.darkSrc : null,
+        }
+      : null,
   }
 }
 
