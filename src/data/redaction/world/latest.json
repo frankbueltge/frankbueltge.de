@@ -1,30 +1,30 @@
 {
-  "date": "2026-11-02",
+  "date": "2026-11-03",
   "deletion": {
     "available": true,
-    "checked_at": "2026-11-02T13:51:05Z",
+    "checked_at": "2026-11-03T13:01:46Z",
     "counts": {
-      "botwall": 4,
-      "gone_404": 0,
+      "botwall": 18,
+      "gone_404": 1,
       "gone_410": 0,
       "legal_451": 0,
-      "ok": 292,
+      "ok": 280,
       "other": 0,
       "server_error": 0,
-      "unreachable": 4
+      "unreachable": 1
     },
-    "decided": 292,
-    "excluded_unverifiable": 8,
-    "gone": 0,
+    "decided": 281,
+    "excluded_unverifiable": 19,
+    "gone": 1,
     "gone_ci95": [
-      0.0,
-      0.013
+      0.0006,
+      0.0199
     ],
-    "gone_rate": 0.0,
+    "gone_rate": 0.0036,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.013
+      0.0135
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,102 +33,113 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-10-31",
-    "receipts": [],
-    "sample_drawn_at": "2026-11-01T11:58:36Z",
+    "pool_day": "2026-11-01",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "wbap.com",
+        "first_seen": "20261101210000",
+        "http_code": 404,
+        "title": "Texas Felons Arrested After Allegedly Voting While On Parole",
+        "url": "https://www.wbap.com/2026/11/01/texas-felons-arrested-after-allegedly-voting-while-on-parole/"
+      }
+    ],
+    "sample_drawn_at": "2026-11-02T13:46:45Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 2964,
-      "replaced": 3561,
-      "trivial": 504,
-      "update": 230
+      "reframing": 3739,
+      "replaced": 5075,
+      "trivial": 772,
+      "update": 326
     },
-    "day": "2026-11-01",
+    "day": "2026-11-02",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "Vijay"
+          "SPORTSMAN",
+          "Arkansas"
         ],
-        "after": "Vijay: Celebrity MasterChef Tamil: Samantha Opens Up About Her Admiration for Vijay, Calls Him an 'Inspirational Person'",
-        "before": "Samantha Ruth Prabhu: Celebrity MasterChef Tamil: Samantha Opens Up About Her Admiration for Vijay, Calls Him an 'Inspirational Person'",
-        "detected": "2026-11-01T08:17:56Z",
-        "domain": "indiatimes.com",
+        "after": "OPINION | ARKANSAS SPORTSMAN: Some deer hunts are about more than hunting | The Arkansas Democrat-Gazette",
+        "before": "OPINION | BRYAN HENDRICKS: Some deer hunts are about more than hunting | The Arkansas Democrat-Gazette",
+        "detected": "2026-11-02T05:01:25Z",
+        "domain": "arkansasonline.com",
         "removed": [
-          "Ruth",
-          "Prabhu",
-          "Samantha"
+          "BRYAN",
+          "HENDRICKS"
         ],
-        "similarity": 0.889,
-        "url": "https://timesofindia.indiatimes.com/tv/news/tamil/celebrity-masterchef-tamil-samantha-opens-up-about-her-admiration-for-vijay-calls-him-an-inspirational-person/articleshow/135186065.cms",
+        "similarity": 0.812,
+        "url": "https://www.arkansasonline.com/news/2026/oct/25/opinion-bryan-hendricks-some-deer-hunts-are-about/",
         "weight": 8,
         "window": "1w"
       },
       {
         "added": [
-          "Utd"
+          "Ghanaâ",
+          "Womenâ"
         ],
-        "after": "Man Utd's latest abject display spells the end for Carrick after huge call backfires",
-        "before": "Man United's latest abject display spells the end for Michael Carrick after huge call backfires",
-        "detected": "2026-11-01T17:04:28Z",
-        "domain": "aol.co.uk",
+        "after": "Ghanaâ€™s Black Maidens crash out of U-17 Womenâ€™s World Cup after defeat to Japan – Ghanamma.com",
+        "before": "Ghana's Black Maidens crash out of U-17 Women's World Cup after defeat to Japan – Ghanamma.com",
+        "detected": "2026-11-02T17:48:31Z",
+        "domain": "ghanamma.com",
         "removed": [
-          "United",
-          "Michael"
+          "Ghana",
+          "Women"
         ],
-        "similarity": 0.824,
-        "url": "https://www.aol.co.uk/articles/man-united-latest-abject-display-162153000.html",
-        "weight": 6,
-        "window": "1w"
+        "similarity": 0.8,
+        "url": "https://www.ghanamma.com/2026/11/01/ghanas-black-maidens-crash-out-of-u-17-womens-world-cup-after-defeat-to-japan/",
+        "weight": 8,
+        "window": "24h"
       },
       {
         "added": [
-          "Shift"
+          "Nyrraa",
+          "Padosi"
         ],
-        "after": "CJI Chandrachud Asked Me To Take 'Middle Path' In PMLA Case; Was Under Pressure To Shift Judges Matter From Me : Justice Kaul",
-        "before": "CJI Chandrachud Asked Me To Take 'Middle Path' In PMLA Case; Was Under Pressure To Remove Judges Appointment Matter From Me : Justice Kaul",
-        "detected": "2026-11-01T12:16:38Z",
-        "domain": "livelaw.in",
+        "after": "Nyrraa M Banerji on her role in 'Dil Padosi': Was drawn to Diya because she's so unapologetically herself",
+        "before": "Nyrra M Banerji on her role in 'Dil Paodsi': Was drawn to Diya because she's so unapologetically herself",
+        "detected": "2026-11-02T06:31:28Z",
+        "domain": "ianslive.in",
         "removed": [
-          "Remove",
-          "Appointment"
+          "Nyrra",
+          "Paodsi"
         ],
-        "similarity": 0.864,
-        "url": "https://www.livelaw.in/top-stories/j-kaul-555859",
-        "weight": 6,
+        "similarity": 0.81,
+        "url": "https://ianslive.in/nyrra-m-banerji-on-her-role-in-dil-paodsi-was-drawn-to-diya-because-shes-so-unapologetically-herself--20261026113852",
+        "weight": 8,
         "window": "1w"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 9644,
-      "PAGE_TEXTCHANGE": 78840,
-      "PAGE_TITLECHANGE": 33536,
-      "UNCHANGED_CONTENT": 503390
+      "HTTP_REDIRECT": 12204,
+      "PAGE_TEXTCHANGE": 102021,
+      "PAGE_TITLECHANGE": 39231,
+      "UNCHANGED_CONTENT": 593763
     },
-    "title_changes_en": 7259,
+    "title_changes_en": 9912,
     "trace": [
       {
-        "bytes_billed": 16777216,
-        "created": "1793627189518",
-        "job_id": "world_gdg_counts_20261101",
+        "bytes_billed": 19922944,
+        "created": "1793710631985",
+        "job_id": "world_gdg_counts_20261102",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 157286400,
-        "created": "1793627195355",
-        "job_id": "world_gdg_titles_20261101",
+        "bytes_billed": 188743680,
+        "created": "1793710636974",
+        "job_id": "world_gdg_titles_20261102",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-11-02T13:51:05Z",
+  "generated_at": "2026-11-03T13:01:46Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-11-01.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-11-02.json",
   "schema_version": "1",
   "selection_version": "v1"
 }
