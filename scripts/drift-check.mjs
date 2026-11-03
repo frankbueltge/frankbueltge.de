@@ -57,7 +57,9 @@ const isWerkMirror = (rel) => /\/(werke|werke-html)\//.test(rel) || /src\/conten
 const RETIRED = [
   'Die Akte der Gegenwart',
   'the whole lab',
-  'Data & AI Engineer',
+  // The role line of 2026-07-24 to 2026-11-03. Its successor, Data & AI Engineer, stood on this
+  // list until that day (Frank's decision, wording private; wording canon, Person).
+  'Data Engineering & Analytics',
   'data artist',
   'Datenkünstler',
   'locally constituted',
@@ -85,8 +87,8 @@ for (const f of voiceFiles) {
   if (isWerkMirror(rel)) continue
   const text = readFileSync(f, 'utf8')
   for (const phrase of RETIRED) {
-    // Kommentarzeilen, die die Regel selbst dokumentieren, sind erlaubt (z. B. „nicht
-    // ‚Data & AI Engineer'"); geprüft wird nur Nicht-Kommentar-Text.
+    // Comment lines that document the rule itself are allowed (e.g. „never ‚data artist'");
+    // only non-comment text is checked.
     const lines = text.split('\n')
     lines.forEach((line, i) => {
       const trimmed = line.trim()

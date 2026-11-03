@@ -11,11 +11,12 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 
 ## Person
 
-- Rollen-Zeile überall: **„Data & AI Platform Manager"**, Franks Berufstitel (seine
-  Entscheidung vom 2026-11-03, Wortlaut privat). Im Code steht sie einmal, `SITE.role` in
+- Rollen-Zeile überall: **„Data & AI Engineer"** (Franks Entscheidung vom 2026-11-03,
+  Wortlaut privat). Sie beschreibt seine Arbeit, keinen Stellentitel; einen Stellentitel
+  nennt die Site erst, wenn Frank es sagt. Im Code steht sie einmal, `SITE.role` in
   `src/lib/site.ts`; Eyebrow, Titel, Person-Daten, llms.txt und die Texte über ihn folgen.
-  Davor, seit 24.07.: „Data Engineering & Analytics" (gewählt gegen „Data & AI Engineer",
-  zu buzzy). Niemals „data artist"/„Datenkünstler".
+  Davor, seit 24.07.: „Data Engineering & Analytics" — damals gewählt gegen
+  „Data & AI Engineer" (zu buzzy). Niemals „data artist"/„Datenkünstler".
 - Name/Identität: Frank Bültge, `f.bueltge@gmail.com`. Niemals `frank@bueltge.de`
   (gehört einer anderen realen Person).
 
