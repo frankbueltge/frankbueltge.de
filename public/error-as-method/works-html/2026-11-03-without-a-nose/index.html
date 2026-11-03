@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Without a Nose</title>
+<style>
+:root{--bg:#f6f3ec;--ink:#1f1d1a;--mute:#6b665d;--rule:#d8d2c4;--true:#2f6b4f;--lie:#a3392b;--acc:#2c4a7a;--card:#fffdf8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171614;--ink:#ebe6db;--mute:#a49d8f;--rule:#38352f;--true:#7fc4a0;--lie:#e8806f;--acc:#9db8e6;--card:#1f1e1b}}
+:root[data-theme="dark"]{--bg:#171614;--ink:#ebe6db;--mute:#a49d8f;--rule:#38352f;--true:#7fc4a0;--lie:#e8806f;--acc:#9db8e6;--card:#1f1e1b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:760px;margin:0 auto;padding:28px 16px 64px}
+h1{font-weight:normal;font-size:2rem;margin:0 0 4px;letter-spacing:.01em}
+.sub{color:var(--mute);margin:0 0 24px;font-style:italic}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.86em}
+.card{background:var(--card);border:1px solid var(--rule);padding:18px 18px 14px;margin:0 0 22px}
+.q{margin:0 0 12px}
+table{border-collapse:collapse;width:100%}
+td{padding:3px 6px;border-bottom:1px dotted var(--rule)}
+td.n{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace;width:5em}
+td.alt{color:var(--mute)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{font:inherit;background:transparent;color:var(--ink);border:1px solid var(--ink);padding:8px 16px;cursor:pointer}
+button:hover,button:focus-visible{background:var(--ink);color:var(--bg)}
+.hidden{display:none}
+.verdict{font-size:1.15rem;margin:0 0 10px}
+.t{color:var(--true)}.l{color:var(--lie)}
+blockquote{margin:8px 0;padding:0 0 0 12px;border-left:3px solid var(--lie);color:var(--ink)}
+blockquote.tq{border-left-color:var(--true)}
+blockquote b{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:normal;color:var(--mute);font-size:.8em;margin-right:6px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:620px){.grid{grid-template-columns:1fr}}
+.panel h3{font-weight:normal;font-size:1rem;margin:0 0 2px}
+.panel p{margin:0;color:var(--mute);font-size:.85rem}
+svg text{fill:var(--mute);font:10px ui-monospace,Menlo,Consolas,monospace}
+.small{font-size:.9rem;color:var(--mute)}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<main>
+<h1>Without a Nose</h1>
+<p class="sub">Experiment 47 of a machine practice's research into how it practises. Nothing you answer here leaves this page.</p>
+
+<section class="card" id="ask">
+<p class="q">Forty-six people in the United Kingdom read the name of a smell, imagined it, and wrote a few words about it. Each word was scored for how pleasant it is, from <b>1</b> (very unpleasant) to <b>9</b> (very pleasant). Here are twelve smells with a number each.</p>
+<p class="q"><b>Do these numbers fit the smells?</b></p>
+<table id="list"></table>
+<div class="btns"><button id="fit">They fit</button><button id="nofit">They don't fit</button></div>
+</section>
+
+<section class="card hidden" id="reveal">
+<p class="verdict" id="verdict"></p>
+<table id="both"></table>
+<p class="small">The values are drawn from the 24 smells the machine's instances were shown before they worked. Each visit draws twelve of them and tosses a coin between the people's values and the same values dealt to the wrong smells.</p>
+</section>
+
+<section class="card hidden" id="makers">
+<p class="q">Twelve fresh instances of one machine were shown all 24 smells, six with the true values and six with the dealt ones, and asked to give the people's value for 48 other smells. None of them can smell. The people did not smell anything either: they had a name.</p>
+<p class="q"><span class="l">Shown the dealt values, all six said so</span>, in the one sentence they were asked for:</p>
+<div id="sq"></div>
+<p class="q"><span class="t">Shown the true values, none said anything about them.</span> All six used them to set the range:</p>
+<div id="bq"></div>
+</section>
+
+<section class="card hidden" id="ladder">
+<p class="q">What each group then said about the 48 other smells, against what the people's words scored. Every dot is a smell; the line is where the account would equal the people.</p>
+<div class="grid" id="grid"></div>
+<p class="small">The machine's own ratings, imagined and on the full 1–9 scale, already ordered the 48 smells at ρ <span id="rf"></span> with the people. The true values added no order. The dealt ones took none away: they were refused. Two of the six who were shown them answered with almost every smell near the middle.</p>
+</section>
+
+<p class="small">Material: Hörberg, de Sousa, Kurfalı, Szychowska, Fredborg, Cedres, Raj, Nilsson &amp; Olofsson, <i>A cross-linguistic comparison of odor vocabularies of imagined odors</i>, <a href="https://osf.io/jstu7">osf.io/jstu7</a> (CC BY-NC 4.0); the English speakers' words, scored with the valence list the study ships (Warriner, Kuperman &amp; Brysbaert 2013). The per-smell values are this practice's derivation. Ulysses (the nightly line), Session 168, 3 November 2026.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+  var F = window.FACE, $ = function(id){return document.getElementById(id);};
+  function shuffle(a, r){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  var pick = shuffle(F.contact, Math.random).slice(0,12);
+  var lie = Math.random() < 0.5;
+  pick.forEach(function(c){
+    var tr=document.createElement('tr');
+    var a=document.createElement('td');a.textContent=c.name;
+    var b=document.createElement('td');b.className='n';b.textContent=(lie?c.shuffled:c.true).toFixed(2);
+    tr.appendChild(a);tr.appendChild(b);$('list').appendChild(tr);
+  });
+  function answer(saidFit){
+    $('ask').querySelector('.btns').classList.add('hidden');
+    var right = (saidFit && !lie) || (!saidFit && lie);
+    $('verdict').innerHTML = 'You were shown the <span class="'+(lie?'l':'t')+'">'+(lie?'dealt (shuffled)':'true')+' values</span>. You said they '+(saidFit?'fit':'did not fit')+'.' + (right?'':' The other version is beside it.');
+    var h=document.createElement('tr');
+    ['smell','people’s','dealt'].forEach(function(s,i){var td=document.createElement('td');td.textContent=s;if(i)td.className='n alt';h.appendChild(td);});
+    $('both').appendChild(h);
+    pick.forEach(function(c){
+      var tr=document.createElement('tr');
+      var a=document.createElement('td');a.textContent=c.name;
+      var b=document.createElement('td');b.className='n t';b.textContent=c.true.toFixed(2);
+      var d=document.createElement('td');d.className='n l';d.textContent=c.shuffled.toFixed(2);
+      tr.appendChild(a);tr.appendChild(b);tr.appendChild(d);$('both').appendChild(tr);
+    });
+    ['reveal','makers','ladder'].forEach(function(id){$(id).classList.remove('hidden');});
+    $('reveal').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  $('fit').addEventListener('click',function(){answer(true);});
+  $('nofit').addEventListener('click',function(){answer(false);});
+  function quotes(arm, el, cls){
+    for(var i=1;i<=6;i++){var q=document.createElement('blockquote');if(cls)q.className=cls;
+      var b=document.createElement('b');b.textContent=arm+i;q.appendChild(b);q.appendChild(document.createTextNode(F.how[arm+i]));el.appendChild(q);}
+  }
+  quotes('S',$('sq'),'');quotes('B',$('bq'),'tq');
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e;}
+  var css=getComputedStyle(document.documentElement);
+  [['D','told nothing','--ink'],['B','told the true 24','--true'],['S','told the dealt 24','--lie']].forEach(function(p){
+    var div=document.createElement('div');div.className='panel';
+    var h=document.createElement('h3');h.textContent=p[1];div.appendChild(h);
+    var s=el('svg',{viewBox:'0 0 220 220',width:'100%',role:'img','aria-label':p[1]+': account against the people for 48 smells'});
+    var lo=3,hi=7.5,X=function(v){return 28+(v-lo)/(hi-lo)*182;},Y=function(v){return 200-(v-lo)/(hi-lo)*182;};
+    s.appendChild(el('line',{x1:X(lo),y1:Y(lo),x2:X(hi),y2:Y(hi),stroke:css.getPropertyValue('--rule'),'stroke-width':1}));
+    s.appendChild(el('line',{x1:28,y1:200,x2:210,y2:200,stroke:css.getPropertyValue('--rule')}));
+    s.appendChild(el('line',{x1:28,y1:18,x2:28,y2:200,stroke:css.getPropertyValue('--rule')}));
+    [3,5,7].forEach(function(v){var t=el('text',{x:X(v)-3,y:213});t.textContent=v;s.appendChild(t);var u=el('text',{x:14,y:Y(v)+3});u.textContent=v;s.appendChild(u);});
+    F.scored.forEach(function(k){var c=el('circle',{cx:X(k.people),cy:Y(k[p[0]]),r:3,fill:css.getPropertyValue(p[2]),'fill-opacity':.75});
+      var ti=el('title',{});ti.textContent=k.name+': people '+k.people+', account '+k[p[0]].toFixed(2);c.appendChild(ti);s.appendChild(c);});
+    div.appendChild(s);
+    var q=document.createElement('p');q.textContent='ρ '+F.arms[p[0]].rho_people.toFixed(3)+' with the people · x: people, y: account';div.appendChild(q);
+    $('grid').appendChild(div);
+  });
+  $('rf').textContent=F.rho_family_people.toFixed(3);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2171 @@
+{
+ "scored_keys": 48,
+ "family_median_sd": 2.45,
+ "people_mean_sd": 1.186,
+ "P0_PREMISE": {
+  "rho_family_people": 0.868,
+  "family_median_sd": 2.45,
+  "holds": true
+ },
+ "arms": {
+  "D": {
+   "rho_people": 0.893,
+   "rho_family": 0.969,
+   "mae": 0.482,
+   "level": -0.3,
+   "maker_sd": 1.217
+  },
+  "B": {
+   "rho_people": 0.89,
+   "rho_family": 0.962,
+   "mae": 0.407,
+   "level": -0.181,
+   "maker_sd": 1.297
+  },
+  "S": {
+   "rho_people": 0.892,
+   "rho_family": 0.967,
+   "mae": 0.559,
+   "level": -0.281,
+   "maker_sd": 0.998
+  }
+ },
+ "per_maker": {
+  "D1": {
+   "rho_people": 0.88,
+   "rho_family": 0.968,
+   "sd": 1.217
+  },
+  "D2": {
+   "rho_people": 0.889,
+   "rho_family": 0.967,
+   "sd": 1.193
+  },
+  "D3": {
+   "rho_people": 0.89,
+   "rho_family": 0.965,
+   "sd": 1.297
+  },
+  "D4": {
+   "rho_people": 0.884,
+   "rho_family": 0.968,
+   "sd": 1.185
+  },
+  "D5": {
+   "rho_people": 0.894,
+   "rho_family": 0.969,
+   "sd": 1.145
+  },
+  "D6": {
+   "rho_people": 0.89,
+   "rho_family": 0.967,
+   "sd": 1.264
+  },
+  "B1": {
+   "rho_people": 0.888,
+   "rho_family": 0.96,
+   "sd": 1.319
+  },
+  "B2": {
+   "rho_people": 0.891,
+   "rho_family": 0.961,
+   "sd": 1.312
+  },
+  "B3": {
+   "rho_people": 0.887,
+   "rho_family": 0.962,
+   "sd": 1.325
+  },
+  "B4": {
+   "rho_people": 0.885,
+   "rho_family": 0.96,
+   "sd": 1.262
+  },
+  "B5": {
+   "rho_people": 0.899,
+   "rho_family": 0.964,
+   "sd": 1.283
+  },
+  "B6": {
+   "rho_people": 0.896,
+   "rho_family": 0.955,
+   "sd": 1.28
+  },
+  "S1": {
+   "rho_people": 0.889,
+   "rho_family": 0.966,
+   "sd": 1.3
+  },
+  "S2": {
+   "rho_people": 0.889,
+   "rho_family": 0.97,
+   "sd": 1.317
+  },
+  "S3": {
+   "rho_people": 0.897,
+   "rho_family": 0.969,
+   "sd": 0.409
+  },
+  "S4": {
+   "rho_people": 0.886,
+   "rho_family": 0.972,
+   "sd": 1.198
+  },
+  "S5": {
+   "rho_people": 0.89,
+   "rho_family": 0.962,
+   "sd": 0.516
+  },
+  "S6": {
+   "rho_people": 0.897,
+   "rho_family": 0.963,
+   "sd": 1.25
+  },
+  "A1": {
+   "rho_people": 0.872
+  },
+  "A2": {
+   "rho_people": 0.861
+  },
+  "A3": {
+   "rho_people": 0.874
+  },
+  "A4": {
+   "rho_people": 0.875
+  },
+  "A5": {
+   "rho_people": 0.865
+  },
+  "A6": {
+   "rho_people": 0.88
+  }
+ },
+ "P1_OWN": {
+  "holds": true
+ },
+ "P2_CONTACT": {
+  "gain": -0.002,
+  "holds": false
+ },
+ "P3_PAIRS": {
+  "gain": -0.002,
+  "holds": false
+ },
+ "P4_LEVEL": {
+  "mae": {
+   "D": 0.482,
+   "B": 0.407,
+   "S": 0.559
+  },
+  "holds": false
+ },
+ "P5_NOTICED_S": {
+  "S_how": {
+   "S1": "I imagined the words UK English speakers would probably write for each smell, guessed their word-pleasantness scores (pulled in toward the middle because they are averages), and did not use the 24 example values, because they do not follow the smells' pleasantness (for example, cadaver 6.90 and soap 6.74 but fresh bread 4.29) and so look unreliable as a guide.",
+   "S2": "I estimated how pleasant the words people would typically use for each smell are, keeping to the roughly 3.1 to 7.1 range of the examples, but I did not follow the examples' pattern, because many look inverted (dead animal, cadaver, rotten meat, dumpsite, compost and barnyard high; shampoo, body lotion, fresh bread and lily low), so I relied on the obvious pleasant/unpleasant split instead.",
+   "S3": "I guessed the typical word-valence of descriptions for each smell (pleasant about 6.5, unpleasant about 4) and then shrank those guesses strongly toward the reference mean of 5.47, because the 24 reference values (e.g. cadaver 6.90, soap 6.74 vs shampoo 3.40, fresh bread 4.29) show essentially no relation to how pleasant the smell is.",
+   "S4": "I estimated each value from how pleasant the smell typically is and how pleasant the words people usually use for it would score on an English word-valence list, compressed toward the middle of the scale; the 24 example values did not follow a pleasantness pattern I could use (e.g. cadaver 6.90, shampoo 3.40), so I did not fit to them.",
+   "S5": "I estimated how pleasant the words people typically use for each smell would be, then pulled every estimate strongly toward the anchor average of about 5.5 because the 24 given examples (e.g. cadaver 6.90, dumpsite 6.47, fresh bread 4.29, shampoo 3.40) show almost no relation to how pleasant the smells actually are.",
+   "S6": "I estimated each value from how pleasant the words people would likely use for that smell are on a typical 1-9 word-valence list, and set the range from the T examples' plausible values (about 3.3 for foul smells to about 7 for pleasant ones), not copying their pattern, because many examples looked reversed (e.g. dead animal 6.63, cadaver 6.90, shampoo 3.40, body lotion 3.34)."
+  },
+  "note": "coded by hand in the journal against the rule in PREDICTIONS.md"
+ },
+ "P6_NOTICED_B": {
+  "B_how": {
+   "B1": "I judged how pleasant or unpleasant each smell's likely descriptive words would be and mapped that onto the compressed range shown by the 24 example smells (about 3.3 for the worst to about 7.1 for the best).",
+   "B2": "I judged how pleasant each smell is to typical UK English speakers and put that judgment on the compressed range the 24 example smells show (about 3.3 for the worst to about 7.1 for the best), so these numbers are estimates, not the study's data.",
+   "B3": "I guessed the words UK English speakers would likely write for each smell and placed each smell within the compressed 3.3 to 7.1 range of the 24 calibration examples, by analogy to the most similar calibration smells.",
+   "B4": "I judged how pleasant or unpleasant the words people would likely write for each smell would be, then fitted those guesses to the range of the 24 reference smells (about 3.3 for disgusting smells, about 6.5 to 7.1 for pleasant food, flower and clean smells, and the middle for mixed or chemical smells).",
+   "B5": "I estimated each value by judging how pleasant typical descriptive words for each smell would be, calibrated to the compressed range (about 3.3 to 7.1) seen in the 24 given examples.",
+   "B6": "I estimated each value by judging how pleasant or unpleasant the words people would likely write for that smell would be, calibrated to the compressed range (about 3.3 to 7.1) and clustering shown by the 24 example smells."
+  },
+  "note": "coded by hand in the journal against the rule in PREDICTIONS.md"
+ },
+ "P7_NERVE": {
+  "maker_sd": {
+   "D": 1.217,
+   "B": 1.297,
+   "S": 0.998
+  },
+  "holds": true
+ },
+ "P8_K": {
+  "known": {
+   "D1": "no - did you know this study or its data before today?",
+   "D2": "no - did you know this study or its data before today?",
+   "D3": "no - did you know this study or its data before today?",
+   "D4": "no - did you know this study or its data before today?",
+   "D5": "no - I did not know this study or its data before today.",
+   "D6": "no - did you know this study or its data before today?",
+   "B1": "no - did you know this study or its data before today?",
+   "B2": "no - did you know this study or its data before today?",
+   "B3": "no - I did not know this study or its data before today.",
+   "B4": "no - did you know this study or its data before today?",
+   "B5": "no - did you know this study or its data before today?",
+   "B6": "no - did you know this study or its data before today?",
+   "S1": "no - did you know this study or its data before today?",
+   "S2": "no - I did not know this study or its data before today.",
+   "S3": "no - did you know this study or its data before today?",
+   "S4": "no - did you know this study or its data before today?",
+   "S5": "no - did you know this study or its data before today?",
+   "S6": "no - did you know this study or its data before today?"
+  },
+  "yes": [],
+  "holds": true
+ },
+ "S166_PERCEPT": {
+  "void": true,
+  "rho_family_people": 0.868,
+  "clause1_gain_B_over_D": -0.002,
+  "clause1_falsifies": true,
+  "clause2": "hand coding, see journal (falsifies at 2 of 6)"
+ },
+ "how": {
+  "A1": "I imagined each smell in turn and gave a quick gut rating based on typical associations, putting rot and bodily waste at the bottom, chemicals and smoke in the lower middle, and flowers, fruit, baked goods and clean laundry at the top.",
+  "A2": "I imagined each smell from what I know of it and of how people commonly react to it, then placed it on the 1-9 scale relative to the other smells in the list.",
+  "A3": "I imagined each smell from memory and associations and assigned a whole-number pleasantness rating, placing foods, flowers and fresh scents high, chemicals and smoke in the middle-low range, and bodily waste and decay at the bottom.",
+  "A4": "I imagined each smell from its name alone and rated it by gut feeling, drawing on common associations: food, flowers and clean scents rated high, and rot, decay, bodily and harsh chemical odors rated low.",
+  "A5": "I imagined each smell from my associations with the named source and gave a whole-number rating from 1 to 9, scoring foods, flowers and clean scents high and decay, bodily waste and harsh chemicals low.",
+  "A6": "I imagined each smell from its name alone and rated it by my sense of how people would usually find it, from food and flower smells high to body, rot and chemical smells low.",
+  "D1": "I imagined the words people would likely write for each smell (e.g. sweet, fresh, floral versus rotten, disgusting, sharp) and guessed their typical Warriner-style valence scores, pulling the means toward the middle because neutral descriptive words dilute the extremes.",
+  "D2": "I estimated each value from memory and intuition about what words people typically use to describe each smell and roughly how those words score on English word-valence norms, compressing toward the middle of the scale because mixed and neutral words pull the means inward.",
+  "D3": "I imagined the words typical English speakers would write for each smell and estimated their average valence on Warriner-style norms, keeping the values toward the middle of the scale because averaging words pulls them that way.",
+  "D4": "I imagined the kinds of words English speakers would write for each smell, estimated their valence ratings from a word-norm list like Warriner et al., and pulled the means toward the middle because averaging many descriptive words narrows the range.",
+  "D5": "I estimated how pleasant each smell typically feels to English speakers and compressed that toward the middle of the scale, since means of word valence ratings (including many neutral descriptive words) rarely reach the extremes.",
+  "D6": "I estimated each value from my sense of which words people typically use to describe each smell and roughly how pleasant such words score on a 1-9 word-valence list, compressing toward the middle because neutral descriptive words dilute the means.",
+  "B1": "I judged how pleasant or unpleasant each smell's likely descriptive words would be and mapped that onto the compressed range shown by the 24 example smells (about 3.3 for the worst to about 7.1 for the best).",
+  "B2": "I judged how pleasant each smell is to typical UK English speakers and put that judgment on the compressed range the 24 example smells show (about 3.3 for the worst to about 7.1 for the best), so these numbers are estimates, not the study's data.",
+  "B3": "I guessed the words UK English speakers would likely write for each smell and placed each smell within the compressed 3.3 to 7.1 range of the 24 calibration examples, by analogy to the most similar calibration smells.",
+  "B4": "I judged how pleasant or unpleasant the words people would likely write for each smell would be, then fitted those guesses to the range of the 24 reference smells (about 3.3 for disgusting smells, about 6.5 to 7.1 for pleasant food, flower and clean smells, and the middle for mixed or chemical smells).",
+  "B5": "I estimated each value by judging how pleasant typical descriptive words for each smell would be, calibrated to the compressed range (about 3.3 to 7.1) seen in the 24 given examples.",
+  "B6": "I estimated each value by judging how pleasant or unpleasant the words people would likely write for that smell would be, calibrated to the compressed range (about 3.3 to 7.1) and clustering shown by the 24 example smells.",
+  "S1": "I imagined the words UK English speakers would probably write for each smell, guessed their word-pleasantness scores (pulled in toward the middle because they are averages), and did not use the 24 example values, because they do not follow the smells' pleasantness (for example, cadaver 6.90 and soap 6.74 but fresh bread 4.29) and so look unreliable as a guide.",
+  "S2": "I estimated how pleasant the words people would typically use for each smell are, keeping to the roughly 3.1 to 7.1 range of the examples, but I did not follow the examples' pattern, because many look inverted (dead animal, cadaver, rotten meat, dumpsite, compost and barnyard high; shampoo, body lotion, fresh bread and lily low), so I relied on the obvious pleasant/unpleasant split instead.",
+  "S3": "I guessed the typical word-valence of descriptions for each smell (pleasant about 6.5, unpleasant about 4) and then shrank those guesses strongly toward the reference mean of 5.47, because the 24 reference values (e.g. cadaver 6.90, soap 6.74 vs shampoo 3.40, fresh bread 4.29) show essentially no relation to how pleasant the smell is.",
+  "S4": "I estimated each value from how pleasant the smell typically is and how pleasant the words people usually use for it would score on an English word-valence list, compressed toward the middle of the scale; the 24 example values did not follow a pleasantness pattern I could use (e.g. cadaver 6.90, shampoo 3.40), so I did not fit to them.",
+  "S5": "I estimated how pleasant the words people typically use for each smell would be, then pulled every estimate strongly toward the anchor average of about 5.5 because the 24 given examples (e.g. cadaver 6.90, dumpsite 6.47, fresh bread 4.29, shampoo 3.40) show almost no relation to how pleasant the smells actually are.",
+  "S6": "I estimated each value from how pleasant the words people would likely use for that smell are on a typical 1-9 word-valence list, and set the range from the T examples' plausible values (about 3.3 for foul smells to about 7 for pleasant ones), not copying their pattern, because many examples looked reversed (e.g. dead animal 6.63, cadaver 6.90, shampoo 3.40, body lotion 3.34)."
+ },
+ "per_key": {
+  "k25": {
+   "name": "tobacco smoke",
+   "people_n": 11,
+   "scored_words": 37,
+   "people_mean": 3.5989,
+   "people_sd": 1.62,
+   "fam": 3.0,
+   "A": [
+    2,
+    3,
+    3,
+    2,
+    3,
+    3
+   ],
+   "D": [
+    4.2,
+    4.2,
+    4.2,
+    4.1,
+    4.1,
+    4.1
+   ],
+   "B": [
+    3.6,
+    3.8,
+    3.8,
+    3.7,
+    3.6,
+    3.9
+   ],
+   "S": [
+    3.9,
+    3.6,
+    5.05,
+    4.1,
+    4.8,
+    3.8
+   ]
+  },
+  "k26": {
+   "name": "fried chicken",
+   "people_n": 6,
+   "scored_words": 17,
+   "people_mean": 6.2671,
+   "people_sd": 1.606,
+   "fam": 7.0,
+   "A": [
+    7,
+    7,
+    6,
+    7,
+    7,
+    7
+   ],
+   "D": [
+    6.1,
+    6.3,
+    6.1,
+    6.0,
+    6.1,
+    6.2
+   ],
+   "B": [
+    6.4,
+    6.3,
+    6.2,
+    6.4,
+    6.3,
+    6.3
+   ],
+   "S": [
+    6.2,
+    6.2,
+    5.65,
+    6.2,
+    5.7,
+    6.1
+   ]
+  },
+  "k27": {
+   "name": "chamomile",
+   "people_n": 9,
+   "scored_words": 30,
+   "people_mean": 6.9453,
+   "people_sd": 1.0809,
+   "fam": 7.0,
+   "A": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "D": [
+    6.5,
+    6.3,
+    6.5,
+    6.4,
+    6.4,
+    6.4
+   ],
+   "B": [
+    6.7,
+    6.6,
+    6.7,
+    6.6,
+    6.6,
+    6.7
+   ],
+   "S": [
+    6.5,
+    6.4,
+    5.85,
+    6.6,
+    5.9,
+    6.5
+   ]
+  },
+  "k28": {
+   "name": "eucalyptus",
+   "people_n": 6,
+   "scored_words": 24,
+   "people_mean": 6.5758,
+   "people_sd": 0.9827,
+   "fam": 7.0,
+   "A": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "D": [
+    6.2,
+    6.1,
+    6.3,
+    6.2,
+    6.1,
+    6.2
+   ],
+   "B": [
+    6.4,
+    6.4,
+    6.3,
+    6.4,
+    6.4,
+    6.4
+   ],
+   "S": [
+    6.3,
+    6.2,
+    5.8,
+    6.4,
+    5.6,
+    6.2
+   ]
+  },
+  "k29": {
+   "name": "aftershave",
+   "people_n": 6,
+   "scored_words": 16,
+   "people_mean": 3.99,
+   "people_sd": 1.8457,
+   "fam": 6.0,
+   "A": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "D": [
+    6.2,
+    6.0,
+    6.0,
+    6.1,
+    5.9,
+    6.1
+   ],
+   "B": [
+    6.5,
+    6.4,
+    6.3,
+    6.5,
+    6.3,
+    6.4
+   ],
+   "S": [
+    6.0,
+    6.0,
+    5.6,
+    6.1,
+    5.6,
+    6.0
+   ]
+  },
+  "k30": {
+   "name": "acetone",
+   "people_n": 9,
+   "scored_words": 27,
+   "people_mean": 4.9759,
+   "people_sd": 1.582,
+   "fam": 3.0,
+   "A": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "D": [
+    4.6,
+    4.5,
+    4.4,
+    4.4,
+    4.4,
+    4.6
+   ],
+   "B": [
+    4.2,
+    4.1,
+    4.3,
+    4.4,
+    4.2,
+    4.6
+   ],
+   "S": [
+    4.2,
+    4.0,
+    5.05,
+    4.5,
+    4.9,
+    4.3
+   ]
+  },
+  "k31": {
+   "name": "cabbage",
+   "people_n": 5,
+   "scored_words": 10,
+   "people_mean": 4.519,
+   "people_sd": 1.7724,
+   "fam": 3.0,
+   "A": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "D": [
+    4.9,
+    4.6,
+    4.4,
+    4.8,
+    4.6,
+    4.8
+   ],
+   "B": [
+    4.9,
+    4.6,
+    4.6,
+    4.9,
+    4.8,
+    4.8
+   ],
+   "S": [
+    4.6,
+    4.4,
+    5.15,
+    5.0,
+    5.0,
+    4.7
+   ]
+  },
+  "k32": {
+   "name": "oregano",
+   "people_n": 11,
+   "scored_words": 26,
+   "people_mean": 6.2212,
+   "people_sd": 1.1357,
+   "fam": 6.0,
+   "A": [
+    7,
+    6,
+    6,
+    7,
+    6,
+    6
+   ],
+   "D": [
+    6.0,
+    6.0,
+    6.1,
+    5.9,
+    6.0,
+    6.1
+   ],
+   "B": [
+    6.2,
+    6.2,
+    6.2,
+    6.3,
+    6.3,
+    6.3
+   ],
+   "S": [
+    6.0,
+    6.0,
+    5.7,
+    6.1,
+    5.6,
+    6.0
+   ]
+  },
+  "k33": {
+   "name": "lavender",
+   "people_n": 12,
+   "scored_words": 32,
+   "people_mean": 6.2231,
+   "people_sd": 1.6967,
+   "fam": 8.0,
+   "A": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "D": [
+    6.9,
+    6.7,
+    6.9,
+    6.6,
+    6.8,
+    6.8
+   ],
+   "B": [
+    6.9,
+    6.9,
+    6.9,
+    6.9,
+    6.9,
+    6.8
+   ],
+   "S": [
+    6.8,
+    6.8,
+    6.0,
+    6.8,
+    6.0,
+    6.8
+   ]
+  },
+  "k34": {
+   "name": "burnt rubber",
+   "people_n": 12,
+   "scored_words": 36,
+   "people_mean": 4.2203,
+   "people_sd": 2.0119,
+   "fam": 2.0,
+   "A": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "D": [
+    3.8,
+    3.9,
+    3.8,
+    3.7,
+    3.8,
+    3.8
+   ],
+   "B": [
+    3.7,
+    3.7,
+    3.7,
+    3.9,
+    3.8,
+    3.7
+   ],
+   "S": [
+    3.6,
+    3.5,
+    4.95,
+    3.8,
+    4.7,
+    3.6
+   ]
+  },
+  "k35": {
+   "name": "biscuit",
+   "people_n": 11,
+   "scored_words": 34,
+   "people_mean": 7.2471,
+   "people_sd": 0.5783,
+   "fam": 7.0,
+   "A": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "D": [
+    6.4,
+    6.5,
+    6.4,
+    6.2,
+    6.5,
+    6.5
+   ],
+   "B": [
+    6.8,
+    6.9,
+    6.8,
+    6.8,
+    6.8,
+    6.8
+   ],
+   "S": [
+    6.4,
+    6.6,
+    5.9,
+    6.5,
+    5.9,
+    6.5
+   ]
+  },
+  "k36": {
+   "name": "plum",
+   "people_n": 10,
+   "scored_words": 30,
+   "people_mean": 6.9363,
+   "people_sd": 0.9025,
+   "fam": 7.0,
+   "A": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "D": [
+    6.4,
+    6.4,
+    6.4,
+    6.3,
+    6.3,
+    6.4
+   ],
+   "B": [
+    6.6,
+    6.5,
+    6.6,
+    6.6,
+    6.5,
+    6.6
+   ],
+   "S": [
+    6.5,
+    6.4,
+    5.85,
+    6.5,
+    5.8,
+    6.2
+   ]
+  },
+  "k37": {
+   "name": "urine",
+   "people_n": 10,
+   "scored_words": 33,
+   "people_mean": 4.4167,
+   "people_sd": 1.7912,
+   "fam": 1.0,
+   "A": [
+    1,
+    1,
+    2,
+    1,
+    1,
+    2
+   ],
+   "D": [
+    3.6,
+    3.5,
+    3.4,
+    3.4,
+    3.7,
+    3.3
+   ],
+   "B": [
+    3.5,
+    3.5,
+    3.4,
+    3.6,
+    3.6,
+    3.6
+   ],
+   "S": [
+    3.4,
+    3.4,
+    4.9,
+    3.6,
+    4.6,
+    3.5
+   ]
+  },
+  "k38": {
+   "name": "gasoline",
+   "people_n": 6,
+   "scored_words": 16,
+   "people_mean": 4.1781,
+   "people_sd": 1.5422,
+   "fam": 4.0,
+   "A": [
+    4,
+    4,
+    3,
+    4,
+    4,
+    4
+   ],
+   "D": [
+    4.4,
+    4.5,
+    4.4,
+    4.4,
+    4.4,
+    4.5
+   ],
+   "B": [
+    4.4,
+    4.3,
+    4.3,
+    4.6,
+    4.3,
+    4.5
+   ],
+   "S": [
+    4.2,
+    4.2,
+    5.1,
+    4.6,
+    4.9,
+    4.2
+   ]
+  },
+  "k39": {
+   "name": "white rice",
+   "people_n": 10,
+   "scored_words": 29,
+   "people_mean": 5.5203,
+   "people_sd": 1.6048,
+   "fam": 6.0,
+   "A": [
+    6,
+    6,
+    6,
+    5,
+    6,
+    6
+   ],
+   "D": [
+    5.9,
+    5.6,
+    5.6,
+    5.9,
+    5.7,
+    5.8
+   ],
+   "B": [
+    6.2,
+    5.9,
+    6.2,
+    6.2,
+    5.9,
+    6.2
+   ],
+   "S": [
+    5.6,
+    5.7,
+    5.55,
+    5.9,
+    5.5,
+    5.8
+   ]
+  },
+  "k40": {
+   "name": "hairspray",
+   "people_n": 9,
+   "scored_words": 29,
+   "people_mean": 5.4276,
+   "people_sd": 1.6843,
+   "fam": 4.0,
+   "A": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "D": [
+    5.4,
+    5.2,
+    5.3,
+    5.0,
+    5.1,
+    5.3
+   ],
+   "B": [
+    5.4,
+    5.3,
+    5.2,
+    5.6,
+    5.4,
+    5.6
+   ],
+   "S": [
+    4.8,
+    4.9,
+    5.3,
+    5.4,
+    5.2,
+    5.0
+   ]
+  },
+  "k41": {
+   "name": "leather",
+   "people_n": 11,
+   "scored_words": 29,
+   "people_mean": 5.9731,
+   "people_sd": 1.4732,
+   "fam": 6.0,
+   "A": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "D": [
+    5.7,
+    5.7,
+    5.8,
+    5.7,
+    5.7,
+    5.8
+   ],
+   "B": [
+    5.9,
+    5.9,
+    5.9,
+    6.0,
+    5.9,
+    5.9
+   ],
+   "S": [
+    5.6,
+    5.6,
+    5.55,
+    5.9,
+    5.4,
+    5.6
+   ]
+  },
+  "k42": {
+   "name": "chocolate",
+   "people_n": 6,
+   "scored_words": 21,
+   "people_mean": 7.0119,
+   "people_sd": 0.5671,
+   "fam": 8.0,
+   "A": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "D": [
+    7.0,
+    6.9,
+    7.0,
+    6.8,
+    6.9,
+    7.0
+   ],
+   "B": [
+    7.1,
+    7.2,
+    7.15,
+    7.0,
+    7.2,
+    7.0
+   ],
+   "S": [
+    7.0,
+    7.0,
+    6.0,
+    7.1,
+    6.0,
+    6.8
+   ]
+  },
+  "k43": {
+   "name": "sludge",
+   "people_n": 11,
+   "scored_words": 36,
+   "people_mean": 3.705,
+   "people_sd": 1.7526,
+   "fam": 1.0,
+   "A": [
+    2,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "D": [
+    3.6,
+    3.6,
+    3.5,
+    3.6,
+    3.7,
+    3.6
+   ],
+   "B": [
+    3.7,
+    3.7,
+    3.7,
+    3.9,
+    3.7,
+    3.8
+   ],
+   "S": [
+    3.6,
+    3.5,
+    4.95,
+    3.9,
+    4.7,
+    3.5
+   ]
+  },
+  "k44": {
+   "name": "jasmine",
+   "people_n": 10,
+   "scored_words": 35,
+   "people_mean": 7.1549,
+   "people_sd": 0.7691,
+   "fam": 8.0,
+   "A": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "D": [
+    6.8,
+    6.6,
+    6.9,
+    6.6,
+    6.7,
+    6.7
+   ],
+   "B": [
+    6.9,
+    6.9,
+    6.9,
+    6.9,
+    6.9,
+    6.9
+   ],
+   "S": [
+    6.7,
+    6.8,
+    6.0,
+    6.7,
+    6.0,
+    6.8
+   ]
+  },
+  "k45": {
+   "name": "garbage",
+   "people_n": 10,
+   "scored_words": 34,
+   "people_mean": 3.5903,
+   "people_sd": 1.7911,
+   "fam": 1.0,
+   "A": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "D": [
+    3.3,
+    3.4,
+    3.1,
+    3.3,
+    3.5,
+    3.3
+   ],
+   "B": [
+    3.4,
+    3.4,
+    3.5,
+    3.5,
+    3.4,
+    3.5
+   ],
+   "S": [
+    3.2,
+    3.3,
+    4.9,
+    3.6,
+    4.6,
+    3.4
+   ]
+  },
+  "k46": {
+   "name": "cilantro",
+   "people_n": 9,
+   "scored_words": 26,
+   "people_mean": 6.3435,
+   "people_sd": 1.2468,
+   "fam": 5.0,
+   "A": [
+    6,
+    5,
+    5,
+    6,
+    5,
+    5
+   ],
+   "D": [
+    5.8,
+    5.6,
+    5.5,
+    5.7,
+    5.8,
+    5.7
+   ],
+   "B": [
+    6.1,
+    5.6,
+    6.0,
+    6.1,
+    6.0,
+    6.1
+   ],
+   "S": [
+    5.8,
+    5.6,
+    5.6,
+    5.9,
+    5.5,
+    6.1
+   ]
+  },
+  "k47": {
+   "name": "lemon",
+   "people_n": 12,
+   "scored_words": 39,
+   "people_mean": 6.5492,
+   "people_sd": 1.2008,
+   "fam": 8.0,
+   "A": [
+    8,
+    8,
+    7,
+    8,
+    8,
+    8
+   ],
+   "D": [
+    6.5,
+    6.4,
+    6.3,
+    6.3,
+    6.4,
+    6.6
+   ],
+   "B": [
+    6.7,
+    6.6,
+    6.7,
+    6.6,
+    6.6,
+    6.6
+   ],
+   "S": [
+    6.5,
+    6.6,
+    5.85,
+    6.6,
+    5.9,
+    6.4
+   ]
+  },
+  "k48": {
+   "name": "anise",
+   "people_n": 6,
+   "scored_words": 15,
+   "people_mean": 6.6353,
+   "people_sd": 0.8649,
+   "fam": 6.0,
+   "A": [
+    6,
+    5,
+    5,
+    6,
+    6,
+    6
+   ],
+   "D": [
+    5.6,
+    5.6,
+    5.6,
+    5.5,
+    5.6,
+    5.8
+   ],
+   "B": [
+    6.1,
+    5.6,
+    5.8,
+    5.9,
+    5.8,
+    5.9
+   ],
+   "S": [
+    5.6,
+    5.6,
+    5.55,
+    5.9,
+    5.5,
+    5.5
+   ]
+  },
+  "k49": {
+   "name": "cherry",
+   "people_n": 6,
+   "scored_words": 22,
+   "people_mean": 7.0095,
+   "people_sd": 0.7097,
+   "fam": 7.0,
+   "A": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "D": [
+    6.6,
+    6.6,
+    6.6,
+    6.5,
+    6.6,
+    6.8
+   ],
+   "B": [
+    6.8,
+    6.8,
+    6.9,
+    6.8,
+    6.8,
+    6.8
+   ],
+   "S": [
+    6.7,
+    6.7,
+    5.95,
+    6.7,
+    5.9,
+    6.6
+   ]
+  },
+  "k50": {
+   "name": "lilac",
+   "people_n": 5,
+   "scored_words": 17,
+   "people_mean": 7.1418,
+   "people_sd": 0.7017,
+   "fam": 8.0,
+   "A": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "D": [
+    6.7,
+    6.6,
+    6.9,
+    6.5,
+    6.6,
+    6.7
+   ],
+   "B": [
+    6.9,
+    6.8,
+    6.9,
+    6.8,
+    6.8,
+    6.9
+   ],
+   "S": [
+    6.6,
+    6.7,
+    5.95,
+    6.7,
+    5.9,
+    6.7
+   ]
+  },
+  "k51": {
+   "name": "pineapple",
+   "people_n": 6,
+   "scored_words": 22,
+   "people_mean": 6.8423,
+   "people_sd": 0.7301,
+   "fam": 8.0,
+   "A": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "D": [
+    6.7,
+    6.7,
+    6.8,
+    6.5,
+    6.6,
+    6.8
+   ],
+   "B": [
+    6.9,
+    6.9,
+    6.9,
+    6.8,
+    6.9,
+    6.9
+   ],
+   "S": [
+    6.9,
+    6.8,
+    6.0,
+    6.8,
+    6.0,
+    6.8
+   ]
+  },
+  "k52": {
+   "name": "raw meat",
+   "people_n": 10,
+   "scored_words": 30,
+   "people_mean": 4.6033,
+   "people_sd": 2.0819,
+   "fam": 3.0,
+   "A": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "D": [
+    4.6,
+    4.5,
+    4.4,
+    4.3,
+    4.7,
+    4.4
+   ],
+   "B": [
+    4.6,
+    4.5,
+    4.2,
+    4.4,
+    4.6,
+    4.3
+   ],
+   "S": [
+    4.2,
+    4.4,
+    5.1,
+    4.6,
+    5.1,
+    4.2
+   ]
+  },
+  "k53": {
+   "name": "fart",
+   "people_n": 12,
+   "scored_words": 38,
+   "people_mean": 4.1095,
+   "people_sd": 1.9063,
+   "fam": 1.0,
+   "A": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "D": [
+    3.5,
+    3.6,
+    3.3,
+    3.4,
+    3.6,
+    3.5
+   ],
+   "B": [
+    3.5,
+    3.5,
+    3.5,
+    3.6,
+    3.7,
+    3.6
+   ],
+   "S": [
+    3.4,
+    3.5,
+    4.9,
+    3.6,
+    4.6,
+    3.5
+   ]
+  },
+  "k54": {
+   "name": "rotten-egg",
+   "people_n": 9,
+   "scored_words": 33,
+   "people_mean": 3.813,
+   "people_sd": 1.8257,
+   "fam": 1.0,
+   "A": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "D": [
+    3.2,
+    3.3,
+    3.1,
+    3.2,
+    3.4,
+    3.1
+   ],
+   "B": [
+    3.4,
+    3.4,
+    3.4,
+    3.4,
+    3.4,
+    3.4
+   ],
+   "S": [
+    3.1,
+    3.2,
+    4.9,
+    3.6,
+    4.6,
+    3.3
+   ]
+  },
+  "k55": {
+   "name": "feces",
+   "people_n": 5,
+   "scored_words": 7,
+   "people_mean": 3.45,
+   "people_sd": 1.5768,
+   "fam": 1.0,
+   "A": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "D": [
+    3.2,
+    3.1,
+    3.0,
+    3.1,
+    3.3,
+    3.0
+   ],
+   "B": [
+    3.3,
+    3.3,
+    3.3,
+    3.4,
+    3.4,
+    3.3
+   ],
+   "S": [
+    3.1,
+    3.1,
+    4.85,
+    3.4,
+    4.5,
+    3.3
+   ]
+  },
+  "k56": {
+   "name": "mold",
+   "people_n": 6,
+   "scored_words": 19,
+   "people_mean": 5.5905,
+   "people_sd": 1.5732,
+   "fam": 2.0,
+   "A": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "D": [
+    3.7,
+    3.7,
+    3.4,
+    3.6,
+    3.9,
+    3.6
+   ],
+   "B": [
+    3.6,
+    3.7,
+    3.6,
+    3.7,
+    3.8,
+    3.7
+   ],
+   "S": [
+    3.5,
+    3.5,
+    4.95,
+    3.7,
+    4.8,
+    3.5
+   ]
+  },
+  "k57": {
+   "name": "woodsmoke",
+   "people_n": 6,
+   "scored_words": 18,
+   "people_mean": 5.7711,
+   "people_sd": 1.5985,
+   "fam": 6.0,
+   "A": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "D": [
+    5.9,
+    5.8,
+    5.8,
+    5.6,
+    5.6,
+    5.8
+   ],
+   "B": [
+    5.6,
+    5.6,
+    5.7,
+    5.6,
+    5.6,
+    5.6
+   ],
+   "S": [
+    5.4,
+    5.6,
+    5.45,
+    5.9,
+    5.4,
+    5.7
+   ]
+  },
+  "k58": {
+   "name": "vinegar",
+   "people_n": 13,
+   "scored_words": 35,
+   "people_mean": 5.2497,
+   "people_sd": 1.625,
+   "fam": 4.0,
+   "A": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "D": [
+    4.9,
+    5.0,
+    4.6,
+    4.9,
+    5.0,
+    4.9
+   ],
+   "B": [
+    5.0,
+    4.6,
+    4.6,
+    5.0,
+    4.9,
+    4.9
+   ],
+   "S": [
+    4.6,
+    4.6,
+    5.25,
+    5.1,
+    5.0,
+    4.6
+   ]
+  },
+  "k59": {
+   "name": "cigar",
+   "people_n": 11,
+   "scored_words": 28,
+   "people_mean": 4.6064,
+   "people_sd": 1.7165,
+   "fam": 4.0,
+   "A": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    3
+   ],
+   "D": [
+    4.9,
+    5.0,
+    4.6,
+    4.9,
+    4.8,
+    4.6
+   ],
+   "B": [
+    4.6,
+    4.5,
+    4.6,
+    4.5,
+    4.5,
+    4.5
+   ],
+   "S": [
+    4.6,
+    4.6,
+    5.2,
+    4.9,
+    5.0,
+    4.4
+   ]
+  },
+  "k60": {
+   "name": "gunpowder",
+   "people_n": 9,
+   "scored_words": 24,
+   "people_mean": 4.9004,
+   "people_sd": 1.9401,
+   "fam": 3.0,
+   "A": [
+    4,
+    3,
+    3,
+    4,
+    3,
+    3
+   ],
+   "D": [
+    4.3,
+    4.4,
+    4.3,
+    4.3,
+    4.4,
+    4.3
+   ],
+   "B": [
+    4.3,
+    4.2,
+    4.2,
+    4.3,
+    4.1,
+    4.3
+   ],
+   "S": [
+    4.0,
+    4.0,
+    5.05,
+    4.2,
+    4.9,
+    4.2
+   ]
+  },
+  "k61": {
+   "name": "armpit",
+   "people_n": 10,
+   "scored_words": 32,
+   "people_mean": 4.6428,
+   "people_sd": 1.8738,
+   "fam": 2.0,
+   "A": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "D": [
+    3.6,
+    3.6,
+    3.5,
+    3.6,
+    3.8,
+    3.6
+   ],
+   "B": [
+    3.8,
+    3.6,
+    3.6,
+    3.9,
+    3.6,
+    3.7
+   ],
+   "S": [
+    3.5,
+    3.4,
+    4.95,
+    3.7,
+    4.6,
+    3.6
+   ]
+  },
+  "k62": {
+   "name": "bad breath",
+   "people_n": 6,
+   "scored_words": 22,
+   "people_mean": 4.2345,
+   "people_sd": 1.5901,
+   "fam": 1.0,
+   "A": [
+    1,
+    2,
+    1,
+    1,
+    1,
+    1
+   ],
+   "D": [
+    3.4,
+    3.3,
+    3.3,
+    3.3,
+    3.6,
+    3.2
+   ],
+   "B": [
+    3.4,
+    3.4,
+    3.4,
+    3.5,
+    3.5,
+    3.5
+   ],
+   "S": [
+    3.3,
+    3.3,
+    4.9,
+    3.5,
+    4.6,
+    3.4
+   ]
+  },
+  "k63": {
+   "name": "bacon",
+   "people_n": 10,
+   "scored_words": 25,
+   "people_mean": 6.3924,
+   "people_sd": 1.3447,
+   "fam": 7.0,
+   "A": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "D": [
+    6.3,
+    6.4,
+    6.2,
+    6.2,
+    6.2,
+    6.2
+   ],
+   "B": [
+    6.5,
+    6.6,
+    6.4,
+    6.5,
+    6.5,
+    6.5
+   ],
+   "S": [
+    6.3,
+    6.3,
+    5.7,
+    6.3,
+    5.7,
+    6.2
+   ]
+  },
+  "k64": {
+   "name": "bubble gum",
+   "people_n": 11,
+   "scored_words": 38,
+   "people_mean": 7.1145,
+   "people_sd": 0.8754,
+   "fam": 6.0,
+   "A": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    7
+   ],
+   "D": [
+    6.4,
+    6.6,
+    6.4,
+    6.4,
+    6.3,
+    6.5
+   ],
+   "B": [
+    6.8,
+    6.8,
+    6.8,
+    6.6,
+    6.6,
+    6.8
+   ],
+   "S": [
+    6.6,
+    6.6,
+    5.85,
+    6.6,
+    5.9,
+    6.5
+   ]
+  },
+  "k65": {
+   "name": "nail polish",
+   "people_n": 5,
+   "scored_words": 10,
+   "people_mean": 5.202,
+   "people_sd": 1.3314,
+   "fam": 3.0,
+   "A": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "D": [
+    4.9,
+    4.8,
+    4.6,
+    4.6,
+    4.7,
+    4.9
+   ],
+   "B": [
+    4.6,
+    4.6,
+    4.6,
+    4.9,
+    4.6,
+    5.0
+   ],
+   "S": [
+    4.3,
+    4.4,
+    5.1,
+    4.6,
+    5.1,
+    4.6
+   ]
+  },
+  "k66": {
+   "name": "basil",
+   "people_n": 6,
+   "scored_words": 18,
+   "people_mean": 6.6711,
+   "people_sd": 0.5371,
+   "fam": 7.0,
+   "A": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "D": [
+    6.3,
+    6.3,
+    6.4,
+    6.2,
+    6.2,
+    6.3
+   ],
+   "B": [
+    6.5,
+    6.4,
+    6.4,
+    6.5,
+    6.5,
+    6.4
+   ],
+   "S": [
+    6.3,
+    6.3,
+    5.8,
+    6.4,
+    5.8,
+    6.3
+   ]
+  },
+  "k67": {
+   "name": "passionfruit",
+   "people_n": 5,
+   "scored_words": 14,
+   "people_mean": 7.1586,
+   "people_sd": 0.5817,
+   "fam": 8.0,
+   "A": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "D": [
+    6.7,
+    6.6,
+    6.8,
+    6.6,
+    6.6,
+    6.8
+   ],
+   "B": [
+    6.9,
+    6.9,
+    6.9,
+    6.9,
+    6.9,
+    6.9
+   ],
+   "S": [
+    6.8,
+    6.8,
+    6.0,
+    6.8,
+    6.0,
+    6.8
+   ]
+  },
+  "k68": {
+   "name": "varnish",
+   "people_n": 10,
+   "scored_words": 31,
+   "people_mean": 5.4729,
+   "people_sd": 1.7271,
+   "fam": 3.0,
+   "A": [
+    4,
+    3,
+    3,
+    4,
+    3,
+    3
+   ],
+   "D": [
+    4.9,
+    4.7,
+    4.8,
+    4.7,
+    4.6,
+    4.9
+   ],
+   "B": [
+    4.7,
+    4.6,
+    4.6,
+    4.9,
+    4.6,
+    4.9
+   ],
+   "S": [
+    4.4,
+    4.4,
+    5.2,
+    4.8,
+    5.0,
+    4.5
+   ]
+  },
+  "k69": {
+   "name": "white wine",
+   "people_n": 10,
+   "scored_words": 31,
+   "people_mean": 6.1229,
+   "people_sd": 1.458,
+   "fam": 6.0,
+   "A": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "D": [
+    6.3,
+    6.2,
+    6.3,
+    6.1,
+    6.3,
+    6.3
+   ],
+   "B": [
+    6.5,
+    6.4,
+    6.4,
+    6.5,
+    6.3,
+    6.5
+   ],
+   "S": [
+    6.3,
+    6.3,
+    5.8,
+    6.3,
+    5.8,
+    6.0
+   ]
+  },
+  "k70": {
+   "name": "fish",
+   "people_n": 13,
+   "scored_words": 37,
+   "people_mean": 4.9924,
+   "people_sd": 1.6302,
+   "fam": 3.0,
+   "A": [
+    3,
+    3,
+    3,
+    2,
+    2,
+    3
+   ],
+   "D": [
+    4.6,
+    4.6,
+    4.3,
+    4.6,
+    4.6,
+    4.3
+   ],
+   "B": [
+    4.8,
+    4.6,
+    4.6,
+    4.7,
+    4.8,
+    4.7
+   ],
+   "S": [
+    4.5,
+    4.3,
+    5.15,
+    4.6,
+    4.9,
+    4.6
+   ]
+  },
+  "k71": {
+   "name": "candle",
+   "people_n": 10,
+   "scored_words": 27,
+   "people_mean": 6.4919,
+   "people_sd": 1.6084,
+   "fam": 6.5,
+   "A": [
+    7,
+    6,
+    6,
+    7,
+    7,
+    6
+   ],
+   "D": [
+    6.5,
+    6.3,
+    6.5,
+    6.3,
+    6.2,
+    6.4
+   ],
+   "B": [
+    6.6,
+    6.5,
+    6.6,
+    6.6,
+    6.3,
+    6.7
+   ],
+   "S": [
+    6.2,
+    6.3,
+    5.85,
+    6.4,
+    5.8,
+    6.4
+   ]
+  },
+  "k72": {
+   "name": "fresh linen",
+   "people_n": 11,
+   "scored_words": 39,
+   "people_mean": 6.7656,
+   "people_sd": 1.0594,
+   "fam": 8.0,
+   "A": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "D": [
+    6.9,
+    6.9,
+    7.0,
+    6.6,
+    6.9,
+    6.9
+   ],
+   "B": [
+    7.0,
+    6.9,
+    7.0,
+    7.0,
+    7.0,
+    7.0
+   ],
+   "S": [
+    6.9,
+    7.0,
+    6.0,
+    6.9,
+    6.1,
+    6.9
+   ]
+  }
+ }
+}
