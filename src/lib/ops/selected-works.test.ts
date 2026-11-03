@@ -139,7 +139,7 @@ describe('the stills', () => {
     // piece's crop goes stray when a mirror drops the piece, which only a person tidies, so the
     // nightly runs do not ask
     if (!STRICT) return
-    const wanted = new Set([...picks.map((p) => p.work), ...poolEntries.map((e) => e.pick.work)].map((w) => shelfCrop(w).file))
+    const wanted = new Set([...picks.map((p) => p.work), ...poolEntries.map((e) => e.pick.work)].flatMap((w) => [shelfCrop(w).file, shelfCrop(w).darkFile]))
     const present = existsSync(SHELF_STILL_DIR) ? readdirSync(SHELF_STILL_DIR).map((f) => `${SHELF_STILL_DIR}/${f}`) : []
     expect(present.filter((f) => !wanted.has(f)), 'a stray crop — run npm run shelf:stills').toEqual([])
   })
