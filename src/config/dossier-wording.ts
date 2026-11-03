@@ -223,7 +223,7 @@ export const DOSSIER = {
     heading: 'Contact',
     /** the press bio — the one place on this page the name stands in prose, as on /about */
     bio: [
-      'Frank Bültge works in data engineering and analytics in Karlsruhe, building measurement infrastructure — pipelines, data models, automation — that turns raw records into quantities one can check.',
+      'Frank Bültge is a Data & AI Platform Manager in Karlsruhe. By profession he develops a data platform on Google Cloud, from the pipelines and data models to CI/CD and full-stack development in Python and React: infrastructure that turns raw records into quantities one can check.',
       'He built and conducts the machine-run projects on this site, the research ecology and Machine Attention among them, beside the lab’s own instruments, and he is behind datavism.org and data-snack.com. His role in all of them is the same: architect and conductor.',
     ],
     lead: 'For an exhibition, a text, an interview or a question about one work:',

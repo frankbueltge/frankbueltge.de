@@ -19,10 +19,10 @@ export type About = {
 const de: About = {
   nameNote:
     'Bültge, auch Bueltge geschrieben, wo der Umlaut nicht hinpasst. Nicht zu verwechseln mit dem WordPress-Entwickler Frank Bültge: gleicher Name, andere Person.',
-  metaTitle: 'Über Frank Bültge — Data Engineering & Analytics',
+  metaTitle: 'Über Frank Bültge — Data & AI Platform Manager',
   metaDesc:
-    'Frank Bültge — Data Engineering & Analytics. Öffentliche Projekte und Experimente zu der Frage, wie KI und Automatisierung künstlerische Forschung unterstützen und ergänzen können.',
-  lede: 'Ich bin Frank Bültge aus Karlsruhe und arbeite in Data Engineering & Analytics. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Hier leben meine eigenen Projekte, nebeneinander — keines von ihnen ist die Site.',
+    'Frank Bültge — Data & AI Platform Manager. Öffentliche Projekte und Experimente zu der Frage, wie KI und Automatisierung künstlerische Forschung unterstützen und ergänzen können.',
+  lede: 'Ich bin Frank Bültge aus Karlsruhe und arbeite als Data & AI Platform Manager. Seit Jahren baue ich Dateninfrastruktur; heute entwickle ich eine Datenplattform in der Google Cloud, von den Pipelines und Datenmodellen bis zu CI/CD und Full-Stack-Entwicklung mit Python und React: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Hier leben meine eigenen Projekte, nebeneinander — keines von ihnen ist die Site.',
   sections: [
     {
       heading: 'Die Frage darunter',
@@ -60,10 +60,10 @@ const de: About = {
 const en: About = {
   nameNote:
     'Bültge, written Bueltge where the umlaut cannot go. Not to be confused with the WordPress developer Frank Bültge: same name, different person.',
-  metaTitle: 'About Frank Bültge — Data Engineering & Analytics',
+  metaTitle: 'About Frank Bültge — Data & AI Platform Manager',
   metaDesc:
-    'Frank Bültge — Data Engineering & Analytics. Creator of datavism.org and data-snack.com. Public projects and experiments on how AI and automation can support and extend artistic research.',
-  lede: 'I am Frank Bültge from Karlsruhe, and I work in data engineering and analytics. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live, side by side — none of them is the site.',
+    'Frank Bültge — Data & AI Platform Manager. Creator of datavism.org and data-snack.com. Public projects and experiments on how AI and automation can support and extend artistic research.',
+  lede: 'I am Frank Bültge from Karlsruhe, and I work as a Data & AI Platform Manager. I have built data infrastructure for years; today I develop a data platform on Google Cloud, from the pipelines and data models to CI/CD and full-stack development in Python and React: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live, side by side — none of them is the site.',
   sections: [
     {
       heading: 'The question underneath',

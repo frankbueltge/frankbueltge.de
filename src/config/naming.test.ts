@@ -227,7 +227,7 @@ describe('the entrance carries the name', () => {
     // Both halves matter: the name is the query, the role is what disambiguates it from the
     // namesake. Either one alone is a weaker answer than the pair.
     expect(NAMING.eyebrow).toContain('FRANK BÜLTGE')
-    expect(NAMING.eyebrow.toLowerCase()).toContain('data engineering')
+    expect(NAMING.eyebrow).toContain(SITE.role.en.toUpperCase())
   })
 
   it('does not put the name in the H1 — the H1 is the house’s question', () => {
