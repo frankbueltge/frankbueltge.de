@@ -1,0 +1,1602 @@
+{
+ "note": "Session 165, 2026-09-20. Metamorphic perturbation of this practice's own 2026-09-18 measuring rule, on the two corpora its published numbers and its 2026-09-19 experiment rest on. No rule, relation, adjudication or check in this session calls a model.",
+ "preregistration": "PREREGISTRATION.md, committed before any corpus was fetched",
+ "corpora": {
+  "C1": {
+   "what": "the 740 canonical SPDX licence texts, as published",
+   "n": 740,
+   "license_list_version": "3.29.0",
+   "corpus_digest": "73363f6622045c5a4cebc39af0bedf3bbe5cc5f212549a56aae249cdcf8315ec",
+   "digest_of_2026_09_19": "73363f6622045c5a4cebc39af0bedf3bbe5cc5f212549a56aae249cdcf8315ec",
+   "identical_to_2026_09_19": true,
+   "days_since": 1
+  },
+  "C2": {
+   "what": "the 156 licence-shaped files of 2026-09-18, at their pinned commits",
+   "n": 156,
+   "n_pinned": 156,
+   "n_fetched": 156,
+   "n_digest_matches": 156,
+   "excluded": [],
+   "corpus_digest": "6ef7a964dd960b957ce07668f5f7e78b3e4af6ae6db824f4cda637e87ed43a31",
+   "days_since": 2
+  }
+ },
+ "kill_conditions": {
+  "K1_fidelity_of_SUT": {
+   "fired": false,
+   "fields_compared": 8,
+   "files_compared": 156,
+   "mismatches": []
+  },
+  "K2_fidelity_of_C1": {
+   "fired": false,
+   "share_matching": 1.0
+  },
+  "K3_null": {
+   "fired": false
+  },
+  "K4_identity": {
+   "fired": false
+  }
+ },
+ "relations": [
+  {
+   "id": "M1",
+   "desc": "marker case (c) <-> (C)",
+   "scored": true
+  },
+  {
+   "id": "M2",
+   "desc": "marker form (c) <-> ©",
+   "scored": true
+  },
+  {
+   "id": "M3",
+   "desc": "LF -> CRLF",
+   "scored": true
+  },
+  {
+   "id": "M4",
+   "desc": "four-space indent (control)",
+   "scored": true
+  },
+  {
+   "id": "M5",
+   "desc": "typographic punctuation",
+   "scored": true
+  },
+  {
+   "id": "M6",
+   "desc": "re-wrap to 64 columns",
+   "scored": true
+  },
+  {
+   "id": "M7",
+   "desc": "BOM and a leading blank line",
+   "scored": true
+  },
+  {
+   "id": "M8",
+   "desc": "trailing whitespace",
+   "scored": true
+  },
+  {
+   "id": "M9",
+   "desc": "comment-marker decoration",
+   "scored": false
+  }
+ ],
+ "runs": {
+  "shipped": {
+   "rule_label": "shipped",
+   "rule_digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "57db4c561a58683d81fb35be3781168a419785183215a864ed5694981b6669cd"
+   },
+   "registered_oracle": {
+    "M1": 348,
+    "M2": 451,
+    "M3": 0,
+    "M4": 0,
+    "M5": 63,
+    "M6": 272,
+    "M7": 0,
+    "M8": 0,
+    "M9": 470
+   },
+   "decision_oracle": {
+    "M1": 140,
+    "M2": 18,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 7,
+    "M7": 0,
+    "M8": 0,
+    "M9": 143
+   },
+   "classes": [
+    {
+     "relation": "M1",
+     "change": "attribution: 'named' -> 'no_copyright_line' | delivers: True -> False | reason: 'identified_and_attributed' -> 'no_copyright_line'",
+     "n": 106,
+     "C1": 36,
+     "C2": 70,
+     "examples": [
+      "Apache-1.0",
+      "Apache-1.1",
+      "BSD-2-Clause-Darwin",
+      "BSD-2-Clause-NetBSD",
+      "BSD-3-Clause-LBNL"
+     ]
+    },
+    {
+     "relation": "M1",
+     "change": "attribution: 'no_copyright_line' -> 'named' | delivers: False -> True | reason: 'no_copyright_line' -> 'identified_and_attributed'",
+     "n": 18,
+     "C1": 17,
+     "C2": 1,
+     "examples": [
+      "0BSD",
+      "BSD-2-Clause-first-lines",
+      "BSD-Systemics",
+      "BSD-Systemics-W3Works",
+      "Caldera"
+     ]
+    },
+    {
+     "relation": "M1",
+     "change": "attribution: 'no_holder' -> 'no_copyright_line' | reason: 'no_holder' -> 'no_copyright_line'",
+     "n": 6,
+     "C1": 1,
+     "C2": 5,
+     "examples": [
+      "BSD-Inferno-Nettverk",
+      "AI-in-Health/BioMedArena@LICENSE",
+      "Ewendawi/LLaMEA-BO@LICENSE",
+      "openai/preparedness@LICENSE.md",
+      "openai/preparedness@project/swelancer/LICENSE.md"
+     ]
+    },
+    {
+     "relation": "M1",
+     "change": "attribution: 'placeholder' -> 'no_copyright_line' | reason: 'placeholder' -> 'no_copyright_line'",
+     "n": 10,
+     "C1": 10,
+     "C2": 0,
+     "examples": [
+      "BSD-1-Clause",
+      "BSD-2-Clause",
+      "BSD-2-Clause-Patent",
+      "BSD-2-Clause-Views",
+      "BSD-2-Clause-pos-unchanged"
+     ]
+    },
+    {
+     "relation": "M2",
+     "change": "attribution: 'no_copyright_line' -> 'named' | delivers: False -> True | reason: 'no_copyright_line' -> 'identified_and_attributed'",
+     "n": 18,
+     "C1": 17,
+     "C2": 1,
+     "examples": [
+      "0BSD",
+      "BSD-2-Clause-first-lines",
+      "BSD-Systemics",
+      "BSD-Systemics-W3Works",
+      "Caldera"
+     ]
+    },
+    {
+     "relation": "M5",
+     "change": "attribution: 'named' -> 'no_copyright_line' | delivers: True -> False | reason: 'identified_and_attributed' -> 'no_copyright_line'",
+     "n": 2,
+     "C1": 2,
+     "C2": 0,
+     "examples": [
+      "Sendmail",
+      "Sendmail-8.23"
+     ]
+    },
+    {
+     "relation": "M6",
+     "change": "attribution: 'named' -> 'no_copyright_line' | delivers: True -> False | reason: 'identified_and_attributed' -> 'no_copyright_line'",
+     "n": 3,
+     "C1": 2,
+     "C2": 1,
+     "examples": [
+      "Entessa",
+      "VSL-1.0",
+      "Tencent/CognitiveKernel-Pro@LICENSE.txt"
+     ]
+    },
+    {
+     "relation": "M6",
+     "change": "attribution: 'named' -> 'no_holder' | delivers: True -> False | reason: 'identified_and_attributed' -> 'no_holder'",
+     "n": 1,
+     "C1": 0,
+     "C2": 1,
+     "examples": [
+      "Tencent/Tencent-XR-3DGen@LICENSE"
+     ]
+    },
+    {
+     "relation": "M6",
+     "change": "attribution: 'no_copyright_line' -> 'named' | delivers: False -> True | reason: 'no_copyright_line' -> 'identified_and_attributed'",
+     "n": 3,
+     "C1": 3,
+     "C2": 0,
+     "examples": [
+      "BSD-3-Clause-Modification",
+      "DocBook-XML",
+      "ZPL-2.1"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['AGPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 3,
+     "C2": 2,
+     "examples": [
+      "AGPL-3.0",
+      "AGPL-3.0-only",
+      "AGPL-3.0-or-later",
+      "gtrhythm/PARNESS@src/PDF-Extract-Kit/LICENSE.md",
+      "merlresearch/radar-pose-transformer@LICENSE.md"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 8,
+     "C1": 8,
+     "C2": 0,
+     "examples": [
+      "BSD-2-Clause-Darwin",
+      "BSD-2-Clause-pkgconf-disclaimer",
+      "BSD-Advertising-Acknowledgement",
+      "BSD-Attribution-HPND-disclaimer",
+      "BSD-Source-beginning-file"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 8,
+     "C1": 8,
+     "C2": 0,
+     "examples": [
+      "BSD-2-Clause-first-lines",
+      "BSD-3-Clause-Modification",
+      "BSD-Mark-Modifications",
+      "BSD-Source-Code-no-disclaimer",
+      "BSD-Source-alt-GPL"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'placeholder' -> None | reason: 'placeholder' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "BSD-2-Clause-pos-unchanged"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause', 'Apache-2.0'] -> ['Apache-2.0'] | attribution: 'named' -> None | reason: 'identified_and_attributed' -> 'identified_attribution_not_applicable'",
+     "n": 1,
+     "C1": 0,
+     "C2": 1,
+     "examples": [
+      "CMBAgents/cmbagent@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 7,
+     "C1": 4,
+     "C2": 3,
+     "examples": [
+      "BSD-3-Clause-OpenWebUI",
+      "BSD-3-Clause-Sun",
+      "BSD-3-Clause-flex",
+      "UCAR",
+      "Tencent/Tencent-XR-3DGen@data/main_data_pipeline/docker/occupancy_network/external/mesh-fusion/libfusioncpu/LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 4,
+     "C1": 3,
+     "C2": 1,
+     "examples": [
+      "BSD-3-Clause-HP",
+      "BSD-3-Clause-Open-MPI",
+      "BSD-3-Clause-acpica",
+      "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-4-Clause'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "BSD-Systemics",
+      "BSD-Systemics-W3Works",
+      "Caldera-no-preamble",
+      "SSLeay-standalone"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-4-Clause'] -> [] | attribution: 'no_holder' -> None | reason: 'no_holder' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "BSD-Inferno-Nettverk"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['GPL-2.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 4,
+     "C2": 1,
+     "examples": [
+      "GPL-2.0",
+      "GPL-2.0+",
+      "GPL-2.0-only",
+      "GPL-2.0-or-later",
+      "NYU-LLM-CTF/CTFTiny@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['GPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 4,
+     "C2": 1,
+     "examples": [
+      "GPL-3.0",
+      "GPL-3.0+",
+      "GPL-3.0-only",
+      "GPL-3.0-or-later",
+      "Tencent/Tencent-XR-3DGen@geometry/am_generation/miche/LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['ISC'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "pkgconf"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['LGPL-2.1'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "LGPL-2.1",
+      "LGPL-2.1+",
+      "LGPL-2.1-only",
+      "LGPL-2.1-or-later"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['LGPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "LGPL-3.0",
+      "LGPL-3.0+",
+      "LGPL-3.0-only",
+      "LGPL-3.0-or-later"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT', 'Apache-2.0'] -> ['Apache-2.0'] | attribution: 'named' -> None | reason: 'identified_and_attributed' -> 'identified_attribution_not_applicable'",
+     "n": 1,
+     "C1": 0,
+     "C2": 1,
+     "examples": [
+      "uni-medical/MedProbeBench@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 70,
+     "C1": 4,
+     "C2": 66,
+     "examples": [
+      "MIT-STK",
+      "MIT-Wu",
+      "X11-no-permit-persons",
+      "X11-swapped",
+      "Bluefin-Tuna/WISER@dreamerv3/LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 5,
+     "C1": 4,
+     "C2": 1,
+     "examples": [
+      "Clips",
+      "DocBook-XML",
+      "FSL-1.1-MIT",
+      "MIT-Click",
+      "Jinxhy/Awesome-MoAI-Security@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'no_holder' -> None | reason: 'no_holder' -> 'not_identified'",
+     "n": 5,
+     "C1": 0,
+     "C2": 5,
+     "examples": [
+      "AI-in-Health/BioMedArena@LICENSE",
+      "Ewendawi/LLaMEA-BO@LICENSE",
+      "openai/preparedness@LICENSE.md",
+      "openai/preparedness@project/swelancer/LICENSE.md",
+      "raja21068/AutoResearch@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'placeholder' -> None | reason: 'placeholder' -> 'not_identified'",
+     "n": 3,
+     "C1": 3,
+     "C2": 0,
+     "examples": [
+      "MIT",
+      "MIT-0",
+      "X11-distribute-modifications-variant"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['Zlib'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "libpng-2.0"
+     ]
+    }
+   ],
+   "registered_scored_total": 1134,
+   "decision_scored_total": 167,
+   "scored_classes": 9,
+   "unscored_classes_M9": 20,
+   "echo_only_violations": 967
+  },
+  "B": {
+   "rule_label": "B",
+   "rule_digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "8433dba20bf0ac85ad2bbddc4c50e379955da35fdad26048a7139c47c86be2b2"
+   },
+   "registered_oracle": {
+    "M1": 348,
+    "M2": 464,
+    "M3": 0,
+    "M4": 0,
+    "M5": 70,
+    "M6": 502,
+    "M7": 0,
+    "M8": 0,
+    "M9": 562
+   },
+   "decision_oracle": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 20,
+    "M7": 0,
+    "M8": 0,
+    "M9": 143
+   },
+   "classes": [
+    {
+     "relation": "M5",
+     "change": "attribution: 'named' -> 'no_copyright_line' | delivers: True -> False | reason: 'identified_and_attributed' -> 'no_copyright_line'",
+     "n": 2,
+     "C1": 2,
+     "C2": 0,
+     "examples": [
+      "Sendmail",
+      "Sendmail-8.23"
+     ]
+    },
+    {
+     "relation": "M6",
+     "change": "attribution: 'named' -> 'no_copyright_line' | delivers: True -> False | reason: 'identified_and_attributed' -> 'no_copyright_line'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "pkgconf"
+     ]
+    },
+    {
+     "relation": "M6",
+     "change": "attribution: 'no_copyright_line' -> 'named' | delivers: False -> True | reason: 'no_copyright_line' -> 'identified_and_attributed'",
+     "n": 10,
+     "C1": 9,
+     "C2": 1,
+     "examples": [
+      "BSD-3-Clause-Attribution",
+      "BSD-3-Clause-Open-MPI",
+      "BSD-Mark-Modifications",
+      "Linux-OpenIB",
+      "Naumen"
+     ]
+    },
+    {
+     "relation": "M6",
+     "change": "attribution: 'placeholder' -> 'named' | delivers: False -> True | reason: 'placeholder' -> 'identified_and_attributed'",
+     "n": 9,
+     "C1": 9,
+     "C2": 0,
+     "examples": [
+      "BSD-1-Clause",
+      "BSD-2-Clause",
+      "BSD-2-Clause-Patent",
+      "BSD-2-Clause-Views",
+      "BSD-2-Clause-pos-unchanged"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['AGPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 3,
+     "C2": 2,
+     "examples": [
+      "AGPL-3.0",
+      "AGPL-3.0-only",
+      "AGPL-3.0-or-later",
+      "gtrhythm/PARNESS@src/PDF-Extract-Kit/LICENSE.md",
+      "merlresearch/radar-pose-transformer@LICENSE.md"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 12,
+     "C1": 12,
+     "C2": 0,
+     "examples": [
+      "BSD-2-Clause-Darwin",
+      "BSD-2-Clause-first-lines",
+      "BSD-2-Clause-pkgconf-disclaimer",
+      "BSD-3-Clause-Modification",
+      "BSD-Advertising-Acknowledgement"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "BSD-Mark-Modifications",
+      "BSD-Source-Code-no-disclaimer",
+      "BSD-Source-alt-GPL",
+      "Linux-OpenIB"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'placeholder' -> None | reason: 'placeholder' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "BSD-2-Clause-pos-unchanged"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause', 'Apache-2.0'] -> ['Apache-2.0'] | attribution: 'named' -> None | reason: 'identified_and_attributed' -> 'identified_attribution_not_applicable'",
+     "n": 1,
+     "C1": 0,
+     "C2": 1,
+     "examples": [
+      "CMBAgents/cmbagent@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 7,
+     "C1": 4,
+     "C2": 3,
+     "examples": [
+      "BSD-3-Clause-OpenWebUI",
+      "BSD-3-Clause-Sun",
+      "BSD-3-Clause-flex",
+      "UCAR",
+      "Tencent/Tencent-XR-3DGen@data/main_data_pipeline/docker/occupancy_network/external/mesh-fusion/libfusioncpu/LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 4,
+     "C1": 3,
+     "C2": 1,
+     "examples": [
+      "BSD-3-Clause-HP",
+      "BSD-3-Clause-Open-MPI",
+      "BSD-3-Clause-acpica",
+      "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-4-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "BSD-Systemics",
+      "BSD-Systemics-W3Works",
+      "Caldera-no-preamble",
+      "SSLeay-standalone"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-4-Clause'] -> [] | attribution: 'no_holder' -> None | reason: 'no_holder' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "BSD-Inferno-Nettverk"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['GPL-2.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 4,
+     "C2": 1,
+     "examples": [
+      "GPL-2.0",
+      "GPL-2.0+",
+      "GPL-2.0-only",
+      "GPL-2.0-or-later",
+      "NYU-LLM-CTF/CTFTiny@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['GPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 4,
+     "C2": 1,
+     "examples": [
+      "GPL-3.0",
+      "GPL-3.0+",
+      "GPL-3.0-only",
+      "GPL-3.0-or-later",
+      "Tencent/Tencent-XR-3DGen@geometry/am_generation/miche/LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['ISC'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "pkgconf"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['LGPL-2.1'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "LGPL-2.1",
+      "LGPL-2.1+",
+      "LGPL-2.1-only",
+      "LGPL-2.1-or-later"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['LGPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "LGPL-3.0",
+      "LGPL-3.0+",
+      "LGPL-3.0-only",
+      "LGPL-3.0-or-later"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT', 'Apache-2.0'] -> ['Apache-2.0'] | attribution: 'named' -> None | reason: 'identified_and_attributed' -> 'identified_attribution_not_applicable'",
+     "n": 1,
+     "C1": 0,
+     "C2": 1,
+     "examples": [
+      "uni-medical/MedProbeBench@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 71,
+     "C1": 5,
+     "C2": 66,
+     "examples": [
+      "DocBook-XML",
+      "MIT-STK",
+      "MIT-Wu",
+      "X11-no-permit-persons",
+      "X11-swapped"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 4,
+     "C1": 3,
+     "C2": 1,
+     "examples": [
+      "Clips",
+      "FSL-1.1-MIT",
+      "MIT-Click",
+      "Jinxhy/Awesome-MoAI-Security@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'no_holder' -> None | reason: 'no_holder' -> 'not_identified'",
+     "n": 5,
+     "C1": 0,
+     "C2": 5,
+     "examples": [
+      "AI-in-Health/BioMedArena@LICENSE",
+      "Ewendawi/LLaMEA-BO@LICENSE",
+      "openai/preparedness@LICENSE.md",
+      "openai/preparedness@project/swelancer/LICENSE.md",
+      "raja21068/AutoResearch@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'placeholder' -> None | reason: 'placeholder' -> 'not_identified'",
+     "n": 3,
+     "C1": 3,
+     "C2": 0,
+     "examples": [
+      "MIT",
+      "MIT-0",
+      "X11-distribute-modifications-variant"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['Zlib'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "libpng-2.0"
+     ]
+    }
+   ],
+   "registered_scored_total": 1384,
+   "decision_scored_total": 22,
+   "scored_classes": 4,
+   "unscored_classes_M9": 20,
+   "echo_only_violations": 1362
+  },
+  "C": {
+   "rule_label": "C",
+   "rule_digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "39eaef0a2ca6833ada906128a6f8205b0fadb1fe0d8b39f0459e9f8e065f1f3f"
+   },
+   "registered_oracle": {
+    "M1": 348,
+    "M2": 451,
+    "M3": 0,
+    "M4": 0,
+    "M5": 65,
+    "M6": 331,
+    "M7": 0,
+    "M8": 0,
+    "M9": 540
+   },
+   "decision_oracle": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 2,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0,
+    "M9": 143
+   },
+   "classes": [
+    {
+     "relation": "M5",
+     "change": "attribution: 'named' -> 'no_copyright_line' | delivers: True -> False | reason: 'identified_and_attributed' -> 'no_copyright_line'",
+     "n": 2,
+     "C1": 2,
+     "C2": 0,
+     "examples": [
+      "Sendmail",
+      "Sendmail-8.23"
+     ]
+    },
+    {
+     "relation": "M6",
+     "change": "attribution: 'named' -> 'no_copyright_line' | delivers: True -> False | reason: 'identified_and_attributed' -> 'no_copyright_line'",
+     "n": 2,
+     "C1": 2,
+     "C2": 0,
+     "examples": [
+      "Entessa",
+      "VSL-1.0"
+     ]
+    },
+    {
+     "relation": "M6",
+     "change": "attribution: 'no_copyright_line' -> 'named' | delivers: False -> True | reason: 'no_copyright_line' -> 'identified_and_attributed'",
+     "n": 2,
+     "C1": 2,
+     "C2": 0,
+     "examples": [
+      "BSD-3-Clause-Modification",
+      "ZPL-2.1"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['AGPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 3,
+     "C2": 2,
+     "examples": [
+      "AGPL-3.0",
+      "AGPL-3.0-only",
+      "AGPL-3.0-or-later",
+      "gtrhythm/PARNESS@src/PDF-Extract-Kit/LICENSE.md",
+      "merlresearch/radar-pose-transformer@LICENSE.md"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 10,
+     "C1": 10,
+     "C2": 0,
+     "examples": [
+      "BSD-2-Clause-Darwin",
+      "BSD-2-Clause-first-lines",
+      "BSD-2-Clause-pkgconf-disclaimer",
+      "BSD-Advertising-Acknowledgement",
+      "BSD-Attribution-HPND-disclaimer"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 6,
+     "C1": 6,
+     "C2": 0,
+     "examples": [
+      "BSD-3-Clause-Modification",
+      "BSD-Mark-Modifications",
+      "BSD-Source-Code-no-disclaimer",
+      "BSD-Source-alt-GPL",
+      "Linux-OpenIB"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'placeholder' -> None | reason: 'placeholder' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "BSD-2-Clause-pos-unchanged"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause', 'Apache-2.0'] -> ['Apache-2.0'] | attribution: 'named' -> None | reason: 'identified_and_attributed' -> 'identified_attribution_not_applicable'",
+     "n": 1,
+     "C1": 0,
+     "C2": 1,
+     "examples": [
+      "CMBAgents/cmbagent@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 7,
+     "C1": 4,
+     "C2": 3,
+     "examples": [
+      "BSD-3-Clause-OpenWebUI",
+      "BSD-3-Clause-Sun",
+      "BSD-3-Clause-flex",
+      "UCAR",
+      "Tencent/Tencent-XR-3DGen@data/main_data_pipeline/docker/occupancy_network/external/mesh-fusion/libfusioncpu/LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 4,
+     "C1": 3,
+     "C2": 1,
+     "examples": [
+      "BSD-3-Clause-HP",
+      "BSD-3-Clause-Open-MPI",
+      "BSD-3-Clause-acpica",
+      "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-4-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "BSD-Systemics",
+      "BSD-Systemics-W3Works",
+      "Caldera-no-preamble",
+      "SSLeay-standalone"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-4-Clause'] -> [] | attribution: 'no_holder' -> None | reason: 'no_holder' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "BSD-Inferno-Nettverk"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['GPL-2.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 4,
+     "C2": 1,
+     "examples": [
+      "GPL-2.0",
+      "GPL-2.0+",
+      "GPL-2.0-only",
+      "GPL-2.0-or-later",
+      "NYU-LLM-CTF/CTFTiny@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['GPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 4,
+     "C2": 1,
+     "examples": [
+      "GPL-3.0",
+      "GPL-3.0+",
+      "GPL-3.0-only",
+      "GPL-3.0-or-later",
+      "Tencent/Tencent-XR-3DGen@geometry/am_generation/miche/LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['ISC'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "pkgconf"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['LGPL-2.1'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "LGPL-2.1",
+      "LGPL-2.1+",
+      "LGPL-2.1-only",
+      "LGPL-2.1-or-later"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['LGPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "LGPL-3.0",
+      "LGPL-3.0+",
+      "LGPL-3.0-only",
+      "LGPL-3.0-or-later"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT', 'Apache-2.0'] -> ['Apache-2.0'] | attribution: 'named' -> None | reason: 'identified_and_attributed' -> 'identified_attribution_not_applicable'",
+     "n": 1,
+     "C1": 0,
+     "C2": 1,
+     "examples": [
+      "uni-medical/MedProbeBench@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 71,
+     "C1": 5,
+     "C2": 66,
+     "examples": [
+      "DocBook-XML",
+      "MIT-STK",
+      "MIT-Wu",
+      "X11-no-permit-persons",
+      "X11-swapped"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 4,
+     "C1": 3,
+     "C2": 1,
+     "examples": [
+      "Clips",
+      "FSL-1.1-MIT",
+      "MIT-Click",
+      "Jinxhy/Awesome-MoAI-Security@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'no_holder' -> None | reason: 'no_holder' -> 'not_identified'",
+     "n": 5,
+     "C1": 0,
+     "C2": 5,
+     "examples": [
+      "AI-in-Health/BioMedArena@LICENSE",
+      "Ewendawi/LLaMEA-BO@LICENSE",
+      "openai/preparedness@LICENSE.md",
+      "openai/preparedness@project/swelancer/LICENSE.md",
+      "raja21068/AutoResearch@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'placeholder' -> None | reason: 'placeholder' -> 'not_identified'",
+     "n": 3,
+     "C1": 3,
+     "C2": 0,
+     "examples": [
+      "MIT",
+      "MIT-0",
+      "X11-distribute-modifications-variant"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['Zlib'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "libpng-2.0"
+     ]
+    }
+   ],
+   "registered_scored_total": 1195,
+   "decision_scored_total": 6,
+   "scored_classes": 3,
+   "unscored_classes_M9": 20,
+   "echo_only_violations": 1189
+  },
+  "D": {
+   "rule_label": "D",
+   "rule_digests": {
+    "rules.py": "ccb373b6edb1e4397d7ac145aca6ff94e995934c9315b1ccc23eb266a288a2ed",
+    "fingerprints.py": "6d77338dc04e2b35ac6c5e59237305ee8008e87c1516160e625057e22b6a4e34"
+   },
+   "registered_oracle": {
+    "M1": 348,
+    "M2": 451,
+    "M3": 0,
+    "M4": 0,
+    "M5": 65,
+    "M6": 332,
+    "M7": 0,
+    "M8": 0,
+    "M9": 540
+   },
+   "decision_oracle": {
+    "M1": 0,
+    "M2": 0,
+    "M3": 0,
+    "M4": 0,
+    "M5": 0,
+    "M6": 4,
+    "M7": 0,
+    "M8": 0,
+    "M9": 143
+   },
+   "classes": [
+    {
+     "relation": "M6",
+     "change": "attribution: 'named' -> 'no_copyright_line' | delivers: True -> False | reason: 'identified_and_attributed' -> 'no_copyright_line'",
+     "n": 2,
+     "C1": 2,
+     "C2": 0,
+     "examples": [
+      "Entessa",
+      "VSL-1.0"
+     ]
+    },
+    {
+     "relation": "M6",
+     "change": "attribution: 'no_copyright_line' -> 'named' | delivers: False -> True | reason: 'no_copyright_line' -> 'identified_and_attributed'",
+     "n": 2,
+     "C1": 2,
+     "C2": 0,
+     "examples": [
+      "BSD-3-Clause-Modification",
+      "ZPL-2.1"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['AGPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 3,
+     "C2": 2,
+     "examples": [
+      "AGPL-3.0",
+      "AGPL-3.0-only",
+      "AGPL-3.0-or-later",
+      "gtrhythm/PARNESS@src/PDF-Extract-Kit/LICENSE.md",
+      "merlresearch/radar-pose-transformer@LICENSE.md"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 10,
+     "C1": 10,
+     "C2": 0,
+     "examples": [
+      "BSD-2-Clause-Darwin",
+      "BSD-2-Clause-first-lines",
+      "BSD-2-Clause-pkgconf-disclaimer",
+      "BSD-Advertising-Acknowledgement",
+      "BSD-Attribution-HPND-disclaimer"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 6,
+     "C1": 6,
+     "C2": 0,
+     "examples": [
+      "BSD-3-Clause-Modification",
+      "BSD-Mark-Modifications",
+      "BSD-Source-Code-no-disclaimer",
+      "BSD-Source-alt-GPL",
+      "Linux-OpenIB"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-2-Clause'] -> [] | attribution: 'placeholder' -> None | reason: 'placeholder' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "BSD-2-Clause-pos-unchanged"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause', 'Apache-2.0'] -> ['Apache-2.0'] | attribution: 'named' -> None | reason: 'identified_and_attributed' -> 'identified_attribution_not_applicable'",
+     "n": 1,
+     "C1": 0,
+     "C2": 1,
+     "examples": [
+      "CMBAgents/cmbagent@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 7,
+     "C1": 4,
+     "C2": 3,
+     "examples": [
+      "BSD-3-Clause-OpenWebUI",
+      "BSD-3-Clause-Sun",
+      "BSD-3-Clause-flex",
+      "UCAR",
+      "Tencent/Tencent-XR-3DGen@data/main_data_pipeline/docker/occupancy_network/external/mesh-fusion/libfusioncpu/LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-3-Clause'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 4,
+     "C1": 3,
+     "C2": 1,
+     "examples": [
+      "BSD-3-Clause-HP",
+      "BSD-3-Clause-Open-MPI",
+      "BSD-3-Clause-acpica",
+      "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-4-Clause'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "BSD-Systemics",
+      "BSD-Systemics-W3Works",
+      "Caldera-no-preamble",
+      "SSLeay-standalone"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['BSD-4-Clause'] -> [] | attribution: 'no_holder' -> None | reason: 'no_holder' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "BSD-Inferno-Nettverk"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['GPL-2.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 4,
+     "C2": 1,
+     "examples": [
+      "GPL-2.0",
+      "GPL-2.0+",
+      "GPL-2.0-only",
+      "GPL-2.0-or-later",
+      "NYU-LLM-CTF/CTFTiny@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['GPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 5,
+     "C1": 4,
+     "C2": 1,
+     "examples": [
+      "GPL-3.0",
+      "GPL-3.0+",
+      "GPL-3.0-only",
+      "GPL-3.0-or-later",
+      "Tencent/Tencent-XR-3DGen@geometry/am_generation/miche/LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['ISC'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "pkgconf"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['LGPL-2.1'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "LGPL-2.1",
+      "LGPL-2.1+",
+      "LGPL-2.1-only",
+      "LGPL-2.1-or-later"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['LGPL-3.0'] -> [] | delivers: True -> False | reason: 'identified_attribution_not_applicable' -> 'not_identified'",
+     "n": 4,
+     "C1": 4,
+     "C2": 0,
+     "examples": [
+      "LGPL-3.0",
+      "LGPL-3.0+",
+      "LGPL-3.0-only",
+      "LGPL-3.0-or-later"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT', 'Apache-2.0'] -> ['Apache-2.0'] | attribution: 'named' -> None | reason: 'identified_and_attributed' -> 'identified_attribution_not_applicable'",
+     "n": 1,
+     "C1": 0,
+     "C2": 1,
+     "examples": [
+      "uni-medical/MedProbeBench@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 71,
+     "C1": 5,
+     "C2": 66,
+     "examples": [
+      "DocBook-XML",
+      "MIT-STK",
+      "MIT-Wu",
+      "X11-no-permit-persons",
+      "X11-swapped"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'no_copyright_line' -> None | reason: 'no_copyright_line' -> 'not_identified'",
+     "n": 4,
+     "C1": 3,
+     "C2": 1,
+     "examples": [
+      "Clips",
+      "FSL-1.1-MIT",
+      "MIT-Click",
+      "Jinxhy/Awesome-MoAI-Security@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'no_holder' -> None | reason: 'no_holder' -> 'not_identified'",
+     "n": 5,
+     "C1": 0,
+     "C2": 5,
+     "examples": [
+      "AI-in-Health/BioMedArena@LICENSE",
+      "Ewendawi/LLaMEA-BO@LICENSE",
+      "openai/preparedness@LICENSE.md",
+      "openai/preparedness@project/swelancer/LICENSE.md",
+      "raja21068/AutoResearch@LICENSE"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['MIT'] -> [] | attribution: 'placeholder' -> None | reason: 'placeholder' -> 'not_identified'",
+     "n": 3,
+     "C1": 3,
+     "C2": 0,
+     "examples": [
+      "MIT",
+      "MIT-0",
+      "X11-distribute-modifications-variant"
+     ]
+    },
+    {
+     "relation": "M9",
+     "change": "families: ['Zlib'] -> [] | attribution: 'named' -> None | delivers: True -> False | reason: 'identified_and_attributed' -> 'not_identified'",
+     "n": 1,
+     "C1": 1,
+     "C2": 0,
+     "examples": [
+      "libpng-2.0"
+     ]
+    }
+   ],
+   "registered_scored_total": 1196,
+   "decision_scored_total": 4,
+   "scored_classes": 2,
+   "unscored_classes_M9": 20,
+   "echo_only_violations": 1192
+  }
+ },
+ "headline_rederived": {
+  "shipped": {
+   "k": 100,
+   "n": 105,
+   "pct": 95.2,
+   "names_no_holder": 6,
+   "names_no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ]
+  },
+  "C": {
+   "k": 100,
+   "n": 105,
+   "pct": 95.2,
+   "names_no_holder": 6,
+   "names_no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ]
+  },
+  "D": {
+   "k": 100,
+   "n": 105,
+   "pct": 95.2,
+   "names_no_holder": 6,
+   "names_no_holder_repos": [
+    "AI-in-Health/BioMedArena",
+    "Ewendawi/LLaMEA-BO",
+    "Jinxhy/Awesome-MoAI-Security",
+    "alaaNfissi/Unveiling-Hidden-Factors-Explainable-AI-for-Feature-Boosting-in-Speech-Emotion-Recognition",
+    "openai/preparedness",
+    "raja21068/AutoResearch"
+   ]
+  }
+ },
+ "headline_published_0918": {
+  "k": 100,
+  "n": 105,
+  "pct": 95.2,
+  "names_no_holder": 6
+ },
+ "baseline_movement_under_repair": {
+  "B": {
+   "C1": {
+    "tuples_moved": 162,
+    "decisions_moved": 20,
+    "decisions": [
+     "0BSD",
+     "BSD-2-Clause-first-lines",
+     "BSD-3-Clause-Modification",
+     "BSD-Systemics",
+     "BSD-Systemics-W3Works",
+     "Caldera",
+     "Caldera-no-preamble",
+     "CryptoSwift",
+     "Cube",
+     "DocBook-XML",
+     "MIT-advertising",
+     "MIT-enna",
+     "Minpack",
+     "SGI-B-2.0",
+     "SSLeay-standalone",
+     "Saxpath",
+     "TrustedQSL",
+     "X11",
+     "XFree86-1.1",
+     "pkgconf"
+    ]
+   },
+   "C2": {
+    "tuples_moved": 56,
+    "decisions_moved": 1,
+    "decisions": [
+     "Tencent/Tencent-XR-3DGen@geometry/neusdfusion_test/LICENSE"
+    ]
+   }
+  },
+  "C": {
+   "C1": {
+    "tuples_moved": 120,
+    "decisions_moved": 17,
+    "decisions": [
+     "0BSD",
+     "BSD-2-Clause-first-lines",
+     "BSD-Systemics",
+     "BSD-Systemics-W3Works",
+     "Caldera",
+     "Caldera-no-preamble",
+     "CryptoSwift",
+     "Cube",
+     "DocBook-XML",
+     "MIT-advertising",
+     "MIT-enna",
+     "SGI-B-2.0",
+     "SSLeay-standalone",
+     "Saxpath",
+     "TrustedQSL",
+     "X11",
+     "XFree86-1.1"
+    ]
+   },
+   "C2": {
+    "tuples_moved": 8,
+    "decisions_moved": 1,
+    "decisions": [
+     "Tencent/Tencent-XR-3DGen@geometry/neusdfusion_test/LICENSE"
+    ]
+   }
+  },
+  "D": {
+   "C1": {
+    "tuples_moved": 120,
+    "decisions_moved": 17,
+    "decisions": [
+     "0BSD",
+     "BSD-2-Clause-first-lines",
+     "BSD-Systemics",
+     "BSD-Systemics-W3Works",
+     "Caldera",
+     "Caldera-no-preamble",
+     "CryptoSwift",
+     "Cube",
+     "DocBook-XML",
+     "MIT-advertising",
+     "MIT-enna",
+     "SGI-B-2.0",
+     "SSLeay-standalone",
+     "Saxpath",
+     "TrustedQSL",
+     "X11",
+     "XFree86-1.1"
+    ]
+   },
+   "C2": {
+    "tuples_moved": 8,
+    "decisions_moved": 1,
+    "decisions": [
+     "Tencent/Tencent-XR-3DGen@geometry/neusdfusion_test/LICENSE"
+    ]
+   }
+  }
+ }
+}

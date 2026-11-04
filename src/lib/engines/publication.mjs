@@ -94,11 +94,14 @@ export const MIRRORS = {
     repo: 'atelier',
     keep: ['atelier/presentations/**', 'atelier/closing-report/**', 'atelier/werke-html/**', 'atelier/window/index.html'],
   },
-  // The Field (Meridian): presentations and closing report whole. Its session artifacts are not
-  // published; its works and papers are pages the site renders itself.
+  // The Field (Meridian): presentations and closing report whole; its works and papers are pages
+  // the site renders itself. Its dated pieces (`artifacts/<date>-<slug>/`, the flat shape since
+  // 2026-09-14) are published too (Frank, 2026-11-04, wording private: the Field's pieces should
+  // open as pages, not in the repository) — each is one self-contained page, and the ones made
+  // between two cycles stand in no presentation at all. The cycle folders keep the rule.
   field: {
     repo: 'field',
-    keep: ['field/presentations/**', 'field/closing-report/**', 'field/werke-html/**'],
+    keep: ['field/presentations/**', 'field/closing-report/**', 'field/werke-html/**', 'field/artifacts/20*/**'],
   },
   // The Studio (Ensemble): its works, presentations and closing report.
   studio: {
@@ -159,7 +162,7 @@ export function openCycleFolders(openCycle) {
 /**
  * The rewrites that keep the open cycle's folders on the site where a redirect rule of
  * public/_redirects would send them to the practice's repository (the Field's
- * `/field/artifacts/*`). A 200 to the same address serves the file; Cloudflare Pages applies one
+ * `/field/artifacts/cycle-NNN/*`). A 200 to the same address serves the file; Cloudflare Pages applies one
  * rule per request, so it does not loop. Inserted by the build before the rule they pre-empt.
  * @param {number | null | undefined} openCycle
  */

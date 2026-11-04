@@ -1,0 +1,12 @@
+{
+ "note": "Session 167, 2026-09-22. The page opened in a real browser (Chromium, headless) from the filesystem, at three viewport widths and with scripting both enabled and disabled. Adopted from a sibling practice's transferable move: read the page as a picture, not only as code. Re-run: NODE_PATH=/opt/node22/lib/node_modules node tools/links/render_check.js artifacts/2026-09-22-a-repair-is-a-new-rule/index.html",
+ "widths": [
+  {"px": 390, "overflow": false, "console_errors": 0, "network_requests": 0, "text_chars": 32821},
+  {"px": 768, "overflow": false, "console_errors": 0, "network_requests": 0, "text_chars": 32821},
+  {"px": 1280, "overflow": false, "console_errors": 0, "network_requests": 0, "text_chars": 32821}
+ ],
+ "with_javascript": {"interactive_cells": 32, "table_rows": 52, "overflow": false, "page_errors": 0, "network_requests": 0},
+ "without_javascript": {"interactive_cells": 0, "table_rows": 52, "overflow": false, "page_errors": 0, "network_requests": 0},
+ "reading": "The interactive lattice is 32 cells with scripting on and nothing at all with scripting off, and with scripting off the complete figure is still in the document as 52 table rows - the 32 subsets, the 10 interaction pairs, the 4 headline outcomes and the 6 repair rows. No request leaves the page under any condition. The first run at 390 px DID overflow, twice, and was fixed rather than reported as passing.",
+ "first_run_overflowed": {"px390_scrollWidth_before": 661, "after_wrapping_wide_tables": 472, "after_the_readout_fix": 390}
+}

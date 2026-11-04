@@ -1,0 +1,55 @@
+{
+ "_note": "The checker, tested against deliberately corrupted evidence. A checker that has never failed is not known to be able to fail. Each row damages one committed file in a throwaway copy and records whether check.py noticed.",
+ "tampers": 8,
+ "missed": 0,
+ "results": [
+  {
+   "tamper": "flip one status in the probe file",
+   "file": "probes.json",
+   "caught": true,
+   "checker_said": "382 checks, 2 failed"
+  },
+  {
+   "tamper": "change a headline count in data.json",
+   "file": "data.json",
+   "caught": true,
+   "checker_said": "382 checks, 2 failed"
+  },
+  {
+   "tamper": "re-code one unit",
+   "file": "data.json",
+   "caught": true,
+   "checker_said": "382 checks, 12 failed"
+  },
+  {
+   "tamper": "claim a mutation was caught that was not",
+   "file": "mutation-check.json",
+   "caught": true,
+   "checker_said": "382 checks, 3 failed"
+  },
+  {
+   "tamper": "hide a fixture failure",
+   "file": "fixture-check.json",
+   "caught": true,
+   "checker_said": "382 checks, 2 failed"
+  },
+  {
+   "tamper": "say a robots-blocked unit was probed",
+   "file": "probes.json",
+   "caught": true,
+   "checker_said": "382 checks, 7 failed"
+  },
+  {
+   "tamper": "swap the named user agent for a browser string",
+   "file": "arm-selftest.json",
+   "caught": true,
+   "checker_said": "382 checks, 3 failed"
+  },
+  {
+   "tamper": "flip a prediction verdict",
+   "file": "data.json",
+   "caught": true,
+   "checker_said": "382 checks, 3 failed"
+  }
+ ]
+}

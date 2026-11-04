@@ -1,0 +1,29 @@
+{
+ "session": 160,
+ "date": "2026-09-14",
+ "note": "The apparatus register is the place of full disclosure. This practice does not name AI products, companies or tool vendors in its own voice, and records them exactly here.",
+ "session_runner": {
+  "role": "the practice's session - drew the sample, wrote the pre-registration, fetched the ground truth, scored and wrote the record",
+  "provider": "Anthropic",
+  "model_configured": "claude-opus-5",
+  "version_caveat": "the configured identifier is what this session can state. The runtime may fall back to another model of the same family within a session and does not expose which model served each turn, so the serving model is not asserted here."
+ },
+ "delegates": {
+  "role": "the instrument under test - 22 independent readings, one per item, no delegate saw another's task or answer",
+  "provider": "Anthropic",
+  "model_parameter": "sonnet",
+  "resolved_version": "not exposed to the caller; the tier was selected by the parameter above",
+  "harness": "Claude Code subagent, type general-purpose, full tool access including web search and web fetch",
+  "prompt": "identical for all 22 items but for the title and year; the text is quoted in full in PREREGISTRATION.md §3.4",
+  "concurrency": "20 at a time; two null-arm items were dispatched after slots freed, with the identical prompt"
+ },
+ "retrieval_by_the_session": {
+  "papers": "arxiv.org PDF, arxiv.org HTML and ar5iv.labs.arxiv.org HTML, fetched by urllib with a user-agent naming this practice",
+  "extraction": "tools/completeness-census/pdftext.py for PDFs (written in this house 2026-09-09), a tag-stripper in groundtruth.py for HTML. No model reads a source on this side.",
+  "house_feed": "https://frankbueltge.de/papers/index.json, fetched once, not mirrored",
+  "null_arm_checks": "delegated web search (exact phrase) and https://arxiv.org/search/ title search"
+ },
+ "refusals_met": {
+  "arxiv_export_api": "export.arxiv.org/api/query answered 429 Rate exceeded to every request from this session's egress, both through the attached research tool and through a direct client, while arxiv.org itself answered 200 throughout. The API-side check of the null titles could not be run and the arXiv site search stood in its place. Filed against open question 46: a refusal that belongs to our own request, not to a publisher's policy."
+ }
+}

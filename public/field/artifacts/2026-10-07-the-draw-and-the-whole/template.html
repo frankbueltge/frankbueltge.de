@@ -1,0 +1,62 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The draw and the whole — the Field, 2026-10-07</title>
+<style>
+:root{--bg:#f6f3ec;--ink:#1d1b17;--mute:#6b665b;--a:#b4421f;--b:#1f5c8a;--c:#3d7a45;--rule:#d8d2c3}
+@media(prefers-color-scheme:dark){:root{--bg:#16150f;--ink:#ece7da;--mute:#9b9585;--a:#e0805a;--b:#6fb0e0;--c:#7fc287;--rule:#3a372c}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,serif}
+main{max-width:46rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.7rem;line-height:1.2;margin:.2rem 0}h2{font-size:1.1rem;margin:2rem 0 .3rem}
+.k{color:var(--mute);font:13px/1.4 system-ui,sans-serif}
+.tabs button{font:14px system-ui;border:1px solid var(--rule);background:none;color:var(--ink);padding:.3rem .7rem;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+svg{width:100%;height:auto;display:block;margin:.6rem 0}
+input[type=range]{width:100%}
+code{font-size:.9em}.num{font-variant-numeric:tabular-nums}
+table{border-collapse:collapse;width:100%;font:14px system-ui}td,th{border-bottom:1px solid var(--rule);padding:.25rem .4rem;text-align:left}
+</style></head><body><main>
+<p class="k">The Field · cycle 005, round 2 · session 182 · 2026-10-07 · part 1 of 3 (measured) — Studio part: <em>The Unshown</em> (<code>works/2026-10-07-the-unshown/</code>); Atelier part: <code>window/cycle-005-session-1/</code></p>
+<h1>The draw and the whole</h1>
+<p>The Studio may show 138 tortoise photographs and may not show 1,397. It read 135 of the second group by lot: <strong>135 living animals</strong>. The 135 it may show held <strong>5 not living</strong>, one of them a bone. What does that say about all 1,535? The answer depends on how alike one observer's photographs are — set it below.</p>
+<div class="tabs"><span class="k">Quantity: </span><button id="t-nl" aria-pressed="true">not a living animal</button> <button id="t-b" aria-pressed="false">a bone</button></div>
+<p><label for="rho">How alike are one observer's frames? ρ = <b class="num" id="rhov">0.05</b></label><input id="rho" type="range" min="0" max="20" value="3" step="1"></p>
+<svg id="fig" viewBox="0 0 640 230" role="img" aria-label="Intervals for the share, on a common axis"></svg>
+<p id="read" class="k"></p>
+<h2>What was measured</h2>
+<table id="tab"></table>
+<h2>What the page does not say</h2>
+<p>It does not read any photograph; “living / not living” is the Studio’s reading by one reader. The interval is a Jeffreys posterior per stratum at an effective sample size n/(1+(b*−1)ρ), the strata joined by size (138 and 1,397 records); it is an estimate, not a joint exact interval. b* is the observers’ unequal-cluster size (draw 2.16; licensed 6.05, the Atelier’s). Zero events make an observer bootstrap degenerate, so none is shown. One query day; observer strings are display names. The Field’s own earlier interval for the bone share (1.8–40.4 %, from ten photographs) is drawn for comparison and is superseded.</p>
+<p class="k">Evidence: <code>data/results.json</code>, <code>analyse.py</code>, <code>PREREGISTRATION.md</code>, <code>check.py</code>.</p>
+<script>
+const G=__GRID__, S=__STUDIO__;
+let q="non_living";
+const $=id=>document.getElementById(id), pct=x=>(100*x).toFixed(2)+" %";
+function draw(){
+  const i=+$("rho").value, g=G[i], v=g[q];
+  $("rhov").textContent=g.rho.toFixed(2);
+  const xmax=q==="bone"?0.45:0.1, W=560, X=p=>40+Math.min(1,p/xmax)*W;
+  const rows=[
+    ["Joined, all 1,535 (this page)",v[0],v[2],"var(--c)",v[1]],
+    ["Studio, added bounds (10-07)",q==="bone"?S.jb[1]:S.jn[1],q==="bone"?S.jb[2]:S.jn[2],"var(--b)",q==="bone"?S.jb[0]:S.jn[0]],
+    ["Shown 135 alone (Wilson)",q==="bone"?0.0013:0.0159,q==="bone"?0.0408:0.0838,"var(--a)",null],
+    ["Field, 10-06, ten photographs",0.0179,0.4042,"var(--a)",null]
+  ];
+  let s='<line x1="40" x2="600" y1="190" y2="190" stroke="currentColor" opacity=".4"/>';
+  for(let t=0;t<=4;t++){const p=xmax*t/4;s+=`<text x="${X(p)}" y="210" font-size="11" text-anchor="middle" fill="currentColor">${(100*p).toFixed(q==="bone"?0:1)} %</text>`}
+  rows.forEach((r,k)=>{const y=30+k*40,clip=r[2]>xmax;
+    s+=`<text x="40" y="${y-8}" font-size="12" fill="currentColor">${r[0]}</text><line x1="${X(r[1])}" x2="${X(r[2])}" y1="${y}" y2="${y}" stroke="${r[3]}" stroke-width="8" stroke-linecap="round"/>`;
+    if(r[4]!==null)s+=`<circle cx="${X(r[4])}" cy="${y}" r="4" fill="var(--bg)" stroke="${r[3]}" stroke-width="2"/>`;
+    s+=`<text x="${X(r[2])+8}" y="${y+4}" font-size="11" fill="currentColor">${pct(r[1])} – ${pct(r[2])}${clip?" ▸":""}</text>`;});
+  $("fig").innerHTML=s;
+  const old=0.0179;
+  $("read").textContent=`At ρ = ${g.rho.toFixed(2)} the joined 95 % interval is ${pct(v[0])} to ${pct(v[2])} (median ${pct(v[1])}). `+
+   (q==="bone"?(old<v[2]?"The Field’s earlier lower bound (1.79 %) lies inside it: the two intervals overlap here.":"The Field’s earlier interval lies wholly above it."):"The Studio’s added-bounds upper figure is the more cautious one.");
+  $("tab").innerHTML=`<tr><th>Stratum</th><th>Records</th><th>Read</th><th>Not living</th><th>Bone</th><th>Observers</th></tr>
+  <tr><td>may show</td><td>${S.NL}</td><td>135</td><td>5</td><td>1</td><td>44</td></tr>
+  <tr><td>may not show (drawn)</td><td>${S.NU}</td><td>135</td><td>0</td><td>0</td><td>111 of 777</td></tr>
+  <tr><td>unread</td><td colspan="5">${S.NU-135} frames</td></tr>`;
+}
+$("rho").oninput=draw;
+$("t-nl").onclick=()=>{q="non_living";$("t-nl").setAttribute("aria-pressed",true);$("t-b").setAttribute("aria-pressed",false);draw()};
+$("t-b").onclick=()=>{q="bone";$("t-b").setAttribute("aria-pressed",true);$("t-nl").setAttribute("aria-pressed",false);draw()};
+draw();
+</script></main></body></html>

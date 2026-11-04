@@ -1,0 +1,924 @@
+{
+ "note": "Hand-made cases for every rule of session 163, run before any repository blob was read. A fixture checks that a rule computes what its author says, never that the author wrote the right sentence.",
+ "n_cases": 100,
+ "n_pass": 100,
+ "n_fail": 0,
+ "cases": [
+  {
+   "id": "shape/LICENSE",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "shape/LICENSE.md",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "shape/LICENCE.txt",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "shape/COPYING",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "shape/LICENSE-MIT",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "shape/license-risk-scan.md",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "shape/licenses-dir-name",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "shape/licensing.py",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "shape/README",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "shape/relicense.md",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L0/empty",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L0/whitespace",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L0/one-char",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/mit",
+   "kind": "must",
+   "expected": [
+    "MIT"
+   ],
+   "got": [
+    "MIT"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/mit-crlf",
+   "kind": "must",
+   "expected": [
+    "MIT"
+   ],
+   "got": [
+    "MIT"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/mit-curly-quotes",
+   "kind": "must",
+   "expected": [
+    "MIT"
+   ],
+   "got": [
+    "MIT"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/mit-hard-wrapped",
+   "kind": "must",
+   "expected": [
+    "MIT"
+   ],
+   "got": [
+    "MIT"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/bsl-en-dash",
+   "kind": "must",
+   "expected": [
+    "BSL-1.0"
+   ],
+   "got": [
+    "BSL-1.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/epl-em-dash",
+   "kind": "must",
+   "expected": [
+    "EPL-2.0"
+   ],
+   "got": [
+    "EPL-2.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/mit-nbsp",
+   "kind": "must",
+   "expected": [
+    "MIT"
+   ],
+   "got": [
+    "MIT"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "TABLE/no-phrase-carries-a-quote",
+   "kind": "must",
+   "expected": false,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "TABLE/every-phrase-is-normalised",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/isc",
+   "kind": "must",
+   "expected": [
+    "ISC"
+   ],
+   "got": [
+    "ISC"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/bsd2",
+   "kind": "must",
+   "expected": [
+    "BSD-2-Clause"
+   ],
+   "got": [
+    "BSD-2-Clause"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/bsd3",
+   "kind": "must",
+   "expected": [
+    "BSD-3-Clause"
+   ],
+   "got": [
+    "BSD-3-Clause"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/bsd4",
+   "kind": "must",
+   "expected": [
+    "BSD-4-Clause"
+   ],
+   "got": [
+    "BSD-4-Clause"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/bsd3-is-not-bsd2",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/apache-full",
+   "kind": "must",
+   "expected": [
+    "Apache-2.0"
+   ],
+   "got": [
+    "Apache-2.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/apache-header",
+   "kind": "must",
+   "expected": [
+    "Apache-2.0"
+   ],
+   "got": [
+    "Apache-2.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/gpl3",
+   "kind": "must",
+   "expected": [
+    "GPL-3.0"
+   ],
+   "got": [
+    "GPL-3.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/gpl2",
+   "kind": "must",
+   "expected": [
+    "GPL-2.0"
+   ],
+   "got": [
+    "GPL-2.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/agpl3-not-gpl3",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/gpl3-naming-agpl-is-still-gpl3",
+   "kind": "must",
+   "expected": [
+    "GPL-3.0"
+   ],
+   "got": [
+    "GPL-3.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/gpl2-naming-library-gpl-is-still-gpl2",
+   "kind": "must",
+   "expected": [
+    "GPL-2.0"
+   ],
+   "got": [
+    "GPL-2.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/lgpl21",
+   "kind": "must",
+   "expected": [
+    "LGPL-2.1"
+   ],
+   "got": [
+    "LGPL-2.1"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/mpl2",
+   "kind": "must",
+   "expected": [
+    "MPL-2.0"
+   ],
+   "got": [
+    "MPL-2.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/unlicense",
+   "kind": "must",
+   "expected": [
+    "Unlicense"
+   ],
+   "got": [
+    "Unlicense"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/cc0",
+   "kind": "must",
+   "expected": [
+    "CC0-1.0"
+   ],
+   "got": [
+    "CC0-1.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/ccby4",
+   "kind": "must",
+   "expected": [
+    "CC-BY-4.0"
+   ],
+   "got": [
+    "CC-BY-4.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/ccbync4-not-ccby4",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/ccbyncsa4",
+   "kind": "must",
+   "expected": [
+    "CC-BY-NC-SA-4.0"
+   ],
+   "got": [
+    "CC-BY-NC-SA-4.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/zlib",
+   "kind": "must",
+   "expected": [
+    "Zlib"
+   ],
+   "got": [
+    "Zlib"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/dual-mit-apache",
+   "kind": "must",
+   "expected": [
+    "Apache-2.0",
+    "MIT"
+   ],
+   "got": [
+    "Apache-2.0",
+    "MIT"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/pointer-only",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/spdx-tag-only",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/empty",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/copyright-only",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/all-rights-reserved",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/risk-scan-report",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L1/prose-about-licences",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/mit-named",
+   "kind": "must",
+   "expected": "named",
+   "got": "named",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/mit-placeholder-angle",
+   "kind": "must",
+   "expected": "placeholder",
+   "got": "placeholder",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/mit-placeholder-square",
+   "kind": "must",
+   "expected": "placeholder",
+   "got": "placeholder",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/mit-placeholder-brace",
+   "kind": "must",
+   "expected": "placeholder",
+   "got": "placeholder",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/mit-yyyy-word",
+   "kind": "must",
+   "expected": "placeholder",
+   "got": "placeholder",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/holder-containing-yyyy-is-not-placeholder",
+   "kind": "must-not",
+   "forbidden": "placeholder",
+   "got": "named",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/year-only-no-holder",
+   "kind": "must",
+   "expected": "no_holder",
+   "got": "no_holder",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/no-copyright-line",
+   "kind": "must",
+   "expected": "no_copyright_line",
+   "got": "no_copyright_line",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/one-filled-among-many-wins",
+   "kind": "must",
+   "expected": "named",
+   "got": "named",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/comment-prefixed-line",
+   "kind": "must",
+   "expected": "named",
+   "got": "named",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/range-of-years",
+   "kind": "must",
+   "expected": "named",
+   "got": "named",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/mit-boilerplate-is-not-a-notice",
+   "kind": "must-not",
+   "forbidden": "named",
+   "got": "placeholder",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/mit-boilerplate-template-is-placeholder",
+   "kind": "must",
+   "expected": "placeholder",
+   "got": "placeholder",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/mit-boilerplate-filled-is-named",
+   "kind": "must",
+   "expected": "named",
+   "got": "named",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/prose-line",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/definition-line",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/jurisdiction-line",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/plain",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/comment-prefixed",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/c-comment-prefixed",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/symbol-only",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/copr",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/no-copyright-word",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/apache-wrapped-prose",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/no-year-but-capital",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/bracketed-template",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/angle-template",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/lowercase-prose-after-symbol",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/apache-list-marker",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/paren-c-with-year",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/paren-c-with-template",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "NOTICE/symbol-with-name",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "APACHE/canon-has-exactly-one-notice",
+   "kind": "must",
+   "expected": 1,
+   "got": 1,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/not-applicable-gpl",
+   "kind": "must",
+   "expected": null,
+   "got": null,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/not-applicable-apache",
+   "kind": "must",
+   "expected": null,
+   "got": null,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/not-applicable-unidentified",
+   "kind": "must",
+   "expected": null,
+   "got": null,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L2/scored-wins-in-mixed",
+   "kind": "must",
+   "expected": "named",
+   "got": "named",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "HEAD/mit-filled-delivers",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "HEAD/mit-template-does-not",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "HEAD/gpl-delivers-without-holder",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "HEAD/empty-does-not",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "HEAD/pointer-does-not",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "HEAD/reason-empty",
+   "kind": "must",
+   "expected": "empty",
+   "got": "empty",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "HEAD/reason-not-identified",
+   "kind": "must",
+   "expected": "not_identified",
+   "got": "not_identified",
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L3/one-voice",
+   "kind": "must",
+   "expected": [
+    "MIT"
+   ],
+   "got": [
+    "MIT"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L3/two-voices",
+   "kind": "must",
+   "expected": [
+    "MIT",
+    "Apache-2.0"
+   ],
+   "got": [
+    "MIT",
+    "Apache-2.0"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "L3/unidentified-is-not-a-voice",
+   "kind": "must",
+   "expected": [
+    "MIT"
+   ],
+   "got": [
+    "MIT"
+   ],
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "APX/unfilled",
+   "kind": "must",
+   "expected": true,
+   "got": true,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "APX/filled",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  },
+  {
+   "id": "APX/not-apache",
+   "kind": "must-not",
+   "forbidden": true,
+   "got": false,
+   "pass": true,
+   "error": null
+  }
+ ]
+}

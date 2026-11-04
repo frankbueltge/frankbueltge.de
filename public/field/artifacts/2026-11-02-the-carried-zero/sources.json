@@ -1,0 +1,29 @@
+{
+ "_note": "Manifest of check 51's inputs. No source file, PDF or data file is committed: hashes, commit and fetch dates stand here and in results51.json.",
+ "sources": [
+  {"id": "hdx-drc-ebola",
+   "cite": "OCHA HDX, 'République démocratique du Congo : Cas et Décès d'Ebola', resource drc_ebola_cases_consolidated.csv; rows sourced INRB-UMIE; licence CC BY",
+   "url": "https://data.humdata.org/dataset/e902b209-b7bc-42f9-893a-294276d7cc62/resource/f7c9b552-0d41-4559-9fae-c450175fc39c/download/drc_ebola_cases_consolidated.csv",
+   "fetched": "2026-11-02; identical to the 2026-11-01 fetch of checks 50 and the Atelier's s28",
+   "sha256": "761e1ed4f11db45a28ff8338a22ae78d9d78fd942603177bb8cbc16fb8352dbf", "rows": 13363},
+  {"id": "inrb-umie-bdbv2026-data",
+   "cite": "INRB-UMIE, BDBV2026-Data (Kraemer Lab, University of Oxford, with INRB, INSP and partners), GitHub repository; code MIT",
+   "url": "https://github.com/INRB-UMIE/BDBV2026-Data",
+   "commit": "d9400381793b6ff5758fdde890efbd7963aa15a4", "committed": "2026-10-30T22:20:38Z",
+   "used": ["data/insp_sitrep/README.md (digitisation protocol)", "data/insp_sitrep/processed/insp_sitrep__cumulative_confirmed_cases__daily.csv", "data/insp_sitrep/reports/*.md (127 digitisation records)", "data/insp_sitrep/raw/*.pdf (138 files; 74 fetched from the large-file store at media.githubusercontent.com, each matching its pointer's sha256)", "data/aggregated_insp_linelist/README.md and its files"],
+   "passages": [
+    "data/insp_sitrep/README.md, on cumulative confirmed cases: if new cases are 'blank, says ND, or is not included in the table but is already being tracked, we keep the previous number'.",
+    "data/aggregated_insp_linelist/README.md: 'Currently moved to private again for now'; 'redistribution requires INSP/INRB approval'.",
+    "README.md: the epidemiological data are preliminary, and users intending to use them before the group's publication are asked to contact the named investigators. This check publishes counts derived from the open HDX copy and from the public reports, and no file of theirs."
+   ]},
+  {"id": "insp-sitrep-168",
+   "cite": "INSP, Rapport de situation, SitRep N°168/MVE-BDBV/29/10/2026, Tableau 2 (row 'A ventiler', 493 deaths) and footnote; Tableau 3 (alerts and validated suspects by province)",
+   "passage": "Footnote to Tableau 2 (French, short quotation): 'décès confirmés survenus dans les différents CTE de la province qui sont en cours de ventilation pour être classifiés par zone de santé'."},
+  {"id": "atelier-forty-two-days",
+   "cite": "The Atelier, Forty-Two Days, session 28, 2026-11-01 — the 22 quiets under test and the onset question, read as material",
+   "url": "https://github.com/frankbueltge/ulysses/tree/main/artifacts/convening-after-011/forty-two-days"},
+  {"id": "studio-only-the-confirmed",
+   "cite": "The Studio, Only the Confirmed, session 219, 2026-11-01 — the 11 zones quiet on 29 Oct, read as material",
+   "url": "https://github.com/frankbueltge/studio/tree/main/etudes/only-the-confirmed"}
+ ]
+}

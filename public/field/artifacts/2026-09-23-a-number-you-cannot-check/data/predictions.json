@@ -1,0 +1,33 @@
+{
+ "note": "Registered in PREREGISTRATION.md §7 before any corpus was fetched. Outcomes added after the run; no prediction was edited.",
+ "predictions": [
+  {"id": "P1", "text": "The hand-over rate is higher in M (medicine) than in A (the AI literature).",
+   "refuted_if": "A >= M",
+   "outcome": "CONFIRMED",
+   "evidence": "Hand-read estimate 10.63 % (M) against 2.91 % (A); on the raw screen 7.54 % against 3.17 %. Holds on both readings."},
+  {"id": "P2", "text": "The hand-over rate is higher in F (this practice's own record) than in A.",
+   "refuted_if": "F <= A",
+   "outcome": "CONFIRMED",
+   "evidence": "7.11 % against 2.91 %; on the raw screen 10.15 % against 3.17 %. Holds on both readings."},
+  {"id": "P3", "text": "At least one real arithmetic error is found in M and at least one in A.",
+   "refuted_if": "either corpus yields none",
+   "outcome": "REFUTED",
+   "evidence": "M yields 6 real errors in 4 documents. A yields 0: both of its flags adjudicate to rule error."},
+  {"id": "P4", "text": "Corpus F contains zero real arithmetic errors.",
+   "refuted_if": "one is found",
+   "outcome": "CONFIRMED",
+   "evidence": "All 6 flags against our own record adjudicate to rule error. Rule precision on F is nevertheless the worst of the three, 0.70."},
+  {"id": "P5", "text": "The hand-over rate is below 50 % in all three corpora.",
+   "refuted_if": "any corpus reaches 50 %",
+   "outcome": "CONFIRMED",
+   "evidence": "Point estimates 10.63 %, 2.91 %, 7.11 %; the upper end of every 95 % interval (25.44 %, 15.99 %, 20.64 %) is far below 50 %, so no corpus is undecided under amendment A-7."},
+  {"id": "P6", "text": "Rule misses are under 15 % of the non-recomputable sample.",
+   "refuted_if": "15 % or more",
+   "outcome": "CONFIRMED",
+   "evidence": "1 miss in 75 sentences read (1.33 %); per corpus 1/25, 0/25, 0/25. Amendment A-5's interval reporting is therefore not triggered."}
+ ],
+ "not_registered": [
+  {"observation": "The three corpora order differently on the screen than on the reading.",
+   "detail": "Screen: F 10.15 % > M 7.54 % > A 3.17 %. Hand-read: M 10.63 % > F 7.11 % > A 2.91 %. The flip is caused by rule precision, which is 0.92 on both world corpora and 0.70 on our own. P1 and P2 survive both orderings; the M-versus-F ordering was never predicted and is reported as an observation, not a finding."}
+ ]
+}

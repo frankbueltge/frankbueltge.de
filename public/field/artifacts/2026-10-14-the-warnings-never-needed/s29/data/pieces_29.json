@@ -1,0 +1,669 @@
+{
+ "fetched": "2026-10-19",
+ "service": "https://earthquake.usgs.gov/fdsnws/event/1/ (USGS ComCat, public domain)",
+ "regions": {
+  "west": {
+   "box": [
+    30.320901297297297,
+    45.9890307027027,
+    -128.10085123425935,
+    -107.07856376574063
+   ],
+   "start": "2019-01-24T00:00:00",
+   "end": "2026-01-22T00:00:00"
+  },
+  "texas": {
+   "box": [
+    29.0637532972973,
+    34.46915870270271,
+    -109.51978446150294,
+    -102.96325553849705
+   ],
+   "start": "2019-03-26T00:00:00",
+   "end": "2020-03-28T00:00:00"
+  },
+  "northeast": {
+   "box": [
+    37.858560297297295,
+    46.2737117027027,
+    -80.20753669020321,
+    -68.78213730979678
+   ],
+   "start": "2023-04-05T00:00:00",
+   "end": "2024-04-07T00:00:00"
+  }
+ },
+ "pieces": [
+  {
+   "region": "northeast",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-04-05T00%3A00%3A00&endtime=2024-01-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=37.86&maxlatitude=46.27&minlongitude=-80.21&maxlongitude=-68.78",
+   "rows": 59,
+   "sha256": "723ee799526aac8fbde677418558249f65e96e685a91cc05d9ab4f173289b9bb",
+   "file": "northeast_28010880_28401120.csv"
+  },
+  {
+   "region": "northeast",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-01-01T00%3A00%3A00&endtime=2024-04-07T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=37.86&maxlatitude=46.27&minlongitude=-80.21&maxlongitude=-68.78",
+   "rows": 61,
+   "sha256": "d25fcfe756d9a9301c3c925e673f953dd4cf24ba7c122bd0511832e2947f6599",
+   "file": "northeast_28401120_28540800.csv"
+  },
+  {
+   "region": "texas",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-03-26T00%3A00%3A00&endtime=2020-01-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=29.06&maxlatitude=34.47&minlongitude=-109.52&maxlongitude=-102.96",
+   "rows": 114,
+   "sha256": "4d6d2bab82cbd0c21625df710d52382b55d3161e610653ce34f24578ef1fc1da",
+   "file": "texas_25892640_26297280.csv"
+  },
+  {
+   "region": "texas",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-01-01T00%3A00%3A00&endtime=2020-03-28T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=29.06&maxlatitude=34.47&minlongitude=-109.52&maxlongitude=-102.96",
+   "rows": 73,
+   "sha256": "49f150c1c70b57529a9f01d57f51c50cdffd33a4389029e7dabf2dc7bb607eb1",
+   "file": "texas_26297280_26422560.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-01-24T00%3A00%3A00&endtime=2019-02-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 453,
+   "sha256": "91b1a9029eb4c004d692148c15112df55c74e5274f65f5d59ec3cc9590ab5832",
+   "file": "west_25804800_25816320.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-02-01T00%3A00%3A00&endtime=2019-03-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1905,
+   "sha256": "8bbf81b106bf892d3d6996723706810e32c4921ed8d3ee51709d233ef6c12afb",
+   "file": "west_25816320_25856640.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-03-01T00%3A00%3A00&endtime=2019-04-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2129,
+   "sha256": "1a6e52d96bd865023753667e2b6101c0fb6f7c3c598ced982902ab85d9d15965",
+   "file": "west_25856640_25901280.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-04-01T00%3A00%3A00&endtime=2019-05-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2009,
+   "sha256": "7414e576c434faef58353254556efd4fb84106f3b867f3b2880d93bea5495538",
+   "file": "west_25901280_25944480.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-05-01T00%3A00%3A00&endtime=2019-06-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2283,
+   "sha256": "229fe81af390c5380a435acc92dede37653f7b18faedd8ce96b907f0eb2720bd",
+   "file": "west_25944480_25989120.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-06-01T00%3A00%3A00&endtime=2019-07-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2231,
+   "sha256": "38865608a7c07403be7b8e65baa26283e031f54ae965dc7e73ec4bcb4de12f07",
+   "file": "west_25989120_26032320.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-07-01T00%3A00%3A00&endtime=2019-07-16T12%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 17642,
+   "sha256": "c12760f2d94d566fb912ea6dabe2510776fb456c2ecb33c0eafaaaa52a0dd758",
+   "file": "west_26032320_26054640.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-07-16T12%3A00%3A00&endtime=2019-08-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 6308,
+   "sha256": "d9580c6219d4c8f9e45393e8d6092646dad8fb5e1f2636c557f70723601f0ffc",
+   "file": "west_26054640_26076960.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-08-01T00%3A00%3A00&endtime=2019-09-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 5899,
+   "sha256": "1b7ee9cb43e4b1c6409c1d1359f7f8135ac71212634a5f6868d16a64d6ffd85d",
+   "file": "west_26076960_26121600.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-09-01T00%3A00%3A00&endtime=2019-10-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 4004,
+   "sha256": "238b79a50eb8cd3cbfb5b8173f15ce5da2a17c7de3705c0caef23282a548bbfc",
+   "file": "west_26121600_26164800.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-10-01T00%3A00%3A00&endtime=2019-11-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 3098,
+   "sha256": "5ea10d569bfd8fa7297deada2d335806f9e2679d0ec1ccf47fc1ba275ef288a3",
+   "file": "west_26164800_26209440.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-11-01T00%3A00%3A00&endtime=2019-12-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2922,
+   "sha256": "1a2093d20ca2e1cdeaf2c791138a19ae19623e1671ba6bb523a93fd9930163e1",
+   "file": "west_26209440_26252640.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2019-12-01T00%3A00%3A00&endtime=2020-01-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2556,
+   "sha256": "1eb39fc7f80d234c8e0ac37c68a0f74fcc9274cb8f5c01be8df61e97283e0486",
+   "file": "west_26252640_26297280.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-01-01T00%3A00%3A00&endtime=2020-02-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2270,
+   "sha256": "dfa0288344841c701620ab5f71b051c439ef03be74a7cac0194ec2919b01f29a",
+   "file": "west_26297280_26341920.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-02-01T00%3A00%3A00&endtime=2020-03-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2043,
+   "sha256": "2ea700f1080018aa2f41759a4390760ec475a9fc0b0913719afb897e21fb90e7",
+   "file": "west_26341920_26383680.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-03-01T00%3A00%3A00&endtime=2020-04-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 3056,
+   "sha256": "4181914bde6a9570031f7d3cf738f97ac81f034ba5e63ca04898651331763c53",
+   "file": "west_26383680_26428320.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-04-01T00%3A00%3A00&endtime=2020-05-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 4151,
+   "sha256": "ba19e1585e04ff71dc5e7d7cf704dd11ab588cef5765e2ae0a01cb6da247f241",
+   "file": "west_26428320_26471520.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-05-01T00%3A00%3A00&endtime=2020-06-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 8070,
+   "sha256": "665ec3e817d1a026ab3d099aaccd1841e9c3042052aa7e141ef9017a1921391a",
+   "file": "west_26471520_26516160.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-06-01T00%3A00%3A00&endtime=2020-07-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 7816,
+   "sha256": "7176e74a08b5ec72aaeccf1d1e4cee480cefaa9a774520c21a1d9b34bf55f8cd",
+   "file": "west_26516160_26559360.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-07-01T00%3A00%3A00&endtime=2020-08-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 4958,
+   "sha256": "e2ad7fd34f480150c2377dca80131013066144766b2ef2ca0ff00b18ff1dea58",
+   "file": "west_26559360_26604000.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-08-01T00%3A00%3A00&endtime=2020-09-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 4004,
+   "sha256": "0ec92cf80594ded1418d0436a2c0b47514747571e79193689e72481121ad131c",
+   "file": "west_26604000_26648640.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-09-01T00%3A00%3A00&endtime=2020-10-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 3347,
+   "sha256": "12c005b04946a6dc1b3029ca3919f3f3a80543f4bf651ff9531168980d0851e1",
+   "file": "west_26648640_26691840.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-10-01T00%3A00%3A00&endtime=2020-11-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 4590,
+   "sha256": "5f5d8f710f45c330c28c3572371783f959edfe0798e369b575261a93adc83fac",
+   "file": "west_26691840_26736480.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-11-01T00%3A00%3A00&endtime=2020-12-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 3531,
+   "sha256": "877367964b53727a999a05a3dc250cbbe480fcf0a86d18b9427295bd362e84d5",
+   "file": "west_26736480_26779680.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-12-01T00%3A00%3A00&endtime=2021-01-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 4405,
+   "sha256": "751adc6e29e1afa7a3edfd157cf2e6de68a7f0371aca443155af42773fca2e0b",
+   "file": "west_26779680_26824320.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-01-01T00%3A00%3A00&endtime=2021-02-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 3036,
+   "sha256": "2a6a579426fb3ae3e8a2331560ace76dd83288be695a7770a058558936d8ff04",
+   "file": "west_26824320_26868960.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-02-01T00%3A00%3A00&endtime=2021-03-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2479,
+   "sha256": "f7f691ccdb49c0be53a23a856257427c837de4e917485fc0fab4c90102166678",
+   "file": "west_26868960_26909280.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-03-01T00%3A00%3A00&endtime=2021-04-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2472,
+   "sha256": "f8c290615f63af7b0528afa19d2faa548b9d72187f1cbfa0b8c46887c22c7628",
+   "file": "west_26909280_26953920.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-04-01T00%3A00%3A00&endtime=2021-05-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2560,
+   "sha256": "ad91e5added450c4000b9b858e8d26b35b37d51a7256e0af6347af07727f4df2",
+   "file": "west_26953920_26997120.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-05-01T00%3A00%3A00&endtime=2021-06-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2486,
+   "sha256": "8731ad1d3dda90e44bb33fa220c919d9c79f9a0674a1e20f63b33130bac8317c",
+   "file": "west_26997120_27041760.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-06-01T00%3A00%3A00&endtime=2021-07-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 4464,
+   "sha256": "32960bcee5d01609480e94e6043eaba2667565ab0748649bfd8e7ee0345df9f1",
+   "file": "west_27041760_27084960.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-07-01T00%3A00%3A00&endtime=2021-08-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 4679,
+   "sha256": "8b618c3e2f2a76f07515441374b37d2e30080c17d8c3f927a65c2d8c29c62e1a",
+   "file": "west_27084960_27129600.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-08-01T00%3A00%3A00&endtime=2021-09-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2877,
+   "sha256": "76861a15234eb21eee2ef83b3cc183b74df0a8a8b6da243e5fb6679b14580b83",
+   "file": "west_27129600_27174240.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-09-01T00%3A00%3A00&endtime=2021-10-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2690,
+   "sha256": "0d2031ac4e002a32a2a632d0190e619d00a45e14b4994b9ade2c95a929881272",
+   "file": "west_27174240_27217440.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-10-01T00%3A00%3A00&endtime=2021-11-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2726,
+   "sha256": "b0e90dd6c50735120d05039c33999be569d6bfebf89e3b1046b8b25902413eea",
+   "file": "west_27217440_27262080.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-11-01T00%3A00%3A00&endtime=2021-12-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2189,
+   "sha256": "010d78db9447a4357c109207fded97cb29ec454c5e1135b4e521db8dd2a7ca42",
+   "file": "west_27262080_27305280.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2021-12-01T00%3A00%3A00&endtime=2022-01-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2212,
+   "sha256": "7535230aa42ca371130f8f4087dba56d29b751fa29414cee966f2b42b5ef9e2a",
+   "file": "west_27305280_27349920.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-01-01T00%3A00%3A00&endtime=2022-02-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2425,
+   "sha256": "f0c839db8a4a379198ffc711aaf8e69492c0dfef0b3d5085d83a89c7c5d2c16c",
+   "file": "west_27349920_27394560.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-02-01T00%3A00%3A00&endtime=2022-03-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2009,
+   "sha256": "56bf408f3a3b573e09ff37dc91949f6446f2b90a6ccbe60912ac94614f3e3dca",
+   "file": "west_27394560_27434880.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-03-01T00%3A00%3A00&endtime=2022-04-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2246,
+   "sha256": "73cfc338eb15f705f7add18568f9cd9ea000a73fa5719355f2a9298cf70d63cf",
+   "file": "west_27434880_27479520.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-04-01T00%3A00%3A00&endtime=2022-05-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1963,
+   "sha256": "fb3d696c2f9408661f3cd62d4c20bc270949566b408935ceca61495138aee47c",
+   "file": "west_27479520_27522720.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-05-01T00%3A00%3A00&endtime=2022-06-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1824,
+   "sha256": "a1a1487491282f8b057e11bc4f1e2f242030e206372bf001127f4fefbebdfaad",
+   "file": "west_27522720_27567360.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-06-01T00%3A00%3A00&endtime=2022-07-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1974,
+   "sha256": "20739a74ab9de43051776e51271a1e9a1fcd31fa8d5ed4cc604ce27ee336158a",
+   "file": "west_27567360_27610560.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-07-01T00%3A00%3A00&endtime=2022-08-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2155,
+   "sha256": "544cd4edf357ecb9121e992d49dcabaa09ca84b1311887394462e5d8562441a9",
+   "file": "west_27610560_27655200.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-08-01T00%3A00%3A00&endtime=2022-09-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2487,
+   "sha256": "833b96e81a8a0ddf347b4b88930bdbd396d901af283bfed26f89582fd51647e6",
+   "file": "west_27655200_27699840.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-09-01T00%3A00%3A00&endtime=2022-10-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2329,
+   "sha256": "5d0e18a82eb0045ca1e17ba81245c071fcac94f254815b2a262f58240345667d",
+   "file": "west_27699840_27743040.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-10-01T00%3A00%3A00&endtime=2022-11-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2042,
+   "sha256": "e86bfe32235977199dc73ad45ec09bc12604cfab4274b634a7193fa68be98d9e",
+   "file": "west_27743040_27787680.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-11-01T00%3A00%3A00&endtime=2022-12-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1714,
+   "sha256": "0fa4200189275228df817eb50c6485f735ef4b163f469a8df93c6622c56b08f8",
+   "file": "west_27787680_27830880.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2022-12-01T00%3A00%3A00&endtime=2023-01-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2095,
+   "sha256": "664dd1d4f062e0b1df94d061e7553f99e4833b42a5c964c050757909929a0776",
+   "file": "west_27830880_27875520.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01T00%3A00%3A00&endtime=2023-02-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1815,
+   "sha256": "6ad021018a5d62d256d7ac9bee6d8e1770343fb47363821c6e918a8722d38ccd",
+   "file": "west_27875520_27920160.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-02-01T00%3A00%3A00&endtime=2023-03-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1654,
+   "sha256": "e5b941527979af354604d4b4350be5d6f9570bb82e661d7887ace5e83ba7016d",
+   "file": "west_27920160_27960480.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-03-01T00%3A00%3A00&endtime=2023-04-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1996,
+   "sha256": "89ae1ed589a72c6f7282444119f33a1e4b01ecec88712cae9144a1c72cb08dff",
+   "file": "west_27960480_28005120.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-04-01T00%3A00%3A00&endtime=2023-05-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2104,
+   "sha256": "e96a9b0b71a96ff3cdeda406899357cb9452cfb16314b21462c06267234c38d0",
+   "file": "west_28005120_28048320.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-05-01T00%3A00%3A00&endtime=2023-06-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2067,
+   "sha256": "a23b6cd8b8c0cec1be6a41e3cc60b2d5c5e8d07b9d159f6e9f3ed35cdf4fc420",
+   "file": "west_28048320_28092960.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-06-01T00%3A00%3A00&endtime=2023-07-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1908,
+   "sha256": "fbf1525fb65842827256cb66d9f06551618efa5dc8c8c5f7b1ce50541723c56e",
+   "file": "west_28092960_28136160.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-07-01T00%3A00%3A00&endtime=2023-08-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1897,
+   "sha256": "541b02857cf8e78d07a586ecea17386b558a8abbfedcbf9d04126b5cfcdd50c8",
+   "file": "west_28136160_28180800.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-08-01T00%3A00%3A00&endtime=2023-09-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2077,
+   "sha256": "2250449f43a2942fc984d656d605c2a21920854df96bcb3ccda35904159008f8",
+   "file": "west_28180800_28225440.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-09-01T00%3A00%3A00&endtime=2023-10-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1800,
+   "sha256": "f31171f66b1ec28558d99cce4c80cf235ec5bcfc3bea8e97f6a64ef896107e0b",
+   "file": "west_28225440_28268640.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-10-01T00%3A00%3A00&endtime=2023-11-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2007,
+   "sha256": "6d5af30ca60c6d043b9fba9c461cce56f1b1557a98e098aae378e5817a326537",
+   "file": "west_28268640_28313280.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-11-01T00%3A00%3A00&endtime=2023-12-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1778,
+   "sha256": "cc804b0a03a4cc00ba17752dd56e364587d820e598e20f9e319950d4bc7e7b68",
+   "file": "west_28313280_28356480.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-12-01T00%3A00%3A00&endtime=2024-01-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1912,
+   "sha256": "8a5d917dc141a003c8f181a155c201a0d5972f356686694edcb3353e79c92216",
+   "file": "west_28356480_28401120.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-01-01T00%3A00%3A00&endtime=2024-02-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1858,
+   "sha256": "015c003dfa4f22be4df5789cba0190741f65e6d2e44279dc932a745182acb165",
+   "file": "west_28401120_28445760.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-02-01T00%3A00%3A00&endtime=2024-03-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2430,
+   "sha256": "531ba6401ed2f23135349510b1162945e3d30b16cfe00e7f48c932b419aa1648",
+   "file": "west_28445760_28487520.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-03-01T00%3A00%3A00&endtime=2024-04-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2081,
+   "sha256": "12db77af5ad9111bbbe1735d295d6cfac6d4b07ef42991f5610a490efa4c6276",
+   "file": "west_28487520_28532160.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-04-01T00%3A00%3A00&endtime=2024-05-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1997,
+   "sha256": "4c537520c9e9077fbb8a113758e5a925cc4c189135bc40ab91e9253ca97e6fc7",
+   "file": "west_28532160_28575360.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-05-01T00%3A00%3A00&endtime=2024-06-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2476,
+   "sha256": "fff9174a39bd766316ad04d16f64f67f44c4a92b15cd7689ea62f9753b672399",
+   "file": "west_28575360_28620000.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-06-01T00%3A00%3A00&endtime=2024-07-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2284,
+   "sha256": "6f78582aec9332bd6ab08ce182b37f7eabc6081fa83a56f57bab15fe5b643651",
+   "file": "west_28620000_28663200.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-07-01T00%3A00%3A00&endtime=2024-08-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1977,
+   "sha256": "826425210bb49bfe1d809b2bc3805a4d1efed9cbccdb6f954d5fd42f43d087f3",
+   "file": "west_28663200_28707840.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-08-01T00%3A00%3A00&endtime=2024-09-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 3056,
+   "sha256": "41196a63f0657ac876af1a81f89e7de4f94601f5b123daa8c1c5008b757f021b",
+   "file": "west_28707840_28752480.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-09-01T00%3A00%3A00&endtime=2024-10-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2151,
+   "sha256": "c5c82aa0c5959f4a9a640b9095a25f7d74910a857b2a5f909b636a7d150fd228",
+   "file": "west_28752480_28795680.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-10-01T00%3A00%3A00&endtime=2024-11-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1982,
+   "sha256": "689032f40c62dd9e64050f9bd2d06bdf27e0e45ff4f11cb51511e0208d90f07d",
+   "file": "west_28795680_28840320.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-11-01T00%3A00%3A00&endtime=2024-12-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1770,
+   "sha256": "d72f86ebda1bd15cd8459a83143116b7c3a90f1c8f186634cb19d7ee1af71226",
+   "file": "west_28840320_28883520.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-12-01T00%3A00%3A00&endtime=2025-01-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 3471,
+   "sha256": "bcb0800353ee1338324eb011c74218e2edda1bb2e81a9e9754e347593b92ac28",
+   "file": "west_28883520_28928160.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-01-01T00%3A00%3A00&endtime=2025-02-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2463,
+   "sha256": "4704ee0f07ce2d654c9ccd79fdae9f92711e3e32402ce7fd3c231060c3458ba2",
+   "file": "west_28928160_28972800.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-02-01T00%3A00%3A00&endtime=2025-03-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1929,
+   "sha256": "f3ae757d9169d26f0ff15b4f9d65284f1154f8fbfec316dbfc0d84decc8b6384",
+   "file": "west_28972800_29013120.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-03-01T00%3A00%3A00&endtime=2025-04-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2281,
+   "sha256": "14d982bfac29797063df9f40f1a1e8f4c7a529765448c01d584bf5ae252bc675",
+   "file": "west_29013120_29057760.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-04-01T00%3A00%3A00&endtime=2025-05-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2431,
+   "sha256": "84d499d85545e69de519ab67ba7d71f3b3750703683b66f45004f4e05a681523",
+   "file": "west_29057760_29100960.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-05-01T00%3A00%3A00&endtime=2025-06-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2153,
+   "sha256": "1499db3630591a1dfeb1c9382613c81ef22a2b88109dc93f0f5ca8f9d74dee9f",
+   "file": "west_29100960_29145600.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-06-01T00%3A00%3A00&endtime=2025-07-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2160,
+   "sha256": "7e306c2089d24aeca0b022fdb60d686ab543a10e72465b571e5c584136634311",
+   "file": "west_29145600_29188800.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-07-01T00%3A00%3A00&endtime=2025-08-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2129,
+   "sha256": "dccb35f3b1c8db72bd72df462ba0b491224eeed38dfaca84e28b10022fe6d840",
+   "file": "west_29188800_29233440.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-08-01T00%3A00%3A00&endtime=2025-09-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2170,
+   "sha256": "f121429ed332d8a906e939e87099c959db98cc1fd496b0688208627284d990ac",
+   "file": "west_29233440_29278080.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-09-01T00%3A00%3A00&endtime=2025-10-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2160,
+   "sha256": "723c6bc76847da88b75ea71adcb0b6c02a88d4ae89787a46eb9cfff12b5f006e",
+   "file": "west_29278080_29321280.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-10-01T00%3A00%3A00&endtime=2025-11-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2016,
+   "sha256": "0e46f63fdac38ab21c70b8b726ae707665e720e11fa8a3abcfd6919b830d7e2f",
+   "file": "west_29321280_29365920.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-11-01T00%3A00%3A00&endtime=2025-12-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1917,
+   "sha256": "682829d126701d29f1306cb34937ffd8eb505ad9efe012832825c593d52894a2",
+   "file": "west_29365920_29409120.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2025-12-01T00%3A00%3A00&endtime=2026-01-01T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 2263,
+   "sha256": "7f5172602d99202bfc9cea450f4e2ada29d000a66a2dbef8b9bc1407b35299b0",
+   "file": "west_29409120_29453760.csv"
+  },
+  {
+   "region": "west",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2026-01-01T00%3A00%3A00&endtime=2026-01-22T00%3A00%3A00&minmagnitude=1.0&orderby=time-asc&minlatitude=30.32&maxlatitude=45.99&minlongitude=-128.10&maxlongitude=-107.08",
+   "rows": 1639,
+   "sha256": "5edd7f34b3137fb9e30739566e067c32f4c6e8fe8e82804efaaeb27b7a992d2f",
+   "file": "west_29453760_29484000.csv"
+  }
+ ],
+ "rows": 244379
+}

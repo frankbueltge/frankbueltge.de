@@ -1,0 +1,76 @@
+{
+ "note": "Sources read for session 164, 2026-09-19. Protocol v4 §5.2: when a finding rests on someone else's result, read the source and cite the passage; never reconstruct a result, a figure or a method from training memory. Every 'read' below means this session fetched the document and extracted its text with this repository's own extractor (tools/completeness-census/pdftext.py), with no model between the source and the quoted passage. Where a source could not be read, that is recorded as not read, and nothing is quoted from it.",
+ "extractor_defect_disclosed": "tools/completeness-census/pdftext.py drops fi/ffi ligatures (recorded as a correction on 2026-09-14). Quotations below are given exactly as extracted; where a ligature is missing the repaired reading follows in square brackets.",
+ "sources": [
+  {
+   "key": "knight-leveson-1986",
+   "citation": "J. C. Knight and N. G. Leveson, 'An experimental evaluation of the assumption of independence in multiversion programming', IEEE Transactions on Software Engineering, SE-12(1), 1986, pp. 96-109.",
+   "doi": "10.1109/TSE.1986.6312924",
+   "dblp": "journals/tse/KnightL86",
+   "read": false,
+   "status": "NOT READ — closed to this session",
+   "what_was_tried": [
+    "dl.acm.org/doi/10.1109/TSE.1986.6312924 -> HTTP 403",
+    "ieeexplore.ieee.org/document/6312924 -> HTTP 202, a challenge response, no content",
+    "api.semanticscholar.org graph record -> retrieved, but the abstract field is elided by the publisher: openAccessPdf.status = CLOSED, abstract = null"
+   ],
+   "trap_found": {
+    "url": "https://www.csc.kth.se/utbildning/kth/kurser/DA2210/vettig13/Seminarier/KnightLeveson.pdf",
+    "what_it_looks_like": "a PDF on a university server, named for the two authors, opening with the full citation and what reads as the paper's abstract",
+    "what_it_is": "a seminar review written by a third party. After the abstract it carries sections headed 'Critique', 'Conduct of the Experiment', 'Experimental Results' and 'Presentation', and closes with the reviewer's own verdict on the paper: 'The presentation of the experiment was done ve ry well. However, a description of the controls placed on the oracle program and te st driver should have been described. Overall, a nice job.'",
+    "consequence": "Nothing is quoted from this document as the paper's own text, and no number in this session rests on it. The claim that this paper exists and what it is about is carried by the publisher metadata above, not by this PDF."
+   },
+   "what_this_session_uses_it_for": "Nothing but the existence and subject of the result, stated as unread. The session's own limitation — that separately dispatched workers of one automated system are not independent authors — is argued from the session's own numbers, not from this paper."
+  },
+  {
+   "key": "silberzahn-2018",
+   "citation": "R. Silberzahn, E. L. Uhlmann, D. P. Martin et al., 'Many Analysts, One Data Set: Making Transparent How Variations in Analytic Choices Affect Results', Advances in Methods and Practices in Psychological Science, 1(3), 2018, pp. 337-356.",
+   "doi": "10.1177/2515245917747646",
+   "read": true,
+   "read_from": "https://eawtrey.github.io/pubs/Silberzahn%20et%20al_2018_Many%20Analysts,%20One%20Data%20Set.pdf",
+   "quotations": [
+    {
+     "page_marker": "338, Abstract",
+     "text": "Twenty-nine teams involving 61 analysts used the same data set to address the same research question: whether soccer referees are more likely to give red cards to dark-skin-toned players than to light-skin-toned players. Analytic approaches varied widely across the teams, and the estimated effect sizes ranged from 0.89 to 2.93"
+    },
+    {
+     "page_marker": "347",
+     "text": "Twenty teams (69%) found a significant positive relationship, p .05, and nine teams (31%) found a nonsignificant relationship. No team reported a significant negative relationship."
+    },
+    {
+     "page_marker": "on analyst expertise",
+     "text": "there was little evidence that the variability in estimated effect sizes observed across teams was attributable to a subset of analyses that were lower than the others in quality overall"
+    }
+   ],
+   "why_it_is_a_neighbour": "The nearest published shape of tonight's design: one task, one input, many independent executors, and the spread between them as the measurement. It differs in what varies. There the analysts chose their own analytic approach; here the specification is fixed and only the implementation of it varies, which is a narrower and harsher test.",
+   "what_this_session_does_not_claim": "No number here is compared to any number there. Twenty-nine teams of humans and four dispatched workers of one automated system are not the same population."
+  },
+  {
+   "key": "wolter-2019",
+   "citation": "T. Wolter, 'A Comparison Study of Open Source License Crawler', Bachelor thesis, Friedrich-Alexander-Universität Erlangen-Nürnberg, Technische Fakultät, Department Informatik, submitted 13 May 2019. Supervisors: Prof. Dr. Dirk Riehle, M.B.A., Michael Dorner, M.Sc.",
+   "licence": "CC BY 4.0, stated on the thesis's own licence page",
+   "read": true,
+   "read_from": "https://osr.cs.fau.de/wp-content/uploads/2019/08/wolter_2019.pdf",
+   "quotations": [
+    {
+     "page_marker": "Abstract",
+     "text": "we performed a two phased benchmark with 6 license crawlers and 75 open source projects. Firstly, we determined which of the software tools found the most licenses in a direct competition. Secondly, we evaluated con ict situations in the output of the best performing license crawlers.",
+     "repaired_reading": "con[fl]ict situations"
+    },
+    {
+     "page_marker": "2.5.4 Phase 2",
+     "text": "A total of 149884 total license hits occurred while scanning with Scancode and FOSSology. Overall, the two license crawler agreed on their result in 124756 of those cases. This amount to a total of 83.24% of all license hits. However, there were a total of 12564 con ict situation.",
+     "repaired_reading": "con[fl]ict situations"
+    },
+    {
+     "page_marker": "2.5.4 Phase 2, conflict analysis",
+     "text": "Scancode had many false posit- ives, marking license hits that were not actually present or had insu cient data. Overall, the positive prediction value was 37.5%. FOSSology on the other hand stayed neutral in a lot of cases. Thus, it's positive prediction value was much higher with 66.66%.",
+     "repaired_reading": "insu[ffi]cient"
+    }
+   ],
+   "why_it_is_a_neighbour": "It is the prior art for 'independently built licence identifiers disagree with each other', and it puts a number on it: two tools, 83.24 % agreement over 149,884 hits. Same author group as Wolter, Barcomb, Riehle & Harutyunyan 2022, which this practice already carries from 2026-09-18.",
+   "how_tonight_differs": "Those are six tools built to six different purposes by six different projects; the disagreement between them is expected and its causes are many. Tonight holds the specification fixed — one published text, reimplemented — so a disagreement is attributable to the reading of that text and to nothing else.",
+   "novelty_position": "No novelty of method is claimed. Independent reimplementation is old and comparing licence identifiers is published. What this session has not found published is the subject: an automated research practice's own measuring rule, with three defects already known and disclosed, handed back as a specification to be implemented again."
+  }
+ ]
+}

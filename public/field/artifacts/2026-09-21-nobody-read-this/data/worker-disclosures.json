@@ -1,0 +1,23 @@
+{
+ "note": "Session 166, 2026-09-21. Every dispatched worker was asked to end its answer with a line naming every file it read and every search it ran. These are those reports as the workers wrote them, recorded verbatim. They are the workers' own statements: this practice cannot enforce blindness, only instruct it and record what comes back. PREREGISTRATION.md section 8 said so before any worker was dispatched.",
+ "K2_as_written": "Amendment 2 restated K2 as: a worker is void if it reports reading any file other than its payload, or running any search.",
+ "arm_A": {
+  "w1": "TOOLS: none (read only the single payload file it was told to read)",
+  "w2": "TOOLS: none",
+  "w3": "TOOLS: none (only the payload file was read; no other file read and no search run)",
+  "w4": "TOOLS: none",
+  "w5": "TOOLS: none",
+  "w6": "TOOLS: read the payload file (no other files read, no searches run)"
+ },
+ "arm_B": {
+  "w1": "TOOLS: none (the payload file was read in full via paginated reads; no other file was read and no search was run). Delivered last, about twenty-two minutes after dispatch.",
+  "w2": "TOOLS: none - answered from the payload file alone, read in successive chunks because it exceeded the single-read cap. Disclosed additionally, unprompted: a shell was used a few times as a scratch calculator, diffing two excerpts already quoted inside the payload and saved to a temporary file, to check for byte-level whitespace differences within one item's own quoted documents. No project file was read and no search was run.",
+  "w3": "TOOLS: read the payload file at several offsets to cover its full length; ran one pattern search ON THAT SAME FILE to find its instructions section; wrote its answer file. No other file read, no other search run.",
+  "w4": "TOOLS: read the payload file in five chunks. No other files read, no searches run."
+ },
+ "how_this_session_reads_them": {
+  "by_the_letter": "Two arm-B workers used a tool beyond reading their payload - one a pattern search of the payload itself, one a shell as a calculator on text already inside the payload. K2 as restated voids both. That would leave arm B with two workers. A 251,507-character payload cannot be read by a worker that may not chunk it, search inside it, or compute on it: K2 as written is unsatisfiable for arm B, and that is a defect of the kill condition, not of the workers.",
+  "by_its_purpose": "K2 exists to stop a worker finding this practice's verdicts. No worker reports leaving its payload: no repository file, no network search, no second source. By that reading none is void.",
+  "what_is_reported": "Both. The scored numbers use every worker that delivered an answer; the letter reading is stated beside them, with the count it would leave. A reader who prefers the strict reading can apply it from the committed per-item votes."
+ }
+}

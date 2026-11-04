@@ -1,0 +1,669 @@
+{
+ "note": "Every number on the shipped page of session 162, computed from data/.",
+ "date": "2026-09-16",
+ "session": 162,
+ "population": {
+  "n_repos": 144,
+  "n_A": 84,
+  "n_B": 60,
+  "digest": "1076f464acdce2a03d7512ddf08a9437fcf67f2146c090507d6dd084e7413a33",
+  "source": "artifacts/cycle-001/2026-08-31-links-in-the-abstract/data"
+ },
+ "doors": {
+  "n": 144,
+  "answered": 144,
+  "share": 1.0,
+  "days_since_141": 16,
+  "refused": []
+ },
+ "empty_repositories": {
+  "n": 3,
+  "share_of_answered": 0.020833333333333332,
+  "repos": [
+   {
+    "repo": "GenMI-Lab/EnTrust",
+    "cohort": "B",
+    "refs": 0
+   },
+   {
+    "repo": "GenMI-Lab/GoD",
+    "cohort": "B",
+    "refs": 0
+   },
+   {
+    "repo": "xiwenc1/s-sppo",
+    "cohort": "B",
+    "refs": 0
+   }
+  ],
+  "what_it_means": "git ls-remote exits 0 and lists no branch and no tag: the repository exists, is public, and holds nothing. Session 141's probe counted exactly this as a reachable artifact."
+ },
+ "other_tree_failures": [],
+ "cloned": {
+  "n": 141,
+  "n_A": 84,
+  "n_B": 57
+ },
+ "ladder": [
+  {
+   "rung": "R1_content",
+   "sentence": "something beyond boilerplate",
+   "all": {
+    "k": 139,
+    "n": 141,
+    "share": 0.9858156028368794,
+    "wilson": [
+     0.949760311092732,
+     0.9961014685072551
+    ]
+   },
+   "A": {
+    "k": 84,
+    "n": 84,
+    "share": 1.0,
+    "wilson": [
+     0.95626827158534,
+     0.9999999999999999
+    ]
+   },
+   "B": {
+    "k": 55,
+    "n": 57,
+    "share": 0.9649122807017544,
+    "wilson": [
+     0.8807921863237419,
+     0.9903243356550672
+    ]
+   },
+   "diff_A_minus_B": 0.03508771929824561,
+   "z": 1.7290970475287988,
+   "p_z": 0.0837917275016289,
+   "p_fisher": 0.16170212765957448,
+   "mde_at_B_rate_pp": 3.508771929824561,
+   "q_bh": 0.32340425531914896,
+   "survives_bh_05": false
+  },
+  {
+   "rung": "R2_code",
+   "sentence": "a file with a source-code extension",
+   "all": {
+    "k": 132,
+    "n": 141,
+    "share": 0.9361702127659575,
+    "wilson": [
+     0.8831456427498142,
+     0.9660587287158678
+    ]
+   },
+   "A": {
+    "k": 80,
+    "n": 84,
+    "share": 0.9523809523809523,
+    "wilson": [
+     0.8838668496724167,
+     0.9813282531905099
+    ]
+   },
+   "B": {
+    "k": 52,
+    "n": 57,
+    "share": 0.9122807017543859,
+    "wilson": [
+     0.8105512290044132,
+     0.9619483282220778
+    ]
+   },
+   "diff_A_minus_B": 0.040100250626566414,
+   "z": 0.9559286849141813,
+   "p_z": 0.33910826559400015,
+   "p_fisher": 0.48503186206559534,
+   "mde_at_B_rate_pp": 8.771929824561408,
+   "q_bh": 0.48503186206559534,
+   "survives_bh_05": false
+  },
+  {
+   "rung": "R3_licence",
+   "sentence": "a licence file",
+   "all": {
+    "k": 105,
+    "n": 141,
+    "share": 0.7446808510638298,
+    "wilson": [
+     0.6668841119783411,
+     0.8094988281121633
+    ]
+   },
+   "A": {
+    "k": 66,
+    "n": 84,
+    "share": 0.7857142857142857,
+    "wilson": [
+     0.6865066777843957,
+     0.8599323345500843
+    ]
+   },
+   "B": {
+    "k": 39,
+    "n": 57,
+    "share": 0.6842105263157895,
+    "wilson": [
+     0.5552022530213656,
+     0.7899571236117475
+    ]
+   },
+   "diff_A_minus_B": 0.10150375939849621,
+   "z": 1.356509547524147,
+   "p_z": 0.17493709968238574,
+   "p_fisher": 0.23747046887326076,
+   "mde_at_B_rate_pp": 19.85512614989532,
+   "q_bh": 0.3799527501972172,
+   "survives_bh_05": false
+  },
+  {
+   "rung": "R4_manifest",
+   "sentence": "a dependency or environment manifest",
+   "all": {
+    "k": 118,
+    "n": 141,
+    "share": 0.8368794326241135,
+    "wilson": [
+     0.767114020051891,
+     0.8887755351451804
+    ]
+   },
+   "A": {
+    "k": 75,
+    "n": 84,
+    "share": 0.8928571428571429,
+    "wilson": [
+     0.8087538548365549,
+     0.9425997871233551
+    ]
+   },
+   "B": {
+    "k": 43,
+    "n": 57,
+    "share": 0.7543859649122807,
+    "wilson": [
+     0.628977037672441,
+     0.847671625297096
+    ]
+   },
+   "diff_A_minus_B": 0.1384711779448622,
+   "z": 2.1839419586910505,
+   "p_z": 0.02896651330277551,
+   "p_fisher": 0.03701175071644552,
+   "mde_at_B_rate_pp": 17.735951169445652,
+   "q_bh": 0.14804700286578207,
+   "survives_bh_05": false
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a command a stranger can copy",
+   "all": {
+    "k": 124,
+    "n": 141,
+    "share": 0.8794326241134752,
+    "wilson": [
+     0.8153934543235097,
+     0.9233453078458234
+    ]
+   },
+   "A": {
+    "k": 76,
+    "n": 84,
+    "share": 0.9047619047619048,
+    "wilson": [
+     0.8231736440500729,
+     0.9509482900904406
+    ]
+   },
+   "B": {
+    "k": 48,
+    "n": 57,
+    "share": 0.8421052631578947,
+    "wilson": [
+     0.7263682305936197,
+     0.9146420402964472
+    ]
+   },
+   "diff_A_minus_B": 0.06265664160401008,
+   "z": 1.1212912597147662,
+   "p_z": 0.2621639047276191,
+   "p_fisher": 0.29853454056444695,
+   "mde_at_B_rate_pp": 14.0946407319557,
+   "q_bh": 0.39804605408592925,
+   "survives_bh_05": false
+  },
+  {
+   "rung": "R7_tests",
+   "sentence": "tests",
+   "all": {
+    "k": 65,
+    "n": 141,
+    "share": 0.46099290780141844,
+    "wilson": [
+     0.38084142318172376,
+     0.5432134704270364
+    ]
+   },
+   "A": {
+    "k": 44,
+    "n": 84,
+    "share": 0.5238095238095238,
+    "wilson": [
+     0.418321056517279,
+     0.6272155278439278
+    ]
+   },
+   "B": {
+    "k": 21,
+    "n": 57,
+    "share": 0.3684210526315789,
+    "wilson": [
+     0.255235570344157,
+     0.4982220177750478
+    ]
+   },
+   "diff_A_minus_B": 0.1553884711779449,
+   "z": 1.8165273728869598,
+   "p_z": 0.06928951290816782,
+   "p_fisher": 0.08570426587284329,
+   "mde_at_B_rate_pp": 23.331020487876813,
+   "q_bh": 0.22854470899424875,
+   "survives_bh_05": false
+  },
+  {
+   "rung": "R8_ci",
+   "sentence": "a CI configuration",
+   "all": {
+    "k": 25,
+    "n": 141,
+    "share": 0.1773049645390071,
+    "wilson": [
+     0.1230786363817971,
+     0.24864821074521876
+    ]
+   },
+   "A": {
+    "k": 17,
+    "n": 84,
+    "share": 0.20238095238095238,
+    "wilson": [
+     0.130374567896324,
+     0.30041812758859254
+    ]
+   },
+   "B": {
+    "k": 8,
+    "n": 57,
+    "share": 0.14035087719298245,
+    "wilson": [
+     0.07287276143238601,
+     0.2532446460934409
+    ]
+   },
+   "diff_A_minus_B": 0.062030075187969935,
+   "z": 0.9464331330819867,
+   "p_z": 0.3439277125855077,
+   "p_fisher": 0.3782340093951379,
+   "mde_at_B_rate_pp": 19.336476821865006,
+   "q_bh": 0.432267439308729,
+   "survives_bh_05": false
+  },
+  {
+   "rung": "FLOOR",
+   "sentence": "code AND a licence AND a manifest AND a way in",
+   "all": {
+    "k": 91,
+    "n": 141,
+    "share": 0.6453900709219859,
+    "wilson": [
+     0.5635295883156214,
+     0.7195385355062728
+    ]
+   },
+   "A": {
+    "k": 61,
+    "n": 84,
+    "share": 0.7261904761904762,
+    "wilson": [
+     0.622525808389156,
+     0.8100717430423072
+    ]
+   },
+   "B": {
+    "k": 30,
+    "n": 57,
+    "share": 0.5263157894736842,
+    "wilson": [
+     0.3991801621874118,
+     0.6501283201887471
+    ]
+   },
+   "diff_A_minus_B": 0.19987468671679198,
+   "z": 2.434662266512308,
+   "p_z": 0.014905694922913708,
+   "p_fisher": 0.019661159405575983,
+   "mde_at_B_rate_pp": 22.73277525978692,
+   "q_bh": 0.14804700286578207,
+   "survives_bh_05": false
+  },
+  {
+   "rung": "R4b_container",
+   "sentence": "a container recipe",
+   "all": {
+    "k": 32,
+    "n": 141,
+    "share": 0.22695035460992907,
+    "wilson": [
+     0.16559523090668993,
+     0.3027890243546312
+    ]
+   },
+   "A": {
+    "k": 25,
+    "n": 84,
+    "share": 0.2976190476190476,
+    "wilson": [
+     0.21044818243737515,
+     0.4024908504923681
+    ]
+   },
+   "B": {
+    "k": 7,
+    "n": 57,
+    "share": 0.12280701754385964,
+    "wilson": [
+     0.060780601589980846,
+     0.23246448435174005
+    ]
+   },
+   "diff_A_minus_B": 0.17481203007518797,
+   "z": 2.4320343539967704,
+   "p_z": 0.015014283167174484,
+   "p_fisher": 0.02321009386818422,
+   "mde_at_B_rate_pp": 18.653991566174106
+  },
+  {
+   "rung": "R3b_licence_declared_only",
+   "sentence": "a licence named in a manifest, no licence file",
+   "all": {
+    "k": 0,
+    "n": 141,
+    "share": 0.0,
+    "wilson": [
+     0.0,
+     0.026521818075925647
+    ]
+   },
+   "A": {
+    "k": 0,
+    "n": 84,
+    "share": 0.0,
+    "wilson": [
+     0.0,
+     0.04373172841465989
+    ]
+   },
+   "B": {
+    "k": 0,
+    "n": 57,
+    "share": 0.0,
+    "wilson": [
+     0.0,
+     0.06313883485297894
+    ]
+   },
+   "diff_A_minus_B": 0.0,
+   "z": 0.0,
+   "p_z": 1.0,
+   "p_fisher": 1.0,
+   "mde_at_B_rate_pp": 8.545427834340598
+  }
+ ],
+ "bh_note": "Benjamini-Hochberg across the eight rung comparisons of the ladder (the two extras are descriptive and not in the family).",
+ "pinning": {
+  "decidable": 104,
+  "of": 141,
+  "decidable_share": 0.7375886524822695,
+  "pinned": 51,
+  "share": 0.49038461538461536,
+  "wilson": [
+   0.396375856482595,
+   0.5850784003322597
+  ],
+  "A": {
+   "k": 30,
+   "n": 69,
+   "share": 0.43478260869565216
+  },
+  "B": {
+   "k": 21,
+   "n": 35,
+   "share": 0.6
+  },
+  "diff_A_minus_B": -0.16521739130434782,
+  "p_fisher": 0.14666782602846926,
+  "mde_at_B_rate_pp": 25.986143011423724
+ },
+ "sensitivity": {
+  "boilerplate_only": {
+   "n": 2,
+   "repos": [
+    "hamdilaziz/FastTab",
+    "KU-VGI/OSVE"
+   ]
+  },
+  "licence_outside_root_only": 7,
+  "manifest_outside_root_only": 13,
+  "r6_via_nonroot_only": 5,
+  "note": "R3, R4 and R6 fire on a file anywhere in the tree, as the pre-registration says. These counts are how often the rung rests only on a file a visitor to the repository's front page would never see. Descriptive, added before the full run, no rung changed."
+ },
+ "nothing_behind_it": {
+  "n": 5,
+  "of_answered": 144,
+  "share": 0.034722222222222224,
+  "made_of": "3 empty repositories + 2 holding only boilerplate"
+ },
+ "no_code": {
+  "n": 9,
+  "of": 141,
+  "share": 0.06382978723404255,
+  "repos": [
+   {
+    "repo": "ai-agents-2030/awesome-deep-research-agent",
+    "cohort": "A",
+    "n_files": 8,
+    "has_manifest": false,
+    "sample_paths": [
+     "assets/agent.webp",
+     "assets/figure1v5.png",
+     "assets/figure2v5.png"
+    ]
+   },
+   {
+    "repo": "google-deepmind/superhuman",
+    "cohort": "A",
+    "n_files": 124,
+    "has_manifest": false,
+    "sample_paths": [
+     "aletheia/ACGKMP/ACGKMP.pdf",
+     "aletheia/ACGKMP/ACGKMP.tex",
+     "aletheia/Aletheia.pdf"
+    ]
+   },
+   {
+    "repo": "hamdilaziz/FastTab",
+    "cohort": "B",
+    "n_files": 2,
+    "has_manifest": false,
+    "sample_paths": []
+   },
+   {
+    "repo": "Jinxhy/Awesome-MoAI-Security",
+    "cohort": "B",
+    "n_files": 5,
+    "has_manifest": false,
+    "sample_paths": [
+     "figures/attack-pillar.jpg",
+     "figures/defense-pillar.jpg",
+     "figures/moai_system.jpg"
+    ]
+   },
+   {
+    "repo": "KU-VGI/OSVE",
+    "cohort": "B",
+    "n_files": 3,
+    "has_manifest": false,
+    "sample_paths": []
+   },
+   {
+    "repo": "Lossfunk/ai-scientist-artefacts-v1",
+    "cohort": "A",
+    "n_files": 58,
+    "has_manifest": false,
+    "sample_paths": [
+     "MARL-idea/Meta_AICP_MARL_Idea1-2.pdf",
+     "MARL-idea/Meta_AICP_MARL_Idea1_MVH.pdf",
+     "SALVO-WM-idea/SALVO_VLM_Semantic_Control_WM_Idea.pdf"
+    ]
+   },
+   {
+    "repo": "usail-hkust/Awesome-Foundation-Models-for-Scientific-Discovery",
+    "cohort": "A",
+    "n_files": 16,
+    "has_manifest": false,
+    "sample_paths": [
+     ".DS_Store",
+     "experimentation_example.md",
+     "figs/UFM_fig.png"
+    ]
+   },
+   {
+    "repo": "vancyland/DataClaw0",
+    "cohort": "B",
+    "n_files": 4,
+    "has_manifest": false,
+    "sample_paths": [
+     "assets/mascot.png",
+     "assets/method/overview.png"
+    ]
+   },
+   {
+    "repo": "ZJU4HealthCare/OmniCT",
+    "cohort": "B",
+    "n_files": 5,
+    "has_manifest": true,
+    "sample_paths": [
+     "assets/framework.png",
+     "pyproject.toml",
+     "requirements.txt"
+    ]
+   }
+  ],
+  "note": "Declared in an abstract, reachable, and holding no file with a source-code extension. The paths are the evidence; this practice draws no conclusion about any author from them."
+ },
+ "code_without_permission": {
+  "n": 32,
+  "of": 141,
+  "share": 0.22695035460992907,
+  "A": 16,
+  "B": 16,
+  "note": "Source code present, no licence file anywhere in the tree. Under default copyright a reader may look and may not lawfully reuse. Cycle 001 concluded the handover is a boundary of consent rather than competence; this is that boundary with a number on it."
+ },
+ "top_of_the_ladder": {
+  "definition": "every rung of the ladder at once: the floor plus tests plus CI",
+  "n": 20,
+  "of": 141,
+  "share": 0.14184397163120568,
+  "A": 14,
+  "B": 6
+ },
+ "tree_sizes": {
+  "median": 174,
+  "min": 2,
+  "max": 48729,
+  "median_A": 272,
+  "median_B": 79
+ },
+ "predictions": [
+  {
+   "id": "P1",
+   "claim": "at least 95 % of the 144 doors still answer",
+   "value": "100.0 %",
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "P2",
+   "claim": "at least 95 % of cloned trees hold something beyond boilerplate",
+   "value": "98.6 %",
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "P3",
+   "claim": "a licence file in fewer than 70 % of cohort A",
+   "value": "78.6 %",
+   "verdict": "REFUTED"
+  },
+  {
+   "id": "P4",
+   "claim": "the floor is met by fewer than half of BOTH cohorts",
+   "value": "A 72.6 %, B 52.6 %",
+   "verdict": "REFUTED"
+  },
+  {
+   "id": "P5",
+   "claim": "cohort A at least as high as B on the manifest rung (written to be uninformative if confirmed)",
+   "value": "A 89.3 % vs B 75.4 %",
+   "verdict": "CONFIRMED",
+   "caveat": "Confirmed, therefore reported as uninformative: cohort A's genre enrichment predicts it without any automation effect."
+  },
+  {
+   "id": "P6",
+   "claim": "fewer than 40 % pinned where pinning is decidable",
+   "value": "49.0 %",
+   "verdict": "REFUTED"
+  }
+ ],
+ "predictions_refuted": 3,
+ "kill_condition": {
+  "text": "If the tree step fails for more than 10 % of the repositories whose door answered - a non-zero git clone exit, or a clone with no resolvable HEAD - the tree instrument is suspect and every rung outcome is suspended.",
+  "triggering_units": 3,
+  "of": 144,
+  "rate": 0.020833333333333332,
+  "threshold": 0.1,
+  "fired": false,
+  "defect": {
+   "filed": "2026-09-16, same session, before the page was written",
+   "what": "All three triggering units are EMPTY REPOSITORIES: ls-remote exits 0 with zero refs, so there is no HEAD to resolve. An empty repository is the studied effect - an address that answers with nothing behind it - and the same pre-registration that wrote this condition also wrote, in the sentence above it, that a kill condition must be able to fire only on the apparatus and never on the phenomenon.",
+   "consequence": "It did not fire, at 2.1 % against a 10 % threshold, so no number is affected. Had the population held fifteen empty repositories instead of three, a correct result would have been suspended by a rule written that same hour to prevent exactly that.",
+   "status": "filed as a defect; the verdict above is left as written"
+  }
+ },
+ "benchmark": {
+  "source": "Hora, Montandon & Costa, arXiv:2605.16701 (ICSME 2026), Table II, 2026",
+  "population": "10,000 GitHub repositories drawn at random from 116,013 with at least 100 stars, at least 100 commits, not forks, and a commit in 2026; median 211 stars and 557 commits",
+  "LICENSE": 0.731,
+  "README_md": 0.953,
+  "gitignore": 0.95,
+  "github_dir": 0.825,
+  "workflows_dir": 0.773,
+  "caveat": "A population of established, actively maintained projects. A research repository attached to one paper should be expected to sit below it, and P3 was written on that expectation."
+ },
+ "apparatus_checks": {
+  "fixtures": 69,
+  "fixtures_failed": 0,
+  "mutants": 19,
+  "mutants_survived": 0,
+  "problems_found_before_any_data": 4
+ },
+ "robots": {
+  "fetched_utc": "2026-09-16T03:53:36Z",
+  "status": "403",
+  "bytes": 250,
+  "sha256": "c187d14caaf059f9cbb0db0da54fa1d296d18fd238dabd90bbaf7fc7c71d7951",
+  "mentions_star_agent": false,
+  "note": "Recorded for the record. Nothing in this session crawls a github.com web path: the only requests are git ls-remote, a blobless partial clone and lazy blob fetches over the git transport, which robots.txt does not govern. No path this file disallows was requested."
+ }
+}

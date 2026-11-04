@@ -1,0 +1,52 @@
+{
+ "note": "Session 167, 2026-09-22. The six predictions of PREREGISTRATION.md §5, resolved against the committed numbers. Every threshold was fixed before the corpus was fetched.",
+ "predictions": [
+  {
+   "id": "P1",
+   "claim": "the full repair R1+R4+R5+R6+R7 cuts decision-changing violations over the 896 inputs by at least 90 % against the shipped rule's 167",
+   "threshold": 17, "direction": "at_most", "observed": 9,
+   "verdict": "confirmed",
+   "note": "94.6 % reduction. And the number is worth almost nothing: class U3 shows the count is not monotone in instrument quality, and the full repair's 9 violations are a defect the repair itself created."
+  },
+  {
+   "id": "P2",
+   "claim": "at least one pair of repairs is non-additive: the joint effect on the violation count differs from the sum of the two single effects by 5 or more",
+   "threshold": 1, "direction": "at_least", "observed": 6,
+   "verdict": "confirmed",
+   "detail": "six of ten pairs carry a non-zero interaction; two exceed 5. R4+R7 = +161 (pure redundancy: both close defect 4, by different mechanisms). R1+R7 = +6 on violations and -6 on the headline count. R6+R7 is the only pair with a non-zero interaction on the mutation suite (+2) and on the fixtures (+1).",
+   "strongest": {"pair": ["R4", "R7"], "none": 167, "R4_alone": 6, "R7_alone": 7, "joint": 7, "additive_prediction": -154, "interaction": 161}
+  },
+  {
+   "id": "P3",
+   "claim": "at least one of the five repairs, applied alone, fails at least one of the 100 fixtures the shipped rule passes",
+   "threshold": 1, "direction": "at_least", "observed": 2,
+   "verdict": "confirmed",
+   "detail": "R1 alone fails NOTICE/no-year-but-capital ('Copyright Contributors to the OpenVDB Project' must be a notice). R7 alone fails L2/mit-yyyy-word ('Copyright (c) yyyy Name Of Author' must score placeholder). R6 fails L2/year-only-no-holder only in company with R7. Each repair breaks exactly the fixture that states the behaviour it deliberately changes, so no mechanical reading can tell a broken rule from a changed specification."
+  },
+  {
+   "id": "P4",
+   "claim": "the published headline does not move: no D1 repository changes its delivers_any verdict under any of the 32 variants",
+   "threshold": 0, "direction": "at_most", "observed": 4,
+   "verdict": "REFUTED",
+   "detail": "16 of the 32 variants change the set. Four distinct outcomes: 104/105 = 99.0 % (8 variants, four repositories gained, all four on a holder extracted from a liability disclaimer); 100/105 = 95.2 % with an identical set (16 variants); 100/105 = 95.2 % with two repositories gained and two lost (4 variants, the full repair among them); 98/105 = 93.3 % (4 variants, two real notices destroyed).",
+   "what_it_costs_us": "The published 95.2 % of 2026-09-18 is a function of which known defects are repaired. Under the full repair it is still 95.2 % and every one of the four repositories that moved, moved wrongly: two gained on a manufactured holder, two lost because a real notice was destroyed. A dated correction is filed beside the 2026-09-18 artifact and nothing on that page is edited."
+  },
+  {
+   "id": "P5",
+   "claim": "the full repair still carries a defect: at least one decision-changing violation class under it is adjudicated DEFECT",
+   "threshold": 1, "direction": "at_least", "observed": 1,
+   "verdict": "confirmed",
+   "detail": "class A1, nine inputs, all M2, all DEFECT - and the defect is one R7 introduced, not one the repair failed to remove. Two further defect classes (U1, U2) are in the unperturbed data and were not reachable by any relation.",
+   "note": "One round of repair was run and was not re-run to make this prediction fail, as §6.2 required in advance."
+  },
+  {
+   "id": "P6",
+   "claim": "R6 and R7 are partially redundant: the marginal effect of adding R6 to R7 on the violation count is at most 1",
+   "threshold": 1, "direction": "at_most", "observed": 0,
+   "verdict": "confirmed on the letter, and the reading behind it is wrong",
+   "detail": "R7 alone 7, R6+R7 7, marginal 0. But R6's marginal effect on the violation count runs from -5 to 0 depending on context (given R1+R7 it is -5, 14 -> 9), and R6+R7 is the only pair in the lattice that blinds the mutation suite (two mutants survive that neither repair alone lets survive) and breaks a fixture neither breaks alone. R6 is not redundant given R7; it is silent on the one outcome this prediction chose to look at."
+  }
+ ],
+ "summary": {"confirmed": 5, "refuted": 1,
+  "the_refuted_one": "P4 - the prediction this practice said in advance it most expected to be wrong about"}
+}

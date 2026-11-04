@@ -1,0 +1,546 @@
+{
+ "note": "Fixtures for the rungs of session 162. Hand-made cases, no real repository.",
+ "written": "2026-09-16, before any repository was cloned",
+ "limit": "A fixture checks that a rule computes what its author says. It cannot check that the author wrote the right sentence \u2014 session 161's finding, carried here unresolved.",
+ "cases": 69,
+ "failed": 0,
+ "results": [
+  {
+   "rung": "R1_content",
+   "sentence": "a source file beside a README",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R1_content",
+   "sentence": "an empty tree",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R1_content",
+   "sentence": "README and LICENSE only",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R1_content",
+   "sentence": "the full GitHub boilerplate set and nothing else",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R1_content",
+   "sentence": "a boilerplate name inside a directory is not root boilerplate",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R2_code",
+   "sentence": "one python file",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R2_code",
+   "sentence": "a notebook counts as code",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R2_code",
+   "sentence": "documentation and data only",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R2_code",
+   "sentence": "a Dockerfile alone is not source code",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R2_code",
+   "sentence": "a YAML config alone is not source code",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R2_code",
+   "sentence": "an extension is matched case-insensitively",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R3_licence",
+   "sentence": "LICENSE at the root",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R3_licence",
+   "sentence": "British spelling",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R3_licence",
+   "sentence": "COPYING",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R3_licence",
+   "sentence": "a licence nested in a subdirectory still grants",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R3_licence",
+   "sentence": "a word starting with the same letters is not a licence",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R3_licence",
+   "sentence": "a licence mentioned only in the README",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R3b_licence_declared_only",
+   "sentence": "pyproject names a licence",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R3b_licence_declared_only",
+   "sentence": "package.json names a licence",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R3b_licence_declared_only",
+   "sentence": "package.json without a licence key",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R3b_licence_declared_only",
+   "sentence": "pyproject mentioning a licence classifier only",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R4_manifest",
+   "sentence": "requirements.txt",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R4_manifest",
+   "sentence": "a split requirements file",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R4_manifest",
+   "sentence": "an R package description",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R4_manifest",
+   "sentence": "a conda environment",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R4_manifest",
+   "sentence": "a Dockerfile is a container recipe, not a manifest",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R4_manifest",
+   "sentence": "a text file that merely mentions requirements",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R4_manifest",
+   "sentence": "code alone",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R4b_container",
+   "sentence": "a Dockerfile",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R4b_container",
+   "sentence": "a suffixed Dockerfile",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R4b_container",
+   "sentence": "a compose file is not a recipe for an image",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a Makefile",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a root runner script",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a runner buried in a subdirectory is not a root runner",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a fenced command in the README",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "an indented command in the README",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "prose naming python is not a command",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a requirements sentence outside any code block",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a fenced block that is output, not a command",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a command in the README of a repo we did not read",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a dollar-prompted command",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "DECLARED: make in a README without a Makefile does not count",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R6_entry",
+   "sentence": "a shell invocation",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R7_tests",
+   "sentence": "a tests directory",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R7_tests",
+   "sentence": "a suffix-named test file",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R7_tests",
+   "sentence": "conftest at the root",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R7_tests",
+   "sentence": "a word containing test is not a test directory",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R7_tests",
+   "sentence": "data used for testing is not a test",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R7_tests",
+   "sentence": "an evaluation split holding code is still a split, not a suite",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R7_tests",
+   "sentence": "DECLARED BOUNDARY: a tests directory with no code undercounts",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R7_tests",
+   "sentence": "a test suite one level down from the root",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R8_ci",
+   "sentence": "a GitHub Actions workflow",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R8_ci",
+   "sentence": "a Travis file",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "R8_ci",
+   "sentence": "an issue template is not CI",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R8_ci",
+   "sentence": "a workflow-shaped path outside .github",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "R5_pinning",
+   "sentence": "a lockfile is a pin by construction",
+   "expected": [
+    true,
+    true
+   ],
+   "got": [
+    true,
+    true
+   ],
+   "ok": true
+  },
+  {
+   "rung": "R5_pinning",
+   "sentence": "every requirement pinned exactly",
+   "expected": [
+    true,
+    true
+   ],
+   "got": [
+    true,
+    true
+   ],
+   "ok": true
+  },
+  {
+   "rung": "R5_pinning",
+   "sentence": "no requirement pinned",
+   "expected": [
+    true,
+    false
+   ],
+   "got": [
+    true,
+    false
+   ],
+   "ok": true
+  },
+  {
+   "rung": "R5_pinning",
+   "sentence": "exactly half pinned counts as pinned (the boundary, stated)",
+   "expected": [
+    true,
+    true
+   ],
+   "got": [
+    true,
+    true
+   ],
+   "ok": true
+  },
+  {
+   "rung": "R5_pinning",
+   "sentence": "just under half pinned",
+   "expected": [
+    true,
+    false
+   ],
+   "got": [
+    true,
+    false
+   ],
+   "ok": true
+  },
+  {
+   "rung": "R5_pinning",
+   "sentence": "a commit-pinned VCS requirement counts",
+   "expected": [
+    true,
+    true
+   ],
+   "got": [
+    true,
+    true
+   ],
+   "ok": true
+  },
+  {
+   "rung": "R5_pinning",
+   "sentence": "comments and options only, nothing to pin",
+   "expected": [
+    false,
+    false
+   ],
+   "got": [
+    false,
+    false
+   ],
+   "ok": true
+  },
+  {
+   "rung": "R5_pinning",
+   "sentence": "no manifest text read at all",
+   "expected": [
+    false,
+    false
+   ],
+   "got": [
+    false,
+    false
+   ],
+   "ok": true
+  },
+  {
+   "rung": "R5_pinning",
+   "sentence": "a pin with a trailing comment",
+   "expected": [
+    true,
+    true
+   ],
+   "got": [
+    true,
+    true
+   ],
+   "ok": true
+  },
+  {
+   "rung": "FLOOR",
+   "sentence": "code, licence, manifest and a Makefile",
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "rung": "FLOOR",
+   "sentence": "everything but the licence",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "FLOOR",
+   "sentence": "everything but the manifest",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "FLOOR",
+   "sentence": "everything but a way in",
+   "expected": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "rung": "FLOOR",
+   "sentence": "a licence, a manifest and a Makefile but no code",
+   "expected": false,
+   "got": false,
+   "ok": true
+  }
+ ]
+}

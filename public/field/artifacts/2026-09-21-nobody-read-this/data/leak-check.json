@@ -1,0 +1,145 @@
+{
+ "A": {
+  "chars": 37604,
+  "n_document_blocks": 15,
+  "forbidden": {
+   "SPDX": {
+    "total": 4,
+    "in_document": 4,
+    "scaffolding_lines": []
+   },
+   "adjudicat": {
+    "total": 1,
+    "in_document": 0,
+    "scaffolding_lines": [
+     "You are adjudicating between two readings of a set of software licence documents."
+    ]
+   }
+  },
+  "categories": {},
+  "identifiers": {
+   "CAL-1.0-Combined-Work-Exception": {
+    "total": 2,
+    "in_document": 2,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   },
+   "CAL-1.0": {
+    "total": 4,
+    "in_document": 4,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   },
+   "Cube": {
+    "total": 2,
+    "in_document": 2,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   },
+   "X11": {
+    "total": 1,
+    "in_document": 1,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   }
+  },
+  "residual_hits": 0
+ },
+ "B": {
+  "chars": 251455,
+  "n_document_blocks": 98,
+  "forbidden": {
+   "defect": {
+    "total": 2,
+    "in_document": 0,
+    "scaffolding_lines": [
+     "DEFECT     - the rule's verdict on document A (the original) is wrong for what a reader",
+     "{\"item\": \"B01\", \"answer\": \"DEFECT\" | \"LATENT\" | \"MR-FALSE\" | \"UNDECIDED\","
+    ]
+   },
+   "adjudicat": {
+    "total": 1,
+    "in_document": 0,
+    "scaffolding_lines": [
+     "You are adjudicating the results of a test. A rule reads a licence document and"
+    ]
+   }
+  },
+  "categories": {
+   "DEFECT": {
+    "total": 2,
+    "outside_document": 2
+   },
+   "LATENT": {
+    "total": 2,
+    "outside_document": 2
+   },
+   "MR-FALSE": {
+    "total": 2,
+    "outside_document": 2
+   },
+   "UNDECIDED": {
+    "total": 2,
+    "outside_document": 2
+   }
+  },
+  "identifiers": {
+   "BSD-2-Clause": {
+    "total": 20,
+    "in_document": 0,
+    "in_scaffolding": 20,
+    "scaffolding_kind": "family value in a verdict tuple or in the specification's family list"
+   },
+   "BSD-4-Clause": {
+    "total": 8,
+    "in_document": 0,
+    "in_scaffolding": 8,
+    "scaffolding_kind": "family value in a verdict tuple or in the specification's family list"
+   },
+   "Sendmail": {
+    "total": 16,
+    "in_document": 16,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   },
+   "Caldera": {
+    "total": 28,
+    "in_document": 28,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   },
+   "Entessa": {
+    "total": 10,
+    "in_document": 10,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   },
+   "Cube": {
+    "total": 4,
+    "in_document": 4,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   },
+   "NCSA": {
+    "total": 2,
+    "in_document": 2,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   },
+   "MIT": {
+    "total": 187,
+    "in_document": 152,
+    "in_scaffolding": 35,
+    "scaffolding_kind": "family value in a verdict tuple or in the specification's family list"
+   },
+   "X11": {
+    "total": 2,
+    "in_document": 2,
+    "in_scaffolding": 0,
+    "scaffolding_kind": null
+   }
+  },
+  "residual_hits": 0
+ },
+ "note": "Session 166, 2026-09-21. K4 of PREREGISTRATION.md section 9 as run over the exact payload bytes, before any worker was dispatched, and classified under Amendment 1. A residual hit is a forbidden string in the payload's own scaffolding that is not a quoted document, not a family value the worker must see, not a category name the answer format requires, and not the word that names the task."
+}

@@ -1,0 +1,188 @@
+{
+ "note": "Deliberate corruptions of this session's own evidence, each run against a copy of check.py. A corruption that is not caught is a hole in the checker and is published as one.",
+ "n_corruptions": 36,
+ "n_caught": 36,
+ "n_missed": 0,
+ "corruptions": [
+  {
+   "corruption": "corpus: change one entry's sha256",
+   "caught": true,
+   "first_failure": "FAIL corpus: digest recomputes from the committed entries got '084cf5d310713066746defa9414233b402d1ea85b86af80105f04152bc34084c' want '73363f6622045c5a4cebc39af0bedf3bbe5cc5f212549a56aae249cdcf8315ec'"
+  },
+  {
+   "corruption": "corpus: drop one entry",
+   "caught": true,
+   "first_failure": "FAIL corpus: entry count matches got 739 want 740"
+  },
+  {
+   "corruption": "corpus: restate the digest",
+   "caught": true,
+   "first_failure": "FAIL corpus: digest recomputes from the committed entries got '73363f6622045c5a4cebc39af0bedf3bbe5cc5f212549a56aae249cdcf8315ec' want 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'"
+  },
+  {
+   "corruption": "corpus: claim 741 texts",
+   "caught": true,
+   "first_failure": "FAIL corpus: 740 texts got 741 want 740"
+  },
+  {
+   "corruption": "verdicts: delete one row",
+   "caught": true,
+   "first_failure": "FAIL verdicts: 1,480 rows got 1479 want 1480"
+  },
+  {
+   "corruption": "verdicts: invent a family outside the vocabulary",
+   "caught": true,
+   "first_failure": "FAIL verdicts: every family is in the contract vocabulary got None want None"
+  },
+  {
+   "corruption": "verdicts: invent an attribution value",
+   "caught": true,
+   "first_failure": "FAIL verdicts: every attribution is in the contract vocabulary got None want None"
+  },
+  {
+   "corruption": "verdicts: flip one independent's verdict on canonical MIT",
+   "caught": true,
+   "first_failure": "FAIL independents disagree internally: 127 got 128 want 127"
+  },
+  {
+   "corruption": "verdicts: make R-def agree with R-ship on MIT",
+   "caught": true,
+   "first_failure": "FAIL R-def is really the defect: named on canonical MIT got None want None"
+  },
+  {
+   "corruption": "verdicts: claim an implementation failed nothing when it failed",
+   "caught": true,
+   "first_failure": "FAIL verdicts: all six delivered, no failures got None want None"
+  },
+  {
+   "corruption": "analysis: inflate the all-five agreement",
+   "caught": true,
+   "first_failure": "FAIL all five agree on families, arm C got 612 want 700"
+  },
+  {
+   "corruption": "analysis: restate one pair's agreement",
+   "caught": true,
+   "first_failure": "FAIL agreement recomputes: I-A vs R-ship got 711 want 739"
+  },
+  {
+   "corruption": "analysis: shrink the internal disagreement to flatter the method",
+   "caught": true,
+   "first_failure": "FAIL analysis records that number unaltered got 3 want 127"
+  },
+  {
+   "corruption": "analysis: inflate the count that convicts us",
+   "caught": true,
+   "first_failure": "FAIL analysis records the unanimous-against count unaltered got 40 want 11"
+  },
+  {
+   "corruption": "analysis: break the transition arithmetic",
+   "caught": true,
+   "first_failure": "FAIL transition R-ship: parts sum to the scored total got None want None"
+  },
+  {
+   "corruption": "analysis: give R-def a passing transition score",
+   "caught": true,
+   "first_failure": "FAIL transition R-def: pct recomputes got None want None"
+  },
+  {
+   "corruption": "adjudication: drop a case that convicts us",
+   "caught": true,
+   "first_failure": "FAIL adjudication covers exactly those 11 got ['BSD-2-Clause-first-lines', 'BSD-4-Clause-UC', 'CAL-1.0', 'CAL-1.0-Combined-Work-Exception', 'Community-Spec-1.0', 'CryptoSwift', 'Cube', 'InnoSetup', 'MIT-advertising', 'MIT-enna'] want ['BSD-2-Clause-first-lines', 'BSD-4-Clause-UC', 'CAL-1.0', 'CAL-1.0-Combined-Work-Exception', 'Community-Spec-1.0', 'CryptoSwift', 'Cube', 'InnoSetup', 'MIT-advertising', 'MIT-enna', 'X11']"
+  },
+  {
+   "corruption": "adjudication: turn a conviction into an acquittal",
+   "caught": true,
+   "first_failure": "FAIL adjudication verdict counts got {'R-ship right': 5, 'R-ship wrong': 5, 'specification does not decide': 1} want {'R-ship wrong': 6, 'R-ship right': 4, 'specification does not decide': 1}"
+  },
+  {
+   "corruption": "adjudication: misstate what the independents said",
+   "caught": true,
+   "first_failure": "FAIL adjudication X11: independents' verdict matches the rows got None want None"
+  },
+  {
+   "corruption": "adjudication: name a fourth suspect file in the 09-18 data",
+   "caught": true,
+   "first_failure": "FAIL 09-18: they are the three named in the adjudication got None want None"
+  },
+  {
+   "corruption": "predictions: turn a refutation into a confirmation",
+   "caught": true,
+   "first_failure": "FAIL four confirmed, two refuted got None want None"
+  },
+  {
+   "corruption": "predictions: claim a kill condition never existed",
+   "caught": true,
+   "first_failure": "FAIL all four kill conditions are on the record got ['K1', 'K2', 'K3'] want ['K1', 'K2', 'K3', 'K4']"
+  },
+  {
+   "corruption": "predictions: say a kill condition fired",
+   "caught": true,
+   "first_failure": "FAIL no kill condition fired got None want None"
+  },
+  {
+   "corruption": "predictions: change an expectation after the fact",
+   "caught": true,
+   "first_failure": "FAIL both refutations were the expected direction got None want None"
+  },
+  {
+   "corruption": "implementations: change a committed module's recorded digest",
+   "caught": true,
+   "first_failure": "FAIL I-A: sha256 matches got None want None"
+  },
+  {
+   "corruption": "K3: claim the scan passed when it did not",
+   "caught": true,
+   "first_failure": "FAIL K3 run 1 failed all four got None want None"
+  },
+  {
+   "corruption": "K3: hide the second failing run",
+   "caught": true,
+   "first_failure": "FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpcx159201/repo/artifacts/2026-09-19-the-second-hand/data/k3-run2-defective.json'"
+  },
+  {
+   "corruption": "sources: mark the unread paper as read",
+   "caught": true,
+   "first_failure": "FAIL Knight & Leveson is recorded as NOT read got None want None"
+  },
+  {
+   "corruption": "sources: put a quotation into the unread paper",
+   "caught": true,
+   "first_failure": "FAIL nothing is quoted from it as the paper got None want None"
+  },
+  {
+   "corruption": "sources: alter the number inside a quoted passage",
+   "caught": true,
+   "first_failure": "FAIL Wolter's 83.24 % is quoted, not paraphrased got None want None"
+  },
+  {
+   "corruption": "page: restate the headline agreement",
+   "caught": true,
+   "first_failure": "FAIL the headline figure appears on the page exactly twice, unaltered got 1 want 2"
+  },
+  {
+   "corruption": "page: drop the sentence that says the headline does not move",
+   "caught": true,
+   "first_failure": "FAIL the page says the headline does not move got None want None"
+  },
+  {
+   "corruption": "page: remove a prediction from the table",
+   "caught": true,
+   "first_failure": "FAIL P3 appears on the page got None want None"
+  },
+  {
+   "corruption": "page: delete the independence limitation",
+   "caught": true,
+   "first_failure": "FAIL the page states it too got None want None"
+  },
+  {
+   "corruption": "pre-registration: delete a prediction",
+   "caught": true,
+   "first_failure": "FAIL pre-registration names all six predictions got None want None"
+  },
+  {
+   "corruption": "pre-registration: delete the fill table's holder token",
+   "caught": true,
+   "first_failure": "FAIL pre-registration publishes the fill table in full got None want None"
+  }
+ ]
+}

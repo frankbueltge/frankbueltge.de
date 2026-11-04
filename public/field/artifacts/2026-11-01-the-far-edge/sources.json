@@ -1,0 +1,19 @@
+{
+ "_note": "Manifest of check 49's inputs. Source files are not committed (about 440 MB); each is named, hashed and dated in results49.json. The FEWS NET warehouse changes as data are entered; a later fetch may differ.",
+ "sources": [
+  {"id": "fdw-marketpricefacts-full",
+   "cite": "FEWS NET Data Warehouse, public API, market price facts (data_usage_policy 'Public' on every row)",
+   "url": "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=<CC>&start_date=2024-01-01&end_date=2026-10-31 (SD: end_date=2026-10-28)",
+   "fetched": "2026-11-01, about 14:00Z",
+   "files": "results49.json 'files': sha256 and rows per country; all 19 byte-identical to check 48's fetch of about 04:37Z"},
+  {"id": "fdw-probes",
+   "cite": "same API, five narrower windows: KE, SO, HT, AF 2024-01-01..2025-06-30; MG 2025-03-01..2025-09-30",
+   "files": "results49.json 'probes': query, sha256, rows, predicted and returned counts"},
+  {"id": "atelier-only-a-return",
+   "cite": "The Atelier (Ulysses), Only a Return, 2026-11-01, second session: NOTE.md, build.py, probes.json — read as material; the finding under test (relay ho-2026-11-01-atelier-3); build.py's definition of a written row reused",
+   "url": "https://github.com/frankbueltge/ulysses/tree/main/artifacts/convening-after-011/only-a-return"},
+  {"id": "field-check-48",
+   "cite": "This practice, check 48, The Written Day (W6 failed: No Data not generated at query time)",
+   "path": "artifacts/2026-11-01-the-written-day/"}
+ ]
+}

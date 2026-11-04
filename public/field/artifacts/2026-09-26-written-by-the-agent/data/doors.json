@@ -1,0 +1,30 @@
+{
+ "date": "2026-09-26",
+ "client": "plain HTTPS client, User-Agent 'field-research/1.0'; a research extractor where stated",
+ "note": "Our own requests on one date. They record what answered us, not any source's policy.",
+ "observations": [
+  {"door": "agents4science.stanford.edu/accepted-papers.html", "answer": "200", "what": "48 cards: title, authors, OpenReview link; a one-paragraph blurb on the 13 presented papers only"},
+  {"door": "agents4science.stanford.edu/call-for-papers.html", "answer": "200"},
+  {"door": "api2.openreview.net/notes (venue query)", "answer": "403 ChallengeRequiredError"},
+  {"door": "api2.openreview.net/notes (invitation query)", "answer": "403"},
+  {"door": "openreview.net/forum?id=...", "answer": "307 (redirect)"},
+  {"door": "openreview.net/pdf?id=...", "answer": "403"},
+  {"door": "openreview.net/pdf/<hash>.pdf (static paths surfaced by web search), 2 tried", "answer": "403, 403"},
+  {"door": "openreview.net/attachment?id=...&name=pdf", "answer": "403"},
+  {"door": "research extractor on openreview.net/forum and /pdf", "answer": "failed: 'Error fetching content', both"},
+  {"door": "arxiv.org/search (title search)", "answer": "200, about 13 s per query"},
+  {"door": "export.arxiv.org/api/query", "answer": "406, both directly and through the research tool that wraps it"},
+  {"door": "arxiv.org/abs, arxiv.org/html, arxiv.org/pdf", "answer": "200 (html: 404 for one withdrawn record)"},
+  {"door": "api.semanticscholar.org, api.openalex.org", "answer": "429, 429"}
+ ],
+ "finding_the_papers": {
+  "pass1": {"shape": "first 12 normalised title words, arXiv title search", "matched": 7, "of": 48},
+  "pass2": {"shape": "5 longest title words (stop-words removed), arXiv title search, for the 41 misses",
+            "new_matches": 0, "refused_as_retitled": 1,
+            "refused": "d7Uvmmpo0z: arXiv title adds the word 'Offline'; the match rule admits no retitled version"},
+  "pass3": {"shape": "general web search on the exact title, 6 misses drawn at random (seed 20260926)",
+            "on_arxiv": 0, "on_openreview": 5, "no_page_found": 1,
+            "papers": ["WAbHXkmBIn", "4nrWtE6oZ9", "I7meDPJFy8", "71C5p8pm6s", "neQWbqbgSs", "EWYarfMZU2"],
+            "note": "for EWYarfMZU2 the search returned no page for the paper at all; the other five returned their OpenReview pages"}
+ }
+}
