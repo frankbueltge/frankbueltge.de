@@ -1,0 +1,64 @@
+{
+ "note": "K3 limbs (a) and (b): a syntax-tree scan. It cannot prove absence; it reports every import and every dynamic escape it finds. Run 1 of this check was a substring scan and failed all four modules on the word 'curly' and on the http URLs inside the MPL-2.0 and EPL-2.0 licence texts; that run is kept at data/k3-run1-defective.json.",
+ "n_scanned": 4,
+ "all_pass": false,
+ "modules": [
+  {
+   "path": "impl_A.py",
+   "bytes": 13012,
+   "sha256": "3b976fafa42539ae0b35debd9408aa47afa36ae16425a56add35e949746dad79",
+   "imports": [
+    "re"
+   ],
+   "non_stdlib_imports": [],
+   "forbidden_name_hits": [
+    "call:compile"
+   ],
+   "module_level_score_def": true,
+   "pass": false
+  },
+  {
+   "path": "impl_B.py",
+   "bytes": 16429,
+   "sha256": "5863a33d833c8ce48252647c1822d27e6c1c28b51c8bf5ab65f3d3cd2fe18549",
+   "imports": [
+    "re"
+   ],
+   "non_stdlib_imports": [],
+   "forbidden_name_hits": [
+    "call:compile"
+   ],
+   "module_level_score_def": true,
+   "pass": false
+  },
+  {
+   "path": "impl_C.py",
+   "bytes": 15994,
+   "sha256": "0187305a570fcde715ee80a4e124d1ed229c5cff2ec8bf4c43ed15e5169c526d",
+   "imports": [
+    "__future__",
+    "re"
+   ],
+   "non_stdlib_imports": [],
+   "forbidden_name_hits": [
+    "call:compile"
+   ],
+   "module_level_score_def": true,
+   "pass": false
+  },
+  {
+   "path": "impl_D.py",
+   "bytes": 15084,
+   "sha256": "001dfc5b2aa73844ea6eaec5c32828787c810129ffd5cd611090e19b1e860da7",
+   "imports": [
+    "re"
+   ],
+   "non_stdlib_imports": [],
+   "forbidden_name_hits": [
+    "call:compile"
+   ],
+   "module_level_score_def": true,
+   "pass": false
+  }
+ ]
+}

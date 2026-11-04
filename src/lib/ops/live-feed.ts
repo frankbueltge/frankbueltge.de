@@ -20,8 +20,10 @@ import { WERKE, type Werk } from '@/data/werke'
 import { readArchFacts, type ArchFacts } from '@/lib/arch/facts'
 import { loadRelayExtras, type RelayConvening } from '@/lib/ecology/convening'
 import { loadRelay, type RelayState } from '@/lib/ecology/relay'
+import { loadProcess } from '@/lib/ecology/process'
 import { loadArtifacts, loadCycle, loadPresentations, type ArtifactEntry, type CycleState, type PresentationEntry } from '@/lib/ecology/v3'
 import type { LatestWork } from '@/lib/engines/latest'
+import { openCycleOf } from '@/lib/engines/publication.mjs'
 import { allWorks } from '@/lib/engines/register'
 import { readN1Nights, readN1Works, type N1Night, type N1Work } from '@/lib/n1/works'
 import { PAPERS } from '@/lib/papers'
@@ -201,15 +203,39 @@ export function readAtlasRuns(root: string): unknown[] {
     .filter((r) => r !== null)
 }
 
+/**
+ * The running cycle's long works, dated. Since cycle 009 the Atelier and the Field grow one work
+ * per cycle under `artifacts/cycle-NNN/<slug>/`, and its slug carries no date, so the feed (which
+ * lists only dated artifacts) passed it over: the front page's lead named a session artifact of
+ * the convening instead of the work in progress, and the Atelier none at all (found 2026-11-04).
+ * Such a work is dated by the newest state its PROCESS.json records, which is the day it last
+ * visibly changed. Only the open cycle's works: after a presentation the presentation speaks.
+ */
+export function datedOpenCycleWorks(
+  artifacts: readonly ArtifactEntry[],
+  openCycle: number | null,
+  newestState: (href: string) => string | null,
+): ArtifactEntry[] {
+  return artifacts.map((a) => {
+    if (a.date !== null || openCycle === null || a.cycle !== openCycle) return a
+    const date = newestState(a.href)
+    return date ? { ...a, date } : a
+  })
+}
+
+const newestProcessDate = (root: string) => (href: string): string | null =>
+  loadProcess(href, root).reduce<string | null>((best, s) => (best === null || s.date > best ? s.date : best), null)
+
 let cached: FeedInput | null = null
 
 /** The committed record, read once per build — the entrance and /now both render the log. */
 export function loadFeedInput(): FeedInput {
   if (cached) return cached
   const root = process.cwd()
+  const cycle = loadCycle(root)
   cached = {
     works: allWorks(),
-    artifacts: loadArtifacts(root),
+    artifacts: datedOpenCycleWorks(loadArtifacts(root), openCycleOf(cycle), newestProcessDate(root)),
     arch: readArchFacts(),
     n1: readN1Works(),
     n1Nights: readN1Nights(),
@@ -220,7 +246,7 @@ export function loadFeedInput(): FeedInput {
     papers: PAPERS,
     atlasRuns: readAtlasRuns(root),
     datasets: DATASETS,
-    cycle: loadCycle(root),
+    cycle,
     presentations: loadPresentations(root),
     relay: loadRelay(root),
     relayConvening: loadRelayExtras(root).convening,

@@ -1,0 +1,205 @@
+{
+ "study": 28,
+ "set": "study 25 common set, 232 sequences x 9 lags",
+ "blind_on_the_words": {
+  "stated_most": {
+   "observed": 44,
+   "stated": 89.06,
+   "ratio": 0.494,
+   "ci": [
+    0.345,
+    0.633
+   ],
+   "verdict": "too high"
+  },
+  "stated_least": {
+   "observed": 11,
+   "stated": 8.68,
+   "ratio": 1.267,
+   "ci": [
+    0.564,
+    2.01
+   ],
+   "verdict": "cannot be told from right"
+  }
+ },
+ "where_the_words_point": {
+  "most_is_first_hour": 210,
+  "least_is_720h": 206,
+  "most_lags": {
+   "0": 210,
+   "6": 9,
+   "12": 5,
+   "48": 1,
+   "24": 4,
+   "336": 1,
+   "168": 1,
+   "96": 1
+  },
+  "least_lags": {
+   "720": 206,
+   "6": 6,
+   "336": 13,
+   "12": 2,
+   "168": 3,
+   "96": 1,
+   "48": 1
+  }
+ },
+ "reliability": [
+  {
+   "stratum": "<0.01",
+   "first_hour": {
+    "observed": 0,
+    "stated": 1.0,
+    "ratio": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "later": {
+    "observed": 6,
+    "stated": 7.48,
+    "ratio": 0.802,
+    "ci": [
+     0.0,
+     1.94
+    ]
+   }
+  },
+  {
+   "stratum": "0.01-0.03",
+   "first_hour": {
+    "observed": 1,
+    "stated": 1.73,
+    "ratio": 0.577,
+    "ci": [
+     0.0,
+     1.875
+    ]
+   },
+   "later": {
+    "observed": 13,
+    "stated": 13.16,
+    "ratio": 0.988,
+    "ci": [
+     0.241,
+     2.117
+    ]
+   }
+  },
+  {
+   "stratum": "0.03-0.1",
+   "first_hour": {
+    "observed": 3,
+    "stated": 8.22,
+    "ratio": 0.365,
+    "ci": [
+     0.0,
+     0.835
+    ]
+   },
+   "later": {
+    "observed": 25,
+    "stated": 33.41,
+    "ratio": 0.748,
+    "ci": [
+     0.324,
+     1.21
+    ]
+   }
+  },
+  {
+   "stratum": "0.1-0.3",
+   "first_hour": {
+    "observed": 13,
+    "stated": 19.43,
+    "ratio": 0.669,
+    "ci": [
+     0.344,
+     1.02
+    ]
+   },
+   "later": {
+    "observed": 57,
+    "stated": 51.59,
+    "ratio": 1.105,
+    "ci": [
+     0.64,
+     1.568
+    ]
+   }
+  },
+  {
+   "stratum": ">=0.3",
+   "first_hour": {
+    "observed": 30,
+    "stated": 52.15,
+    "ratio": 0.575,
+    "ci": [
+     0.396,
+     0.758
+    ]
+   },
+   "later": {
+    "observed": 92,
+    "stated": 119.67,
+    "ratio": 0.769,
+    "ci": [
+     0.588,
+     0.923
+    ]
+   }
+  }
+ ],
+ "hour_beyond_size": {
+  "ratio": 0.669,
+  "ci": [
+   0.481,
+   0.915
+  ],
+  "verdict": "too high"
+ },
+ "size_within_later": {
+  "ratio": 0.945,
+  "ci": [
+   0.49,
+   2.897
+  ]
+ },
+ "without_first_hour": {
+  "stated_most": {
+   "observed": 36,
+   "stated": 52.17,
+   "ratio": 0.69,
+   "ci": [
+    0.484,
+    0.885
+   ],
+   "verdict": "too high"
+  },
+  "stated_least": {
+   "observed": 11,
+   "stated": 8.68,
+   "ratio": 1.267,
+   "ci": [
+    0.564,
+    2.01
+   ],
+   "verdict": "cannot be told from right"
+  }
+ },
+ "p4_strata": [
+  "0.03-0.1",
+  "0.1-0.3",
+  ">=0.3"
+ ],
+ "predictions": {
+  "P1": false,
+  "P2": true,
+  "P3": true,
+  "P4": true,
+  "P5": false
+ }
+}

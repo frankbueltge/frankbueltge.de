@@ -68,13 +68,15 @@ describe('the rule, file by file', () => {
     expect(isPublished('studio/window/index.html')).toBe(false)
   })
 
-  it('publishes the works, and not the Field’s session artifacts', () => {
+  it('publishes the works and the Field’s dated pieces, not its cycle folders', () => {
     expect(isPublished('studio/werke-html/2026-10-16-filed-under/index.html')).toBe(true)
     expect(isPublished('atelier/werke-html/2026-07-04-attractor/index.html')).toBe(true)
     expect(isPublished('error-as-method/works-html/2026-10-16-told-true/index.html')).toBe(true)
     expect(isPublished('error-as-method/2026-10-16-told-true/figure.svg')).toBe(true)
     expect(isPublished('arch/works/arrival/iteration-15/us6000tmta.html')).toBe(true)
-    expect(isPublished('field/artifacts/2026-10-16-the-end-sent-apart/index.html')).toBe(false)
+    // published since 2026-11-04: the Field's dated pieces open as pages
+    expect(isPublished('field/artifacts/2026-10-16-the-end-sent-apart/index.html')).toBe(true)
+    expect(isPublished('field/artifacts/2026-10-16-the-end-sent-apart/data49.js')).toBe(true)
     expect(isPublished('field/artifacts/cycle-001/2026-08-31-links-in-the-abstract/data.json')).toBe(false)
   })
 
@@ -449,7 +451,7 @@ describe('the files the build stopped copying lead to their repositories', () =>
     ['/atelier/window/cycle-008-session-5/index.html', `${GH}/ulysses/tree/main/window/cycle-008-session-5`],
     ['/atelier/window/cycle-008-session-5', `${GH}/ulysses/tree/main/window/cycle-008-session-5`],
     ['/field/artifacts', `${GH}/field-research/tree/main/artifacts`],
-    ['/field/artifacts/2026-10-16-the-end-sent-apart/', `${GH}/field-research/tree/main/artifacts/2026-10-16-the-end-sent-apart/`],
+    ['/field/artifacts/cycle-003/2026-09-08-complete-and-empty/', `${GH}/field-research/tree/main/artifacts/cycle-003/2026-09-08-complete-and-empty/`],
     ['/n-1/nights/39-fourteenth-night.md', `${GH}/n-1/blob/main/nights/39-fourteenth-night.md`],
     ['/n-1/projects/will-write/', `${GH}/n-1/blob/main/projects/will-write/`],
     ['/n-1/projects/unicode-admission/', `${GH}/n-1/tree/main/projects/unicode-admission`],
@@ -525,8 +527,8 @@ describe('a link to a piece points where the piece is read', () => {
     expect(publishedHref('/atelier/window/cycle-008-session-5/', mirrored('atelier/window/cycle-008-session-5/index.html'))).toBe(
       `${GH}/ulysses/tree/main/window/cycle-008-session-5`,
     )
-    expect(publishedHref('/field/artifacts/2026-10-16-the-end-sent-apart/', mirrored('field/artifacts/2026-10-16-the-end-sent-apart/index.html'))).toBe(
-      `${GH}/field-research/tree/main/artifacts/2026-10-16-the-end-sent-apart`,
+    expect(publishedHref('/field/artifacts/cycle-003/2026-09-08-complete-and-empty/', mirrored('field/artifacts/cycle-003/2026-09-08-complete-and-empty/index.html'))).toBe(
+      `${GH}/field-research/tree/main/artifacts/cycle-003/2026-09-08-complete-and-empty`,
     )
   })
 
@@ -621,9 +623,9 @@ describe('what the build reads stays in the mirror', () => {
 
   it('is working material nobody opens, nor reads, that goes', () => {
     for (const path of [
-      'field/artifacts/2026-10-16-x/data/series.tsv',
-      'field/artifacts/2026-10-16-x/analyse.py',
-      'field/artifacts/2026-10-16-x/README.md',
+      'field/artifacts/cycle-003/2026-09-08-x/data/series.tsv',
+      'field/artifacts/cycle-003/2026-09-08-x/analyse.py',
+      'field/artifacts/cycle-003/2026-09-08-x/README.md',
       'atelier/window/cycle-008-session-5/data.json',
       'atelier/window/cycle-008-session-5/model.js',
       'studio/werke-html/2026-10-16-filed-under/build.py',

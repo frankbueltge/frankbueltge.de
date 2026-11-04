@@ -1,0 +1,18 @@
+{
+ "data": [
+  {"what": "19,631 US tornadoes 2008-2023 with warned flag, casualties and study 15's exposure covariates",
+   "path": "../2026-10-14-who-was-beneath/data/beneath.tsv",
+   "upstream": "see ../2026-10-14-who-was-beneath/data/sources.json (SPC tornado database; IEM warning polygons via study 13; US Census 2010 county gazetteer)"}
+ ],
+ "literature": [
+  {"cite": "Boeken, P., O. Zoeter and J. M. Mooij, 2025: Conditional Forecasts and Proper Scoring Rules for Reliable and Accurate Performative Predictions. arXiv:2510.21335v1.",
+   "url": "https://arxiv.org/abs/2510.21335",
+   "read": "abstract only, through a page-to-text fetch on 2026-10-16",
+   "passages": ["Performative predictions are forecasts which influence the outcomes they aim to predict,",
+                "However, even under this condition, classical proper scoring rules fail to elicit correct forecasts."],
+   "use": "the theory's side: a forecast that changes its outcome is not elicited correctly by a proper score; this study prices the gap in one record"}
+ ],
+ "handoff": {"id": "ho-2026-10-15-atelier-3", "from": "the Atelier", "offer": "a proper score charges a heeded warning (p*e)^2 per occasion, so scoring tornado warnings on deaths fines the ones that worked"},
+ "searches": ["one web search for scoring warnings that prevent their own outcome, 2026-10-16: no measurement of the fine's size in a real warning record found (about my search)",
+              "house paper index /papers/index.json fetched 2026-10-16 (1,086 entries): zero hits for brier, proper scor*, scoring rule, self-defeat*, prevention paradox; three for performative, all performance research"]
+}

@@ -1,0 +1,126 @@
+{
+ "sha256": "761e1ed4f11db45a28ff8338a22ae78d9d78fd942603177bb8cbc16fb8352dbf",
+ "rows": 13363,
+ "duplicate_keys": 0,
+ "zones": 70,
+ "last_date": "2026-10-29",
+ "F1": {
+  "zone_suspected_dates": 15,
+  "first": "2026-05-14",
+  "last": "2026-05-30",
+  "holds": true
+ },
+ "F2": {
+  "country_suspected_dates": 70,
+  "first": "2026-05-14",
+  "last": "2026-08-04",
+  "holds": true
+ },
+ "F3": {
+  "zone_days_confirmed": 6295,
+  "with_suspected_deaths": 161,
+  "share": 0.0256,
+  "holds": true
+ },
+ "F4": {
+  "deaths": {
+   "date": "2026-10-29",
+   "country": 5026.0,
+   "zone_sum": 4533.0,
+   "zones_reporting": 67,
+   "rel_diff": -0.0981
+  },
+  "cases": {
+   "date": "2026-10-29",
+   "country": 10351.0,
+   "zone_sum": 10351.0,
+   "zones_reporting": 67,
+   "rel_diff": 0.0
+  },
+  "holds": true
+ },
+ "F5": {
+  "Jiba": {
+   "series": [
+    [
+     "cases",
+     "suspected"
+    ],
+    [
+     "deaths",
+     "confirmed"
+    ]
+   ],
+   "confirmed_values": 3,
+   "last_row": "2026-05-30"
+  },
+  "Karisimbi": {
+   "series": [
+    [
+     "contacts",
+     ""
+    ],
+    [
+     "deaths",
+     "suspected"
+    ],
+    [
+     "cases",
+     "confirmed"
+    ],
+    [
+     "cases",
+     "suspected"
+    ],
+    [
+     "deaths",
+     "confirmed"
+    ]
+   ],
+   "confirmed_values": 8,
+   "last_row": "2026-05-30"
+  },
+  "holds": false
+ },
+ "downward_revisions": 111,
+ "explore_quiet": {
+  "zones_with_confirmed": 68,
+  "quiet_ge_42": 12,
+  "quiet_ge_21": 20,
+  "quiet_0": 21,
+  "zones_whose_confirmed_series_ends_before_last": 2
+ },
+ "posthoc_country": {
+  "cases|confirmed": {
+   "first": "2026-05-14",
+   "last": "2026-10-29",
+   "days": 141,
+   "last_value": 10351.0
+  },
+  "cases|suspected": {
+   "first": "2026-05-14",
+   "last": "2026-08-04",
+   "days": 70,
+   "last_value": 270.0
+  },
+  "deaths|confirmed": {
+   "first": "2026-05-14",
+   "last": "2026-10-29",
+   "days": 141,
+   "last_value": 5026.0
+  },
+  "deaths|suspected": {
+   "first": "2026-05-18",
+   "last": "2026-07-11",
+   "days": 39,
+   "last_value": 91.0
+  }
+ },
+ "posthoc_zones_2026_05_30": {
+  "confirmed_cases": 243.0,
+  "suspected_cases": 966.0,
+  "confirmed_deaths": 42.0,
+  "suspected_deaths": 236.0,
+  "contacts": 3550.0
+ }
+}

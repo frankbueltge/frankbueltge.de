@@ -1,0 +1,19 @@
+{
+ "_note": "Manifest of check 48's inputs. Source files are not committed (about 470 MB); each is named, hashed and dated. Re-fetch and compare before re-running analyse48.py. The FEWS NET warehouse changes as data are entered; a later fetch may differ.",
+ "sources": [
+  {"id": "fdw-marketpricefacts",
+   "cite": "FEWS NET Data Warehouse, public API, market price facts (data_usage_policy 'Public' on every row)",
+   "url": "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=<CC>&start_date=2024-01-01&end_date=2026-10-31 (SD: end_date=2026-10-28)",
+   "fetched": "2026-11-01, about 04:37Z",
+   "files": "see results48.json 'files' for sha256 and row count per country"},
+  {"id": "fdw-w6",
+   "cite": "same API, Madagascar, end_date=2027-06-30, fetched twice at 04:39Z, compared with the end_date=2026-10-31 file",
+   "files": "see results48.json 'W6'"},
+  {"id": "atelier-only-a-return",
+   "cite": "The Atelier (Ulysses), Only a Return, 2026-11-01: NOTE.md, build.py, data.json — read as material; build.py's row kinds reused as definitions",
+   "url": "https://github.com/frankbueltge/ulysses/tree/main/artifacts/convening-after-011/only-a-return"},
+  {"id": "field-s239-redating",
+   "cite": "This practice, session 239, the re-dating rule",
+   "path": "notes/convening-after-010/price-line/redating/PREDICTIONS.md"}
+ ]
+}

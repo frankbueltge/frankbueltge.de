@@ -7,10 +7,9 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { NAMING } from '@/config/naming'
 import { WERKE } from '@/data/werke'
 import { loadRelayExtras } from '@/lib/ecology/convening'
-import { loadArtifacts } from '@/lib/ecology/v3'
 import { READOUTS, type ReadoutId } from '@/lib/experiments/readouts'
 import { FEED_DEPTH, FEED_TOP, SOURCE_ORDER, streamOf, topOf, type SourceId } from './house-feed'
-import { buildFeed, buildHouseFeed, loadFeedInput, readArchive } from './live-feed'
+import { buildFeed, buildHouseFeed, datedOpenCycleWorks, loadFeedInput, readArchive } from './live-feed'
 
 const real = buildHouseFeed()
 
@@ -75,7 +74,7 @@ describe('the stream reads the whole house', () => {
 
   it('carries the practices’ cycle artifacts, so the Atelier’s newest row is not a work of July', () => {
     for (const practice of ['atelier', 'field'] as const) {
-      const shipped = loadArtifacts().filter((a) => a.practice === practice && !a.fromWorksRegister && a.date)
+      const shipped = loadFeedInput().artifacts.filter((a) => a.practice === practice && !a.fromWorksRegister && a.date)
       expect(shipped.length, `${practice} has committed no dated cycle artifact`).toBeGreaterThan(0)
       const rows = real.filter((e) => e.house === practice && e.source === 'artifact')
       expect(rows).toHaveLength(shipped.length)
@@ -235,5 +234,26 @@ describe('the convening joins the ecology’s turns (2026-10-08)', () => {
 
   it('reads the relay’s convening from the committed mirror, as /ecology does', () => {
     expect(loadFeedInput().relayConvening).toEqual(loadRelayExtras().convening)
+  })
+})
+
+describe('the open cycle long works in the feed (2026-11-04)', () => {
+  const work = { practice: 'field' as const, slug: 'the-quiet-curve', date: null, href: '/field/artifacts/cycle-012/the-quiet-curve/', cycle: 12, fromWorksRegister: false }
+  const newest = (href: string) => (href === work.href ? '2026-11-04' : null)
+
+  it('dates an undated work of the open cycle by its newest process state', () => {
+    expect(datedOpenCycleWorks([work], 12, newest)[0]!.date).toBe('2026-11-04')
+  })
+  it('leaves a work of another cycle, a closed cycle, or one without a process undated', () => {
+    expect(datedOpenCycleWorks([work], 11, newest)[0]!.date).toBeNull()
+    expect(datedOpenCycleWorks([work], null, newest)[0]!.date).toBeNull()
+    expect(datedOpenCycleWorks([work], 12, () => null)[0]!.date).toBeNull()
+  })
+  it('lists the running cycle long works of the committed mirror in the feed', () => {
+    const input = loadFeedInput()
+    const open = input.cycle?.phase === 'working' ? input.cycle.cycle : null
+    const longWorks = input.artifacts.filter((a) => open !== null && a.cycle === open && !/^\d{4}-/.test(a.href.split('/').at(-2) ?? ''))
+    const feed = buildHouseFeed()
+    for (const a of longWorks.filter((x) => x.date !== null)) expect(feed.some((e) => e.href === a.href)).toBe(true)
   })
 })

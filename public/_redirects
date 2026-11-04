@@ -1426,8 +1426,39 @@
 # pattern here may match /atelier/window/ or a file directly in it — `:dir/*` needs a second slash
 /atelier/window/:dir/* https://github.com/frankbueltge/ulysses/tree/main/window/:dir 301
 /atelier/window/cycle-:rest https://github.com/frankbueltge/ulysses/tree/main/window/cycle-:rest 301
-# the Field's session artifacts
-/field/artifacts/* https://github.com/frankbueltge/field-research/tree/main/artifacts/:splat 301
+# the Field's cycle folders (its dated pieces, artifacts/<date>-<slug>/, are published since
+# 2026-11-04 and so are not sent away). One rule per cycle, written ahead to cycle 030; the build
+# puts the open cycle's 200 rewrite before its rule (publication-prune.mjs, withOpenCycleRewrites).
+/field/artifacts/cycle-001/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-001/:splat 301
+/field/artifacts/cycle-002/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-002/:splat 301
+/field/artifacts/cycle-003/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-003/:splat 301
+/field/artifacts/cycle-004/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-004/:splat 301
+/field/artifacts/cycle-005/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-005/:splat 301
+/field/artifacts/cycle-006/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-006/:splat 301
+/field/artifacts/cycle-007/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-007/:splat 301
+/field/artifacts/cycle-008/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-008/:splat 301
+/field/artifacts/cycle-009/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-009/:splat 301
+/field/artifacts/cycle-010/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-010/:splat 301
+/field/artifacts/cycle-011/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-011/:splat 301
+/field/artifacts/cycle-012/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-012/:splat 301
+/field/artifacts/cycle-013/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-013/:splat 301
+/field/artifacts/cycle-014/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/:splat 301
+/field/artifacts/cycle-015/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-015/:splat 301
+/field/artifacts/cycle-016/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-016/:splat 301
+/field/artifacts/cycle-017/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-017/:splat 301
+/field/artifacts/cycle-018/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-018/:splat 301
+/field/artifacts/cycle-019/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-019/:splat 301
+/field/artifacts/cycle-020/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-020/:splat 301
+/field/artifacts/cycle-021/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-021/:splat 301
+/field/artifacts/cycle-022/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-022/:splat 301
+/field/artifacts/cycle-023/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-023/:splat 301
+/field/artifacts/cycle-024/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-024/:splat 301
+/field/artifacts/cycle-025/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-025/:splat 301
+/field/artifacts/cycle-026/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-026/:splat 301
+/field/artifacts/cycle-027/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-027/:splat 301
+/field/artifacts/cycle-028/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-028/:splat 301
+/field/artifacts/cycle-029/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-029/:splat 301
+/field/artifacts/cycle-030/* https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-030/:splat 301
 # n-1's and Arch's directories that the build no longer copies at all
 /n-1/material/atp/* https://github.com/frankbueltge/n-1/blob/main/material/atp/:splat 301
 /n-1/material/night-sky/* https://github.com/frankbueltge/n-1/blob/main/material/night-sky/:splat 301

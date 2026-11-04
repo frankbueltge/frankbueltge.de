@@ -1,0 +1,131 @@
+{
+ "n": 39,
+ "target_positive_DE": 10,
+ "majority_correct": 29,
+ "majority_acc": 0.7436,
+ "rules_searched": 98,
+ "best_correct": 32,
+ "best_acc": 0.8205,
+ "best_rule": [
+  [
+   "f4 publisher_null",
+   "OR",
+   "f6 year>=2018"
+  ],
+  "inverted"
+ ],
+ "n_tied_rules": 2,
+ "tied_rules": [
+  [
+   "f4 publisher_null/OR/f6 year>=2018",
+   "inverted"
+  ],
+  [
+   "f5 locality_null/OR/f6 year>=2018",
+   "inverted"
+  ]
+ ],
+ "shuffled_best_p95": 32,
+ "shuffled_best_median": 30,
+ "shuffled_best_max": 35,
+ "shuffled_runs_at_or_above_real": 132,
+ "P1": {
+  "G_size": 6,
+  "G_flagged": 6,
+  "flagged_outside_G": 4
+ },
+ "P4_rules_separating_A_from_D": [
+  "f3 has_remarks",
+  "f1 shares_date_place OR f3 has_remarks",
+  "f2 has_media AND f3 has_remarks",
+  "f3 has_remarks OR f4 publisher_null",
+  "f3 has_remarks OR f5 locality_null",
+  "f3 has_remarks OR f8 shares_place_any_date"
+ ],
+ "A_size": 4,
+ "D_size": 2,
+ "feature_by_class": {
+  "A": {
+   "f1 shares_date_place": 0,
+   "f2 has_media": 4,
+   "f3 has_remarks": 0,
+   "f4 publisher_null": 0,
+   "f5 locality_null": 0,
+   "f6 year>=2018": 3,
+   "f8 shares_place_any_date": 0
+  },
+  "B": {
+   "f1 shares_date_place": 0,
+   "f2 has_media": 3,
+   "f3 has_remarks": 0,
+   "f4 publisher_null": 3,
+   "f5 locality_null": 0,
+   "f6 year>=2018": 3,
+   "f8 shares_place_any_date": 2
+  },
+  "C": {
+   "f1 shares_date_place": 0,
+   "f2 has_media": 1,
+   "f3 has_remarks": 1,
+   "f4 publisher_null": 1,
+   "f5 locality_null": 0,
+   "f6 year>=2018": 1,
+   "f8 shares_place_any_date": 0
+  },
+  "D": {
+   "f1 shares_date_place": 0,
+   "f2 has_media": 2,
+   "f3 has_remarks": 2,
+   "f4 publisher_null": 0,
+   "f5 locality_null": 0,
+   "f6 year>=2018": 0,
+   "f8 shares_place_any_date": 0
+  },
+  "E": {
+   "f1 shares_date_place": 4,
+   "f2 has_media": 1,
+   "f3 has_remarks": 0,
+   "f4 publisher_null": 1,
+   "f5 locality_null": 0,
+   "f6 year>=2018": 0,
+   "f8 shares_place_any_date": 7
+  },
+  "F": {
+   "f1 shares_date_place": 0,
+   "f2 has_media": 0,
+   "f3 has_remarks": 1,
+   "f4 publisher_null": 0,
+   "f5 locality_null": 0,
+   "f6 year>=2018": 0,
+   "f8 shares_place_any_date": 0
+  },
+  "G": {
+   "f1 shares_date_place": 6,
+   "f2 has_media": 0,
+   "f3 has_remarks": 0,
+   "f4 publisher_null": 0,
+   "f5 locality_null": 0,
+   "f6 year>=2018": 6,
+   "f8 shares_place_any_date": 6
+  },
+  "H": {
+   "f1 shares_date_place": 0,
+   "f2 has_media": 0,
+   "f3 has_remarks": 1,
+   "f4 publisher_null": 8,
+   "f5 locality_null": 8,
+   "f6 year>=2018": 7,
+   "f8 shares_place_any_date": 6
+  }
+ },
+ "class_sizes": {
+  "H": 14,
+  "C": 1,
+  "D": 2,
+  "G": 6,
+  "E": 8,
+  "B": 3,
+  "A": 4,
+  "F": 1
+ }
+}

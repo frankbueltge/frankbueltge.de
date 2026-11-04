@@ -1,0 +1,54 @@
+{
+ "note": "Session 165. The seven predictions of PREREGISTRATION.md §8, scored exactly as written. Two are refuted.",
+ "predictions": [
+  {
+   "id": "P1",
+   "text": "M1 violates on at least one input of C2.",
+   "flag": "confirmatory, and explicitly NOT blind: this practice already knew defect 4 from 2026-09-19",
+   "outcome": "CONFIRMED",
+   "evidence": "M1 produced 76 decision-changing violations on C2 (70 named -> no_copyright_line, 5 no_holder -> no_copyright_line, 1 no_copyright_line -> named)."
+  },
+  {
+   "id": "P2",
+   "text": "M6 (re-wrapping) produces more violations than any other scored relation.",
+   "outcome": "REFUTED",
+   "evidence": "Under the registered oracle M2 leads with 451, then M1 with 348, then M6 with 272. Under the decision-field reading M1 leads with 140, then M2 with 18, then M6 with 7. Refuted under both readings."
+  },
+  {
+   "id": "P3",
+   "text": "At least one scored relation other than M1 produces at least one violation that adjudicates DEFECT or LATENT. This is the session's real question.",
+   "outcome": "CONFIRMED",
+   "evidence": "M5 found a defect nobody knew about (2 inputs, LATENT): the typographic quotation marks that normalise() folds at rung L1 are load-bearing at rung L2. M6 found the priced cost of 2026-09-18's own repair of defect 1 (7 inputs, LATENT), including the same defect 1 reproducing under reflow on 3 inputs."
+  },
+  {
+   "id": "P4",
+   "text": "M4 produces zero violations on both corpora.",
+   "outcome": "CONFIRMED",
+   "evidence": "0 of 896 under every rule variant. M3 (CRLF), M7 (BOM) and M8 (trailing whitespace) also returned zero and were not predicted to.",
+   "gloss": "M4 is the four-space indentation, the pre-registered negative control."
+  },
+  {
+   "id": "P5",
+   "text": "At least one violation adjudicates MR-FALSE.",
+   "outcome": "CONFIRMED, AND NOT AS EXPECTED",
+   "evidence": "This practice expected a handful of individual inputs. 967 of the 1,134 scored violations adjudicate MR-FALSE at once, because the relation AS REGISTERED demanded that fields quoting the input be identical after the input was edited. The false relation was ours, wholesale."
+  },
+  {
+   "id": "P6",
+   "text": "The total scored violation count, over all relations and both corpora, is below 127 - the second hand's internal-disagreement cost on the same rule.",
+   "outcome": "REFUTED",
+   "evidence": "1,134 as registered; 167 on decision fields; 9 at the level of distinct classes a person must read. Only the third reading comes under 127, and it was not the one registered."
+  },
+  {
+   "id": "P7",
+   "text": "No adjudicated DEFECT moves a figure published by this practice.",
+   "outcome": "CONFIRMED",
+   "evidence": "Re-derived here rather than taken from 2026-09-19: under the shipped rule and under both targeted repairs, the repository-level headline is 100 of 105 = 95.2 % and the count of repositories whose licence names no holder is 6. One file of 156 changes verdict under repair, the same file and the same string 2026-09-19 named."
+  }
+ ],
+ "score": {
+  "confirmed": 5,
+  "refuted": 2
+ },
+ "kill_conditions_fired": []
+}

@@ -1,0 +1,14 @@
+{
+  "study": 25,
+  "session": 210,
+  "date": "2026-10-19",
+  "inputs": [
+    {"what": "USGS ComCat: the event detail of the 255 study-21 mainshocks with superseded products (every oaf version), the forecast.json of each version chosen by the nine lag rules, and the catalogue events in each chosen version's one-week window and circle",
+     "fetched": "2026-10-19", "committed": "extracted fields only: data/versions_25.jsonl, data/lagged_25.jsonl, data/outcomes_25.jsonl",
+     "defects_in_source": "2 forecast.json files carry a trailing comma and are not valid JSON; repaired for that defect only (data/repaired_25.json)"},
+    {"what": "The Atelier, The Heeded Column exposed, plate VII (Which Warning): its sighted bounds 0.218 and 1.34 over two versions per sequence, quoted on the page; offered to the Field in its bulletin of 2026-10-18",
+     "repo": "frankbueltge/ulysses", "commit": "d991d2dd16d0e6fcf52d6e8d5a0294ee5ca877da",
+     "paths": {"presentations/cycle-008/exposition/plate7.json": "3009881ddf8497192237bb59a1ca16a70eef0fd99b0e55fe831fdeeab3ab918c"}}
+  ],
+  "not_committed": "The sibling file is read and not copied here; only its two bounds are quoted."
+}

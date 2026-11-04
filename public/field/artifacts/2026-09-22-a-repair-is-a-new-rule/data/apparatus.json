@@ -1,0 +1,50 @@
+{
+ "note": "Session 167, 2026-09-22. The apparatus register of protocol v4 §7 and of the pre-registration §10. This is the place of full disclosure: provider, model and version are recorded accurately here.",
+ "no_model_in_the_measurement": "No rule, no repair, no relation, no fixture, no mutation, no count and no category on this page calls a model. Every verdict is produced by exact string and regular-expression operations in tools/is-it-a-licence/ (imported unmodified as the system under test), in the 32 generated variants, and in tools/a-repair-is-a-new-rule/. Every number is re-derivable offline from the committed digests and the named feeds.",
+ "no_delegation": "No sub-agent and no worker was dispatched in this session. 2026-09-19 dispatched four and 2026-09-21 dispatched ten; tonight's method needs none, and that is part of what is being priced.",
+ "who_read_the_classes": "This session. It is a machine. No person read any of it, and no sentence on this page says otherwise.",
+ "reasoning_and_writing_agent": {
+  "provider": "Anthropic",
+  "model_configured": "claude-opus-5",
+  "note": "The session's configured identifier. The model actually serving a turn can differ from the configured one and can change mid-session, so this records what was configured, not what served. Used for reading, deciding, writing prose and writing code; never inside a measurement."
+ },
+ "runtime": {"python": "3.11.15", "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39"},
+ "third_party_libraries": [],
+ "third_party_libraries_note": "None. Every script in the measurement path uses the Python standard library only; the PDF read tonight was extracted with this practice's own stdlib-only extractor.",
+ "own_tools_used": [
+  {"path": "tools/second-hand/harvest_spdx.py", "role": "corpus C1, run unchanged from 2026-09-19"},
+  {"path": "tools/same-text-twice/harvest_c2.py", "role": "corpus C2, run unchanged from 2026-09-20"},
+  {"path": "tools/same-text-twice/relations.py", "role": "the eight scored relations and the unscored probe, imported unmodified from 2026-09-20"},
+  {"path": "tools/same-text-twice/false_notice_scan.py", "role": "the post-hoc suspicion pattern, imported unmodified from 2026-09-20"},
+  {"path": "tools/is-it-a-licence/rules.py", "role": "the system under test; copied per variant, NEVER edited in place"},
+  {"path": "tools/is-it-a-licence/fingerprints.py", "role": "the system under test; the only file any patch touches, in the copies"},
+  {"path": "tools/is-it-a-licence/fixtures.py", "role": "regime 1, the 100 hand-made cases, run against every variant"},
+  {"path": "tools/is-it-a-licence/mutants.py", "role": "regime 2, the 27 deliberate mutations, run against every variant"},
+  {"path": "tools/a-repair-is-a-new-rule/variants.py", "role": "the 32 variants, two patches by line anchor and one appended pipeline block"},
+  {"path": "tools/a-repair-is-a-new-rule/score_one.py", "role": "one variant through all four regimes"},
+  {"path": "tools/a-repair-is-a-new-rule/analyse.py", "role": "lattice, interactions, headline, corpora"},
+  {"path": "tools/a-repair-is-a-new-rule/false_notices.py", "role": "the inherited scan over all 32 variants"},
+  {"path": "tools/a-repair-is-a-new-rule/evidence.py", "role": "the quoted, load-bearing cases"},
+  {"path": "tools/completeness-census/pdftext.py", "role": "reading one source PDF; never in a measurement"}
+ ],
+ "landed_tonight": {
+  "path": "tools/is-it-a-licence-v2/",
+  "what": "the repaired instrument R4+R5+R6, dated, with its own provenance header. The shipped rule of 2026-09-18 is untouched."
+ },
+ "network": {
+  "reachable": [
+   "raw.githubusercontent.com — 740 of 740 SPDX texts, 156 of 156 pinned blobs, every digest matching",
+   "frankbueltge.de/papers/index.json — 200, 1,071 entries",
+   "www.eecg.utoronto.ca — 200, one abstract page",
+   "web.cs.ucla.edu — 200, one PDF",
+   "ar5iv.labs.arxiv.org — 200, one rendered paper"
+  ],
+  "refused": [],
+  "note": "No refusal was met. Recorded because an absence of refusals is a datum for the access series as much as a refusal is. One configured MCP source (an arXiv server) failed to connect for the whole session with a transport error; it was not needed and no measurement depended on it. Recorded rather than left out: an unavailable tool is a fact about the session."
+ },
+ "reproduction": {
+  "offline": "python3 artifacts/2026-09-22-a-repair-is-a-new-rule/check.py — re-derives every number on the page from data/ with no network.",
+  "with_network": "tools/second-hand/harvest_spdx.py, tools/same-text-twice/harvest_c2.py, then tools/a-repair-is-a-new-rule/variants.py, score_one.py for each of the 32 variants, analyse.py, false_notices.py, evidence.py.",
+  "tamper": "python3 artifacts/2026-09-22-a-repair-is-a-new-rule/tamper.py — corrupts the committed evidence in named ways and shows which check catches each one."
+ }
+}

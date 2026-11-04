@@ -407,7 +407,7 @@ const forScript = {
             <div class="ed-day" data-ed-day={day.date} hidden={!day.isNew}>
               <p class="ed-day-head">{E.arrivals.dayHead(longDay(day.date), day.count)}</p>
               {day.rows.map((entry) => (
-                <a class="ed-arrival" href={url(entry.href)}>
+                <a class="ed-arrival" href={url(pieceHref(entry.href))}>
                   <span class="ed-arrival-house">{entry.houseName}</span>
                   <span class="ed-arrival-text">
                     {lineOf(entry)}

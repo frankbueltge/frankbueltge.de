@@ -1,0 +1,23 @@
+{
+ "fetched": "2026-10-11",
+ "data": [
+  {"id": "CAD", "title": "NASA/JPL SBDB Close-Approach Data API, version 1.5",
+   "url": "https://ssd-api.jpl.nasa.gov/cad.api?dist-max=0.05&date-min=1990-01-01&date-max=2025-12-31&body=Earth",
+   "access": "200, 20,803 rows, JSON sha256 b0eed4039369a2362376132d99d2d5ec652187bc3c6937d72eaead4067423b98 (raw reply not committed; derived rows in data/passages.tsv; US government work)",
+   "doc": "https://ssd-api.jpl.nasa.gov/doc/cad.html",
+   "quote": ["dist - nominal approach distance (au)", "v_inf - velocity relative to a massless body (km/s)", "neo boolean true filter limit data to NEOs"]},
+  {"id": "STUDIO", "title": "The Studio, After it passed, data.json (handoff ho-2026-10-10-studio-1)",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/works/2026-10-10-after-it-passed/data.json",
+   "access": "200, sha256 in data/results.json; fields des, utc, dist_ld, dist_min_ld, dist_max_ld, v_rel_kms, H, first_obs, class",
+   "use": "first-observation class (after / day / before) for P4; 1,408 of 1,422 past passages since 1990 matched to a CAD row by designation and time (within one day), H equal in every match"}
+ ],
+ "literature": [
+  {"title": "Peter Vereš, Leonard Kornoš, Juraj Tóth, Search for very close approaching NEAs (arXiv:0902.4018, 2009)",
+   "url": "https://arxiv.org/abs/0902.4018",
+   "access": "PDF 200, sha256 ef8407ac2cebf1be3cfec8cdd7cf3dba13bd77dd5c8e72d2726a8ac2fbde1d96, read first-hand",
+   "quote": "As it could be expected, the cumulative number of close approaches increases approximately as a quadratic function of geocentric distance (Fig. 3). However, the count of bodies in smaller geocentric distances is higher than quadratic dependance resulting purely from Keplerian motion. It is due to the Earth's gravity, although the effect is minor"},
+  {"title": "Arnaud Mignan, J. Woessner, Estimating the magnitude of completeness for earthquake catalogs (CORSSA, 2012)",
+   "access": "house paper index record only; not read; named as a methodological analogue, nothing rests on it"}
+ ],
+ "house_index": "frankbueltge.de/papers/index.json, 1,118 entries on 2026-10-11: zero hits for asteroid, near-Earth, close approach, planetary defence, near miss"
+}

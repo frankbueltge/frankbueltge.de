@@ -1,0 +1,85 @@
+{
+ "note": "Study 27, exploration after the result (not pre-registered): ComCat queries of any magnitude around the alerts the rule left unmet without a named event within 200 km. Fetched 2026-10-19.",
+ "probes": [
+  {
+   "label": "i=5404, Humboldt, 2023-05-21 18:44Z: offshore, outside the contiguous-US box of the rule",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time-asc&starttime=2023-05-21T18:14:00&endtime=2023-05-21T19:14:00&minlatitude=38&maxlatitude=44&minlongitude=-131&maxlongitude=-122",
+   "events": [
+    {
+     "id": "nc73890906",
+     "time_ms": 1684694641400,
+     "mag": 5.58,
+     "magType": "mw",
+     "place": "108km W of Petrolia, CA"
+    },
+    {
+     "id": "nc73890911",
+     "time_ms": 1684695721690,
+     "mag": 2.94,
+     "magType": "md",
+     "place": "80km W of Petrolia, CA"
+    }
+   ]
+  },
+  {
+   "label": "i=10607/10608, 2025-12-04 16:07Z: central Sierra box, any magnitude, +-30 min",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time-asc&starttime=2025-12-04T15:37:00&endtime=2025-12-04T16:37:00&minlatitude=36.5&maxlatitude=40.5&minlongitude=-122.5&maxlongitude=-117.5",
+   "events": [
+    {
+     "id": "nc75274341",
+     "time_ms": 1764865099680,
+     "mag": 0.55,
+     "magType": "md",
+     "place": "2 km SE of Pacifica, CA"
+    }
+   ]
+  },
+  {
+   "label": "i=1893 (and its cancel 1894), 2020-05-21 21:09Z: eastern California box, any magnitude, +-30 min",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time-asc&starttime=2020-05-21T20:39:00&endtime=2020-05-21T21:39:00&minlatitude=34&maxlatitude=38&minlongitude=-120&maxlongitude=-115.5",
+   "events": [
+    {
+     "id": "ci39210391",
+     "time_ms": 1590094306380,
+     "mag": 0.59,
+     "magType": "ml",
+     "place": "23km N of Ridgecrest, CA"
+    },
+    {
+     "id": "ci39210423",
+     "time_ms": 1590094783640,
+     "mag": 1.22,
+     "magType": "ml",
+     "place": "49km ENE of Big Pine, CA"
+    },
+    {
+     "id": "ci39210415",
+     "time_ms": 1590094970590,
+     "mag": 0.78,
+     "magType": "ml",
+     "place": "25km N of Searles Valley, CA"
+    },
+    {
+     "id": "nc73392566",
+     "time_ms": 1590095334300,
+     "mag": 1.13,
+     "magType": "md",
+     "place": "7km W of Round Valley, CA"
+    }
+   ]
+  },
+  {
+   "label": "i=10607/10608: western US, M>=2, +-60 min",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time-asc&starttime=2025-12-04T15:07:00&endtime=2025-12-04T17:07:00&minmagnitude=2&minlatitude=30&maxlatitude=50&minlongitude=-135&maxlongitude=-110",
+   "events": [
+    {
+     "id": "nc75274356",
+     "time_ms": 1764866903010,
+     "mag": 2.43,
+     "magType": "md",
+     "place": "4 km W of Cobb, CA"
+    }
+   ]
+  }
+ ]
+}

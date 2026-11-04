@@ -1,0 +1,154 @@
+{
+ "snapshot": "backup-20261005101424",
+ "incidents": 1713,
+ "classified": 1498,
+ "unclassified": 215,
+ "max_classified_id": 1509,
+ "unclassified_below_max_classified": 0,
+ "frame_candidates": 146,
+ "n_terms": 42,
+ "frame_candidates_labelled_7_1": 0,
+ "labelled_7_1": {
+  "29": "unclear",
+  "65": "meets",
+  "195": "no"
+ },
+ "sample": {
+  "n": 60,
+  "pool": 1366,
+  "meets": 0,
+  "wilson95": [
+   0.0,
+   0.0602
+  ]
+ },
+ "registered": {
+  "read": 209,
+  "meets": 4,
+  "unclear": 2,
+  "meets_ids": [
+   65,
+   1628,
+   1633,
+   1668
+  ],
+  "unclear_ids": [
+   29,
+   38
+  ],
+  "meets_labelled_7_1": 1,
+  "meets_outside_or_unlabelled": 3,
+  "meets_test_setting": 3
+ },
+ "exploratory_added": {
+  "read_on_description": 34,
+  "read_on_title": 168
+ },
+ "all_read": {
+  "read": 411,
+  "meets": 14,
+  "unclear": 6,
+  "meets_ids": [
+   65,
+   1152,
+   1604,
+   1627,
+   1628,
+   1629,
+   1633,
+   1642,
+   1649,
+   1668,
+   1673,
+   1685,
+   1700,
+   1707
+  ],
+  "unclear_ids": [
+   29,
+   38,
+   1542,
+   1613,
+   1674,
+   1710
+  ],
+  "meets_labelled_7_1": 1,
+  "meets_outside_or_unlabelled": 13,
+  "meets_test_setting": 9
+ },
+ "frame_recall_on_all_meets": [
+  3,
+  14
+ ],
+ "unclassified_census": {
+  "read": 215,
+  "meets": 12,
+  "unclear": 4,
+  "meets_ids": [
+   1604,
+   1627,
+   1628,
+   1629,
+   1633,
+   1642,
+   1649,
+   1668,
+   1673,
+   1685,
+   1700,
+   1707
+  ],
+  "unclear_ids": [
+   1542,
+   1613,
+   1674,
+   1710
+  ],
+  "meets_labelled_7_1": 0,
+  "meets_outside_or_unlabelled": 12,
+  "meets_test_setting": 8
+ },
+ "meets_by_year": {
+  "2016": 1,
+  "2025": 1,
+  "2026": 12
+ },
+ "predictions": {
+  "P1": {
+   "pred": ">= 30 candidates",
+   "obs": 146,
+   "held": true
+  },
+  "P2": {
+   "pred": ">= 6 meet (registered reading)",
+   "obs": 4,
+   "held": false
+  },
+  "P3": {
+   "pred": ">= half of meets outside 7.1 or unlabelled",
+   "obs": [
+    3,
+    4
+   ],
+   "held": true
+  },
+  "P4": {
+   "pred": ">= 1 of 3 labelled 7.1 does not meet",
+   "obs": 1,
+   "held": true
+  },
+  "P5": {
+   "pred": ">= half of meets in a test setting",
+   "obs": [
+    3,
+    4
+   ],
+   "held": true
+  },
+  "P6": {
+   "pred": "0 of 60 sampled non-candidates meet",
+   "obs": 0,
+   "held": true
+  }
+ }
+}

@@ -1,0 +1,704 @@
+{
+ "_note": "Pre-registered population for artifacts/2026-09-15-whose-refusal-is-it. Drawn before any probe ran. Rules in tools/refusal-shape/population.py and PREREGISTRATION.md; nothing here was chosen by hand.",
+ "seed": 20260915,
+ "drawn_utc": "2026-09-15T03:40:51+00:00",
+ "feeds": {
+  "datasets_register": {
+   "url": "https://frankbueltge.de/datasets/register.json",
+   "sha256": "17985634d4503f7d2a04696bc77ff0b6c291b535155745502c34563e2791f6f7",
+   "count": 82
+  },
+  "papers_register": {
+   "url": "https://frankbueltge.de/papers/register.json",
+   "sha256": "413b0e146c7b192affedb3705e469621b10fbf29f639e46d1d8be1a241ddfbc2",
+   "count": 907
+  }
+ },
+ "stratum_sizes": {
+  "H_population": 13,
+  "H_drawn": 13,
+  "L_population": 230,
+  "L1_drawn": 24,
+  "L2_drawn": 24,
+  "L2_prefixes_available": 43,
+  "L_distinct_prefixes": 57,
+  "C_drawn": 8
+ },
+ "excluded_by_rule": {
+  "pruef_status_202": 50,
+  "ground": "202 is not a refusal status; session 157 coded one 202 as a bot-block by hand, and a judgement does not belong in a population rule."
+ },
+ "units": [
+  {
+   "unit_id": "H:api-eia-gov",
+   "stratum": "H",
+   "url": "https://api.eia.gov/v2/petroleum/pri/spt/data/",
+   "label": "api.eia.gov",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:api-tavily-com",
+   "stratum": "H",
+   "url": "https://api.tavily.com/extract",
+   "label": "api.tavily.com",
+   "recorded_status": 401,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 401)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:datacenters-microsoft-com",
+   "stratum": "H",
+   "url": "https://datacenters.microsoft.com/sustainability/efficiency/",
+   "label": "datacenters.microsoft.com",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:en-wikipedia-org",
+   "stratum": "H",
+   "url": "https://en.wikipedia.org/w/api.php",
+   "label": "en.wikipedia.org",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:gateway-api-globalfishingwatch-org",
+   "stratum": "H",
+   "url": "https://gateway.api.globalfishingwatch.org/v3/events",
+   "label": "gateway.api.globalfishingwatch.org",
+   "recorded_status": 401,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 401)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:query-wikidata-org",
+   "stratum": "H",
+   "url": "https://query.wikidata.org/sparql",
+   "label": "query.wikidata.org",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:wikimedia-org",
+   "stratum": "H",
+   "url": "https://wikimedia.org/api/rest_v1/",
+   "label": "wikimedia.org",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:www-fema-gov",
+   "stratum": "H",
+   "url": "https://www.fema.gov/about/openfema/api",
+   "label": "www.fema.gov",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:www-iea-org",
+   "stratum": "H",
+   "url": "https://www.iea.org/reports/net-zero-by-2050",
+   "label": "www.iea.org",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:www-reddit-com",
+   "stratum": "H",
+   "url": "https://www.reddit.com/r/popular/",
+   "label": "www.reddit.com",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:www-state-gov",
+   "stratum": "H",
+   "url": "https://www.state.gov/policy-issues/climate-and-environment/",
+   "label": "www.state.gov",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:www-unhcr-org",
+   "stratum": "H",
+   "url": "https://www.unhcr.org/global-trends",
+   "label": "www.unhcr.org",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "H:www-wikidata-org",
+   "stratum": "H",
+   "url": "https://www.wikidata.org/",
+   "label": "www.wikidata.org",
+   "recorded_status": 403,
+   "recorded_note": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+   "register_says_blocked": true
+  },
+  {
+   "unit_id": "L1:adriano-angelucci-on-justifying-case-verdicts-a-dialectical-hypothesis",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1080/0020174x.2022.2092905",
+   "label": "On justifying case verdicts. A dialectical hypothesis",
+   "doi_prefix": "10.1080",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:alan-agresti-other-ordinal-multinomial-response-models",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1002/9780470594001.ch5",
+   "label": "Other Ordinal Multinomial Response Models",
+   "doi_prefix": "10.1002",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:alexandra-baumann-where-have-all-the-working-papers-gone-evidence-from-four-majo",
+   "stratum": "L1",
+   "url": "https://doi.org/10.2139/ssrn.3618853",
+   "label": "Where Have All the Working Papers Gone? Evidence from Four Major Economics Working Paper S",
+   "doi_prefix": "10.2139",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:antonio-somaini-latent-spaces-ai-art-and-the-archive",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1162/octo.a.545",
+   "label": "Latent Spaces: AI, Art, and the Archive",
+   "doi_prefix": "10.1162",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:bojana-m-zlatkovic-one-way-for-the-probability-of-stability-estimation-of-discre",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1093/imamci/dnr041",
+   "label": "One way for the probability of stability estimation of discrete systems with randomly chos",
+   "doi_prefix": "10.1093",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:charles-f-rocca-test-ranks-of-finitely-generated-abelian-groups",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1090/conm/296/05075",
+   "label": "Test ranks of finitely generated abelian groups",
+   "doi_prefix": "10.1090",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:craig-batty-research-practice-knowledge-introducing-the-creative-knowledges-enab",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1080/25741136.2024.2384686",
+   "label": "Research, practice, knowledge: introducing the creative knowledges enabling framework",
+   "doi_prefix": "10.1080",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:d-h-rogstad-arraying-combinations-and-comparisons",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1002/047172131x.ch7",
+   "label": "Arraying Combinations and Comparisons",
+   "doi_prefix": "10.1002",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:edward-e-cureton-rank-biserial-correlation-when-ties-are-present",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1177/001316446802800107",
+   "label": "Rank-Biserial Correlation when Ties Are Present",
+   "doi_prefix": "10.1177",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:ephrem-tora-bacterial-profile-of-bovine-mastitis-in-ethiopia-a-systematic-review",
+   "stratum": "L1",
+   "url": "https://doi.org/10.7717/peerj.13253",
+   "label": "Bacterial profile of bovine mastitis in Ethiopia: a systematic review and meta-analysis",
+   "doi_prefix": "10.7717",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:jack-quach-frailty-index-deficit-interchangeability-an-empirical-test-using-rand",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1093/ageing/afag262",
+   "label": "Frailty index deficit interchangeability: an empirical test using random survival forests ",
+   "doi_prefix": "10.1093",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:john-macfarlane-truth-in-the-garden-of-forking-paths",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1093/acprof:oso/9780199234950.003.0004",
+   "label": "Truth in the Garden of Forking Paths",
+   "doi_prefix": "10.1093",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:kinga-lichtarska-two-cases-of-intentional-sodium-nitrite-poisoning-with-contrast",
+   "stratum": "L1",
+   "url": "https://doi.org/10.7759/cureus.113663",
+   "label": "Two Cases of Intentional Sodium Nitrite Poisoning With Contrasting Outcomes: The Critical ",
+   "doi_prefix": "10.7759",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:magdalena-bofill-rodriguez-long-term-hormone-therapy-for-perimenopausal-and-post",
+   "stratum": "L1",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42695385/",
+   "label": "Long-term hormone therapy for perimenopausal and postmenopausal women",
+   "doi_prefix": "10.1002",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:nathan-halko-finding-structure-with-randomness-probabilistic-algorithms-for-cons",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1137/090771806",
+   "label": "Finding Structure with Randomness: Probabilistic Algorithms for Constructing Approximate M",
+   "doi_prefix": "10.1137",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:oecd-below-threshold-contracts",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1787/5js4vmp1xxd3-en",
+   "label": "Below Threshold Contracts",
+   "doi_prefix": "10.1787",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:r-lindsey-bergman-sessions-11-14-intermediate-exposure-sessions",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1093/med:psych/9780195391527.003.0008",
+   "label": "Sessions 11–14: Intermediate Exposure Sessions",
+   "doi_prefix": "10.1093",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:sheila-templado-frequency-following-responses-for-objective-neurophysiological-m",
+   "stratum": "L1",
+   "url": "https://doi.org/10.3390/children13081116",
+   "label": "Frequency-Following Responses for Objective Neurophysiological Monitoring in Pediatric Fet",
+   "doi_prefix": "10.3390",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:sindy-angjaya-business-combinations-business-combination-objectives",
+   "stratum": "L1",
+   "url": "https://doi.org/10.2139/ssrn.4345956",
+   "label": "Business Combinations: Business Combination Objectives",
+   "doi_prefix": "10.2139",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:sreejata-bandopadhyay-effects-of-biodegradable-plastic-film-mulching-on-soil-mic",
+   "stratum": "L1",
+   "url": "https://doi.org/10.7717/peerj.9015",
+   "label": "Effects of biodegradable plastic film mulching on soil microbial communities in two agroec",
+   "doi_prefix": "10.7717",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:susumu-kunisawa-postoperative-mortality-analysis-of-national-japanese-diagnosis-",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1101/2022.09.09.22279570",
+   "label": "Postoperative mortality analysis of national Japanese Diagnosis Procedure Combination data",
+   "doi_prefix": "10.1101",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:unbekannt-documents-before-the-committee-at-its-thirty-seventh-thirty-eighth-and",
+   "stratum": "L1",
+   "url": "https://doi.org/10.18356/9789210606813c033",
+   "label": "Documents before the Committee at its thirty-seventh, thirty-eighth and thirty-ninth sessi",
+   "doi_prefix": "10.18356",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L1:xiaohong-liang-mri-signs-for-the-preoperative-diagnosis-of-intracranial-solitary",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1002/jmri.70531",
+   "label": "MRI Signs for the Preoperative Diagnosis of Intracranial Solitary Fibrous Tumors",
+   "doi_prefix": "10.1002",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L1:yula-salifu-family-structure-and-peer-influences-as-correlates-of-lifetime-smoke",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1177/1179173x261478963",
+   "label": "Family Structure and Peer Influences as Correlates of Lifetime Smokeless Tobacco Use Among",
+   "doi_prefix": "10.1177",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:anna-maria-lombardi-a-normalized-distance-test-for-co-determining-the-completene",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1029/2020jb021242",
+   "label": "A Normalized Distance Test for Co‐Determining the Completeness Magnitude andb‐Value of Ear",
+   "doi_prefix": "10.1029",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:m-c-ockenden-reduced-nutrient-pollution-in-a-rural-stream-following-septic-tank-",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1039/c3em00681f",
+   "label": "Reduced nutrient pollution in a rural stream following septic tank upgrade and installatio",
+   "doi_prefix": "10.1039",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:guilherme-pimenta-roncete-usability-evaluation-of-ezlist-a-digital-platform-for-",
+   "stratum": "L2",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13286103/",
+   "label": "Usability Evaluation of EzList: A Digital Platform for Surgical Waitlist Management Using ",
+   "doi_prefix": "10.1055",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:abdurakhman-muhamedov-convergence-test-statistic-of-kernel-estimators-of-a-densi",
+   "stratum": "L2",
+   "url": "http://dx.doi.org/10.1063/5.0201723",
+   "label": "Convergence test statistic of kernel estimators of a density function from stationary sequ",
+   "doi_prefix": "10.1063",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:mohamad-bydon-spinal-decompression-in-achondroplastic-patients-using-high-speed-",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1097/bpo.0000000000000211",
+   "label": "Spinal Decompression in Achondroplastic Patients Using High-Speed Drill Versus Ultrasonic ",
+   "doi_prefix": "10.1097",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:l-gammaitoni-stochastic-resonance",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1103/revmodphys.70.223",
+   "label": "Stochastic resonance",
+   "doi_prefix": "10.1103",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:angus-g-butchart-paramedic-laryngoscopy-in-the-simulated-difficult-airway-compar",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1111/j.1553-2712.2011.01115.x",
+   "label": "Paramedic Laryngoscopy in the Simulated Difficult Airway: Comparison of the Venner A.P. Ad",
+   "doi_prefix": "10.1111",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:nicholas-ravanelli-a-retrospective-analysis-to-determine-if-exercise-training-in",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1113/ep088385",
+   "label": "A retrospective analysis to determine if exercise training‐induced thermoregulatory adapta",
+   "doi_prefix": "10.1113",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:john-o-stoner-limitless-numbers-of-multiple-choice-problems",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1119/1.14698",
+   "label": "Limitless numbers of multiple-choice problems",
+   "doi_prefix": "10.1119",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:john-j-sloggett-comment-on-invasive-harlequin-ladybird-carries-biological-weapon",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1126/science.1241827",
+   "label": "Comment on “Invasive Harlequin Ladybird Carries Biological Weapons Against Native Competit",
+   "doi_prefix": "10.1126",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:preeti-garai-l2-lactamase-contributes-to-ceftolozane-tazobactam-resistance-in-ps",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1128/aac.00356-26",
+   "label": "L2 β-lactamase contributes to ceftolozane-tazobactam resistance in Pseudomonas aeruginosa",
+   "doi_prefix": "10.1128",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:amirhossein-ghaseminejad-raeini-prospective-evaluation-of-real-world-safety-symp",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1136/bmjopen-2026-124273",
+   "label": "Prospective evaluation of real-world safety, symptoms improvement and adherence to mavacam",
+   "doi_prefix": "10.1136",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:cheng-william-hong-a-multicenter-assessment-of-interreader-reliability-of-li-rad",
+   "stratum": "L2",
+   "url": "https://escholarship.org/uc/item/5m82d1dg",
+   "label": "A Multicenter Assessment of Interreader Reliability of LI-RADS Version 2018 for MRI and CT",
+   "doi_prefix": "10.1148",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:unbekannt-mental-health-in-appalachia-problems-and-prospects-in-the-central-high",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1176/ps.17.7.220-a",
+   "label": "MENTAL HEALTH IN APPALACHIA: Problems and Prospects in the Central Highlands. Public Healt",
+   "doi_prefix": "10.1176",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:zhiwei-ang-lymphoma-immunotherapy-the-garden-of-forking-paths",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1182/blood.2023023202",
+   "label": "Lymphoma immunotherapy: the garden of forking paths",
+   "doi_prefix": "10.1182",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:roselle-kurland-education-for-the-group-worker-s-reality-the-special-qualities-a",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1300/j009v29n02_06",
+   "label": "Education for the Group Worker's Reality: The Special Qualities and World View of Those Dr",
+   "doi_prefix": "10.1300",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:n-raddatz-measurement-of-muon-neutrino-disappearance-with-non-fiducial-interacti",
+   "stratum": "L2",
+   "url": "https://doi.org/10.2172/1253594",
+   "label": "Measurement of Muon Neutrino Disappearance with Non-Fiducial Interactions in the NO$\\nu$A ",
+   "doi_prefix": "10.2172",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:yi-lun-tsai-correspondence-and-address-reprint-request-to-yi-lun-tsai",
+   "stratum": "L2",
+   "url": "https://doi.org/10.22541/au.167347082.22706730/v1",
+   "label": "Correspondence and address reprint request to: Yi-Lun Tsai",
+   "doi_prefix": "10.22541",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:peter-j-hutchinson-decompressive-craniectomy-versus-craniotomy-for-patients-unde",
+   "stratum": "L2",
+   "url": "https://doi.org/10.3310/gjph0512",
+   "label": "Decompressive craniectomy versus craniotomy for patients undergoing surgical evacuation of",
+   "doi_prefix": "10.3310",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:david-card-the-effect-of-unions-on-the-distribution-of-wages-redistribution-or-r",
+   "stratum": "L2",
+   "url": "https://doi.org/10.3386/w4195",
+   "label": "The Effect of Unions on the Distribution of Wages: Redistribution or Relabelling?",
+   "doi_prefix": "10.3386",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:paul-christopher-pereira-text-mining-maintenance-records-to-automate-the-identif",
+   "stratum": "L2",
+   "url": "https://doi.org/10.4043/30737-ms",
+   "label": "Text-Mining Maintenance Records to Automate the Identification and Grouping of Failure Mod",
+   "doi_prefix": "10.4043",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:jose-moral-de-la-rubia-note-on-rank-biserial-correlation-when-there-are-ties",
+   "stratum": "L2",
+   "url": "https://doi.org/10.4236/ojs.2022.125036",
+   "label": "Note on Rank-Biserial Correlation when There Are Ties",
+   "doi_prefix": "10.4236",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": true
+  },
+  {
+   "unit_id": "L2:paul-a-baran-remarks-on-the-question-of-privacy-raised-by-the-automation-of-ment",
+   "stratum": "L2",
+   "url": "https://doi.org/10.7249/p3523",
+   "label": "Remarks on the Question of Privacy Raised by the Automation of Mental Health Records",
+   "doi_prefix": "10.7249",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "L2:liz-halcombs-using-technology-in-research",
+   "stratum": "L2",
+   "url": "https://doi.org/10.7748/nr.25.1.6.s2",
+   "label": "Using technology in research",
+   "doi_prefix": "10.7748",
+   "recorded_status": 403,
+   "recorded_note": "Identifier antwortet mit HTTP 403",
+   "register_says_open": false
+  },
+  {
+   "unit_id": "C:unbekannt-defining-the-observed-significance-level-of-a-test-a-simple-example-us",
+   "stratum": "C",
+   "url": "https://doi.org/10.1007/978-0-387-34113-2_7",
+   "label": "Defining the Observed Significance Level of a Test: A Simple Example Using the Binomial Di",
+   "doi_prefix": "10.1007",
+   "recorded_status": 200,
+   "recorded_note": null,
+   "register_says_open": false
+  },
+  {
+   "unit_id": "C:thomas-t-samaras-height-body-size-and-longevity-is-smaller-better-for-the-human-",
+   "stratum": "C",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/1071721",
+   "label": "Height, body size, and longevity: is smaller better for the human body?",
+   "doi_prefix": "10.1136",
+   "recorded_status": 200,
+   "recorded_note": null,
+   "register_says_open": true
+  },
+  {
+   "unit_id": "C:unbekannt-list-of-illustrations",
+   "stratum": "C",
+   "url": "https://doi.org/10.1515/9781800107588-001",
+   "label": "LIST OF ILLUSTRATIONS",
+   "doi_prefix": "10.1515",
+   "recorded_status": 200,
+   "recorded_note": null,
+   "register_says_open": false
+  },
+  {
+   "unit_id": "C:katherine-severi-policy-actors-perceptions-of-conflicts-of-interest-and-alcohol-",
+   "stratum": "C",
+   "url": "http://dx.doi.org/10.34172/ijhpm.2024.8068",
+   "label": "Policy Actors’ Perceptions of Conflicts of Interest and Alcohol Industry Engagement in UK ",
+   "doi_prefix": "10.34172",
+   "recorded_status": 200,
+   "recorded_note": null,
+   "register_says_open": true
+  },
+  {
+   "unit_id": "C:bijan-davvaz-groups",
+   "stratum": "C",
+   "url": "https://doi.org/10.1007/978-981-16-6365-9_3",
+   "label": "Groups",
+   "doi_prefix": "10.1007",
+   "recorded_status": 200,
+   "recorded_note": null,
+   "register_says_open": false
+  },
+  {
+   "unit_id": "C:rss-marketingtools-apple-com",
+   "stratum": "C",
+   "url": "https://rss.marketingtools.apple.com/",
+   "label": "rss.marketingtools.apple.com",
+   "recorded_status": 200,
+   "recorded_note": null
+  },
+  {
+   "unit_id": "C:api-coingecko-com",
+   "stratum": "C",
+   "url": "https://api.coingecko.com/api/v3/search/trending",
+   "label": "api.coingecko.com",
+   "recorded_status": 200,
+   "recorded_note": null
+  },
+  {
+   "unit_id": "C:bsky-app",
+   "stratum": "C",
+   "url": "https://bsky.app",
+   "label": "Bluesky",
+   "recorded_status": 200,
+   "recorded_note": null
+  }
+ ]
+}

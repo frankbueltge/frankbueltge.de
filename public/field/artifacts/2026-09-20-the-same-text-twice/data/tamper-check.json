@@ -1,0 +1,238 @@
+{
+ "note": "Session 165. Each deliberate corruption of this session's own evidence, and the checks that caught it. A corruption is only counted as caught when the checker named at least one failing check; a checker that merely crashed is a miss.",
+ "n_corruptions": 68,
+ "n_caught": 68,
+ "n_missed": 0,
+ "missed": [],
+ "distinct_reason_sets": 68,
+ "caught_by": {
+  "adj bad input": [
+   "adjudicated input NotAnInputAtAll is absent from violations.json under M5"
+  ],
+  "adj category": [
+   "an adjudication uses a category the pre-registration did not define"
+  ],
+  "adj causes": [
+   "the three causes are not three"
+  ],
+  "adj coverage": [
+   "the adjudicated classes cover 111 violations, not 167"
+  ],
+  "adj defect": [
+   "37 + 130 does not equal 167"
+  ],
+  "adj inputs": [
+   "class 1 does not hold 17 C1 and 1 C2 inputs",
+   "class 1 does not name the file 2026-09-19 convicted us on"
+  ],
+  "adj undecided": [
+   "an UNDECIDED verdict is recorded but not reported"
+  ],
+  "app delegation": [
+   "the no-delegation claim is missing"
+  ],
+  "app lib": [
+   "the extraction library is not recorded with its version"
+  ],
+  "app model": [
+   "the no-model claim is missing"
+  ],
+  "app provider": [
+   "the apparatus register does not name provider and model"
+  ],
+  "app toolfail": [
+   "tonight's own tool failure is not recorded"
+  ],
+  "c1 claim": [
+   "data.json claims C1 moved"
+  ],
+  "c1 digest": [
+   "C1's corpus digest is not the digest of its own entries"
+  ],
+  "c1 matches": [
+   "C1 is not 740 of 740"
+  ],
+  "c2 digest": [
+   "1 C2 blobs differ from the digest 2026-09-18 recorded"
+  ],
+  "c2 excluded": [
+   "C2 excluded an input"
+  ],
+  "c2 matches": [
+   "C2 is not 156 of 156 with every digest matching"
+  ],
+  "control": [
+   "the control M4 fired under rule D"
+  ],
+  "decision": [
+   "the decision-field total is not 167",
+   "the decision total is not the sum of its relations",
+   "967 + 167 does not equal 1,134",
+   "the repair ladder is [166, 22, 6, 4], not [167, 22, 6, 4]"
+  ],
+  "echo": [
+   "the echo-only count is not 967",
+   "967 + 167 does not equal 1,134",
+   "the MR-FALSE count does not equal the echo-only count"
+  ],
+  "fn clean": [
+   "the C2 hit is not carried by nine genuine notices"
+  ],
+  "fn count": [
+   "the scan's notice count is not 15"
+  ],
+  "fn posthoc": [
+   "the scan is not declared post-hoc"
+  ],
+  "fn risk": [
+   "the false-notice scan puts a decision at risk"
+  ],
+  "headline": [
+   "the re-derived headline under D is not 100/105 = 95.2 %"
+  ],
+  "k1": [
+   "K1 recorded mismatches against the 2026-09-18 verdicts"
+  ],
+  "k1 files": [
+   "K1 did not compare all 156 files"
+  ],
+  "k3": [
+   "kill condition K3_null is recorded as fired"
+  ],
+  "ladder": [
+   "the repair ladder is [167, 22, 6, 9], not [167, 22, 6, 4]"
+  ],
+  "missing file": [
+   "missing data/adjudication.json"
+  ],
+  "movement": [
+   "the one moving C2 verdict is not the file 2026-09-19 named",
+   "C and D disagree on C2"
+  ],
+  "noholder": [
+   "the names-no-holder count under C is not 6"
+  ],
+  "noholder set": [
+   "the six repositories naming no holder are not the same six under every rule"
+  ],
+  "page figure": [
+   "index.html does not state '95.2'"
+  ],
+  "page number": [
+   "index.html does not state '1,134'"
+  ],
+  "page remote": [
+   "the page pulls a remote resource"
+  ],
+  "page script": [
+   "the page carries a script"
+  ],
+  "page vendor": [
+   "index.html names 'chatgpt' in this practice's own voice"
+  ],
+  "pred blind": [
+   "P1 is not flagged as unblinded"
+  ],
+  "pred drop": [
+   "there are not seven predictions",
+   "prediction P7 is absent"
+  ],
+  "pred flip": [
+   "the refuted predictions do not number two",
+   "P6 is not scored as refuted"
+  ],
+  "pred kill": [
+   "predictions.json disagrees: a kill condition fired"
+  ],
+  "pred score": [
+   "the prediction score is not 5 confirmed and 2 refuted"
+  ],
+  "pred text": [
+   "P4's text is not the text the pre-registration committed"
+  ],
+  "prereg digest": [
+   "pre-registration does not name the pinned digest of rules.py"
+  ],
+  "relation control": [
+   "relation fixture failed: m4 indents text -> '  # a\\n  # b' not '    a\\n    b'",
+   "relation fixture failed: m4 leaves blank lines blank -> '  # a\\n\\n  # b' not '    a\\n\\n    b'",
+   "the control M4 changes the normalised text, so it is not a control"
+  ],
+  "relation dropped": [
+   "the scored relations are not the eight that were pre-registered"
+  ],
+  "relation oneway": [
+   "relation fixture failed: m1 swaps both ways -> 'a (C) b (C) c' not 'a (C) b (c) c'",
+   "relation fixture failed: m1 is its own inverse -> 'Copyright (C) 1 (C) 2' not 'Copyright (c) 1 (C) 2'"
+  ],
+  "relation wrap": [
+   "relation fixture failed: m6 respects the column -> False not True"
+  ],
+  "repair m1": [
+   "variant C did not repair M1"
+  ],
+  "resurrection": [
+   "B's M6 decision count is not 20 -- the defect-2 resurrection",
+   "B did not make M6 worse, which is the whole point of the B arm"
+  ],
+  "rule edited": [
+   "tools/is-it-a-licence/fingerprints.py no longer matches the digest this session measured",
+   "defect 4 does not reproduce: the uppercase notice IS recognised",
+   "the shipped rule reads a lowercase continuation as a notice, which 2026-09-18 repaired"
+  ],
+  "rule not pinned": [
+   "the scored run was not made with the pinned rule"
+  ],
+  "src chen status": [
+   "chen-1998 is not marked unquoted"
+  ],
+  "src digest": [
+   "segura-2016 has no source digest"
+  ],
+  "src quote chen": [
+   "a quotation is taken from a source declared unquotable"
+  ],
+  "src quotes": [
+   "duque-torres-2023 carries fewer than two quotations"
+  ],
+  "src unread": [
+   "the house index's single metamorphic entry is not recorded as unread"
+  ],
+  "src world claim": [
+   "the unfound claim is not stated as a fact about our search"
+  ],
+  "summary vendor": [
+   "SUMMARY.md names 'claude' in this practice's own voice"
+  ],
+  "total": [
+   "the registered scored total is not 1,134",
+   "the registered scored total is not the sum of its relations",
+   "967 + 167 does not equal 1,134"
+  ],
+  "variant same": [
+   "the four rule variants are not four distinct files"
+  ],
+  "verd drop": [
+   "verdicts.json holds 895 inputs, not 896",
+   "C1 is not 740 rows",
+   "17 decisions move between the shipped rule and D, not 18",
+   "127 inputs change ANY recorded field between the shipped rule and D, not 128"
+  ],
+  "verd move": [
+   "19 decisions move between the shipped rule and D, not 18",
+   "129 inputs change ANY recorded field between the shipped rule and D, not 128"
+  ],
+  "viol drop": [
+   "violations.json holds 309 shipped rows, not 310"
+  ],
+  "viol m2": [
+   "M1 and M2 do not convict the same eighteen inputs"
+  ],
+  "viol tencent": [
+   "adjudicated input Tencent/Tencent-XR-3DGen@geometry/neusdfusion_test/LICENSE is absent from violations.json under M1",
+   "violations.json holds 309 shipped rows, not 310",
+   "the committed violations do not hold 167 scored rows",
+   "M1 and M2 do not convict the same eighteen inputs"
+  ]
+ }
+}

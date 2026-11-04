@@ -1,0 +1,29 @@
+{
+ "forecasts": {"name": "USGS ComCat, product type 'oaf' (operational aftershock forecast), first version's forecast.json",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?producttype=oaf&starttime=2015-01-01&endtime=2026-10-17&format=geojson",
+   "fetched": "2026-10-17", "events": 255, "licence": "US government work; raw downloads not committed, fields extracted to forecasts.jsonl"},
+ "outcomes": {"name": "USGS ComCat fdsnws event query, per forecast circle", "url": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+   "licence": "US government work"},
+ "literature": [
+  {"ref": "USGS, Operational Aftershock Forecasting overview page", "url": "https://earthquake.usgs.gov/data/oaf/overview.php",
+   "read": "2026-10-17, page via a page-to-text fetch",
+   "passages": ["Forecasts are posted for earthquakes of M4+ in the contiguous United States and M5+ in other U.S. states and territories",
+                "Forecasts are currently made with either the Reasenberg-Jones (1989, 1994) model", "the Epidemic-Type (ETAS) model (Ogata, 1988)"],
+   "note": "the page states no evaluation of past forecasts"},
+  {"ref": "USGS, OAF background page", "url": "https://earthquake.usgs.gov/data/oaf/background.php", "read": "2026-10-17, via a page-to-text fetch",
+   "passages": ["We use the statistical model of aftershock rate developed by Reasenberg and Jones (1989, 1994).",
+                "may perform poorly for sequences with large aftershocks that trigger many of their own aftershocks"]},
+  {"ref": "van der Elst, N. J., J. L. Hardebeck, A. J. Michael, S. K. McBride, E. Vanacore, 2022: Prospective and retrospective evaluation of the U.S. Geological Survey public aftershock forecast for the 2019-2021 Southwest Puerto Rico earthquake and aftershocks. Seismological Research Letters, doi:10.1785/0220210222",
+   "url": "https://www.usgs.gov/publications/prospective-and-retrospective-evaluation-us-geological-survey-public-aftershock",
+   "read": "2026-10-17, abstract only (publication record page)",
+   "passages": ["The ETAS-based forecast performed well overall", "successfully capturing both the chance of having at least one earthquake of a given magnitude in a forecast interval",
+                "the ETAS model is a substantial improvement over the existing Reasenberg and Jones (1989) forecast model"],
+   "note": "one sequence; the article body not read"},
+  {"ref": "Schneider, M., M. Barall, J. Hardebeck, A. Michael, M. Page, N. van der Elst, 2025: Evaluating the Forecasting Performance of U.S. Geological Survey Aftershock Forecasts. SSA Annual Meeting, poster 136",
+   "url": "https://seismosoc.secure-platform.com/a/gallery/rounds/43/details/12304", "read": "2026-10-17, abstract page",
+   "passages": ["releases public aftershock forecasts following earthquakes with magnitudes 5 or larger", "simulated aftershock forecasts made under this proposed system"],
+   "note": "evaluates simulated forecasts of a prototype; reports no calibration figure in the abstract"}
+ ],
+ "search_note": "Two web searches on 2026-10-17 found single-sequence evaluations and the 2025 poster, and no pooled evaluation of the published first forecasts across all sequences. That is a fact about my search, not about the literature.",
+ "house_index": "frankbueltge.de/papers/index.json, 1,086 entries on 2026-10-17: no entry on aftershock forecasting; three on catalogue completeness (Mignan & Woessner 2012; Rydelek & Sacks 1989; Lombardi 2021), none read here"
+}

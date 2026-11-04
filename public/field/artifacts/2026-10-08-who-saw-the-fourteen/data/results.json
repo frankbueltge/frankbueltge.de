@@ -1,0 +1,522 @@
+{
+ "snapshot": "backup-20261005101424",
+ "n": 14,
+ "observer_counts": {
+  "maker": 8,
+  "user": 3,
+  "affected party": 1,
+  "third-party evaluator": 1,
+  "third-party researchers": 1
+ },
+ "prong_b_fail": 8,
+ "prong_a_pass": 0,
+ "independent_registered": 0,
+ "independent_exploratory": [
+  1668
+ ],
+ "distinct_disclosures": 12,
+ "with_irregular": [
+  1627,
+  1628,
+  1629,
+  1649,
+  1685,
+  1700
+ ],
+ "domains_per_incident": {
+  "values": [
+   1,
+   5,
+   10,
+   14,
+   14,
+   14,
+   4,
+   2,
+   3,
+   2,
+   2,
+   3,
+   1,
+   4
+  ],
+  "median": 3.5
+ },
+ "deployed": {
+  "n": 4,
+  "b_pass_a_fail": 3
+ },
+ "first_report_is_maker_domain": [
+  65,
+  1627,
+  1628,
+  1629
+ ],
+ "predictions": {
+  "Q1": {
+   "pred": "0 of 14 pass both prongs",
+   "obs": 0,
+   "held": true
+  },
+  "Q2": {
+   "pred": ">= 9 fail prong (b)",
+   "obs": 8,
+   "held": false
+  },
+  "Q3": {
+   "pred": ">= 4 of the deployed pass (b) and fail (a); registered as \"of the 5\", there are 4",
+   "obs": [
+    3,
+    4
+   ],
+   "held": false
+  },
+  "Q4": {
+   "pred": "median distinct source domains <= 3",
+   "obs": 3.5,
+   "held": false
+  }
+ },
+ "incidents": [
+  {
+   "id": 65,
+   "title": "Reinforcement Learning Reward Functions in Video Games",
+   "incident_date": "2016-12-22",
+   "setting": "test",
+   "deployers": [
+    "openai"
+   ],
+   "reports": 1,
+   "domains": [
+    "blog.openai.com"
+   ],
+   "first_report": {
+    "date": "2016-12-22",
+    "domain": "blog.openai.com",
+    "title": "Faulty Reward Functions in the Wild"
+   },
+   "report_set": "1140",
+   "observer": "maker",
+   "prong_a": "fail",
+   "prong_b": "fail",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "The developer's own research blog on its own RL experiment; no earlier published protocol shown."
+  },
+  {
+   "id": 1152,
+   "title": "LLM-Driven Replit Agent Reportedly Executed Unauthorized Destructive Commands During Code Freeze, Leading to Loss of Production Data",
+   "incident_date": "2025-07-18",
+   "setting": "deployed",
+   "deployers": [
+    "replit"
+   ],
+   "reports": 5,
+   "domains": [
+    "cybernews.com",
+    "economictimes.indiatimes.com",
+    "thecyberexpress.com",
+    "theregister.com",
+    "tomshardware.com"
+   ],
+   "first_report": {
+    "date": "2025-07-21",
+    "domain": "tomshardware.com",
+    "title": "AI coding platform goes rogue during code freeze and deletes entire company database — Replit CEO apologizes after AI engine says it 'made a catastrophic error in judgment' and 'destroyed all production data'"
+   },
+   "report_set": "5577|5578|5593|6113|6126",
+   "observer": "user",
+   "prong_a": "fail",
+   "prong_b": "pass",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "The user's account of a coding agent on their own project, carried by the press; no recording rule."
+  },
+  {
+   "id": 1604,
+   "title": "OpenAI Models Reportedly Compromised Hugging Face Production Infrastructure During Cybersecurity Evaluation",
+   "incident_date": "2026-07-11",
+   "setting": "test",
+   "deployers": [
+    "openai",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 11,
+   "domains": [
+    "huggingface.co",
+    "nytimes.com",
+    "openai.com",
+    "reuters.com",
+    "swarmtraces.org",
+    "theatlantic.com",
+    "theguardian.com",
+    "transformernews.ai",
+    "washingtonpost.com",
+    "wired.com"
+   ],
+   "first_report": {
+    "date": "2026-07-16",
+    "domain": "huggingface.co",
+    "title": "Security incident disclosure — July 2026"
+   },
+   "report_set": "7537|7538|7559|7654|7687|7754|7774|7775|8000|8001|8008",
+   "observer": "affected party",
+   "prong_a": "fail",
+   "prong_b": "pass",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "The affected platform disclosed first (07-16), five days before the developer, and per the description detected and contained the activity; no published rule shown."
+  },
+  {
+   "id": 1627,
+   "title": "Claude Opus 4.7 Reportedly Compromised Real Company's Production Infrastructure During Cybersecurity Evaluation",
+   "incident_date": "2026-07-30",
+   "setting": "test",
+   "deployers": [
+    "irregular",
+    "anthropic",
+    "ai-evaluation-organizations",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 16,
+   "domains": [
+    "anthropic.com",
+    "apnews.com",
+    "bleepingcomputer.com",
+    "businessinsider.com",
+    "forbes.com",
+    "fortune.com",
+    "npr.org",
+    "nytimes.com",
+    "reuters.com",
+    "securityaffairs.com",
+    "techcrunch.com",
+    "transformernews.ai",
+    "washingtonpost.com",
+    "wired.com"
+   ],
+   "first_report": {
+    "date": "2026-07-30",
+    "domain": "anthropic.com",
+    "title": "Investigating three real-world incidents in our cybersecurity evaluations"
+   },
+   "report_set": "7670|7671|7672|7673|7682|7683|7684|7685|7686|7688|7689|7690|7691|7754|7775|7936",
+   "observer": "maker",
+   "prong_a": "fail",
+   "prong_b": "fail",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "The developer's disclosure of its own evaluation, run with an evaluation contractor; the press follows the same day."
+  },
+  {
+   "id": 1628,
+   "title": "Claude Mythos 5 Reportedly Published Malicious PyPI Package That Compromised Real Security Company During Evaluation",
+   "incident_date": "2026-07-30",
+   "setting": "test",
+   "deployers": [
+    "irregular",
+    "anthropic",
+    "ai-evaluation-organizations",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 16,
+   "domains": [
+    "anthropic.com",
+    "apnews.com",
+    "bleepingcomputer.com",
+    "businessinsider.com",
+    "forbes.com",
+    "fortune.com",
+    "npr.org",
+    "nytimes.com",
+    "reuters.com",
+    "securityaffairs.com",
+    "techcrunch.com",
+    "transformernews.ai",
+    "washingtonpost.com",
+    "wired.com"
+   ],
+   "first_report": {
+    "date": "2026-07-30",
+    "domain": "anthropic.com",
+    "title": "Investigating three real-world incidents in our cybersecurity evaluations"
+   },
+   "report_set": "7670|7671|7672|7673|7682|7683|7684|7685|7686|7688|7689|7690|7691|7754|7775|7936",
+   "observer": "maker",
+   "prong_a": "fail",
+   "prong_b": "fail",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "Same developer disclosure as 1627."
+  },
+  {
+   "id": 1629,
+   "title": "Anthropic Research Model Reportedly Scanned 9,000 Targets and Compromised Real Company's Application During Evaluation",
+   "incident_date": "2026-07-30",
+   "setting": "test",
+   "deployers": [
+    "irregular",
+    "anthropic",
+    "ai-evaluation-organizations",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 16,
+   "domains": [
+    "anthropic.com",
+    "apnews.com",
+    "bleepingcomputer.com",
+    "businessinsider.com",
+    "forbes.com",
+    "fortune.com",
+    "npr.org",
+    "nytimes.com",
+    "reuters.com",
+    "securityaffairs.com",
+    "techcrunch.com",
+    "transformernews.ai",
+    "washingtonpost.com",
+    "wired.com"
+   ],
+   "first_report": {
+    "date": "2026-07-30",
+    "domain": "anthropic.com",
+    "title": "Investigating three real-world incidents in our cybersecurity evaluations"
+   },
+   "report_set": "7670|7671|7672|7673|7682|7683|7684|7685|7686|7688|7689|7690|7691|7754|7775|7936",
+   "observer": "maker",
+   "prong_a": "fail",
+   "prong_b": "fail",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "Same developer disclosure as 1627."
+  },
+  {
+   "id": 1633,
+   "title": "Anthropic and OpenAI AI Agents Reportedly Took Unsanctioned Actions on the Live Internet During UK AISI Cybersecurity Evaluations",
+   "incident_date": "2026-07-26",
+   "setting": "test",
+   "deployers": [
+    "government-agencies",
+    "ai-security-institute-(united-kingdom)",
+    "ai-evaluation-organizations",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 4,
+   "domains": [
+    "aisi.gov.uk",
+    "reuters.com",
+    "transformernews.ai",
+    "washingtonpost.com"
+   ],
+   "first_report": {
+    "date": "2026-08-04",
+    "domain": "reuters.com",
+    "title": "OpenAI, Anthropic AI agents implicated in new security breaches"
+   },
+   "report_set": "7695|7696|7754|7775",
+   "observer": "third-party evaluator",
+   "prong_a": "fail",
+   "prong_b": "pass",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "A government AI evaluation institute's own incident report on its tests of two developers' agents; no earlier published protocol shown in the record."
+  },
+  {
+   "id": 1642,
+   "title": "AI Agent Powered by Claude Opus 4.6 Reportedly Exploited Gym Booking API and Removed Another Member From Waitlist",
+   "incident_date": "2026-04-30",
+   "setting": "deployed",
+   "deployers": [
+    "andrew-bird",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 2,
+   "domains": [
+    "abc.net.au",
+    "affinda.com"
+   ],
+   "first_report": {
+    "date": "2026-04-30",
+    "domain": "affinda.com",
+    "title": "When my AI agent hacked my gym, Mythos stopped feeling theoretical"
+   },
+   "report_set": "7716|7717",
+   "observer": "user",
+   "prong_a": "fail",
+   "prong_b": "pass",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "The user's own blog post about their agent; no recording rule."
+  },
+  {
+   "id": 1649,
+   "title": "Meta AI Model Reportedly Exploited Security Vulnerability in Real Third-Party Service During Cybersecurity Evaluation",
+   "incident_date": "2026-08-05",
+   "setting": "test",
+   "deployers": [
+    "meta",
+    "irregular",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 3,
+   "domains": [
+    "bleepingcomputer.com",
+    "reuters.com",
+    "washingtonpost.com"
+   ],
+   "first_report": {
+    "date": "2026-08-05",
+    "domain": "reuters.com",
+    "title": "Meta AI model hacks another company during testing"
+   },
+   "report_set": "7752|7753|7754",
+   "observer": "maker",
+   "prong_a": "fail",
+   "prong_b": "fail",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "The developer's evaluation, run with an evaluation contractor, first reported by the press; the developer had not confirmed the account."
+  },
+  {
+   "id": 1668,
+   "title": "OpenAI-Linked AI Agents Reportedly Used German Programming Wiki DSEWiki for Coordination and Restriction Evasion",
+   "incident_date": "2026-05-24",
+   "setting": "other",
+   "deployers": [
+    "openai",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 2,
+   "domains": [
+    "reuters.com",
+    "techcrunch.com"
+   ],
+   "first_report": {
+    "date": "2026-09-04",
+    "domain": "reuters.com",
+    "title": "OpenAI agents hijacked German website in previously undisclosed AI breakout this spring"
+   },
+   "report_set": "7873|7874",
+   "observer": "third-party researchers",
+   "prong_a": "fail",
+   "prong_b": "pass",
+   "independent": false,
+   "independent_exploratory": true,
+   "reason": "Researchers not tied to the developer, reading the public edit history of a wiki; the developer disputed the account. Registered rule: no named evaluation suite or registered procedure (see exploratory reading)."
+  },
+  {
+   "id": 1673,
+   "title": "Google Gemini 3.5 Coding Agent Reportedly Caused Production Portal Outage and Generated Fabricated Recovery Records",
+   "incident_date": "2026-05-20",
+   "setting": "deployed",
+   "deployers": [
+    "software-developers",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 2,
+   "domains": [
+    "digitaltrends.com",
+    "theregister.com"
+   ],
+   "first_report": {
+    "date": "2026-05-21",
+    "domain": "theregister.com",
+    "title": "Gemini accused of 30,000-line code purge and fake recovery report"
+   },
+   "report_set": "7886|7887",
+   "observer": "user",
+   "prong_a": "fail",
+   "prong_b": "pass",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "A developer-user's account of their own coding agent; the model's developer had not verified it."
+  },
+  {
+   "id": 1685,
+   "title": "Early Claude Opus 4.6 Checkpoint Reportedly Gained Unauthorized Admin Access to Third-Party System During Cybersecurity Evaluation",
+   "incident_date": "2026-09-09",
+   "setting": "test",
+   "deployers": [
+    "irregular",
+    "anthropic",
+    "ai-evaluation-organizations",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 3,
+   "domains": [
+    "anthropic.com",
+    "cbsnews.com",
+    "reuters.com"
+   ],
+   "first_report": {
+    "date": "2026-09-09",
+    "domain": "reuters.com",
+    "title": "Anthropic discloses fourth AI hacking incident missed in earlier review"
+   },
+   "report_set": "7936|7937|7938",
+   "observer": "maker",
+   "prong_a": "fail",
+   "prong_b": "fail",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "The developer's disclosure, in its own alignment assessment, of its January evaluation."
+  },
+  {
+   "id": 1700,
+   "title": "Google Gemini Reportedly Accessed Three Real Companies' Protected Systems During Cybersecurity Evaluation",
+   "incident_date": "2026-05-01",
+   "setting": "test",
+   "deployers": [
+    "irregular",
+    "google",
+    "ai-evaluation-organizations",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 1,
+   "domains": [
+    "wsj.com"
+   ],
+   "first_report": {
+    "date": "2026-09-18",
+    "domain": "wsj.com",
+    "title": "Gemini Hacked Three Companies in First Known Breakout by Google’s AI"
+   },
+   "report_set": "7981",
+   "observer": "maker",
+   "prong_a": "fail",
+   "prong_b": "fail",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "The developer's evaluation, run by an evaluation contractor, reported by the press with the developer's statements."
+  },
+  {
+   "id": 1707,
+   "title": "OpenAI AI Agent Reportedly Gained Unauthorized Access to Australian Medicare Statistics Portal During Research Task",
+   "incident_date": "2026-06-18",
+   "setting": "deployed",
+   "deployers": [
+    "openai",
+    "ai-agent-system-deployers"
+   ],
+   "reports": 4,
+   "domains": [
+    "abc.net.au",
+    "nytimes.com",
+    "pm.gov.au",
+    "transluce.org"
+   ],
+   "first_report": {
+    "date": "2026-09-23",
+    "domain": "nytimes.com",
+    "title": "OpenAI’s A.I. Tried to Breach 4 Other Targets, Without Prompting"
+   },
+   "report_set": "7990|7991|7992|7993",
+   "observer": "maker",
+   "prong_a": "fail",
+   "prong_b": "fail",
+   "independent": false,
+   "independent_exploratory": false,
+   "reason": "The description says the developer notified the government; a related strand was found by outside researchers in a public URL-scanning service (see exploratory reading)."
+  }
+ ]
+}

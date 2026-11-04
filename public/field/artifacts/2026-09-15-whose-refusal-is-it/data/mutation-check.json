@@ -1,0 +1,119 @@
+{
+ "_note": "Mutation test of the fixture set (PREREGISTRATION.md §4). Each row damages one mechanical rule and reports which fixtures noticed. A surviving mutation is a hole in the fixtures and is reported, not patched away.",
+ "baseline_failures": [],
+ "mutations": 10,
+ "survived": 0,
+ "history": [
+  {
+   "utc": "2026-09-15",
+   "event": "On its first run, before any probe request, M5 survived: every Allow/Disallow fixture had unequal pattern lengths, so the tie-break rule was never exercised and a mutation that broke it changed no outcome. One fixture ('Allow wins an equal-length tie') was added and M5 is caught. Recorded rather than quietly repaired: the fixture set as first written had a hole, and the mutation test is the only thing that found it."
+  }
+ ],
+ "results": [
+  {
+   "id": "M1",
+   "slip": "the robots rule is never consulted",
+   "applied": true,
+   "fixtures_that_caught_it": 1,
+   "caught_by": [
+    "code_unit/policy fires when robots disallows"
+   ],
+   "survived": false
+  },
+  {
+   "id": "M2",
+   "slip": "key-declared stops requiring the WWW-Authenticate header",
+   "applied": true,
+   "fixtures_that_caught_it": 1,
+   "caught_by": [
+    "code_unit/key-declared does NOT fire on 401 without the header"
+   ],
+   "survived": false
+  },
+  {
+   "id": "M3",
+   "slip": "client-string counts any non-2xx as a refusal (404 and 500 included)",
+   "applied": true,
+   "fixtures_that_caught_it": 3,
+   "caught_by": [
+    "code_unit/open does NOT fire when one arm failed to get a status",
+    "code_unit/client-string does NOT fire on 200 beside a 500",
+    "code_unit/client-string does NOT fire on 200 beside a 404"
+   ],
+   "survived": false
+  },
+  {
+   "id": "M4",
+   "slip": "register_label_wrong also fires where the door refused everyone",
+   "applied": true,
+   "fixtures_that_caught_it": 1,
+   "caught_by": [
+    "code_unit/label_wrong does NOT fire when the door refuses everyone"
+   ],
+   "survived": false
+  },
+  {
+   "id": "M5",
+   "slip": "a longer Allow no longer beats a shorter Disallow",
+   "applied": true,
+   "fixtures_that_caught_it": 1,
+   "caught_by": [
+    "robots/Allow wins an equal-length tie"
+   ],
+   "survived": false
+  },
+  {
+   "id": "M6",
+   "slip": "an empty Disallow is read as forbidding everything",
+   "applied": true,
+   "fixtures_that_caught_it": 1,
+   "caught_by": [
+    "robots/empty disallow forbids nothing"
+   ],
+   "survived": false
+  },
+  {
+   "id": "M7",
+   "slip": "rules written for a named crawler are applied to us",
+   "applied": true,
+   "fixtures_that_caught_it": 3,
+   "caught_by": [
+    "robots/a rule for another agent is not ours",
+    "robots/a rule for another agent does not leak the block",
+    "crawl_delay/crawl-delay of another agent not taken"
+   ],
+   "survived": false
+  },
+  {
+   "id": "M8",
+   "slip": "open accepts an arm that never answered",
+   "applied": true,
+   "fixtures_that_caught_it": 1,
+   "caught_by": [
+    "code_unit/open does NOT fire when one arm failed to get a status"
+   ],
+   "survived": false
+  },
+  {
+   "id": "M9",
+   "slip": "the named/unnamed split is read off the wrong pair",
+   "applied": true,
+   "fixtures_that_caught_it": 2,
+   "caught_by": [
+    "arm_pattern/named apart",
+    "arm_pattern/urllib apart"
+   ],
+   "survived": false
+  },
+  {
+   "id": "M10",
+   "slip": "the refusal set silently loses 429",
+   "applied": true,
+   "fixtures_that_caught_it": 1,
+   "caught_by": [
+    "code_unit/client-string fires in the other direction too"
+   ],
+   "survived": false
+  }
+ ]
+}

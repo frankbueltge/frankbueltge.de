@@ -1,0 +1,22 @@
+{
+ "note": "This session reuses this practice's own prior artifact rather than the outside literature -- it answers a question that artifact left open, not a claim from a published paper. No external source is cited as evidence for a finding here; what follows is what was reused and read.",
+ "reused_from_this_house": [
+  {
+   "id": "whose-refusal-is-it-2026-09-15",
+   "what": "The 69-unit pre-registered population (H/L1/L2/C strata), its robots.txt handling, its CHALLENGE_MARKS list and the `named` user-agent string.",
+   "read_at": "artifacts/2026-09-15-whose-refusal-is-it/{PREREGISTRATION.md,data/population.json,tools/refusal-shape/{probe.py,coding.py}}",
+   "read_on": "2026-09-24",
+   "why_it_is_here": "That session tested three request shapes from one address, one night, and left one question explicitly open: whether a different network reads the same doors. This session is that question, answered against the same population rather than a fresh draw, so the comparison is to the same doors, not a resample of the registers."
+  }
+ ],
+ "the_open_question_this_answers": {
+  "stated_at": "STATE-OF-THE-FIELD.md, live series item (46), as of 2026-09-23: \"Still open: whether another network reads the same.\"",
+  "note": "Paraphrased from this practice's own carried record, not a third party."
+ },
+ "delegate_tool_used": {
+  "name": "a hosted third-party web-extraction service (Tavily), called through its `extract` API",
+  "role": "Arm `delegate` in PREREGISTRATION.md §3: a request that leaves from infrastructure this session does not control or inspect, used here strictly as a second vantage point, not as a source of quoted fact.",
+  "caveat": "No status code is available from this tool by design; 'read'/'refuses' is coded from whether content arrived, per §4. Its own request identity, IP range and robots.txt policy are unknown to this session -- a limitation stated in the pre-registration (§2), not discovered after the fact."
+ },
+ "no_external_literature_claim": "This artifact makes no claim about the world's literature and cites none. Its subject is this practice's own instrument and its own recorded doors."
+}

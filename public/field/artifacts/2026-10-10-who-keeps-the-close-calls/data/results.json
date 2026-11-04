@@ -1,0 +1,250 @@
+{
+ "keepers": {
+  "PH": "Phillips 1998 (Nuclear Age Peace Foundation)",
+  "CH": "Chatham House 2014, Table 1",
+  "FLI": "Future of Life Institute timeline (2016)",
+  "WP": "Wikipedia, Nuclear close calls"
+ },
+ "excluded": {
+  "NTI": "Close calls fact sheet: 403 to direct request and to the extraction fallback, 2026-10-10"
+ },
+ "window": [
+  1945,
+  1998
+ ],
+ "entries": 110,
+ "primary": {
+  "union": 53,
+  "list_length": {
+   "PH": 20,
+   "CH": 12,
+   "FLI": 26,
+   "WP": 39
+  },
+  "by_count": {
+   "1": 26,
+   "2": 13,
+   "3": 11,
+   "4": 3
+  },
+  "share_all": 0.0566,
+  "share_one": 0.4906,
+  "dice_pairs": {
+   "PH-CH": 0.375,
+   "PH-FLI": 0.6957,
+   "PH-WP": 0.339,
+   "CH-FLI": 0.3684,
+   "CH-WP": 0.2745,
+   "FLI-WP": 0.5538
+  },
+  "dice_mean": 0.4344,
+  "longest_over_shortest": 3.25,
+  "dice_mean_ci95": [
+   0.3232,
+   0.5283
+  ]
+ },
+ "all_years": {
+  "union": 63,
+  "list_length": {
+   "PH": 20,
+   "CH": 14,
+   "FLI": 30,
+   "WP": 46
+  },
+  "by_count": {
+   "1": 33,
+   "2": 16,
+   "3": 11,
+   "4": 3
+  },
+  "share_all": 0.0476,
+  "share_one": 0.5238,
+  "dice_pairs": {
+   "PH-CH": 0.3529,
+   "PH-FLI": 0.64,
+   "PH-WP": 0.303,
+   "CH-FLI": 0.3182,
+   "CH-WP": 0.3,
+   "FLI-WP": 0.5
+  },
+  "dice_mean": 0.4024,
+  "longest_over_shortest": 3.286,
+  "dice_mean_ci95": [
+   0.2984,
+   0.4913
+  ]
+ },
+ "predictions": {
+  "P1": {
+   "bar": "share listed by every keeper < 20 %",
+   "value": 0.0566,
+   "verdict": "held"
+  },
+  "P2": {
+   "bar": "share listed by exactly one keeper > 40 %",
+   "value": 0.4906,
+   "verdict": "held"
+  },
+  "P3": {
+   "bar": "mean pairwise Dice < 0.50",
+   "value": 0.4344,
+   "verdict": "held"
+  },
+  "P4": {
+   "bar": "Serpukhov 1983 and a Cuban-crisis event in every keeper",
+   "serpukhov": {
+    "PH": false,
+    "CH": true,
+    "FLI": true,
+    "WP": true
+   },
+   "cuba": {
+    "PH": true,
+    "CH": true,
+    "FLI": true,
+    "WP": true
+   },
+   "verdict": "failed"
+  },
+  "P5": {
+   "bar": "longest list > 3 x shortest",
+   "value": 3.25,
+   "verdict": "held"
+  }
+ },
+ "decade_profile": {
+  "PH": {
+   "1950s": 1,
+   "1960s": 15,
+   "1970s": 2,
+   "1980s": 1,
+   "1990s": 1
+  },
+  "CH": {
+   "1960s": 5,
+   "1970s": 2,
+   "1980s": 3,
+   "1990s": 2
+  },
+  "FLI": {
+   "1950s": 1,
+   "1960s": 16,
+   "1970s": 3,
+   "1980s": 5,
+   "1990s": 1
+  },
+  "WP": {
+   "1950s": 6,
+   "1960s": 22,
+   "1970s": 3,
+   "1980s": 4,
+   "1990s": 4
+  }
+ },
+ "leave_one_keeper_out": {
+  "without_PH": {
+   "union": 51,
+   "share_all": 0.1176,
+   "share_one": 0.6078,
+   "dice_mean": 0.3989
+  },
+  "without_CH": {
+   "union": 51,
+   "share_all": 0.1961,
+   "share_one": 0.5294,
+   "dice_mean": 0.5295
+  },
+  "without_FLI": {
+   "union": 51,
+   "share_all": 0.0588,
+   "share_one": 0.6667,
+   "dice_mean": 0.3295
+  },
+  "without_WP": {
+   "union": 33,
+   "share_all": 0.1212,
+   "share_one": 0.3636,
+   "dice_mean": 0.4797
+  }
+ },
+ "fli_shared_with_ph": {
+  "shared_events": 16,
+  "citing_nuclearfiles": 13
+ },
+ "in_all_four": [
+  "E23",
+  "E42",
+  "E52"
+ ],
+ "only_one": {
+  "PH": [
+   "E15",
+   "E18"
+  ],
+  "CH": [
+   "E25",
+   "E49"
+  ],
+  "FLI": [
+   "E26",
+   "E41"
+  ],
+  "WP": [
+   "E01",
+   "E02",
+   "E04",
+   "E05",
+   "E06",
+   "E09",
+   "E12",
+   "E27",
+   "E28",
+   "E29",
+   "E31",
+   "E32",
+   "E33",
+   "E36",
+   "E36b",
+   "E37",
+   "E38",
+   "E48",
+   "E50",
+   "E51"
+  ]
+ },
+ "second_matching": {
+  "same_event_pairs_mine": 67,
+  "same_event_pairs_blind": 67,
+  "both": 67,
+  "specific_agreement_same_event": 1.0,
+  "differing_pairs": [],
+  "primary_under_blind_matching": {
+   "union": 53,
+   "list_length": {
+    "PH": 20,
+    "CH": 12,
+    "FLI": 26,
+    "WP": 39
+   },
+   "by_count": {
+    "1": 26,
+    "2": 13,
+    "3": 11,
+    "4": 3
+   },
+   "share_all": 0.0566,
+   "share_one": 0.4906,
+   "dice_pairs": {
+    "PH-CH": 0.375,
+    "PH-FLI": 0.6957,
+    "PH-WP": 0.339,
+    "CH-FLI": 0.3684,
+    "CH-WP": 0.2745,
+    "FLI-WP": 0.5538
+   },
+   "dice_mean": 0.4344,
+   "longest_over_shortest": 3.25
+  }
+ }
+}

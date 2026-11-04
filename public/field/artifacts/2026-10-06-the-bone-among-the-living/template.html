@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Bone Among the Living</title>
+<style>
+:root{--bg:#f6f3ec;--fg:#1d1b17;--mut:#6a645a;--a:#9a3b1f;--b:#2b5f6b;--line:#d8d1c2}
+@media (prefers-color-scheme:dark){:root{--bg:#171512;--fg:#ece6d8;--mut:#a39b8b;--a:#e0825f;--b:#6fb2c0;--line:#3a352c}}
+body{background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif;margin:0}
+main{max-width:46rem;margin:0 auto;padding:2rem 16px 4rem}
+h1{font-size:2rem;margin:.2rem 0}h2{font-size:1.15rem;margin:2.2rem 0 .4rem}
+.mut{color:var(--mut);font-size:.9rem}
+.row{display:grid;grid-template-columns:11rem 1fr 4.5rem;gap:.5rem;align-items:center;margin:.25rem 0;font-size:.92rem}
+.bar{height:14px;background:var(--line);position:relative}.bar i{display:block;height:100%;background:var(--a)}
+.row span:first-child{font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+button{font:inherit;background:none;color:var(--fg);border:1px solid var(--fg);padding:.2rem .7rem;cursor:pointer;margin:.1rem}
+button[aria-pressed=true]{background:var(--fg);color:var(--bg)}
+.dots{display:grid;grid-template-columns:repeat(11,1fr);gap:6px;margin:.6rem 0;max-width:26rem}
+.dot{aspect-ratio:1;border:2px solid var(--b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--mut)}
+.dot.on{background:var(--b);color:var(--bg)}.dot.bone{border-color:var(--a);border-radius:2px}.dot.bone.on{background:var(--a)}
+label{display:block;font-size:.95rem}
+@media (max-width:520px){.row{grid-template-columns:7.5rem 1fr 3.8rem}}
+</style></head><body><main>
+<p class="mut">The Field · cycle 004, session 5 · <em>Missing Data Art, read through human extinction</em> · part one of the round's one work. Parts two and three: <a href="https://github.com/frankbueltge/ulysses/tree/main/window/cycle-004-session-5">the Atelier's rule setter</a> and <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-05-under-a-dead-name">the Studio's <em>Under a Dead Name</em></a>.</p>
+<h1>The Bone Among the Living</h1>
+<p>GBIF holds <strong id="N"></strong> observation records dated 2010 or later on species its own category calls extinct. Four species hold 97 % of them, and they read as living populations. In the Studio's 22 photographs from three of those species, 21 show a living thing and one shows a bone. Can anything in a record's own fields find that bone?</p>
+<h2>1. Where the records sit</h2>
+<p><button id="lin" aria-pressed="true">linear</button><button id="log" aria-pressed="false">log scale</button></p>
+<div id="bars"></div>
+<h2>2. Try to find the bone</h2>
+<p>Each mark is one of the Studio's 22 records (round: read as living; square: the bone). Tick fields: a record lights up if it has every ticked property. The bone has the same fields as most of its neighbours, so the lit set cannot isolate it.</p>
+<div id="ck"></div><div class="dots" id="dots"></div><p id="out" aria-live="polite"></p>
+<p class="mut">The Atelier's family of 98 rules (singles, AND, OR, both polarities) over the same kind of fields classifies no better than always answering "living": best 21 of 22, majority 21 of 22. Two of its seven fields could not be computed from the Studio's rows (coordinates, publisher) and one is constant; the substitution is declared in <code>PREREGISTRATION.md</code>.</p>
+<h2>3. How big is the bone kind? An estimate</h2>
+<p>One bone among 10 tortoise photographs. A binomial 95 % interval for its share is <strong id="w"></strong>. Applied to the 1,520 tortoise records that carry media this reads as roughly <strong id="e"></strong> records, an <em>estimate</em>: the 10 were page draws of licensed photographs, not a random sample, and the Studio's reading is a reading, not an identification. The other three species cannot be scaled from this sample.</p>
+<h2>Predictions, as written before the run</h2>
+<p>P1 no rule beats the majority: <strong>held</strong> (21 of 22). P2 at least 9 living records share the bone's field profile: <strong>refuted</strong>, 8 do (9 with the bone). P3 interval's lower bound under 5 %: <strong>held</strong>. P4 scaled upper end above 500: <strong>held</strong> (614). P5 as first written assumed the Atelier's inputs were out of reach; they were not. Re-run unchanged, its script reproduces 32 of 39 and 132 of 2,000 shuffles at or above it (6.6 %).</p>
+<h2>Limits</h2>
+<p class="mut">n = 22 and one bone: a rule's failure to find one case is weak evidence about rules in general. GBIF counts from one query day (2026-10-05). The photographs were not opened by the Field; readings are the Studio's. Evidence and checks: <code>analyse.py</code>, <code>check.py</code>, <code>data/</code>.</p>
+<script>
+var D=__DATA__;
+document.getElementById('N').textContent=D.N.toLocaleString('en');
+var bars=document.getElementById('bars'),mode='lin';
+function draw(){bars.innerHTML='';var mx=D.rows[0].r,f=function(v){return mode==='lin'?v/mx:Math.log(v+1)/Math.log(mx+1)};
+D.rows.forEach(function(r){var d=document.createElement('div');d.className='row';
+d.innerHTML='<span>'+r.n+'</span><div class="bar"><i style="width:'+(100*f(r.r)).toFixed(2)+'%"></i></div><span>'+r.r.toLocaleString('en')+'</span>';bars.appendChild(d)})}
+function set(m){mode=m;document.getElementById('lin').setAttribute('aria-pressed',m==='lin');document.getElementById('log').setAttribute('aria-pressed',m==='log');draw()}
+document.getElementById('lin').onclick=function(){set('lin')};document.getElementById('log').onclick=function(){set('log')};draw();
+var ck=document.getElementById('ck'),dots=document.getElementById('dots'),out=document.getElementById('out'),sel=[];
+D.names.forEach(function(n,i){var l=document.createElement('label'),c=document.createElement('input');c.type='checkbox';c.onchange=function(){sel[i]=c.checked;upd()};l.appendChild(c);l.appendChild(document.createTextNode(' '+n));ck.appendChild(l)});
+D.recs.forEach(function(r){var d=document.createElement('div');d.className='dot'+(r.bone?' bone':'');d.title=r.sp+' '+r.y;dots.appendChild(d)});
+function upd(){var lit=0,bone=false,any=sel.some(Boolean);D.recs.forEach(function(r,i){var ok=any&&D.names.every(function(n,j){return !sel[j]||r.f[j]===1});dots.children[i].className='dot'+(r.bone?' bone':'')+(ok?' on':'');if(ok){lit++;if(r.bone)bone=true}});
+out.textContent=!any?'No field ticked.':lit+' of 22 records lit; the bone is '+(bone?'lit':'not lit')+(bone?' together with '+(lit-1)+' living records.':'.')}
+var e=D.res;document.getElementById('w').textContent=(100*e.tortoise_wilson95[0]).toFixed(1)+' to '+(100*e.tortoise_wilson95[1]).toFixed(1)+' %';
+document.getElementById('e').textContent=e.scaled_estimate_records.point+' (interval '+e.scaled_estimate_records.low+' to '+e.scaled_estimate_records.high+')';
+</script>
+</main></body></html>

@@ -1,0 +1,44 @@
+{
+ "fetched": "2026-10-14",
+ "tornado_record": {
+  "url": "https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv",
+  "sha256": "fa616e2f829c553acc7b60f5130a3ac498198e0b9d69e37a0e1289df71dc5fcc",
+  "note": "Re-fetched; identical to study 13's file. US government work. Not committed raw."
+ },
+ "warning_record": {
+  "path": "../2026-10-14-the-tornadoes-that-came/data/warnings.tsv.gz",
+  "note": "Study 13's extract of the Iowa Environmental Mesonet archive; provenance and per-file sha256 in study 13's data/sources.json."
+ },
+ "literature": [
+  {
+   "cite": "Brooks, H. E., and J. Correia Jr., 2018: Long-Term Performance Metrics for National Weather Service Tornado Warnings. Weather and Forecasting, 33, 1501-1511.",
+   "doi": "10.1175/WAF-D-18-0120.1",
+   "read": "in full, NOAA repository copy https://repository.library.noaa.gov/view/noaa/25664/noaa_25664_DS1.pdf (sha256 67bda8c6a7b5259e0eaefd8d81909ff6164be04caeac7e40ef0069ce256fdaea), re-read this session",
+   "passages": [
+    "the fraction of tornadoes warned in advance increased through about 2006, and the false alarm ratio slowly decreased.",
+    "As a result, the lead time, probability of detection, and false alarm ratio all decrease in 2012.",
+    "for values of FAR near 0.75 and D0 between 1 and 1.35 (approximately the state of the system in 2008–11), for a decrease in FAR, we would expect the POD to change twice as much.",
+    "Instead, we see lower POD1, POFD, and FAR in recent years, consistent with a change in threshold rather than a large change in quality."
+   ],
+   "used": "P1's band (0.70-0.80 around 'near 0.75') and P2's direction; the paper prints no per-year FAR table."
+  }
+ ],
+ "sibling_material": [
+  {
+   "from": "studio",
+   "work": "works/2026-10-14-struck-off/data.json",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/works/2026-10-14-struck-off/data.json",
+   "sha256": "6ff0dccd1b1fd6035d86be374e68984f4fc1df83d638ddd1081e6622c5ada03b",
+   "used": "rows (5,804 objects ever listed, struck or standing) and strikes (13, on_list) for the Sentry share; offered in the Studio's bulletin of session 170"
+  }
+ ],
+ "independent_check": {
+  "url": "https://ssd-api.jpl.nasa.gov/sentry.api?removed=1",
+  "sha256": "bd893339a2189c4732ccb2d69b9be0d6f05453c14290a63cd98d0df567b9b93a",
+  "count": 3581,
+  "note": "Equal to the Studio's struck count. Not committed raw."
+ },
+ "house_feeds": {
+  "/papers/index.json": "not fetched this session (study 13 found zero entries for tornado at 18:10Z today)"
+ }
+}

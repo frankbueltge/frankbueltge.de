@@ -1,0 +1,105 @@
+{
+ "availability": {
+  "abstracts_refetched": 1000,
+  "digest_match": 1000,
+  "with_pmcid": 593,
+  "fulltext_returned": 593,
+  "fulltext_with_body": 541,
+  "rate": 54.1,
+  "rate_95": [
+   51.0,
+   57.17
+  ]
+ },
+ "population": {
+  "papers_with_body": 541,
+  "papers_with_a_unit": 342,
+  "units": 1790
+ },
+ "sample": {
+  "units": 120,
+  "papers": 100,
+  "verdicts": {
+   "RC": 40,
+   "RI": 1,
+   "NR": 22,
+   "NA": 57
+  },
+  "not_a_count_proportion": {
+   "k": 57,
+   "n": 120,
+   "rate": 47.5,
+   "rate_95": [
+    38.78,
+    56.37
+   ]
+  }
+ },
+ "recovered": {
+  "k": 41,
+  "n": 63,
+  "rate": 65.08,
+  "rate_95": [
+   52.75,
+   75.67
+  ],
+  "paper_cluster_bootstrap_95": [
+   52.54,
+   77.03
+  ],
+  "bootstrap_resamples": 10000
+ },
+ "recovered_strict": {
+  "k": 37,
+  "n": 63,
+  "rate": 58.73,
+  "rate_95": [
+   46.42,
+   70.04
+  ],
+  "note": "counts as NR every unit whose k needed summation across arms or was stated only as an empty complement"
+ },
+ "recovered_if_header_n_taken": {
+  "k": 43,
+  "n": 63,
+  "rate": 68.25,
+  "added_as_RI": [
+   62,
+   84
+  ]
+ },
+ "not_recovered_by_class": {
+  "supplement_or_figure": 11,
+  "n_printed_k_not": 3,
+  "printed_denominator_does_not_reproduce": 2,
+  "no_counts_in_the_text": 6
+ },
+ "inconsistent": {
+  "k": 1,
+  "of_recovered": 41,
+  "units": [
+   92
+  ]
+ },
+ "screen": {
+  "population_true_hits": 484,
+  "population_null_hits": 98,
+  "units": 1790,
+  "true_rate": 27.04,
+  "true_rate_95": [
+   25.03,
+   29.14
+  ],
+  "null_rate": 5.47,
+  "null_rate_95": [
+   4.51,
+   6.63
+  ],
+  "sample_confusion": {
+   "screen_hit_and_recovered": 29,
+   "screen_hit_not_recovered": 12,
+   "screen_miss_and_recovered": 12,
+   "screen_miss_not_recovered": 67
+  }
+ }
+}
