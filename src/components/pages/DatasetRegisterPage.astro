@@ -64,9 +64,10 @@ const fold = 'fold-chevron inline-block'
     <p class={cn(kicker, 'mb-2')}>Dataset Register</p>
     <h1 class="text-h1 font-semibold">Dataset Register</h1>
     <p class="mt-4 text-body text-fg-muted">
-      The public data this ecology's own works actually retrieve. Every entry names the
-      work that fetches it and the file the call is written in — and states how far the
-      access route was confirmed when it was last asked.
+      The public data this lab's own pipelines and the practices' works actually retrieve,
+      and the datasets the practices cite by DOI. Every entry names who uses it and the
+      file the call or citation is written in — and states how far the access route was
+      confirmed when it was last asked.
     </p>
     <p class="mt-3 text-body text-fg-muted">
       The register does not collect what exists. It reads what runs. A call in the source
@@ -174,11 +175,13 @@ const fold = 'fold-chevron inline-block'
 
           <details class="mt-3 border-t border-line pt-2">
             <summary class="cursor-pointer font-mono text-mono-sm text-fg-faint hover:text-fg">
-              <span class={fold}>▾</span> admitted because a work of this ecology retrieves it
+              <span class={fold}>▾</span> {e.aufnahmegrund === 'zitiert'
+                ? 'admitted because a practice cites it as a dataset'
+                : 'admitted because a work of this ecology retrieves it'}
             </summary>
             <ul class="mt-2 space-y-1 font-mono text-mono-sm text-fg-faint">
-              {e.fundstellen.map((f) => <li>call written in {f}</li>)}
-              {e.adressen.map((a) => <li class="break-all">fetches {a}</li>)}
+              {e.fundstellen.map((f) => <li>{e.aufnahmegrund === 'zitiert' ? 'cited in' : 'call written in'} {f}</li>)}
+              {e.adressen.map((a) => <li class="break-all">{e.aufnahmegrund === 'zitiert' ? 'resolves at' : 'fetches'} {a}</li>)}
               {e.pruef_vermerk && <li>note: {e.pruef_vermerk}</li>}
             </ul>
           </details>

@@ -94,11 +94,12 @@ jobs:
       - name: Dataset Register bauen
         run: |
           set -euo pipefail
-          # Liest die eigenen Pipelines und prüft die Datenquellen, die sie abrufen.
-          # Braucht keine Praxis-Klone und keinen Schlüssel — die Belege stehen im
-          # eigenen Repo. Der Lauf ist zugleich eine tägliche Erreichbarkeitsprüfung:
+          # Liest die eigenen Pipelines und die Werke der Praxen und prüft die
+          # Datenquellen, die sie abrufen. Kein Schlüssel. Der Lauf ist zugleich eine tägliche Erreichbarkeitsprüfung:
           # Eine Quelle, die verstummt, ist ein Befund über ein laufendes Werk.
-          python -m atlas_scout.holdings --wurzel . | tee -a lauf.log
+          # Since 2026-11-04 also the practices' works (the clones above) and the datasets
+          # they cite by DOI (DataCite) — before, only the site's own pipelines were read.
+          python -m atlas_scout.holdings --wurzel . --repos ../praxen | tee -a lauf.log
 
       - name: Zusammenfassung
         if: always()

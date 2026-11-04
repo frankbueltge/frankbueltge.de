@@ -147,6 +147,125 @@ def sammle(wurzel: Path) -> tuple[list[Quelle], list[str]]:
     return quellen, vermerke
 
 
+# ── The practices' works (since 2026-11-04) ──────────────────────────────────────────
+#
+# Until this day the register read only the site's own pipelines. Frank asked whether
+# everything the practices use was in the catalogues (2026-11-04, wording private); measured
+# that day, the works of the practices and the lab's other houses fetched 86 public data
+# sources the register did not hold — GBIF, the National Weather Service, NASA JPL's
+# small-body API, HDX, FEWS NET, USGS water services, Eurostat, seismic FDSN services.
+#
+# A practice repository is not a pipeline directory: its code links documentation, papers,
+# artists' pages and examples far more often than it fetches data (over 800 hosts in the
+# same code). So the reading is narrower here than for the site's own pipelines, by two
+# conditions that must both hold:
+#
+#   1. Where: a code file of the practice (comment lines skipped) or a file in which a work
+#      declares what it fetched (`sources*.json`, `SOURCES.md`, `DATA.md`, `datasets.json`,
+#      and the `data_sources` field of a work's `meta.json` — the declaration the practices'
+#      constitutions ask for since 2026-11-04).
+#   2. What: the address has the shape of data — an API or query endpoint, a data host, a
+#      download of a data file — rather than the shape of a page to read.
+#
+# What the conditions drop is not lost: papers go to the paper catalogue, and a page a work
+# read is a reading, not a dataset.
+
+PRAXIS_CODE = (".py", ".mjs", ".js", ".ts", ".sh")
+PRAXIS_ERKLAERUNG = re.compile(r"^(sources?[\w-]*\.json|SOURCES\.md|DATA\.md|datasets\.json)$", re.I)
+PRAXIS_UEBERSPRUNGEN = frozenset(
+    {".git", "node_modules", "__pycache__", ".venv", "dist", "build", ".astro", "vendor",
+     "vendored", "tests", "test", "fixtures", "archive"}
+)
+# The shape of data. A host label that names a data service (`api.`, `bills-api.`, `data.`,
+# `opendata.`, `catalog.` …), a path that names an endpoint (`/api/`, `/tap/`, `/fdsnws/`,
+# `/sparql`, `/graphql` …), or a file a work downloads as data.
+MUSTER_DATENFORM = re.compile(
+    r"^https?://(?:[\w-]+\.)*(?:[\w]+-)?(?:api|data|opendata|catalog|catalogue|dataverse|"
+    r"tap\w*|dumps|download|ftp|stats?|waterservices)(?:-[\w-]+)?\."
+    r"|/api/|/apis/|/rest/|/tap/|/sparql|/interpreter|/fdsnws/|/odata/|/graphql|/download"
+    r"|/datasets?/|/data/|/opendata|/query\b"
+    r"|\.(?:csv|tsv|json|jsonl|geojson|zip|gz|zst|xlsx?|nc|parquet|ndjson|pgn|dat|txt)(?:[?#]|$)",
+    re.I,
+)
+# Addresses that have that shape and are still not data: tooling and infrastructure files.
+MUSTER_KEINE_DATEN = re.compile(
+    r"robots\.txt|sitemap|pythonhosted|jsdelivr|unpkg|cdnjs|cran\.r-project|\.pdf(?:[?#]|$)"
+    r"|/wiki/|fonts\.|tiles?\.|/tile/|example|\.invalid|localhost|anthropic|openai|tavily"
+    r"|rfc-editor|/licenses?/",
+    re.I,
+)
+KOMMENTARZEILE = re.compile(r"^\s*(?:#|//|\*|/\*)")
+
+
+def _praxis_texte(pfad: Path, roh: str) -> list[str]:
+    """The lines of a practice file that can hold a fetched address."""
+    if pfad.name == "meta.json":
+        try:
+            daten = json.loads(roh)
+        except (json.JSONDecodeError, RecursionError):
+            return []
+        erklaert = daten.get("data_sources") if isinstance(daten, dict) else None
+        return [json.dumps(erklaert)] if erklaert else []
+    if pfad.suffix in PRAXIS_CODE:
+        return [z for z in roh.splitlines() if not KOMMENTARZEILE.match(z)]
+    return roh.splitlines()
+
+
+def sammle_praxen(
+    repos: Path, praxen: dict[str, str] | None = None
+) -> tuple[list[Quelle], list[str]]:
+    """Reads the practice repositories under `repos` and returns the data sources their
+    works fetch. Each Bezug names the practice as the work and `<repo>/<path>` as the
+    evidence. Returns (sources, notes); a missing repository is a note, never silence."""
+    from .praxen import FREMDES_MATERIAL, PRAXEN
+
+    gefunden: dict[str, list[Bezug]] = {}
+    vermerke: list[str] = []
+    for praxis, repo_name in (praxen or PRAXEN).items():
+        repo = repos / repo_name
+        if not repo.is_dir():
+            vermerke.append(f"{repo_name}: nicht gefunden — Ausfall, nicht leer")
+            continue
+        for pfad in sorted(repo.rglob("*")):
+            relativ = pfad.relative_to(repo)
+            if PRAXIS_UEBERSPRUNGEN & set(relativ.parts) or not pfad.is_file():
+                continue
+            if relativ.parts and relativ.parts[0] in FREMDES_MATERIAL.get(repo_name, ()):
+                continue
+            erklaerung = PRAXIS_ERKLAERUNG.match(pfad.name) or pfad.name == "meta.json"
+            if not erklaerung and (pfad.suffix not in PRAXIS_CODE or ".min." in pfad.name):
+                continue
+            if "test" in pfad.name:
+                continue
+            try:
+                roh = pfad.read_text(encoding="utf-8", errors="ignore")
+            except OSError:
+                continue
+            if len(roh) > 500_000:  # a bundled library or a data dump, not a work's code
+                continue
+            for zeile in _praxis_texte(pfad, roh):
+                for url in MUSTER_URL.findall(zeile):
+                    host = url.split("/")[2].lower()
+                    if any(a in host for a in KEINE_QUELLE + GEHOERT_ZU_PAPERS):
+                        continue
+                    if MUSTER_KEINE_DATEN.search(url) or not MUSTER_DATENFORM.search(url):
+                        continue
+                    gefunden.setdefault(host, []).append(
+                        Bezug(werk=praxis, datei=f"{repo_name}/{relativ}", url=url)
+                    )
+    quellen = [Quelle(host=h, bezuege=tuple(b)) for h, b in sorted(gefunden.items())]
+    return quellen, vermerke
+
+
+def vereinige(*listen: list[Quelle]) -> list[Quelle]:
+    """One source per host across the site's pipelines and the practices' works."""
+    je_host: dict[str, list[Bezug]] = {}
+    for liste in listen:
+        for quelle in liste:
+            je_host.setdefault(quelle.host, []).extend(quelle.bezuege)
+    return [Quelle(host=h, bezuege=tuple(dict.fromkeys(b))) for h, b in sorted(je_host.items())]
+
+
 # ── Vom Abruf zum Registereintrag ────────────────────────────────────────────────────
 
 import html  # noqa: E402
@@ -173,6 +292,19 @@ def _seitentitel(text: str) -> str:
     return re.sub(r"\s+", " ", titel).strip()[:180]
 
 
+# The practices and houses as the register names them in a sentence.
+PRAXIS_NAMEN = {
+    "atelier": "the Atelier", "field": "the Field", "studio": "the Studio",
+    "meridian": "Meridian", "nightly": "the nightly line", "attention": "Machine Attention",
+    "middle": "the Middle", "n-1": "n-1", "arch": "Arch",
+    "observatory": "The State Before the Interface",
+}
+
+
+def _liste(namen: list[str]) -> str:
+    return namen[0] if len(namen) == 1 else ", ".join(namen[:-1]) + f" and {namen[-1]}"
+
+
 def _gebrauchsbeleg(quelle: Quelle) -> str:
     """Der Satz, der sagt, DASS diese Quelle zählt: Welches Werk holt sie, und wo steht das.
 
@@ -180,9 +312,14 @@ def _gebrauchsbeleg(quelle: Quelle) -> str:
     das einmal gelesen"; ein Abruf im Quelltext einer laufenden Pipeline sagt „das läuft
     jede Nacht". Die Begründung ist damit nicht bloß behauptet, sondern in Betrieb.
     """
-    werke = list(quelle.werke)
-    liste = werke[0] if len(werke) == 1 else ", ".join(werke[:-1]) + f" and {werke[-1]}"
-    return f"Retrieved by this ecology's own {liste} pipeline on every run."
+    werke = [w for w in quelle.werke if w not in PRAXIS_NAMEN]
+    praxen = [PRAXIS_NAMEN[w] for w in quelle.werke if w in PRAXIS_NAMEN]
+    saetze = []
+    if werke:
+        saetze.append(f"Retrieved by this ecology's own {_liste(werke)} pipeline on every run.")
+    if praxen:
+        saetze.append(f"Fetched in the works of {_liste(praxen)}.")
+    return " ".join(saetze)
 
 
 def baue_register(quellen: list[Quelle], *, grenze: int | None = None) -> list[dict]:
@@ -249,6 +386,123 @@ def baue_register(quellen: list[Quelle], *, grenze: int | None = None) -> list[d
                 "verify_status": "toVerify",
             })
     return eintraege
+
+
+# ── Datasets the practices cite by DOI (since 2026-11-04) ────────────────────────────
+#
+# The second gap measured on 2026-11-04: practices cite datasets by DOI (Zenodo, GBIF,
+# Harvard Dataverse, the British Geological Survey's seismic network …) — at least 22 such
+# identifiers in prose and work files, none in the register. A DOI does not say what it
+# names; its registration agency and the agency's own record do. So: every DOI the
+# practices cite (the same seed the paper catalogue reads) is grouped by prefix, each prefix
+# asked once which agency registers it (doi.org/ra), and only DataCite DOIs are looked up
+# in DataCite. A DOI enters the register only when DataCite itself types it as a Dataset —
+# never because its prefix looks like a repository.
+
+DOI_RA = "https://doi.org/ra/"
+DATACITE = "https://api.datacite.org/dois/"
+DATENSATZ_TYPEN = frozenset({"Dataset"})
+PAUSE_DOI = 0.2
+
+
+def _doi_id(doi: str) -> str:
+    return "doi-" + re.sub(r"[^a-z0-9]+", "-", doi.lower()).strip("-")
+
+
+def baue_doi_eintraege(
+    repos: Path, vorher: list[dict] | None = None
+) -> tuple[list[dict], list[str]]:
+    """Register entries for the DataCite datasets the practices cite. An entry the committed
+    register already holds is carried with fresh evidence of use and no new lookup."""
+    from .praxen import sammle as sammle_saat
+
+    saat = sammle_saat(repos)
+    frueher = {e.get("id"): e for e in (vorher or []) if isinstance(e, dict)}
+    vermerke: list[str] = []
+    eintraege: list[dict] = []
+    koerner = [k for k in saat.koerner if k.art == "doi"]
+    agentur: dict[str, str | None] = {}
+
+    with httpx.Client(follow_redirects=True, headers=KOPF, timeout=20.0) as client:
+        for korn in koerner:
+            doi = korn.kennung.rstrip("*.")
+            eid = _doi_id(doi)
+            beleg = {
+                "fundstellen": sorted({f"{f.repo}/{f.datei}" for f in korn.fundstellen}),
+                "benutzt_von": list(korn.praxen),
+            }
+            titel = (frueher.get(eid) or {}).get("titel")
+            if not titel:
+                titel = _datacite_datensatz(client, doi, agentur, vermerke)
+                if not titel:
+                    continue
+            adresse = f"https://doi.org/{doi}"
+            # Probed on every run like every other entry: the date the register stamps is
+            # the date of a probe that happened.
+            befund = pruefe(adresse, client)
+            status = befund.status
+            eintraege.append({
+                "id": eid,
+                "titel": titel,
+                "host": "doi.org",
+                "adressen": [adresse],
+                "zugriff_url": adresse,
+                "geprueft": bool(befund.aufgeloest),
+                "pruef_status": status,
+                "pruef_vermerk": (
+                    f"Zugang erfordert Anmeldung oder Schlüssel (HTTP {status})"
+                    if status in (401, 403) else befund.vermerk
+                ),
+                "zugang_gesperrt": status in (401, 403),
+                "nur_vorlage": False,
+                "relevanz": _doi_beleg(korn),
+                "relevanz_herkunft": "gebrauch",
+                "weg": "praxis",
+                "aufnahmegrund": "zitiert",
+                **beleg,
+                "verify_status": "toVerify",
+            })
+    return eintraege, vermerke
+
+
+def _datacite_datensatz(
+    client: httpx.Client, doi: str, agentur: dict[str, str | None], vermerke: list[str]
+) -> str | None:
+    """The DataCite title of `doi` if DataCite registers it and types it as a Dataset; the
+    DOI itself when such a record has no title; None for anything else."""
+    praefix = doi.split("/")[0]
+    if praefix not in agentur:
+        try:
+            antwort = client.get(DOI_RA + praefix)
+            daten = antwort.json() if antwort.status_code == 200 else []
+            agentur[praefix] = (daten[0] or {}).get("RA") if daten else None
+        except (httpx.HTTPError, ValueError, IndexError, AttributeError):
+            agentur[praefix] = None
+            vermerke.append(f"Agentur für {praefix} nicht erfragbar — Ausfall")
+        time.sleep(PAUSE_DOI)
+    if agentur[praefix] != "DataCite":
+        return None
+    try:
+        antwort = client.get(DATACITE + doi)
+    except httpx.HTTPError as fehler:
+        vermerke.append(f"DataCite {doi}: {type(fehler).__name__} — Ausfall")
+        return None
+    time.sleep(PAUSE_DOI)
+    if antwort.status_code != 200:
+        if antwort.status_code != 404:
+            vermerke.append(f"DataCite {doi}: HTTP {antwort.status_code} — Ausfall")
+        return None
+    attr = ((antwort.json() or {}).get("data") or {}).get("attributes") or {}
+    if (attr.get("types") or {}).get("resourceTypeGeneral") not in DATENSATZ_TYPEN:
+        return None
+    titel = next((t.get("title") for t in attr.get("titles") or [] if t.get("title")), "")
+    # Without a recorded title the DOI stands — never a name made up for it.
+    return re.sub(r"\s+", " ", titel).strip()[:180] or doi
+
+
+def _doi_beleg(korn) -> str:
+    namen = [PRAXIS_NAMEN.get(p, p) for p in korn.praxen]
+    return f"Cited as a dataset (DataCite: Dataset) by {_liste(namen)}."
 
 
 # ── The dates the register carries (since 2026-10-05) ────────────────────────────────
@@ -340,6 +594,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--wurzel", type=Path, default=Path("."))
     parser.add_argument("--grenze", type=int, default=None)
+    parser.add_argument(
+        "--repos", type=Path, default=None,
+        help="directory holding the practice repositories side by side (since 2026-11-04)",
+    )
     args = parser.parse_args(argv)
     # The run day, read once before the probe pass: the date every probe of this run carries.
     today = datetime.now(timezone.utc).date().isoformat()
@@ -348,6 +606,13 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Datenquellen in den Werken: {len(quellen)}")
     for v in vermerke[:8]:
         print(f"   {v}")
+    if args.repos:
+        aus_praxen, praxis_vermerke = sammle_praxen(args.repos)
+        print(f"Datenquellen in den Werken der Praxen: {len(aus_praxen)}")
+        for v in praxis_vermerke:
+            print(f"   {v}")
+        quellen = vereinige(quellen, aus_praxen)
+        print(f"zusammen: {len(quellen)} Quellen")
 
     eintraege = baue_register(quellen, grenze=args.grenze)
     erreichbar = sum(1 for e in eintraege if e["geprueft"])
@@ -360,6 +625,15 @@ def main(argv: list[str] | None = None) -> int:
     vorher_liste: list[dict] | None = None
     if ziel.is_file():
         vorher_liste = json.loads(ziel.read_text(encoding="utf-8"))
+
+    if args.repos:
+        doi_eintraege, doi_vermerke = baue_doi_eintraege(args.repos, vorher_liste)
+        print(f"zitierte Datensätze (DataCite): {len(doi_eintraege)}")
+        for v in doi_vermerke:
+            print(f"   {v}")
+        eintraege += doi_eintraege
+
+    if vorher_liste is not None:
         alt = {e["id"]: e for e in vorher_liste}
         bewahrt = 0
         for e in eintraege:
