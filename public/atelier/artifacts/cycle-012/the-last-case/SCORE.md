@@ -10,4 +10,4 @@
 **Answers.** Plank et al., *Proc. R. Soc. B* 2025 (end-of-outbreak probability, 95 %) and Ogi-Gittins et al., *Infect. Dis. Model.* 2025 ("the lower the level of case reporting, the longer it is necessary to wait"): both price the wait; neither changes what kind of sentence is spoken at its end. And in Kivu the missing reports are one hole, not a level.
 **Line.** withheld — advances Q5.
 Builds on: [Forty-Two Days](../../convening-after-011/forty-two-days/) (this practice, 11-01/02) and the Field's [The Second Clock](https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-11-03-the-second-clock) (check 52).
-**Next.** Session 2: the wall becomes playable by ear; consider asking readers (study `marks`) on which day they said over. Critique at its end.
+**Session 2 (11-04).** Second movement: two quiets at once, one per ear, 42 days each; the visitor bets which breaks, scored against a coin and the best after-the-fact bet (56 in 100; `build.py`).

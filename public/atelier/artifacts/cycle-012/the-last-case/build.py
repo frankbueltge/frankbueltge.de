@@ -61,6 +61,11 @@ for T in (42, 49, 63, 90):
     over = [q for q in Q if len(q["k"]) >= T]
     F["wait"][T] = {"over": len(over), "brokeAfter": sum(q["b"] for q in over)}
 assert F["wait"][42] == {"over": 82, "brokeAfter": 43}
+# The second movement (pair.js) bets on one broke against one held: every such pair, and the best
+# simple bet on the first 42 days, which pair.js states as "56 in 100" (found after the fact)
+F["pairs"] = len(B) * len(H)
+assert F["pairs"] == 1677
+assert round(max(F["auc"]["named"], 1 - F["auc"]["named"], F["auc"]["silent"], 1 - F["auc"]["silent"]) * 100) == 56
 for k, v in F.items():
     print(k, v)
 here = os.path.dirname(os.path.abspath(__file__))

@@ -9,7 +9,7 @@
 </head>
 <body>
 <main>
-<div class="kick">THE ATELIER · CYCLE 012 · FIRST STATE · 2026-11-03</div>
+<div class="kick">THE ATELIER · CYCLE 012 · SECOND STATE · 2026-11-04</div>
 <h1>The Last Case</h1>
 <p class="lede">A health zone in eastern Congo has just written a new confirmed case of Ebola, and then nothing more. From here, every beat is one day. A clear tick: that day's report named the zone and had nothing new. A dull tick: a report came out and did not name it. Silence: no report at all. <b>When you are sure the zone has gone quiet, say so.</b></p>
 
@@ -43,11 +43,28 @@
   <p class="legend" id="walllegend">All 82 quiets of both records, as a listener heard their first 120 days, in a fixed shuffled order. Your median day is the line. Can you tell, before you tick the box, which ones will break?</p>
 </section>
 
+<section id="pair">
+  <h2>Which one breaks?</h2>
+  <p class="lede small">Now the other way round. Two quiets at once, the first 42 days of each: one in your left ear and the upper row, one in your right ear and the lower row. One of the two later wrote a new case; the other did not. Listen, then bet which.</p>
+  <div class="top"><div class="count"><span id="pday">0</span><small>days, both</small></div><div class="tally" id="pscore">Nothing heard yet.</div></div>
+  <div class="plabel">left</div><canvas id="pa" aria-label="The left quiet, first 42 days"></canvas><div class="pout" id="oa" aria-live="polite"></div>
+  <div class="plabel">right</div><canvas id="pb" aria-label="The right quiet, first 42 days"></canvas><div class="pout" id="ob" aria-live="polite"></div>
+  <div class="controls">
+    <button id="pgo" class="primary">Listen to a pair</button>
+    <button id="pA" hidden disabled>The left one breaks</button>
+    <button id="pB" hidden disabled>The right one breaks</button>
+    <label><input type="checkbox" id="psnd" checked> sound</label>
+    <label>pace <select id="ppace"><option value="5">slow</option><option value="9" selected>steady</option><option value="16">fast</option></select></label>
+  </div>
+  <p id="pverdict" class="verdict" aria-live="polite"></p>
+</section>
+
 <section class="text">
 <h2>What this tries</h2>
 <p>To say a zone is quiet is to say something about a case: that the last one has been. But which case was the last is not written on the day it happens. Robert Northcott, summarising the philosopher Arthur Danto: <q>Danto defines a narrative sentence to be a description of an event that includes reference to later events.</q> “The last case” is such a sentence. Only what comes after can make it true. A declaration of the end speaks it in the present tense, and can do so only by a rule about waiting.</p>
 <p>The field's current answer is to price the wait. Plank and colleagues (<i>Proc. R. Soc. B</i> 292, 2025) estimate the probability that no further case will come, allowing for reporting that is late and incomplete, and suggest using the day it passes 95 % alongside other evidence. Ogi-Gittins and colleagues (<i>Infectious Disease Modelling</i> 10, 2025), on the Ebola outbreak in Équateur in 2018: <q>the lower the level of case reporting, the longer it is necessary to wait.</q> Both make the wait honest. Neither changes what kind of sentence is spoken at its end. The probability is a stated price for speaking a narrative sentence early, and the threshold is a choice about risk, not a reading of the zone.</p>
 <p>The Field's second record shows where the prescription “wait longer” stops working. In Kivu, 2018 to 2020, the missing reports are not a level but one hole of 94 days, and a longer wait fills the hole with silence (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-11-03-the-second-clock">check 52</a>). You can hear that hole above, if a Kivu quiet from early 2020 comes up: it is the long silence.</p>
+<p><b>Why the second movement.</b> A bet on which of two quiets will break is a prediction, and a prediction can be scored on the day it is made. A declaration that the last case has been cannot. The pairs let you try to turn the one into the other: if the first 42 days held the answer, a careful listener could hear it there and the declaration would stop being a narrative sentence. On this record you cannot, and the best simple bet that can be found is found by counting the outcomes first.</p>
 <p><b>What the listening could not hear.</b> <span id="auc"></span></p>
 </section>
 
@@ -60,5 +77,6 @@
 </section>
 </main>
 <script src="last.js"></script>
+<script src="pair.js"></script>
 </body>
 </html>
