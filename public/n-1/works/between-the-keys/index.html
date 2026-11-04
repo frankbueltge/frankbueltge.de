@@ -3590,7 +3590,7 @@
   }
   function freq(cell) { return 440 * Math.pow(2, (cell - 50 + 0.5) / 1200); }
   window.__betweenTheKeys = { strike: strike, freq: freq };
-  var ctx = null, master = null, forkGain = null, forkOsc = null, timer = null, events = [], ei = 0, t0 = 0;
+  var ctx = null, out = null, master = null, forkGain = null, forkOsc = null, timer = null, events = [], ei = 0, t0 = 0;
   var now = document.getElementById('now'), rows = document.querySelectorAll('.rb');
   function plan(from) {
     var ev = [], t = 0;
@@ -3618,22 +3618,60 @@
       strike(ctx, master, at, e.f, e.a);
     }
   }
+  // iOS Safari (reported 2026-11-04: Play did nothing on an iPhone): Web Audio there is muted by the ring/silent switch unless
+  // the page asks for media playback, a context must be resumed inside the tap itself, and a page may only hold a few contexts.
+  // So: one context for the page, made and resumed inside the tap, the audio session set to playback where Safari offers it
+  // (iOS 16.4+), and on older iOS a silent looping media element started in the same tap, which moves Web Audio to playback.
+  var IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var hush = null;
+  function silentWav() {
+    var n = 4410, b = new ArrayBuffer(44 + n * 2), v = new DataView(b), s = 'RIFF____WAVEfmt ____________________data';
+    for (var i = 0; i < 40; i++) v.setUint8(i, s.charCodeAt(i));
+    v.setUint32(4, 36 + n * 2, true); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, 44100, true); v.setUint32(28, 88200, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+    v.setUint32(40, n * 2, true);
+    var bin = '', u = new Uint8Array(b);
+    for (var j = 0; j < u.length; j++) bin += String.fromCharCode(u[j]);
+    return 'data:audio/wav;base64,' + btoa(bin);
+  }
+  function unlock() {
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+    if (IOS && !navigator.audioSession) {
+      try {
+        if (!hush) { hush = document.createElement('audio'); hush.setAttribute('x-webkit-airplay', 'deny'); hush.loop = true; hush.src = silentWav(); }
+        var pr = hush.play(); if (pr && pr.catch) pr.catch(function () {});
+      } catch (e) {}
+    }
+    if (ctx.state !== 'running' && ctx.resume) { var r = ctx.resume(); if (r && r.catch) r.catch(function () {}); }
+    var buf = ctx.createBuffer(1, 1, 22050), src = ctx.createBufferSource();
+    src.buffer = buf; src.connect(ctx.destination); src.start(0);
+  }
   function start(from) {
     stop();
     var AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) { now.textContent = 'This browser cannot play sound; the rows and the table hold the same count.'; return; }
-    ctx = new AC();
-    var comp = ctx.createDynamicsCompressor(); comp.connect(ctx.destination);
-    master = ctx.createGain(); master.gain.value = 0.9; master.connect(comp);
+    if (!ctx) {
+      ctx = new AC();
+      var comp = ctx.createDynamicsCompressor(); comp.connect(ctx.destination); out = comp;
+    }
+    unlock();
+    master = ctx.createGain(); master.gain.value = 0.9; master.connect(out);
     forkOsc = ctx.createOscillator(); forkOsc.frequency.value = 440; forkGain = ctx.createGain();
     forkGain.gain.value = document.getElementById('fork').checked ? 0.06 : 0;
-    forkOsc.connect(forkGain); forkGain.connect(comp); forkOsc.start();
+    forkOsc.connect(forkGain); forkGain.connect(out); forkOsc.start();
     events = plan(from); ei = 0; t0 = ctx.currentTime + 0.15;
     timer = setInterval(tick, 100); tick();
+    var c = ctx;
+    setTimeout(function () {
+      if (c === ctx && timer && c.state !== 'running') now.textContent = 'The browser is holding the sound back; press Play once more.';
+    }, 1200);
   }
   function stop() {
     if (timer) { clearInterval(timer); timer = null; }
-    if (ctx) { try { ctx.close(); } catch (e) {} ctx = null; }
+    if (forkOsc) { try { forkOsc.stop(); } catch (e) {} forkOsc.disconnect(); forkOsc = null; }
+    if (forkGain) { forkGain.disconnect(); forkGain = null; }
+    if (master) { master.disconnect(); master = null; }
+    if (hush) hush.pause();
     for (var r = 0; r < rows.length; r++) rows[r].classList.remove('on');
   }
   document.getElementById('play').addEventListener('click', function () { start(0); });
