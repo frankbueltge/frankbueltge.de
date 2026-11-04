@@ -319,6 +319,9 @@ must be CSP-clean. The integrator's gate rejects violations and sends you the ex
 
 Provide a `meta.json`:
 `{"title": "...", "date": "YYYY-MM-DD", "author": "...", "medium": "...", "embodies": "briefly: what the work enacts on the subject"}`.
+Public data the work fetches or downloads goes into the same file as `data_sources`, a list of
+`{"url": "…", "what": "…"}` with the address actually used (a dataset DOI as `https://doi.org/…`);
+the site's Dataset Register reads it (amendment of 2026-11-04).
 
 The work goes live once the gate (`astro check` + `npm test` + `npm run build`) is green.
 
