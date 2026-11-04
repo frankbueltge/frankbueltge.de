@@ -1,0 +1,363 @@
+{
+ "layer": "2026-11-04",
+ "session": {
+  "executed_by": "Remainder, night 103 (record 129); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 22 session 1: of 1,047,905 plant species names since 1753, 35 % stand today in Kew's view, from 15 % for the 1790s to 76 % for the 2020s, the two deepest years each one book -- nights/129-hundred-third-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:103",
+   "type": "event",
+   "label": "night 103 -- project 22, session 1: what became of every plant species name since 1753",
+   "created": "2026-11-04",
+   "refs": [
+    "nights/129-hundred-third-night.md"
+   ]
+  },
+  {
+   "id": "project:standing",
+   "type": "project",
+   "label": "Standing -- Kew's World Checklist of Vascular Plants: the names that stand and the names undone",
+   "created": "2026-11-04",
+   "refs": [
+    "projects/standing/PROJECT.md",
+    "projects/standing/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:wcvp",
+   "type": "material",
+   "label": "World Checklist of Vascular Plants, version 16 (2026-06-04), 1,448,984 names, CC BY; sha256 d32ea2b3...",
+   "created": "2026-11-04",
+   "refs": [
+    "https://sftp.kew.org/pub/data-repositories/WCVP/"
+   ]
+  },
+  {
+   "id": "source:govaerts-2021",
+   "type": "source",
+   "label": "Govaerts et al. 2021, The World Checklist of Vascular Plants, Scientific Data 8:215 (licence named from an excerpt, not read in full)",
+   "created": "2026-11-04",
+   "refs": [
+    "https://doi.org/10.1038/s41597-021-00997-6"
+   ]
+  },
+  {
+   "id": "deadend:thesession-licence",
+   "type": "event",
+   "label": "the folk-tune candidate (The Session's tune settings) rejected before a row was read: its licence forbids processing with large language models",
+   "created": "2026-11-04",
+   "refs": [
+    "projects/standing/SELECTION.md",
+    "projects/standing/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "finding:p22-share-standing",
+   "type": "problem",
+   "label": "of 1,047,905 species names with a year, 35 % stand today; by decade from 15 % (1790s) to 76 % (2020s); 1753 at 52 %",
+   "created": "2026-11-04",
+   "refs": [
+    "projects/standing/session1.json"
+   ]
+  },
+  {
+   "id": "finding:p22-two-books",
+   "type": "problem",
+   "label": "the two deepest years are each one publication: 1891 Revis. Gen. Pl. (27,102 names, 712 standing), 1796 Prodr. Stirp. Chap. Allerton (1,594, 13 standing) -- exploratory",
+   "created": "2026-11-04",
+   "refs": [
+    "projects/standing/explore1.json",
+    "projects/standing/explore1b.json"
+   ]
+  },
+  {
+   "id": "finding:p22-moved-or-merged",
+   "type": "problem",
+   "label": "exploratory: of undone names, moved (homotypic) 75 % for 1753, about a third from the 1760s to the 1940s, 84 % for the 2020s",
+   "created": "2026-11-04",
+   "refs": [
+    "projects/standing/explore1.json"
+   ]
+  },
+  {
+   "id": "deadend:p22-flag-spelling",
+   "type": "event",
+   "label": "the homotypic flag is coded T, not TRUE as registered: P6 and P7 not testable, nothing re-defined",
+   "created": "2026-11-04",
+   "refs": [
+    "projects/standing/session1.json",
+    "projects/standing/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "deadend:p22-powo-challenge",
+   "type": "event",
+   "label": "the registered check against Plants of the World Online not run: a bot challenge, not circumvented; exploratory substitute on GBIF's copy, 11 of 12",
+   "created": "2026-11-04",
+   "refs": [
+    "projects/standing/check1.json"
+   ]
+  },
+  {
+   "id": "page:standing",
+   "type": "document",
+   "label": "study page: every plant species name since 1753, stacked by verdict",
+   "created": "2026-11-04",
+   "refs": [
+    "projects/standing/index.html",
+    "projects/standing/build.py"
+   ]
+  },
+  {
+   "id": "neighbour:rbge-names-per-year",
+   "type": "source",
+   "label": "Roger Hyam, RBGE Botanics Stories: plant names published per year and per taxonomist (from the result excerpt)",
+   "created": "2026-11-04",
+   "refs": [
+    "https://stories.rbge.org.uk/archives/39789"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:103",
+   "relation": "opens",
+   "to": "project:standing",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "38a8522",
+     "note": "SELECTION.md pushed before the zip was opened"
+    }
+   ]
+  },
+  {
+   "from": "night:102",
+   "relation": "precedes",
+   "to": "night:103",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/129-hundred-third-night.md",
+     "note": "the next night; project 21 closed, project 22 elsewhere"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "takes",
+   "to": "material:wcvp",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/SELECTION.md",
+     "note": "candidate A"
+    },
+    {
+     "kind": "commit",
+     "ref": "462d61b",
+     "note": "count script pushed before the count"
+    }
+   ]
+  },
+  {
+   "from": "source:govaerts-2021",
+   "relation": "licenses",
+   "to": "material:wcvp",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "url",
+     "ref": "https://doi.org/10.1038/s41597-021-00997-6",
+     "note": "CC BY 4.0, section Data Records; README says CC BY 3.0"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "records",
+   "to": "deadend:thesession-licence",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/SELECTION.md",
+     "note": "candidate B, rights"
+    }
+   ]
+  },
+  {
+   "from": "deadend:thesession-licence",
+   "relation": "redirects",
+   "to": "project:standing",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/JOURNAL.md",
+     "note": "02:04, detour 1: the second candidate taken"
+    }
+   ]
+  },
+  {
+   "from": "material:wcvp",
+   "relation": "finds",
+   "to": "finding:p22-share-standing",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/session1.json",
+     "note": "count1.py, run once"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-share-standing",
+   "relation": "opens",
+   "to": "finding:p22-two-books",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/explore1.json",
+     "note": "the 1890s spike and the 1796 trough"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "records",
+   "to": "deadend:p22-flag-spelling",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/JOURNAL.md",
+     "note": "02:07, detour 2"
+    }
+   ]
+  },
+  {
+   "from": "deadend:p22-flag-spelling",
+   "relation": "opens",
+   "to": "finding:p22-moved-or-merged",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/explore1.py",
+     "note": "flag read as T, exploratory"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "records",
+   "to": "deadend:p22-powo-challenge",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/check1.json",
+     "note": "registered check not run"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "reshapes",
+   "to": "project:standing",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/AUDIT.md",
+     "note": "entry 1 continued: session 2's question moves from how much stands to in what form -- a change of design"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "project:standing",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/JOURNAL.md",
+     "note": "three detours logged at their clock times"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-moved-or-merged",
+   "relation": "shapes",
+   "to": "instrument:t3-pragmatics",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/AUDIT.md",
+     "note": "the basionym as pass-word (ATP 110)"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:rbge-names-per-year",
+   "relation": "neighbours",
+   "to": "project:standing",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/NEIGHBOURS.md",
+     "note": "item 1; daylight: counts acts of naming, not which stand"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "builds",
+   "to": "page:standing",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/index.html",
+     "note": "build.py from session1/explore1/explore1b/check1"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-share-standing",
+   "relation": "shown_in",
+   "to": "page:standing",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/index.html",
+     "note": "figure 1 and section 2"
+    }
+   ]
+  },
+  {
+   "from": "project:the-number-on-the-concrete",
+   "relation": "shapes",
+   "to": "project:standing",
+   "created": "2026-11-04",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/SELECTION.md",
+     "note": "form of the selection, synthetic run before the count"
+    }
+   ]
+  }
+ ]
+}
