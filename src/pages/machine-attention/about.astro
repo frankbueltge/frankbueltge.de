@@ -76,7 +76,7 @@ const PROJECT_NOTE: Record<string, string> = {
   // The window opens with the first night after its build conditions are met, and the practice
   // logs that night (memoryhole-window-open); the status word `v0` says it has not happened.
   memoryhole:
-    'Asks what power changes about its own published past: one archive query per institution a night, a validity gate before a difference may mean anything, five named operations on text, and every deletion claim rechecked live before the word “gone” appears. Its acceptance criteria were committed on 2026-08-22; its fourteen-night window opens only after its build conditions are met, and it has not opened yet.',
+    'Asks what power changes about its own published past: one archive query per institution a night, a validity gate before a difference may mean anything, five named operations on text, and every deletion claim rechecked live before the word “gone” appears. Its acceptance criteria were committed on 2026-08-22; its fourteen-night window opens only after its build conditions are met, and it has not opened yet. Since 2026-10-12 its nightly readings have mostly found no sampled page (a finding of 2026-10-28, cause not established); nothing in the instrument has been changed for it.',
   'state-before-interface':
     'The instrument: quiet, nightly, reading Europe’s public procurement journal for AI notices. It may produce nothing for a long time, and that is allowed.',
   // 2026-10-04: The Foreknown's question, moved to the clock where response is measurable. Its
@@ -84,20 +84,22 @@ const PROJECT_NOTE: Record<string, string> = {
   interval:
     'The Foreknown’s question, moved to a clock where response is measurable: how long humanitarian money takes to follow a projected food crisis. Admitted to V0 on 2026-10-04 and built by the discovery pass.',
   'interval:e-experiment':
-    'The Foreknown’s question, moved to a clock where response is measurable: how long humanitarian money takes to follow a projected food crisis. Its acceptance criteria were committed before its window, and they keep it off this site until the maintainer’s review: no page, no figure, no number. Only its name and its question stand here.',
+    'The Foreknown’s question, moved to a clock where response is measurable: how long humanitarian money takes to follow a projected food crisis. Its acceptance criteria were committed before its window and are not rewritten. Until 2026-10-29 they kept it off this site beyond its name; since then its figures are drawn on the entrance from the committed records, and at the review criterion C counts as missed.',
   // The audit's line, not the exposé's: the planetary framing was withdrawn once the measurements
   // came in (2026-08-22). Its audit keeps everything beyond the name for RUNNING.
   planetary:
-    'One named site against its own public declaration and against the public catalogues. Admitted to V0 on 2026-10-04 and built by the discovery pass in tested increments. Its audit keeps it off this site, beyond its name and its question, until it runs.',
+    'One named site against its own public declaration and against the public catalogues. Admitted to V0 on 2026-10-04 and built by the discovery pass in tested increments. Its criteria were committed on 2026-10-19, before its window. Until 2026-10-29 they kept it off this site beyond its name and its question; since then its figures are drawn on the entrance from the committed records, and at the review criterion C counts as missed.',
 }
 
 // The candidates that are not admitted yet, as the discovery pass's own agenda lists them
 // (machine-attention discovery/AGENDA.md, read 2026-10-18). The Interval and Planetary
 // Listening left this shelf on 2026-10-04 and are projects in the export above; until
 // 2026-10-18 this list still called them candidates.
-const SHELF_READ = '2026-10-18'
+const SHELF_READ = '2026-11-03'
 const CANDIDATES = [
-  { name: 'The Synthetic Flood', origin: 'Consensus', line: 'how much of public language is written by machines', standing: 'audited 2026-10-18 — the audit recommends a narrow V0, which the GO of 2026-10-04 made conditional on it' },
+  { name: 'The Synthetic Flood', origin: 'Consensus', line: 'how much of public language is written by machines', standing: 'in V0 under the conditional GO of 2026-10-04, after the audit of 2026-10-18 — built in counted steps, the latest read on 2026-11-03' },
+  { name: 'The Declared Network', origin: '', line: 'how long a silent weather station stays declared', standing: 'audited 2026-10-23 — parked on the result: the register’s robots file disallows automated readers' },
+  { name: 'The Afterlife', origin: '', line: 'how long a retracted paper stays unmarked where it is found', standing: 'audited 2026-10-30 — parked on the result: one of its two registers disallows automated readers' },
   { name: 'Compute Ground', origin: 'Two Meters · The Floor · One Tap', line: 'the physical ground under the compute story', standing: 'parked — no machine-readable permit registers, and no thesis on form' },
 ]
 
@@ -287,13 +289,13 @@ const drift = figure('futures_drift')
       <p class="mb-4">
         Candidates with a written exposé that are not admitted yet, as the discovery pass&rsquo;s own
         {' '}<a href={`${REPO}/blob/main/discovery/AGENDA.md`} class="underline decoration-line underline-offset-4">agenda</a>
-        {' '}lists them on {SHELF_READ}. Each grows out of an earlier experiment of the lab.
+        {' '}lists them on {SHELF_READ}. The older ones grow out of an earlier experiment of the lab.
       </p>
       <ul class="space-y-2">
         {CANDIDATES.map((c) => (
           <li>
             <b class="text-fg">{c.name}</b> — {c.line}
-            <span class="text-fg-faint"> · origin: {c.origin}</span>
+            {c.origin && <span class="text-fg-faint"> · origin: {c.origin}</span>}
             <span class="block font-mono text-[11px] text-fg-faint">{c.standing}</span>
           </li>
         ))}
