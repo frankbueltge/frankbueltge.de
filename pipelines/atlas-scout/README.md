@@ -47,7 +47,8 @@ menschliches Urteil. Quellenausfälle stehen als `ausfaelle` im Lauf und werden 
 | **Thematischer Sweep** | Theorie | OpenAlex | `--atlas theorie --thema 10` |
 | **Werke zu einem Feld** | Werke | Rhizome ArtBase | `--atlas werke --thema 13` |
 | **Datenphysikalisierung** | Werke | dataphys.org | `--atlas werke --quelle dataphys` |
-| **Gegenwartswerke** | Werke | S+T+ARTS Prize | `--atlas werke --quelle starts` |
+| **Gegenwartswerke** | Werke | S+T+ARTS Prize (neuester Jahrgang + zwei ältere im Wechsel, seit 2026-11-04) | `--atlas werke --quelle starts` |
+| **Gegenwartswerke** | Werke | Prix Ars Electronica (Gewinnerseite, seit 2026-11-04) | `--atlas werke --quelle prix` |
 | **Externe Funde** | Werke | beliebig | `python -m atlas_scout.extern funde.json` |
 | **Aufnahme** | Werke | — | `python -m atlas_scout.aufnahme --hoechstzahl 30` |
 

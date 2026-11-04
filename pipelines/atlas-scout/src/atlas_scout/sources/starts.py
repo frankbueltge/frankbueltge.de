@@ -30,8 +30,12 @@ JAHRGANG = "https://ars.electronica.art/starts-prize/en/winners/winners{jahr}/"
 ZEITLIMIT = httpx.Timeout(120.0, connect=20.0)
 
 # * ## [Titel](URL)  /  ## Urheber (LAND)  /  Beschreibung
+# Since 2026-11-04 the bullet may also carry the work's thumbnail before the heading
+# (`*   [![Image 5: …](…jpg)](…/eden/)` on its own line, then `## [Titel](URL)`) — the form
+# the older yearbooks (2016–2023) come back in.
 EINTRAG = re.compile(
-    r"\*\s*##\s*\[(?P<titel>[^\]]+)\]\((?P<url>https?://[^)]+)\)\s*"
+    r"\*\s*(?:\[!\[[^\]]*\]\([^)]*\)\]\([^)]*\)\s*)?"
+    r"##\s*\[(?P<titel>[^\]]+)\]\((?P<url>https?://[^)]+)\)\s*"
     r"##\s*(?P<urheber>[^\n]+?)\s*"
     r"\n\s*\n\s*(?P<beschreibung>[^\n]+)",
     re.S,
@@ -112,8 +116,33 @@ def lies_jahrgang(markdown: str, jahr: int) -> list[dict]:
     return funde
 
 
-def ernte(*, jahre: tuple[int, ...] = (2026, 2025, 2024), grenze: int = 60) -> list[dict]:
+# The prize has run since 2016. Until 2026-11-04 the adapter read only 2024–2026, and once
+# those winners were in the atlas (2026-09-29) every run found nothing new: the atlas stood
+# at 523 for five weeks while the scout reported success nightly. Now the whole archive is
+# read in rotation, three yearbooks a night, so each comes round every few nights and a new
+# yearbook joins the rotation on its own.
+ERSTER_JAHRGANG = 2016
+JE_LAUF = 3
+
+
+def jahrgaenge(tag: int, jahr_jetzt: int) -> tuple[int, ...]:
+    """The yearbooks of one night: a deterministic window over all yearbooks, moved by
+    the day of the year. The newest yearbook is read every night — it is the one that can
+    still change."""
+    alle = list(range(jahr_jetzt, ERSTER_JAHRGANG - 1, -1))
+    aeltere = alle[1:]
+    start = (tag * (JE_LAUF - 1)) % len(aeltere) if aeltere else 0
+    fenster = [aeltere[(start + i) % len(aeltere)] for i in range(min(JE_LAUF - 1, len(aeltere)))]
+    return (alle[0], *fenster)
+
+
+def ernte(*, jahre: tuple[int, ...] | None = None, grenze: int = 60) -> list[dict]:
     """Rohfunde aus den Gewinnerjahrgängen des S+T+ARTS Prize."""
+    if jahre is None:
+        from datetime import datetime, timezone
+
+        heute = datetime.now(timezone.utc)
+        jahre = jahrgaenge(heute.timetuple().tm_yday, heute.year)
     seiten = _rendere([JAHRGANG.format(jahr=j) for j in jahre])
     funde: list[dict] = []
     for url, markdown in seiten.items():
