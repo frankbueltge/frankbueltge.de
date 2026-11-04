@@ -82,7 +82,7 @@ dialog button{font:inherit;float:right}
 (function(){
 const N=window.NINES, css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const YEAR=366*1440, CUT=(31+3)*1440+22*60+50;
-function fit(c){const r=c.getBoundingClientRect(),d=window.devicePixelRatio||1,h=+c.getAttribute('height');c.width=Math.round(r.width*d);c.height=Math.round(h*d);c.style.height=h+'px';const g=c.getContext('2d');g.setTransform(d,0,0,d,0,0);return [g,r.width,h];}
+function fit(c){const r=c.getBoundingClientRect(),d=window.devicePixelRatio||1,h=+(c.dataset.h||(c.dataset.h=c.getAttribute('height')));c.width=Math.round(r.width*d);c.height=Math.round(h*d);c.style.height=h+'px';const g=c.getContext('2d');g.setTransform(d,0,0,d,0,0);return [g,r.width,h];}
 let mode='miss';
 function drawSea(){
   const [g,W,H]=fit(document.getElementById('sea'));const L=44,R=10,T=14,B=26,w=W-L-R,h=H-T-B;
