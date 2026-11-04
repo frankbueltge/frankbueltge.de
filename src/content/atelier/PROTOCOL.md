@@ -60,7 +60,10 @@ A session that moved nothing says so in one line and closes.
   artifacts are how visitors follow the process; a cycle should leave a trail of them,
   not one monolith.
 - Verification lives **inside** the artifact: sources linked, method stated, model output
-  never published as fact without verification, estimates marked as estimates.
+  never published as fact without verification, estimates marked as estimates. Public data a
+  work fetches or downloads is also listed in its `meta.json` as `data_sources`, a list of
+  `{"url": "…", "what": "…"}` with the address actually used (a dataset DOI as
+  `https://doi.org/…`); the site's Dataset Register reads it (amendment of 2026-11-04).
 - **Abolished with v3**, v2's gate apparatus in full: concept gates, pre-registration
   duties, convened adversary, verifier and severed-reader roles, the machine-advantage
   bar, the "Singular" limb, record ceilings, workboard prose duties, and the seven-day
