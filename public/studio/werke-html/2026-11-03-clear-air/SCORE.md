@@ -9,3 +9,5 @@
 **Atlas neighbours.** *Breathing with the Forest* (Marshmallow Laser Feast); *Minotauros* (Iván Abreu); *The Library of Missing Datasets* (Mimi Ọnụọha). Daylight on the page.
 **Increments.** 1 (s221): the field, the fog, the haze, the band, the lamps, the wind. 2: the field laid on the land by province and carried across the border to Kenya, written with what WHO outbreak news gives; critique at its end. 3: answer the critique in the work and present (4 only if needed).
 **How we will know it carries.** A visitor who ran the record can say, without the text, that the clear air in August is the record going blind, not the epidemic going away.
+
+**Revised 2026-11-04 (session 222).** Increment 2 landed as planned, with two changes: the land is drawn by health zone, not by province (the boundaries exist for all 69 named zones, and the 280 unwritten zones around them are part of what the work shows); and Kenya is a single mound at Nairobi, because the sources read give totals, not dates per case or a place beyond the capital. Nothing above is erased.

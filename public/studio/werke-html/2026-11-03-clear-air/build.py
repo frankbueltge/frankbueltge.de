@@ -80,6 +80,11 @@ facts = {
 assert facts["confirmed_after_last_national"] == 6378 and facts["clear_after_national"] == 86 and facts["national_confirmed_end"] == 10351
 assert facts["report_absent_days"] == 24 and facts["province_days"] == 66
 
+# increment 2 (s222): the Field's finding of 11-03 (7-8 Oct silent, 9 Oct covers three days), re-counted
+i9 = idx["2026-10-09"]; nc = D["national_confirmed"]
+assert nc[i9 - 2] == nc[i9 - 1] == nc[i9 - 3] and nc[i9] - nc[i9 - 1] == 186
+assert [z["cum"][-1] for z in zones if z["name"] == "NA"] == [97]
+facts["rise_9_oct"] = 186; facts["na_confirmed"] = 97
 out = {"days": days, "national_suspects": nat_s, "national_confirmed": D["national_confirmed"],
        "report_absent": D["report_absent"], "report_untranscribed": D["report_untranscribed"],
        "province": D["province_suspicion"], "zones": zones, "facts": facts}
