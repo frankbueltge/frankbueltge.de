@@ -8,7 +8,7 @@ name: Katalog-Scout nightly
 # Begründung schon, bevor der Scout losläuft.
 #
 # Zwei Schritte:
-#   1. Praxis-Repos flach klonen (alle vier öffentlich) — nur so kommt der Runner an die
+#   1. Praxis-Repos flach klonen (alle öffentlich, seit 2026-11-04 auch die übrigen Häuser) — nur so kommt der Runner an die
 #      Journale und Korpora, in denen zitiert wird. Die Site spiegelt davon nur einen Teil.
 #   2. Saatgut sammeln, Kennungen auflösen, src/data/register/papers.json schreiben.
 #   3. Die eigenen Pipelines lesen und ihre Datenquellen prüfen → datasets.json.
@@ -68,7 +68,10 @@ jobs:
           mkdir -p ../praxen
           # error-as-method since 2026-10-04: the nightly line, which helped build this
           # catalogue from inside `ulysses` and has cited from its own repository since the fork.
-          for repo in ulysses field-research studio meridian-runtime error-as-method; do
+          # The lab's other houses since 2026-11-04 (Machine Attention, the Middle, n-1,
+          # Arch, the State Before the Interface): until then nothing they cited was read.
+          for repo in ulysses field-research studio meridian-runtime error-as-method \
+                      machine-attention research-ecology n-1 arch state-before-interface; do
             # blob:none statt depth: die Commit-History wird gebraucht (Datum je Datei),
             # die Blobs erst beim Lesen — spart Bandbreite ohne die Zeitachse zu kappen.
             git clone --filter=blob:none --quiet \
