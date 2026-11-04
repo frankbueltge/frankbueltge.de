@@ -35,7 +35,7 @@ from pathlib import Path
 import httpx
 
 from .ablehnung import ist_abgelehnt, lies_register
-from .atlas import normiere_titel, slugifiziere
+from .atlas import normiere_doi, normiere_titel, slugifiziere
 from .praxen import Saat, Saatkorn
 from .source_links import read_guard, strip_refused_links
 from .themen import THEMEN
@@ -131,15 +131,55 @@ class Ausfall:
     vermerk: str
 
 
-def _hole(client: httpx.Client, url: str, params: dict) -> dict:
+# ── Throttling (2026-11-04) ──────────────────────────────────────────────────────────
+#
+# Measured on the run of 2026-11-04: 7,760 seeds went out, and after a few hundred OpenAlex
+# and arXiv answered nearly every request with HTTP 429 for the rest of the run. The build
+# then wrote only what had resolved before the wall — so a paper that a practice still
+# cites dropped out of the catalogue on any night its turn came after the wall, and came
+# back on a night it came before. That is the churn behind "first seen 154 of 1118" that
+# day: most of those were not new, they had been away. A 429 is now waited out briefly
+# (the source's own Retry-After, capped), and after a run of throttled seeds the source
+# rests for the remainder of the run instead of being asked thousands more times. What it
+# would have answered is noted as a failure and asked again the next night.
+GEDROSSELT = 429
+DROSSEL_WIEDERHOLUNGEN = 2  # retries of one request after a 429
+DROSSEL_WARTEN_MAX = 10.0  # seconds; a longer Retry-After means the day's budget is gone
+DROSSEL_SCHWELLE = 10  # consecutive throttled seeds before the source rests for this run
+VERMERK_RUHT = "source throttled (HTTP 429) and resting for this run; asked again next run"
+
+
+def _wartezeit(antwort: httpx.Response, versuch: int) -> float:
+    """How long to wait after a 429: the source's Retry-After if it gives seconds, else a
+    short backoff — capped either way, because a long wait inside a nightly run buys
+    nothing that the next night would not give for free."""
+    angabe = (antwort.headers.get("Retry-After") or "").strip()
     try:
-        antwort = client.get(url, params=params, timeout=ZEITLIMIT)
-    except httpx.HTTPError as fehler:
-        # Keine URL in die Meldung — Vermerke landen im öffentlichen Archiv.
-        raise QuellenAusfall(f"Netzfehler: {type(fehler).__name__}") from fehler
+        sekunden = float(angabe)
+    except ValueError:
+        sekunden = 2.0 * (versuch + 1)
+    return max(0.0, min(sekunden, DROSSEL_WARTEN_MAX))
+
+
+def _frage(client: httpx.Client, url: str, params: dict) -> httpx.Response:
+    """One GET with the throttling rule above. Raises QuellenAusfall on anything but 200."""
+    for versuch in range(DROSSEL_WIEDERHOLUNGEN + 1):
+        try:
+            antwort = client.get(url, params=params, timeout=ZEITLIMIT)
+        except httpx.HTTPError as fehler:
+            # Keine URL in die Meldung — Vermerke landen im öffentlichen Archiv.
+            raise QuellenAusfall(f"Netzfehler: {type(fehler).__name__}") from fehler
+        if antwort.status_code == GEDROSSELT and versuch < DROSSEL_WIEDERHOLUNGEN:
+            time.sleep(_wartezeit(antwort, versuch))
+            continue
+        break
     if antwort.status_code != 200:
         raise QuellenAusfall(f"HTTP {antwort.status_code}")
-    return antwort.json()
+    return antwort
+
+
+def _hole(client: httpx.Client, url: str, params: dict) -> dict:
+    return _frage(client, url, params).json()
 
 
 def _felder_aus_begriffen(*texte: str) -> tuple[int, ...]:
@@ -306,14 +346,9 @@ def _loese_auf(client: httpx.Client, korn: Saatkorn) -> dict | None:
     # ME-JEPA v2.0.0-rc1 …"). Wer hier OpenAlex zuerst fragt, bekommt still ein falsches
     # Paper in den Katalog — mit korrekt aussehender Kennung.
     try:
-        antwort = client.get(
-            ARXIV, params={"id_list": korn.kennung, "max_results": 1}, timeout=ZEITLIMIT
-        )
-    except httpx.HTTPError as fehler:
-        raise QuellenAusfall(f"Netzfehler: {type(fehler).__name__}") from fehler
-    time.sleep(PAUSE_ARXIV)
-    if antwort.status_code != 200:
-        raise QuellenAusfall(f"HTTP {antwort.status_code}")
+        antwort = _frage(client, ARXIV, {"id_list": korn.kennung, "max_results": 1})
+    finally:
+        time.sleep(PAUSE_ARXIV)
     return _aus_arxiv(antwort.text)
 
 
@@ -357,27 +392,184 @@ def _gebrauchsbeleg(korn: Saatkorn) -> str:
     return f"Cited by {liste} in their own research{wann}."
 
 
+# ── Resolution memory (2026-11-04) ───────────────────────────────────────────────────
+#
+# The catalogue is rebuilt from the citations every night, and until this day every seed
+# was resolved again every night — 7,760 requests for metadata the catalogue committed the
+# night before already held. Under throttling (see above) that is what made entries drop
+# out. A seed the committed catalogue already resolved now takes its metadata from there:
+# title, authors, year, venue, address and the access check, all as resolved and checked
+# when the entry first came in. Nothing is invented by this — the metadata came from the
+# source once, and the citation that justifies the entry is re-read from the practice
+# repositories on every run exactly as before (fundstellen, zitiert_von, last use). Only
+# seeds the catalogue does not hold yet go to the network.
+
+
+def _gedaechtnisschluessel(kennung: object) -> str | None:
+    """The memory key of an identifier as the catalogue writes it: `doi:<doi>` or
+    `arxiv:<id>`. Anything else (a publisher URL in `weitere_kennungen`) is not a key."""
+    if not isinstance(kennung, str) or not kennung.strip():
+        return None
+    k = normiere_doi(kennung)
+    if k.startswith("arxiv:"):
+        return "arxiv:" + re.sub(r"v\d+$", "", k[len("arxiv:"):])
+    if k.startswith("10.") and "/" in k:
+        return "doi:" + k
+    return None
+
+
+def gedaechtnis(vorher: list[dict] | None) -> dict[str, dict]:
+    """Index of the committed catalogue by every identifier it records for an entry."""
+    index: dict[str, dict] = {}
+    for eintrag in vorher or []:
+        if not isinstance(eintrag, dict) or not eintrag.get("titel"):
+            continue
+        for kennung in (eintrag.get("kennung"), *(eintrag.get("weitere_kennungen") or [])):
+            schluessel = _gedaechtnisschluessel(kennung)
+            if schluessel:
+                index.setdefault(schluessel, eintrag)
+    return index
+
+
+def _aus_gedaechtnis(korn: Saatkorn, index: dict[str, dict]) -> dict | None:
+    """The committed entry a seed resolved to before, if any. DOIs walk the same ladder
+    the resolver walks, so a seed carrying a publisher path finds the entry its shorter
+    form resolved to."""
+    if korn.art == "arxiv":
+        return index.get("arxiv:" + re.sub(r"v\d+$", "", korn.kennung.lower()))
+    for fassung in _doi_leiter(korn.kennung):
+        treffer = index.get("doi:" + fassung.lower())
+        if treffer:
+            return treffer
+    return None
+
+
+def _ist_datenablage(korn: Saatkorn) -> bool:
+    """Whether every place the seed was found is a data store of a work (a `data/` folder,
+    a `data.json`, a `.jsonl` log) rather than prose. Such seeds are not dropped — whether
+    they count as citations is not decided here — but they are asked last, so that under a
+    request budget the citations in the practices' own writing resolve first. Measured on
+    2026-11-04: six such files held about 6,400 of the 7,760 seeds."""
+    def ablage(datei: str) -> bool:
+        teile = [t.lower() for t in Path(datei).parts]
+        return "data" in teile[:-1] or teile[-1] == "data.json" or teile[-1].endswith(".jsonl")
+
+    return bool(korn.fundstellen) and all(ablage(f.datei) for f in korn.fundstellen)
+
+
+def _eintrag(
+    korn: Saatkorn,
+    *,
+    eintrag_id: str,
+    kennung: str,
+    metadaten: dict,
+    felder: tuple[int, ...],
+    pruefung: tuple[bool, int | None, str | None],
+    eigener_satz: str | None,
+) -> Katalogeintrag:
+    geprueft, pruef_status, pruef_vermerk = pruefung
+    return Katalogeintrag(
+        id=eintrag_id,
+        titel=metadaten["titel"],
+        urheber=tuple(u for u in metadaten["urheber"] if u),
+        jahr=metadaten["jahr"],
+        ort=metadaten["ort"],
+        kennung=kennung,
+        url=metadaten["url"],
+        frei_zugaenglich=metadaten["frei_zugaenglich"],
+        felder=felder,
+        zusammenfassung=metadaten["zusammenfassung"],
+        relevanz=eigener_satz or _gebrauchsbeleg(korn),
+        relevanz_herkunft="praxis" if eigener_satz else "gebrauch",
+        weg=WEG_PRAXIS,
+        aufnahmegrund=GRUND_ZITIERT,
+        # Die Fundstellen aus dem Saatkorn: Repo und Datei, in denen zitiert
+        # wurde. Sie sind der Beleg — ohne sie wäre „zitiert" eine Behauptung.
+        fundstellen=tuple(dict.fromkeys(f"{f.repo}/{f.datei}" for f in korn.fundstellen)),
+        geprueft=geprueft,
+        pruef_status=pruef_status,
+        pruef_vermerk=pruef_vermerk,
+        zitiert_von=korn.praxen,
+        zuletzt_gebraucht=korn.juengste_nennung,
+        # Wörtlich von einer Praxis begründet = gelesen. Sonst wartet der
+        # Eintrag auf die Urteilsroutine und zeigt sich auf der Fläche mit „?".
+        verify_status="verified" if eigener_satz else "toVerify",
+    )
+
+
 def baue(
-    saat: Saat, wurzel: Path, *, grenze: int | None = None
+    saat: Saat,
+    wurzel: Path,
+    *,
+    grenze: int | None = None,
+    vorher: list[dict] | None = None,
+    statistik: dict | None = None,
 ) -> tuple[list[Katalogeintrag], list[Ausfall]]:
-    """Löst das Saatgut auf und gibt Katalogeinträge samt Ausfallliste zurück."""
+    """Löst das Saatgut auf und gibt Katalogeinträge samt Ausfallliste zurück.
+
+    `vorher` is the committed catalogue: seeds it already resolved take their metadata from
+    it instead of the network. `statistik`, if given, receives the counts of the run."""
     begruendungen = lade_praxis_begruendungen(wurzel)
+    index = gedaechtnis(vorher)
     eintraege: list[Katalogeintrag] = []
     ausfaelle: list[Ausfall] = []
     koerner = saat.koerner[:grenze] if grenze else saat.koerner
+    # Prose before data stores; otherwise the order of the seed (newest first) is kept.
+    koerner = sorted(koerner, key=_ist_datenablage)
+    zaehler = {"gedaechtnis": 0, "abgefragt": 0, "ruht": 0}
+    gedrosselt_in_folge: dict[str, int] = {}
+    ruht: set[str] = set()
 
     with httpx.Client(follow_redirects=True, headers=KOPF) as client:
         for korn in koerner:
+            eigener_satz = begruendungen.get(korn.kennung)
+            frueher = _aus_gedaechtnis(korn, index)
+            if frueher:
+                zaehler["gedaechtnis"] += 1
+                eintraege.append(_eintrag(
+                    korn,
+                    eintrag_id=frueher.get("id") or slugifiziere(korn.kennung),
+                    kennung=frueher["kennung"],
+                    metadaten={
+                        "titel": frueher["titel"],
+                        "urheber": list(frueher.get("urheber") or []),
+                        "jahr": frueher.get("jahr"),
+                        "ort": frueher.get("ort") or "",
+                        "url": frueher.get("url") or "",
+                        "frei_zugaenglich": bool(frueher.get("frei_zugaenglich")),
+                        "zusammenfassung": frueher.get("zusammenfassung") or "",
+                    },
+                    felder=tuple(frueher.get("felder") or ()),
+                    pruefung=(
+                        bool(frueher.get("geprueft")),
+                        frueher.get("pruef_status"),
+                        frueher.get("pruef_vermerk"),
+                    ),
+                    eigener_satz=eigener_satz,
+                ))
+                continue
+
+            if korn.art in ruht:
+                zaehler["ruht"] += 1
+                ausfaelle.append(Ausfall(korn.kennung, korn.art, VERMERK_RUHT))
+                continue
+            zaehler["abgefragt"] += 1
             try:
                 gefunden = _loese_auf(client, korn)
             except QuellenAusfall as fehler:
                 ausfaelle.append(Ausfall(korn.kennung, korn.art, str(fehler)))
+                if str(fehler) == f"HTTP {GEDROSSELT}":
+                    gedrosselt_in_folge[korn.art] = gedrosselt_in_folge.get(korn.art, 0) + 1
+                    if gedrosselt_in_folge[korn.art] >= DROSSEL_SCHWELLE:
+                        ruht.add(korn.art)
+                else:
+                    gedrosselt_in_folge[korn.art] = 0
                 continue
+            gedrosselt_in_folge[korn.art] = 0
             if not gefunden:
                 ausfaelle.append(Ausfall(korn.kennung, korn.art, "in keiner Quelle gefunden"))
                 continue
 
-            eigener_satz = begruendungen.get(korn.kennung)
             # Kennung aus der Quelle, sonst die des Saatkorns (arXiv führt keine DOI).
             kennung = gefunden.get("doi") or (
                 korn.kennung if korn.art == "doi" else f"arXiv:{korn.kennung}"
@@ -387,40 +579,27 @@ def baue(
             # anzufragen, ob sie trägt. „Identifier prüfen heißt: HTTP-Antwort geholt"
             # (Bauregel des Startauftrags), und das galt für den Katalog nicht.
             befund = pruefe(gefunden["url"], client) if gefunden["url"] else None
-            eintraege.append(Katalogeintrag(
-                id=slugifiziere(
+            eintraege.append(_eintrag(
+                korn,
+                eintrag_id=slugifiziere(
                     (gefunden["urheber"] or ["unbekannt"])[0], gefunden["titel"]
                 ) or slugifiziere(korn.kennung),
-                titel=gefunden["titel"],
-                urheber=tuple(u for u in gefunden["urheber"] if u),
-                jahr=gefunden["jahr"],
-                ort=gefunden["ort"],
                 kennung=kennung,
-                url=gefunden["url"],
-                frei_zugaenglich=gefunden["frei_zugaenglich"],
+                metadaten=gefunden,
                 felder=_felder_aus_begriffen(
                     gefunden["titel"], gefunden["zusammenfassung"], *gefunden["begriffe"]
                 ),
-                zusammenfassung=gefunden["zusammenfassung"],
-                relevanz=eigener_satz or _gebrauchsbeleg(korn),
-                relevanz_herkunft="praxis" if eigener_satz else "gebrauch",
-                weg=WEG_PRAXIS,
-                aufnahmegrund=GRUND_ZITIERT,
-                # Die Fundstellen aus dem Saatkorn: Repo und Datei, in denen zitiert
-                # wurde. Sie sind der Beleg — ohne sie wäre „zitiert" eine Behauptung.
-                fundstellen=tuple(
-                    dict.fromkeys(f"{f.repo}/{f.datei}" for f in korn.fundstellen)
+                pruefung=(
+                    bool(befund and befund.aufgeloest),
+                    befund.status if befund else None,
+                    befund.vermerk if befund else "keine Adresse zu prüfen",
                 ),
-                geprueft=bool(befund and befund.aufgeloest),
-                pruef_status=befund.status if befund else None,
-                pruef_vermerk=befund.vermerk if befund else "keine Adresse zu prüfen",
-                zitiert_von=korn.praxen,
-                zuletzt_gebraucht=korn.juengste_nennung,
-                # Wörtlich von einer Praxis begründet = gelesen. Sonst wartet der
-                # Eintrag auf die Urteilsroutine und zeigt sich auf der Fläche mit „?".
-                verify_status="verified" if eigener_satz else "toVerify",
+                eigener_satz=eigener_satz,
             ))
 
+    zaehler["ruhende_quellen"] = sorted(ruht)
+    if statistik is not None:
+        statistik.update(zaehler)
     return eintraege, ausfaelle
 
 
@@ -748,20 +927,30 @@ def main(argv: list[str] | None = None) -> int:
     for ausfall in saat.ausfaelle:
         print(f"   AUSFALL {ausfall.praxis}: {ausfall.vermerk}")
 
-    aufgeloest, ausfaelle = baue(saat, args.wurzel, grenze=args.grenze)
+    # The catalogue committed before this run: what verdicts, first appearances and — since
+    # 2026-11-04 — already resolved metadata are kept by.
+    ziel = args.wurzel / "src/data/register/papers.json"
+    alt: list[dict] | None = None
+    if ziel.is_file():
+        alt = json.loads(ziel.read_text(encoding="utf-8"))
+
+    statistik: dict = {}
+    aufgeloest, ausfaelle = baue(saat, args.wurzel, grenze=args.grenze, vorher=alt,
+                                 statistik=statistik)
+    print(f"aus dem Katalog erinnert: {statistik['gedaechtnis']} · neu abgefragt: "
+          f"{statistik['abgefragt']} · wegen Drosselung vertagt: {statistik['ruht']}"
+          + (f" (ruhend: {', '.join(statistik['ruhende_quellen'])})"
+             if statistik["ruhende_quellen"] else ""))
     roh = len(gesammelt) + len(aufgeloest)
     eintraege = fuehre_zusammen(gesammelt + aufgeloest)
     print(f"zusammen: {roh} · nach Zusammenführung: {len(eintraege)} · "
           f"nicht aufgelöst: {len(ausfaelle)}")
     for ausfall in ausfaelle:
-        print(f"   – {ausfall.art} {ausfall.kennung[:52]}: {ausfall.vermerk}")
+        if ausfall.vermerk != VERMERK_RUHT:
+            print(f"   – {ausfall.art} {ausfall.kennung[:52]}: {ausfall.vermerk}")
 
     # Urteile aus dem bestehenden Katalog übernehmen, BEVOR geschrieben wird.
-    ziel = args.wurzel / "src/data/register/papers.json"
-    # The catalogue committed before this run: what verdicts and first appearances are kept by.
-    alt: list[dict] | None = None
-    if ziel.is_file():
-        alt = json.loads(ziel.read_text(encoding="utf-8"))
+    if alt is not None:
         vorher_urteile = sum(1 for e in alt if e.get("relevanz_herkunft") == "urteil")
         eintraege = bewahre_urteile(eintraege, alt)
         nachher = sum(1 for e in eintraege if e.relevanz_herkunft == "urteil")

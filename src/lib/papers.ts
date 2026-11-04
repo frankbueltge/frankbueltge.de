@@ -87,7 +87,7 @@ export interface PaperEntry {
   geprueft: boolean
   pruef_status: number | null
   pruef_vermerk: string | null
-  /** Welche Praxen den Eintrag zitieren: 'atelier' | 'field' | 'studio' | 'meridian'. */
+  /** Who cites the entry: a practice or house key, labelled by `praxisLabel`. */
   zitiert_von: string[]
   /** ISO-Datum der jüngsten Nennung — das Maß für „gerade in Arbeit". */
   zuletzt_gebraucht: string | null
@@ -139,6 +139,12 @@ const praxisNamen: Record<string, string> = {
   meridian: 'Meridian',
   // 2026-10-04: the nightly line (error-as-method), read by the scout again since its fork.
   nightly: 'Nightly line',
+  // 2026-11-04: the lab's other houses, read by the scout since that day.
+  attention: 'Machine Attention',
+  middle: 'The Middle',
+  'n-1': 'n-1',
+  arch: 'Arch',
+  observatory: 'The State Before the Interface',
 }
 export const praxisLabel = (p: string): string => praxisNamen[p] ?? p
 

@@ -42,6 +42,17 @@ PRAXEN: dict[str, str] = {
     # `error-as-method` nothing it cited reached the catalogue, because this list never
     # followed it. Its older citations stay under "atelier", where they were made.
     "nightly": "error-as-method",
+    # The lab's other houses (2026-11-04, Frank's question, wording private: is everything
+    # in the catalogues that the practices cited, not only the ecology). Measured that day
+    # against the committed catalogue: Machine Attention cited 12 identifiers, the Middle 1,
+    # n-1 32 — none of them reached the catalogue, because none of these repos was read.
+    # Arch and the State Before the Interface cite nothing yet; they are read so that the
+    # first citation they make arrives without anyone having to remember this list.
+    "attention": "machine-attention",
+    "middle": "research-ecology",
+    "n-1": "n-1",
+    "arch": "arch",
+    "observatory": "state-before-interface",
 }
 
 # Top-level folders that hold material HANDED TO a practice rather than used by it. A citation
