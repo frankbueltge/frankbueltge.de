@@ -88,5 +88,16 @@ const werkNamen: Record<string, string> = {
   irrtum: 'Error',
   'atlas-scout': 'Atlas Scout',
   scripts: 'site data scripts',
+  // 2026-11-04: the practices and houses whose works the register reads since that day.
+  atelier: 'Atelier',
+  field: 'Field',
+  studio: 'Studio',
+  meridian: 'Meridian',
+  nightly: 'Nightly line',
+  attention: 'Machine Attention',
+  middle: 'The Middle',
+  'n-1': 'n-1',
+  arch: 'Arch',
+  observatory: 'The State Before the Interface',
 }
 export const werkLabel = (w: string): string => werkNamen[w] ?? w
