@@ -97,7 +97,7 @@ document.getElementById('sha').textContent=D.sha;
 const S={cc:'cases|confirmed',cd:'deaths|confirmed',sc:'cases|suspected',sd:'deaths|suspected'};
 const nat={};for(const k in S){const a=new Array(N).fill(null);for(const [d,v] of D.national[S[k]])a[di(d)]=v;nat[k]=a}
 const valAt=(a,i)=>{for(let j=i;j>=0;j--)if(a[j]!=null)return [a[j],j];return [null,-1]};
-function sizeCanvas(c){const r=window.devicePixelRatio||1,w=c.clientWidth,h=+c.getAttribute('height');c.width=w*r;c.height=h*r;const x=c.getContext('2d');x.setTransform(r,0,0,r,0,0);return [x,w,h]}
+function sizeCanvas(c){const r=window.devicePixelRatio||1,w=c.clientWidth,h=+(c.dataset.h||(c.dataset.h=c.getAttribute('height')));c.width=w*r;c.height=h*r;const x=c.getContext('2d');x.setTransform(r,0,0,r,0,0);return [x,w,h]}
 const day=document.getElementById('day');
 function drawCountry(){
  const t=+day.value;document.getElementById('dlab').textContent=ds(t);

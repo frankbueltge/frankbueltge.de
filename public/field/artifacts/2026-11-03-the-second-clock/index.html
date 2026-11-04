@@ -22,7 +22,7 @@ a{color:var(--link)}
 .ctl button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .ctl input[type=range]{width:220px;max-width:60vw}
 #cvw{position:relative;width:100%}
-canvas{display:block;width:100%;touch-action:none}
+canvas{display:block;width:100%;touch-action:pan-y}
 #st{font:15px/1.5 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:3px;margin:8px 0}
 #st b{font-weight:600}
 .k{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 4px 0 2px;vertical-align:-1px}
@@ -96,7 +96,7 @@ const preds=[["P1","Kivu: share of days with a report lies between 75 % and 95 %
 ["P4","Kivu: at the best wait, fewer than 10 % of long quiets are classed differently","2 of 60 (3.3 %)",true],
 ["P5","Kivu: inside the long quiets, the zone is named on at least 95 % of report days","98.5 %",true]];
 document.querySelector('#pred tbody').innerHTML=preds.map(p=>`<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td class="${p[3]?'held':'failed'}">${p[3]?'held':'failed'}</td></tr>`).join('');
-function size(c){const w=c.clientWidth,h=+c.getAttribute('height');const d=devicePixelRatio||1;c.width=w*d;c.height=h*d;c.style.height=h+'px';const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return [x,w,h]}
+function size(c){const w=c.clientWidth,h=+(c.dataset.h||(c.dataset.h=c.getAttribute('height')));const d=devicePixelRatio||1;c.width=w*d;c.height=h*d;c.style.height=h+'px';const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return [x,w,h]}
 const isRep=q=>q.R>=42, isCal=q=>q.L>=T;
 const cls=q=>isRep(q)===isCal(q)?'agree':(isCal(q)?'cal':'rep');
 function geom(w,h){const L=48,Rr=14,Tp=12,B=40;const lx=v=>L+(Math.log(v)-Math.log(30))/(Math.log(800)-Math.log(30))*(w-L-Rr);const ly=v=>h-B-(Math.log(Math.max(v,8))-Math.log(8))/(Math.log(800)-Math.log(8))*(h-B-Tp);return {L,Rr,Tp,B,lx,ly}}
@@ -125,7 +125,7 @@ function draw(){
  drawStrip();drawCurve();
 }
 function drawStrip(){
- const [x,w]=size(sc);x.clearRect(0,0,w,+sc.getAttribute('height'));
+ const [x,w]=size(sc);x.clearRect(0,0,w,+(sc.dataset.h||(sc.dataset.h=sc.getAttribute('height'))));
  const q=sel||hov;if(!q){x.fillStyle=css('--mute');x.font='13px system-ui,sans-serif';x.fillText('(no quiet chosen)',0,20);return}
  const cols=Math.min(q.k.length,Math.floor(w/3));
  const rows=Math.ceil(q.k.length/cols),cs=Math.max(2,Math.floor(Math.min(w/cols,12)));

@@ -18,7 +18,7 @@ h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-
 .small{font-size:.85rem;color:var(--muted)}
 .lede{font-size:1.15rem}
 figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
-canvas{width:100%;display:block;touch-action:none}
+canvas{width:100%;display:block;touch-action:pan-y}
 .controls{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font:14px system-ui,sans-serif;margin-bottom:8px}
 .controls button{font:inherit;padding:4px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
 .controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
@@ -85,7 +85,7 @@ const P=window.PASSAGES,R=window.RESULTS,BMAX=R.b_max_ld;
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 let win='prim',col='later',pts=[];
 function sel(){return P.filter(p=>win==='prim'?p[2]>=2015:p[2]<2015)}
-function setupCanvas(c){const dpr=window.devicePixelRatio||1,w=c.clientWidth,h=+c.getAttribute('height');c.width=w*dpr;c.height=h*dpr;c.style.height=h+'px';const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);return [x,w,h]}
+function setupCanvas(c){const dpr=window.devicePixelRatio||1,w=c.clientWidth,h=+(c.dataset.h||(c.dataset.h=c.getAttribute('height')));c.width=w*dpr;c.height=h*dpr;c.style.height=h+'px';const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);return [x,w,h]}
 const H0=16,H1=34;
 function scatter(){
   const c=document.getElementById('scatter'),[x,w,h]=setupCanvas(c);

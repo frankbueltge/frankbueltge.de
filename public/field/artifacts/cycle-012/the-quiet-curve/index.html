@@ -23,7 +23,7 @@ a{color:var(--link)}
 .ctl span{min-width:5.5em;color:var(--mute)}
 .ctl button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:5px 11px;border-radius:3px;cursor:pointer}
 .ctl button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-canvas{display:block;width:100%;touch-action:none}
+canvas{display:block;width:100%;touch-action:pan-y}
 #rd{font:14px/1.5 system-ui,sans-serif;min-height:3.2em;background:var(--card);padding:8px 12px;border-radius:3px;margin:6px 0}
 .legend{font:13px/1.6 system-ui,sans-serif;color:var(--mute)}
 .k{display:inline-block;width:14px;height:3px;margin:0 4px 0 8px;vertical-align:3px}
@@ -111,7 +111,7 @@ for(const [id,x] of Object.entries(D.pred)){const tr=document.createElement('tr'
 const cv=document.getElementById('cv'),rd=document.getElementById('rd'),lg=document.getElementById('lg');let hov=null;
 function series(){return S.split==='all'?[{c:C(S.rec,S.H,'all'),col:'--all',band:'--band',name:'all quiets'}]:
  [{c:C(S.rec,S.H,'nb'),col:'--nb',band:'--bandnb',name:'a case elsewhere in the province in the last 21 days'},{c:C(S.rec,S.H,'nonb'),col:'--no',band:'--bandno',name:'no such case'}]}
-function geom(){const w=cv.clientWidth,h=+cv.getAttribute('height');const m={l:46,r:12,t:14,b:34};return{w,h,m,X:d=>m.l+(d-1)/(119)*(w-m.l-m.r),Y:s=>m.t+(1-s)*(h-m.t-m.b)}}
+function geom(){const w=cv.clientWidth,h=+(cv.dataset.h||(cv.dataset.h=cv.getAttribute('height')));const m={l:46,r:12,t:14,b:34};return{w,h,m,X:d=>m.l+(d-1)/(119)*(w-m.l-m.r),Y:s=>m.t+(1-s)*(h-m.t-m.b)}}
 function draw(){const dpr=devicePixelRatio||1,g=geom();cv.width=g.w*dpr;cv.height=g.h*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);
  x.clearRect(0,0,g.w,g.h);x.font='12px system-ui,sans-serif';x.fillStyle=css('--mute');x.strokeStyle=css('--line');x.lineWidth=1;
  for(const s of [0,.25,.5,.75,1]){x.beginPath();x.moveTo(g.m.l,g.Y(s));x.lineTo(g.w-g.m.r,g.Y(s));x.stroke();x.fillText((s*100)+' %',4,g.Y(s)+4)}
@@ -138,7 +138,7 @@ document.querySelectorAll('.ctl button').forEach(bt=>bt.addEventListener('click'
  document.querySelectorAll('.ctl button[data-g="'+bt.dataset.g+'"]').forEach(o=>o.setAttribute('aria-pressed',o===bt));draw()}));
 // figure 2
 const br=document.getElementById('br'),rd2=document.getElementById('rd2');let bh=null;
-function g2(){const w=br.clientWidth,h=+br.getAttribute('height');const m={l:46,r:12,t:16,b:30};const maxL=Math.max(...D.breaks.map(b=>b.L));
+function g2(){const w=br.clientWidth,h=+(br.dataset.h||(br.dataset.h=br.getAttribute('height')));const m={l:46,r:12,t:16,b:30};const maxL=Math.max(...D.breaks.map(b=>b.L));
  return{w,h,m,maxL,X:L=>m.l+(L-21)/(maxL-21)*(w-m.l-m.r),Y:o=>o==='K'?m.t+30:m.t+90}}
 function place(){const g=g2(),c={};return D.breaks.map(b=>{const key=b.o+b.L;c[key]=(c[key]||0)+1;return{b,x:g.X(b.L),y:g.Y(b.o)+((c[key]-1)%5)*7-14}})}
 function draw2(){const dpr=devicePixelRatio||1,g=g2();br.width=g.w*dpr;br.height=g.h*dpr;const x=br.getContext('2d');x.scale(dpr,dpr);
