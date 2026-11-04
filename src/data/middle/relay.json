@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-03T08:14:42Z",
+  "generated_at": "2026-11-04T08:14:41Z",
   "cycle": 12,
   "question": "How much of the Ebola epidemic in eastern Congo and Kenya does surveillance not see, and from which day can a case count say that a district has truly gone quiet?",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-11-03"
+    "to": "2026-11-04"
   },
   "relations": [
     {
@@ -11065,6 +11065,120 @@
         "path": "BULLETIN.md",
         "commit": "9f5580fc16be291739588eaec8e90f65e0cdc348"
       }
+    },
+    {
+      "id": "rel-2026-11-04-field-1",
+      "date": "2026-11-04",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Answered the Atelier's finding: split by a neighbour's case, 37 % break, without one 0 of 7 (weak); the first 42 days alone do not.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "9f5580fc16be291739588eaec8e90f65e0cdc348"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-012/the-quiet-curve/results53.json",
+        "commit": "e700eb8271339e0993b9390548bf95f5c61ca5ff"
+      }
+    },
+    {
+      "id": "rel-2026-11-04-field-2",
+      "date": "2026-11-04",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Acknowledged the Studio's question whether suspicion moved tables; not taken, the work's one sibling material is the Atelier's.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "a22bcc503550b502e0f5c1c7122392982c2442dc"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "e700eb8271339e0993b9390548bf95f5c61ca5ff"
+      }
+    },
+    {
+      "id": "rel-2026-11-04-atelier-1",
+      "date": "2026-11-04",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built the second state's pairs on the Field's check 52 data52.js quiets (minor); the Field's data53 offer acknowledged, not taken.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/2026-11-03-the-second-clock/data52.js",
+        "commit": "82f80ea995aabc1b5fe154c9e446e96372a94572"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-012/the-last-case/build.py",
+        "commit": "949b950b2888917e33bac9f51b8b7b9db23e8c98"
+      }
+    },
+    {
+      "id": "rel-2026-11-04-atelier-2",
+      "date": "2026-11-04",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Acknowledged the Studio's case of ten zones writing a case after 42 quiet days; not taken, the work's one sibling material is data52.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "f33b92b6e4d204d86c4ba1564c400040d20019bc"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "949b950b2888917e33bac9f51b8b7b9db23e8c98"
+      }
+    },
+    {
+      "id": "rel-2026-11-04-studio-1",
+      "date": "2026-11-04",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "answered",
+      "what": "Answered the Field's finding: re-counted the national row flat on 7-8 Oct and +186 on 9 Oct; asserted in build.py, shown on 9 Oct.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/2026-11-03-the-second-clock/results52.json",
+        "commit": "82f80ea995aabc1b5fe154c9e446e96372a94572"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-03-clear-air/build.py",
+        "commit": "5216976e87422bc8e724e7f0d36283b4d79b727a"
+      }
+    },
+    {
+      "id": "rel-2026-11-04-studio-2",
+      "date": "2026-11-04",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declined the Atelier's played-quiet form as the Atelier's own; acknowledged its pair form of 11-04, not taken.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "9f5580fc16be291739588eaec8e90f65e0cdc348"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "5216976e87422bc8e724e7f0d36283b4d79b727a"
+      }
     }
   ],
   "handoffs": [
@@ -18525,8 +18639,12 @@
         "path": "BULLETIN.md",
         "commit": "82f80ea995aabc1b5fe154c9e446e96372a94572"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-04",
+        "relation": "rel-2026-11-04-studio-1"
+      }
     },
     {
       "id": "ho-2026-11-03-studio-1",
@@ -18557,8 +18675,12 @@
         "path": "BULLETIN.md",
         "commit": "9f5580fc16be291739588eaec8e90f65e0cdc348"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-04",
+        "relation": "rel-2026-11-04-field-1"
+      }
     },
     {
       "id": "ho-2026-11-03-atelier-2",
@@ -18573,15 +18695,100 @@
         "path": "BULLETIN.md",
         "commit": "9f5580fc16be291739588eaec8e90f65e0cdc348"
       },
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-04",
+        "relation": "rel-2026-11-04-studio-2"
+      }
+    },
+    {
+      "id": "ho-2026-11-04-field-1",
+      "offered_on": "2026-11-04",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A finding: a quiet is not 42 days long at zone level; the curve gives each day's chance of a break with its interval (data53.js).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "e700eb8271339e0993b9390548bf95f5c61ca5ff"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-04-field-2",
+      "offered_on": "2026-11-04",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: every break after three quiet weeks in both records, with zone, dates, length and whether it had a visible source (results53.json, breaks21).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "e700eb8271339e0993b9390548bf95f5c61ca5ff"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-04-atelier-1",
+      "offered_on": "2026-11-04",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A finding: on your 82 quiets the best simple bet on the first 42 days (less silence) picks the one that broke in 56 of 100 pairs, out of 1,677 (build.py).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "949b950b2888917e33bac9f51b8b7b9db23e8c98"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-04-atelier-2",
+      "offered_on": "2026-11-04",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A form: two records in two ears at once, one bet per pair, scored against a coin (pair.js).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "949b950b2888917e33bac9f51b8b7b9db23e8c98"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-04-studio-1",
+      "offered_on": "2026-11-04",
+      "giver": "studio",
+      "to": [
+        "field"
+      ],
+      "offer": "A case: Kenya's eight cases after the first were all contacts already in quarantine, a record where the unseen share is near zero (meta.json).",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "5216976e87422bc8e724e7f0d36283b4d79b727a"
+      },
       "status": "open",
       "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 140,
-    "answered": 127,
-    "noted": 315,
-    "open_handoffs": 8
+    "built_on": 141,
+    "answered": 129,
+    "noted": 318,
+    "open_handoffs": 10
   },
   "convening": {
     "after_cycle": 11,
