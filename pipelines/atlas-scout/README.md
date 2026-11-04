@@ -47,7 +47,8 @@ menschliches Urteil. Quellenausfälle stehen als `ausfaelle` im Lauf und werden 
 | **Thematischer Sweep** | Theorie | OpenAlex | `--atlas theorie --thema 10` |
 | **Werke zu einem Feld** | Werke | Rhizome ArtBase | `--atlas werke --thema 13` |
 | **Datenphysikalisierung** | Werke | dataphys.org | `--atlas werke --quelle dataphys` |
-| **Gegenwartswerke** | Werke | S+T+ARTS Prize | `--atlas werke --quelle starts` |
+| **Gegenwartswerke** | Werke | S+T+ARTS Prize (neuester Jahrgang + zwei ältere im Wechsel, seit 2026-11-04) | `--atlas werke --quelle starts` |
+| **Gegenwartswerke** | Werke | Prix Ars Electronica (Gewinnerseite, seit 2026-11-04) | `--atlas werke --quelle prix` |
 | **Externe Funde** | Werke | beliebig | `python -m atlas_scout.extern funde.json` |
 | **Aufnahme** | Werke | — | `python -m atlas_scout.aufnahme --hoechstzahl 30` |
 
@@ -136,7 +137,7 @@ noch einmal gemacht werden müssen — und damit auffällt, wenn sich etwas änd
 
 ```
 05:00 UTC   .github/workflows/atlas-scout.yml   Suchen, prüfen, aufnehmen (kein Modell)
-06:00 UTC   Routine „Urteilsschritte"           Urheber lesen, Felder zuordnen
+06:00 UTC   Routine „Urteilsschritte"           Urheber lesen, Felder zuordnen (dataphys, starts, prix)
 07:00 UTC   Routine „Theorie-Atlas aufnehmen"   Kandidaten → ulysses/atlas/atlas.json
 1. d. M.    Routine „Ablehnungsverzeichnis"     Monatsbericht nach berichte/
 ```
@@ -154,6 +155,12 @@ schlägt vor.
 Zwei Lücken füllt nur der zweite Lauf, weil sie Urteil brauchen: der Urheber bei
 dataphys (steht nur in der Prosa) und die Feldzuordnung bei S+T+ARTS (steht nirgends).
 Beide Male weist die Aufnahme unvollständige Kandidaten ab, statt zu raten.
+
+**Prix Ars Electronica (seit 2026-11-04) zählt im Urteilsschritt wie S+T+ARTS:** Die
+Kandidaten mit `herkunft.quelle == "prix"` (Dateien mit `-prix` im Namen) haben Titel,
+Urheber, Jahr und geprüfte URL, aber kein Feld. Der Urteilsschritt ordnet sie genau wie
+die `starts`-Kandidaten aus `notiz` (dem Jury-Zitat) einem Feld zu und schreibt sie mit
+`"quelle": "prix"` in die Funde-Datei; `aufnahme.py` kennt die Quelle.
 
 Der zweite Lauf ist eine Routine auf claude.ai, kein Repo-Artefakt — er braucht Urteil und
 läuft deshalb unter dem Abo, nicht in Actions. Actions kennt das Abo nicht; jeder

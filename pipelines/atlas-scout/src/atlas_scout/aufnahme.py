@@ -61,6 +61,14 @@ QUELLEN_VORGABEN = {
         "form": "hybrid",
         "axis_pole": "mixed",
     },
+    # Prix Ars Electronica (since 2026-11-04). As with S+T+ARTS the year is the award year,
+    # so it stands in the venue too; the prize and category travel in the candidate's signals.
+    "prix": {
+        "venue_prize": "Prix Ars Electronica",
+        "medium_class": "hybrid",
+        "form": "hybrid",
+        "axis_pole": "mixed",
+    },
     "tavily": {
         "venue_prize": "—",
         "medium_class": "hybrid",
@@ -111,6 +119,8 @@ def als_eintrag(kandidat: dict) -> dict:
         # "S+T+ARTS Prize feld-N (Ars Electronica)" statt eines Jahres).
         vorgaben = {**vorgaben,
                     "venue_prize": f"S+T+ARTS Prize {kandidat['jahr']} (Ars Electronica)"}
+    if quelle == "prix":
+        vorgaben = {**vorgaben, "venue_prize": f"Prix Ars Electronica {kandidat['jahr']}"}
     feld = _feld_aus_saat(kandidat["herkunft"]["ausgehend_von"])
     return {
         "title": kandidat["titel"],

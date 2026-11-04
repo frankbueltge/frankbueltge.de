@@ -91,7 +91,19 @@ jobs:
           # Die Gewinnerseiten sind JS-gerendert; Tavilys Extract rendert sie, den Rest
           # liest ein Parser. Ohne Schlüssel vermerkt der Lauf einen Ausfall und macht
           # weiter — er findet dann nichts, behauptet aber auch nichts.
-          python -m atlas_scout.run --atlas werke --quelle starts --anzahl 40 | tee -a lauf.log
+          # Since 2026-11-04 the whole archive (2016 on) in rotation: the newest yearbook and
+          # two older ones a night. Reading only 2024–2026 had left the atlas at 523 for weeks.
+          python -m atlas_scout.run --atlas werke --quelle starts --anzahl 90 | tee -a lauf.log
+
+      - name: Gegenwartswerke (Prix Ars Electronica)
+        env:
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+        run: |
+          set -u
+          # Second source for current works (2026-11-04): the Prix's winners page, rendered
+          # by Tavily and read by a parser. Candidates wait for the field assignment of the
+          # judgement routine, like the S+T+ARTS ones.
+          python -m atlas_scout.run --atlas werke --quelle prix --anzahl 80 | tee -a lauf.log
 
       - name: Aufnehmen
         run: |
