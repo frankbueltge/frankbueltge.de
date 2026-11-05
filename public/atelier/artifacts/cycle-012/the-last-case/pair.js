@@ -1,5 +1,5 @@
 // The Last Case — second movement: two quiets at once, one per ear. Which one breaks?
-// The Atelier, cycle 012, session 2. No library. Data: quiets.json (build.py).
+// The Atelier, cycle 012, session 2; state 3 (11-05) locks it until three quiets are heard and ends it on a tally. No library. Data: quiets.json (build.py).
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
@@ -54,6 +54,7 @@
   }
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
   function startPair() {
+    if ($("pair").classList.contains("locked")) return;
     audio(); if (ac && ac.state === "suspended") ac.resume();
     var b = pick(B), h = pick(H), flip = Math.random() < 0.5;
     pair = { A: flip ? b : h, B: flip ? h : b };
@@ -89,10 +90,19 @@
   function score() {
     var n = trials.length, k = trials.filter(Boolean).length, F = D.facts;
     var best = Math.round(Math.max(F.auc.named, 1 - F.auc.named, F.auc.silent, 1 - F.auc.silent) * 100);
-    $("pscore").innerHTML = "You: <b>" + k + " of " + n + "</b>. A coin would expect " + (n / 2).toFixed(n % 2 ? 1 : 0) + "." +
-      (n >= 5 ? " Over all " + (F.broke * (F.quiets - F.broke)) + " pairs this record holds, the best bet on what the first 42 days sound like (" +
-        (1 - F.auc.silent >= 1 - F.auc.named ? "the one with less silence" : "the one with more named days") + ") is right " + best +
-        " times in 100. That bet was found afterwards, by counting the outcomes, so it is itself a sentence only the later days could write." : "");
+    $("pscore").innerHTML = "You: <b>" + k + " of " + n + "</b>. A coin would expect " + (n / 2).toFixed(n % 2 ? 1 : 0) + ".";
+    if (n < 5) { $("pend").hidden = true; return; }
+    // after five bets, the visitor's tally stands beside the coin and the best bet the record allows
+    $("pend").hidden = false;
+    $("pend").innerHTML = "<div class='bars'>" + bar("you", Math.round(100 * k / n), "you, " + k + " of " + n) +
+      bar("coin", 50, "a coin") + bar("best", best, (1 - F.auc.silent >= 1 - F.auc.named ? "less silence" : "more named days") + ", the best simple bet") + "</div>" +
+      "<p>The quiets that broke had a report naming the zone on " + Math.round(F.named42.broke * 100) + " % of their first 42 days; the ones that held, on " +
+      Math.round(F.named42.held * 100) + " %. Over all " + F.pairs.toLocaleString("en-GB") + " pairs this record holds, the best bet on what those days sound like is right <b>" + best +
+      " times in 100</b>. That bet was found afterwards, by counting the outcomes, so it is itself a sentence only the later days could write. " +
+      "A bet on a pair can be scored the day it is made. “The last case has been” cannot: the first 42 days do not turn it into a prediction.</p>";
+  }
+  function bar(cls, pct, label) {
+    return "<div class='bar " + cls + "'><span style='width:" + Math.max(2, pct) + "%'></span><em>" + pct + " in 100</em> <small>" + label + "</small></div>";
   }
 
   fetch("quiets.json").then(function (r) { return r.json(); }).then(function (d) {
@@ -102,6 +112,7 @@
       $("psnd").checked = false; trials = [true, false, true, false];
       pair = { A: B[7], B: H[12] }; day = N; $("pA").disabled = false; guess("B");
     }
+    if ($("pair").classList.contains("locked")) $("pgo").disabled = true;
   });
   $("pgo").onclick = startPair; $("pA").onclick = function () { guess("A"); }; $("pB").onclick = function () { guess("B"); };
   window.addEventListener("resize", function () { draw(!$("pgo").hidden && trials.length > 0); });

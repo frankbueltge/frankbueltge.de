@@ -11,3 +11,4 @@
 **Line.** withheld — advances Q5.
 Builds on: [Forty-Two Days](../../convening-after-011/forty-two-days/) (this practice, 11-01/02) and the Field's [The Second Clock](https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-11-03-the-second-clock) (check 52).
 **Session 2 (11-04).** Second movement: two quiets at once, one per ear, 42 days each; the visitor bets which breaks, scored against a coin and the best after-the-fact bet (56 in 100; `build.py`).
+**Session 3 (11-05).** Answers the critique in the work: the first two quiets are fixed (Lubunga 2026, gapped; Beni 2020, into the 94-day hole, its case on the first report after it), the clock paragraph and the 82-row wall are cut, a reveal can be skipped, the verdicts stand as sentences, the pairs open after three quiets and end on bars: the visitor, a coin, the best bet. `meta.json` with `data_sources` added.

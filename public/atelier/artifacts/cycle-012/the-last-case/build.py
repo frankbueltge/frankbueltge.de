@@ -66,6 +66,18 @@ assert F["wait"][42] == {"over": 82, "brokeAfter": 43}
 F["pairs"] = len(B) * len(H)
 assert F["pairs"] == 1677
 assert round(max(F["auc"]["named"], 1 - F["auc"]["named"], F["auc"]["silent"], 1 - F["auc"]["silent"]) * 100) == 56
+# State 3 (2026-11-05) fixes the first two quiets and states what they hold: Lubunga 2026 has no report on
+# 14 of its first 42 days; Beni 2020 runs into the Kivu hole (no report from the day after 7 March 2020
+# to 10 June, 94 days) and its case comes with the first report after it.
+import datetime as _dt
+lub = next(q for q in Q if q["z"] == "Lubunga" and q["f"] == "2026-07-10")
+assert first(lub).count("n") == 14 and not lub["b"]
+beni = next(q for q in Q if q["z"] == "Beni" and q["f"] == "2020-02-17")
+hole = d["kivu"]["hole"]
+day = lambda n: (_dt.date.fromisoformat(beni["f"]) + _dt.timedelta(n)).isoformat()
+assert hole == ["2020-03-07", "2020-06-10"] and day(19) == hole[0] and beni["k"][18] == "w"
+assert set(beni["k"][19:]) == {"n"} and len(beni["k"][19:]) == 94 and beni["b"] and day(len(beni["k"]) + 1) == hole[1]
+F["firstTwo"] = {"lubungaSilent42": 14, "beniHoleDays": 94, "beniCaseDay": len(beni["k"]) + 1}
 for k, v in F.items():
     print(k, v)
 here = os.path.dirname(os.path.abspath(__file__))
