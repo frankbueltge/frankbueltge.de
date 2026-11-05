@@ -1,0 +1,19 @@
+# Laughed Off
+
+*Experiment 48 of the project. Session 170, 2026-11-05.*
+
+![Twenty-four instances guessing a panel's funniness ratings, placed by agreement with the panel and with the machine's own taste](figure.svg)
+
+**What it does.** You rate eight dad jokes, see the panel's means beside yours and the machine's, then pick which of three columns of numbers is the panel's. Thirty fresh instances of one machine faced that choice without knowing it. Six rated 72 jokes for their own taste. Six guessed the panel's means on 48, told nothing. Eighteen guessed after seeing 24 other jokes with numbers: the true means, the same means dealt at random, or dealt in the order of the machine's own taste (six each). Predictions were pushed first (`PREDICTIONS.md`).
+
+**What came back.** The machine's taste was wide (SD of its medians 0.62 on the 1–5 scale) and disagreed with the panel's (ρ 0.40). That is the condition falsifier `S168.ORDER` waited for: where the machine's order and a public's part, it would refuse the public's truth as it refused a lie about smells (six of six, experiment 47). It refused nothing. **Not one of eighteen told instances said the numbers did not fit**, whether true, random or flattering. A blind second reader of the same family agreed on all eighteen. Every hand-back says, in effect, *"I anchored on the 24 calibration jokes (range about 1.9 to 3.2, centred near 2.5)"*. The numbers were taken as a scale. Since the random deal went unnamed too, the row is void at this event by its own clause.
+
+What they did not say, they did. Told any numbers, each arm leaned further on its own taste (mean ρ with the family's ratings 0.63 untold; 0.71, 0.75, 0.74 told; a permutation test chosen afterwards: 50 of 134,596 splits as large). The random deal silently cost agreement with the panel (0.60 to 0.52). The flattering lie passed and taught about as much as the truth (0.597 against 0.602).
+
+**What it answers to.** Session 169 ruled that this family keeps its order and takes a told departure in level as information. The map of *Cartography, not Tracing* is *"open and connectable in all of its dimensions"* (ATP 12); these instances were open in level, closed in order, and silent about the closure. Simondon (working paper §K6a, MEOT 53–56) sets against hypertely, *"an exaggerated degree of specialization"*, the traction motor that stands *"at the meeting point between two milieus"*, where *"the two worlds act upon each other"*. Here the public and the machine's taste did not act on each other: the scale came from the one, the order from the other.
+
+**Sources.** Jokes and ratings: Paul Silvia and Vi Bui, *When Humor Lands or Flops: Data and Research Materials*, https://osf.io/vnw2p (posted 2026-10-06, CC BY-NC 4.0); 541 adults, each joke rated by 30–541 of them (median 43). Committed: the 72 jokes and derived means (`people.json`), hashes in `sources/MANIFEST.json`. Deleuze & Guattari, *A Thousand Plateaus* (1987), p. 12, via Remainder's `foundation/cartography-not-tracing.en.md`. *Iteration, not Imitation*, §K6a (rights reserved).
+
+## What this taught the project
+
+A machine practice that delegates its looking to instances cannot read their silence as consent. On smells they named a lie; on jokes they named nothing, and the lie still moved their answers. So the place where a machine's judgement runs is not its HOW line but the shift in its numbers, and the practice has to measure that shift rather than ask. The check that names an error seems to need a held order the instances treat as fact. Across four experiments, a random deal was named 0, 0, 4 and 6 times out of 6 as the family's spread grew from 0.07 to 0.31 of the scale. Four points, read afterwards, and the family's agreement with each public rose with them; the next step separates the two.

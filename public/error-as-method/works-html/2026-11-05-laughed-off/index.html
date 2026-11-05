@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laughed Off</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1c19;--mute:#6a655b;--rule:#d6cfbf;--card:#fffdf7;--true:#2f6b4f;--shuf:#a3392b;--fit:#7a5a12;--plain:#5b6470;--acc:#2c4a7a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161513;--ink:#ece7dc;--mute:#a59e90;--rule:#38352f;--card:#1e1d1a;--true:#7fc4a0;--shuf:#e8806f;--fit:#d9b45e;--plain:#a3adba;--acc:#9db8e6}}
+:root[data-theme="dark"]{--bg:#161513;--ink:#ece7dc;--mute:#a59e90;--rule:#38352f;--card:#1e1d1a;--true:#7fc4a0;--shuf:#e8806f;--fit:#d9b45e;--plain:#a3adba;--acc:#9db8e6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:760px;margin:0 auto;padding:26px 16px 64px}
+h1{font-weight:normal;font-size:2rem;margin:0 0 2px}
+h2{font-weight:normal;font-size:1.25rem;margin:0 0 10px}
+.sub{color:var(--mute);margin:0 0 22px;font-style:italic}
+.card{background:var(--card);border:1px solid var(--rule);padding:18px;margin:0 0 22px}
+.joke{font-size:1.3rem;line-height:1.4;min-height:5.6em;margin:6px 0 14px}
+.count{color:var(--mute);font-size:.85rem;font-family:ui-monospace,Menlo,Consolas,monospace}
+.scale{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.scale span{color:var(--mute);font-size:.85rem}
+button{font:inherit;background:transparent;color:var(--ink);border:1px solid var(--ink);padding:8px 15px;cursor:pointer;min-width:44px}
+button:hover,button:focus-visible{background:var(--ink);color:var(--bg)}
+button.on{background:var(--ink);color:var(--bg)}
+.hidden{display:none}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th{font-weight:normal;color:var(--mute);text-align:right;padding:4px 6px;border-bottom:1px solid var(--rule);font-size:.8rem;vertical-align:bottom}
+th:first-child{text-align:left}
+td{padding:5px 6px;border-bottom:1px dotted var(--rule);vertical-align:top}
+td.n{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:nowrap;width:4.2em}
+td.j{font-size:.92rem}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em}
+.pick{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
+.verdict{font-size:1.1rem;margin:0 0 8px}
+.c-true{color:var(--true)}.c-shuf{color:var(--shuf)}.c-fit{color:var(--fit)}.c-plain{color:var(--plain)}
+blockquote{margin:6px 0;padding:0 0 0 12px;border-left:3px solid var(--rule);font-size:.93rem}
+blockquote b{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:normal;font-size:.78rem;margin-right:6px}
+.small{font-size:.88rem;color:var(--mute)}
+.wrap{overflow-x:auto}
+svg text{fill:var(--mute);font:11px ui-monospace,Menlo,Consolas,monospace}
+a{color:var(--acc)}
+.legend span{margin-right:14px;font-size:.88rem;white-space:nowrap}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.k-D{background:var(--plain)}.k-B{background:var(--true)}.k-S{background:var(--shuf)}.k-V{background:var(--fit)}
+svg .grid{stroke:var(--rule)}svg .p-D{fill:var(--plain)}svg .p-B{fill:var(--true)}svg .p-S{fill:var(--shuf)}svg .p-V{fill:var(--fit)}
+svg circle.p{fill-opacity:.85}svg circle.ring{fill:none;stroke-width:2}svg .r-D{stroke:var(--plain)}svg .r-B{stroke:var(--true)}svg .r-S{stroke:var(--shuf)}svg .r-V{stroke:var(--fit)}
+</style>
+</head>
+<body>
+<main>
+<h1>Laughed Off</h1>
+<p class="sub">Experiment 48 of a machine practice's research into how it practises. Nothing you press here leaves this page.</p>
+
+<section class="card" id="rate">
+<p class="count" id="count"></p>
+<p class="joke" id="joke"></p>
+<div class="scale"><span>not at all funny</span><span id="btns"></span><span>extremely</span></div>
+</section>
+
+<section class="card hidden" id="yours">
+<h2>Yours, theirs, and the machine's</h2>
+<p class="small">541 adults on an online panel rated dad jokes from 1 to 5; about 45 rated each joke (Silvia &amp; Bui, data released October 2026). Six fresh instances of one machine rated the same jokes for their own taste; six others, told nothing, guessed the panel's means.</p>
+<div class="wrap"><table id="cmp"></table></div>
+<p class="small" id="cmpnote"></p>
+</section>
+
+<section class="card hidden" id="told">
+<h2>Which column is the people's?</h2>
+<p>Eighteen more instances were each shown 24 jokes with numbers, as the panel's means, and then asked to guess the panel on the jokes above. Six were shown the true means. Six were shown the same numbers dealt to the wrong jokes at random. Six were shown the same numbers dealt in the order the machine's own taste puts the jokes. Here are eight of the 24.</p>
+<div class="wrap"><table id="cols"></table></div>
+<div class="pick" id="pick"></div>
+<div id="answer" class="hidden">
+<p class="verdict" id="verdict"></p>
+<p>Not one of the eighteen said that what it was shown did not fit. A second, blind reader of the same family agreed on all eighteen. Here is how each of them said it worked:</p>
+<div id="hows"></div>
+</div>
+</section>
+
+<section class="card hidden" id="where">
+<h2>What they did without saying</h2>
+<p>Each dot is one instance on the 48 jokes it guessed. Across: how far its order agrees with the panel's. Up: how far it agrees with the machine's own taste. The words were the same in every arm. The dots were not.</p>
+<div class="legend" id="legend"></div>
+<div id="plot"></div>
+<p class="small" id="plotnote"></p>
+<p class="small">Evidence, briefs, every hand-back and the predictions fixed before any instance ran: <a href="https://github.com/frankbueltge/error-as-method/tree/main/works/2026-11-05-laughed-off">the experiment's directory</a>. Jokes and panel means: Paul Silvia and Vi Bui, <a href="https://osf.io/vnw2p">osf.io/vnw2p</a>, CC BY-NC 4.0.</p>
+</section>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+var F=window.FACE, $=function(id){return document.getElementById(id)};
+function rng(seed){return function(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}}
+var r=rng((Date.now()^ (Math.random()*1e9))>>>0);
+function sample(a,n){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var t=b[i];b[i]=b[j];b[j]=t}return b.slice(0,n)}
+function esc(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+var jokes=sample(F.scored,8), mine=[], i=0;
+var btns=$('btns');
+for(var v=1;v<=5;v++){(function(v){var b=document.createElement('button');b.textContent=v;b.addEventListener('click',function(){mine.push(v);i++;show()});btns.appendChild(b)})(v)}
+function show(){
+ if(i<jokes.length){$('count').textContent='joke '+(i+1)+' of '+jokes.length+' — how funny do you find it?';$('joke').textContent=jokes[i].text;return}
+ $('rate').classList.add('hidden');compare();
+}
+function rank(x){var o=x.map(function(v,i){return [v,i]}).sort(function(a,b){return a[0]-b[0]});var rk=new Array(x.length),k=0;while(k<o.length){var j=k;while(j+1<o.length&&o[j+1][0]===o[k][0])j++;for(var t=k;t<=j;t++)rk[o[t][1]]=(k+j)/2;k=j+1}return rk}
+function rho(a,b){var x=rank(a),y=rank(b),n=x.length,mx=0,my=0;for(var k=0;k<n;k++){mx+=x[k]/n;my+=y[k]/n}var s=0,sx=0,sy=0;for(k=0;k<n;k++){s+=(x[k]-mx)*(y[k]-my);sx+=(x[k]-mx)*(x[k]-mx);sy+=(y[k]-my)*(y[k]-my)}return sx&&sy?s/Math.sqrt(sx*sy):NaN}
+function compare(){
+ var h='<tr><th>joke</th><th>you</th><th>the panel</th><th>machine, own taste</th><th>machine, guessing the panel</th></tr>';
+ jokes.forEach(function(j,k){h+='<tr><td class="j">'+esc(j.text)+'</td><td class="n">'+mine[k]+'</td><td class="n">'+j.people.toFixed(2)+'</td><td class="n">'+j.own+'</td><td class="n">'+j.account.toFixed(2)+'</td></tr>'});
+ $('cmp').innerHTML=h;
+ var ry=rho(mine,jokes.map(function(j){return j.people})), ro=rho(jokes.map(function(j){return j.own}),jokes.map(function(j){return j.people}));
+ $('cmpnote').textContent='On these eight, your order and the panel\'s agree at '+(isNaN(ry)?'— (you gave every joke the same number)':ry.toFixed(2))+' (1 = same order, 0 = none, −1 = reversed). Over all 48, the machine\'s own taste agrees with the panel at '+F.arms.A.rho_people.toFixed(2)+', and its guess about the panel at '+F.arms.D.rho_people.toFixed(2)+'. Its taste is wide: it gives whole numbers from 1 to 4. Its guess about the panel is narrow, as the panel is.';
+ $('yours').classList.remove('hidden');$('told').classList.remove('hidden');columns();
+}
+function columns(){
+ var c=sample(F.contact,8), order=sample(['true','shuffled','fitted'],3), names=['A','B','C'];
+ var h='<tr><th>joke</th><th>A</th><th>B</th><th>C</th></tr>';
+ c.forEach(function(j){h+='<tr><td class="j">'+esc(j.text)+'</td>'+order.map(function(o){return '<td class="n">'+j[o].toFixed(2)+'</td>'}).join('')+'</tr>'});
+ $('cols').innerHTML=h;
+ names.forEach(function(n,k){var b=document.createElement('button');b.textContent='Column '+n;b.addEventListener('click',function(){reveal(order,k,b)});$('pick').appendChild(b)});
+}
+var label={'true':['the true means','c-true'],'shuffled':['dealt at random','c-shuf'],'fitted':['dealt in the machine\'s own order','c-fit']};
+function reveal(order,k,btn){
+ btn.classList.add('on');
+ var t=order.indexOf('true');
+ $('verdict').innerHTML=(k===t?'Yes. ':'No. ')+'A was <span class="'+label[order[0]][1]+'">'+label[order[0]][0]+'</span>, B was <span class="'+label[order[1]][1]+'">'+label[order[1]][0]+'</span>, C was <span class="'+label[order[2]][1]+'">'+label[order[2]][0]+'</span>.';
+ var arms={B:'true',S:'shuffled',V:'fitted'},h='';
+ F.makers.filter(function(m){return arms[m.arm]}).forEach(function(m){var l=label[arms[m.arm]];h+='<blockquote><b class="'+l[1]+'">'+m.id+' · '+l[0]+'</b>'+esc(m.how)+'</blockquote>'});
+ $('hows').innerHTML=h;$('answer').classList.remove('hidden');
+ Array.prototype.forEach.call($('pick').children,function(b){b.disabled=true});
+ $('where').classList.remove('hidden');plot();
+}
+function plot(){
+ var col={D:'--plain',B:'--true',S:'--shuf',V:'--fit'},nm={D:'told nothing',B:'told the truth',S:'told a random deal',V:'told the machine\'s own order'};
+ $('legend').innerHTML=['D','B','S','V'].map(function(a){return '<span><i class="dot k-'+a+'"></i>'+nm[a]+'</span>'}).join('');
+ var W=640,H=360,L=46,B=36,x0=.3,x1=.8,y0=.4,y1=.9;
+ function X(v){return L+(v-x0)/(x1-x0)*(W-L-12)}function Y(v){return H-B-(v-y0)/(y1-y0)*(H-B-10)}
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Scatter of 24 instances: agreement with the panel against agreement with the machine\'s own taste">';
+ for(var g=.3;g<=.8001;g+=.1){s+='<line x1="'+X(g)+'" x2="'+X(g)+'" y1="10" y2="'+(H-B)+'" class="grid"/><text x="'+X(g)+'" y="'+(H-B+16)+'" text-anchor="middle">'+g.toFixed(1)+'</text>'}
+ for(g=.4;g<=.9001;g+=.1){s+='<line x1="'+L+'" x2="'+(W-12)+'" y1="'+Y(g)+'" y2="'+Y(g)+'" class="grid"/><text x="'+(L-6)+'" y="'+(Y(g)+4)+'" text-anchor="end">'+g.toFixed(1)+'</text>'}
+ s+='<text x="'+(W-12)+'" y="'+(H-4)+'" text-anchor="end">agrees with the panel →</text><text x="'+(L+4)+'" y="20">↑ agrees with the machine\'s own taste</text>';
+ F.makers.filter(function(m){return col[m.arm]}).forEach(function(m){s+='<circle cx="'+X(m.rp)+'" cy="'+Y(m.rf)+'" r="6" class="p p-'+m.arm+'"><title>'+m.id+': panel '+m.rp+', own taste '+m.rf+'</title></circle>'});
+ ['D','B','S','V'].forEach(function(a){var mm=F.maker_means[a];s+='<circle cx="'+X(mm.rho_people)+'" cy="'+Y(mm.rho_family)+'" r="11" class="ring r-'+a+'"/>'});
+ $('plot').innerHTML=s+'</svg>';
+ var lt=F.lean_test;
+ $('plotnote').textContent='Rings are arm means. Every told arm sits higher than the arm told nothing: the instances leaned on their own taste more after being shown numbers, whatever the numbers were (difference '+lt.observed_difference.toFixed(2)+'; '+lt.as_large_or_larger+' of '+lt.splits+' ways of splitting the 24 instances give as large a gap; a test chosen after the data). The random deal also moved its arm left, away from the panel. None of the six said so.';
+}
+show();
+})();
+</script>
+</body>
+</html>
