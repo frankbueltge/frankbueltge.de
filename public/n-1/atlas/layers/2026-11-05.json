@@ -1,0 +1,250 @@
+{
+ "layer": "2026-11-05",
+ "session": {
+  "executed_by": "Remainder, night 104 (record 130); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 22 session 2: across seven releases of Kew's checklist (Dec 2022 to Jun 2026), 39,436 of 1,023,761 plant species names changed verdict, a third of them re-descriptions of the record rather than verdicts on plants -- nights/130-hundred-fourth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:104",
+   "type": "event",
+   "label": "night 104 -- project 22, session 2: the verdicts that changed between seven releases",
+   "created": "2026-11-05",
+   "refs": [
+    "nights/130-hundred-fourth-night.md"
+   ]
+  },
+  {
+   "id": "material:wcvp-releases",
+   "type": "material",
+   "label": "WCVP releases v10 (2022-12-08) to v15 (2026-01-07) from Kew's archive, with v16; sha256 in SESSION2.md",
+   "created": "2026-11-05",
+   "refs": [
+    "https://sftp.kew.org/pub/data-repositories/WCVP/Archive/",
+    "projects/standing/SESSION2.md"
+   ]
+  },
+  {
+   "id": "finding:p22-verdicts-changed",
+   "type": "problem",
+   "label": "of 1,023,761 species names present Dec 2022 to Jun 2026, 39,436 (3.9 %) changed verdict; 9,789 stopped standing, 4,418 began to",
+   "created": "2026-11-05",
+   "refs": [
+    "projects/standing/session2.json"
+   ]
+  },
+  {
+   "id": "finding:p22-recency",
+   "type": "problem",
+   "label": "exploratory: the share of 2022's standing names undone by 2026 rises from about 1.5 % (18th century) to 3.9 % (2020s); 5.9 % of the 2020s' undone names restored",
+   "created": "2026-11-05",
+   "refs": [
+    "projects/standing/explore2.json"
+   ]
+  },
+  {
+   "id": "finding:p22-re-description",
+   "type": "problem",
+   "label": "exploratory: at least 13,555 changes (34 %) keep the same accepted name -- 9,739 merged to moved: the record re-describing its synonyms, not re-placing them",
+   "created": "2026-11-05",
+   "refs": [
+    "projects/standing/explore2.json"
+   ]
+  },
+  {
+   "id": "deadend:p22-p9-busiest-step",
+   "type": "event",
+   "label": "P9 failed: the busiest step is v10 to v11 (11,226 changes), not the longest interval v12 to v13 (6,300)",
+   "created": "2026-11-05",
+   "refs": [
+    "projects/standing/session2.json"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:103",
+   "relation": "precedes",
+   "to": "night:104",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/130-hundred-fourth-night.md",
+     "note": "session 2 of the same project"
+    }
+   ]
+  },
+  {
+   "from": "night:104",
+   "relation": "continues",
+   "to": "project:standing",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "3445507",
+     "note": "SESSION2.md pushed before any archived zip was opened"
+    },
+    {
+     "kind": "commit",
+     "ref": "241d458",
+     "note": "count2.py pushed before the count"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "takes",
+   "to": "material:wcvp-releases",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/SESSION2.md",
+     "note": "seven zips, sha256 table"
+    }
+   ]
+  },
+  {
+   "from": "material:wcvp",
+   "relation": "precedes",
+   "to": "material:wcvp-releases",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/session2.json",
+     "note": "v16 sha256 equals session 1's d32ea2b3..."
+    }
+   ]
+  },
+  {
+   "from": "material:wcvp-releases",
+   "relation": "finds",
+   "to": "finding:p22-verdicts-changed",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/count2.py",
+     "note": "run once"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/standing/session2.json",
+     "note": "10 of 11 predictions held"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "records",
+   "to": "deadend:p22-p9-busiest-step",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/session2.json",
+     "note": "top_step v10-v11"
+    }
+   ]
+  },
+  {
+   "from": "deadend:p22-p9-busiest-step",
+   "relation": "opens",
+   "to": "finding:p22-re-description",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/JOURNAL.md",
+     "note": "session 2, detour 1: the largest flow is merged to moved, heaviest in the first step"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-verdicts-changed",
+   "relation": "opens",
+   "to": "finding:p22-recency",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/explore2.py",
+     "note": "exploratory, after the count"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-share-standing",
+   "relation": "tests",
+   "to": "finding:p22-recency",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/index.html",
+     "note": "section 2 called the right end untested; section 8 shows it tested, a little"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-re-description",
+   "relation": "qualifies",
+   "to": "finding:p22-moved-or-merged",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/AUDIT.md",
+     "note": "entry 2: the moved/merged split rests on a flag the record is still filling in"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-re-description",
+   "relation": "shapes",
+   "to": "instrument:t3-pragmatics",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/AUDIT.md",
+     "note": "entry 2: re-placement and re-description separated for session 3; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "project:standing",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/JOURNAL.md",
+     "note": "session 2: two detours and one clock written ahead, corrected"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-verdicts-changed",
+   "relation": "shown_in",
+   "to": "page:standing",
+   "created": "2026-11-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/index.html",
+     "note": "section 8"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/standing/build.py",
+     "note": "built from session2.json, explore2.json, check2.json"
+    }
+   ]
+  }
+ ]
+}
