@@ -1,5 +1,105 @@
 [
  {
+  "id": "api-artic-edu",
+  "titel": "api.artic.edu",
+  "host": "api.artic.edu",
+  "adressen": [
+   "https://api.artic.edu/api/v1/artworks"
+  ],
+  "zugriff_url": "https://api.artic.edu/api/v1/artworks",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/tools/travel/harvest.py"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-census-gov",
+  "titel": "Missing Key",
+  "host": "api.census.gov",
+  "adressen": [
+   "https://api.census.gov/data/2015/acs/acs5?get=B25024_001E"
+  ],
+  "zugriff_url": "https://api.census.gov/data/2015/acs/acs5?get=B25024_001E",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/2026-10-14-who-was-beneath/data/sources.json"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-certspotter-com",
+  "titel": "api.certspotter.com",
+  "host": "api.certspotter.com",
+  "adressen": [
+   "https://api.certspotter.com/v1/issuances?domain=frankbueltge.de&include_subdomains=true&expand=dns_names&expand=issuer",
+   "https://api.certspotter.com/v1/issuances?domain=n-1.frankbueltge.de&include_subdomains=false&expand=dns_names&expand=issuer"
+  ],
+  "zugriff_url": "https://api.certspotter.com/v1/issuances?domain=frankbueltge.de&include_subdomains=true&expand=dns_names&expand=issuer",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/material/ct-logs/2026-08-31-sixteenth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-01-seventeenth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-02-eighteenth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-03-nineteenth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-03-twentieth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-05-twenty-first-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-06-twenty-second-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-08-twenty-third-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-09-twenty-fourth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-11-twenty-fifth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-12-twenty-sixth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-19-twenty-seventh-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-20-twenty-eighth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-22-twenty-ninth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-23-thirtieth-asking/ask.sh",
+   "n-1/material/ct-logs/2026-09-24-closing-asking/ask.sh"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "api-cloudflare-com",
   "titel": "api.cloudflare.com",
   "host": "api.cloudflare.com",
@@ -56,6 +156,62 @@
   "reachability_changed_on": null
  },
  {
+  "id": "api-datacite-org",
+  "titel": "api.datacite.org",
+  "host": "api.datacite.org",
+  "adressen": [
+   "https://api.datacite.org/dois/"
+  ],
+  "zugriff_url": "https://api.datacite.org/dois/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own atlas-scout pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/atlas-scout/src/atlas_scout/holdings.py"
+  ],
+  "benutzt_von": [
+   "atlas-scout"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-delphi-cmu-edu",
+  "titel": "api.delphi.cmu.edu",
+  "host": "api.delphi.cmu.edu",
+  "adressen": [
+   "https://api.delphi.cmu.edu/epidata/fluview/"
+  ],
+  "zugriff_url": "https://api.delphi.cmu.edu/epidata/fluview/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-22-old-tools/face-data.js"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "api-eia-gov",
   "titel": "api.eia.gov",
   "host": "api.eia.gov",
@@ -81,6 +237,347 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-gbif-org",
+  "titel": "GBIF API",
+  "host": "api.gbif.org",
+  "adressen": [
+   "https://api.gbif.org/v1/",
+   "https://api.gbif.org/v1/dataset/",
+   "https://api.gbif.org/v1/occurrence/",
+   "https://api.gbif.org/v1/occurrence/%d",
+   "https://api.gbif.org/v1/occurrence/search",
+   "https://api.gbif.org/v1/occurrence/search?",
+   "https://api.gbif.org/v1/occurrence/search?limit=0&taxonKey=%d",
+   "https://api.gbif.org/v1/occurrence/search?limit=0&taxonKey=%d&basisOfRecord=%s&facet=publishingOrg&facet=country&facetLimit=100",
+   "https://api.gbif.org/v1/occurrence/search?limit=0&taxonKey=%d&basisOfRecord=LIVING_SPECIMEN",
+   "https://api.gbif.org/v1/occurrence/search?speciesKey={k",
+   "https://api.gbif.org/v1/occurrence/search?taxonKey=9527499&mediaType=StillImage&year=2010",
+   "https://api.gbif.org/v1/occurrence/search?taxonKey={k",
+   "https://api.gbif.org/v1/occurrence/search?taxonKey={v[",
+   "https://api.gbif.org/v1/occurrence/{r[",
+   "https://api.gbif.org/v1/occurrence/{x[",
+   "https://api.gbif.org/v1/organization/",
+   "https://api.gbif.org/v1/species/search",
+   "https://api.gbif.org/v1/species/search?",
+   "https://api.gbif.org/v1/species/search?rank=SPECIES&status=ACCEPTED&highertaxonKey=212&threat=EXTINCT&limit=300&offset=%d",
+   "https://api.gbif.org/v1/species/{k",
+   "https://api.gbif.org/v1/species/{v["
+  ],
+  "zugriff_url": "https://api.gbif.org/v1/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier, the Field, n-1, the nightly line and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-08-31-the-nature-of-the-record/gbif.py",
+   "error-as-method/works/2026-08-31-the-nature-of-the-record/harvest.py",
+   "field-research/artifacts/2026-10-03-after-the-last-seen/fetch.py",
+   "field-research/artifacts/2026-10-03-after-the-last-seen/probe.py",
+   "field-research/artifacts/2026-10-03-the-record-of-the-gone/fetch.py",
+   "field-research/artifacts/2026-10-03-the-record-of-the-gone/v1-failed/fetch.py",
+   "field-research/artifacts/2026-10-04-the-label-and-the-species/fetch.py",
+   "field-research/artifacts/2026-10-04-the-label-and-the-species/repair.py",
+   "field-research/artifacts/2026-10-05-the-sightings-of-the-gone/analyse.py",
+   "field-research/artifacts/2026-10-05-the-sightings-of-the-gone/fetch.py",
+   "field-research/artifacts/2026-10-05-the-sightings-of-the-gone/top4.py",
+   "field-research/artifacts/2026-10-07-how-many-sightings-of-the-gone/datasets.py",
+   "field-research/artifacts/2026-10-07-how-many-sightings-of-the-gone/fetch.py",
+   "n-1/projects/looked-for/count1.py",
+   "n-1/projects/looked-for/count2.py",
+   "n-1/projects/looked-for/count2b.py",
+   "n-1/projects/looked-for/count3.py",
+   "n-1/projects/looked-for/count3b.py",
+   "n-1/projects/looked-for/explore3.py",
+   "n-1/projects/looked-for/sheet.py",
+   "n-1/projects/standing/check1.py",
+   "studio/works/2026-10-03-how-many-hands/fetch.py",
+   "studio/works/2026-10-03-how-many-hands/verify.py",
+   "studio/works/2026-10-03-who-writes-the-row/verify.py",
+   "studio/works/2026-10-04-proof-of-life/fetch.py",
+   "studio/works/2026-10-04-proof-of-life/verify.py",
+   "studio/works/2026-10-05-under-a-dead-name/fetch_sample.py",
+   "studio/works/2026-10-05-under-a-dead-name/fetch_species.py",
+   "studio/works/2026-10-05-under-a-dead-name/verify.py",
+   "studio/works/2026-10-06-every-open-one/fetch_census.py",
+   "studio/works/2026-10-06-every-open-one/verify.py",
+   "studio/works/2026-10-07-the-unshown/fetch_all.py",
+   "ulysses/window/cycle-004-session-4/collect.py"
+  ],
+  "benutzt_von": [
+   "atelier",
+   "field",
+   "n-1",
+   "nightly",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-gdeltproject-org",
+  "titel": "api.gdeltproject.org",
+  "host": "api.gdeltproject.org",
+  "adressen": [
+   "https://api.gdeltproject.org/api/v2/doc/doc",
+   "https://api.gdeltproject.org/api/v2/doc/doc?query="
+  ],
+  "zugriff_url": "https://api.gdeltproject.org/api/v2/doc/doc",
+  "geprueft": false,
+  "pruef_status": 429,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 429",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/drafts/2026-08-04-echo-below-the-line/day2/fetch_pool_day2.py",
+   "field-research/drafts/2026-08-04-echo-below-the-line/day2/politics_only.py",
+   "field-research/drafts/2026-08-04-echo-below-the-line/day2/refetch_patient.py",
+   "field-research/drafts/2026-08-04-echo-below-the-line/fetch_pool.py",
+   "field-research/drafts/2026-08-08-the-hours-it-was-not-looking/api_probe.py"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-hpc-tools",
+  "titel": "api.hpc.tools",
+  "host": "api.hpc.tools",
+  "adressen": [
+   "https://api.hpc.tools/v1/public/fts/flow",
+   "https://api.hpc.tools/v1/public/fts/flow?year=2026&groupby=plan",
+   "https://api.hpc.tools/v1/public/fts/flow?year=<YEAR>&groupby=plan",
+   "https://api.hpc.tools/v1/public/plan/year/2026",
+   "https://api.hpc.tools/v1/public/plan/year/<YEAR>",
+   "https://api.hpc.tools/v2/public/plan/overview/<YEAR>"
+  ],
+  "zugriff_url": "https://api.hpc.tools/v1/public/fts/flow",
+  "geprueft": false,
+  "pruef_status": 405,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 405",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of Machine Attention, the Field and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/2026-11-01-the-other-hour/sources.json",
+   "machine-attention/practice/src/practice/foreknown/reaction.py",
+   "machine-attention/practice/src/practice/foreknown/sources.py",
+   "machine-attention/practice/src/practice/interval/sources.py",
+   "studio/works/2026-10-29-unwoven/build_rod.py"
+  ],
+  "benutzt_von": [
+   "attention",
+   "field",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-manifold-markets",
+  "titel": "api.manifold.markets",
+  "host": "api.manifold.markets",
+  "adressen": [
+   "https://api.manifold.markets/v0",
+   "https://api.manifold.markets/v0/market/",
+   "https://api.manifold.markets/v0/market/<id>",
+   "https://api.manifold.markets/v0/market/{i",
+   "https://api.manifold.markets/v0/market/{mid"
+  ],
+  "zugriff_url": "https://api.manifold.markets/v0",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier, the Field and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/2026-10-08-does-the-rule-move-the-price/fetch.py",
+   "studio/works/2026-10-08-only-no/fetch.py",
+   "studio/works/2026-10-08-only-no/fetch_detail.py",
+   "ulysses/presentations/cycle-006/analysis.py",
+   "ulysses/presentations/cycle-006/correction.py"
+  ],
+  "benutzt_von": [
+   "atelier",
+   "field",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-nal-usda-gov",
+  "titel": "api.nal.usda.gov",
+  "host": "api.nal.usda.gov",
+  "adressen": [
+   "https://api.nal.usda.gov/fdc/v1/food/{i",
+   "https://api.nal.usda.gov/fdc/v1/food/{r["
+  ],
+  "zugriff_url": "https://api.nal.usda.gov/fdc/v1/food/{i",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "Adresse ist eine Vorlage mit Platzhalter, nicht abrufbar",
+  "zugang_gesperrt": false,
+  "nur_vorlage": true,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/on-the-grid/check1.py",
+   "n-1/projects/on-the-grid/check2.py",
+   "n-1/projects/on-the-grid/recheck1.py"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": null,
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-opencitations-net",
+  "titel": "api.opencitations.net",
+  "host": "api.opencitations.net",
+  "adressen": [
+   "https://api.opencitations.net/index/v2/citations/doi:{doi"
+  ],
+  "zugriff_url": "https://api.opencitations.net/index/v2/citations/doi:{doi",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "Adresse ist eine Vorlage mit Platzhalter, nicht abrufbar",
+  "zugang_gesperrt": false,
+  "nur_vorlage": true,
+  "relevanz": "Fetched in the works of the Atelier.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "ulysses/projects/2026-07-23-negative-parallax/warrant-trace/frame-recovery-tick41.py"
+  ],
+  "benutzt_von": [
+   "atelier"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": null,
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-parliament-uk",
+  "titel": "api.parliament.uk",
+  "host": "api.parliament.uk",
+  "adressen": [
+   "https://api.parliament.uk/bill-papers/publication-types/44"
+  ],
+  "zugriff_url": "https://api.parliament.uk/bill-papers/publication-types/44",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/will-write/build.py"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-semanticscholar-org",
+  "titel": "api.semanticscholar.org",
+  "host": "api.semanticscholar.org",
+  "adressen": [
+   "https://api.semanticscholar.org/graph/v1/paper/search",
+   "https://api.semanticscholar.org/graph/v1/paper/search/bulk"
+  ],
+  "zugriff_url": "https://api.semanticscholar.org/graph/v1/paper/search",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/tools/a-number-you-cannot-check/fetch_s2.py",
+   "field-research/tools/autoloop/priorart.py"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-sightengine-com",
+  "titel": "api.sightengine.com",
+  "host": "api.sightengine.com",
+  "adressen": [
+   "https://api.sightengine.com/1.0/check.json"
+  ],
+  "zugriff_url": "https://api.sightengine.com/1.0/check.json",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/drafts/2026-07-12-split-seal-adversarial/tools/run_layer2.py",
+   "field-research/drafts/2026-07-23-grandfather-clause/a1/tools/run_layer2.py",
+   "field-research/works/2026-07-11-split-seal/tools/run_layer2.py"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -138,6 +635,94 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-ted-europa-eu",
+  "titel": "api.ted.europa.eu",
+  "host": "api.ted.europa.eu",
+  "adressen": [
+   "https://api.ted.europa.eu/v3/notices/search"
+  ],
+  "zugriff_url": "https://api.ted.europa.eu/v3/notices/search",
+  "geprueft": false,
+  "pruef_status": 405,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 405",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of The State Before the Interface.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "state-before-interface/sentinel/src/sentinel/fetch.py"
+  ],
+  "benutzt_von": [
+   "observatory"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-weather-gov",
+  "titel": "api.weather.gov",
+  "host": "api.weather.gov",
+  "adressen": [
+   "https://api.weather.gov/alerts/active",
+   "https://api.weather.gov/products",
+   "https://api.weather.gov/zones?type=public"
+  ],
+  "zugriff_url": "https://api.weather.gov/alerts/active",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of Machine Attention and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "machine-attention/practice/src/practice/foreknown/sources.py",
+   "studio/tools/relay.py"
+  ],
+  "benutzt_von": [
+   "attention",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "api-worldpop-org",
+  "titel": "api.worldpop.org",
+  "host": "api.worldpop.org",
+  "adressen": [
+   "https://api.worldpop.org/v1/services/stats?"
+  ],
+  "zugriff_url": "https://api.worldpop.org/v1/services/stats?",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "studio/works/2026-10-13-underneath/fetch.py"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -200,6 +785,63 @@
   "reachability_changed_on": null
  },
  {
+  "id": "aviationweather-gov",
+  "titel": "aviationweather.gov",
+  "host": "aviationweather.gov",
+  "adressen": [
+   "https://aviationweather.gov/api/data/metar"
+  ],
+  "zugriff_url": "https://aviationweather.gov/api/data/metar",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "studio/tools/eventfulness.py",
+   "studio/tools/relay.py"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "bills-api-parliament-uk",
+  "titel": "bills-api.parliament.uk",
+  "host": "bills-api.parliament.uk",
+  "adressen": [
+   "https://bills-api.parliament.uk/api/v1"
+  ],
+  "zugriff_url": "https://bills-api.parliament.uk/api/v1",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/will-write/q1.py"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "blog-gdeltproject-org",
   "titel": "GKG 2.0 Now Includes Page Titles – The GDELT Project",
   "host": "blog.gdeltproject.org",
@@ -256,6 +898,93 @@
   "reachability_changed_on": null
  },
  {
+  "id": "catalog-data-gov",
+  "titel": "catalog.data.gov",
+  "host": "catalog.data.gov",
+  "adressen": [
+   "https://catalog.data.gov/api/3/action/package_search",
+   "https://catalog.data.gov/dataset/soil-climate-analysis-network-scan:"
+  ],
+  "zugriff_url": "https://catalog.data.gov/api/3/action/package_search",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field and the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-18-told-when/extract.py",
+   "field-research/artifacts/cycle-003/2026-09-11-does-it-travel/data/sources.json"
+  ],
+  "benutzt_von": [
+   "field",
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "catalogue-dataspace-copernicus-eu",
+  "titel": "catalogue.dataspace.copernicus.eu",
+  "host": "catalogue.dataspace.copernicus.eu",
+  "adressen": [
+   "https://catalogue.dataspace.copernicus.eu/odata/v1/Products"
+  ],
+  "zugriff_url": "https://catalogue.dataspace.copernicus.eu/odata/v1/Products",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of Machine Attention.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "machine-attention/practice/src/practice/darkocean/sources.py"
+  ],
+  "benutzt_von": [
+   "attention"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "cdsarc-cds-unistra-fr",
+  "titel": "cdsarc.cds.unistra.fr",
+  "host": "cdsarc.cds.unistra.fr",
+  "adressen": [
+   "https://cdsarc.cds.unistra.fr/ftp/V/50/catalog.gz"
+  ],
+  "zugriff_url": "https://cdsarc.cds.unistra.fr/ftp/V/50/catalog.gz",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "nicht erreichbar: ConnectTimeout",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "studio/works/2026-10-24-going-out/fetch.py"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "celestrak-org",
   "titel": "celestrak.org",
   "host": "celestrak.org",
@@ -281,6 +1010,35 @@
   "verify_status": "toVerify",
   "probed_on": null,
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "ckan-publishing-service-gov-uk",
+  "titel": "ckan.publishing.service.gov.uk",
+  "host": "ckan.publishing.service.gov.uk",
+  "adressen": [
+   "https://ckan.publishing.service.gov.uk/api/3/action/package_search"
+  ],
+  "zugriff_url": "https://ckan.publishing.service.gov.uk/api/3/action/package_search",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/tools/identify/identify.py",
+   "field-research/tools/travel/harvest.py"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -371,6 +1129,40 @@
   "reachability_changed_on": null
  },
  {
+  "id": "clinicaltrials-gov",
+  "titel": "clinicaltrials.gov",
+  "host": "clinicaltrials.gov",
+  "adressen": [
+   "https://clinicaltrials.gov/api/int/studies/{NCT",
+   "https://clinicaltrials.gov/api/v2/studies",
+   "https://clinicaltrials.gov/api/v2/version"
+  ],
+  "zugriff_url": "https://clinicaltrials.gov/api/v2/studies",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1 and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/why-stopped/fetch.py",
+   "n-1/projects/why-stopped/fetch3.py",
+   "n-1/projects/why-stopped/probe2.py",
+   "studio/projects/amendments/capture.py"
+  ],
+  "benutzt_von": [
+   "n-1",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "commission-europa-eu",
   "titel": "commission.europa.eu",
   "host": "commission.europa.eu",
@@ -427,6 +1219,35 @@
   "reachability_changed_on": "2026-10-09"
  },
  {
+  "id": "data-cityofnewyork-us",
+  "titel": "311 Service Requests from 2020 to Present | NYC Open Data",
+  "host": "data.cityofnewyork.us",
+  "adressen": [
+   "https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9",
+   "https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2020-to-Present/erm2-nwe9"
+  ],
+  "zugriff_url": "https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-22-old-tools/face-data.js"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "data-ecb-europa-eu",
   "titel": "Homepage | ECB Data Portal",
   "host": "data.ecb.europa.eu",
@@ -455,11 +1276,46 @@
   "reachability_changed_on": null
  },
  {
+  "id": "data-europa-eu",
+  "titel": "data.europa.eu",
+  "host": "data.europa.eu",
+  "adressen": [
+   "http://data.europa.eu/eli/reg/2024/1689/oj>",
+   "https://data.europa.eu/mqa/methodology"
+  ],
+  "zugriff_url": "http://data.europa.eu/eli/reg/2024/1689/oj>",
+  "geprueft": true,
+  "pruef_status": 202,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/cycle-003/2026-09-09-the-denominator/data/sources.json",
+   "field-research/drafts/2026-07-30-follow-the-line/SOURCES.md"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "data-gdeltproject-org",
   "titel": "data.gdeltproject.org",
   "host": "data.gdeltproject.org",
   "adressen": [
-   "http://data.gdeltproject.org/gdeltv2"
+   "http://data.gdeltproject.org/events/{stamp",
+   "http://data.gdeltproject.org/gdeltv2",
+   "http://data.gdeltproject.org/gdeltv2/",
+   "http://data.gdeltproject.org/gdeltv2/20221111000000.export.CSV.zip",
+   "http://data.gdeltproject.org/gdeltv2/masterfilelist-translation.txt",
+   "http://data.gdeltproject.org/gdeltv2/masterfilelist.txt"
   ],
   "zugriff_url": "http://data.gdeltproject.org/gdeltv2",
   "geprueft": false,
@@ -467,15 +1323,22 @@
   "pruef_vermerk": "Identifier antwortet mit HTTP 404",
   "zugang_gesperrt": false,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own newspool and protokoll pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own newspool and protokoll pipeline on every run. Fetched in the works of Machine Attention and the Field.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
+   "field-research/drafts/2026-08-08-the-hours-it-was-not-looking/build_register.py",
+   "field-research/drafts/2026-08-08-the-hours-it-was-not-looking/probe.py",
+   "field-research/drafts/2026-08-10-who-actually-reads-it/demonstrate2.py",
+   "field-research/drafts/2026-08-10-who-actually-reads-it/reproduce_refutation.py",
+   "machine-attention/practice/src/practice/foreknown/attention.py",
    "pipelines/newspool/fetch_pool.py",
    "pipelines/protokoll/src/protokoll/adapters/conflict.py"
   ],
   "benutzt_von": [
+   "attention",
+   "field",
    "newspool",
    "protokoll"
   ],
@@ -510,6 +1373,173 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "data-gov-uk",
+  "titel": "National Data Library - The home of UK public data - data.gov.uk",
+  "host": "data.gov.uk",
+  "adressen": [
+   "https://data.gov.uk"
+  ],
+  "zugriff_url": "https://data.gov.uk",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/tools/travel/harvest.py"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "data-humdata-org",
+  "titel": "data.humdata.org",
+  "host": "data.humdata.org",
+  "adressen": [
+   "https://data.humdata.org/api/3/action/package_show",
+   "https://data.humdata.org/dataset/7a7e7428-b8d7-4d2e-91d3-19100500e016/resource/23d51849-5926-422c-a58a-f9bd68088f20/download/ipc_global_national_long.csv",
+   "https://data.humdata.org/dataset/7a7e7428-b8d7-4d2e-91d3-19100500e016/resource/2c471c60-b94b-4f9d-b4a1-9a4373e213d1/download/ipc_global_area_long.csv",
+   "https://data.humdata.org/dataset/cecb0d2f-331f-45be-a613-58aa506844f9/resource/",
+   "https://data.humdata.org/dataset/e902b209-b7bc-42f9-893a-294276d7cc62/resource/",
+   "https://data.humdata.org/dataset/e902b209-b7bc-42f9-893a-294276d7cc62/resource/f7c9b552-0d41-4559-9fae-c450175fc39c/download/drc_ebola_cases_consolidated.csv",
+   "https://data.humdata.org/dataset/ebola-cases-and-deaths-drc-north-kivu",
+   "https://data.humdata.org/dataset/global-acute-food-insecurity-country-data"
+  ],
+  "zugriff_url": "https://data.humdata.org/api/3/action/package_show",
+  "geprueft": false,
+  "pruef_status": 409,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 409",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier, Machine Attention, the Field and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/2026-11-01-the-mist-stops/sources.json",
+   "field-research/artifacts/2026-11-01-the-other-hour/sources.json",
+   "field-research/artifacts/2026-11-02-the-carried-zero/sources.json",
+   "field-research/artifacts/2026-11-03-the-second-clock/sources.json",
+   "field-research/artifacts/cycle-011/the-blank-and-the-cuts/sources.json",
+   "field-research/artifacts/cycle-012/the-quiet-curve/sources.json",
+   "field-research/notes/convening-after-010/unclassified/sources.json",
+   "machine-attention/practice/src/practice/interval/sources.py",
+   "studio/etudes/only-the-confirmed/build.py",
+   "studio/works/2026-11-03-clear-air/build.py",
+   "studio/works/2026-11-03-clear-air/build_land.py",
+   "ulysses/artifacts/convening-after-010/the-unclassified/build_national.py",
+   "ulysses/artifacts/convening-after-011/forty-two-days/build.py",
+   "ulysses/artifacts/cycle-011/the-mortar/build.py",
+   "ulysses/presentations/cycle-011/build.py"
+  ],
+  "benutzt_von": [
+   "atelier",
+   "attention",
+   "field",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "data-iana-org",
+  "titel": "Index of /time-zones/releases",
+  "host": "data.iana.org",
+  "adressen": [
+   "https://data.iana.org/time-zones/releases/"
+  ],
+  "zugriff_url": "https://data.iana.org/time-zones/releases/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-08-13-the-backward-file/harvest.py",
+   "error-as-method/works/2026-08-13-the-backward-file/measure.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "database-lichess-org",
+  "titel": "database.lichess.org",
+  "host": "database.lichess.org",
+  "adressen": [
+   "https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.zst",
+   "https://database.lichess.org/standard/sha256sums.txt"
+  ],
+  "zugriff_url": "https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.zst",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/departures/fetch.py"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "datacenter-iers-org",
+  "titel": "datacenter.iers.org",
+  "host": "datacenter.iers.org",
+  "adressen": [
+   "https://datacenter.iers.org/data/latestVersion/EOP_20_C04_one_file_1962-now.txt",
+   "https://datacenter.iers.org/data/latestVersion/finals.all.iau2000.txt"
+  ],
+  "zugriff_url": "https://datacenter.iers.org/data/latestVersion/EOP_20_C04_one_file_1962-now.txt",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "ulysses/projects/2026-07-21-untested-second/eop-check.py"
+  ],
+  "benutzt_von": [
+   "atelier"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -566,6 +1596,62 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "dataverse-harvard-edu",
+  "titel": "dataverse.harvard.edu",
+  "host": "dataverse.harvard.edu",
+  "adressen": [
+   "https://dataverse.harvard.edu/api/access/datafile/3674405"
+  ],
+  "zugriff_url": "https://dataverse.harvard.edu/api/access/datafile/3674405",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/cycle-009/after-the-empty-warnings/data/sources.json"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "depositedpapers-api-parliament-uk",
+  "titel": "depositedpapers-api.parliament.uk",
+  "host": "depositedpapers-api.parliament.uk",
+  "adressen": [
+   "https://depositedpapers-api.parliament.uk/api/DepositedPapers"
+  ],
+  "zugriff_url": "https://depositedpapers-api.parliament.uk/api/DepositedPapers",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/will-write/fetch3.py"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -627,27 +1713,1146 @@
   "reachability_changed_on": null
  },
  {
-  "id": "earthquake-usgs-gov",
-  "titel": "earthquake.usgs.gov",
-  "host": "earthquake.usgs.gov",
+  "id": "discovery-nationalarchives-gov-uk",
+  "titel": "discovery.nationalarchives.gov.uk",
+  "host": "discovery.nationalarchives.gov.uk",
   "adressen": [
-   "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson"
+   "https://discovery.nationalarchives.gov.uk/API/search/records"
   ],
-  "zugriff_url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+  "zugriff_url": "https://discovery.nationalarchives.gov.uk/API/search/records",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "studio/works/2026-09-14-opens-2109/harvest.py"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-16904-envidat-778",
+  "titel": "Stem Radius Change Data Pfynwald",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.16904/envidat.778"
+  ],
+  "zugriff_url": "https://doi.org/10.16904/envidat.778",
   "geprueft": true,
   "pruef_status": 200,
   "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/docs/research-notes/machine-practice/PROJECT.md",
+   "error-as-method/journal/2026-10-16-session-131.md",
+   "error-as-method/works/2026-10-16-told-what-fits/PREDICTIONS.md",
+   "error-as-method/works/2026-10-16-told-what-fits/extract.py",
+   "error-as-method/works/2026-10-16-told-what-fits/meta.json",
+   "error-as-method/works/2026-10-16-told-what-fits/sources/MANIFEST.json",
+   "error-as-method/works/2026-10-16-told-what-fits/work.md"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-14470-tr560404",
+  "titel": "GEOFON Seismic Network",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.14470/tr560404"
+  ],
+  "zugriff_url": "https://doi.org/10.14470/tr560404",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by Machine Attention.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "machine-attention/docs/2026-08-22-planetary-listening-audit.md",
+   "machine-attention/planetary/readings/2026-10-15.json",
+   "machine-attention/planetary/readings/2026-10-16.json",
+   "machine-attention/planetary/readings/2026-10-17.json",
+   "machine-attention/planetary/readings/2026-10-18.json",
+   "machine-attention/planetary/readings/2026-10-19.json",
+   "machine-attention/planetary/readings/2026-10-20.json",
+   "machine-attention/planetary/readings/2026-10-22.json",
+   "machine-attention/planetary/readings/2026-10-23.json",
+   "machine-attention/planetary/readings/2026-10-24.json",
+   "machine-attention/planetary/readings/2026-10-25.json",
+   "machine-attention/planetary/readings/2026-10-26.json",
+   "machine-attention/planetary/readings/2026-10-27.json",
+   "machine-attention/planetary/readings/2026-10-28.json",
+   "machine-attention/planetary/readings/2026-10-29.json",
+   "machine-attention/planetary/readings/2026-10-30.json",
+   "machine-attention/planetary/readings/2026-10-31.json",
+   "machine-attention/planetary/readings/2026-11-01.json",
+   "machine-attention/planetary/readings/2026-11-02.json",
+   "machine-attention/planetary/readings/2026-11-03.json",
+   "machine-attention/planetary/readings/2026-11-04.json",
+   "machine-attention/planetary/spike/2026-10-14.json",
+   "machine-attention/practice/src/practice/planetary/spike.py",
+   "machine-attention/verify.py"
+  ],
+  "benutzt_von": [
+   "attention"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-7910-dvn-gurszb",
+  "titel": "Replication data for: Responding to Criticism: Non-Democratic States and Treaty Reservation Withdrawal",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.7910/dvn/gurszb"
+  ],
+  "zugriff_url": "https://doi.org/10.7910/dvn/gurszb",
+  "geprueft": true,
+  "pruef_status": 202,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/REGISTER.md",
+   "n-1/atlas/layers/2026-10-22.json",
+   "n-1/projects/held-back/NEIGHBOURS.md",
+   "n-1/projects/held-back/PROJECT.md",
+   "n-1/projects/held-back/SELECTION.md"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-15468-9evqzx",
+  "titel": "Visuelle undersøkelser - petroleumsvirksomhet",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/9evqzx"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/9evqzx",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/REGISTER.md",
+   "n-1/projects/looked-for/SESSION3.md",
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5683-sp4-sbou0s",
+  "titel": "Is this Funny to You? (IFY)",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5683/sp4/sbou0s"
+  ],
+  "zugriff_url": "https://doi.org/10.5683/sp4/sbou0s",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/journal/2026-10-30.md"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5281-zenodo-23228231",
+  "titel": "Acceptability data on English right-peripheral dependents: experimental materials, analysis plans, data, and scripts",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5281/zenodo.23228231"
+  ],
+  "zugriff_url": "https://doi.org/10.5281/zenodo.23228231",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-29-occupied-without-counting/sources/zenodo-23354343.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5281-zenodo-23354343",
+  "titel": "Acceptability data on English right-peripheral dependents: experimental materials, analysis plans, data, and scripts",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5281/zenodo.23354343"
+  ],
+  "zugriff_url": "https://doi.org/10.5281/zenodo.23354343",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-29-occupied-without-counting/sources/zenodo-23354343.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5281-zenodo-22045971",
+  "titel": "Dataset to \"Short-term noise annoyance towards drones and other transportation noise sources: a laboratory study\"",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5281/zenodo.22045971"
+  ],
+  "zugriff_url": "https://doi.org/10.5281/zenodo.22045971",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-29-unheard/sources/zenodo-22045972.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5281-zenodo-22045972",
+  "titel": "Dataset to \"Short-term noise annoyance towards drones and other transportation noise sources: a laboratory study\"",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5281/zenodo.22045972"
+  ],
+  "zugriff_url": "https://doi.org/10.5281/zenodo.22045972",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-29-unheard/sources/zenodo-22045972.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5281-zenodo-23658923",
+  "titel": "The Foreign Language Effect on Moral Judgments of Blameworthy and Praiseworthy Behaviors Across Moral Foundations",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5281/zenodo.23658923"
+  ],
+  "zugriff_url": "https://doi.org/10.5281/zenodo.23658923",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-28-told-the-half/sources/zenodo-23658923.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5281-zenodo-23658922",
+  "titel": "The Foreign Language Effect on Moral Judgments of Blameworthy and Praiseworthy Behaviors Across Moral Foundations",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5281/zenodo.23658922"
+  ],
+  "zugriff_url": "https://doi.org/10.5281/zenodo.23658922",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-28-told-the-half/sources/zenodo-23658923.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5281-zenodo-23296648",
+  "titel": "Food liking ratings in adults with constitutional thinness and normal weight",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5281/zenodo.23296648"
+  ],
+  "zugriff_url": "https://doi.org/10.5281/zenodo.23296648",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-26-without-a-tongue/sources/zenodo-record-23296649.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5281-zenodo-23296649",
+  "titel": "Food liking ratings in adults with constitutional thinness and normal weight",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5281/zenodo.23296649"
+  ],
+  "zugriff_url": "https://doi.org/10.5281/zenodo.23296649",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-26-without-a-tongue/sources/zenodo-record-23296649.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-15468-b9c3d7",
+  "titel": "Swedish National Forest Inventory: Presence-absence vegetation data (1995-current)",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/b9c3d7"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/b9c3d7",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-15468-nwjta7",
+  "titel": "Swedish National Forest Inventory: Presence-absence vegetation data (1995-2017, discontinued sample)",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/nwjta7"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/nwjta7",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-25494-p6-mlpa-kelpforest-9",
+  "titel": "Monitoring and Evaluation of Kelp Forest Ecosystems in the MLPA Marine Protected Area Network",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.25494/p6/mlpa_kelpforest.9"
+  ],
+  "zugriff_url": "https://doi.org/10.25494/p6/mlpa_kelpforest.9",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-15468-8vepgt",
+  "titel": "A spatio-temporal _Culicoides_ species dataset produced by the French surveillance program from 2009 to 2012",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/8vepgt"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/8vepgt",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-15468-eplomk",
+  "titel": "Collation of spatial seagrass data (meadow extent polygons, species presence/absence points) from 1984 - 2018 for the Great Barrier Reef World Heritage Area (GBRWHA) (NESP TWQ Proj",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/eplomk"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/eplomk",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-15468-g4kafk",
+  "titel": "New Zealand Department of Conservation non-native Mammal Faecal Pellet Data 2011–2026",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/g4kafk"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/g4kafk",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-15468-zey5uw",
+  "titel": "ANEMOON Beach washup monitoring (SMP) data along the Dutch coastline collected through citizen science.",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/zey5uw"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/zey5uw",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-14284-712",
+  "titel": "Phytoplankton abundance and composition and physico-chemical parameters in the Ebro delta embayments (Alfacs Bay and Fangar Bay, North Western Mediterranean) during 1990-2019",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.14284/712"
+  ],
+  "zugriff_url": "https://doi.org/10.14284/712",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-25607-sespyq",
+  "titel": "Monitoring offshore subtidal marine biodiversity in the Eastern Shore Islands Area of Interest using eDNA Metabarcoding",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.25607/sespyq"
+  ],
+  "zugriff_url": "https://doi.org/10.25607/sespyq",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-7910-dvn-k7a6nw",
+  "titel": "Replication Data for: Qualified ratification: Explaining reservations to international human rights treaties, Journal of Legal Studies, 36 (2), 2007, pp. 397-430",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.7910/dvn/k7a6nw"
+  ],
+  "zugriff_url": "https://doi.org/10.7910/dvn/k7a6nw",
+  "geprueft": true,
+  "pruef_status": 202,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/held-back/NEIGHBOURS.md",
+   "n-1/projects/held-back/SELECTION.md"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-7289-v57w69f2",
+  "titel": "Earth System Research Laboratory Carbon Cycle and Greenhouse Gases Group Continuous Measurements of CO2, CO, and CH4 from Tall Towers, 1992-Present",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.7289/v57w69f2"
+  ],
+  "zugriff_url": "https://doi.org/10.7289/v57w69f2",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/journal/2026-10-16.md",
+   "error-as-method/works/2026-10-16-told-true/sources/MANIFEST.json",
+   "error-as-method/works/2026-10-16-told-true/work.md"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5880-kp-0001",
+  "titel": "Geomagnetic Kp index",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5880/kp.0001"
+  ],
+  "zugriff_url": "https://doi.org/10.5880/kp.0001",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/journal/2026-10-07-session-111.md",
+   "error-as-method/works/2026-10-07-unknowing/cut.py",
+   "error-as-method/works/2026-10-07-unknowing/figure.py",
+   "error-as-method/works/2026-10-07-unknowing/meta.json",
+   "error-as-method/works/2026-10-07-unknowing/sources/MANIFEST.json",
+   "error-as-method/works/2026-10-07-unknowing/work.md"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-7265-a98x-0f50",
+  "titel": "Sea Ice Index, Version 4",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.7265/a98x-0f50"
+  ],
+  "zugriff_url": "https://doi.org/10.7265/a98x-0f50",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/journal/2026-10-07-session-114.md",
+   "error-as-method/works/2026-10-07-the-balance/meta.json",
+   "error-as-method/works/2026-10-07-the-balance/sources/MANIFEST.json",
+   "error-as-method/works/2026-10-07-the-balance/work.md"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5281-zenodo-20770707",
+  "titel": "PubMed 2026 MeSH-Incidence Corpus: a sparse-binary dataset (30 M articles × 30 k descriptors) for self-organizing-map and clustering benchmarks",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5281/zenodo.20770707"
+  ],
+  "zugriff_url": "https://doi.org/10.5281/zenodo.20770707",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-04-withdrawn/notices.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-14470-tr560404",
+  "titel": "GEOFON Seismic Network",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.14470/tr560404"
+  ],
+  "zugriff_url": "https://doi.org/10.14470/tr560404",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by Machine Attention.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "machine-attention/docs/2026-08-22-planetary-listening-audit.md"
+  ],
+  "benutzt_von": [
+   "attention"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5285-4ed6f721-b23b-454e-b185-02ba54d551f0",
+  "titel": "Hydraulics data for the River Lambourn at Boxford, 2008 to 2014",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5285/4ed6f721-b23b-454e-b185-02ba54d551f0"
+  ],
+  "zugriff_url": "https://doi.org/10.5285/4ed6f721-b23b-454e-b185-02ba54d551f0",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "field-research/artifacts/cycle-003/2026-09-12-what-a-description-is-for/data/screen-anchor.json"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5285-64607f86-0228-4a03-9d87-6e36435028a1",
+  "titel": "Seed traits, seed viability and germination rates of seeds collected from 12 natural Juniper (Juniperus communis) populations in the UK, 2023-2025",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5285/64607f86-0228-4a03-9d87-6e36435028a1"
+  ],
+  "zugriff_url": "https://doi.org/10.5285/64607f86-0228-4a03-9d87-6e36435028a1",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "field-research/artifacts/cycle-003/2026-09-12-what-a-description-is-for/data/screen-anchor.json",
+   "field-research/artifacts/cycle-003/2026-09-12-what-a-description-is-for/data/sheet-uk-masked.json"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-5285-9df4ca6b-6c24-44f9-be25-0bd97ff9594e",
+  "titel": "Fortnightly soil respiration and related measurements from Climoor field site in Clocaenog Forest (2015-2016)",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.5285/9df4ca6b-6c24-44f9-be25-0bd97ff9594e"
+  ],
+  "zugriff_url": "https://doi.org/10.5285/9df4ca6b-6c24-44f9-be25-0bd97ff9594e",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "field-research/artifacts/cycle-003/2026-09-12-what-a-description-is-for/data/screen-anchor.json"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-7910-dvn-89vex8",
+  "titel": "Replication Data for: A Database of the United States Supreme Court's Shadow Docket, 1993-2025",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.7910/dvn/89vex8"
+  ],
+  "zugriff_url": "https://doi.org/10.7910/dvn/89vex8",
+  "geprueft": true,
+  "pruef_status": 202,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "studio/projects/at-any-time/NEIGHBOURS-PRIMARIES.md"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "dumps-wikimedia-org",
+  "titel": "Index of /simplewiki/latest/",
+  "host": "dumps.wikimedia.org",
+  "adressen": [
+   "https://dumps.wikimedia.org/simplewiki/latest/"
+  ],
+  "zugriff_url": "https://dumps.wikimedia.org/simplewiki/latest/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
-   "pipelines/protokoll/src/protokoll/adapters/quakes.py"
+   "studio/works/2026-09-15-content-was/harvest.py"
   ],
   "benutzt_von": [
-   "protokoll"
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "earthquake-usgs-gov",
+  "titel": "Aftershock Forecast Scientific Background",
+  "host": "earthquake.usgs.gov",
+  "adressen": [
+   "https://earthquake.usgs.gov/data/oaf/background.php",
+   "https://earthquake.usgs.gov/data/oaf/overview.php",
+   "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+   "https://earthquake.usgs.gov/fdsnws/event/1/",
+   "https://earthquake.usgs.gov/fdsnws/event/1/count",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid={i",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=<Y>-01-01&endtime=<Y+1>-01-01&latitude=37.876221&longitude=-122.23558&maxradiuskm=40&eventtype=earthquake&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=<Y>-01-01&endtime=<Y+1>-01-01&latitude=37.876221&longitude=-122.23558&maxradiuskm=40&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime={y",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2018-01-01T00%3A00%3A00&endtime=2019-01-01T00%3A00%3A00&minmagnitude=3.0&minlatitude=24.0&maxlatitude=50.0&minlongitude=-125.5&maxlongitude=-66.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-01-01T00%3A00%3A00&endtime=2020-01-01T00%3A00%3A00&minmagnitude=3.0&minlatitude=24.0&maxlatitude=50.0&minlongitude=-125.5&maxlongitude=-66.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-01-01T00%3A00%3A00&endtime=2021-01-01T00%3A00%3A00&minmagnitude=3.0&minlatitude=24.0&maxlatitude=50.0&minlongitude=-125.5&maxlongitude=-66.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-01-01T00%3A00%3A00&endtime=2022-01-01T00%3A00%3A00&minmagnitude=3.0&minlatitude=24.0&maxlatitude=50.0&minlongitude=-125.5&maxlongitude=-66.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-01-01T00%3A00%3A00&endtime=2023-01-01T00%3A00%3A00&minmagnitude=3.0&minlatitude=24.0&maxlatitude=50.0&minlongitude=-125.5&maxlongitude=-66.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-01-01T00%3A00%3A00&endtime=2024-01-01T00%3A00%3A00&minmagnitude=3.0&minlatitude=24.0&maxlatitude=50.0&minlongitude=-125.5&maxlongitude=-66.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-01-01T00%3A00%3A00&endtime=2025-01-01T00%3A00%3A00&minmagnitude=3.0&minlatitude=24.0&maxlatitude=50.0&minlongitude=-125.5&maxlongitude=-66.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-09T23%3A20%3A00&endtime=2024-12-16T23%3A20%3A00&latitude=39.1837&longitude=-119.0219&maxradiuskm=10.0&minmagnitude=4.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-10T11%3A10%3A00&endtime=2024-12-17T11%3A10%3A00&latitude=39.1624&longitude=-119.0393&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-10T17%3A10%3A00&endtime=2024-12-17T17%3A10%3A00&latitude=39.1605&longitude=-119.0379&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-12T00%3A00%3A00&endtime=2024-12-19T00%3A00%3A00&latitude=39.1599&longitude=-119.0436&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-13T00%3A00%3A00&endtime=2024-12-20T00%3A00%3A00&latitude=39.1614&longitude=-119.0422&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-15T00%3A00%3A00&endtime=2024-12-22T00%3A00%3A00&latitude=39.1595&longitude=-119.0407&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-18T00%3A00%3A00&endtime=2024-12-25T00%3A00%3A00&latitude=39.1589&longitude=-119.0415&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-26T00%3A00%3A00&endtime=2025-01-02T00%3A00%3A00&latitude=39.1577&longitude=-119.0412&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-01-01T00%3A00%3A00&endtime=2026-01-01T00%3A00%3A00&minmagnitude=3.0&minlatitude=24.0&maxlatitude=50.0&minlongitude=-125.5&maxlongitude=-66.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-01-14T00%3A00%3A00&endtime=2025-01-21T00%3A00%3A00&latitude=39.1554&longitude=-119.0385&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-07-16T20%3A50%3A00&endtime=2025-07-23T20%3A50%3A00&latitude=54.5489&longitude=-160.4717&maxradiuskm=65.61&minmagnitude=4.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-07-17T08%3A40%3A00&endtime=2025-07-24T08%3A40%3A00&latitude=54.5384&longitude=-160.0445&maxradiuskm=65.61&minmagnitude=4.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-07-17T14%3A40%3A00&endtime=2025-07-24T14%3A40%3A00&latitude=54.5368&longitude=-160.0434&maxradiuskm=65.61&minmagnitude=4.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-07-18T21%3A00%3A00&endtime=2025-07-25T21%3A00%3A00&latitude=54.5249&longitude=-160.0226&maxradiuskm=65.61&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-07-19T21%3A00%3A00&endtime=2025-07-26T21%3A00%3A00&latitude=54.5368&longitude=-160.1182&maxradiuskm=65.61&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-07-21T21%3A00%3A00&endtime=2025-07-28T21%3A00%3A00&latitude=54.5276&longitude=-160.1016&maxradiuskm=65.61&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-07-24T20%3A00%3A00&endtime=2025-07-31T20%3A00%3A00&latitude=54.5178&longitude=-160.0808&maxradiuskm=65.61&minmagnitude=4.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-08-01T21%3A00%3A00&endtime=2025-08-08T21%3A00%3A00&latitude=54.5149&longitude=-160.0747&maxradiuskm=65.61&minmagnitude=4.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-08-20T21%3A00%3A00&endtime=2025-08-27T21%3A00%3A00&latitude=54.4986&longitude=-160.0639&maxradiuskm=65.61&minmagnitude=4.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-09-01T00%3A00%3A00&endtime=2025-09-08T00%3A00%3A00&latitude=34.614&longitude=70.7201&maxradiuskm=22.5&minmagnitude=6.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-09-02T04%3A00%3A00&endtime=2025-09-09T04%3A00%3A00&latitude=34.5688&longitude=70.7537&maxradiuskm=22.5&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-09-02T16%3A00%3A26&endtime=2025-09-09T16%3A00%3A26&latitude=34.6788&longitude=70.7279&maxradiuskm=22.5&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-09-03T16%3A00%3A26&endtime=2025-09-10T16%3A00%3A26&latitude=34.6659&longitude=70.7274&maxradiuskm=22.5&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-09-04T18%3A01%3A56&endtime=2025-09-11T18%3A01%3A56&latitude=34.6725&longitude=70.7353&maxradiuskm=22.5&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-09-08T16%3A00%3A26&endtime=2025-09-15T16%3A00%3A26&latitude=34.6154&longitude=70.7468&maxradiuskm=100.0&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-09-15T16%3A00%3A26&endtime=2025-09-22T16%3A00%3A26&latitude=34.5993&longitude=70.7448&maxradiuskm=100.0&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-14T16%3A00%3A25&endtime=2025-11-21T16%3A00%3A25&latitude=34.6284&longitude=70.7283&maxradiuskm=100.0&minmagnitude=5.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-27T17%3A30%3A00&endtime=2025-12-04T17%3A30%3A00&latitude=61.5695&longitude=-150.7508&maxradiuskm=10.0&minmagnitude=4.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-28T05%3A20%3A00&endtime=2025-12-05T05%3A20%3A00&latitude=61.5695&longitude=-150.7508&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-28T11%3A20%3A00&endtime=2025-12-05T11%3A20%3A00&latitude=61.5695&longitude=-150.7508&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-29T18%3A00%3A00&endtime=2025-12-06T18%3A00%3A00&latitude=61.5789&longitude=-150.748&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-30T18%3A00%3A00&endtime=2025-12-07T18%3A00%3A00&latitude=61.5789&longitude=-150.748&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-02T18%3A00%3A00&endtime=2025-12-09T18%3A00%3A00&latitude=61.5789&longitude=-150.748&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-05T18%3A00%3A00&endtime=2025-12-12T18%3A00%3A00&latitude=61.5789&longitude=-150.748&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-13T18%3A00%3A00&endtime=2025-12-20T18%3A00%3A00&latitude=61.5789&longitude=-150.748&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-01-01T00%3A00%3A00&endtime=2027-01-01T00%3A00%3A00&minmagnitude=3.0&minlatitude=24.0&maxlatitude=50.0&minlongitude=-125.5&maxlongitude=-66.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-01-01T18%3A00%3A00&endtime=2026-01-08T18%3A00%3A00&latitude=61.5789&longitude=-150.748&maxradiuskm=10.0&minmagnitude=3.0&orderby=time-asc",
+   "https://earthquake.usgs.gov/fdsnws/event/1/query?producttype=oaf&starttime=2015-01-01&endtime=2026-10-17&format=geojson",
+   "https://earthquake.usgs.gov/fdsnws/event/1/version"
+  ],
+  "zugriff_url": "https://earthquake.usgs.gov/data/oaf/background.php",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run. Fetched in the works of Arch, the Atelier, Machine Attention, the Field, n-1, the nightly line and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "arch/works/arrival/iteration-1/build.py",
+   "arch/works/arrival/iteration-10/build.py",
+   "arch/works/arrival/iteration-11/build.py",
+   "arch/works/arrival/iteration-12/build.py",
+   "arch/works/arrival/iteration-13/build.py",
+   "arch/works/arrival/iteration-14/build.py",
+   "arch/works/arrival/iteration-15/build.py",
+   "arch/works/arrival/iteration-16/build.py",
+   "arch/works/arrival/iteration-17/build.py",
+   "arch/works/arrival/iteration-18/build.py",
+   "arch/works/arrival/iteration-19/build.py",
+   "arch/works/arrival/iteration-2/build.py",
+   "arch/works/arrival/iteration-20/build.py",
+   "arch/works/arrival/iteration-21/build.py",
+   "arch/works/arrival/iteration-3/build.py",
+   "arch/works/arrival/iteration-4/build.py",
+   "arch/works/arrival/iteration-5/build.py",
+   "arch/works/arrival/iteration-6/build.py",
+   "arch/works/arrival/iteration-7/build.py",
+   "arch/works/arrival/iteration-8/build.py",
+   "arch/works/arrival/iteration-9/build.py",
+   "arch/works/arrival/population/intensity.py",
+   "arch/works/arrival/population/probe.py",
+   "arch/works/arrival/population/revisions.py",
+   "error-as-method/works/2026-10-04-the-mould/harvest.py",
+   "field-research/artifacts/2026-10-14-the-warnings-never-needed/s27/data/sources_27.json",
+   "field-research/artifacts/2026-10-14-the-warnings-never-needed/s27/join_27.py",
+   "field-research/artifacts/2026-10-14-the-warnings-never-needed/s29/fetch_29.py",
+   "field-research/artifacts/2026-10-17-the-odds-written-down/data/sources.json",
+   "field-research/artifacts/2026-10-17-the-odds-written-down/fetch_forecasts.py",
+   "field-research/artifacts/2026-10-17-the-odds-written-down/fetch_outcomes.py",
+   "field-research/artifacts/2026-10-17-the-odds-written-down/fetch_outcomes_23.py",
+   "field-research/artifacts/2026-10-17-the-odds-written-down/fetch_outcomes_25.py",
+   "field-research/artifacts/2026-10-17-the-odds-written-down/fetch_outcomes_3x.py",
+   "field-research/artifacts/2026-10-17-the-odds-written-down/fetch_updates.py",
+   "field-research/artifacts/2026-10-17-the-odds-written-down/fetch_versions_25.py",
+   "machine-attention/practice/src/practice/planetary/spike.py",
+   "n-1/projects/usgs-fixed-depth/session3.py",
+   "n-1/projects/usgs-fixed-depth/session3b.py",
+   "pipelines/protokoll/src/protokoll/adapters/quakes.py",
+   "studio/works/2026-09-11-below-hearing/harvest.py",
+   "studio/works/2026-09-25-below-the-trace/sources.json",
+   "studio/works/2026-09-28-woven-by-day/sources.json",
+   "studio/works/2026-10-16-filed-under/build_quake.py",
+   "studio/works/2026-10-16-filed-under/coda/fetch_nine.py",
+   "studio/works/2026-10-16-filed-under/coda/fetch_outcomes.py",
+   "studio/works/2026-10-16-filed-under/coda/reconcile.js",
+   "studio/works/2026-10-16-filed-under/coda/reconcile_26.py",
+   "ulysses/presentations/cycle-008/exposition/plate11.py",
+   "ulysses/presentations/cycle-008/exposition/plate11b.py",
+   "ulysses/window/cycle-003-session-17/derive.py",
+   "ulysses/window/cycle-003-session-17/sources.json",
+   "ulysses/window/cycle-003-session-18/derive.py",
+   "ulysses/window/cycle-003-session-18/sources.json",
+   "ulysses/window/cycle-003-session-19/derive.py",
+   "ulysses/window/cycle-003-session-19/sources.json"
+  ],
+  "benutzt_von": [
+   "arch",
+   "atelier",
+   "attention",
+   "field",
+   "n-1",
+   "nightly",
+   "protokoll",
+   "studio"
   ],
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
@@ -683,6 +2888,66 @@
   "reachability_changed_on": null
  },
  {
+  "id": "ec-europa-eu",
+  "titel": "ec.europa.eu",
+  "host": "ec.europa.eu",
+  "adressen": [
+   "https://ec.europa.eu/eurostat/api/dissemination",
+   "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/sbs_ovw_act?format=JSON&lang=en&time=2021",
+   "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/sbs_sc_ovw?format=JSON&lang=en&time=2021&indic_sbs=ENT_NR"
+  ],
+  "zugriff_url": "https://ec.europa.eu/eurostat/api/dissemination",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/cycle-010/the-withheld-cell/fetch.sh",
+   "studio/works/2026-09-12-too-few-to-hide-behind/harvest.py"
+  ],
+  "benutzt_von": [
+   "field",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "eida-bgr-de",
+  "titel": "eida.bgr.de",
+  "host": "eida.bgr.de",
+  "adressen": [
+   "https://eida.bgr.de/fdsnws/dataselect/1/query"
+  ],
+  "zugriff_url": "https://eida.bgr.de/fdsnws/dataselect/1/query",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of Machine Attention.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "machine-attention/practice/src/practice/planetary/spike.py"
+  ],
+  "benutzt_von": [
+   "attention"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "en-wikipedia-org",
   "titel": "en.wikipedia.org",
   "host": "en.wikipedia.org",
@@ -708,6 +2973,122 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "ento-psu-edu",
+  "titel": "ento.psu.edu",
+  "host": "ento.psu.edu",
+  "adressen": [
+   "https://ento.psu.edu/research/labs/ottar-bjornstad/ottar-lab-abstracts/60measles.txt"
+  ],
+  "zugriff_url": "https://ento.psu.edu/research/labs/ottar-bjornstad/ottar-lab-abstracts/60measles.txt",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-22-old-tools/face-data.js"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "exoplanetarchive-ipac-caltech-edu",
+  "titel": "exoplanetarchive.ipac.caltech.edu",
+  "host": "exoplanetarchive.ipac.caltech.edu",
+  "adressen": [
+   "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?format=csv&query="
+  ],
+  "zugriff_url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?format=csv&query=",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/exoplanet-discord/fetch.py",
+   "n-1/projects/exoplanet-discord/fetch3.py"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "fdw-fews-net",
+  "titel": "fdw.fews.net",
+  "host": "fdw.fews.net",
+  "adressen": [
+   "https://fdw.fews.net/api/ipcphase/?format=json&country_code=SD",
+   "https://fdw.fews.net/api/ipcphase/?format=json&start_date=2024-01-01&end_date=2025-12-31&fields=simple",
+   "https://fdw.fews.net/api/marketpricefacts/",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=$cc&start_date=2024-01-01&end_date=2026-10-28",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=<CC>",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=<CC>&start_date=2024-01-01&end_date=2026-10-28",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=<CC>&start_date=2024-01-01&end_date=2026-10-29",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=<CC>&start_date=2024-01-01&end_date=2026-10-31",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=AF&start_date=2024-01-01&end_date=2025-06-30",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=HT&start_date=2024-01-01&end_date=2025-06-30",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=KE&start_date=2024-01-01&end_date=2025-06-30",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=MG&start_date=2024-01-01&end_date=2026-10-31",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=MG&start_date=2025-03-01&end_date=2025-09-30",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=SD&start_date=2024-01-01&end_date=2026-10-28",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code=SO&start_date=2024-01-01&end_date=2025-06-30",
+   "https://fdw.fews.net/api/marketpricefacts/?format=json&country_code={cc"
+  ],
+  "zugriff_url": "https://fdw.fews.net/api/ipcphase/?format=json&country_code=SD",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier, the Field and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/2026-11-01-the-far-edge/analyse49.py",
+   "field-research/artifacts/2026-11-01-the-far-edge/data49.js",
+   "field-research/artifacts/2026-11-01-the-far-edge/sources.json",
+   "field-research/artifacts/2026-11-01-the-written-day/sources.json",
+   "field-research/notes/convening-after-010/dark-months/analyze.py",
+   "field-research/notes/convening-after-010/dark-months/sources.json",
+   "field-research/notes/convening-after-010/price-line/fetch.sh",
+   "field-research/notes/convening-after-010/price-line/redating/analyze.py",
+   "field-research/notes/convening-after-010/price-line/redating/sources.json",
+   "field-research/notes/convening-after-010/price-line/reduce.py",
+   "field-research/notes/convening-after-010/price-line/sources.json",
+   "studio/etudes/the-remainder/build_vii.py",
+   "studio/etudes/the-remainder/build_viii.py",
+   "ulysses/artifacts/convening-after-010/the-unclassified/build_clock.py",
+   "ulysses/artifacts/convening-after-011/only-a-return/build.py"
+  ],
+  "benutzt_von": [
+   "atelier",
+   "field",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -856,6 +3237,90 @@
   "reachability_changed_on": null
  },
  {
+  "id": "genesis-destatis-de",
+  "titel": "genesis.destatis.de",
+  "host": "genesis.destatis.de",
+  "adressen": [
+   "https://genesis.destatis.de/genesisWS/downloads/00/tables/45211-0013_00.csv"
+  ],
+  "zugriff_url": "https://genesis.destatis.de/genesisWS/downloads/00/tables/45211-0013_00.csv",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-04-the-draw/harvest.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "geofon-gfz-de",
+  "titel": "geofon.gfz.de",
+  "host": "geofon.gfz.de",
+  "adressen": [
+   "https://geofon.gfz.de/fdsnws/dataselect/1/query"
+  ],
+  "zugriff_url": "https://geofon.gfz.de/fdsnws/dataselect/1/query",
+  "geprueft": false,
+  "pruef_status": 413,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 413",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of Machine Attention.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "machine-attention/practice/src/practice/planetary/spike.py"
+  ],
+  "benutzt_von": [
+   "attention"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "geysertimes-org",
+  "titel": "geysertimes.org",
+  "host": "geysertimes.org",
+  "adressen": [
+   "https://geysertimes.org/archive/geysers/Old_Faithful_eruptions.tsv.gz"
+  ],
+  "zugriff_url": "https://geysertimes.org/archive/geysers/Old_Faithful_eruptions.tsv.gz",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-20-first-to-hand/face-data.js"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "globalfishingwatch-org",
   "titel": "Our Apis - Explore and visualize ocean data | Global Fishing Watch",
   "host": "globalfishingwatch.org",
@@ -889,22 +3354,26 @@
   "titel": "gml.noaa.gov",
   "host": "gml.noaa.gov",
   "adressen": [
+   "https://gml.noaa.gov/aftp/data/radiation/surfrad/Fort_Peck_MT/2025/",
+   "https://gml.noaa.gov/aftp/data/radiation/surfrad/Fort_Peck_MT/README_SURFRAD.txt",
    "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv"
   ],
-  "zugriff_url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv",
+  "zugriff_url": "https://gml.noaa.gov/aftp/data/radiation/surfrad/Fort_Peck_MT/2025/",
   "geprueft": true,
   "pruef_status": 200,
   "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run. Fetched in the works of the nightly line.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
+   "error-as-method/works/2026-10-17-told-where/extract.py",
    "pipelines/protokoll/src/protokoll/adapters/co2.py"
   ],
   "benutzt_von": [
+   "nightly",
    "protokoll"
   ],
   "verify_status": "toVerify",
@@ -941,6 +3410,66 @@
   "reachability_changed_on": null
  },
  {
+  "id": "hajim-rochester-edu",
+  "titel": "hajim.rochester.edu",
+  "host": "hajim.rochester.edu",
+  "adressen": [
+   "https://hajim.rochester.edu/ece/sites/gsharma/ciede2000/dataNprograms/ciede2000testdata.txt"
+  ],
+  "zugriff_url": "https://hajim.rochester.edu/ece/sites/gsharma/ciede2000/dataNprograms/ciede2000testdata.txt",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "studio/works/2026-09-22-the-nearer-one/sources.json"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "hansard-api-parliament-uk",
+  "titel": "hansard-api.parliament.uk",
+  "host": "hansard-api.parliament.uk",
+  "adressen": [
+   "https://hansard-api.parliament.uk/debates/debate/",
+   "https://hansard-api.parliament.uk/debates/debate/{BURY",
+   "https://hansard-api.parliament.uk/debates/debate/{r[",
+   "https://hansard-api.parliament.uk/search/contributions/Spoken.json"
+  ],
+  "zugriff_url": "https://hansard-api.parliament.uk/debates/debate/",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/will-write/build.py",
+   "n-1/projects/will-write/fetch.py"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "hn-algolia-com",
   "titel": "hn.algolia.com",
   "host": "hn.algolia.com",
@@ -955,15 +3484,18 @@
   "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own trending pipeline on every run. Fetched in the works of the Field.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
+   "field-research/drafts/2026-08-11-the-arm-that-was-missing/check_sweep_completeness.py",
+   "field-research/drafts/2026-08-11-the-arm-that-was-missing/collect_corpus_hn.py",
    "pipelines/trending/src/trending/discover.py",
    "pipelines/trending/src/trending/tracker.py"
   ],
   "benutzt_von": [
+   "field",
    "trending"
   ],
   "verify_status": "toVerify",
@@ -1002,6 +3534,90 @@
   "reachability_changed_on": null
  },
  {
+  "id": "incidentdatabase-ai",
+  "titel": "incidentdatabase.ai",
+  "host": "incidentdatabase.ai",
+  "adressen": [
+   "https://incidentdatabase.ai/api/graphql"
+  ],
+  "zugriff_url": "https://incidentdatabase.ai/api/graphql",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/2026-10-07-what-the-incident-record-holds/data/sources.json"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "inspirehep-net",
+  "titel": "inspirehep.net",
+  "host": "inspirehep.net",
+  "adressen": [
+   "https://inspirehep.net/api/literature?q=refersto%20recid%20{recid"
+  ],
+  "zugriff_url": "https://inspirehep.net/api/literature?q=refersto%20recid%20{recid",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "Adresse ist eine Vorlage mit Platzhalter, nicht abrufbar",
+  "zugang_gesperrt": false,
+  "nur_vorlage": true,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-08-10-eight-misprints/harvest.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": null,
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "iso639-3-sil-org",
+  "titel": "iso639-3.sil.org",
+  "host": "iso639-3.sil.org",
+  "adressen": [
+   "https://iso639-3.sil.org/sites/iso639-3/files/downloads/iso-639-3_Retirements.tab"
+  ],
+  "zugriff_url": "https://iso639-3.sil.org/sites/iso639-3/files/downloads/iso-639-3_Retirements.tab",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-08-14-the-threshold/harvest.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "journals-sub-uni-hamburg-de",
   "titel": "Science Tracking über Transformationsverträge und Wissenschaftsplattformen: Vom Beifang zum Hauptziel | kommunikation@gesellschaft",
   "host": "journals.sub.uni-hamburg.de",
@@ -1027,6 +3643,34 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "kp-gfz-de",
+  "titel": "kp.gfz.de",
+  "host": "kp.gfz.de",
+  "adressen": [
+   "https://kp.gfz.de/app/files/Kp_ap_since_1932.txt"
+  ],
+  "zugriff_url": "https://kp.gfz.de/app/files/Kp_ap_since_1932.txt",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-07-unknowing/cut.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -1058,6 +3702,98 @@
   "reachability_changed_on": null
  },
  {
+  "id": "luftdaten-umweltbundesamt-de",
+  "titel": "luftdaten.umweltbundesamt.de",
+  "host": "luftdaten.umweltbundesamt.de",
+  "adressen": [
+   "https://luftdaten.umweltbundesamt.de/api/air-data/v3",
+   "https://luftdaten.umweltbundesamt.de/api/air-data/v3/measures/json",
+   "https://luftdaten.umweltbundesamt.de/api/air-data/v4/doc;"
+  ],
+  "zugriff_url": "https://luftdaten.umweltbundesamt.de/api/air-data/v3",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-07-other-trainings/fetch.py",
+   "studio/works/2026-09-18-hours-that-do-not-count/harvest.py"
+  ],
+  "benutzt_von": [
+   "nightly",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "maps-mail-ru",
+  "titel": "maps.mail.ru",
+  "host": "maps.mail.ru",
+  "adressen": [
+   "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+   "https://maps.mail.ru/osm/tools/overpass/api/interpreter\\n(query:"
+  ],
+  "zugriff_url": "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+  "geprueft": false,
+  "pruef_status": 504,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 504",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-20-first-to-hand/face-data.js",
+   "studio/works/2026-10-02-the-name-on-the-deck/fetch.py",
+   "studio/works/2026-10-02-the-name-on-the-deck/sources.json"
+  ],
+  "benutzt_von": [
+   "nightly",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "mars-nasa-gov",
+  "titel": "mars.nasa.gov",
+  "host": "mars.nasa.gov",
+  "adressen": [
+   "https://mars.nasa.gov/rss/api/?feed=weather&category=msl&feedtype=json"
+  ],
+  "zugriff_url": "https://mars.nasa.gov/rss/api/?feed=weather&category=msl&feedtype=json",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-22-old-tools/face-data.js"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "mastodon-social",
   "titel": "mastodon.social",
   "host": "mastodon.social",
@@ -1084,6 +3820,98 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "meri-digitraffic-fi",
+  "titel": "meri.digitraffic.fi",
+  "host": "meri.digitraffic.fi",
+  "adressen": [
+   "https://meri.digitraffic.fi/api/ais/v1/locations"
+  ],
+  "zugriff_url": "https://meri.digitraffic.fi/api/ais/v1/locations",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of Machine Attention.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "machine-attention/practice/src/practice/darkocean/sources.py"
+  ],
+  "benutzt_von": [
+   "attention"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "mesonet-agron-iastate-edu",
+  "titel": "mesonet.agron.iastate.edu",
+  "host": "mesonet.agron.iastate.edu",
+  "adressen": [
+   "https://mesonet.agron.iastate.edu/api/1/cow.json?wfo={w",
+   "https://mesonet.agron.iastate.edu/api/1/nwstext/",
+   "https://mesonet.agron.iastate.edu/geojson/network/WFO.geojson"
+  ],
+  "zugriff_url": "https://mesonet.agron.iastate.edu/api/1/nwstext/",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "studio/works/2026-10-20-take-cover-again/fetch.py",
+   "studio/works/2026-10-20-take-cover-again/fetch_word.py",
+   "studio/works/2026-10-20-take-cover-again/sample_words.py"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "msi-nga-mil",
+  "titel": "msi.nga.mil",
+  "host": "msi.nga.mil",
+  "adressen": [
+   "https://msi.nga.mil/api/publications/ngalol/lights-buoys?volume=114&includeRemovals=false&output=json\\n(publication",
+   "https://msi.nga.mil/api/publications/ngalol/lights-buoys?volume=N&output=json",
+   "https://msi.nga.mil/api/publications/ngalol/lights-buoys?volume={v"
+  ],
+  "zugriff_url": "https://msi.nga.mil/api/publications/ngalol/lights-buoys?volume=114&includeRemovals=false&output=json\\n(publication",
+  "geprueft": false,
+  "pruef_status": 503,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 503",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1 and the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-20-first-to-hand/face-data.js",
+   "n-1/projects/light-characters/fetch.py"
+  ],
+  "benutzt_von": [
+   "n-1",
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -1176,6 +4004,118 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "nwis-waterservices-usgs-gov",
+  "titel": "nwis.waterservices.usgs.gov",
+  "host": "nwis.waterservices.usgs.gov",
+  "adressen": [
+   "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=06221400"
+  ],
+  "zugriff_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=06221400",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-19-told-out-of-season/extract.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "openaccess-api-clevelandart-org",
+  "titel": "openaccess-api.clevelandart.org",
+  "host": "openaccess-api.clevelandart.org",
+  "adressen": [
+   "https://openaccess-api.clevelandart.org/api/artworks/"
+  ],
+  "zugriff_url": "https://openaccess-api.clevelandart.org/api/artworks/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/tools/travel/harvest.py"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "opendata-swiss",
+  "titel": "opendata.swiss",
+  "host": "opendata.swiss",
+  "adressen": [
+   "https://opendata.swiss/api/3/action/package_search"
+  ],
+  "zugriff_url": "https://opendata.swiss/api/3/action/package_search",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/cycle-003/2026-09-11-does-it-travel/data/sources.json"
+  ],
+  "benutzt_von": [
+   "field"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "ourairports-com",
+  "titel": "Open data @ OurAirports",
+  "host": "ourairports.com",
+  "adressen": [
+   "https://ourairports.com/data/"
+  ],
+  "zugriff_url": "https://ourairports.com/data/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/the-number-on-the-concrete/build.py"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -1292,11 +4232,45 @@
   "reachability_changed_on": null
  },
  {
+  "id": "publications-europa-eu",
+  "titel": "OpenLink Virtuoso SPARQL Query Editor",
+  "host": "publications.europa.eu",
+  "adressen": [
+   "https://publications.europa.eu/webapi/rdf/sparql"
+  ],
+  "zugriff_url": "https://publications.europa.eu/webapi/rdf/sparql",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "ulysses/projects/2026-08-21-the-citation-that-stopped/fetch_acts.py",
+   "ulysses/projects/2026-08-25-the-pointer-that-resolves/fetch_corrigenda.py",
+   "ulysses/projects/2026-08-25-the-pointer-that-resolves/resolve.py",
+   "ulysses/projects/2026-08-29-the-english-that-exists-only-in-the-catalogue/catalogue.py",
+   "ulysses/projects/2026-08-30-the-address-the-register-names/addresses.py"
+  ],
+  "benutzt_von": [
+   "atelier"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "query-wikidata-org",
   "titel": "query.wikidata.org",
   "host": "query.wikidata.org",
   "adressen": [
-   "https://query.wikidata.org/sparql"
+   "https://query.wikidata.org/sparql",
+   "https://query.wikidata.org/sparql?format=json&query=",
+   "https://query.wikidata.org/sparql?query=SELECT%20*%20WHERE%20%7B%3Fs%20"
   ],
   "zugriff_url": "https://query.wikidata.org/sparql",
   "geprueft": false,
@@ -1304,14 +4278,20 @@
   "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
   "zugang_gesperrt": true,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run. Fetched in the works of the Atelier and the Field.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
-   "pipelines/protokoll/src/protokoll/halbwertszeit/wikidata.py"
+   "field-research/artifacts/2026-10-04-the-label-and-the-species/fetch.py",
+   "pipelines/protokoll/src/protokoll/halbwertszeit/wikidata.py",
+   "ulysses/tools/second/candidates.py",
+   "ulysses/tools/second/probe.py",
+   "ulysses/window/cycle-006-session-2/analysis.py"
   ],
   "benutzt_von": [
+   "atelier",
+   "field",
    "protokoll"
   ],
   "verify_status": "toVerify",
@@ -1347,6 +4327,152 @@
   "probed_on": "2026-11-04",
   "first_seen_on": null,
   "reachability_changed_on": "2026-11-04"
+ },
+ {
+  "id": "salsa-debian-org",
+  "titel": "salsa.debian.org",
+  "host": "salsa.debian.org",
+  "adressen": [
+   "https://salsa.debian.org/iso-codes-team/iso-codes/-/raw/main/data/iso_3166-1.json",
+   "https://salsa.debian.org/iso-codes-team/iso-codes/-/raw/main/data/iso_3166-3.json"
+  ],
+  "zugriff_url": "https://salsa.debian.org/iso-codes-team/iso-codes/-/raw/main/data/iso_3166-1.json",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-08-14-the-fourth-letter/harvest.py",
+   "error-as-method/works/2026-08-15-the-exempt-address/harvest.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "service-ncedc-org",
+  "titel": "service.ncedc.org",
+  "host": "service.ncedc.org",
+  "adressen": [
+   "https://service.ncedc.org/fdsnws/station/1/query?net=BK&sta=BKS&level=station&format=text"
+  ],
+  "zugriff_url": "https://service.ncedc.org/fdsnws/station/1/query?net=BK&sta=BKS&level=station&format=text",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "studio/works/2026-09-25-below-the-trace/sources.json"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "ssd-api-jpl-nasa-gov",
+  "titel": "ssd-api.jpl.nasa.gov",
+  "host": "ssd-api.jpl.nasa.gov",
+  "adressen": [
+   "https://ssd-api.jpl.nasa.gov/cad.api?des=<des>&dist-max=0.05&date-min=1900-01-01&date-max=2100-01-01",
+   "https://ssd-api.jpl.nasa.gov/cad.api?dist-max=0.0026&date-min=2015-01-01&date-max=2025-12-31&fullname=true",
+   "https://ssd-api.jpl.nasa.gov/cad.api?dist-max=0.05&date-min=1900-01-01&date-max=now&fullname=true",
+   "https://ssd-api.jpl.nasa.gov/cad.api?dist-max=0.05&date-min=1990-01-01&date-max=2025-12-31",
+   "https://ssd-api.jpl.nasa.gov/cad.api?dist-max=0.05&date-min=1990-01-01&date-max=2025-12-31&body=Earth",
+   "https://ssd-api.jpl.nasa.gov/cad.api?dist-max=1LD&date-min=1900-01-01&date-max=2100-01-01&fullname=true",
+   "https://ssd-api.jpl.nasa.gov/doc/cad.html",
+   "https://ssd-api.jpl.nasa.gov/fireball.api",
+   "https://ssd-api.jpl.nasa.gov/sbdb.api?discovery=1&sstr=",
+   "https://ssd-api.jpl.nasa.gov/sbdb.api?sstr={n",
+   "https://ssd-api.jpl.nasa.gov/sbdb_query.api",
+   "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=pdes",
+   "https://ssd-api.jpl.nasa.gov/sentry.api",
+   "https://ssd-api.jpl.nasa.gov/sentry.api?removed=1"
+  ],
+  "zugriff_url": "https://ssd-api.jpl.nasa.gov/cad.api?des=<des>&dist-max=0.05&date-min=1900-01-01&date-max=2100-01-01",
+  "geprueft": false,
+  "pruef_status": 400,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 400",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier, the Field, n-1, the nightly line and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-22-old-tools/face-data.js",
+   "field-research/artifacts/2026-10-11-how-far-the-record-sees/data/sources.json",
+   "field-research/artifacts/2026-10-14-the-strikes-that-came/analyse.py",
+   "field-research/artifacts/2026-10-14-the-strikes-that-came/data/sources.json",
+   "field-research/artifacts/2026-10-14-the-warnings-never-needed/data/sources.json",
+   "n-1/projects/minor-planet-names/fetch.py",
+   "n-1/projects/minor-planet-names/fetch3.py",
+   "studio/works/2026-10-10-after-it-passed/fetch.py",
+   "studio/works/2026-10-11-nobody-knew/fetch.py",
+   "studio/works/2026-10-13-underneath/build.py",
+   "studio/works/2026-10-14-struck-off/fetch.py",
+   "ulysses/window/cycle-007-session-2/analyse.py"
+  ],
+  "benutzt_von": [
+   "atelier",
+   "field",
+   "n-1",
+   "nightly",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "static-case-law",
+  "titel": "static.case.law",
+  "host": "static.case.law",
+  "adressen": [
+   "https://static.case.law/f2d/159/cases/0169-01.json",
+   "https://static.case.law/f2d/790/cases/0199-01.json"
+  ],
+  "zugriff_url": "https://static.case.law/f2d/159/cases/0169-01.json",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/plate4.js",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/plate4.py",
+   "ulysses/presentations/cycle-009/plate4.js",
+   "ulysses/presentations/cycle-009/plate4.py"
+  ],
+  "benutzt_von": [
+   "atelier"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
  },
  {
   "id": "staticcdn-duckduckgo-com",
@@ -1491,6 +4617,63 @@
   "reachability_changed_on": null
  },
  {
+  "id": "tapvizier-cds-unistra-fr",
+  "titel": "tapvizier.cds.unistra.fr",
+  "host": "tapvizier.cds.unistra.fr",
+  "adressen": [
+   "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync"
+  ],
+  "zugriff_url": "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "nicht erreichbar: ConnectTimeout",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "studio/works/2026-09-19-in-the-way/harvest.py",
+   "studio/works/2026-09-19-in-the-way/sources.json"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "teorievedy-flu-cas-cz",
+  "titel": "teorievedy.flu.cas.cz",
+  "host": "teorievedy.flu.cas.cz",
+  "adressen": [
+   "https://teorievedy.flu.cas.cz/index.php/tv/article/download/364/396/1899"
+  ],
+  "zugriff_url": "https://teorievedy.flu.cas.cz/index.php/tv/article/download/364/396/1899",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-09-20-the-borrowed-axis/reconcile.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "trends-google-com",
   "titel": "trends.google.com",
   "host": "trends.google.com",
@@ -1521,12 +4704,41 @@
   "reachability_changed_on": null
  },
  {
+  "id": "unicode-org",
+  "titel": "unicode.org",
+  "host": "unicode.org",
+  "adressen": [
+   "https://unicode.org/Public/cldr/48.2/cldr-common-48.2.zip"
+  ],
+  "zugriff_url": "https://unicode.org/Public/cldr/48.2/cldr-common-48.2.zip",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/unicode-admission/sources2.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "web-archive-org",
   "titel": "Wayback Machine",
   "host": "web.archive.org",
   "adressen": [
    "https://web.archive.org/",
    "https://web.archive.org/cdx/search/cdx",
+   "https://web.archive.org/web/20131116080015id_/http://www.bankofengland.co.uk/publications/Documents/inflationreport/cpiinternet.xls",
    "https://web.archive.org/web/{timestamp"
   ],
   "zugriff_url": "https://web.archive.org/",
@@ -1535,20 +4747,50 @@
   "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run. Fetched in the works of the Atelier.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
    "pipelines/redaction/src/redaction/build.py",
-   "pipelines/redaction/src/redaction/cdx.py"
+   "pipelines/redaction/src/redaction/cdx.py",
+   "ulysses/window/cycle-008-session-3/sources.json"
   ],
   "benutzt_von": [
+   "atelier",
    "redaction"
   ],
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "webtai-bipm-org",
+  "titel": "webtai.bipm.org",
+  "host": "webtai.bipm.org",
+  "adressen": [
+   "https://webtai.bipm.org/webdb/temp/showlab.csv"
+  ],
+  "zugriff_url": "https://webtai.bipm.org/webdb/temp/showlab.csv",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "studio/tools/circular_t_tail.py"
+  ],
+  "benutzt_von": [
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -1585,6 +4827,35 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "world-openfoodfacts-org",
+  "titel": "world.openfoodfacts.org",
+  "host": "world.openfoodfacts.org",
+  "adressen": [
+   "https://world.openfoodfacts.org/api/v2/product/{code"
+  ],
+  "zugriff_url": "https://world.openfoodfacts.org/api/v2/product/{code",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "Adresse ist eine Vorlage mit Platzhalter, nicht abrufbar",
+  "zugang_gesperrt": false,
+  "nur_vorlage": true,
+  "relevanz": "Fetched in the works of n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "n-1/projects/on-the-grid/check3.py",
+   "n-1/projects/on-the-grid/fetch4.py"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": null,
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -1759,6 +5030,80 @@
   "reachability_changed_on": null
  },
  {
+  "id": "www-consumerfinance-gov",
+  "titel": "www.consumerfinance.gov",
+  "host": "www.consumerfinance.gov",
+  "adressen": [
+   "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/"
+  ],
+  "zugriff_url": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-08-30-dependent-on-product/harvest.py",
+   "error-as-method/works/2026-08-30-dependent-on-product/verify.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "www-ecfr-gov",
+  "titel": "www.ecfr.gov",
+  "host": "www.ecfr.gov",
+  "adressen": [
+   "https://www.ecfr.gov/api/versioner/v1/ancestry/{date",
+   "https://www.ecfr.gov/api/versioner/v1/full/%s/title-14.xml",
+   "https://www.ecfr.gov/api/versioner/v1/full/{ISSUE_DATE",
+   "https://www.ecfr.gov/api/versioner/v1/full/{d",
+   "https://www.ecfr.gov/api/versioner/v1/full/{d[",
+   "https://www.ecfr.gov/api/versioner/v1/full/{date",
+   "https://www.ecfr.gov/api/versioner/v1/structure/{date",
+   "https://www.ecfr.gov/api/versioner/v1/versions/title-{t"
+  ],
+  "zugriff_url": "https://www.ecfr.gov/api/versioner/v1/ancestry/{date",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "Adresse ist eine Vorlage mit Platzhalter, nicht abrufbar",
+  "zugang_gesperrt": false,
+  "nur_vorlage": true,
+  "relevanz": "Fetched in the works of the Atelier and the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-09-26-no-person-may/harvest.py",
+   "ulysses/projects/2026-08-14-the-addresses-the-law-prints/collect_sections.py",
+   "ulysses/projects/2026-08-14-the-addresses-the-law-prints/extract_urls.py",
+   "ulysses/projects/2026-08-17-the-warrant-under-the-section/fetch_part_sources.py",
+   "ulysses/projects/2026-08-17-the-warrant-under-the-section/fetch_sections.py",
+   "ulysses/projects/2026-08-18-when-the-law-reopens-the-page/coda_check.py",
+   "ulysses/projects/2026-08-18-when-the-law-reopens-the-page/fetch_snapshots.py",
+   "ulysses/projects/2026-08-18-when-the-law-reopens-the-page/fetch_versions.py",
+   "ulysses/projects/2026-08-18-when-the-law-reopens-the-page/handcheck.py",
+   "ulysses/projects/2026-08-19-reasonably-available/read_part51.py"
+  ],
+  "benutzt_von": [
+   "atelier",
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": null,
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "www-eia-gov",
   "titel": "www.eia.gov",
   "host": "www.eia.gov",
@@ -1850,6 +5195,10 @@
   "host": "www.fema.gov",
   "adressen": [
    "https://www.fema.gov/about/openfema/api",
+   "https://www.fema.gov/api/open/v1/IpawsArchivedAlerts",
+   "https://www.fema.gov/api/open/v1/IpawsArchivedAlerts?$filter=incidents%20ne%20null",
+   "https://www.fema.gov/api/open/v1/IpawsArchivedAlerts?$select=id&$top=1&$count=true",
+   "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries",
    "https://www.fema.gov/api/open/v2/FimaNfipClaims?$top=1000"
   ],
   "zugriff_url": "https://www.fema.gov/about/openfema/api",
@@ -1858,15 +5207,30 @@
   "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
   "zugang_gesperrt": true,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run. Fetched in the works of the Atelier, the Field and the Studio.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
-   "pipelines/protokoll/src/protokoll/praemie/claims.py"
+   "field-research/artifacts/2026-10-15-the-end-written-in-advance/fetch.py",
+   "field-research/artifacts/2026-10-16-the-end-sent-apart/data/sources.json",
+   "field-research/artifacts/2026-10-16-the-end-sent-apart/fill.py",
+   "pipelines/protokoll/src/protokoll/praemie/claims.py",
+   "studio/works/2026-10-15-the-keepers-word/fetch.py",
+   "studio/works/2026-10-15-the-keepers-word/fetch_followups.py",
+   "studio/works/2026-10-15-the-unsent/fetch_cases.py",
+   "studio/works/2026-10-15-the-unsent/fetch_declarations.py",
+   "studio/works/2026-10-16-filed-under/build_taken.py",
+   "studio/works/2026-10-16-filed-under/fetch.py",
+   "studio/works/2026-10-16-filed-under/fetch_declarations.py",
+   "studio/works/2026-10-16-filed-under/fetch_followups.py",
+   "ulysses/presentations/cycle-008/exposition/plate6.py"
   ],
   "benutzt_von": [
-   "protokoll"
+   "atelier",
+   "field",
+   "protokoll",
+   "studio"
   ],
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
@@ -1874,11 +5238,40 @@
   "reachability_changed_on": null
  },
  {
+  "id": "www-gdacs-org",
+  "titel": "www.gdacs.org",
+  "host": "www.gdacs.org",
+  "adressen": [
+   "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH"
+  ],
+  "zugriff_url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of Machine Attention.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "machine-attention/practice/src/practice/foreknown/sources.py"
+  ],
+  "benutzt_von": [
+   "attention"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "www-gdeltproject-org",
   "titel": "The GDELT Project",
   "host": "www.gdeltproject.org",
   "adressen": [
-   "https://www.gdeltproject.org/"
+   "https://www.gdeltproject.org/",
+   "https://www.gdeltproject.org/data/lookups/FIPS.country.txt"
   ],
   "zugriff_url": "https://www.gdeltproject.org/",
   "geprueft": true,
@@ -1886,11 +5279,12 @@
   "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own balance, invoked, protokoll and redaction pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own balance, invoked, protokoll and redaction pipeline on every run. Fetched in the works of Machine Attention.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
+   "machine-attention/practice/src/practice/foreknown/attention.py",
    "pipelines/balance/refresh.py",
    "pipelines/invoked/refresh.py",
    "pipelines/protokoll/src/protokoll/adapters/conflict.py",
@@ -1899,6 +5293,7 @@
    "pipelines/redaction/src/redaction/world/sample.py"
   ],
   "benutzt_von": [
+   "attention",
    "balance",
    "invoked",
    "protokoll",
@@ -1910,32 +5305,134 @@
   "reachability_changed_on": null
  },
  {
-  "id": "www-gov-uk",
-  "titel": "Net Zero Strategy: Build Back Greener - GOV.UK",
-  "host": "www.gov.uk",
+  "id": "www-geysertimes-org",
+  "titel": "GeyserTimes API V5 Documentation",
+  "host": "www.geysertimes.org",
   "adressen": [
-   "https://www.gov.uk/government/publications/net-zero-strategy",
-   "https://www.gov.uk/guidance/climate-change-explained"
+   "https://www.geysertimes.org/api/v5/docs",
+   "https://www.geysertimes.org/api/v5/entries/1735714800/1767250800/2\\n",
+   "https://www.geysertimes.org/api/v5/entries/1735714800/1767250800/2\\n(documented"
   ],
-  "zugriff_url": "https://www.gov.uk/government/publications/net-zero-strategy",
+  "zugriff_url": "https://www.geysertimes.org/api/v5/docs",
   "geprueft": true,
   "pruef_status": 200,
   "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz": "Fetched in the works of the nightly line.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
+   "error-as-method/works/2026-10-20-first-to-hand/face-data.js"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "www-gov-uk",
+  "titel": "www.gov.uk",
+  "host": "www.gov.uk",
+  "adressen": [
+   "https://www.gov.uk/api/content",
+   "https://www.gov.uk/api/content/<path>",
+   "https://www.gov.uk/api/search.json?",
+   "https://www.gov.uk/government/publications/net-zero-strategy",
+   "https://www.gov.uk/guidance/climate-change-explained"
+  ],
+  "zugriff_url": "https://www.gov.uk/api/content",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run. Fetched in the works of the Field.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/drafts/2026-08-08-does-the-date-move/census.py",
+   "field-research/drafts/2026-08-08-does-the-date-move/probe_notes_read.py",
+   "field-research/drafts/2026-08-08-does-the-date-move/probe_publisher_history.py",
    "pipelines/redaction/src/redaction/watchlist.py"
   ],
   "benutzt_von": [
+   "field",
    "redaction"
   ],
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "www-govdata-de",
+  "titel": "www.govdata.de",
+  "host": "www.govdata.de",
+  "adressen": [
+   "https://www.govdata.de/ckan/api/3/action/package_search",
+   "https://www.govdata.de/ckan/api/3/action/package_show?id=umsatz-im-grosshandel-bundeslander-jahre-preisarten0e0e4"
+  ],
+  "zugriff_url": "https://www.govdata.de/ckan/api/3/action/package_search",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field and the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-04-the-draw/draw.py",
+   "error-as-method/works/2026-10-04-the-draw/harvest.py",
+   "field-research/tools/room/room.py",
+   "field-research/tools/travel/harvest.py"
+  ],
+  "benutzt_von": [
+   "field",
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "www-gutenberg-org",
+  "titel": "www.gutenberg.org",
+  "host": "www.gutenberg.org",
+  "adressen": [
+   "https://www.gutenberg.org/cache/epub/11339/pg11339.txt",
+   "https://www.gutenberg.org/cache/epub/21/pg21.txt"
+  ],
+  "zugriff_url": "https://www.gutenberg.org/cache/epub/11339/pg11339.txt",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/plate1.js",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/plate1.py",
+   "ulysses/presentations/cycle-009/plate1.js",
+   "ulysses/presentations/cycle-009/plate1.py"
+  ],
+  "benutzt_von": [
+   "atelier"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -2024,6 +5521,34 @@
   "reachability_changed_on": "2026-10-26"
  },
  {
+  "id": "www-isc-ac-uk",
+  "titel": "www.isc.ac.uk",
+  "host": "www.isc.ac.uk",
+  "adressen": [
+   "https://www.isc.ac.uk/fdsnws/event/1/query?"
+  ],
+  "zugriff_url": "https://www.isc.ac.uk/fdsnws/event/1/query?",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "nicht erreichbar: ReadTimeout",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of Machine Attention.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "machine-attention/practice/src/practice/planetary/spike.py"
+  ],
+  "benutzt_von": [
+   "attention"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "www-microsoft-com",
   "titel": "2026 Environmental Sustainability Report - Microsoft",
   "host": "www.microsoft.com",
@@ -2057,7 +5582,10 @@
   "host": "www.ncei.noaa.gov",
   "adressen": [
    "https://www.ncei.noaa.gov/access/billions/",
-   "https://www.ncei.noaa.gov/access/billions/events-US-1980-2024.csv"
+   "https://www.ncei.noaa.gov/access/billions/events-US-1980-2024.csv",
+   "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/",
+   "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz",
+   "https://www.ncei.noaa.gov/sites/default/files/2024-12/WMM2025COF.zip"
   ],
   "zugriff_url": "https://www.ncei.noaa.gov/access/billions/",
   "geprueft": true,
@@ -2065,20 +5593,96 @@
   "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
-  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run. Fetched in the works of the Atelier, the Field, the nightly line and the Studio.",
   "relevanz_herkunft": "gebrauch",
   "weg": "praxis",
   "aufnahmegrund": "benutzt",
   "fundstellen": [
-   "pipelines/protokoll/src/protokoll/praemie/disasters.py"
+   "error-as-method/works/2026-08-13-the-drifting-address/geomag.py",
+   "error-as-method/works/2026-08-13-the-drifting-address/harvest.py",
+   "field-research/artifacts/2026-10-14-the-warnings-never-needed/s24/data/sources_24.json",
+   "field-research/artifacts/cycle-009/after-the-empty-warnings/data/sources38.json",
+   "pipelines/protokoll/src/protokoll/praemie/disasters.py",
+   "studio/works/2026-10-16-filed-under/build_below.py",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/survey.js",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/survey.py",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/tracks.js",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/tracks.py",
+   "ulysses/presentations/cycle-009/survey.js",
+   "ulysses/presentations/cycle-009/survey.py",
+   "ulysses/presentations/cycle-009/tracks.js",
+   "ulysses/presentations/cycle-009/tracks.py",
+   "ulysses/window/cycle-007-convening-5/sources.json"
   ],
   "benutzt_von": [
-   "protokoll"
+   "atelier",
+   "field",
+   "nightly",
+   "protokoll",
+   "studio"
   ],
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
   "reachability_changed_on": "2026-10-23"
+ },
+ {
+  "id": "www-ngdc-noaa-gov",
+  "titel": "www.ngdc.noaa.gov",
+  "host": "www.ngdc.noaa.gov",
+  "adressen": [
+   "https://www.ngdc.noaa.gov/IAGA/vmod/coeffs/igrf14coeffs.txt"
+  ],
+  "zugriff_url": "https://www.ngdc.noaa.gov/IAGA/vmod/coeffs/igrf14coeffs.txt",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-08-13-the-drifting-address/geomag.py",
+   "error-as-method/works/2026-08-13-the-drifting-address/harvest.py",
+   "error-as-method/works/2026-08-13-the-drifting-address/measure.py"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "www-nhc-noaa-gov",
+  "titel": "www.nhc.noaa.gov",
+  "host": "www.nhc.noaa.gov",
+  "adressen": [
+   "https://www.nhc.noaa.gov/CurrentStorms.json"
+  ],
+  "zugriff_url": "https://www.nhc.noaa.gov/CurrentStorms.json",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of Machine Attention.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "machine-attention/practice/src/practice/foreknown/sources.py"
+  ],
+  "benutzt_von": [
+   "attention"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
  },
  {
   "id": "www-philadelphiafed-org",
@@ -2167,6 +5771,83 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-04",
   "first_seen_on": null,
+  "reachability_changed_on": null
+ },
+ {
+  "id": "www-sidc-be",
+  "titel": "www.sidc.be",
+  "host": "www.sidc.be",
+  "adressen": [
+   "https://www.sidc.be/SILSO/DATA/SN_m_tot_V2.0.csv"
+  ],
+  "zugriff_url": "https://www.sidc.be/SILSO/DATA/SN_m_tot_V2.0.csv",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-10-20-first-to-hand/face-data.js"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "www-spc-noaa-gov",
+  "titel": "www.spc.noaa.gov",
+  "host": "www.spc.noaa.gov",
+  "adressen": [
+   "https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv",
+   "https://www.spc.noaa.gov/wcm/data/1950-2023_all_tornadoes.csv",
+   "https://www.spc.noaa.gov/wcm/data/1950-2024_actual_tornadoes.csv",
+   "https://www.spc.noaa.gov/wcm/data/1955-2023_hail.csv.zip",
+   "https://www.spc.noaa.gov/wcm/data/1955-2023_wind.csv.zip",
+   "https://www.spc.noaa.gov/wcm/data/;"
+  ],
+  "zugriff_url": "https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Atelier, the Field and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/2026-10-14-the-tornadoes-that-came/data/sources.json",
+   "field-research/artifacts/2026-10-14-the-warnings-never-needed/data/sources.json",
+   "field-research/artifacts/2026-10-14-who-was-beneath/data/sources.json",
+   "field-research/artifacts/cycle-009/after-the-empty-warnings/data/sources.json",
+   "studio/works/2026-10-20-take-cover-again/build_toll.py",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/accounts.js",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/accounts.py",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/tracks.js",
+   "ulysses/artifacts/cycle-009/the-wolfs-ledger/tracks.py",
+   "ulysses/presentations/cycle-009/accounts.js",
+   "ulysses/presentations/cycle-009/accounts.py",
+   "ulysses/presentations/cycle-009/tracks.js",
+   "ulysses/presentations/cycle-009/tracks.py",
+   "ulysses/window/cycle-007-convening-4/sources.json",
+   "ulysses/window/cycle-007-convening-5/sources.json"
+  ],
+  "benutzt_von": [
+   "atelier",
+   "field",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
   "reachability_changed_on": null
  },
  {
@@ -2287,6 +5968,55 @@
   "reachability_changed_on": null
  },
  {
+  "id": "www-unicode-org",
+  "titel": "www.unicode.org",
+  "host": "www.unicode.org",
+  "adressen": [
+   "https://www.unicode.org/Public/15.0.0/ucd/SpecialCasing.txt",
+   "https://www.unicode.org/Public/18.0.0/ucd/UnicodeData.txt",
+   "https://www.unicode.org/Public/5.0.0/ucd/NameAliases.txt",
+   "https://www.unicode.org/Public/UCD/latest/ucd/DerivedAge.txt",
+   "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt",
+   "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt",
+   "https://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt",
+   "https://www.unicode.org/Public/UCD/latest/ucd/Scripts.txt",
+   "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt",
+   "https://www.unicode.org/license.txt"
+  ],
+  "zugriff_url": "https://www.unicode.org/Public/15.0.0/ucd/SpecialCasing.txt",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of n-1 and the nightly line.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "error-as-method/works/2026-08-13-the-vacated-block/evidence.py",
+   "error-as-method/works/2026-08-13-the-vacated-block/harvest.py",
+   "error-as-method/works/2026-08-18-the-applicable-version/harvest.py",
+   "error-as-method/works/2026-08-22-no-shared-table/shipped_rule.py",
+   "error-as-method/works/2026-08-22-no-shared-table/sources/harvest.py",
+   "n-1/projects/unicode-admission/build.py",
+   "n-1/projects/unicode-admission/build2.py",
+   "n-1/projects/unicode-admission/build3.py",
+   "n-1/projects/unicode-admission/build4.py",
+   "n-1/projects/unicode-admission/sources.json",
+   "n-1/projects/unicode-admission/sources3.json",
+   "n-1/projects/unicode-admission/sources4.json"
+  ],
+  "benutzt_von": [
+   "n-1",
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "www-whitehouse-gov",
   "titel": "The White House Priorities",
   "host": "www.whitehouse.gov",
@@ -2375,5 +6105,42 @@
   "probed_on": "2026-11-04",
   "first_seen_on": null,
   "reachability_changed_on": "2026-10-22"
+ },
+ {
+  "id": "www2-census-gov",
+  "titel": "www2.census.gov",
+  "host": "www2.census.gov",
+  "adressen": [
+   "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2023_Gazetteer/2023_Gaz_counties_national.zip",
+   "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/Gaz_counties_national.zip",
+   "https://www2.census.gov/geo/docs/reference/cenpop2010/blkgrp/CenPop2010_Mean_BG.txt",
+   "https://www2.census.gov/geo/docs/reference/cenpop2020/blkgrp/CenPop2020_Mean_BG.txt"
+  ],
+  "zugriff_url": "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2023_Gazetteer/2023_Gaz_counties_national.zip",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Fetched in the works of the Field and the Studio.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "field-research/artifacts/2026-10-14-the-warnings-never-needed/s27/data/sources_27.json",
+   "field-research/artifacts/2026-10-14-the-warnings-never-needed/s27/join_27.py",
+   "field-research/artifacts/2026-10-14-who-was-beneath/data/sources.json",
+   "field-research/artifacts/cycle-009/after-the-empty-warnings/data/sources.json",
+   "studio/works/2026-10-14-under-warning/fetch.py",
+   "studio/works/2026-10-16-filed-under/build_quake.py"
+  ],
+  "benutzt_von": [
+   "field",
+   "studio"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-04",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
  }
 ]
