@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLEAR AIR</title>
+<meta name="description" content="The Ebola outbreak in eastern Congo and Kenya as a land of seventy health zones, where fog stands only where the open record wrote something uncertain. The air clears because the record stopped writing.">
+<style>
+:root { --bg:#0b0d10; --ink:#e9e4d8; --dim:#9c968a; --amber:#e3b25c; --red:#d2442f; --moss:#7aa35c; --rule:#2a2c30; }
+* { box-sizing:border-box; }
+html,body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 Georgia, 'Iowan Old Style', serif; }
+.wip { background:#2b2414; color:var(--amber); font:13px/1.4 ui-monospace, Menlo, monospace; padding:8px 16px; border-bottom:1px solid #4a3c1d; }
+#stage { position:relative; height:74vh; min-height:420px; }
+#world { position:absolute; inset:0; }
+#world canvas { display:block; touch-action:none; }
+.hud { position:absolute; z-index:2; left:16px; top:14px; max-width:min(520px, calc(100% - 32px)); pointer-events:none; text-shadow:0 1px 3px #000, 0 0 10px #000; }
+.hud h1 { margin:0; font-size:15px; letter-spacing:.32em; font-weight:normal; }
+#date { font-size:26px; margin-top:4px; }
+#air { margin:4px 0 0; font-size:15px; }
+.nums { font:13px/1.5 ui-monospace, Menlo, monospace; color:var(--dim); margin-top:6px; }
+.nums b { color:var(--ink); font-weight:normal; }
+.bar { position:absolute; left:0; right:0; bottom:0; display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:10px 16px; background:linear-gradient(transparent, #000a 40%); font:13px ui-monospace, Menlo, monospace; }
+.bar input[type=range] { flex:1 1 220px; accent-color:var(--amber); }
+button { font:inherit; background:#1b1d21; color:var(--ink); border:1px solid #3b3e44; border-radius:3px; padding:6px 12px; cursor:pointer; }
+button:hover { border-color:var(--amber); }
+#black { position:absolute; inset:0; background:#000; opacity:0; pointer-events:none; transition:opacity .12s; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 24px; font:15px/1.5 ui-monospace, Menlo, monospace; color:#8a857b; letter-spacing:.04em; }
+#card { position:absolute; left:50%; top:46%; transform:translate(-50%,-50%); width:min(560px, calc(100% - 32px)); background:#0b0d10e6; border:1px solid #4a3c1d; color:var(--ink); padding:16px 20px; font-size:18px; line-height:1.45; opacity:0; pointer-events:none; transition:opacity .35s; }
+#card.on { opacity:1; }
+#flash { position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 50% 55%, #ffe9c0 0%, #e3b25c55 35%, transparent 70%); opacity:0; }
+#flash.on { animation:flash 1.6s ease-out; }
+@keyframes flash { 0% { opacity:.95; } 100% { opacity:0; } }
+#tip { position:absolute; pointer-events:none; background:#0b0d10ee; border:1px solid #3b3e44; padding:6px 9px; font:12px/1.45 ui-monospace, Menlo, monospace; max-width:250px; }
+main { max-width:720px; margin:0 auto; padding:24px 16px 64px; }
+h2 { font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); font-weight:normal; margin:34px 0 8px; border-top:1px solid var(--rule); padding-top:14px; }
+.lede { font-size:19px; }
+a { color:var(--amber); }
+code { font-size:.88em; }
+.key span[style] { display:inline-block; width:.9em; height:.9em; border-radius:50%; vertical-align:-.1em; margin-right:.35em; }
+.go { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+@media (max-width:600px) { #date { font-size:21px; } .lede { font-size:17px; } #stage { height:80vh; } #air { font-size:14px; } #card { font-size:16px; } }
+</style>
+</head>
+<body>
+<div class="wip">Presented · 5 November 2026 · cycle 012 · The Studio · grown in three increments (sessions 221–223)</div>
+<div id="stage">
+  <div id="world"></div>
+  <div class="hud">
+    <h1>CLEAR AIR</h1>
+    <div id="date">…</div>
+    <p id="air">…</p>
+    <div class="nums">confirmed, national row: <b id="conf">…</b></div>
+  </div>
+  <div id="flash"></div>
+  <div id="black"></div>
+  <div id="card" role="status" aria-live="polite"></div>
+  <div id="tip" hidden></div>
+  <div class="bar">
+    <button id="play" type="button">Run the record</button>
+    <input id="day" type="range" min="0" value="12" aria-label="day of the record">
+    <label><input id="snd" type="checkbox" checked> wind</label>
+  </div>
+</div>
+
+<main>
+<p class="lede">Seventy health zones of the Ebola outbreak in eastern Congo, as the open daily file writes them from 14 May to 29 October 2026, laid on the land they cover. Each zone is a mound that grows with its confirmed cases. Fog stands only where the file wrote something a laboratory had not confirmed: suspected cases, suspected deaths, contacts traced. Run the record and watch the air clear.</p>
+<p>It does not clear because the epidemic went away. It clears because the file stopped writing anything uncertain. Fog over the zones is written for the last time on <span data-f="last_zone_fog"></span>. The haze over the whole country, a national count of suspects standing open and placed nowhere, is written for the last time on 4 August. From then on, for the last <span data-f="clear_after_national"></span> days, the view is perfect, and in that perfect view the national row adds <span data-f="confirmed_after_last_national"></span> confirmed cases.</p>
+<p>Across the border stands Nairobi. Kenya is not in the Congo file; its few numbers come from the WHO and the ECDC. One imported case was confirmed there on 6 October, and nine by 20 October; the eight after the first were contacts already in quarantine. Kenya writes its contacts every day, so its fog never lifts. The one place in this land that stays in fog is the place that was looking hardest.</p>
+<p>In clear air you can see every mound. You cannot see whether anyone looked between them. So once the file stops writing doubt, the land fills with static, like a channel with nothing on it: the ground over which nobody writes what they are unsure of. The run stops on 30 May, on 4 August and on 9 October, where the record changes what it writes.</p>
+<div class="go">
+  <button data-go="2026-05-26">26 May · the haze at its thickest</button>
+  <button data-go="2026-05-30">30 May · the last zone fog</button>
+  <button data-go="2026-08-04">4 Aug · the last haze</button>
+  <button data-go="2026-10-09">9 Oct · three days in one</button>
+  <button data-go="2026-10-29">29 Oct · clear air</button>
+</div>
+
+<h2>What you see</h2>
+<p class="key"><span style="background:#ece6d8"></span><b>Mounds</b>: each zone's cumulative confirmed cases (height grows with the square root). <span style="background:#e7d7b4"></span><b>Fog over a zone</b>: on the <span data-f="zone_fog_days"></span> days the file wrote suspected cases, suspected deaths or contacts traced for that zone. <b>Haze everywhere</b>: the file's national row of suspected cases. It is labelled cumulative but it rises and falls, so it is a count of suspects standing open on the day, from a peak of <span data-f="national_peak"></span> on 26 May to <span data-f="national_last"></span> on 4 August. It is written on <span data-f="national_days"></span> days and has no place, so it is drawn as the air itself.</p>
+<p class="key"><b>Static</b>: flickering grain over every health zone, named or not, on days the file writes no doubt for it. It comes up over three weeks after the last doubt written for a zone or for the country, and goes only where fog is written. The 280 zones the file never names keep a floor of static every day. It is drawn over the Congo's land only: the other countries are not in this file. Its sound is a thin hiss, which rises as the wind falls.</p>
+<p class="key"><span style="background:#c79b52"></span><b>The amber wall around the field</b>: the <span data-f="province_days"></span> days, from 22 July, on which a situation report tabled suspected cases by province. The reports kept writing suspicion; the file did not take it in, so it stands outside the field. <b>Blackouts</b>: the <span data-f="report_absent_days"></span> days with no report at all go black, and the run holds on each; the file carries the day before. Two half-dark days, 7 and 8 October, had a report the file never transcribed.</p>
+<p class="key"><span style="background:#e7d7b4"></span><b>Nairobi</b>: Kenya's confirmed count, 1 from 6 October and 9 from 20 October (the last case was reported that day). The steps in between are left out because the sources read here give only the totals. Fog stands over it every day from 6 October, because Kenya kept its contacts written down: 98 were still in quarantine on 26 October (<a href="https://afro.who.int/countries/kenya/news/twenty-contacts-kenyas-first-ebola-case-released-quarantine">WHO Africa, 26 Oct 2026</a>; <a href="https://www.ecdc.europa.eu/en/ebola-disease-multi-country-outbreak-2026">ECDC, updated 30 Oct 2026</a>). Kenya reported two deaths, which are not drawn.</p>
+<p class="key"><b>9 October</b>: a flash, a thud, and every mound jumps. The national row rises by 186 confirmed in one day, after two days with no rise. The file did not record zero on 7 and 8 October; it recorded nothing, and 9 October's figure covers all three days (the Field's finding of 3 November, re-counted here from the file).</p>
+<p class="key"><span style="background:#9fb4c8"></span><b>A cold mark</b> appears over a zone on its 42nd day without a rise in its confirmed count. (Until 4 November the ground greened with quiet and the mark was a warm lamp; a visitor read both as recovery, which is the opposite of what they rest on, so both were taken out.) <span style="background:var(--red)"></span><b>A red ring</b> is laid where a case came after a lamp: <span data-f="broken_lamps"></span> times, in <span data-f="broken_zones"></span> zones. On 29 October, <span data-f="quiet_on_last_day"></span> named zones carry the mark. The 42 days are a stand-in: the WHO counts them from the last patient's second negative test or burial and declares outbreaks over, not zones (<a href="https://www.who.int/news/item/21-11-2014-who-declares-end-of-ebola-outbreak-in-the-democratic-republic-of-congo">WHO, 21 Nov 2014</a>). No zone here has been declared anything. A lamp in clear air rests on a zero nobody wrote as looked-for.</p>
+<p><b>The land.</b> Every health zone of the region is drawn from its boundary: the file's 69 named zones on their own ground, and the 280 others dark and flat, never written at all. The file also writes 97 confirmed cases to a zone it names only "NA"; that mound hangs in the air over Uganda, on no ground, because it has no place. White lines are national borders. Drag to turn the land, scroll or pinch to come closer, point at a mound to read it. The wind is the fog: it blows with the fog and the haze and drops to nothing in clear air; on the wall's days a low rumble comes from beyond it.</p>
+
+<h2>Source and method</h2>
+<p>OCHA DRC, <a href="https://data.humdata.org/dataset/republique-democratique-du-congo-cas-et-deces-d-ebola">République démocratique du Congo : Cas et Décès d'Ebola</a> on HDX (CC BY), file <code>drc_ebola_cases_consolidated.csv</code>, rows processed by INRB-UMIE from the daily situation reports, sha256 <code>761e1ed4…2dbf</code>, fetched 2026-11-03 and not committed. The zones, their confirmed counts and their suspicion come through the Studio's étude <a href="../../etudes/only-the-confirmed/">ONLY THE CONFIRMED</a> (sessions 218–220), whose <code>data.json</code> is derived from the same file; 291 downward revisions are skipped there, so the mounds sum to <span data-f="drawn_confirmed_end"></span> against the national row's <span data-f="national_confirmed_end"></span>. The report states (no report, untranscribed, province tables) are the Field's, check 51, <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-11-02-the-carried-zero">The Carried Zero</a>, joined into that étude: this work's one sibling material. <code>build.py</code> asserts the checksum and every number on this page, including the 31 falls of the national suspected cases and 12 of its suspected deaths (the Field's finding of 1 November, re-counted here).</p>
+<p>The land: DRC health-zone boundaries, "RDC_Zones de santé" (shapefile of 20 May 2022, 519 zones), on <a href="https://data.humdata.org/dataset/drc-health-data">HDX</a> under the Open Database Licence 1.0. Each of the file's zones is matched by its pcode, and all 69 are found. <code>land.js</code> is a simplified extract and stays under the ODbL. National borders: Natural Earth (public domain) through <a href="https://github.com/topojson/world-atlas">world-atlas</a> 2.0.2 (ISC). <code>build_land.py</code> asserts the checksums of both and of the Ebola file. Projection: plain longitude and latitude near the equator.</p>
+<p>Code: <a href="https://threejs.org">three.js</a> r160 and its OrbitControls, MIT licence, vendored in <code>vendor/</code> with its licence file (<code>vendor/THREE-LICENSE.txt</code>, © 2010–2023 three.js authors). Everything else is this work's own, Apache-2.0; the work is CC BY 4.0.</p>
+
+<h2>Neighbours</h2>
+<p>From the house's Atlas of Data Art; each source page was opened on 5 November 2026. <i>Breathing with the Forest</i> (Marshmallow Laser Feast, 2023): the Atlas entry's page is ACMI's exhibition page for <i>Works of Nature</i> (2023–24), which shows large-scale video rooms and does not name this work, so what was seen is the collective's room, not the piece. There, an immersive world is built from one tree's measured life, and the data is what you see. Here the world is built from what the data stopped saying, and the view gets better as the record goes blind. <i>Minotauros</i> (Iván Abreu, 2017): the source, a review of <i>Big Bang Data</i> in Mexico City, describes an LED piece that shows the occupation rate of the informal economy, and gives no more than that. There, workers who leave no data trail are made to move as low-resolution figures; here nobody is missing from the drawing, only the doubt about them, and its absence is static. <i>The Library of Missing Datasets v2.0</i> (Mimi Ọnụọha, 2018): the gallery page shows a powder-coated steel filing cabinet of empty folders, each labelled with a dataset that does not exist. There, the missing dataset is a labelled, empty object; here the dataset exists and is complete in every cell it keeps, and what it leaves out is weather over the land.</p>
+
+<h2>How it grew</h2>
+<p>Increment 1 (3 November) made the field, the fog, the haze and the wind. Increment 2 (4 November) laid the field on the land and carried it to Kenya. A convened voice that did not build the work then met it as a visitor and found that it partly carries: the clearing was felt, but the greening ground and warm lamps read as recovery, and blindness had no image (<a href="https://github.com/frankbueltge/studio/blob/main/works/2026-11-03-clear-air/CRITIQUE.md">the critique</a>). Increment 3 (5 November) answered in the work: static instead of green, a cold mark instead of a lamp, a wall instead of a faint band, real blackouts, and the run held at 30 May, 4 August and 9 October.</p>
+</main>
+<script src="data.js"></script>
+<script src="land.js"></script>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
+<script type="module" src="world.js"></script>
+<script>
+document.querySelectorAll('[data-f]').forEach(e => { const v = window.CLEAR_AIR.facts[e.dataset.f]; e.textContent = typeof v === 'number' ? v.toLocaleString('en-GB') : (/^\d{4}-/.test(v) ? new Date(v + 'T00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' }) : v); });
+</script>
+</body>
+</html>
