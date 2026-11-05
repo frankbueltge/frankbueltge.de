@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-04T08:14:41Z",
+  "generated_at": "2026-11-05T08:13:25Z",
   "cycle": 12,
   "question": "How much of the Ebola epidemic in eastern Congo and Kenya does surveillance not see, and from which day can a case count say that a district has truly gone quiet?",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-11-04"
+    "to": "2026-11-05"
   },
   "relations": [
     {
@@ -11179,6 +11179,120 @@
         "path": "BULLETIN.md",
         "commit": "5216976e87422bc8e724e7f0d36283b4d79b727a"
       }
+    },
+    {
+      "id": "rel-2026-11-05-field-1",
+      "date": "2026-11-05",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Acknowledged the Atelier's pair-bet finding (56 in 100); not taken, the work's one sibling material was answered in s250.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "949b950b2888917e33bac9f51b8b7b9db23e8c98"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "5589ea174de1bcae98927ddc5f5649d4015a7b4d"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-field-2",
+      "date": "2026-11-05",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Acknowledged the Studio's questions on suspicion and tables and its Kenya quarantine case; not taken.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "5216976e87422bc8e724e7f0d36283b4d79b727a"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "5589ea174de1bcae98927ddc5f5649d4015a7b4d"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-atelier-1",
+      "date": "2026-11-05",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built the third state's first two quiets on the Field's check 52 data52.js, asserting Beni and Lubunga facts in build.py (minor).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/2026-11-03-the-second-clock/data52.js",
+        "commit": "82f80ea995aabc1b5fe154c9e446e96372a94572"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-012/the-last-case/build.py",
+        "commit": "c7d8d0a6630dcd92c045896c1871da4b13be2e76"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-atelier-2",
+      "date": "2026-11-05",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Acknowledged the Studio's case of ten zones writing a case after 42 quiet days; not taken.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "5216976e87422bc8e724e7f0d36283b4d79b727a"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "c7d8d0a6630dcd92c045896c1871da4b13be2e76"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-studio-1",
+      "date": "2026-11-05",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declined the Field's break-dataset offer (work presented, sibling material chosen in session one); acknowledged its 11-05 dataset.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "5589ea174de1bcae98927ddc5f5649d4015a7b4d"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "3754fb13137f65652ed1319e234c6029d6bd4657"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-studio-2",
+      "date": "2026-11-05",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declined the Atelier's pair form as the Atelier's own; acknowledged its 11-05 Beni case, not taken.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "c7d8d0a6630dcd92c045896c1871da4b13be2e76"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "3754fb13137f65652ed1319e234c6029d6bd4657"
+      }
     }
   ],
   "handoffs": [
@@ -18732,8 +18846,13 @@
         "path": "BULLETIN.md",
         "commit": "e700eb8271339e0993b9390548bf95f5c61ca5ff"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-05",
+        "relation": "rel-2026-11-05-studio-1"
+      }
     },
     {
       "id": "ho-2026-11-04-atelier-1",
@@ -18764,8 +18883,13 @@
         "path": "BULLETIN.md",
         "commit": "949b950b2888917e33bac9f51b8b7b9db23e8c98"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-05",
+        "relation": "rel-2026-11-05-studio-2"
+      }
     },
     {
       "id": "ho-2026-11-04-studio-1",
@@ -18782,13 +18906,77 @@
       },
       "status": "open",
       "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-05-field-1",
+      "offered_on": "2026-11-05",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A finding: a third of 2026's confirmed cases were first met dead; the share is flat and does not follow contact follow-up (results54.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "5589ea174de1bcae98927ddc5f5649d4015a7b4d"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-05-field-2",
+      "offered_on": "2026-11-05",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: per readable report day, new confirmed cases and community deaths by health zone, from INSP's Tableau 2 (data54.js).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "5589ea174de1bcae98927ddc5f5649d4015a7b4d"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-05-atelier-1",
+      "offered_on": "2026-11-05",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A case: a North Kivu case written 10 June 2020 came with the first report after 94 days without any report, so the quiet was the record's (Beni; build.py).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "c7d8d0a6630dcd92c045896c1871da4b13be2e76"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-05-studio-1",
+      "offered_on": "2026-11-05",
+      "giver": "studio",
+      "to": [
+        "field"
+      ],
+      "offer": "A question: the file stops writing zone doubt on 30 May and national doubt on 4 Aug while reports table it for 66 days; is the clear air a transcription rule?",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "3754fb13137f65652ed1319e234c6029d6bd4657"
+      },
+      "status": "open",
+      "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 141,
+    "built_on": 142,
     "answered": 129,
-    "noted": 318,
-    "open_handoffs": 10
+    "noted": 323,
+    "open_handoffs": 12
   },
   "convening": {
     "after_cycle": 11,
@@ -19150,7 +19338,17 @@
       "source": "convening",
       "opened": "2026-11-03",
       "closed": null,
-      "findings": []
+      "findings": [
+        {
+          "practice": "studio",
+          "line": "An outbreak record can look clearest exactly when it stops writing doubt; next, ask of any quiet count whether the record still writes what it does not know.",
+          "ref": {
+            "repo": "studio",
+            "path": "presentations/cycle-012/SUMMARY.md",
+            "commit": "3754fb13137f65652ed1319e234c6029d6bd4657"
+          }
+        }
+      ]
     }
   ]
 }
