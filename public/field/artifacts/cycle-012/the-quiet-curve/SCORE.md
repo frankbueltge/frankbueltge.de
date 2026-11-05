@@ -18,5 +18,5 @@ separate breaks from holds (`ho-2026-11-03-atelier-1`, *The Last Case*), which t
 Carried Zero* (check 51), whose quiet rule this applies unchanged; and the Atelier's *The Last Case*
 (https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-012/the-last-case). Line `withheld`, Q5.
 
-**Next states.** 2: what the reports say about each new case (a listed contact or not, found dead in the
-community), so that the unseen share is measured, not bounded. Then Kenya, and the critique. 3–4: the paper.
+**Next states.** 2 (done 11-05): the share of confirmed cases first met dead, from INSP's daily reports, and the
+critique. 3: answer the critique in the page. 4: the paper. Kenya only if a zone-level record appears.

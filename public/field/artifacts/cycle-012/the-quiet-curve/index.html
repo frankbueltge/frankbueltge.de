@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Quiet Curve</title>
-<meta name="description" content="Study 53 of The Field, cycle 012, state 1. When an Ebola health zone has gone d days without a new confirmed case, how often does it record another within six weeks? Two records, Kivu 2018–2020 and Congo 2026.">
+<meta name="description" content="Studies 53 and 54 of The Field, cycle 012, state 2. A third of the confirmed cases of 2026 were first met dead. When an Ebola health zone has gone d days without a new confirmed case, how often does it record another within six weeks? Two records, Kivu 2018–2020 and Congo 2026.">
 <style>
 :root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a65;--line:#d9d6ce;--card:#f2efe7;--all:#2b2a27;--nb:#a33a2a;--no:#1f5f8b;--band:rgba(43,42,39,.13);--bandnb:rgba(163,58,42,.15);--bandno:rgba(31,95,139,.15);--ref:#c9821f;--link:#1f5f8b;--held:#2e7d4f;--fail:#a33a2a}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--all:#e4e2db;--nb:#e2775f;--no:#6fb3e0;--band:rgba(228,226,219,.13);--bandnb:rgba(226,119,95,.18);--bandno:rgba(111,179,224,.18);--ref:#e3a548;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f}}
@@ -32,11 +32,13 @@ td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertic
 .held{color:var(--held);font-weight:600}.failed{color:var(--fail);font-weight:600}
 .note{font:14px/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
 code{font-size:.92em}
+.rdx{font:14px/1.5 system-ui,sans-serif;min-height:2.4em;background:var(--card);padding:8px 12px;border-radius:3px;margin:6px 0}
+.h3{font-size:1.02rem;font-weight:normal;margin:1.4em 0 .3em}
 </style>
 </head>
 <body>
 <main>
-<div class="kick">THE FIELD · STUDY 53 · CYCLE 012 · STATE 1 · SESSION 250 · 2026-11-04</div>
+<div class="kick">THE FIELD · STUDIES 53–54 · CYCLE 012 · STATE 2 · SESSION 251 · 2026-11-05</div>
 <h1>The Quiet Curve</h1>
 <p class="lede">WHO declares an Ebola outbreak over once 42 days pass without a new case, <a href="https://www.who.int/news/item/21-11-2014-who-declares-end-of-ebola-outbreak-in-the-democratic-republic-of-congo">"twice the maximum incubation period"</a>. That rule speaks of a whole outbreak. But a case count also goes quiet zone by zone, and responders read those quiets. This study asks of two records how often a health zone that has been quiet for <i>d</i> days records another confirmed case within the next six weeks, and whether anything outside the zone can tell the quiets that break from those that hold.</p>
 
@@ -44,6 +46,7 @@ code{font-size:.92em}
 <p><b>On these two records:</b> of the health zones that had gone <b>42 days</b> without a new confirmed case, <b><span data-v="p42k"></span> of <span data-v="p42n"></span></b> (<span data-v="p42s"></span>, interval <span data-v="p42ci"></span>) recorded another within the next 42 days.</p>
 <p>The share falls below one in ten only after about <b><span data-v="d10"></span> quiet days</b>, and below one in twenty after <b><span data-v="d5"></span></b>.</p>
 <p>Almost every break had a neighbour. <b><span data-v="srcl"></span> of <span data-v="nbr"></span></b> breaks after three or more quiet weeks came with no new case anywhere else in the province in the 21 days before. The count shows a hidden chain only that rarely. Read with the record's own holes, one of those three is Beni, at the end of a 94-day gap in the reports.</p>
+<p><b>What the count does not see, measured:</b> in the 2026 outbreak, <b><span data-v="cdk"></span> of <span data-v="cdn"></span></b> newly confirmed cases (<span data-v="cds"></span>, interval <span data-v="cdci"></span>) were <b>community deaths</b>: a body swabbed positive outside a treatment centre. Surveillance first met one confirmed case in three dead.</p>
 </div>
 
 <h2>Figure 1. The chance that a quiet breaks, by how long it has lasted</h2>
@@ -67,27 +70,44 @@ code{font-size:.92em}
 <div class="legend"><span class="k" style="background:var(--mute);height:8px;width:8px;border-radius:50%"></span>another zone of the province had a new case in the 21 days before <span class="k" style="background:var(--nb);height:10px;width:10px;border-radius:50%"></span>no new case anywhere else in the province: a chain the count did not see · upper row Kivu, lower row Congo 2026</div>
 <div id="rd2" class="note">Point at a dot to read it.</div>
 
+<h2>Figure 3. First met dead: the confirmed cases surveillance did not see alive (Congo 2026)</h2>
+<canvas id="fd" height="300" aria-label="For each report day, new confirmed cases as a bar, with the community deaths among them filled, and the contact follow-up rate as a line"></canvas>
+<div class="legend"><span class="k" style="background:var(--line);height:10px"></span>new confirmed cases that day <span class="k" style="background:var(--nb);height:10px"></span>of them, found dead in the community <span class="k" style="background:var(--no)"></span>contacts followed that day (right scale)</div>
+<div id="rd3" aria-live="polite" class="rdx">Point at a day to read it.</div>
+<p class="note">Each bar is one INSP situation report, 13 July – 1 November 2026: the sum of its health-zone rows (Tableau 2, "Nouv. Cas" and "Décès communautaires (Swab+)"). Only <span data-v="usable"></span> of the 141 reports in the open archive carry these day columns in a table that reads cleanly. The earlier reports print only cumulative figures by zone, and six reports of October (158–163, 19–24 October) are missing from the archive. On <span data-v="capx"></span> of <span data-v="capn"></span> days the zone rows sum exactly to the report's own province rows. The line is the report's banner rate of contacts seen that day, where it can be read (<span data-v="fun"></span> days).</p>
+<h3 class="h3">The breaks of 2026: met dead, or seen alive?</h3>
+<canvas id="bk" height="150" aria-label="The 34 breaks of 2026 after three quiet weeks, by date: met dead, seen alive, or not readable"></canvas>
+<div class="legend"><span class="k" style="background:var(--nb);height:10px;width:10px;border-radius:50%"></span>the zone's first new case after the quiet includes a community death <span class="k" style="background:var(--no);height:10px;width:10px;border-radius:50%"></span>seen alive <span class="k" style="border:1px solid var(--mute);height:10px;width:10px;border-radius:50%"></span>the report of that day cannot say · height: quiet days before the break</div>
+<div id="rd4" class="note">Point at a dot to read it.</div>
+
 <h2>What this state shows, and what it does not yet</h2>
 <ul>
 <li><b>From which day is a zone quiet?</b> Not from day 42. At zone level, while an outbreak is running, the 42-day mark leaves about a one-in-three chance of a new case within six weeks. Within three weeks it is about one in five (switch the horizon).</li>
 <li><b>The neighbourhood tells what the zone's own record does not.</b> The Atelier found that the first 42 days of a quiet sound the same whether it later broke or held (<a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-012/the-last-case"><i>The Last Case</i></a>: 0.54 and 0.44 against a coin's 0.50). Split by a neighbour's case: at day 42, <span data-v="nb42"></span> of quiets with a case elsewhere in the province in the last 21 days broke, against <span data-v="no42"></span> without one. But only <b><span data-v="no42n"></span></b> quiets at day 42 lacked such a neighbour. The split rests on them. Read as a test, "no case in the province for 21 days" is close to "the outbreak has ended here".</li>
-<li><b>How much the count does not see.</b> On counts alone, the count admits a chain it missed only when a case comes from nowhere visible: <span data-v="srcl"></span> of <span data-v="nbr"></span>. Every other break could be an import from a known focus or a chain nobody followed. A count cannot tell those apart. The next states bring in what the reports say about each new case: whether it was a listed contact, and whether it was found dead in the community.</li>
+<li><b>How much the count does not see.</b> On counts alone, the count admits a chain it missed only when a case comes from nowhere visible: <span data-v="srcl"></span> of <span data-v="nbr"></span>. Every other break could be an import from a known focus or a chain nobody followed. A count cannot tell those apart. <b>State 2 measures one part of what it misses.</b> The daily reports say how many of the day's confirmed cases were found dead in the community: <span data-v="cds"></span> over the <span data-v="usable"></span> readable days, and about the same in the first half as in the second (<span data-v="h1"></span> and <span data-v="h2"></span>). That share did not move with the day's contact follow-up rate (Spearman's ρ <span data-v="rho"></span> over <span data-v="fun"></span> days; predicted at most −0.20, failed). A body is a case the count saw only once nobody could be followed from it any more.</li>
+<li><b>Are breaks met dead more often?</b> This could not be tested. Only <span data-v="bfound"></span> of the 34 breaks of 2026 can be read in a report of the same date (the instrument check needed 31). Of those, <span data-v="bmd"></span> were met dead, against <span data-v="base"></span> of all zone days with a new case. That is no sign that the case ending a quiet is found dead more often. It is post hoc and on <span data-v="bfound"></span> breaks. In <span data-v="b0"></span> breaks the report of the day shows no new case in the zone: the rise in the open file comes from a corrected cumulative figure, not from a reported case.</li>
 <li><b>The two records differ.</b> At day 42, Kivu <span data-v="k42"></span>, Congo 2026 <span data-v="b42"></span>. The 2026 outbreak is still running at the record's end and gives only <span data-v="b42n"></span> quiets a full six-week window.</li>
-<li><b>Kenya</b> is not in this state. No zone-level Kenyan record is in hand yet.</li>
+<li><b>Kenya</b> is not in this state either. No zone-level Kenyan record is in hand, and the work's one sibling material is already chosen.</li>
 </ul>
 
 <h2>Predictions, written before any count (<a href="PREDICTIONS.md">PREDICTIONS.md</a>)</h2>
 <table id="pred"><tbody></tbody></table>
 <p class="note">P2 and P4 held, but on 7 quiets without an active neighbour at day 42, none of which broke (Wilson interval 0–35 %). They are weak. After the first run, P2 was scored by its own words (at least three times the share without a neighbour; three times zero is zero). The first run's code needed a finite ratio and scored a zero as a failure. Read post hoc: without a neighbour, the curve still breaks 2 or 3 times in 9 to 12 quiets at days 49–63, so P4's single day flatters it. P5 failed low: sourceless breaks are rarer than predicted (under 3 %, not 10–40 %). P6 failed: the two records differ by 25 points at day 42.</p>
 
+<h2>Study 54: predictions, written before any count (<a href="PREDICTIONS54.md">PREDICTIONS54.md</a>)</h2>
+<table id="pred54"><tbody></tbody></table>
+<p class="note">P7 failed, so P9 and P10 are uninformative by their own rule (the date join is the instrument they stand on). The join is not off by a day: shifting it by −2 to +2 days finds no more breaks. P8's intervals: Wilson <span data-v="p8w"></span>; bootstrap over report days <span data-v="p8b"></span>. <b>Deviation, declared:</b> P8 was written for the reports' highlights paragraph. Its wording changes from report to report, and a first parse caught cumulative figures, so P8 is measured from the zone tables, which carry the same count in fixed columns. <b>Corrected in the session:</b> the first parse lost every number of four digits printed without a space (Bunia, Ituri), read one day's follow-up rate from the prose ("12,0 %" on 7 October) and accepted a community death on a zone row with no new case. All three were fixed before this page was written. The first run's figures (1,639 of 4,933; ρ −0.03) stand in the journal.</p>
+
 <h2>Method</h2>
 <p class="note">Records: OCHA HDX, <a href="https://data.humdata.org/dataset/ebola-cases-and-deaths-drc-north-kivu">North Kivu outbreak by health zone, 2018–2020</a> (ministry and WHO, CC BY-IGO, sha256 <code>76c7e999…86cb</code>), North Kivu, Ituri and South Kivu rows; OCHA HDX, <a href="https://data.humdata.org/dataset/e902b209-b7bc-42f9-893a-294276d7cc62">Congo 2026 consolidated</a> (INRB-UMIE, CC BY, sha256 <code>761e1ed4…2dbf</code>), 14 May – 29 October 2026. Quiet rule as in checks 51 and 52: a rise is a report on which a zone's cumulative confirmed count exceeds every earlier value, and a quiet runs from one rise to the next. A neighbour is another zone of the same province (Kivu: the file's province; 2026: the first four characters of the pcode). Intervals: 2,000 bootstrap draws over zones, seed 53. Everything is computed by <a href="analyse53.py">analyse53.py</a> into <a href="results53.json">results53.json</a>; this page reads <code>data53.js</code> and computes no number of its own.</p>
-<p class="note">Limits. A rise in a cumulative count dates a case by its report, not its onset. Kivu's record has one 94-day hole (8 March – 9 June 2020, check 52), in which no rise can be written; quiets across it are counted as calendar days. A province is a coarse neighbourhood, and 21 days is one incubation period, chosen before the count. Two outbreaks are two cases, not a sample of Ebola. This rule is not WHO's end-of-outbreak rule, which counts from the last patient.</p>
+<p class="note">State 2: INSP, <i>Rapport de situation</i> SitRep MVE-BDBV, the 141 PDFs in <a href="https://github.com/INRB-UMIE/BDBV2026-Data">INRB-UMIE/BDBV2026-Data</a> (commit <code>a5ee90c0</code>, 4 November 2026; 74 of them from its large-file store, each matching its pointer's sha256), read as text (<code>pdftotext -layout</code>). Each zone row is checked against itself (its printed fatality must equal deaths over cases, and community plus intra-CTE deaths must equal its total), and a report is used if at least 80 % of its zone rows pass. Blank cells are placed by the column positions of the full rows on the same page. A break is joined to the report whose reporting date is the break's date. Everything is computed by <a href="analyse54.py">analyse54.py</a> into <a href="results54.json">results54.json</a>. No PDF or text is committed: the repository asks for contact before use of its epidemiological data, and this page publishes counts read from the public reports, not their files.</p>
+<p class="note">Limits. A community death is counted on the day it was confirmed, and the reports do not say how long the chain behind it ran. It measures one kind of unseen case: those who died before anyone followed them. Unseen cases who survived are not in it. The reports do not say, in a table that can be read, whether each new case was a listed contact. A rise in a cumulative count dates a case by its report, not its onset. Kivu's record has one 94-day hole (8 March – 9 June 2020, check 52), in which no rise can be written; quiets across it are counted as calendar days. A province is a coarse neighbourhood, and 21 days is one incubation period, chosen before the count. Two outbreaks are two cases, not a sample of Ebola. This rule is not WHO's end-of-outbreak rule, which counts from the last patient.</p>
 
 <h2>Beside this work</h2>
 <p class="note">The Atelier, <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-012/the-last-case"><i>The Last Case</i></a>: a visitor hears a quiet day by day and declares its end. This study's split by neighbour answers its finding (<code>ho-2026-11-03-atelier-1</code>), the work's one sibling material. The Studio, <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-11-03-clear-air">CLEAR AIR</a>: the same 2026 record as weather, where the air clears as the record stops writing doubt. Earlier: the Field's <a href="../../2026-11-03-the-second-clock/">The Second Clock</a> (check 52) and <a href="../../2026-11-02-the-carried-zero/">The Carried Zero</a> (check 51).</p>
 </main>
 <script src="data53.js"></script>
+<script src="data54.js"></script>
 <script>
 (function(){
 const D=window.D53,S={rec:'pooled',H:'42',split:'all'};
@@ -149,8 +169,52 @@ function draw2(){const dpr=devicePixelRatio||1,g=g2();br.width=g.w*dpr;br.height
 br.addEventListener('pointermove',e=>{const r=br.getBoundingClientRect();let best=null,bd=144;
  for(const p of place()){const d=(p.x-(e.clientX-r.left))**2+(p.y-(e.clientY-r.top))**2;if(d<bd){bd=d;best=p}}
  bh=best;draw2();rd2.textContent=best?(best.b.z+' ('+best.b.p+'): quiet from '+best.b.start+', broken '+best.b.at+' after '+best.b.L+' days. '+(best.b.sourceless?'No new case anywhere else in the province in the 21 days before.':'Another zone of the province had a new case in the 21 days before.')):'Point at a dot to read it.'});
+// state 2: study 54
+const E=window.DATA54,PE=E.predictions,SR=E.series;
+const sum=(a,f)=>a.reduce((t,x)=>t+f(x),0);
+const half=Math.floor(SR.length/2),h1=SR.slice(0,half),h2=SR.slice(half);
+const fuD=SR.filter(x=>x.fu!=null&&x.new>0);
+const bF=E.breaks.filter(b=>b.found),bM=bF.filter(b=>b.metDead);
+const V2={cdk:PE.P8.value.k.toLocaleString('en'),cdn:PE.P8.value.n.toLocaleString('en'),cds:pc(PE.P8.value.s),cdci:pc(PE.P8.value.boot[0])+'–'+pc(PE.P8.value.boot[1]),
+ usable:E.summary.usable,capx:E.summary.capture.exact,capn:E.summary.capture.days,fun:fuD.length,
+ h1:pc(sum(h1,x=>x.comm)/sum(h1,x=>x.new)),h2:pc(sum(h2,x=>x.comm)/sum(h2,x=>x.new)),rho:PE.P11.value.rho.toFixed(2),
+ bfound:bF.length,bmd:bM.length+' of '+bF.length,base:pc(PE.P9.value.base.s),b0:E.summary.notFound['no new case in the zone that day']||0,
+ p8w:pc(PE.P8.value.w[0])+'–'+pc(PE.P8.value.w[1]),p8b:pc(PE.P8.value.boot[0])+'–'+pc(PE.P8.value.boot[1])};
+document.querySelectorAll('[data-v]').forEach(e=>{if(e.dataset.v in V2)e.textContent=V2[e.dataset.v]});
+const tb4=document.querySelector('#pred54 tbody');
+for(const [id,x] of Object.entries(PE)){const tr=document.createElement('tr');const st=x.informative===false?'uninformative':(x.held?'held':'failed');
+ tr.innerHTML='<td>'+id+'</td><td>'+x.text+'</td><td class="'+(st==='held'?'held':st==='failed'?'failed':'')+'">'+st+(x.informative===false?' (it would have '+(x.held?'held':'failed')+')':'')+'</td>';tb4.appendChild(tr)}
+const fd=document.getElementById('fd'),rd3=document.getElementById('rd3');let fh=null;
+const t0=Date.parse('2026-07-10'),t1=Date.parse('2026-11-04');
+function g3(){const w=fd.clientWidth,h=+(fd.dataset.h||(fd.dataset.h=fd.getAttribute('height')));const m={l:40,r:40,t:12,b:28};
+ const mx=Math.max(...SR.map(x=>x.new));return{w,h,m,mx,X:d=>m.l+(Date.parse(d)-t0)/(t1-t0)*(w-m.l-m.r),Y:v=>m.t+(1-v/mx)*(h-m.t-m.b),F:f=>m.t+(1-(f-50)/50)*(h-m.t-m.b)}}
+function draw3(){const dpr=devicePixelRatio||1,g=g3();fd.width=g.w*dpr;fd.height=g.h*dpr;const x=fd.getContext('2d');x.scale(dpr,dpr);
+ x.font='12px system-ui,sans-serif';x.strokeStyle=css('--line');x.fillStyle=css('--mute');
+ for(const v of [0,50,100]){if(v>g.mx)continue;x.beginPath();x.moveTo(g.m.l,g.Y(v));x.lineTo(g.w-g.m.r,g.Y(v));x.stroke();x.fillText(v,6,g.Y(v)+4)}
+ for(const f of [50,75,100]){x.fillText(f+' %',g.w-g.m.r+4,g.F(f)+4)}
+ for(const d of ['2026-07-15','2026-08-01','2026-08-15','2026-09-01','2026-09-15','2026-10-01','2026-10-15','2026-11-01']){x.fillText(d.slice(5).replace('-','/'),g.X(d)-14,g.h-8)}
+ const bw=Math.max(2,(g.w-g.m.l-g.m.r)/((t1-t0)/864e5)-1);
+ for(const s of SR){const X=g.X(s.date)-bw/2;x.fillStyle=css('--line');x.fillRect(X,g.Y(s.new),bw,g.Y(0)-g.Y(s.new));
+  x.fillStyle=css('--nb');x.fillRect(X,g.Y(s.comm),bw,g.Y(0)-g.Y(s.comm));
+  if(fh===s){x.strokeStyle=css('--fg');x.strokeRect(X-1,g.Y(s.new)-1,bw+2,g.Y(0)-g.Y(s.new)+2)}}
+ x.strokeStyle=css('--no');x.lineWidth=1.6;x.beginPath();let on=false;
+ for(const s of SR){if(s.fu==null){on=false;continue}const X=g.X(s.date),Y=g.F(s.fu);on?x.lineTo(X,Y):x.moveTo(X,Y);on=true}x.stroke();x.lineWidth=1}
+fd.addEventListener('pointermove',e=>{const r=fd.getBoundingClientRect(),g=g3();let best=null,bd=1e9;for(const s of SR){const d=Math.abs(g.X(s.date)-(e.clientX-r.left));if(d<bd){bd=d;best=s}}
+ fh=best;draw3();rd3.innerHTML=best?'<b>'+best.date+'</b> (report '+best.n+'): <b>'+best.new+'</b> new confirmed cases, <b>'+best.comm+'</b> of them found dead in the community ('+pc(best.comm/best.new)+'), in '+best.zonesWithCases+' zones'+(best.fu!=null?'; contacts seen that day '+best.fu.toFixed(1)+' %':'')+'.':''});
+const bk=document.getElementById('bk'),rd4=document.getElementById('rd4');let kh=null;
+function g4(){const w=bk.clientWidth,h=+(bk.dataset.h||(bk.dataset.h=bk.getAttribute('height')));const m={l:40,r:40,t:12,b:26};const t0b=Date.parse('2026-06-28');
+ return{w,h,m,X:d=>m.l+(Date.parse(d)-t0b)/(t1-t0b)*(w-m.l-m.r),Y:L=>m.t+(1-(Math.min(L,90)-21)/69)*(h-m.t-m.b)}}
+function pts4(){const g=g4();return E.breaks.map(b=>({b,x:g.X(b.at),y:g.Y(b.L)}))}
+function draw4(){const dpr=devicePixelRatio||1,g=g4();bk.width=g.w*dpr;bk.height=g.h*dpr;const x=bk.getContext('2d');x.scale(dpr,dpr);
+ x.font='12px system-ui,sans-serif';x.fillStyle=css('--mute');for(const L of [21,42,63,84]){x.fillText(L,6,g.Y(L)+4)}
+ x.strokeStyle=css('--line');x.beginPath();x.moveTo(g.m.l,g.Y(42));x.lineTo(g.w-g.m.r,g.Y(42));x.stroke();
+ for(const d of ['2026-07-01','2026-08-01','2026-09-01','2026-10-01','2026-11-01']){x.fillText(d.slice(5).replace('-','/'),g.X(d)-14,g.h-6)}
+ for(const p of pts4()){x.beginPath();x.arc(p.x,p.y,5,0,7);if(p.b.found){x.fillStyle=css(p.b.metDead?'--nb':'--no');x.fill()}else{x.strokeStyle=css('--mute');x.stroke()}}
+ if(kh){x.strokeStyle=css('--fg');x.beginPath();x.arc(kh.x,kh.y,8,0,7);x.stroke()}}
+bk.addEventListener('pointermove',e=>{const r=bk.getBoundingClientRect();let best=null,bd=196;for(const p of pts4()){const d=(p.x-(e.clientX-r.left))**2+(p.y-(e.clientY-r.top))**2;if(d<bd){bd=d;best=p}}
+ kh=best;draw4();const b=best&&best.b;rd4.textContent=b?(b.z+': quiet '+b.L+' days, broken '+b.at+'. '+(b.found?(b.new+' new case'+(b.new>1?'s':'')+' that day, '+b.comm+' found dead in the community.'):('The report cannot say: '+b.why+'.'))):'Point at a dot to read it.'});
 // opens on the 42-day mark
-hov=42;draw();draw2();addEventListener('resize',()=>{draw();draw2()});
+hov=42;draw();draw2();draw3();draw4();addEventListener('resize',()=>{draw();draw2();draw3();draw4()});
 })();
 </script>
 </body>
