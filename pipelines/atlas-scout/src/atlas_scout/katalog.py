@@ -382,7 +382,7 @@ def _gebrauchsbeleg(korn: Saatkorn) -> str:
     nennt den Gebrauch, den es tatsächlich gab.
     """
     namen = {"atelier": "the atelier", "field": "the field", "studio": "the studio",
-             "meridian": "the field's Meridian runtime", "nightly": "the nightly line"}
+             "meridian": "the field's Meridian runtime", "nightly": "Ulysses"}
     wer = [namen.get(p, p) for p in korn.praxen]
     if len(wer) == 1:
         liste = wer[0]

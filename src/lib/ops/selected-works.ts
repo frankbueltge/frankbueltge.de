@@ -199,6 +199,23 @@ function n1Work(href: string, root: string, work: ShelfWork): FromRecord {
   }
 }
 
+function nightlyWork(slug: string, root: string, work: ShelfWork): FromRecord {
+  const metaPath = `src/data/nightly/works/${slug}/meta.json`
+  if (!existsSync(join(root, metaPath))) fail(work, `${metaPath} does not exist`)
+  const meta = JSON.parse(readText(root, metaPath)) as { title?: string; date?: string }
+  const date = meta.date ?? /^\d{4}-\d{2}-\d{2}/.exec(slug)?.[0]
+  if (!date) fail(work, `${metaPath} names no date`)
+  return {
+    title: meta.title ?? fail(work, 'the work names no title'),
+    maker: cardTitle('nightly-line', NAMING.opsRoom.signal.houseFallback['nightly-line']),
+    voice: null,
+    kind: W.kinds.work,
+    when: W.when.made(dayMonthYear(date!)),
+    day: date!,
+    href: `/error-as-method/${slug}/`,
+  }
+}
+
 interface ExportProject {
   id: string
   title: string
@@ -282,7 +299,9 @@ export function readPick(pick: ShelfPick, root: string = process.cwd(), shelf: r
             ? experiment(work.id, work)
             : work.kind === 'n-1-work'
               ? n1Work(work.href, root, work)
-              : attentionExperiment(work.id, root, work)
+              : work.kind === 'nightly-work'
+                ? nightlyWork(work.slug, root, work)
+                : attentionExperiment(work.id, root, work)
   const sentence = pick.sentence ?? record.line ?? fail(work, 'it says no sentence, and its record carries no line to use')
   const crop = shelfCrop(work)
   const maker = makerStill(work, root)

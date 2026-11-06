@@ -66,7 +66,7 @@ describe('the instructions on /post', () => {
       },
       {
         work: 'error-as-method:2026-10-25-asked',
-        practice: 'The nightly line',
+        practice: 'Ulysses',
         title: '2026-10-25-asked',
         forms: [],
         summary: 'A wall.',

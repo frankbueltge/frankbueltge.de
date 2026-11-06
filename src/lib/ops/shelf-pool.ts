@@ -14,6 +14,8 @@
 //     (since 2026-11-02 the edition's shelf leaves the lab's own out, withoutLab below: they lead
 //     the page in a carousel of their own; the pool keeps them, so their stills stay kept),
 //   · every work n-1 declares (public/n-1/surface/margin.json),
+//   · every work Ulysses, the nightly line, has made since its fork (src/data/nightly/works, since
+//     2026-11-06; withdrawn ones are left out),
 //   · every experiment of Machine Attention that has a stage on this site.
 //
 // A pool card's sentence is its maker's own: the reviewed teaser on record, else the page's own
@@ -115,6 +117,18 @@ export function poolPicks(root: string = process.cwd()): ShelfPick[] {
     const margin = JSON.parse(readFileSync(marginFile, 'utf8')) as { works?: { href?: unknown; line?: unknown }[] }
     for (const w of Array.isArray(margin.works) ? margin.works : []) {
       if (typeof w?.href === 'string') add({ kind: 'n-1-work', href: w.href }, typeof w.line === 'string' ? w.line : undefined)
+    }
+  }
+  const nightlyDir = join(root, 'src/data/nightly/works')
+  if (existsSync(nightlyDir)) {
+    for (const slug of readdirSync(nightlyDir).sort()) {
+      const metaPath = join(nightlyDir, slug, 'meta.json')
+      if (!existsSync(metaPath)) continue
+      const meta = JSON.parse(readFileSync(metaPath, 'utf8')) as { embodies?: string; medium?: string }
+      // the works register's own rule (src/lib/engines/latest.ts): a work is withdrawn when its
+      // medium or its account opens with WITHDRAWN
+      if ([meta.medium, meta.embodies].some((t) => typeof t === 'string' && /^WITHDRAWN\b/i.test(t.trim()))) continue
+      add({ kind: 'nightly-work', slug }, firstSentence(meta.embodies))
     }
   }
   for (const project of exportFile.projects as { id: string; site_route: string | null }[]) {

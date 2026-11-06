@@ -28,7 +28,7 @@ const PRACTICE_NAME: Record<StudyPractice, string> = {
   atelier: 'The Atelier',
   field: 'The Field',
   studio: 'The Studio',
-  'error-as-method': 'The nightly line',
+  'error-as-method': 'Ulysses',
 }
 
 export interface Instruction {

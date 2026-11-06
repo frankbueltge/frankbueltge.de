@@ -44,7 +44,7 @@ export const PRACTICE_LABEL: Record<ReceptionPractice, string> = {
   field: 'The Field (Meridian)',
   atelier: 'The Atelier (Assay)',
   studio: 'The Studio (Ensemble)',
-  'error-as-method': 'Error as Method (the nightly line)',
+  'error-as-method': 'Ulysses (Error as Method)',
   'n-1': 'n-1',
   attention: 'Machine Attention',
 }

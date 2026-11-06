@@ -35,10 +35,10 @@ describe('the houses and the chips', () => {
     expect(houseOfCard({ voice: null, key: 'attention-foreknown' })).toBeNull()
   })
 
-  it('offers All and the four houses of the handoff, in its order, each with its count', () => {
+  it('offers All and the five houses, in their order, each with its count', () => {
     const houses = pool.map(houseOfCard)
     const chips = ecologyChips(houses, SELECTED_WORKS.ecology.filters)
-    expect(chips.map((c) => c.label)).toEqual(['All', 'The Atelier', 'The Field', 'The Studio', 'n-1'])
+    expect(chips.map((c) => c.label)).toEqual(['All', 'The Atelier', 'The Field', 'The Studio', 'Ulysses', 'n-1'])
     expect(chips[0].count).toBe(pool.length)
     for (const chip of chips.slice(1)) expect(chip.count).toBe(houses.filter((h) => h === chip.id).length)
   })
@@ -78,8 +78,8 @@ describe('the words', () => {
   const E = SELECTED_WORKS.ecology
   const strings = [SELECTED_WORKS.title, SELECTED_WORKS.sub, E.filterLabel, E.chip, E.modeLabel, E.more, E.status, ...Object.values(E.filters), ...Object.values(E.modes), ...Object.values(E.modeWords)]
 
-  it('calls the shelf From the Ecology', () => {
-    expect(SELECTED_WORKS.title).toBe('From the Ecology')
+  it('calls the shelf Latest works from the practices', () => {
+    expect(SELECTED_WORKS.title).toBe('Latest works from the practices')
   })
 
   it.each(strings.map((s) => [s] as const))('%s carries no typed digit', (text) => {

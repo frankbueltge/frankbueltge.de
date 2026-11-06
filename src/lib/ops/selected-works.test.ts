@@ -40,7 +40,11 @@ function pageExists(href: string): boolean {
     existsSync(join('public', path, 'index.html')) ||
     existsSync(join('src/pages', `${path}.astro`)) ||
     existsSync(join('src/pages', path, 'index.astro')) ||
-    loadFieldPapers().some((p) => p.href === href)
+    loadFieldPapers().some((p) => p.href === href) ||
+    // a work of Ulysses, the nightly line: one dynamic route over its mirrored works
+    (/^error-as-method\/[^/]+$/.test(path) &&
+      existsSync(join('src/pages/error-as-method/[slug].astro')) &&
+      existsSync(join('src/data/nightly/works', path.split('/')[1], 'meta.json')))
   )
 }
 

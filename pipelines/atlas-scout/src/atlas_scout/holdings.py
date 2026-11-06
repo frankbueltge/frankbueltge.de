@@ -295,7 +295,7 @@ def _seitentitel(text: str) -> str:
 # The practices and houses as the register names them in a sentence.
 PRAXIS_NAMEN = {
     "atelier": "the Atelier", "field": "the Field", "studio": "the Studio",
-    "meridian": "Meridian", "nightly": "the nightly line", "attention": "Machine Attention",
+    "meridian": "Meridian", "nightly": "Ulysses", "attention": "Machine Attention",
     "middle": "the Middle", "n-1": "n-1", "arch": "Arch",
     "observatory": "The State Before the Interface",
 }

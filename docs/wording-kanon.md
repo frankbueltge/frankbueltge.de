@@ -465,6 +465,10 @@ Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-1
 - **Die Nachtlinie heißt auf Flächen „Ulysses".** Die Karte `nightly-line` trägt den Namen der
   Praxis; „Error as Method" bleibt der Titel ihres Gründungstexts — Route (`/error-as-method`),
   Überschrift der eigenen Seite, und als erläuternde Zeile unter dem Namen (Leiste, Board).
+  **Seit 2026-11-06 (Frank, Wortlaut privat) auch im Fließtext und in Labels:** nie mehr
+  „nightly line"/„Nightly line" als Name, überall **Ulysses** (die Kadenz-Angabe NIGHTLY im
+  Board bleibt, sie nennt den Rhythmus, nicht die Praxis). Der Startseiten-Regal-Abschnitt heißt
+  seitdem „Latest works from the practices" und führt Ulysses' Werke mit eigenem Chip.
 - **Eingang = Edition.** Die Startseite ist seit 2026-10-11 wie die Titelseite einer Zeitung
   gesetzt (Datumszeile, Puls, „since yesterday / since your last visit", Aufmacher = laufender
   Zyklus, Timetable, „Overnight, house by house", Readings, Arrivals, Index). Wortlaut in

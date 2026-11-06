@@ -62,7 +62,7 @@ export const FIGURES = {
       caption: (lines: number, works: number) =>
         `▮ WORK-LINE WORK · ▯ NIGHTLY-LINE WORK · SLAB HEIGHT = WORKS THAT DAY<br>` +
         `✕ STOPPED · ▢ ARCHIVED AS STUDY · ● PUBLISHED · ⤳ RUNNING · │ LEFT OPEN — the strands hanging below the axis are the work-line’s records<br>` +
-        `${works} works from the register — both strands: the nightly line’s first era, the work-line, and everything the nightly line has made since its 2026-08-10 revival. ` +
+        `${works} works from the register — both strands: Ulysses’ first era, the work-line, and everything Ulysses has made since its 2026-08-10 revival. ` +
         `${lines} work-lines from their own SCORE/TRACE records in src/content/atelier/projects/. ` +
         `A stopped line wears the practice’s own ink, not a warning colour: under this constitution closing costs what continuing costs. ` +
         `Hover or tab to a line for its span; open it for its whole record — score, decision, every move of its trace. n-1 keeps its record on its own surface. ` +

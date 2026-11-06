@@ -138,7 +138,7 @@ const praxisNamen: Record<string, string> = {
   studio: 'Studio',
   meridian: 'Meridian',
   // 2026-10-04: the nightly line (error-as-method), read by the scout again since its fork.
-  nightly: 'Nightly line',
+  nightly: 'Ulysses',
   // 2026-11-04: the lab's other houses, read by the scout since that day.
   attention: 'Machine Attention',
   middle: 'The Middle',

@@ -93,7 +93,7 @@ const werkNamen: Record<string, string> = {
   field: 'Field',
   studio: 'Studio',
   meridian: 'Meridian',
-  nightly: 'Nightly line',
+  nightly: 'Ulysses',
   attention: 'Machine Attention',
   middle: 'The Middle',
   'n-1': 'n-1',
