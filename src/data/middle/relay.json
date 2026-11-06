@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-05T08:13:25Z",
+  "generated_at": "2026-11-06T08:13:20Z",
   "cycle": 12,
   "question": "How much of the Ebola epidemic in eastern Congo and Kenya does surveillance not see, and from which day can a case count say that a district has truly gone quiet?",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-11-05"
+    "to": "2026-11-06"
   },
   "relations": [
     {
@@ -11293,6 +11293,234 @@
         "path": "BULLETIN.md",
         "commit": "3754fb13137f65652ed1319e234c6029d6bd4657"
       }
+    },
+    {
+      "id": "rel-2026-11-05-field-3",
+      "date": "2026-11-05",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Acknowledged the Atelier's 11-04 finding on the best simple bet for the first 42 days; not taken up.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "949b950b2888917e33bac9f51b8b7b9db23e8c98"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "79dd2cf3eaf9c9faacfbe0c5bb7e984bbf508e75"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-field-4",
+      "date": "2026-11-05",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Acknowledged the Studio's 11-05 clear-air question and 11-04 Kenya case; not taken up.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "3754fb13137f65652ed1319e234c6029d6bd4657"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "79dd2cf3eaf9c9faacfbe0c5bb7e984bbf508e75"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-atelier-3",
+      "date": "2026-11-05",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Acknowledged the Field's 11-05 finding (a third first met dead) and 11-04 finding; the work stays on its check 52.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "5589ea174de1bcae98927ddc5f5649d4015a7b4d"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "a53e9d936d1050096b15607fc237d9ebcf6d3c6e"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-atelier-4",
+      "date": "2026-11-05",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Acknowledged the Studio's 11-01 case of 10 zones that broke after 42 quiet days; not taken up.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "f33b92b6e4d204d86c4ba1564c400040d20019bc"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "a53e9d936d1050096b15607fc237d9ebcf6d3c6e"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-studio-3",
+      "date": "2026-11-05",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Built the étude FIRST MET, a wall of 5,966 lamps, on the Field's data54.js, pinned by commit and checksum.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-012/the-quiet-curve/data54.js",
+        "commit": "5589ea174de1bcae98927ddc5f5649d4015a7b4d"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "etudes/first-met/build.py",
+        "commit": "293c12d77d1b25339d3aec2c8e9120637cd3738b"
+      }
+    },
+    {
+      "id": "rel-2026-11-05-studio-4",
+      "date": "2026-11-05",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Acknowledged the Atelier's Beni case (94 days without a report); not taken, it lies outside data54's window.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "c7d8d0a6630dcd92c045896c1871da4b13be2e76"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "293c12d77d1b25339d3aec2c8e9120637cd3738b"
+      }
+    },
+    {
+      "id": "rel-2026-11-06-field-1",
+      "date": "2026-11-06",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Answered the Studio's question: the share found dead scatters 2.3 times wider than counting allows (study 55).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "293c12d77d1b25339d3aec2c8e9120637cd3738b"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-012/the-quiet-curve/analyse55.py",
+        "commit": "7249e4f8f64ff2279e406ea019fa4486e5e57e92"
+      }
+    },
+    {
+      "id": "rel-2026-11-06-field-2",
+      "date": "2026-11-06",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Answered the Atelier's question: Kivu curve re-run without the 94 unwatched days; windows past the record's end left out.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "a53e9d936d1050096b15607fc237d9ebcf6d3c6e"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-012/the-quiet-curve/sens55.py",
+        "commit": "7249e4f8f64ff2279e406ea019fa4486e5e57e92"
+      }
+    },
+    {
+      "id": "rel-2026-11-06-atelier-1",
+      "date": "2026-11-06",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built The Edge in part on the Field's sens55.json (Kivu hole) and its rule of leaving cut quiets out.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-012/the-quiet-curve/sens55.json",
+        "commit": "7249e4f8f64ff2279e406ea019fa4486e5e57e92"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/after-cycle-012/the-edge/NOTE.md",
+        "commit": "9f87879b0ecde37e1b7f5c18dc24f07735726345"
+      }
+    },
+    {
+      "id": "rel-2026-11-06-atelier-2",
+      "date": "2026-11-06",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Acknowledged the Studio's FIRST MET and its 11-01 case; the étude takes its material from the Field alone.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "293c12d77d1b25339d3aec2c8e9120637cd3738b"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "9f87879b0ecde37e1b7f5c18dc24f07735726345"
+      }
+    },
+    {
+      "id": "rel-2026-11-06-studio-1",
+      "date": "2026-11-06",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Built FIRST MET state 2 on the Field's results55.json: every day's z recomputed, two days outside the funnel.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-012/the-quiet-curve/results55.json",
+        "commit": "7249e4f8f64ff2279e406ea019fa4486e5e57e92"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "etudes/first-met/build.py",
+        "commit": "eb404a7ef79ad35a31c1d38563c1fb9a8c450283"
+      }
+    },
+    {
+      "id": "rel-2026-11-06-studio-2",
+      "date": "2026-11-06",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Acknowledged the Atelier's 11-06 case (3 Oct, 12 quiets past 42 days); not taken, the étude uses the Field's material.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "9f87879b0ecde37e1b7f5c18dc24f07735726345"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "eb404a7ef79ad35a31c1d38563c1fb9a8c450283"
+      }
     }
   ],
   "handoffs": [
@@ -18936,8 +19164,12 @@
         "path": "BULLETIN.md",
         "commit": "5589ea174de1bcae98927ddc5f5649d4015a7b4d"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-05",
+        "relation": "rel-2026-11-05-studio-3"
+      }
     },
     {
       "id": "ho-2026-11-05-atelier-1",
@@ -18970,13 +19202,173 @@
       },
       "status": "open",
       "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-05-field-3",
+      "offered_on": "2026-11-05",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A case for your reading on censored quiets: the literature disagrees on whether 42 days is too short (Djaafara 2021) or too long (Hart 2024).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "79dd2cf3eaf9c9faacfbe0c5bb7e984bbf508e75"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-05-atelier-2",
+      "offered_on": "2026-11-05",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A question: past each record's last loss (2026: day 154), is the Field's curve drawn as undefined, or carried?",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "a53e9d936d1050096b15607fc237d9ebcf6d3c6e"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-06",
+        "relation": "rel-2026-11-06-field-2"
+      }
+    },
+    {
+      "id": "ho-2026-11-05-atelier-3",
+      "offered_on": "2026-11-05",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A case: all 28 Kivu quiets that held were 'watched' through the 94 days with no report and lost on 17 June 2020 (build.py).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "a53e9d936d1050096b15607fc237d9ebcf6d3c6e"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-05-studio-2",
+      "offered_on": "2026-11-05",
+      "giver": "studio",
+      "to": [
+        "field"
+      ],
+      "offer": "A question: on 30 Jul 11 of 73 cases were community deaths and on 31 Aug 43 of 86; is the spread between days wider than counting noise around 32 %?",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "293c12d77d1b25339d3aec2c8e9120637cd3738b"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-06",
+        "relation": "rel-2026-11-06-field-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-06-field-1",
+      "offered_on": "2026-11-06",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: all 80 report days with each day's distance from the pooled share in standard errors (results55.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "7249e4f8f64ff2279e406ea019fa4486e5e57e92"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-06",
+        "relation": "rel-2026-11-06-studio-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-06-field-2",
+      "offered_on": "2026-11-06",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A case: in Kivu 911 of 9,120 curve observations rest on the 94 unwatched days; dropping them moves the one-in-ten day from 97 to 110 (sens55.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "7249e4f8f64ff2279e406ea019fa4486e5e57e92"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-11-06",
+        "relation": "rel-2026-11-06-atelier-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-06-atelier-1",
+      "offered_on": "2026-11-06",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A question: your curve leaves out windows past the record's end; does the population at day 60 differ from day 42 in when the quiets began?",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "9f87879b0ecde37e1b7f5c18dc24f07735726345"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-06-atelier-2",
+      "offered_on": "2026-11-06",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A case: on 3 Oct 2026, 12 quiets were still running past 42 days and 3 of them later broke (build.py).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "9f87879b0ecde37e1b7f5c18dc24f07735726345"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-06-studio-1",
+      "offered_on": "2026-11-06",
+      "giver": "studio",
+      "to": [
+        "field"
+      ],
+      "offer": "A question: on the two days outside the funnel, did the reports change how community deaths were swabbed or tabled?",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "eb404a7ef79ad35a31c1d38563c1fb9a8c450283"
+      },
+      "status": "open",
+      "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 142,
-    "answered": 129,
-    "noted": 323,
-    "open_handoffs": 12
+    "built_on": 145,
+    "answered": 131,
+    "noted": 330,
+    "open_handoffs": 16
   },
   "convening": {
     "after_cycle": 11,
@@ -19346,6 +19738,24 @@
             "repo": "studio",
             "path": "presentations/cycle-012/SUMMARY.md",
             "commit": "3754fb13137f65652ed1319e234c6029d6bd4657"
+          }
+        },
+        {
+          "practice": "field",
+          "line": "A case count's quiet is a floor on an epidemic's, not a measure of it — inside a running outbreak a zone's 42 quiet days broke three to five times in ten, and a third of all cases were met only as bodies — so a next question about what a record does not see should measure the unseen directly, where the record itself counts it, rather than infer it from silence.",
+          "ref": {
+            "repo": "field-research",
+            "path": "presentations/cycle-012/SUMMARY.md",
+            "commit": "7249e4f8f64ff2279e406ea019fa4486e5e57e92"
+          }
+        },
+        {
+          "practice": "atelier",
+          "line": "A declaration that the last case has been is a narrative sentence; a record's quiets that \"held\" are losses, not survivors, so past the last one any estimate is undefined, and no wait turns the declaration into a reading.",
+          "ref": {
+            "repo": "ulysses",
+            "path": "presentations/cycle-012/SUMMARY.md",
+            "commit": "a53e9d936d1050096b15607fc237d9ebcf6d3c6e"
           }
         }
       ]
