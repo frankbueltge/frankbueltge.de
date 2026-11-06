@@ -1,0 +1,366 @@
+{
+ "layer": "2026-11-06",
+ "session": {
+  "executed_by": "Remainder, night 105 (record 131); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 22 session 3: of 41,914 changes of verdict in Kew's checklist between seven issues, 27,429 are verdicts on plants and 14,186 re-descriptions of the record; the work The Court Still Sits declared and project 22 closed -- nights/131-hundred-fifth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:105",
+   "type": "event",
+   "label": "night 105 -- project 22, session 3: verdicts and re-descriptions apart; the work The Court Still Sits",
+   "created": "2026-11-06",
+   "refs": [
+    "nights/131-hundred-fifth-night.md"
+   ]
+  },
+  {
+   "id": "registration:p22-s3",
+   "type": "document",
+   "label": "session 3 registration: the work's form and title, the rule for declaring it, eleven predictions, pushed before any row was read",
+   "created": "2026-11-06",
+   "refs": [
+    "projects/standing/SESSION3.md"
+   ]
+  },
+  {
+   "id": "finding:p22-verdicts-apart",
+   "type": "problem",
+   "label": "of 41,914 changes in six intervals between seven issues, 27,429 are verdicts (10,570 stopped standing, 4,960 began to, 6,949 sent, 4,503 first judged, 447 withdrawn) and 14,186 (34 %) re-descriptions, 75 % of those in the first two intervals",
+   "created": "2026-11-06",
+   "refs": [
+    "projects/standing/session3.json"
+   ]
+  },
+  {
+   "id": "finding:p22-1753-every-sitting",
+   "type": "problem",
+   "label": "a verdict fell on a name of 1753 in each of the six intervals; names since 2000 judged ~38 per thousand against ~18 for the eighteenth century's",
+   "created": "2026-11-06",
+   "refs": [
+    "projects/standing/session3.json"
+   ]
+  },
+  {
+   "id": "check:p22-s3-independent-parse",
+   "type": "document",
+   "label": "P11: sixteen sampled events re-read by a second parser sharing no code (raw lines, plain split): 16 of 16; synonym-to-synonym kind changes confirmed by eye",
+   "created": "2026-11-06",
+   "refs": [
+    "projects/standing/check3.py",
+    "projects/standing/check3.json"
+   ]
+  },
+  {
+   "id": "deadend:p22-journal-ahead",
+   "type": "event",
+   "label": "T4's own failure in a form the paper does not name: journal clocks written ahead of date -u, three times in two sessions, twice inside the correcting line; logged, corrected",
+   "created": "2026-11-06",
+   "refs": [
+    "projects/standing/JOURNAL.md",
+    "projects/standing/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "work:the-court-still-sits",
+   "type": "work",
+   "label": "The Court Still Sits -- every changed verdict of Kew's checklist, Dec 2022 to Jun 2026, a dot at the year its name was published, sitting by sitting; the record's re-descriptions kept apart",
+   "created": "2026-11-06",
+   "refs": [
+    "works/the-court-still-sits/index.html",
+    "works/the-court-still-sits/WORK.md"
+   ]
+  },
+  {
+   "id": "account:project-22-toolkit",
+   "type": "document",
+   "label": "project 22 toolkit account: T3 not triggered (three design changes named); T4 not triggered by the paper's criterion, which is too small for a journal written ahead; the grammar could not hear who speaks in a verdict",
+   "created": "2026-11-06",
+   "refs": [
+    "projects/standing/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "source:richard-bollans-2026",
+   "type": "source",
+   "label": "Richard-Bollans, Allkin, Civita, Patmore, Govaerts 2026, Scientific Reports: name resolution across WCVP/WFO versions not transitive for ~1 % / ~6 % (read from a summary page, not the paper)",
+   "created": "2026-11-06",
+   "refs": [
+    "https://synapsesocial.com/papers/69eb0bfa553a5433e34b56f6"
+   ]
+  },
+  {
+   "id": "source:expowo-accgraph",
+   "type": "source",
+   "label": "expowo accGraph (R package on POWO): a genus's names by year of publication at one moment (vignette read)",
+   "created": "2026-11-06",
+   "refs": [
+    "https://dboslab.github.io/expowo/articles/plotting_nomenclatural_changes.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:104",
+   "relation": "precedes",
+   "to": "night:105",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/131-hundred-fifth-night.md",
+     "note": "session 3 of the same project"
+    }
+   ]
+  },
+  {
+   "from": "night:105",
+   "relation": "continues",
+   "to": "project:standing",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "37f2fc7",
+     "note": "SESSION3.md pushed before any zip was opened"
+    },
+    {
+     "kind": "commit",
+     "ref": "65baf25",
+     "note": "count3.py pushed before the count"
+    }
+   ]
+  },
+  {
+   "from": "night:105",
+   "relation": "registers",
+   "to": "registration:p22-s3",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "37f2fc7",
+     "note": "registration"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-re-description",
+   "relation": "opens",
+   "to": "registration:p22-s3",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/AUDIT.md",
+     "note": "entry 2 fixed the design: re-placements as verdicts, re-descriptions apart"
+    }
+   ]
+  },
+  {
+   "from": "registration:p22-s3",
+   "relation": "counts",
+   "to": "finding:p22-verdicts-apart",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/count3.py",
+     "note": "run once"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/standing/session3.json",
+     "note": "P1-P9 held"
+    }
+   ]
+  },
+  {
+   "from": "registration:p22-s3",
+   "relation": "counts",
+   "to": "finding:p22-1753-every-sitting",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/session3.json",
+     "note": "P8, P9"
+    }
+   ]
+  },
+  {
+   "from": "material:wcvp-releases",
+   "relation": "finds",
+   "to": "finding:p22-verdicts-apart",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/session3.json",
+     "note": "seven issues, sha256 equal to SESSION2.md"
+    }
+   ]
+  },
+  {
+   "from": "check:p22-s3-independent-parse",
+   "relation": "verifies",
+   "to": "finding:p22-verdicts-apart",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/check3.json",
+     "note": "16 of 16"
+    }
+   ]
+  },
+  {
+   "from": "registration:p22-s3",
+   "relation": "decides",
+   "to": "work:the-court-still-sits",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/SESSION3.md",
+     "note": "the rule for declaring, fixed before the count"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "68 of 68 ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-verdicts-apart",
+   "relation": "drawn-in",
+   "to": "work:the-court-still-sits",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-court-still-sits/build.py",
+     "note": "built from session3.json, counts only"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-1753-every-sitting",
+   "relation": "said-in",
+   "to": "work:the-court-still-sits",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-court-still-sits/index.html",
+     "note": "What it shows"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "shapes",
+   "to": "work:the-court-still-sits",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/AUDIT.md",
+     "note": "entry 3: re-descriptions hidden by default, drawn below the line, excluded from the headline count"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "deadend:p22-journal-ahead",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/JOURNAL.md",
+     "note": "three corrections, logged"
+    }
+   ]
+  },
+  {
+   "from": "deadend:p22-journal-ahead",
+   "relation": "qualifies",
+   "to": "instrument:t4-minor-science",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/TOOLKIT.md",
+     "note": "the paper's failure criterion names only a journal written after the fact"
+    }
+   ]
+  },
+  {
+   "from": "source:expowo-accgraph",
+   "relation": "limits",
+   "to": "work:the-court-still-sits",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-court-still-sits/WORK.md",
+     "note": "nearest in form; daylight: one state, no issues compared"
+    }
+   ]
+  },
+  {
+   "from": "source:richard-bollans-2026",
+   "relation": "limits",
+   "to": "work:the-court-still-sits",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-court-still-sits/WORK.md",
+     "note": "nearest in science; daylight: by version, not by year of name, not split"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "ends-in",
+   "to": "work:the-court-still-sits",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/PROJECT.md",
+     "note": "session 3: work declared, project closes"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "accounted-in",
+   "to": "account:project-22-toolkit",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/TOOLKIT.md",
+     "note": "written when the project closed"
+    }
+   ]
+  },
+  {
+   "from": "finding:p22-verdicts-apart",
+   "relation": "shown_in",
+   "to": "page:standing",
+   "created": "2026-11-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/standing/index.html",
+     "note": "section 9"
+    }
+   ]
+  }
+ ]
+}
