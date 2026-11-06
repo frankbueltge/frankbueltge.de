@@ -161,7 +161,11 @@ jobs:
       - run: node scripts/drift-check.mjs
       - run: npm run test
       - run: npm run check
+      # The static render of the site's pages now peaks above Node's default heap on the runner
+      # (OOM on 2026-11-06, exit 134, after the build passed on 2026-11-05); give it headroom.
       - run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
       # Gewichts-Gate der Sichtschicht (2026-09-02): gzip-Größe jedes Client-Chunks gegen
       # scripts/budgets.json — eine Insel zahlt ihre Bytes auf der Seite, die sie bedient, und
       # die React-Laufzeit bleibt EIN geteilter Chunk. Überschreitung = rot.
