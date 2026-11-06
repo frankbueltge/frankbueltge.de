@@ -58,7 +58,7 @@ export const PROTOCOL_LADDER: readonly ProtocolStep[] = [
     version: 3,
     date: '2026-07-16',
     unit: 'the night',
-    note: 'the nightly constitution, and the last one the nightly line ran under',
+    note: 'the nightly constitution, and the last one Ulysses ran under',
     restored: true,
   },
   {

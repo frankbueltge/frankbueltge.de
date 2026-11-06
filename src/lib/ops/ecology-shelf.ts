@@ -13,16 +13,17 @@
 import type { ShelfCard } from './selected-works'
 
 /** The houses a chip can narrow the shelf to. Machine Attention's pieces stand under "all" only. */
-export const ECOLOGY_HOUSES = ['atelier', 'field', 'studio', 'n-1'] as const
+export const ECOLOGY_HOUSES = ['atelier', 'field', 'studio', 'nightly-line', 'n-1'] as const
 export type EcologyHouse = (typeof ECOLOGY_HOUSES)[number]
 export type EcologyFilter = 'all' | EcologyHouse
 
 /** How many cards a view shows at first, and how many "show more" adds. */
 export const ECOLOGY_STEP = 6
 
-/** The house a card belongs to, for the chips: a practice by its voice, n-1 by its key. */
+/** The house a card belongs to, for the chips: a practice by its voice, Ulysses and n-1 by its key. */
 export function houseOfCard(card: Pick<ShelfCard, 'voice' | 'key'>): EcologyHouse | null {
   if (card.voice) return card.voice
+  if (card.key.startsWith('ulysses-')) return 'nightly-line'
   return card.key.startsWith('n-1-') ? 'n-1' : null
 }
 

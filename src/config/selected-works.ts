@@ -57,6 +57,9 @@ export type ShelfWork =
   | { kind: 'n-1-work'; href: string }
   /** an experiment of Machine Attention: src/data/attention/export.json */
   | { kind: 'attention-experiment'; id: string }
+  /** a work of Ulysses, the nightly line (frankbueltge/error-as-method), made since its fork:
+   *  src/data/nightly/works/<slug>/meta.json, its page at /error-as-method/<slug>/ */
+  | { kind: 'nightly-work'; slug: string }
 
 export interface ShelfPick {
   work: ShelfWork
@@ -75,12 +78,14 @@ export const SELECTED_WORKS = {
   /** The edition's shelf since 2026-11-03 (the calm homepage, docs/design_handoff_homepage_calm/
    *  README.md §4): the practices' finished pieces, newest first, with chips and a random draw
    *  (src/lib/ops/ecology-shelf.ts). /dossier keeps the picks below as its shelf of record. */
-  title: 'From the Ecology',
+  /** Renamed 2026-11-06 (Frank, wording private): the shelf holds the latest works of every
+   *  practice, Ulysses' nightly works included, not of the ecology alone. */
+  title: 'Latest works from the practices',
   sub: 'finished pieces from the machine-run practices',
   /** the controls of the edition's shelf; the script fills the templates */
   ecology: {
     filterLabel: 'Show the pieces of',
-    filters: { all: 'All', atelier: 'The Atelier', field: 'The Field', studio: 'The Studio', 'n-1': 'n-1' },
+    filters: { all: 'All', atelier: 'The Atelier', field: 'The Field', studio: 'The Studio', 'nightly-line': 'Ulysses', 'n-1': 'n-1' },
     /** a chip: its house and how many pieces it holds */
     chip: '{label} {count}',
     modeLabel: 'Order',

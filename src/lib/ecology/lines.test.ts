@@ -43,7 +43,7 @@ describe('the wording is the canon’s', () => {
       expect(l.label).not.toMatch(/v\d/)
       expect(l.gloss.length).toBeGreaterThan(20)
     }
-    expect(ATELIER_LINES.map((l) => l.label)).toEqual(['the nightly line', 'the work-line', 'n-1'])
+    expect(ATELIER_LINES.map((l) => l.label)).toEqual(['Ulysses', 'the work-line', 'n-1'])
   })
 
   it('gives n-1 a founding law and no protocol namespace — no version exists by design', () => {

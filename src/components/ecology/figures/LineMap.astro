@@ -58,7 +58,7 @@ const slabs = [...perDayLine.values()].map((slab) => ({
   height: Math.min(6 + slab.n * 5, 34),
   // side-by-side only where the same day carries both lines; alone, a slab stands on its date
   dx: datesWithBoth.has(slab.date) ? (slab.line === 'nightly' ? -3 : 3) : 0,
-  label: slab.line === 'nightly' ? 'nightly line' : 'work-line',
+  label: slab.line === 'nightly' ? 'Ulysses' : 'work-line',
 }))
 
 /** How each ending reads, in the record's own words — shared by the glance, the native <title>
@@ -86,7 +86,7 @@ const tableRows = [...lines]
 ---
 
 <div class="eco-linemap" data-linemap>
-  <svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} role="img" aria-label={`The Atelier's works on one time axis from ${map.from} to ${map.to} — filled slabs are the work-line's works, hollow slabs the nightly line's — with ${map.lines.length} work-lines below the axis, each ending in the mark its record earned. Each line links to its whole record.`}>
+  <svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} role="img" aria-label={`The Atelier's works on one time axis from ${map.from} to ${map.to} — filled slabs are the work-line's works, hollow slabs Ulysses' — with ${map.lines.length} work-lines below the axis, each ending in the mark its record earned. Each line links to its whole record.`}>
     <line class="eco-fig-baseline" x1={BOX.left - 6} y1={BOX.base} x2={BOX.right + 10} y2={BOX.base} />
     <path class="eco-fig-baseline" d={`M${BOX.right + 10} ${BOX.base} l 10 0 m -4 -3.5 l 4 3.5 l -4 3.5`} />
 

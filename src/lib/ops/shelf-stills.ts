@@ -49,6 +49,8 @@ export function shelfKey(work: ShelfWork): string {
       return `n-1-${slugOf(work.href)}`
     case 'attention-experiment':
       return `attention-${work.id}`
+    case 'nightly-work':
+      return `ulysses-${work.slug}`
   }
 }
 
@@ -88,6 +90,9 @@ export function makerStill(work: ShelfWork, root: string = process.cwd()): strin
       const still = n1MarginWork(work.href, root)?.still
       return still ? present(posix.join('public/n-1', still)) : null
     }
+    case 'nightly-work':
+      // Ulysses commits a figure beside nearly every work (figure.svg, the work's own drawing)
+      return present(`public/error-as-method/works-html/${work.slug}/figure.svg`) ?? present(`public/error-as-method/${work.slug}/figure.svg`)
     default:
       return null
   }

@@ -43,7 +43,7 @@ const carried = { step: ECOLOGY_STEP, status: E.status, modeWords: E.modeWords }
       {chips.map((chip) => (
         <button
           type="button"
-          class={chip.id === 'all' ? 'ed-eco-chip' : `ed-eco-chip pp-voice-${chip.id === 'n-1' ? 'middle' : chip.id}`}
+          class={chip.id === 'all' ? 'ed-eco-chip' : `ed-eco-chip pp-voice-${chip.id === 'n-1' || chip.id === 'nightly-line' ? 'middle' : chip.id}`}
           data-ed-eco-filter={chip.id}
           aria-pressed={chip.id === 'all' ? 'true' : 'false'}
         >

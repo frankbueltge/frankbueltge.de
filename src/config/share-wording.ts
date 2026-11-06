@@ -28,7 +28,7 @@ export const SHARE = {
     field: { label: 'The Field', href: '/field', kicker: named('meridian', 'The Field · Meridian') },
     studio: { label: 'The Studio', href: '/studio', kicker: named('ensemble', 'The Studio · Ensemble') },
     plenum: { label: 'The Plenum', href: '/encounters', kicker: 'The Plenum' },
-    'error-as-method': { label: house('error-as-method', 'Error as Method'), href: '/error-as-method', kicker: `${house('error-as-method', 'Error as Method')} · the nightly line` },
+    'error-as-method': { label: house('error-as-method', 'Error as Method'), href: '/error-as-method', kicker: `${house('error-as-method', 'Error as Method')} · Ulysses` },
     'n-1': { label: house('n-1', 'n-1'), href: '/n-1', kicker: `${house('n-1', 'n-1')} · Remainder` },
     attention: { label: house('attention', 'Machine Attention'), href: '/machine-attention', kicker: house('attention', 'Machine Attention') },
   } satisfies Record<Ns, { label: string; href: string; kicker: string }>,

@@ -541,7 +541,7 @@ export const NAMING = {
        here while the Studio, which still ships works, filled the list. The artifact rows are
        marked as what they are; the nightly line's works stand under its own name. */
     intro:
-      'The three research practices each keep their own room, in their own vocabulary. This is the complete list across all three: one line per work and, since every session of the ecology’s shared question closes with a self-contained artifact, one line per artifact — marked as such, newest first, each linked to the thing itself. The works of the nightly line, which keeps its own address beside the ecology, stand here under its own name.',
+      'The three research practices each keep their own room, in their own vocabulary. This is the complete list across all three: one line per work and, since every session of the ecology’s shared question closes with a self-contained artifact, one line per artifact — marked as such, newest first, each linked to the thing itself. The works of Ulysses, which keeps its own address beside the ecology, stand here under its own name.',
     honesty:
       'Nothing is left out to make the record look better: a withdrawn work stays on this list and carries its withdrawal in the practice’s own words, dated. Every line is read from the practice’s own committed record — a work’s metadata, an artifact’s own page — so a line missing here would be a line missing from the archive.',
     /** the distinction a visitor arriving from the nav needs first */
@@ -566,7 +566,7 @@ export const NAMING = {
      *  typed here: it is read from the line's overview card, the same string the signal log uses
      *  (houseNames() in src/lib/ops/house-feed.ts), so the register cannot call it something its
      *  own card does not. The noun is the one its own page uses for what it made. */
-    nightlyLine: { noun: 'works', roomLabel: 'the nightly line’s works', roomHref: '/error-as-method' },
+    nightlyLine: { noun: 'works', roomLabel: 'Ulysses’ works', roomHref: '/error-as-method' },
     roomsLead: 'Each practice keeps its own room, where a work stands in its house’s own language:',
     /** What a STANDALONE work carries when someone lands on it cold — a shared link, a search
      *  result — with no site chrome around it at all. Two gaps closed at once (Frank,
@@ -1182,7 +1182,7 @@ export const NAMING = {
         { card: 'attention', line: 'the counter-experiment' },
         { name: 'Atlas', href: '/atlas' },
         { card: 'n-1', line: 'the Atelier’s third line' },
-        { card: 'nightly-line', line: 'Error as Method, the Atelier’s nightly line' },
+        { card: 'nightly-line', line: 'Error as Method, forked from the Atelier' },
         { name: 'Post office', href: '/post', line: 'what the practices lay out for the world' },
       ] as ({ card: string; line: string } | { name: string; href: string; line?: string })[],
     },

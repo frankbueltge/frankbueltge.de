@@ -261,7 +261,7 @@ export const SCORE_WORDING = {
       nearest: '· nearest prior art:',
     },
     none: 'Nothing matches.',
-    foot: 'Read from the committed record (journals, artifacts, works, presentations and the Middle’s relay); nothing is fetched while you read. A row without a day in its record is listed by its cycle. The nightly line stands beside the ecology: its works are listed under its own name and belong to no cycle.',
+    foot: 'Read from the committed record (journals, artifacts, works, presentations and the Middle’s relay); nothing is fetched while you read. A row without a day in its record is listed by its cycle. Ulysses stands beside the ecology: its works are listed under its own name and belong to no cycle.',
     label: 'Filter the register',
   },
 

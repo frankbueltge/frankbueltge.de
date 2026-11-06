@@ -415,7 +415,7 @@ export const ATELIER_NARRATIVE = {
     heading: 'One founding text, two constitutions',
     lead:
       'This practice ran one night at a time until 18 July 2026, then changed what a unit of work ' +
-      'is — twice. The nightly line was not finished when that happened; it was switched off. On ' +
+      'is — twice. The line it ran by night, Ulysses, was not finished when that happened; it was switched off. On ' +
       '10 August it was forked back to life in its own repository, under the constitution that ' +
       'produced it, and it is running now.',
     /** the sentence that keeps the two arms from reading as rivals */
@@ -433,7 +433,7 @@ export const ATELIER_NARRATIVE = {
     },
     /** stands over the works of the nightly phase, wherever they are listed */
     worksNote:
-      'The works below up to 18 July are the nightly line’s. They stay here, at the addresses they ' +
+      'The works below up to 18 July are Ulysses’. They stay here, at the addresses they ' +
       'have had since the night each was made — this practice made them, and moving them would ' +
       'falsify its own record. The line that made them continues elsewhere.',
     /** under the closed session register */
@@ -441,7 +441,7 @@ export const ATELIER_NARRATIVE = {
       'The register is closed at its last numbered night because the protocol that numbered them ' +
       'was replaced, not because the practice ran out of nights. The numbering continues in the ' +
       'forked line, which reads the next session number off its own journal.',
-    link: 'Error as Method — the nightly line, running again →',
+    link: 'Ulysses — Error as Method, running again →',
     ladderHeading: 'The constitutions, in order',
     ladderNote:
       'Every text below is archived unchanged in the engine repository; nothing in the published ' +
@@ -528,7 +528,7 @@ export const ATELIER_NARRATIVE = {
       'closed at its last numbered night; what follows are unnumbered dispatcher ticks under the ' +
       'new protocol — they keep the historical record continuous, their full decision traces live ' +
       `in the engine repo’s projects/. The practice now runs under Protocol v${protocolVersion}, ` +
-      'the shared-question protocol of 30 August 2026, which replaced the work-line protocol. The register is closed here, not everywhere: the nightly line was ' +
+      'the shared-question protocol of 30 August 2026, which replaced the work-line protocol. The register is closed here, not everywhere: Ulysses was ' +
       'forked back to life on 10 August under the constitution that produced it, and it reads its ' +
       'next session number off this same journal.',
     material: 'Assay’s own shelf: the sources the practice has pulled, as it catalogued them.',

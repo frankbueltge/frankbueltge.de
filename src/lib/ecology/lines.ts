@@ -58,7 +58,7 @@ export type LineFacts =
 export const ATELIER_LINES: readonly LineFacts[] = [
   {
     id: 'nightly',
-    label: 'the nightly line',
+    label: 'Ulysses',
     law: { kind: 'protocol', ns: 'nightly' },
     gloss: 'one night, one work or one reading — stopped 2026-07-18, restored 2026-08-10 in a fork',
   },

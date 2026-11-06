@@ -163,7 +163,7 @@ export const DOORS: Record<StationId, Door[]> = {
     // No protocol number in this string: the numbers move (v3 may develop, v6 becomes v7), and a
     // door that names one is wrong at the next amendment. The constitutions row above states both,
     // read from the two mirrors.
-    { title: 'the nightly line', sub: 'the same practice under its other constitution — its own room', href: '/error-as-method' },
+    { title: 'Ulysses', sub: 'the same practice under its other constitution — its own room', href: '/error-as-method' },
     // The third line's door (Frank, 2026-08-15). Like the nightly line it keeps its own room —
     // more so: its repository is mirrored whole and served as the practice's OWN surface, never
     // a house window, so this door is the only thing the house owns about it. The door's title
