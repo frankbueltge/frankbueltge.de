@@ -61,7 +61,11 @@ describe('the catalogue feeds carry what the pages carry', () => {
     expect(feed.entries.some((e: Record<string, unknown>) => 'zusammenfassung' in e)).toBe(false)
     expect(feed.entries[0].titel).toBe(PAPERS[0].titel)
     expect(feed.full).toBe('https://frankbueltge.de/papers/register.json')
-    expect(JSON.stringify(feed).length).toBeLessThan(1_200_000)
+    // A bound per entry, not a pinned total: the scouts grow the register every night, so a fixed
+    // byte ceiling goes red on growth alone (it did on 2026-11-06, at 1.28 MB, and blocked the
+    // deploy). An entry without its abstract is about 500 bytes; abstracts average about 590 more,
+    // so a per-entry mean above 800 means a heavy field crept back in.
+    expect(JSON.stringify(feed).length / PAPERS.length).toBeLessThan(800)
   })
 
   it('every feed names its source, its page and its licence', async () => {
