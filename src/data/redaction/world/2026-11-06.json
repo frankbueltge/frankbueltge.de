@@ -1,0 +1,172 @@
+{
+  "date": "2026-11-06",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-06T13:13:42Z",
+    "counts": {
+      "botwall": 6,
+      "gone_404": 4,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 287,
+      "other": 1,
+      "server_error": 1,
+      "unreachable": 1
+    },
+    "decided": 292,
+    "excluded_unverifiable": 8,
+    "gone": 4,
+    "gone_ci95": [
+      0.0053,
+      0.0347
+    ],
+    "gone_rate": 0.0137,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.013
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-04",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "krdo.com",
+        "first_seen": "20261104200000",
+        "http_code": 404,
+        "title": "What Trump's midterms setback could mean for Iran, Israel and Ukraine",
+        "url": "https://krdo.com/news/national-world/cnn-world/2026/11/04/what-trumps-midterms-setback-could-mean-for-iran-israel-and-ukraine/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "kfru.com",
+        "first_seen": "20261104110000",
+        "http_code": 404,
+        "title": "\"Choosin' Texas\" Sets New Record with 26th Nonconsecutive Week at No. 1",
+        "url": "https://www.kfru.com/2026/11/04/choosin-texas-sets-new-record-with-26th-nonconsecutive-week-at-no-1/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "lmfm.ie",
+        "first_seen": "20261104070000",
+        "http_code": 404,
+        "title": "Public's assistance sought in tracing the whereabouts of Ashbourne teen",
+        "url": "https://www.lmfm.ie/news/lmfm-news/publics-assistance-sought-in-tracing-the-whereabouts-of-ashbourne-teen/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wbnq.com",
+        "first_seen": "20261104090000",
+        "http_code": 404,
+        "title": "Mariah Carey Kicks Off Christmas 2026 With a Rock Surprise and New Gucci Campaign",
+        "url": "https://www.wbnq.com/2026/11/04/mariah-carey-kicks-off-christmas-2026-with-a-rock-surprise-and-new-gucci-campaign/"
+      }
+    ],
+    "sample_drawn_at": "2026-11-05T13:25:59Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 6802,
+      "replaced": 5907,
+      "trivial": 991,
+      "update": 781
+    },
+    "day": "2026-11-05",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Amy",
+          "Acton"
+        ],
+        "after": "Amy Acton: US election results: Amy Acton defeats Donald Trump-backed Vivek Ramaswamy to become Ohio's first woman governor",
+        "before": "Ohio Governor Election: US election results: Amy Acton defeats Donald Trump-backed Vivek Ramaswamy to become Ohio's first woman governor",
+        "detected": "2026-11-05T04:48:21Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "election",
+          "Ohio",
+          "governor"
+        ],
+        "similarity": 1.0,
+        "url": "https://timesofindia.indiatimes.com/world/us/us-mid-term-elections/news/us-election-results-amy-acton-defeats-donald-trump-backed-vivek-ramaswamy-to-become-ohios-first-woman-governor/articleshow/135522936.cms",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "No1"
+        ],
+        "after": "Tributes paid to legendary drummer who played on more UK No1 singles than any other - backing acts including Paul McCartney, the Kinks, Dusty Springfield, Lulu, Paul Weller and the Wombles",
+        "before": "Tributes paid to legendary rock drummer who played on more UK number one singles than any other - backing acts including Paul McCartney, the Kinks, Dusty Springfield, Lulu, Marc Bolan, Paul Weller and the Wombles",
+        "detected": "2026-11-05T18:36:07Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "rock",
+          "number",
+          "one",
+          "Marc",
+          "Bolan"
+        ],
+        "similarity": 0.818,
+        "url": "https://www.dailymail.com/news/article-16265609/Tributes-paid-legendary-rock-drummer-clem-cattini.html",
+        "weight": 9,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Maiouf"
+        ],
+        "after": "Arab News | King Salman appoints Sheikh Abdulmohsen bin Mohammed Al-Maiouf to Board of Grievances position",
+        "before": "Arab News | King Salman appoints Sheikh Abdulmohsen bin Mohammed bin Abdullah Al-Mayouf to Board of Grievances position",
+        "detected": "2026-11-05T14:48:30Z",
+        "domain": "arabnews.com",
+        "removed": [
+          "bin",
+          "Abdullah",
+          "Mayouf"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.arabnews.com/saudi-arabia/king-salman-appoints-sheikh-abdulmohsen-bin-mohammed-bin-abdullah-al-mayouf-to-board-of-grievances-position-3008873",
+        "weight": 7,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 15474,
+      "PAGE_TEXTCHANGE": 139593,
+      "PAGE_TITLECHANGE": 53198,
+      "UNCHANGED_CONTENT": 750482
+    },
+    "title_changes_en": 14481,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1793970563107",
+        "job_id": "world_gdg_counts_20261105",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 242221056,
+        "created": "1793970568278",
+        "job_id": "world_gdg_titles_20261105",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-06T13:13:42Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-05.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
