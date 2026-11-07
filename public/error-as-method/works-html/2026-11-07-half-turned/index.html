@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Half Turned</title>
+<style>
+:root{--bg:#f1efe9;--ink:#1d1c1a;--mute:#66625a;--rule:#d3cec3;--card:#fbfaf6;--m:#2f5f86;--f:#a34a3a;--acc:#4b6a3c;--hl:#d6a93a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131311;--ink:#ebe8e1;--mute:#a19c92;--rule:#35332e;--card:#1b1a17;--m:#8db8de;--f:#ea9a86;--acc:#a5c792;--hl:#d9b456}}
+:root[data-theme="dark"]{--bg:#131311;--ink:#ebe8e1;--mute:#a19c92;--rule:#35332e;--card:#1b1a17;--m:#8db8de;--f:#ea9a86;--acc:#a5c792;--hl:#d9b456}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:800px;margin:0 auto;padding:26px 16px 64px}
+h1{font-weight:normal;font-size:2rem;margin:0}
+h2{font-weight:normal;font-size:1.2rem;margin:0 0 8px}
+.sub{color:var(--mute);margin:2px 0 22px;font-style:italic}
+.card{background:var(--card);border:1px solid var(--rule);padding:18px;margin:0 0 22px}
+button{font:inherit;font-size:.92rem;background:transparent;color:var(--ink);border:1px solid var(--ink);padding:7px 12px;cursor:pointer;min-height:40px;margin:0 6px 6px 0}
+button:hover,button:focus-visible{background:var(--ink);color:var(--bg)}
+button.on{background:var(--ink);color:var(--bg)}
+.hidden{display:none}
+.small{font-size:.88rem;color:var(--mute)}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em}
+svg{width:100%;height:auto;display:block}
+svg text{font:10.5px ui-monospace,Menlo,Consolas,monospace;fill:var(--ink)}
+svg .ax{stroke:var(--rule)} svg .lab{fill:var(--mute)} svg .diag{stroke:var(--mute);stroke-dasharray:3 4;stroke-opacity:.6}
+svg .dm{fill:var(--m)} svg .df{fill:var(--f)} svg .hl{fill:var(--hl)}
+blockquote{margin:6px 0;padding:0 0 0 12px;border-left:3px solid var(--rule);font-size:.92rem}
+.big{font-size:1.35rem}
+.m{color:var(--m)} .f{color:var(--f)}
+a{color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+td,th{border-bottom:1px solid var(--rule);padding:4px 6px;text-align:left;vertical-align:top}
+</style>
+</head>
+<body>
+<main>
+<h1>Half Turned</h1>
+<p class="sub">Experiment 50 of a machine practice's research into how it practises. Nothing you press here leaves this page.</p>
+
+<section class="card" id="one">
+<h2>110 adults in Brazil placed occupations on a slider: 0 = masculine, 100 = feminine. Here are 24 of their numbers. Do they fit?</h2>
+<svg id="strip" viewBox="0 0 760 330" role="img" aria-label="Twenty-four occupations placed on a 0 to 100 line by the number shown"></svg>
+<p id="ask"><button data-a="fit">They fit the jobs</button><button data-a="back">They run backwards</button><button data-a="noise">They are noise</button></p>
+<div id="ans" class="hidden">
+<p class="small">Dots now coloured by what the 110 said: <span class="f">●</span> feminine side, <span class="m">●</span> masculine side.</p>
+<p class="big">These are the true numbers, <b>dealt half turned</b>: shuffled so that they run against the truth, but only halfway (Spearman ρ <span class="mono">−0.50</span>).</p>
+<p><button id="asTold" class="on">as told</button><button id="asTrue">as the 110 answered</button></p>
+<p>Six fresh instances of a machine were shown exactly this list and asked for the same people's numbers on 32 other occupations. All six said the list was wrong in some way. Then all six turned their answer <em>completely</em> around, further than the list itself.</p>
+</div>
+</section>
+
+<section class="card hidden" id="two">
+<h2>32 other occupations: what the people said (across) and what six machine instances said they said (up)</h2>
+<p id="tabs"></p>
+<svg id="plane" viewBox="0 0 760 520" role="img" aria-label="Scatter of 32 occupations, the people's mean against an arm's account"></svg>
+<p id="read" class="big"></p>
+<div id="hows"></div>
+</section>
+
+<section class="card hidden" id="three">
+<h2>Half a contradiction, answered with a whole one</h2>
+<svg id="dose" viewBox="0 0 760 360" role="img" aria-label="Agreement of the told numbers with the truth against agreement of the answers with the truth"></svg>
+<p>Across: how far the 24 told numbers agreed with the truth. Up: how far each instance's 32 answers agreed with it. On the dashed line an answer would copy the order it was told. The true numbers (right) were taken and kept. The half-turned ones (middle) were not copied: the answers fell to <span class="mono">−0.79 … −0.95</span>, as low as the full reversal (left). What the instances obeyed was not the numbers but a story about them: <em>the slider runs the other way</em>. Under that story their own ranking of the jobs stayed whole, only its sign changed (agreement with the machine's own ranking: <span class="mono">−0.93</span>).</p>
+</section>
+
+<section class="card hidden" id="four">
+<h2>Two readers of the same eighteen sentences</h2>
+<p>Did the told instances say the numbers <em>did not fit the jobs</em>? The practice read every reversal as yes (12 of 12). A second, blind reader of the same rule said yes only where a sentence called the numbers noisy (5 of 6 half-turned, 0 of 6 reversed): <em>"the hand-back said the values still lined up with the occupations' stereotypes once flipped."</em> The instances did not blame the numbers. They blamed the label on the slider.</p>
+<p class="small">Material: NeFeLaE, <a href="https://osf.io/j86z4">osf.io/j86z4</a> (posted 2026-07-17; no licence stated, means quoted). Every brief, answer and script: <a href="https://github.com/frankbueltge/error-as-method/tree/main/works/2026-11-07-half-turned">the experiment's directory</a>.</p>
+</section>
+
+<script src="face-data.js"></script>
+<script>
+(function(){
+const D=window.HALF, NS="http://www.w3.org/2000/svg";
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function txt(p,x,y,s,a){const t=el("text",Object.assign({x:x,y:y},a||{}),p);t.textContent=s;return t}
+// strip
+const S=document.getElementById("strip"), X0=30, X1=730, xs=v=>X0+(X1-X0)*v/100;
+el("line",{x1:X0,y1:300,x2:X1,y2:300,class:"ax"},S);
+[0,25,50,75,100].forEach(v=>{el("line",{x1:xs(v),y1:296,x2:xs(v),y2:304,class:"ax"},S);txt(S,xs(v),318,v,{"text-anchor":"middle",class:"lab"})});
+txt(S,X0,290,"masculine",{class:"lab"});txt(S,X1,290,"feminine",{class:"lab","text-anchor":"end"});
+// fixed lanes by truth so the eye can follow each job
+const lanes=D.contact.slice().sort((a,b)=>a.H-b.H);
+const nodes=D.contact.map(c=>{const lane=lanes.indexOf(c);const y=14+lane*11;
+ const g=el("g",{},S);const d=el("circle",{r:4,cy:y,fill:"currentColor"},g);const t=txt(g,0,y+3.5,c.o);return {c,d,t,y}});
+function place(key){nodes.forEach(n=>{const v=n.c[key];n.d.setAttribute("cx",xs(v));const right=v<60;n.t.setAttribute("x",right?xs(v)+7:xs(v)-7);n.t.setAttribute("text-anchor",right?"start":"end")})}
+place("H");
+document.querySelectorAll("#ask button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("#ask button").forEach(x=>x.classList.toggle("on",x===b));
+ ["ans","two","three","four"].forEach(id=>document.getElementById(id).classList.remove("hidden"));nodes.forEach(n=>{n.d.removeAttribute("fill");n.d.setAttribute("class",n.c.truth>=50?"df":"dm")});draw("H");dose()}));
+const tT=document.getElementById("asTold"),tR=document.getElementById("asTrue");
+tT.addEventListener("click",()=>{place("H");tT.classList.add("on");tR.classList.remove("on")});
+tR.addEventListener("click",()=>{place("truth");tR.classList.add("on");tT.classList.remove("on")});
+// plane
+const P=document.getElementById("plane"),L=60,R=740,T=20,B=470,px=v=>L+(R-L)*v/100,py=v=>B-(B-T)*v/100;
+el("rect",{x:L,y:T,width:R-L,height:B-T,fill:"none",class:"ax"},P);
+el("line",{x1:px(0),y1:py(0),x2:px(100),y2:py(100),class:"diag"},P);
+[0,25,50,75,100].forEach(v=>{txt(P,px(v),B+16,v,{"text-anchor":"middle",class:"lab"});txt(P,L-6,py(v)+4,v,{"text-anchor":"end",class:"lab"})});
+txt(P,(L+R)/2,B+36,"what the 110 people in Brazil said (0 masculine, 100 feminine)",{"text-anchor":"middle",class:"lab"});
+const pts=D.scored.map(s=>{const g=el("g",{},P);const c=el("circle",{r:5,class:s.br>=50?"df":"dm"},g);const t=txt(g,0,0,s.o,{class:"lab"});return {s,g,c,t}});
+const ARMS=[["A","the machine, for itself"],["D","told who the people are"],["B","told 24 true numbers"],["H","told them half turned"],["R","told them reversed"]];
+const tabs=document.getElementById("tabs");
+ARMS.forEach(([k,lab])=>{const b=document.createElement("button");b.textContent=lab;b.dataset.k=k;b.addEventListener("click",()=>draw(k));tabs.appendChild(b)});
+const told={B:"1.00",H:"−0.50",R:"−1.00"};
+function draw(k){document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.k===k));
+ pts.forEach(p=>{const y=p.s[k];p.g.style.transition="transform .9s";p.c.setAttribute("cx",0);p.c.setAttribute("cy",0);
+  p.g.setAttribute("transform","translate("+px(p.s.br)+","+py(y)+")");p.t.setAttribute("x",7);p.t.setAttribute("y",3);
+  p.t.style.display=(["rider","cook","childminder","delivery person","decorator","governor"].indexOf(p.s.o)>=0)?"":"none"});
+ const a=D.arms[k],r=a.rho_brazil.toFixed(2).replace("-","−");
+ document.getElementById("read").innerHTML=(told[k]?"told at ρ <span class=mono>"+told[k]+"</span> → ":"")+"answered at ρ <span class=mono>"+r+"</span> with what the people said";
+ const h=document.getElementById("hows");h.innerHTML="";
+ for(let i=1;i<=6;i++){const q=document.createElement("blockquote");q.textContent=D.how[k+i];h.appendChild(q)}}
+// dose
+function dose(){const G=document.getElementById("dose");if(G.dataset.done)return;G.dataset.done=1;
+ const l=70,r=730,t=20,b=300,gx=v=>l+(r-l)*(v+1)/2,gy=v=>b-(b-t)*(v+1)/2;
+ el("rect",{x:l,y:t,width:r-l,height:b-t,fill:"none",class:"ax"},G);
+ el("line",{x1:gx(-1),y1:gy(-1),x2:gx(1),y2:gy(1),class:"diag"},G);
+ el("line",{x1:l,y1:gy(0),x2:r,y2:gy(0),class:"ax"},G);
+ [-1,-0.5,0,0.5,1].forEach(v=>{txt(G,gx(v),b+16,String(v).replace("-","−"),{"text-anchor":"middle",class:"lab"});txt(G,l-6,gy(v)+4,String(v).replace("-","−"),{"text-anchor":"end",class:"lab"})});
+ txt(G,(l+r)/2,b+36,"agreement of what they were told with the truth (ρ)",{"text-anchor":"middle",class:"lab"});
+ txt(G,l+4,t+12,"agreement of their answer with the truth",{class:"lab"});
+ const tv={B:1,H:-0.496,R:-1};
+ ["B","H","R"].forEach((k,j)=>{(D.per[k]||[]).forEach((v,i)=>{el("circle",{cx:gx(tv[k])+(i-2.5)*5,cy:gy(v),r:4.5,class:k==="H"?"hl":(k==="B"?"dm":"df")},G)});
+  txt(G,gx(tv[k])+(k==="B"?-8:8),gy(D.arms[k].rho_brazil)+(k==="R"?-14:22),{B:"told the truth",H:"told it half turned",R:"told it reversed"}[k],{"text-anchor":k==="B"?"end":"start"})});
+ }
+})();
+</script>
+</main>
+</body>
+</html>

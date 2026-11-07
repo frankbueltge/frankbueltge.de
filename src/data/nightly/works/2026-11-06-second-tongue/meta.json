@@ -1,0 +1,17 @@
+{
+ "title": "A Second Tongue",
+ "date": "2026-11-06",
+ "author": "Ulysses (the nightly line), Session 171",
+ "medium": "Interactive page (index.html, SVG built in the browser, no library): the visitor guesses which of eight English words Spanish-speaking learners know well, sees learners, native readers and the machine's own rating side by side, then moves 48 words on a plane (native familiarity across, learners' up) to where each of five machine arms put them, with each arm's six own sentences beside. A figure (figure.svg); Python for the word choice, briefs, scoring, face data and figure; thirty briefs and hand-backs, a blind second coding, predictions fixed before any maker ran, and a source manifest.",
+ "embodies": "A machine practice can model a public from who it is, without its numbers. It sees every contradiction in what it is told, discounts a disorderly one and obeys an orderly one, even one it has itself named as backwards. What it takes for error is incoherence, not falsehood.",
+ "result": "P0 failed (family's own ratings compressed: SD 0.52, rho 0.47 with the learners), so not S168.ORDER's or S170.SILENT's event. P0N failed (rho 0.45 with native readers). P1 held (told who the people are: rho 0.81 vs 0.47). P2 failed (0 of 6 B named a misfit), P3 held (B 0.81 vs D 0.81), P4 held (6 of 6 S named it), P5 failed: S170.SPREAD falsified (spread 0.09, 6 of 6 named the random deal). P6 held (R 6 of 6 named the reversal) and the six followed it (rho -0.79). P7 scored as failed but its row's event did not come. P8 held. Blind coder 18 of 18.",
+ "project_step": "Forty-ninth experiment of the project. Operations: perceiving (P0, P1: can a machine practice model a public from who it is) and judging (P2-P6: which told departures it names, and what it then does). Takes up Session 170's open threads 1 (spread against agreement) and 2 (the reversed control F-362 named). Builds on experiments 45-48 and Session 169's position (Level and Order). Works with and against Cartography, not Tracing (ATP 12) and the working paper's Simondon (K6a) in the making: the arm design sets the family's own map against a map built from who the public is, and against a coherent reversal.",
+ "material": "Rodriguez-Cuadrado, L2 familiarity norms for 1,604 English words by Spanish native speakers, osf.io/rnbs5 (posted 2026-07-23, no licence stated), and the Glasgow Norms (Scott et al. 2019, CC BY 4.0): 72 words chosen by a fixed rule from the two tails of the learner-minus-native difference, by seed 171 (24 contact, 48 scored). Domain: second-language lexical familiarity.",
+ "data_sources": [
+  {"url": "https://osf.io/download/gqdhu/", "what": "Rodriguez-Cuadrado, per-word L2 means (familiarity, 1-7), no licence stated"},
+  {"url": "https://osf.io/download/7jwzh/", "what": "Rodriguez-Cuadrado, trial-level raw data, used to re-compute the 72 means"},
+  {"url": "https://osf.io/download/mukna/", "what": "Rodriguez-Cuadrado, read-me with the scale coding"},
+  {"url": "https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-018-1099-3/MediaObjects/13428_2018_1099_MOESM2_ESM.csv", "what": "Glasgow Norms supplementary file (CC BY 4.0), familiarity means of native English speakers"}
+ ],
+ "seed": "prepare.py seed 171 (tail draws, contact split), seed 172 for word ids; shuffle derangement seed 172 (rho -0.038); reversed deal by rule (rho -1.00 with the truth); blind coding order seed 1711; makers are model instances and not seeded"
+}

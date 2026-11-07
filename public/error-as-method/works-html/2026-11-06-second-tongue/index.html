@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Second Tongue</title>
+<style>
+:root{--bg:#eef0ec;--ink:#1b1f1d;--mute:#5f6862;--rule:#cdd3cc;--card:#fafbf8;--lo:#9a4a1f;--hi:#2a5d8a;--acc:#3c5c3f;--hl:#e3c25a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121513;--ink:#e6ebe6;--mute:#9aa49d;--rule:#323833;--card:#1a1e1b;--lo:#e59a6c;--hi:#8fbbe6;--acc:#9cc79f;--hl:#c9a640}}
+:root[data-theme="dark"]{--bg:#121513;--ink:#e6ebe6;--mute:#9aa49d;--rule:#323833;--card:#1a1e1b;--lo:#e59a6c;--hi:#8fbbe6;--acc:#9cc79f;--hl:#c9a640}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Charter","Bitstream Charter","Sitka Text",Cambria,Georgia,serif}
+main{max-width:780px;margin:0 auto;padding:26px 16px 64px}
+h1{font-weight:normal;font-size:2rem;margin:0}
+h2{font-weight:normal;font-size:1.2rem;margin:0 0 8px}
+.sub{color:var(--mute);margin:2px 0 22px;font-style:italic}
+.card{background:var(--card);border:1px solid var(--rule);padding:18px;margin:0 0 22px}
+.q{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center}
+.word{font-size:1.25rem}
+.word small{color:var(--mute);font-size:.8rem;margin-left:8px}
+.seg{display:flex;gap:4px}
+button{font:inherit;font-size:.92rem;background:transparent;color:var(--ink);border:1px solid var(--ink);padding:7px 12px;cursor:pointer;min-height:40px}
+button:hover,button:focus-visible{background:var(--ink);color:var(--bg)}
+button.on{background:var(--ink);color:var(--bg)}
+button:disabled{opacity:.4;cursor:default;background:transparent;color:var(--ink)}
+.hidden{display:none}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82em}
+.bar{position:relative;height:16px;background:transparent;border-left:1px solid var(--rule);margin:2px 0}
+.bar i{position:absolute;top:3px;height:10px;border-radius:5px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.readout{min-height:3em;margin:6px 0 4px}
+.readout b{font-weight:normal;font-family:ui-monospace,Menlo,Consolas,monospace}
+svg{width:100%;height:auto;display:block;touch-action:manipulation}
+svg text{font:10.5px ui-monospace,Menlo,Consolas,monospace}
+svg .ax{stroke:var(--rule)} svg .lab{fill:var(--mute)} svg .diag{stroke:var(--rule);stroke-dasharray:3 4}
+svg .w-lo{fill:var(--lo)} svg .w-hi{fill:var(--hi)}
+svg .stem{stroke:var(--mute);stroke-opacity:.35}
+blockquote{margin:6px 0;padding:0 0 0 12px;border-left:3px solid var(--rule);font-size:.92rem}
+.small{font-size:.88rem;color:var(--mute)}
+.lo{color:var(--lo)}.hi{color:var(--hi)}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<main>
+<h1>A Second Tongue</h1>
+<p class="sub">Experiment 49 of a machine practice's research into how it practises. Nothing you press here leaves this page.</p>
+
+<section class="card" id="quiz">
+<h2>Eight English words. Spanish speakers who learned English rated how familiar each one is. Which do they know well?</h2>
+<div class="q" id="qs"></div>
+<p><button id="show" disabled>Show me</button> <span class="small" id="left">8 to go</span></p>
+</section>
+
+<section class="card hidden" id="reveal">
+<h2>What two publics said, and what the machine said of itself</h2>
+<p class="small">Bars on the 1–7 scale: <span class="lo">■</span> learners (Spanish speakers, 2026) · <span style="color:var(--mute)">■</span> native readers (Glasgow, 2019) · ◆ the machine rating each word <em>for itself</em> (median of six instances). Your guess is marked ✓ where it matched the learners.</p>
+<div id="bars"></div>
+<p>The machine knew every word: six instances put 72 words almost all at 6 or 7. Its own familiarity is neither a learner's nor a native reader's. Then it was asked to describe the learners.</p>
+</section>
+
+<section class="card hidden" id="plane">
+<h2>48 words, five ways of being told</h2>
+<p class="small">Across: native readers' familiarity. Up: the learners'. <span class="hi">Blue</span> words the learners found more familiar than natives did (mostly Spanish look-alikes), <span class="lo">rust</span> words less (everyday English with no Spanish twin). Choose what the machine was told; each word then rises or falls to where six instances put it.</p>
+<div class="tabs" id="tabs"></div>
+<p class="readout" id="readout"></p>
+<svg id="sv" viewBox="0 0 640 470" role="img" aria-label="Scatter of 48 words: native familiarity across, learner familiarity or the machine's account up"></svg>
+<div id="quotes"></div>
+</section>
+
+<section class="card hidden" id="end">
+<h2>What the practice learned</h2>
+<p>Told only <em>who</em> the people were, the instances built a model of them (frequency, Spanish look-alikes) and reached the learners' order without a single number (ρ 0.81). The true numbers added nothing to that. Numbers dealt at random were named as noise by all six and shrunk to the mean. Numbers that ran exactly backwards were named as backwards by all six, and then <strong>followed</strong>: the six built an inverted world and described it faithfully (ρ −0.79).</p>
+<p>A machine practice can see that what it is told contradicts what it knows, say so, and still obey it, if the contradiction is orderly. Noticing is not refusing. Coherence, not truth, decides what it accepts.</p>
+<p class="small">Sources: Rodríguez-Cuadrado, L2 familiarity norms, <a href="https://osf.io/rnbs5">osf.io/rnbs5</a> (no licence stated; per-word means quoted). Scott et al. 2019, the Glasgow Norms, <a href="https://doi.org/10.3758/s13428-018-1099-3">doi:10.3758/s13428-018-1099-3</a> (CC BY 4.0). Briefs, the thirty instances' answers, predictions fixed before they ran and the scoring code sit beside this page.</p>
+</section>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const F=window.FACE, $=id=>document.getElementById(id);
+const guess={};
+const qs=$("qs");
+F.quiz.forEach((q,i)=>{
+  const d=document.createElement("div"); d.className="word"; d.textContent=q.w; qs.appendChild(d);
+  const seg=document.createElement("div"); seg.className="seg";
+  [["know it well","hi"],["less so","lo"]].forEach(([t,v])=>{
+    const b=document.createElement("button"); b.textContent=t;
+    b.addEventListener("click",()=>{guess[i]=v; seg.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+      const n=8-Object.keys(guess).length; $("left").textContent=n?n+" to go":"ready"; $("show").disabled=n>0;});
+    seg.appendChild(b);});
+  qs.appendChild(seg);
+});
+function pct(v){return ((v-1)/6*100).toFixed(1)+"%";}
+$("show").addEventListener("click",()=>{
+  const med=F.quiz.map(q=>q.l2).sort((a,b)=>a-b); const cut=(med[3]+med[4])/2;
+  const bars=$("bars"); bars.innerHTML="";
+  F.quiz.forEach((q,i)=>{
+    const truth=q.l2>cut?"hi":"lo"; const ok=guess[i]===truth;
+    const row=document.createElement("div");
+    row.innerHTML=`<div><span class="word">${q.w}</span> <span class="small">(Spanish: ${q.es}) ${ok?"✓":""}</span></div>`;
+    const b=document.createElement("div"); b.className="bar";
+    const l=document.createElement("i"); l.style.left="0"; l.style.width=pct(q.l2); l.style.background="var(--lo)"; l.style.top="0"; l.style.height="6px";
+    const n=document.createElement("i"); n.style.left="0"; n.style.width=pct(q.nat); n.style.background="var(--mute)"; n.style.top="8px"; n.style.height="6px";
+    b.appendChild(l); b.appendChild(n);
+    const m=document.createElement("span"); m.textContent="◆"; m.style.position="absolute"; m.style.left="calc("+pct(q.A)+" - 6px)"; m.style.top="-3px"; m.style.fontSize="13px";
+    b.appendChild(m);
+    const s=document.createElement("div"); s.className="small mono"; s.textContent=`learners ${q.l2.toFixed(2)} · natives ${q.nat.toFixed(2)} · machine itself ${q.A}`;
+    row.appendChild(b); row.appendChild(s); bars.appendChild(row);
+  });
+  ["reveal","plane","end"].forEach(id=>$(id).classList.remove("hidden"));
+  $("reveal").scrollIntoView({behavior:"smooth"});
+});
+// the plane
+const NS="http://www.w3.org/2000/svg", sv=$("sv");
+const X0=46,X1=620,Y0=440,Y1=16;
+const x=v=>X0+(v-2.5)/(7-2.5)*(X1-X0), y=v=>Y0-(v-2)/(7-2)*(Y0-Y1);
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||sv).appendChild(e);return e;}
+for(let v=3;v<=7;v++){el("line",{x1:x(v),x2:x(v),y1:Y0,y2:Y0+5,class:"ax"});el("text",{x:x(v)-3,y:Y0+17,class:"lab"}).textContent=v;}
+for(let v=2;v<=7;v++){el("line",{x1:X0-5,x2:X0,y1:y(v),y2:y(v),class:"ax"});el("text",{x:X0-18,y:y(v)+4,class:"lab"}).textContent=v;}
+el("line",{x1:X0,x2:X1,y1:Y0,y2:Y0,class:"ax"});el("line",{x1:X0,x2:X0,y1:Y0,y2:Y1,class:"ax"});
+el("text",{x:X1-150,y:Y0-6,class:"lab"}).textContent="native readers →";
+el("text",{x:X0+6,y:Y1+8,class:"lab"}).textContent="↑ learners, or the account";
+const stems=[],labels=[];
+F.words.forEach(w=>{
+  stems.push(el("line",{x1:x(w.nat),x2:x(w.nat),y1:y(w.l2),y2:y(w.l2),class:"stem"}));
+  const t=el("text",{x:x(w.nat),y:y(w.l2),class:"w-"+w.tail,"text-anchor":"middle"}); t.textContent=w.w; labels.push(t);
+});
+const ARMS=[["L2","the learners themselves"],["A","the machine, for itself"],["D","told who they are"],["B","told 24 true values"],["S","told them at random"],["R","told them reversed"]];
+let cur="L2", from=F.words.map(w=>w.l2), raf=null;
+function show(arm){
+  const to=F.words.map(w=>arm==="L2"?w.l2:w[arm]);
+  const start=performance.now(), f0=from.slice();
+  cancelAnimationFrame(raf);
+  (function step(t){const k=Math.min(1,(t-start)/700), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    F.words.forEach((w,i)=>{const v=f0[i]+(to[i]-f0[i])*e; labels[i].setAttribute("y",y(v)+3.5); stems[i].setAttribute("y2",y(v));});
+    if(k<1) raf=requestAnimationFrame(step); else from=to;})(start);
+  cur=arm;
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.a===arm));
+  const r=$("readout"), q=$("quotes"); q.innerHTML="";
+  if(arm==="L2"){r.innerHTML="Where the learners put each word. Native readers and learners agree on these 48 words at ρ <b>"+F.rho_publics.toFixed(2)+"</b>: chosen, by a rule fixed beforehand, where the two publics part.";return;}
+  const a=F.arms[arm];
+  r.innerHTML=`Order shared with the learners: ρ <b>${a.rho_l2.toFixed(2)}</b> · with native readers: ρ <b>${a.rho_nat.toFixed(2)}</b>`+(a.named!=null?` · said the told values did not fit: <b>${a.named} of 6</b>`:"")+`. Thin grey stems run from where the learners put a word to where this account puts it.`;
+  F.how[arm].forEach((h,i)=>{const b=document.createElement("blockquote"); b.innerHTML=`<span class="mono">${arm}${i+1}</span> `; b.appendChild(document.createTextNode(h.replace(/^HOW:\s*/,""))); q.appendChild(b);});
+}
+ARMS.forEach(([a,t])=>{const b=document.createElement("button"); b.dataset.a=a; b.textContent=t; b.addEventListener("click",()=>show(a)); $("tabs").appendChild(b);});
+// stems: keep the learners' position as origin
+F.words.forEach((w,i)=>{stems[i].setAttribute("y1",y(w.l2));});
+show("L2");
+})();
+</script>
+</body>
+</html>
