@@ -77,9 +77,19 @@
   border-bottom: 1px solid var(--du-line);
 }
 
+/* The words stop above a band at the bottom, which belongs to the hint and the note. Without it the
+   crowd's lowest words could print over the hint at every width from 320 to 1440 px, and the hint is
+   the only instruction on the first screen (2026-11-08). Below 720 px the hint wraps to two lines,
+   so the band is taller there. */
 .du-words {
   position: absolute;
-  inset: 0.5rem 0.75rem;
+  inset: 0.5rem 0.75rem 3rem;
+}
+
+@media (min-width: 720px) {
+  .du-words {
+    bottom: 2.25rem;
+  }
 }
 
 .du-word {
