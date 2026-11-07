@@ -129,6 +129,6 @@ describe('the build', () => {
     // The band stands outside the frame, so the frame's rewrite must come first; and every build —
     // the integrate gates, CI and the deploy — writes the list the endpoints accept.
     const pkg = JSON.parse(readFileSync(fileURLToPath(new URL('../../../package.json', import.meta.url)), 'utf8'))
-    expect(pkg.scripts.build).toBe('astro build && tsx scripts/engines/frame-dist.ts && tsx scripts/reception/dist.ts && tsx scripts/study/dist.ts')
+    expect(pkg.scripts.build.replace(/^NODE_OPTIONS=\S+ /, '')).toBe('astro build && tsx scripts/engines/frame-dist.ts && tsx scripts/reception/dist.ts && tsx scripts/study/dist.ts')
   })
 })

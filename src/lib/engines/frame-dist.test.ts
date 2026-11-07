@@ -73,6 +73,6 @@ describe('the built site carries the wall text on record', () => {
     // so in so many words), so the step belongs to that script and to nothing narrower.
     const pkg = JSON.parse(readFileSync(fileURLToPath(new URL('../../../package.json', import.meta.url)), 'utf8'))
     // Since 2026-10-17 the reception's band follows it (src/lib/reception/dist.ts), after the frame.
-    expect(pkg.scripts.build).toMatch(/^astro build && tsx scripts\/engines\/frame-dist\.ts( && |$)/)
+    expect(pkg.scripts.build).toMatch(/^(NODE_OPTIONS=\S+ )?astro build && tsx scripts\/engines\/frame-dist\.ts( && |$)/)
   })
 })
