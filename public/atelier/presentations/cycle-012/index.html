@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Last Case</title>
+<meta name="description" content="Listen to a quiet in an Ebola record, one day per beat, and say when it is over. The Atelier, cycle 012.">
+<link rel="stylesheet" href="last.css">
+</head>
+<body>
+<main>
+<h1>The Last Case</h1>
+<p class="lede">A health zone in eastern Congo has just written a new confirmed case of Ebola, and then nothing more. From here, every beat is one day. A clear tick: that day's report named the zone and had nothing new. A dull tick: a report came out and did not name it. Silence: no report at all. <b>When you are sure the zone has gone quiet, say so.</b></p>
+<p class="lede small">The first two quiets are chosen, the rest are drawn. After three, a second movement opens.</p>
+
+<section id="stage" aria-live="polite">
+  <div class="top">
+    <div class="count"><span id="day">0</span><small>days since the last confirmed case</small></div>
+    <div class="tally" id="tally">named 0 · not named 0 · no report 0</div>
+  </div>
+  <canvas id="strip" height="200" aria-label="The days of this quiet, one square per day"></canvas>
+  <div class="legend"><span class="sq w"></span>report named the zone <span class="sq a"></span>report did not name it <span class="sq n"></span>no report</div>
+  <div class="controls">
+    <button id="go" class="primary">Listen</button>
+    <button id="over" disabled>It is over</button>
+    <button id="skip" hidden>Skip to what came</button>
+    <button id="next" hidden>Next quiet</button>
+    <label><input type="checkbox" id="snd" checked> sound</label>
+    <label>pace <select id="pace"><option value="5">slow</option><option value="9" selected>steady</option><option value="16">fast</option></select></label>
+  </div>
+  <p id="verdict" class="verdict"></p>
+  <p id="where" class="legend"></p>
+</section>
+
+<section id="ledger" hidden>
+  <h2>What you said, and what came</h2>
+  <ol id="rows" class="said"></ol>
+  <p id="ledgernote" class="legend"></p>
+</section>
+
+<section id="pair" class="locked">
+  <h2>Which one breaks?</h2>
+  <p id="plock" class="legend">Opens after three quiets.</p>
+  <p class="lede small">Now the other way round. Two quiets at once, the first 42 days of each: one in your left ear and the upper row, one in your right ear and the lower row. One of the two later wrote a new case; the other did not. Listen, then bet which.</p>
+  <div class="top"><div class="count"><span id="pday">0</span><small>days, both</small></div><div class="tally" id="pscore">Nothing heard yet.</div></div>
+  <div class="plabel">left</div><canvas id="pa" aria-label="The left quiet, first 42 days"></canvas><div class="pout" id="oa" aria-live="polite"></div>
+  <div class="plabel">right</div><canvas id="pb" aria-label="The right quiet, first 42 days"></canvas><div class="pout" id="ob" aria-live="polite"></div>
+  <div class="controls">
+    <button id="pgo" class="primary" disabled>Listen to a pair</button>
+    <button id="pA" hidden disabled>The left one breaks</button>
+    <button id="pB" hidden disabled>The right one breaks</button>
+    <label><input type="checkbox" id="psnd" checked> sound</label>
+    <label>pace <select id="ppace"><option value="5">slow</option><option value="9" selected>steady</option><option value="16">fast</option></select></label>
+  </div>
+  <p id="pverdict" class="verdict" aria-live="polite"></p>
+  <div id="pend" class="pend" hidden></div>
+</section>
+
+<section id="losses" class="locked">
+  <h2>The losses</h2>
+  <p id="klock" class="legend">Opens with the second movement.</p>
+  <p class="lede small">Every quiet you heard is on this curve. Read from day 42 onward, it shows how many of the quiets that got that far were still quiet. A quiet that broke steps the curve down. A quiet that held does not count as a survivor. It is a green tick, a <i>loss</i> in the statisticians’ word: the day the record stopped watching, not the day the zone stopped. Past the last tick, the curve has nothing left to say.</p>
+  <div id="kmrec" class="controls" role="group" aria-label="Which record">
+    <button data-rec="bdbv" aria-pressed="true">2026</button><button data-rec="kivu" aria-pressed="false">Kivu 2018–2020</button><button data-rec="both" aria-pressed="false">both</button>
+  </div>
+  <canvas id="km" aria-label="The product-limit estimate of how many quiets that reached 42 days were still quiet, by day, with the losses marked and the undefined region hatched"></canvas>
+  <div class="legend"><span class="ln pl"></span>product-limit estimate <span class="ln nv"></span>if every quiet that held were over for good <span class="ln ls"></span>a loss <span class="ln yu"></span>your “over”</div>
+  <p id="kmread" class="verdict small" aria-live="polite"></p>
+  <p id="kmyou" class="legend"></p>
+</section>
+
+<section class="text">
+<h2>What this tries</h2>
+<p>To say a zone is quiet is to say something about a case: that the last one has been. But which case was the last is not written on the day it happens. Robert Northcott, summarising the philosopher Arthur Danto: <q>Danto defines a narrative sentence to be a description of an event that includes reference to later events.</q> “The last case” is such a sentence. Only what comes after can make it true. A declaration of the end speaks it in the present tense, and can do so only by a rule about waiting.</p>
+<p>The field's current answer is to price the wait. Plank and colleagues (<i>Proc. R. Soc. B</i> 292, 2025) estimate the probability that no further case will come, allowing for reporting that is late and incomplete, and suggest using the day it passes 95 % alongside other evidence. Ogi-Gittins and colleagues (<i>Infectious Disease Modelling</i> 10, 2025), on the Ebola outbreak in Équateur in 2018: <q>the lower the level of case reporting, the longer it is necessary to wait.</q> Both make the wait honest. Neither changes what kind of sentence is spoken at its end. The probability is a stated price for speaking a narrative sentence early, and the threshold is a choice about risk, not a reading of the zone.</p>
+<p>The Field's second record shows where the prescription “wait longer” stops working. In Kivu, 2018 to 2020, the missing reports are not a level but one hole of 94 days, and a longer wait fills the hole with silence (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-11-03-the-second-clock">check 52</a>). The second quiet above runs into it: Beni, from 17 February 2020. After its day 19, 7 March, the record holds no report at all for 94 days, and its silence ends only with the case.</p>
+<p><b>Why the second movement.</b> A bet on which of two quiets will break is a prediction, and a prediction can be scored on the day it is made. A declaration that the last case has been cannot. The pairs let you try to turn the one into the other: if the first 42 days held the answer, a careful listener could hear it there and the declaration would stop being a narrative sentence. On this record you cannot, and the best simple bet that can be found is found by counting the outcomes first.</p>
+<p><b>What the listening could not hear.</b> <span id="auc"></span></p>
+<p><b>Why the losses.</b> In 1958 E. L. Kaplan and Paul Meier wrote down how to estimate a lifetime from observations that end before the event does. In their words, the time of the event (<q>called a death</q>) <q>may be prevented for some of the items of the sample by the previous occurrence of some other event (called a loss)</q>. Here a death is a new case, and a loss is the end of the record. Their estimate counts each loss for as long as it was watched, and then stops counting it. It does not call the loss a survivor. Where the longest observation is a loss, they write, <q>P(t) is undefined though bounded by 0 and P(t*)</q>. That is the hatched band. An end-of-outbreak declaration fills that band with its upper edge and carries it forward for ever: the dashed line. Their estimate is a way to speak honestly about time that has not yet run out, and it has no tense for “the last case has been”.</p>
+<p><b>What the band holds.</b> All 11 quiets of 2026 that held are lost on 29 October 2026, the last day of the transcription, and the longest of them reached day 154. Past that day the 2026 curve is undefined, somewhere between 0 and 43 in 100. All 28 Kivu quiets that held are lost on 17 June 2020, the record’s last day. Every one of them ran through the 94 days with no report, and 37 % of their days had no report at all. Kaplan and Meier assume that a lifetime is <q>independent of the potential loss time</q>, and they add: <q>in practice this assumption deserves careful scrutiny</q>. A record that stops when an outbreak looks over does not stop independently of whether the outbreak is over. Neither does a quiet that was watched through a silence.</p>
+<p class="legend">Fourth state, presented 2026-11-05. The Atelier, cycle 012.</p>
+</section>
+
+<section class="text small">
+<h2>Sources and method</h2>
+<p><b>Material.</b> Every quiet of 42 days or more in two Ebola records, each day classed by the Field (<a href="https://github.com/frankbueltge/field-research/blob/82f80ea995aabc1b5fe154c9e446e96372a94572/artifacts/2026-11-03-the-second-clock/data52.js">data52.js</a>, check 52, commit 82f80ea, sha256 checked by <a href="build.py">build.py</a>): 22 from the 2026 Bundibugyo epidemic (HDX copy of the INRB-UMIE transcription of the ministry's situation reports, 14 May to 29 Oct 2026; the Field's check 51) and 60 from North Kivu and Ituri, 2018 to 2020 (OCHA HDX, ministry and WHO, CC BY-IGO). A quiet runs from a day the zone's cumulative confirmed count rose to the next rise, or to the record's end. Day 1 is the day after the rise.</p>
+<p><b>What it is not.</b> WHO declares an outbreak over 42 days after the last case's second negative test or burial. This work counts days after a rise in a zone's reported count, a reader's proxy. A rise can be a late report or a reclassification, not a new infection. “Held” means only that the record ends without a rise: for 2026 the record stops on 29 October, so those quiets cannot yet be called.</p>
+<p><b>Quotations</b> checked word for word: Northcott, “What did Danto show?” (PhilSci-archive 29862, 2026; checked in this practice's session of 2026-10-11); Ogi-Gittins et al., doi:10.1016/j.idm.2025.03.009 (abstract, read 2026-11-03). Plank et al., doi:10.1098/rspb.2024.2825 (abstract read 2026-11-03 in Europe PMC), paraphrased: a declaration balances its benefits against the risk of a resurgence, and the day the probability reached 95 % held across their assumptions. Kaplan, E. L., and Meier, P., “Nonparametric estimation from incomplete observations”, <i>Journal of the American Statistical Association</i> 53 (282), 1958, 457–481, doi:10.1080/01621459.1958.10501452: the first three quotations from the summary on p. 457, the fourth from p. 465 (read 2026-11-05 in a scan of the journal pages). The estimate on the curve is theirs, computed in <a href="build.py">build.py</a>: a new case on day L+1 is a death, a record’s last day L is a loss, and every quiet entered at day 42, an entry after the start of the lifetime, which the paper allows. Built on this practice's study <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/convening-after-011/forty-two-days">Forty-Two Days</a> (2026-11-01 and 11-02).</p>
+<p><b>Form.</b> A quiet is something you can only wait through, so the work makes you wait through it, one day per beat, without the 42-day mark in view. Canvas and Web Audio, no library. Sound is optional; the squares carry the same days. The first two quiets are fixed so that a newcomer meets reporting gaps and the Kivu hole before the drawn ones: Lubunga from 10 July 2026 (no report on 14 of its first 42 days) and Beni from 17 February 2020. Every other quiet is drawn at random, without repeating a zone.</p>
+</section>
+</main>
+<script src="last.js"></script>
+<script src="pair.js"></script>
+<script src="losses.js"></script>
+</body>
+</html>

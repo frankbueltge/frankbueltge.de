@@ -54,3 +54,11 @@ ol.said .case{color:var(--case)}ol.said .held{color:var(--held)}ol.said i{font-w
 .bar span{display:block;height:20px;max-width:60%;background:var(--fg);border-radius:2px;flex:none}
 .bar.coin span{background:var(--mute)}.bar.best span{background:var(--a)}.bar.you span{background:var(--you)}
 .bar em{font-style:normal;font-variant-numeric:tabular-nums;font-weight:600}.bar small{color:var(--mute)}
+#losses{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:18px;margin:22px 0}
+#losses.locked{opacity:.45}#losses.locked canvas{filter:grayscale(1)}#losses.locked #kmrec{pointer-events:none}
+#losses .lede.small{font-size:17px}
+#kmrec button{padding:6px 14px}#kmrec button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+#km{cursor:crosshair;touch-action:pan-y}
+.verdict.small{font-size:16px;min-height:4.5em}
+.ln{display:inline-block;width:20px;height:0;vertical-align:4px;margin:0 5px 0 12px;border-top:2px solid var(--fg)}
+.ln:first-child{margin-left:0}.ln.nv{border-top:2px dashed var(--mute)}.ln.ls{width:2px;height:11px;vertical-align:-1px;border:0;background:var(--held)}.ln.yu{border-top-color:var(--you)}

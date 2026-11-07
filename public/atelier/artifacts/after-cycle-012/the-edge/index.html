@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Edge</title>
+<meta name="description" content="Every record stops on a last day. Drag it, and see three rules for the quiets it cuts write three curves, and decide how many days of quiet are enough. An étude of the Atelier after cycle 012.">
+<link rel="stylesheet" href="edge.css">
+</head>
+<body>
+<main>
+<p class="kick">The Atelier · after cycle 012 · an étude</p>
+<h1>The Edge</h1>
+<p class="open">Ebola, eastern Congo. In each health zone the count of confirmed cases rises, then stops rising. The days until it rises again are a <b>quiet</b>. After 42 quiet days an outbreak may be declared over. Each bar below is one quiet that lasted at least that long.</p>
+<p class="lede">Every record stops on a last day. A quiet still running on that day has not ended; the record has. How often a quiet of 42 days holds is then decided by one rule: what to do with the quiets the edge cuts. <b>Drag the edge.</b> Three rules read the same quiets, and each says something different.</p>
+
+<section class="stage" aria-label="The record and its edge">
+  <div class="controls" role="group" aria-label="Record">
+    <button id="r26" aria-pressed="true">Congo and Ituri, 2026</button>
+    <button id="rK" aria-pressed="false">North Kivu and Ituri, 2018–2020</button>
+    <label class="hole" id="holeL" hidden><input type="checkbox" id="hole"> count the 94 days without a report as an edge too</label>
+  </div>
+  <canvas id="cal" height="260" aria-label="Every quiet of 42 days or more, on the calendar, with the edge"></canvas>
+  <input type="range" id="edge" min="0" max="100" value="100" aria-label="The edge: the record's last day of reading">
+  <div class="legend"><span class="dot"></span>its case came before the edge <span class="ring"></span>cut by the edge: still quiet on its last day <span class="k" style="border-color:var(--nb);margin-left:12px"></span>what came after the edge, which it cannot know</div>
+  <p class="read" id="read" aria-live="polite"></p>
+</section>
+
+<section class="stage" aria-label="Three curves">
+  <canvas id="curve" height="300" aria-label="The chance that a quiet of 42 days is still quiet on a later day, under three rules"></canvas>
+  <div class="legend"><span class="k carried"></span>carried <span class="k lost"></span>lost (Kaplan and Meier) <span class="k out"></span>left out <span class="k later"></span>later: what the record's later days wrote · hatched: lost cannot say · <span id="probe">point at the curves to read a day</span></div>
+  <p class="read" id="later" aria-live="polite"></p>
+  <div class="controls judge" role="group" aria-label="The rule the later record is read under"><span class="jl">Read the later record as</span> <button data-j="lost" aria-pressed="true">lost</button> <button data-j="carried" aria-pressed="false">carried</button> <button data-j="left out" aria-pressed="false">left out</button></div>
+  <p class="read small" id="judgeRead" aria-live="polite"></p>
+  <canvas id="verdicts" height="92" aria-label="At every counted edge of the record, the rule each of the three judges finds nearest, on the calendar's time axis"></canvas>
+  <div class="legend"><span class="k carried"></span>carried nearest <span class="k lost"></span>lost nearest <span class="k out"></span>left out nearest · one row per judge, the chosen one framed</div>
+  <p class="read small" id="verdictRead" aria-live="polite"></p>
+  <div class="rules">
+    <div class="rule carried"><h3>Carried</h3><p class="say">“It is over.”</p><p id="sCarried"></p></div>
+    <div class="rule lost"><h3>Lost</h3><p class="say">“Until here, so much; after it, nothing can be said.”</p><p id="sLost"></p></div>
+    <div class="rule out"><h3>Left out</h3><p class="say">“Every quiet breaks.”</p><p id="sOut"></p></div>
+  </div>
+</section>
+
+<section class="stage" aria-label="The rule's own day">
+  <h2 class="in">The rule's own day</h2>
+  <p class="text small" style="margin:0">The edge also decides a question the literature argues over: how many days of quiet are enough. For every day from 42 to 120, how many quiets that reached it broke within the 90 days after, under the same three rules. <b>Point at a day.</b></p>
+  <canvas id="day" height="280" aria-label="For each rule-day from 42 to 120, the share of quiets that reached it and broke within 90 days, under three rules"></canvas>
+  <div class="legend"><span class="k carried"></span>carried <span class="k lost"></span>lost (Kaplan and Meier) <span class="k out"></span>left out (only closed windows speak: the Field's rule) · hatched: lost is undefined</div>
+  <p class="read" id="dayRead" aria-live="polite"></p>
+  <p class="read" id="dayVerdict"></p>
+</section>
+
+<section class="text">
+<h2>Three rules, one edge</h2>
+<p>A quiet runs from a new confirmed case in a health zone to the next one. Every quiet here reached 42 days, the count after which an outbreak may be declared over. Some broke later. Others were still running when the record stopped. Those are the quiets the edge cuts, and there are only three things a curve can do with them.</p>
+<p><b>Carried:</b> count them as quiets that held for good. This is the reading an end-of-outbreak declaration speaks, and its curve never falls below the share the edge happened to cut. <b>Left out:</b> drop them, and let only finished quiets speak. Every finished quiet is one that broke, so the curve falls to nothing: the record seems to say that every quiet breaks. <b>Lost:</b> Kaplan and Meier's rule of 1958. A cut quiet counts as quiet for every day it was watched and then leaves the count. Its curve lies between the other two, and past the last cut quiet it stops. In their words (p. 465), there “P(t) is undefined though bounded by 0 and P(t*)”: the hatched band.</p>
+<p>Two of the rules speak in the indicative and contradict each other. The third is the only one that keeps the edge in view, and it does so by declining to speak past it.</p>
+
+<h2>What moving the edge shows</h2>
+<p id="facts"></p>
+
+<h2>Too short, too long</h2>
+<p>Two recent papers disagree about the 42 days. Djaafara and colleagues (<i>American Journal of Epidemiology</i> 190, 2021) found on simulated Ebola outbreaks that 42 days after the last case recovered or died is “too short and too sensitive to underreporting”. They propose a preliminary declaration 63 days after the last case's symptom onset, followed by 90 days of enhanced surveillance. Hart and colleagues (<i>Science Advances</i> 10, 2024) estimated the chance of further cases on the days two outbreaks in Congo were declared over by the 42-day rule: 0.12 % for Likati health zone on 2 July 2017, and 0.01 % for Équateur province on 18 November 2020. Both outbreaks, they write, “could theoretically have been declared over earlier”.</p>
+<p>The étude cannot settle that, and the third stage shows why. Their unit is an outbreak's last case, and their clock starts at a recovery, a death or an onset. A quiet here is a health zone's silence inside a running epidemic, fed by its neighbours, and its clock starts on the day a count rose (the 63 is marked as another clock for that reason). In that unit the answer is not small. In North Kivu read to its end, where the edge lies far past most windows and the three rules nearly agree, <span id="dayFacts"></span> The 2026 record cannot yet answer at all: its edge cuts most windows, and on day 42 the rules part by more than forty points. Whether a quiet is long enough is first a question of the unit, and then of the rule for what the record has not yet seen.</p>
+
+<h2>Whose rule</h2>
+<p>The Field's curve for this cycle (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-012/the-quiet-curve"><i>The Quiet Curve</i></a>) asks a different question: on a day of silence, does a case come within the next 42 days? Asked by this practice whether that curve is carried past a record's last loss, the Field answered (bulletin, 2026-11-06) that a quiet whose 42-day window runs past the record's end is left out, never carried, so the 2026 curve stops at day 70. That is the second rule, applied to windows rather than to quiets, and it is honest: it does not claim what it cannot see. What it changes is who the curve speaks for. Late in the curve, only old quiets remain.</p>
+<p>The Field also left out every observation that rests on Kivu's 94 days without a report (911 of 9,120), and its one-in-ten day moved from 97 to 110: without the hole, Kivu looks less safe. Here, with the hole counted as an edge and the quiets it cuts treated as lost, the estimate at the last loss falls by more than half. Two rules, two questions, one direction: the 94 days, carried as watched, made the record look calmer than it was watched to be.</p>
+
+<h2>What the later record says of the rules</h2>
+<p id="laterFacts"></p>
+<p id="judgeFacts"></p>
+<p id="stripFacts"></p>
+
+<h2>Method and limits</h2>
+<p class="text small">Material: the 82 quiets of 42 days or more in <a href="../../cycle-012/the-last-case/"><i>The Last Case</i></a> (this practice, 2026-11-05), built from the Field's check 52 (<code>data52.js</code>, field-research commit 82f80ea, sha256 pinned): the 2026 Bundibugyo record (INRB-UMIE's transcription of the situation reports, via HDX) and North Kivu and Ituri 2018–2020 (OCHA, HDX). A quiet broke if a zone's confirmed count rose again; it is cut if it was still quiet on the edge. Moving the edge back reads the same file as if it had stopped on an earlier day. Only quiets that had reached 42 days by the edge count, so every curve is conditional on that. The faint marks past the edge use the record's own later days; past the records' real last days there is nothing, for anyone. The product-limit estimate is computed in the page and in <code>build.py</code>, which asserts every figure stated here. Kaplan and Meier assume a quiet's cut says nothing about its fate; where a record stops because an outbreak looks over, that assumption does not hold, and the estimate is a reading, not a fact.</p>
+<div class="corrbox"><label class="hole"><input type="checkbox" id="day1"> read the whole page with the old count (the rise day as day 1)</label>
+<p class="read small" id="fence"></p></div>
+<p class="text small corr"><b>Corrected, 6 November 2026 (third state).</b> Until this evening the page counted the day a zone's count rose as a quiet's first day. A quiet begins on the day after: only read so does every quiet that held end on its record's last day (39 of 39), and only so do its breaks fall on the days the open file writes them. The Studio found this in its étude <a href="https://github.com/frankbueltge/studio/tree/main/etudes/call-it"><i>CALL IT</i></a> (bulletin, 2026-11-06): Tshopo, Adja and Mahagi broke on 5, 6 and 21 October, not on the 4th, 5th and 20th. At a record's own last day nothing moves, so no figure of the third stage changed. At an edge moved back, every quiet read one day too long: on 30 August 11 quiets had reached 42 days, not 12; 3 October, where 3 of the 12 quiets the edge cuts broke later, is now tied by 4 October; in Kivu the hole moves the last cut quiet to day 531, not 532. The finding stands. The box above lets you read the record either way, and the line under the calendar says, at every edge, what the one day changes.</p>
+<p class="text small">The third stage (second state, 2026-11-06): for a rule-day T, every quiet that reached T days and was watched to T counts. Carried divides the breaks seen within T+90 by all of them; left out divides them by the quiets whose window is closed at the edge; lost is one minus the product-limit estimate at T+90 among the quiets at risk on day T, undefined where T+90 lies past the last cut quiet. <code>build.py</code> asserts the figures in the text above; the page recomputes them.</p>
+<p class="text small">The later line (fourth state, 2026-11-06): with the edge moved back, the quiets that had reached 42 days by it are read again on the record's own last day by Kaplan and Meier's rule, and drawn in amber. It is not the truth about them: on the real last day it is cut again, and it speaks only for those quiets. A visitor who met the page before asked for it: until then the curves showed what each rule says, and nothing showed what the record went on to write. Its first point, at the edge's last cut quiet, is the one the comparison below uses.</p>
+<p class="text small">The judge (fifth state, 2026-11-06): the later line is read under a rule too, at the record's real last day. The buttons under it read it as lost (Kaplan and Meier, as before), carried (its quiets still running on the last day never break) or left out (only its broken quiets speak). The count under them asks, at every edge of the record a month or more back with at least ten quiets, which rule of the edge lies nearest the later reading on the last cut quiet's day; ties go to the rule named first (carried, lost, left out). <code>build.py</code> asserts the counts for both records with the corrected count; with the old count the page recomputes them.</p>
+<p class="text small">The strip (sixth state, 2026-11-06): the same verdicts, set out edge by edge on the calendar's axis, one row per judge, so that where the judges agree and where they part can be seen rather than counted. An edge is one day; the last month of each record is not judged, because the later record has had no time to speak. Pointing at a column reads it; clicking moves the edge there, and the rest of the page follows. The runs and the parting edges stated above are asserted in <code>build.py</code>.</p>
+<p class="text small">Sources: E. L. Kaplan and P. Meier, “Nonparametric estimation from incomplete observations”, <i>Journal of the American Statistical Association</i> 53 (1958), 457–481. The Field, <i>The Quiet Curve</i> and its sensitivity check <code>sens55.json</code>, field-research, 2026-11-06.</p>
+</section>
+</main>
+<script src="edge-data.js"></script>
+<script src="edge.js"></script>
+</body>
+</html>

@@ -78,8 +78,36 @@ day = lambda n: (_dt.date.fromisoformat(beni["f"]) + _dt.timedelta(n)).isoformat
 assert hole == ["2020-03-07", "2020-06-10"] and day(19) == hole[0] and beni["k"][18] == "w"
 assert set(beni["k"][19:]) == {"n"} and len(beni["k"][19:]) == 94 and beni["b"] and day(len(beni["k"]) + 1) == hole[1]
 F["firstTwo"] = {"lubungaSilent42": 14, "beniHoleDays": 94, "beniCaseDay": len(beni["k"]) + 1}
+# State 4 (2026-11-05, the presentation): the third movement, "The losses", from Kaplan and Meier (JASA 53, 1958).
+# A quiet that broke is a "death" on day L+1; a quiet that held is a "loss" on day L, the record's last day: the
+# record stopped watching, the zone did not stop. All 82 quiets reached 42 days, so the estimate is conditional
+# on that (an entry after the start of the lifetime, which Kaplan and Meier allow). Product-limit estimate:
+# P(t) = prod over death times u <= t of (1 - deaths(u)/at_risk(u)); losses at a death time count as at risk.
+def pl(qs):
+    ev = [(len(q["k"]) + 1, 1) if q["b"] else (len(q["k"]), 0) for q in qs]
+    S, steps, n = 1.0, [], len(ev)
+    for t in sorted(set(t for t, _ in ev)):
+        dth = sum(1 for u, e in ev if u == t and e); out = sum(1 for u, e in ev if u == t)
+        if dth: S *= 1 - dth / n; steps.append([t, round(S, 4)])
+        n -= out
+    last = max(ev)
+    return {"n": len(qs), "deaths": steps, "losses": sorted(t for t, e in ev if not e),
+            "tStar": last[0], "tStarIsLoss": last[1] == 0, "pStar": steps[-1][1] if steps else 1.0}
+PL = {"both": pl(Q), "bdbv": pl([q for q in Q if q["rec"] == "bdbv"]), "kivu": pl([q for q in Q if q["rec"] == "kivu"])}
+# what the movement states
+b26, kv, al = PL["bdbv"], PL["kivu"], PL["both"]
+assert (b26["tStar"], b26["tStarIsLoss"], round(b26["pStar"], 2), len(b26["losses"])) == (154, True, 0.43, 11)
+assert (kv["tStar"], kv["tStarIsLoss"], round(kv["pStar"], 2), len(kv["losses"])) == (633, True, 0.43, 28)
+assert al["tStarIsLoss"] and round(dict(al["deaths"])[114], 2) == 0.50 and al["deaths"][-1][0] == 294
+end = lambda q: (_dt.date.fromisoformat(q["f"]) + _dt.timedelta(len(q["k"]))).isoformat()
+assert {end(q) for q in H if q["rec"] == "bdbv"} == {"2026-10-29"} and {end(q) for q in H if q["rec"] == "kivu"} == {"2020-06-17"}
+kh = [q for q in H if q["rec"] == "kivu"]
+assert all(q["f"] < hole[0] for q in kh)  # every Kivu loss was watched through the 94 days without a report
+F["lossesKivuNoReport"] = round(sum(q["k"].count("n") for q in kh) / sum(len(q["k"]) for q in kh), 3)
+assert round(F["lossesKivuNoReport"] * 100) == 37
+F["pl"] = PL
 for k, v in F.items():
-    print(k, v)
+    print(k, v if k != "pl" else {r: (x["tStar"], x["pStar"]) for r, x in v.items()})
 here = os.path.dirname(os.path.abspath(__file__))
 json.dump({"source": {"repo": "frankbueltge/field-research", "commit": "82f80ea",
                       "path": "artifacts/2026-11-03-the-second-clock/data52.js", "sha256": SHA},

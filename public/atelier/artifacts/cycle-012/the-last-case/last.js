@@ -1,6 +1,7 @@
 // The Last Case — the Atelier, cycle 012. No library. Data: quiets.json (build.py).
 // State 3 (2026-11-05): the first three quiets are chosen, the clock and the wall are gone,
 // the reveal can be skipped, the verdicts stand, and the pairs open after three quiets.
+// State 4 (2026-11-05): each declaration is handed to the third movement (losses.js).
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
@@ -134,6 +135,7 @@
     $("next").hidden = false; $("next").focus({ preventScroll: true });
     log.push({ q: cur, said: said, broke: cur.b, L: L });
     ledger();
+    window.dispatchEvent(new CustomEvent("quiet-said", { detail: log.map(function (r) { return r.said; }) }));
     if (log.length === OPEN_PAIRS) openPairs();
   }
 
