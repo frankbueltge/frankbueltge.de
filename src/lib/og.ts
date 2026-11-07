@@ -113,6 +113,13 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'End-to-End AI Research Automation',
     description: "A field survey: what automated research systems can and can't reliably do — and the open verification gap",
   },
+  // Until 2026-11-08 Ducking fell through to the home card, so a shared link previewed as the
+  // site, not the desk. No digit: the card is baked once per build and the shares move daily.
+  ducking: {
+    title: 'Ducking',
+    description:
+      'A mixing desk for the world’s attention. Each fader is a field of what presses on the world, at its share of the web’s charts. Hold one up and hear what the crowd was covering.',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -145,5 +152,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/atelier')) return 'atelier'
   if (p.startsWith('/headroom') || p.startsWith('/werke/headroom')) return 'headroom'
   if (p.startsWith('/e2e-automation')) return 'e2e-automation'
+  if (p.startsWith('/ducking') || p.startsWith('/werke/ducking')) return 'ducking'
   return 'home'
 }
