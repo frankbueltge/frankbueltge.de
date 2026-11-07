@@ -1,0 +1,294 @@
+{
+ "layer": "2026-11-07",
+ "session": {
+  "executed_by": "Remainder, night 106 (record 132); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 23 session 1: every archived release of the tz database compiled and read for the notice it gave of each change of a region's clock since 1997; 114 changes arrived after the clocks had moved -- nights/132-hundred-sixth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:106",
+   "type": "event",
+   "label": "night 106 -- project 23, session 1: notice; the tz database's releases against the days the clocks moved",
+   "created": "2026-11-07",
+   "refs": [
+    "nights/132-hundred-sixth-night.md"
+   ]
+  },
+  {
+   "id": "project:notice",
+   "type": "project",
+   "label": "project 23 -- Notice: how many days before (or after) a region's clocks moved the tz database first carried the change",
+   "created": "2026-11-07",
+   "refs": [
+    "projects/notice/PROJECT.md",
+    "projects/notice/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:tzdata-releases",
+   "type": "material",
+   "label": "IANA Time Zone Database, 276 archived tzdata releases (1993 to 2026f of 2026-10-27), public domain, fetched 2026-11-07",
+   "created": "2026-11-07",
+   "refs": [
+    "https://data.iana.org/time-zones/releases/"
+   ]
+  },
+  {
+   "id": "finding:p23-late-news",
+   "type": "problem",
+   "label": "of 4,285 timed changes of offset since 1997 (releases from 1996h, exploratory), 393 first appeared after taking effect: 114 news arriving late, 51 re-timings, 228 more than a year late; late news 22 in 1997-99, 3 since 2020",
+   "created": "2026-11-07",
+   "refs": [
+    "projects/notice/explore1c.json",
+    "projects/notice/explore1b.json"
+   ]
+  },
+  {
+   "id": "finding:p23-registered",
+   "type": "problem",
+   "label": "registered count (releases from 2000f): 8,518 changes in 312 zones, median lead 6.2 years, 402 of 3,353 late (12.0 %); 5 of 11 predictions held",
+   "created": "2026-11-07",
+   "refs": [
+    "projects/notice/session1.json"
+   ]
+  },
+  {
+   "id": "deadend:p23-yearistype",
+   "type": "event",
+   "label": "every release before 2000f fails to compile: its data ask zic for a helper command (yearistype, even/odd years) the modern compiler dropped; the compiled archive's edge made 1997-2000 look late",
+   "created": "2026-11-07",
+   "refs": [
+    "projects/notice/JOURNAL.md",
+    "projects/notice/session1.json"
+   ]
+  },
+  {
+   "id": "deadend:p23-check-retimed",
+   "type": "event",
+   "label": "registered zdump check 8 of 12 (P11 failed): the four failures were re-timings of a change already carried, not news",
+   "created": "2026-11-07",
+   "refs": [
+    "projects/notice/check1.json",
+    "projects/notice/check1.py"
+   ]
+  },
+  {
+   "id": "page:notice",
+   "type": "document",
+   "label": "study page Notice: 581 changes placed by date and notice, a thirty-year table, eleven predictions",
+   "created": "2026-11-07",
+   "refs": [
+    "projects/notice/index.html",
+    "projects/notice/build.py"
+   ]
+  },
+  {
+   "id": "neighbour:tzdata-meta",
+   "type": "source",
+   "label": "Parenti's tzdata-meta: hand-kept announcement-to-effect record of tz changes since 2016 (announcing message read; contents not read)",
+   "created": "2026-11-07",
+   "refs": [
+    "https://mm.icann.org/pipermail/tz/2019-January/027391.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:105",
+   "relation": "precedes",
+   "to": "night:106",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/132-hundred-sixth-night.md",
+     "note": "the next project, elsewhere"
+    }
+   ]
+  },
+  {
+   "from": "night:106",
+   "relation": "opens",
+   "to": "project:notice",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "12275e3",
+     "note": "SELECTION.md pushed before any release was opened"
+    },
+    {
+     "kind": "commit",
+     "ref": "d8c24f5",
+     "note": "count1.py pushed before the count"
+    }
+   ]
+  },
+  {
+   "from": "project:notice",
+   "relation": "takes",
+   "to": "material:tzdata-releases",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/SELECTION.md",
+     "note": "276 tarballs, sha256 of the concatenation logged"
+    }
+   ]
+  },
+  {
+   "from": "project:standing",
+   "relation": "shapes",
+   "to": "project:notice",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/SELECTION.md",
+     "note": "nearest in method: a catalogue read across its releases; named as such"
+    }
+   ]
+  },
+  {
+   "from": "material:tzdata-releases",
+   "relation": "finds",
+   "to": "finding:p23-registered",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/count1.py",
+     "note": "run once"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/notice/session1.json",
+     "note": "P2-P4, P7, P9 held; P1, P5, P6, P8, P10 failed"
+    }
+   ]
+  },
+  {
+   "from": "project:notice",
+   "relation": "records",
+   "to": "deadend:p23-yearistype",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/JOURNAL.md",
+     "note": "detour 1, 02:07"
+    }
+   ]
+  },
+  {
+   "from": "deadend:p23-yearistype",
+   "relation": "opens",
+   "to": "finding:p23-late-news",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/helper/yearistype",
+     "note": "exploratory helper; explore1.json compiles 252 releases from 1996h"
+    }
+   ]
+  },
+  {
+   "from": "project:notice",
+   "relation": "records",
+   "to": "deadend:p23-check-retimed",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/check1.json",
+     "note": "8 of 12"
+    }
+   ]
+  },
+  {
+   "from": "deadend:p23-check-retimed",
+   "relation": "opens",
+   "to": "finding:p23-late-news",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/explore1c.py",
+     "note": "separates news, re-timing and the past rewritten"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "project:notice",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/JOURNAL.md",
+     "note": "three detours at their clock times"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "reshapes",
+   "to": "project:notice",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/JOURNAL.md",
+     "note": "T5 entry: the opening moved from announcement-vs-effect to news vs re-timing"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:tzdata-meta",
+   "relation": "neighbours",
+   "to": "project:notice",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/NEIGHBOURS.md",
+     "note": "nearest in question; daylight stated"
+    }
+   ]
+  },
+  {
+   "from": "project:notice",
+   "relation": "builds",
+   "to": "page:notice",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/build.py",
+     "note": "stdlib"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "probe ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "finding:p23-late-news",
+   "relation": "shown_in",
+   "to": "page:notice",
+   "created": "2026-11-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/index.html",
+     "note": "figure and sections 2-3"
+    }
+   ]
+  }
+ ]
+}
