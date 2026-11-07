@@ -108,10 +108,10 @@ Read the sidebar yourself before posting. No rule on title format was found.
 
 Three of the rules bite:
 
-- **AI-Generated Content.** Per the copy: "submissions are not allowed if their primary content is
-  produced by AI, or if AI is used to drive functionality". The counts use no AI, but every voice is
-  synthetic, and the readings were written from a briefing that a machine practice wrote, checked
-  against sources afterwards. A moderator can read Ducking either way.
+- **AI-Generated Content.** Per the copy, a site is not allowed when AI produces its primary content
+  or drives its functionality. The counts use no AI, but every voice is synthetic, and the readings
+  were written from a briefing that a machine practice wrote, checked against sources afterwards. A
+  moderator can read Ducking either way.
 - **No Politics.** Play reads real headlines aloud. In the current round they include Iran, the Strait
   of Hormuz and a US president's approval rating.
 - **90/10.** At most a tenth of your recent Reddit activity may be about a site you run. Whether your
