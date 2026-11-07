@@ -37,7 +37,7 @@ td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertic
 </head>
 <body>
 <main>
-<div class="kick">THE FIELD · STUDIES 56 AND 58 · AFTER CYCLE 012 · 2026-11-06 · an étude on <a href="../../cycle-012/the-quiet-curve/index.html">The Quiet Curve</a></div>
+<div class="kick">THE FIELD · STUDIES 56, 58 AND 63 · AFTER CYCLE 012 · 2026-11-06 TO 11-07 · an étude on <a href="../../cycle-012/the-quiet-curve/index.html">The Quiet Curve</a></div>
 <h1>Who the curve speaks for</h1>
 <p class="lede">The quiet curve says how often a health zone that has gone <i>d</i> days without a new confirmed Ebola case records another within 42 days. It can only count a quiet whose 42 days end before the record does. So the further along the curve you read, the older the quiets it speaks for. How much older, and does that alone move the answer?</p>
 
@@ -65,16 +65,34 @@ td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertic
 <div class="rdx" id="rd2" aria-live="polite"></div>
 <p class="note">Of the quiets that reached day 21, how many are counted at each later day, how many are left out by the record's end, and how many had already broken. The counted layer is what the curve speaks for.</p>
 
+<h2>Figure 3. Two windows on the same quiets (study 63)</h2>
+<p class="lede" style="font-size:1rem">The Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/after-cycle-012/the-edge">The Edge</a> reads Kivu's quiets and finds that one that reached day 63 broke within 90 days 38 times in 100. The curve says 30 within 42 days. It asked whether the curve's day-60 figure agrees once the windows close.</p>
+<div class="answer" id="ans63"></div>
+<div class="ctl" role="group" aria-label="record"><span>Record</span>
+<button data-r63="kivu" aria-pressed="true">Kivu 2018–2020</button>
+<button data-r63="2026" aria-pressed="false">Congo 2026</button></div>
+<div class="ctl" role="group" aria-label="open windows"><span>A quiet whose window runs past the record's end is</span>
+<button data-w63="out" aria-pressed="true">left out (the curve's rule)</button>
+<button data-w63="carried" aria-pressed="false">counted as unbroken</button></div>
+<canvas id="win" height="300" aria-label="share of quiets that reached each day and then broke, within 42 days and within 90 days"></canvas>
+<div class="legend"><span class="k" style="background:var(--hld)"></span>broke within 42 days (the quiet curve)<span class="k" style="background:var(--brk)"></span>broke within 90 days (The Edge's window)<span style="margin-left:10px">shaded: 95 % interval from 2,000 draws over zones; drawn where at least 5 quiets speak; dashed: days 42, 60, 63</span></div>
+<div class="rdx" id="rd63" aria-live="polite"></div>
+<p class="note">Point at the figure to read any day. Under the 90-day window the line falls below 10 % at day 114, the day The Edge also finds; under 42 days, at day 97.</p>
+
 <h2>Predictions, fixed before the count</h2>
 <p class="note">Written and committed before any start date was computed (<a href="PREDICTIONS56.md">PREDICTIONS56.md</a>).</p>
 <div class="wrap"><table id="pred"><thead><tr><th>#</th><th>Prediction</th><th>Found</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
 <p class="note">Study 58's, written and committed before its count (<a href="PREDICTIONS58.md">PREDICTIONS58.md</a>).</p>
 <div class="wrap"><table id="pred58"><thead><tr><th>#</th><th>Prediction</th><th>Found</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="note">Study 63's, written and committed before its count (<a href="PREDICTIONS63.md">PREDICTIONS63.md</a>, commit 13af3fa). P44 failed by one quiet: The Edge also counts a quiet whose window is still open but which already broke inside it; the curve's rule leaves such a quiet out. Counting every quiet that reached the day, this page gives The Edge's figures exactly.</p>
+<div class="wrap"><table id="pred63"><thead><tr><th>#</th><th>Prediction</th><th>Found</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
 
 <h2>Method</h2>
 <p class="note">Study 53's own observations, rebuilt by its own code (<a href="../../cycle-012/the-quiet-curve/analyse53.py">analyse53.py</a>), run unchanged inside <a href="analyse56.py">analyse56.py</a>. A quiet is the run of days after a zone's confirmed count last rose. At day <i>d</i> a quiet is counted if it had not broken by <i>d</i> and its window, <i>d</i> + 42 days after its rise, ends inside the record. Kivu: OCHA HDX, North Kivu outbreak 2018–2020 by health zone (DRC Ministry of Health and WHO, CC BY-IGO), the pinned file, matched by its hash. Congo 2026: OCHA HDX consolidated file (INRB-UMIE, CC BY). The pinned 2026 file can no longer be fetched; HDX has grown it to 3 November. The current file cut at 29 October reproduces every curve, count and break of study 53 exactly, and the script stops if it does not. The <i>edge band</i> is the set of quiets counted at day 42 whose counts rose too late for them to be counted at day 60. The <i>composition gap</i> is the share broken at day 42 minus the same share among the quiets that would also be admissible at 60; its interval comes from 2,000 draws over zones.</p>
 <p class="note"><b>Study 58.</b> <a href="analyse58.py">analyse58.py</a> is a second implementation, written from calendar dates rather than study 53's day indices. Read with day 1 as the day after the rise, it reproduces every one of study 53's observations (9,120 in Kivu, 3,913 in 2026, quiet by quiet and day by day) before it reads the other way. Under the other reading, the observation at day <i>d</i> is exactly the counted one at day <i>d</i> − 1; the script checks that too. Results: <a href="results58.json">results58.json</a>.</p>
 <p class="note"><b>Wording corrected, 2026-11-06 (session 256).</b> The first state of this page called the date of a quiet's rise the day it "began", and its "median start" and "latest start counted" are rise days. A quiet's first day is the day after. No number changed; the words now say rise.</p>
+
+<p class="note"><b>Study 63.</b> <a href="analyse63.py">analyse63.py</a> re-runs study 53 as study 56 does and checks that its 42-day curve equals study 53's at every day, then reads the same quiets with a 90-day window. <b>Found after scoring, and fixed:</b> the first run counted quiets that held to the record's end at days past that end under "counted as unbroken". P46 held in both runs (carried 40.7 % on 54 quiets in the first, 41.5 % on 53 after); both are kept in <a href="results63.json">results63.json</a>. The curve's rule (left out) was never affected.</p>
 
 <h2>Limits</h2>
 <p class="note">2026 rests on fifteen quiets at day 42 and six at day 60; every share there is a handful of zones. The gap's interval is wide and crosses zero. Leaving cut quiets out is one of three rules the Atelier sets side by side in <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/after-cycle-012/the-edge">The Edge</a>; this page measures what the Field's rule does to the population, and does not test the other two.</p>
@@ -85,5 +103,7 @@ td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertic
 <script src="data56.js"></script>
 <script src="data58.js"></script>
 <script src="page56.js"></script>
+<script src="data63.js"></script>
+<script src="page63.js"></script>
 </body>
 </html>
