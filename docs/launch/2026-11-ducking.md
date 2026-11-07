@@ -185,7 +185,9 @@ find in search. Every post below is at most 300 characters, the limit, counted w
 > https://frankbueltge.de/werke/ducking
 
 Post 1 carries the link card: paste the URL, let the card load, then remove the URL text if you like.
-The card shows Ducking's own image since #1275.
+The card shows Ducking's own image since #1275. Bluesky's card service (`cardyb.bsky.app`) read the
+page on 2026-11-08 and returned the title, the new description and `/og/ducking.png`. Cloudflare does
+not block it.
 
 ## When
 
@@ -211,6 +213,9 @@ On the live site at 1024 px and at 375 px (an emulated phone), with sound muted 
   - the link card, which was the site's home card;
   - the page description, which still called the faders matters;
   - the crowd's lowest words, which could cover the hint at every width.
+- **After the deploy of #1275:**
+  - `og:image` on `/ducking/` and `/werke/ducking/` is `/og/ducking.png` (1200×630);
+  - at 375 px the crowd's lowest word ends 11 px above the hint.
 - **Not tested:** iOS Safari, a real phone, real multi-touch.
 
 ## Risks
