@@ -88,8 +88,9 @@ what it is built on, and what it cannot say.
 > Limits: these charts lean to technology and to English, and a fader is a field's place on them, not
 > in the world. Method and limits: https://frankbueltge.de/werke/ducking
 >
-> Sound loads only when you press Sound on (about 5 MB). Nothing you do at the desk is sent or kept. The
-> HN front page is one of the sources, read each morning, so this thread may end up in tomorrow's crowd.
+> Sound loads only when you press Sound on (about 5 MB). Nothing you do at the desk is sent or kept; the
+> page itself counts visits with a cookieless, self-hosted counter. The HN front page is one of the
+> sources, read each morning, so this thread may end up in tomorrow's crowd.
 
 **Optional line, Frank's call.** The site states AI involvement in its own words, and HN readers will
 ask. If you want to say it up front, add as the last paragraph:
@@ -153,7 +154,7 @@ There is no account yet.
 
 > Data & AI Engineer · Karlsruhe · How can AI support and extend artistic research? frankbueltge.de
 
-**Handle.** `frankbueltge.bsky.social` works at once. Optionally, `frankbueltge.de` can be the handle
+**Handle.** `frankbueltge.bsky.social` works at once, if it is still free. Optionally, `frankbueltge.de` can be the handle
 itself. Bluesky shows a TXT record for `_atproto.frankbueltge.de` during setup, and you would add it
 in Cloudflare DNS. That ties the account to the site.
 
