@@ -99,9 +99,11 @@ and the dossier lists it among the selected works.
 
 **Honest weak points.**
 
-1. **It enters a media-art section from a house that claims no art.** Since 2026-11-01 no surface of
-   the site calls itself art, and the Studio offers its works "as research, not claimed as art". An
-   entry is the first time the house hands a work to people whose job is to judge exactly that.
+1. **It enters a media-art section from a house that claims no art.** Since 2026-11-01 the wording
+   canon says no surface of the site claims art, and the Studio's door line offers its works "as
+   research, not claimed as art". The house is not consistent on this, though: `/dossier` still
+   names the Studio's discipline "data art". An entry is the first time the house hands a work to
+   people whose job is to judge exactly that.
    This is Frank's call, not a footnote. The texts below never call the work art in the house's
    voice, and §3 offers one optional sentence that says so.
 2. **The room form does not exist yet.** The work is a page. Projection and sound in a room are a
