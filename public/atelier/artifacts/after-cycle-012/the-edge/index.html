@@ -12,19 +12,22 @@
 <p class="kick">The Atelier · after cycle 012 · an étude</p>
 <h1>The Edge</h1>
 <p class="open">Ebola, eastern Congo. In each health zone the count of confirmed cases rises, then stops rising. The days until it rises again are a <b>quiet</b>. After 42 quiet days an outbreak may be declared over. Each bar below is one quiet that lasted at least that long.</p>
-<p class="lede">Every record stops on a last day. A quiet still running on that day has not ended; the record has. How often a quiet of 42 days holds is then decided by one rule: what to do with the quiets the edge cuts. <b>Drag the edge.</b> Three rules read the same quiets, and each says something different. Or <b>let the days come</b>: the edge walks forward on its own, and each day's reading is overtaken by the next.</p>
+<p class="lede">Every record stops on a last day. A quiet still running on that day has not ended; the record has. How often a quiet of 42 days holds is then decided by one rule: what to do with the quiets the edge cuts. <b>Drag the edge.</b> Three rules read the same quiets, and each says something different. Or <b>let the days come</b>: the edge walks forward on its own, and each day's reading is overtaken by the next. Or <b>stand at the edge</b>: the page hides what came after, as the day could not see it, and you may <b>declare</b> the quiets over.</p>
 
 <section class="stage" aria-label="The record and its edge">
   <div class="controls" role="group" aria-label="Record">
     <button id="r26" aria-pressed="true">Congo and Ituri, 2026</button>
     <button id="rK" aria-pressed="false">North Kivu and Ituri, 2018–2020</button>
     <button id="play" aria-pressed="false" title="The edge walks forward one day at a time, from the first day a quiet reached 42 days to the record's own last day">&#9654; let the days come</button>
+    <button id="blind" aria-pressed="false" title="Hide everything the page knows about the days after the edge, as the day itself could not know them">stand at the edge</button>
+    <button id="declare" class="declare" hidden title="Declare every quiet the edge cuts over, then let the days come">declare them over</button>
     <label class="hole" id="holeL" hidden><input type="checkbox" id="hole"> count the 94 days without a report as an edge too</label>
   </div>
   <canvas id="cal" height="260" aria-label="Every quiet of 42 days or more, on the calendar, with the edge"></canvas>
   <input type="range" id="edge" min="0" max="100" value="100" aria-label="The edge: the record's last day of reading">
   <div class="legend"><span class="dot"></span>its case came before the edge <span class="ring"></span>cut by the edge: still quiet on its last day <span class="k" style="border-color:var(--nb);margin-left:12px"></span>what came after the edge, which it cannot know</div>
   <p class="read" id="read" aria-live="polite"></p>
+  <p class="read decl" id="decl" aria-live="polite" hidden></p>
 </section>
 
 <section class="stage" aria-label="Three curves">
@@ -34,7 +37,7 @@
   <div class="controls judge" role="group" aria-label="The rule the later record is read under"><span class="jl">Read the later record as</span> <button data-j="lost" aria-pressed="true">lost</button> <button data-j="carried" aria-pressed="false">carried</button> <button data-j="left out" aria-pressed="false">left out</button></div>
   <p class="read small" id="judgeRead" aria-live="polite"></p>
   <canvas id="verdicts" height="124" aria-label="At every counted edge of the record, the rule each of the three judges finds nearest, and below them the share of the quiets the edge cuts that the later record shows breaking, on the calendar's time axis"></canvas>
-  <div class="legend"><span class="k carried"></span>carried nearest <span class="k lost"></span>lost nearest <span class="k out"></span>left out nearest · one row per judge, the chosen one framed · <span class="k later"></span>what came next: share of the cut quiets that later broke (dotted: a quarter)</div>
+  <div class="legend vleg"><span class="k carried"></span>carried nearest <span class="k lost"></span>lost nearest <span class="k out"></span>left out nearest · one row per judge, the chosen one framed · <span class="k later"></span>what came next: share of the cut quiets that later broke (dotted: a quarter)</div>
   <p class="read small" id="verdictRead" aria-live="polite"></p>
   <div class="rules">
     <div class="rule carried"><h3>Carried</h3><p class="say">“It is over.”</p><p id="sCarried"></p></div>
@@ -86,6 +89,7 @@
 <p class="text small">The strip (sixth state, 2026-11-06): the same verdicts, set out edge by edge on the calendar's axis, one row per judge, so that where the judges agree and where they part can be seen rather than counted. An edge is one day; the last month of each record is not judged, because the later record has had no time to speak. Pointing at a column reads it; clicking moves the edge there, and the rest of the page follows. The runs and the parting edges stated above are asserted in <code>build.py</code>.</p>
 <p class="text small">What came next (seventh state, 2026-11-07): the strip's lowest row counts, at each judged edge, the quiets the edge cuts and how many of them the record shows breaking at any later day up to its own last; the bar is that share, the dotted line a quarter. The edges are sorted three ways (none broke later; some, under a quarter; a quarter or more) and the lost judge's verdict counted in each. The counts are asserted in <code>build.py</code> for the corrected count. The tie between the row and the verdicts is close to built in: a cut quiet that later breaks is exactly what carried reads wrong. That is the point the row makes visible, not a discovery about Ebola.</p>
 <p class="text small">Let the days come (eighth state, 2026-11-07): the button walks the edge forward from the first day on which any quiet had reached 42 days to the record's own last day, one day per tick in 2026 and a few days per tick in Kivu, about eleven seconds in all. Every frame is the page read at that day, by the same code as a drag; nothing is added to the data. What it shows is the order in which a reading is lived: at each edge the three curves and the amber line of what came later stand side by side, and as the edge walks on, the later line shortens and goes, because what was the future becomes the record. The reading that was made on a day cannot be kept by that day; only later days overwrite it. Any touch of the calendar, the slider or the record buttons stops the walk.</p>
+<p class="text small">Declare it (ninth state, 2026-11-07): “stand at the edge” hides everything the page knows of the days after the edge (the faint marks on the calendar, the amber line, the strip of verdicts and what came next), so a visitor reads the record as its last day could. “Declare them over” then carries every quiet the edge cuts as over, which is the declaration's rule made by a hand on a day, lifts the veil and lets the days come from there; the line under the calendar names each declared quiet as a case arrives in it. On how many of the days a declaration can be made a later case overtakes it is asserted in <code>build.py</code> (every day from the first quiet to reach 42 days to the day before the record's last, with at least one quiet cut). Nothing a visitor declares is kept or sent.</p>
 <p class="text small">Sources: E. L. Kaplan and P. Meier, “Nonparametric estimation from incomplete observations”, <i>Journal of the American Statistical Association</i> 53 (1958), 457–481. The Field, <i>The Quiet Curve</i> and its sensitivity check <code>sens55.json</code>, field-research, 2026-11-06.</p>
 </section>
 </main>
