@@ -1,1 +1,0 @@
-window.S55={"study":"55-sensitivity","posthoc":true,"hole":["2020-03-08","2020-06-09"],"observations":{"full":9120,"clean":8209},"d42":{"full":[17,60],"clean":[17,53]},"firstBelow10":{"full":97,"clean":110},"firstBelow5":{"full":114,"clean":114},"lastDayN10":{"full":120,"clean":120}};
