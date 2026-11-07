@@ -1,0 +1,232 @@
+{
+  "$contract": "third-reading-round/1",
+  "id": "after-cycle-012",
+  "briefing": {
+    "title": "Briefing after cycle 012 — what the world is pressing on",
+    "written": "2026-11-07",
+    "url": "https://github.com/frankbueltge/research-ecology/blob/086ff3c6671faec65b84fbac89bbc86f69d5a77e/briefings/after-cycle-012.md"
+  },
+  "attention_window": {
+    "from": "2026-10-09",
+    "to": "2026-11-07"
+  },
+  "consent_version": "2026-10-31",
+  "question": "Which of these two should the world act on first, in the coming year?",
+  "pairs_per_reading": 15,
+  "estimates_per_reading": 3,
+  "matters": [
+    {
+      "id": "ebola",
+      "short": "Ebola in Congo",
+      "title": "Ebola in Congo, still running",
+      "gist": "The Bundibugyo outbreak in eastern Congo keeps rising nearly six months on, with cases in Kenya and Nigeria and no approved vaccine for this strain.",
+      "quiet_rank": null,
+      "terms": [
+        "Ebola",
+        "Bundibugyo"
+      ]
+    },
+    {
+      "id": "extreme-poverty",
+      "short": "One in ten, extreme poor",
+      "title": "One in ten below three dollars a day",
+      "gist": "Extreme poverty barely moves: about one in ten people live on less than three dollars a day, rising in one region and high in another.",
+      "quiet_rank": 4,
+      "terms": [
+        "extreme poverty",
+        "poverty line",
+        "poorest"
+      ]
+    },
+    {
+      "id": "interest-over-health",
+      "short": "Interest before health",
+      "title": "Interest before hospitals",
+      "gist": "In much of the developing world, governments now spend more on interest to creditors than on health or on education.",
+      "quiet_rank": 1,
+      "terms": [
+        "sovereign debt",
+        "debt crisis",
+        "debt relief",
+        "debt distress",
+        "public debt"
+      ]
+    },
+    {
+      "id": "wealth-share",
+      "short": "Who holds the wealth",
+      "title": "Three quarters of the world's wealth",
+      "gist": "The richest tenth holds most of the world's wealth, and the poorer half holds almost none of it.",
+      "quiet_rank": 5,
+      "terms": [
+        "inequality",
+        "wealth gap",
+        "wealth tax",
+        "tax the rich",
+        "wealth inequality"
+      ]
+    },
+    {
+      "id": "compute-concentration",
+      "short": "Who owns AI compute",
+      "title": "Five companies, most of the machines",
+      "gist": "Five cloud companies own most of the world's computing power for AI, and their share grew through 2025.",
+      "quiet_rank": 6,
+      "terms": [
+        "hyperscaler",
+        "hyperscalers",
+        "market concentration",
+        "antitrust",
+        "big tech",
+        "monopolies"
+      ]
+    },
+    {
+      "id": "autocracy",
+      "short": "Living under autocracy",
+      "title": "Three in four people under autocracy",
+      "gist": "Most of the world's people now live in autocracies, and global freedom has declined for two decades in a row.",
+      "quiet_rank": null,
+      "terms": [
+        "autocracy",
+        "authoritarian",
+        "authoritarianism",
+        "democracy",
+        "dictatorship"
+      ]
+    },
+    {
+      "id": "record-heat",
+      "short": "Record heat, El Niño",
+      "title": "The warmest October, with El Niño rising",
+      "gist": "The world has just had its warmest October on record, and a very strong El Niño is still building in the Pacific.",
+      "quiet_rank": null,
+      "terms": [
+        "El Nino",
+        "El Niño",
+        "heatwave",
+        "heat wave",
+        "global warming",
+        "record heat"
+      ],
+      "exclude": [
+        "el nino de",
+        "el niño de"
+      ]
+    },
+    {
+      "id": "cop31-gap",
+      "short": "COP31 and the gap",
+      "title": "COP31 opens on a 2.8-degree path",
+      "gist": "The climate summit in Antalya opens while current policies still point to far more warming than the Paris goal.",
+      "quiet_rank": null,
+      "terms": [
+        "COP31",
+        "emissions gap",
+        "Paris Agreement",
+        "climate summit",
+        "NDC",
+        "NDCs"
+      ]
+    },
+    {
+      "id": "air-deaths",
+      "short": "Deaths from dirty air",
+      "title": "The air that kills millions",
+      "gist": "Air pollution is among the largest causes of early death in the world, most of it in low- and middle-income countries.",
+      "quiet_rank": 3,
+      "terms": [
+        "air pollution",
+        "air quality",
+        "smog",
+        "PM2.5"
+      ]
+    },
+    {
+      "id": "aid-shortfall",
+      "short": "Aid less than half paid",
+      "title": "Appeals less than half funded",
+      "gist": "With two months of the year left, the world's humanitarian appeals have received less than half of what they asked for.",
+      "quiet_rank": 2,
+      "terms": [
+        "humanitarian aid",
+        "aid cuts",
+        "humanitarian funding",
+        "displaced",
+        "refugees"
+      ]
+    }
+  ],
+  "estimates": [
+    {
+      "id": "ebola-cases-nov",
+      "label": "Confirmed Ebola cases in the DRC",
+      "matter": "ebola",
+      "question": "How many confirmed Ebola cases had the Democratic Republic of the Congo reported in this outbreak on data to 3 November 2026?",
+      "kind": "count",
+      "unit": "confirmed cases",
+      "truth": 10668,
+      "truth_label": "10,668",
+      "source": {
+        "label": "ECDC, multi-country outbreak 2026, updated 5 November 2026",
+        "url": "https://www.ecdc.europa.eu/en/ebola-disease-multi-country-outbreak-2026"
+      }
+    },
+    {
+      "id": "interest-people",
+      "label": "People in countries paying more interest than for health or education",
+      "matter": "interest-over-health",
+      "question": "How many people lived in countries that spend more on interest than on health or on education, by UNCTAD's 2026 count?",
+      "kind": "count",
+      "unit": "people",
+      "truth": 3700000000,
+      "truth_label": "3.7 billion",
+      "source": {
+        "label": "UNCTAD, A World of Debt 2026",
+        "url": "https://unctad.org/publication/world-of-debt"
+      }
+    },
+    {
+      "id": "air-deaths-2023",
+      "label": "Deaths from air pollution",
+      "matter": "air-deaths",
+      "question": "How many deaths did air pollution contribute to worldwide in 2023, by the State of Global Air 2025?",
+      "kind": "count",
+      "unit": "deaths",
+      "truth": 7900000,
+      "truth_label": "7.9 million",
+      "source": {
+        "label": "State of Global Air 2025",
+        "url": "https://www.stateofglobalair.org/news-events/2025/new-state-global-air-2025-report-shows-nearly-nine-ten-global-air-pollution-deaths"
+      }
+    },
+    {
+      "id": "gho-funded",
+      "label": "Share of the 2026 humanitarian appeals funded",
+      "matter": "aid-shortfall",
+      "question": "What share of the 2026 Global Humanitarian Overview's requirements was funded on 28 October 2026?",
+      "kind": "percent",
+      "unit": "%",
+      "truth": 45,
+      "truth_label": "45.0%",
+      "source": {
+        "label": "OCHA FTS, coordinated plans 2026",
+        "url": "https://fts.unocha.org/plans/overview/2026"
+      }
+    },
+    {
+      "id": "hyperscaler-share",
+      "label": "Five hyperscalers' share of AI compute",
+      "matter": "compute-concentration",
+      "question": "What share of the world's cumulative AI compute did five hyperscalers hold in the fourth quarter of 2025, by Epoch AI's estimate?",
+      "kind": "percent",
+      "unit": "%",
+      "truth": 71,
+      "truth_label": "71%",
+      "source": {
+        "label": "Epoch AI, 14 April 2026",
+        "url": "https://epoch.ai/data-insights/hyperscalers-control-most-compute"
+      }
+    }
+  ]
+}
