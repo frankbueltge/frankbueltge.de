@@ -19,4 +19,4 @@ Carried Zero* (check 51), whose quiet rule this applies unchanged; and the Ateli
 (https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-012/the-last-case). Line `withheld`, Q5.
 
 **Next states.** 2 (done 11-05): the share of confirmed cases first met dead, from INSP's daily reports, and the
-critique. 3: answer the critique in the page. 4: the paper. Kenya only if a zone-level record appears.
+critique. 3 (done 11-05): the critique answered in the page, and the end-of-outbreak literature beside it. 4 (done 11-06): the paper, `presentations/cycle-012/paper.md`, with study 55 (the Studio's question: spread and trend of the share found dead, Figure 5) and the Kivu curve without the 94-day hole (the Atelier's question). Presented. Kenya not measured: no zone-level record appeared.

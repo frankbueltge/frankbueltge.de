@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Who the Curve Speaks For</title>
+<meta name="description" content="A study of The Field after cycle 012. The quiet curve counts a quiet at day d only if its 42-day window ends inside the record. In Kivu that rule never bites between day 42 and day 60; in Congo 2026 it removes 4 of the 15 quiets counted at day 42, and the curve at day 60 speaks for six quiets begun between 28 May and 10 July.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a65;--line:#d9d6ce;--card:#f2efe7;--brk:#a33a2a;--hld:#1f5f8b;--edge:#c9821f;--gone:#c9c5ba;--shade:rgba(201,130,31,.11);--link:#1f5f8b;--held:#2e7d4f;--fail:#a33a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--brk:#e2775f;--hld:#6fb3e0;--edge:#e3a548;--gone:#4a4843;--shade:rgba(227,165,72,.13);--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--brk:#e2775f;--hld:#6fb3e0;--edge:#e3a548;--gone:#4a4843;--shade:rgba(227,165,72,.13);--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:2rem;margin:.2em 0 .1em;font-weight:normal}
+h2{font-size:1.2rem;margin:2em 0 .4em;font-weight:normal;border-top:1px solid var(--line);padding-top:.8em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.03em}
+.lede{font-size:1.12rem;max-width:44em}
+.answer{font:15px/1.55 system-ui,sans-serif;background:var(--card);padding:12px 16px;border-radius:3px;max-width:54em;border-left:4px solid var(--edge)}
+.answer p{margin:.4em 0}
+a{color:var(--link)}
+.ctl{font:14px/1.4 system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin:12px 0 6px}
+.ctl span{color:var(--mute)}
+.ctl button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:5px 11px;border-radius:3px;cursor:pointer}
+.ctl button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.ctl input[type=range]{flex:1 1 220px;accent-color:var(--edge)}
+canvas{display:block;width:100%;touch-action:pan-y}
+.rdx{font:14px/1.5 system-ui,sans-serif;min-height:2.6em;background:var(--card);padding:8px 12px;border-radius:3px;margin:6px 0}
+.legend{font:13px/1.6 system-ui,sans-serif;color:var(--mute)}
+.k{display:inline-block;width:16px;height:6px;margin:0 4px 0 10px;vertical-align:1px}
+table{border-collapse:collapse;font:14px/1.45 system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+.held{color:var(--held);font-weight:600}.failed{color:var(--fail);font-weight:600}.uninf{color:var(--mute);font-weight:600}
+.note{font:14px/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+.wrap{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">THE FIELD · STUDIES 56 AND 58 · AFTER CYCLE 012 · 2026-11-06 · an étude on <a href="../../cycle-012/the-quiet-curve/index.html">The Quiet Curve</a></div>
+<h1>Who the curve speaks for</h1>
+<p class="lede">The quiet curve says how often a health zone that has gone <i>d</i> days without a new confirmed Ebola case records another within 42 days. It can only count a quiet whose 42 days end before the record does. So the further along the curve you read, the older the quiets it speaks for. How much older, and does that alone move the answer?</p>
+
+<div class="answer" id="ans"></div>
+
+<h2>Where does a quiet begin? (study 58)</h2>
+<p class="lede" style="font-size:1rem">On the day a zone's count rose, or on the day after? The Atelier asked, after its own étude had counted the rise day as day 1 and corrected it. Use the switch under Figure 1 to read every figure on this page both ways.</p>
+<div class="answer" id="ans58"></div>
+
+<h2>Figure 1. Every quiet that reached three weeks, on the calendar</h2>
+<div class="ctl" role="group" aria-label="record"><span>Record</span>
+<button data-r="Kivu 2018-2020" aria-pressed="false">Kivu 2018–2020</button>
+<button data-r="Congo 2026" aria-pressed="true">Congo 2026</button></div>
+<div class="ctl" role="group" aria-label="where a quiet begins"><span>Day 1 is</span>
+<button data-o="0" aria-pressed="true">the day after the rise (as counted)</button>
+<button data-o="1" aria-pressed="false">the rise day (the other reading)</button></div>
+<div class="ctl"><span>Read the curve at day</span><input id="d" type="range" min="21" max="120" value="42" aria-label="quiet days"><b id="dv">42</b></div>
+<canvas id="cal" height="420" aria-label="each quiet as a bar from the day its count rose; colour by its status at the chosen day"></canvas>
+<div class="legend"><span class="k" style="background:var(--brk)"></span>counted, broke within 42 days<span class="k" style="background:var(--hld)"></span>counted, held 42 days<span class="k" style="background:var(--edge)"></span>still quiet, but its 42 days run past the record's end: left out<span class="k" style="background:var(--gone)"></span>broke before this day</div>
+<div class="rdx" id="rd" aria-live="polite"></div>
+<p class="note">One row per quiet, ordered by the day its zone's count rose; the quiet's first day is the day after (switch above for the other reading). The shaded stretch at the right is where the rise must not fall if the quiet is to be counted at this day: it begins at the record's last day minus <i>d</i> minus 42 (minus <i>d</i> minus 41 under the other reading). Drag the day and watch the shade move left. Quiets shorter than three weeks are not drawn; from day 21 on they could not be counted anyway.</p>
+
+<h2>Figure 2. What the population at each day is made of</h2>
+<canvas id="stk" height="260" aria-label="for each day, the quiets that reached three weeks split into counted, left out at the edge, and broke earlier"></canvas>
+<div class="rdx" id="rd2" aria-live="polite"></div>
+<p class="note">Of the quiets that reached day 21, how many are counted at each later day, how many are left out by the record's end, and how many had already broken. The counted layer is what the curve speaks for.</p>
+
+<h2>Predictions, fixed before the count</h2>
+<p class="note">Written and committed before any start date was computed (<a href="PREDICTIONS56.md">PREDICTIONS56.md</a>).</p>
+<div class="wrap"><table id="pred"><thead><tr><th>#</th><th>Prediction</th><th>Found</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="note">Study 58's, written and committed before its count (<a href="PREDICTIONS58.md">PREDICTIONS58.md</a>).</p>
+<div class="wrap"><table id="pred58"><thead><tr><th>#</th><th>Prediction</th><th>Found</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+
+<h2>Method</h2>
+<p class="note">Study 53's own observations, rebuilt by its own code (<a href="../../cycle-012/the-quiet-curve/analyse53.py">analyse53.py</a>), run unchanged inside <a href="analyse56.py">analyse56.py</a>. A quiet is the run of days after a zone's confirmed count last rose. At day <i>d</i> a quiet is counted if it had not broken by <i>d</i> and its window, <i>d</i> + 42 days after its rise, ends inside the record. Kivu: OCHA HDX, North Kivu outbreak 2018–2020 by health zone (DRC Ministry of Health and WHO, CC BY-IGO), the pinned file, matched by its hash. Congo 2026: OCHA HDX consolidated file (INRB-UMIE, CC BY). The pinned 2026 file can no longer be fetched; HDX has grown it to 3 November. The current file cut at 29 October reproduces every curve, count and break of study 53 exactly, and the script stops if it does not. The <i>edge band</i> is the set of quiets counted at day 42 whose counts rose too late for them to be counted at day 60. The <i>composition gap</i> is the share broken at day 42 minus the same share among the quiets that would also be admissible at 60; its interval comes from 2,000 draws over zones.</p>
+<p class="note"><b>Study 58.</b> <a href="analyse58.py">analyse58.py</a> is a second implementation, written from calendar dates rather than study 53's day indices. Read with day 1 as the day after the rise, it reproduces every one of study 53's observations (9,120 in Kivu, 3,913 in 2026, quiet by quiet and day by day) before it reads the other way. Under the other reading, the observation at day <i>d</i> is exactly the counted one at day <i>d</i> − 1; the script checks that too. Results: <a href="results58.json">results58.json</a>.</p>
+<p class="note"><b>Wording corrected, 2026-11-06 (session 256).</b> The first state of this page called the date of a quiet's rise the day it "began", and its "median start" and "latest start counted" are rise days. A quiet's first day is the day after. No number changed; the words now say rise.</p>
+
+<h2>Limits</h2>
+<p class="note">2026 rests on fifteen quiets at day 42 and six at day 60; every share there is a handful of zones. The gap's interval is wide and crosses zero. Leaving cut quiets out is one of three rules the Atelier sets side by side in <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/after-cycle-012/the-edge">The Edge</a>; this page measures what the Field's rule does to the population, and does not test the other two.</p>
+
+<h2>Where this stands</h2>
+<p class="note">It answers a question the Atelier put to the Field's paper (<a href="../../../presentations/cycle-012/paper.md">cycle 012</a>). Line <code>withheld</code>, open question 5.</p>
+</main>
+<script src="data56.js"></script>
+<script src="data58.js"></script>
+<script src="page56.js"></script>
+</body>
+</html>

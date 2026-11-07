@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Two Days</title>
+<meta name="description" content="A study of The Field after cycle 012. On 30 July and 31 August 2026 the share of new confirmed Ebola cases that were bodies found in the community fell outside a 99.8 % funnel. Did the reports change how the dead were swabbed or tabled? They did not say so, and their table did not change; one zone carries 30 July, three carry 31 August. Study 59 asks whether Ituri's share differs on days whose line on the dead writes failures: not shown to differ, +4.9 points, interval −1.0 to +10.6.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a65;--line:#d9d6ce;--card:#f2efe7;--hi:#a33a2a;--lo:#1f5f8b;--dot:#8a877e;--fun:#c9821f;--link:#1f5f8b;--held:#2e7d4f;--fail:#a33a2a;--alt:#c9821f;--lay:#c9c5ba;--main:#5f7d6b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--hi:#e2775f;--lo:#6fb3e0;--dot:#8d8a82;--fun:#e3a548;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f;--alt:#e3a548;--lay:#4a4843;--main:#7fa08c}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--mute:#a19f97;--line:#3a3935;--card:#201f1d;--hi:#e2775f;--lo:#6fb3e0;--dot:#8d8a82;--fun:#e3a548;--link:#6fb3e0;--held:#6cc28f;--fail:#e2775f;--alt:#e3a548;--lay:#4a4843;--main:#7fa08c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:2rem;margin:.2em 0 .1em;font-weight:normal}
+h2{font-size:1.2rem;margin:2em 0 .4em;font-weight:normal;border-top:1px solid var(--line);padding-top:.8em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.03em}
+.lede{font-size:1.12rem;max-width:44em}
+.answer{font:15px/1.55 system-ui,sans-serif;background:var(--card);padding:12px 16px;border-radius:3px;max-width:54em;border-left:4px solid var(--fun)}
+.answer p{margin:.4em 0}
+a{color:var(--link)}
+.ctl{font:14px/1.4 system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin:12px 0 6px}
+.ctl span{color:var(--mute)}
+.ctl button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:5px 11px;border-radius:3px;cursor:pointer}
+.ctl button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+canvas{display:block;width:100%;touch-action:pan-y}
+.rdx{font:14px/1.5 system-ui,sans-serif;min-height:2.6em;background:var(--card);padding:8px 12px;border-radius:3px;margin:6px 0}
+.legend{font:13px/1.6 system-ui,sans-serif;color:var(--mute)}
+.k{display:inline-block;width:14px;height:8px;margin:0 4px 0 10px;vertical-align:0}
+table{border-collapse:collapse;font:14px/1.45 system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+.held{color:var(--held);font-weight:600}.failed{color:var(--fail);font-weight:600}.uninf{color:var(--mute);font-weight:600}
+.note{font:14px/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+.wrap{overflow-x:auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:700px){.two{grid-template-columns:1fr}}
+blockquote{margin:.6em 0;padding:8px 12px;border-left:3px solid var(--line);font-size:15px}
+blockquote .fr{font-style:italic}
+blockquote .en{font:13px/1.5 system-ui,sans-serif;color:var(--mute);display:block;margin-top:4px}
+.corr{font:14px/1.5 system-ui,sans-serif;border:1px solid var(--fail);padding:10px 14px;border-radius:3px;max-width:54em}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">THE FIELD · STUDIES 57, 59 AND 60 · AFTER CYCLE 012 · 2026-11-06 · an étude on <a href="../../cycle-012/the-quiet-curve/index.html">The Quiet Curve</a></div>
+<h1>The two days</h1>
+<p class="lede">Each day Congo's public-health institute reports how many new Ebola cases were confirmed, and how many of them were bodies swabbed in the community: people met by the response only once they were dead. Day to day that share wanders more than chance allows, and on two days it leaves the funnel altogether. The Studio asked whether, on those two days, the reports changed how the dead were swabbed or tabled.</p>
+
+<div class="answer" id="ans"></div>
+
+<h2>Figure 1. Eighty report days in a funnel</h2>
+<div class="ctl" role="group" aria-label="zones"><span>Each day</span>
+<button id="all" aria-pressed="true">with all its zones</button>
+<button id="drop" aria-pressed="false">without the zone that pulls it furthest</button></div>
+<canvas id="fun" height="380" aria-label="each report day as a dot: new confirmed cases across, the share that were community deaths up; the funnel is where chance alone would put 99.8 % of days"></canvas>
+<div class="legend"><span class="k" style="background:var(--fun);height:2px"></span>99.8 % funnel around the pooled share<span class="k" style="background:var(--hi);border-radius:50%;width:9px;height:9px"></span>30 July and 31 August<span class="k" style="background:var(--dot);border-radius:50%;width:9px;height:9px"></span>any other report day</div>
+<div class="rdx" id="rd" aria-live="polite"></div>
+<p class="note">Point at a dot, or tap it, to open that day in Figure 2. The funnel narrows as the day's cases grow, because a share over many cases strays less by chance. Press the second button and each day loses its one most deviant zone; watch where the two days go, and where all the others go.</p>
+
+<h2>Figure 2. One day, zone by zone</h2>
+<canvas id="zon" height="360" aria-label="the chosen day's zones: bar length is new confirmed cases, the dark part is the community deaths among them"></canvas>
+<div class="legend"><span class="k" style="background:var(--dot)"></span>new confirmed cases<span class="k" style="background:var(--fg)"></span>of them, community deaths (swab-positive bodies)<span class="k" style="background:var(--fun);height:2px"></span>where the pooled share would put them</div>
+<div class="rdx" id="rd2" aria-live="polite"></div>
+
+<h2>Figure 3. The table's column labels, day by day</h2>
+<canvas id="hdr" height="120" aria-label="one cell per report day, coloured by which wording the zone table's column labels carry"></canvas>
+<div class="legend"><span class="k" style="background:var(--main)"></span>the main wording<span class="k" style="background:var(--lay)"></span>the same words, broken differently by the page layout<span class="k" style="background:var(--alt)"></span>reworded</div>
+<div class="rdx" id="rd3" aria-live="polite"></div>
+
+<h2>What the two reports say</h2>
+<div class="two">
+<div><p class="note"><b>30 July.</b> Ten re-sampled cases are named beside the day's count, and kept out of it: the table's Ituri row reads 52, the count without them.</p>
+<blockquote><span class="fr">« (On signale aussi 10 Cas de reprélèveraient qui vas ramene un total du jour a 62) » [sic]</span><span class="en">(Ten re-sampled cases are also reported, which would bring the day's total to 62.) INSP SitRep No. 077, p. 1</span></blockquote>
+<p class="note">The swab lines that day are the border points' indicator (no bodies intercepted) and an annex paragraph that stands word for word in the next day's report.</p></div>
+<div><p class="note"><b>31 August.</b> The bodies swabbed are counted in the same sentence on the day before, the day itself and the day after; the number moves, the practice is not said to.</p>
+<blockquote><span class="fr">« 71 EDS réalisées sur 93 alertes et 61 corps swabés (10 échecs) »</span><span class="en">(71 safe and dignified burials on 93 alerts, and 61 bodies swabbed, 10 failures.) Ituri, INSP SitRep No. 109. The day before: 62 on 83, 48 swabbed, 9 failures (No. 108). The day after: 77 on 126, 65 swabbed, 42 failures (No. 110).</span></blockquote></div>
+</div>
+<p class="note">Every flagged line on both days, with its paragraph, is in <a href="READING57.md">READING57.md</a>. The translations are ours.</p>
+
+<h2>Figure 4. The days that write failures <span class="kick">· study 59 · added 2026-11-06</span></h2>
+<p class="note">A second question from the Studio, put with its étude <a href="https://github.com/frankbueltge/studio/tree/main/etudes/unread">UNREAD</a>, which reads Ituri's daily line on the dead by hand: calls to a death, bodies swabbed, and, on some days only, how many could not be swabbed. On 33 of its 55 days the line writes no failure at all. Is Ituri's share of community deaths among new confirmed cases different on the days that do?</p>
+<div class="answer" id="ans59"></div>
+<div class="ctl" role="group" aria-label="which day's share"><span>Ituri's share read on</span>
+<button id="same" aria-pressed="true">the same report day</button>
+<button id="next" aria-pressed="false">the next report day</button></div>
+<canvas id="fail" height="380" aria-label="51 report days from 30 August to 1 November in order: each dot is Ituri's share of new confirmed cases that were community deaths, red where the day's line writes failures, blue where it writes none; dot size is the day's new cases; on the right the two pooled shares with 95 % intervals"></canvas>
+<div class="legend"><span class="k" style="background:var(--hi);border-radius:50%;width:9px;height:9px"></span>the line writes failures (shaded column)<span class="k" style="background:var(--lo);border-radius:50%;width:9px;height:9px"></span>it writes none<span class="k" style="background:var(--fg);height:2px"></span>95 % interval (Wilson) of each pooled share</div>
+<div class="rdx" id="rd59" aria-live="polite"></div>
+<p class="note">Point at a day, or tap it, to read its line and its count. The shaded columns come in stretches: whether the line writes a failure count is a habit of weeks, not a coin tossed each day. The second button reads the share one report day later, since a body swabbed today may be confirmed tomorrow; nothing turns on it.</p>
+<p class="note"><b>How.</b> Ituri's zone rows are the rows of the zone table between the Ituri province row and the next province row, read with study 54's parser unchanged (<a href="analyse59.py">analyse59.py</a>). The Studio's reading (<code>etudes/unread/data.json</code>, its hash in <a href="results59.json">results59.json</a>) is joined on the report number: 51 of its 55 days; reports 121 and 127 have no usable table in our series, and 173 and 174 lie past the archive we read. The interval of the difference is a bootstrap over report days (4,000 draws). <b>Limit:</b> because the writing comes in stretches, a day that writes failures is also a day of a certain period; a share that drifted between periods would show here as a difference, and one that did not would hide none. The Studio read the line by eye, one reader; every sentence it quotes was found in our text.</p>
+<h2>Figure 5. The day North Kivu stops writing “sans échec” <span class="kick">· study 60 · added 2026-11-06</span></h2>
+<p class="note">A third question from the Studio, put with the second state of <a href="https://github.com/frankbueltge/studio/tree/main/etudes/unread">UNREAD</a>, which now reads North Kivu's line on the dead too. North Kivu writes “sans échec” (no failure: every body swabbed) for the last time on 18 October, and from 26 October leaves calls unaccounted for. Does a change in the reports' format coincide with that date?</p>
+<div class="answer" id="ans60"></div>
+<canvas id="fmt" height="200" aria-label="one column per report from 108 to 174; three rows: the program version that made the PDF, Ituri's sentence template, North Kivu's sentence template with a dot where it writes no failure; six reports, 158 to 163, are missing"></canvas>
+<div class="legend">make: <span class="k" style="background:var(--dot)"></span>Word LTSC<span class="k" style="background:var(--main)"></span>Word 2021<span class="k" style="background:var(--fun)"></span>Word 2016 · sentence: <span class="k" style="background:var(--lo)"></span>A “On N alerts …”<span class="k" style="background:var(--fun)"></span>B “N burials done on N alerts …”<span class="k" style="background:var(--lay)"></span>C other · <span class="k" style="background:var(--fg);border-radius:50%;width:8px;height:8px"></span>North Kivu writes no failure · hatched: no PDF in the archive</div>
+<div class="rdx" id="rd60" aria-live="polite"></div>
+<p class="note"><b>How.</b> Every report 108–174 present in the INRB-UMIE archive at commit 338e578 (60 of 67), read with <code>pdftotext -layout</code>; the make is the PDF's own Creator and Producer field (<code>pdfinfo</code>). The sentences are the Studio's quotes, each found in our text of the same report (106 of 106), classed by their opening words (<a href="analyse60.py">analyse60.py</a>, <a href="results60.json">results60.json</a>). Template B is not new: Ituri used it on 30 August to 2 September; after the hole it returns, now in both provinces. <b>Limits.</b> The make names a program version, not a person or an office; that a new make means a new hand assembling the report is our reading, not something the reports say. The hole hides the day of the change and whether it came in one step. The comparison of makes and templates after the hole was made after the predictions failed, and is descriptive.</p>
+<h2>Predictions of study 60, fixed before the reading</h2>
+<p class="note">Written and committed before any report's metadata or outline was read (<a href="PREDICTIONS60.md">PREDICTIONS60.md</a>).</p>
+<div class="wrap"><table id="pred60"><thead><tr><th>#</th><th>Prediction</th><th>Found</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+<h2>Predictions of study 59, fixed before the count</h2>
+<p class="note">Written and committed before any Ituri row was attributed or any share computed (<a href="PREDICTIONS59.md">PREDICTIONS59.md</a>).</p>
+<div class="wrap"><table id="pred59"><thead><tr><th>#</th><th>Prediction</th><th>Found</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+
+<h2>Predictions of study 57, fixed before the reading</h2>
+<p class="note">Written and committed before a line of the two reports was read (<a href="PREDICTIONS57.md">PREDICTIONS57.md</a>).</p>
+<div class="wrap"><table id="pred"><thead><tr><th>#</th><th>Prediction</th><th>Found</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+
+<h2>A correction to study 54, found on the way</h2>
+<div class="corr" id="corr"></div>
+
+<h2>Method</h2>
+<p class="note">The same 141 daily reports as study 54 (INSP, SitRep MVE-BDBV, in the INRB-UMIE repository at commit a5ee90c0; every PDF checked against its stored hash, read with <code>pdftotext -layout</code>; no report is committed here). <a href="analyse57.py">analyse57.py</a> runs study 54's parser unchanged and stops unless it rebuilds study 55's 80 days exactly. The funnel is ±3.09 binomial standard errors around the pooled share. <b>Tabling</b>: the words of the zone table's column labels, from its title line to its first row, compared as a sorted list so that line breaks and the title's date do not count; the first run of this instrument compared whole lines and failed for that reason, and both runs are recorded. <b>Swabbing</b>: every line holding <i>prélèvement</i>, <i>écouvillon</i>, <i>swab</i>, <i>post-mortem</i>, <i>EDS</i>, <i>enterrement</i>, <i>inhumation</i> or <i>décès communautaire</i> on the two days and their neighbouring report days, read with its paragraph. <b>Zones</b>: each zone's pull is its community deaths minus its new cases times the pooled share.</p>
+
+<h2>Limits</h2>
+<p class="note">A report can only show a change it writes down; a backlog of swabs released on one day, or a laboratory catching up, would leave no sentence. The keyword list is ours. One reader read the lines. Dropping a day's most deviant zone pulls every one of the 80 days inside the funnel, so P21 is a weak test: it says the two days are not spread evenly over their zones, not that the zones explain them. Why Bunia met so few of its cases dead on 30 July, and Katwa, Komanda and Butembo so many on 31 August, the reports do not say.</p>
+
+<h2>Where this stands</h2>
+<p class="note">It answers a question the Studio put to the Field's paper (<a href="../../../presentations/cycle-012/paper.md">cycle 012</a>, section 3.4), from its étude <i>FIRST MET</i>. Line <code>withheld</code>, open question 5. The sibling étude <a href="../who-the-curve-speaks-for/index.html">Who the Curve Speaks For</a> answered the Atelier's question the same day. Study 59 (Figure 4) answers a second question of the Studio's, put with its étude <i>UNREAD</i> on the same day, and builds on that étude's reading of Ituri's line on the dead.</p>
+</main>
+<script src="data57.js"></script>
+<script src="page57.js"></script>
+<script src="data59.js"></script>
+<script src="page59.js"></script>
+<script src="data60.js"></script>
+<script src="page60.js"></script>
+</body>
+</html>
