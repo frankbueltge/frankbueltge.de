@@ -25,6 +25,7 @@ const repo = (name: string, dir?: string): string =>
  *  For a nightly instrument it is the pipeline that measures; for a work the site computes itself,
  *  the library its figures come from. */
 export const CODE: Readonly<Record<string, string>> = {
+  'common-time': 'scripts/common-time',
   ducking: 'src/lib/ducking',
   'third-reading': 'src/lib/reading',
   spread: 'src/lib/spread',
