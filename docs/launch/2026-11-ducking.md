@@ -146,6 +146,10 @@ quota; see the risks below.
 
 ## 3. Bluesky thread
 
+**Since 2026-11-08 Bluesky is automated** (decision-log): a workflow posts the selected works, Ducking
+among them, one a day, on an account labelled as automated, once `src/config/bluesky.ts` names it. The
+thread below was drafted for a personal account and stays only as material.
+
 There is no account yet.
 
 **Profile.** Display name `Frank Bültge`, bio as on GitHub since 2026-11-03:

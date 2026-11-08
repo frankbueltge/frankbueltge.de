@@ -21,7 +21,7 @@ interface Call {
   /** a JSON body: the call is a procedure (POST) */
   body?: unknown
   /** raw bytes with their media type: an upload (POST) */
-  bytes?: { data: Uint8Array; type: string }
+  bytes?: { data: Uint8Array<ArrayBuffer>; type: string }
   token?: string
 }
 
@@ -30,7 +30,7 @@ export async function xrpc<T>(service: string, method: string, call: Call = {}):
   for (const [key, value] of Object.entries(call.params ?? {})) url.searchParams.set(key, value)
   const headers: Record<string, string> = { 'user-agent': USER_AGENT }
   if (call.token) headers.authorization = `Bearer ${call.token}`
-  let body: Uint8Array | string | undefined
+  let body: Uint8Array<ArrayBuffer> | string | undefined
   if (call.bytes) {
     headers['content-type'] = call.bytes.type
     body = call.bytes.data
@@ -110,7 +110,7 @@ export async function putRecord(session: Session, collection: string, rkey: stri
   })
 }
 
-export async function uploadBlob(session: Session, data: Uint8Array, type: string): Promise<unknown> {
+export async function uploadBlob(session: Session, data: Uint8Array<ArrayBuffer>, type: string): Promise<unknown> {
   const { blob } = await xrpc<{ blob: unknown }>(session.pds, 'com.atproto.repo.uploadBlob', {
     token: session.accessJwt,
     bytes: { data, type },

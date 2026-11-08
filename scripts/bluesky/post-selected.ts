@@ -59,7 +59,7 @@ function say(line = ''): void {
 }
 
 interface Picture {
-  data: Uint8Array
+  data: Uint8Array<ArrayBuffer>
   type: string
   from: string
 }
