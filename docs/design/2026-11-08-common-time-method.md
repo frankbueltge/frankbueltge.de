@@ -265,7 +265,7 @@ instead of many sketches. For acoustic colour the lab now has real instruments: 
 Frank's go of 9 November outside the repository), played by a small sampler that tunes every note exactly
 (`sampler.py`), so the ensemble can play in just intonation.
 
-**Probe 15, *Overlooked* (planned):** week 45 for a chamber ensemble in just intonation on A (the harmonic scale
+**Probe 15, *Overlooked* (built on 9 November, `probe15_overlooked.py`, `out15/`, 5:37):** week 45 for a chamber ensemble in just intonation on A (the harmonic scale
 8 to 16 of A1), a pulse of 0.2 s. Each day the most overlooked headline of all thirteen fields (the speakable one
 with the lowest attention on its platform that day) is said once; an instrument chosen by its field answers with its
 speech melody, in the speech's own rhythm; then the melody becomes a motif on the pulse, and the strings take it up in
@@ -276,7 +276,13 @@ Sunday all seven sound together; then silence, and Monday's sentence once more. 
 by day: nature (an acoustic biodiversity index, arXiv, flute), economy (Asian currencies before inflation data,
 bassoon), climate (pension funds underestimating climate risk, oboe), war (data breaches led by Ukraine, horn), power
 (voters rejecting tech oligarchy, Mastodon, trombone), hunger (a wildlife charity, a search, solo violin), AI (fewer
-jobs for graduates in India, clarinet).
+jobs for graduates in India, clarinet). Two rules were added while building it: on a tie for least attention (many headlines sit at the bottom
+of their platform) the field the day named least wins, and each day takes a field not heard yet that week, so the
+ensemble grows by one instrument a day; without them war took four of the seven days. Each new day the older motifs
+step back while its sentence is said and answered, and each is 4 dB softer per day of age. Known means: speech
+melody taken up by instruments (Reich's *Different Trains*), canon and pulse (Reich), just intonation on strings
+(Kali Malone, Catherine Lamb); what the data decide is who is heard (inverse attention) and how the week gathers.
+Renders bit-identically twice. How it sounds is for Frank to judge.
 
 ## From the data to the music (first template, probes 04 to 10)
 
