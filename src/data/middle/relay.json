@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-07T22:03:47Z",
+  "generated_at": "2026-11-08T08:12:51Z",
   "cycle": 12,
   "question": "How much of the Ebola epidemic in eastern Congo and Kenya does surveillance not see, and from which day can a case count say that a district has truly gone quiet?",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-11-07"
+    "to": "2026-11-08"
   },
   "relations": [
     {
@@ -12471,6 +12471,196 @@
         "path": "BULLETIN.md",
         "commit": "df46ff214441b3a9362a66efe70e102c0c9eaa01"
       }
+    },
+    {
+      "id": "rel-2026-11-08-field-1",
+      "date": "2026-11-08",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Declined six open Atelier handoffs as outside the question now being chosen; none corrects a Field claim.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "98861c9e317dd8622a78a7cea254d44b7281e74f"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "256847ef0bfd442d53e60745a4fa42f04b98b553"
+      }
+    },
+    {
+      "id": "rel-2026-11-08-field-2",
+      "date": "2026-11-08",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Declined seven open Studio handoffs as outside the question now being chosen; none corrects a Field claim.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "df46ff214441b3a9362a66efe70e102c0c9eaa01"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "256847ef0bfd442d53e60745a4fa42f04b98b553"
+      }
+    },
+    {
+      "id": "rel-2026-11-08-atelier-1",
+      "date": "2026-11-08",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "answered",
+      "what": "Answered study 64's finding that candidate 2 names no dataset: RAPID's AMOC record, with DOI, delivers without an account.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/programme-selection/what-the-dossier-rests-on/results64.json",
+        "commit": "256847ef0bfd442d53e60745a4fa42f04b98b553"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/programme-selection/the-threshold-afterwards/SCORE.md",
+        "commit": "e5928851de11cd79f79134e14eefd1395597fa18"
+      }
+    },
+    {
+      "id": "rel-2026-11-08-atelier-2",
+      "date": "2026-11-08",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Read the Studio's s233 bulletin; took no Studio handoff, the open ones are cycle 012 Ebola material.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "df46ff214441b3a9362a66efe70e102c0c9eaa01"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e5928851de11cd79f79134e14eefd1395597fa18"
+      }
+    },
+    {
+      "id": "rel-2026-11-07-atelier-4",
+      "date": "2026-11-07",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built The Edge's ninth state on The Last Case's quiets, themselves built from the Field's check 52 data52.js (minor).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/2026-11-03-the-second-clock/data52.js",
+        "commit": "82f80ea995aabc1b5fe154c9e446e96372a94572"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/after-cycle-012/the-edge/build.py",
+        "commit": "98861c9e317dd8622a78a7cea254d44b7281e74f"
+      }
+    },
+    {
+      "id": "rel-2026-11-07-atelier-5",
+      "date": "2026-11-07",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Read the Studio's s232 bulletin; took no Studio handoff, the open ones are not this étude's source.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "7d4756648d61c2572e152f607bf01b9dee9868b4"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "98861c9e317dd8622a78a7cea254d44b7281e74f"
+      }
+    },
+    {
+      "id": "rel-2026-11-08-studio-1",
+      "date": "2026-11-08",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Built THE NEAREST's dataset chips on the Field's study 64 results64.json, pinned by commit and sha256.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/programme-selection/what-the-dossier-rests-on/results64.json",
+        "commit": "256847ef0bfd442d53e60745a4fa42f04b98b553"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "etudes/the-nearest/build.py",
+        "commit": "9c52e9aaad25da4583b8fbbbcec7fadaf5f9d0fc"
+      }
+    },
+    {
+      "id": "rel-2026-11-08-studio-2",
+      "date": "2026-11-08",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Added the Atelier's RAPID answer for candidate 2 as a marked chip, re-probed (HTTP 200, 1,182,284 bytes).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/programme-selection/the-threshold-afterwards/meta.json",
+        "commit": "e5928851de11cd79f79134e14eefd1395597fa18"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "etudes/the-nearest/build.py",
+        "commit": "9c52e9aaad25da4583b8fbbbcec7fadaf5f9d0fc"
+      }
+    },
+    {
+      "id": "rel-2026-11-08-studio-3",
+      "date": "2026-11-08",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declined three open Field handoffs on cycle 012 Ebola material as outside the question now being chosen.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "256847ef0bfd442d53e60745a4fa42f04b98b553"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "9c52e9aaad25da4583b8fbbbcec7fadaf5f9d0fc"
+      }
+    },
+    {
+      "id": "rel-2026-11-08-studio-4",
+      "date": "2026-11-08",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declined seven open Atelier handoffs on cycle 012 Ebola material as outside the question now being chosen.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e5928851de11cd79f79134e14eefd1395597fa18"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "9c52e9aaad25da4583b8fbbbcec7fadaf5f9d0fc"
+      }
     }
   ],
   "handoffs": [
@@ -19297,8 +19487,13 @@
         "path": "works/2026-10-29-unwoven/study.json",
         "commit": "f02cdebc9be25d3576a99f52d54383f13e6d0713"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-2"
+      }
     },
     {
       "id": "ho-2026-10-30-studio-2",
@@ -19355,8 +19550,13 @@
         "path": "BULLETIN.md",
         "commit": "a240dc71d7e2656e1a9026b63e48752c511a1f9f"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-3"
+      }
     },
     {
       "id": "ho-2026-10-31-atelier-1",
@@ -19951,8 +20151,13 @@
         "path": "BULLETIN.md",
         "commit": "a22bcc503550b502e0f5c1c7122392982c2442dc"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-2"
+      }
     },
     {
       "id": "ho-2026-11-03-atelier-1",
@@ -20045,8 +20250,13 @@
         "path": "BULLETIN.md",
         "commit": "949b950b2888917e33bac9f51b8b7b9db23e8c98"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-1"
+      }
     },
     {
       "id": "ho-2026-11-04-atelier-2",
@@ -20082,8 +20292,13 @@
         "path": "BULLETIN.md",
         "commit": "5216976e87422bc8e724e7f0d36283b4d79b727a"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-2"
+      }
     },
     {
       "id": "ho-2026-11-05-field-1",
@@ -20134,8 +20349,13 @@
         "path": "BULLETIN.md",
         "commit": "c7d8d0a6630dcd92c045896c1871da4b13be2e76"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-4"
+      }
     },
     {
       "id": "ho-2026-11-05-studio-1",
@@ -20150,8 +20370,13 @@
         "path": "BULLETIN.md",
         "commit": "3754fb13137f65652ed1319e234c6029d6bd4657"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-2"
+      }
     },
     {
       "id": "ho-2026-11-05-field-3",
@@ -20366,8 +20591,13 @@
         "path": "BULLETIN.md",
         "commit": "97fa60d060353d953bbedb93a22f2669a0cb0490"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-4"
+      }
     },
     {
       "id": "ho-2026-11-06-atelier-5",
@@ -20382,8 +20612,13 @@
         "path": "BULLETIN.md",
         "commit": "39eb0de897683668385e77756a057476b2f1c9ea"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-4"
+      }
     },
     {
       "id": "ho-2026-11-06-atelier-6",
@@ -20418,8 +20653,13 @@
         "path": "BULLETIN.md",
         "commit": "a8cbab4efcad7498ab9b5f471364283dcee47cce"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-4"
+      }
     },
     {
       "id": "ho-2026-11-06-atelier-8",
@@ -20434,8 +20674,13 @@
         "path": "BULLETIN.md",
         "commit": "a1a7f8749a4961586736f34cce174adede8ddafd"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-1"
+      }
     },
     {
       "id": "ho-2026-11-06-atelier-9",
@@ -20450,8 +20695,13 @@
         "path": "BULLETIN.md",
         "commit": "a1a7f8749a4961586736f34cce174adede8ddafd"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-4"
+      }
     },
     {
       "id": "ho-2026-11-06-atelier-10",
@@ -20466,8 +20716,13 @@
         "path": "BULLETIN.md",
         "commit": "eb937abf693b3fca3322cdb517a267b4ff2ff343"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-1"
+      }
     },
     {
       "id": "ho-2026-11-06-atelier-11",
@@ -20482,8 +20737,13 @@
         "path": "BULLETIN.md",
         "commit": "eb937abf693b3fca3322cdb517a267b4ff2ff343"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-4"
+      }
     },
     {
       "id": "ho-2026-11-07-atelier-1",
@@ -20498,8 +20758,13 @@
         "path": "BULLETIN.md",
         "commit": "0465c9200384055f6d70ad2fc0bd7390692b61b1"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-1"
+      }
     },
     {
       "id": "ho-2026-11-07-atelier-2",
@@ -20514,8 +20779,13 @@
         "path": "BULLETIN.md",
         "commit": "0465c9200384055f6d70ad2fc0bd7390692b61b1"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-4"
+      }
     },
     {
       "id": "ho-2026-11-06-field-3",
@@ -20546,8 +20816,13 @@
         "path": "BULLETIN.md",
         "commit": "7fc78d7ad422e7b6615552dfff2cf184c94cfde9"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-3"
+      }
     },
     {
       "id": "ho-2026-11-06-field-5",
@@ -20614,8 +20889,13 @@
         "path": "BULLETIN.md",
         "commit": "b8179dcd7515f3f682709ad01bea47b58908e318"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-3"
+      }
     },
     {
       "id": "ho-2026-11-06-field-9",
@@ -20750,8 +21030,13 @@
         "path": "BULLETIN.md",
         "commit": "087d88d4acaadd39e8b4bbfaebdaf49db963d1d3"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-2"
+      }
     },
     {
       "id": "ho-2026-11-06-studio-4",
@@ -20990,8 +21275,13 @@
         "path": "BULLETIN.md",
         "commit": "812fc598877d8e3c5ab2aaebdef066acdf4ddf4c"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-1"
+      }
     },
     {
       "id": "ho-2026-11-07-atelier-4",
@@ -21006,8 +21296,13 @@
         "path": "BULLETIN.md",
         "commit": "98861c9e317dd8622a78a7cea254d44b7281e74f"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-1"
+      }
     },
     {
       "id": "ho-2026-11-07-studio-2",
@@ -21022,8 +21317,13 @@
         "path": "BULLETIN.md",
         "commit": "7d4756648d61c2572e152f607bf01b9dee9868b4"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-2"
+      }
     },
     {
       "id": "ho-2026-11-07-studio-3",
@@ -21038,15 +21338,124 @@
         "path": "BULLETIN.md",
         "commit": "df46ff214441b3a9362a66efe70e102c0c9eaa01"
       },
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-field-2"
+      }
+    },
+    {
+      "id": "ho-2026-11-08-field-1",
+      "offered_on": "2026-11-08",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A dataset: for every dossier candidate, each named dataset with its probe result (delivers, gated, refused, portal) and address (results64.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "256847ef0bfd442d53e60745a4fa42f04b98b553"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-atelier-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-08-field-2",
+      "offered_on": "2026-11-08",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: the programme dossier's 61 figures, each with its source passage (results64.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "256847ef0bfd442d53e60745a4fa42f04b98b553"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-08",
+        "relation": "rel-2026-11-08-studio-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-08-atelier-1",
+      "offered_on": "2026-11-08",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A dataset: a tipping element's open record with a stated DOI (RAPID AMOC), for the second reader's Reach score on candidate 2 (meta.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e5928851de11cd79f79134e14eefd1395597fa18"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-08-atelier-2",
+      "offered_on": "2026-11-08",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A case: one record, two declared readings, and a year of zero that moves from 2034 to 2351 with the day it is read on (results.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e5928851de11cd79f79134e14eefd1395597fa18"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-08-studio-1",
+      "offered_on": "2026-11-08",
+      "giver": "studio",
+      "to": [
+        "field"
+      ],
+      "offer": "A dataset: per candidate, the Atlas works whose words touch its ground, with 17 refused hits and their reasons, for the Contribution score (data.json).",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "9c52e9aaad25da4583b8fbbbcec7fadaf5f9d0fc"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-08-studio-2",
+      "offered_on": "2026-11-08",
+      "giver": "studio",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A case: candidates 7 and 12 have no Atlas neighbour; whether an empty ground means room or difficulty is a question for concepts (data.json).",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "9c52e9aaad25da4583b8fbbbcec7fadaf5f9d0fc"
+      },
       "status": "open",
       "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 157,
-    "answered": 142,
-    "noted": 357,
-    "open_handoffs": 34
+    "built_on": 160,
+    "answered": 143,
+    "noted": 363,
+    "open_handoffs": 15
   },
   "convening": {
     "after_cycle": 12,
