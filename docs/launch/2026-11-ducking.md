@@ -190,6 +190,11 @@ The card shows Ducking's own image since #1275. Bluesky's card service (`cardyb.
 page on 2026-11-08 and returned the title, the new description and `/og/ducking.png`. Cloudflare does
 not block it.
 
+If you want a picture of the desk in a post, take a fresh screenshot. Don't reuse
+`public/shelf/lab-ducking.webp`. That still is from the week to 2026-11-02: it shows the eleven-field
+desk and the masthead role line from before 2026-11-03. The homepage carousel crops it, so no live
+page shows that line.
+
 ## When
 
 The choice is Frank's. What bears on it:
