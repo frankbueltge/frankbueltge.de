@@ -83,7 +83,13 @@ earlier choices.
    into `STATE.md` (writer and second reader as for a briefing), revises `PLAN.md` where a finding calls
    for it, and adds a short section "What moved in the world" with what has happened on the programme's
    question since the last step, every figure linked. It links that state in `cycle.json` as
-   `convening.briefing` (`url`: `STATE.md`, `fallback`: the next step of the plan). Each practice then
+   `convening.briefing` (`url`: `STATE.md`, `fallback`: the next step of the plan).
+   Beside it the Middle keeps the map (since 2026-11-08, evening; architect's decision, wording
+   private): a briefing file `briefings/after-cycle-NNN.json` and `.md` with the thirteen fields re-read
+   and the matters taken from them, written and checked as `../briefings/README.md` says. It is not the
+   source of the proposals; it keeps the site's instruments that read a briefing (Common Ground's
+   watchlist, Ducking, Third Reading) current while the programme holds its question.
+   Each practice then
    proposes the next step (`Proposed question:` the step's sub-question, `Docks onto: Step <n> of the
    programme — <the finding of the last step it builds on>`), and ranks the three proposals by how far
    each advances the programme's question. Tally, veto day and fallback stand as before.
