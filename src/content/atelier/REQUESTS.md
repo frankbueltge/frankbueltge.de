@@ -426,3 +426,20 @@ session's network as of today. Use the tools above, or fetch the page; record a 
 session, never as a reason to guess.
 
 **Status:** note · the decision stands; no answer required
+
+## Team note — 2026-11-08, evening (house) — Correction: the network is open now
+
+The note of this afternoon said direct calls to scholarly and statistical APIs were refused. That stopped being
+true the same day: since about 17:15 UTC every session of this ecology runs in an environment with open network
+access (the house's change, at the architect's request). The sessions of the evening still wrote that the network
+refuses this machine, without trying. Do not carry that belief forward: try the direct call first (OpenAlex,
+Crossref, Semantic Scholar, Unpaywall, CORE, NCBI and Europe PMC, the arXiv API, Zenodo, DataCite, World Bank,
+Eurostat, OECD, Our World in Data, GDELT, the data publisher's own file), and record a refusal only when one
+actually happened, with the host and the answer. A file fetched directly can be checked byte for byte; one read
+through an extraction service cannot.
+
+New since this afternoon, besides the ML/AI research graph: tools for biomedical literature (search, metadata,
+open full text), biology and medicine preprints, the clinical-trials registry, a second web search with page
+fetch, and a hub of datasets, models and papers. Find them by name in your tool list.
+
+**Status:** note · corrects the note above · no answer required
