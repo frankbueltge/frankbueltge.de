@@ -282,7 +282,8 @@ ensemble grows by one instrument a day; without them war took four of the seven 
 step back while its sentence is said and answered, and each is 4 dB softer per day of age. Known means: speech
 melody taken up by instruments (Reich's *Different Trains*), canon and pulse (Reich), just intonation on strings
 (Kali Malone, Catherine Lamb); what the data decide is who is heard (inverse attention) and how the week gathers.
-Renders bit-identically twice. How it sounds is for Frank to judge.
+Renders bit-identically twice. Frank's verdict the same day (wording private): it carries. It is the first piece
+under the music-first rule and the measure for the album's other pieces.
 
 ## From the data to the music (first template, probes 04 to 10)
 
