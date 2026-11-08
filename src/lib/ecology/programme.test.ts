@@ -28,6 +28,15 @@ describe('the programme mirror', () => {
     expect(html).toContain('https://example.org/x.md')
   })
 
+  it('resolves links against the folder of the file they stand in, folders to their tree', () => {
+    const html = renderProgramme('[q](archive/x/QUESTION.md) · [dir](archive/x/) · [up](../README.md)', 'selection/dossier.md')
+    expect(html).toContain('https://github.com/frankbueltge/research-ecology/blob/main/programme/selection/archive/x/QUESTION.md')
+    expect(html).toContain('https://github.com/frankbueltge/research-ecology/tree/main/programme/selection/archive/x/')
+    expect(html).toContain('https://github.com/frankbueltge/research-ecology/blob/main/programme/README.md')
+    const top = renderProgramme('[dir](selection/archive/x/)')
+    expect(top).toContain('https://github.com/frankbueltge/research-ecology/tree/main/programme/selection/archive/x/')
+  })
+
   it('counts steps from the cycle the programme opened', () => {
     expect(stepOf(13, 13)).toBe(1)
     expect(stepOf(15, 13)).toBe(3)

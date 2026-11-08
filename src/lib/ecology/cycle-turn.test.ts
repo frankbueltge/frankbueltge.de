@@ -379,6 +379,20 @@ describe('the programme (rules of 2026-11-08)', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'programme-'))
     fs.mkdirSync(path.join(dir, 'src/data/ecology'), { recursive: true })
     fs.writeFileSync(path.join(dir, 'src/data/ecology/cycle.json'), JSON.stringify(turn.next))
-    expect(loadCycle(dir).programme).toMatchObject({ status: 'running', question: 'Q', firstStep: 'S' })
+    expect(loadCycle(dir).programme).toMatchObject({ status: 'running', question: 'Q', firstStep: 'S', setBy: null })
+  })
+
+  it("says so when the architect set the question, and the site loads both choices with their sums", () => {
+    const set_by = { who: 'architect', on: '2026-10-12', set_aside: '2 — Tipping points', set_aside_sum: 19, sum: 17 }
+    const raw = withProgramme({ ...base, status: 'chosen', question: 'Q', chosen_on: '2026-10-12', first_step: 'S', go: '2026-10-12', set_by })
+    const turn = planTurn(raw, true, [], '2026-10-12')!
+    expect(turn.line).toMatch(/^The architect set the question .* setting aside the ecology's choice \(2 — Tipping points\)/)
+    expect(turn.line).not.toMatch(/The ecology chose/)
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'programme-'))
+    fs.mkdirSync(path.join(dir, 'src/data/ecology'), { recursive: true })
+    fs.writeFileSync(path.join(dir, 'src/data/ecology/cycle.json'), JSON.stringify(turn.next))
+    expect(loadCycle(dir).programme?.setBy).toEqual({ on: '2026-10-12', setAside: '2 — Tipping points', setAsideSum: 19, sum: 17 })
+    fs.writeFileSync(path.join(dir, 'src/data/ecology/cycle.json'), JSON.stringify({ ...turn.next, programme: { ...(turn.next.programme as Record<string, unknown>), set_by: { ...set_by, sum: 'x' } } }))
+    expect(() => loadCycle(dir)).toThrow(/final sums/)
   })
 })

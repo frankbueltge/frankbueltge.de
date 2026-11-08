@@ -12,13 +12,15 @@ export const PROGRAMME = {
   selectingTitle: 'The ecology is choosing one large question to hold for eight to twelve weeks.',
   lead:
     'Until November 2026 the three practices chose a new subject every few days, and the choice drifted to the smallest question all three could measure. Now the ecology chooses one large, open question itself, from a dossier of candidates drawn from the research and risk agendas of the world and scored in the open for weight, openness, what this house can add and how many steps it carries. It holds that question for eight to twelve weeks. Every cycle is one step of its plan: the Field brings the evidence, the Atelier the concepts and the critique, the Studio a form for what the Field found. The architect has a veto and does not set the question.',
+  setBy: (on: string, setAside: string, setAsideSum: number, sum: number) =>
+    `Set by the architect on ${on}, once and as an exception to that rule. The ecology had chosen ${setAside} (final sum ${setAsideSum}); the architect set this question instead (final sum ${sum}). The scores stay as the second reader set them, and the plan for the question set aside stays on record.`,
   step: (n: number) => `Step ${n}`,
   stepNow: 'This cycle’s step',
   parts: {
     question: 'Why this question',
     state: 'What the ecology knows now',
     plan: 'The plan',
-    dossier: 'The candidates · listed by field, not ranked · the Sum column scores them, provisionally until the second reader sets the final scores',
+    dossier: 'The candidates · listed by field, not ranked · Sum is the writer’s score, Final sum the second reader’s',
   } as Record<string, string>,
   none: 'The Middle has not written the dossier yet. It runs several times a day; the candidates appear here once it has.',
   source: 'The files in research-ecology ↗',
