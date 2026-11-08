@@ -29,8 +29,10 @@ Czech, Reich's *Different Trains*), and the vocoder (Kraftwerk, Holly Herndon).
 | the vowels of the topic's name, unspoken | the hook's onsets per bar |
 | the topic on most days of the week | the weekly pressing's bass figure |
 | platform-days over the week | which three topics get a track of their own |
-| a headline that ran with the topic | the words of a sung hookline (topic tracks) |
-| that headline's intonation when spoken | the hookline's melody |
+| a line that ran with the topic: an outlet's headline, else a platform's own line | the words of a sung hookline (topic tracks) |
+| that line's intonation when spoken | the hookline's melody |
+| the families that carried the topic that day | the notes the hookline may sing |
+| the topic's first family | where the hookline starts around the listener |
 
 ## Tuning and voices
 
@@ -38,7 +40,7 @@ One fundamental, A1 = 55 Hz, held as a drone in every track: the ear's reference
 harmonic of it and a vowel: Wikipedia 4 "ah", Google Trends 5 "ee", news 6 "oh", social 7 "oo", tech 9
 "eh", markets 11 "ay". A topic's chord is the set of families that carried it, so agreement between
 different kinds of platform is heard as a different just chord, never as a louder one. The voice is a
-synthetic voice (Kokoro-82M, local), vocoded onto a band-limited saw stack with noise for consonants.
+synthetic voice (Kokoro-82M, local), vocoded onto a Surge XT saw stack with noise for consonants.
 
 ## The weekly pressing
 
@@ -60,31 +62,58 @@ Three per week, for the topics with the most platform-days (distinct platforms p
 week; ties to more days, then the id). A track tells its topic's week: a day it was present lasts
 2 × (1 + platforms) bars, at most twelve, with the bed, its hook, its families' loops, bass and drums as
 open as that day's platforms against its busiest day; a day it was absent is one bar of drone. The hook
-of a topic track is its sung headline (next section); the vowel fingerprint is the fallback.
+of a topic track is its sung line (next section); the vowel fingerprint is the fallback.
 
 ## Sung news: the speech melody as hookline
 
-1. **The words.** Among the topic's links of the day, the first headline from a news outlet, else the first
-   headline. It must pass the content rules below.
-2. **The name.** The words of the topic's own label are not sung: they are replaced by the vowels of the
-   families that carried it, so the hookline has a wordless gap where the name would be.
-3. **Speaking.** The synthetic voice of the topic's first family reads the line once.
-4. **Measuring.** Its pitch contour is tracked (YIN), and the line is cut into syllables at the voiced
-   stretches.
-5. **Quantizing.** Each syllable's median pitch moves to the nearest harmonic of the families that carried
-   the topic, octave-equivalent; each syllable's length moves to the nearest sixteenth.
-6. **Singing.** The vocoder's carrier follows the quantized line while the spoken headline modulates it: the
+1. **The line.** Among the topic's links of the day, news outlets first, then the platforms' own lines (a
+   Polymarket question, say): the first title that still has at least three words once the topic's name is
+   taken out, a line not yet sung in the track before one that was. It must pass the content rules below. A
+   Wikipedia title is the name itself and never qualifies. In week 44 two of the three tracks sing
+   Polymarket's questions, because no outlet carried those topics: there the market sings, not the news.
+2. **The name.** Each run of the label's words inside the line is cut out. In the gap, the vowels of the
+   families that carried the topic hum the name's own speech melody, one vowel per syllable: the name keeps
+   its rhythm and its contour, not its sound.
+3. **Speaking.** The synthetic voice of the topic's first family reads the line in its parts, the words on
+   either side of the gap separately, so the prosody starts afresh after the gap.
+4. **Measuring.** The pitch is tracked (YIN). The voice's own phonemes (espeak-ng, as Kokoro uses them) give
+   the number of syllables in each part; the most prominent voiced loudness peaks are their nuclei, and the
+   line is cut in the dips between them.
+5. **Quantizing.** Each syllable keeps its pitch interval to the line's median, doubled, and moves to the
+   nearest harmonic of the families that carried the topic that day or to the drone's A, in any octave from
+   90 to 520 Hz. Each syllable's onset moves to the nearest sixteenth (onsets, not lengths, so the line does
+   not drift), and the syllable is stretched to fill its slot.
+6. **Singing.** The vocoder's carrier holds each syllable's note while the spoken syllable modulates it: the
    news sings its own intonation, in pure tuning.
-7. **Placing.** The hookline enters on the first bar of every day the topic was present and repeats every
-   second bar.
+7. **Placing.** The line enters on the first bar of every day the topic was present and comes again every
+   whole number of bars it needs; the next day cuts off a repetition that does not fit. Its words start where
+   the topic's first family stands and travel to the front as they are sung; each hummed syllable comes from
+   its family's place. The track ends on the topic's name alone, hummed from the front.
+
+Why the doubling, measured on week 44: spoken, a line moves within about seven semitones, and a topic
+carried by Wikipedia and Polymarket allows only A and the eleventh harmonic in that range, so without it
+50 to 73 % of a line's syllables land on one note and every line uses two. With the intervals doubled the
+lines use three to five notes and none holds more than 56 % of a line. Speech is narrower than song; the
+doubling is the one step from one to the other. A topic carried by news and Google Trends sings in the A
+major triad (harmonics 4, 5, 6); one carried by Wikipedia and Polymarket in A and the eleventh harmonic.
+
+## Space
+
+Every family has a place around the listener: Wikipedia front left, Google Trends front right, news left,
+social right, tech behind on the left, markets behind on the right. The bed's pads and the loops sound
+from there; a hook moves to the front as it is sung, the further the more families carried its topic, so
+agreement is heard as voices meeting in front of you. The placement is binaural, for headphones, through
+measured head responses: the MIT KEMAR set (Gardner and Martin, MIT Media Lab, 1994; from sofacoustics.org,
+provided without usage restrictions, credit requested).
 
 ## Content rules
 
 - A topic or headline that names death, violence, crime or a court case (the stoplist in the renderer) gives
   no hook, no sung line and no track.
 - No politician's name is sung (Frank's decision of 2026-11-08, wording private). The topic's own name is
-  only ever heard as vowels. Other names inside a headline are still sung; whether they need a rule too
-  is open.
+  only ever heard as vowels. Other names inside a line are still sung; whether they need a rule too is
+  open. In week 44 no other person is named; the Polymarket questions do sing three party names (Likud,
+  Together, Yashar).
 - A name that cannot be read in Latin script is not voiced.
 
 ## Composed, the same every week
@@ -102,12 +131,16 @@ speaks vowels and headlines; pitch, rhythm, harmony and form come from the rules
 Voices run locally on one thread; two renders of the same week are bit-identical. Every track is mastered
 to −14 LUFS and −1 dBTP, and every layer is kept as a stem. Before this goes into the weekly workflow, the
 layer levels must again be set on an ordinary day of the archive rather than on the week itself (the
-probes normalise each render), so that a quiet week is heard as one. A full synthesizer (Surge XT) would
-be the next step for the sound; it is a download and needs the owner's go.
+probes normalise each render), so that a quiet week is heard as one. The instruments are Surge XT (open source, GPL, run as a plugin
+through Pedalboard and used as a tool), installed with the owner's go; every note is played at its exact
+just frequency (the nearest MIDI note, bent the rest of the way), with the oscillators' drift off and their
+phase retriggered, so the renders stay bit-identical.
 
 ## Open
 
-- whether names other than the topic's own may be sung in a headline;
+- whether names other than the topic's own may be sung in a line (in week 44: three party names);
+- whether a market's question may stand in for news when no outlet carried a topic (week 44: two of three
+  tracks);
 - whether a politician may be the subject of a topic track at all (in W44 all three were political);
 - the stems desk: each layer of a pressing as a channel to filter, loop and mix, two weeks against each
   other.
