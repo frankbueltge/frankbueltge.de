@@ -106,10 +106,21 @@ def europepmc_payload(hits=1):
     ]}}
 
 
+def openalex_payload(count=2):
+    return {"meta": {"count": count}, "results": [
+        {"id": "https://openalex.org/W1", "display_name": "Loop engineering at scale",
+         "publication_date": ago(3).strftime("%Y-%m-%d")},
+        {"id": "https://openalex.org/W2", "display_name": "Loop engineering, a review",
+         "publication_date": ago(20).strftime("%Y-%m-%d")},
+    ]}
+
+
 def route(request):
     url = str(request.url)
     if "api.crossref.org" in url:
         return httpx.Response(200, json=crossref_payload())
+    if "api.openalex.org" in url:
+        return httpx.Response(200, json=openalex_payload())
     if "europepmc" in url:
         return httpx.Response(200, json=europepmc_payload())
     if "hn.algolia.com" in url:
@@ -139,6 +150,7 @@ def route(request):
     ("reddit", {"d1": 1, "d7": 1, "d30": 2, "capped": False}),
     ("crossref", {"d1": 0, "d7": 1, "d30": 2, "capped": False}),
     ("europepmc", {"d1": 1, "d7": 1, "d30": 1, "capped": False}),
+    ("openalex", {"d1": 0, "d7": 1, "d30": 2, "capped": False}),
 ])
 def test_each_platform_counts_its_own_documents_into_the_three_windows(platform, expected):
     outcomes, report = tracker.track_platform(ctx(route), platform, [PLAIN], log=lambda s: None)
@@ -510,3 +522,23 @@ def test_github_splits_a_long_alias_list_below_its_operator_limit():
     tracker.track_platform(ctx(handler), "github", [many], log=lambda s: None)
     assert len(seen) == 2
     assert all(q.count(" OR ") <= 5 for q in seen)
+
+
+def test_openalex_key_goes_to_openalex_only_and_never_into_the_url(monkeypatch):
+    monkeypatch.setenv("OPENALEX_API_KEY", "k-123")
+    seen = {}
+
+    def handler(request):
+        seen[request.url.host] = (request.headers.get("authorization"), str(request.url))
+        if request.url.host == "api.openalex.org":
+            return httpx.Response(200, json=openalex_payload(count=500))
+        return httpx.Response(200, json=github_payload())
+    client = make_client(handler)
+    c = tracker.make_context(client, rules={}, now=NOW)
+    c.throttles = {p: 0.0 for p in tracker.PLATFORMS}
+    outcomes, _ = tracker.track_platform(c, "openalex", [PLAIN], log=lambda s: None)
+    tracker.track_platform(c, "github", [PLAIN], log=lambda s: None)
+    assert seen["api.openalex.org"][0] == "Bearer k-123"
+    assert "k-123" not in seen["api.openalex.org"][1]
+    assert seen["api.github.com"][0] != "Bearer k-123"
+    assert outcomes["loop-engineering"].counts["capped"] is True
