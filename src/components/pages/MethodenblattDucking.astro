@@ -83,18 +83,17 @@ const record = book.record
         <b class="text-fg">The crowd.</b> Several voices read a seeded random sample of the labels of the week the round ends,
         each label once. Of {fmtCount(sample.labels)} distinct labels that name no field, {fmtCount(sample.long)} are left out as too
         long to read in passing and {fmtCount(sample.unreadable)} because they carry a non-Latin script or an emoji the voices cannot
-        say, so the crowd is more Latin-script than the charts are. {fmtCount(sample.stopped)} more fall to a stop list of words for sex,
-        killing, death, crime and accidents, a few swear words and web addresses, because a machine reading those aloud out of
-        context would be a statement the ledger does not make. It is a blunt list: it can catch the innocent and miss the rest, and
-        war headlines without those words stay in. It is in the script. {fmtCount(sample.spoken)} labels are spoken; the sample is drawn
-        once per round, and it loops.
+        say, so the crowd is more Latin-script than the charts are. Left out as well, because a voice would spell them out sign by
+        sign: web addresses, code and formulas, {sample.stopped ? fmtCount(sample.stopped) : 'none'} this round. Nothing is left out for what it says: since
+        2026-11-08 the crowd reads the charts’ words as they stand, deaths, crimes, sex and swearing among them. The rule is in the
+        script. {fmtCount(sample.spoken)} labels are spoken; the sample is drawn once per round, and it loops.
       </li>
       <li>
         <b class="text-fg">The record.</b> One recording of the {Math.round((Date.parse(record.to) - Date.parse(record.from)) / 86400000) + 1} days from {record.from} to {record.to}, played at {record.day} seconds
         a day. Of {fmtCount(record.sample.signals)} signals that named a field in those days, {fmtCount(record.sample.readable)} distinct headlines can be
-        read aloud: the label itself names the field, it has at least three words, it is not too long, and it passes the crowd’s
-        stop list, so the record is more Latin-script and less violent than the ledger. App stores, code hosts and coin charts are left
-        out, because they name things and say nothing. {fmtCount(record.sample.spoken)} headlines are spoken. Each field gets a number of them in proportion to
+        read aloud: the label itself names the field, it has at least three words, it is not too long, and it holds nothing the
+        voices cannot say, by the crowd’s rule, so the record is more Latin-script than the ledger. Nothing is left out for what it
+        says. App stores, code hosts and coin charts are left out, because they name things and say nothing. {fmtCount(record.sample.spoken)} headlines are spoken. Each field gets a number of them in proportion to
         its signals in those days, at least one if it has any, spread evenly along its own signals, so that a dense week stays dense.
         Each is read once at the same level by its field’s voice, on about the day it was counted, later if that voice is still speaking.
         So on the record a field is heard by how often it speaks, not by how loud. The crowd is held at a seventh of its amplitude behind the closed filter while it plays. The faders go on showing
@@ -137,6 +136,7 @@ const record = book.record
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">6. Change log</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>2026-11-08, night — nothing is left out for what it says. Until now a stop list kept a label or a headline off the crowd and the record when it held a word for sex, killing, death, crime or accidents, a swear word, a web address or a dollar sign, on the reasoning that a machine reading those aloud would make a statement the ledger does not. In the round after cycle 012 it kept 118 of 774 readable headlines off the record, 88 of them war and violence and 14 that named a sum in dollars, and 133 labels off the crowd; matching fragments of words, it also silenced “programming”, “skill”, “scraped” and “Essex”. The crowd and the record now read the charts’ words as they stand. Only a web address, code or a formula, which a voice would spell out sign by sign, and a script the voices cannot say stay out. Both were rendered again; the fields’ own readings did not change.</li>
       <li>2026-11-02, evening — AI’s fader counts AI and its harms. A headline counts only if it names AI and a harm together: work lost, risk and loss of control, misuse, lawsuits and bans, the bubble, energy and water, people, slop. Until now every mention of AI counted, and most of the field was app-store entries, product news and developer posts, which the record read aloud. About one in seven of those signals names a harm. Levels before and after this day do not compare; the crowd and the record were rendered again.</li>
       <li>2026-11-02, later — the map grows to thirteen fields: nature, air and water leaves the climate field, debt, work and the cost of living joins, war takes in the violence beyond it. The round after cycle 011 took the two new faders the same evening rather than waiting for the next briefing: their lines were not in that briefing, and were written from the map’s sources, each figure read at the publisher’s own page. The monitored-wildlife matter moved from climate to nature, war took a line on homicide and inequality one on femicide, and the whole round was rendered again, at a lower bitrate (voices 40 kbps, the crowd and the record 64), so that thirteen channels still stay under the six megabytes a phone is asked to load. A voice now belongs to its field, not to its place on the desk, so every field keeps the voice it had.</li>
       <li>2026-11-02 — the channels are now the eleven fields of the ecology’s map instead of the ten matters of one briefing, so that a fader means the same from round to round and the record can be read across time. Each voice reads where its field stands, then the briefing’s matters in it. The play button became the record: real headlines, read by field, with the crowd held back. The first version’s lines below stay as they were.</li>
