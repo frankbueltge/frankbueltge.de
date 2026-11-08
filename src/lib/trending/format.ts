@@ -65,6 +65,7 @@ const PLATFORM_LABEL: Record<string, string> = {
   humanitarian: 'Humanitarian desk',
   crossref: 'Crossref',
   europepmc: 'Europe PMC',
+  openalex: 'OpenAlex',
 }
 
 export function platformLabel(id: string): string {

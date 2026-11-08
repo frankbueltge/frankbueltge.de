@@ -12,6 +12,7 @@ name: Trending nightly
 # Secrets (Settings → Secrets and variables → Actions) and one variable:
 #   CF_ANALYTICS_TOKEN — Cloudflare API token, Zone · Analytics · Read for frankbueltge.de.
 #                        Missing: the audience half records status "unavailable" with a note.
+#   OPENALEX_API_KEY   — OpenAlex API key (free). Missing: the openalex counter reports 429s.
 #   CF_ZONE_ID         — repository VARIABLE (not secret): the zone id of frankbueltge.de.
 #
 # A committed day file is never rewritten (the archive rule): the pipeline refuses to overwrite
@@ -70,6 +71,8 @@ jobs:
         env:
           CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # OpenAlex's free key (2026-11-08): sent only to api.openalex.org, as a header.
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
           CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
         run: |
           # The dress rehearsal: the same run, the same secrets, the same archive as history —
@@ -130,6 +133,8 @@ jobs:
           # The built-in token lifts GitHub's search limit from 10 to 30 requests a minute for
           # the term tracker; the pipeline runs unauthenticated (slower) when it is absent.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # OpenAlex's free key (2026-11-08): sent only to api.openalex.org, as a header.
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
           CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
         run: python -m trending.run --repo-root .
       - name: Commit
