@@ -63,5 +63,47 @@ export function frameDist(
       }
     }
   }
+  // Since 2026-11-08: the artifacts the Field and the Atelier publish as pages of their own
+  // (<ns>/artifacts/<slug>/ and, since the programme, <ns>/artifacts/cycle-NNN/<slug>/) are works a
+  // visitor reaches from /ecology and the front page just as a Studio work, and had no way back.
+  // They get the same frame. A page the site renders itself carries the house's head and is left.
+  for (const ns of ARTIFACT_NAMESPACES) {
+    for (const { file, slug } of artifactPages(join(dist, ns, 'artifacts'))) {
+      report.pages++
+      try {
+        const before = readFileSync(file, 'utf8')
+        if (/<html\b[^>]*\bdata-skin=/i.test(before)) continue
+        const after = frameStandaloneWork(before, ns, wallText(ns, slug))
+        if (after !== before) {
+          writeFileSync(file, after)
+          report.reframed++
+        }
+      } catch (e) {
+        report.failed.push(`${ns}/artifacts/${slug}: ${(e as Error).message}`)
+      }
+    }
+  }
   return report
+}
+
+/** The practices whose published artifacts stand as pages under <ns>/artifacts/. */
+export const ARTIFACT_NAMESPACES = ['atelier', 'field'] as const
+
+/** An artifact's own page: artifacts/<slug>/index.html, or artifacts/cycle-NNN/<slug>/index.html. */
+export function artifactPages(root: string): { file: string; slug: string }[] {
+  if (!existsSync(root)) return []
+  const out: { file: string; slug: string }[] = []
+  for (const entry of readdirSync(root, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue
+    if (/^cycle-\d+$/.test(entry.name)) {
+      for (const inner of readdirSync(join(root, entry.name), { withFileTypes: true })) {
+        const file = join(root, entry.name, inner.name, 'index.html')
+        if (inner.isDirectory() && existsSync(file)) out.push({ file, slug: inner.name })
+      }
+    } else {
+      const file = join(root, entry.name, 'index.html')
+      if (existsSync(file)) out.push({ file, slug: entry.name })
+    }
+  }
+  return out
 }

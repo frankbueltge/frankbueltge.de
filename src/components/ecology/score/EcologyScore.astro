@@ -70,11 +70,13 @@ const details = record.cycles.map((c) => {
   const relations = relIn(c.n)
   return {
     n: c.n,
-    source: row.source ? W.source[row.source] : null,
+    source: inProgramme && prog!.firstCycle !== null && c.n >= prog!.firstCycle ? W.detail.step(stepOf(c.n, prog!.firstCycle)!) : row.source ? W.source[row.source] : null,
     dates: W.dates(c.opened, c.closed),
     question: c.question ?? W.noQuestion,
     findings: row.findings,
     presentations: record.things.filter((t) => t.kind === 'presentation' && t.cycle === c.n),
+    // the running cycle's works and artifacts, shown live while no presentation stands (2026-11-08)
+    pieces: c.closed === null ? ORDER.flatMap((p) => piecesIn(record.things, p, c.n).filter((t) => !t.withdrawn)) : [],
     stats: [
       // a cycle's sessions are the ones its practices label with it — the convening after it is
       // in its days, but its sessions are not the cycle's (2026-10-17)
@@ -246,6 +248,13 @@ const firstRelation = record.relations[0]?.date ?? null
                   </p>
                 ))}
               </div>
+            )}
+            {d.presentations.length === 0 && d.pieces.length > 0 && (
+              <p class="sc-detail-links">
+                {d.pieces.map((t) => (
+                  <a class={`pp-voice-${t.house}`} href={url(t.href)}>{W.detail.piece(t.title, name(t.house as PracticeId))} →</a>
+                ))}
+              </p>
             )}
             {d.presentations.length > 0 && (
               <p class="sc-detail-links">
