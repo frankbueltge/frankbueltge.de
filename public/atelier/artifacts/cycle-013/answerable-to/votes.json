@@ -1,0 +1,64 @@
+{
+  "_note": "Who votes over each owner of the Field's record, as the owners' own proxy statements state it. Read 2026-11-08. One entry per owner category of the Field's results65.json. 'held' lists named holders with their stated percentage; 'measure' says what the percentage is. Owners for which this work found no voting table carry held: [] and table: false.",
+  "read": "2026-11-08",
+  "owners": {
+    "Google": {
+      "company": "Alphabet Inc.",
+      "table": true,
+      "measure": "percent of total voting power, as of 2025-04-08 (Class B carries ten votes per share)",
+      "held": [["Larry Page", 27.1], ["Sergey Brin", 25.2]],
+      "kind": "founders",
+      "source": "https://www.sec.gov/Archives/edgar/data/1652044/000130817925000511/goog012701-def14a.htm",
+      "passage": "Larry Page | 389,051,160 | 45.5 | 27.1 ... Sergey Brin | 362,766,628 | 42.4 | 25.2 (Class B shares, % of Class B, Total Voting Power %)"
+    },
+    "Meta": {
+      "company": "Meta Platforms, Inc.",
+      "table": true,
+      "measure": "percent of total voting power, as of 2025-04-01 (Class B carries ten votes per share)",
+      "held": [["Mark Zuckerberg", 61.0]],
+      "kind": "founders",
+      "source": "https://www.sec.gov/Archives/edgar/data/1326801/000132680125000040/meta-20250417.htm",
+      "passage": "Mark Zuckerberg | 141,000 | * | 342,606,985 | 99.8 | 61.0"
+    },
+    "CoreWeave": {
+      "company": "CoreWeave, Inc.",
+      "table": true,
+      "measure": "percent of total voting power, as of 2026-04-15 (Class B carries ten votes per share)",
+      "held": [["Michael Intrator", 38.70], ["Brian Venturo", 20.30], ["Brannin McBee", 14.59]],
+      "kind": "founders",
+      "source": "https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/Proxy-Statement.pdf",
+      "passage": "Michael Intrator ... 38.70 % ... Brannin McBee ... 14.59 % ... Brian Venturo ... 20.30 %"
+    },
+    "Oracle": {
+      "company": "Oracle Corporation",
+      "table": true,
+      "measure": "percent of class (one class of common stock reported), 2025 proxy statement",
+      "held": [["Lawrence J. Ellison", 40.6]],
+      "kind": "founder, below a majority",
+      "source": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525220801/d72066ddef14a.htm",
+      "passage": "Lawrence J. Ellison (2) | 1,158,232,353 | 40.6%"
+    },
+    "Amazon": {
+      "company": "Amazon.com, Inc.",
+      "table": true,
+      "measure": "percent of class, as of 2025-02-24 (one class of common stock)",
+      "held": [["Jeffrey P. Bezos", 9.6], ["The Vanguard Group", 7.3], ["BlackRock", 5.9]],
+      "kind": "dispersed",
+      "source": "https://www.sec.gov/Archives/edgar/data/1018724/000110465925033442/tm252295-1_def14a.htm",
+      "passage": "Jeffrey P. Bezos ... 9.6% / The Vanguard Group, Inc. ... 7.3% / BlackRock, Inc. ... 5.9%"
+    },
+    "Microsoft": {
+      "company": "Microsoft Corporation",
+      "table": true,
+      "measure": "percent of class to be voted, as of 2025-09-30 (all holders above 5 %)",
+      "held": [["The Vanguard Group", 8.95], ["BlackRock", 7.30]],
+      "kind": "dispersed",
+      "source": "https://www.sec.gov/Archives/edgar/data/789019/000119312525245150/d908201ddef14a.htm",
+      "passage": "The Vanguard Group, Inc. ... 8.95% / BlackRock, Inc. ... 7.30%"
+    },
+    "xAI": {"table": false, "held": [], "kind": "no table", "note": "This work found no published voting table for xAI. That is a fact about this search, not about xAI."},
+    "China": {"table": false, "held": [], "kind": "no table", "note": "A bucket of companies based in the People's Republic of China, not an owner (Epoch: 'It does not mean Chinese government ownership of compute')."},
+    "China (smuggled)": {"table": false, "held": [], "kind": "no table", "note": "A modelled volume of export-controlled chips, not an owner."},
+    "Other": {"table": false, "held": [], "kind": "no table", "note": "Everyone the record does not name."}
+  }
+}
