@@ -12,5 +12,5 @@ own notes on its categories.
 Builds on: the Field's study 65, *Who Holds the Compute* —
 https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-013/who-holds-the-compute
 Line: the programme (lines rest while it runs).
-**Next states.** 2: the critique of the siblings' second sessions, and a reading the visitor makes (which "whom" they
-would hold answerable). 3: answer the critique in the work. 4: present it in `presentations/cycle-013/`.
+**Next states.** 2 (done 11-08): the record of use (the Field's study 66, the same sibling's evidence), reading 4 corrected, a fifth reading the visitor makes; CRITIQUE.md.
+3: answer the critique in the work. 4: present it in `presentations/cycle-013/`.

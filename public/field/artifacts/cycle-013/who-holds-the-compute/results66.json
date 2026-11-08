@@ -1,0 +1,120 @@
+{
+ "n_first": 19,
+ "n_secondary": 2,
+ "users_first": [
+  "Anthropic",
+  "Meta",
+  "OpenAI"
+ ],
+ "providers_openai": [
+  "Amazon",
+  "Cerebras",
+  "CoreWeave",
+  "Microsoft",
+  "NVIDIA (operator not named)",
+  "Oracle"
+ ],
+ "with_chips": [
+  "A10",
+  "A12",
+  "A15"
+ ],
+ "with_usd": [
+  "A01",
+  "A03",
+  "A04",
+  "A05",
+  "A06",
+  "A07",
+  "A11",
+  "A12",
+  "A14",
+  "A15",
+  "A16",
+  "A17",
+  "A18",
+  "A19"
+ ],
+ "with_gw": [
+  "A02",
+  "A07",
+  "A08",
+  "A09",
+  "A10",
+  "A11",
+  "A12",
+  "A13",
+  "A15"
+ ],
+ "usd_by_user": {
+  "OpenAI": 410.4,
+  "Anthropic": 180,
+  "Meta": 50.2
+ },
+ "gw_by_user": {
+  "OpenAI": 12.25,
+  "Anthropic": 12.3
+ },
+ "owner_and_user": [
+  "Google",
+  "xAI"
+ ],
+ "joined_by_name": 14,
+ "q4_2025_share": {
+  "Amazon": 11.7,
+  "China": 5.52,
+  "China (smuggled)": 3.16,
+  "CoreWeave": 3.98,
+  "Google": 24.13,
+  "Meta": 11.0,
+  "Microsoft": 16.32,
+  "Oracle": 5.47,
+  "Other": 16.07,
+  "xAI": 2.65
+ },
+ "studio_check": {
+  "owner_sum_gap": 0,
+  "worst_gap_vs_total": 0.81,
+  "worst_gap_vs_ex_smuggled": 0.0,
+  "five_area_minus_label_max": 2.39,
+  "at": "2025-06-30"
+ },
+ "predictions": [
+  {
+   "id": "P60",
+   "text": "At least three of the five frontier developers have a disclosed agreement with a provider other than themselves.",
+   "held": true,
+   "result": "3 of 5 in first-hand texts (Anthropic, Meta, OpenAI); Google only in a news report (renting from xAI); xAI rents from providers it does not name"
+  },
+  {
+   "id": "P61",
+   "text": "None of the disclosed agreements names a state-held provider.",
+   "held": true,
+   "result": "0 of 19; every provider is a listed or private company"
+  },
+  {
+   "id": "P62",
+   "text": "OpenAI's disclosed agreements involve at least four distinct providers.",
+   "held": true,
+   "result": "6: Amazon, Cerebras, CoreWeave, Microsoft, NVIDIA (operator not named), Oracle"
+  },
+  {
+   "id": "P63",
+   "text": "Fewer than half of the disclosed agreements state a quantity in chips or H100-equivalents.",
+   "held": true,
+   "result": "3 of 19 state chips (A10, A12, A15); none states H100-equivalents; 14 state money, 9 state power"
+  },
+  {
+   "id": "P64",
+   "text": "OpenAI and Anthropic appear as owners in none of Epoch's owner rows.",
+   "held": true,
+   "result": "owner rows: Amazon, China, China (smuggled), CoreWeave, Google, Meta, Microsoft, Oracle, Other, xAI"
+  },
+  {
+   "id": "P65",
+   "text": "The Studio's parcel areas agree with this study's owner shares within 0.1 points in every quarter.",
+   "held": false,
+   "result": "owner sums identical in all 17 quarters (largest gap 0 H100e); the areas are shares of the stock without smuggled chips, where they agree to 0.0 points, so against this study's shares one parcel is off by up to 0.81 points and the five red parcels cover up to 2.39 points more than the 68.6 %-style label (2025-06-30)"
+  }
+ ]
+}

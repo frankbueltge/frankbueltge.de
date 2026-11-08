@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "bc3bab9b284516d2"
+        "sha256": "de065b3a25936000"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "b804b23315260381"
+        "sha256": "04d494f1055d48a7"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -43,7 +43,7 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "f784771de6be11ff",
+        "sha256": "8db0c43877913520",
         "files": 63
       },
       {
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 618,
-      "edges": 551,
+      "nodes": 619,
+      "edges": 552,
       "nodesByKind": {
-        "decision": 182,
+        "decision": 183,
         "encounter": 6,
         "neighbor": 155,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 228,
         "neighbor-of": 158,
         "participates": 17,
-        "touches": 133
+        "touches": 134
       }
     }
   },
@@ -1863,6 +1863,16 @@
     {
       "id": "decision:2026-11-08-2",
       "kind": "decision",
+      "label": "Common Ground reads wider, and the map goes on during a programme",
+      "date": "2026-11-08",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Common Ground reads wider, and the map goes on during a programme"
+      }
+    },
+    {
+      "id": "decision:2026-11-08-3",
+      "kind": "decision",
       "label": "The selected works go out on Bluesky on their own",
       "date": "2026-11-08",
       "source": {
@@ -1871,7 +1881,7 @@
       }
     },
     {
-      "id": "decision:2026-11-08-3",
+      "id": "decision:2026-11-08-4",
       "kind": "decision",
       "label": "The architect sets the programme's question once",
       "date": "2026-11-08",
@@ -1881,7 +1891,7 @@
       }
     },
     {
-      "id": "decision:2026-11-08-4",
+      "id": "decision:2026-11-08-5",
       "kind": "decision",
       "label": "The architect can say go on the programme's choice",
       "date": "2026-11-08",
@@ -1891,7 +1901,7 @@
       }
     },
     {
-      "id": "decision:2026-11-08-5",
+      "id": "decision:2026-11-08-6",
       "kind": "decision",
       "label": "The ecology runs one research programme",
       "date": "2026-11-08",
@@ -7121,7 +7131,7 @@
         "file": "src/content/studio/works/2026-11-08-no-public-land/meta.json",
         "quote": "\"title\": \"NO PUBLIC LAND\""
       },
-      "embodies": "Five companies hold 68.6 % of the AI chip compute the open record counts at the end of 2025 (90 %: 63-73 %); the counted land grew 334-fold since March 2022; the record has no owner row for a state or a public.",
+      "embodies": "Five companies hold 70.9 % of the land the open record's chip-owner table draws at the end of 2025, and 68.6 % of every chip it counts with the smuggled stock (90 %: 63-73 %); the counted land grew 334-fold since March 2022; the owner table has no column for a state or a public, and only the cluster list, covering a fraction, stakes public ground (132 public and 45 public/private clusters standing at the end of 2025).",
       "medium": "A 2D canvas cadastre drawn per pixel, with Web Audio: one land parcelled by owner, every quarter of the record."
     },
     {
@@ -13094,6 +13104,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "scripts/common-time/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-08-2",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/trending/src/trending/sources/{science_press,humanitarian}.py"
       }
     }
   ]

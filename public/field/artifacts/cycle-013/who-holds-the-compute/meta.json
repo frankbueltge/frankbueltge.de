@@ -5,12 +5,101 @@
  "status": "in progress",
  "cycle": 13,
  "programme_step": 1,
- "medium": "Study page (study 65): three interactive figures drawn by script with no library; numbers from analyse65.py",
- "embodies": "Five companies hold about 69 % (90 %: 63-73 %) of the AI chip compute the open record counts at the end of 2025, up about 7 points since early 2024 and flat for two quarters; the newest published 75.8 % rests on an unfinished quarter; the record has no category for states, counts ownership not use, and models smuggled chips within a 5.4-fold range.",
+ "medium": "Study page (studies 65-66): four interactive figures drawn by script with no library; numbers from analyse65.py and analyse66.py",
+ "embodies": "Five companies hold about 69 % (90 %: 63-73 %) of the AI chip compute the open record counts at the end of 2025, flat for two quarters; the newest published 75.8 % rests on an unfinished quarter; the record has no category for states and counts ownership, not use. The use record crosses it: OpenAI and Anthropic own none of the counted chips but have published commitments of at least $590 billion to nine providers; xAI, an owner, rents its chips to Anthropic; only 3 of 19 published agreements state a number of chips, none in H100-equivalents.",
  "data_sources": [
-  {"url": "https://epoch.ai/data/ai_chip_owners_cumulative_by_designer.csv", "what": "Epoch AI, AI chip owners, cumulative by designer (CC BY 4.0), copied in data/"},
-  {"url": "https://epoch.ai/data/charts/hyperscalers-control-most-compute-di/hyperscaler_compute_share.csv", "what": "Epoch AI, hyperscaler compute share by quarter (CC BY 4.0), copied in data/"},
-  {"url": "https://epoch.ai/data/gpu_clusters.csv", "what": "Epoch AI, GPU clusters (CC BY 4.0), rebuilt into data/gpu_clusters.json (first 13 columns)"}
+  {
+   "url": "https://epoch.ai/data/ai_chip_owners_cumulative_by_designer.csv",
+   "what": "Epoch AI, AI chip owners, cumulative by designer (CC BY 4.0), copied in data/"
+  },
+  {
+   "url": "https://epoch.ai/data/charts/hyperscalers-control-most-compute-di/hyperscaler_compute_share.csv",
+   "what": "Epoch AI, hyperscaler compute share by quarter (CC BY 4.0), copied in data/"
+  },
+  {
+   "url": "https://epoch.ai/data/gpu_clusters.csv",
+   "what": "Epoch AI, GPU clusters (CC BY 4.0), rebuilt into data/gpu_clusters.json (first 13 columns)"
+  },
+  {
+   "url": "https://openai.com/index/next-chapter-of-microsoft-openai-partnership/",
+   "what": "Microsoft and OpenAI, compute agreement of 2025-10-28 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://openai.com/index/stargate-advances-with-partnership-with-oracle/",
+   "what": "Oracle and OpenAI, compute agreement of 2025-07-22 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000014/crwv-20250331.htm",
+   "what": "CoreWeave and OpenAI, compute agreement of 2025-03-31 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000119312525216497/d17274d8k.htm",
+   "what": "CoreWeave and OpenAI, compute agreement of 2025-09-23 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://www.aboutamazon.com/news/aws/aws-open-ai-workloads-compute-infrastructure",
+   "what": "Amazon and OpenAI, compute agreement of 2025-11-03 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://openai.com/index/amazon-partnership",
+   "what": "Amazon and OpenAI, compute agreement of 2026-02-27 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://openai.com/index/cerebras-partnership/",
+   "what": "Cerebras and OpenAI, compute agreement of 2026-01-14 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://openai.com/index/scaling-ai-for-everyone/",
+   "what": "NVIDIA (operator not named) and OpenAI, compute agreement of 2026-02-27 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services",
+   "what": "Google and Anthropic, compute agreement of 2025-10-23 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships",
+   "what": "Microsoft and Anthropic, compute agreement of 2025-11-18 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://www.anthropic.com/news/anthropic-amazon-compute",
+   "what": "Amazon and Anthropic, compute agreement of 2026-04-20 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://www.anthropic.com/news/google-broadcom-partnership-compute",
+   "what": "Google and Anthropic, compute agreement of 2026-04-06 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://fluidstack.io/press/fluidstack-selected-by-anthropic-to-deliver-custom-data-centers-in-the-us",
+   "what": "Fluidstack and Anthropic, compute agreement of 2025-11-12 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://www.anthropic.com/news/higher-limits-spacex",
+   "what": "xAI and Anthropic, compute agreement of 2026-05-06 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000193/formars.pdf",
+   "what": "CoreWeave and Meta, compute agreement of 2025-09-30 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+   "what": "CoreWeave and Meta, compute agreement of 2026-03-31 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://nebius.com/blog/posts/digest-november-2025",
+   "what": "Nebius and Meta, compute agreement of 2025-11-11 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta",
+   "what": "Nebius and Meta, compute agreement of 2026-03-16 (study 66; passage in data/agreements66.json)"
+  },
+  {
+   "url": "https://openai.com/policies/sub-processor-list",
+   "what": "OpenAI sub-processor list, cloud infrastructure providers (study 66)"
+  },
+  {
+   "url": "https://trust.anthropic.com/subprocessors",
+   "what": "Anthropic sub-processor list, cloud infrastructure providers (study 66)"
+  }
  ],
  "pages_read": [
   "https://epoch.ai/data-insights/hyperscalers-control-most-compute",
@@ -18,6 +107,6 @@
   "https://epoch.ai/data/gpu-clusters",
   "https://epoch.ai/data-insights/ai-supercomputers-performance-share-by-country"
  ],
- "retrieval": "Direct requests from this machine were refused by its network; all files and pages were read through a web-research extraction service on 2026-11-08. Byte identity with Epoch's files is not checked. The cluster file arrived with line breaks flattened (parse_clusters65.py); two cluster names keep stray quote marks.",
- "predictions": "PREDICTIONS65.md, committed in 9fe601a before any data was read; 4 of 6 held"
+ "retrieval": "Direct requests from this machine were refused by its network; all files and pages were read through a web-research extraction service on 2026-11-08. Byte identity with Epoch's files is not checked. The cluster file arrived with line breaks flattened (parse_clusters65.py); two cluster names keep stray quote marks. Study 66: pages and filings read through web-research search and fetch services on 2026-11-08; quotes are copied from what they returned.",
+ "predictions": "PREDICTIONS65.md (9fe601a, 4 of 6 held); PREDICTIONS66.md (ba140d7, 5 of 6 held)"
 }

@@ -87,8 +87,31 @@ def views_payload(days=31, per_day=100):
     return {"items": items}
 
 
+def crossref_payload():
+    def item(doi, title, days):
+        return {"DOI": doi, "title": [title],
+                "created": {"date-time": ago(days).strftime("%Y-%m-%dT%H:%M:%SZ")}}
+    return {"status": "ok", "message": {"total-results": 3, "items": [
+        item("10.1/a", "Loop engineering for laboratories", 2.0),
+        item("10.1/b", "Engineering a loop: not the phrase", 1.0),
+        item("10.1/c", "Notes on loop-engineering", 15.0),
+    ]}}
+
+
+def europepmc_payload(hits=1):
+    return {"hitCount": hits, "resultList": {"result": [
+        {"id": "41000001", "source": "MED", "title": "Loop engineering in clinics.",
+         "firstIndexDate": ago(0.5).strftime("%Y-%m-%d")},
+        {"id": "PPR1", "source": "PPR", "title": "", "firstIndexDate": ago(2).strftime("%Y-%m-%d")},
+    ]}}
+
+
 def route(request):
     url = str(request.url)
+    if "api.crossref.org" in url:
+        return httpx.Response(200, json=crossref_payload())
+    if "europepmc" in url:
+        return httpx.Response(200, json=europepmc_payload())
     if "hn.algolia.com" in url:
         return httpx.Response(200, json=hn_payload())
     if "news.google.com" in url:
@@ -114,6 +137,8 @@ def route(request):
     ("github", {"d1": 1, "d7": 2, "d30": 3, "capped": False}),
     ("arxiv", {"d1": 1, "d7": 1, "d30": 2, "capped": False}),
     ("reddit", {"d1": 1, "d7": 1, "d30": 2, "capped": False}),
+    ("crossref", {"d1": 0, "d7": 1, "d30": 2, "capped": False}),
+    ("europepmc", {"d1": 1, "d7": 1, "d30": 1, "capped": False}),
 ])
 def test_each_platform_counts_its_own_documents_into_the_three_windows(platform, expected):
     outcomes, report = tracker.track_platform(ctx(route), platform, [PLAIN], log=lambda s: None)
@@ -436,3 +461,52 @@ def test_without_a_token_github_is_throttled_to_the_unauthenticated_rate(monkeyp
     assert context.throttle_for("github") == 7.0
     assert TermContext(client=client, now=NOW, rules={},
                        github_authenticated=True).throttle_for("github") == 2.0
+
+
+# ---------------------------------------------------------------- the platforms of 2026-11-08
+
+def test_reddit_left_the_arcs_and_two_scholarly_indexes_joined():
+    assert "reddit" not in tracker.PLATFORMS and "reddit" in tracker.RETIRED_PLATFORMS
+    assert {"crossref", "europepmc"} <= set(tracker.PLATFORMS)
+    assert all(p in tracker.PLATFORM_META for p in tracker.PLATFORMS)
+
+
+def test_crossref_counts_a_work_only_when_the_phrase_stands_in_its_title():
+    outcomes, _ = tracker.track_platform(ctx(route), "crossref", [PLAIN], log=lambda s: None)
+    urls = [r["url"] for r in outcomes["loop-engineering"].receipts]
+    assert urls == ["https://doi.org/10.1/a", "https://doi.org/10.1/c"]
+
+
+def test_crossref_says_it_may_undercount_when_the_last_row_still_matches(monkeypatch):
+    monkeypatch.setattr(tracker, "CROSSREF_ROWS", 1)
+
+    def handler(request):
+        return httpx.Response(200, json={"message": {"items": [
+            {"DOI": "10.1/a", "title": ["Loop engineering"],
+             "created": {"date-time": ago(1).strftime("%Y-%m-%dT%H:%M:%SZ")}}]}})
+    outcomes, _ = tracker.track_platform(ctx(handler), "crossref", [PLAIN], log=lambda s: None)
+    assert outcomes["loop-engineering"].counts["capped"] is True
+
+
+def test_europepmc_asks_once_per_term_with_its_own_phrase_and_date_syntax():
+    seen = []
+
+    def handler(request):
+        seen.append(str(request.url))
+        return httpx.Response(200, json=europepmc_payload(hits=1500))
+    outcomes, report = tracker.track_platform(ctx(handler), "europepmc", [TERM], log=lambda s: None)
+    assert len(seen) == 1 and "FIRST_IDATE" in seen[0] and "TITLE%3A%22loop-engineering%22" in seen[0]
+    assert outcomes["loop-engineering"].counts["capped"] is True
+    assert outcomes["loop-engineering"].receipts[0]["url"] == "https://europepmc.org/article/MED/41000001"
+
+
+def test_github_splits_a_long_alias_list_below_its_operator_limit():
+    seen = []
+
+    def handler(request):
+        seen.append(request.url.params["q"])
+        return httpx.Response(200, json=github_payload())
+    many = {**PLAIN, "aliases": [f"alias {n}" for n in range(8)]}  # nine phrases
+    tracker.track_platform(ctx(handler), "github", [many], log=lambda s: None)
+    assert len(seen) == 2
+    assert all(q.count(" OR ") <= 5 for q in seen)

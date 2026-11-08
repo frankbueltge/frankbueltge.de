@@ -95,6 +95,7 @@ interface RawProgramme {
   objected?: string | null
   go?: string | null
   first_step?: string | null
+  set_by?: { who: string; on: string; set_aside: string } | null
   [key: string]: unknown
 }
 
@@ -141,8 +142,11 @@ export function planTurn(
     if (programme.objected) return null // the architect objected: the Middle chooses again
     const go = typeof programme.go === 'string' && programme.go >= programme.chosen_on!
     if (!go && today < addDays(programme.chosen_on!, 1)!) return null // the architect's veto day runs
+    const chose = programme.set_by
+      ? `The architect set the question of its programme on ${programme.set_by.on}, setting aside the ecology's choice (${programme.set_by.set_aside}): ${programme.question!.trim()} `
+      : `The ecology chose the question of its programme on ${programme.chosen_on}: ${programme.question!.trim()} `
     const line =
-      `The ecology chose the question of its programme on ${programme.chosen_on}: ${programme.question!.trim()} ` +
+      chose +
       (go ? `The architect said go on ${programme.go}. ` : `No objection came within a day. `) +
       `Cycle ${pad(n)} opens on ${today} as the programme's first step. ` +
       `Turned by the cycle clock under the rules of 2026-11-08.`

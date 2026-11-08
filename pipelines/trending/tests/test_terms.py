@@ -54,7 +54,7 @@ def test_the_record_has_the_shape_the_contract_names():
                         "promoted", "let_go", "summary", "quality"}
     assert rec["$contract"] == "trending-terms/1"
     assert rec["date"] == "2026-09-02" and rec["generated_at"] == "2026-09-02T12:00:00Z"
-    assert rec["pipeline_version"] == "0.2.0" and rec["method_version"] == "2"
+    assert rec["pipeline_version"] == "0.3.0" and rec["method_version"] == "3"
     assert rec["windows"] == {"d1": 1, "d7": 7, "d30": 30}
     assert [s["id"] for s in rec["sources"]] == list(tracker.PLATFORMS)
     assert all(set(s) == {"id", "name", "url", "status", "note", "retrieved_at"}
@@ -71,15 +71,16 @@ def test_every_term_carries_counts_for_every_platform_and_a_total_without_pagevi
     assert first["counts"]["wikipedia_views"] is None  # no article on this term
     assert all(set(first["counts"][p]) == {"d1", "d7", "d30", "capped"}
                for p in tracker.PLATFORMS if p != "wikipedia_views")
-    # thirty days: hackernews 4 + google_news 3 + github 3 + arxiv 2 + reddit 2, pageviews out
-    assert first["total"] == {"d1": 5, "d7": 9, "d30": 14}
+    # thirty days: hackernews 4 + google_news 3 + github 3 + arxiv 2 + crossref 2
+    # + europepmc 1, pageviews out (Reddit left the arcs on 2026-11-08)
+    assert first["total"] == {"d1": 5, "d7": 10, "d30": 15}
     second = rec["terms"][1]
     assert second["counts"]["wikipedia_views"] == {"d1": 100, "d7": 700, "d30": 3000,
                                                    "capped": False}
     # Pageviews stay out of the total; and the headline guard drops the news items, whose
     # fixture headlines carry no word of this second term.
     assert second["counts"]["google_news"] == {"d1": 0, "d7": 0, "d30": 0, "capped": False}
-    assert second["total"] == {"d1": 4, "d7": 7, "d30": 11}
+    assert second["total"] == {"d1": 4, "d7": 7, "d30": 10}  # Crossref titles never name it; Reddit left the arcs
 
 
 def test_the_terms_keep_the_order_of_the_watchlist():

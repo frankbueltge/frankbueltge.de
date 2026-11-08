@@ -28,8 +28,9 @@ const SITE: Record<string, { html: string; mirrored: boolean }> = {
   'n-1/index.html': { html: frameStandaloneWork(page('Remainder'), 'n-1', null, { atHouseIndex: true }), mirrored: true },
   // a page that names its own preview image
   'atelier/presentations/cycle-008/index.html': { html: page('The Heeded Column').replace('</head>', '<meta property="og:image" content="https://frankbueltge.de/atelier/own.png"></head>'), mirrored: true },
-  // NOT published: a session artifact (working material under the rule), an unlinked sub-page
-  'field/artifacts/2026-10-11-how-far/index.html': { html: page('A session artifact'), mirrored: true },
+  // a Field artifact, published as a page of its own (artifacts/<date>-<slug>/, publication.mjs)
+  'field/artifacts/2026-10-11-how-far/index.html': { html: page('An artifact'), mirrored: true },
+  // NOT published: an unlinked sub-page
   'field/presentations/cycle-007/unlinked/index.html': { html: page('Nobody links here'), mirrored: true },
   // NOT the practices' pages: Arch's bare works, and a page the site renders itself
   'arch/works/the-ledger/index.html': { html: page('An Arch work'), mirrored: true },
@@ -80,6 +81,7 @@ describe('which pages are finished', () => {
     expect(files).toEqual([
       'atelier/presentations/cycle-008/index.html',
       'error-as-method/works-html/2026-10-09-order-words/index.html',
+      'field/artifacts/2026-10-11-how-far/index.html',
       'field/presentations/cycle-007/exposition/index.html',
       'field/presentations/cycle-007/index.html',
       'n-1/index.html',
@@ -91,7 +93,6 @@ describe('which pages are finished', () => {
     const dirs = site()
     await run(dirs)
     for (const path of [
-      'field/artifacts/2026-10-11-how-far/index.html',
       'field/presentations/cycle-007/unlinked/index.html',
       'field/presentations/cycle-007/template.html',
       'error-as-method/works-html/2026-10-09-order-words/makers/m01/first/index.html',
@@ -107,7 +108,7 @@ describe('which pages are finished', () => {
 })
 
 describe('a finished page', () => {
-  it('carries its preview tags, its image and the way back — the strip only where no frame stands', async () => {
+  it('carries its preview tags, its image and the way back — the work frame on every page (2026-11-08)', async () => {
     const dirs = site()
     const report = await run(dirs)
     expect(report.failed).toEqual([])
@@ -115,8 +116,12 @@ describe('a finished page', () => {
     expect(presentation).toContain('<meta property="og:title" content="Where the Near Miss Is Decided">')
     expect(presentation).toContain('<meta property="og:description" content="A near miss is an event that did not happen, so every record of near misses holds a decision.">')
     expect(presentation).toContain('content="https://frankbueltge.de/og/practice/field/presentations/cycle-007.png"')
-    expect(count(presentation, `<nav class="${BACK_MARKER}"`)).toBe(1)
-    expect(presentation).toContain('<a href="/field">The Field</a>')
+    expect(presentation).not.toContain(BACK_MARKER)
+    expect(count(presentation, `<header class="${FRAME_MARKER}"`)).toBe(1)
+    expect(presentation).toContain('<a href="/field">')
+    const artifact = read(dirs.dist, 'field/artifacts/2026-10-11-how-far/index.html')
+    expect(count(artifact, `<header class="${FRAME_MARKER}"`)).toBe(1)
+    expect(artifact).not.toContain(BACK_MARKER)
 
     const work = read(dirs.dist, 'studio/werke-html/2026-10-14-under-warning/index.html')
     expect(work).toContain('content="https://frankbueltge.de/og/practice/studio/werke-html/2026-10-14-under-warning.jpg"')
@@ -130,7 +135,7 @@ describe('a finished page', () => {
     // the images were written where the tags point
     expect(existsSync(join(dirs.dist, imageHref({ href: '/field/presentations/cycle-007/' } as never, 'png')))).toBe(true)
     expect(existsSync(join(dirs.dist, 'og/practice/studio/werke-html/2026-10-14-under-warning.jpg'))).toBe(true)
-    expect(report).toMatchObject({ pages: 6, stills: 1, cards: 4, ownImages: 1, strips: 4 })
+    expect(report).toMatchObject({ pages: 7, stills: 1, cards: 5, ownImages: 1, strips: 0 })
   })
 
   it('keeps an image the page names itself, and makes none for it', async () => {
@@ -172,7 +177,7 @@ describe('the step can run again', () => {
       wallText: () => undefined,
       readWorks: () => new Set(),
     })
-    expect(report.pages).toBe(6)
+    expect(report.pages).toBe(7)
     expect(report.failed.length).toBeGreaterThan(0)
     const html = read(dirs.dist, 'field/presentations/cycle-007/index.html')
     expect(html).toContain('property="og:title"')

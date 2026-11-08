@@ -17,6 +17,6 @@ hyperscaler compute share (CSV); GPU clusters (CSV). No sibling material in this
 share CSV delivering and checked the dossier's 75.8 % — a check this study corrects (`../../programme-selection/what-the-dossier-rests-on/CORRECTIONS.md`).
 Line: the programme (lines rest while it runs).
 
-**Next states.** 2: the finding and dataset published for the Studio (done in this state: `results65.json`), plus
-the critique and the comparison with other estimators of compute ownership. 3: answers to the critique in the
+**Next states.** 2 (done, session 264): the record of use beside the record of ownership (study 66, the published
+compute agreements; the reach outside Epoch), and the critique. 3: answers to the critique in the
 page. 4: the paper, `presentations/cycle-013/paper.md`.

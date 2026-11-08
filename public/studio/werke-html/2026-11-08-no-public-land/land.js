@@ -10,6 +10,11 @@
   const NQ = Q.length;
   const LAST_FULL = NQ - 2; // 2025-12-31; the last quarter is unfinished
   const MAXT = Math.max(...Q.map(q => q.total));
+  const STAKES = D.stakes || [];
+  // a stake stands from its survey until a later phase of the same site replaces it
+  const standing = (m, qi) => m.q <= qi && (m.until === undefined || qi < m.until);
+  function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0) / 4294967296; }
+  STAKES.forEach((m, i) => { const key = (m.n || "anon") + "|" + m.c + "|" + i; m.ha = hash(key) * Math.PI * 2; m.hr = Math.sqrt(hash(key + "r")); });
 
   // fixed owners, fixed homes on the unit land (x east, y south), fixed harmonic of the hum
   const OWN = [
@@ -147,8 +152,8 @@
 
   function layout(st) {
     const narrow = W < 640;
-    const Rmax = Math.min(W * (narrow ? 0.36 : 0.30), H * (narrow ? 0.28 : 0.37));
-    const ox = narrow ? W * 0.5 : W * 0.5, oy = narrow ? H * 0.42 : H * 0.55;
+    const Rmax = Math.min(W * (narrow ? 0.36 : 0.30), H * (narrow ? 0.24 : 0.37));
+    const ox = narrow ? W * 0.5 : W * 0.55, oy = narrow ? H * 0.45 : H * 0.55;
     const R = mode === "true" ? Rmax * Math.sqrt(st.land / MAXT) : Rmax * 0.97;
     const unit = mode === "true" ? Rmax / Math.sqrt(MAXT) : R / Math.sqrt(st.land); // px per sqrt(H100e) / sqrt(pi)
     return { Rmax, ox, oy, R, unit, narrow };
@@ -245,7 +250,7 @@
     if (sm && sm.m > 0) {
       const r = (k) => L.unit * Math.sqrt(k);
       const R = L.R, rh = r(sm.hi);
-      const sxp = L.narrow ? W * 0.25 : L.ox + Math.max(R, 30) * 1.1 + rh + 40;
+      const sxp = L.narrow ? W * 0.24 : L.ox + Math.max(R, 30) * 1.1 + rh + 40;
       const syp = L.narrow ? L.oy + L.Rmax * 1.03 + rh + 20 : L.oy + Math.max(R, 30) * 0.45;
       ctx.fillStyle = "#1d1b18";
       const rm = r(sm.m), n = Math.min(900, Math.round(rm * rm * 0.5));
@@ -255,13 +260,87 @@
       ctx.setLineDash([]);
       if (rh > 8) {
         ctx.font = "12px ui-monospace, Menlo, monospace"; ctx.fillStyle = "#1d1b18";
-        if (L.narrow) { ctx.textAlign = "left"; ctx.fillText("smuggled into China,", sxp + rh + 10, syp - 6); ctx.fillText("modelled, never surveyed", sxp + rh + 10, syp + 9); }
+        if (L.narrow) { ctx.textAlign = "center"; ctx.fillText("smuggled into China,", sxp, syp + rh + 14); ctx.fillText("modelled,", sxp, syp + rh + 28); ctx.fillText("never surveyed", sxp, syp + rh + 42); }
         else { ctx.textAlign = "center"; ctx.fillText("smuggled into China", sxp, syp - rh - 20); ctx.fillText("modelled, never surveyed", sxp, syp - rh - 7); }
       }
       geom.shoal = { x: sxp, y: syp, r: r(sm.hi), v: sm };
     } else if (geom) geom.shoal = null;
+    // the stakes: Epoch's cluster list laid on the land, each at its true area, in its owner's parcel
+    geom.stakes = [];
+    const showStakes = document.getElementById("stk").checked;
+    const qs = Math.min(Math.round(t), LAST_FULL);
+    const px2 = Math.PI * L.unit * L.unit; // px² per H100e
+    const col = [], adrift = [];
+    if (showStakes) {
+      const pw = cv.width;
+      for (const m of STAKES) {
+        if (!standing(m, qs)) continue;
+        const side = Math.sqrt(px2 * m.h);
+        if (m.home === "public" || m.home === "mixed") { col.push({ m, side }); continue; }
+        const k = IDX[m.home];
+        if (k === undefined || !live[k]) { adrift.push({ m, side }); continue; }
+        const rad = Math.sqrt(target[k] / NC) * L.R * 0.95;
+        let f = m.hr, x = 0, y = 0, ok = false;
+        for (let tries = 0; tries < 9 && !ok; tries++, f *= 0.6) {
+          x = L.ox + cx[k] * L.R + f * rad * Math.cos(m.ha);
+          y = L.oy + cy[k] * L.R + f * rad * Math.sin(m.ha);
+          const i = Math.round(y * dpr) * pw + Math.round(x * dpr);
+          ok = own[i] === k;
+        }
+        drawStake(m, x, y, side, false);
+      }
+    }
+    // the column the owner table does not have: a state, a public. It is not a parcel of size zero; it is
+    // a column missing from the record, so it stands off the coast, dashed, and holds only what another list
+    // (the cluster list, 10–20 % of the world's capacity) stakes there.
+    {
+      const cw = L.narrow ? Math.min(W * 0.44, 150) : 132;
+      const cxL = L.narrow ? W * 0.52 : Math.max(16, L.ox - L.Rmax * 1.08 - cw - 24);
+      const top = L.narrow ? L.oy + L.Rmax * 1.08 + 26 : L.oy - L.Rmax * 0.55;
+      // shelf-pack the public stakes, largest first, at the land's own scale; where they would leave the
+      // sheet (early quarters filling the sheet), they are drawn smaller and the column says by how much
+      const room = Math.max(60, H - 70 - (top + 30) - (L.narrow ? 70 : 90));
+      let x = 0, y = 0, shelf = 0, placed = [], shrink = 1;
+      const pad = 3;
+      for (let tries = 0; tries < 30; tries++) {
+        x = 0; y = 0; shelf = 0; placed = [];
+        for (const it of col) {
+          const sd = Math.max(it.side * shrink, 2);
+          if (x + sd > cw - 2 * pad && x > 0) { x = 0; y += shelf + pad; shelf = 0; }
+          placed.push({ it, x: cxL + pad + x + sd / 2, y: top + 30 + pad + y + sd / 2, sd });
+          x += sd + pad; shelf = Math.max(shelf, sd);
+        }
+        if (y + shelf <= room) break;
+        shrink *= 0.85;
+      }
+      const ch = Math.max(56, y + shelf + 2 * pad + 30 + (shrink < 0.999 ? 16 : 0));
+      ctx.strokeStyle = "#1d1b18"; ctx.lineWidth = 1; ctx.setLineDash([5, 4]);
+      ctx.beginPath(); ctx.moveTo(cxL, top + ch); ctx.lineTo(cxL, top); ctx.lineTo(cxL + cw, top); ctx.lineTo(cxL + cw, top + ch); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#1d1b18"; ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+      ctx.font = "bold 12px ui-monospace, Menlo, monospace"; ctx.fillText("STATE · PUBLIC", cxL + 6, top + 14);
+      ctx.font = "11px ui-monospace, Menlo, monospace"; ctx.fillText("no column in the record", cxL + 6, top + 27);
+      if (!showStakes) { ctx.fillText("— (not 0)", cxL + 6, top + 46); }
+      for (const p of placed) drawStake(p.it.m, p.x, p.y, p.it.side * shrink, true);
+      if (shrink < 0.999) { ctx.font = "11px ui-monospace, Menlo, monospace"; ctx.fillStyle = "#8c2f1b"; ctx.fillText(`area shown at 1/${Math.round(1 / (shrink * shrink))}`, cxL + 6, top + ch - 6); }
+      if (showStakes) {
+        let ph = 0, mx = 0; for (const it of col) { if (it.m.home === "public") ph += it.m.h; else mx += it.m.h; }
+        ctx.font = "11px ui-monospace, Menlo, monospace"; ctx.fillStyle = "#1d1b18";
+        const yb = top + ch + 14;
+        ctx.fillText(`${col.filter(i => i.m.home === "public").length} public clusters, ${fmtM(ph)}`, cxL, yb);
+        ctx.fillText(`${col.filter(i => i.m.home === "mixed").length} public/private, ${fmtM(mx)}`, cxL, yb + 14);
+        ctx.fillText("staked by the cluster list,", cxL, yb + 30); ctx.fillText("not by the owner table", cxL, yb + 44);
+      }
+      geom.column = { x: cxL, y: top, w: cw, h: ch };
+      // stakes whose owner has no parcel in this survey (the unfinished quarter lacks rows)
+      if (adrift.length) {
+        let ax = 0; const ay = top + ch + (showStakes ? 66 : 20);
+        ctx.fillText(`${adrift.length} stakes whose owner`, cxL, ay); ctx.fillText("has no row this quarter", cxL, ay + 14);
+        for (const it of adrift) { const sd = Math.max(it.side, 2); drawStake(it.m, cxL + ax + sd / 2, ay + 24 + sd / 2, it.side, true); ax += sd + 3; }
+      }
+    }
     // labels on parcels large enough to carry them
-    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.save(); ctx.textAlign = "center"; ctx.textBaseline = "middle";
     const fullArea = Math.PI * L.R * L.R;
     for (let k = 0; k < K; k++) {
       if (!live[k]) continue;
@@ -270,7 +349,7 @@
       if (pxA < (L.narrow ? 1400 : 2200)) continue;
       const x = L.ox + cx[k] * L.R, y = L.oy + cy[k] * L.R;
       const five = FIVE.has(OWN[k].n);
-      const sh = (100 * st.v[OWN[k].n].m / st.total).toFixed(1) + " %";
+      const sh = (100 * st.v[OWN[k].n].m / st.land).toFixed(1) + " %";
       ctx.font = (five ? "bold " : "") + (L.narrow ? "12px" : "14px") + " Georgia, serif";
       const tw = Math.max(ctx.measureText(OWN[k].n).width, 44);
       ctx.fillStyle = "rgba(239,233,220,.92)"; ctx.fillRect(x - tw / 2 - 5, y - 17, tw + 10, 33);
@@ -278,17 +357,7 @@
       ctx.fillText(OWN[k].n === "Other" ? "everyone else" : OWN[k].n, x, y - 7);
       ctx.font = "11px ui-monospace, Menlo, monospace"; ctx.fillText(sh, x, y + 8);
     }
-    // the record's missing owner: no parcel for a state or a public, staked where one would stand
-    const rhs = L.unit * Math.sqrt(Q[LAST_FULL].owners[SMUG].hi);
-    const px = L.narrow ? W * 0.25 : L.ox - Math.max(L.R, 60) - 90, py = L.narrow ? L.oy + L.Rmax * 1.03 + 2 * rhs + 50 : L.oy + 10;
-    {
-      ctx.strokeStyle = "#1d1b18"; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
-      ctx.strokeRect(px - 22, py - 14, 44, 28); ctx.setLineDash([]);
-      ctx.beginPath(); ctx.moveTo(px - 4, py - 4); ctx.lineTo(px + 4, py + 4); ctx.moveTo(px + 4, py - 4); ctx.lineTo(px - 4, py + 4); ctx.stroke();
-      ctx.font = "12px ui-monospace, Menlo, monospace"; ctx.fillStyle = "#1d1b18"; ctx.textAlign = "center";
-      if (L.narrow) { ctx.textAlign = "left"; ctx.fillText("no row for a state or a public", px + 30, py + 4); }
-      else { ctx.fillText("no row for a state", px, py + 26); ctx.fillText("or a public", px, py + 40); }
-    }
+    ctx.restore();
     // ranges of the hovered parcel: its boundary redrawn at the 5th and 95th percentile
     if (hover >= 0 && live[hover]) {
       const o = st.v[OWN[hover].n];
@@ -309,20 +378,51 @@
     ctx.restore();
   }
 
+  function drawStake(m, x, y, side, inColumn) {
+    const anon = !m.n;
+    ctx.save();
+    if (side >= 3) {
+      ctx.fillStyle = inColumn ? (m.home === "mixed" ? "#efe9dc" : "#1d1b18") : "#efe9dc";
+      ctx.fillRect(x - side / 2, y - side / 2, side, side);
+      if (inColumn && m.home === "mixed") { ctx.fillStyle = "#1d1b18"; ctx.beginPath(); ctx.moveTo(x - side / 2, y + side / 2); ctx.lineTo(x + side / 2, y - side / 2); ctx.lineTo(x + side / 2, y + side / 2); ctx.closePath(); ctx.fill(); }
+      ctx.strokeStyle = "#1d1b18"; ctx.lineWidth = 1;
+      if (anon) ctx.setLineDash([2, 2]);
+      ctx.strokeRect(x - side / 2, y - side / 2, side, side);
+      if (!inColumn && !anon && side >= 7) { ctx.beginPath(); ctx.moveTo(x, y - side / 2); ctx.lineTo(x, y - side / 2 - 5); ctx.lineTo(x + 4, y - side / 2 - 3.5); ctx.lineTo(x, y - side / 2 - 2); ctx.stroke(); }
+    } else {
+      ctx.fillStyle = anon ? "#efe9dc" : "#1d1b18";
+      ctx.strokeStyle = "#1d1b18"; ctx.lineWidth = 0.8;
+      ctx.fillRect(x - 1.1, y - 1.1, 2.2, 2.2); if (anon) ctx.strokeRect(x - 1.5, y - 1.5, 3, 3);
+    }
+    ctx.restore();
+    geom.stakes.push({ m, x, y, r: Math.max(side / 2, 2.5) });
+  }
+
   function hud(st) {
     const qi = Math.round(t), q = Q[qi];
     const d = new Date(q.q + "T00:00:00Z");
     const qn = Math.floor(d.getUTCMonth() / 3) + 1;
     document.getElementById("when").textContent = (Math.abs(t - qi) < 0.02 ? "" : "≈ ") + "end of Q" + qn + " " + d.getUTCFullYear();
     let five = 0; for (const n of D.five) if (st.v[n]) five += st.v[n].m;
-    const pct = (100 * five / st.total).toFixed(1);
+    const pct = (100 * five / st.total).toFixed(1), pctLand = (100 * five / st.land).toFixed(1);
     const unfinished = Math.abs(t - (NQ - 1)) < 0.5;
     document.getElementById("five").textContent = unfinished
       ? `${pct} % held by the five, of an unfinished count`
-      : `${pct} % held by the five (90 %: ${q.top5_90[0].toFixed(0)}–${q.top5_90[1].toFixed(0)} %)`;
+      : st.land < st.total - 0.5
+        ? `${pctLand} % of the land held by the five`
+        : `${pct} % held by the five (90 %: ${q.top5_90[0].toFixed(0)}–${q.top5_90[1].toFixed(0)} %)`;
+    document.getElementById("five2").textContent = (!unfinished && st.land < st.total - 0.5)
+      ? `${pct} % of every counted chip, the smuggled included (90 %: ${q.top5_90[0].toFixed(0)}–${q.top5_90[1].toFixed(0)} %)` : "";
     document.getElementById("count").textContent = (unfinished ? "8 of 19 series · the published 75.8 % rests on this quarter · " : "") +
-      `${fmtM(st.total)} H100e counted · ${(st.mw / 1000).toFixed(st.mw < 1000 ? 2 : 1)} GW`;
+      `${fmtM(st.total)} H100e counted · ${(st.mw / 1000).toFixed(st.mw < 1000 ? 2 : 1)} GW` + stakeLine();
     const sl = document.getElementById("q"); if (!playing) sl.value = String(qi);
+  }
+
+  function stakeLine() {
+    if (!document.getElementById("stk").checked) return "";
+    const qs = Math.min(Math.round(t), LAST_FULL);
+    let n = 0, h = 0; for (const m of STAKES) if (standing(m, qs)) { n++; h += m.h; }
+    return ` · ${n} clusters staked, ${fmtM(h)} H100e` + (Math.round(t) > LAST_FULL ? " (as at the end of 2025)" : "");
   }
 
   // ---- the hum: the land's power heard at 60 Hz, one harmonic per owner, loud as its share ----
@@ -373,7 +473,7 @@
     if (!playing) return;
     const dt = last ? Math.min(0.05, (ts - last) / 1000) : 0; last = ts;
     t += dt * 0.9;
-    if (t >= NQ - 1) { t = NQ - 1; playing = false; setPlay(); }
+    if (t >= LAST_FULL) { t = LAST_FULL; playing = false; setPlay(); } // the survey ends on the last finished quarter
     sl.value = String(Math.round(t));
     draw();
     if (playing) requestAnimationFrame(frame); else draw();
@@ -381,13 +481,14 @@
   pb.addEventListener("click", () => {
     if (!AC && document.getElementById("snd").checked) { try { startHum(); } catch (e) { /* no sound */ } }
     playing = !playing;
-    if (playing) { if (t >= NQ - 1.01) t = 0; last = 0; requestAnimationFrame(frame); }
+    if (playing) { if (t >= LAST_FULL - 0.01) t = 0; last = 0; requestAnimationFrame(frame); }
     setPlay(); draw();
   });
   document.getElementById("snd").addEventListener("change", (e) => {
     if (e.target.checked && !AC) { try { startHum(); } catch (er) { /* no sound */ } }
     draw();
   });
+  document.getElementById("stk").addEventListener("change", () => draw());
   document.querySelectorAll("input[name=scale]").forEach(r => r.addEventListener("change", (e) => { mode = e.target.value; draw(); }));
 
   function pick(ev) {
@@ -397,9 +498,21 @@
     let k = own && i >= 0 && i < own.length ? own[i] : -1;
     const st = state(t);
     let html = "";
-    if (k >= 0) {
+    let sk = null;
+    if (geom && geom.stakes) {
+      let bd = 1e9;
+      for (const s of geom.stakes) { const d = Math.max(Math.abs(x - s.x), Math.abs(y - s.y)); if (d <= s.r + 1.5 && s.r < bd) { bd = s.r; sk = s.m; } }
+    }
+    if (sk) {
+      const where = sk.home === "public" ? "public: the owner table has no row for it" : sk.home === "mixed" ? "public/private: the owner table has no row for it"
+        : (IDX[sk.home] !== undefined && live[IDX[sk.home]]) ? "staked in " + (sk.home === "Other" ? "everyone else" : sk.home) + "'s parcel" : "its owner's row is missing in this survey";
+      html = `<b>${sk.n || "a cluster in China, unnamed in the list"}</b><br>${sk.o ? "owner: " + sk.o : "no owner named"}${sk.c ? " · " + sk.c : ""}` +
+        `<br>${fmtM(sk.h)} H100e · ${sk.k.toLowerCase()}<br>${sk.d ? "operational from " + sk.d : "no date in the list; staked at its last survey"}` +
+        (sk.site ? `<br>a phase of ${sk.site}` : "") + `<br>${where}`;
+      k = -1;
+    } else if (k >= 0) {
       const n = OWN[k].n, o = st.v[n], qo = Q[Math.round(t)].owners[n];
-      html = `<b>${n === "Other" ? "everyone else (the record's “Other”)" : n}</b><br>${fmtM(o.m)} H100e, ${(100 * o.m / st.total).toFixed(1)} % of the count` +
+      html = `<b>${n === "Other" ? "everyone else (the record's “Other”)" : n}</b><br>${fmtM(o.m)} H100e, ${(100 * o.m / st.land).toFixed(1)} % of the land, ${(100 * o.m / st.total).toFixed(1)} % of the count` +
         `<br>90 % of the estimate: ${fmtM(o.lo)}–${fmtM(o.hi)}` + (qo ? `<br>${qo.rows} row${qo.rows > 1 ? "s" : ""}: ${qo.designers.join(", ")} chips` + (qo.norange ? `; ${qo.norange} without a range` : "") : "") +
         (FIVE.has(n) ? "<br>one of the five" : "");
     } else if (geom && geom.shoal && Math.hypot(x - geom.shoal.x, y - geom.shoal.y) < geom.shoal.r + 4) {
