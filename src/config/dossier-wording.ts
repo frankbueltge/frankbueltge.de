@@ -185,6 +185,12 @@ export const DOSSIER = {
       label: 'The Field’s papers: every cycle’s paper, in preprint form',
       href: '/field/papers/',
     },
+    /** under the shelf once src/config/bluesky.ts names the account (2026-11-08): the picks leave
+     *  the house on their own, and the page says so where they stand */
+    bluesky: {
+      lead: 'Each pick also goes out on Bluesky, at most one a day, posted by a scheduled workflow on an account labelled as automated:',
+      profile: (handle: string) => `https://bsky.app/profile/${handle}`,
+    },
   },
 
   /** the ways in and out (2026-11-02): what leaves the screen is read from the post office's own

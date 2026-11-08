@@ -15,6 +15,7 @@
 // cannot say, src/config/dossier-wording.ts says, dated.
 import Page from '@/layouts/Page.astro'
 import SelectedWorks from '@/components/ops/SelectedWorks.astro'
+import { BLUESKY } from '@/config/bluesky'
 import { DOSSIER } from '@/config/dossier-wording'
 import { inWords } from '@/config/edition-wording'
 import { NAMING } from '@/config/naming'
@@ -309,6 +310,12 @@ const aboutRole = aboutContent.en.sections.find((s) => s.heading === D.role.head
         <p class="ds-prose">{D.works.lead}</p>
         <SelectedWorks cards={shelf} variant="dossier" />
         <p class="ds-more"><a class="ds-link" href={D.works.papers.href}>{D.works.papers.label} →</a></p>
+        {BLUESKY.handle && (
+          <p class="ds-more">
+            {D.works.bluesky.lead}{' '}
+            <a class="ds-link" href={D.works.bluesky.profile(BLUESKY.handle)} target="_blank" rel="noreferrer">@{BLUESKY.handle} ↗</a>
+          </p>
+        )}
       </section>
 
       {/* ── the role I hold, in /about's words (until 2026-11-02 "Who answers for it") ──────────── */}

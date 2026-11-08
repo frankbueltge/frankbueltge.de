@@ -1,0 +1,44 @@
+name: Bluesky — selected works
+
+# Announces the selected works on Bluesky, one pick per run, in the shelf's order (Frank's
+# decision of 2026-11-08, wording private): the first pick whose address the account has not
+# posted yet, in the pick's own words, with its page's link card. Nothing is committed: the
+# account's own posts are the record of what went out (scripts/bluesky/post-selected.ts).
+#
+# It posts only when src/config/bluesky.ts names the account AND the repository secret
+# BLUESKY_APP_PASSWORD exists. Until both are there, every run is a rehearsal: the run's summary
+# shows what it would post, and nothing leaves the house. A manual run rehearses unless told not to.
+
+on:
+  schedule:
+    - cron: '17 9 * * *' # daily 09:17 UTC; GitHub starts schedules hours late, which a daily post does not mind
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Rehearse only: show what would be posted, post nothing'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bluesky-selected
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Post the next pick, or rehearse it
+        env:
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && 'true' || 'false' }}
+        run: npx tsx scripts/bluesky/post-selected.ts
