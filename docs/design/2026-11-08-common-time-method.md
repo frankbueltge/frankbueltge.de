@@ -254,6 +254,30 @@ of 42, power none). The form instead takes what the day files carry for every si
   stays out (web addresses, code, formulas, non-Latin script, emoji), without the record's length and form limits.
   In week 45 that voices one more war headline (5 November), so war's editions 4 to 7 were pressed again.
 
+**Music first (Frank's verdict on probe 14, 9 November, wording private: spoken samples, no music, nothing that
+surprises).** He is right, and the fault is in the method, not the mix: since probe 11 the forms were rules that
+map data onto a procedure, judged by measurements (word recall, descriptor distance, hashes), and the testimony track
+left the music out on purpose so the words would be understood: a measurement made the target a second time. From
+now on every piece is music first, with a harmony, a pulse or a sustained ground, timbre and a development over
+minutes; data choose material and form; speech is material, never the whole piece; fewer, longer, composed pieces
+instead of many sketches. For acoustic colour the lab now has real instruments: the VSCO 2 Community Edition
+(Versilian Studios, recorded by Sam Gossner and Simon Dalzell, CC0, version 1.1.0, 3,168 recordings, downloaded at
+Frank's go of 9 November outside the repository), played by a small sampler that tunes every note exactly
+(`sampler.py`), so the ensemble can play in just intonation.
+
+**Probe 15, *Overlooked* (planned):** week 45 for a chamber ensemble in just intonation on A (the harmonic scale
+8 to 16 of A1), a pulse of 0.2 s. Each day the most overlooked headline of all thirteen fields (the speakable one
+with the lowest attention on its platform that day) is said once; an instrument chosen by its field answers with its
+speech melody, in the speech's own rhythm; then the melody becomes a motif on the pulse, and the strings take it up in
+canon, with a piano pulse and a held bass under it. Earlier days' motifs keep sounding, softer by the day, so the
+overlooked gather into a polyphony across the week, their loops of different lengths drifting against each other;
+under them the day's most attended headlines murmur, granulated and far, and give way as the overlooked grow. On
+Sunday all seven sound together; then silence, and Monday's sentence once more. In week 45 the overlooked are, day
+by day: nature (an acoustic biodiversity index, arXiv, flute), economy (Asian currencies before inflation data,
+bassoon), climate (pension funds underestimating climate risk, oboe), war (data breaches led by Ukraine, horn), power
+(voters rejecting tech oligarchy, Mastodon, trombone), hunger (a wildlife charity, a search, solo violin), AI (fewer
+jobs for graduates in India, clarinet).
+
 ## From the data to the music (first template, probes 04 to 10)
 
 | Common Ground | Becomes |
