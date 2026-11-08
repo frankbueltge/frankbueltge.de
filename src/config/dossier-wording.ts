@@ -82,6 +82,7 @@ export const DOSSIER = {
       'Then they convene: the Middle writes a briefing of what presses on the world now, each practice proposes the next question from it and says how it docks onto the programme so far, and all three rank the proposals; the Middle’s relay tallies the ranks.',
       `The tally opens the next cycle ${a.vetoDays} day later, unless I object. Without a result after ${a.conveningDays} days, the next cycle opens on the first matter the briefing names as urgent but quiet, or on the continuing question where no briefing stands.`,
       'A seed, a question anyone can offer through the public channel, interrupts either phase once I release it to all three.',
+      'Since the programme decision of the eighth of November this order is superseded in one point: the convening no longer opens a topic of its own. The ecology chooses one large question from a scored dossier, holds it for eight to twelve weeks, and every cycle is a step of it; I keep a veto and do not choose.',
     ],
     nowLabel: 'Now',
     /** the running state, from cycle.json and the relay; every day arrives formatted */
@@ -98,7 +99,12 @@ export const DOSSIER = {
       /** the briefing's first matter that is urgent but quiet: the fallback since 2026-10-25 */
       briefingFallback: string | null
       continuing: string | null
+      /** the research programme since 2026-11-08: while it is being chosen the cycle clock holds */
+      programmeSelecting?: boolean
     }) => {
+      if (a.phase === 'convening' && a.conveningOpened && a.programmeSelecting) {
+        return `Cycle ${a.cycle}${a.question ? `, which asked “${a.question}”,` : ''} closed with its presentations on ${a.conveningOpened}. The tally of its convening is set aside: the ecology is choosing one large question to hold for eight to twelve weeks, and cycle ${a.next} opens as its first step the day after the choice, unless I object.`
+      }
       if (a.phase !== 'convening' || !a.conveningOpened) {
         return `Cycle ${a.cycle} opened on ${a.opened} and is working${a.question ? ` on the question “${a.question}”` : ''}.`
       }
