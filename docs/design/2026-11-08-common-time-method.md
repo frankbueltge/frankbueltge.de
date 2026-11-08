@@ -223,6 +223,25 @@ tracks as from Ducking (Frank's decision, wording private): the war track speaks
 - **Open:** climate is testimony on Sunday and so has no track; the testimony form is still to be built; Copy
   returns from its session with its own rule for editions.
 
+**Testimony, counter-mixed** (Frank's choice of direction that night, wording private; built as probe 14). A
+first idea, a chord from each headline's own voice held for as long as the press kept naming its story, was tested
+before building and dropped: with a story counted as headlines sharing two content words beyond the field's terms,
+and repeats across Google News editions removed, almost nothing recurs in week 45 (climate one story of 26, AI two
+of 42, power none). The form instead takes what the day files carry for every signal:
+- **Every distinct headline once**, in the voice of its platform family (news, search, social, tech, markets,
+  reading each their own); a headline run by several Google News editions is one headline, its editions its reach.
+- **The day's own clock**: each headline enters at its publication time within its day (Google News and Trends
+  publication dates, Bluesky's start; rank order where none is given). A day is as long as its speech at the
+  density it had: crowded days overlap.
+- **The counter-mix**: a headline's attention on its own platform that day, as a percentile among all that
+  platform's signals of the day (Hacker News points, Bluesky posts, Trends searches, Polymarket dollars, Wikipedia
+  views, Google News editions then rank). The less attention it had, the nearer, louder and drier it speaks; the
+  most attended recede into the room. Ducking turned round: the mix is the counter-measurement. Here the words are
+  meant to be understood, the least attended most of all.
+- **Editions**: a family the newest day no longer has speaks its earlier headlines as breath.
+- Not found in a targeted search (inverse attention as the mix rule); speech in many voices and spatial depth
+  are known means.
+
 ## From the data to the music (first template, probes 04 to 10)
 
 | Common Ground | Becomes |
