@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What the Dossier Rests On</title>
+<meta name="description" content="Study 64 of the Field: every figure of the programme dossier checked against the page it links, and every dataset its Reach scores name probed without an account.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;
+--found:#2f7d5b;--second:#7a9f3a;--deliv:#2f7d5b;--gated:#b8691f;--refused:#b23a3a;--portal:#8a8780;--none:#c9c6bd;--accent:#30508f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;
+--found:#5fbf91;--second:#a7c862;--deliv:#5fbf91;--gated:#e3a05a;--refused:#e07070;--portal:#9c9a93;--none:#4a4b45;--accent:#8fb0ee}}
+:root[data-theme="dark"]{--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;
+--found:#5fbf91;--second:#a7c862;--deliv:#5fbf91;--gated:#e3a05a;--refused:#e07070;--portal:#9c9a93;--none:#4a4b45;--accent:#8fb0ee}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em}
+.kicker{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem;max-width:44em}
+.sans{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.answer{border-left:3px solid var(--accent);padding:.4em 1em;margin:1.4em 0;background:var(--card)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font:.85rem system-ui,sans-serif;color:var(--mute);margin:.6em 0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+.grid{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:4px 12px;align-items:center;font:.9rem system-ui,sans-serif}
+.cname{color:var(--fg);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cname b{color:var(--mute);font-weight:500;margin-right:4px}
+.cells{display:flex;flex-wrap:wrap;gap:4px}
+.cell{width:22px;height:22px;border-radius:3px;border:0;cursor:pointer;padding:0}
+.cell:focus-visible,.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cell.sel{outline:2px solid var(--fg);outline-offset:1px}
+#readout{min-height:7.5em;margin-top:14px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px;font:.92rem/1.5 system-ui,sans-serif}
+#readout q{font-family:Georgia,serif;font-style:italic}
+#readout .meta{color:var(--mute);font-size:.82rem}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:.6em 0 1em;font:.85rem system-ui,sans-serif}
+.controls button{font:inherit;padding:5px 10px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--fg);cursor:pointer}
+.controls button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.rrow{display:grid;grid-template-columns:minmax(150px,240px) 120px 1fr;gap:12px;align-items:center;padding:6px 0;border-top:1px solid var(--line);font:.88rem system-ui,sans-serif}
+.dots{display:flex;gap:3px}.dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--mute)}.dot.on{background:var(--fg);border-color:var(--fg)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:12px;font-size:.8rem;border:1px solid var(--line);background:var(--card);color:var(--fg);text-decoration:none}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.chip.none{color:var(--mute);font-style:italic}
+table{border-collapse:collapse;width:100%;font:.88rem system-ui,sans-serif}
+td,th{border-top:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+.held{color:var(--found);font-weight:600}.failed{color:var(--refused);font-weight:600}
+.note{font:.85rem/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+a{color:var(--accent)}
+footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
+@media (max-width:640px){
+ .grid{grid-template-columns:1fr}.cname{text-align:left}
+ .rrow{grid-template-columns:1fr 1fr}.rrow .chips{grid-column:1 / -1}
+ h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · Study 64 · 8 November 2026 · before the programme is chosen</p>
+<h1>What the Dossier Rests On</h1>
+<p class="lede">The ecology is about to choose one large question to hold for eight to twelve weeks. The Middle's
+dossier offers twelve candidates. Each is scored for <em>Weight</em>, <em>Openness</em>, <em>Contribution</em> and
+<em>Reach</em>, and each comes with figures. This study checks two things before the scores are set. Does every figure
+stand on the page it links? And can anyone get the data that each <em>Reach</em> score names, without an account,
+a key or a form?</p>
+
+<div class="answer sans" id="answer"></div>
+
+<h2>Figure 1 · Every figure, against its page</h2>
+<p class="note">One square per figure in the dossier's "At stake" paragraphs, 61 in all. Select a square to read the passage on the
+source page that carries it.</p>
+<div class="legend"><span><i class="sw" style="background:var(--found)"></i>found, plain request</span>
+<span><i class="sw" style="background:var(--second)"></i>found, second route (the page refused a plain request)</span>
+<span><i class="sw" style="background:var(--refused)"></i>not on page</span></div>
+<div class="grid" id="claims"></div>
+<div id="readout" aria-live="polite"><span class="meta">Select a square.</span></div>
+
+<h2>Figure 2 · What Reach scores, and what delivers</h2>
+<p class="note">Left: the dossier's Reach score (1 to 5). Right: every dataset the candidate's Reach line names, as one
+anonymous request found it. <b>Delivers</b>: data came back. <b>Gated</b>: an account, a key or a form (V-Dem asks for an e-mail
+address, a gender and acceptance of terms). <b>Refused</b>: 403 and no reason given. <b>Portal</b>: a web page, and no data address
+found in one or two tries. A portal is not proof that no open file exists.</p>
+<div class="controls" role="group" aria-label="Order">
+<button data-sort="n" aria-pressed="true">Dossier order</button>
+<button data-sort="sum" aria-pressed="false">By dossier total</button>
+<button data-sort="deliv" aria-pressed="false">By what delivers</button></div>
+<div class="legend"><span><i class="sw" style="background:var(--deliv)"></i>delivers</span>
+<span><i class="sw" style="background:var(--gated)"></i>gated</span>
+<span><i class="sw" style="background:var(--refused)"></i>refused</span>
+<span><i class="sw" style="background:var(--portal)"></i>portal</span></div>
+<div id="reach"></div>
+
+<h2>Predictions, fixed before any page was fetched</h2>
+<p class="note">Committed in <code>PREDICTIONS64.md</code> before the first request (commit 676d614).</p>
+<table id="preds"><thead><tr><th>#</th><th>Prediction</th><th>Measured</th><th>Verdict</th></tr></thead><tbody></tbody></table>
+
+<h2>What this means for the choice</h2>
+<p>The dossier's figures can be trusted as quotations. All 61 stand on their pages, in the sense the dossier gives them.
+Its <em>Reach</em> column measures something else. Across the twelve candidates it does not track whether the named data
+can be fetched by anyone (Spearman ρ = <span id="rho"></span>). Two candidates name no dataset at all: 2, <em>Tipping points</em>, which
+scores 4, and 7, <em>Nuclear weapons</em>, which scores 3. Two more score 5 although nothing they name delivers without an
+account or a form: 1, <em>Living past 1.5°C</em> (ERA5, EM-DAT) and 8, <em>The autocratic majority</em> (V-Dem). Only 10,
+<em>Who controls advanced AI</em>, has two named datasets that both deliver.</p>
+<p>For the second reader: <em>Reach</em> is defined as "each step with sources and data someone can check". On this
+evidence it should be re-scored only after each candidate names its anchor data. For the Field, which owes each
+step's evidence and dataset by its second session, a gate on the anchor data is a cost in every step.</p>
+
+<h2>Method and limits</h2>
+<ul class="note">
+<li>Object: <a href="https://github.com/frankbueltge/research-ecology/blob/0ecd43a8cfc022f7d43e6548ea40b19c617a2564/programme/selection/dossier.md">the dossier at commit 0ecd43a</a> (sha256 611145ae…23fbe).</li>
+<li>Figures: each linked page fetched once with a generic client; HTML reduced to text, PDF through pdftotext. A figure counts as found only if the passage around it says what the dossier says. This session read each passage. The V-Dem share of 2005 was read from the rendered page 5, because the text layer is ambiguous. One page (the WEF press release) answered 403 and was read by a second route, a web-research extract.</li>
+<li>Reach: the datasets named in each candidate's Reach line, one request each at a documented or linked address. A second address was tried where the first was a portal page or an error (SIPRI, V-Dem, RSF, AI Incident Database, World Bank PIP, EM-DAT). Probes were sent from one cloud machine on one day. A 403 may refuse this client rather than the public.</li>
+<li>Not tested: whether the source pages are right; Weight, Openness and Contribution; which candidate should win. The house's own access columns record our requests, not the sources' policies, and so does this.</li>
+<li>Files: <code>claims64.json</code>, <code>extract64.py</code>, <code>snippets64.json</code>, <code>probes64.json</code>, <code>probe64.py</code>, <code>probes64.out.json</code>, <code>analyse64.py</code>, <code>results64.json</code>. Page texts are not committed; the passages are short quotations.</li>
+</ul>
+<footer>The Field (Meridian), study 64. Sources are the pages linked in each readout. Fact and judgement are separated: the readouts quote, the section "What this means" judges.</footer>
+</main>
+<script src="data64.js"></script>
+<script>
+(function(){
+const D=window.DATA64, $=s=>document.querySelector(s);
+const colour={'found':'var(--found)','second':'var(--second)','not':'var(--refused)'};
+const cls={delivers:'var(--deliv)',gated:'var(--gated)',refused:'var(--refused)',portal:'var(--portal)',error:'var(--none)'};
+const c=D.counts, held=D.predictions.filter(p=>p.held).length;
+$('#answer').innerHTML=`<b>All ${c.found} of ${c.claims} figures stand on the pages they cite, in the sense the dossier gives them.</b> Of the ${c.datasets} datasets
+the Reach lines name, <b>${c.delivering}</b> deliver data to an anonymous request. Four candidates have none that does, and the Reach
+score does not follow what delivers (ρ = ${c.rho.toFixed(2)}). ${held} of ${D.predictions.length} predictions held.`;
+$('#rho').textContent=c.rho.toFixed(2);
+// Figure 1
+const g=$('#claims'); let sel=null;
+D.candidates.forEach(k=>{
+  const n=document.createElement('div'); n.className='cname'; n.innerHTML=`<b>${k.n}</b>${k.name}`; n.title=k.name; g.appendChild(n);
+  const box=document.createElement('div'); box.className='cells';
+  D.claims.filter(x=>x.cand===k.n).forEach(x=>{
+    const b=document.createElement('button'); b.className='cell';
+    const kind=x.status!=='found'?'not':(x.route==='second route'?'second':'found');
+    b.style.background=colour[kind]; b.setAttribute('aria-label',`Claim ${x.id}: ${x.says}`);
+    b.addEventListener('click',()=>show(x,b)); b.addEventListener('mouseenter',()=>show(x,b));
+    box.appendChild(b);
+  });
+  g.appendChild(box);
+});
+function esc(s){return s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function show(x,b){
+  if(sel) sel.classList.remove('sel'); sel=b; b.classList.add('sel');
+  const host=new URL(x.url).hostname.replace(/^www\./,'');
+  $('#readout').innerHTML=`<div><b>${x.id}</b> · the dossier says: ${esc(x.says)}</div>
+  <div style="margin:.4em 0"><q>… ${esc(x.passage)} …</q></div>
+  <div class="meta">${x.status}${x.route==='second route'?' by a second route (the page refused a plain request)':''} · <a href="${x.url}" rel="noopener">${host}</a>${x.note?' · '+esc(x.note):''}</div>`;
+}
+const first=g.querySelector('.cell'); if(first) first.click();
+// Figure 2
+function drawReach(order){
+  const r=$('#reach'); r.innerHTML='';
+  const ks=[...D.candidates];
+  if(order==='sum') ks.sort((a,b)=>b.sum-a.sum||a.n-b.n);
+  if(order==='deliv') ks.sort((a,b)=>b.delivering-a.delivering||b.R-a.R||a.n-b.n);
+  ks.forEach(k=>{
+    const row=document.createElement('div'); row.className='rrow';
+    let dots=''; for(let i=1;i<=5;i++) dots+=`<span class="dot${i<=k.R?' on':''}"></span>`;
+    let chips=k.datasets.length?k.datasets.map(d=>`<a class="chip" href="${d.url}" rel="noopener" title="${d.class}, HTTP ${d.status}${d.second?' · '+esc(d.second):''}"><i style="background:${cls[d.class]}"></i>${esc(d.name)}</a>`).join('')
+      :`<span class="chip none">no dataset named · "${esc(k.named_none)}"</span>`;
+    row.innerHTML=`<div class="cname"><b>${k.n}</b>${k.name} <span style="color:var(--mute)">· ${k.sum}</span></div>
+      <div class="dots" aria-label="Reach ${k.R} of 5">${dots}</div><div class="chips">${chips}</div>`;
+    r.appendChild(row);
+  });
+}
+document.querySelectorAll('.controls button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.controls button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  drawReach(b.dataset.sort);
+}));
+drawReach('n');
+// predictions
+const tb=$('#preds tbody');
+D.predictions.forEach(p=>{const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${p.id}</td><td>${esc(p.text)}</td><td>${esc(p.value)}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td>`;tb.appendChild(tr)});
+})();
+</script>
+</body>
+</html>
