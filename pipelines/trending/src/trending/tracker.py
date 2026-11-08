@@ -49,8 +49,10 @@ ACCEPT = "application/json, application/rss+xml, application/atom+xml, applicati
 # scholarly indexes joined, so that "papers" means more than arXiv's computer science and physics:
 # Crossref (every discipline that registers DOIs) and Europe PMC (PubMed, PMC and the life-science
 # preprint servers, medRxiv and bioRxiv among them). Reddit's day list (r/popular) is untouched.
+# OpenAlex joined the same evening, once the repository held a key (OPENALEX_API_KEY): without
+# one its shared budget answers 429, and the platform then reports itself unavailable.
 PLATFORMS: tuple[str, ...] = ("hackernews", "google_news", "github", "arxiv", "crossref",
-                              "europepmc", "wikipedia_views")
+                              "europepmc", "openalex", "wikipedia_views")
 RETIRED_PLATFORMS: tuple[str, ...] = ("reddit",)
 
 # name and url as the record reports them, in the fixed order above
@@ -63,6 +65,7 @@ PLATFORM_META: dict[str, tuple[str, str]] = {
     "crossref": ("Crossref (works search, title phrase)", "https://api.crossref.org/works"),
     "europepmc": ("Europe PMC (PubMed, PMC and preprints)",
                   "https://www.ebi.ac.uk/europepmc/webservices/rest/search"),
+    "openalex": ("OpenAlex (works, title search)", "https://api.openalex.org/works"),
     "wikipedia_views": ("Wikipedia (Pageviews API, English)",
                         "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article"),
 }
@@ -81,7 +84,7 @@ NOTE_CAP = 200
 # inside a few minutes; the source stays optional.
 THROTTLE_S: dict[str, float] = {
     "hackernews": 0.5, "google_news": 0.5, "github": 7.0, "arxiv": 3.0, "reddit": 7.0,
-    "crossref": 0.5, "europepmc": 0.5, "wikipedia_views": 0.5,
+    "crossref": 0.5, "europepmc": 0.5, "openalex": 0.2, "wikipedia_views": 0.5,
 }
 GITHUB_THROTTLE_AUTHENTICATED_S = 2.0
 
@@ -157,9 +160,27 @@ def open_client() -> httpx.Client:
     return httpx.Client(headers={"User-Agent": USER_AGENT, "Accept": ACCEPT})
 
 
+def install_openalex_auth(client: httpx.Client) -> bool:
+    """Send `OPENALEX_API_KEY` to api.openalex.org and nowhere else, as a bearer header, so it
+    never stands in a URL and so never in a public note."""
+    key = (os.environ.get("OPENALEX_API_KEY") or "").strip()
+    if not key:
+        return False
+
+    def add_openalex_key(request: httpx.Request) -> None:
+        if request.url.host == "api.openalex.org" and "authorization" not in request.headers:
+            request.headers["Authorization"] = f"Bearer {key}"
+
+    hooks = list(client.event_hooks.get("request", []))
+    if not any(getattr(h, "__name__", "") == "add_openalex_key" for h in hooks):
+        client.event_hooks["request"] = [*hooks, add_openalex_key]
+    return True
+
+
 def make_context(client: httpx.Client, *, rules: dict[str, Any],
                  now: datetime | None = None) -> TermContext:
     authenticated = install_github_auth(client)
+    install_openalex_auth(client)
     return TermContext(client=client, now=now or datetime.now(timezone.utc), rules=rules,
                        github_authenticated=authenticated)
 
@@ -267,7 +288,7 @@ def _shares_a_word(title: str, phrase: str) -> bool:
 # Platforms whose query syntax understands OR: one request per term covers the term and its
 # aliases. Hacker News (Algolia) has no OR, so it is asked once per phrase — cheaply.
 # Crossref has no phrase syntax at all, so it too is asked once per phrase.
-OR_PLATFORMS = frozenset({"github", "arxiv", "google_news", "reddit", "europepmc"})
+OR_PLATFORMS = frozenset({"github", "arxiv", "google_news", "reddit", "europepmc", "openalex"})
 # GitHub's search accepts at most five AND/OR/NOT operators per query and answers a sixth with
 # HTTP 422 (biodiversity and the diseases term, since 2026-10-29): a longer alias list is split.
 GITHUB_MAX_PHRASES = 6
@@ -438,6 +459,32 @@ def _search_europepmc(ctx: TermContext, phrase: "str | Sequence[str]") -> tuple[
     return matches, int(data.get("hitCount") or 0) > EUROPEPMC_PAGE
 
 
+OPENALEX_PAGE = 200
+
+
+def _search_openalex(ctx: TermContext, phrase: "str | Sequence[str]") -> tuple[list[Match], bool]:
+    """Every discipline, by title, published in the last thirty days and not after today (a
+    journal issue can carry a date ahead of the calendar). `meta.count` says how many exist,
+    so the record knows when the page undercounts."""
+    since = (ctx.now - timedelta(days=WINDOWS["d30"])).date().isoformat()
+    today = ctx.now.date().isoformat()
+    words = " OR ".join(f'"{p}"' for p in _phrases(phrase))
+    filt = quote(f"title.search:{words},from_publication_date:{since},to_publication_date:{today}",
+                 safe=":,")
+    url = (f"https://api.openalex.org/works?filter={filt}&per-page={OPENALEX_PAGE}"
+           "&sort=publication_date:desc&select=id,display_name,publication_date")
+    data = fetch(url, client=ctx.client, expect="json")
+    matches: list[Match] = []
+    for work in data.get("results") or []:
+        title = " ".join(str(work.get("display_name") or "").split())
+        link = str(work.get("id") or "").strip()
+        when = parse_when(work.get("publication_date"))
+        if not title or not link or when is None:
+            continue
+        matches.append(Match(url=link, title=title, when=when))
+    return matches, int((data.get("meta") or {}).get("count") or 0) > OPENALEX_PAGE
+
+
 def _wikipedia_views(ctx: TermContext, article: str) -> dict[str, Any]:
     """Daily pageviews of one English article, summed into the three windows. The endpoint
     publishes a day with a lag, so the newest available day is the d1 value."""
@@ -460,6 +507,7 @@ SEARCHES: dict[str, Callable[[TermContext, str], tuple[list[Match], bool]]] = {
     "reddit": _search_reddit,
     "crossref": _search_crossref,
     "europepmc": _search_europepmc,
+    "openalex": _search_openalex,
 }
 
 

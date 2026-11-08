@@ -72,15 +72,15 @@ def test_every_term_carries_counts_for_every_platform_and_a_total_without_pagevi
     assert all(set(first["counts"][p]) == {"d1", "d7", "d30", "capped"}
                for p in tracker.PLATFORMS if p != "wikipedia_views")
     # thirty days: hackernews 4 + google_news 3 + github 3 + arxiv 2 + crossref 2
-    # + europepmc 1, pageviews out (Reddit left the arcs on 2026-11-08)
-    assert first["total"] == {"d1": 5, "d7": 10, "d30": 15}
+    # + europepmc 1 + openalex 2, pageviews out (Reddit left the arcs on 2026-11-08)
+    assert first["total"] == {"d1": 5, "d7": 11, "d30": 17}
     second = rec["terms"][1]
     assert second["counts"]["wikipedia_views"] == {"d1": 100, "d7": 700, "d30": 3000,
                                                    "capped": False}
     # Pageviews stay out of the total; and the headline guard drops the news items, whose
     # fixture headlines carry no word of this second term.
     assert second["counts"]["google_news"] == {"d1": 0, "d7": 0, "d30": 0, "capped": False}
-    assert second["total"] == {"d1": 4, "d7": 7, "d30": 10}  # Crossref titles never name it; Reddit left the arcs
+    assert second["total"] == {"d1": 4, "d7": 8, "d30": 12}  # Crossref titles never name it; OpenAlex 2; Reddit left
 
 
 def test_the_terms_keep_the_order_of_the_watchlist():

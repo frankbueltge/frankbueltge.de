@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "04d494f1055d48a7"
+        "sha256": "c9bbd04899707453"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 619,
-      "edges": 552,
+      "nodes": 620,
+      "edges": 553,
       "nodesByKind": {
-        "decision": 183,
+        "decision": 184,
         "encounter": 6,
         "neighbor": 155,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 228,
         "neighbor-of": 158,
         "participates": 17,
-        "touches": 134
+        "touches": 135
       }
     }
   },
@@ -1863,6 +1863,16 @@
     {
       "id": "decision:2026-11-08-2",
       "kind": "decision",
+      "label": "Ducking has no filters",
+      "date": "2026-11-08",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Ducking has no filters"
+      }
+    },
+    {
+      "id": "decision:2026-11-08-3",
+      "kind": "decision",
       "label": "Common Ground reads wider, and the map goes on during a programme",
       "date": "2026-11-08",
       "source": {
@@ -1871,7 +1881,7 @@
       }
     },
     {
-      "id": "decision:2026-11-08-3",
+      "id": "decision:2026-11-08-4",
       "kind": "decision",
       "label": "The selected works go out on Bluesky on their own",
       "date": "2026-11-08",
@@ -1881,7 +1891,7 @@
       }
     },
     {
-      "id": "decision:2026-11-08-4",
+      "id": "decision:2026-11-08-5",
       "kind": "decision",
       "label": "The architect sets the programme's question once",
       "date": "2026-11-08",
@@ -1891,7 +1901,7 @@
       }
     },
     {
-      "id": "decision:2026-11-08-5",
+      "id": "decision:2026-11-08-6",
       "kind": "decision",
       "label": "The architect can say go on the programme's choice",
       "date": "2026-11-08",
@@ -1901,7 +1911,7 @@
       }
     },
     {
-      "id": "decision:2026-11-08-6",
+      "id": "decision:2026-11-08-7",
       "kind": "decision",
       "label": "The ecology runs one research programme",
       "date": "2026-11-08",
@@ -13109,6 +13119,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-11-08-2",
+      "to": "work:ducking",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "scripts/ducking/voices.py"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-08-3",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
