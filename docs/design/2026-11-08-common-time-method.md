@@ -72,11 +72,10 @@ of a topic track is its sung line (next section); the vowel fingerprint is the f
    Wikipedia title is the name itself and never qualifies. In week 44 nine of the ten days sing a
    Polymarket question, because no outlet carried those topics on those days; only Lagarde's resignation
    (CNN) is a news headline. There the market sings, not the news.
-2. **The name.** Each run of the label's words inside the line is cut out. In the gap, the vowels of the
-   families that carried the topic hum the name's own speech melody, one vowel per syllable: the name keeps
-   its rhythm and its contour, not its sound.
-3. **Speaking.** The synthetic voice of the topic's first family reads the line in its parts, the words on
-   either side of the gap separately, so the prosody starts afresh after the gap.
+2. **The name.** Sung with the rest of the line, since the evening of 2026-11-08 (content rules). Until then
+   each run of the label's words was cut out of the line and the families' vowels hummed the name's speech
+   melody in the gap; the renderer keeps that as a switch.
+3. **Speaking.** The synthetic voice of the topic's first family reads the line once.
 4. **Measuring.** The pitch is tracked (YIN). The voice's own phonemes (espeak-ng, as Kokoro uses them) give
    the number of syllables in each part; the most prominent voiced loudness peaks are their nuclei, and the
    line is cut in the dips between them.
@@ -88,8 +87,8 @@ of a topic track is its sung line (next section); the vowel fingerprint is the f
    news sings its own intonation, in pure tuning.
 7. **Placing.** The line enters on the first bar of every day the topic was present and comes again every
    whole number of bars it needs; the next day cuts off a repetition that does not fit. Its words start where
-   the topic's first family stands and travel to the front as they are sung; each hummed syllable comes from
-   its family's place. The track ends on the topic's name alone, hummed from the front.
+   the topic's first family stands and travel to the front as they are sung. The track ends on the topic's
+   name alone, hummed from the front on its own speech melody, each syllable on the next family's vowel.
 
 Why the doubling, measured on week 44: spoken, a line moves within about seven semitones, and a topic
 carried by Wikipedia and Polymarket allows only A and the eleventh harmonic in that range, so without it
@@ -97,6 +96,62 @@ carried by Wikipedia and Polymarket allows only A and the eleventh harmonic in t
 lines use three to five notes and none holds more than 56 % of a line. Speech is narrower than song; the
 doubling is the one step from one to the other. A topic carried by news and Google Trends sings in the A
 major triad (harmonics 4, 5, 6); one carried by Wikipedia and Polymarket in A and the eleventh harmonic.
+
+## Map tracks (proposed, not built)
+
+The thirteen fields of the map (`src/lib/briefing/map.ts`), the fields Ducking has as faders, each get a track
+a week: the field's week in Common Ground, opened by the state the briefing checked for it.
+
+- **Which fields.** All thirteen, every week. A quiet field is short and sparse, and that is the
+  measurement: from 2 to 8 November war and violence was named by 147 signals, AI and its harms by 56,
+  climate and disasters by 31, poverty by 2.
+- **The count.** The house's one count (`src/lib/reading/attention.ts`, mirrored in
+  `scripts/ducking/voices.py`, which the renderer imports): a signal names a field when its label or one of
+  its links' titles carries one of the field's terms as a whole word, its required words where it has any,
+  and none of its exclusions. Since 2026-11-02 Google News is read in ten editions, so one headline can count
+  more than once, and weeks before and after that date do not compare.
+- **A day's length** is logarithmic, like Ducking's fader: 1 + 2 × ⌈log₂(1 + signals)⌉ bars, at most
+  eleven (1 signal 3 bars, 2 to 3 five, 4 to 7 seven, 8 to 15 nine, 16 and more eleven). A day without a
+  signal is one bar of drone.
+- **The chord** is the families of the platforms whose signals named the field that day.
+- **The state first.** The track opens with the field's checked line from the newest Ducking round checked
+  on or before the week's last day, spoken, not sung, in the field's Ducking voice over the drone (its
+  `say` for the voice, its `text` for the page): what is, before what was said.
+- **The news.** On each day with signals, the field's headlines from Google News are sung on their speech
+  melodies one after another, each once, as many as the day's bars hold, so the more the field was named,
+  the more is sung. A trailing outlet name is dropped, and a headline sung once in the track is not sung
+  again. In a map track no line is looped as a hook; the hook is the field's wordless vowel fingerprint.
+- **Which headlines may be sung:** what Ducking's spoken record may read (`readable` in
+  `scripts/ducking/voices.py`, imported): at most 96 characters and three words, nothing on its stop list
+  (killing, death, violence, attacks, abuse and the like), nothing a voice cannot read. The house already
+  decided what a machine voice reads aloud about the world's ills; the map tracks sing the same. From 2 to 8
+  November that leaves war 65 distinct headlines, climate 17, AI 16, economy 14, and poverty none: its one
+  headline names a sum in dollars, which the filter does not read.
+- **Bed, loops, bass and drums** as in the topic tracks.
+
+## Consensus: the week in echoes (proposed, not built)
+
+One track a week from Consensus (`/consensus`), which measures verbatim copying in GDELT's English news
+stream. Each day file names the phrase of six words that the most outlets ran word for word, how many outlets
+ran it, the first twelve of them with the quarter hour each did, and the echo index: the share of all titled
+articles that share such a phrase with another outlet.
+
+- **A day** is a section, labelled by its file's date; the files are rolling 24-hour windows that end at the
+  last full quarter hour, not calendar days.
+- **The phrase** is sung on its speech melody: the six words that were copied, not the sample title. Its notes
+  are the harmonics 4 to 11 of the drone's A; this instrument has no platform families.
+- **The cascade** sings it as a canon at the unison: the twelve listed outlets enter in the file's order and
+  at their recorded times, compressed into the section; outlets in the same 15-minute GDELT slot enter
+  together, in the file's order. Each voice comes from the direction of its outlet's country domain. The
+  phrase's other outlets (150 to 259 in all from 2 to 8 November, against the twelve listed) join as a dense
+  choir whose size is their count on a log scale. Copies in unison, as Reich's tape loops made a copied
+  phrase audible.
+- **The echo index** sets how much echo the section carries, as its percentile against Consensus's seven
+  years of baseline (`src/data/consensus/baseline.json`), because the raw value hardly moves (0.329 to 0.366
+  that week). This is the first layer of Common Time that is levelled against an archive, as the method owes.
+- **A phrase the house filter would not read** (Ducking's `readable`) is hummed on its speech melody, its
+  words withheld, and the score keeps its text. Taking the runner-up instead would misreport the instrument.
+  From 2 to 8 November that is one day of seven: a rape verdict.
 
 ## Space
 
@@ -109,12 +164,13 @@ provided without usage restrictions, credit requested).
 
 ## Content rules
 
-- A topic or headline that names death, violence, crime or a court case (the stoplist in the renderer) gives
-  no hook, no sung line and no track.
-- No politician's name is sung (Frank's decision of 2026-11-08, wording private). The topic's own name is
-  only ever heard as vowels. Other names inside a line are still sung; whether they need a rule too is
-  open. In week 44 no other person is named; the Polymarket questions do sing three party names (Likud,
-  Together, Yashar).
+- Topic tracks: a topic or line that names death, violence, crime or a court case (the stoplist in the
+  renderer) gives no hook, no sung line and no track. Their lines loop as hooks, so this list is stricter
+  than the house filter the proposed map and Consensus tracks would use, where a line is sung once.
+- Names are sung in the lines, the topic's own and any other (Frank's decision of the evening of 2026-11-08,
+  wording private). It replaces his decision of the same afternoon, under which no politician's name was sung
+  and the topic's own name was only hummed. A title that is nothing but the name still never becomes a line
+  (step 1), and the coda still hums the name.
 - A name that cannot be read in Latin script is not voiced.
 
 ## Composed, the same every week
@@ -139,9 +195,13 @@ phase retriggered, so the renders stay bit-identical.
 
 ## Open
 
-- whether names other than the topic's own may be sung in a line (in week 44: three party names);
 - whether a market's question may stand in for news when no outlet carried a topic (week 44: nine of ten
   days);
+- the map tracks: all thirteen fields every week; their headlines filtered as Ducking's record is;
+- the Consensus track: a phrase the filter catches hummed rather than skipped;
+- storage: the weekly pressing, three topic tracks, thirteen map tracks and the Consensus track come to
+  about 30 MB of git history a week at the probes' bitrate; the bitrate, Zenodo or a retention window has to
+  be chosen before the workflow presses them;
 - whether a politician may be the subject of a topic track at all (in W44 all three were political);
 - the stems desk: each layer of a pressing as a channel to filter, loop and mix, two weeks against each
   other.
