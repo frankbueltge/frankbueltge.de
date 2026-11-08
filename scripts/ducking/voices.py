@@ -69,16 +69,17 @@ RECORD_STEP = 0.15    # seconds between two headlines of one voice
 # These charts name things. They hold nothing a voice could read as a sentence.
 RECORD_SILENT = {'appstore', 'coingecko', 'github', 'github_trending', 'huggingface', 'pypi', 'steam'}
 
-# Reads as a chart entry, not as anything a person should hear said about someone by a machine.
-STOP = re.compile(
-    r'porn|xxx|xhamster|xvideos|onlyfans|nude|naked|sex|titty|titties|boob|zoofil|bestial|incest|rape|'
-    r'murder|kill|shoot|stabb|suicide|fuck|shit|'
-    r'\bass\b|bitch|dies\b|dead\b|death|obituar|arrest|victim|abuse|violence|attack|bundy|nazi|hitler|'
-    r'atentado|fusillade|attentat|accident|unfall|anschlag|affaire|massacre|tohopesate|crash|disaster|'
-    r'messerangriff|assassinat|collision|collide|ramming|harass|bowels|hospital|'
-    r'http|www\.|\.com|\$|\\\\|\{|\}|\^',
-    re.I,
-)
+# What a voice cannot say: a web address, code or a formula, which it would spell out sign by sign. Nothing is
+# left out for what it says. Until 2026-11-08 a stop list of words for sex, killing, death, crime and accidents,
+# swear words, web addresses and the dollar sign kept headlines off the crowd and the record; since then they
+# read the charts' words as they stand (docs/decision-log.md). A sum in dollars is read; a formula is two
+# dollar signs around something that is not a number.
+UNSAYABLE = re.compile(r'://|www\.|\\|[{}^]|\$[^$\d\s][^$]*\$', re.I)
+
+
+def unsayable_script(label):
+    """A non-Latin script or an emoji, which the English voices cannot say."""
+    return any((ord(c) > 0x24f and c.isalpha()) or unicodedata.category(c) == 'So' for c in label)
 
 
 def fold(s):
@@ -182,9 +183,9 @@ def sample_labels(rnd):
                 tally['labels'] += 1
                 if len(label) > REST_MAX_CHARS:
                     tally['long'] += 1
-                elif any((ord(c) > 0x24f and c.isalpha()) or unicodedata.category(c) == 'So' for c in label):
+                elif unsayable_script(label):
                     tally['unreadable'] += 1
-                elif STOP.search(label):
+                elif UNSAYABLE.search(label):
                     tally['stopped'] += 1
                 else:
                     pool.append(label)
@@ -226,8 +227,10 @@ def rest(k, rnd, out, labels, week, tally):
 
 
 def readable(label):
-    return (len(label) <= RECORD_MAX_CHARS and len(label.split()) >= RECORD_MIN_WORDS and not STOP.search(label)
-            and not any((ord(c) > 0x24f and c.isalpha()) or unicodedata.category(c) == 'So' for c in label))
+    """A headline the record can read: short enough, a sentence rather than a name, and nothing a voice cannot say.
+    Not a judgement of what it says (since 2026-11-08)."""
+    return (len(label) <= RECORD_MAX_CHARS and len(label.split()) >= RECORD_MIN_WORDS and not UNSAYABLE.search(label)
+            and not unsayable_script(label))
 
 
 def record_pools(rnd):

@@ -82,6 +82,48 @@ describe('the record', () => {
   })
 })
 
+describe('what the voices leave out', () => {
+  // Since 2026-11-08 nothing is left out for what it says (docs/decision-log.md). The rule lives in the
+  // render script and is read from there, so that a stop list cannot quietly come back.
+  const script = readFileSync(join(process.cwd(), 'scripts/ducking/voices.py'), 'utf8')
+  const source = /^UNSAYABLE = re\.compile\(r'([^']+)', re\.I\)$/m.exec(script)?.[1]
+  const unsayable = new RegExp(source ?? '(?!)', 'i')
+
+  it('is one rule in the script, for the crowd and the record alike', () => {
+    expect(source).toBeDefined()
+    expect(script).not.toMatch(/^STOP\s*=/m)
+  })
+
+  it('reads the charts’ words as they stand, whatever they say', () => {
+    for (const headline of [
+      'Nine killed in fiery Florida jet crash in West Palm Beach County',
+      'Russell Brand convicted of rape and sexual assault',
+      'Philippines school shooting leaves at least three dead, including gunman',
+      'Pennsylvania measles deaths rise to four',
+      'My mother lied and now I’m in hospital.',
+      'Ofcom opens an investigation into Pornhub owner Aylo',
+      'Norway makes shithouses great again',
+      'North Korea gets away with $3 billion from Binance',
+      'Goodbye from Salon - Salon.com',
+      'Introduction to Programming in ATS',
+    ]) {
+      expect(unsayable.test(headline), headline).toBe(false)
+    }
+  })
+
+  it('leaves out only what a voice would spell out sign by sign', () => {
+    for (const label of [
+      'Gemini 4 Argon https://blog.google/innovation-and-ai/',
+      'Two $\\operatorname{ReLU}$ Layers is All You Need',
+      'Achieving an $O(1/N)$ Optimality Gap in Average-Reward Weakly-Coupled MDPs',
+      'DocuSign API endpoint /restapi/v2.1/accounts/{accountId}/envelopes search_text problem',
+      'vimeo_video_player: ^1.0.3 not working on iOS',
+    ]) {
+      expect(unsayable.test(label), label).toBe(true)
+    }
+  })
+})
+
 describe('a round and the briefings after it', () => {
   it('stays current through the convening that wrote its briefing and the cycle after', () => {
     expect(roundBehind('after-cycle-011', { cycle: 11, convening: { after_cycle: 11, briefing: {} } })).toBe(false)
