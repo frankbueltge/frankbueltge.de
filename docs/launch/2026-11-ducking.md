@@ -1,7 +1,14 @@
 # Ducking launch, November 2026: posts and checklist
 
-**Status: drafts. Nothing has been posted anywhere.** Posting leaves the house, so it is Frank's own
-step, on a day he picks.
+**Status, 2026-11-08:** the Show HN went out that afternoon from an account made the same day, and it
+was dead within minutes ([item 50413333](https://news.ycombinator.com/item?id=50413333)), most likely
+killed by HN's filter for new accounts. Nobody else sees it, and its thread takes no comments. The next
+step is a mail to the moderators; see section 1. Nothing has been posted on Reddit or Bluesky. Posting
+leaves the house, so it stays Frank's own step, on a day he picks.
+
+**Every draft in this file was written by a session.** HN's guidelines forbid generated and AI-edited
+text in posts and comments, so section 1 holds notes, not text to paste. The Reddit and Bluesky drafts
+stay; whether those venues allow such text was not checked.
 
 On 2026-11-03 Frank agreed a plan for more attention to the site (wording private):
 
@@ -9,7 +16,7 @@ On 2026-11-03 Frank agreed a plan for more attention to the site (wording privat
 2. One launch moment with [Ducking](https://frankbueltge.de/ducking/).
 3. The EMAF 40 call.
 
-LinkedIn waits until there is outside proof. This file holds the texts for step 2, the checks they rest
+LinkedIn waits until there is outside proof. This file holds the drafts and notes for step 2, the checks they rest
 on, and the risks that decide whether a post survives.
 
 Figures marked **⟨check⟩** move with the ledger or with the next round. Read them off the live page on
@@ -24,78 +31,69 @@ the day and correct them before posting. The values below are from the week to 2
    the number of sources ("What the record shows"), and the Play button's day count.
 3. **Keep two or three hours free after the Show HN post.** HN's rules ask that the maker is around to
    answer questions.
-4. **Ask nobody to upvote or comment.** HN forbids it, and the ranking penalises it.
-5. **Bluesky:** create the account first; see the profile line below.
-6. **Reddit:** read the subreddit's own rules page yourself, and look at your account's recent history
+4. **Write everything you post on HN yourself.** HN's guidelines forbid generated and AI-edited text;
+   see section 1.
+5. **Ask nobody to upvote, comment or vouch.** HN forbids soliciting votes and comments, and the ranking
+   penalises it.
+6. **Bluesky:** create the account first; see the profile line below.
+7. **Reddit:** read the subreddit's own rules page yourself, and look at your account's recent history
    against the 90/10 rule. Both are explained below; neither could be checked from here.
 
 ## 1. Show HN
 
-HN's rules: <https://news.ycombinator.com/showhn.html>, read 2026-11-08. The ones that matter here:
+HN's rules, read 2026-11-08: the [Show HN rules](https://news.ycombinator.com/showhn.html), the
+[guidelines](https://news.ycombinator.com/newsguidelines.html) and the
+[FAQ](https://news.ycombinator.com/newsfaq.html). The ones that matter here:
 
 - It must be something people can try without a signup. Ducking needs none.
 - The maker has to be around to discuss it.
-- No upvote requests.
-- No "quickly-generated one-offs"; explain how and why. The first comment answers that with facts that
-  are already public on the method sheet: the measured lowpass, the checked readings, the ledger running
-  since September, and the prior work.
+- Nobody may be asked to upvote or comment.
+- No "quickly-generated one-offs"; explain how and why.
+- **No generated or AI-edited text,** in posts or in comments. HN is for people writing to each other.
+  The first version of this file missed that rule: it had read only the Show HN page.
+- No deleting and reposting. Anything meant for the moderators goes to hn@ycombinator.com, not into a
+  thread.
+- A killed thread takes no new comments.
 
-**Title** (HN allows 80 characters):
+**Title** (HN allows 80 characters). It is the page's own name and the opening of its own description,
+not new text:
 
 > Show HN: Ducking – a mixing desk for the world's attention
 
-Alternative, if the name alone says too little:
-
-> Show HN: A mixing desk where each fader is an issue's share of the web's charts
-
 **URL:** `https://frankbueltge.de/ducking/`
 
-**First comment.** Post it right after submitting. It is plain on purpose: what it is, how it works,
-what it is built on, and what it cannot say.
+**First comment.** Write it yourself, right after submitting. The draft that stood here until 2026-11-08
+was written by a session; don't post it, not even reworked. What a first comment can cover, as notes
+rather than sentences:
 
-> Ducking is a mixing desk in the browser. Thirteen faders stand for fields of what presses on the
-> world, from war and hunger to climate and AI's harms. A fourteenth is the crowd: everything else.
->
-> Each fader stands at its field's share of what 21 ⟨check⟩ public charts and feeds held in the last
-> seven days. Among them are the HN front page, Google Trends, Wikipedia's most-read pages, Reddit,
-> Google News, GitHub, the App Store and Steam. A headline counts for a field when it contains one of
-> the field's terms. The page lists the terms and the newest matches, false positives included. This
-> week the crowd holds about 96 % ⟨check⟩.
->
-> Each field has a synthetic voice reading where it stands, every figure checked against its source.
-> The crowd is several voices reading a sample of the actual chart entries. All of them play at once
-> at the level the week gave them, so at first you hear only the crowd. Push a fader up and hold it,
-> and its voice comes out. The total stays at 100 %, so the room comes from the crowd. Let go and it
-> falls back. Nothing latches.
->
-> Some details:
->
-> - The faders are logarithmic, as on a real desk. A field at 1 % of the mix sits 20 dB under the whole.
-> - Against the open crowd, a voice needed about 80 % of the mix before a transcription recovered it
->   fully. So the crowd is low-passed as you raise a field, and with the filter 10 % is enough. That
->   filter is the one thing the faders don't show.
-> - Play runs the record back from mid-September ⟨check⟩, two seconds a day. Real headlines that named a
->   field are read by its voice.
-> - The voices are Kokoro-82M, an open TTS model, rendered locally. The counting uses no model. It is
->   term matching over a ledger of committed JSON, collected every morning since 2026-09-02. Code and
->   data: https://github.com/frankbueltge/frankbueltge.de
-> - The closest prior work I found is AudioStreamer (Schmandt and Mullins, CHI 1995). Leaning towards
->   one of three news streams turns it up, but there the levels measure nothing.
->
-> Why: Eisensee and Strömberg (QJE 2007) found that US disaster relief depended on what else was in the
-> news. Attention behaves like a fixed sum, and the desk puts that in your hand.
->
-> Limits: these charts lean to technology and to English, and a fader is a field's place on them, not
-> in the world. Method and limits: https://frankbueltge.de/werke/ducking
->
-> Sound loads only when you press Sound on (about 5 MB). Nothing you do at the desk is sent or kept; the
-> page itself counts visits with a cookieless, self-hosted counter. The HN front page is one of the
-> sources, read each morning, so this thread may end up in tomorrow's crowd.
+- **What:** a mixing desk in the browser · thirteen fields, from war and hunger to climate and AI's
+  harms, plus the crowd (everything else) · hold a fader up to hear its field; let go and it falls back
+- **Counting:** each field's share of what 21 ⟨check⟩ public charts and feeds held in seven days, the
+  HN front page among them · term matching, no model · terms and newest matches on the page, false
+  positives included · the crowd at about 96 % ⟨check⟩
+- **Sound:** one synthetic voice per field, every figure checked against its source · Kokoro-82M,
+  rendered locally · logarithmic faders · the crowd's lowpass: without it a voice needed about 80 % of
+  the mix to be transcribed in full, with it 10 %
+- **Play:** the record from mid-September ⟨check⟩, two seconds a day · real headlines, read by their
+  field's voice
+- **Data:** a ledger of committed JSON, collected every morning since 2026-09-02 ·
+  https://github.com/frankbueltge/frankbueltge.de
+- **Why:** Eisensee and Strömberg (QJE 2007) · US disaster relief and what else was in the news
+- **Prior work:** AudioStreamer (Schmandt and Mullins, CHI 1995) · its levels measure nothing
+- **Limits:** the charts lean to technology and English · a fader is a place on the charts, not in the
+  world · https://frankbueltge.de/werke/ducking
+- **Privacy:** sound loads only on Sound on (about 5 MB) · nothing from the desk is sent or kept · a
+  cookieless, self-hosted visit counter
+- **Aside:** the HN front page is a source, so the thread may land in the next morning's crowd
+- **AI:** whether to say that you build with AI coding agents is your call · readers may ask · the
+  counts use no model
 
-**Optional line, Frank's call.** The site states AI involvement in its own words, and HN readers will
-ask. If you want to say it up front, add as the last paragraph:
-
-> I build with AI coding agents. The counts use no model, and everything is in the repo.
+**If the post is killed.** This happened on 2026-11-08, most likely through HN's filter for new
+accounts. Nobody else sees a dead post, and its thread takes no comments. The way back is a short mail
+in your own words to hn@ycombinator.com with the item link; whether to restore it is the moderators'
+call. Don't delete and repost, don't open a second account, and ask nobody to vouch. An account that
+also takes part in other threads looks less like promotion; the guidelines ask that HN is not used
+primarily for that.
 
 ## 2. r/InternetIsBeautiful
 
@@ -202,6 +200,8 @@ The choice is Frank's. What bears on it:
 - **Show HN.** A common rule of thumb is a weekday US morning, about 15:00–17:00 Berlin (9–11
   Eastern). Weekend mornings have less competition and fewer readers. What matters most is that you
   have the next two or three hours free.
+- **If the moderators restore the post,** the two or three hours start then, with your own first
+  comment.
 - **Bluesky** can go the same day, after the HN post.
 - **r/InternetIsBeautiful** goes on another day, after the moderators answer, if at all.
 - Rounds change the voices. When the next briefing arrives, a new round is recorded automatically. The

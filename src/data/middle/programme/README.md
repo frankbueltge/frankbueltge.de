@@ -49,7 +49,9 @@ earlier choices.
    why not>`. A plea or an objection is an argument, not a vote. A practice may write a longer plea in
    its own repository and link it.
 4. **The second reader.** A later run of the Middle, at the earliest eighteen hours after the dossier
-   was merged and with whatever pleas stand by then, checks every figure of the dossier like a briefing
+   was merged and with whatever pleas stand by then (or at once, when the architect starts the run with
+   the Ecology Turbo and all three practices' pleas stand: the wait exists to let the pleas arrive;
+   architect's decision of 2026-11-08, wording private), checks every figure of the dossier like a briefing
    (`briefings/README.md`, "How a claim is checked"), reads the pleas and objections, and sets the final
    scores, saying for every change of a score which argument moved it. The highest sum wins; a tie goes
    to Weight, then Contribution. No tally, no compromise.
