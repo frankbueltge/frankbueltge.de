@@ -109,7 +109,7 @@ export function termPlatformLabel(id: string): string {
   return TERM_PLATFORM_LABEL[id] ?? platformLabel(id)
 }
 
-/** "Hacker News, Google News, GitHub, arXiv and Reddit" — the searched platforms of a run, in
+/** "Hacker News, Google News, GitHub, arXiv, Crossref and Europe PMC" — the searched platforms of a run, in
  *  the file's order, page views left out because they are not documents. */
 export function searchedPlatforms(file: TrendingTermsDay): string[] {
   return file.sources.filter((s) => s.id !== VIEWS_PLATFORM).map((s) => s.id)
