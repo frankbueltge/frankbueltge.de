@@ -84,11 +84,24 @@ of a topic track is its sung line (next section); the vowel fingerprint is the f
    90 to 520 Hz. Each syllable's onset moves to the nearest sixteenth (onsets, not lengths, so the line does
    not drift), and the syllable is stretched to fill its slot.
 6. **Singing.** The vocoder's carrier holds each syllable's note while the spoken syllable modulates it: the
-   news sings its own intonation, in pure tuning.
+   news sings its own intonation, in pure tuning. The vocoder is built for words: forty bands from 80 Hz to
+   10 kHz whose envelopes follow at 90 Hz, and the spoken line's own hiss above 4 kHz passed through, which
+   carries consonants and no pitch. (The first vocoder, thirty bands following at 45 Hz, let about 70 % of
+   a line's words through even before any music; this one about 90 %.)
 7. **Placing.** The line enters on the first bar of every day the topic was present and comes again every
    whole number of bars it needs; the next day cuts off a repetition that does not fit. Its words start where
-   the topic's first family stands and travel to the front as they are sung. The track ends on the topic's
-   name alone, hummed from the front on its own speech melody, each syllable on the next family's vowel.
+   the topic's first family stands, but never further back than the side, and travel to the front as they
+   are sung. The track ends on the topic's name alone, hummed from the front on its own speech melody, each
+   syllable on the next family's vowel.
+
+The words lead. They have a track of their own, nearly dry (a light compressor, a short room), and while
+they sing the rest of the music steps back by half its amplitude, about 6 dB: the house's Ducking, inside the
+track. Whether the words come through is measured, not assumed: a speech recogniser (whisper.cpp with the
+small English model, used as an instrument; it generates nothing) transcribes each sung line from the
+finished mix, each ear separately, and the share of the line's words it recovers is recorded with the
+pressing. Measured on 2026-11-08, as medians over each track's lines: the topic tracks as first heard 42, 53
+and 0 %, with the vocal chain above 92, 95 and 80 %; the map tracks 78 % (war and violence), 77 % (AI) and
+62 % (climate), where the same lines spoken plainly give 92 to 100 %.
 
 Why the doubling, measured on week 44: spoken, a line moves within about seven semitones, and a topic
 carried by Wikipedia and Polymarket allows only A and the eleventh harmonic in that range, so without it
@@ -97,7 +110,7 @@ lines use three to five notes and none holds more than 56 % of a line. Speech is
 doubling is the one step from one to the other. A topic carried by news and Google Trends sings in the A
 major triad (harmonics 4, 5, 6); one carried by Wikipedia and Polymarket in A and the eleventh harmonic.
 
-## Map tracks (proposed, not built)
+## Map tracks (built as probe 09 on 2026-11-08, at the owner's go)
 
 The thirteen fields of the map (`src/lib/briefing/map.ts`), the fields Ducking has as faders, each get a track
 a week: the field's week in Common Ground, opened by the state the briefing checked for it.
@@ -127,9 +140,9 @@ a week: the field's week in Common Ground, opened by the state the briefing chec
   decided what a machine voice reads aloud about the world's ills; the map tracks sing the same. From 2 to 8
   November that leaves war 65 distinct headlines, climate 17, AI 16, economy 14, and poverty none: its one
   headline names a sum in dollars, which the filter does not read.
-- **Bed, loops, bass and drums** as in the topic tracks.
+- **Bed, loops, bass and drums** as in the topic tracks; the words lead as in the topic tracks.
 
-## Consensus: the week in echoes (proposed, not built)
+## Consensus: the week in echoes (built as probe 10 on 2026-11-08, at the owner's go)
 
 One track a week from Consensus (`/consensus`), which measures verbatim copying in GDELT's English news
 stream. Each day file names the phrase of six words that the most outlets ran word for word, how many outlets
@@ -140,9 +153,11 @@ articles that share such a phrase with another outlet.
   last full quarter hour, not calendar days.
 - **The phrase** is sung on its speech melody: the six words that were copied, not the sample title. Its notes
   are the harmonics 4 to 11 of the drone's A; this instrument has no platform families.
-- **The cascade** sings it as a canon at the unison: the twelve listed outlets enter in the file's order and
-  at their recorded times, compressed into the section; outlets in the same 15-minute GDELT slot enter
-  together, in the file's order. Each voice comes from the direction of its outlet's country domain. The
+- **The cascade** sings it as a canon at the unison: the outlets of the first quarter hour sing the phrase
+  together, once and whole; the copies of each later quarter hour enter after it, one beat apart per quarter
+  hour, in the file's order; outlets in the same 15-minute GDELT slot enter together. (Entering one beat
+  after the first, with the phrase still running, the copies drowned it: a recogniser heard the first word
+  six times and nothing else.) Each voice comes from the direction of its outlet's country domain. The
   phrase's other outlets (150 to 259 in all from 2 to 8 November, against the twelve listed) join as a dense
   choir whose size is their count on a log scale. Copies in unison, as Reich's tape loops made a copied
   phrase audible.
@@ -191,7 +206,14 @@ layer levels must again be set on an ordinary day of the archive rather than on 
 probes normalise each render), so that a quiet week is heard as one. The instruments are Surge XT (open source, GPL, run as a plugin
 through Pedalboard and used as a tool), installed with the owner's go; every note is played at its exact
 just frequency (the nearest MIDI note, bent the rest of the way), with the oscillators' drift off and their
-phase retriggered, so the renders stay bit-identical.
+phase retriggered, so the renders stay bit-identical. Two faults of the instrument were found and fixed on
+2026-11-08, after probe 10. A note whose note-off fell on the last sample of its buffer was never released, so
+every later note sounded on top of the voices before it: from probe 07 to probe 10 each sung syllable carried
+a cluster of earlier pitches. Every note is now rendered past its note-off and then cut. And Surge keeps the
+phase of its oscillators from note to note, so the same note differs in its samples, not in its sound,
+after other notes; every track now gets fresh instruments, and a track rendered alone then matches the same
+track in a set in every layer but the pads, by about -80 dB. The weekly workflow renders each track in its
+own process, so even that does not carry over; a whole set renders bit-identically twice.
 
 ## Open
 
