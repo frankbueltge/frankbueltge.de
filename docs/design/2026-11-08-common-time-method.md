@@ -86,8 +86,9 @@ of a topic track is its sung line (next section); the vowel fingerprint is the f
 6. **Singing.** The vocoder's carrier holds each syllable's note while the spoken syllable modulates it: the
    news sings its own intonation, in pure tuning. The vocoder is built for words: forty bands from 80 Hz to
    10 kHz whose envelopes follow at 90 Hz, and the spoken line's own hiss above 4 kHz passed through, which
-   carries consonants and no pitch. (The first vocoder, thirty bands following at 45 Hz, let about 70 % of
-   a line's words through even before any music; this one about 90 %.)
+   carries consonants and no pitch. (Measured dry, on twenty lines of the map tracks with the corrected
+   instrument: the first vocoder, thirty bands following at 45 Hz, let a recogniser recover 48 % of a line's
+   words, this one 87 %.)
 7. **Placing.** The line enters on the first bar of every day the topic was present and comes again every
    whole number of bars it needs; the next day cuts off a repetition that does not fit. Its words start where
    the topic's first family stands, but never further back than the side, and travel to the front as they
@@ -127,11 +128,12 @@ a week: the field's week in Common Ground, opened by the state the briefing chec
   eleven (1 signal 3 bars, 2 to 3 five, 4 to 7 seven, 8 to 15 nine, 16 and more eleven). A day without a
   signal is one bar of drone.
 - **The chord** is the families of the platforms whose signals named the field that day.
-- **The state first.** The track opens with the field's checked line from the newest Ducking round checked
-  on or before the week's last day, spoken, not sung, in the field's Ducking voice over the drone (its
+- **The state first.** The track opens with the field's first checked line from the newest Ducking round
+  checked on or before the week's last day, spoken, not sung, in the field's Ducking voice over the drone (its
   `say` for the voice, its `text` for the page): what is, before what was said.
 - **The news.** On each day with signals, the field's headlines from Google News are sung on their speech
-  melodies one after another, each once, as many as the day's bars hold, so the more the field was named,
+  melodies one after another with a bar between them, each once, as many as the day's bars hold (the day's
+  first line always starts, and the next day cuts off what runs over), so the more the field was named,
   the more is sung. A trailing outlet name is dropped, and a headline sung once in the track is not sung
   again. In a map track no line is looped as a hook; the hook is the field's wordless vowel fingerprint.
 - **Which headlines may be sung:** what Ducking's spoken record may read (`readable` in
@@ -158,8 +160,9 @@ articles that share such a phrase with another outlet.
   hour, in the file's order; outlets in the same 15-minute GDELT slot enter together. (Entering one beat
   after the first, with the phrase still running, the copies drowned it: a recogniser heard the first word
   six times and nothing else.) Each voice comes from the direction of its outlet's country domain. The
-  phrase's other outlets (150 to 259 in all from 2 to 8 November, against the twelve listed) join as a dense
-  choir whose size is their count on a log scale. Copies in unison, as Reich's tape loops made a copied
+  phrase's other outlets (150 to 259 in all from 2 to 8 November, against the twelve listed) join as a cloud
+  of copies on the sixteenth grid: 4 copies when the day's reach is the narrowest in Consensus's seven years
+  of baseline, 24 when it is the widest (4 + 20 × its percentile). Copies in unison, as Reich's tape loops made a copied
   phrase audible.
 - **The echo index** sets how much echo the section carries, as its percentile against Consensus's seven
   years of baseline (`src/data/consensus/baseline.json`), because the raw value hardly moves (0.329 to 0.366
@@ -212,8 +215,9 @@ every later note sounded on top of the voices before it: from probe 07 to probe 
 a cluster of earlier pitches. Every note is now rendered past its note-off and then cut. And Surge keeps the
 phase of its oscillators from note to note, so the same note differs in its samples, not in its sound,
 after other notes; every track now gets fresh instruments, and a track rendered alone then matches the same
-track in a set in every layer but the pads, by about -80 dB. The weekly workflow renders each track in its
-own process, so even that does not carry over; a whole set renders bit-identically twice.
+track in a set in every layer but the pads, by about -80 dB. The weekly workflow must therefore render each
+track in its own process. A whole set renders bit-identically twice (checked on 2026-11-08 for all eight
+tracks of probes 08c, 09 and 10, in fresh processes).
 
 ## Open
 
