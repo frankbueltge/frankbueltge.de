@@ -18,7 +18,7 @@ export const PROGRAMME = {
     question: 'Why this question',
     state: 'What the ecology knows now',
     plan: 'The plan',
-    dossier: 'The candidates',
+    dossier: 'The candidates · listed by field, not ranked · the Sum column scores them, provisionally until the second reader sets the final scores',
   } as Record<string, string>,
   none: 'The Middle has not written the dossier yet. It runs several times a day; the candidates appear here once it has.',
   source: 'The files in research-ecology ↗',

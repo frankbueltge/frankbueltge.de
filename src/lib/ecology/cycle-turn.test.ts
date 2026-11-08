@@ -353,6 +353,21 @@ describe('the programme (rules of 2026-11-08)', () => {
     expect(turn.next.programme).toMatchObject({ status: 'running', started: '2026-10-13', first_cycle: 7, question: 'Who will control the most capable AI?' })
   })
 
+  it('opens the first step on the day of the choice once the architect has said go', () => {
+    const raw = withProgramme({ ...base, status: 'chosen', question: 'Q', chosen_on: '2026-10-12', first_step: 'S', go: '2026-10-12' })
+    const turn = planTurn(raw, true, [], '2026-10-12')!
+    expect(turn.kind).toBe('programme')
+    expect(turn.next.question).toBe('S')
+    expect(turn.line).toMatch(/said go on 2026-10-12/)
+  })
+
+  it('ignores a go older than the choice, and an objection outranks a go', () => {
+    const stale = withProgramme({ ...base, status: 'chosen', question: 'Q', chosen_on: '2026-10-12', first_step: 'S', go: '2026-10-01' })
+    expect(planTurn(stale, true, [], '2026-10-12')).toBeNull()
+    const both = withProgramme({ ...base, status: 'chosen', question: 'Q', chosen_on: '2026-10-12', first_step: 'S', go: '2026-10-12', objected: '2026-10-12' })
+    expect(planTurn(both, true, [], '2026-10-12')).toBeNull()
+  })
+
   it('opens nothing on a choice the architect objected to', () => {
     const raw = withProgramme({ ...base, status: 'chosen', question: 'Q', chosen_on: '2026-10-12', first_step: 'S', objected: '2026-10-12' })
     expect(planTurn(raw, true, [], '2026-10-20')).toBeNull()

@@ -29,7 +29,8 @@
 // the cycles are steps of one research PROGRAMME, a question the ecology chooses itself and holds for
 // eight to twelve weeks. While it chooses (programme "selecting") the clock holds everything, seeds
 // included; once the choice stands (programme "chosen") the first step opens the day after it was
-// chosen, unless the architect objected; while it runs, the convening decides the next step, by the
+// chosen, unless the architect objected, or at once when he has said go (programme.go, his decision of
+// 2026-11-08, wording private: he can decide right after he reads the choice); while it runs, the convening decides the next step, by the
 // rules above.
 //
 // What stays a hand step: anything without a continuing question (the defaults regime turns by
@@ -92,6 +93,7 @@ interface RawProgramme {
   question?: string | null
   chosen_on?: string | null
   objected?: string | null
+  go?: string | null
   first_step?: string | null
   [key: string]: unknown
 }
@@ -137,10 +139,12 @@ export function planTurn(
   if (programme?.status === 'selecting') return null // the ecology is choosing its question
   if (programme?.status === 'chosen') {
     if (programme.objected) return null // the architect objected: the Middle chooses again
-    if (today < addDays(programme.chosen_on!, 1)!) return null // the architect's veto day runs
+    const go = typeof programme.go === 'string' && programme.go >= programme.chosen_on!
+    if (!go && today < addDays(programme.chosen_on!, 1)!) return null // the architect's veto day runs
     const line =
       `The ecology chose the question of its programme on ${programme.chosen_on}: ${programme.question!.trim()} ` +
-      `No objection came within a day. Cycle ${pad(n)} opens on ${today} as the programme's first step. ` +
+      (go ? `The architect said go on ${programme.go}. ` : `No objection came within a day. `) +
+      `Cycle ${pad(n)} opens on ${today} as the programme's first step. ` +
       `Turned by the cycle clock under the rules of 2026-11-08.`
     const next = opening(raw, n, today, { question: programme.first_step!.trim(), source: 'convening', seedId: null, taken }, line)
     next.programme = { ...programme, status: 'running', started: today, first_cycle: n }

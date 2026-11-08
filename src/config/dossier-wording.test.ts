@@ -41,6 +41,7 @@ const called: { path: string; text: string }[] = [
     { phase: 'convening', opensOn: null, proposedQuestion: null, briefingFallback: 'X' },
     { phase: 'convening', opensOn: null, proposedQuestion: null, briefingFallback: null },
     { phase: 'working', opensOn: null, proposedQuestion: null, briefingFallback: null },
+    { phase: 'convening', opensOn: null, proposedQuestion: null, briefingFallback: 'X', programmeSelecting: true },
   ].map((v, i) => ({
     path: `ecology.now[${i}]`,
     text: D.ecology.now({ cycle: 'X', next: 'X', question: 'X', opened: 'X', conveningOpened: 'X', fallbackOn: 'X', continuing: 'X', ...v }),

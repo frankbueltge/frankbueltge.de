@@ -1,30 +1,30 @@
 {
-  "date": "2026-11-07",
+  "date": "2026-11-08",
   "deletion": {
     "available": true,
-    "checked_at": "2026-11-07T11:57:48Z",
+    "checked_at": "2026-11-08T12:10:27Z",
     "counts": {
-      "botwall": 11,
+      "botwall": 16,
       "gone_404": 0,
-      "gone_410": 0,
+      "gone_410": 1,
       "legal_451": 0,
-      "ok": 286,
+      "ok": 280,
       "other": 0,
       "server_error": 0,
       "unreachable": 3
     },
-    "decided": 286,
-    "excluded_unverifiable": 14,
-    "gone": 0,
+    "decided": 281,
+    "excluded_unverifiable": 19,
+    "gone": 1,
     "gone_ci95": [
-      0.0,
-      0.0133
+      0.0006,
+      0.0199
     ],
-    "gone_rate": 0.0,
+    "gone_rate": 0.0036,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.0133
+      0.0135
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,112 +33,116 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-11-05",
-    "receipts": [],
-    "sample_drawn_at": "2026-11-06T13:09:42Z",
+    "pool_day": "2026-11-06",
+    "receipts": [
+      {
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20261106180000",
+        "http_code": 410,
+        "title": "Naval Service recruits barricaded bedrooms over fears of sexual assault, tribunal hears",
+        "url": "https://www.breakingnews.ie/news/naval-service-recruits-barricaded-bedrooms-over-fears-of-sexual-assault-tribunal-hears-1957280.html"
+      }
+    ],
+    "sample_drawn_at": "2026-11-07T11:53:14Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 5386,
-      "replaced": 5884,
-      "trivial": 699,
-      "update": 422
+      "reframing": 3783,
+      "replaced": 4921,
+      "trivial": 665,
+      "update": 284
     },
-    "day": "2026-11-06",
+    "day": "2026-11-07",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "2"
+          "First",
+          "Doom",
+          "Guard"
         ],
-        "after": "'Ramayana: Rise Of A Legend' box office collection day 1: Ranbir Kapoor, Yash's film collects Rs 64.85 crore net in India across all languages from 25,200 shows, fails to beat Dhurandhar 2's opening day",
-        "before": "Ramaya﻿Na Full Movie Collection: 'Ramayana: Rise Of A Legend' box office collection day 1: Ranbir Kapoor, Yash's film collects Rs 64.85 crore net in India across all languages from 25,200 shows, fails to beat Dhurandhar's opening day | Hindi Movie News",
-        "detected": "2026-11-06T22:19:05Z",
-        "domain": "indiatimes.com",
+        "after": "Avengers: Doomsday Promo Art Reveals Epic MCU Team-ups And A First Look At Doctor Doom's \"Doom Guard\"",
+        "before": "Avengers: Doomsday Promo Art Reveals Epic MCU Team-ups And A New Look At Doctor Doom's Allies",
+        "detected": "2026-11-07T16:03:11Z",
+        "domain": "comicbookmovie.com",
         "removed": [
-          "Ramaya",
-          "Na",
-          "Full",
-          "Movie",
-          "collection",
-          "Hindi",
-          "Movie",
-          "News"
+          "New",
+          "Allies"
         ],
-        "similarity": 0.833,
-        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/box-office/ramayana-box-office-collection-day-1-live-ranbir-kapoor-yashs-film-expected-to-cross-rs-70-crore-on-opening-day-eyes-dhurandhars-record-diwali-weekend-growth-will-depend-on-word-of-mouth/articleshow/135566619.cms",
-        "weight": 16,
+        "similarity": 0.8,
+        "url": "https://comicbookmovie.com/avengers/avengers-doomsday/avengers-doomsday-promo-art-reveals-epic-mcu-team-ups-and-a-new-look-at-doctor-dooms-allies-a230842",
+        "weight": 10,
         "window": "24h"
       },
       {
         "added": [
-          "US",
-          "US"
+          "stock"
         ],
-        "after": "US Justice Department claims it's been investigating whether voters were misled in Alaska US Senate race",
-        "before": "U.S. Justice Department claims it's been investigating whether voters were misled in an Alaska U.S. Senate race",
-        "detected": "2026-11-06T22:01:38Z",
-        "domain": "alaskasnewssource.com",
+        "after": "Stock futures today: Chip stocks bounce up to 8% as US stock futures recover after Thursday's stock market crash - Jefferies says sell-off was 'reactionary, not a reset'",
+        "before": "Dow Jones futures Nasdaq S&P 500 today: Chip stocks bounce up to 8% as US stock futures recover after Thursday's stock market crash - Jefferies says sell-off was 'reactionary, not a reset'",
+        "detected": "2026-11-07T13:32:22Z",
+        "domain": "indiatimes.com",
         "removed": [
-          "U",
-          "s",
-          "an",
-          "U",
-          "S"
+          "Dow",
+          "Jones",
+          "Nasdaq",
+          "P",
+          "500",
+          "s"
         ],
-        "similarity": 0.833,
-        "url": "https://www.alaskasnewssource.com/2026/10/30/developing-us-justice-department-hold-press-conference-anchorage-friday/",
-        "weight": 8,
-        "window": "1w"
+        "similarity": 0.839,
+        "url": "https://economictimes.indiatimes.com/news/international/us/chip-stocks-bounce-up-to-8-as-us-stock-futures-recover-after-thursdays-stock-market-crash-jefferies-says-sell-off-was-reactionary-not-a-reset/articleshow/135606585.cms",
+        "weight": 10,
+        "window": "24h"
       },
       {
         "added": [
-          "Erling",
-          "Haaland"
+          "Mesa"
         ],
-        "after": "Raccoons at the ready! 20 Halloween costumes for 2026 – from Erling Haaland to Kate in Widow's Bay",
-        "before": "Raccoons at the ready! 20 Halloween costumes for 2026 – from Count Binface to Kate in Widow's Bay",
-        "detected": "2026-11-06T13:32:16Z",
-        "domain": "aol.co.uk",
+        "after": "Mesa vet tech hurt in hit-and-run after couple allegedly failed to pay vet bill",
+        "before": "East Valley vet tech hurt in hit-and-run after couple allegedly failed to pay vet bill",
+        "detected": "2026-11-07T06:47:13Z",
+        "domain": "azfamily.com",
         "removed": [
-          "Count",
-          "Binface"
+          "East",
+          "Valley"
         ],
-        "similarity": 0.8,
-        "url": "https://www.aol.co.uk/articles/raccoons-ready-20-halloween-costumes-131338000.html",
-        "weight": 8,
-        "window": "1w"
+        "similarity": 0.824,
+        "url": "https://www.azfamily.com/2026/11/06/east-valley-vet-tech-hurt-hit-and-run-after-couple-allegedly-failed-pay-vet-bill/",
+        "weight": 6,
+        "window": "24h"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 14549,
-      "PAGE_TEXTCHANGE": 131536,
-      "PAGE_TITLECHANGE": 49052,
-      "UNCHANGED_CONTENT": 729703
+      "HTTP_REDIRECT": 11099,
+      "PAGE_TEXTCHANGE": 101357,
+      "PAGE_TITLECHANGE": 39800,
+      "UNCHANGED_CONTENT": 619541
     },
-    "title_changes_en": 12391,
+    "title_changes_en": 9653,
     "trace": [
       {
-        "bytes_billed": 25165824,
-        "created": "1794052373084",
-        "job_id": "world_gdg_counts_20261106",
+        "bytes_billed": 20971520,
+        "created": "1794139551729",
+        "job_id": "world_gdg_counts_20261107",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 232783872,
-        "created": "1794052377626",
-        "job_id": "world_gdg_titles_20261106",
+        "bytes_billed": 193986560,
+        "created": "1794139557113",
+        "job_id": "world_gdg_titles_20261107",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-11-07T11:57:48Z",
+  "generated_at": "2026-11-08T12:10:27Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-11-06.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-11-07.json",
   "schema_version": "1",
   "selection_version": "v1"
 }

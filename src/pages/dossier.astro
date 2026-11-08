@@ -64,6 +64,7 @@ const now = D.ecology.now({
   proposedQuestion: convening?.stands && convening.result ? convening.result.question : null,
   briefingFallback: convening ? (cycle.convening?.briefing?.fallback ?? null) : null,
   continuing,
+  programmeSelecting: cycle.programme?.status === 'selecting',
 })
 
 // ── who set each question: the relay's programme, worded ──────────────────────────────────────
