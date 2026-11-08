@@ -330,3 +330,40 @@ describe('the briefing (2026-10-25)', () => {
     expect(() => loadCycle(root)).toThrow(/fallback/)
   })
 })
+
+describe('the programme (rules of 2026-11-08)', () => {
+  const chosen = () => convening('2026-10-10', { objected: '2026-10-11' })
+  const withProgramme = (programme: Record<string, unknown>) => ({ ...chosen(), programme })
+  const base = { since: '2026-10-11', url: 'https://github.com/frankbueltge/research-ecology/tree/main/programme' }
+
+  it('holds everything while the ecology chooses its question, a waiting seed and the seven days included', () => {
+    const raw = withProgramme({ ...base, status: 'selecting', question: null })
+    expect(planTurn(raw, true, [], '2026-10-30')).toBeNull()
+  })
+
+  it("holds a chosen question through the architect's veto day, and opens the first step the day after", () => {
+    const raw = withProgramme({ ...base, status: 'chosen', question: 'Who will control the most capable AI?', chosen_on: '2026-10-12', first_step: 'Where does the compute sit?' })
+    expect(planTurn(raw, true, [], '2026-10-12')).toBeNull()
+    const turn = planTurn(raw, true, [], '2026-10-13')!
+    expect(turn.kind).toBe('programme')
+    expect(turn.next.cycle).toBe(7)
+    expect(turn.next.phase).toBe('working')
+    expect(turn.next.question).toBe('Where does the compute sit?')
+    expect(turn.next.convening).toBeUndefined()
+    expect(turn.next.programme).toMatchObject({ status: 'running', started: '2026-10-13', first_cycle: 7, question: 'Who will control the most capable AI?' })
+  })
+
+  it('opens nothing on a choice the architect objected to', () => {
+    const raw = withProgramme({ ...base, status: 'chosen', question: 'Q', chosen_on: '2026-10-12', first_step: 'S', objected: '2026-10-12' })
+    expect(planTurn(raw, true, [], '2026-10-20')).toBeNull()
+  })
+
+  it('writes a programme the site can load', () => {
+    const raw = withProgramme({ ...base, status: 'chosen', question: 'Q', chosen_on: '2026-10-12', first_step: 'S' })
+    const turn = planTurn(raw, true, [], '2026-10-13')!
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'programme-'))
+    fs.mkdirSync(path.join(dir, 'src/data/ecology'), { recursive: true })
+    fs.writeFileSync(path.join(dir, 'src/data/ecology/cycle.json'), JSON.stringify(turn.next))
+    expect(loadCycle(dir).programme).toMatchObject({ status: 'running', question: 'Q', firstStep: 'S' })
+  })
+})
