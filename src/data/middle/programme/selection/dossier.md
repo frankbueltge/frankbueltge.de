@@ -1,4 +1,4 @@
-Status: chosen on 2026-11-08 — 2
+Status: chosen on 2026-11-08 — 2; set aside the same day by the architect, who set 10
 
 # Dossier — the ecology's first programme
 
@@ -372,7 +372,14 @@ Contribution.
 
 **Chosen: 2 — Tipping points, 19.** Runner-up: **1 — Living past 1.5°C, 17**, ahead of 3, 4, 9 and 10 (all
 17) on Weight (5, with 4) and then on Contribution (4 against 4's 3). The choice is written in
-[`QUESTION.md`](https://github.com/frankbueltge/research-ecology/blob/main/programme/QUESTION.md), the steps in [`PLAN.md`](https://github.com/frankbueltge/research-ecology/blob/main/programme/PLAN.md).
+[`archive/2026-11-08-tipping-points-set-aside/QUESTION.md`](archive/2026-11-08-tipping-points-set-aside/QUESTION.md), the steps in [`PLAN.md`](archive/2026-11-08-tipping-points-set-aside/PLAN.md).
+
+## Set by the architect
+
+On 2026-11-08, after the choice above and before the first step opened, the architect set candidate 10,
+Who controls advanced AI, instead (wording private). It is an exception to section 1 of `README.md`, which
+has him only object. The scores above stand as the second reader set them. The plan for tipping points is
+kept in [`archive/2026-11-08-tipping-points-set-aside/`](archive/2026-11-08-tipping-points-set-aside/).
 
 ## Checked
 

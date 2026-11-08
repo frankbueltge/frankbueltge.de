@@ -1,7 +1,6 @@
-# What the ecology knows — Tipping points
+# What the ecology knows — Who controls advanced AI
 
-**The question.** How close are the Earth's tipping elements to irreversible change, and how could anyone
-know in time?
+**The question.** Can increasingly capable AI be kept under human and democratic control, and by whom?
 
 *Kept by the Middle after every step: at most two pages, every claim linked to the work and the source it
 rests on, every claim marked holds, corrected or refuted. Plan: [`PLAN.md`](PLAN.md).*
@@ -17,7 +16,5 @@ rests on, every claim marked holds, corrected or refuted. Plan: [`PLAN.md`](PLAN
 ## Step 5
 
 ## Step 6
-
-## Step 7
 
 ## What moved in the world
