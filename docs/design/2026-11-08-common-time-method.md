@@ -69,8 +69,9 @@ of a topic track is its sung line (next section); the vowel fingerprint is the f
 1. **The line.** Among the topic's links of the day, news outlets first, then the platforms' own lines (a
    Polymarket question, say): the first title that still has at least three words once the topic's name is
    taken out, a line not yet sung in the track before one that was. It must pass the content rules below. A
-   Wikipedia title is the name itself and never qualifies. In week 44 two of the three tracks sing
-   Polymarket's questions, because no outlet carried those topics: there the market sings, not the news.
+   Wikipedia title is the name itself and never qualifies. In week 44 nine of the ten days sing a
+   Polymarket question, because no outlet carried those topics on those days; only Lagarde's resignation
+   (CNN) is a news headline. There the market sings, not the news.
 2. **The name.** Each run of the label's words inside the line is cut out. In the gap, the vowels of the
    families that carried the topic hum the name's own speech melody, one vowel per syllable: the name keeps
    its rhythm and its contour, not its sound.
@@ -92,7 +93,7 @@ of a topic track is its sung line (next section); the vowel fingerprint is the f
 
 Why the doubling, measured on week 44: spoken, a line moves within about seven semitones, and a topic
 carried by Wikipedia and Polymarket allows only A and the eleventh harmonic in that range, so without it
-50 to 73 % of a line's syllables land on one note and every line uses two. With the intervals doubled the
+56 to 73 % of a line's syllables land on one note and every such line uses two. With the intervals doubled the
 lines use three to five notes and none holds more than 56 % of a line. Speech is narrower than song; the
 doubling is the one step from one to the other. A topic carried by news and Google Trends sings in the A
 major triad (harmonics 4, 5, 6); one carried by Wikipedia and Polymarket in A and the eleventh harmonic.
@@ -139,8 +140,8 @@ phase retriggered, so the renders stay bit-identical.
 ## Open
 
 - whether names other than the topic's own may be sung in a line (in week 44: three party names);
-- whether a market's question may stand in for news when no outlet carried a topic (week 44: two of three
-  tracks);
+- whether a market's question may stand in for news when no outlet carried a topic (week 44: nine of ten
+  days);
 - whether a politician may be the subject of a topic track at all (in W44 all three were political);
 - the stems desk: each layer of a pressing as a channel to filter, loop and mix, two weeks against each
   other.
