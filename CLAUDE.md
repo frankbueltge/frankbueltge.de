@@ -282,7 +282,8 @@ seit 2026-08-14 **nicht mehr nur für dieses Repo**, sondern für `machine-atten
 Wortlaut privat) auch für `research-ecology`, `error-as-method` und `n-1`, die bis dahin in keiner
 der beiden Listen standen; Wortlaut, Ausnahmen und Reichweite stehen in `../CLAUDE.md`. **Nicht mitdelegiert:** (1) alles, was das Haus verlässt —
 Mails an reale Empfänger, Einreichungen, Bewerbungen; das Post Office bleibt bei „nothing sends
-itself". (2) **Engine-Site-PRs** (`engine-site-pr.yml`), weil `/apparatus` öffentlich behauptet,
+itself". Einzige Ausnahme seit 2026-11-08 (decision-log): Die Selected Works postet der Workflow
+`bluesky-selected.yml` selbst auf Bluesky, scharf erst, wenn `src/config/bluesky.ts` den Account nennt. (2) **Engine-Site-PRs** (`engine-site-pr.yml`), weil `/apparatus` öffentlich behauptet,
 ein Mensch merge sie — die Behauptung ändern, bevor der Automatismus kommt. (3) Verfassungs- und
 Lizenzänderungen in den Praxis-Repos.
 
