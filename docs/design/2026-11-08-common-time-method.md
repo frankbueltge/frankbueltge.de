@@ -104,7 +104,8 @@ differs between them is the method. Each renders bit-identically twice in fresh 
   of its country domain, the outlets of the first quarter hour together, each later quarter hour half a phrase
   later and looping slower by k × its quarter hours, k = 0.6 % × (1 − the echo index's percentile): the more the
   whole news stream copied that day, the tighter the copies hold. The rape verdict is never voiced; its copies
-  are breath. The recogniser writes down 67 to 100 % of each voiced phrase said alone and 0 to 67 % at the end of
+  are breath. (This sketch still tests only the six words; under the corrected rule below three more days would
+  be breath.) The recogniser writes down 67 to 100 % of each voiced phrase said alone and 0 to 67 % at the end of
   the day, where it starts to hear words that were never said ("we promise after a week" in "threats after a week
   of hoaxes").
 - **Silence, poverty.** The field's checked line once (the World Bank's nowcast of 811 million people below
@@ -148,16 +149,22 @@ and notation as a subject of its own. On notation the composer Christian Dimpker
 Notation: The Depiction of the Unconventional*, 2013; *Holistic Notation*, announced for 2026); his premise is
 that a score allows a kind of composing only it allows, and that it permits versions and archiving.
 
-**Probe 12, Copy** (`probe12_copy.py`, `out12/`): Consensus as a techno track, 134 BPM, F Phrygian, the robot
-voice here a choice of style. Three devices carry it; only the first is a candidate for something new:
+**Probe 12, Copy** (`probe12_copy.py`, `out12/`): Consensus as a techno track. After Frank heard it (wording
+private): the headline must not be cut off, and the track may be harder, Detroit or Berghain. So it now loops the
+whole headline (Consensus's sample title) over one, two or four bars, voiced only where the whole headline passes
+the filter (three days of seven; the other four are breath and the bass holds F), at 138 BPM in F Phrygian,
+−8 LUFS, with the rumble always under it and as loud as the day's reach, a 909 ride, claps, dub chords and toms
+entering as the reach grows; the robot voice is a choice of style. Three devices carry it; only the first is a
+candidate for something new:
 - the **latency groove**: a bar is the cascade. The kick on the beats is the clock; the twelve sixteenths between
   them are the first twelve outlets in the file's order, each 8 ms late for every GDELT quarter hour after the
   first outlet ran the phrase (never by half a sixteenth or more, where a late copy would sound early), and hats
-  and bass ride the same template. Measured on the copies: about 0 ms median lateness on the days the outlets ran
-  it within one quarter hour (3 and 8 November), 27 to 35 ms on the days it trickled (4, 5 and 7 November). The
+  and bass ride the same template. Measured on the copies at 138 BPM: about 0 ms median lateness on the days the
+  outlets ran it within one quarter hour (3 and 8 November), 24 to 36 ms on the days it trickled (2, 4, 5 and 7
+  November). The
   groove is the copying's delay. Not found in a targeted search; the nearest work, Chris Chafe and Greg Niemeyer's
   *Ping* (2001), turns network round-trip time into pitch, not into groove.
-- the **illusion becomes the bassline**: the phrase loops exactly, which makes speech sound sung (Diana Deutsch's
+- the **illusion becomes the bassline**: the headline loops exactly, which makes speech sound sung (Diana Deutsch's
   speech-to-song illusion); from a day's ninth bar the bass plays the melody the ear has begun to hear, from the
   thirteenth only the bass still says the phrase. Instruments doubling speech melody are Reich's *Different
   Trains*; only the order (illusion first, then the bass, then the words gone) belongs to this piece.
@@ -329,7 +336,14 @@ articles that share such a phrase with another outlet.
   that week). This is the first layer of Common Time that is levelled against an archive, as the method owes.
 - **A phrase the house filter would not read** (Ducking's `readable`) is hummed on its speech melody, its
   words withheld, and the score keeps its text. Taking the runner-up instead would misreport the instrument.
-  From 2 to 8 November that is one day of seven: a rape verdict.
+  From 2 to 8 November that seemed to be one day of seven: a rape verdict.
+- **Correction (night of 2026-11-08): the filter has to read the whole headline.** Probes 10 and 11 and the first
+  version of probe 12 tested only the six copied words. Cut to six words, four of the week's seven headlines
+  passed while the whole headline named deaths, rape or attacks ("9 dead as jet nosedives…", "…including 12
+  counts of rape", "Missile attacks injure nine as…"), so those probes voiced fragments of headlines the house
+  does not read aloud. The rule from now on: a Consensus day is voiced only if Ducking's `readable` passes both
+  the phrase and the whole headline around it (Consensus's `sample_title`, the outlet's name dropped). In week 45
+  that leaves three days of seven.
 
 ## Space
 
