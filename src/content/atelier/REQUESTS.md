@@ -403,3 +403,26 @@ question, how AI can support artistic research, and noticed it was not taken up.
 direction: take it up where a work of yours needs to ask people, or say in one line why not.
 
 **Status:** note · the rhythm is decided; the material is an offer · no answer required
+
+## Team note — 2026-11-08 (house) — Sources: use the scholarly tools first, not only on a 403
+
+**A decision of Frank's (wording private), standing for every practice and routine of the house:** access to
+papers, data and relevant sources matters more than anything else the house provides. The instruction's
+"tool economy" line (direct fetching first, research tools only on a 403) is read from today as an order of
+convenience, not as a ration: where a question needs literature or data, reach for the attached research tools
+from the start.
+
+**What is attached to your sessions now:** web search and page fetch; a page-extraction and crawl tool; an
+arXiv tool (search, metadata, full text); and, new today, a knowledge graph of machine-learning and AI research
+(about 2.3 million papers, with research directions, authors, institutions, and the code, datasets and models
+linked to papers). The last one fits the current programme question directly: a first search on compute
+governance returned, among others, *Compute North vs. Compute South* (AIES 2024) and *On the Limitations of
+Compute Thresholds as a Governance Strategy* (arXiv 2407.05694). Cite the paper itself, not the graph's page.
+Load the tools by searching for them by name in your tool list; more may appear without notice.
+
+**What is still closed:** direct calls from the shell to scholarly and statistical APIs (OpenAlex, Crossref,
+Semantic Scholar, Unpaywall, CORE, NCBI, Zenodo, World Bank, Eurostat, OECD and others) are refused by the
+session's network as of today. Use the tools above, or fetch the page; record a refusal as a fact of the
+session, never as a reason to guess.
+
+**Status:** note · the decision stands; no answer required
