@@ -62,6 +62,7 @@ const ROOTS: { re: RegExp; practice: (m: RegExpExecArray) => SharePractice; kind
   { re: /^(atelier|field|studio)\/(closing-report)\/index\.html$/, practice: (m) => m[1] as SharePractice, kind: 'report' },
   { re: /^(atelier)\/(window)\/index\.html$/, practice: () => 'atelier', kind: 'report' },
   { re: /^(atelier|field|studio|plenum)\/werke-html\/([^/]+)\/index\.html$/, practice: (m) => m[1] as SharePractice, kind: 'work' },
+  { re: /^(atelier|field)\/artifacts\/(?:cycle-\d+\/)?([^/]+)\/index\.html$/, practice: (m) => m[1] as SharePractice, kind: 'work' },
   { re: /^(error-as-method)\/works-html\/([^/]+)\/index\.html$/, practice: () => 'error-as-method', kind: 'work' },
   // a stage-only work of the nightly line, served from its stage folder (the text works there are the
   // site's own pages, and isHousePage leaves them out)
@@ -90,6 +91,13 @@ function candidates(dist: string): string[] {
     add(`${ns}/closing-report/index.html`)
   }
   add('atelier/window/index.html')
+  // the Field's and the Atelier's published artifacts (2026-11-08): artifacts/<slug>/ and, since the
+  // programme, artifacts/cycle-NNN/<slug>/
+  for (const ns of ['atelier', 'field'])
+    for (const dir of list(`${ns}/artifacts`)) {
+      if (/^cycle-\d+$/.test(dir)) for (const inner of list(`${ns}/artifacts/${dir}`)) add(`${ns}/artifacts/${dir}/${inner}/index.html`)
+      else add(`${ns}/artifacts/${dir}/index.html`)
+    }
   for (const ns of ['atelier', 'field', 'studio', 'plenum']) for (const dir of list(`${ns}/werke-html`)) add(`${ns}/werke-html/${dir}/index.html`)
   for (const dir of list('error-as-method/works-html')) add(`error-as-method/works-html/${dir}/index.html`)
   for (const dir of list('error-as-method')) if (dir !== 'works-html') add(`error-as-method/${dir}/index.html`)

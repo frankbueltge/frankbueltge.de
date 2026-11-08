@@ -28,10 +28,11 @@ import { SHARE } from '@/config/share-wording'
 import { SITE } from '@/lib/site'
 import { loadPresentations } from '@/lib/ecology/v3'
 import { dayMonthYear } from '@/lib/ops/since'
-import { injectBack, injectShare, openingSentences, ownMeta, pageTitle, type ShareImage } from './share'
+import { injectBack, injectShare, openingSentences, ownMeta, pageTitle, stripBack, type ShareImage } from './share'
 import { CARD, renderCard, renderStill } from './share-card'
 import { sharePages, type SharePage } from './share-pages'
 import { teaserFor } from './teaser'
+import { FRAME_MARKER, frameStandaloneWork, houseFor, practiceFor } from './work-frame'
 
 /** Where the preview images are written, as a site address. */
 export const SHARE_IMAGE_DIR = '/og/practice'
@@ -177,6 +178,12 @@ export async function shareDist({ dist, publicDir, root = process.cwd(), render,
       }
 
       let html = injectShare(before, { url: `${SITE.url}${page.href}`, title, description, siteName: SITE.name, image })
+      // Since 2026-11-08 every practice page a visitor can arrive at carries the same frame as a
+      // standalone work (the bar with the way back to the practice, its works and the ecology),
+      // not the thinner strip: the architect asked for one way back on every work, and for every
+      // work to come. The strip stays only for a namespace the frame does not know.
+      if (!html.includes(`<header class="${FRAME_MARKER}"`) && (practiceFor(page.practice) || houseFor(page.practice)))
+        html = frameStandaloneWork(stripBack(html), page.practice, page.kind === 'work' ? teaserFor(page.practice, page.slug) : null)
       const back = injectBack(html, { label: practice.label, href: practice.href })
       html = back.html
       if (back.placed) report.strips++
