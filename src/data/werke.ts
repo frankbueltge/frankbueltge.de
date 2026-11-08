@@ -85,7 +85,7 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
     id: 'ledger',
     label: 'NIGHTLY LEDGER',
     blurb: bilingual(
-      "Instruments that write one dated entry every night and never revise it: the minutes of the planet's session, and a premium on the present. The series is the finding, never a single night.",
+      "Instruments that write one dated entry on a fixed clock, every night or once a week, and never revise it: the minutes of the planet's session, and a premium on the present. The series is the finding, never a single entry.",
     ),
   },
   {
@@ -107,6 +107,28 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
 /** Verzeichnis der Experimente. Reihenfolge unten = redaktionelle Feinordnung bei Datums-
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
+  {
+    // Built 2026-11-08 on Frank's word of that day (wording private): asked how the lab could compose
+    // from the data its works reflect, he heard three probes, and the third, Common Ground alone,
+    // was the one that held. Design doc docs/design/2026-11-08-common-time.md. Not `live`: it
+    // presses once a week, and a pressing is never rewritten.
+    id: 'common-time',
+    line: 'ledger',
+    title: 'Common Time',
+    subtitle: {
+      de: 'What the web agreed on, played back once a week: a topic’s name becomes its melody, and the more platforms carried it, the fuller the unison',
+      en: 'What the web agreed on, played back once a week: a topic’s name becomes its melody, and the more platforms carried it, the fuller the unison',
+    },
+    status: 'live',
+    since: '2026-11-08',
+    href: '/common-time',
+    description: {
+      de: 'From the nightly-ledger line. Once a week the seven day files of Common Ground are pressed into a short piece of music in which every note that carries data comes from a committed file. A topic that converged across platforms sings its own name: the vowels of its label on a five-note scale without a semitone, so a topic that returns comes back as the same melody. The week’s most persistent topic is the theme and falls silent on the days it was off the charts; each day’s most converged topic is the melody, played in unison by one instrument for every platform family that carried it, so agreement is heard as fullness. Tempo, chords, beat and timbres are composed and stay the same; the levels are set on an ordinary day, never on the week, so a busy week is heard as one. Every pressing comes with its score, which hashes each day file it read.',
+      en: 'From the nightly-ledger line. Once a week the seven day files of Common Ground are pressed into a short piece of music in which every note that carries data comes from a committed file. A topic that converged across platforms sings its own name: the vowels of its label on a five-note scale without a semitone, so a topic that returns comes back as the same melody. The week’s most persistent topic is the theme and falls silent on the days it was off the charts; each day’s most converged topic is the melody, played in unison by one instrument for every platform family that carried it, so agreement is heard as fullness. Tempo, chords, beat and timbres are composed and stay the same; the levels are set on an ordinary day, never on the week, so a busy week is heard as one. Every pressing comes with its score, which hashes each day file it read.',
+    },
+    methodHref: '/werke/common-time',
+    tier: 'experiment',
+  },
   {
     // Built 2026-11-01 on Frank's word of that day (wording private): the idea had been proposed the
     // night before as a motorised desk for two Raspberry Pis, and he asked for it as a lab experiment

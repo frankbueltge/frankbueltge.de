@@ -1,0 +1,50 @@
+/* src/styles/common-time.css — Common Time (/common-time, 2026-11-08).
+ *
+ * The frame's mono ink only. The guide carries its facts by position, length and height, never by
+ * a hue, so no identity colour enters the page and no palette record is needed.
+ */
+
+.ct-player {
+  display: block;
+  width: 100%;
+  max-width: 40rem;
+}
+
+.ct-guide svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.ct-guide .ct-row,
+.ct-guide .ct-day-label {
+  fill: var(--color-fg-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.ct-guide .ct-day {
+  stroke: var(--color-line-lift);
+  stroke-width: 1;
+}
+
+.ct-guide .ct-theme,
+.ct-guide .ct-melody {
+  fill: var(--color-fg);
+}
+
+.ct-guide .ct-orn {
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.5;
+}
+
+.ct-guide .ct-crowd {
+  fill: var(--color-fg-faint);
+  opacity: 0.45;
+}
+
+.ct-weeks {
+  display: grid;
+  gap: 1.25rem;
+}

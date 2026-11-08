@@ -1,0 +1,147 @@
+---
+// Method sheet — Common Time (2026-11-08). The six parts of the method-sheet duty (werkgruppe spec §3.5).
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
+import { FAMILIES, INSTRUMENT, MOTIF_MAX } from '@/lib/common-time/arrangement'
+import { clock, readPressings, weekName } from '@/lib/common-time/score'
+
+const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+const pressings = readPressings()
+const first = pressings[0]!
+const latest = pressings.at(-1)!
+const patch = latest.patch
+---
+
+<MethodSheet title="Method sheet — Common Time" workHref="/common-time" workLabel="To the work">
+  <section class="sheet-reveal mb-10">
+    <h2 class="kicker mb-2">What this is</h2>
+    <p class="leading-relaxed">
+      A week of Common Ground, played. Each ISO week of the ledger becomes about {clock(latest.audio.seconds)} of music in which every
+      note that carries data comes from a committed day file: which topic is the theme, which is each day’s melody, which
+      instruments sound it, how many ornaments and how dense the crowd. The claim is narrow and checkable: the arrangement is what
+      the published rule makes of the ledger, and a test decides it again from the day files for every pressing. The music adds no
+      finding to Common Ground. It makes a week of convergence something you can follow by ear.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">1. Sources &amp; licences</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>
+        Common Ground’s day files — open data (CC0) in <a class={link} href={`${REPO}/tree/main/src/data/trending`}>src/data/trending</a>:
+        the converging topics with the links that show where each surfaced, and the signals of every source. Nothing else is read;
+        no other work of the house sounds in this one.
+      </li>
+      <li>
+        The pressings — the audio (AAC) in <a class={link} href={`${REPO}/tree/main/public/common-time`}>public/common-time</a> and the
+        scores in <a class={link} href={`${REPO}/tree/main/src/data/common-time`}>src/data/common-time</a>, CC BY 4.0 with the rest of
+        the lab’s works. The renderer, <a class={link} href={`${REPO}/blob/main/scripts/common-time/press.py`}>scripts/common-time/press.py</a>,
+        is Apache 2.0.
+      </li>
+      <li>
+        No samples, no recordings and no model: every sound is synthesised from numbers, by numpy and scipy, and mastered to
+        loudness with pyloudnorm.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">2. Cadence</h2>
+    <p class="leading-relaxed text-fg-muted">
+      Once a week. A workflow presses every ISO week whose Monday and Sunday are both in the ledger and that has no pressing yet,
+      on Monday morning after Sunday’s day file has landed; GitHub starts scheduled runs late, so a pressing can arrive hours after
+      that. A pressing is never rewritten. The first pressings, from {weekName(first.week)}, the first full week of the ledger, were
+      made at once on the day the work began; {pressings.length} are on file now.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">3. Processing</h2>
+    <ul class="list-disc space-y-2 pl-5 leading-relaxed text-fg-muted">
+      <li>
+        <strong class="text-fg">Form.</strong> {patch.intro_bars} bars of introduction, {patch.day_bars} bars per day from Monday to Sunday,
+        {patch.outro_bars} bars of ending, at {patch.bpm} beats a minute, over the chords {patch.progression.filter((c, i, a) => a.indexOf(c) === i).join(', ')},
+        two bars each.
+      </li>
+      <li>
+        <strong class="text-fg">A name as a melody.</strong> The label of a topic as first recorded in the ledger, accents read as their
+        letters, is reduced to its vowels; u, e, i, o and a land on F, G, A, C and D, one eighth note each, the last vowel of a word a
+        quarter, at most {MOTIF_MAX} notes. This is the soggetto cavato without the fa, chosen so that no two notes in the piece are a
+        semitone apart. A label without a Latin vowel would sing a single F; none has so far.
+      </li>
+      <li>
+        <strong class="text-fg">Theme.</strong> The topic on the most days of the week; ties go to the one carried by more families in
+        all, then to the one seen first. Its melody repeats once a bar, or every two bars when it is longer than one, on every day
+        it was on the charts.
+      </li>
+      <li>
+        <strong class="text-fg">Melody.</strong> On each day, the other topic carried by the most platform families; ties go to the one
+        on more days of the week, then to the ledger’s own order. It is played at half speed, twice, by the instrument of every
+        family that carried it.
+      </li>
+      <li>
+        <strong class="text-fg">Ornaments and crowd.</strong> Every other converging topic sounds the first note of its melody once, the
+        topics spread evenly over the day’s {patch.day_bars * 16} sixteenths in the ledger’s order. The crowd ticks as many times a bar as
+        16 × the day’s signals ÷ the most signals any day of the ledger has held, at least once.
+      </li>
+      <li>
+        <strong class="text-fg">Families.</strong>
+        {FAMILIES.map((f, i) => (
+          <span>{INSTRUMENT[f]}: {patch.platforms[f].join(', ')}{f === patch.fallback_family && ', and any publisher that is no platform (the news outlets behind Google News)'}{i < FAMILIES.length - 1 ? '; ' : '.'}</span>
+        ))}
+      </li>
+      <li>
+        <strong class="text-fg">Levels.</strong> Every voice is set to a fixed loudness on an ordinary day of the ledger, the most recent day
+        with the median number of converging topics up to the week’s end, played seven times; the week itself never sets a level.
+        The finished pressing is brought to −14 LUFS with a true-peak ceiling of −1 dBTP.
+      </li>
+      <li>
+        <strong class="text-fg">Receipts.</strong> The score of each week names every day file with its sha256, the archive it scaled
+        against, the arrangement, the hashes of the rendered sound and the versions that made it. The guard test
+        (<a class={link} href={`${REPO}/blob/main/src/lib/common-time/score.test.ts`}>score.test.ts</a>) checks the audio against its hash,
+        the day files against theirs, and the arrangement against the rule, decided again from the ledger in TypeScript.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">4. Limits of the method</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>Music is no measurement. Nothing heard here is a finding beyond Common Ground’s own; the piece only makes its week audible.</li>
+      <li>
+        The mapping from vowels to notes is a convention, not a property of the topic: two names with the same vowels sing the same
+        melody, and a name in a script without Latin vowels sings nothing of itself.
+      </li>
+      <li>
+        Which platform is which instrument is a choice, made once and printed above. A melody’s fullness counts families, not
+        platforms or outlets, so ten outlets behind Google News count as one voice.
+      </li>
+      <li>
+        The crowd moves little: the sources hold about as many signals every day, so the tick is close to constant. It is kept
+        because it is what the ledger says, not because it varies.
+      </li>
+      <li>
+        The sound is reproducible where it was made: the same renderer, versions and platform give the same samples, whose hash is
+        in the score. A machine with another floating-point library may differ in the last bits; the arrangement does not.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">5. Compute footprint</h2>
+    <p class="leading-relaxed text-fg-muted">
+      Seconds of CPU per week on the workflow’s runner, no paid service, no GPU. A pressing adds about two megabytes of audio and
+      a score of a few dozen kilobytes to the repository, roughly a hundred megabytes a year.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">6. Change log</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>
+        2026-11-08 — begun, after three listening probes; the third, Common Ground alone, was the one that held. Weeks
+        {first.week.slice(-2)} to {latest.week.slice(-2)} pressed at once.
+      </li>
+    </ul>
+  </section>
+</MethodSheet>
