@@ -1,0 +1,1175 @@
+{
+ "$contract": "common-time/1",
+ "week": "2026-W39",
+ "days": [
+  "2026-09-21",
+  "2026-09-22",
+  "2026-09-23",
+  "2026-09-24",
+  "2026-09-25",
+  "2026-09-26",
+  "2026-09-27"
+ ],
+ "archive": {
+  "to": "2026-09-27",
+  "days": 26,
+  "files_sha256": "a0d31c30c826ee79e2b8889967798ded2c6786a8fce40e4530bb2914daf71356",
+  "signals_max": 867,
+  "converging_median": 11,
+  "reference_day": "2026-09-27"
+ },
+ "patch": {
+  "bpm": 120,
+  "scale": "F G A C D",
+  "vowels": "u e i o a",
+  "progression": [
+   "F",
+   "F",
+   "Dm7",
+   "Dm7",
+   "Gsus4",
+   "Gsus4",
+   "Csus2",
+   "Csus2"
+  ],
+  "intro_bars": 2,
+  "day_bars": 8,
+  "outro_bars": 2,
+  "instruments": {
+   "reading": "vibraphone",
+   "search": "electric piano",
+   "news": "soft pad",
+   "social": "marimba",
+   "tech": "bell",
+   "markets": "pluck"
+  },
+  "platforms": {
+   "reading": [
+    "wikipedia"
+   ],
+   "search": [
+    "google_trends"
+   ],
+   "news": [
+    "google_news"
+   ],
+   "social": [
+    "bluesky",
+    "mastodon",
+    "reddit"
+   ],
+   "tech": [
+    "arxiv",
+    "devto",
+    "github",
+    "github_trending",
+    "hackernews",
+    "huggingface",
+    "lobsters",
+    "producthunt",
+    "pypi",
+    "stackoverflow",
+    "techmeme"
+   ],
+   "markets": [
+    "appstore",
+    "coingecko",
+    "polymarket",
+    "steam"
+   ]
+  },
+  "fallback_family": "news",
+  "levels_set_on": "2026-09-27",
+  "gains": {
+   "theme": 0.135411,
+   "melody": 0.216496,
+   "ornaments": 0.230663,
+   "crowd": 0.457156,
+   "bass": 0.117257,
+   "bed": 0.033988,
+   "kick": 0.378381,
+   "hat": 0.30029,
+   "reverb": 0.325868,
+   "delay": 1.649827
+  }
+ },
+ "theme": {
+  "id": "control-resonant-launches-early",
+  "label": "Control Resonant launches early",
+  "label_from": "2026-09-25",
+  "families": [
+   "social",
+   "markets"
+  ],
+  "publishers": [
+   "bluesky",
+   "steam"
+  ],
+  "motif": [
+   [
+    3,
+    1.0
+   ],
+   [
+    3,
+    2.0
+   ],
+   [
+    1,
+    1.0
+   ],
+   [
+    3,
+    1.0
+   ],
+   [
+    4,
+    2.0
+   ],
+   [
+    4,
+    1.0
+   ],
+   [
+    0,
+    1.0
+   ],
+   [
+    1,
+    2.0
+   ]
+  ],
+  "days": 3,
+  "outro_families": [
+   "social",
+   "markets"
+  ]
+ },
+ "sections": [
+  {
+   "day": "2026-09-21",
+   "from_s": 4.0,
+   "to_s": 20.0,
+   "missing": false,
+   "receipt": {
+    "file": "src/data/trending/2026-09-21.json",
+    "sha256": "7fcdd16c91a6626a8bbf11e91f79cb17de751e8c6c9834f21e94bb4363829732"
+   },
+   "converging": 11,
+   "signals": 862,
+   "crowd_per_bar": 16,
+   "theme": {
+    "present": false,
+    "families": []
+   },
+   "melody": {
+    "id": "google-gemini",
+    "label": "Google Gemini",
+    "label_from": "2026-09-04",
+    "families": [
+     "search",
+     "news",
+     "markets"
+    ],
+    "publishers": [
+     "BBC",
+     "CNBC",
+     "WSJ",
+     "appstore",
+     "google_trends"
+    ],
+    "motif": [
+     [
+      3,
+      1.0
+     ],
+     [
+      3,
+      1.0
+     ],
+     [
+      1,
+      2.0
+     ],
+     [
+      1,
+      1.0
+     ],
+     [
+      2,
+      1.0
+     ],
+     [
+      2,
+      2.0
+     ]
+    ]
+   },
+   "ornaments": [
+    {
+     "id": "data-center",
+     "label": "data center",
+     "family": "search",
+     "step": 4,
+     "slot": 6
+    },
+    {
+     "id": "cindy-crawford",
+     "label": "cindy crawford",
+     "family": "news",
+     "step": 2,
+     "slot": 19
+    },
+    {
+     "id": "patrick-clancy",
+     "label": "patrick clancy",
+     "family": "search",
+     "step": 4,
+     "slot": 32
+    },
+    {
+     "id": "qwen-image-2-1",
+     "label": "Qwen Image 2.1",
+     "family": "tech",
+     "step": 1,
+     "slot": 45
+    },
+    {
+     "id": "what-happened-to-the-snowden-archive",
+     "label": "What happened to the Snowden archive",
+     "family": "tech",
+     "step": 4,
+     "slot": 58
+    },
+    {
+     "id": "trump-gets-caught-in-a-dilemma-over-a-saudi-plea-for-military-help",
+     "label": "Trump Gets Caught in a Dilemma Over a Saudi Plea for Military Help",
+     "family": "news",
+     "step": 0,
+     "slot": 70
+    },
+    {
+     "id": "friedrich-merz",
+     "label": "Friedrich Merz",
+     "family": "reading",
+     "step": 2,
+     "slot": 83
+    },
+    {
+     "id": "german-state-elections",
+     "label": "German state elections",
+     "family": "news",
+     "step": 1,
+     "slot": 96
+    },
+    {
+     "id": "yom-kippur-observance",
+     "label": "Yom Kippur observance",
+     "family": "reading",
+     "step": 3,
+     "slot": 109
+    },
+    {
+     "id": "james-talarico-s-campaign-could-do-lasting-damage-to-the-gop",
+     "label": "James Talarico’s campaign could do lasting damage to the GOP",
+     "family": "social",
+     "step": 4,
+     "slot": 122
+    }
+   ],
+   "lufs": -14.25
+  },
+  {
+   "day": "2026-09-22",
+   "from_s": 20.0,
+   "to_s": 36.0,
+   "missing": false,
+   "receipt": {
+    "file": "src/data/trending/2026-09-22.json",
+    "sha256": "7c305392e73e72b6f1b6a2a5fa387eacd8fd2d5ecede1626ad19b466566223c8"
+   },
+   "converging": 16,
+   "signals": 858,
+   "crowd_per_bar": 16,
+   "theme": {
+    "present": false,
+    "families": []
+   },
+   "melody": {
+    "id": "networks-suspend-pool-coverage-of-trump-after-white-house-bars-cnn",
+    "label": "Networks Suspend Pool Coverage of Trump After White House Bars CNN",
+    "label_from": "2026-09-22",
+    "families": [
+     "news",
+     "social",
+     "markets"
+    ],
+    "publishers": [
+     "appstore",
+     "google_news",
+     "mastodon",
+     "reddit"
+    ],
+    "motif": [
+     [
+      1,
+      1.0
+     ],
+     [
+      3,
+      2.0
+     ],
+     [
+      0,
+      1.0
+     ],
+     [
+      1,
+      2.0
+     ],
+     [
+      3,
+      1.0
+     ],
+     [
+      3,
+      2.0
+     ],
+     [
+      3,
+      1.0
+     ],
+     [
+      1,
+      1.0
+     ]
+    ]
+   },
+   "ornaments": [
+    {
+     "id": "presley-walker-gerber",
+     "label": "presley walker gerber",
+     "family": "reading",
+     "step": 1,
+     "slot": 4
+    },
+    {
+     "id": "cindy-crawford",
+     "label": "cindy crawford",
+     "family": "reading",
+     "step": 2,
+     "slot": 13
+    },
+    {
+     "id": "i-said-no-and-apple-said-yes",
+     "label": "I said no and Apple said yes",
+     "family": "tech",
+     "step": 2,
+     "slot": 21
+    },
+    {
+     "id": "why-muse-really-just-added-billions-to-meta-s-market-cap-and-to-mark-zuckerberg-",
+     "label": "Why Muse really just added billions to Meta's market cap and to Mark Zuckerberg's net worth",
+     "family": "news",
+     "step": 0,
+     "slot": 30
+    },
+    {
+     "id": "claude-by-anthropic",
+     "label": "Claude by Anthropic",
+     "family": "tech",
+     "step": 4,
+     "slot": 38
+    },
+    {
+     "id": "what-sun-got-wrong",
+     "label": "What Sun got wrong",
+     "family": "tech",
+     "step": 4,
+     "slot": 47
+    },
+    {
+     "id": "looking-forward-to-git-2-56-and-3-0",
+     "label": "Looking forward to Git 2.56 – and 3.0",
+     "family": "tech",
+     "step": 3,
+     "slot": 55
+    },
+    {
+     "id": "die-linke",
+     "label": "die linke",
+     "family": "reading",
+     "step": 2,
+     "slot": 64
+    },
+    {
+     "id": "attention-is-all-you-have",
+     "label": "Attention is all you have",
+     "family": "tech",
+     "step": 4,
+     "slot": 73
+    },
+    {
+     "id": "hong-kong",
+     "label": "hong kong",
+     "family": "search",
+     "step": 3,
+     "slot": 81
+    },
+    {
+     "id": "silent-hill-townfall-reviews-released",
+     "label": "Silent Hill: Townfall reviews released",
+     "family": "social",
+     "step": 2,
+     "slot": 90
+    },
+    {
+     "id": "estados-unidos",
+     "label": "estados unidos",
+     "family": "reading",
+     "step": 1,
+     "slot": 98
+    },
+    {
+     "id": "nasa-s-mars-sample-return-mission-is-dead",
+     "label": "NASA’s Mars Sample Return mission is dead",
+     "family": "tech",
+     "step": 4,
+     "slot": 107
+    },
+    {
+     "id": "ernesto-laguardia",
+     "label": "ernesto laguardia",
+     "family": "reading",
+     "step": 1,
+     "slot": 115
+    },
+    {
+     "id": "gable-steveson",
+     "label": "Gable Steveson",
+     "family": "reading",
+     "step": 4,
+     "slot": 124
+    }
+   ],
+   "lufs": -13.84
+  },
+  {
+   "day": "2026-09-23",
+   "from_s": 36.0,
+   "to_s": 52.0,
+   "missing": false,
+   "receipt": {
+    "file": "src/data/trending/2026-09-23.json",
+    "sha256": "7a64bf1af0954c29fe5f6ca12b925878684a63367972922c1fc41644bab58dd7"
+   },
+   "converging": 12,
+   "signals": 867,
+   "crowd_per_bar": 16,
+   "theme": {
+    "present": false,
+    "families": []
+   },
+   "melody": {
+    "id": "meta-tests-muse-ai-agent-calls-that-are-actually-made-by-humans-in-a-call-center",
+    "label": "Meta Tests Muse AI Agent Calls That Are Actually Made By Humans in a Call Center",
+    "label_from": "2026-09-23",
+    "families": [
+     "social",
+     "tech",
+     "markets"
+    ],
+    "publishers": [
+     "appstore",
+     "mastodon",
+     "techmeme"
+    ],
+    "motif": [
+     [
+      1,
+      1.0
+     ],
+     [
+      4,
+      2.0
+     ],
+     [
+      1,
+      2.0
+     ],
+     [
+      0,
+      1.0
+     ],
+     [
+      1,
+      2.0
+     ],
+     [
+      4,
+      1.0
+     ],
+     [
+      2,
+      2.0
+     ],
+     [
+      4,
+      1.0
+     ]
+    ]
+   },
+   "ornaments": [
+    {
+     "id": "hayden-panettiere",
+     "label": "hayden panettiere",
+     "family": "reading",
+     "step": 4,
+     "slot": 6
+    },
+    {
+     "id": "we-hacked-the-fbi-hackers-say-they-have-data-on-all-fbi-employees",
+     "label": "‘We Hacked the FBI:’ Hackers Say They Have Data on All FBI Employees",
+     "family": "social",
+     "step": 1,
+     "slot": 17
+    },
+    {
+     "id": "bitcoin",
+     "label": "bitcoin",
+     "family": "search",
+     "step": 2,
+     "slot": 29
+    },
+    {
+     "id": "claude-opus-5-5",
+     "label": "Claude Opus 5.5",
+     "family": "tech",
+     "step": 4,
+     "slot": 41
+    },
+    {
+     "id": "angry-anderson",
+     "label": "angry anderson",
+     "family": "search",
+     "step": 4,
+     "slot": 52
+    },
+    {
+     "id": "doj-defends-white-house-media-ban-urges-court-to-reject-lawsuit",
+     "label": "DOJ defends White House media ban, urges court to reject lawsuit",
+     "family": "news",
+     "step": 3,
+     "slot": 64
+    },
+    {
+     "id": "trump-canada",
+     "label": "trump canada",
+     "family": "search",
+     "step": 0,
+     "slot": 76
+    },
+    {
+     "id": "presley-gerber",
+     "label": "Presley Gerber",
+     "family": "reading",
+     "step": 1,
+     "slot": 87
+    },
+    {
+     "id": "jaxson-dart",
+     "label": "Jaxson Dart",
+     "family": "reading",
+     "step": 4,
+     "slot": 99
+    },
+    {
+     "id": "tahar-rahim",
+     "label": "tahar rahim",
+     "family": "reading",
+     "step": 4,
+     "slot": 111
+    },
+    {
+     "id": "linke",
+     "label": "linke",
+     "family": "reading",
+     "step": 2,
+     "slot": 122
+    }
+   ],
+   "lufs": -13.75
+  },
+  {
+   "day": "2026-09-24",
+   "from_s": 52.0,
+   "to_s": 68.0,
+   "missing": false,
+   "receipt": {
+    "file": "src/data/trending/2026-09-24.json",
+    "sha256": "ff6aa4ef912b8898d6e556ac618aa40e38f88ae44de4084d4678ce2462c06192"
+   },
+   "converging": 17,
+   "signals": 864,
+   "crowd_per_bar": 16,
+   "theme": {
+    "present": false,
+    "families": []
+   },
+   "melody": {
+    "id": "vr-glasses",
+    "label": "vr glasses",
+    "label_from": "2026-09-24",
+    "families": [
+     "search",
+     "news",
+     "social",
+     "tech"
+    ],
+    "publishers": [
+     "BBC",
+     "Financial Times",
+     "The Guardian",
+     "bluesky",
+     "google_trends",
+     "hackernews"
+    ],
+    "motif": [
+     [
+      4,
+      1.0
+     ],
+     [
+      1,
+      2.0
+     ]
+    ]
+   },
+   "ornaments": [
+    {
+     "id": "thelyson-orelien",
+     "label": "thélyson orélien",
+     "family": "reading",
+     "step": 1,
+     "slot": 4
+    },
+    {
+     "id": "ideas-on-modernizing-the-open-source-desktop",
+     "label": "Ideas on modernizing the open-source desktop",
+     "family": "tech",
+     "step": 2,
+     "slot": 12
+    },
+    {
+     "id": "judge-orders-trump-white-house-to-restore-access-to-cnn-ms-now-and-politico",
+     "label": "Judge orders Trump White House to restore access to CNN, MS Now and Politico",
+     "family": "news",
+     "step": 0,
+     "slot": 20
+    },
+    {
+     "id": "openai-agent-hacked-australian-government-website-pm-says",
+     "label": "OpenAI agent hacked Australian government website, PM says",
+     "family": "news",
+     "step": 3,
+     "slot": 28
+    },
+    {
+     "id": "tommy-tuberville",
+     "label": "tommy tuberville",
+     "family": "search",
+     "step": 3,
+     "slot": 36
+    },
+    {
+     "id": "google-unveils-new-gemini-3-8-flash-tts-gemini-3-8-flash-lite-tts-ai-models-goog",
+     "label": "Google unveils new Gemini 3.8 Flash TTS, Gemini 3.8 Flash-Lite TTS AI models (GOOG:NASDAQ)",
+     "family": "news",
+     "step": 3,
+     "slot": 44
+    },
+    {
+     "id": "brasil",
+     "label": "brasil",
+     "family": "reading",
+     "step": 4,
+     "slot": 52
+    },
+    {
+     "id": "alexandra-eala",
+     "label": "alexandra eala",
+     "family": "news",
+     "step": 4,
+     "slot": 60
+    },
+    {
+     "id": "elizabeth-holmes",
+     "label": "Elizabeth Holmes",
+     "family": "reading",
+     "step": 1,
+     "slot": 68
+    },
+    {
+     "id": "claude-by-anthropic",
+     "label": "Claude by Anthropic",
+     "family": "tech",
+     "step": 4,
+     "slot": 76
+    },
+    {
+     "id": "love-hypothesis",
+     "label": "love hypothesis",
+     "family": "reading",
+     "step": 3,
+     "slot": 84
+    },
+    {
+     "id": "zohran-mamdani",
+     "label": "Zohran Mamdani",
+     "family": "reading",
+     "step": 3,
+     "slot": 92
+    },
+    {
+     "id": "a-brief-history-of-windows-scroll-bar-shortcuts",
+     "label": "A brief history of Windows scroll bar shortcuts",
+     "family": "tech",
+     "step": 4,
+     "slot": 100
+    },
+    {
+     "id": "23-september",
+     "label": "23. September",
+     "family": "reading",
+     "step": 1,
+     "slot": 108
+    },
+    {
+     "id": "silent-hill-townfall-reviews-released",
+     "label": "Silent Hill: Townfall reviews released",
+     "family": "social",
+     "step": 2,
+     "slot": 116
+    },
+    {
+     "id": "mark-carney",
+     "label": "mark carney",
+     "family": "search",
+     "step": 4,
+     "slot": 124
+    }
+   ],
+   "lufs": -15.22
+  },
+  {
+   "day": "2026-09-25",
+   "from_s": 68.0,
+   "to_s": 84.0,
+   "missing": false,
+   "receipt": {
+    "file": "src/data/trending/2026-09-25.json",
+    "sha256": "2fae9db4f7a171f21bf79c331d4cc0bb707bb73320bfd7f29f6754f5325b3e59"
+   },
+   "converging": 15,
+   "signals": 866,
+   "crowd_per_bar": 16,
+   "theme": {
+    "present": true,
+    "families": [
+     "social",
+     "markets"
+    ]
+   },
+   "melody": {
+    "id": "leylah-fernandez",
+    "label": "leylah fernandez",
+    "label_from": "2026-09-25",
+    "families": [
+     "search",
+     "news",
+     "markets"
+    ],
+    "publishers": [
+     "Bleacher Nation",
+     "SportPlus.sg",
+     "WTA Tennis",
+     "google_trends",
+     "polymarket"
+    ],
+    "motif": [
+     [
+      1,
+      1.0
+     ],
+     [
+      4,
+      2.0
+     ],
+     [
+      1,
+      1.0
+     ],
+     [
+      4,
+      1.0
+     ],
+     [
+      1,
+      2.0
+     ]
+    ]
+   },
+   "ornaments": [
+    {
+     "id": "muse-from-meta",
+     "label": "Muse from Meta",
+     "family": "tech",
+     "step": 0,
+     "slot": 5
+    },
+    {
+     "id": "f-droid-2-0",
+     "label": "F-Droid 2.0",
+     "family": "tech",
+     "step": 3,
+     "slot": 15
+    },
+    {
+     "id": "google-gemini",
+     "label": "Google Gemini",
+     "family": "tech",
+     "step": 3,
+     "slot": 25
+    },
+    {
+     "id": "brasil-vs",
+     "label": "brasil vs",
+     "family": "reading",
+     "step": 4,
+     "slot": 34
+    },
+    {
+     "id": "sourcehut-account-takeover-via-build-logs-xss-in-ansi2html",
+     "label": "Sourcehut account takeover via build logs (XSS in ansi2html)",
+     "family": "tech",
+     "step": 3,
+     "slot": 44
+    },
+    {
+     "id": "xi-jinping",
+     "label": "Xi Jinping",
+     "family": "reading",
+     "step": 2,
+     "slot": 54
+    },
+    {
+     "id": "macklemore-announces-free-palestine-tour",
+     "label": "Macklemore announces Free Palestine tour",
+     "family": "social",
+     "step": 4,
+     "slot": 64
+    },
+    {
+     "id": "benjamin-netanyahu-canadian-airspace-flight",
+     "label": "benjamin netanyahu canadian airspace flight",
+     "family": "reading",
+     "step": 1,
+     "slot": 74
+    },
+    {
+     "id": "mikey-musumeci",
+     "label": "mikey musumeci",
+     "family": "search",
+     "step": 2,
+     "slot": 84
+    },
+    {
+     "id": "two-tier-encryption-in-the-uk",
+     "label": "Two-tier encryption in the UK",
+     "family": "tech",
+     "step": 3,
+     "slot": 94
+    },
+    {
+     "id": "my-weird-new-hobby-wandering-around-tokyo-on-google-maps",
+     "label": "My weird new hobby: Wandering around Tokyo on Google Maps",
+     "family": "tech",
+     "step": 1,
+     "slot": 103
+    },
+    {
+     "id": "meta-launches-1m-developer-competition-to-stock-vr-glasses-with-more-hand-tracke",
+     "label": "Meta Launches $1M Developer Competition to Stock 'VR Glasses' with More Hand-tracked Apps",
+     "family": "news",
+     "step": 1,
+     "slot": 113
+    },
+    {
+     "id": "jevforagents",
+     "label": "JevForAgents",
+     "family": "tech",
+     "step": 1,
+     "slot": 123
+    }
+   ],
+   "lufs": -13.43
+  },
+  {
+   "day": "2026-09-26",
+   "from_s": 84.0,
+   "to_s": 100.0,
+   "missing": false,
+   "receipt": {
+    "file": "src/data/trending/2026-09-26.json",
+    "sha256": "a26af543159445d4c6ce540526859e1c8b526de3d26c2943b54644456ce5fc31"
+   },
+   "converging": 8,
+   "signals": 835,
+   "crowd_per_bar": 15,
+   "theme": {
+    "present": true,
+    "families": [
+     "social",
+     "markets"
+    ]
+   },
+   "melody": {
+    "id": "leylah-fernandez",
+    "label": "leylah fernandez",
+    "label_from": "2026-09-25",
+    "families": [
+     "search",
+     "news",
+     "markets"
+    ],
+    "publishers": [
+     "SuaraGarut.ID",
+     "TennisTemple",
+     "The New York Times",
+     "google_trends",
+     "polymarket"
+    ],
+    "motif": [
+     [
+      1,
+      1.0
+     ],
+     [
+      4,
+      2.0
+     ],
+     [
+      1,
+      1.0
+     ],
+     [
+      4,
+      1.0
+     ],
+     [
+      1,
+      2.0
+     ]
+    ]
+   },
+   "ornaments": [
+    {
+     "id": "babylon-berlin",
+     "label": "babylon berlin",
+     "family": "reading",
+     "step": 4,
+     "slot": 11
+    },
+    {
+     "id": "we-re-gonna-need-a-lot-more-mathematicians",
+     "label": "We're gonna need a lot more mathematicians",
+     "family": "tech",
+     "step": 1,
+     "slot": 32
+    },
+    {
+     "id": "mid-autumn-festival-celebrated",
+     "label": "Mid-Autumn Festival celebrated",
+     "family": "reading",
+     "step": 2,
+     "slot": 53
+    },
+    {
+     "id": "breaking-up-with-google-play-why-conversations-is-now-free",
+     "label": "Breaking Up with Google Play: Why Conversations Is Now Free",
+     "family": "tech",
+     "step": 1,
+     "slot": 75
+    },
+    {
+     "id": "asian-games-2026",
+     "label": "asian games 2026",
+     "family": "reading",
+     "step": 4,
+     "slot": 96
+    },
+    {
+     "id": "xi-jinping",
+     "label": "Xi Jinping",
+     "family": "reading",
+     "step": 2,
+     "slot": 117
+    }
+   ],
+   "lufs": -13.55
+  },
+  {
+   "day": "2026-09-27",
+   "from_s": 100.0,
+   "to_s": 116.0,
+   "missing": false,
+   "receipt": {
+    "file": "src/data/trending/2026-09-27.json",
+    "sha256": "bf48a0312b6b7431f32b962096f2fc10518fad692c8d930d039bcc801c6c70ec"
+   },
+   "converging": 11,
+   "signals": 835,
+   "crowd_per_bar": 15,
+   "theme": {
+    "present": true,
+    "families": [
+     "social",
+     "markets"
+    ]
+   },
+   "melody": {
+    "id": "meta-launches-muse-ai-agent",
+    "label": "Meta launches Muse AI agent",
+    "label_from": "2026-09-27",
+    "families": [
+     "news",
+     "social",
+     "markets"
+    ],
+    "publishers": [
+     "appstore",
+     "bluesky",
+     "google_news"
+    ],
+    "motif": [
+     [
+      1,
+      1.0
+     ],
+     [
+      4,
+      2.0
+     ],
+     [
+      4,
+      1.0
+     ],
+     [
+      0,
+      1.0
+     ],
+     [
+      1,
+      2.0
+     ],
+     [
+      0,
+      1.0
+     ],
+     [
+      1,
+      2.0
+     ],
+     [
+      4,
+      1.0
+     ]
+    ]
+   },
+   "ornaments": [
+    {
+     "id": "trump-administration-considers-building-baseball-park-in-grand-teton-national-pa",
+     "label": "Trump administration considers building baseball park in Grand Teton National Park",
+     "family": "news",
+     "step": 0,
+     "slot": 7
+    },
+    {
+     "id": "go-concurrency-distilled",
+     "label": "Go Concurrency Distilled",
+     "family": "tech",
+     "step": 3,
+     "slot": 21
+    },
+    {
+     "id": "nor-easter-hits-east-coast",
+     "label": "Nor'easter hits East Coast",
+     "family": "reading",
+     "step": 3,
+     "slot": 36
+    },
+    {
+     "id": "donald-trump-hit-with-26-articles-of-impeachment",
+     "label": "Donald Trump Hit With 26 Articles Of Impeachment",
+     "family": "social",
+     "step": 3,
+     "slot": 50
+    },
+    {
+     "id": "improving-site-performance-by-shipping-more-css",
+     "label": "Improving site performance by shipping more CSS",
+     "family": "tech",
+     "step": 2,
+     "slot": 64
+    },
+    {
+     "id": "contrastive-lm-clm",
+     "label": "Contrastive-LM/CLM",
+     "family": "tech",
+     "step": 3,
+     "slot": 78
+    },
+    {
+     "id": "jon-watts-to-direct-star-wars",
+     "label": "Jon Watts to direct Star Wars",
+     "family": "news",
+     "step": 3,
+     "slot": 92
+    },
+    {
+     "id": "reverse-engineering-the-intel-8087-s-tangent-algorithm-more-than-cordic",
+     "label": "Reverse-engineering the Intel 8087's tangent algorithm: more than CORDIC",
+     "family": "tech",
+     "step": 1,
+     "slot": 107
+    },
+    {
+     "id": "26-september",
+     "label": "26. September",
+     "family": "reading",
+     "step": 1,
+     "slot": 121
+    }
+   ],
+   "lufs": -13.21
+  }
+ ],
+ "audio": {
+  "file": "public/common-time/2026-W39.m4a",
+  "sha256": "2031273455d235f273e50602eebc7a1ac8989ab4c892fd6d203815dbda56b87c",
+  "seconds": 123.0,
+  "lufs": -14.01,
+  "true_peak_dbtp": -1.1,
+  "encoder": "AAC 128 kbps"
+ },
+ "render": {
+  "renderer": "1",
+  "float32_sha256": "ffc6f9fd1b8ff7d43578f707681ee76572b61685e207d3f8f999a25337628b55",
+  "wav_pcm24_sha256": "3bad708e1d7b8e06b9908eea3745a27c48eb83ddd91a9ac4420c16a368468919",
+  "python": "3.12.15",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "pyloudnorm": "0.2.0",
+  "platform": "arm64 Darwin"
+ }
+}
