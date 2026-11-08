@@ -200,6 +200,29 @@ probe 13). Each night the album is pressed again from the days so far; every edi
 - **Storage, open:** renders are bit-identical, so only the newest edition's audio needs keeping; earlier editions
   can be pressed again from data and code.
 
+**Probe 13, built the same night** (`album13.py`, `out13/`, `probe-13-editions.png`): 25 tracks in seven editions of
+week 45. Copy is being reworked in its own session and is not part of it. The content filter is gone from these
+tracks as from Ducking (Frank's decision, wording private): the war track speaks 145 of its 147 signals instead of
+96; only text the English voice cannot read, URLs and porn or spam site names stay out, the last pending his answer.
+- **The album formed itself.**
+  - Monday's edition: war as mass, and seven quiet fields sharing the silence.
+  - Tuesday: information enters as a room.
+  - Wednesday: economy enters as a process.
+  - Thursday: nature as process, economy as room.
+  - From Saturday: AI is the process track, after five days without one of its own (testimony, not built yet).
+- **The room's sentence followed the story the days repeated:** Somali women journalists who do not feel safe at work
+  (editions 2 and 3), Philippine inflation seen at a three-year high (4), inflation surging to 7.8 % (7).
+- **Hindsight, measured on Monday's war.** In edition 4, four of its 21 voices lose their words because their stories
+  are not named on Thursday; in edition 7, three. In those seconds Monday sounds completely different (the
+  difference reaches the section's own level), and everywhere else it is identical to the bit (−37 to −115 dB).
+  - A first build drew every event of a day from one random stream, so one changed voice re-drew the whole day. Each
+    event now has its own stream (field, day, source, text).
+  - In the process track the family the newest day no longer has (Google Trends, for AI) pulses as breath. In the
+    silence, poverty's and displacement's earlier headlines are no longer said once Sunday does not name them.
+- **Checked:** six tracks rendered a second time in fresh processes, all bit-identical.
+- **Open:** climate is testimony on Sunday and so has no track; the testimony form is still to be built; Copy
+  returns from its session with its own rule for editions.
+
 ## From the data to the music (first template, probes 04 to 10)
 
 | Common Ground | Becomes |
