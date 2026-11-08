@@ -349,7 +349,10 @@ a week: the field's week in Common Ground, opened by the state the briefing chec
   (killing, death, violence, attacks, abuse and the like), nothing a voice cannot read. The house already
   decided what a machine voice reads aloud about the world's ills; the map tracks sing the same. From 2 to 8
   November that leaves war 65 distinct headlines, climate 17, AI 16, economy 14, and poverty none: its one
-  headline names a sum in dollars, which the filter does not read.
+  headline names a sum in dollars, which the filter does not read. *Superseded later the same night:* Frank
+  decided (wording private) that the headlines are voiced as they are, in Copy and in Ducking itself, and so in
+  these tracks; only text the English voice cannot read, URLs and porn or spam site names stay out (the last
+  pending his answer).
 - **Bed, loops, bass and drums** as in the topic tracks; the words lead as in the topic tracks.
 
 ## Consensus: the week in echoes (built as probe 10 on 2026-11-08, at the owner's go)
@@ -384,7 +387,9 @@ articles that share such a phrase with another outlet.
   counts of rape", "Missile attacks injure nine as…"), so those probes voiced fragments of headlines the house
   does not read aloud. The rule from now on: a Consensus day is voiced only if Ducking's `readable` passes both
   the phrase and the whole headline around it (Consensus's `sample_title`, the outlet's name dropped). In week 45
-  that leaves three days of seven.
+  that leaves three days of seven. *Superseded later the same night:* Frank decided (wording private) that the
+  headlines are voiced as they are; what stands is only that a Consensus track uses the whole headline, never the
+  six words cut out of it.
 
 ## Space
 
@@ -397,6 +402,10 @@ provided without usage restrictions, credit requested).
 
 ## Content rules
 
+- No content filter (Frank's decision of the night of 2026-11-08, wording private, for Copy and for Ducking,
+  and so for every track that reads like Ducking): headlines are voiced as they are, deaths, rape and attacks
+  included. Out stays only what the English voice cannot read (no Latin letters), URLs, and porn or spam site
+  names (pending his answer). The rules below this line are the earlier ones, kept for the record.
 - Topic tracks: a topic or line that names death, violence, crime or a court case (the stoplist in the
   renderer) gives no hook, no sung line and no track. Their lines loop as hooks, so this list is stricter
   than the house filter the proposed map and Consensus tracks would use, where a line is sung once.
