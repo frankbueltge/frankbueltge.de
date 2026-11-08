@@ -202,8 +202,8 @@ probe 13). Each night the album is pressed again from the days so far; every edi
 
 **Probe 13, built the same night** (`album13.py`, `out13/`, `probe-13-editions.png`): 25 tracks in seven editions of
 week 45. Copy is being reworked in its own session and is not part of it. The content filter is gone from these
-tracks as from Ducking (Frank's decision, wording private): the war track speaks 145 of its 147 signals instead of
-96; only text the English voice cannot read, URLs and porn or spam site names stay out, the last pending his answer.
+tracks as from Ducking (Frank's decision, wording private): 146 of the war track's 147 signals can be voiced instead
+of 96, and in Sunday's edition 130 speak, hindsight taking the words from 16; only text the English voice cannot read, URLs and porn or spam site names stay out, the last pending his answer.
 - **The album formed itself.**
   - Monday's edition: war as mass, and seven quiet fields sharing the silence.
   - Tuesday: information enters as a room.
@@ -220,8 +220,8 @@ tracks as from Ducking (Frank's decision, wording private): the war track speaks
   - In the process track the family the newest day no longer has (Google Trends, for AI) pulses as breath. In the
     silence, poverty's and displacement's earlier headlines are no longer said once Sunday does not name them.
 - **Checked:** six tracks rendered a second time in fresh processes, all bit-identical.
-- **Open:** climate is testimony on Sunday and so has no track; the testimony form is still to be built; Copy
-  returns from its session with its own rule for editions.
+- **Open:** Copy returns from its session with its own rule for editions. (Climate, testimony on Sunday, had no
+  track until the testimony form below was built.)
 
 **Testimony, counter-mixed** (Frank's choice of direction that night, wording private; built as probe 14). A
 first idea, a chord from each headline's own voice held for as long as the press kept naming its story, was tested
@@ -241,6 +241,17 @@ of 42, power none). The form instead takes what the day files carry for every si
 - **Editions**: a family the newest day no longer has speaks its earlier headlines as breath.
 - Not found in a targeted search (inverse attention as the mix rule); speech in many voices and spatial depth
   are known means.
+
+**Probe 14, built that night** (`form_testimony.py`, `out14/`, and a testimony track in every edition of probe 13):
+- **Climate's week**, 27 distinct headlines. The recogniser writes down a median 80 % of a headline in front (the
+  13 less attended) and 0 % of one behind (the 14 more attended): the ignored are heard, the attended murmur. A first
+  build placed every headline at its publication hour; crowded hours then buried the front as well (10 %), so the
+  less attended now speak one after another and only the more attended keep their hours.
+- **In the editions** the testimony track is AI on Monday, Tuesday and Friday, climate on Wednesday, Thursday and
+  Sunday, power on Saturday. Descriptor distance to the room 4.9.
+- **The reading rule** of all these tracks now follows Ducking's as merged (#1305): only what a voice cannot say
+  stays out (web addresses, code, formulas, non-Latin script, emoji), without the record's length and form limits.
+  In week 45 that voices one more war headline (5 November), so war's editions 4 to 7 were pressed again.
 
 ## From the data to the music (first template, probes 04 to 10)
 
