@@ -1,6 +1,6 @@
 """The term tracker — the slow half of Common Ground.
 
-Six platforms are asked the same question about every watched term: how many documents from
+Seven platforms are asked the same question about every watched term: how many documents from
 the last one, seven and thirty days mention this term (or one of its aliases)? Each platform
 answers with its own search API, one quoted phrase per request; every count is a document
 count deduped by url, every receipt is a title, a url and a date. No bodies are stored, no
@@ -44,8 +44,14 @@ CONTRACT_TERMS = "trending-terms/1"
 # The same header set run.py sends for the day sources.
 ACCEPT = "application/json, application/rss+xml, application/atom+xml, application/xml;q=0.9, */*;q=0.8"
 
-PLATFORMS: tuple[str, ...] = ("hackernews", "google_news", "github", "arxiv", "reddit",
-                              "wikipedia_views")
+# 2026-11-08: Reddit's search feed left the arcs (it answered 429 after its first two requests on
+# every run since at least 2026-10-18, so its column read zero for nearly every term), and two
+# scholarly indexes joined, so that "papers" means more than arXiv's computer science and physics:
+# Crossref (every discipline that registers DOIs) and Europe PMC (PubMed, PMC and the life-science
+# preprint servers, medRxiv and bioRxiv among them). Reddit's day list (r/popular) is untouched.
+PLATFORMS: tuple[str, ...] = ("hackernews", "google_news", "github", "arxiv", "crossref",
+                              "europepmc", "wikipedia_views")
+RETIRED_PLATFORMS: tuple[str, ...] = ("reddit",)
 
 # name and url as the record reports them, in the fixed order above
 PLATFORM_META: dict[str, tuple[str, str]] = {
@@ -53,7 +59,10 @@ PLATFORM_META: dict[str, tuple[str, str]] = {
     "google_news": ("Google News (search RSS)", "https://news.google.com/rss/search"),
     "github": ("GitHub (repository search)", "https://api.github.com/search/repositories"),
     "arxiv": ("arXiv (API query)", "https://export.arxiv.org/api/query"),
-    "reddit": ("Reddit (search feed)", "https://www.reddit.com/search.rss"),
+    "reddit": ("Reddit (search feed)", "https://www.reddit.com/search.rss"),  # retired 2026-11-08
+    "crossref": ("Crossref (works search, title phrase)", "https://api.crossref.org/works"),
+    "europepmc": ("Europe PMC (PubMed, PMC and preprints)",
+                  "https://www.ebi.ac.uk/europepmc/webservices/rest/search"),
     "wikipedia_views": ("Wikipedia (Pageviews API, English)",
                         "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article"),
 }
@@ -72,7 +81,7 @@ NOTE_CAP = 200
 # inside a few minutes; the source stays optional.
 THROTTLE_S: dict[str, float] = {
     "hackernews": 0.5, "google_news": 0.5, "github": 7.0, "arxiv": 3.0, "reddit": 7.0,
-    "wikipedia_views": 0.5,
+    "crossref": 0.5, "europepmc": 0.5, "wikipedia_views": 0.5,
 }
 GITHUB_THROTTLE_AUTHENTICATED_S = 2.0
 
@@ -257,7 +266,11 @@ def _shares_a_word(title: str, phrase: str) -> bool:
 
 # Platforms whose query syntax understands OR: one request per term covers the term and its
 # aliases. Hacker News (Algolia) has no OR, so it is asked once per phrase — cheaply.
-OR_PLATFORMS = frozenset({"github", "arxiv", "google_news", "reddit"})
+# Crossref has no phrase syntax at all, so it too is asked once per phrase.
+OR_PLATFORMS = frozenset({"github", "arxiv", "google_news", "reddit", "europepmc"})
+# GitHub's search accepts at most five AND/OR/NOT operators per query and answers a sixth with
+# HTTP 422 (biodiversity and the diseases term, since 2026-10-29): a longer alias list is split.
+GITHUB_MAX_PHRASES = 6
 
 
 def _phrases(phrase: "str | Sequence[str]") -> list[str]:
@@ -364,6 +377,67 @@ def _search_reddit(ctx: TermContext, phrase: "str | Sequence[str]") -> tuple[lis
     return matches, len(entries) >= 25
 
 
+CROSSREF_ROWS = 200
+
+
+def _title_has(title: str, phrase: str) -> bool:
+    """The phrase as whole words in the title, case and hyphens folded."""
+    norm = lambda t: " ".join(re.sub(r"[^\w]+", " ", t.casefold()).split())  # noqa: E731
+    return f" {norm(phrase)} " in f" {norm(title)} "
+
+
+def _search_crossref(ctx: TermContext, phrase: str) -> tuple[list[Match], bool]:
+    """Crossref knows no phrase search: it ranks by relevance. So the newest month of works is
+    asked for the phrase, and a work counts only when the phrase stands in its title — the
+    same rule the hub states for every platform. Relevance puts those works at the top; when
+    the last row of the page still matches, more may lie beyond it, and the count says so."""
+    since = (ctx.now - timedelta(days=WINDOWS["d30"])).date().isoformat()
+    url = (f"https://api.crossref.org/works?query.bibliographic={quote_plus(phrase)}"
+           f"&filter=from-created-date:{since}&rows={CROSSREF_ROWS}"
+           f"&select=DOI,title,created&sort=relevance")
+    data = fetch(url, client=ctx.client, expect="json")
+    items = (data.get("message") or {}).get("items") or []
+    matches: list[Match] = []
+    last_matched = False
+    for item in items:
+        title = " ".join(" ".join(item.get("title") or []).split())
+        doi = (item.get("DOI") or "").strip()
+        when = parse_when(((item.get("created") or {}).get("date-time")))
+        last_matched = bool(title) and _title_has(title, phrase)
+        if not last_matched or not doi or when is None:
+            continue
+        matches.append(Match(url=f"https://doi.org/{doi}", title=title, when=when))
+    return matches, len(items) >= CROSSREF_ROWS and last_matched
+
+
+EUROPEPMC_PAGE = 1000
+
+
+def _search_europepmc(ctx: TermContext, phrase: "str | Sequence[str]") -> tuple[list[Match], bool]:
+    """Europe PMC's own phrase and OR syntax, in the title only (the rule the hub states for
+    every platform; a full-text search catches a phrase in a methods section), over the date a
+    record was first indexed."""
+    start = (ctx.now - timedelta(days=WINDOWS["d30"])).date().isoformat()
+    end = ctx.now.date().isoformat()
+    words = " OR ".join(f'TITLE:"{p}"' for p in _phrases(phrase))
+    query = quote(f"({words}) AND FIRST_IDATE:[{start} TO {end}]")
+    url = ("https://www.ebi.ac.uk/europepmc/webservices/rest/search?query="
+           f"{query}&format=json&resultType=lite&pageSize={EUROPEPMC_PAGE}"
+           "&sort=FIRST_IDATE_D%20desc")
+    data = fetch(url, client=ctx.client, expect="json")
+    rows = ((data.get("resultList") or {}).get("result")) or []
+    matches: list[Match] = []
+    for row in rows:
+        title = " ".join(str(row.get("title") or "").split())
+        when = parse_when(row.get("firstIndexDate"))
+        source, ident = row.get("source"), row.get("id")
+        if not title or when is None or not source or not ident:
+            continue
+        matches.append(Match(url=f"https://europepmc.org/article/{source}/{ident}",
+                             title=title, when=when))
+    return matches, int(data.get("hitCount") or 0) > EUROPEPMC_PAGE
+
+
 def _wikipedia_views(ctx: TermContext, article: str) -> dict[str, Any]:
     """Daily pageviews of one English article, summed into the three windows. The endpoint
     publishes a day with a lag, so the newest available day is the d1 value."""
@@ -384,6 +458,8 @@ SEARCHES: dict[str, Callable[[TermContext, str], tuple[list[Match], bool]]] = {
     "github": _search_github,
     "arxiv": _search_arxiv,
     "reddit": _search_reddit,
+    "crossref": _search_crossref,
+    "europepmc": _search_europepmc,
 }
 
 
@@ -439,6 +515,10 @@ def track_platform(ctx: TermContext, platform: str, terms: Sequence[dict[str, An
             if not article:
                 continue
             jobs: list[str] = [article]
+        elif platform == "github":
+            every = phrases_for(term)
+            jobs = [every[i:i + GITHUB_MAX_PHRASES]
+                    for i in range(0, len(every), GITHUB_MAX_PHRASES)]
         elif platform in OR_PLATFORMS:
             jobs = [phrases_for(term)]  # one request: the term and its aliases, OR-joined
         else:

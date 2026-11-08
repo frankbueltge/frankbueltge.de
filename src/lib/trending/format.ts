@@ -61,6 +61,10 @@ const PLATFORM_LABEL: Record<string, string> = {
   steam: 'Steam',
   coingecko: 'CoinGecko',
   polymarket: 'Polymarket',
+  science_press: 'Science press',
+  humanitarian: 'Humanitarian desk',
+  crossref: 'Crossref',
+  europepmc: 'Europe PMC',
 }
 
 export function platformLabel(id: string): string {

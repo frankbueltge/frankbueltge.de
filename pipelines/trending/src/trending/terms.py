@@ -33,8 +33,8 @@ from trending.tracker import (CONTRACT_TERMS, PLATFORMS, WINDOWS, TermContext, f
 
 # The arcs are their own method on top of the day pipeline, and say so in the record: the
 # day file stays at the version the package carries, this file names the second method.
-TERMS_PIPELINE_VERSION = "0.2.0"
-TERMS_METHOD_VERSION = "2"
+TERMS_PIPELINE_VERSION = "0.3.0"
+TERMS_METHOD_VERSION = "3"  # 2026-11-08: Crossref and Europe PMC in, Reddit out
 
 STATUSES = ("emerging", "rising", "established", "fading", "quiet")
 COUNTED = tuple(p for p in PLATFORMS if p != "wikipedia_views")
