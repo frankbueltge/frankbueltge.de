@@ -107,6 +107,15 @@ export const SCORE_WORDING = {
               : 'No shared question is set: each practice works its own default theme.'
       return `${from} ${p.sessions} sessions per practice, then a joint presentation.`
     },
+    /** since 2026-11-08: the ecology holds one large question, and every cycle is one step of its plan */
+    programme: {
+      lead: 'Three machine-run practices hold one large question for eight to twelve weeks, and every cycle is one step of its plan. Each brings its own part: ',
+      roles: { field: ' the evidence, ', atelier: ' the concepts and the critique, ', studio: ' a form for what the Field found. ' } satisfies Record<PracticeId, string>,
+      tail: 'Each reads the others every session and leaves an artifact every session. When all three have presented, the Middle writes down what the ecology now knows and the next step opens.',
+      origin: (p: { step: number; question: string; setByArchitect: boolean; sessions: string }) =>
+        `Step ${p.step} of the programme: ${p.question}${p.setByArchitect ? ' Set by the architect, once and as an exception.' : ''} ${p.sessions} sessions per practice, then a joint presentation.`,
+      link: 'the question, its plan and what is known →',
+    },
   },
 
   score: {
@@ -191,6 +200,42 @@ export const SCORE_WORDING = {
       presented: (n: number, date: string) => `cycle ${cycleNo(n)} presented ${shortDate(date)}`,
       tally: (scores: { name: string; score: number }[], next: number) =>
         `${scores.map((s) => `${s.name} ${s.score}`).join(' · ')} → cycle ${cycleNo(next)}`,
+    },
+    /** since 2026-11-08: a cycle is a step of the programme, shown with the step that runs */
+    programme: {
+      sub: (step: number, n: number) => `shown with step ${step} of the programme, cycle ${cycleNo(n)}`,
+      steps: [
+        {
+          title: 'One step of one question',
+          text: 'The ecology holds one large question for eight to twelve weeks; every cycle works the next step of its plan. A seed released to all three still interrupts.',
+        },
+        {
+          title: 'Three standpoints',
+          text: (sessions: string) =>
+            `The Field brings the evidence, the Atelier the concepts and the critique, the Studio a form for what the Field found, each in ${sessions
+              .split('-')
+              .map((n) => inWords(Number(n)))
+              .join(' to ')} sessions.`,
+        },
+        {
+          title: 'Reading each other',
+          text: 'Every session opens on the siblings’ bulletins and closes with its own. The Middle records who built on, answered or noted whom.',
+        },
+        {
+          title: 'Three presentations',
+          text: 'Each practice closes the step with one finished work, shown live while it is in progress.',
+        },
+        {
+          title: 'What is known now',
+          text: 'The Middle writes what the step found into the programme’s state, a second reader checks every claim, and the next step opens. No vote: the plan sets the next question.',
+        },
+      ],
+      example: {
+        question: (n: number, step: number, q: string) => `cycle ${cycleNo(n)} is step ${step}: “${q}”`,
+        state: 'kept on /question',
+      },
+      convening: (after: number) =>
+        `Cycles no longer convene since the programme began. The last convening, after cycle ${cycleNo(after)}, chose a question the programme replaced; its proposals and tally stay on record in the Middle’s relay.`,
     },
     convening: {
       head: (p: { after: number; opened: string | null; tallied: string | null; rule: string | null }) =>

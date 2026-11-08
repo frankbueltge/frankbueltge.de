@@ -25,6 +25,7 @@ import { SCORE_WORDING as W, SHORT, cycleNo } from '@/config/score-wording'
 import { rankedScores, resultFate } from '@/lib/ecology/convening'
 import { loadEcologyRecord, piecesIn, piecesSince, scoreInput, sessionsIn } from '@/lib/ecology/record'
 import { buildScore, cycleOn, ORDER } from '@/lib/ecology/score'
+import { stepOf } from '@/lib/ecology/programme'
 import { loadClosingReports, PRACTICE_REPO, type PracticeId } from '@/lib/ecology/v3'
 import '@fontsource-variable/literata/opsz-italic.css'
 import '@/styles/paper.css'
@@ -47,7 +48,15 @@ const name = (p: PracticeId) => P[p].name
 // ── the hero's "now" ──────────────────────────────────────────────────────────────────────
 const conv = record.convening
 const chosenHere = conv?.result && conv.afterCycle === cycle.cycle - 1 && conv.result.question === cycle.question ? conv.result : null
-const origin = W.hero.origin({
+// Since 2026-11-08 the ecology holds one large question and every cycle is a step of its plan: while
+// the programme runs, the hero, the cycle explainer and the convening say that, not the old order.
+const prog = cycle.programme?.status === 'running' ? cycle.programme : null
+const step = prog ? stepOf(cycle.cycle, prog.firstCycle) : null
+const inProgramme = prog !== null && step !== null && cycle.question !== null
+const intro = inProgramme ? W.hero.programme : W.hero.intro
+const origin = inProgramme
+  ? W.hero.programme.origin({ step: step!, question: prog!.question ?? '', setByArchitect: prog!.setBy !== null, sessions: cycle.sessionsPerPractice })
+  : W.hero.origin({
   source: cycle.source,
   previous: cycle.cycle - 1,
   proposedBy: chosenHere?.proposedBy ? name(chosenHere.proposedBy).replace(/^The /, 'the ') : null,
@@ -77,13 +86,23 @@ const details = record.cycles.map((c) => {
 })
 
 // ── how a cycle works, shown with the last turn the record holds ──────────────────────────
-const shown = [...record.cycles].reverse().find((c) => c.closed !== null) ?? null
+const shown = inProgramme
+  ? (record.cycles.find((c) => c.n === cycle.cycle) ?? null)
+  : ([...record.cycles].reverse().find((c) => c.closed !== null) ?? null)
 const shownRelations = shown ? relIn(shown.n) : []
 const shownPresented = shown
   ? (record.presentations.filter((p) => p.cycle === shown.n && p.date).map((p) => p.date!).sort().at(-1) ?? null)
   : null
 const tally = conv?.result && shown && conv.afterCycle === shown.n ? rankedScores(conv.result) : []
-const examples = shown
+const examples = shown && inProgramme
+  ? [
+      W.how.programme.example.question(shown.n, step!, cycle.question!),
+      W.how.example.sessions(shown.n, ORDER.map((p) => ({ name: SHORT[p], sessions: sessionsIn(record, p, shown.n).length }))),
+      W.how.example.crossings(shown.n, shownRelations.length),
+      shownPresented ? W.how.example.presented(shown.n, shownPresented) : null,
+      W.how.programme.example.state,
+    ]
+  : shown
   ? [
       W.how.example.question(shown.n, shown.question),
       W.how.example.sessions(shown.n, ORDER.map((p) => ({ name: SHORT[p], sessions: sessionsIn(record, p, shown.n).length }))),
@@ -92,7 +111,7 @@ const examples = shown
       tally.length > 0 ? W.how.example.tally(tally.map((t) => ({ name: SHORT[t.practice], score: t.score })), shown.n + 1) : null,
     ]
   : []
-const steps = W.how.steps.map((s, i) => ({
+const steps = (inProgramme ? W.how.programme.steps : W.how.steps).map((s, i) => ({
   no: String(i + 1).padStart(2, '0'),
   title: s.title,
   text: typeof s.text === 'function' ? s.text(cycle.sessionsPerPractice) : s.text,
@@ -159,11 +178,11 @@ const firstRelation = record.relations[0]?.date ?? null
         <p class="sc-kicker">{W.hero.kicker(record.since)}</p>
         <h1>{W.hero.title[0]}<br />{W.hero.title[1]}</h1>
         <p class="sc-lede">
-          {W.hero.intro.lead}
+          {intro.lead}
           {ORDER.map((p) => (
-            <><a class={`sc-voice pp-voice-${p}`} href={url(P[p].href)}>{name(p)}</a>{W.hero.intro.roles[p]}</>
+            <><a class={`sc-voice pp-voice-${p}`} href={url(P[p].href)}>{name(p)}</a>{intro.roles[p]}</>
           ))}
-          {W.hero.intro.tail}
+          {intro.tail}
         </p>
       </div>
       {/* id="now": the board on /now and the retired /maschinenraum route lead here */}
@@ -173,7 +192,7 @@ const firstRelation = record.relations[0]?.date ?? null
           <span class="pp-muted">{W.hero.phase[cycle.phase]} · {W.hero.opened(cycle.opened)}</span>
         </div>
         <p class="sc-now-q">{cycle.source !== 'defaults' && cycle.question ? cycle.question : W.noQuestion}</p>
-        <p class="sc-now-origin">{origin}</p>
+        <p class="sc-now-origin">{origin}{inProgramme && <>{' '}<a class="underline" href={url('/question')}>{W.hero.programme.link}</a></>}</p>
       </div>
     </header>
 
@@ -259,7 +278,7 @@ const firstRelation = record.relations[0]?.date ?? null
       <div class="sc-head sc-head--bare sc-head--big">
         <div class="sc-head-title">
           <h2>{W.how.title}</h2>
-          <span class="sc-head-sub">{shown ? W.how.sub(shown.n, shown.n + 1) : W.how.subPlain}</span>
+          <span class="sc-head-sub">{shown && inProgramme ? W.how.programme.sub(step!, shown.n) : shown ? W.how.sub(shown.n, shown.n + 1) : W.how.subPlain}</span>
         </div>
       </div>
       <ol class="sc-steps">
@@ -275,7 +294,12 @@ const firstRelation = record.relations[0]?.date ?? null
 
       {/* id="convening": the signal log's rows about a convening, and the notice the architect
           is sent when one is tallied (src/lib/ecology/convening-notice.ts), both lead here. */}
-      {conv ? (
+      {inProgramme ? (
+        <p class="sc-note-line" id="convening">
+          {conv ? W.how.programme.convening(conv.afterCycle) : null}{' '}
+          <a class="underline" href={url('/question')}>{W.hero.programme.link}</a>
+        </p>
+      ) : conv ? (
         <div id="convening">
           <p class="sc-conv-head">
             <span>{W.how.convening.head({ after: conv.afterCycle, opened: conv.opened, tallied: conv.result?.talliedOn ?? null, rule: conv.result?.rule ?? null })}</span>
