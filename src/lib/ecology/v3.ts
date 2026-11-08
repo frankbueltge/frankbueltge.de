@@ -164,6 +164,8 @@ export function loadCycle(root: string = process.cwd()): CycleState {
     }
     if (programme.objected != null && !DATE.test(programme.objected))
       throw new Error(`cycle.json: programme.objected must be a date, got "${programme.objected}"`)
+    if (programme.go != null && !DATE.test(programme.go))
+      throw new Error(`cycle.json: programme.go must be a date, got "${programme.go}"`)
     if (programme.url != null && (typeof programme.url !== 'string' || !programme.url.startsWith('https://')))
       throw new Error('cycle.json: programme.url must be an https link')
   }
