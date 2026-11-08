@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Holds the Compute</title>
+<meta name="description" content="Study 65 of the Field, step 1 of the programme on who controls advanced AI: the world's counted AI chip stock by owner, quarter by quarter since 2022, with its uncertainty, and what the record of it cannot see.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;--accent:#30508f;--held:#2f7d5b;--failed:#b23a3a;
+--g:#3b6fb6;--ms:#5a9bd4;--me:#6c5aa8;--am:#2c8c8a;--or:#8fb9a8;--xai:#9a8f80;--cw:#b5aca0;--oth:#d3cec4;--cn:#c77a2e;--cns:#e8b27a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--g:#6f9be0;--ms:#8fc1ee;--me:#a596de;--am:#5cc0bd;--or:#a9d4c3;--xai:#8a8174;--cw:#6e675e;--oth:#4a4740;--cn:#e0954a;--cns:#9a6a3a}}
+:root[data-theme="dark"]{--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--g:#6f9be0;--ms:#8fc1ee;--me:#a596de;--am:#5cc0bd;--or:#a9d4c3;--xai:#8a8174;--cw:#6e675e;--oth:#4a4740;--cn:#e0954a;--cns:#9a6a3a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em}
+.kicker{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem;max-width:44em}
+.answer{border-left:3px solid var(--accent);padding:.5em 1em;margin:1.4em 0;background:var(--card)}
+.answer p{margin:.35em 0}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:.6em 0 .8em;font:.85rem system-ui,sans-serif}
+.controls button{font:inherit;padding:5px 10px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--fg);cursor:pointer}
+.controls button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font:.82rem system-ui,sans-serif;color:var(--mute);margin:.5em 0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+#chart{width:100%;display:block;touch-action:pan-y}
+#chart text{font:11px system-ui,sans-serif;fill:var(--mute)}
+#readout{margin-top:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px;font:.9rem/1.45 system-ui,sans-serif;min-height:12em}
+#readout table td{padding:2px 6px;border:0}
+#readout .num{text-align:right;font-variant-numeric:tabular-nums}
+.warn{color:var(--failed);font-weight:600}
+.blind{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:1em 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font:.9rem/1.45 system-ui,sans-serif}
+.card .big{font:600 1.6rem/1.1 system-ui,sans-serif;margin:.1em 0 .2em}
+.card q{font-family:Georgia,serif;font-style:italic}
+.card .src{color:var(--mute);font-size:.8rem}
+#strip{width:100%;display:block}
+table.t{border-collapse:collapse;width:100%;font:.88rem system-ui,sans-serif}
+table.t td,table.t th{border-top:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+.held{color:var(--held);font-weight:600}.failed{color:var(--failed);font-weight:600}
+.note{font:.85rem/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+a{color:var(--accent)}
+footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
+@media (max-width:640px){h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · Study 65 · Cycle 013 · Step 1 of the programme “Who controls advanced AI” · first state, 8 November 2026</p>
+<h1>Who Holds the Compute</h1>
+<p class="lede">Control of advanced AI presupposes someone placed to exercise it. The first material answer is who owns the chips that frontier models are trained and run on. This page rebuilds that ownership, quarter by quarter, from the one open record that counts it, keeps the record's own uncertainty, and lists what the record cannot see.</p>
+
+<div class="answer" id="answer"></div>
+
+<h2>1 · The counted stock of AI chips, by owner</h2>
+<p class="note">Each column is a quarter; its height is all AI chip compute the record counts as delivered by then (cumulative, in H100-equivalents), shown as shares. The five hyperscalers sit at the bottom, everyone else above. The dark line is their joint share, the band its 90 % range. Tap or hover a quarter for its owners.</p>
+<div class="controls" role="group" aria-label="Chart options">
+ <button data-band="ind" aria-pressed="true">Band: rows independent</button>
+ <button data-band="cor" aria-pressed="false">Band: rows move together</button>
+ <button data-inc="1" aria-pressed="false">Show the unfinished quarter (2026 Q1)</button>
+</div>
+<svg id="chart" viewBox="0 0 960 420" role="img" aria-label="Share of counted AI chip compute by owner per quarter, 2022 to 2025"></svg>
+<div class="legend" id="legend"></div>
+<div id="readout" aria-live="polite"></div>
+
+<h2>2 · What the record cannot see</h2>
+<p class="note">Every number above is an estimate built from company disclosures and analysts' figures. These are the edges the record states itself, or that its own files show. Each card quotes its source.</p>
+<div class="blind" id="blind"></div>
+
+<h2>3 · The second record: the clusters one can name</h2>
+<p class="note">Epoch also lists individual GPU clusters. Each mark below is one cluster in the public file (459 with a stated capacity), its width its share of the listed capacity. Grey marks have no owner in the file: the Chinese ones are published anonymised, rounded to one significant figure. The whole list covers an estimated 10–20 % of the world's cluster capacity.</p>
+<svg id="strip" viewBox="0 0 960 122" role="img" aria-label="Listed GPU clusters by country and whether the owner is named"></svg>
+<div class="legend" id="legend2"></div>
+
+<h2>Predictions, fixed before the count</h2>
+<p class="note">Written and committed before any of the data was read (commit 9fe601a). Held or failed by the rule written then.</p>
+<table class="t" id="preds"><thead><tr><th>#</th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
+
+<h2>Method</h2>
+<p class="note"><b>Records.</b> Epoch AI, <a href="https://epoch.ai/data/ai-chip-owners">AI chip owners</a>, file “Cumulative by designer” (updated 12 May 2026; 215 rows: owner × chip designer × quarter, each with a median and a 5th and 95th percentile). Epoch AI, <a href="https://epoch.ai/data-insights/hyperscalers-control-most-compute">hyperscaler compute share</a> (chart of 14 April 2026, CSV of 16 April). Epoch AI, <a href="https://epoch.ai/data/gpu-clusters">GPU clusters</a> (CSV of 13 March 2026). All CC BY 4.0, copied in <code>data/</code>. Direct requests from this machine were refused by its network, so all three files were read through a web-research extraction service; the cluster file arrived with its line breaks flattened and was rebuilt by <code>parse_clusters65.py</code>, which trusts only its first thirteen columns.</p>
+<p class="note"><b>Shares.</b> A quarter's share is an owner's summed median over the quarter's total. The band draws every row 20,000 times from a split lognormal fitted to its two percentiles (<code>analyse65.py</code>, seed 65). “Independent” treats each row's error as its own; “together” moves all rows to the same quantile, which mostly cancels in a share. The truth about how Epoch's errors are correlated is not in the file, so both are shown. Rows without percentiles (xAI) are held fixed. Smuggled chips are counted in the total by default, as Epoch's file lists them; without them every top-five share rises by one to two points.</p>
+<p class="note"><b>Comparable span.</b> The number of series grows: 7 rows a quarter in 2022, 9 from 2023 Q1 (Google's TPUs join), 17–19 from 2024 Q1 (AMD, Huawei, Cambricon, Amazon's own chips, CoreWeave, xAI, smuggling). Epoch itself analyses 2024–2025 only. The rise before 2024 is partly a rise in what is counted.</p>
+<p class="note"><b>Limits.</b> One record, one producer. H100-equivalents weigh chips by their peak 8-bit throughput, not their use. Ownership is not control of use: the record says most frontier developers do not own the chips they train on. Nothing here measures a state's command over chips held by its companies.</p>
+
+<footer>The Field (Meridian) · study 65 · <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-013/who-holds-the-compute">files and code</a> · data © Epoch AI, CC BY 4.0 · this page CC BY 4.0</footer>
+</main>
+<script src="data65.js"></script>
+<script>
+(function(){
+const D=window.D65, css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const ORDER=['Google','Microsoft','Meta','Amazon','Oracle','xAI','CoreWeave','Other','China','China (smuggled)'];
+const VAR={'Google':'--g','Microsoft':'--ms','Meta':'--me','Amazon':'--am','Oracle':'--or','xAI':'--xai','CoreWeave':'--cw','Other':'--oth','China':'--cn','China (smuggled)':'--cns'};
+const LABEL={'Other':'Everyone else (unnamed)','China':'Companies in China','China (smuggled)':'Smuggled into China (modelled)'};
+const TOP5=ORDER.slice(0,5);
+let band='ind', showInc=false, sel=null;
+const fmt=n=>n>=1e6?(n/1e6).toFixed(2)+' M':n>=1e3?Math.round(n/1e3)+' k':String(n);
+const qn=q=>{const [y,m]=q.split('-');return y+' Q'+Math.ceil(+m/3)};
+const last=D.quarters.filter(q=>!q.incomplete).slice(-1)[0], first24=D.quarters.find(q=>q.q==='2024-03-31');
+const sm=D.smuggled_q4_2025, c=D.clusters;
+document.getElementById('answer').innerHTML=
+ `<p><b>Five companies hold about ${Math.round(last.top5)} %</b> of the AI chip compute the open record counts at the end of 2025 (Google, Microsoft, Meta, Amazon, Oracle; 90 % range ${last.top5_90_independent[0].toFixed(0)}–${last.top5_90_independent[1].toFixed(0)} %).</p>`+
+ `<p><b>The share rose by about ${(last.top5-first24.top5).toFixed(0)} points in two years</b>, all of it between mid-2024 and mid-2025; in the last two quarters it stood still. Google alone moved from ${first24.owner_share.Google.toFixed(0)} % to ${last.owner_share.Google.toFixed(0)} %.</p>`+
+ `<p><b>The newest published figure, 75.8 % for March 2026, rests on an unfinished quarter</b>: ${D.q1_2026_rows} of ${D.q4_2025_rows} series exist for it, the counted world stock falls by ${Math.abs(D.q1_2026_total_change_pct)} % although the stock only grows, and Epoch's own page says that quarter is excluded.</p>`+
+ `<p><b>What the record leaves out is large</b>: chips smuggled into China are modelled at ${fmt(sm.median)} H100e with a range of ${fmt(sm.p5)} to ${fmt(sm.p95)}; the record has no owner category for any state; and it counts ownership, not who uses the chips.</p>`;
+// legend
+document.getElementById('legend').innerHTML=ORDER.map(o=>`<span><i class="sw" style="background:var(${VAR[o]})"></i>${LABEL[o]||o}</span>`).join('')+
+ `<span><i class="sw" style="background:var(--fg);height:3px;vertical-align:3px"></i>Top five, joint share</span><span>○ Epoch's published share</span>`;
+// a <style> block for swatch colours would need a nonce; set them from script instead
+document.querySelectorAll('#legend .sw').forEach((e,i)=>{if(i<ORDER.length)e.style.background=css(VAR[ORDER[i]])});
+const svg=document.getElementById('chart'), NS='http://www.w3.org/2000/svg';
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
+function draw(){
+ svg.innerHTML='';
+ const Q=D.quarters.filter(q=>showInc||!q.incomplete), W=960,H=420,L=40,R=10,T=10,B=40,pw=W-L-R,ph=H-T-B, bw=pw/Q.length;
+ const y=v=>T+ph*(1-v/100);
+ for(const v of [0,25,50,75,100]){el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:css('--line')});const t=el('text',{x:L-6,y:y(v)+4,'text-anchor':'end'});t.textContent=v+'%'}
+ Q.forEach((q,i)=>{
+  let acc=0; const x=L+i*bw+2, w=bw-4;
+  for(const o of ORDER){const s=q.owner_share[o]||0; if(!s)continue;
+   const r=el('rect',{x,y:y(acc+s),width:w,height:Math.max(0,y(acc)-y(acc+s)),fill:css(VAR[o])}); if(q.incomplete)r.setAttribute('opacity','.45'); acc+=s}
+  const t=el('text',{x:x+w/2,y:H-B+16,'text-anchor':'middle'}); t.textContent=qn(q.q).replace(' ',' ');
+  if(q.incomplete){const t2=el('text',{x:x+w/2,y:H-B+30,'text-anchor':'middle'});t2.textContent='unfinished';t2.style.fill=css('--failed')}
+  const hit=el('rect',{x:L+i*bw,y:T,width:bw,height:ph,fill:'transparent',tabindex:0,'aria-label':qn(q.q)});
+  hit.addEventListener('mouseenter',()=>show(q)); hit.addEventListener('click',()=>show(q)); hit.addEventListener('focus',()=>show(q));
+  if(sel===q.q)el('rect',{x:L+i*bw,y:T,width:bw,height:ph,fill:'none',stroke:css('--fg'),'stroke-width':1.5});
+ });
+ // band and line for top five
+ const key=band==='ind'?'top5_90_independent':'top5_90_correlated';
+ const cx=i=>L+i*bw+bw/2;
+ let p='';Q.forEach((q,i)=>p+=(i?'L':'M')+cx(i)+' '+y(q[key][1]));for(let i=Q.length-1;i>=0;i--)p+='L'+cx(i)+' '+y(Q[i][key][0]);
+ el('path',{d:p+'Z',fill:css('--fg'),opacity:.13});
+ el('path',{d:Q.map((q,i)=>(i?'L':'M')+cx(i)+' '+y(q.top5)).join(''),fill:'none',stroke:css('--fg'),'stroke-width':2.5});
+ D.epoch_top5.forEach(e=>{const i=Q.findIndex(q=>q.q===e.q);if(i<0)return;el('circle',{cx:cx(i),cy:y(e.share),r:4.5,fill:css('--bg'),stroke:css('--fg'),'stroke-width':1.5})});
+}
+function show(q){
+ sel=q.q;
+ const rows=ORDER.filter(o=>q.owner_share[o]).map(o=>`<tr><td><i class="sw" style="background:${css(VAR[o])}"></i>${LABEL[o]||o}</td><td class="num">${fmt(q.owner_h100e[o])}</td><td class="num">${q.owner_share[o].toFixed(1)} %</td></tr>`).join('');
+ const ep=D.epoch_top5.find(e=>e.q===q.q);
+ document.getElementById('readout').innerHTML=`<b>${qn(q.q)}</b> · counted stock ${fmt(q.total)} H100e · ${q.rows} series`+
+  (q.incomplete?` · <span class="warn">unfinished: ${D.q1_2026_missing_series.length} series missing (${D.q1_2026_missing_series.join(', ')})</span>`:'')+
+  `<br>Top five ${q.top5.toFixed(1)} % (90 %: ${q.top5_90_independent.join('–')} independent, ${q.top5_90_correlated.join('–')} together; ${q.top5_ex_smuggled.toFixed(1)} % without smuggled chips)`+
+  (ep?` · Epoch's chart: ${ep.share} %`:'')+`<table>${rows}</table>`;
+ draw();
+}
+document.querySelectorAll('[data-band]').forEach(b=>b.addEventListener('click',()=>{band=b.dataset.band;document.querySelectorAll('[data-band]').forEach(x=>x.setAttribute('aria-pressed',x===b));draw()}));
+const ib=document.querySelector('[data-inc]');ib.addEventListener('click',()=>{showInc=!showInc;ib.setAttribute('aria-pressed',showInc);if(showInc)show(D.quarters[D.quarters.length-1]);else{show(last)}});
+show(last);
+// blind spots
+const cards=[
+ {big:`${fmt(sm.p5)}–${fmt(sm.p95)}`,t:`Smuggled chips in China at the end of 2025 (median ${fmt(sm.median)} H100e): a spread of ${(sm.p95/sm.p5).toFixed(1)}× between the record's own 5th and 95th percentiles.`,src:'Chip-owner file, row “China (smuggled) … through Q4 2025”: “Estimates from Epoch AI Monte Carlo model of compute smuggled to China”.'},
+ {big:'0 states',t:'The record has no owner category for a government. Its “China” bucket is companies.',src:'<q>It does not mean Chinese government ownership of compute.</q> — epoch.ai/data/ai-chip-owners, FAQ.'},
+ {big:'owned ≠ used',t:'Frontier developers mostly rent. The record cannot say who runs what on the chips it assigns.',src:'<q>This explorer tracks ownership, not usage — most frontier AI developers do not own the chips they use for training and inference.</q> — epoch.ai/data/ai-chip-owners.'},
+ {big:`${last.owner_share.Other.toFixed(0)} %`,t:'“Everyone else”: the compute of every owner not named, one unnamed residual larger than Amazon, Meta or Oracle at the end of 2025.',src:'Chip-owner file, rows “Other cumulative …”: “Excludes Microsoft, Meta, Amazon, Google, Oracle, China, xAI, CoreWeave.”'},
+ {big:'no place',t:'Where the chips stand is outside the record: a US company may hold them in any country.',src:'<q>This is outside the scope of the current phase of this project as of early 2026.</q> — epoch.ai/data/ai-chip-owners, FAQ.'},
+ {big:`${D.q1_2026_rows} of ${D.q4_2025_rows}`,t:`Series present for 2026 Q1, the quarter behind the published 75.8 %. Its counted total is ${Math.abs(D.q1_2026_total_change_pct)} % below the quarter before.`,src:'<q>Q1 2026 data is excluded as it was not yet finalized at time of analysis.</q> — epoch.ai/data-insights/hyperscalers-control-most-compute; rows flagged “Incomplete: based on Nvidia fiscal quarters ending 1/25/2026”.'},
+ {big:'10–20 %',t:`The share of the world's cluster capacity the named-cluster list covers; in it, ${c.china_anonymised} Chinese clusters carry no name and no owner.`,src:'<q>Our dataset covers an estimated 10–20% of existing global aggregate GPU cluster performance as of March 2025.</q> — epoch.ai/data/gpu-clusters.'},
+];
+document.getElementById('blind').innerHTML=cards.map(k=>`<div class="card"><div class="big">${k.big}</div><div>${k.t}</div><p class="src">${k.src}</p></div>`).join('');
+// cluster strip
+(function(){
+ const s=document.getElementById('strip'), L=D.cluster_marks||[]; const W=960; let x=0;
+ const groups=[['United States of America',1],['China',0],['Other',1]];
+ const tot=L.reduce((a,m)=>a+m.h,0);
+ const pal={us:css('--g'),cn:css('--cn'),other:css('--am'),anon:css('--oth')};
+ let gx=0;
+ for(const [g] of groups){const ms=L.filter(m=>g==='Other'?(m.c!=='United States of America'&&m.c!=='China'):m.c===g);
+  const gw=ms.reduce((a,m)=>a+m.h,0)/tot*W;
+  ms.forEach(m=>{const w=m.h/tot*W; const r=document.createElementNS(NS,'rect');
+   r.setAttribute('x',x);r.setAttribute('y',20);r.setAttribute('width',Math.max(w-0.3,0.4));r.setAttribute('height',60);
+   r.setAttribute('fill',m.o?(g==='China'?pal.cn:g==='Other'?pal.other:pal.us):pal.anon);
+   const t=document.createElementNS(NS,'title');t.textContent=(m.n||'(no name)')+' · '+(m.o||'no owner')+' · '+fmt(m.h)+' H100e';r.appendChild(t);s.appendChild(r);x+=w});
+  const lbl=document.createElementNS(NS,'text');lbl.setAttribute('x',gx+2);lbl.setAttribute('y',g==='Other'?114:98);if(g==='Other'){lbl.setAttribute('x',W-2);lbl.setAttribute('text-anchor','end')}lbl.textContent=(g==='United States of America'?'United States':g==='Other'?'elsewhere':g)+' · '+(gw/W*100).toFixed(1)+' %';
+  lbl.setAttribute('font-size','12');lbl.style.fill=css('--mute');s.appendChild(lbl); gx+=gw;}
+ document.getElementById('legend2').innerHTML=`<span><i class="sw"></i>United States, owner named</span><span><i class="sw"></i>China, owner named</span><span><i class="sw"></i>elsewhere, owner named</span><span><i class="sw"></i>no owner in the file (${c.no_owner} of ${c.n}; ${c.china_no_owner} of them Chinese)</span>`;
+ const sw=document.querySelectorAll('#legend2 .sw');[pal.us,pal.cn,pal.other,pal.anon].forEach((p,i)=>sw[i].style.background=p);
+})();
+// predictions
+document.querySelector('#preds tbody').innerHTML=D.predictions.map(p=>`<tr><td>${p.id}</td><td>${p.text}</td><td>${p.result}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td></tr>`).join('');
+window.addEventListener('resize',()=>draw());
+})();
+</script>
+</body>
+</html>
