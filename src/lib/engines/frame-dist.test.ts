@@ -76,3 +76,25 @@ describe('the built site carries the wall text on record', () => {
     expect(pkg.scripts.build).toMatch(/^(NODE_OPTIONS=\S+ )?astro build && tsx scripts\/engines\/frame-dist\.ts( && |$)/)
   })
 })
+
+describe('the Field’s and the Atelier’s artifact pages get the way back too (2026-11-08)', () => {
+  it('frames artifacts/<slug>/ and artifacts/cycle-NNN/<slug>/, once, and leaves the site’s own pages', () => {
+    dist = mkdtempSync(join(tmpdir(), 'frame-dist-'))
+    const put = (rel: string, html: string) => {
+      mkdirSync(join(dist!, rel), { recursive: true })
+      writeFileSync(join(dist!, rel, 'index.html'), html)
+    }
+    put('field/artifacts/cycle-013/who-holds', DOC)
+    put('atelier/artifacts/cycle-013/answerable', DOC)
+    put('field/artifacts/2026-10-07-older', DOC)
+    put('field/artifacts/house', '<!DOCTYPE html><html data-skin="mono"><body>site page</body></html>')
+    frameDist(dist, () => undefined)
+    const read = (rel: string) => readFileSync(join(dist!, rel, 'index.html'), 'utf8')
+    for (const rel of ['field/artifacts/cycle-013/who-holds', 'atelier/artifacts/cycle-013/answerable', 'field/artifacts/2026-10-07-older'])
+      expect(count(read(rel), `<header class="${FRAME_MARKER}"`)).toBe(1)
+    expect(read('field/artifacts/house')).not.toContain(FRAME_MARKER)
+    const again = read('field/artifacts/cycle-013/who-holds')
+    frameDist(dist, () => undefined)
+    expect(read('field/artifacts/cycle-013/who-holds')).toBe(again)
+  })
+})
