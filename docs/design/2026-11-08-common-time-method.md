@@ -147,10 +147,10 @@ adding something new to the composition itself, not only to the material. Fewer 
 suite a week, perhaps pieces that take shape over the week; a live stream and the sampler or desk would be
 experiments of their own. Consensus could be a hard techno track in the direction of Atom TM or Gesaffelstein; not
 everything has to be atonal, and a piece on the same focus should not repeat its style, while the whole stays
-serious, avant-garde composition. And the scores: how a piece can be notated and drawn progressively, a field his
-friend Christian Dimpker works in (*Extended Notation: The Depiction of the Unconventional*, 2013; *Holistic
-Notation*, announced for 2026), whose premise is that a score allows a kind of composing that only it allows,
-and that it permits versions and archiving.
+serious, avant-garde composition. And the scores: how a piece can be notated and drawn progressively. The composer
+Christian Dimpker has published on this (*Extended Notation: The Depiction of the Unconventional*, 2013;
+*Holistic Notation*, announced for 2026); his premise is that a score allows a kind of composing that only it
+allows, and that it permits versions and archiving.
 
 **Probe 12, Copy** (`probe12_copy.py`, `out12/`): Consensus as a techno track, 134 BPM, F Phrygian, the robot
 voice here a choice of style. Three devices carry it, none of them found in the research:
