@@ -142,28 +142,28 @@ the topic tracks and the weekly pressing under this rule (the next probe).
 
 ### Probe 12 and the week as an album (proposed later the same night, awaiting Frank's verdict)
 
-Frank's note on probe 11 (wording private), summarised: the forms apply known procedures, and progressive means
-adding something new to the composition itself, not only to the material. Fewer and better pieces: an album or a
-suite a week, perhaps pieces that take shape over the week; a live stream and the sampler or desk would be
-experiments of their own. Consensus could be a hard techno track in the direction of Atom TM or Gesaffelstein; not
-everything has to be atonal, and a piece on the same focus should not repeat its style, while the whole stays
-serious, avant-garde composition. And the scores: how a piece can be notated and drawn progressively. The composer
-Christian Dimpker has published on this (*Extended Notation: The Depiction of the Unconventional*, 2013;
-*Holistic Notation*, announced for 2026); his premise is that a score allows a kind of composing that only it
-allows, and that it permits versions and archiving.
+Frank's note on probe 11 (wording private), in short: new material is not enough, the composition itself has to
+add something; fewer and better pieces, a week as an album, styles that do not repeat, Consensus as hard techno,
+and notation as a subject of its own. On notation the composer Christian Dimpker has published (*Extended
+Notation: The Depiction of the Unconventional*, 2013; *Holistic Notation*, announced for 2026); his premise is
+that a score allows a kind of composing only it allows, and that it permits versions and archiving.
 
 **Probe 12, Copy** (`probe12_copy.py`, `out12/`): Consensus as a techno track, 134 BPM, F Phrygian, the robot
-voice here a choice of style. Three devices carry it, none of them found in the research:
+voice here a choice of style. Three devices carry it; only the first is a candidate for something new:
 - the **latency groove**: a bar is the cascade. The kick on the beats is the clock; the twelve sixteenths between
-  them are the first twelve outlets in order, each 12 ms late for every quarter hour it printed after the first,
-  and hats and bass ride the same template. Measured: about 0 ms median lateness on the days the outlets printed
-  together (3 and 8 November), 33 to 35 ms on the days the phrase trickled (5 and 7 November). The groove is the
-  copying's delay.
+  them are the first twelve outlets in the file's order, each 8 ms late for every GDELT quarter hour after the
+  first outlet ran the phrase (never by half a sixteenth or more, where a late copy would sound early), and hats
+  and bass ride the same template. Measured on the copies: about 0 ms median lateness on the days the outlets ran
+  it within one quarter hour (3 and 8 November), 27 to 35 ms on the days it trickled (4, 5 and 7 November). The
+  groove is the copying's delay. Not found in a targeted search; the nearest work, Chris Chafe and Greg Niemeyer's
+  *Ping* (2001), turns network round-trip time into pitch, not into groove.
 - the **illusion becomes the bassline**: the phrase loops exactly, which makes speech sound sung (Diana Deutsch's
   speech-to-song illusion); from a day's ninth bar the bass plays the melody the ear has begun to hear, from the
-  thirteenth only the bass still says the phrase.
-- **reach as arrangement**: how widely the phrase was printed, as a percentile of seven years, decides how many
-  layers play; the echo index's percentile is the vocal delay's feedback.
+  thirteenth only the bass still says the phrase. Instruments doubling speech melody are Reich's *Different
+  Trains*; only the order (illusion first, then the bass, then the words gone) belongs to this piece.
+- **reach as arrangement**: how widely the phrase ran, as a percentile of seven years, decides how many layers
+  play; the echo index's percentile is the vocal delay's feedback. Counts setting the number of voices are a
+  standard of sonification (Brian Foo's *Two Trains*), applied here.
 Its listening guide is a first score (`probe-12-score.png`): kick and copies in percussion notation, each copy
 drawn where it sounds with its lateness in milliseconds, the bass on a staff, a page a drummer and a bassist could
 play from. Bit-identical across two runs.
