@@ -84,7 +84,7 @@ const record = book.record
         each label once. Of {fmtCount(sample.labels)} distinct labels that name no field, {fmtCount(sample.long)} are left out as too
         long to read in passing and {fmtCount(sample.unreadable)} because they carry a non-Latin script or an emoji the voices cannot
         say, so the crowd is more Latin-script than the charts are. Left out as well, because a voice would spell them out sign by
-        sign: web addresses, code and formulas, {fmtCount(sample.stopped)} this round. Nothing is left out for what it says: since
+        sign: web addresses, code and formulas, {sample.stopped ? fmtCount(sample.stopped) : 'none'} this round. Nothing is left out for what it says: since
         2026-11-08 the crowd reads the charts’ words as they stand, deaths, crimes, sex and swearing among them. The rule is in the
         script. {fmtCount(sample.spoken)} labels are spoken; the sample is drawn once per round, and it loops.
       </li>
