@@ -285,6 +285,13 @@ melody taken up by instruments (Reich's *Different Trains*), canon and pulse (Re
 Renders bit-identically twice. Frank's verdict the same day (wording private): it carries. It is the first piece
 under the music-first rule and the measure for the album's other pieces.
 
+**Overlooked in editions** (Frank's choice the same day, wording private). Each night the piece is pressed again
+from the days so far and the newest Ducking round checked by then: Monday's edition is the flute alone, Sunday's the
+whole ensemble, and the tutti, the cut and the coda fall on the newest day of each edition. The retroactive principle
+holds here too: an earlier day's motif keeps sounding after its own day only if its field is named on the newest day;
+otherwise it ends with its day and is missing from that edition's tutti. The seven endings, one after another, are
+the week's growth in two minutes.
+
 ## From the data to the music (first template, probes 04 to 10)
 
 | Common Ground | Becomes |
