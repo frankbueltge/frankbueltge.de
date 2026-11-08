@@ -16,7 +16,117 @@ The devices come from a line of music that made a process audible rather than hi
 (La Monte Young, Kali Malone), phasing (Steve Reich), speech melody (Leoš Janáček's notations of spoken
 Czech, Reich's *Different Trains*), and the vocoder (Kraftwerk, Holly Herndon).
 
-## From the data to the music
+## Forms (since the night of 2026-11-08)
+
+Frank's verdict on probes 08c, 09 and 10 (night of 2026-11-08, wording private), summarised: not yet. The
+tracks resemble one another, so the method has to change, not the mix. The vocoder is one means among others;
+the wordless vowel probes (05 to 07) came closer, in the direction of Reich's process music. Atonal and
+non-electronic forms are open, no genre is set, and the reference is current experimental practice with data
+and sound, researched and named. The sections after this one describe the first template (probes 04 to 10);
+it stays on record as one way to make a track, no longer the rule for all.
+
+**Why they sounded alike, measured.** Every track from probe 04 to probe 10 shared 128 BPM, the just grid on
+A1 = 55 Hz, the same three Surge instruments, the same vocoder, the same two-step drums, the same level map, a
+master at −14 LUFS and the same form (a state or a hook, one section per day, a coda). Only the data changed,
+and a template whose knobs the data turn sounds like one track. A descriptor distance (`contrast.py` in the
+probes: pulse strength and period, onsets per second, spectral centroid and its spread, flatness, pitch-class
+profile, loudness range, each scaled over the set compared) puts probe 09's three louder map tracks 0.7 to 2.1
+apart, and the five forms of probe 11 1.7 to 5.5 apart in the same comparison. The closest pair is mass and
+phase, both made of many synthetic voices. The ear decides; the number keeps the argument honest.
+
+**A measurement had become a target.** Probe 09 brought in a speech recogniser to check whether sung words come
+through, and the music was then arranged to raise its score: words in front and nearly dry, the rest ducked by
+6 dB, never a voice from behind. That pulled every track into one shape. Intelligibility is now a property a
+form may choose, not a gate every track must pass. The recogniser stays an instrument: in the room form it
+measures how fast the words dissolve.
+
+**The rule: the structure of the data chooses the form.** Each form brings its own time, tuning, sound source
+and level. Shared are only the data rules (the house count, Ducking's reading filter, the content rules), the
+record (receipts, hashes, stems), the ears (measured head responses) and the absence of any music model. For a
+map track the first form whose condition holds is taken (`forms.py` in the probes; thresholds are first
+settings, to be checked against a longer archive):
+
+| Form | Taken when | Lineage | The data's reason |
+|---|---|---|---|
+| silence | at most 7 signals in the week | the Wandelweiser composers (founded 1992 by Antoine Beuger and Burkhard Schlothauer; still releasing in 2026), Cage | absence is the measurement |
+| mass | at least 100 signals | Xenakis' stochastic music; *Formalized Music* (1963/1971), ch. I, derives the composition of masses from the sound of a political crowd | no single signal can be followed |
+| process | the week turned: the last two days' mean at least twice or at most half the first five days' (each + 0.5) | Reich's gradual process (essay, 1968; *Piano Phase*, 1967; *Drumming*, 1971), Stockhausen's *Stimmung* (1968) | a change of attention is a process the ear can follow |
+| room | one word stands in at least a third (and at least four) of the readable headlines; the field's required words do not count, its terms do | Alvin Lucier, *I Am Sitting in a Room* (1969) | a repeated story is one sentence passing again and again through the same medium |
+| phase | one phrase copied by many outlets (Consensus) | Reich, *It's Gonna Rain* (1965), *Come Out* (1966) | the same words in many places, minutes apart |
+| testimony | otherwise: a handful of distinct headlines | speech melody: Janáček; Reich's *Different Trains* (1988), where instruments double recorded speech | each headline worth hearing on its own (not built yet) |
+
+Week 45 (2 to 8 November) by the rule: war and violence mass (147 signals); AI, power and information process;
+economy, climate, nature and health room (inflation, El Niño, air, polio); hunger, poverty, inequality,
+displacement and democracy silence. Over the nine complete weeks in the archive (from 2026-09-07) hunger,
+poverty and inequality are silent every week, war takes room six times, mass twice and testimony once. Since
+2026-11-02 Google News is read in ten editions, so earlier weeks count lower.
+
+### Probe 11: five forms on the same week
+
+Built in the night of 2026-11-08 (`_drafts/probe-pressing/form_*.py`, `out11/`), all on week 45, so that what
+differs between them is the method. Each renders bit-identically twice in fresh processes.
+
+- **Mass, war and violence.** No beat and no tuning. Seven equal days of twelve seconds; every one of the 147
+  signals is one event, its onset where a Poisson process with that day's count puts it, its length from an
+  exponential law. A headline the record reads is its own text in one of 27 English voices, granulated (grains
+  of 90 ms, four deep) and stretched over the event while its pitch glides; a signal the record does not read
+  is breath, the loudness envelope of its words on a gliding noise band. Glide speeds are drawn from a Gaussian
+  law, as Xenakis drew his; each family has a register and a direction around the listener. When the mass has
+  gone, the field's checked line, plainly. Denser days are louder days; nothing evens them out.
+- **Process, AI and its harms.** A pulse of 0.2 s, a cycle of twelve. Each family sings its vowel on its
+  harmonic (probe 05's sound), and its pattern moves one pulse per cycle towards that day's count of its
+  signals: beats replace rests, or rests beats, one at a time, so the music lags the data as attention does.
+  The week's busiest family (tech) sings twice, the second voice drifting ahead by a quarter pulse a cycle on
+  the busiest day and less on quieter ones; the drift never resets, so the distance between the two voices is
+  the week's whole attention. Each day opens with its families held as one chord, an octave down.
+- **Room, climate and disasters.** The sentence the week repeated (the readable headline sharing most words
+  with the others; on a tie the shorter): "NIA-Kalinga steps up irrigation measures amid El Niño", said once,
+  then passed once more through the room for each of the week's 31 signals. The room is the platforms that
+  carried the field: narrow resonances on the harmonics of news, social and search in every octave from 120 Hz
+  to 4 kHz, each lifting its band 2.4 dB a pass (plus up to 0.5 dB by the family's share), over a faint diffuse
+  room. The recogniser writes the whole sentence down through pass 10, 78 and 67 % of it at passes 11 and 12,
+  22 % at pass 13, and from pass 14 on only "[MUSIC PLAYING]", later "(eerie music)" and "(chiming)".
+- **Phase, Consensus.** No pitch, no grid, no instrument. Each day the first outlet says the copied phrase once,
+  alone; then each of the first twelve outlets loops it in its own voice (British for .uk) from the direction
+  of its country domain, the outlets of the first quarter hour together, each later quarter hour half a phrase
+  later and looping slower by k × its quarter hours, k = 0.6 % × (1 − the echo index's percentile): the more the
+  whole news stream copied that day, the tighter the copies hold. The rape verdict is never voiced; its copies
+  are breath. The recogniser writes down 67 to 100 % of each phrase said alone and 0 to 67 % at the end of the
+  day, where it starts to hear words that were never said ("we promise after a week" in "threats after a week
+  of hoaxes").
+- **Silence, poverty.** The field's checked line once (the World Bank's nowcast of 811 million people below
+  three dollars a day), then seven days of twelve seconds, each begun by one soft tick, and one sine tone for
+  each signal on its family's harmonic. The week had two: a Google Trends query on a celebrity's Halloween
+  costume, counted because its headlines name homelessness, and a headline on the record debt of the poorest
+  countries, not read aloud because it names a sum in dollars. Levels as composed: a quiet field stays quiet.
+
+**Neighbours and daylight** (research of 2026-11-08; every entry from a fetched page). Sonified attention and
+web text: *The Listening Machine* (Daniel Jones and Peter Gregson, 2012; 500 UK Twitter users, sentiment as mood,
+the prosody of their syllables as melodies), *Listen to Wikipedia* (Hatnote, 2013; edits as tones),
+*Listening Post* (Mark Hansen and Ben Rubin, 2002–06; chat-room fragments read and sung by a speech
+synthesizer), *#tweetscapes* (Tarik Barri and Anselm Venezian Nehls, 2012), Brian Foo's *Two Trains* (2015),
+*Loud Numbers* (Duncan Geere and Miriam Quick, since 2021), Reveal's choir sung in proportion to executive
+shares (2018), Johannes Kreidler's *Charts Music* (2009), Smriti Keshari and Matthew Herbert's *Disintegration*
+(2020; 1,460 headlines). Identical phrases across outlets have been shown only as spoken video montage (the
+local anchors in Conan O'Brien's segments; Deadspin's Sinclair supercut, 2018). Daily songs from the news now
+exist made by music models (Audio.Observer, since May 2026). In the programmes of CTM, transmediale, Ars
+Electronica, MaerzMusik, Donaueschingen and ZKM from 2020 to 2026 no work sonifies headlines or attention counts
+directly. Closest in method: Laure M. Hiendl's few bars of Vaughan Williams played incessantly as a study of
+circulation (Donaueschingen 2025), Interspecifics' *Recurrent Morphing Radio* (overtraining dissolves a stream
+into noise; Prix Ars Electronica 2021), Maximilian Marcoll's *Amproprification VI* (gain curves compose an
+unchanged reading; CTM 2021), Jennifer Walshe and Jon Leidecker on hype language as dataset (transmediale 2023),
+Brigitta Muntendorf's *MELENCOLIA* (MaerzMusik 2025), Holly Herndon and Mat Dryhurst's *The Call* (Prix Ars
+Electronica 2025), Julia Jasmin Rommel's cartophony, which sonifies changes rather than levels (Prix Ars
+Electronica 2023). The daylight is the combination: a weekly pressing from cross-platform attention in thirteen
+fields, the form of each track chosen by the structure of its data, and one copied phrase played in the order
+and timing in which outlets printed it. Not found is not proof of absence.
+
+**Open, for Frank:** whether the quiet fields share one silence track (five in week 45; hunger, poverty and
+inequality in every archived week), and whether fields that take the same form share one movement, so that a
+week becomes a suite of four or five movements instead of thirteen tracks; the thresholds; the testimony form,
+the topic tracks and the weekly pressing under this rule (the next probe).
+
+## From the data to the music (first template, probes 04 to 10)
 
 | Common Ground | Becomes |
 |---|---|
@@ -95,7 +205,8 @@ of a topic track is its sung line (next section); the vowel fingerprint is the f
    are sung. The track ends on the topic's name alone, hummed from the front on its own speech melody, each
    syllable on the next family's vowel.
 
-The words lead. They have a track of their own, nearly dry (a light compressor, a short room), and while
+The words lead (in this template; since the night of 2026-11-08 an option a form may take, see Forms). They
+have a track of their own, nearly dry (a light compressor, a short room), and while
 they sing the rest of the music steps back by half its amplitude, about 6 dB: the house's Ducking, inside the
 track. Whether the words come through is measured, not assumed: a speech recogniser (whisper.cpp with the
 small English model, used as an instrument; it generates nothing) transcribes each sung line from the
@@ -193,9 +304,11 @@ provided without usage restrictions, credit requested).
 
 ## Composed, the same every week
 
-Tempo, the fundamental, which family has which harmonic and vowel, the voices, the drum sounds and
-patterns, the effects (Pedalboard: filter, delay, reverb, compressor), the proportions of the form, and the
-target loudness of each layer.
+Within a form: its tempo or its absence, its tuning, its voices and sounds, its effects, the proportions of its
+form and its level. Across forms nothing of this is shared (Forms). In the first template it was tempo, the
+fundamental, which family has which harmonic and vowel, the voices, the drum sounds and patterns, the effects
+(Pedalboard: filter, delay, reverb, compressor), the proportions of the form, and the target loudness of each
+layer.
 
 ## Sound and record
 
@@ -203,8 +316,9 @@ No music model is involved, and the work says so on its page (Frank's wish of 20
 private): nothing is generated by a system trained on music. The only model is a speech synthesizer that
 speaks vowels and headlines; pitch, rhythm, harmony and form come from the rules above.
 
-Voices run locally on one thread; two renders of the same week are bit-identical. Every track is mastered
-to −14 LUFS and −1 dBTP, and every layer is kept as a stem. Before this goes into the weekly workflow, the
+Voices run locally on one thread; two renders of the same week are bit-identical. In the first template every
+track was mastered to −14 LUFS; since the forms, each form sets its own level (a silent field is not raised to
+the loudness of a mass), and only the ceiling of −1 dBTP is shared. Every layer is kept as a stem. Before this goes into the weekly workflow, the
 layer levels must again be set on an ordinary day of the archive rather than on the week itself (the
 probes normalise each render), so that a quiet week is heard as one. The instruments are Surge XT (open source, GPL, run as a plugin
 through Pedalboard and used as a tool), installed with the owner's go; every note is played at its exact
