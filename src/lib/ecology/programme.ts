@@ -38,16 +38,19 @@ export function loadProgrammeDocs(root: string = process.cwd()): ProgrammeDoc[] 
     if (!existsSync(path)) return []
     const source = readFileSync(path, 'utf8')
     if (source.trim().length === 0) return []
-    return [{ part, file, html: renderProgramme(source) }]
+    return [{ part, file, html: renderProgramme(source, file) }]
   })
 }
 
-/** Relative links inside the folder point to the files in research-ecology, not to this site. */
-export function renderProgramme(source: string): string {
-  const rewritten = source.replace(/\]\((?!https?:|#|mailto:)([^)\s]+\.md)\)/g, (_m, href: string) => {
-    const clean = href.replace(/^\.\//, '')
-    const base = clean.startsWith('../') ? 'https://github.com/frankbueltge/research-ecology/blob/main' : `${PROGRAMME_REPO.replace('/tree/', '/blob/')}`
-    return `](${base}/${clean.replace(/^\.\.\//, '')})`
+/** Relative links inside the folder point to the files in research-ecology, not to this site. A link
+ *  resolves against the folder of the file it stands in (`file`, relative to programme/), as GitHub
+ *  resolves it; a link to a file opens its blob, a link to a folder (trailing slash) its tree. */
+export function renderProgramme(source: string, file: string = ''): string {
+  const dir = file.includes('/') ? file.slice(0, file.lastIndexOf('/') + 1) : ''
+  const rewritten = source.replace(/\]\((?!https?:|#|mailto:)([^)\s]+(?:\.md|\/))\)/g, (_m, href: string) => {
+    const path = new URL(href, `https://repo.invalid/programme/${dir}`).pathname.replace(/^\//, '')
+    const kind = path.endsWith('/') ? 'tree' : 'blob'
+    return `](https://github.com/frankbueltge/research-ecology/${kind}/main/${path})`
   })
   return renderLine(rewritten)
 }

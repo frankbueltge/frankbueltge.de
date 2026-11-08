@@ -99,6 +99,19 @@ export interface ProgrammeState {
   url: string | null
   /** the cycle that opened as the programme's first step (set by the clock) */
   firstCycle: number | null
+  /** when the architect set the question himself instead of the ecology's choice (once, 2026-11-08) */
+  setBy: ProgrammeSetBy | null
+}
+
+/** The architect's exception: the question he set, and the ecology's choice he set aside, with both
+ *  final sums as the dossier's second reader set them. The scores themselves are never rewritten. */
+export interface ProgrammeSetBy {
+  on: string
+  /** the ecology's choice that was set aside, as the dossier names it ("2 — Tipping points") */
+  setAside: string
+  setAsideSum: number
+  /** the final sum of the question that was set */
+  sum: number
 }
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/
@@ -168,6 +181,15 @@ export function loadCycle(root: string = process.cwd()): CycleState {
       throw new Error(`cycle.json: programme.go must be a date, got "${programme.go}"`)
     if (programme.url != null && (typeof programme.url !== 'string' || !programme.url.startsWith('https://')))
       throw new Error('cycle.json: programme.url must be an https link')
+    const s = programme.set_by
+    if (s != null) {
+      if (s.who !== 'architect') throw new Error(`cycle.json: programme.set_by.who must be "architect", got "${s.who}"`)
+      if (!DATE.test(s.on)) throw new Error(`cycle.json: programme.set_by.on must be a date, got "${s.on}"`)
+      if (typeof s.set_aside !== 'string' || s.set_aside.trim().length === 0)
+        throw new Error('cycle.json: programme.set_by requires the choice it set aside')
+      if (!Number.isInteger(s.set_aside_sum) || !Number.isInteger(s.sum))
+        throw new Error('cycle.json: programme.set_by requires both final sums as integers')
+    }
   }
   return {
     cycle: raw.cycle,
@@ -195,6 +217,9 @@ export function loadCycle(root: string = process.cwd()): CycleState {
       firstStep: programme.first_step ?? null,
       url: programme.url ?? null,
       firstCycle: typeof programme.first_cycle === 'number' ? programme.first_cycle : null,
+      setBy: programme.set_by
+        ? { on: programme.set_by.on, setAside: programme.set_by.set_aside, setAsideSum: programme.set_by.set_aside_sum, sum: programme.set_by.sum }
+        : null,
     },
   }
 }

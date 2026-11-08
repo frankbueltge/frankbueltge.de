@@ -12,6 +12,7 @@ const programme = cycle.programme ?? null
 const docs = loadProgrammeDocs()
 const status = programme?.status ?? 'selecting'
 const title = programme?.question ?? PROGRAMME.selectingTitle
+const setBy = programme?.setBy ?? null
 const step = programme?.status === 'running' ? stepOf(cycle.cycle, programme.firstCycle) : null
 ---
 
@@ -28,6 +29,11 @@ const step = programme?.status === 'running' ? stepOf(cycle.cycle, programme.fir
       </p>
     )}
     <p class="mb-10 text-[15.5px] leading-relaxed text-fg-muted">{PROGRAMME.lead}</p>
+    {setBy && (
+      <p class="-mt-4 mb-10 border-l-2 border-line pl-4 text-[15.5px] leading-relaxed text-fg">
+        {PROGRAMME.setBy(setBy.on, setBy.setAside, setBy.setAsideSum, setBy.sum)}
+      </p>
+    )}
 
     {docs.length === 0 && <p class="text-fg-muted">{PROGRAMME.none}</p>}
     {docs.map((d) => (
