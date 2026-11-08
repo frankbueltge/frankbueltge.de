@@ -155,6 +155,10 @@ export const SCORE_WORDING = {
     head: (n: number) => `Cycle ${cycleNo(n)}`,
     presentation: (name: string) => `${name} — presentation`,
     paper: 'the Field’s paper',
+    /** the running cycle's works before any presentation stands (live, in progress) */
+    piece: (title: string, name: string) => `${title} · ${name} · in progress`,
+    /** the source of a cycle that is a step of the programme */
+    step: (n: number) => `step ${n} of the programme`,
     sessions: 'sessions',
     pieces: 'works & artifacts',
   },
