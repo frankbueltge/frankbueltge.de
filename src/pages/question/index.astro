@@ -1,0 +1,61 @@
+---
+// /question — the research programme: the one large question the ecology chose for itself and the
+// state of its work on it (2026-11-08; docs/design/2026-11-08-the-programme.md). Read from cycle.json
+// and the mirror of research-ecology's programme/ (src/lib/ecology/programme.ts); adds nothing to them.
+import Page from '@/layouts/Page.astro'
+import { PROGRAMME } from '@/config/programme-wording'
+import { loadCycle } from '@/lib/ecology/v3'
+import { loadProgrammeDocs, PROGRAMME_REPO, stepOf } from '@/lib/ecology/programme'
+
+const cycle = loadCycle()
+const programme = cycle.programme ?? null
+const docs = loadProgrammeDocs()
+const status = programme?.status ?? 'selecting'
+const title = programme?.question ?? PROGRAMME.selectingTitle
+const step = programme?.status === 'running' ? stepOf(cycle.cycle, programme.firstCycle) : null
+---
+
+<Page title={PROGRAMME.seoTitle} description={PROGRAMME.seoDescription}>
+  <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-4 py-14">
+    <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      <a href="/ecology" class="underline underline-offset-2">{PROGRAMME.kicker}</a> · {PROGRAMME.status[status]}
+    </p>
+    <h1 class="mb-6 text-3xl font-semibold leading-tight tracking-tight text-fg">{title}</h1>
+    {step !== null && cycle.question && (
+      <p class="mb-8 border-l-2 border-line pl-4 text-[15.5px] leading-relaxed text-fg">
+        <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">{PROGRAMME.stepNow} · {PROGRAMME.step(step)}</span><br />
+        {cycle.question}
+      </p>
+    )}
+    <p class="mb-10 text-[15.5px] leading-relaxed text-fg-muted">{PROGRAMME.lead}</p>
+
+    {docs.length === 0 && <p class="text-fg-muted">{PROGRAMME.none}</p>}
+    {docs.map((d) => (
+      <section class="border-t border-line py-8" aria-label={PROGRAMME.parts[d.part]}>
+        <p class="mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">{PROGRAMME.parts[d.part]}</p>
+        <article class="prog-md" set:html={d.html} />
+      </section>
+    ))}
+
+    <p class="mt-10 border-t border-line pt-4 font-mono text-[11px] leading-relaxed text-fg-faint">
+      {PROGRAMME.foot} <a href={PROGRAMME_REPO} class="underline underline-offset-2">{PROGRAMME.source}</a>
+    </p>
+  </main>
+</Page>
+
+<style>
+  .prog-md { font-size: 15.5px; line-height: 1.7; }
+  .prog-md :global(h1) { font-size: 1.45rem; font-weight: 600; line-height: 1.25; margin: 0 0 1.1rem; letter-spacing: -0.02em; }
+  .prog-md :global(h2) { font-size: 1.15rem; font-weight: 600; margin: 1.8rem 0 0.6rem; }
+  .prog-md :global(h3) { font-size: 1rem; font-weight: 600; margin: 1.4rem 0 0.5rem; }
+  .prog-md :global(p) { margin: 0 0 1rem; }
+  .prog-md :global(ul), .prog-md :global(ol) { margin: 0 0 1rem 1.4rem; }
+  .prog-md :global(ul) { list-style: disc; }
+  .prog-md :global(ol) { list-style: decimal; }
+  .prog-md :global(li) { margin: 0.35rem 0; }
+  .prog-md :global(table) { display: block; overflow-x: auto; border-collapse: collapse; margin: 0 0 1rem; font-size: 14px; }
+  .prog-md :global(th), .prog-md :global(td) { border: 1px solid var(--color-line, currentColor); padding: 0.3rem 0.5rem; text-align: left; vertical-align: top; }
+  .prog-md :global(code) { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; overflow-wrap: anywhere; }
+  .prog-md :global(a) { text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  .prog-md :global(strong) { font-weight: 600; }
+</style>

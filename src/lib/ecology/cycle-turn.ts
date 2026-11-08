@@ -25,12 +25,20 @@
 //     cycle or from a convening; only a seed's own cycle is never cut short, and a seed's cycle
 //     whose presentations stand goes on to the next waiting seed before anything convenes
 //
+// Since 2026-11-08 (architect's decision, wording private; docs/design/2026-11-08-the-programme.md)
+// the cycles are steps of one research PROGRAMME, a question the ecology chooses itself and holds for
+// eight to twelve weeks. While it chooses (programme "selecting") the clock holds everything, seeds
+// included; once the choice stands (programme "chosen") the first step opens the day after it was
+// chosen, unless the architect objected; while it runs, the convening decides the next step, by the
+// rules above.
+//
 // What stays a hand step: anything without a continuing question (the defaults regime turns by
 // hand, as before), and the architect may edit cycle.json at any time — the clock only ever reads
 // the state it finds.
 //
 // Pure: no file system, no clock. scripts/ecology/cycle-turn.ts is the mouth that reads the
 // files, writes the result and validates it through loadCycle before anything is committed.
+import { addDays } from './relay'
 import {
   CONVENING_DAYS,
   fallbackOn,
@@ -55,7 +63,7 @@ export interface RegisterSeed {
  *  next cycle · fallback: a convening without a result opens it on the continuing question ·
  *  interrupt: a released seed opens it at once · next-seed: a presented seed's cycle hands on to
  *  the next waiting seed. */
-export type TurnKind = 'convene' | 'convened' | 'fallback' | 'interrupt' | 'next-seed'
+export type TurnKind = 'convene' | 'convened' | 'fallback' | 'interrupt' | 'next-seed' | 'programme'
 
 export interface Turn {
   kind: TurnKind
@@ -76,6 +84,16 @@ export function waitingSeeds(seeds: readonly RegisterSeed[], taken: readonly str
     .filter((s) => s.addressed_to === 'open' && s.status === 'offered' && !taken.includes(s.id))
     .filter((s) => typeof s.text === 'string' && s.text.trim().length > 0)
     .sort((a, b) => a.ts.localeCompare(b.ts))
+}
+
+interface RawProgramme {
+  status: string
+  since: string
+  question?: string | null
+  chosen_on?: string | null
+  objected?: string | null
+  first_step?: string | null
+  [key: string]: unknown
 }
 
 interface RawConvening {
@@ -112,8 +130,24 @@ export function planTurn(
   const opened = raw.opened as string
   const phase = raw.phase as string
   const taken = Array.isArray(raw.taken_seeds) ? (raw.taken_seeds as string[]) : []
-  const seed = waitingSeeds(seeds, taken)[0]
   const n = cycle + 1
+
+  // ——— the programme's choice (since 2026-11-08) ————————————————————————————————————
+  const programme = raw.programme as RawProgramme | null | undefined
+  if (programme?.status === 'selecting') return null // the ecology is choosing its question
+  if (programme?.status === 'chosen') {
+    if (programme.objected) return null // the architect objected: the Middle chooses again
+    if (today < addDays(programme.chosen_on!, 1)!) return null // the architect's veto day runs
+    const line =
+      `The ecology chose the question of its programme on ${programme.chosen_on}: ${programme.question!.trim()} ` +
+      `No objection came within a day. Cycle ${pad(n)} opens on ${today} as the programme's first step. ` +
+      `Turned by the cycle clock under the rules of 2026-11-08.`
+    const next = opening(raw, n, today, { question: programme.first_step!.trim(), source: 'convening', seedId: null, taken }, line)
+    next.programme = { ...programme, status: 'running', started: today, first_cycle: n }
+    return { kind: 'programme', next, line }
+  }
+
+  const seed = waitingSeeds(seeds, taken)[0]
 
   // ——— in the convening ———————————————————————————————————————————————————————————
   if (phase === 'convening') {

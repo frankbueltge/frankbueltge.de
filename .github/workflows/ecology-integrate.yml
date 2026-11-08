@@ -140,6 +140,39 @@ jobs:
             echo "lines unchanged"
           fi
 
+      # The programme (2026-11-08; docs/design/2026-11-08-the-programme.md): research-ecology keeps
+      # the one large question the ecology holds for weeks in programme/ (QUESTION.md, PLAN.md,
+      # STATE.md, selection/), and /question renders it. Mirrored verbatim, markdown only, like the lines.
+      - name: Mirror the programme (programme/**/*.md → src/data/middle/programme/)
+        run: |
+          set -euo pipefail
+          SRC=/tmp/ecology/programme
+          DST=src/data/middle/programme
+          rm -rf "$DST"
+          if [ -d "$SRC" ]; then
+            (cd "$SRC" && find . -name '*.md' -type f) | while read -r f; do
+              mkdir -p "$DST/$(dirname "$f")"
+              cp "$SRC/$f" "$DST/$f"
+            done
+          else
+            echo "programme/ is not published yet — nothing to mirror (a legal state)"
+          fi
+          if git status --porcelain --untracked-files=all -- "$DST" | grep -q .; then
+            git config user.name "Ecology-Integrate"
+            git config user.email "ecology-integrate@frankbueltge.de"
+            SHA=$(git -C /tmp/ecology rev-parse --short HEAD)
+            git add -A -- "$DST"
+            git commit -m "middle: programme mirrored from research-ecology $SHA"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              git rebase --abort 2>/dev/null || true
+              [ "$attempt" = 5 ] && { echo "programme push failed after 5 rebase attempts" >&2; exit 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
+          else
+            echo "programme unchanged"
+          fi
+
       # The convening (2026-10-07; docs/design/2026-10-07-the-convening.md): the relay carries the
       # practices' tally, and the cycle clock opens the next cycle a day after it unless the
       # architect objects. A cron that may run hours late would stretch that day, so the clock is

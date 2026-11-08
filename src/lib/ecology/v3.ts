@@ -76,6 +76,29 @@ export interface CycleState {
   takenSeeds?: string[]
   /** set exactly while the phase is 'convening' */
   convening?: ConveningState | null
+  /** since 2026-11-08: the research programme the cycles are steps of (docs/design/2026-11-08-the-programme.md) */
+  programme?: ProgrammeState | null
+}
+
+export const PROGRAMME_STATUSES = ['selecting', 'chosen', 'running'] as const
+export type ProgrammeStatus = (typeof PROGRAMME_STATUSES)[number]
+
+/** One question held for eight to twelve weeks. "selecting": the ecology is choosing it, the clock
+ *  holds · "chosen": the choice stands, the architect's veto day runs · "running": the cycles are
+ *  its steps. */
+export interface ProgrammeState {
+  status: ProgrammeStatus
+  since: string
+  question: string | null
+  /** the day the choice was made; the first step opens the day after, unless objected */
+  chosenOn: string | null
+  objected: string | null
+  /** the first step's question, which cycle n+1 carries when the choice stands */
+  firstStep: string | null
+  /** where the programme's files stand (research-ecology programme/) */
+  url: string | null
+  /** the cycle that opened as the programme's first step (set by the clock) */
+  firstCycle: number | null
 }
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/
@@ -126,6 +149,24 @@ export function loadCycle(root: string = process.cwd()): CycleState {
   } else if (convening !== null) {
     throw new Error(`cycle.json: a convening block outside the convening phase (phase "${raw.phase}")`)
   }
+  const programme = raw.programme ?? null
+  if (programme !== null) {
+    if (!PROGRAMME_STATUSES.includes(programme.status))
+      throw new Error(`cycle.json: unknown programme status "${programme.status}"`)
+    if (!DATE.test(programme.since)) throw new Error(`cycle.json: programme.since must be a date, got "${programme.since}"`)
+    if (programme.status !== 'selecting') {
+      if (typeof programme.question !== 'string' || programme.question.trim().length === 0)
+        throw new Error(`cycle.json: a ${programme.status} programme requires its question`)
+      if (!DATE.test(programme.chosen_on))
+        throw new Error(`cycle.json: programme.chosen_on must be a date, got "${programme.chosen_on}"`)
+      if (typeof programme.first_step !== 'string' || programme.first_step.trim().length === 0)
+        throw new Error('cycle.json: a chosen programme requires its first step')
+    }
+    if (programme.objected != null && !DATE.test(programme.objected))
+      throw new Error(`cycle.json: programme.objected must be a date, got "${programme.objected}"`)
+    if (programme.url != null && (typeof programme.url !== 'string' || !programme.url.startsWith('https://')))
+      throw new Error('cycle.json: programme.url must be an https link')
+  }
   return {
     cycle: raw.cycle,
     phase: raw.phase,
@@ -142,6 +183,16 @@ export function loadCycle(root: string = process.cwd()): CycleState {
       opened: convening.opened,
       objected: convening.objected ?? null,
       ...(convening.briefing ? { briefing: { url: convening.briefing.url, fallback: convening.briefing.fallback } } : {}),
+    },
+    programme: programme && {
+      status: programme.status,
+      since: programme.since,
+      question: programme.question ?? null,
+      chosenOn: programme.chosen_on ?? null,
+      objected: programme.objected ?? null,
+      firstStep: programme.first_step ?? null,
+      url: programme.url ?? null,
+      firstCycle: typeof programme.first_cycle === 'number' ? programme.first_cycle : null,
     },
   }
 }

@@ -65,6 +65,7 @@ import {
 } from '@/lib/ops/edition'
 import { arrivedAfter, counted, DAY_MS, dayOf, dayReaches, fill, longDate, longDay, shortDay, startOf } from '@/lib/ops/since'
 import { loadCycle } from '@/lib/ecology/v3'
+import { stepOf } from '@/lib/ecology/programme'
 import { conveningView, loadRelayExtras } from '@/lib/ecology/convening'
 import { getLatestProtokoll } from '@/lib/protokoll/data'
 import { SELECTED_WORKS } from '@/config/selected-works'
@@ -99,6 +100,33 @@ const chosen =
   convening?.stands && convening.result && convening.opensOn
     ? { question: convening.result.question, next: convening.next, opens: convening.opensOn }
     : null
+// The programme (2026-11-08): while the ecology holds one large question, the lead names it.
+const programme = cycle.programme ?? null
+const P = EDITION.lead.programme
+const progStep = programme?.status === 'running' ? stepOf(cycle.cycle, programme.firstCycle) : null
+const progLead = !programme
+  ? null
+  : programme.status === 'selecting'
+    ? { kicker: P.selectingKicker, title: P.selectingTitle, stand: P.selectingStandfirst({ next: cycleName(cycle.cycle + 1) }) }
+    : programme.status === 'chosen'
+      ? {
+          kicker: P.chosenKicker({ opens: dayAfter(programme.chosenOn!) }),
+          title: programme.question!,
+          stand: P.chosenStandfirst({ next: cycleName(cycle.cycle + 1), opens: dayAfter(programme.chosenOn!) }),
+        }
+      : {
+          kicker: P.runningKicker({ step: progStep ?? 1, cycle: cycleName(cycle.cycle) }),
+          title: programme.question!,
+          stand: P.runningStandfirst({ step: cycle.question ?? '' }),
+        }
+function cycleName(n: number): string {
+  return `cycle ${String(n).padStart(3, '0')}`
+}
+function dayAfter(day: string): string {
+  const d = new Date(`${day}T00:00:00Z`)
+  d.setUTCDate(d.getUTCDate() + 1)
+  return d.toISOString().slice(0, 10)
+}
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
 // The lab's experiments (2026-11-02), the band the page's work opens with: since 2026-11-03 Ducking
 // large (EDITION.lab.lead) over a carousel of exactly the nine EDITION.lab.picks names; each card
@@ -353,11 +381,11 @@ const forScript = {
         <section class="ed-section ed-section--double ed-cycle" aria-labelledby="ed-cycle-title">
           <article class="ed-lead">
             <p class="ed-lead-kicker">
-              {E.lead.house} · {chosen ? E.lead.chosenKicker(chosen) : E.lead.kicker({ cycle: cycle.cycle, phase: cycle.phase, age })}
+              {E.lead.house} · {progLead ? progLead.kicker : chosen ? E.lead.chosenKicker(chosen) : E.lead.kicker({ cycle: cycle.cycle, phase: cycle.phase, age })}
             </p>
-            <h2 id="ed-cycle-title">{chosen ? chosen.question : (cycle.question ?? E.lead.noQuestion)}</h2>
+            <h2 id="ed-cycle-title">{progLead ? progLead.title : chosen ? chosen.question : (cycle.question ?? E.lead.noQuestion)}</h2>
             <p class="ed-lead-stand">
-              {chosen
+              {progLead ? progLead.stand : chosen
                 ? E.lead.chosenStandfirst({ after: cycle.cycle, next: chosen.next, opens: chosen.opens, practices: PRACTICES.length })
                 : E.lead.standfirst({
                     source: cycle.source,
@@ -385,7 +413,7 @@ const forScript = {
               )}
             </div>
             <p class="ed-lead-links">
-              {E.lead.links.map((l) => (
+              {(progLead ? [P.link, ...E.lead.links] : E.lead.links).map((l) => (
                 <a class="ed-link" href={url(l.href)}>{l.label}</a>
               ))}
             </p>
