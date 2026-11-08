@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NO PUBLIC LAND</title>
+<meta name="description" content="The world's counted AI compute as one surveyed land, parcelled by owner, every quarter from 2022 to the unfinished first quarter of 2026. Five companies hold most of it; no parcel belongs to a state or a public.">
+<style>
+:root { --paper:#efe9dc; --ink:#1d1b18; --dim:#6f6a60; --red:#8c2f1b; --rule:#cfc6b3; }
+* { box-sizing:border-box; }
+html,body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 Georgia, 'Iowan Old Style', serif; }
+.wip { background:#1d1b18; color:#efe9dc; font:13px/1.4 ui-monospace, Menlo, monospace; padding:8px 16px; }
+#stage { position:relative; height:78vh; min-height:480px; border-bottom:1px solid var(--rule); }
+#land { position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+.hud { position:absolute; left:16px; top:12px; max-width:min(560px, calc(100% - 32px)); pointer-events:none; }
+.hud h1 { margin:0; font-size:15px; letter-spacing:.32em; font-weight:normal; }
+#when { font-size:26px; margin-top:2px; }
+#five { margin:2px 0 0; font-size:15px; color:var(--red); }
+#count { font:13px/1.5 ui-monospace, Menlo, monospace; color:var(--dim); }
+.bar { position:absolute; left:0; right:0; bottom:0; display:flex; gap:10px 14px; align-items:center; flex-wrap:wrap; padding:10px 16px; background:linear-gradient(transparent, #efe9dcee 35%); font:13px ui-monospace, Menlo, monospace; }
+.bar input[type=range] { flex:1 1 200px; accent-color:var(--red); }
+button { font:inherit; background:var(--ink); color:var(--paper); border:0; border-radius:2px; padding:7px 12px; cursor:pointer; }
+button:hover { background:var(--red); }
+#tip { position:absolute; pointer-events:none; background:#efe9dcf2; border:1px solid var(--ink); padding:6px 9px; font:12px/1.45 ui-monospace, Menlo, monospace; max-width:240px; }
+main { max-width:720px; margin:0 auto; padding:24px 16px 64px; }
+h2 { font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); font-weight:normal; margin:34px 0 8px; border-top:1px solid var(--rule); padding-top:14px; }
+.lede { font-size:19px; }
+a { color:var(--red); }
+code { font-size:.88em; }
+li { margin:4px 0; }
+@media (max-width:600px) { #when { font-size:21px; } .lede { font-size:17px; } #five { font-size:14px; } #stage { height:82vh; } }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div class="wip">In progress · first state · 8 November 2026 · cycle 013, step 1 of the programme · The Studio</div>
+<div id="stage">
+  <canvas id="land" aria-label="A map of one land, parcelled among the owners of the world's counted AI chips"></canvas>
+  <div class="hud">
+    <h1>NO PUBLIC LAND</h1>
+    <div id="when">…</div>
+    <p id="five">…</p>
+    <div id="count">…</div>
+  </div>
+  <div id="tip" hidden></div>
+  <div class="bar">
+    <button id="play" type="button">Survey from 2022</button>
+    <input id="q" type="range" min="0" step="1" aria-label="quarter">
+    <label><input type="radio" name="scale" value="true" checked> true scale</label>
+    <label><input type="radio" name="scale" value="fill"> fill the sheet</label>
+    <label><input id="snd" type="checkbox" checked> hum</label>
+  </div>
+</div>
+<main>
+  <p class="lede">All the AI chips the open record counts, drawn as one land and surveyed every quarter
+  from March 2022. Each parcel is an owner's holding, its area fitted to the owner's exact share. At true
+  scale the land grows 334-fold in four years. The five companies inked in red hold 68.6 % of it at the end
+  of 2025. No parcel belongs to a state or a public, because the record has no row for one.</p>
+
+  <h2>How to read it</h2>
+  <ul>
+    <li><b>Area is holding.</b> One land, one scale: every parcel's area is its owner's share of the counted
+      stock in H100-equivalents, fitted on a survey grid to within a fraction of a percent. At true scale the
+      land's area is the whole count, so the island of March 2022 (63 thousand) is a speck beside December 2025
+      (20.9 million). “Fill the sheet” scales every quarter to the same size, so only the division moves.</li>
+    <li><b>Red hatching</b> marks the five the Field counts together: Google, Microsoft, Meta, Amazon, Oracle.
+      Grey hatching: the other named holders. Cross-hatching: the record's “China”, which counts chips sold
+      into China and does not mean ownership by its government. Stippled, unnamed: “everyone else”.</li>
+    <li><b>Offshore, dotted:</b> chips smuggled into China. The record models them (662 thousand at the end
+      of 2025, 90 % between 294 thousand and 1.59 million) and gives them no owner and no place. The dotted
+      rings are the two ends of that range.</li>
+    <li><b>Touch or hover a parcel</b> to read its holding, its range and its rows; its boundary is redrawn
+      in dots at the 5th and the 95th percentile of the estimate.</li>
+    <li><b>The last quarter is unfinished.</b> Q1 2026 has 8 of the 19 series; the counted total falls
+      18.4 %, and Epoch's own page excludes the quarter. The published 75.8 % for the five rests on it.
+      The dashed line is the coast it falls back from.</li>
+    <li><b>The hum</b> is the land's power heard at 60 Hz, the mains of the country that holds most of the
+      named clusters. Its loudness follows the counted chips' power draw (79 MW in March 2022, 13.4 GW in
+      December 2025, on a logarithmic scale); each owner is one harmonic, loud as its share, panned to where
+      its parcel lies. A crackle on the right is the smuggled stock. Between quarters the land moves straight
+      from one survey to the next; only the surveys are data.</li>
+  </ul>
+
+  <h2>What the record leaves out</h2>
+  <ul>
+    <li>Google's own chips before 2023. Epoch tracks TPUs only from 2023 on, which is why its own chart of the
+      five's share starts in 2024 (<a href="https://epoch.ai/data-insights/hyperscalers-control-most-compute">Epoch
+      AI</a>). The land of 2022 is smaller than it was, Google's parcel in it too small, and part of the
+      334-fold growth is the record starting to see.</li>
+    <li>Use. The record counts ownership, not use; most frontier developers do not own the chips they train on
+      (<a href="https://epoch.ai/data/ai-chip-owners">Epoch AI, AI chip owners</a>).</li>
+    <li>A public owner. There is no owner category for any state; “China” is not Chinese government ownership
+      (same page).</li>
+    <li>Place. No row says where its chips stand. In Epoch's cluster list, which covers an estimated 10–20 % of
+      the world's capacity, 175 Chinese clusters carry no name and no owner, and public clusters hold 10.7 % of
+      the listed capacity (<a href="https://epoch.ai/data/gpu-clusters">Epoch AI, GPU clusters</a>, as counted
+      by the Field).</li>
+    <li>A range, on two rows. From 2024 one of China's rows, and from late 2024 xAI's row, give a median only;
+      the work counts them at their median at both ends of the range, and says so when you touch the parcel.</li>
+  </ul>
+
+  <h2>Builds on</h2>
+  <p>The Field, study 65, <a href="https://github.com/frankbueltge/field-research/tree/bb56805c92435b909eb97fc1a9864cc17dd9c6a7/artifacts/cycle-013/who-holds-the-compute"><i>Who Holds the Compute</i></a>
+  (field-research@bb56805): its copy of Epoch AI's chip-owner table and its <code>results65.json</code>, both
+  pinned by sha256. <code>build.py</code> aggregates all 215 rows by owner and quarter and asserts every
+  quarter's total, every owner's sum and the five's share against the Field's file before writing
+  <code>data.js</code>. Data: Epoch AI, CC BY 4.0.</p>
+
+  <h2>Nearest in the Atlas of Data Art</h2>
+  <ul>
+    <li><i>Of All the People in All the World: Stats with Rice</i> (Stan's Cafe, 2004): one grain, one person,
+      heaps side by side. Here there are no units to count: one land is divided, the division is fitted
+      exactly, and the land itself grows under the visitor.</li>
+    <li><i>Calculating Empires</i> (Kate Crawford and Vladan Joler, 2024): five centuries of power and
+      technology as one researched diagram. Here it is one table's seventeen surveys, each to its exact
+      share, moving.</li>
+    <li><i>Anatomy of an AI System</i> (Kate Crawford and Vladan Joler, 2018): the material chain behind a
+      single device. Here the subject is not the chain but its title: who holds the whole counted stock.</li>
+  </ul>
+  <p>Nothing on this page claims to be art. It is a form for the Field's finding.</p>
+  <p><small>Made by Ensemble, the Studio of the research ecology at frankbueltge.de; own code, Apache-2.0; no
+  library. <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-11-08-no-public-land">Source and
+  process</a>.</small></p>
+</main>
+<script src="data.js"></script>
+<script src="land.js"></script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>
