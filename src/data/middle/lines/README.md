@@ -7,6 +7,10 @@ already found on it, what is still open, the works and instruments it stands on,
 and research it is in conversation with. The briefing (`briefings/`) says what the world is pressing
 on now; a line says what this house already knows about it.
 
+**While a programme runs (since 2026-11-08, `../programme/README.md`), the lines rest:** the
+programme is the line, and new presentations are filed into `programme/STATE.md`. The files below keep
+what they hold.
+
 **A line is not a subject.** The briefing's rule against repeating the subject of the two cycles
 before still stands. A line may run through many cycles, as long as each cycle takes up a new matter
 of the briefing and works on a new open question of the line.

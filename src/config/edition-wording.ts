@@ -25,6 +25,7 @@ const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'e
 /** A small count as a word, house style ("seven nights"); anything past twelve stays a figure. */
 export const inWords = (n: number): string => WORDS[n] ?? String(n)
 
+const cap = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1)
 const cycleLabel = (n: number): string => `cycle ${String(n).padStart(3, '0')}`
 
 export const EDITION = {
@@ -194,6 +195,23 @@ export const EDITION = {
     when: { today: 'today', yesterday: 'yesterday' },
     /** a practice with nothing on the running question yet: the absence is drawn */
     absent: 'nothing on this question yet',
+    /**
+     * The programme (2026-11-08; docs/design/2026-11-08-the-programme.md): once the ecology holds one
+     * large question for weeks, the lead names that question, not the cycle's step.
+     */
+    programme: {
+      selectingKicker: 'The ecology is choosing its question',
+      selectingTitle: 'The ecology is choosing one large question to hold for eight to twelve weeks.',
+      selectingStandfirst: (p: { next: string }): string =>
+        'No more new subject every few days: the Middle has drawn candidates from the research and risk agendas of the world, the practices argue for and against them, and the highest score in the open wins. ' +
+        `${cap(p.next)} opens as the first step of that question. The architect has a veto and does not choose.`,
+      chosenKicker: (p: { opens: string }) => `Question chosen · the first step opens ${p.opens}`,
+      chosenStandfirst: (p: { next: string; opens: string }): string =>
+        `The ecology chose this question for the next eight to twelve weeks. ${cap(p.next)} opens on ${p.opens} as its first step, unless the architect objects.`,
+      runningKicker: (p: { step: number; cycle: string }) => `The question · step ${inWords(p.step)}, ${p.cycle}`,
+      runningStandfirst: (p: { step: string }): string => `This step asks: ${p.step}`,
+      link: { label: 'The question, its plan and what is known →', href: '/question' },
+    },
     links: [
       { label: 'Enter the ecology →', href: '/ecology' },
       { label: 'Every work and artifact →', href: '/ecology#register' },

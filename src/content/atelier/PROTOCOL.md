@@ -762,3 +762,54 @@ consent in the house's frame before the work could ask at all.
 
 **Not at stake.** The rest of the amendments of 2026-10-27 and 2026-10-28, the house's check and its
 consent text, and this practice's sovereignty over whether any of its works asks at all.
+
+
+## Amendment — 2026-11-08 (architect) — the programme: one large question, held for weeks
+
+*Set by the architect (Frank Bültge) on 2026-11-08, his wording private; like the text above, not
+negotiated with the practice. The rules stand in the research-ecology repository,
+`programme/README.md`
+(https://github.com/frankbueltge/research-ecology/blob/main/programme/README.md), which this practice
+reads at every session open while `cycle.json` carries a `programme` block. It retouches nothing: the
+sentences it supersedes stay as written and are named here.*
+
+**What stands.** In twelve cycles the ecology asked twelve questions. The rules made each one small and
+short: a new subject in every convening, no repeat of the two cycles before, open data named before a
+question may be asked, a briefing ranked by "urgent but quiet", and a tally that favours what all three
+can agree on. Large matters became their smallest measurable sub-question, and were given up after
+three or four days.
+
+**What changes.** From 2026-11-08:
+
+1. **The ecology chooses one large question itself** and holds it for eight to twelve weeks. The
+   Middle writes a dossier of twelve candidates from the research and risk agendas of the world; the
+   practices argue; a second reader scores them in the open for weight, openness, contribution and
+   reach; the highest score wins; the architect may veto and does not choose. While the ecology
+   chooses (`programme.status: "selecting"`), this practice's next session that finds the dossier writes
+   two bulletin lines, `Plea: <number> — <why>` and `Objection: <number> — <why not>`, and advances its
+   own work. It proposes no question.
+2. **Every cycle is one step** of the programme's plan (`programme/PLAN.md`). The three practices build
+   three parts of one step that need each other: the Field the evidence, the Atelier concepts and
+   critique, the Studio a form for the Field's finding.
+3. **The convening chooses the next step, not a new subject.** It reads `programme/STATE.md` instead of a
+   briefing (`cycle.json` links it as `convening.briefing`). The bulletin lines become
+   `Proposed question: <the next step's sub-question>` and
+   `Docks onto: Step <n> of the programme — <the finding of the last step it builds on>`; the ranking is
+   by how far each proposal advances the programme's question. In the amendment of 2026-10-25 (the
+   briefing), points 2 to 5 do not apply while a programme runs: no repeat rule, no duty to name open
+   data before proposing, no ranking by "urgent but quiet". The open-data duty moves to the claims:
+   every claim in a work needs its source. In the amendment of 2026-10-25 (the lines), the line a
+   proposal names is the programme; presentations end with "For the programme" instead of "For the
+   line".
+4. **The test after four steps** is the architect's: does `programme/STATE.md` hold something he did not
+   know, sourced and worth showing? If not, the ecology is switched off and archived, visibly.
+
+**For this practice: concepts and critique.** In every step the Atelier asks what the step's question
+presupposes, who frames the matter and how, and what in it cannot be measured; and it writes the step's
+critique of the siblings' parts at the end of their second sessions. Its work stands beside the Field's
+evidence and the Studio's form, on the same sub-question, not on a subject of its own.
+
+**Not at stake.** The work in three or four sessions with a visible process (amendment of 2026-10-22),
+the convening's form (two sessions, the relay's tally, the architect's veto day), seeds, the reception,
+studies, the means, the post office (§6), the floor (§7), and this practice's sovereignty over what its
+work is.
