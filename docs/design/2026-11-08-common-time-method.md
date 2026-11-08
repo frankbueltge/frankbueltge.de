@@ -16,14 +16,15 @@ The devices come from a line of music that made a process audible rather than hi
 (La Monte Young, Kali Malone), phasing (Steve Reich), speech melody (Leoš Janáček's notations of spoken
 Czech, Reich's *Different Trains*), and the vocoder (Kraftwerk, Holly Herndon).
 
-## Forms (since the night of 2026-11-08)
+## Forms (proposed in the night of 2026-11-08, built as probe 11, awaiting Frank's verdict)
 
 Frank's verdict on probes 08c, 09 and 10 (night of 2026-11-08, wording private), summarised: not yet. The
 tracks resemble one another, so the method has to change, not the mix. The vocoder is one means among others;
 the wordless vowel probes (05 to 07) came closer, in the direction of Reich's process music. Atonal and
 non-electronic forms are open, no genre is set, and the reference is current experimental practice with data
-and sound, researched and named. The sections after this one describe the first template (probes 04 to 10);
-it stays on record as one way to make a track, no longer the rule for all.
+and sound, researched and named. This section is a session's proposal and the probe built from it, not a
+decision; nothing in it holds until Frank has heard probe 11. The sections after it describe the first template
+(probes 04 to 10), which this proposal would make one way among several.
 
 **Why they sounded alike, measured.** Every track from probe 04 to probe 10 shared 128 BPM, the just grid on
 A1 = 55 Hz, the same three Surge instruments, the same vocoder, the same two-step drums, the same level map, a
@@ -40,26 +41,38 @@ through, and the music was then arranged to raise its score: words in front and 
 form may choose, not a gate every track must pass. The recogniser stays an instrument: in the room form it
 measures how fast the words dissolve.
 
-**The rule: the structure of the data chooses the form.** Each form brings its own time, tuning, sound source
-and level. Shared are only the data rules (the house count, Ducking's reading filter, the content rules), the
-record (receipts, hashes, stems), the ears (measured head responses) and the absence of any music model. For a
-map track the first form whose condition holds is taken (`forms.py` in the probes; thresholds are first
-settings, to be checked against a longer archive):
+**The proposed rule: the structure of the data chooses the form.** Each form brings its own time, tuning, sound
+source and level. Shared are only the data rules (the house count, Ducking's reading filter, the content rules),
+the record (receipts, hashes, stems), the ears (measured head responses) and the absence of any music model. For
+a map track the first form whose condition holds is taken (`forms.py` in the probes; thresholds are first
+settings, to be checked against a longer archive). The procedures come from the canon; where they stand today is
+in the column of current work, from the research below:
 
-| Form | Taken when | Lineage | The data's reason |
-|---|---|---|---|
-| silence | at most 7 signals in the week | the Wandelweiser composers (founded 1992 by Antoine Beuger and Burkhard Schlothauer; still releasing in 2026), Cage | absence is the measurement |
-| mass | at least 100 signals | Xenakis' stochastic music; *Formalized Music* (1963/1971), ch. I, derives the composition of masses from the sound of a political crowd | no single signal can be followed |
-| process | the week turned: the last two days' mean at least twice or at most half the first five days' (each + 0.5) | Reich's gradual process (essay, 1968; *Piano Phase*, 1967; *Drumming*, 1971), Stockhausen's *Stimmung* (1968) | a change of attention is a process the ear can follow |
-| room | one word stands in at least a third (and at least four) of the readable headlines; the field's required words do not count, its terms do | Alvin Lucier, *I Am Sitting in a Room* (1969) | a repeated story is one sentence passing again and again through the same medium |
-| phase | one phrase copied by many outlets (Consensus) | Reich, *It's Gonna Rain* (1965), *Come Out* (1966) | the same words in many places, minutes apart |
-| testimony | otherwise: a handful of distinct headlines | speech melody: Janáček; Reich's *Different Trains* (1988), where instruments double recorded speech | each headline worth hearing on its own (not built yet) |
+| Form | Taken when | Lineage | Current work nearby | The data's reason |
+|---|---|---|---|---|
+| silence | at most 7 signals in the week | the Wandelweiser composers (founded 1992 by Antoine Beuger and Burkhard Schlothauer), Cage | Wandelweiser's six releases of May 2026 | absence is the measurement |
+| mass | at least 100 signals | Xenakis' stochastic music; *Formalized Music*, ch. I, derives the composition of masses from the sound of a political crowd | Rania Kim's accumulating voice clones (ZKM 2025); Félix Blume's one pulse per walker (Donaueschingen 2025) | no single signal can be followed |
+| process | the week turned: the last two days' mean at least twice or at most half the first five days' (each + 0.5) | Reich's gradual process (essay, 1968; *Piano Phase*; *Drumming*), Stockhausen's *Stimmung* (six singers on harmonics of one low B flat, shaping overtones with vowels); probe 05's looped vowels have the structure of Eno's sung notes on incommensurable loops (*Music for Airports*, 1978) | Julia Jasmin Rommel's cartophony, which sounds changes rather than levels (Prix Ars Electronica 2023) | a change of attention is a process the ear can follow |
+| room | one word stands in at least a third (and at least four) of the readable headlines; the field's required words do not count, its terms do | Alvin Lucier, *I Am Sitting in a Room* (1969; the 1980 recording has 32 repetitions) | Interspecifics' *Recurrent Morphing Radio*, consumption as overtraining into noise (Prix 2021); Laure M. Hiendl's repetition as circulation (Donaueschingen 2025) | a repeated story is one sentence passing again and again through the same medium |
+| phase | one phrase copied by many outlets (Consensus) | Reich, *It's Gonna Rain* (1965), *Come Out* (1966); Diana Deutsch's speech-to-song illusion (1995): a phrase looped exactly comes to sound sung | Hiendl (as above); Deadspin's montage of Sinclair anchors reading one script (2018) | the same words in many places, minutes apart |
+| testimony | otherwise: a handful of distinct headlines | speech melody: Janáček; Reich's *Different Trains* (1988), where instruments double recorded speech; speech re-sounded by instruments: Peter Ablinger's *Voices and Piano* (since 1998), Clarence Barlow's synthrumentation, sine-wave speech snapped to notes (Remez's lab, 2007) | (not built yet) | each headline worth hearing on its own |
+
+**The rule was settled after the sketches, and says so.** The room was first built for climate by hand. The
+rule's first version then put climate, economy, nature and health under testimony, because it ignored a field's
+own terms when looking for a repeated word, and El Niño is one of climate's terms; it also rounded the share
+before comparing it with a third. Two changes followed: the field's required words are ignored (every headline
+carries them) but its terms count (any one of them qualifies a headline, so one term in a third of them is a week
+spent on one story), and the share is compared unrounded. Both flipped all four fields to room. The reasoning
+holds, but it came after the outcome; the thresholds are to be fixed before the next week is pressed, not after.
 
 Week 45 (2 to 8 November) by the rule: war and violence mass (147 signals); AI, power and information process;
 economy, climate, nature and health room (inflation, El Niño, air, polio); hunger, poverty, inequality,
 displacement and democracy silence. Over the nine complete weeks in the archive (from 2026-09-07) hunger,
 poverty and inequality are silent every week, war takes room six times, mass twice and testimony once. Since
-2026-11-02 Google News is read in ten editions, so earlier weeks count lower.
+2026-11-02 Google News is read in ten editions, so earlier weeks count lower. Two weaknesses show already: power
+(8 signals) and information (12) take process from a turn that small counts produce by chance, so process needs
+a floor (about two signals a day); and a week of four rooms and five silences repeats Frank's complaint one level
+up, which is what the open question below is about.
 
 ### Probe 11: five forms on the same week
 
@@ -91,14 +104,15 @@ differs between them is the method. Each renders bit-identically twice in fresh 
   of its country domain, the outlets of the first quarter hour together, each later quarter hour half a phrase
   later and looping slower by k × its quarter hours, k = 0.6 % × (1 − the echo index's percentile): the more the
   whole news stream copied that day, the tighter the copies hold. The rape verdict is never voiced; its copies
-  are breath. The recogniser writes down 67 to 100 % of each phrase said alone and 0 to 67 % at the end of the
-  day, where it starts to hear words that were never said ("we promise after a week" in "threats after a week
+  are breath. The recogniser writes down 67 to 100 % of each voiced phrase said alone and 0 to 67 % at the end of
+  the day, where it starts to hear words that were never said ("we promise after a week" in "threats after a week
   of hoaxes").
 - **Silence, poverty.** The field's checked line once (the World Bank's nowcast of 811 million people below
   three dollars a day), then seven days of twelve seconds, each begun by one soft tick, and one sine tone for
-  each signal on its family's harmonic. The week had two: a Google Trends query on a celebrity's Halloween
-  costume, counted because its headlines name homelessness, and a headline on the record debt of the poorest
-  countries, not read aloud because it names a sum in dollars. Levels as composed: a quiet field stays quiet.
+  each signal on its family's harmonic. A signal the record would read is said once, quietly, before its tone.
+  The week had two: a Google Trends query on a celebrity's Halloween costume, counted because its headlines name
+  homelessness, and said once; and a headline on the record debt of the poorest countries, not read aloud because
+  it names a sum in dollars. Levels as composed: a quiet field stays quiet.
 
 **Neighbours and daylight** (research of 2026-11-08; every entry from a fetched page). Sonified attention and
 web text: *The Listening Machine* (Daniel Jones and Peter Gregson, 2012; 500 UK Twitter users, sentiment as mood,
