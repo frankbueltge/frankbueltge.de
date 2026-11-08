@@ -203,7 +203,8 @@ probe 13). Each night the album is pressed again from the days so far; every edi
 **Probe 13, built the same night** (`album13.py`, `out13/`, `probe-13-editions.png`): 25 tracks in seven editions of
 week 45. Copy is being reworked in its own session and is not part of it. The content filter is gone from these
 tracks as from Ducking (Frank's decision, wording private): 146 of the war track's 147 signals can be voiced instead
-of 96, and in Sunday's edition 130 speak, hindsight taking the words from 16; only text the English voice cannot read, URLs and porn or spam site names stay out, the last pending his answer.
+of 96, and in Sunday's edition 130 speak, hindsight taking the words from 16; since Ducking's merge (#1305) only what a voice cannot say stays out (web addresses, code, formulas, non-Latin
+script, emoji).
 - **The album formed itself.**
   - Monday's edition: war as mass, and seven quiet fields sharing the silence.
   - Tuesday: information enters as a room.
@@ -381,8 +382,8 @@ a week: the field's week in Common Ground, opened by the state the briefing chec
   November that leaves war 65 distinct headlines, climate 17, AI 16, economy 14, and poverty none: its one
   headline names a sum in dollars, which the filter does not read. *Superseded later the same night:* Frank
   decided (wording private) that the headlines are voiced as they are, in Copy and in Ducking itself, and so in
-  these tracks; only text the English voice cannot read, URLs and porn or spam site names stay out (the last
-  pending his answer).
+  these tracks; only what a voice cannot say stays out (web addresses, code, formulas, non-Latin script,
+  emoji).
 - **Bed, loops, bass and drums** as in the topic tracks; the words lead as in the topic tracks.
 
 ## Consensus: the week in echoes (built as probe 10 on 2026-11-08, at the owner's go)
@@ -434,8 +435,8 @@ provided without usage restrictions, credit requested).
 
 - No content filter (Frank's decision of the night of 2026-11-08, wording private, for Copy and for Ducking,
   and so for every track that reads like Ducking): headlines are voiced as they are, deaths, rape and attacks
-  included. Out stays only what the English voice cannot read (no Latin letters), URLs, and porn or spam site
-  names (pending his answer). The rules below this line are the earlier ones, kept for the record.
+  included, sex and swearing as well. Out stays only what a voice cannot say: web addresses, code, formulas,
+  non-Latin script and emoji (Ducking's rule as merged in #1305, without the record's length and form limits). The rules below this line are the earlier ones, kept for the record.
 - Topic tracks: a topic or line that names death, violence, crime or a court case (the stoplist in the
   renderer) gives no hook, no sung line and no track. Their lines loop as hooks, so this list is stricter
   than the house filter the proposed map and Consensus tracks would use, where a line is sung once.
