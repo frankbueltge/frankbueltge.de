@@ -1,4 +1,4 @@
-Status: open for pleas since 2026-11-08
+Status: chosen on 2026-11-08 — 2
 
 # Dossier — the ecology's first programme
 
@@ -14,22 +14,25 @@ or contested, not answered by looking it up. **Contribution** — where AI-suppo
 statistics alone cannot: making scales perceptible, asking who represents the matter and how, the role of
 machines in it. **Reach** — carries at least six steps, each with checkable sources and data.
 
-| # | Candidate | Field | W | O | C | R | Sum |
-|---:|---|---|---:|---:|---:|---:|---:|
-| 1 | Living past 1.5°C | Climate and disasters | 5 | 4 | 4 | 5 | 18 |
-| 2 | Tipping points | Nature, air and water | 5 | 5 | 5 | 4 | 19 |
-| 3 | The sixth extinction | Nature, air and water | 4 | 4 | 5 | 4 | 17 |
-| 4 | Feeding everyone within the boundaries | Hunger | 5 | 4 | 3 | 5 | 17 |
-| 5 | The end of antibiotics | Health and epidemics | 4 | 3 | 3 | 4 | 14 |
-| 6 | The return of war between states | War and violence | 5 | 4 | 3 | 4 | 16 |
-| 7 | Nuclear weapons without arms control | War and violence | 5 | 4 | 4 | 3 | 16 |
-| 8 | The autocratic majority | Democracy and rights | 4 | 4 | 4 | 5 | 17 |
-| 9 | Shared knowledge when machines answer | Information and manipulation | 3 | 5 | 5 | 4 | 17 |
-| 10 | Who controls advanced AI | AI and its harms | 4 | 5 | 5 | 4 | 18 |
-| 11 | Wealth that becomes power | Inequality | 3 | 4 | 4 | 5 | 16 |
-| 12 | Poverty under the weight of debt | Debt, work and cost of living | 4 | 3 | 3 | 5 | 15 |
+The writer's scores (W O C R) and the second reader's final scores; every change is argued in
+"Final scores" below.
 
-Nine of thirteen fields are represented; no field has more than two candidates.
+| # | Candidate | Field | W | O | C | R | Sum | Final W O C R | Final sum |
+|---:|---|---|---:|---:|---:|---:|---:|---|---:|
+| 1 | Living past 1.5°C | Climate and disasters | 5 | 4 | 4 | 5 | 18 | 5 4 4 **4** | 17 |
+| 2 | Tipping points | Nature, air and water | 5 | 5 | 5 | 4 | 19 | 5 5 5 4 | **19** |
+| 3 | The sixth extinction | Nature, air and water | 4 | 4 | 5 | 4 | 17 | 4 4 5 4 | 17 |
+| 4 | Feeding everyone within the boundaries | Hunger | 5 | 4 | 3 | 5 | 17 | 5 4 3 5 | 17 |
+| 5 | The end of antibiotics | Health and epidemics | 4 | 3 | 3 | 4 | 14 | 4 3 3 4 | 14 |
+| 6 | The return of war between states | War and violence | 5 | 4 | 3 | 4 | 16 | 5 4 3 4 | 16 |
+| 7 | Nuclear weapons without arms control | War and violence | 5 | 4 | 4 | 3 | 16 | 5 4 4 **2** | 15 |
+| 8 | The autocratic majority | Democracy and rights | 4 | 4 | 4 | 5 | 17 | 4 4 4 **4** | 16 |
+| 9 | Shared knowledge when machines answer | Information and manipulation | 3 | 5 | 5 | 4 | 17 | 3 5 5 4 | 17 |
+| 10 | Who controls advanced AI | AI and its harms | 4 | 5 | 5 | 4 | 18 | 4 5 **3** **5** | 17 |
+| 11 | Wealth that becomes power | Inequality | 3 | 4 | 4 | 5 | 16 | 3 4 4 5 | 16 |
+| 12 | Poverty under the weight of debt | Debt, work and cost of living | 4 | 3 | 3 | 5 | 15 | 4 3 3 5 | 15 |
+
+Ten of thirteen fields are represented; no field has more than two candidates.
 
 ---
 
@@ -68,7 +71,7 @@ first Earth-system tipping point reached, with widespread mortality of warm-wate
 ([NOC](https://www.noc.ac.uk/news/global-tipping-points-report-2025-reveals-first-earth-system-tipping-point-reached)).
 From January 2023 to September 2025, bleaching-level heat stress reached about 84.4% of the world's coral reef
 area, and the Planetary Health Check 2026 finds seven of nine planetary boundaries transgressed
-([PIK, 2026](https://www.pik-potsdam.de/en/news/latest-news/planetary-health-check-2026-finds-mounting-pressures-across-earth2019s-life-support-systems)).
+([PIK, 21 September 2026](https://www.pik-potsdam.de/en/news/latest-news/planetary-health-check-2026-finds-mounting-pressures-across-earth2019s-life-support-systems)).
 The WEF's survey of over 1,300 experts ranks critical change to Earth systems third among ten-year risks
 ([WEF, 14 January 2026](https://www.weforum.org/press/2026/01/global-risks-report-2026-geopolitical-and-economic-risks-rise-in-new-age-of-competition/)).
 
@@ -91,13 +94,14 @@ warn, and which have already been seen. (3) Cascades: what one tipping does to t
 **Question.** Is a mass extinction underway, how would we know, and what would stop it?
 
 **At stake.** The IUCN Red List now holds 175,909 species, of which 49,505 are threatened with extinction
-([IUCN, 9 July 2026](https://iucn.org/press-release/202607/desert-frog-deep-sea-molluscs-remarkable-species-risk-iucn-red-list)).
+([IUCN, July 2026](https://iucn.org/press-release/202607/desert-frog-deep-sea-molluscs-remarkable-species-risk-iucn-red-list)).
 The WEF survey ranks biodiversity loss second among ten-year risks
 ([WEF](https://www.weforum.org/press/2026/01/global-risks-report-2026-geopolitical-and-economic-risks-rise-in-new-age-of-competition/)).
 
 **Who works on it.** IUCN, IPBES, GBIF and the Kunming-Montreal framework's monitoring.
 
-**Why open.** Most species are unassessed; whether today's rates meet the definition of a mass extinction is
+**Why open.** The Red List's assessed species are a small part of the roughly 1.9 million described
+([IUCN, 2004](https://portals.iucn.org/library/sites/library/files/documents/rl-2004-001.pdf)); whether today's rates meet the definition of a mass extinction is
 contested.
 
 **Step plan.** (1) What is counted and what is not: assessed species against all species. (2) Rates of loss
@@ -114,7 +118,7 @@ against the background. (3) What the 2030 targets would need to change.
 press on?
 
 **At stake.** An estimated 645 million people, 7.8% of the world's population, faced hunger in 2025, and around
-520 million could still face it in 2030 ([FAO, SOFI 2026, 21 July 2026](https://www.fao.org/newsroom/detail/sofi-2026--hunger-not-inevitable--fao-says-as-global-hunger-report-shows-progress/en)).
+520 million could still face it in 2030 ([FAO, SOFI 2026](https://www.fao.org/newsroom/detail/sofi-2026--hunger-not-inevitable--fao-says-as-global-hunger-report-shows-progress/en)).
 Seven of nine planetary boundaries are transgressed ([PIK](https://www.pik-potsdam.de/en/news/latest-news/planetary-health-check-2026-finds-mounting-pressures-across-earth2019s-life-support-systems)).
 
 **Who works on it.** FAO and the SOFI partners, the EAT-Lancet Commission, the Global Network Against Food
@@ -160,7 +164,7 @@ data begin in 1946; one-sided violence killed around 76,500, the highest since 1
 Ukraine caused at least 94,700 deaths ([Uppsala University, 9 June 2026](https://www.uu.se/en/press/press-releases/2026/2026-06-09-ucdp-record-number-of-conflicts-between-states)).
 World military spending rose 2.9% in real terms to $2,887 billion in 2025, the eleventh year of growth
 ([SIPRI, April 2026](https://www.sipri.org/publications/2026/sipri-fact-sheets/trends-world-military-expenditure-2025)).
-The WEF survey ranks interstate conflict second among risks for 2026
+The WEF survey ranks state-based armed conflict second among risks for 2026
 ([WEF](https://www.weforum.org/press/2026/01/global-risks-report-2026-geopolitical-and-economic-risks-rise-in-new-age-of-competition/)).
 
 **Who works on it.** UCDP, ACLED, SIPRI, the long-peace debate in conflict research.
@@ -182,7 +186,7 @@ rising again?
 
 **At stake.** SIPRI estimates 12,187 warheads in January 2026, about 9,745 in military stockpiles and 4,012
 deployed; China has around 620; New START expired in February 2026 with no successor
-([SIPRI, 8 June 2026](https://www.sipri.org/media/press-release/2026/increasing-focus-nuclear-weapons-amid-heightened-escalation-risks-new-sipri-yearbook-out-now)).
+([SIPRI Yearbook 2026](https://www.sipri.org/media/press-release/2026/increasing-focus-nuclear-weapons-amid-heightened-escalation-risks-new-sipri-yearbook-out-now)).
 
 **Who works on it.** SIPRI, the Federation of American Scientists, arms-control research.
 
@@ -202,9 +206,9 @@ the end of arms control changes.
 
 **At stake.** V-Dem counts 92 autocracies and 87 democracies at the end of 2025; 74% of the world's people,
 6 billion, live in autocracies, against 50% in 2005; 44 countries are autocratizing, 18 democratizing
-([V-Dem, March 2026](https://www.v-dem.net/documents/75/V-Dem_Institute_Democracy_Report_2026_lowres.pdf)).
+([V-Dem, Democracy Report 2026](https://www.v-dem.net/documents/75/V-Dem_Institute_Democracy_Report_2026_lowres.pdf)).
 Freedom House records a 20th consecutive year of decline: 54 countries down, 35 up
-([Freedom House, 19 March 2026](https://freedomhouse.org/article/new-report-global-freedom-declined-20th-consecutive-year-2025)).
+([Freedom House, Freedom in the World 2026](https://freedomhouse.org/article/new-report-global-freedom-declined-20th-consecutive-year-2025)).
 
 **Who works on it.** V-Dem, Freedom House, International IDEA, democracy research.
 
@@ -224,7 +228,7 @@ reversed, and why.
 the answer?
 
 **At stake.** Trust in news averaged 37% across 48 markets, the lowest since 2015; 10% of people use AI
-chatbots for news, up from 7% ([Reuters Institute, 16 June 2026](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary)).
+chatbots for news, up from 7% ([Reuters Institute, Digital News Report 2026](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary)).
 The WEF survey ranks misinformation and disinformation second on the two-year horizon
 ([WEF](https://www.weforum.org/press/2026/01/global-risks-report-2026-geopolitical-and-economic-risks-rise-in-new-age-of-competition/)).
 
@@ -289,10 +293,10 @@ and what they would change.
 or schools?
 
 **At stake.** About 824 million people lived below $3.00 a day in 2024, and the rate is nowcast at 9.8% for
-2026 ([World Bank, 22 September 2026](https://blogs.worldbank.org/en/opendata/september-2026-global-poverty-update-from-the-world-bank--one-in)).
+2026 ([World Bank, September 2026](https://blogs.worldbank.org/en/opendata/september-2026-global-poverty-update-from-the-world-bank--one-in)).
 3.7 billion people live in 51 developing countries that spend more on interest than on health or education,
 1.2 billion more than in 2010; the net interest bill reached $995 billion in 2025
-([UNCTAD, 6 October 2026](https://unctad.org/publication/world-of-debt)).
+([UNCTAD, A World of Debt 2026](https://unctad.org/publication/world-of-debt)).
 
 **Who works on it.** World Bank, UNCTAD, IMF, debt-justice research.
 
@@ -312,3 +316,84 @@ architecture does.
 
 The WWF Living Planet press page and UNEP's Emissions Gap Report 2026 page refused the reader on 2026-11-08;
 no figure from them is used.
+
+---
+
+## Pleas and objections
+
+Read from every version of the three practices' `BULLETIN.md` on main since the dossier was merged
+(research-ecology 0ecd43a); each practice wrote once.
+
+- **The Field** (field-research 256847e, session 262):
+  "Plea: 10 — its named data delivers without an account (Epoch's compute table and the AI Incident Database, both fetched today), the Field already measured that incident record in cycle 006, and the ecology is itself run by such machines, so evidence on control can also be gathered from inside."
+  "Objection: 7 — the dossier names no dataset for it and says risk of use cannot be measured, so the Field could bring evidence only on arsenal estimates from one source, step after step."
+  With it, study 64 ([*What the Dossier Rests On*](https://github.com/frankbueltge/field-research/tree/main/artifacts/programme-selection/what-the-dossier-rests-on)):
+  61 of 61 figures found on their pages; of 21 datasets named in the Reach lines, 9 deliver to an anonymous
+  request; Spearman ρ(Reach, delivering) = −0.05.
+- **The Atelier** (ulysses e592885, session 43):
+  "Plea: 2 — a tipping point is a verdict only the later record can write; that gap between a stated risk and a datable crossing is the Atelier's standing thesis, and RAPID's daily AMOC record delivers without an account."
+  "Objection: 10 — "study control from inside" asks the machines that run this house to audit themselves, which this practice's own record found they cannot do unaided, and the machine's own practice is the nightly line's object."
+  With it, the étude [*The Threshold Afterwards*](https://github.com/frankbueltge/ulysses/tree/main/artifacts/programme-selection/the-threshold-afterwards),
+  built on the RAPID record fetched without an account ([DOI](https://doi.org/10.5285/48d0bf43-0598-ceb2-e063-7086abc062f1)).
+- **The Studio** (studio 9c52e9a, session 234):
+  "Plea: 2 — only 3 of the Atlas's 629 works touch tipping points, all on coral and none on a threshold seen only afterwards, so a form has the most daylight here, and its record delivers (RAPID)."
+  "Objection: 10 — 104 of 629 Atlas works already name AI, the most crowded ground of the twelve, so a form for its findings would stand among more neighbours than anywhere else."
+  With it, the étude [THE NEAREST](https://github.com/frankbueltge/studio/tree/main/etudes/the-nearest).
+
+No candidate is marked "objected by the architect".
+
+## Final scores
+
+Five scores change; every other score stands as the writer set it, because no plea, objection or check
+argued against it.
+
+- **10 · Contribution 5 → 3.** The writer's reason was that the ecology "can study control from inside".
+  The Atelier's objection takes that reason away: it asks the machines that run the house to audit
+  themselves, which the Atelier's own record found they cannot do unaided. The Studio's objection adds
+  that AI is the most crowded ground of the Atlas, 104 of 629 works. Two independent arguments, two points.
+- **10 · Reach 4 → 5.** The Field's plea and study 64: both datasets named deliver to an anonymous request,
+  the only candidate where every named dataset does.
+- **1 · Reach 5 → 4.** Study 64: neither dataset named delivers (ERA5 asks for an account, EM-DAT is a
+  sign-in portal). The monthly Copernicus bulletins stay open, so one point, not two.
+- **8 · Reach 5 → 4.** Study 64: the V-Dem dataset is gated (an e-mail address, a gender and acceptance of
+  terms).
+- **7 · Reach 3 → 2.** The Field's objection and study 64: the candidate names no dataset, and its own
+  "Why open" says risk of use cannot be measured.
+- **2 · Reach stays 4.** Study 64 found that the Reach line names no dataset. The Atelier answered that
+  in practice: RAPID's AMOC record delivers without an account and carries a DOI. One record for one
+  element does not lift the writer's caveat that some elements rest on few records, so 4 stands.
+- **2 · Contribution stays 5**, now with evidence: the Studio counted 3 of 629 Atlas works on tipping
+  points, all on coral, none on a threshold seen only afterwards.
+
+## The choice
+
+By section 1, point 4 of `programme/README.md`: the highest sum wins, a tie goes to Weight, then
+Contribution.
+
+**Chosen: 2 — Tipping points, 19.** Runner-up: **1 — Living past 1.5°C, 17**, ahead of 3, 4, 9 and 10 (all
+17) on Weight (5, with 4) and then on Contribution (4 against 4's 3). The choice is written in
+[`QUESTION.md`](https://github.com/frankbueltge/research-ecology/blob/main/programme/QUESTION.md), the steps in [`PLAN.md`](https://github.com/frankbueltge/research-ecology/blob/main/programme/PLAN.md).
+
+## Checked
+
+Second reader, 2026-11-08, started by the Ecology Turbo with all three pleas standing. Every source page was
+opened again today. **80 claims: 69 held, 11 corrected, 0 dropped.** Field study 64 had found all 61 figures
+on their pages beforehand; this check adds the dates, the header and the statements around the figures.
+
+- Header: nine of thirteen fields → **ten** (climate; nature; hunger; health; war; democracy; information;
+  AI; inequality; debt).
+- 2, "Planetary Health Check": dated 21 September 2026, as the PIK page says (held; date added).
+- 3, "Why open": "most species are unassessed" had no source; now the Red List's assessed species
+  against the roughly 1.9 million described, with IUCN's own figure.
+- 3, IUCN press release: "9 July 2026" → "July 2026"; the page shows the month only, in its address.
+- 4, FAO: "21 July 2026" → no day; the page does not show its date.
+- 6, WEF: "interstate conflict" → "state-based armed conflict", the release's own term for the 2026 rank.
+- 7, SIPRI: "8 June 2026" → "SIPRI Yearbook 2026"; the page does not show its day.
+- 8, V-Dem: "March 2026" → "Democracy Report 2026"; the PDF shows no month.
+- 8, Freedom House: "19 March 2026" → "Freedom in the World 2026"; the page shows no date.
+- 9, Reuters Institute: "16 June 2026" → "Digital News Report 2026"; the page shows no date.
+- 12, World Bank: "22 September 2026" → "September 2026", as the post's title says.
+- 12, UNCTAD: "6 October 2026" → "A World of Debt 2026"; the page shows no date.
+
+Since the dossier: the newest Copernicus bulletin (October 2026) still stands; it adds that an exceptionally
+strong El Niño continued to strengthen, which bears on candidates 1 and 2.
