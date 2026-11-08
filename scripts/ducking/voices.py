@@ -72,9 +72,10 @@ RECORD_SILENT = {'appstore', 'coingecko', 'github', 'github_trending', 'huggingf
 # What a voice cannot say: a web address, code or a formula, which it would spell out sign by sign. Nothing is
 # left out for what it says. Until 2026-11-08 a stop list of words for sex, killing, death, crime and accidents,
 # swear words, web addresses and the dollar sign kept headlines off the crowd and the record; since then they
-# read the charts' words as they stand (docs/decision-log.md). A sum in dollars is read; a formula is two
-# dollar signs around something that is not a number.
-UNSAYABLE = re.compile(r'://|www\.|\\|[{}^]|\$[^$\d\s][^$]*\$', re.I)
+# read the charts' words as they stand (docs/decision-log.md). A sum in dollars is read, and so is a cashtag; a
+# formula is two dollar signs around something without a space ($k$, $O(1/N)$), unless the second one begins
+# the next sum ($20-$60).
+UNSAYABLE = re.compile(r'://|www\.|\\|[{}^]|\$[^$\s]+\$(?!\d)', re.I)
 
 
 def unsayable_script(label):

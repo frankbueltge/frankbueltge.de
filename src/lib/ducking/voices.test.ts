@@ -84,14 +84,14 @@ describe('the record', () => {
 
 describe('what the voices leave out', () => {
   // Since 2026-11-08 nothing is left out for what it says (docs/decision-log.md). The rule lives in the
-  // render script and is read from there, so that a stop list cannot quietly come back.
+  // render script and is read from there, so that it cannot change without this test seeing it.
   const script = readFileSync(join(process.cwd(), 'scripts/ducking/voices.py'), 'utf8')
   const source = /^UNSAYABLE = re\.compile\(r'([^']+)', re\.I\)$/m.exec(script)?.[1]
   const unsayable = new RegExp(source ?? '(?!)', 'i')
 
   it('is one rule in the script, for the crowd and the record alike', () => {
     expect(source).toBeDefined()
-    expect(script).not.toMatch(/^STOP\s*=/m)
+    expect(script.match(/^\w+\s*=\s*re\.compile\(/gm)).toEqual(['UNSAYABLE = re.compile('])
   })
 
   it('reads the charts’ words as they stand, whatever they say', () => {
@@ -104,6 +104,9 @@ describe('what the voices leave out', () => {
       'Ofcom opens an investigation into Pornhub owner Aylo',
       'Norway makes shithouses great again',
       'North Korea gets away with $3 billion from Binance',
+      'Tickets cost $20-$60',
+      'Why $NVDA beat $AMD',
+      'Ke$ha and A$AP Rocky tour',
       'Goodbye from Salon - Salon.com',
       'Introduction to Programming in ATS',
     ]) {
@@ -116,6 +119,8 @@ describe('what the voices leave out', () => {
       'Gemini 4 Argon https://blog.google/innovation-and-ai/',
       'Two $\\operatorname{ReLU}$ Layers is All You Need',
       'Achieving an $O(1/N)$ Optimality Gap in Average-Reward Weakly-Coupled MDPs',
+      'Beyond Best-of-$k$: Prior-Consistent DAPS for Ambiguous Nonlinear Inverse Problems',
+      'A $2$-approximation for metric TSP',
       'DocuSign API endpoint /restapi/v2.1/accounts/{accountId}/envelopes search_text problem',
       'vimeo_video_player: ^1.0.3 not working on iOS',
     ]) {
