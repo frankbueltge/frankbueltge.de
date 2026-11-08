@@ -175,12 +175,30 @@ Its listening guide is a first score (`probe-12-score.png`): kick and copies in 
 drawn where it sounds with its lateness in milliseconds, the bass on a staff, a page a drummer and a bassist could
 play from. Bit-identical across two runs.
 
-**Proposed: the week as an album in editions.** Each night the album is pressed again from the days so far, and
-the newest day re-voices the earlier ones (the chord a day is heard in is the set of topics still alive at the
-latest edition), so Monday sounds different on Sunday, as yesterday's news reads differently today; every edition
-stays playable. Each track takes a different idiom, chosen by its data's structure (the forms) and kept from
-repeating: a track whose descriptors lie too close to the same focus's last weeks (`contrast.py`) takes the next
-idiom. Every track comes with its score. A live version and the desk stay separate experiments.
+**The week as an album in editions** (proposed that night; Frank's go the same night, wording private; built as
+probe 13). Each night the album is pressed again from the days so far; every edition stays playable.
+- **No hindsight from the future.** Edition k uses only the days up to k and the newest Ducking round checked on
+  or before day k (in week 45: the round after cycle 011, checked 2 November, until the 6th; the round after
+  cycle 012, checked 7 November, from then on), for the fields' terms as for their checked lines.
+- **The tracks form themselves.** Copy (Consensus) is on every edition. For the map, every field's form is chosen
+  again in every edition, with the thresholds scaled to the days so far: silence at most one signal a day, mass at
+  least 100/7 a day, process from the third day on (the last two days against the days before them), room and
+  testimony as for a week. One track per form: all silent fields share the silence track; mass, process and room
+  take their busiest field, the others stay open; testimony is not built yet, so a field in it has no track in
+  that edition and is listed as such. A field can change form during the week, and its track with it.
+- **One retroactive principle.** Every edition hears the earlier days from its newest day: what the newest day no
+  longer carries loses its voice in them; where a form has a voice to lend, the newest day's voice enters them.
+  In the mass, an earlier signal whose story (the field terms it named) is not named on the newest day is breath
+  instead of words; in the process, a family absent on the newest day pulses as breath; in the silence, an earlier
+  headline is only said if its field is named on the newest day; in the room, the sentence is the story the days so
+  far repeated, so every pass sings what the newest edition found; in Copy, the newest voiced headline's melody
+  closes every earlier day (its last four bars, in the bass). Measured per track: Monday's section in edition 1
+  against edition 7.
+- **Not repeating.** Each track takes a different idiom, chosen by its data's structure (the forms); a track whose
+  descriptors lie too close to the same focus's last weeks (`contrast.py`) takes the next idiom (from the second
+  week on). Every track comes with its score. A live version and the desk stay separate experiments.
+- **Storage, open:** renders are bit-identical, so only the newest edition's audio needs keeping; earlier editions
+  can be pressed again from data and code.
 
 ## From the data to the music (first template, probes 04 to 10)
 
