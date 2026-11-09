@@ -786,7 +786,7 @@ export const NAMING = {
              NAMING.overview.items). `resident` is the relation line a door would carry —
              stated here because neither has a resident in the doors' sense. */
           rows: [
-            { card: 'attention', repo: 'machine-attention', status: 'RUNNING', resident: 'the counter-experiment' },
+            { card: 'attention', repo: 'machine-attention', status: 'RUNNING', resident: 'one machine, its own investigations' },
             /* The relation line names the founding text since 2026-10-11, when the card took the
                practice's name (Ulysses): the row should still say which line this is. */
             { card: 'nightly-line', repo: 'error-as-method', status: 'NIGHTLY', resident: 'Error as Method · forked from the Atelier' },
@@ -1179,7 +1179,7 @@ export const NAMING = {
       label: 'Research projects',
       items: [
         { card: 'ecology', line: 'three practices, one shared question' },
-        { card: 'attention', line: 'the counter-experiment' },
+        { card: 'attention', line: 'one machine, its own investigations' },
         { name: 'Atlas', href: '/atlas' },
         { card: 'n-1', line: 'the Atelier’s third line' },
         { card: 'nightly-line', line: 'Error as Method, forked from the Atelier' },

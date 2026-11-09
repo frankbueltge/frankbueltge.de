@@ -259,6 +259,21 @@ export const EDITION = {
       [p.day, `${p.commits} commit${p.commits === 1 ? '' : 's'} in ${inWords(p.days)} nights`, p.relation].filter(Boolean).join(' · '),
     /** a house whose record holds nothing dated: the absence is drawn */
     absent: 'nothing landed on the record yet',
+    /**
+     * Machine Attention's row reads its newest instrument night, not its last stage moment
+     * (2026-11-09): the moment was The Foreknown's retirement of 2026-10-04 and stood there for
+     * five weeks. `relation` names what runs now, from the practice's own export.
+     */
+    attention: {
+      night: (p: { outage: boolean; impulses: number | null; strong: number }) =>
+        p.outage
+          ? 'Planetary Listening · the seismometer was down that day'
+          : p.impulses === null
+            ? 'Planetary Listening · listened to the quarry'
+            : `Planetary Listening · ${p.impulses} impulse${p.impulses === 1 ? '' : 's'} heard at the quarry` +
+              (p.strong > 0 ? `, ${p.strong} strong enough to be a blast` : ''),
+      now: (titles: readonly string[]) => (titles.length ? `now: ${titles.join(', ')}` : ''),
+    },
   },
 
   readings: {

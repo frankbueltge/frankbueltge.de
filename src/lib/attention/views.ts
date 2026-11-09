@@ -268,3 +268,30 @@ export function usd(v: number): string {
   if (v >= 1e3) return `$${Math.round(v / 1e3)}k`
   return `$${Math.round(v)}`
 }
+
+// ---------------------------------------------------------------- the newest reading
+
+/**
+ * The newest night Planetary Listening has on record (2026-11-09): what the homepage's column of
+ * houses says about Machine Attention. Until then that column showed the practice's last stage
+ * moment, The Foreknown's retirement of 2026-10-04, five weeks after the instruments it still runs
+ * had moved on. `day` is the day listened to, not the night the row was written.
+ */
+export type LatestNight = { day: string; outage: boolean; impulses: number | null; strong: number }
+
+export function latestNight(views: Views | null): LatestNight | null {
+  if (!views || views.planetary.length === 0) return null
+  const night = views.planetary.reduce((a, b) => (b.day > a.day ? b : a))
+  return { day: night.day, outage: night.outage, impulses: night.triggers, strong: night.strong.length }
+}
+
+/**
+ * Whether a stage moment is still news beside the practice's own newest step: older than
+ * `days` before `reference` (a YYYY-MM-DD day), it is history and leaves the entrance's head.
+ */
+export function isFresh(occurredAt: string, reference: string | null, days = 14): boolean {
+  if (!reference) return true
+  const ref = Date.parse(`${reference}T00:00:00Z`)
+  const at = Date.parse(occurredAt)
+  return Number.isFinite(ref) && Number.isFinite(at) && ref - at <= days * 86_400_000
+}
