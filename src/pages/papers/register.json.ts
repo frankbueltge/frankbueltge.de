@@ -6,7 +6,7 @@
 // the discarded stays in the record. `rejected` is small, and it is the part that says what the
 // register is FOR.
 import type { APIRoute } from 'astro'
-import { PAPERS, ABGELEHNT } from '@/lib/papers'
+import { PAPERS, ABGELEHNT, TESTED_IN_WORK, isTestedInWork } from '@/lib/papers'
 
 export const prerender = true
 
@@ -26,8 +26,11 @@ export const GET: APIRoute = () =>
           'abstracts alone are 1.5 MB); to scan rather than read, take `slim` — same entries, ' +
           'no abstracts, whole in one fetch.',
         count: PAPERS.length,
+        // Since 2026-11-09 /papers lists only what the practices read; identifiers a work tested
+        // as its material (found only in a work's data folder) carry `tested_in_work: true`.
+        tested_in_work_count: TESTED_IN_WORK.length,
         rejected_count: ABGELEHNT.length,
-        entries: PAPERS,
+        entries: PAPERS.map((p) => ({ ...p, tested_in_work: isTestedInWork(p) })),
         rejected: ABGELEHNT,
       },
       null,

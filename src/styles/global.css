@@ -330,6 +330,14 @@ body {
   details[open] > summary .fold-chevron {
     transform: rotate(180deg);
   }
+  /* A summary that draws its own chevron hides the browser's triangle; until 2026-11-09 every
+     fold on the catalogues showed both ("▶ ▾"). */
+  summary:has(.fold-chevron) {
+    list-style: none;
+  }
+  summary:has(.fold-chevron)::-webkit-details-marker {
+    display: none;
+  }
 
   /* The kicker: the small mono line that names what a block is, above nearly every heading
      on this site. It was retyped as `font-mono text-[11px] uppercase tracking-[0.16em]

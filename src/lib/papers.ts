@@ -136,9 +136,13 @@ const praxisNamen: Record<string, string> = {
   atelier: 'Atelier',
   field: 'Field',
   studio: 'Studio',
-  meridian: 'Meridian',
+  // Meridian is the Field's own name for itself, not a second practice (wording canon). The
+  // scout keys the two apart because they sat in different repos; a reader sees one practice.
+  meridian: 'Field',
   // 2026-10-04: the nightly line (error-as-method), read by the scout again since its fork.
-  nightly: 'Ulysses',
+  // Named with its line since 2026-11-09: "Ulysses" alone next to "Atelier" read as a fifth
+  // practice to anyone who does not know the history of the name.
+  nightly: 'Ulysses (nightly line)',
   // 2026-11-04: the lab's other houses, read by the scout since that day.
   attention: 'Machine Attention',
   middle: 'The Middle',
@@ -181,4 +185,115 @@ export const authorLine = (urheber: string[]): string => {
   if (urheber.length === 0) return 'author not stated'
   if (urheber.length <= 3) return urheber.join(', ')
   return `${urheber.slice(0, 3).join(', ')} et al.`
+}
+
+/** The key a practice is filtered by. Meridian and Field are one practice under two repo
+ *  keys; the catalogue's facets and "cited by" lines show them once. */
+export const practiceKey = (p: string): string => (p === 'meridian' ? 'field' : p)
+
+/** The practices that cite an entry, each once, in the order the entry names them. */
+export const citedBy = (e: Pick<PaperEntry, 'zitiert_von'>): string[] => [
+  ...new Set(e.zitiert_von.map(practiceKey)),
+]
+
+// ── Read, or tested inside a work (2026-11-09) ───────────────────────────────────────────
+//
+// Measured on 2026-11-09: 2,978 of the 3,972 entries were found ONLY in the data folders of
+// works — 2,342 in the Field's "The Dial" alone, 574 in "Does it know it is known". Those works
+// tested thousands of identifiers as their material (resolution, retrieval); the identifiers
+// are the experiment's sample, not the practice's reading. They filled the catalogue with
+// "LIST OF FIGURES", "Chapter Nine" and dictionary headwords, under a page that says "what the
+// practices actually read". The rule below separates them. It is the same test the scout
+// already applies to ask such seeds last (pipelines/atlas-scout/src/atlas_scout/katalog.py,
+// `_ist_datenablage`): a data folder, a data.json, or a .jsonl log. Nothing is deleted — the
+// feeds keep every entry, and the page lists the works the references were tested in.
+
+const isDataStore = (file: string): boolean => {
+  const parts = file.toLowerCase().split('/')
+  const last = parts[parts.length - 1] ?? ''
+  return parts.slice(0, -1).includes('data') || last === 'data.json' || last.endsWith('.jsonl')
+}
+
+/** True when every place an entry was found is a data store of a work, never prose. */
+export const isTestedInWork = (e: Pick<PaperEntry, 'fundstellen'>): boolean =>
+  e.fundstellen.length > 0 && e.fundstellen.every(isDataStore)
+
+/** The work a data-store finding belongs to: the path up to its data folder or file. */
+export const workOfFinding = (file: string): string => {
+  const parts = file.split('/')
+  const i = parts.findIndex((p, k) => k < parts.length - 1 && p.toLowerCase() === 'data')
+  return parts.slice(0, i >= 0 ? i : parts.length - 1).join('/')
+}
+
+const RANK: Record<RelevanceSource, number> = { praxis: 0, urteil: 1, gebrauch: 2 }
+const titleKey = (e: PaperEntry): string | null => {
+  const t = e.titel
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+  // A short title ("Making", "Groups") is too common to prove two entries are one text.
+  return t.length >= 20 && e.jahr ? `${t}|${e.jahr}` : null
+}
+
+/** One card per text. The scout keeps a DOI and a handle, or a preprint and its journal
+ *  version, apart when their first authors are written differently ("Craig Batty" and "Craig
+ *  Batty & Arezou Zalipour"); the page folds entries with the same full title and year into
+ *  one, led by the DOI, and keeps every other identifier as "also". */
+export const mergeSameText = (entries: PaperEntry[]): PaperEntry[] => {
+  const byKey = new Map<string, PaperEntry[]>()
+  const out: (PaperEntry | string)[] = []
+  for (const e of entries) {
+    const k = titleKey(e)
+    if (!k) {
+      out.push(e)
+      continue
+    }
+    const group = byKey.get(k)
+    if (group) group.push(e)
+    else {
+      byKey.set(k, [e])
+      out.push(k)
+    }
+  }
+  return out.map((x) => {
+    if (typeof x !== 'string') return x
+    const group = byKey.get(x)!
+    if (group.length === 1) return group[0]
+    const lead = group.find((e) => e.kennung.startsWith('10.')) ?? group[0]
+    const best = [...group].sort((a, b) => RANK[a.relevanz_herkunft] - RANK[b.relevanz_herkunft])[0]
+    const others = group.filter((e) => e !== lead)
+    const dates = group.map((e) => e.zuletzt_gebraucht).filter((d): d is string => !!d).sort()
+    return {
+      ...lead,
+      relevanz: best.relevanz,
+      relevanz_herkunft: best.relevanz_herkunft,
+      urteil: best.urteil,
+      verify_status: group.some((e) => e.verify_status === 'verified') ? 'verified' : lead.verify_status,
+      weitere_kennungen: [
+        ...new Set([...(lead.weitere_kennungen ?? []), ...others.flatMap((e) => [e.kennung, ...(e.weitere_kennungen ?? [])])]),
+      ].filter((k) => k !== lead.kennung),
+      zitiert_von: [...new Set(group.flatMap((e) => e.zitiert_von))],
+      fundstellen: [...new Set(group.flatMap((e) => e.fundstellen))],
+      felder: [...new Set(group.flatMap((e) => e.felder))].sort((a, b) => a - b),
+      frei_zugaenglich: group.some((e) => e.frei_zugaenglich),
+      zuletzt_gebraucht: dates[dates.length - 1] ?? null,
+    }
+  })
+}
+
+/** What the practices read: the catalogue /papers shows. */
+export const READING: PaperEntry[] = mergeSameText(PAPERS.filter((p) => !isTestedInWork(p)))
+
+/** Identifiers a work tested as its material, kept in the feeds and summarised on the page. */
+export const TESTED_IN_WORK: PaperEntry[] = PAPERS.filter(isTestedInWork)
+
+/** The works those identifiers were tested in, largest first. */
+export const testedInWorkSummary = (entries: PaperEntry[] = TESTED_IN_WORK) => {
+  const m = new Map<string, number>()
+  for (const e of entries) {
+    for (const w of new Set(e.fundstellen.map(workOfFinding))) m.set(w, (m.get(w) ?? 0) + 1)
+  }
+  return [...m.entries()].map(([work, n]) => ({ work, n })).sort((a, b) => b.n - a.n)
 }

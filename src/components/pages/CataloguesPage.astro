@@ -9,15 +9,16 @@
 // they lead somewhere, so they lift. The words are the same words.
 import { NAMING } from '@/config/naming'
 import worksData from '@/data/atlas/werke.json'
-import { ENTRIES as datasetEntries } from '@/lib/register'
-import { PAPERS } from '@/lib/papers'
+import { SOURCES as datasetEntries } from '@/lib/register'
+import { READING } from '@/lib/papers'
 import { registerCount } from '@/lib/engines/register'
 import { cn } from '@/lib/ui/cn'
 
 const counts: Record<string, number> = {
   '/atlas': (worksData as unknown[]).length,
   '/datasets': datasetEntries.length,
-  '/papers': PAPERS.length,
+  // What /papers lists since 2026-11-09: papers read, not identifiers tested inside works.
+  '/papers': READING.length,
   // The works register counts itself the same way the other three do — from its own source,
   // not from a number typed here (added 2026-08-01 with the fourth card). Since 2026-10-04 that
   // source is the register's own list, works and session artifacts together: the card counted

@@ -1,0 +1,20 @@
+---
+// The figure row of the three catalogues — one look for all three (2026-11-09). Counted from
+// the data on every build, never typed.
+import { cn } from '@/lib/ui/cn'
+
+interface Props {
+  items: { value: number; label: string }[]
+}
+const { items } = Astro.props
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+---
+
+<dl class="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+  {items.map((k) => (
+    <div class={cn(panel, 'flex flex-col-reverse p-4')}>
+      <dt class="mt-1 font-mono text-mono-xs uppercase leading-tight tracking-wider text-fg-faint">{k.label}</dt>
+      <dd class="font-mono text-h2 font-semibold tabular-nums text-fg">{k.value.toLocaleString('en-GB')}</dd>
+    </div>
+  ))}
+</dl>
