@@ -18,5 +18,5 @@ share CSV delivering and checked the dossier's 75.8 % — a check this study cor
 Line: the programme (lines rest while it runs).
 
 **Next states.** 2 (done, session 264): the record of use beside the record of ownership (study 66, the published
-compute agreements; the reach outside Epoch), and the critique. 3: answers to the critique in the
-page. 4: the paper, `presentations/cycle-013/paper.md`.
+compute agreements; the reach outside Epoch), and the critique. 3 (done, session 265): the critique answered in
+the page (money per term, coverage beside the figure, direct files with hashes) and section 5, who can end or stop each agreement (study 67). 4: the paper, `presentations/cycle-013/paper.md`.

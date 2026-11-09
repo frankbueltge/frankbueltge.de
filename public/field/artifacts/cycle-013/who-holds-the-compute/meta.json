@@ -5,8 +5,8 @@
  "status": "in progress",
  "cycle": 13,
  "programme_step": 1,
- "medium": "Study page (studies 65-66): four interactive figures drawn by script with no library; numbers from analyse65.py and analyse66.py",
- "embodies": "Five companies hold about 69 % (90 %: 63-73 %) of the AI chip compute the open record counts at the end of 2025, flat for two quarters; the newest published 75.8 % rests on an unfinished quarter; the record has no category for states and counts ownership, not use. The use record crosses it: OpenAI and Anthropic own none of the counted chips but have published commitments of at least $590 billion to nine providers; xAI, an owner, rents its chips to Anthropic; only 3 of 19 published agreements state a number of chips, none in H100-equivalents.",
+ "medium": "Study page (studies 65-67): five sections with interactive figures and tables drawn by script with no library; numbers from analyse65.py, analyse66.py and analyse67.py",
+ "embodies": "Five companies hold about 69 % (90 %: 63-73 %) of the AI chip compute the open record counts at the end of 2025, flat for two quarters; the newest published 75.8 % rests on an unfinished quarter; the record has no category for states and counts ownership, not use. OpenAI and Anthropic own none of the counted chips but rent at roughly $22 bn and $25 bn a year in published agreements with a stated term. Of 19 published agreements, 13 say nothing in public about who can end them, restrict their use or stop them; the 5 that state an end do so only in securities filings, never giving the provider alone that right; the two contracts filed in full let a court, law-enforcement request or regulator order only a suspension, and in OpenAI's the provider gave up the right to end it even for unlawful use.",
  "data_sources": [
   {
    "url": "https://epoch.ai/data/ai_chip_owners_cumulative_by_designer.csv",
@@ -18,7 +18,7 @@
   },
   {
    "url": "https://epoch.ai/data/gpu_clusters.csv",
-   "what": "Epoch AI, GPU clusters (CC BY 4.0), rebuilt into data/gpu_clusters.json (first 13 columns)"
+   "what": "Epoch AI, GPU clusters (CC BY 4.0), fetched directly 2026-11-09 and kept whole as data/gpu_clusters_direct67.csv"
   },
   {
    "url": "https://openai.com/index/next-chapter-of-microsoft-openai-partnership/",
@@ -99,6 +99,26 @@
   {
    "url": "https://trust.anthropic.com/subprocessors",
    "what": "Anthropic sub-processor list, cloud infrastructure providers (study 66)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000119312525216497/d17274dex101.htm",
+   "what": "Master Services Agreement between CoreWeave, Inc. and OpenAI OpCo, LLC, dated 8 May 2025 (Exhibit 10.1 to CoreWeave's Form 8-K of 25 Sep 2025; portions redacted) (study 67; passages in data/control67.json)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000050/redactedmetamsa929finald.htm",
+   "what": "Master Services Agreement between CoreWeave, Inc. and Meta Platforms, Inc., dated 10 Dec 2023 (Exhibit 10.1 to CoreWeave's Form 8-K of 30 Sep 2025; portions redacted) (study 67; passages in data/control67.json)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm",
+   "what": "SpaceX registration statement, 2026 (study 67; passages in data/control67.json)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465925109803/tm2530882d2_6k.htm",
+   "what": "Nebius Group Form 6-K of 12 Nov 2025 (agreement with Meta) (study 67; passages in data/control67.json)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926027886/tm268879d1_6k.htm",
+   "what": "Nebius Group Form 6-K of 16 Mar 2026 (agreement with Meta) (study 67; passages in data/control67.json)"
   }
  ],
  "pages_read": [
@@ -108,5 +128,11 @@
   "https://epoch.ai/data-insights/ai-supercomputers-performance-share-by-country"
  ],
  "retrieval": "Direct requests from this machine were refused by its network; all files and pages were read through a web-research extraction service on 2026-11-08. Byte identity with Epoch's files is not checked. The cluster file arrived with line breaks flattened (parse_clusters65.py); two cluster names keep stray quote marks. Study 66: pages and filings read through web-research search and fetch services on 2026-11-08; quotes are copied from what they returned.",
- "predictions": "PREDICTIONS65.md (9fe601a, 4 of 6 held); PREDICTIONS66.md (ba140d7, 5 of 6 held)"
+ "predictions": "PREDICTIONS65.md (9fe601a, 4 of 6 held); PREDICTIONS66.md (ba140d7, 5 of 6 held)",
+ "corrections": [
+  {
+   "date": "2026-11-09",
+   "what": "Cluster sector shares summed every row, so a site's successive phases counted twice; standing at the end of 2025 (file column 'Superseded by'), public is 12.7 %, private 82.8 %, US 75.3 % (were 10.7, 85.7, 79.5). The 8 November rebuild also lost one cluster. Offered by the Studio (ho-2026-11-08-studio-5)."
+  }
+ ]
 }
