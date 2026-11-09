@@ -1,139 +1,289 @@
 ---
-// /papers — Paper-Katalog (wording-kanon.md "Catalogues": ab 2026-07-27 der dritte
-// Nachschlagewerk-Eintrag neben Atlas und Dataset Register).
+// /papers — the paper catalogue (wording-kanon.md "Catalogues": since 2026-07-27 the third
+// reference work next to the Atlas and the Dataset Register).
 //
 // Frank's decision of 2026-07-27, wording private: datasets go to the register, and papers get
 // a catalogue of their own. Built from what the practices actually cite — see src/lib/papers.ts
 // for provenance and for the line drawn against Assay's theory atlas.
 //
-// Rendering: vollständig serverseitig. 134 Einträge sind ein paar hundert KB Markup —
-// der Vorgänger brauchte eine Client-Suche, weil er 16.516 führte. Das ist kein
-// technischer Fortschritt, sondern die Folge davon, dass jeder Eintrag begründet ist.
+// 2026-11-09 (Frank's choice on the catalogue review, wording private): the page lists what the
+// practices READ (src/lib/papers.ts, READING) and summarises the identifiers works tested as
+// their material instead of printing thousands of them; it shares its toolbar with /atlas and
+// /datasets (search, sort, folded filters, paging, state in the address). Every card is still
+// rendered on the server, so the whole catalogue stands without JavaScript.
 //
-// Zahlen NUR aus den Daten (Kanon-Regel) — kein Wert steht im Fließtext.
-import { ABGELEHNT, PAPERS, ablehnungsGrundLabel, authorLine, grundLabel, praxisLabel, pruefLabel, urteilLabel } from '@/lib/papers'
+// Numbers only from the data (canon rule) — no value is typed into the prose.
+import {
+  ABGELEHNT,
+  READING,
+  TESTED_IN_WORK,
+  ablehnungsGrundLabel,
+  authorLine,
+  citedBy,
+  grundLabel,
+  praxisLabel,
+  pruefLabel,
+  testedInWorkSummary,
+  urteilLabel,
+} from '@/lib/papers'
+import { titleSortKey } from '@/lib/catalogue/query'
 import { THEMEN_LABELS } from '@/config/themen'
+import CatalogueStats from '@/components/catalogue/CatalogueStats.astro'
+import CatalogueToolbar from '@/components/catalogue/CatalogueToolbar.astro'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/ui/cn'
 
-const total = PAPERS.length
-const mitEigenerBegruendung = PAPERS.filter((p) => p.relevanz_herkunft === 'praxis').length
-const vonMehreren = PAPERS.filter((p) => p.zitiert_von.length > 1).length
-const ausScout = PAPERS.filter((p) => p.weg === 'scout').length
-const ausUrteil = PAPERS.filter((p) => p.relevanz_herkunft === 'urteil').length
+const PAGE_SIZE = 50
+const total = READING.length
+const withReason = READING.filter((p) => p.relevanz_herkunft === 'praxis').length
+const byMore = READING.filter((p) => citedBy(p).length > 1).length
+const byModel = READING.filter((p) => p.relevanz_herkunft === 'urteil').length
 
-// Jüngstes zuerst: was gerade gebraucht wird, steht oben. Einträge ohne Datum ans Ende,
-// statt sie mit einem erfundenen Datum einzureihen.
-const sortiert = [...PAPERS].sort((a, b) => {
+// Most recently used first: what is in use now stands on top. Entries without a date go last
+// instead of being given an invented one.
+const sorted = [...READING].sort((a, b) => {
   const av = a.zuletzt_gebraucht ?? ''
   const bv = b.zuletzt_gebraucht ?? ''
   if (av !== bv) return bv.localeCompare(av)
   return (b.jahr ?? 0) - (a.jahr ?? 0)
 })
 
-// ── Facetten ──────────────────────────────────────────────────────────────────────
-// Alle aus den Daten abgeleitet, nie aus einer festen Liste: Eine Option erscheint nur,
-// wenn sie belegt ist (Atlas-Muster). Die Seite behauptet damit keine Zustände, die im
-// Bestand nicht vorkommen — bei einem Katalog, dessen ganzer Sinn Nachprüfbarkeit ist,
-// wäre ein leerer Filter eine kleine Lüge.
-const zaehle = <T,>(werte: T[]) => {
+// ── Facets ────────────────────────────────────────────────────────────────────────────────
+// All derived from the data, never from a fixed list: an option appears only when it is held
+// (the atlas pattern). A catalogue whose point is checkability does not offer empty filters.
+const count = <T,>(values: T[]) => {
   const m = new Map<T, number>()
-  for (const w of werte) m.set(w, (m.get(w) ?? 0) + 1)
+  for (const v of values) m.set(v, (m.get(v) ?? 0) + 1)
   return m
 }
 
-const praxisFacette = [...zaehle(PAPERS.flatMap((p) => p.zitiert_von)).entries()]
-  .sort((a, b) => b[1] - a[1])
+const practiceFacet = [...count(READING.flatMap(citedBy)).entries()].sort((a, b) => b[1] - a[1])
 
-// Felder in der bindenden Reihenfolge 1–13, nicht nach Häufigkeit: Die Nummern sind die
-// gemeinsame Karte, und ihre Ordnung ist Teil der Aussage (drei Familien).
-const feldZaehler = zaehle(PAPERS.flatMap((p) => p.felder))
-const feldFacette = [...feldZaehler.entries()].sort((a, b) => a[0] - b[0])
-const ohneFeld = PAPERS.filter((p) => p.felder.length === 0).length
+// Fields in their binding order 1–13, not by frequency: the numbers are the shared map.
+const fieldCounts = count(READING.flatMap((p) => p.felder))
+const fieldFacet = [...fieldCounts.entries()].sort((a, b) => a[0] - b[0])
+const unplaced = READING.filter((p) => p.felder.length === 0).length
 
-// Herkunft der Begründung — die wichtigste Facette dieses Katalogs: Sie trennt, was eine
-// Praxis geschrieben hat, von dem, was eine Maschine vorschlug, und von dem, wo noch
-// niemand etwas gesagt hat.
-const herkunftOrder = [
+const reasonOrder = [
   { key: 'praxis', label: 'written by a practice' },
   { key: 'urteil', label: 'written by a model' },
   { key: 'gebrauch', label: 'no reason written yet' },
 ] as const
-const herkunftZaehler = zaehle(PAPERS.map((p) => p.relevanz_herkunft))
-const herkunftFacette = herkunftOrder.filter((h) => (herkunftZaehler.get(h.key) ?? 0) > 0)
+const reasonCounts = count(READING.map((p) => p.relevanz_herkunft))
 
-// Jahrzehnte statt Jahre: 208 Einträge über gut fünf Jahrzehnte ergäben sonst eine
-// Filterleiste, die länger ist als die Ergebnisliste.
-const jahrzehnt = (j: number | null) => (j ? Math.floor(j / 10) * 10 : null)
-const jahrzehntZaehler = zaehle(
-  PAPERS.map((p) => jahrzehnt(p.jahr)).filter((d): d is number => d !== null),
-)
-const jahrzehntFacette = [...jahrzehntZaehler.entries()].sort((a, b) => b[0] - a[0])
+// Decades, with everything before 1990 in one bucket: nineteen decade chips back to the 1840s
+// made the bar longer than a phone screen for a handful of entries (2026-11-09).
+const EARLY = 1990
+const period = (y: number | null): string =>
+  y === null ? '' : y < EARLY ? 'early' : String(Math.floor(y / 10) * 10)
+const periodCounts = count(READING.map((p) => period(p.jahr)).filter(Boolean))
+const periodFacet = [...periodCounts.entries()]
+  .sort((a, b) => (a[0] === 'early' ? 1 : b[0] === 'early' ? -1 : Number(b[0]) - Number(a[0])))
+  .map(([v, n]) => ({ value: v, label: v === 'early' ? `before ${EARLY}` : `${v}s`, n }))
 
-const zugangFacette = [
-  { key: 'open', label: 'openly accessible', n: PAPERS.filter((p) => p.frei_zugaenglich).length },
-  { key: 'geprueft', label: 'access confirmed', n: PAPERS.filter((p) => p.geprueft).length },
+const accessFacet = [
+  { value: 'open', label: 'openly accessible', n: READING.filter((p) => p.frei_zugaenglich).length },
+  { value: 'checked', label: 'access confirmed', n: READING.filter((p) => p.geprueft).length },
 ].filter((z) => z.n > 0)
 
-// Re-skin 2d (2026-09-02): the catalogue on the frame's recipe — the kicker as the one .kicker
-// class, the head and entries on the type scale, panels on the frame's radius and resting
-// depth, the filter chips cut from the shadcn Button recipe, the folds on the frame's turning
-// chevron, and an entry that answers the pointer the way every other card of the frame does.
-// The filter script, the data and every word are untouched.
+const groups = [
+  { key: 'cited', title: 'cited by',
+    options: practiceFacet.map(([p, n]) => ({ value: p, label: praxisLabel(p), n })) },
+  { key: 'reason', title: 'reason',
+    options: reasonOrder
+      .map((h) => ({ value: h.key, label: h.label, n: reasonCounts.get(h.key) ?? 0 }))
+      .filter((o) => o.n > 0) },
+  { key: 'field', title: 'field',
+    options: [
+      ...fieldFacet.map(([f, n]) => ({ value: String(f), label: THEMEN_LABELS[f] ?? `field ${f}`, n })),
+      ...(unplaced > 0 ? [{ value: 'none', label: 'not yet placed', n: unplaced }] : []),
+    ] },
+  { key: 'period', title: 'published', options: periodFacet },
+  { key: 'access', title: 'access', options: accessFacet },
+]
+const sorts = [
+  { value: 'recent', label: 'recently used' },
+  { value: 'year', label: 'newest published' },
+  { value: 'title', label: 'title A–Z' },
+]
+
+// The works whose data folders held identifiers they tested. Named by their folder, linked to
+// it in the practice's public repository, largest first.
+const tested = testedInWorkSummary().map(({ work, n }) => {
+  const [repo, ...rest] = work.split('/')
+  const slug = rest[rest.length - 1] ?? work
+  const name = slug.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/-/g, ' ')
+  return {
+    n,
+    name: name.charAt(0).toUpperCase() + name.slice(1),
+    repo,
+    href: `https://github.com/frankbueltge/${repo}/tree/main/${rest.join('/')}`,
+  }
+})
+
 const kicker = 'kicker'
 const panel = 'rounded-md border border-line bg-panel panel-raised'
-const chip = cn(
-  buttonVariants({ variant: 'outline', size: 'sm' }),
-  'h-7 gap-1.5 px-2 font-mono text-mono-sm font-normal text-fg-faint aria-pressed:border-line-lift aria-pressed:text-fg',
-)
 const fold = 'fold-chevron inline-block'
+const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono text-mono-sm font-normal')
 ---
 
 <main id="main" class="mx-auto w-full max-w-4xl px-4 py-10 sm:py-14">
   <header class="mb-8 max-w-3xl">
-    <p class={cn(kicker, 'mb-2')}>Papers</p>
+    <p class={cn(kicker, 'mb-2')}>Catalogues · Papers</p>
     <h1 class="text-h1 font-semibold">Paper Catalogue</h1>
     <p class="mt-4 text-body text-fg-muted">
       What this ecology's research practices and the lab's other houses actually read.
-      Every entry is here because one of them reached for it in its own work — the
+      Every entry is here because one of them reached for it in its own writing — the
       catalogue starts from use, not from a search of everything that exists.
     </p>
     <p class="mt-3 text-body text-fg-muted">
-      Each entry says who cites it and when it was last picked up, and each one shows
-      where its reason came from. A sentence written by a practice is reproduced verbatim.
-      A sentence written by a model names the model, the date and what it was reading —
-      it is a proposal to the practice, never a substitute for its own reading. Where
-      nobody has written one at all, the entry carries the plain record of its use.
-    </p>
-    <p class="mt-3 text-body text-fg-muted">
-      Nothing here is marked as read over until a person or a practice says so. Every
-      entry can be unfolded to show the file it was found in, the rule under which it was
-      admitted, and whether its access route answered when asked.
+      Each entry says who cites it, when it was last picked up, and where its reason came
+      from: a sentence written by a practice is reproduced verbatim; a sentence written by a
+      model names the model, the date and what it read. Unfold an entry to see the file it
+      was found in and whether its access route answered.
     </p>
   </header>
 
-  <!-- Kennzahlen: gezählt, nie behauptet. -->
-  <section class="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
-    {[
-      { wert: total, label: 'entries' },
-      { wert: mitEigenerBegruendung, label: 'with a written reason' },
-      { wert: vonMehreren, label: 'cited by more than one' },
-      { wert: ausUrteil, label: 'reason written by a model' },
-    ].map((k) => (
-      <div class={cn(panel, 'p-4')}>
-        <div class="font-mono text-h2 font-semibold tabular-nums text-fg">{k.wert}</div>
-        <div class="mt-1 font-mono text-mono-xs uppercase leading-tight tracking-wider text-fg-faint">
-          {k.label}
+  <CatalogueStats items={[
+    { value: total, label: 'papers read' },
+    { value: withReason, label: 'with a written reason' },
+    { value: byMore, label: 'cited by more than one' },
+    { value: TESTED_IN_WORK.length, label: 'tested inside works' },
+  ]} />
+
+  <section
+    data-catalogue
+    data-groups="cited reason field period access"
+    data-multi="cited field access"
+    data-sorts="recent year title"
+    data-sort-desc="recent year"
+    data-default-sort="recent"
+    data-page-size={PAGE_SIZE}
+  >
+    <CatalogueToolbar
+      groups={groups}
+      sorts={sorts}
+      total={total}
+      noun="papers"
+      placeholder="Search title, author, journal, DOI…"
+    />
+
+    <ol data-list class="space-y-4">
+    {sorted.map((p) => (
+      <li
+        class={cn(panel, 'pp-card break-words p-5')}
+        data-card
+        data-f-cited={citedBy(p).join(' ')}
+        data-f-reason={p.relevanz_herkunft}
+        data-f-field={p.felder.length ? p.felder.join(' ') : 'none'}
+        data-f-period={period(p.jahr)}
+        data-f-access={[p.frei_zugaenglich ? 'open' : '', p.geprueft ? 'checked' : ''].filter(Boolean).join(' ')}
+        data-s-recent={p.zuletzt_gebraucht ?? ''}
+        data-s-year={p.jahr ? String(p.jahr) : ''}
+        data-s-title={titleSortKey(p.titel)}
+        data-text={[p.titel, p.urheber.join(' '), p.ort, p.kennung, ...(p.weitere_kennungen ?? []), p.relevanz].join(' ')}
+      >
+        <h2 class="text-h3 font-semibold leading-snug text-fg">
+          <a href={p.url} rel="noopener" class="decoration-line underline-offset-4 hover:underline">
+            {p.titel}
+          </a>
+        </h2>
+
+        <p class="mt-1 font-mono text-mono text-fg-faint">
+          {authorLine(p.urheber)}{p.jahr ? ` · ${p.jahr}` : ''}{p.ort ? ` · ${p.ort}` : ''}
+        </p>
+
+        <p class={cn('mt-3 text-small leading-relaxed', p.relevanz_herkunft === 'gebrauch' ? 'text-fg-faint' : 'text-fg-muted')}>
+          {p.relevanz_herkunft === 'urteil' && <span class="font-mono text-mono-xs uppercase tracking-wider text-fg-faint">model's proposal · </span>}
+          {p.relevanz}
+        </p>
+
+        <div class="pp-ids mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-mono-sm text-fg-faint">
+          <a href={p.url} rel="noopener" class="hover:text-fg">{p.kennung}</a>
+          {p.weitere_kennungen?.map((k) => <span>also {k}</span>)}
+          {p.frei_zugaenglich && <span>open access</span>}
+          {p.zitiert_von.length > 0 && <span>cited by {citedBy(p).map(praxisLabel).join(', ')}</span>}
+          {p.zuletzt_gebraucht && <span>last used {p.zuletzt_gebraucht}</span>}
         </div>
-      </div>
+        {p.felder.length > 0 && (
+          <p class="mt-2 font-mono text-mono-xs text-fg-faint">
+            {p.felder.map((f) => THEMEN_LABELS[f] ?? `field ${f}`).join(' · ')}
+          </p>
+        )}
+
+        {/* The warrant: why the entry stands here, where to read it, whether the address was
+            checked. Frank's instruction of 2026-07-28 (wording private): everything checked and
+            annotated — where it comes from and why it was admitted. */}
+        <details class="mt-3 border-t border-line pt-2">
+          <summary class="cursor-pointer font-mono text-mono-sm text-fg-faint hover:text-fg">
+            <span class={fold}>▾</span> admitted because {grundLabel(p.aufnahmegrund)} · {pruefLabel(p)}
+          </summary>
+          <ul class="mt-2 space-y-1 font-mono text-mono-sm text-fg-faint">
+            {p.fundstellen?.map((f) => <li>found in {f}</li>)}
+            {p.pruef_vermerk && <li>note: {p.pruef_vermerk}</li>}
+            <li>
+              route: {p.weg === 'scout' ? 'scout enrichment' : 'from the practices'} ·
+              reason for the sentence above: {
+                p.relevanz_herkunft === 'praxis'
+                  ? 'written by the practice, reproduced verbatim'
+                  : p.relevanz_herkunft === 'urteil'
+                    ? `${urteilLabel(p.urteil)} — a proposal to the practice, not a substitute for its reading`
+                    : 'record of use — nobody has written the reason yet'
+              }
+            </li>
+          </ul>
+        </details>
+      </li>
     ))}
+    </ol>
+
+    <p data-empty hidden class="py-10 text-center text-small text-fg-muted">
+      Nothing matches. Clear the search or a filter.
+    </p>
+    <div class="mt-6 flex justify-center">
+      <button type="button" data-more hidden class={more}>show <span data-more-n>{PAGE_SIZE}</span> more</button>
+    </div>
   </section>
 
+  {total === 0 && (
+    <p class="text-small leading-relaxed text-fg-muted">
+      Empty — the catalogue is built from the practices' own citations and has not been
+      run yet. Not a source outage.
+    </p>
+  )}
+
+  <!-- What used to be three quarters of this page: identifiers a work tested as its material.
+       Summarised by work, not printed one by one; every entry stays in the feeds. -->
+  {tested.length > 0 && (
+    <section class={cn(panel, 'mt-12 p-5')}>
+      <details>
+        <summary class={cn(kicker, 'cursor-pointer hover:text-fg')}>
+          <span class={fold}>▾</span> tested inside works, not read: {TESTED_IN_WORK.length.toLocaleString('en-GB')} identifiers
+        </summary>
+        <p class="mt-3 text-small leading-relaxed text-fg-muted">
+          Some works use identifiers as their material — they resolve, retrieve or count
+          thousands of them to measure something about the record itself. Those identifiers are
+          the work's sample, not the practice's reading, so they are not listed above. They
+          are kept, entry by entry, in the
+          <a href="/papers/register.json" class="underline decoration-line underline-offset-4 hover:text-fg">machine-readable register</a>,
+          and each work's data folder holds them in full:
+        </p>
+        <ul class="mt-4 space-y-1.5 font-mono text-mono-sm text-fg-faint">
+          {tested.map((t) => (
+            <li class="flex items-baseline justify-between gap-3">
+              <a href={t.href} rel="noopener" class="hover:text-fg">{t.name} <span class="opacity-60">({t.repo})</span></a>
+              <span class="shrink-0 tabular-nums">{t.n.toLocaleString('en-GB')}</span>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </section>
+  )}
+
   {ABGELEHNT.length > 0 && (
-    <!-- Das Ablehnungsverzeichnis. Steht hier, weil ein Katalog, der still ENTFERNEN
-         kann, nicht prüfbarer ist als einer, der still aufnimmt — und weil ein
-         Verzeichnis, das niemand sieht, keines ist. -->
-    <section class={cn(panel, 'mb-10 p-4')}>
+    <!-- The withdrawals. A catalogue that can REMOVE silently is no more checkable than one
+         that admits silently — and a list nobody sees is no list. -->
+    <section class={cn(panel, 'mt-4 p-5')}>
       <details>
         <summary class={cn(kicker, 'cursor-pointer hover:text-fg')}>
           <span class={fold}>▾</span> withdrawn from this catalogue: {ABGELEHNT.length}
@@ -160,138 +310,17 @@ const fold = 'fold-chevron inline-block'
       </details>
     </section>
   )}
-
-  <section data-papers>
-    <!-- Filter. Rein clientseitig über data-Attribute; ohne JavaScript bleibt die
-         vollständige Liste stehen (kein leerer Bildschirm als Ausfallzustand). -->
-    <div class="mb-6 space-y-3 border-y border-line py-4">
-      {[
-        { gruppe: 'praxis', titel: 'cited by',
-          optionen: praxisFacette.map(([p, n]) => ({ wert: p, label: praxisLabel(p), n })) },
-        { gruppe: 'herkunft', titel: 'reason',
-          optionen: herkunftFacette.map((h) => ({
-            wert: h.key, label: h.label, n: herkunftZaehler.get(h.key) ?? 0 })) },
-        { gruppe: 'feld', titel: 'field',
-          optionen: [
-            ...feldFacette.map(([f, n]) => ({
-              wert: String(f), label: THEMEN_LABELS[f] ?? `field ${f}`, n })),
-            ...(ohneFeld > 0
-              ? [{ wert: 'keins', label: 'not yet placed', n: ohneFeld }]
-              : []),
-          ] },
-        { gruppe: 'jahrzehnt', titel: 'decade',
-          optionen: jahrzehntFacette.map(([d, n]) => ({ wert: String(d), label: `${d}s`, n })) },
-        { gruppe: 'zugang', titel: 'access',
-          optionen: zugangFacette.map((z) => ({ wert: z.key, label: z.label, n: z.n })) },
-      ].filter((g) => g.optionen.length > 1).map((g) => (
-        <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <span class="w-16 shrink-0 font-mono text-mono-xs uppercase tracking-wider text-fg-faint">
-            {g.titel}
-          </span>
-          <button type="button" data-filter={g.gruppe} data-value="all" aria-pressed="true" class={chip}>all</button>
-          {g.optionen.map((o) => (
-            <button type="button" data-filter={g.gruppe} data-value={o.wert} aria-pressed="false" class={chip}
-            >{o.label} <span class="tabular-nums opacity-60">{o.n}</span></button>
-          ))}
-        </div>
-      ))}
-
-      <div class="flex items-center gap-3 pt-1">
-        <p class="font-mono text-mono text-fg-faint">
-          <span data-count>{total}</span> / {total} shown
-        </p>
-        <button type="button" data-reset class={cn(chip, 'hidden')}>reset</button>
-      </div>
-    </div>
-
-    <ol class="space-y-5">
-    {sortiert.map((p) => (
-      <li
-        class={cn(panel, 'pp-card break-words p-5')}
-        data-card
-        data-praxis={p.zitiert_von.join(' ')}
-        data-herkunft={p.relevanz_herkunft}
-        data-feld={p.felder.length ? p.felder.join(' ') : 'keins'}
-        data-jahrzehnt={p.jahr ? String(Math.floor(p.jahr / 10) * 10) : ''}
-        data-zugang={[p.frei_zugaenglich ? 'open' : '', p.geprueft ? 'geprueft' : ''].filter(Boolean).join(' ')}
-      >
-        <div class="flex items-start justify-between gap-3">
-          <h2 class="text-h3 font-semibold leading-snug text-fg">
-            <a href={p.url} rel="noopener" class="decoration-line underline-offset-4 hover:underline">
-              {p.titel}
-            </a>
-          </h2>
-          {p.verify_status === 'toVerify' && (
-            <span
-              class="shrink-0 font-mono text-mono text-fg-faint"
-              title="the use is documented; nobody has written down why it matters yet">?</span>
-          )}
-        </div>
-
-        <p class="mt-1 font-mono text-mono text-fg-faint">
-          {authorLine(p.urheber)}{p.jahr ? ` · ${p.jahr}` : ''}{p.ort ? ` · ${p.ort}` : ''}
-        </p>
-
-        <p class="mt-3 text-small leading-relaxed text-fg-muted">{p.relevanz}</p>
-
-        <div class="pp-ids mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-mono-sm text-fg-faint">
-          <a href={p.url} rel="noopener" class="hover:text-fg">{p.kennung}</a>
-          {/* Preprint neben Veröffentlichung: beide Kennungen bleiben auffindbar. */}
-          {p.weitere_kennungen?.map((k) => <span>also {k}</span>)}
-          {p.frei_zugaenglich && <span>open access</span>}
-          {p.zitiert_von.length > 0 && (
-            <span>cited by {p.zitiert_von.map(praxisLabel).join(', ')}</span>
-          )}
-          {p.zuletzt_gebraucht && <span>last used {p.zuletzt_gebraucht}</span>}
-          {p.felder.map((f) => (
-            <span class="rounded-xs border border-line px-1.5 py-0.5">
-              {THEMEN_LABELS[f] ?? `field ${f}`}
-            </span>
-          ))}
-        </div>
-
-        {/* Der Beleg: warum der Eintrag hier steht, wo das nachzulesen ist, und ob die
-            Adresse geprüft wurde. Franks Vorgabe, 2026-07-28 (Wortlaut privat): alles muss geprüft
-            und annotiert sein — woher es kommt und warum es aufgenommen wurde. Das gehört sichtbar
-            an den Eintrag, nicht nur ins JSON — sonst ist es keine Rechenschaft. */}
-        <details class="mt-3 border-t border-line pt-2">
-          <summary class="cursor-pointer font-mono text-mono-sm text-fg-faint hover:text-fg">
-            <span class={fold}>▾</span> admitted because {grundLabel(p.aufnahmegrund)} · {pruefLabel(p)}
-          </summary>
-          <ul class="mt-2 space-y-1 font-mono text-mono-sm text-fg-faint">
-            {p.fundstellen?.map((f) => <li>found in {f}</li>)}
-            {p.pruef_vermerk && <li>note: {p.pruef_vermerk}</li>}
-            <li>
-              route: {p.weg === 'scout' ? 'scout enrichment' : 'from the practices'} ·
-              reason for the sentence above: {
-                p.relevanz_herkunft === 'praxis'
-                  ? 'written by the practice, reproduced verbatim'
-                  : p.relevanz_herkunft === 'urteil'
-                    ? `${urteilLabel(p.urteil)} — a proposal to the practice, not a substitute for its reading`
-                    : 'record of use — nobody has written the reason yet'
-              }
-            </li>
-          </ul>
-        </details>
-      </li>
-    ))}
-    </ol>
-  </section>
-
-  {total === 0 && (
-    <p class="text-small leading-relaxed text-fg-muted">
-      Empty — the catalogue is built from the practices' own citations and has not been
-      run yet. Not a source outage.
+  {byModel > 0 && (
+    <p class="mt-6 font-mono text-mono-xs text-fg-faint">
+      {byModel} {byModel === 1 ? 'reason was' : 'reasons were'} proposed by a model and {byModel === 1 ? 'is' : 'are'} marked as such on the entry.
     </p>
   )}
 </main>
 
 <style>
   /* The entry answers the pointer the way every card of this frame does, at the frame's own
-     speed. It is READ in place — its links and its fold sit inside it — so it brightens its
-     hairline and casts a little deeper rather than rising; .lift belongs to cards that ARE the
-     destination. Written here because global.css's interactive rule cannot reach a <li>.
-     (re-skin 2d, 2026-09-02) */
+     speed. It is READ in place, so it brightens its hairline and casts a little deeper rather
+     than rising; .lift belongs to cards that ARE the destination. (re-skin 2d, 2026-09-02) */
   .pp-card {
     transition:
       border-color 0.2s var(--ease-frame),
@@ -303,11 +332,8 @@ const fold = 'fold-chevron inline-block'
     box-shadow: var(--elev-lift);
   }
 
-  /* The identifier strip. A DOI or an arXiv id is one unbreakable word, and a flex item does not
-     shrink below its content — which is why this page has pushed a phone's viewport sideways by
-     two and a half screens since it was built. Measured 2026-09-02: 1020 px of scroll at 390 px
-     wide, on the live site as well as here. Letting the items shrink and the ids break anywhere
-     is the whole fix; nothing about what the strip says changes. */
+  /* A DOI or an arXiv id is one unbreakable word; letting the items shrink and the ids break
+     anywhere keeps a phone's viewport from being pushed sideways (measured 2026-09-02). */
   .pp-ids > * {
     min-width: 0;
     overflow-wrap: anywhere;
@@ -315,52 +341,7 @@ const fold = 'fold-chevron inline-block'
 </style>
 
 <script>
-  // Dasselbe Muster wie AtlasPage — ein zweites zu erfinden hieße, zwei Filterleisten
-  // getrennt zu pflegen. Mehrwertige Merkmale (Praxis, Feld, Zugang) prüfen auf
-  // Enthaltensein, einwertige auf Gleichheit.
-  const root = document.querySelector<HTMLElement>('[data-papers]')
-  if (root) {
-    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-card]'))
-    const countEl = root.querySelector<HTMLElement>('[data-count]')
-    const resetEl = root.querySelector<HTMLButtonElement>('[data-reset]')
-    const MEHRWERTIG = new Set(['praxis', 'feld', 'zugang'])
-    const state: Record<string, string> = {
-      praxis: 'all', herkunft: 'all', feld: 'all', jahrzehnt: 'all', zugang: 'all',
-    }
-
-    const apply = () => {
-      let n = 0
-      for (const card of cards) {
-        const show = Object.entries(state).every(([gruppe, wert]) => {
-          if (wert === 'all') return true
-          const feld = card.dataset[gruppe] ?? ''
-          return MEHRWERTIG.has(gruppe) ? feld.split(' ').includes(wert) : feld === wert
-        })
-        card.hidden = !show
-        if (show) n++
-      }
-      if (countEl) countEl.textContent = String(n)
-      resetEl?.classList.toggle('hidden', !Object.values(state).some((v) => v !== 'all'))
-    }
-
-    resetEl?.addEventListener('click', () => {
-      for (const gruppe of Object.keys(state)) state[gruppe] = 'all'
-      root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => {
-        b.setAttribute('aria-pressed', String(b.dataset.value === 'all'))
-      })
-      apply()
-    })
-
-    root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const gruppe = btn.dataset.filter ?? ''
-        state[gruppe] = btn.dataset.value ?? 'all'
-        root.querySelectorAll<HTMLButtonElement>(`[data-filter="${gruppe}"]`)
-          .forEach((b) => b.setAttribute('aria-pressed', String(b === btn)))
-        apply()
-      })
-    })
-
-    apply()
-  }
+  import { initCatalogue } from '@/lib/catalogue/controller'
+  const root = document.querySelector<HTMLElement>('[data-catalogue]')
+  if (root) initCatalogue(root)
 </script>

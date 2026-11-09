@@ -44,17 +44,19 @@ def test_science_press_keeps_nature_journalism_and_reads_three_formats(ctx_facto
 
 
 def test_humanitarian_one_feed_failing_is_a_note(ctx_factory):
-    ctx = ctx_factory(_by_host({"reliefweb.int": RELIEFWEB, "news.un.org": ""}))
+    ctx = ctx_factory(_by_host({"reliefweb.int": RELIEFWEB, "news.un.org": "",
+                                "thenewhumanitarian.org": "", "msf.org": "", "icrc.org": ""}))
     res = humanitarian.fetch_source(ctx)
     assert [s.label for s in res.signals] == ["A million face acute hunger"]
     assert res.signals[0].source == "humanitarian" and res.signals[0].meta == {"feed": "reliefweb"}
-    assert len(res.notes) == 1 and res.notes[0].startswith("un_news:")
+    assert len(res.notes) == 4 and res.notes[0].startswith("un_news:")
     assert "?" not in res.notes[0]  # no query string in a public note
 
 
 def test_both_feeds_failing_makes_the_source_unavailable(ctx_factory):
     import pytest
     from trending.fetch import SourceUnavailable
-    ctx = ctx_factory(_by_host({"reliefweb.int": "", "news.un.org": ""}))
+    ctx = ctx_factory(_by_host({"reliefweb.int": "", "news.un.org": "",
+                                "thenewhumanitarian.org": "", "msf.org": "", "icrc.org": ""}))
     with pytest.raises(SourceUnavailable):
         humanitarian.fetch_source(ctx)

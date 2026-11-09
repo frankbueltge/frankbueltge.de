@@ -7,7 +7,7 @@
 // `zugang_gesperrt` — because a source that answers 403 is a fact about the source, not a gap
 // in the register.
 import type { APIRoute } from 'astro'
-import { ENTRIES } from '@/lib/register'
+import { SOURCES } from '@/lib/register'
 
 export const prerender = true
 
@@ -23,8 +23,8 @@ export const GET: APIRoute = () =>
           'Data sources this ecology actually calls, derived from its own pipelines by the ' +
           'katalog-scout (daily 05:30 UTC) and probed for reachability. Rebuilt with the site, ' +
           'so this feed and the /datasets page are never two states.',
-        count: ENTRIES.length,
-        entries: ENTRIES,
+        count: SOURCES.length,
+        entries: SOURCES,
       },
       null,
       2,

@@ -1,67 +1,94 @@
 ---
 // /datasets — Dataset Register.
 //
-// Stand 2026-07-28: nicht mehr leer. Der Bestand kommt aus den Datenquellen, die die
-// eigenen Werke nächtlich abrufen (src/lib/register.ts erklärt, warum das der Weg ist
-// und welche fünf Suchwege vorher gemessen und verworfen wurden).
+// Since 2026-07-28 not empty: the holdings come from the data sources the house's own works
+// fetch nightly (src/lib/register.ts explains why that is the route and which five search
+// routes were measured and dropped before it).
 //
-// Auskunft-vor-Poesie: zuerst „was ist das hier?", dann der Befund, dann der Bestand.
-// Zahlen NUR aus den Daten — kein Wert steht im Fließtext.
-import { ENTRIES, werkLabel, zugangLabel } from '@/lib/register'
+// 2026-11-09 (Frank's choice on the catalogue review, wording private): the register shares its
+// toolbar with /papers and /atlas (search, sort, folded filters, paging, state in the address),
+// shows each source once (src/lib/register.ts, SOURCES), separates the APIs works fetch from the
+// datasets practices cite, and groups its users into practices, instruments and plumbing.
+//
+// Information before poetry: first "what is this?", then the figures, then the holdings.
+// Numbers only from the data — no value is typed into the prose.
+import { SOURCES, usedBy, userKind, werkLabel, zugangLabel } from '@/lib/register'
+import { titleSortKey } from '@/lib/catalogue/query'
+import CatalogueStats from '@/components/catalogue/CatalogueStats.astro'
+import CatalogueToolbar from '@/components/catalogue/CatalogueToolbar.astro'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/ui/cn'
 
-const total = ENTRIES.length
-const bestaetigt = ENTRIES.filter((e) => e.geprueft).length
-const gesperrt = ENTRIES.filter((e) => e.zugang_gesperrt).length
-const vonMehreren = ENTRIES.filter((e) => e.benutzt_von.length > 1).length
+const PAGE_SIZE = 50
+const total = SOURCES.length
+const confirmed = SOURCES.filter((e) => e.geprueft).length
+const gated = SOURCES.filter((e) => e.zugang_gesperrt).length
+const byMore = SOURCES.filter((e) => usedBy(e).length > 1).length
 
-const zaehle = <T,>(werte: T[]) => {
+const count = <T,>(values: T[]) => {
   const m = new Map<T, number>()
-  for (const w of werte) m.set(w, (m.get(w) ?? 0) + 1)
+  for (const v of values) m.set(v, (m.get(v) ?? 0) + 1)
   return m
 }
-const werkFacette = [...zaehle(ENTRIES.flatMap((e) => e.benutzt_von)).entries()]
-  .sort((a, b) => b[1] - a[1])
 
-// Zugangszustände als Facette — die vier sind der eigentliche Gegenstand dieses
-// Registers, und sie sind bewusst nicht zu „geprüft/ungeprüft" eingeebnet.
-const zugangFacette = [
-  { key: 'confirmed', label: 'access confirmed', n: bestaetigt },
-  { key: 'gated', label: 'gated', n: gesperrt },
-  { key: 'template', label: 'template only', n: ENTRIES.filter((e) => e.nur_vorlage).length },
-  {
-    key: 'silent', label: 'no answer',
-    n: ENTRIES.filter((e) => !e.geprueft && !e.zugang_gesperrt && !e.nur_vorlage).length,
-  },
+// Two kinds of entry that used to stand in one alphabet: an API or file a work calls (its
+// title is often just the host, because that is what it is), and a dataset a practice cites by
+// DOI. The filter and the card say which is which.
+const kindOf = (e: (typeof SOURCES)[number]) => (e.aufnahmegrund === 'zitiert' ? 'cited' : 'fetched')
+const kindCounts = count(SOURCES.map(kindOf))
+
+const KIND_ORDER = ['practice', 'instrument', 'infrastructure'] as const
+const KIND_TITLE = { practice: 'practices', instrument: 'instruments', infrastructure: 'shared plumbing' }
+const userCounts = [...count(SOURCES.flatMap(usedBy)).entries()]
+const userOptions = KIND_ORDER.flatMap((k) =>
+  userCounts
+    .filter(([w]) => userKind(w) === k)
+    .sort((a, b) => b[1] - a[1])
+    .map(([w, n], i) => ({ value: w, label: werkLabel(w), n, section: i === 0 ? KIND_TITLE[k] : undefined })),
+)
+
+// The four access states are the register's real subject and are deliberately not flattened
+// into "checked / unchecked".
+const state = (e: (typeof SOURCES)[number]) =>
+  e.geprueft ? 'confirmed' : e.zugang_gesperrt ? 'gated' : e.nur_vorlage ? 'template' : 'silent'
+const accessFacet = [
+  { value: 'confirmed', label: 'access confirmed', n: confirmed },
+  { value: 'gated', label: 'gated', n: gated },
+  { value: 'template', label: 'template only', n: SOURCES.filter((e) => e.nur_vorlage).length },
+  { value: 'silent', label: 'no answer', n: SOURCES.filter((e) => state(e) === 'silent').length },
 ].filter((z) => z.n > 0)
 
-const zustand = (e: (typeof ENTRIES)[number]) =>
-  e.geprueft ? 'confirmed' : e.zugang_gesperrt ? 'gated' : e.nur_vorlage ? 'template' : 'silent'
-
-// Bestätigte zuerst, dann alphabetisch: Was nachweislich antwortet, steht oben.
-const sortiert = [...ENTRIES].sort((a, b) => {
+const groups = [
+  { key: 'kind', title: 'kind', options: [
+    { value: 'fetched', label: 'fetched by a work', n: kindCounts.get('fetched') ?? 0 },
+    { value: 'cited', label: 'cited as a dataset', n: kindCounts.get('cited') ?? 0 },
+  ].filter((o) => o.n > 0) },
+  { key: 'used', title: 'used by', options: userOptions },
+  { key: 'access', title: 'access', options: accessFacet },
+]
+const sorts = [
+  { value: 'access', label: 'access confirmed first' },
+  { value: 'used', label: 'most used' },
+  { value: 'title', label: 'name A–Z' },
+]
+// Confirmed first, then alphabetical: what demonstrably answers stands on top.
+const sorted = [...SOURCES].sort((a, b) => {
   if (a.geprueft !== b.geprueft) return a.geprueft ? -1 : 1
   return a.titel.localeCompare(b.titel)
 })
+const ACCESS_RANK = { confirmed: 0, gated: 1, template: 2, silent: 3 }
+/** A title that is one word with a dot in it is a host name, and is set as one. */
+const isHost = (t: string) => !/\s/.test(t.trim()) && t.includes('.')
 
-// Re-skin 2d (2026-09-02): the register on the frame's recipe — the kicker as the one .kicker
-// class, the head and the entries on the type scale, panels on the frame's radius and resting
-// depth, the filter chips cut from the shadcn Button recipe (they ARE buttons, and they were
-// four hand-typed copies of the same look), the folds on the frame's turning chevron. The
-// filter script, the data and every word are untouched.
 const kicker = 'kicker'
 const panel = 'rounded-md border border-line bg-panel panel-raised'
-const chip = cn(
-  buttonVariants({ variant: 'outline', size: 'sm' }),
-  'h-7 gap-1.5 px-2 font-mono text-mono-sm font-normal text-fg-faint aria-pressed:border-line-lift aria-pressed:text-fg',
-)
 const fold = 'fold-chevron inline-block'
+const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono text-mono-sm font-normal')
 ---
 
 <main id="main" class="mx-auto w-full max-w-4xl px-4 py-10 sm:py-14">
   <header class="mb-8 max-w-3xl">
-    <p class={cn(kicker, 'mb-2')}>Dataset Register</p>
+    <p class={cn(kicker, 'mb-2')}>Catalogues · Datasets</p>
     <h1 class="text-h1 font-semibold">Dataset Register</h1>
     <p class="mt-4 text-body text-fg-muted">
       The public data this lab's own pipelines and the practices' works actually retrieve,
@@ -76,9 +103,95 @@ const fold = 'fold-chevron inline-block'
     </p>
   </header>
 
-  <!-- Der Rückbau bleibt sichtbar und datiert, statt unter dem neuen Bestand zu
-       verschwinden (Aktualitäts-Regel). -->
-  <details class={cn(panel, 'mb-8 p-5')}>
+
+  <CatalogueStats items={[
+    { value: total, label: 'sources in use' },
+    { value: confirmed, label: 'access confirmed' },
+    { value: gated, label: 'exist but gated' },
+    { value: byMore, label: 'used by more than one' },
+  ]} />
+
+  <section
+    data-catalogue
+    data-groups="kind used access"
+    data-multi="used"
+    data-sorts="access used title"
+    data-sort-desc="used"
+    data-default-sort="access"
+    data-page-size={PAGE_SIZE}
+  >
+    <CatalogueToolbar
+      groups={groups}
+      sorts={sorts}
+      total={total}
+      noun="sources"
+      placeholder="Search name, host, user, file…"
+    />
+
+    <ol data-list class="space-y-4">
+      {sorted.map((e) => (
+        <li
+          class={cn(panel, 'ds-card break-words p-5')}
+          data-card
+          data-f-kind={kindOf(e)}
+          data-f-used={usedBy(e).join(' ')}
+          data-f-access={state(e)}
+          data-s-access={`${ACCESS_RANK[state(e)]}${titleSortKey(e.titel)}`}
+          data-s-used={String(usedBy(e).length)}
+          data-s-title={titleSortKey(e.titel)}
+          data-text={[e.titel, e.host, e.relevanz, ...usedBy(e).map(werkLabel), ...e.fundstellen].join(' ')}
+        >
+          <p class="mb-1 font-mono text-mono-xs uppercase tracking-wider text-fg-faint">
+            {kindOf(e) === 'cited' ? 'dataset · cited' : 'source · fetched'}
+            {e.verify_status === 'toVerify' && (
+              <span title="the use is documented; nobody has read the entry over yet"> · not yet reviewed</span>
+            )}
+          </p>
+          <h2 class={cn('font-semibold leading-snug text-fg', isHost(e.titel) ? 'font-mono text-body' : 'text-h3')}>
+            <a href={e.zugriff_url} rel="noopener"
+               class="decoration-line underline-offset-4 hover:underline">{e.titel}</a>
+          </h2>
+
+          <p class="mt-2 text-small leading-relaxed text-fg-muted">{e.relevanz}</p>
+
+          <div class="ds-ids mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-mono-sm text-fg-faint">
+            {!isHost(e.titel) && <span>{e.host}</span>}
+            <span>{zugangLabel(e)}</span>
+            <span>used by {usedBy(e).map(werkLabel).join(', ')}</span>
+          </div>
+
+          <details class="mt-3 border-t border-line pt-2">
+            <summary class="cursor-pointer font-mono text-mono-sm text-fg-faint hover:text-fg">
+              <span class={fold}>▾</span> {e.aufnahmegrund === 'zitiert'
+                ? 'admitted because a practice cites it as a dataset'
+                : 'admitted because a work of this ecology retrieves it'}
+            </summary>
+            <ul class="mt-2 space-y-1 font-mono text-mono-sm text-fg-faint">
+              {e.fundstellen.map((f) => <li>{e.aufnahmegrund === 'zitiert' ? 'cited in' : 'call written in'} {f}</li>)}
+              {e.adressen.map((a) => <li class="break-all">{e.aufnahmegrund === 'zitiert' ? 'resolves at' : 'fetches'} {a}</li>)}
+              {e.pruef_vermerk && <li>note: {e.pruef_vermerk}</li>}
+            </ul>
+          </details>
+        </li>
+      ))}
+    </ol>
+
+    <p data-empty hidden class="py-10 text-center text-small text-fg-muted">
+      Nothing matches. Clear the search or a filter.
+    </p>
+    <div class="mt-6 flex justify-center">
+      <button type="button" data-more hidden class={more}>show <span data-more-n>{PAGE_SIZE}</span> more</button>
+    </div>
+  </section>
+
+  {total === 0 && (
+    <p class="text-small leading-relaxed text-fg-muted">
+      Empty, and that is the accurate state — not a source outage, not a failed build.
+    </p>
+  )}
+  <!-- The roll-back stays visible and dated instead of vanishing under the new holdings
+       (currency rule); since 2026-11-09 below the list rather than above it. -->
+  <details class={cn(panel, 'mt-12 p-5')}>
     <summary class={cn(kicker, 'cursor-pointer hover:text-fg')}>
       <span class={fold}>▾</span> How this register got here · reset 2026-07-27
     </summary>
@@ -104,97 +217,6 @@ const fold = 'fold-chevron inline-block'
       repository as a quarry, not as a record on display.
     </p>
   </details>
-
-  <section class="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-    {[
-      { wert: total, label: 'sources in use' },
-      { wert: bestaetigt, label: 'access confirmed' },
-      { wert: gesperrt, label: 'exist but gated' },
-      { wert: vonMehreren, label: 'used by more than one work' },
-    ].map((k) => (
-      <div class={cn(panel, 'p-4')}>
-        <div class="font-mono text-h2 font-semibold tabular-nums text-fg">{k.wert}</div>
-        <div class="mt-1 font-mono text-mono-xs uppercase leading-tight tracking-wider text-fg-faint">
-          {k.label}
-        </div>
-      </div>
-    ))}
-  </section>
-
-  <section data-register>
-    <div class="mb-6 space-y-3 border-y border-line py-4">
-      {[
-        { gruppe: 'werk', titel: 'used by',
-          optionen: werkFacette.map(([w, n]) => ({ wert: w, label: werkLabel(w), n })) },
-        { gruppe: 'zugang', titel: 'access',
-          optionen: zugangFacette.map((z) => ({ wert: z.key, label: z.label, n: z.n })) },
-      ].filter((g) => g.optionen.length > 1).map((g) => (
-        <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <span class="w-16 shrink-0 font-mono text-mono-xs uppercase tracking-wider text-fg-faint">
-            {g.titel}
-          </span>
-          <button type="button" data-filter={g.gruppe} data-value="all" aria-pressed="true" class={chip}>all</button>
-          {g.optionen.map((o) => (
-            <button type="button" data-filter={g.gruppe} data-value={o.wert} aria-pressed="false" class={chip}
-            >{o.label} <span class="tabular-nums opacity-60">{o.n}</span></button>
-          ))}
-        </div>
-      ))}
-      <div class="flex items-center gap-3 pt-1">
-        <p class="font-mono text-mono text-fg-faint"><span data-count>{total}</span> / {total} shown</p>
-        <button type="button" data-reset class={cn(chip, 'hidden')}>reset</button>
-      </div>
-    </div>
-
-    <ol class="space-y-4">
-      {sortiert.map((e) => (
-        <li
-          class={cn(panel, 'ds-card break-words p-5')}
-          data-card
-          data-werk={e.benutzt_von.join(' ')}
-          data-zugang={zustand(e)}
-        >
-          <div class="flex items-start justify-between gap-3">
-            <h2 class="text-h3 font-semibold leading-snug text-fg">
-              <a href={e.zugriff_url} rel="noopener"
-                 class="decoration-line underline-offset-4 hover:underline">{e.titel}</a>
-            </h2>
-            {e.verify_status === 'toVerify' && (
-              <span class="shrink-0 font-mono text-mono text-fg-faint"
-                    title="the use is documented; nobody has read the entry over yet">?</span>
-            )}
-          </div>
-
-          <p class="mt-2 text-small leading-relaxed text-fg-muted">{e.relevanz}</p>
-
-          <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-mono-sm text-fg-faint">
-            <span>{e.host}</span>
-            <span>{zugangLabel(e)}</span>
-            <span>used by {e.benutzt_von.map(werkLabel).join(', ')}</span>
-          </div>
-
-          <details class="mt-3 border-t border-line pt-2">
-            <summary class="cursor-pointer font-mono text-mono-sm text-fg-faint hover:text-fg">
-              <span class={fold}>▾</span> {e.aufnahmegrund === 'zitiert'
-                ? 'admitted because a practice cites it as a dataset'
-                : 'admitted because a work of this ecology retrieves it'}
-            </summary>
-            <ul class="mt-2 space-y-1 font-mono text-mono-sm text-fg-faint">
-              {e.fundstellen.map((f) => <li>{e.aufnahmegrund === 'zitiert' ? 'cited in' : 'call written in'} {f}</li>)}
-              {e.adressen.map((a) => <li class="break-all">{e.aufnahmegrund === 'zitiert' ? 'resolves at' : 'fetches'} {a}</li>)}
-              {e.pruef_vermerk && <li>note: {e.pruef_vermerk}</li>}
-            </ul>
-          </details>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  {total === 0 && (
-    <p class="text-small leading-relaxed text-fg-muted">
-      Empty, and that is the accurate state — not a source outage, not a failed build.
-    </p>
-  )}
 </main>
 
 <style>
@@ -213,51 +235,14 @@ const fold = 'fold-chevron inline-block'
     border-color: var(--color-line-lift);
     box-shadow: var(--elev-lift);
   }
+  .ds-ids > * {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
 </style>
 
 <script>
-  // Dasselbe Muster wie AtlasPage und PapersPage.
-  const root = document.querySelector<HTMLElement>('[data-register]')
-  if (root) {
-    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-card]'))
-    const countEl = root.querySelector<HTMLElement>('[data-count]')
-    const resetEl = root.querySelector<HTMLButtonElement>('[data-reset]')
-    const MEHRWERTIG = new Set(['werk'])
-    const state: Record<string, string> = { werk: 'all', zugang: 'all' }
-
-    const apply = () => {
-      let n = 0
-      for (const card of cards) {
-        const show = Object.entries(state).every(([gruppe, wert]) => {
-          if (wert === 'all') return true
-          const feld = card.dataset[gruppe] ?? ''
-          return MEHRWERTIG.has(gruppe) ? feld.split(' ').includes(wert) : feld === wert
-        })
-        card.hidden = !show
-        if (show) n++
-      }
-      if (countEl) countEl.textContent = String(n)
-      resetEl?.classList.toggle('hidden', !Object.values(state).some((v) => v !== 'all'))
-    }
-
-    resetEl?.addEventListener('click', () => {
-      for (const gruppe of Object.keys(state)) state[gruppe] = 'all'
-      root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => {
-        b.setAttribute('aria-pressed', String(b.dataset.value === 'all'))
-      })
-      apply()
-    })
-
-    root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const gruppe = btn.dataset.filter ?? ''
-        state[gruppe] = btn.dataset.value ?? 'all'
-        root.querySelectorAll<HTMLButtonElement>(`[data-filter="${gruppe}"]`)
-          .forEach((b) => b.setAttribute('aria-pressed', String(b === btn)))
-        apply()
-      })
-    })
-
-    apply()
-  }
+  import { initCatalogue } from '@/lib/catalogue/controller'
+  const root = document.querySelector<HTMLElement>('[data-catalogue]')
+  if (root) initCatalogue(root)
 </script>
