@@ -294,7 +294,7 @@ the week's growth in two minutes. Built the same day (`probe15_overlooked.py --e
 Hindsight is audible in three of them: Thursday's edition loses the flute after Monday, because Thursday names no
 nature story; Friday's has it back, because Friday does; Saturday's and Sunday's end the trombone (power) after
 Friday. Without `--edition` the script still renders the version Frank approved, bit-identically; two editions,
-rendered twice, are bit-identical too.
+rendered twice, are bit-identical too. Frank's verdict the same day (wording private): the growing piece carries.
 
 ## From the data to the music (first template, probes 04 to 10)
 
