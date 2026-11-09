@@ -91,7 +91,7 @@ export const GALLERY = {
     'round-number': 'the leading-digit distribution against the expectation it is measured against',
     sawtooth: 'the published gap between Earth time and atomic time, every day of the record',
     ducking: 'one fader per channel of the desk, at its share of the last week, on the desk’s own logarithmic scale; the crowd marked',
-    'common-time': 'one column per day of the newest pressing, as tall as the melody’s unison; marked where the week’s theme sounds',
+    'ill-tempered-week': 'one column per day of the newest album, as tall as the press agreed about war that day; marked where the brass took up the chord',
     'third-reading': 'one dot per matter of the newest round: across, how loud the web was about it; up, how urgent this page’s readers judged it; the urgent-but-quiet ones marked',
     pattern: 'the last night’s strongest pair, both series over the days on file',
     praemie: 'the premium index over the years the record covers',
@@ -127,7 +127,7 @@ export const GALLERY = {
        src/lib/experiments/thumbnails.ts, per rule 1 of this file */
     sawtooth: (leaps: string, years: string) => `${leaps} leap seconds; none for ${years} years`,
     ducking: (fields: string, share: string) => `${fields} fields hold ${share} of the week`,
-    'common-time': (theme: string, days: string) => `${theme} carried the week, on ${days} of seven days`,
+    'ill-tempered-week': (story: string, share: string, day: string) => `the press agreed most on ${story}, ${share} on ${day}`,
     'third-reading': (readings: string, matters: string) => `${readings} readings of ${matters} matters on the record`,
     pattern: (a: string, b: string, r: string) => `${a} against ${b}, correlation ${r}`,
     praemie: (base: string, change: string) => `since ${base} the premium has moved ${change}`,

@@ -1,0 +1,72 @@
+/* src/styles/ill-tempered-week.css — The Ill-Tempered Week (/ill-tempered-week, 2026-11-09).
+ *
+ * The frame's mono ink only. The agreement bars carry their fact by length and say it again in words beside
+ * them, so no identity colour enters the page and no palette record is needed.
+ */
+
+.itw-player {
+  display: block;
+  width: 100%;
+  max-width: 40rem;
+}
+
+.itw-title {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* The running week stands apart from the complete album by a rule, not by a colour. */
+.itw-growing {
+  border-left: 2px solid var(--color-line-lift);
+  padding-left: 1rem;
+}
+
+.itw-days {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  max-width: 48rem;
+}
+
+.itw-agree {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+  max-width: 40rem;
+}
+
+.itw-agree li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(6rem, 12rem) 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.itw-bar {
+  display: block;
+  width: 100%;
+  height: 0.5rem;
+}
+
+.itw-bar .itw-track {
+  fill: var(--color-line-lift);
+}
+
+.itw-bar .itw-fill {
+  fill: var(--color-fg);
+}
+
+.itw-bar .itw-none {
+  fill: var(--color-fg-muted);
+}
+
+.itw-albums {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+}

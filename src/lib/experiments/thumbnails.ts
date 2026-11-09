@@ -44,7 +44,7 @@ import { readAudience, type AudienceReading } from '@/lib/reading/aggregate'
 import { gapFigure } from '@/lib/reading/figure'
 import { readDesk } from '@/lib/ducking/desk-data'
 import { fmtShare, toPosition } from '@/lib/ducking/mix'
-import { readPressings } from '@/lib/common-time/score'
+import { readAlbums } from '@/lib/ill-tempered-week/albums'
 import type { InvokedData } from '@/lib/invoked/types'
 import type { BalanceCountry } from '@/lib/balance/types'
 
@@ -563,15 +563,14 @@ function duckingMarks(shares: readonly number[]): ThumbMark[] {
 /** The newest pressing: one column per day, as tall as the instruments in that day's unison
  *  (at most six, the families), marked on the days the week's theme sounds. A day without a melody
  *  is a hollow slot. */
-function commonTimeMarks(days: readonly { families: number | null; theme: boolean }[]): ThumbMark[] {
+function illTemperedMarks(days: readonly { agreement: number; peak: boolean }[]): ThumbMark[] {
   const slot = (W - 2 * P) / days.length
   const w = r1(slot * 0.6)
   const tall = H - 2 * P
   return days.map((d, i): ThumbMark => {
     const x = r1(P + i * slot + slot * 0.2)
-    if (d.families === null) return { t: 'gap', x, y: P, w, h: tall }
-    const h = Math.max(1, r1((d.families / 6) * tall))
-    return d.theme ? { t: 'bar', x, y: r1(H - P - h), w, h, on: true } : { t: 'bar', x, y: r1(H - P - h), w, h }
+    const h = Math.max(1, r1(d.agreement * tall))
+    return d.peak ? { t: 'bar', x, y: r1(H - P - h), w, h, on: true } : { t: 'bar', x, y: r1(H - P - h), w, h }
   })
 }
 
@@ -805,14 +804,17 @@ function buildThumbnails(): Thumbnail[] {
     source: `src/data/trending/${desk.latest}.json`,
   })
 
-  const pressing = readPressings().at(-1)
-  if (pressing?.theme) {
+  const album = readAlbums().filter((a) => a.pieces.unison).at(-1)
+  if (album?.pieces.unison) {
+    const days = album.pieces.unison.days
+    const most = days.reduce((a, b) => (b.agreement > a.agreement ? b : a))
+    const weekday = new Date(`${most.day}T12:00:00Z`).toLocaleDateString('en-GB', { weekday: 'long', timeZone: 'UTC' })
     out.push({
-      id: 'common-time',
-      marks: commonTimeMarks(pressing.sections.map((s) => ({ families: s.melody ? s.melody.families.length : null, theme: s.theme.present }))),
-      draws: D['common-time']!,
-      readout: R['common-time'](pressing.theme.label, count(pressing.theme.days)),
-      source: `src/data/common-time/${pressing.week}.json`,
+      id: 'ill-tempered-week',
+      marks: illTemperedMarks(days),
+      draws: D['ill-tempered-week']!,
+      readout: R['ill-tempered-week'](most.story, `${Math.round(100 * most.agreement)} %`, weekday),
+      source: `src/data/ill-tempered-week/${album.week}.json`,
     })
   }
 

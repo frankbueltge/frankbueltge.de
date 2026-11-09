@@ -349,7 +349,7 @@ Werk); die Labels heißen auf der Seite genau so:
 | Linie | Was sie fragt | Heute |
 |---|---|---|
 | **COUNTER-MEASUREMENT** | Messen, was Macht im Dunkeln lässt — nachprüfbar, auch gegen die eigene Methode. | 9 Werke; Meridians Kern-Remit in der Ökologie |
-| **NIGHTLY LEDGER** | Instrumente, die nach fester Uhr (jede Nacht oder einmal die Woche) einen datierten Eintrag schreiben und keinen revidieren; seit 2026-11-08 „on a fixed clock“ statt „every night“, weil Common Time wöchentlich presst. | Protocol · Policy · Common Ground · Common Time |
+| **NIGHTLY LEDGER** | Instrumente, die nach fester Uhr (jede Nacht oder einmal die Woche) einen datierten Eintrag schreiben und keinen revidieren; seit 2026-11-08 „on a fixed clock“ statt „every night“, weil ein Werk wöchentlich presst (seit 2026-11-09 The Ill-Tempered Week: jede Nacht eine Edition, jede Woche ein Album). | Protocol · Policy · Common Ground · The Ill-Tempered Week |
 | **REPRESENTATION & MEMORY** | Was ein Record sagt und was er auslässt. | Invoked Past · Society · Iceberg Theory |
 | **SURVEILLANCE, COUNTED** | Wer beobachtet — gezählt aus den Katalogen der Beobachter. | Bycatch · All Along the Watchtower |
 

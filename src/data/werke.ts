@@ -108,25 +108,25 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
-    // Built 2026-11-08 on Frank's word of that day (wording private): asked how the lab could compose
-    // from the data its works reflect, he heard three probes, and the third, Common Ground alone,
-    // was the one that held. Design doc docs/design/2026-11-08-common-time.md. Not `live`: it
-    // presses once a week, and a pressing is never rewritten.
-    id: 'common-time',
+    // Begun 2026-11-08 as Common Time at Frank's request; rebuilt 2026-11-09 as an album of three composed pieces
+    // after his verdict that the sound must come first, and retitled The Ill-Tempered Week the same day (wording
+    // private). Method: docs/design/2026-11-08-common-time-method.md. A complete album is never pressed again;
+    // Overlooked grows by one edition a night while its week runs.
+    id: 'ill-tempered-week',
     line: 'ledger',
-    title: 'Common Time',
+    title: 'The Ill-Tempered Week',
     subtitle: {
-      de: 'What the web agreed on, played back once a week: a topic’s name becomes its melody, and the more platforms carried it, the fuller the unison',
-      en: 'What the web agreed on, played back once a week: a topic’s name becomes its melody, and the more platforms carried it, the fuller the unison',
+      de: 'A week of the web’s attention, composed: what was overlooked, where the press agreed, when the week turned',
+      en: 'A week of the web’s attention, composed: what was overlooked, where the press agreed, when the week turned',
     },
     status: 'live',
     since: '2026-11-08',
-    href: '/common-time',
+    href: '/ill-tempered-week',
     description: {
-      de: 'From the nightly-ledger line. Once a week the seven day files of Common Ground are pressed into a short piece of music in which every note that carries data comes from a committed file. A topic that converged across platforms sings its own name: the vowels of its label on a five-note scale without a semitone, so a topic that returns comes back as the same melody. The week’s most persistent topic is the theme and falls silent on the days it was off the charts; each day’s most converged topic is the melody, played in unison by one instrument for every platform family that carried it, so agreement is heard as fullness. Tempo, chords, beat and timbres are composed and stay the same; the levels are set on an ordinary day, never on the week, so a busy week is heard as one. Every pressing comes with its score, which hashes each day file it read.',
-      en: 'From the nightly-ledger line. Once a week the seven day files of Common Ground are pressed into a short piece of music in which every note that carries data comes from a committed file. A topic that converged across platforms sings its own name: the vowels of its label on a five-note scale without a semitone, so a topic that returns comes back as the same melody. The week’s most persistent topic is the theme and falls silent on the days it was off the charts; each day’s most converged topic is the melody, played in unison by one instrument for every platform family that carried it, so agreement is heard as fullness. Tempo, chords, beat and timbres are composed and stay the same; the levels are set on an ordinary day, never on the week, so a busy week is heard as one. Every pressing comes with its score, which hashes each day file it read.',
+      de: 'From the nightly-ledger line. Each week of Common Ground becomes an album, a Contrapunctus numbered by the week, of three composed pieces in three idioms, played by recorded instruments tuned to just intonation and by synthetic voices that say what the week said. Overlooked, for chamber ensemble, gives each day the headline that drew the least attention on its own platform, from a field not heard before that week; its instrument answers with the headline’s speech melody and the ensemble takes it up in canon, so the overlooked gather across the week while the most attended murmur underneath. Unison, for strings, brass and timpani, plays every signal about war as one glissando and lets the mass glide towards harmony exactly as far as the press agreed that day. Turn, electronic, is a rhythmicon of the platform families whose bars fill as the attention on AI does. Overlooked is pressed again every night from the days so far; no music model is involved, and every album’s record hashes the day files it read.',
+      en: 'From the nightly-ledger line. Each week of Common Ground becomes an album, a Contrapunctus numbered by the week, of three composed pieces in three idioms, played by recorded instruments tuned to just intonation and by synthetic voices that say what the week said. Overlooked, for chamber ensemble, gives each day the headline that drew the least attention on its own platform, from a field not heard before that week; its instrument answers with the headline’s speech melody and the ensemble takes it up in canon, so the overlooked gather across the week while the most attended murmur underneath. Unison, for strings, brass and timpani, plays every signal about war as one glissando and lets the mass glide towards harmony exactly as far as the press agreed that day. Turn, electronic, is a rhythmicon of the platform families whose bars fill as the attention on AI does. Overlooked is pressed again every night from the days so far; no music model is involved, and every album’s record hashes the day files it read.',
     },
-    methodHref: '/werke/common-time',
+    methodHref: '/werke/ill-tempered-week',
     tier: 'experiment',
   },
   {

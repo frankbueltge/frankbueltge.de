@@ -1,5 +1,10 @@
 # Common Time — Common Ground, played back once a week (2026-11-08)
 
+> **Superseded 2026-11-09.** The weekly template described here was never published. After probes in five forms and
+> Frank's verdict that the sound must come first (wording private), the work was rebuilt as an album of three composed
+> pieces and renamed *The Ill-Tempered Week*; its pressings of weeks 37 to 44 were removed before the merge. The method
+> in force: `docs/design/2026-11-08-common-time-method.md`. This note stays as the record of how it began.
+
 **Origin.** On 2026-11-08 Frank asked how the lab could compose and publish progressive music from the
 data its works reflect, pointing at three radioeins programmes (EleKtricity, Kaleidoskop, Schöne Töne)
 as examples of the music he meant (wording private, paraphrased). Three listening probes followed, all
