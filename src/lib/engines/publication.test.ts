@@ -474,7 +474,7 @@ const KEPT = [
   'atelier/presentations/cycle-008/index.html',
   'atelier/werke-html/2026-07-04-attractor/index.html',
   'field/index.html',
-  'field/instruments/index.html',
+  'field/works/index.html',
   'field/papers/cycle-006/index.html',
   'field/werke/2026-07-01-calibration-gap/index.html',
   'field/presentations/cycle-006/index.html',

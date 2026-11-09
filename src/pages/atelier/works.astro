@@ -1,100 +1,13 @@
 ---
-// /atelier/works — the works register as a Level-2 register sheet (2026-08-15).
-//
-// Until today this room printed every work as a full card and the whole texts & catalogue
-// verbatim below them — thirty-eight cards and twenty-six documents on one URL. That is not a
-// register, it is a scroll nobody finishes (Frank's finding, wording private), and it was the
-// last big room still wearing the retired practice frame. Now: one row per work, the work
-// itself one click behind it, filter chips by line — the same sheet every register in the
-// house wears. The texts & catalogue moved to their own register at /atelier/texts, verbatim
-// pages behind it; the bounce below catches the deep links that used to land on this page.
-//
-// The detail routes are untouched: /atelier/werke/<slug> for native works, the full-viewport
-// stage at /atelier/werke-html/<slug>/ for interactive ones (exhibition model, 2026-07-21 —
-// a work is a door, never a cramped preview), and the revived nightly line's works at their
-// own stages under /error-as-method/<slug>/.
+// /atelier/works — the practice's works, on the paper ground (2026-11-09): the ecology's works
+// register narrowed to this practice (src/components/ecology/score/PracticeWorks.astro).
 import Page from '@/layouts/Page.astro'
-import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
-import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
-import RespondCta from '@/components/post/RespondCta.astro'
-import { allWorks } from '@/lib/engines/register'
-// the texts & catalogue had a register of its own here until the publication rule of 2026-10-17;
-// its documents are read in the practice's repository now (src/lib/engines/publication.mjs)
-import { repoUrl } from '@/lib/engines/publication.mjs'
-import { countByLine, lineOfWork, lineShortLabel } from '@/lib/ecology/lines'
-import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import PracticeWorks from '@/components/ecology/score/PracticeWorks.astro'
+import { PRACTICE_WORKS } from '@/config/practice-works-wording'
 
-// EVERY work of this practice, from the same source the station's status rows count —
-// src/lib/engines/register.ts, which reads all three of the Atelier's mirrors: the native
-// works, the interactive works, and the revived nightly line's works from its own repository
-// (mirrored to src/data/nightly/works, staged at /error-as-method/<slug>/). Until 2026-08-16
-// this page re-globbed only the first two, so everything the nightly line has made since its
-// 2026-08-10 revival was missing here while the station counted it (Frank's finding) — two
-// surfaces reading two sources is exactly the drift one source exists to prevent.
-const works = allWorks().filter((w) => w.ns === 'atelier')
-const counts = countByLine(works)
-
-const rows: RegisterRow[] = works.map((w) => ({
-  date: w.date,
-  // A withdrawal is part of the record and outranks the medium in the marker column; the
-  // work's own page carries the full withdrawal note verbatim.
-  marker: w.state === 'withdrawn' ? 'withdrawn' : w.kind === 'html' ? 'interactive' : null,
-  move: lineShortLabel(lineOfWork(w)!),
-  line: w.title,
-  href: w.href,
-  // The old page gave every work card its slug as a DOM id; the rows keep them, so a deep link
-  // that pointed at a card still lands on that work's row.
-  anchor: w.slug,
-}))
-
-// The texts & catalogue lived on this page until 2026-08-15; a fragment never reaches the
-// server, so their old anchors are caught client-side and bounced to where they live now — since
-// the publication rule of 2026-10-17 the files in the practice's repository (their pages of
-// 2026-08-15 to 2026-10-17 301 there too).
-const textSlugs = Object.keys(
-  import.meta.glob('/src/content/atelier/works/*.md'),
-).map((p) => p.replace('/src/content/atelier/works/', '').replace(/\.md$/, ''))
-const textBounce = { base: repoUrl('atelier', 'works', 'blob'), slugs: textSlugs }
+const SEO = PRACTICE_WORKS.seo.atelier
 ---
 
-<Page
-  title="Atelier — works | Frank Bültge"
-  description="The Atelier's works register — one row per work, newest first, filterable by line; each work one click behind its row, the texts & catalogue in the practice's own repository."
->
-  <RegisterSheet
-    id="atelier"
-    register="works"
-    title="the works — every one, newest first"
-    span={`${works.length} works · ${counts.nightly} of Ulysses — its first era and everything since its 2026-08-10 revival · ${counts['work-line']} of the work-line · one row per work, the work itself behind it`}
-    rows={rows}
-    source="src/content/atelier/works/*/meta.json · src/components/atelier/werke/*/meta.json · src/data/nightly/works/*/meta.json"
-    more={{ label: 'the texts & catalogue ↗ in the repository', href: repoUrl('atelier', 'works') }}
-  >
-    <p class="eco-doc-note">{ATELIER_NARRATIVE.rooms.worksPhase}</p>
-    <p class="eco-doc-note">
-      Ulysses' works since its revival keep their own stages under
-      <a href="/error-as-method">/error-as-method</a> — the rows above link there directly. The
-      third line, n-1, does not land works here: its repository is its record, on its own
-      surface — <a href="/n-1">/n-1</a>.
-    </p>
-    <RespondCta variant="line" ns="atelier" class="eco-doc-note" />
-  </RegisterSheet>
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description} surface="paper">
+  <PracticeWorks id="atelier" />
 </Page>
-
-<script type="application/json" id="atelier-text-slugs" set:html={JSON.stringify(textBounce)} />
-<script>
-  // Legacy deep links: the genealogy, the positions and the error registers rendered on this
-  // page until 2026-08-15 and were linked as /atelier/works#<slug>. Each is a file in the
-  // practice's repository now (2026-10-17). Best-effort by design (it needs JS); without it the
-  // fragment is simply inert and the register is there — the correct failure mode for a page
-  // whose job is to show holdings. Only a slug the mirror holds is followed, never a guessed one.
-  const el = document.getElementById('atelier-text-slugs')
-  const data = (el ? JSON.parse(el.textContent ?? '{}') : {}) as { base?: string; slugs?: string[] }
-  const texts = new Set<string>(data.slugs ?? [])
-  const bounce = () => {
-    const target = decodeURIComponent(location.hash.slice(1))
-    if (data.base && texts.has(target)) location.replace(`${data.base}/${target}.md`)
-  }
-  bounce()
-  addEventListener('hashchange', bounce)
-</script>

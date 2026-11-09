@@ -55,7 +55,7 @@ describe('NAMING.doors tour links', () => {
     // strip and the stage floor left with the sheets, so the Field's and the Studio's doors lead
     // into their register rooms. The old tour routes 301 to the same targets (public/_redirects).
     ulysses: '/atelier#figure',
-    meridian: '/field/instruments',
+    meridian: '/field/works',
     ensemble: '/studio/works',
   }
 

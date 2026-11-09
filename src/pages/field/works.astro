@@ -1,0 +1,13 @@
+---
+// /field/works — the practice's works, on the paper ground (2026-11-09): the ecology's works
+// register narrowed to this practice (src/components/ecology/score/PracticeWorks.astro).
+import Page from '@/layouts/Page.astro'
+import PracticeWorks from '@/components/ecology/score/PracticeWorks.astro'
+import { PRACTICE_WORKS } from '@/config/practice-works-wording'
+
+const SEO = PRACTICE_WORKS.seo.field
+---
+
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description} surface="paper">
+  <PracticeWorks id="field" />
+</Page>

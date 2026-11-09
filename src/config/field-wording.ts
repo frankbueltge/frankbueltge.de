@@ -28,7 +28,7 @@ export const FIELD_GRAMMAR = {
    *  labels say so. */
   rail: [
     { label: 'the station', href: '/field', hint: 'the cycle’s question, the bulletin, the last sessions' },
-    { label: 'instruments', href: '/field/instruments', hint: 'all instruments — existing URLs stay' },
+    { label: 'instruments', href: '/field/works', hint: 'all instruments — existing URLs stay' },
     { label: 'journal ↗ in the repository', href: REPOSITORY_DOORS.field.journal, hint: 'day files — the unedited record, in the collective’s own repository' },
     { label: 'constitution ↗ in the repository', href: REPOSITORY_DOORS.field.protocol, hint: 'the protocol, in the collective’s own repository' },
     { label: 'team channel ↗ in the repository', href: REPOSITORY_DOORS.field.requests, hint: 'REQUESTS — the one steering channel' },
@@ -78,7 +78,7 @@ export const FIELD_NARRATIVE = {
         // Corrected 2026-09-01: the owed-by-2026-09-05 investigation was a v2 obligation; under
         // v3 (2026-08-30) the collective works the ecology's shared question in cycles instead.
         'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the dossier below always opens on the one currently in service. Since 2026-08-30 the collective also works the research ecology’s shared question, one cycle at a time, closing every session with an artifact and a bulletin.',
-      href: '/field/instruments',
+      href: '/field/works',
       moreLabel: 'all instruments',
     },
     {
