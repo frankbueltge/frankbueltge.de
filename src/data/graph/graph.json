@@ -4,15 +4,15 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "1448840440c3ce42"
+        "sha256": "008b7dce81c9c0b2"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "9dec3a447ece52c6"
+        "sha256": "a61d1217d2b64657"
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "29fe97ec3e405532"
+        "sha256": "1d3cf10841dc22c2"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,25 +57,25 @@
       }
     ],
     "counts": {
-      "nodes": 613,
-      "edges": 538,
+      "nodes": 625,
+      "edges": 550,
       "nodesByKind": {
-        "decision": 184,
+        "decision": 185,
         "encounter": 6,
-        "neighbor": 149,
+        "neighbor": 159,
         "practice": 9,
         "practice-work": 228,
         "receiver": 8,
-        "work": 29
+        "work": 30
       },
       "edgesByKind": {
         "addresses": 8,
         "concerns": 2,
         "door": 5,
         "made-by": 228,
-        "neighbor-of": 150,
+        "neighbor-of": 161,
         "participates": 17,
-        "touches": 128
+        "touches": 129
       }
     }
   },
@@ -1921,6 +1921,16 @@
       }
     },
     {
+      "id": "decision:2026-11-09-2",
+      "kind": "decision",
+      "label": "The Ill-Tempered Week composes Common Ground, one album a week",
+      "date": "2026-11-09",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The Ill-Tempered Week composes Common Ground, one album a week"
+      }
+    },
+    {
       "id": "encounter:enc-2026-001-calibration-gap-travels",
       "kind": "encounter",
       "label": "The Calibration Gap travels: Instrument 001 → Native Speaker → correction upstream",
@@ -2343,6 +2353,26 @@
       "url": "https://www.comparativeagendas.net/"
     },
     {
+      "id": "neighbor:creativeainews-com-blog-audio-observer-ai-news-music-2026",
+      "kind": "neighbor",
+      "label": "Audio.Observer (since May 2026)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Audio.Observer (since May 2026)](https://www.creativeainews.com/blog/audio-observer-ai-news-music-2026/) — daily songs from the news, made by a music model, topic and tone choosing genre tags. Scheduled news music exists; this one generates rather than derives."
+      },
+      "url": "https://www.creativeainews.com/blog/audio-observer-ai-news-music-2026/"
+    },
+    {
+      "id": "neighbor:danieljohnjones-com-projects-the-listening-machine",
+      "kind": "neighbor",
+      "label": "The Listening Machine — Daniel Jones and Peter Gregson with the Britten Sinfonia (2012)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[The Listening Machine — Daniel Jones and Peter Gregson with the Britten Sinfonia (2012)](https://www.danieljohnjones.com/projects/the-listening-machine/) — the closest in spirit: 500 UK Twitter users for six months, sentiment as mood, the prosody of their syllables as melodies, recorded orchestral segments. One platform, continuous, no selection against attention."
+      },
+      "url": "https://www.danieljohnjones.com/projects/the-listening-machine/"
+    },
+    {
       "id": "neighbor:data-ted-europa-eu",
       "kind": "neighbor",
       "label": "TED Open Data Service",
@@ -2351,6 +2381,16 @@
         "quote": "[TED Open Data Service](https://data.ted.europa.eu) — the EU's own official SPARQL/knowledge-graph layer over all TED notices, already open and reusable."
       },
       "url": "https://data.ted.europa.eu"
+    },
+    {
+      "id": "neighbor:datadrivendj-com-tracks-subway",
+      "kind": "neighbor",
+      "label": "Brian Foo, *Data-Driven DJ: Two Trains* (2015)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Brian Foo, *Data-Driven DJ: Two Trains* (2015)](https://datadrivendj.com/tracks/subway/) — income along a subway line sets how many instruments play. The standard count-to-density mapping, one dataset per track."
+      },
+      "url": "https://datadrivendj.com/tracks/subway/"
     },
     {
       "id": "neighbor:deepskyclimate-com-data-dashboard-charts-price-of-home-insur",
@@ -2423,6 +2463,16 @@
       "url": "https://en.wikipedia.org/wiki/Civilian_Drone_Strike_(Banksy"
     },
     {
+      "id": "neighbor:en-wikipedia-org-wiki-different-trains",
+      "kind": "neighbor",
+      "label": "Steve Reich, *Different Trains* (1988)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Steve Reich, *Different Trains* (1988)](https://en.wikipedia.org/wiki/Different_Trains) — instruments doubling recorded speech melodies: the technique *Overlooked* and the solo bass of *Unison* use."
+      },
+      "url": "https://en.wikipedia.org/wiki/Different_Trains"
+    },
+    {
       "id": "neighbor:en-wikipedia-org-wiki-erasure-artform",
       "kind": "neighbor",
       "label": "Erasure as an artform",
@@ -2441,6 +2491,26 @@
         "quote": "[Hans Haacke, *MoMA Poll* (1970)](https://en.wikipedia.org/wiki/Hans_Haacke) — the lineage in art: visitors' ballots, counted in the gallery. Polling the audience is a canonical move, and this work is that move kept as open data."
       },
       "url": "https://en.wikipedia.org/wiki/Hans_Haacke"
+    },
+    {
+      "id": "neighbor:en-wikipedia-org-wiki-metastaseis",
+      "kind": "neighbor",
+      "label": "Iannis Xenakis, *Metastaseis* (1954)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Iannis Xenakis, *Metastaseis* (1954)](https://en.wikipedia.org/wiki/Metastaseis) — string glissando masses; with Penderecki's *Threnody* (1960) the lineage of *Unison*'s sound."
+      },
+      "url": "https://en.wikipedia.org/wiki/Metastaseis"
+    },
+    {
+      "id": "neighbor:en-wikipedia-org-wiki-rhythmicon",
+      "kind": "neighbor",
+      "label": "Henry Cowell and Leon Theremin, the Rhythmicon (1931)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Henry Cowell and Leon Theremin, the Rhythmicon (1931)](https://en.wikipedia.org/wiki/Rhythmicon) — rhythm in the ratios of the overtone series, the frame of *Turn*."
+      },
+      "url": "https://en.wikipedia.org/wiki/Rhythmicon"
     },
     {
       "id": "neighbor:en-wikipedia-org-wiki-wikipedia-on-this-day",
@@ -2753,6 +2823,16 @@
       }
     },
     {
+      "id": "neighbor:listen-hatnote-com",
+      "kind": "neighbor",
+      "label": "Listen to Wikipedia — Hatnote, Stephen LaPorte and Mahmoud Hashemi (2013)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Listen to Wikipedia — Hatnote, Stephen LaPorte and Mahmoud Hashemi (2013)](http://listen.hatnote.com) — a platform's edits as live tones, bells for additions, plucks for removals. One platform, nothing composed, nothing kept."
+      },
+      "url": "http://listen.hatnote.com"
+    },
+    {
       "id": "neighbor:longnow-org-clock",
       "kind": "neighbor",
       "label": "The Long Now Foundation, *Clock of the Long Now*",
@@ -2761,6 +2841,16 @@
         "quote": "[The Long Now Foundation, *Clock of the Long Now*](https://longnow.org/clock/) — the canonical artwork about timekeeping at scale. It builds a clock meant to survive; it does not measure the disagreement between the two we have."
       },
       "url": "https://longnow.org/clock/"
+    },
+    {
+      "id": "neighbor:loudnumbers-net",
+      "kind": "neighbor",
+      "label": "Loud Numbers — Duncan Geere and Miriam Quick (since 2021)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Loud Numbers — Duncan Geere and Miriam Quick (since 2021)](https://www.loudnumbers.net/) — sonification made to be listened to as music, a story per piece; laws per year as the number of fugue voices. Composed once, by hand."
+      },
+      "url": "https://www.loudnumbers.net/"
     },
     {
       "id": "neighbor:marino-who-s-reading-who-exploring-the-state-of-third-party-",
@@ -3126,6 +3216,16 @@
       "url": "https://www.slate.com/articles/technology/copenhagen_consensus_2012/2012/05/copenhagen_consensus_readers_vote_for_family_planning_better_nutrition_and_tobacco_taxes_.html"
     },
     {
+      "id": "neighbor:sonification-design",
+      "kind": "neighbor",
+      "label": "Data Sonification Archive — Sara Lenzi and Paolo Ciuccarelli",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Data Sonification Archive — Sara Lenzi and Paolo Ciuccarelli](https://sonification.design) — the field as a curated collection; no entry found that plays a cross-platform ledger against its own attention."
+      },
+      "url": "https://sonification.design"
+    },
+    {
       "id": "neighbor:sonificationart-wordpress-com-2013-11-03-tweetscapes-sonifyi",
       "kind": "neighbor",
       "label": "Tweetscapes — Hermann, Nehls and others (about 2012)",
@@ -3134,6 +3234,16 @@
         "quote": "[Tweetscapes — Hermann, Nehls and others (about 2012)](https://sonificationart.wordpress.com/2013/11/03/tweetscapes-sonifying-germanys-twitterscape/) — the closest mapping from data to loudness found: live German Twitter as sound, follower count setting volume. No speech, no control, and now offline."
       },
       "url": "https://sonificationart.wordpress.com/2013/11/03/tweetscapes-sonifying-germanys-twitterscape/"
+    },
+    {
+      "id": "neighbor:source-opennews-org-articles-sound-of-disparity",
+      "kind": "neighbor",
+      "label": "Reveal, *The sound of disparity* (2018)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Reveal, *The sound of disparity* (2018)](https://source.opennews.org/articles/sound-of-disparity/) — a choir split in proportion to executive shares. Counts as voices, sung once."
+      },
+      "url": "https://source.opennews.org/articles/sound-of-disparity/"
     },
     {
       "id": "neighbor:sparc-navigating-risk-in-vendor-data-privacy-practices",
@@ -7212,7 +7322,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'balance'"
       },
-      "rank": 8,
+      "rank": 9,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "UNIQUE",
@@ -7234,7 +7344,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 11,
+      "rank": 12,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -7254,7 +7364,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'consensus'"
       },
-      "rank": 17,
+      "rank": 18,
       "tier": "experiment",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "ADDED VALUE",
@@ -7276,7 +7386,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 18,
+      "rank": 19,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -7298,7 +7408,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ducking'"
       },
-      "rank": 1,
+      "rank": 2,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -7332,7 +7442,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 12,
+      "rank": 13,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -7354,7 +7464,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'globe'"
       },
-      "rank": 5,
+      "rank": 6,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -7363,6 +7473,27 @@
       "auditSource": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "ADDED VALUE (provisional — two registered searches owed, sealed at the end of G4)."
+      }
+    },
+    {
+      "id": "work:ill-tempered-week",
+      "kind": "work",
+      "label": "The Ill-Tempered Week",
+      "werkId": "ill-tempered-week",
+      "href": "/ill-tempered-week",
+      "since": "2026-11-08",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'ill-tempered-week'"
+      },
+      "rank": 1,
+      "tier": "experiment",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (a new combination with three devices not found, 2026-11-09).",
+      "daylight": "Keep it and read the kill conditions on the record after a month of albums: how far apart the weeks' agreement curves lie, whether *Overlooked*'s order of fields changes week to week, and how much a day's edition changes the days before it. Beyond that: Copy (Consensus as techno) when it carries, scores for the pieces, and anything that leaves the house (a release, a festival submission), which is the owner's to send.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE (a new combination with three devices not found, 2026-11-09)."
       }
     },
     {
@@ -7376,7 +7507,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'invoked-past'"
       },
-      "rank": 7,
+      "rank": 8,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (as a living instrument).",
@@ -7430,7 +7561,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'parallaxe'"
       },
-      "rank": 20,
+      "rank": 21,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT-leaning.",
       "daylight": "The plausible surviving differentiator is *process*, not method: a committed, versioned, git-archived daily register with a fixed non-selected topic set, never retconned — none of the neighbors offer that as a public, continuously-dated artifact (INFOGAP is a paper/dataset; Omnipedia/Manypedia are dead demos). Name this explicitly as the point, and cite INFOGAP/Omnipedia/Manypedia openly rather than let a visitor discover the overlap unassisted.",
@@ -7450,7 +7581,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 16,
+      "rank": 17,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -7471,7 +7602,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'praemie'"
       },
-      "rank": 19,
+      "rank": 20,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
       "daylight": "Either build on genuinely under-covered instruments — actual cat-bond spread/ROL data (Swiss Re index, Artemis.bm) rather than the BLS homeowner PPI others already use — or make the legal-document framing itself the explicit differentiator, citing Deep Sky/BLS/FRED openly rather than implying proprietary discovery.",
@@ -7491,7 +7622,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'protokoll'"
       },
-      "rank": 21,
+      "rank": 22,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, driven by the literary form, not the data aggregation.",
       "daylight": "Stop positioning \"twelve open sources, daily\" as the value proposition (invites a losing comparison to OWID); foreground the deterministic/no-LLM/ test-locked-template mechanism and the \"adjourned\" bureaucratic-literary device as the explicit claim — an art piece about administrative language applied to planetary indicators, not a data-aggregation competitor to Our World in Data.",
@@ -7511,7 +7642,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'redaction'"
       },
-      "rank": 13,
+      "rank": 14,
       "tier": "instrument",
       "line": "From the “Counter-Measurement” line, in two chambers.",
       "verdict": "ADDED VALUE",
@@ -7533,7 +7664,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 14,
+      "rank": 15,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -7554,7 +7685,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'sawtooth'"
       },
-      "rank": 4,
+      "rank": 5,
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE.",
@@ -7575,7 +7706,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'society'"
       },
-      "rank": 9,
+      "rank": 10,
       "tier": "experiment",
       "verdict": "UNIQUE",
       "verdictLabel": "UNIQUE (provisional).",
@@ -7596,7 +7727,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 10,
+      "rank": 11,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -7618,7 +7749,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spread'"
       },
-      "rank": 3,
+      "rank": 4,
       "tier": "experiment",
       "line": "From the counter-measurement line, and the house’s first live, real-time work: an asset does not have one price, it has several, disagreeing by fractions of a second across venues nobody can watch all at once."
     },
@@ -7645,7 +7776,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 15,
+      "rank": 16,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -7666,7 +7797,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'third-reading'"
       },
-      "rank": 2,
+      "rank": 3,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -7688,7 +7819,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'trending'"
       },
-      "rank": 6,
+      "rank": 7,
       "tier": "experiment",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (provisional — sealed before ship).",
@@ -7709,7 +7840,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 22,
+      "rank": 23,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -10570,6 +10701,127 @@
     },
     {
       "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:creativeainews-com-blog-audio-observer-ai-news-music-2026",
+      "note": "daily songs from the news, made by a music model, topic and tone choosing genre tags. Scheduled news music exists; this one generates rather than derives.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Audio.Observer (since May 2026)](https://www.creativeainews.com/blog/audio-observer-ai-news-music-2026/) — daily songs from the news, made by a music model, topic and tone choosing genre tags. Scheduled news music exists; this one generates rather than derives."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:danieljohnjones-com-projects-the-listening-machine",
+      "note": "the closest in spirit: 500 UK Twitter users for six months, sentiment as mood, the prosody of their syllables as melodies, recorded orchestral segments. One platform, continuous, no selection against attention.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[The Listening Machine — Daniel Jones and Peter Gregson with the Britten Sinfonia (2012)](https://www.danieljohnjones.com/projects/the-listening-machine/) — the closest in spirit: 500 UK Twitter users for six months, sentiment as mood, the prosody of their syllables as melodies, recorded orchestral segments. One platform, continuous, no selection against attention."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:datadrivendj-com-tracks-subway",
+      "note": "income along a subway line sets how many instruments play. The standard count-to-density mapping, one dataset per track.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Brian Foo, *Data-Driven DJ: Two Trains* (2015)](https://datadrivendj.com/tracks/subway/) — income along a subway line sets how many instruments play. The standard count-to-density mapping, one dataset per track."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:earstudio-com-projects-project-page-listening-post",
+      "note": "chat-room fragments read and sung by a speech synthesizer in movements. Speaks what was said; does not ask what was overlooked.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Mark Hansen and Ben Rubin, *Listening Post* (2001)](https://www.earstudio.com/projects/project-page/listening-post) — chat-room fragments read and sung by a speech synthesizer in movements. Speaks what was said; does not ask what was overlooked."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:en-wikipedia-org-wiki-different-trains",
+      "note": "instruments doubling recorded speech melodies: the technique *Overlooked* and the solo bass of *Unison* use.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Steve Reich, *Different Trains* (1988)](https://en.wikipedia.org/wiki/Different_Trains) — instruments doubling recorded speech melodies: the technique *Overlooked* and the solo bass of *Unison* use."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:en-wikipedia-org-wiki-metastaseis",
+      "note": "string glissando masses; with Penderecki's *Threnody* (1960) the lineage of *Unison*'s sound.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Iannis Xenakis, *Metastaseis* (1954)](https://en.wikipedia.org/wiki/Metastaseis) — string glissando masses; with Penderecki's *Threnody* (1960) the lineage of *Unison*'s sound."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:en-wikipedia-org-wiki-rhythmicon",
+      "note": "rhythm in the ratios of the overtone series, the frame of *Turn*.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Henry Cowell and Leon Theremin, the Rhythmicon (1931)](https://en.wikipedia.org/wiki/Rhythmicon) — rhythm in the ratios of the overtone series, the frame of *Turn*."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:listen-hatnote-com",
+      "note": "a platform's edits as live tones, bells for additions, plucks for removals. One platform, nothing composed, nothing kept.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Listen to Wikipedia — Hatnote, Stephen LaPorte and Mahmoud Hashemi (2013)](http://listen.hatnote.com) — a platform's edits as live tones, bells for additions, plucks for removals. One platform, nothing composed, nothing kept."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:loudnumbers-net",
+      "note": "sonification made to be listened to as music, a story per piece; laws per year as the number of fugue voices. Composed once, by hand.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Loud Numbers — Duncan Geere and Miriam Quick (since 2021)](https://www.loudnumbers.net/) — sonification made to be listened to as music, a story per piece; laws per year as the number of fugue voices. Composed once, by hand."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:sonification-design",
+      "note": "the field as a curated collection; no entry found that plays a cross-platform ledger against its own attention.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Data Sonification Archive — Sara Lenzi and Paolo Ciuccarelli](https://sonification.design) — the field as a curated collection; no entry found that plays a cross-platform ledger against its own attention."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:source-opennews-org-articles-sound-of-disparity",
+      "note": "a choir split in proportion to executive shares. Counts as voices, sung once.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Reveal, *The sound of disparity* (2018)](https://source.opennews.org/articles/sound-of-disparity/) — a choir split in proportion to executive shares. Counts as voices, sung once."
+      }
+    },
+    {
+      "kind": "neighbor-of",
       "from": "work:invoked-past",
       "to": "neighbor:blog-gdeltproject-org-gdelt-2-0-our-global-world-in-realtime",
       "note": "the sensor itself, added in 2015 explicitly for anniversary analysis; no tooling was ever built on it and the legacy Analysis Service's anniversary visualizer is retired.",
@@ -12900,6 +13152,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "pipelines/trending/src/trending/sources/{science_press,humanitarian}.py"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-09-2",
+      "to": "work:ill-tempered-week",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "scripts/ill-tempered-week/"
       }
     }
   ]

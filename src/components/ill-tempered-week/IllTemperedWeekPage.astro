@@ -1,0 +1,182 @@
+---
+// THE ILL-TEMPERED WEEK — a week of the web's attention, composed (2026-11-09; method:
+// docs/design/2026-11-08-common-time-method.md). The music first, then what each piece hears, then how it is
+// made. The page plays the newest complete album in full and, while a week runs, that week's Overlooked as far as
+// it has grown. Every number on the page is read at build time from the albums' own records
+// (src/data/ill-tempered-week/<week>.json), which the renderer wrote beside the audio; the guard
+// (src/lib/ill-tempered-week/albums.test.ts) holds each record to the day files it names.
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import OverlookedDays from '@/components/ill-tempered-week/OverlookedDays.astro'
+import { clock, readAlbums, span, weekday } from '@/lib/ill-tempered-week/albums'
+import '@/styles/experiment-sheet.css'
+import '@/styles/ill-tempered-week.css'
+
+const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+const pct = (x: number): string => `${Math.round(100 * x)} %`
+
+const albums = readAlbums()
+const newest = albums.at(-1)!
+// The album the page plays in full: the newest complete one (the growing week, only until one exists).
+const album = albums.filter((a) => a.complete).at(-1) ?? newest
+// The week that is still growing, shown above the album while it runs.
+const growing = newest.complete || newest === album ? null : newest
+const earlier = albums.filter((a) => a !== album && a !== growing).reverse()
+const o = album.pieces.overlooked
+const u = album.pieces.unison
+const t = album.pieces.turn
+const g = growing?.pieces.overlooked
+const recordHref = (week: string): string => `${REPO}/blob/main/src/data/ill-tempered-week/${week}.json`
+const turnDay = t?.days.find((d) => d.turn)
+const peaks = u ? u.days.filter((d) => d.peak) : []
+const most = u ? u.days.reduce((a, b) => (b.agreement > a.agreement ? b : a)) : null
+const badges = growing && g
+  ? [`${album.title}, complete`, `${growing.title}, edition ${g.edition} of 7`]
+  : [album.title, album.complete ? 'complete' : `edition ${o.edition} of 7`]
+---
+
+<main id="main" class="sheet mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">
+  <SheetHead
+    kicker="From the nightly-ledger line"
+    title="The Ill-Tempered Week"
+    sub="A week of the web’s attention, composed. Each week is an album, a Contrapunctus numbered by the week, pressed day by day from Common Ground: what was overlooked, where the press agreed, when the week turned."
+    badges={badges}
+    stamp={span(album.days)}
+  />
+
+  <section class="mb-12 max-w-3xl" aria-label="About the album">
+    <p class="leading-relaxed">
+      Three pieces in three idioms: a chamber ensemble, a string orchestra with brass and timpani, and electronics. Real
+      instruments, recorded notes tuned to just intonation on A; synthetic voices that say what the week said. No music model is
+      involved: every note follows a written rule from a committed day file, and the album’s record names each file it read. While
+      the week runs, <em>Overlooked</em> is pressed again from the days so far each time a day of the ledger lands, so the piece grows and ends on the
+      newest day; when the week is complete, <em>Unison</em> and <em>Turn</em> join it and the album is never pressed again.
+    </p>
+  </section>
+
+  {growing && g && (
+    <section class="itw-piece itw-growing mb-14" aria-label="This week so far">
+      <p class="kicker mb-1">This week · {growing.title} · {span(growing.days)}</p>
+      <h2 class="itw-title">Overlooked, so far</h2>
+      <audio class="itw-player mt-3" controls preload="metadata" src={g.audio}></audio>
+      <p class="mt-2 font-mono text-mono-sm text-fg-muted">
+        {clock(g.seconds)} · edition {g.edition} of 7, to {weekday(g.newest_day)} ·
+        <a class={link} href={g.audio} download>download</a> · CC BY 4.0
+      </p>
+      <p class="mt-5 max-w-3xl leading-relaxed">
+        The running week, pressed from its days so far. Each new day of the ledger adds a day, and the piece is pressed again from the start,
+        so this edition breaks off at its newest day and the next one hears the week differently: a motif ends with its
+        day once a later day no longer names its field. Once Sunday’s day is in, the piece is complete, and <em>Unison</em> and
+        <em>Turn</em> join it.
+      </p>
+      <OverlookedDays piece={g} />
+    </section>
+  )}
+
+  {growing && <p class="kicker mb-6">The album · {album.title} · {span(album.days)}</p>}
+
+  <section class="itw-piece mb-14" aria-label="Overlooked">
+    <p class="kicker mb-1">I · chamber ensemble</p>
+    <h2 class="itw-title">Overlooked</h2>
+    <audio class="itw-player mt-3" controls preload="metadata" src={o.audio}></audio>
+    <p class="mt-2 font-mono text-mono-sm text-fg-muted">
+      {clock(o.seconds)} · {album.complete ? 'seven days' : `edition ${o.edition} of 7, to ${weekday(o.newest_day)}`} ·
+      <a class={link} href={o.audio} download>download</a> · CC BY 4.0
+    </p>
+    <p class="mt-5 max-w-3xl leading-relaxed">
+      Each day, the headline that drew the least attention on its own platform, among all thirteen fields of the map and from a
+      field not heard before that week, is said once. The instrument of its field answers with the headline’s own speech melody,
+      in the rhythm it was spoken; then the melody becomes a motif, and violins, violas, piano, cellos and basses take it up in
+      canon. Earlier days keep sounding, softer by the day, so the overlooked gather into a polyphony across the week, while the
+      day’s most attended headlines murmur underneath and give way. A day’s motif ends with its day if the newest day no longer
+      names its field.
+    </p>
+    <OverlookedDays piece={o} />
+  </section>
+
+  {u && most && (
+    <section class="itw-piece mb-14" aria-label="Unison">
+      <p class="kicker mb-1">II · string orchestra, brass, timpani</p>
+      <h2 class="itw-title">Unison</h2>
+      <audio class="itw-player mt-3" controls preload="metadata" src={u.audio}></audio>
+      <p class="mt-2 font-mono text-mono-sm text-fg-muted">
+        {clock(u.seconds)} · war and violence · <a class={link} href={u.audio} download>download</a> · CC BY 4.0
+      </p>
+      <p class="mt-5 max-w-3xl leading-relaxed">
+        Every signal that named war and violence is one string glissando: its section by the attention it drew on its platform,
+        the most attended highest, its first pitch from its own headline as spoken, its entry at the hour it was published. Each
+        day the whole mass glides towards A’s harmonic chord exactly as far as the press agreed: the share of the day’s war
+        signals naming its most named story. Where the press agreed, brass and timpani take up the chord and the day’s most attended
+        headline is said over it; after each peak a solo double bass plays the speech melody of the day’s least attended war
+        headline, outside the chord. The press agreed most on {weekday(most.day)}, {pct(most.agreement)} on {most.story};
+        {peaks.length === u.days.length ? ' every day reached the chord.' : ` ${u.days.length - peaks.length} of ${u.days.length} days stayed a cluster.`}
+      </p>
+      <ol class="itw-agree mt-5" aria-label="Agreement by day">
+        {u.days.map((d) => (
+          <li>
+            <span class="font-mono text-mono-sm text-fg-muted">{weekday(d.day).slice(0, 3)}</span>
+            <svg class="itw-bar" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true">
+              <rect class="itw-track" x="0" y="0" width="100" height="6"></rect>
+              <rect class={d.peak ? 'itw-fill' : 'itw-fill itw-none'} x="0" y="0" width={Math.round(100 * d.agreement)} height="6"></rect>
+            </svg>
+            <span class="font-mono text-mono-sm">{pct(d.agreement)} {d.story}{d.peak ? '' : ' · no chord'}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
+
+  {t && (
+    <section class="itw-piece mb-14" aria-label="Turn">
+      <p class="kicker mb-1">III · electronics</p>
+      <h2 class="itw-title">Turn</h2>
+      <audio class="itw-player mt-3" controls preload="metadata" src={t.audio}></audio>
+      <p class="mt-2 font-mono text-mono-sm text-fg-muted">
+        {clock(t.seconds)} · AI and its harms · <a class={link} href={t.audio} download>download</a> · CC BY 4.0
+      </p>
+      <p class="mt-5 max-w-3xl leading-relaxed">
+        A rhythmicon of the platform families: each pulses as many beats a bar as its harmonic number (search 5, news 6, social 7,
+        tech 9) and sings its vowel on that harmonic of A; how many of its beats sound is its count of AI signals that day, so the
+        bar fills as attention does. Busy days run faster. {turnDay
+          ? <>The week turned on {weekday(turnDay.day)}, with {turnDay.signals} signals: one bar sounds every beat of every family, and a silent bar carries the day’s most attended AI headline, “{turnDay.said}”.</>
+          : <>This week did not turn.</>}
+      </p>
+    </section>
+  )}
+
+  <section class="mb-12 max-w-3xl" aria-label="How it is made">
+    <p class="kicker mb-3">How it is made</p>
+    <p class="leading-relaxed text-fg-muted">
+      The counts are the house’s one count over Common Ground’s day files, the fields those of the map; a headline’s attention is
+      its place among the signals of its own platform that day (Hacker News points, Bluesky posts, Trends searches, Polymarket
+      dollars, Wikipedia views, Google News editions). Instruments: {album.library}. Voices: {album.voices}. Each album’s record
+      hashes every day file it read: <a class={link} href={recordHref(album.week)}>{album.title}</a>{growing && <>, <a class={link} href={recordHref(growing.week)}>{growing.title}</a></>}.
+    </p>
+  </section>
+
+  {earlier.length > 0 && (
+    <section class="mb-12" aria-label="Earlier albums">
+      <p class="kicker mb-3">Earlier albums</p>
+      <ul class="itw-albums">
+        {earlier.map((a) => (
+          <li>
+            <p class="font-mono text-mono-sm text-fg-muted">
+              {a.title} · {span(a.days)} · <a class={link} href={recordHref(a.week)}>record</a>
+            </p>
+            {Object.entries(a.pieces).map(([name, p]) => (
+              <p class="mt-1"><span class="font-mono text-mono-sm">{name}</span> <audio class="itw-player mt-1" controls preload="none" src={p!.audio}></audio></p>
+            ))}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <SheetFoot links={[
+    { href: '/werke/ill-tempered-week', label: 'method sheet' },
+    { href: `${REPO}/tree/main/src/data/ill-tempered-week`, label: 'the records', external: true },
+    { href: `${REPO}/tree/main/scripts/ill-tempered-week`, label: 'the renderer', external: true },
+    { href: '/trending', label: 'Common Ground' },
+  ]} />
+</main>

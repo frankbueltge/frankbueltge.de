@@ -273,10 +273,11 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'instruments',
     kind: 'pipeline',
     owner: 'shared',
-    what: 'The morning reader of what the web is searching, reading and posting about: one dated ledger per day, a term tracker that counts how a watched word is building across platforms, the n-grams a discovery pass noticed on its own, and a day later the count of who read it.',
-    commitsAs: 'Morgenlese <morgenlese@frankbueltge.de>',
+    what: 'The morning reader of what the web is searching, reading and posting about: one dated ledger per day, a term tracker that counts how a watched word is building across platforms, the n-grams a discovery pass noticed on its own, and a day later the count of who read it. Right after each ledger, the press of The Ill-Tempered Week composes the week from it.',
+    commitsAs: 'Morgenlese / Presswerk <…@frankbueltge.de>',
     members: [
       { label: 'Trending nightly', what: 'the day’s keyless sources and one disclosed convergence rule, then the term tracker with its discovery pass, then the edge audience of the day before', ref: '.github/workflows/trending.yml', workflowName: 'Trending nightly', cron: ['40 6 * * *'], secrets: ['CF_ANALYTICS_TOKEN'] },
+      { label: 'The Ill-Tempered Week', what: 'started by the ledger once it has pushed a day file: the week’s Overlooked again from its days so far, and Unison and Turn once the seventh day is in; held to the album’s tests before it commits, and a complete album never again', ref: '.github/workflows/ill-tempered-week.yml', workflowName: 'The Ill-Tempered Week', cron: ['50 9 * * *'] },
     ],
   },
   {
@@ -506,6 +507,7 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'src/data/pulse', what: 'the ecology’s own commit pulse' },
       { label: 'src/content/beifang', what: 'bycatch' },
       { label: 'src/data/trending', what: 'the trending ledger, and its audience the day after' },
+      { label: 'src/data/ill-tempered-week', what: 'the albums of The Ill-Tempered Week, each record hashing the day files it read; the audio beside them in public/ill-tempered-week' },
     ],
   },
   {
@@ -673,6 +675,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'in-protokoll', to: 'st-instruments', kind: 'commit', mechanism: 'commits the policy, the parallax register and the overflight snapshot', checked: 'derived', ref: '.github/workflows/praemie.yml' },
   { from: 'in-gegenmessung', to: 'st-instruments', kind: 'commit', mechanism: 'each instrument commits its own dated findings', checked: 'derived', ref: '.github/workflows/gegenmessung.yml' },
   { from: 'in-trending', to: 'st-instruments', kind: 'commit', mechanism: 'commits one day file and one terms file every morning, plus the audience file of the day before, never rewriting any of them', checked: 'derived', ref: '.github/workflows/trending.yml' },
+  { from: 'in-trending', to: 'st-instruments', kind: 'commit', mechanism: 'the press commits the week’s album every night until it is complete, then never rewrites it', checked: 'derived', ref: '.github/workflows/ill-tempered-week.yml' },
   { from: 'in-scouts', to: 'st-catalogues', kind: 'commit', mechanism: 'commits the atlas nightly, capped at thirty new entries a run', checked: 'derived', ref: '.github/workflows/atlas-scout.yml' },
   { from: 'in-pulse', to: 'st-instruments', kind: 'commit', mechanism: `commits the commit pulse of ${PULSE_REPOS} repositories`, checked: 'derived', ref: '.github/workflows/pulse-refresh.yml' },
   { from: 'in-saat', to: 'st-inlets', kind: 'commit', mechanism: 'commits each practice’s public answer to an offered seed', checked: 'derived', ref: '.github/workflows/requests-watchdog.yml' },

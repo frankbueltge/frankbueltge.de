@@ -44,6 +44,7 @@ import { readAudience, type AudienceReading } from '@/lib/reading/aggregate'
 import { gapFigure } from '@/lib/reading/figure'
 import { readDesk } from '@/lib/ducking/desk-data'
 import { fmtShare, toPosition } from '@/lib/ducking/mix'
+import { readAlbums, weekday } from '@/lib/ill-tempered-week/albums'
 import type { InvokedData } from '@/lib/invoked/types'
 import type { BalanceCountry } from '@/lib/balance/types'
 
@@ -559,6 +560,20 @@ function duckingMarks(shares: readonly number[]): ThumbMark[] {
   return [floor, ...caps]
 }
 
+/** The newest pressing: one column per day, as tall as the instruments in that day's unison
+ *  (at most six, the families), marked on the days the week's theme sounds. A day without a melody
+ *  is a hollow slot. */
+function illTemperedMarks(days: readonly { agreement: number; peak: boolean }[]): ThumbMark[] {
+  const slot = (W - 2 * P) / days.length
+  const w = r1(slot * 0.6)
+  const tall = H - 2 * P
+  return days.map((d, i): ThumbMark => {
+    const x = r1(P + i * slot + slot * 0.2)
+    const h = Math.max(1, r1(d.agreement * tall))
+    return d.peak ? { t: 'bar', x, y: r1(H - P - h), w, h, on: true } : { t: 'bar', x, y: r1(H - P - h), w, h }
+  })
+}
+
 // ── the practices beside the lab ──────────────────────────────────────────────────────────
 /**
  * The three houses listed beside the lab keep no instrument and publish no reading, so there is
@@ -788,6 +803,19 @@ function buildThumbnails(): Thumbnail[] {
     readout: R.ducking(count(desk.round.channels.length), fmtShare(desk.week.share)),
     source: `src/data/trending/${desk.latest}.json`,
   })
+
+  const album = readAlbums().filter((a) => a.pieces.unison).at(-1)
+  if (album?.pieces.unison) {
+    const days = album.pieces.unison.days
+    const most = days.reduce((a, b) => (b.agreement > a.agreement ? b : a))
+    out.push({
+      id: 'ill-tempered-week',
+      marks: illTemperedMarks(days),
+      draws: D['ill-tempered-week']!,
+      readout: R['ill-tempered-week'](most.story, `${Math.round(100 * most.agreement)} %`, weekday(most.day)),
+      source: `src/data/ill-tempered-week/${album.week}.json`,
+    })
+  }
 
   return out
 }

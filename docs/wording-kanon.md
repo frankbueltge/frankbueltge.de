@@ -349,7 +349,7 @@ Werk); die Labels heißen auf der Seite genau so:
 | Linie | Was sie fragt | Heute |
 |---|---|---|
 | **COUNTER-MEASUREMENT** | Messen, was Macht im Dunkeln lässt — nachprüfbar, auch gegen die eigene Methode. | 9 Werke; Meridians Kern-Remit in der Ökologie |
-| **NIGHTLY LEDGER** | Instrumente, die jede Nacht einen datierten Eintrag schreiben und keinen revidieren. | Protocol · Policy |
+| **NIGHTLY LEDGER** | Instrumente, die nach fester Uhr (jede Nacht oder einmal die Woche) einen datierten Eintrag schreiben und keinen revidieren; seit 2026-11-08 „on a fixed clock“ statt „every night“, weil ein Werk wöchentlich presst (seit 2026-11-09 The Ill-Tempered Week: mit jedem Tag des Ledgers eine Edition, jede Woche ein Album). | Protocol · Policy · Common Ground · The Ill-Tempered Week |
 | **REPRESENTATION & MEMORY** | Was ein Record sagt und was er auslässt. | Invoked Past · Society · Iceberg Theory |
 | **SURVEILLANCE, COUNTED** | Wer beobachtet — gezählt aus den Katalogen der Beobachter. | Bycatch · All Along the Watchtower |
 
@@ -369,6 +369,9 @@ Methodenblättern. In **Prosa** bleibt der kleingeschriebene Artikel, wo die Gra
 braucht („die Nächte des Protocol", „the Consensus archive"). **Nicht betroffen:** Titel
 anderer Häuser — „The Measuring Field", „The State Before the Interface", „The Foreknown" —
 und die gespiegelten Texte der Praxen; fremde Werktitel werden hier nicht umbenannt.
+**Eine Ausnahme seit 2026-11-09 (Franks Entscheidung, Wortlaut privat):** *The Ill-Tempered Week* behält
+ihr „The“, weil der Artikel die Anspielung auf *The Well-Tempered Clavier* trägt; der Wächter in
+`src/data/werke.test.ts` nennt sie mit Kennung und Datum, für jedes andere Experiment gilt die Regel weiter.
 
 **Neben dem Lab, nicht darin:** Die Seite führt unter **„BESIDE THE LAB"** die zwei
 maschinellen Praxen, die **nicht** zur research ecology gehören und bis dahin nur über

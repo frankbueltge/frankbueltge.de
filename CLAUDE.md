@@ -87,7 +87,9 @@ entschieden: `/experiments` ordnet nach **Forschungslinie** (COUNTER-MEASUREMENT
 LEDGER · REPRESENTATION & MEMORY · SURVEILLANCE, COUNTED — kanonisch in `src/data/werke.ts`,
 Feld `line`), und die Titel der Experimente tragen **keinen bestimmten Artikel** mehr
 (Society, Protocol, Policy, Consensus, Invoked Past, Balance, Correction, Ghost Fleet —
-Ghost Fleet, Round Numbers and Patterns seit 2026-10-17 RETIRED, Archive bleiben stehen).
+Ghost Fleet, Round Numbers and Patterns seit 2026-10-17 RETIRED, Archive bleiben stehen;
+einzige Ausnahme seit 2026-11-09: *The Ill-Tempered Week*, deren „The“ die Bach-Anspielung trägt, Franks
+Entscheidung, Wortlaut privat).
 Darunter verlinkt die Seite die drei Praxen **neben** dem Lab, die nicht zur Ökologie
 gehören: die Nachtlinie (`/error-as-method`), n-1 (`/n-1`) und Arch (`/arch`, gegründet
 2026-08-22, Bilanz vom 2026-09-21 mit dem Verdikt FAILED, seit 2026-10-11 nicht mehr unter

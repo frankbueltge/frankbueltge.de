@@ -85,7 +85,7 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
     id: 'ledger',
     label: 'NIGHTLY LEDGER',
     blurb: bilingual(
-      "Instruments that write one dated entry every night and never revise it: the minutes of the planet's session, and a premium on the present. The series is the finding, never a single night.",
+      "Instruments that write one dated entry on a fixed clock, every night or once a week, and never revise it: the minutes of the planet's session, and a premium on the present. The series is the finding, never a single entry.",
     ),
   },
   {
@@ -107,6 +107,28 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
 /** Verzeichnis der Experimente. Reihenfolge unten = redaktionelle Feinordnung bei Datums-
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
+  {
+    // Begun 2026-11-08 as Common Time at Frank's request; rebuilt 2026-11-09 as an album of three composed pieces
+    // after his verdict that the sound must come first, and retitled The Ill-Tempered Week the same day (wording
+    // private). Method: docs/design/2026-11-08-common-time-method.md. A complete album is never pressed again;
+    // Overlooked grows by one edition a night while its week runs.
+    id: 'ill-tempered-week',
+    line: 'ledger',
+    title: 'The Ill-Tempered Week',
+    subtitle: {
+      de: 'A week of the web’s attention, composed: what was overlooked, where the press agreed, when the week turned',
+      en: 'A week of the web’s attention, composed: what was overlooked, where the press agreed, when the week turned',
+    },
+    status: 'live',
+    since: '2026-11-08',
+    href: '/ill-tempered-week',
+    description: {
+      de: 'From the nightly-ledger line. Each week of Common Ground becomes an album, a Contrapunctus numbered by the week, of three composed pieces in three idioms, played by recorded instruments tuned to just intonation and by synthetic voices that say what the week said. Overlooked, for chamber ensemble, gives each day the headline that drew the least attention on its own platform, from a field not heard before that week; its instrument answers with the headline’s speech melody and the ensemble takes it up in canon, so the overlooked gather across the week while the most attended murmur underneath. Unison, for strings, brass and timpani, plays every signal about war as one glissando and lets the mass glide towards harmony exactly as far as the press agreed that day. Turn, electronic, is a rhythmicon of the platform families whose bars fill as the attention on AI does. Overlooked is pressed again from the days so far whenever a day of the ledger lands; no music model is involved, and every album’s record hashes the day files it read.',
+      en: 'From the nightly-ledger line. Each week of Common Ground becomes an album, a Contrapunctus numbered by the week, of three composed pieces in three idioms, played by recorded instruments tuned to just intonation and by synthetic voices that say what the week said. Overlooked, for chamber ensemble, gives each day the headline that drew the least attention on its own platform, from a field not heard before that week; its instrument answers with the headline’s speech melody and the ensemble takes it up in canon, so the overlooked gather across the week while the most attended murmur underneath. Unison, for strings, brass and timpani, plays every signal about war as one glissando and lets the mass glide towards harmony exactly as far as the press agreed that day. Turn, electronic, is a rhythmicon of the platform families whose bars fill as the attention on AI does. Overlooked is pressed again from the days so far whenever a day of the ledger lands; no music model is involved, and every album’s record hashes the day files it read.',
+    },
+    methodHref: '/werke/ill-tempered-week',
+    tier: 'experiment',
+  },
   {
     // Built 2026-11-01 on Frank's word of that day (wording private): the idea had been proposed the
     // night before as a motorised desk for two Raspberry Pis, and he asked for it as a lab experiment
