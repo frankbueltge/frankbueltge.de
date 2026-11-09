@@ -11,7 +11,7 @@
 //   root      [data-catalogue] data-groups data-multi data-sorts data-sort-desc
 //             data-default-sort data-page-size
 //   cards     [data-list] > [data-card] with data-f-<group>, data-s-<sort>, data-text
-//   controls  [data-q] [data-sort-select] [data-filter][data-value] [data-count] [data-reset]
+//   controls  [data-q] [data-sort-btn][data-value] [data-filter][data-value] [data-count] [data-reset]
 //             [data-more] [data-more-n] [data-active] [data-panel] [data-empty]
 import {
   activeFilterCount,
@@ -46,7 +46,7 @@ export function initCatalogue(root: HTMLElement): void {
   )
 
   const q = root.querySelector<HTMLInputElement>('[data-q]')
-  const sortSelect = root.querySelector<HTMLSelectElement>('[data-sort-select]')
+  const sortButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-sort-btn]'))
   const countEl = root.querySelector<HTMLElement>('[data-count]')
   const resetEl = root.querySelector<HTMLButtonElement>('[data-reset]')
   const moreEl = root.querySelector<HTMLButtonElement>('[data-more]')
@@ -97,7 +97,7 @@ export function initCatalogue(root: HTMLElement): void {
       b.setAttribute('aria-pressed', String((state.filters[g] ?? 'all') === b.dataset.value))
     }
     if (q && q.value !== state.q) q.value = state.q
-    if (sortSelect && sortSelect.value !== state.sort) sortSelect.value = state.sort
+    for (const b of sortButtons) b.setAttribute('aria-pressed', String(b.dataset.value === state.sort))
     if (writeUrl) {
       const url = `${location.pathname}${serialiseState(state, defaultSort)}${location.hash}`
       history.replaceState(history.state, '', url)
@@ -123,7 +123,7 @@ export function initCatalogue(root: HTMLElement): void {
   })
   // Enter in the search box must not submit anything; the box filters as one types.
   q?.closest('form')?.addEventListener('submit', (e) => e.preventDefault())
-  sortSelect?.addEventListener('change', () => update({ sort: sortSelect.value }))
+  for (const b of sortButtons) b.addEventListener('click', () => update({ sort: b.dataset.value ?? defaultSort }))
   resetEl?.addEventListener('click', () => {
     update({ q: '', filters: Object.fromEntries(groups.map((g) => [g, 'all'])) })
   })

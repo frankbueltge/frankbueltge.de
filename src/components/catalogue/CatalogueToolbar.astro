@@ -25,6 +25,7 @@ export interface ToolbarGroup {
   title: string
   options: ToolbarOption[]
 }
+/** The first sort is the page's default: it must equal the root's data-default-sort. */
 export interface ToolbarSort {
   value: string
   label: string
@@ -39,7 +40,8 @@ interface Props {
   noun: string
 }
 const { groups, sorts, total, placeholder, noun } = Astro.props
-const shownGroups = groups.filter((g) => g.options.length > 1)
+// A group with one option is still a yes/no question ("verified only"); only an empty one hides.
+const shownGroups = groups.filter((g) => g.options.length > 0)
 
 const chip = cn(
   buttonVariants({ variant: 'outline', size: 'sm' }),
@@ -50,7 +52,7 @@ const label = 'font-mono text-mono-xs uppercase tracking-wider text-fg-faint'
 ---
 
 <div data-tools class="mb-6 space-y-3 border-y border-line py-4">
-  <form role="search" class="flex flex-col gap-2 sm:flex-row sm:items-center">
+  <form role="search">
     <label class="sr-only" for="catalogue-q">Search</label>
     <input
       id="catalogue-q"
@@ -59,16 +61,8 @@ const label = 'font-mono text-mono-xs uppercase tracking-wider text-fg-faint'
       autocomplete="off"
       spellcheck="false"
       placeholder={placeholder}
-      class={cn(fieldVariants({ kind: 'input' }), 'sm:flex-1')}
+      class={fieldVariants({ kind: 'input' })}
     />
-    {sorts.length > 1 && (
-      <label class="flex items-center gap-2">
-        <span class={label}>Sort</span>
-        <select data-sort-select class={cn(fieldVariants({ kind: 'select' }), 'w-auto appearance-auto pr-2')}>
-          {sorts.map((s) => <option value={s.value}>{s.label}</option>)}
-        </select>
-      </label>
-    )}
   </form>
 
   {shownGroups.length > 0 && (
@@ -102,10 +96,20 @@ const label = 'font-mono text-mono-xs uppercase tracking-wider text-fg-faint'
     </details>
   )}
 
-  <div class="flex flex-wrap items-center gap-3">
-    <p class="font-mono text-mono text-fg-faint" aria-live="polite">
-      <span data-count>{total}</span> of {total} {noun}
-    </p>
-    <button type="button" data-reset hidden class={chip}>clear search and filters</button>
+  <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+    <div class="flex flex-wrap items-center gap-3">
+      <p class="font-mono text-mono text-fg-faint" aria-live="polite">
+        <span data-count>{total}</span> of {total} {noun}
+      </p>
+      <button type="button" data-reset hidden class={chip}>clear search and filters</button>
+    </div>
+    {sorts.length > 1 && (
+      <div class="flex flex-wrap items-center gap-1.5" role="group" aria-label="Sort">
+        <span class={cn(label, 'mr-1')}>Sort</span>
+        {sorts.map((o, i) => (
+          <button type="button" data-sort-btn data-value={o.value} aria-pressed={i === 0 ? "true" : "false"} class={chip}>{o.label}</button>
+        ))}
+      </div>
+    )}
   </div>
 </div>
