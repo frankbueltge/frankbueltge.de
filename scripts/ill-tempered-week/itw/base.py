@@ -192,11 +192,13 @@ def level(x: np.ndarray, lufs: float | None, ceiling_dbtp: float = -1.0) -> np.n
 
 
 def encode(wav: Path, m4a: Path, kbps: int = 128) -> None:
-    """AAC: afconvert on a Mac, ffmpeg anywhere else."""
+    """AAC: afconvert on a Mac, ffmpeg anywhere else. Both put the index (moov) before the audio, so a browser can
+    start playing and seek before the whole file has arrived; ffmpeg does that only when told to (faststart)."""
     if shutil.which('afconvert'):
         subprocess.run(['afconvert', '-f', 'm4af', '-d', 'aac', '-b', str(kbps * 1000), str(wav), str(m4a)], check=True)
     else:
-        subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', str(wav), '-c:a', 'aac', '-b:a', f'{kbps}k', str(m4a)], check=True)
+        subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', str(wav), '-c:a', 'aac', '-b:a', f'{kbps}k',
+                        '-movflags', '+faststart', str(m4a)], check=True)
 
 
 def digest(x: np.ndarray) -> str:
