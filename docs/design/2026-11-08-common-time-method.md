@@ -307,7 +307,20 @@ and a timpani roll take up the chord and the day's most attended headline is sai
 mass stays a cluster. After each day's peak a solo double bass plays the speech melody of the day's least attended
 war headline. The week ends without agreement: Sunday's mass stays dispersed, and the last sound is that solo, on
 Sunday's least attended war headline. Known means: glissando masses (Xenakis, *Metastaseis*; Penderecki,
-*Threnody*), speech melody (Reich). What the data decide: how far the mass reaches harmony.
+*Threnody*), speech melody (Reich). What the data decide: how far the mass reaches harmony. Its spectrogram shows the intended shape (a build and peak each day, held chord lines on Wednesday and
+Thursday, no peak on Sunday, the bass alone at the end); a targeted search found no work that turns the press's
+agreement into consonance.
+
+**Probe 17, *Turn*** (built 9 November, `probe17_turn.py`, `out17/`, 2:47, bit-identical twice): AI and its harms,
+week 45, electronic, in its own idiom. A rhythmicon of the platform families: each pulses as many beats per bar as
+its harmonic number (search 5, news 6, social 7, tech 9; Henry Cowell's idea of rhythm and pitch from one overtone
+series) and sings its vowel on that harmonic (probe 05's sound); how many of its beats sound is its count of AI
+signals that day, spread evenly, so the bar fills as attention does. A bar lasts 2.4 s times the square root of the
+mean count so far over the day's count, so busy days run faster; on the day the week turned (Saturday, 15 signals
+against a mean of 5.4) one bar sounds every beat of every family, then a bar of silence carries the day's most
+attended AI headline, plainly. Sub, bell chords and noise ticks as ground; Sunday stops on a downbeat, one low A.
+Known means: the rhythmicon (Cowell, 1931), euclidean rhythm (Toussaint); what the data decide: how full the
+polyrhythm is and how fast its time runs.
 
 ## From the data to the music (first template, probes 04 to 10)
 
