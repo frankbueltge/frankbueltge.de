@@ -22,6 +22,7 @@ Cloudflare Pages Functions, same-origin, keine CORS-Header, alle fail-closed:
 | `/api/zentrale/*` (5) | authentifizierte Ops-API: Status, Antworten, Saat-Review, Site-PRs | `ZENTRALE_SECRET`, `ZENTRALE_GITHUB_TOKEN` |
 | `POST /api/subscribe`, `/api/brevo-hook` | Double-Opt-in-Mailstrecke und ihr Webhook | Brevo-Keys, `BREVO_WEBHOOK_SECRET` |
 | `/stats/*` | First-Party-Proxy auf selbst gehostetes Umami (Vercel + Neon-Postgres) | — |
+| `GET /audio/<name>.m4a` (seit 2026-09-20), `GET /ill-tempered-week/<week>/<piece>.m4a` (seit 2026-11-09) | Audio mit Byte-Ranges, zustandslos: Pages beantwortet Range-Anfragen an seine Assets mit einem vollen 200, Safari spielt dann nicht ab (`functions/audio/[file].js`, `functions/ill-tempered-week/[week]/[piece].js`, Logik und Tests in `src/lib/audio/ranged.ts`) | `ASSETS` |
 | `POST /api/notify/daily` (seit 2026-11-02) | Tagesmail an den Betreiber: Bewertungen, Lesungen und Studienantworten des Vortags, nur gezählt, höchstens eine am Tag; Saat und Bewertung melden sich zusätzlich sofort (`src/lib/notify/`) | `RECEPTION_DB`, Brevo-Keys, `BREVO_NOTIFY_TO` |
 
 **Unverhandelbare Invarianten** (so schon in `functions/api/seed.js` dokumentiert, hier

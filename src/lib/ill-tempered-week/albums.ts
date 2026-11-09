@@ -86,8 +86,9 @@ export function readAlbums(dir = ALBUMS_DIR): Album[] {
 /** The ISO week's number, which is the album's: 2026-W45 is Contrapunctus 45. */
 export const weekNumber = (week: string): number => Number(week.split('-W')[1])
 
+/** m:ss, cut rather than rounded, as a browser's audio player counts (166.8 s is 2:46 there and here). */
 export const clock = (seconds: number): string => {
-  const s = Math.round(seconds)
+  const s = Math.floor(seconds)
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 }
 
