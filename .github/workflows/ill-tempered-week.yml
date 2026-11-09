@@ -37,7 +37,9 @@ concurrency:
 jobs:
   press:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    # The heaviest morning (Overlooked over seven days, then Unison and Turn) took about nine minutes on a fast Mac
+    # with a cold voice cache; a runner core is slower, and a catch-up morning presses two weeks.
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
         with:
