@@ -132,11 +132,10 @@ export function initCatalogue(root: HTMLElement): void {
     render(false)
   })
 
-  // The filters stand open on a wide screen and folded on a phone, where they used to fill two
-  // screens before the first entry. A link that arrives with filters set opens them either way.
-  if (panel && (window.matchMedia('(min-width: 768px)').matches || activeFilterCount(state) > 0)) {
-    panel.open = true
+  // The filters are rendered open; on a phone they are folded into their bar, where they used to
+  // fill two screens before the first entry. A link that arrives with filters set keeps them open.
+  if (panel && !window.matchMedia('(min-width: 768px)').matches && activeFilterCount(state) === 0) {
+    panel.open = false
   }
-  root.querySelector<HTMLElement>('[data-tools]')?.removeAttribute('hidden')
   render(false)
 }
