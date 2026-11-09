@@ -296,7 +296,7 @@ nature story; Friday's has it back, because Friday does; Saturday's and Sunday's
 Friday. Without `--edition` the script still renders the version Frank approved, bit-identically; two editions,
 rendered twice, are bit-identical too. Frank's verdict the same day (wording private): the growing piece carries.
 
-**Probe 16, *Unison* (planned; Frank's go for the next piece, 9 November, wording private):** war and violence, week
+**Probe 16, *Unison* (built 9 November, `probe16_unison.py`, `out16/`, 4:26, bit-identical twice; Frank's go for the next piece, wording private):** war and violence, week
 45, for string orchestra, brass and timpani from VSCO 2 CE. Every war signal is one glissando: its section by its
 attention on its platform (the most attended highest, in the violins, the least attended lowest, in the basses), its
 first pitch from its own headline's spoken pitch, its entry at its publication hour within the day. Each glissando
