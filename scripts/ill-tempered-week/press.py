@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The Ill-Tempered Week: press a week's Contrapunctus from the ledger (method doc
+"""the ill-tempered week: press a week's Contrapunctus from the ledger (method doc
 docs/design/2026-11-08-common-time-method.md).
 
 Each week is one album, Contrapunctus N (N = its ISO week). Overlooked grows night by night: edition k is pressed
@@ -94,7 +94,7 @@ def press(week: str) -> None:
             pieces[name] = write_piece(week, name, x, rec)
             print(f'{week}: {name.capitalize()}, {pieces[name]["seconds"]} s')
     number = int(week.split('-W')[1])
-    album = {'work': 'The Ill-Tempered Week', 'title': f'Contrapunctus {number}', 'week': week, 'days': days,
+    album = {'work': 'the ill-tempered week', 'title': f'Contrapunctus {number}', 'week': week, 'days': days,
              'complete': k == 7, 'pressed': date.today().isoformat(), 'pieces': {p: pieces[p] for p in PIECES if p in pieces},
              'library': 'VSCO 2 Community Edition 1.1.0 (Versilian Studios, CC0)', 'voices': 'Kokoro-82M (Apache 2.0), local',
              'receipts': dict(sorted(base.RECEIPTS.items()))}

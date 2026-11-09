@@ -4,8 +4,8 @@
 // no Accept-Ranges; measured again on 2026-11-09). Safari's media stack opens with a Range request and treats a 200
 // as a server that cannot stream, so an <audio> element there does not play; other browsers cannot seek past what
 // they hold. functions/audio/[file].js answered that for the found recording on 2026-09-20. This module is the same
-// answer as pure, tested functions, used by functions/ill-tempered-week/[week]/[piece].js for the albums of The
-// Ill-Tempered Week. Ducking does not need it: its desk fetches whole files into the Web Audio API.
+// answer as pure, tested functions, used by functions/ill-tempered-week/[week]/[piece].js for the albums of the
+// ill-tempered week. Ducking does not need it: its desk fetches whole files into the Web Audio API.
 
 export interface ByteRange {
   start: number

@@ -1,4 +1,4 @@
-// Guard for The Ill-Tempered Week: every album on file must be what its own record says it is, read from the
+// Guard for the ill-tempered week: every album on file must be what its own record says it is, read from the
 // ledger it names (src/data/ill-tempered-week/*.json, written by scripts/ill-tempered-week/press.py).
 import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
@@ -30,7 +30,7 @@ describe('clock', () => {
   })
 })
 
-describe('The Ill-Tempered Week', () => {
+describe('the ill-tempered week', () => {
   it('has at least one album, and the first is Contrapunctus 45', () => {
     expect(albums.length).toBeGreaterThan(0)
     expect(albums[0]!.week).toBe('2026-W45')
@@ -39,7 +39,9 @@ describe('The Ill-Tempered Week', () => {
   for (const a of albums) {
     describe(a.title, () => {
       it('is named after its ISO week and holds that week’s first days, in order', () => {
-        expect(a.work).toBe('The Ill-Tempered Week')
+        // Written in lowercase since 2026-11-09; a record pressed on that day or before keeps the spelling it was
+        // pressed under (the archive is not rewritten for a name), every later one carries the lowercase.
+        expect(a.pressed <= '2026-11-09' ? ['The Ill-Tempered Week', 'the ill-tempered week'] : ['the ill-tempered week']).toContain(a.work)
         expect(a.title).toBe(`Contrapunctus ${weekNumber(a.week)}`)
         expect(a.days).toEqual(isoDays(a.week).slice(0, a.days.length))
         expect(span(a.days).length).toBeGreaterThan(0)
