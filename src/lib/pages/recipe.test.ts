@@ -119,11 +119,12 @@ describe('the panels, the cards and the marks', () => {
   })
 
   it('the register filters are cut from the Button recipe', () => {
-    for (const name of ['DatasetRegisterPage', 'PapersPage']) {
-      expect(SURFACES[name]).toMatch(
-        /import \{ buttonVariants \} from '@\/components\/ui\/button'/,
-      )
-      expect(SURFACES[name]).toMatch(/buttonVariants\(\{ variant: 'outline', size: 'sm' \}\)/)
+    // Since 2026-11-09 the three catalogues draw their filters in one shared toolbar.
+    const toolbar = read('../../components/catalogue/CatalogueToolbar.astro')
+    expect(toolbar).toMatch(/import \{ buttonVariants \} from '@\/components\/ui\/button'/)
+    expect(toolbar).toMatch(/buttonVariants\(\{ variant: 'outline', size: 'sm' \}\)/)
+    for (const name of ['AtlasPage', 'DatasetRegisterPage', 'PapersPage']) {
+      expect(SURFACES[name]).toMatch(/import CatalogueToolbar from '@\/components\/catalogue\/CatalogueToolbar.astro'/)
     }
   })
 

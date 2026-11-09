@@ -88,12 +88,19 @@ const werkNamen: Record<string, string> = {
   irrtum: 'Error',
   'atlas-scout': 'Atlas Scout',
   scripts: 'site data scripts',
+  // 2026-11-09: three pipeline keys that showed raw on /datasets. `trending` is Common Ground's
+  // pipeline, `invoked` the Invoked Past's, `newspool` the GDELT news pool several instruments
+  // share.
+  trending: 'Common Ground',
+  invoked: 'Invoked Past',
+  newspool: 'news pool (shared)',
   // 2026-11-04: the practices and houses whose works the register reads since that day.
   atelier: 'Atelier',
   field: 'Field',
   studio: 'Studio',
-  meridian: 'Meridian',
-  nightly: 'Ulysses',
+  // Meridian is the Field's own name (wording canon): one practice, shown once.
+  meridian: 'Field',
+  nightly: 'Ulysses (nightly line)',
   attention: 'Machine Attention',
   middle: 'The Middle',
   'n-1': 'n-1',
@@ -101,3 +108,43 @@ const werkNamen: Record<string, string> = {
   observatory: 'The State Before the Interface',
 }
 export const werkLabel = (w: string): string => werkNamen[w] ?? w
+
+/** The key a user is filtered by: Meridian and the Field are one practice. */
+export const userKey = (w: string): string => (w === 'meridian' ? 'field' : w)
+
+/** Who uses an entry, each once. */
+export const usedBy = (e: Pick<RegisterEntry, 'benutzt_von'>): string[] => [
+  ...new Set(e.benutzt_von.map(userKey)),
+]
+
+const PRACTICES = new Set(['atelier', 'field', 'studio', 'nightly', 'attention', 'middle', 'n-1', 'arch', 'observatory'])
+const INFRASTRUCTURE = new Set(['atlas-scout', 'scripts', 'newspool'])
+/** Three kinds of user, so the "used by" filter reads as practices, instruments and plumbing
+ *  instead of one alphabet of twenty names (2026-11-09). */
+export const userKind = (w: string): 'practice' | 'instrument' | 'infrastructure' =>
+  PRACTICES.has(userKey(w)) ? 'practice' : INFRASTRUCTURE.has(w) ? 'infrastructure' : 'instrument'
+
+/** One card per source. Until 2026-11-09 the builder could write the same id twice (a dataset
+ *  DOI both cited in prose and read in a work's data), and the page showed it twice. Entries
+ *  with one id are folded: findings, addresses and users are united, the confirmed probe wins. */
+export const foldSameId = (entries: RegisterEntry[]): RegisterEntry[] => {
+  const byId = new Map<string, RegisterEntry>()
+  for (const e of entries) {
+    const seen = byId.get(e.id)
+    if (!seen) {
+      byId.set(e.id, e)
+      continue
+    }
+    const lead = seen.geprueft || !e.geprueft ? seen : e
+    byId.set(e.id, {
+      ...lead,
+      fundstellen: [...new Set([...seen.fundstellen, ...e.fundstellen])],
+      adressen: [...new Set([...seen.adressen, ...e.adressen])],
+      benutzt_von: [...new Set([...seen.benutzt_von, ...e.benutzt_von])],
+    })
+  }
+  return [...byId.values()]
+}
+
+/** What /datasets shows: the register, one card per source. */
+export const SOURCES: RegisterEntry[] = foldSameId(ENTRIES)

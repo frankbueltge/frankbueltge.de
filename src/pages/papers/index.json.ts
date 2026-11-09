@@ -7,7 +7,7 @@
 // reader needs to decide whether a paper is worth the full record: who, when, where, the
 // identifier, the URL, the fields it was filed under, and the register's own verdict.
 import type { APIRoute } from 'astro'
-import { PAPERS } from '@/lib/papers'
+import { PAPERS, TESTED_IN_WORK, isTestedInWork } from '@/lib/papers'
 
 export const prerender = true
 
@@ -30,13 +30,17 @@ export const GET: APIRoute = () =>
           'verdict. For the abstracts, the rejections and the access checks, read the full feed ' +
           'at `full` — knowing it is large.',
         count: PAPERS.length,
-        entries: PAPERS.map((p) =>
-          Object.fromEntries(
+        // Since 2026-11-09 /papers lists only what the practices read; identifiers a work tested
+        // as its material (found only in a work's data folder) carry `tested_in_work: true`.
+        tested_in_work_count: TESTED_IN_WORK.length,
+        entries: PAPERS.map((p) => ({
+          ...Object.fromEntries(
             KEEP.filter((k) => (p as unknown as Record<string, unknown>)[k] !== undefined).map(
               (k) => [k, (p as unknown as Record<string, unknown>)[k]],
             ),
           ),
-        ),
+          tested_in_work: isTestedInWork(p),
+        })),
       },
       null,
       2,

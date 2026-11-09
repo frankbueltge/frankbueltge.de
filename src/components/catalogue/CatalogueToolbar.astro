@@ -1,0 +1,107 @@
+---
+// The one toolbar of the three catalogues (/papers, /atlas, /datasets), 2026-11-09.
+//
+// Before this date the three pages drew three filter bars: two in outlined mono chips, one in
+// filled sans chips, with different heads and widths, so moving between them felt like three
+// sites. Now they share this component: a search box and a sort on top, the filters folded
+// under one "Filters" fold (open on a wide screen, folded on a phone), the count and a reset.
+// Everything here is inert until src/lib/catalogue/controller.ts runs, so the whole toolbar is
+// rendered `hidden` and the controller reveals it — without JavaScript the reader gets the full
+// list and no dead controls.
+import { buttonVariants } from '@/components/ui/button'
+import { fieldVariants } from '@/lib/ui/field'
+import { cn } from '@/lib/ui/cn'
+
+export interface ToolbarOption {
+  value: string
+  label: string
+  n?: number
+  /** A sub-heading the option starts (the atlas's three families of fields). */
+  section?: string
+}
+export interface ToolbarGroup {
+  key: string
+  title: string
+  options: ToolbarOption[]
+}
+export interface ToolbarSort {
+  value: string
+  label: string
+}
+interface Props {
+  groups: ToolbarGroup[]
+  sorts: ToolbarSort[]
+  total: number
+  /** what the search box searches, in the placeholder's words */
+  placeholder: string
+  /** the noun for the count line ("papers", "works", "sources") */
+  noun: string
+}
+const { groups, sorts, total, placeholder, noun } = Astro.props
+const shownGroups = groups.filter((g) => g.options.length > 1)
+
+const chip = cn(
+  buttonVariants({ variant: 'outline', size: 'sm' }),
+  'h-7 gap-1.5 px-2 font-mono text-mono-sm font-normal text-fg-muted',
+  'aria-pressed:border-fg aria-pressed:bg-fg aria-pressed:text-bg aria-pressed:hover:bg-fg aria-pressed:hover:text-bg',
+)
+const label = 'font-mono text-mono-xs uppercase tracking-wider text-fg-faint'
+---
+
+<div data-tools hidden class="mb-6 space-y-3 border-y border-line py-4">
+  <form role="search" class="flex flex-col gap-2 sm:flex-row sm:items-center">
+    <label class="sr-only" for="catalogue-q">Search</label>
+    <input
+      id="catalogue-q"
+      type="search"
+      data-q
+      autocomplete="off"
+      spellcheck="false"
+      placeholder={placeholder}
+      class={cn(fieldVariants({ kind: 'input' }), 'sm:flex-1')}
+    />
+    {sorts.length > 1 && (
+      <label class="flex items-center gap-2">
+        <span class={label}>Sort</span>
+        <select data-sort-select class={cn(fieldVariants({ kind: 'select' }), 'w-auto appearance-auto pr-2')}>
+          {sorts.map((s) => <option value={s.value}>{s.label}</option>)}
+        </select>
+      </label>
+    )}
+  </form>
+
+  {shownGroups.length > 0 && (
+    <details data-panel class="group">
+      <summary class={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'h-8 cursor-pointer list-none font-mono text-mono-sm font-normal text-fg-muted [&::-webkit-details-marker]:hidden')}>
+        Filters
+        <span data-active class="tabular-nums text-fg empty:hidden"></span>
+        <span class="fold-chevron inline-block" aria-hidden="true">▾</span>
+      </summary>
+      <div class="mt-3 space-y-3">
+        {shownGroups.map((g) => (
+          <div class="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:gap-3">
+            <span class={cn(label, 'w-20 shrink-0 pt-1')}>{g.title}</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button type="button" data-filter={g.key} data-value="all" aria-pressed="true" class={chip}>all</button>
+              {g.options.map((o) => (
+                <>
+                  {o.section && <span class={cn(label, 'basis-full pt-1')}>{o.section}</span>}
+                  <button type="button" data-filter={g.key} data-value={o.value} aria-pressed="false" class={chip}>
+                    {o.label}{o.n !== undefined && <span class="tabular-nums opacity-60">{o.n}</span>}
+                  </button>
+                </>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </details>
+  )}
+
+  <div class="flex flex-wrap items-center gap-3">
+    <p class="font-mono text-mono text-fg-faint" aria-live="polite">
+      <span data-count>{total}</span> of {total} {noun}
+    </p>
+    <button type="button" data-reset hidden class={chip}>clear search and filters</button>
+  </div>
+</div>
