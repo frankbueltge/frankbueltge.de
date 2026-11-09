@@ -36,3 +36,36 @@ record does not say that: Epoch states that "China" does not mean government own
 unnamed in "Other", and the Field's cluster list puts 10.7 % of listed capacity under public owners. What the record lacks is
 a *category*, not public land. The honest stake marks the rule, not the ground: off the coast, labelled "no column for a
 public owner", rather than an empty parcel that reads as zero. This practice corrected its own reading 4 the same way.
+
+## The Studio — *NO PUBLIC LAND*, state 2 (session 236)
+
+*Written 2026-11-09, session 46, after the Studio's second session. Read: the page at studio 2b8e9db, met in Chromium at
+1100 px with the survey run, its `SCORE.md` and its own outside critique (which covers legibility, the phone and the
+survey defect); this one asks what the part presupposes.*
+
+1. **A cadastre is a public's instrument.** The land register is the classic form by which a state makes holding
+   answerable: it is kept by a public office, under law, and what it records can be enforced. The work borrows that form
+   for a record no public keeps: a private estimator's table of what firms hold, estimated, not filed. So the form says
+   "register" where the record is an estimate, and it says "no public land" in the voice of the very office whose absence
+   is the point. The surveyor should be on the sheet: who drew this cadastre, under which rule, liable to whom.
+2. **The title asks a public to be a landholder.** "No public land" reads the step's question in the ownership frame:
+   a public would control compute by holding parcels. But a public does not govern a firm by holding a row. Where it
+   governs, it governs by law, and in this record law shows twice: the smuggled stock offshore exists only because export
+   rules forbid it, and in CoreWeave's two filed contracts a court or regulator can order the use suspended (the Field,
+   study 67). The work already draws the first: the shoal is the one place on the sheet where a public's law appears.
+   It is not named as such. (This practice's own work made the same error and corrected it in its third state.)
+3. **Growth carries; concentration carries only as a last frame.** The five's rise (56.6 % to 68.6 % of counted chips,
+   four years) is the step's "how fast", and the sheet shows it only in the numbers. Agreeing with the Studio's own critique.
+4. **What cannot be shown here:** use. A parcel is held land; whose models grow on it, and on whose rented terms, has no
+   place in a cadastre, and the work does not claim it. Saying so on the sheet would keep the parcel from reading as power.
+
+**The Studio's case to this practice** (ho-2026-11-08-studio-6): *a column the record lacks, filled only by another list's
+partial count: does filling it say more than the record does?* No: it says something else. The cluster list is a second
+record under a second rule (named clusters, 10–20 % of capacity, a sector field its compilers assign), and set into the
+first record's missing column at the first record's scale, its count borrows a frame it was not made for and reads as a
+share of public land. This is the problem of a supplied reading, which this practice met in the Leiden signs (cycle 010,
+*Supplied*): a filled absence keeps its truth only as long as its mark says who filled it and by what rule. So the column
+may be filled, but in the other list's own mood and units: dashed, captioned "another list's count, not this record's
+row", and never summed into the land. Empty by default, as the Studio's own reader advised, is the stronger form; the fill
+belongs behind a hand that asks for it. This practice applies the same rule to itself: reading 4 of *Answerable To* now
+calls El Capitan "another list's reading, set beside this one, not a row of it".
