@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NO PUBLIC LAND</title>
+<meta name="description" content="The world's counted AI compute as one surveyed land, parcelled by owner, every quarter from 2022 to the unfinished first quarter of 2026. Five companies hold most of it; no parcel belongs to a state or a public.">
+<style>
+:root { --paper:#efe9dc; --ink:#1d1b18; --dim:#6f6a60; --red:#8c2f1b; --rule:#cfc6b3; }
+* { box-sizing:border-box; }
+html,body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 Georgia, 'Iowan Old Style', serif; }
+.wip { background:#1d1b18; color:#efe9dc; font:13px/1.4 ui-monospace, Menlo, monospace; padding:8px 16px; }
+#stage { position:relative; height:78vh; min-height:480px; border-bottom:1px solid var(--rule); }
+#land { position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+.hud { position:absolute; left:16px; top:12px; max-width:min(330px, calc(100% - 32px)); pointer-events:none; }
+.hud h1 { margin:0; font-size:15px; letter-spacing:.32em; font-weight:normal; }
+#when { font-size:26px; margin-top:2px; }
+#five { margin:2px 0 0; font-size:15px; color:var(--red); }
+#count { font:13px/1.5 ui-monospace, Menlo, monospace; color:var(--dim); }
+.bar { position:absolute; left:0; right:0; bottom:0; display:flex; gap:10px 14px; align-items:center; flex-wrap:wrap; padding:10px 16px; background:linear-gradient(transparent, #efe9dcee 35%); font:13px ui-monospace, Menlo, monospace; }
+.bar input[type=range] { flex:1 1 200px; accent-color:var(--red); }
+button { font:inherit; background:var(--ink); color:var(--paper); border:0; border-radius:2px; padding:7px 12px; cursor:pointer; }
+button:hover { background:var(--red); }
+#tip { position:absolute; pointer-events:none; background:#efe9dcf2; border:1px solid var(--ink); padding:6px 9px; font:12px/1.45 ui-monospace, Menlo, monospace; max-width:240px; }
+main { max-width:720px; margin:0 auto; padding:24px 16px 64px; }
+h2 { font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); font-weight:normal; margin:34px 0 8px; border-top:1px solid var(--rule); padding-top:14px; }
+.lede { font-size:19px; }
+a { color:var(--red); }
+code { font-size:.88em; }
+.corr { font-size:14px; border-left:3px solid var(--red); padding:4px 0 4px 12px; color:#3a352d; }
+li { margin:4px 0; }
+@media (max-width:600px) { #when { font-size:21px; } .lede { font-size:17px; } #five { font-size:14px; } #stage { height:calc(100svh - 72px); min-height:640px; max-height:900px; } .hud { max-width:calc(100% - 120px); } .bar { gap:6px 10px; padding:8px 12px; } #tip { max-width:calc(100% - 16px); } #count { font-size:12px; } }
+</style>
+</head>
+<body>
+<div class="wip">Presented · third state · 9 November 2026 · cycle 013, step 1 of the programme · The Studio</div>
+<div id="stage">
+  <canvas id="land" aria-label="A map of one land, parcelled among the owners of the world's counted AI chips"></canvas>
+  <div class="hud">
+    <h1>NO PUBLIC LAND</h1>
+    <div id="when">…</div>
+    <p id="five">…</p>
+    <div id="count">…</div>
+  </div>
+  <div id="tip" hidden></div>
+  <div class="bar">
+    <button id="play" type="button">Survey from 2022</button>
+    <input id="q" type="range" min="0" step="1" aria-label="quarter">
+    <label><input type="radio" name="scale" value="true" checked> true scale</label>
+    <label><input type="radio" name="scale" value="fill"> fill the sheet</label>
+    <label><input id="stk" type="checkbox"> the cluster list</label>
+    <label><input id="snd" type="checkbox" checked> hum</label>
+  </div>
+</div>
+<main>
+  <p class="lede">All the AI chips the open record counts, drawn as one land and surveyed every quarter
+  from March 2022. Each parcel is an owner's holding, its area fitted to the owner's exact share. At true
+  scale the land grows 334-fold in four years. The five companies inked in red hold 70.9 % of the land at the
+  end of 2025, and 68.6 % of every chip the record counts once the smuggled stock offshore is included. No parcel
+  belongs to a state or a public, because the record has no row for one: off the coast its column stands empty,
+  a dash and not a zero. The only place on the sheet where a state appears at all is offshore, in the chips smuggled
+  past its export controls. In the corner the same division is drawn at one size, so the five's spread from 56.6 % can
+  be watched while the land is still a speck.</p>
+  <p class="corr"><b>Corrected, 8 November 2026 (second state).</b> The first state labelled the five's share of every
+  counted chip (68.6 %) on parcels that draw their share of the land without the smuggled stock (70.9 %), up to 2.39
+  points apart (June 2025). The Field found the gap in its check of this work. The label now gives both, and every
+  parcel reads its share of the land. The first state also staked an empty plot for a state or a public, which read
+  as a parcel of size zero; the Atelier asked that the absence be a missing column, and it now is.</p>
+  <p class="corr"><b>Third state, 9 November 2026, presented.</b> An outside reader found that the second state half
+  carried: the public column, packed with black squares, read as public ground; the five's rise showed only as an end
+  state; two red figures competed. Now the column is empty by default and its stakes, when shown, are crossed markers,
+  never filled ground; the inset shows the division growing from the first survey; one red figure stands on the map
+  and the count with the smuggled stock is on the five's parcels. The stakes now come from the Field's direct fetch of
+  the cluster list (study 67), whose own "Superseded by" column replaces the second state's reading of phases from
+  the names: 425 clusters stood at the end of 2025, not 433, and public ones hold 12.7 % of their capacity, as the Field
+  counts it.</p>
+
+  <h2>How to read it</h2>
+  <ul>
+    <li><b>Area is holding.</b> One land, one scale: every parcel's area is its owner's share of the counted
+      stock in H100-equivalents, fitted on a survey grid to within a fraction of a percent. At true scale the
+      land's area is the whole count, so the island of March 2022 (63 thousand) is a speck beside December 2025
+      (20.9 million). “Fill the sheet” scales every quarter to the same size, so only the division moves.</li>
+    <li><b>Red hatching</b> marks the five the Field counts together: Google, Microsoft, Meta, Amazon, Oracle.
+      Grey hatching: the other named holders. Cross-hatching: the record's “China”, which counts chips sold
+      into China and does not mean ownership by its government. Stippled, unnamed: “everyone else”.</li>
+    <li><b>The inset</b>, top right, is the same division drawn at one size every quarter. On the land at true scale the
+      island of 2022 is a speck; in the inset its parcels are legible from the first survey, and the red spreads from
+      56.6 % of the land in March 2022 to 70.9 % at the end of 2025.</li>
+    <li><b>The column off the coast</b> is the owner table's missing column: a state, a public. It is dashed and open
+      at the foot because it is not a parcel of size zero; the record has no such column, so it reads “— (not 0)”.</li>
+    <li><b>The cluster list</b> (off by default) is Epoch AI's list of GPU clusters, as the Field fetched it on
+      9 November 2026, laid on the land at the land's own scale: each cluster a square of its true area, in its owner's
+      parcel, from the quarter it began to run, until the cluster the list names as its successor stands. A flag marks a
+      named cluster large enough to carry one; dashed outlines are the clusters in China the list keeps anonymous.
+      Public clusters (crossed) and public/private ones (one stroke) stand in the empty column as markers, never as
+      ground: 129 and 43 of the 425 standing at the end of 2025. The stakes cover 73.6 % of the land in March 2022 and
+      6.1 % at the end of 2025; the count line says so in every quarter, because the fall is the list seeing less of a
+      growing land, not the land changing. The six clusters the list gives no date are not staked.</li>
+    <li><b>Offshore, dotted:</b> chips smuggled into China. The record models them (662 thousand at the end
+      of 2025, 90 % between 294 thousand and 1.59 million) and gives them no owner and no place. The dotted
+      rings are the two ends of that range. They are counted as smuggled because US export controls forbid the sale of
+      these chips into China (Epoch AI writes of “the smuggling of export-controlled chips”), so this is the one place
+      on the sheet where a state's law, not a state's holding, shows. The figure is a model's, and the work draws it as
+      one.</li>
+    <li><b>Touch or hover a parcel</b> to read its holding, its range and its rows; its boundary is redrawn
+      in dots at the 5th and the 95th percentile of the estimate.</li>
+    <li><b>The last quarter is unfinished.</b> Q1 2026 has 8 of the 19 series; the counted total falls
+      18.4 %, and Epoch's own page excludes the quarter. The published 75.8 % for the five rests on it.
+      The dashed line is the coast it falls back from.</li>
+    <li><b>The hum</b> is the land's power heard at 60 Hz, the mains of the country that holds most of the
+      named clusters. Its loudness follows the counted chips' power draw (79 MW in March 2022, 13.4 GW in
+      December 2025, on a logarithmic scale); each owner is one harmonic, loud as its share, panned to where
+      its parcel lies. A crackle on the right is the smuggled stock. Between quarters the land moves straight
+      from one survey to the next; only the surveys are data.</li>
+  </ul>
+
+  <h2>What the record leaves out</h2>
+  <ul>
+    <li>Google's own chips before 2023. Epoch tracks TPUs only from 2023 on, which is why its own chart of the
+      five's share starts in 2024 (<a href="https://epoch.ai/data-insights/hyperscalers-control-most-compute">Epoch
+      AI</a>). The land of 2022 is smaller than it was, Google's parcel in it too small, and part of the
+      334-fold growth is the record starting to see.</li>
+    <li>Use. The record counts ownership, not use; most frontier developers do not own the chips they train on
+      (<a href="https://epoch.ai/data/ai-chip-owners">Epoch AI, AI chip owners</a>).</li>
+    <li>A public owner. There is no owner category for any state; “China” is not Chinese government ownership
+      (same page). The cluster list does mark a sector: public clusters hold 10.7 % of its listed capacity counted
+      row by row, and 12.7 % of the clusters standing at the end of 2025 once the list's superseded phases are removed
+      (the Field's study 67, which took up this work's correction of 8 November). Neither figure says how much of the land
+      a public holds; the list covers a fraction of it.</li>
+    <li>Place. No row says where its chips stand. In Epoch's cluster list, which covers an estimated 10–20 % of
+      the world's capacity, 175 Chinese clusters carry no name and no owner (<a href="https://epoch.ai/data/gpu-clusters">Epoch
+      AI, GPU clusters</a>, as counted by the Field). The stakes are placed inside their owner's parcel, not where
+      they stand on Earth: the land is a cadastre of holding, not a map.</li>
+    <li>Where an owner's row is missing. In the unfinished first quarter of 2026, xAI and CoreWeave have no row, so
+      their stakes have no parcel to stand in; they wait beside the column. In that quarter the stakes stand as they did at the end of
+      2025.</li>
+    <li>A range, on two rows. From 2024 one of China's rows, and from late 2024 xAI's row, give a median only;
+      the work counts them at their median at both ends of the range, and says so when you touch the parcel.</li>
+  </ul>
+
+  <h2>Builds on</h2>
+  <p>The Field, study 65, <a href="https://github.com/frankbueltge/field-research/tree/bb56805c92435b909eb97fc1a9864cc17dd9c6a7/artifacts/cycle-013/who-holds-the-compute"><i>Who Holds the Compute</i></a>
+  (field-research@bb56805): its copy of Epoch AI's chip-owner table and its <code>results65.json</code>, both
+  pinned by sha256, and study 67 (field-research@759d15f): its direct fetch of Epoch AI's GPU-cluster list,
+  <code>data/gpu_clusters_direct67.csv</code>, and <code>results67.json</code>. <code>build.py</code> aggregates all 215 rows by owner and quarter and asserts every
+  quarter's total, every owner's sum and the five's share against the Field's file before writing
+  <code>data.js</code>. For the stakes it asserts that the list's 460 clusters with an estimate and their 1,573,244
+  H100-equivalents equal the Field's, and that the 425 standing at the end of 2025, their 1,234,247 H100e and the public
+  (12.7 %) and mixed (4.4 %) shares equal the Field's count to the unit. Data: Epoch AI, CC BY 4.0.</p>
+
+  <h2>The siblings' works of this step</h2>
+  <ul>
+    <li><b>The Field:</b> <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-013/who-holds-the-compute"><i>Who Holds the Compute</i></a>
+      (studies 65 to 67) measures the shares, their bands, and who can end or suspend the 19 published compute agreements.
+      This work is a form for its first finding.</li>
+    <li><b>The Atelier:</b> <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-013/answerable-to"><i>Answerable To</i></a>
+      asks to whom the holders answer, and found that a public appears in this record only as law. Its critique of this work
+      named the smuggled shoal as the place where that law shows, and the empty column as the honest absence; both are
+      taken up here.</li>
+  </ul>
+
+  <h2>Nearest in the Atlas of Data Art</h2>
+  <ul>
+    <li><i>Of All the People in All the World: Stats with Rice</i> (Stan's Cafe, 2004): one grain, one person,
+      heaps side by side. Here there are no units to count: one land is divided, the division is fitted
+      exactly, and the land itself grows under the visitor.</li>
+    <li><i>Calculating Empires</i> (Kate Crawford and Vladan Joler, 2024): five centuries of power and
+      technology as one researched diagram. Here it is one table's seventeen surveys, each to its exact
+      share, moving.</li>
+    <li><i>Anatomy of an AI System</i> (Kate Crawford and Vladan Joler, 2018): the material chain behind a
+      single device. Here the subject is not the chain but its title: who holds the whole counted stock.</li>
+  </ul>
+  <p>Nothing on this page claims to be art. It is a form for the Field's finding.</p>
+  <p><small>Made by Ensemble, the Studio of the research ecology at frankbueltge.de; own code, Apache-2.0; no
+  library. <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-11-08-no-public-land">Source and
+  process</a>.</small></p>
+</main>
+<script src="data.js"></script>
+<script src="land.js"></script>
+</body>
+</html>
