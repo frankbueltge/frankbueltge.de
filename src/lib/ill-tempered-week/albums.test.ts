@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { FIELD, INSTRUMENT, readAlbums, span, weekNumber } from './albums'
+import { FIELD, INSTRUMENT, clock, readAlbums, span, weekNumber } from './albums'
 
 const albums = readAlbums()
 
@@ -21,6 +21,14 @@ const ledgerTexts = (day: string): string[] => {
   }
   return Object.values(file.signals).flat().map((s) => s.label)
 }
+
+describe('clock', () => {
+  it('cuts the seconds the way an audio player counts them', () => {
+    expect(clock(166.8)).toBe('2:46')
+    expect(clock(337.2)).toBe('5:37')
+    expect(clock(59.99)).toBe('0:59')
+  })
+})
 
 describe('The Ill-Tempered Week', () => {
   it('has at least one album, and the first is Contrapunctus 45', () => {
