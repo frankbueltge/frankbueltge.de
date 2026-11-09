@@ -322,6 +322,10 @@ attended AI headline, plainly. Sub, bell chords and noise ticks as ground; Sunda
 Known means: the rhythmicon (Cowell, 1931), euclidean rhythm (Toussaint); what the data decide: how full the
 polyrhythm is and how fast its time runs.
 
+Frank's verdict on *Unison* and *Turn* the same day (wording private): both carry. With *Overlooked* the album
+now has three pieces that carry, in three idioms (chamber ensemble, orchestra, electronics); Copy (techno) is with
+him.
+
 ## From the data to the music (first template, probes 04 to 10)
 
 | Common Ground | Becomes |
