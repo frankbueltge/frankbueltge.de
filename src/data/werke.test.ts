@@ -181,10 +181,24 @@ describe('titles carry no leading article (Frank, 2026-08-22)', () => {
   // Eight titles lost their "The" on 2026-08-22. The rule holds for the shelf only: the
   // practice doors and the other houses' pieces ("The Measuring Field", "The State Before the
   // Interface") are named by their own houses, and this register does not rename them.
+  // One experiment keeps its article, by Frank's decision of 2026-11-09 (wording private): in The
+  // Ill-Tempered Week the "The" belongs to the allusion to The Well-Tempered Clavier. The exception
+  // is named by id, so a second "The" on the shelf still turns this red.
+  const KEEPS_ITS_ARTICLE: Record<string, string> = { 'ill-tempered-week': 'The Ill-Tempered Week' }
+
   it('no experiment on /experiments starts with "The"', () => {
     for (const werk of WERKE_HOLDINGS) {
+      if (werk.id in KEEPS_ITS_ARTICLE) continue
       expect(werkTitle(werk, 'en'), werk.id).not.toMatch(/^The\s/)
       expect(werkTitle(werk, 'de'), werk.id).not.toMatch(/^The\s/)
+    }
+  })
+
+  it('lets the one exception keep exactly its own title', () => {
+    for (const [id, title] of Object.entries(KEEPS_ITS_ARTICLE)) {
+      const werk = WERKE_HOLDINGS.find((w) => w.id === id)
+      expect(werk, `${id} is excused but not on the shelf`).toBeDefined()
+      expect(werkTitle(werk!, 'en')).toBe(title)
     }
   })
 
