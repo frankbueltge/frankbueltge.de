@@ -4,7 +4,9 @@ Reads the Field's study 65 (results65.json, field-research @ bb56805, sha256 ass
 Field's study 66 (data/agreements66.json, field-research @ 1ac8d8a, sha256 asserted: the record of use) and
 this work's votes.json (the owners' own proxy statements, read 2026-11-08), writes data.js for the page and
 results.json, and asserts every figure the page and the bulletin state.
-Run from this folder:  python3 build.py <path to results65.json> <path to agreements66.json>
+From state 3 also the Field's study 67 (data/control67.json, field-research @ 759d15f, sha256 asserted: who can end,
+restrict or suspend each agreement) and three developers' own reports that they built a frontier model on chips they hold.
+Run from this folder:  python3 build.py <results65.json> <agreements66.json> <control67.json>
 """
 import hashlib
 import json
@@ -19,6 +21,9 @@ Q = "2025-12-31"  # the last finished quarter (the Field's correction: 2026-03-3
 SHA66 = "c10faa1c8dc765869b47057219aa5a34dbc5f42ed6e9abb03aa330d0743afaa3"
 src = Path(sys.argv[1])
 src66 = Path(sys.argv[2])
+src67 = Path(sys.argv[3])
+SHA67 = "8114a6cd4cd00ca4827d8551ea3f7e5ca5749d78c6e1e40c67cd208604c8c318"
+assert hashlib.sha256(src67.read_bytes()).hexdigest() == SHA67, "not the Field's study 67 file"
 assert hashlib.sha256(src66.read_bytes()).hexdigest() == SHA66, "not the Field's study 66 file"
 assert hashlib.sha256(src.read_bytes()).hexdigest() == SHA, "not the Field's file this was built on"
 r65 = json.loads(src.read_text())
@@ -120,6 +125,59 @@ fig["reach"] = {
 assert fig["reach"] == {"holders": 75.25, "voters": 72.6, "users": 64.25, "public": 0}, fig["reach"]
 fig["reach_sets"] = {"holders": named_holders, "voters": founders + ["Oracle"] + dispersed,
                      "users": sorted(uses), "public": []}
+
+# state 3 — (A) the trend in fixed text: the five named firms' share of the counted stock, every finished quarter
+FIVE = ["Google", "Microsoft", "Amazon", "Meta", "Oracle"]
+trend = [[q["q"], round(100 * sum(q["owner_h100e"].get(o, 0) for o in FIVE) / q["total"], 1),
+          round(q["total"] / 1e6, 2)] for q in finished]
+fig["five_trend"] = trend
+assert trend[0][1] == 56.6 and trend[-1][1] == 68.6, (trend[0], trend[-1])
+fig["growth"] = round(finished[-1]["total"] / finished[0]["total"])
+assert fig["growth"] == 334, fig["growth"]
+
+# state 3 — (B) use is not only renting: holders that build frontier models on chips they hold, by their own reports
+SELF = {
+    "Google": ["Gemini", "https://arxiv.org/abs/2312.11805",
+               "Training Gemini Ultra used a large fleet of TPUv4 accelerators owned by Google across multiple datacenters"],
+    "Meta": ["Llama 3", "https://arxiv.org/abs/2407.21783",
+             "As we scaled further, the training for Llama 3 was migrated to Meta's production clusters"],
+    "xAI": ["Grok 3", "https://x.ai/news/grok-3", "Trained on our Colossus supercluster"],
+}
+assert set(SELF) <= set(H)
+fig["self_use"] = SELF
+fig["providers_hold"] = fig["use_named"]  # the named providers hold 64.3 %
+users_any = sorted(set(uses) | set(SELF))
+fig["reach_sets"]["users"] = users_any
+fig["reach"]["users"] = pct(users_any)
+assert fig["reach"]["users"] == 75.25 == fig["reach"]["holders"]  # every named holder is a user somewhere in the record
+fig["self_only"] = pct(["Meta"])  # held by a firm that builds on it, named by no renter in a first-hand agreement
+assert "Meta" not in uses
+
+# state 3 — (C) a public in this record: not an owner; it shows as law
+fig["law_written"] = pct(["China (smuggled)"])  # only "smuggled" is a category a law wrote; "China" is a country bucket
+assert fig["law_written"] == 3.16, fig["law_written"]
+fig["china_bucket"] = pct(["China"])
+c67 = {r["id"]: r for r in json.loads(src67.read_text())["rows"]}
+assert sorted(c67) == sorted(r["id"] for r in a66)
+ends = {i: r["end"] for i, r in c67.items() if r["end"]}
+assert ends == {"A03": "user", "A05": "either", "A15": "either", "A16": "either", "A18": "user"}, ends
+levers = sorted(i for i, r in c67.items() if r["state_lever"])
+assert levers == ["A05", "A16"]
+by_id = {r["id"]: r for r in a66}
+assert {by_id[i]["provider"] for i in levers} == {"CoreWeave"}
+fig["ctrl_n"] = len(c67)
+fig["ctrl_silent"] = sum(1 for r in c67.values() if not r["end"] and not r["use_restriction"] and not r["state_lever"] and not r["exclusivity"])
+fig["ctrl_ends"] = ends
+fig["ctrl_levers"] = levers
+fig["ctrl_lever_text"] = {i: c67[i]["state_lever"] for i in levers}
+fig["ctrl_provider_end"] = sum(1 for v in ends.values() if v == "provider")
+assert fig["ctrl_provider_end"] == 0
+# whom the visitor may now also choose: a court or regulator. The record names one for the smuggled stock (a law forbids
+# it) and for CoreWeave's chips (both contracts filed in full let an order suspend the use). Nothing else.
+fig["reach_sets"]["law"] = ["CoreWeave", "China (smuggled)"]
+fig["reach"]["law"] = pct(fig["reach_sets"]["law"])
+assert fig["reach"]["law"] == 7.14, fig["reach"]["law"]
+assert fig["ctrl_silent"] == 13 and fig["self_only"] == 11.0 and fig["china_bucket"] == 5.52
 
 squares = {o: round(h / UNIT) for o, h in H.items()}
 assert sum(squares.values()) == 2092, sum(squares.values())

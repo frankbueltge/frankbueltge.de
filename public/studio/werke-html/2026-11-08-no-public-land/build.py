@@ -10,19 +10,24 @@ in the parcel of its owner where the owner table has a row for it, and in a colu
 (the public and the mixed public/private clusters). It also asserts the five's share of the land as drawn (the
 smuggled stock offshore), which the Field's check of 2026-11-08 found missing from the label.
 
-Usage: python3 -I build.py <ai_chip_owners_cumulative_by_designer.csv> <results65.json> <gpu_clusters.json>
+Since session 237 the stakes come from the Field's direct fetch of the cluster list (study 67), with the list's own
+"Superseded by" column; what stood at the end of 2025 is asserted equal to the Field's count.
+
+Usage: python3 -I build.py <ai_chip_owners_cumulative_by_designer.csv> <results65.json> <gpu_clusters_direct67.csv> <results67.json>
 """
 import collections
 import csv
 import hashlib
 import json
-import re
+
 import sys
 
 FIELD_COMMIT = "bb56805c92435b909eb97fc1a9864cc17dd9c6a7"
 CSV_SHA = "17c3381ac7af47da1901afd3a5c5bb88db26b389fd3a809cbaaa5620cde10f25"
 RES_SHA = "0edf831d0cbfc2e9e0d32a60241e9b2d7f6d12f6ab71af0fe680082d529beb86"
-CL_SHA = "1f35afaacf7b4cf8e2a325a40415d6e8f47c99e88ca0240644c5ebd647e44675"
+CL_SHA = "4cfab6db793cb4d39868812797756a712d01f8b337ee35341e53fe3c826c650f"  # study 67, gpu_clusters_direct67.csv
+R67_SHA = "ae3429502d246d81936d7a5313719aad6e6e66e48530cc960e153adcf46295fe"  # study 67, results67.json
+FIELD_COMMIT_67 = "759d15f9514785cfbbfff6480eb630efc92c8c4f"
 # a cluster's owner, as the cluster list names it first, mapped to the owner table's row where one exists
 TABLE_OWNER = {"Google": "Google", "Microsoft": "Microsoft", "Meta AI": "Meta", "Amazon": "Amazon",
                "Oracle": "Oracle", "CoreWeave": "CoreWeave", "xAI": "xAI"}
@@ -44,8 +49,9 @@ def stake_home(r):
     return TABLE_OWNER.get(first, "Other")
 
 
-def main(csv_path, res_path, cl_path):
-    assert sha(cl_path) == CL_SHA, "gpu_clusters.json is not the Field's file"
+def main(csv_path, res_path, cl_path, r67_path):
+    assert sha(cl_path) == CL_SHA, "gpu_clusters_direct67.csv is not the Field's file"
+    assert sha(r67_path) == R67_SHA, "results67.json is not the Field's file"
     assert sha(csv_path) == CSV_SHA, "chip table is not the Field's file"
     assert sha(res_path) == RES_SHA, "results65.json is not the Field's file"
     res = json.load(open(res_path))
@@ -112,82 +118,76 @@ def main(csv_path, res_path, cl_path):
     other = 100 * last["owners"]["Other"]["m"] / last["total"]
     assert round(other) == 16, other
     cl = res["clusters"]
-    assert (cl["n"], cl["china_no_owner"], round(cl["public"], 1)) == (459, 175, 10.7)
     # the correction of 2026-11-08: the parcels draw the land without the smuggled stock
     assert round(last["top5_land"], 1) == 70.9
     gap = max(q["top5_land"] - q["top5"] for q in quarters)
     assert round(gap, 2) == 2.39 and quarters[13]["q"] == "2025-06-30"
     assert round(quarters[13]["top5_land"] - quarters[13]["top5"], 2) == 2.39
 
-    # the stakes: every cluster with an H100e estimate, as the Field counted them (459)
+    # the stakes (since session 237): Epoch AI's GPU-cluster list as the Field fetched it directly on 2026-11-09
+    # (study 67, data/gpu_clusters_direct67.csv, pinned), with the list's own "Superseded by" column. It replaces
+    # session 236's reading of study 65's copy, in which that column was lost and phases were read from the names.
+    r67 = json.load(open(r67_path))
     f = lambda v: float(v) if v not in ("", None) else 0.0
-    rows_cl = [r for r in json.load(open(cl_path, encoding="utf-8"))["rows"] if f(r["H100 equivalents"])]
-    assert len(rows_cl) == cl["n"]
+    rows_cl = [r for r in csv.DictReader(open(cl_path, encoding="utf-8")) if f(r["H100 equivalents"])]
+    ad = r67["clusters_all_rows_direct"]
     ct = sum(f(r["H100 equivalents"]) for r in rows_cl)
-    assert round(ct) == cl["h100e"]
+    assert (len(rows_cl), round(ct)) == (ad["n"], ad["h100e"]) == (460, 1573244)
     qends = [q["q"] for q in quarters if not q["incomplete"]]
-    stakes = []
+    names = {r["Name"].strip() for r in rows_cl}
+    stakes, undated = [], 0
     for r in rows_cl:
         d = r["First Operational Date"].strip()
-        # a cluster stands from the first survey on or after its first operational date; undated: from the last
-        qi = next((i for i, e in enumerate(qends) if d and d <= e), len(qends) - 1)
-        if d and d > qends[-1]:
-            qi = len(qends) - 1
+        if not d:
+            undated += 1  # no date in the list: the Field leaves it out of what stood, and so does the land
+            continue
+        # a cluster stands from the first survey on or after its first operational date
+        qi = next((i for i, e in enumerate(qends) if d <= e), len(qends))
         anon = r["Name"].startswith("Anonymized")
-        # the Field's copy carries stray quote marks on a few names (its CSV was flattened); they are dropped here
-        stakes.append({"n": "" if anon else r["Name"].replace('"', "").strip(), "o": r["Owner"].strip(), "c": r["Country"], "s": r["Sector"],
+        nm = r["Name"].strip()
+        succ = r["Superseded by"].strip()
+        stakes.append({"n": "" if anon else nm, "o": r["Owner"].strip(), "c": r["Country"], "s": r["Sector"],
                        "h": round(f(r["H100 equivalents"])), "d": d, "k": r["Certainty"], "q": qi,
-                       "home": stake_home(r)})
-    # Successive phases of one site ("<site> Phase 2" after "<site> Phase 1") are read as one site growing: from
-    # the survey in which a later phase stands, it replaces the earlier one on the land. Read from the names, an
-    # estimate: the list's own "Superseded by" column did not survive the Field's copy (parse_clusters65.py).
-    site = {}
+                       "home": stake_home(r), "_hx": f(r["H100 equivalents"]), "_id": nm, "_succ": succ if succ in names else ""})
+    assert undated == r67["clusters_standing"]["no_date"] == 6
+    # a cluster the list marks "Superseded by" another stands until the survey in which its successor stands;
+    # a successor the list does not hold supersedes nothing (the Field's one unresolved pair, NVIDIA SATURN V)
+    first_q = {}
     for m in stakes:
-        g = re.match(r"^(.*?) Phase (\d+)$", m["n"])
-        if g:
-            site.setdefault(g.group(1), []).append((int(g.group(2)), m))
-    for pre, ph in site.items():
-        ph.sort(key=lambda x: x[0])
-        for i, (_, m) in enumerate(ph):
-            m["site"] = pre
-            later = [x[1]["q"] for x in ph[i + 1:]]
-            if later:
-                m["until"] = min(later)  # stands until the survey before the next phase
+        first_q[m["_id"]] = min(first_q.get(m["_id"], 99), m["q"])
+    nsup = 0
+    for m in stakes:
+        if m["_succ"]:
+            m["until"] = first_q[m["_succ"]]
+            m["site"] = m["_succ"]
+            nsup += 1
+    stakes = [m for m in stakes if m["q"] < len(qends)]  # nothing in the list begins after the end of 2025
     stakes.sort(key=lambda m: -m["h"])
-    by = collections.Counter(m["home"] for m in stakes)
-    hb = collections.defaultdict(float)
-    for m in stakes:
-        hb[m["home"]] += m["h"]
-    assert round(100 * hb["public"] / ct, 1) == cl["public"] == 10.7
-    assert round(100 * hb["mixed"] / ct, 1) == cl["mixed"] == 3.5
-    assert sum(1 for m in stakes if m["c"] == "China" and not m["n"]) == cl["china_anonymised"] == 175
-    assert sum(1 for m in stakes if not m["d"]) == 6
-    # what the page states about the stakes, asserted here
     standing = lambda m, qi: m["q"] <= qi and ("until" not in m or qi < m["until"])
-    staked_q4 = sum(m["h"] for m in stakes if standing(m, LAST_Q_INDEX))
-    hb_site = collections.defaultdict(float)
-    for m in stakes:
-        if standing(m, LAST_Q_INDEX):
-            hb_site[m["home"]] += m["h"]
-    ct_site = sum(hb_site.values())
-    xai = [m for m in stakes if m["o"] == "xAI"]
-    assert (sum(1 for m in stakes if "site" in m), len(site), sum(1 for p in site.values() if len(p) > 1),
-            sum(1 for m in stakes if "until" in m)) == (62, 36, 23, 26)
-    assert sum(m["h"] for m in xai) == 575796 and sum(m["h"] for m in xai if standing(m, LAST_Q_INDEX)) == 275796
+    st = [m for m in stakes if standing(m, LAST_Q_INDEX)]
+    hst = round(sum(m["_hx"] for m in st))
+    cs = r67["clusters_standing"]
+    pub = 100 * sum(m["_hx"] for m in st if m["home"] == "public") / hst
+    mix = 100 * sum(m["_hx"] for m in st if m["home"] == "mixed") / hst
+    # what stood at the end of 2025 equals the Field's count, to the cluster and the H100e
+    assert (len(st), hst, round(pub, 1), round(mix, 1)) == (cs["n"], cs["h100e"], cs["public"], cs["mixed"]) == (425, 1234247, 12.7, 4.4)
+    assert nsup == 29 and cs["superseded_rows"] == 30  # the 30th is SATURN V Phase 2, whose successor is not listed
     land_q4 = last["total"] - last["owners"]["China (smuggled)"]["m"]
-    stake_stats = {"n": len(stakes), "h100e": round(ct), "by_home": dict(by),
-                   "h_by_home": {k: round(v) for k, v in hb.items()},
-                   "public_n": by["public"], "mixed_n": by["mixed"],
-                   "share_of_land_q4_2025": round(100 * staked_q4 / land_q4, 1),
-                   "phase_rows": 62, "phase_sites": 36, "superseded_rows": 26,
-                   "h100e_by_site_q4_2025": round(ct_site),
-                   "public_by_site_q4_2025": round(100 * hb_site["public"] / ct_site, 1),
-                   "mixed_by_site_q4_2025": round(100 * hb_site["mixed"] / ct_site, 1)}
-    nst = collections.Counter(m["home"] for m in stakes if standing(m, LAST_Q_INDEX))
-    assert (nst["public"], nst["mixed"], sum(nst.values())) == (132, 45, 433)
-    stake_stats["standing_q4_2025"] = {"all": 433, "public": 132, "mixed": 45}
-    assert (stake_stats["share_of_land_q4_2025"], round(ct_site), stake_stats["public_by_site_q4_2025"],
-            stake_stats["mixed_by_site_q4_2025"]) == (6.2, 1248696, 12.6, 4.4)
+    nst = collections.Counter(m["home"] for m in st)
+    # the list's coverage of the land, survey by survey: what the stakes cover is the list seeing, not the land changing
+    cover = []
+    for qi, qq in enumerate(quarters[:len(qends)]):
+        lq = qq["total"] - qq["owners"].get("China (smuggled)", {"m": 0})["m"]
+        cover.append(round(100 * sum(m["h"] for m in stakes if standing(m, qi)) / lq, 1))
+    stake_stats = {"n": len(stakes), "undated_not_staked": undated, "superseded": nsup,
+                   "standing_q4_2025": {"all": len(st), "public": nst["public"], "mixed": nst["mixed"], "h100e": hst},
+                   "public_q4_2025": round(pub, 1), "mixed_q4_2025": round(mix, 1),
+                   "share_of_land_q4_2025": round(100 * hst / land_q4, 1), "cover": cover}
+    assert (nst["public"], nst["mixed"]) == (129, 43), nst
+    assert stake_stats["share_of_land_q4_2025"] == 6.1 and cover[0] == 73.6, (stake_stats["share_of_land_q4_2025"], cover[0])
+    assert sum(1 for m in st if m["c"] == "China" and not m["n"]) == 172
+    for m in stakes:
+        del m["_id"], m["_succ"], m["_hx"]
     print("stakes", stake_stats)
 
     data = {
@@ -195,20 +195,22 @@ def main(csv_path, res_path, cl_path):
             "field_commit": FIELD_COMMIT,
             "csv_sha256": CSV_SHA,
             "results_sha256": RES_SHA,
+            "clusters_commit": FIELD_COMMIT_67,
+            "clusters_sha256": CL_SHA,
+            "results67_sha256": R67_SHA,
         },
         "five": FIVE,
         "epoch_top5": res["epoch_top5"],
         "missing_q1_2026": res["q1_2026_missing_series"],
-        "clusters": {k: cl[k] for k in ("n", "public", "private", "mixed", "china_no_owner")},
         "quarters": quarters,
         "stakes": stakes,
         "stake_stats": stake_stats,
     }
     with open("data.js", "w", encoding="utf-8") as f:
-        f.write("// Built by build.py from the Field's study 65 (field-research@" + FIELD_COMMIT[:7] + "). Do not edit.\n")
+        f.write("// Built by build.py from the Field's studies 65 and 67 (field-research@" + FIELD_COMMIT[:7] + ", @" + FIELD_COMMIT_67[:7] + "). Do not edit.\n")
         f.write("window.NPL = " + json.dumps(data, separators=(",", ":")) + ";\n")
     print("ok", len(quarters), "quarters; end 2025:", last["total"], "H100e,", last["mw"], "MW, five", last["top5"], "%")
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2], sys.argv[3])
+    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

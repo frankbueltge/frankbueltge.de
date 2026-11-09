@@ -121,7 +121,7 @@
   const cv = document.getElementById("land");
   const ctx = cv.getContext("2d");
   const tip = document.getElementById("tip");
-  let W = 0, H = 0, dpr = 1, img = null, own = null;
+  let W = 0, H = 0, dpr = 1, img = null, own = null, own2 = null;
   const INK = [29, 27, 24], PAPER = [239, 233, 220], RED = [140, 47, 27], GREY = [104, 99, 90];
 
   const STYLE = OWN.map(o => {
@@ -147,6 +147,7 @@
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     img = ctx.createImageData(cv.width, cv.height);
     own = new Int8Array(cv.width * cv.height);
+    own2 = new Int8Array(cv.width * cv.height).fill(-1);
     draw();
   }
 
@@ -156,7 +157,10 @@
     const ox = narrow ? W * 0.5 : W * 0.55, oy = narrow ? H * 0.45 : H * 0.55;
     const R = mode === "true" ? Rmax * Math.sqrt(st.land / MAXT) : Rmax * 0.97;
     const unit = mode === "true" ? Rmax / Math.sqrt(MAXT) : R / Math.sqrt(st.land); // px per sqrt(H100e) / sqrt(pi)
-    return { Rmax, ox, oy, R, unit, narrow };
+    // the inset: the same division at one size, top right (true scale only; "fill the sheet" is the division itself)
+    const ir = narrow ? 36 : 62;
+    const inset = mode === "true" ? { x: W - ir - (narrow ? 14 : 30), y: (narrow ? 30 : 30) + ir + 16, r: ir } : null;
+    return { Rmax, ox, oy, R, unit, narrow, inset };
   }
 
   function draw() {
@@ -176,58 +180,65 @@
       }
     }
     own.fill(-1);
-    const x0 = Math.max(0, Math.floor(ox - R * 1.12)), x1 = Math.min(pw - 1, Math.ceil(ox + R * 1.12));
-    const y0 = Math.max(0, Math.floor(oy - R * 1.12)), y1 = Math.min(ph - 1, Math.ceil(oy + R * 1.12));
-    if (R > 0.5) {
-      for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
-        const ux = (x - ox) / R, uy = (y - oy) / R;
-        if (Math.hypot(ux, uy) > coastR(ux, uy)) continue;
-        let best = -1, bd = 1e9;
-        for (let k = 0; k < K; k++) {
-          if (!live[k]) continue;
-          const d = (ux - sx[k]) ** 2 + (uy - sy[k]) ** 2 - w[k];
-          if (d < bd) { bd = d; best = k; }
-        }
-        own[y * pw + x] = best;
-      }
-      const s1 = dpr;
-      for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
-        const k = own[y * pw + x]; if (k < 0) continue;
-        const S = STYLE[k], p = (y * pw + x) * 4;
-        let col = PAPER, on = false;
-        const xs = x / s1, ys = y / s1;
-        if (S.stipple) {
-          const hsh = Math.sin(xs * 12.9898 + ys * 78.233) * 43758.5453;
-          on = (hsh - Math.floor(hsh)) < 0.06;
-        } else {
-          const u = xs * Math.cos(S.ang) + ys * Math.sin(S.ang);
-          on = ((u % S.sp) + S.sp) % S.sp < S.lw;
-          if (S.cross && !on) { const u2 = xs * Math.cos(-S.ang) + ys * Math.sin(-S.ang); on = ((u2 % S.sp) + S.sp) % S.sp < S.lw; }
-        }
-        const lit = hover === k;
-        if (on) col = lit ? INK : S.ink;
-        else col = lit ? [230, 221, 202] : PAPER;
-        data[p] = col[0]; data[p + 1] = col[1]; data[p + 2] = col[2];
-      }
-      // parcel boundaries and the coast in ink
-      const lw = Math.max(1, Math.round(dpr));
-      for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
-        const k = own[y * pw + x];
-        let edge = false, coastE = false;
-        for (let d = 1; d <= lw && !edge; d++) {
-          const nb = [x + d < pw ? own[y * pw + x + d] : -1, y + d < ph ? own[(y + d) * pw + x] : -1];
-          for (const m of nb) if (m !== k) { edge = true; if (m < 0 || k < 0) coastE = true; }
-        }
-        if (!edge) continue;
-        const p = (y * pw + x) * 4;
-        data[p] = INK[0]; data[p + 1] = INK[1]; data[p + 2] = INK[2];
-        if (coastE) for (const q of [p - 4, p + 4, p - pw * 4, p + pw * 4]) if (q >= 0 && q < data.length) { data[q] = INK[0]; data[q + 1] = INK[1]; data[q + 2] = INK[2]; }
-      }
-    }
+    paint(own, ox, oy, R, true);
+    // the inset: the same division at one fixed size, so the five's spread reads while the land is still a speck
+    if (L.inset) { paint(own2, L.inset.x * dpr, L.inset.y * dpr, L.inset.r * dpr, false); }
     ctx.putImageData(img, 0, 0);
     overlay(st, L);
     hud(st);
     hum(st);
+  }
+
+  function paint(ownA, ox, oy, R, main) {
+    const pw = cv.width, ph = cv.height, data = img.data;
+    const x0 = Math.max(0, Math.floor(ox - R * 1.12)), x1 = Math.min(pw - 1, Math.ceil(ox + R * 1.12));
+    const y0 = Math.max(0, Math.floor(oy - R * 1.12)), y1 = Math.min(ph - 1, Math.ceil(oy + R * 1.12));
+    if (!(R > 0.5)) return;
+    if (!main) for (let y = y0; y <= y1; y++) ownA.fill(-1, y * pw + x0, y * pw + x1 + 1);
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+      const ux = (x - ox) / R, uy = (y - oy) / R;
+      if (Math.hypot(ux, uy) > coastR(ux, uy)) continue;
+      let best = -1, bd = 1e9;
+      for (let k = 0; k < K; k++) {
+        if (!live[k]) continue;
+        const d = (ux - sx[k]) ** 2 + (uy - sy[k]) ** 2 - w[k];
+        if (d < bd) { bd = d; best = k; }
+      }
+      ownA[y * pw + x] = best;
+    }
+    const s1 = dpr * (main ? 1 : 0.8);
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+      const k = ownA[y * pw + x]; if (k < 0) continue;
+      const S = STYLE[k], p = (y * pw + x) * 4;
+      let col = PAPER, on = false;
+      const xs = x / s1, ys = y / s1;
+      if (S.stipple) {
+        const hsh = Math.sin(xs * 12.9898 + ys * 78.233) * 43758.5453;
+        on = (hsh - Math.floor(hsh)) < 0.06;
+      } else {
+        const u = xs * Math.cos(S.ang) + ys * Math.sin(S.ang);
+        on = ((u % S.sp) + S.sp) % S.sp < S.lw;
+        if (S.cross && !on) { const u2 = xs * Math.cos(-S.ang) + ys * Math.sin(-S.ang); on = ((u2 % S.sp) + S.sp) % S.sp < S.lw; }
+      }
+      const lit = main && hover === k;
+      if (on) col = lit ? INK : S.ink;
+      else col = lit ? [230, 221, 202] : PAPER;
+      data[p] = col[0]; data[p + 1] = col[1]; data[p + 2] = col[2];
+    }
+    // parcel boundaries and the coast in ink
+    const lw = Math.max(1, Math.round(dpr));
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+      const k = ownA[y * pw + x];
+      let edge = false, coastE = false;
+      for (let d = 1; d <= lw && !edge; d++) {
+        const nb = [x + d < pw ? ownA[y * pw + x + d] : -1, y + d < ph ? ownA[(y + d) * pw + x] : -1];
+        for (const m of nb) if (m !== k) { edge = true; if (m < 0 || k < 0) coastE = true; }
+      }
+      if (!edge) continue;
+      const p = (y * pw + x) * 4;
+      data[p] = INK[0]; data[p + 1] = INK[1]; data[p + 2] = INK[2];
+      if (coastE && main) for (const q of [p - 4, p + 4, p - pw * 4, p + pw * 4]) if (q >= 0 && q < data.length) { data[q] = INK[0]; data[q + 1] = INK[1]; data[q + 2] = INK[2]; }
+    }
   }
 
   function fmtM(v) { return v >= 1e6 ? (v / 1e6).toFixed(1) + " M" : v >= 1e3 ? Math.round(v / 1e3) + " k" : String(Math.round(v)); }
@@ -243,7 +254,7 @@
       for (let i = 0; i <= NA; i++) { const a = (i / NA) * Math.PI * 2, r = coast[i % NA] * Rg; const x = L.ox + r * Math.cos(a), y = L.oy + r * Math.sin(a); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
       ctx.stroke(); ctx.setLineDash([]);
       ctx.fillStyle = "#1d1b18"; ctx.font = "12px ui-monospace, Menlo, monospace"; ctx.textAlign = "center";
-      ctx.fillText("the coast at the end of 2025", L.ox, L.oy + Rg * 1.08 + 14);
+      ctx.fillText("the coast at the end of 2025", L.ox, L.oy - Rg * 1.08 - 8);
     }
     // the smuggled chips: offshore, never surveyed, modelled within a range
     const sm = st.v[SMUG];
@@ -260,8 +271,10 @@
       ctx.setLineDash([]);
       if (rh > 8) {
         ctx.font = "12px ui-monospace, Menlo, monospace"; ctx.fillStyle = "#1d1b18";
-        if (L.narrow) { ctx.textAlign = "center"; ctx.fillText("smuggled into China,", sxp, syp + rh + 14); ctx.fillText("modelled,", sxp, syp + rh + 28); ctx.fillText("never surveyed", sxp, syp + rh + 42); }
-        else { ctx.textAlign = "center"; ctx.fillText("smuggled into China", sxp, syp - rh - 20); ctx.fillText("modelled, never surveyed", sxp, syp - rh - 7); }
+        const lines = ["smuggled into China", "past US export controls:", "the one place a state's", "law shows on this sheet", "(modelled, never surveyed)"];
+        ctx.textAlign = "center";
+        if (L.narrow) lines.forEach((s, i) => ctx.fillText(s, sxp, syp + rh + 14 + 14 * i));
+        else lines.forEach((s, i) => ctx.fillText(s, sxp, syp - rh - 8 - 14 * (lines.length - 1 - i)));
       }
       geom.shoal = { x: sxp, y: syp, r: r(sm.hi), v: sm };
     } else if (geom) geom.shoal = null;
@@ -294,7 +307,7 @@
     // a column missing from the record, so it stands off the coast, dashed, and holds only what another list
     // (the cluster list, 10–20 % of the world's capacity) stakes there.
     {
-      const cw = L.narrow ? Math.min(W * 0.44, 150) : 132;
+      const cw = L.narrow ? Math.min(W * 0.44, 170) : 168;
       const cxL = L.narrow ? W * 0.52 : Math.max(16, L.ox - L.Rmax * 1.08 - cw - 24);
       const top = L.narrow ? L.oy + L.Rmax * 1.08 + 26 : L.oy - L.Rmax * 0.55;
       // shelf-pack the public stakes, largest first, at the land's own scale; where they would leave the
@@ -320,7 +333,7 @@
       ctx.fillStyle = "#1d1b18"; ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
       ctx.font = "bold 12px ui-monospace, Menlo, monospace"; ctx.fillText("STATE · PUBLIC", cxL + 6, top + 14);
       ctx.font = "11px ui-monospace, Menlo, monospace"; ctx.fillText("no column in the record", cxL + 6, top + 27);
-      if (!showStakes) { ctx.fillText("— (not 0)", cxL + 6, top + 46); }
+      if (!showStakes) { ctx.font = "15px Georgia, serif"; ctx.fillText("— (not 0)", cxL + 6, top + 50); ctx.font = "11px ui-monospace, Menlo, monospace"; }
       for (const p of placed) drawStake(p.it.m, p.x, p.y, p.it.side * shrink, true);
       if (shrink < 0.999) { ctx.font = "11px ui-monospace, Menlo, monospace"; ctx.fillStyle = "#8c2f1b"; ctx.fillText(`area shown at 1/${Math.round(1 / (shrink * shrink))}`, cxL + 6, top + ch - 6); }
       if (showStakes) {
@@ -329,12 +342,12 @@
         const yb = top + ch + 14;
         ctx.fillText(`${col.filter(i => i.m.home === "public").length} public clusters, ${fmtM(ph)}`, cxL, yb);
         ctx.fillText(`${col.filter(i => i.m.home === "mixed").length} public/private, ${fmtM(mx)}`, cxL, yb + 14);
-        ctx.fillText("staked by the cluster list,", cxL, yb + 30); ctx.fillText("not by the owner table", cxL, yb + 44);
+        ctx.fillText("markers: the cluster list,", cxL, yb + 30); ctx.fillText("not the owner table", cxL, yb + 44);
       }
       geom.column = { x: cxL, y: top, w: cw, h: ch };
       // stakes whose owner has no parcel in this survey (the unfinished quarter lacks rows)
       if (adrift.length) {
-        let ax = 0; const ay = top + ch + (showStakes ? 66 : 20);
+        let ax = 0; const ay = top + ch + (showStakes ? 80 : 20);
         ctx.fillText(`${adrift.length} stakes whose owner`, cxL, ay); ctx.fillText("has no row this quarter", cxL, ay + 14);
         for (const it of adrift) { const sd = Math.max(it.side, 2); drawStake(it.m, cxL + ax + sd / 2, ay + 24 + sd / 2, it.side, true); ax += sd + 3; }
       }
@@ -358,6 +371,25 @@
       ctx.font = "11px ui-monospace, Menlo, monospace"; ctx.fillText(sh, x, y + 8);
     }
     ctx.restore();
+    // the inset's frame and its one figure: the five's share of the land, March 2022 to now
+    if (L.inset) {
+      const I = L.inset;
+      ctx.save();
+      ctx.fillStyle = "#1d1b18"; ctx.textAlign = "center"; ctx.font = "11px ui-monospace, Menlo, monospace";
+      let f5 = 0; for (const n of D.five) if (st.v[n]) f5 += st.v[n].m;
+      const now5 = (100 * f5 / st.land).toFixed(1);
+      if (L.narrow) {
+        ctx.textAlign = "right"; ctx.font = "10px ui-monospace, Menlo, monospace";
+        ctx.fillText("same division, one size", W - 8, I.y - I.r - 8);
+        ctx.fillStyle = "#8c2f1b"; ctx.font = "bold 12px Georgia, serif";
+        ctx.fillText("the five", W - 8, I.y + I.r + 16); ctx.fillText(`${Q[0].top5_land.toFixed(1)} → ${now5} %`, W - 8, I.y + I.r + 31);
+      } else {
+        ctx.fillText("the same division,", I.x, I.y - I.r - 24); ctx.fillText("at one size", I.x, I.y - I.r - 11);
+        ctx.fillStyle = "#8c2f1b"; ctx.font = "bold 13px Georgia, serif";
+        ctx.fillText(`the five: ${Q[0].top5_land.toFixed(1)} %  →  ${now5} %`, I.x, I.y + I.r + 20);
+      }
+      ctx.restore();
+    }
     // ranges of the hovered parcel: its boundary redrawn at the 5th and 95th percentile
     if (hover >= 0 && live[hover]) {
       const o = st.v[OWN[hover].n];
@@ -382,16 +414,22 @@
     const anon = !m.n;
     ctx.save();
     if (side >= 3) {
-      ctx.fillStyle = inColumn ? (m.home === "mixed" ? "#efe9dc" : "#1d1b18") : "#efe9dc";
+      // in the column a stake is an outline with its cross, a marker, never filled ground: the record has no such land
+      ctx.fillStyle = "#efe9dc";
       ctx.fillRect(x - side / 2, y - side / 2, side, side);
-      if (inColumn && m.home === "mixed") { ctx.fillStyle = "#1d1b18"; ctx.beginPath(); ctx.moveTo(x - side / 2, y + side / 2); ctx.lineTo(x + side / 2, y - side / 2); ctx.lineTo(x + side / 2, y + side / 2); ctx.closePath(); ctx.fill(); }
       ctx.strokeStyle = "#1d1b18"; ctx.lineWidth = 1;
+      if (inColumn && side >= 5) {
+        ctx.beginPath(); ctx.moveTo(x - side / 2, y - side / 2); ctx.lineTo(x + side / 2, y + side / 2);
+        if (m.home === "public") { ctx.moveTo(x + side / 2, y - side / 2); ctx.lineTo(x - side / 2, y + side / 2); }
+        ctx.stroke();
+      }
       if (anon) ctx.setLineDash([2, 2]);
       ctx.strokeRect(x - side / 2, y - side / 2, side, side);
       if (!inColumn && !anon && side >= 7) { ctx.beginPath(); ctx.moveTo(x, y - side / 2); ctx.lineTo(x, y - side / 2 - 5); ctx.lineTo(x + 4, y - side / 2 - 3.5); ctx.lineTo(x, y - side / 2 - 2); ctx.stroke(); }
     } else {
-      ctx.fillStyle = anon ? "#efe9dc" : "#1d1b18";
+      ctx.fillStyle = anon || inColumn ? "#efe9dc" : "#1d1b18";
       ctx.strokeStyle = "#1d1b18"; ctx.lineWidth = 0.8;
+      if (inColumn) { ctx.strokeRect(x - 1.5, y - 1.5, 3, 3); }
       ctx.fillRect(x - 1.1, y - 1.1, 2.2, 2.2); if (anon) ctx.strokeRect(x - 1.5, y - 1.5, 3, 3);
     }
     ctx.restore();
@@ -410,9 +448,7 @@
       ? `${pct} % held by the five, of an unfinished count`
       : st.land < st.total - 0.5
         ? `${pctLand} % of the land held by the five`
-        : `${pct} % held by the five (90 %: ${q.top5_90[0].toFixed(0)}–${q.top5_90[1].toFixed(0)} %)`;
-    document.getElementById("five2").textContent = (!unfinished && st.land < st.total - 0.5)
-      ? `${pct} % of every counted chip, the smuggled included (90 %: ${q.top5_90[0].toFixed(0)}–${q.top5_90[1].toFixed(0)} %)` : "";
+        : `${pct} % of the land held by the five`;
     document.getElementById("count").textContent = (unfinished ? "8 of 19 series · the published 75.8 % rests on this quarter · " : "") +
       `${fmtM(st.total)} H100e counted · ${(st.mw / 1000).toFixed(st.mw < 1000 ? 2 : 1)} GW` + stakeLine();
     const sl = document.getElementById("q"); if (!playing) sl.value = String(qi);
@@ -422,7 +458,8 @@
     if (!document.getElementById("stk").checked) return "";
     const qs = Math.min(Math.round(t), LAST_FULL);
     let n = 0, h = 0; for (const m of STAKES) if (standing(m, qs)) { n++; h += m.h; }
-    return ` · ${n} clusters staked, ${fmtM(h)} H100e` + (Math.round(t) > LAST_FULL ? " (as at the end of 2025)" : "");
+    const cov = D.stake_stats.cover[qs];
+    return ` · ${n} clusters staked, ${fmtM(h)} H100e, covering ${cov.toFixed(1)} % of the land: what the list sees, not what the land holds` + (Math.round(t) > LAST_FULL ? " (as at the end of 2025)" : "");
   }
 
   // ---- the hum: the land's power heard at 60 Hz, one harmonic per owner, loud as its share ----
@@ -488,7 +525,7 @@
     if (e.target.checked && !AC) { try { startHum(); } catch (er) { /* no sound */ } }
     draw();
   });
-  document.getElementById("stk").addEventListener("change", () => draw());
+  document.getElementById("stk").addEventListener("change", () => { tip.hidden = true; hover = -1; draw(); });
   document.querySelectorAll("input[name=scale]").forEach(r => r.addEventListener("change", (e) => { mode = e.target.value; draw(); }));
 
   function pick(ev) {
@@ -508,19 +545,25 @@
         : (IDX[sk.home] !== undefined && live[IDX[sk.home]]) ? "staked in " + (sk.home === "Other" ? "everyone else" : sk.home) + "'s parcel" : "its owner's row is missing in this survey";
       html = `<b>${sk.n || "a cluster in China, unnamed in the list"}</b><br>${sk.o ? "owner: " + sk.o : "no owner named"}${sk.c ? " · " + sk.c : ""}` +
         `<br>${fmtM(sk.h)} H100e · ${sk.k.toLowerCase()}<br>${sk.d ? "operational from " + sk.d : "no date in the list; staked at its last survey"}` +
-        (sk.site ? `<br>a phase of ${sk.site}` : "") + `<br>${where}`;
+        (sk.site ? `<br>the list marks it superseded by ${sk.site}` : "") + `<br>${where}`;
       k = -1;
     } else if (k >= 0) {
       const n = OWN[k].n, o = st.v[n], qo = Q[Math.round(t)].owners[n];
       html = `<b>${n === "Other" ? "everyone else (the record's “Other”)" : n}</b><br>${fmtM(o.m)} H100e, ${(100 * o.m / st.land).toFixed(1)} % of the land, ${(100 * o.m / st.total).toFixed(1)} % of the count` +
         `<br>90 % of the estimate: ${fmtM(o.lo)}–${fmtM(o.hi)}` + (qo ? `<br>${qo.rows} row${qo.rows > 1 ? "s" : ""}: ${qo.designers.join(", ")} chips` + (qo.norange ? `; ${qo.norange} without a range` : "") : "") +
-        (FIVE.has(n) ? "<br>one of the five" : "");
+        (FIVE.has(n) ? (() => { const qq = Q[Math.round(t)]; return `<br>one of the five: together ${qq.top5_land.toFixed(1)} % of the land` +
+          (qq.top5_land > qq.top5 + 0.01 ? `, ${qq.top5.toFixed(1)} % of every counted chip with the smuggled stock (90 %: ${qq.top5_90[0].toFixed(0)}–${qq.top5_90[1].toFixed(0)} %)` : ""); })() : "");
     } else if (geom && geom.shoal && Math.hypot(x - geom.shoal.x, y - geom.shoal.y) < geom.shoal.r + 4) {
       const o = geom.shoal.v;
       html = `<b>Chips smuggled into China</b><br>modelled at ${fmtM(o.m)} H100e<br>90 % of the model: ${fmtM(o.lo)}–${fmtM(o.hi)}<br>a row of the record with no owner and no place`;
     }
     if (k !== hover) { hover = k; draw(); }
-    if (html) { tip.innerHTML = html; tip.hidden = false; tip.style.left = Math.min(x + 14, W - 230) + "px"; tip.style.top = (y + 14) + "px"; }
+    if (html) {
+      tip.innerHTML = html; tip.hidden = false;
+      // on a phone the note stands at the foot of the sheet, above the controls, and never covers the land
+      if (W < 640) { tip.style.left = "8px"; tip.style.top = Math.max(8, H - 120 - tip.offsetHeight) + "px"; }
+      else { tip.style.left = Math.min(x + 14, W - 250) + "px"; tip.style.top = Math.min(y + 14, H - 90 - tip.offsetHeight) + "px"; }
+    }
     else tip.hidden = true;
   }
   cv.addEventListener("pointermove", pick);
