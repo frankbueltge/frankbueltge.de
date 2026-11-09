@@ -86,7 +86,6 @@ const newest = newestPiece(record.things, id)
 const newestHref = newest ? pieceHref(newest.href) : null
 const newestOnSite = newest !== null && newestHref === newest.href
 const shot = (name: string) => (newest && newestOnSite && newest.href.endsWith('/') && existsSync(`public${newest.href}${name}`) ? `${newest.href}${name}` : null)
-const still = { wide: shot('shot-1100.png'), narrow: shot('shot-390.png') }
 const newestTitle = newest ? withoutHouseSuffix(newest.title, me.name) : null
 // A piece of the cycle still in its working phase is still being made: since cycle 009 each
 // practice grows one piece across the cycle, and the site shows it as in progress (2026-10-20).
@@ -100,6 +99,10 @@ const onSiteFolder = (href: string) => pieceHref(href) === href && href.endsWith
 const ownStates = newest && newestOnSite && newest.href.endsWith('/') ? loadProcess(newest.href) : []
 const presentationOfNewest = newest && newest.kind !== 'presentation' ? presentations.filter((p) => p.cycle === newest.cycle && onSiteFolder(p.href)).at(-1) ?? null : null
 const states = ownStates.length > 0 ? ownStates : presentationOfNewest ? loadProcess(presentationOfNewest.href) : []
+// A piece without its own shot-1100.png still has the screenshots of its sessions: the newest
+// one stands in, so a work in progress shows where it is instead of an empty plate.
+const newestStateShot = [...states].reverse().find((s) => s.shot)?.shot ?? null
+const still = { wide: shot('shot-1100.png') ?? newestStateShot, narrow: shot('shot-390.png') }
 const newestPlace = newest ? repoPlaceOf(newest.href.replace(/^\/+|\/+$/g, '')) : null
 const historyHref = newestPlace?.path ? `${REPOS[newestPlace.practice]}/commits/main/${newestPlace.path}` : null
 // The session that made it, where the record ties the two (record.ts, tieSessions); the day's
@@ -138,13 +141,27 @@ const clip = (text: string) => {
   return `${text.slice(0, soft > 0 ? soft : SUB_MAX)}…`
 }
 const mine = record.things.filter((t) => t.house === id)
+// A cycle's final work is recorded twice: as the work itself and as the cycle's presentation,
+// under the same title. The shelf lists it once: the copy that opens on this site, and of two
+// that do, the work rather than the presentation.
+const titleKey = (t: (typeof mine)[number]) => withoutHouseSuffix(t.title, me.name).trim().toLowerCase()
+const rank = (t: (typeof mine)[number]) => (pieceHref(t.href) === t.href ? 0 : 2) + (t.kind === 'presentation' ? 1 : 0)
+function onePerTitle(things: typeof mine): typeof mine {
+  const best = new Map<string, (typeof mine)[number]>()
+  for (const t of things) {
+    const k = titleKey(t)
+    const held = best.get(k)
+    if (!held || rank(t) < rank(held)) best.set(k, t)
+  }
+  return things.filter((t) => best.get(titleKey(t)) === t)
+}
 const shelf = [
   ...[...record.cycles].reverse().map((c) => ({ n: c.n, label: W.cycleLabel(c.n), sub: c.question ? clip(c.question) : T.shelf.ownTheme })),
   { n: 0, label: T.shelf.before.label, sub: T.shelf.before.sub },
 ]
   .map((group) => ({
     ...group,
-    works: mine.filter((t) => t.cycle === group.n).sort((a, b) => a.sortDay.localeCompare(b.sortDay)),
+    works: onePerTitle(mine.filter((t) => t.cycle === group.n)).sort((a, b) => a.sortDay.localeCompare(b.sortDay)),
   }))
   .filter((group) => group.works.length > 0)
 
@@ -321,7 +338,7 @@ const hasFigure = Astro.slots.has('figure')
         <div class="sc-head sc-head--ink">
           <div class="sc-head-title">
             <h2>{noun.shelf}</h2>
-            <span class="sc-head-sub">{T.shelf.meta(mine.length)}</span>
+            <span class="sc-head-sub">{T.shelf.meta(shelf.reduce((n, g) => n + g.works.length, 0))}</span>
           </div>
         </div>
         <div class="sc-list">

@@ -274,7 +274,7 @@ export const NAMING = {
         // Retargeted 2026-09-01 (v3 practice stations): /field keeps no figure any more — the
         // gate strip and claim plate went with the station sheet — so the shortest path into
         // what this practice actually does is its instrument register.
-        tourHref: '/field/instruments',
+        tourHref: '/field/works',
       },
       {
         id: 'ensemble',
@@ -359,7 +359,7 @@ export const NAMING = {
         title: 'a strip of millimetre tape',
         caption: 'The last marked days of the record strip: an instrument entering service, the sessions stamped on their own day, a review cutting in from outside — and the resting pen, where the tape runs on.',
         cta: 'into the record — every instrument, dated →',
-        href: '/field/instruments',
+        href: '/field/works',
       },
       {
         id: 'ensemble',
@@ -554,8 +554,8 @@ export const NAMING = {
      *  own output, and the room where that work is at home */
     practices: [
       { ns: 'atelier' as const, name: 'The Atelier', noun: 'works', roomLabel: 'the atelier’s works', roomHref: '/atelier/works' },
-      { ns: 'field' as const, name: 'The Field', noun: 'instruments', roomLabel: 'the field’s instruments', roomHref: '/field/instruments' },
-      { ns: 'studio' as const, name: 'The Studio', noun: 'premieres', roomLabel: 'the studio’s premieres', roomHref: '/studio/works' },
+      { ns: 'field' as const, name: 'The Field', noun: 'works', roomLabel: 'the field’s works', roomHref: '/field/works' },
+      { ns: 'studio' as const, name: 'The Studio', noun: 'works', roomLabel: 'the studio’s works', roomHref: '/studio/works' },
     ],
     /** What a session leaves under research ecology v3 (2026-08-30), in the canon's noun — the
      *  plural counts in the head line, the singular marks the row. An artifact is never called a

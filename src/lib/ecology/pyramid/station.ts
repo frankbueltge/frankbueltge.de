@@ -176,7 +176,7 @@ export const DOORS: Record<StationId, Door[]> = {
     // record it read stays in the practice's repository.
   ],
   field: [
-    { title: 'instruments', sub: 'the register — each with its record', href: '/field/instruments' },
+    { title: 'instruments', sub: 'the register — each with its record', href: '/field/works' },
     // Since 2026-10-18: the papers the Field presents each cycle's work in, gathered on one page.
     // Until then /field/papers/ was a 404 and a paper could only be found through its presentation.
     { title: 'papers', sub: 'every cycle’s paper, in preprint form', href: '/field/papers' },
