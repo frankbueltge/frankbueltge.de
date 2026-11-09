@@ -6,10 +6,13 @@ the ledger read those fields only through general headlines and an encyclopaedia
 could stand "absent" while the aid world wrote about it every day. Two feeds read that desk:
 
   · ReliefWeb headlines — the UN OCHA service's editorial selection from agencies and NGOs;
-  · UN News — the United Nations' own newsroom.
+  · UN News — the United Nations' own newsroom;
+  · The New Humanitarian, MSF and the ICRC — added on 2026-11-09, after the first nightly run
+    found ReliefWeb answering GitHub's runners with an empty body and UN News with a 404 (both
+    answered elsewhere). Five desks, so that one closed door does not silence the source.
 
-One platform, two feeds (see science_press.py for why). Headlines and links only; a feed that
-fails is a note, the other still counts."""
+One platform, five feeds (see science_press.py for why). Headlines and links only; a feed that
+fails is a note, the others still count."""
 from __future__ import annotations
 
 import xml.etree.ElementTree as ET
@@ -21,8 +24,11 @@ from trending.sources.base import Context, SourceResult, SourceSpec
 FEEDS: tuple[tuple[str, str], ...] = (
     ("reliefweb", "https://reliefweb.int/updates/rss.xml?view=headlines"),
     ("un_news", "https://news.un.org/feed/subscribe/en/news/all/rss.xml"),
+    ("thenewhumanitarian", "https://www.thenewhumanitarian.org/rss/all.xml"),
+    ("msf", "https://www.msf.org/rss/all"),
+    ("icrc", "https://www.icrc.org/en/rss/news"),
 )
-TOP_N = 20  # per feed
+TOP_N = 15  # per feed
 
 
 def fetch_source(ctx: Context) -> SourceResult:
@@ -53,7 +59,7 @@ def fetch_source(ctx: Context) -> SourceResult:
 
 
 SPEC = SourceSpec(
-    id="humanitarian", name="Humanitarian desk — ReliefWeb headlines, UN News (feeds)",
+    id="humanitarian", name="Humanitarian desk — ReliefWeb, UN News, The New Humanitarian, MSF, ICRC (feeds)",
     url="https://reliefweb.int/updates/rss.xml?view=headlines",
     licence="ReliefWeb and UN terms; headlines and links only",
     fetch=fetch_source, optional=True,
