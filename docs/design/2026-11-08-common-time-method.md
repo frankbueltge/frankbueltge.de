@@ -9,11 +9,24 @@ edition breaks off at its newest day. Until that day the work was called Common 
 still use where they record its history.
 
 **To the site (Frank's go of 9 November, wording private).** The three pieces that carry are pressed every week from
-the ledger as *Contrapunctus N*: *Overlooked* each night as an edition of the week so far, all three on Monday for
-the finished week. The renderers move from `_drafts/` into `scripts/ill-tempered-week/` (the VSCO 2 CE library and
+the ledger as *Contrapunctus N*: *Overlooked* with each day file as an edition of the week so far, all three once
+the week's last day file is in. The renderers move from `_drafts/` into `scripts/ill-tempered-week/` (the VSCO 2 CE library and
 the Kokoro voices cached in CI); the page is `/ill-tempered-week`, the method sheet `/werke/ill-tempered-week`. The
 first template's pressings of weeks 37 to 44 were never published and are removed; the album starts with week 45.
 Storage: about 12 MB of audio a week at 128 kbps, the newest edition of *Overlooked* replacing the one before.
+
+**As built (9 November).** `.github/workflows/ill-tempered-week.yml` presses after the ledger: `trending.yml` starts it
+once it has pushed a day file (that run deploys itself, since GitHub gives a run started by the built-in token no
+`workflow_run` event), with a daily cron as the fallback. `press.py --plan` decides first whether anything is due (the
+newest week and the one before it, so a week whose last night failed still completes the next morning); only then
+does the runner fetch what it needs. `scripts/ill-tempered-week/library.py` takes from the pinned VSCO archive (sha256
+checked) only the 24 instruments the renderer names, about 1.2 GB, and writes each sample under the spelling its
+instrument file uses, because the runner's file system is case-sensitive. The album is held to
+`src/lib/ill-tempered-week/albums.test.ts` before anything is committed, so a bad pressing cannot turn the deploy's
+test suite red. Renders are bit-identical in fresh processes on one machine; the runner's builds of numpy and
+onnxruntime may round differently from a Mac's, so a week pressed there is not claimed to match one pressed here to the
+bit. The history keeps every night's edition, so the repository grows by about 30 MB a week, not 12.
+The page plays the newest complete album in full and, above it, the running week's *Overlooked* as far as it has grown.
 
 Written down at Frank's request before the next build (wording private). It replaces the rules of
 `2026-11-08-common-time.md` once the renderer follows it; until then that note describes what the weekly

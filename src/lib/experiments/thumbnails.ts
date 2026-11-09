@@ -44,7 +44,7 @@ import { readAudience, type AudienceReading } from '@/lib/reading/aggregate'
 import { gapFigure } from '@/lib/reading/figure'
 import { readDesk } from '@/lib/ducking/desk-data'
 import { fmtShare, toPosition } from '@/lib/ducking/mix'
-import { readAlbums } from '@/lib/ill-tempered-week/albums'
+import { readAlbums, weekday } from '@/lib/ill-tempered-week/albums'
 import type { InvokedData } from '@/lib/invoked/types'
 import type { BalanceCountry } from '@/lib/balance/types'
 
@@ -808,12 +808,11 @@ function buildThumbnails(): Thumbnail[] {
   if (album?.pieces.unison) {
     const days = album.pieces.unison.days
     const most = days.reduce((a, b) => (b.agreement > a.agreement ? b : a))
-    const weekday = new Date(`${most.day}T12:00:00Z`).toLocaleDateString('en-GB', { weekday: 'long', timeZone: 'UTC' })
     out.push({
       id: 'ill-tempered-week',
       marks: illTemperedMarks(days),
       draws: D['ill-tempered-week']!,
-      readout: R['ill-tempered-week'](most.story, `${Math.round(100 * most.agreement)} %`, weekday),
+      readout: R['ill-tempered-week'](most.story, `${Math.round(100 * most.agreement)} %`, weekday(most.day)),
       source: `src/data/ill-tempered-week/${album.week}.json`,
     })
   }

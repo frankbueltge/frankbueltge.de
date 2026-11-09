@@ -40,7 +40,7 @@ const badges = growing && g
   <SheetHead
     kicker="From the nightly-ledger line"
     title="The Ill-Tempered Week"
-    sub="A week of the web’s attention, composed. Each week is an album, a Contrapunctus numbered by the week, pressed night by night from Common Ground: what was overlooked, where the press agreed, when the week turned."
+    sub="A week of the web’s attention, composed. Each week is an album, a Contrapunctus numbered by the week, pressed day by day from Common Ground: what was overlooked, where the press agreed, when the week turned."
     badges={badges}
     stamp={span(album.days)}
   />
@@ -50,7 +50,7 @@ const badges = growing && g
       Three pieces in three idioms: a chamber ensemble, a string orchestra with brass and timpani, and electronics. Real
       instruments, recorded notes tuned to just intonation on A; synthetic voices that say what the week said. No music model is
       involved: every note follows a written rule from a committed day file, and the album’s record names each file it read. While
-      the week runs, <em>Overlooked</em> is pressed again every night from the days so far, so the piece grows and ends on the
+      the week runs, <em>Overlooked</em> is pressed again from the days so far each time a day of the ledger lands, so the piece grows and ends on the
       newest day; when the week is complete, <em>Unison</em> and <em>Turn</em> join it and the album is never pressed again.
     </p>
   </section>
@@ -65,9 +65,9 @@ const badges = growing && g
         <a class={link} href={g.audio} download>download</a> · CC BY 4.0
       </p>
       <p class="mt-5 max-w-3xl leading-relaxed">
-        The running week, pressed from its days so far. Each night adds a day and presses the piece again from the start,
+        The running week, pressed from its days so far. Each new day of the ledger adds a day, and the piece is pressed again from the start,
         so this edition breaks off at its newest day and the next one hears the week differently: a motif ends with its
-        day once a later day no longer names its field. On Sunday night the piece is complete, and <em>Unison</em> and
+        day once a later day no longer names its field. Once Sunday’s day is in, the piece is complete, and <em>Unison</em> and
         <em>Turn</em> join it.
       </p>
       <OverlookedDays piece={g} />

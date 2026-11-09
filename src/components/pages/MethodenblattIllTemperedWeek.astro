@@ -20,7 +20,7 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
       A week of the web’s attention, composed. Each ISO week of Common Ground becomes an album, a <em>Contrapunctus</em> numbered by the
       week, of three pieces in three idioms ({clock(minutes)} in {album.title}). The title alludes twice to Bach: to the
       <em>Well-Tempered Clavier</em>, here a week in bad temper and in just intonation, not tempered at all; and to the numbered
-      <em>Contrapunctus</em> of the <em>Art of Fugue</em>, whose last breaks off mid-phrase as every nightly edition breaks off at its
+      <em>Contrapunctus</em> of the <em>Art of Fugue</em>, whose last breaks off mid-phrase as every edition breaks off at its
       newest day. The claim is narrow: which headline is heard, how far a mass of strings reaches harmony and how full a rhythm is,
       each follows a written rule from committed day files, and a test holds every album to the files it names. The music adds no
       finding to Common Ground; it lets a week be heard from where the attention was not.
@@ -52,9 +52,9 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">2. Cadence</h2>
     <p class="leading-relaxed text-fg-muted">
-      Every night. When a new day file lands, <em>Overlooked</em> is pressed again from the week’s days so far and replaces the edition
+      Daily, after the ledger. When a new day file lands, <em>Overlooked</em> is pressed again from the week’s days so far and replaces the edition
       before; when the week’s seventh day has landed, <em>Unison</em> and <em>Turn</em> are pressed too and the album is complete. A
-      complete album is never pressed again. GitHub starts scheduled runs late, so an edition can arrive hours after its day file.
+      complete album is never pressed again. The press starts as soon as the ledger has pushed its day file; if that start fails, a daily fallback run presses the edition later, often hours later.
       The first album is {first.title}, the week of the work’s start.
     </p>
   </section>
@@ -107,7 +107,7 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
     <p class="leading-relaxed text-fg-muted">
       Some minutes of CPU a night on the workflow’s runner, no paid service, no GPU. The runner keeps the voice model and the two
       dozen instruments the pieces play (about 1.2 GB of the library’s 3 GB) in its cache between nights. A complete album is
-      about twelve megabytes of audio and a record of tens of kilobytes; because every night’s edition of <em>Overlooked</em>
+      about twelve megabytes of audio and a record of tens of kilobytes; because each day’s edition of <em>Overlooked</em>
       replaces the one before and the history keeps them all, the repository grows by about thirty megabytes a week.
     </p>
   </section>
