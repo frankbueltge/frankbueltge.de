@@ -109,12 +109,12 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
 export const WERKE: Werk[] = [
   {
     // Begun 2026-11-08 as Common Time at Frank's request; rebuilt 2026-11-09 as an album of three composed pieces
-    // after his verdict that the sound must come first, and retitled The Ill-Tempered Week the same day (wording
+    // after his verdict that the sound must come first, and retitled the ill-tempered week the same day, written in lowercase (wording
     // private). Method: docs/design/2026-11-08-common-time-method.md. A complete album is never pressed again;
     // Overlooked grows by one edition a night while its week runs.
     id: 'ill-tempered-week',
     line: 'ledger',
-    title: 'The Ill-Tempered Week',
+    title: 'the ill-tempered week',
     subtitle: {
       de: 'A week of the web’s attention, composed: what was overlooked, where the press agreed, when the week turned',
       en: 'A week of the web’s attention, composed: what was overlooked, where the press agreed, when the week turned',

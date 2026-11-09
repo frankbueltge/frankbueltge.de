@@ -273,11 +273,11 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'instruments',
     kind: 'pipeline',
     owner: 'shared',
-    what: 'The morning reader of what the web is searching, reading and posting about: one dated ledger per day, a term tracker that counts how a watched word is building across platforms, the n-grams a discovery pass noticed on its own, and a day later the count of who read it. Right after each ledger, the press of The Ill-Tempered Week composes the week from it.',
+    what: 'The morning reader of what the web is searching, reading and posting about: one dated ledger per day, a term tracker that counts how a watched word is building across platforms, the n-grams a discovery pass noticed on its own, and a day later the count of who read it. Right after each ledger, a press composes the week from it as an album, “the ill-tempered week”.',
     commitsAs: 'Morgenlese / Presswerk <…@frankbueltge.de>',
     members: [
       { label: 'Trending nightly', what: 'the day’s keyless sources and one disclosed convergence rule, then the term tracker with its discovery pass, then the edge audience of the day before', ref: '.github/workflows/trending.yml', workflowName: 'Trending nightly', cron: ['40 6 * * *'], secrets: ['CF_ANALYTICS_TOKEN'] },
-      { label: 'The Ill-Tempered Week', what: 'started by the ledger once it has pushed a day file: the week’s Overlooked again from its days so far, and Unison and Turn once the seventh day is in; held to the album’s tests before it commits, and a complete album never again', ref: '.github/workflows/ill-tempered-week.yml', workflowName: 'The Ill-Tempered Week', cron: ['50 9 * * *'] },
+      { label: 'the ill-tempered week', what: 'started by the ledger once it has pushed a day file: the week’s Overlooked again from its days so far, and Unison and Turn once the seventh day is in; held to the album’s tests before it commits, and a complete album never again', ref: '.github/workflows/ill-tempered-week.yml', workflowName: 'the ill-tempered week', cron: ['50 9 * * *'] },
     ],
   },
   {
@@ -507,7 +507,7 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'src/data/pulse', what: 'the ecology’s own commit pulse' },
       { label: 'src/content/beifang', what: 'bycatch' },
       { label: 'src/data/trending', what: 'the trending ledger, and its audience the day after' },
-      { label: 'src/data/ill-tempered-week', what: 'the albums of The Ill-Tempered Week, each record hashing the day files it read; the audio beside them in public/ill-tempered-week' },
+      { label: 'src/data/ill-tempered-week', what: 'the albums of “the ill-tempered week”, each record hashing the day files it read; the audio beside them in public/ill-tempered-week' },
     ],
   },
   {

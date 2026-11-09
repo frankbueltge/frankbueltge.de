@@ -70,7 +70,7 @@ describe('WERKE_HOLDINGS (/experiments register)', () => {
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
       WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
     )
-    expect(WERKE_HOLDINGS[0].id).toBe('ill-tempered-week') // newest werk on top today (The Ill-Tempered Week, 2026-11-08)
+    expect(WERKE_HOLDINGS[0].id).toBe('ill-tempered-week') // newest werk on top today (the ill-tempered week, 2026-11-08)
     expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual([...HOLDINGS_RANKED])
   })
   it('keeps every non-excluded entry — ranked and register agree on the set', () => {
@@ -181,16 +181,18 @@ describe('titles carry no leading article (Frank, 2026-08-22)', () => {
   // Eight titles lost their "The" on 2026-08-22. The rule holds for the shelf only: the
   // practice doors and the other houses' pieces ("The Measuring Field", "The State Before the
   // Interface") are named by their own houses, and this register does not rename them.
-  // One experiment keeps its article, by Frank's decision of 2026-11-09 (wording private): in The
-  // Ill-Tempered Week the "The" belongs to the allusion to The Well-Tempered Clavier. The exception
-  // is named by id, so a second "The" on the shelf still turns this red.
-  const KEEPS_ITS_ARTICLE: Record<string, string> = { 'ill-tempered-week': 'The Ill-Tempered Week' }
+  // One experiment keeps its article, by Frank's decisions of 2026-11-09 (wording private): in the
+  // ill-tempered week the article belongs to the allusion to The Well-Tempered Clavier, and the whole
+  // title is written in lowercase, because in the house typeface "Ill" read as the numeral III. The
+  // exception is named by id, and the test reads the article in either case, so a second leading
+  // article on the shelf still turns this red.
+  const KEEPS_ITS_ARTICLE: Record<string, string> = { 'ill-tempered-week': 'the ill-tempered week' }
 
   it('no experiment on /experiments starts with "The"', () => {
     for (const werk of WERKE_HOLDINGS) {
       if (werk.id in KEEPS_ITS_ARTICLE) continue
-      expect(werkTitle(werk, 'en'), werk.id).not.toMatch(/^The\s/)
-      expect(werkTitle(werk, 'de'), werk.id).not.toMatch(/^The\s/)
+      expect(werkTitle(werk, 'en'), werk.id).not.toMatch(/^the\s/i)
+      expect(werkTitle(werk, 'de'), werk.id).not.toMatch(/^the\s/i)
     }
   })
 

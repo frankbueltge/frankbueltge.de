@@ -1,6 +1,8 @@
-# The Ill-Tempered Week — the method (2026-11-08, retitled 2026-11-09)
+# the ill-tempered week — the method (2026-11-08, retitled 2026-11-09)
 
-**Title (Frank's decision of 9 November, wording private):** the work is called *The Ill-Tempered Week*; each week's
+**Title (Frank's decision of 9 November, wording private):** the work is called *the ill-tempered week*, written in
+lowercase since the evening of that day (his choice, wording private: in the house typeface a capital I and a lowercase
+l are the same stroke, and "Ill" read as the numeral III beside pieces numbered I to III); each week's
 album is a *Contrapunctus* numbered by its ISO week (*Contrapunctus 45* for 2 to 8 November 2026); the pieces keep
 their own names (*Overlooked*, *Unison*, *Turn*, and Copy once it carries). Two allusions to Bach: the
 *Well-Tempered Clavier*, here a week in bad temper and in just intonation, not tempered at all; and the

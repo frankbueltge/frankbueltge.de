@@ -1,4 +1,4 @@
-"""The Ill-Tempered Week: the plain tools every piece shares (paths, voices, sound helpers, writing down).
+"""the ill-tempered week: the plain tools every piece shares (paths, voices, sound helpers, writing down).
 
 Kokoro-82M speaks (local, one thread, so a render is deterministic on a given machine); model files from
 KOKORO_MODEL / KOKORO_VOICES or the usual caches. Spoken lines are cached by voice and text in ITW_TTS_CACHE.

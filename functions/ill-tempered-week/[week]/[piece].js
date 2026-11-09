@@ -1,5 +1,5 @@
 // @ts-nocheck
-// Range-capable delivery for the albums of The Ill-Tempered Week (Cloudflare Pages Function, 2026-11-09).
+// Range-capable delivery for the albums of the ill-tempered week (Cloudflare Pages Function, 2026-11-09).
 //
 // As plain Pages assets the albums answered a Range request with a full 200, which Safari takes for a server that
 // cannot stream, so its players stayed silent. The answer, with its tests, is src/lib/audio/ranged.ts: the same one

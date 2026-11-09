@@ -1,4 +1,4 @@
-// src/lib/ill-tempered-week/albums.ts — The Ill-Tempered Week's albums as the site reads them (2026-11-09,
+// src/lib/ill-tempered-week/albums.ts — the albums of the ill-tempered week as the site reads them (2026-11-09,
 // docs/design/2026-11-08-common-time-method.md). Build time only: it reads src/data/ill-tempered-week/*.json,
 // which scripts/ill-tempered-week/press.py writes beside the audio in public/ill-tempered-week/<week>/.
 import { readdirSync, readFileSync } from 'node:fs'
@@ -63,7 +63,9 @@ export interface Turn extends Rendered {
 }
 
 export interface Album {
-  work: 'The Ill-Tempered Week'
+  /** The work's name as written when the album was pressed: lowercase from 2026-11-10 on (Frank's choice of
+   *  2026-11-09, wording private); a record pressed before keeps the capitals it was pressed under. */
+  work: 'the ill-tempered week' | 'The Ill-Tempered Week'
   title: string
   week: string
   days: string[]

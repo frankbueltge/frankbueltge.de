@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch the part of the VSCO 2 Community Edition that The Ill-Tempered Week plays.
+"""Fetch the part of the VSCO 2 Community Edition that the ill-tempered week plays.
 
 The library (Versilian Studios, CC0, version 1.1.0) is about 3 GB; the pieces play two dozen of its instruments,
 about 1.2 GB. This script reads which instruments the renderer names (every quoted name in itw/*.py that is an

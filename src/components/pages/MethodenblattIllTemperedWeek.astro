@@ -1,5 +1,5 @@
 ---
-// Method sheet — The Ill-Tempered Week (2026-11-09). The six parts of the method-sheet duty (werkgruppe spec §3.5).
+// Method sheet — the ill-tempered week (2026-11-09). The six parts of the method-sheet duty (werkgruppe spec §3.5).
 // Method in full: docs/design/2026-11-08-common-time-method.md.
 import MethodSheet from '@/components/experiments/MethodSheet.astro'
 import { clock, readAlbums } from '@/lib/ill-tempered-week/albums'
@@ -13,7 +13,7 @@ const album = albums.filter((a) => a.complete).at(-1) ?? albums.at(-1)!
 const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
 ---
 
-<MethodSheet title="Method sheet — The Ill-Tempered Week" workHref="/ill-tempered-week" workLabel="To the work">
+<MethodSheet title="Method sheet — the ill-tempered week" workHref="/ill-tempered-week" workLabel="To the work">
   <section class="sheet-reveal mb-10">
     <h2 class="kicker mb-2">What this is</h2>
     <p class="leading-relaxed">
@@ -116,7 +116,8 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
     <h2 class="mb-2 font-semibold">6. Change log</h2>
     <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
       <li>2026-11-08 — begun as Common Time, a weekly pressing in one fixed template; never published.</li>
-      <li>2026-11-09 — after probes in five forms and the owner’s verdict that the sound must come first, rebuilt as an album of three composed pieces with recorded instruments, and renamed The Ill-Tempered Week. {first.title} pressed the same day.</li>
+      <li>2026-11-09 — after probes in five forms and the owner’s verdict that the sound must come first, rebuilt as an album of three composed pieces with recorded instruments, and renamed <em>the ill-tempered week</em>. {first.title} pressed the same day.</li>
+      <li>2026-11-09 — the title written in lowercase: in the house typeface a capital I and a lowercase l are the same stroke, and “Ill” read as the numeral III beside pieces numbered I to III.</li>
     </ul>
   </section>
 </MethodSheet>

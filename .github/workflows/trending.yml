@@ -167,7 +167,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
-      # The Ill-Tempered Week presses the week's next edition from the day file just pushed (2026-11-09). Started with
+      # the ill-tempered week presses the week's next edition from the day file just pushed (2026-11-09). Started with
       # the built-in token, that run deploys itself. A start that fails must not fail the ledger, whose deploy hangs on
       # this run's success; the pressing's own cron is the fallback.
       - name: Start the week's pressing
