@@ -121,6 +121,8 @@ export const WERKE: Werk[] = [
     },
     status: 'live',
     since: '2026-11-08',
+    // Overlooked is pressed again with every day of the ledger, so the page changes daily (2026-11-09).
+    live: true,
     href: '/ill-tempered-week',
     description: {
       de: 'From the nightly-ledger line. Each week of Common Ground becomes an album, a Contrapunctus numbered by the week, of three composed pieces in three idioms, played by recorded instruments tuned to just intonation and by synthetic voices that say what the week said. Overlooked, for chamber ensemble, gives each day the headline that drew the least attention on its own platform, from a field not heard before that week; its instrument answers with the headline’s speech melody and the ensemble takes it up in canon, so the overlooked gather across the week while the most attended murmur underneath. Unison, for strings, brass and timpani, plays every signal about war as one glissando and lets the mass glide towards harmony exactly as far as the press agreed that day. Turn, electronic, is a rhythmicon of the platform families whose bars fill as the attention on AI does. Overlooked is pressed again from the days so far whenever a day of the ledger lands; no music model is involved, and every album’s record hashes the day files it read.',
