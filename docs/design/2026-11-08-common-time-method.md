@@ -27,6 +27,9 @@ test suite red. Renders are bit-identical in fresh processes on one machine; the
 onnxruntime may round differently from a Mac's, so a week pressed there is not claimed to match one pressed here to the
 bit. The history keeps every night's edition, so the repository grows by about 30 MB a week, not 12.
 The page plays the newest complete album in full and, above it, the running week's *Overlooked* as far as it has grown.
+The audio goes out through `functions/ill-tempered-week/[week]/[piece].js` with byte ranges (`src/lib/audio/ranged.ts`),
+because Pages answers a Range request to a plain asset with a full 200 and Safari then does not play; found on the live
+page the day it went up, the same fault the found recording met on 2026-09-20.
 
 Written down at Frank's request before the next build (wording private). It replaces the rules of
 `2026-11-08-common-time.md` once the renderer follows it; until then that note describes what the weekly
