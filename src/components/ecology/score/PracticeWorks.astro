@@ -1,0 +1,50 @@
+---
+// A practice's works page on the paper ground (2026-11-09): /field/works, /atelier/works,
+// /studio/works. Until today these were three rooms in three older designs, each reading its own
+// source: the Field's listed only its early instruments, the Atelier's mixed in the works of the
+// nightly line (Ulysses, which is not part of the ecology), the Studio's stood in the retired
+// frame. Now each is the ecology's own works register (src/lib/ecology/record.ts, the same rows
+// /ecology lists), narrowed to the one practice, on the table /ecology already uses.
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { PRACTICE_WORKS as W } from '@/config/practice-works-wording'
+import { SCORE_WORDING } from '@/config/score-wording'
+import { loadEcologyRecord } from '@/lib/ecology/record'
+import type { PracticeId } from '@/lib/ecology/v3'
+import '@fontsource-variable/literata/opsz-italic.css'
+import '@/styles/paper.css'
+import '@/styles/score.css'
+import EcoSubnav from './EcoSubnav.astro'
+import RegisterTable from './RegisterTable.astro'
+
+interface Props {
+  id: PracticeId
+}
+const { id } = Astro.props
+const P = ECOLOGY_V3.practices[id]
+const record = loadEcologyRecord(SCORE_WORDING.presentationTitle)
+const things = record.things.filter((t) => t.house === id)
+const cycles = [...new Set(things.map((t) => t.cycle).filter((c): c is number => typeof c === 'number' && c > 0))].sort((a, b) => a - b)
+---
+
+<main id="main" class={`paper sc pp-voice-${id}`}>
+  <EcoSubnav here={id} />
+  <div class="paper-sheet sc-wrap">
+    <header class="sc-hero">
+      <div class="sc-hero-text">
+        <p class="sc-kicker"><a href={P.href}>{P.name}</a> · {W.kicker}</p>
+        <h1>{W.title(P.name)}</h1>
+        <p class="sc-lede">{W.lead[id]}</p>
+      </div>
+    </header>
+    <section id="register" class="sc-section">
+      <div class="sc-head sc-head--bare">
+        <div class="sc-head-title">
+          <h2>{W.registerTitle}</h2>
+          <span class="sc-head-sub">{W.registerSub}</span>
+        </div>
+        <span class="sc-head-aside" data-sc-register-count>{SCORE_WORDING.register.count(things.length, things.length)}</span>
+      </div>
+      {things.length > 0 ? <RegisterTable things={things} cycles={cycles} single /> : <p class="sc-note-line">{W.none}</p>}
+    </section>
+  </div>
+</main>

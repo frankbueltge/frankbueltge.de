@@ -40,7 +40,7 @@ export const PRACTICE_V3: Record<PracticeId, PracticeStationWording> = {
         ? 'One instrument on the record, read from its own committed metadata.'
         : `${n} instruments on the record, each read from its own committed metadata.`,
     registerLabel: (n) => `all ${n} instruments →`,
-    registerHref: '/field/instruments',
+    registerHref: '/field/works',
   },
   atelier: {
     seo: {

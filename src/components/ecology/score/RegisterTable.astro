@@ -41,8 +41,10 @@ interface Props {
   things: MadeThing[]
   /** the cycles the register can be narrowed to, oldest first */
   cycles: number[]
+  /** one practice's own works page: no house filter, every row is that practice's */
+  single?: boolean
 }
-const { things, cycles } = Astro.props
+const { things, cycles, single = false } = Astro.props
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 // A session's window or artifact is read in the practice's repository since the publication rule of
@@ -69,12 +71,12 @@ const daylightWord = (verdict: string): string => VERDICT_LEGEND.find((l) => l.k
 <div data-sc-register data-count={R.countTemplate(things.length)} data-sort-newest={R.sort.newest} data-sort-oldest={R.sort.oldest}>
   <div class="sc-register-tools" data-sc-tools hidden role="group" aria-label={R.label}>
     <input type="search" placeholder={R.search} aria-label={R.search} data-sc-search />
-    <div class="sc-chips">
+    {!single && <div class="sc-chips">
       {PRACTICES.map((p) => (
         <button type="button" class={`sc-chip sc-voice-chip pp-voice-${p}`} data-filter="house" data-value={p} aria-pressed="false">{SHORT[p]}</button>
       ))}
       {hasNightly && <button type="button" class="sc-chip" data-filter="house" data-value="nightly-line" aria-pressed="false">{R.nightly}</button>}
-    </div>
+    </div>}
     <div class="sc-chips">
       {(['artifact', 'work', 'presentation'] as const).map((k) => (
         <button type="button" class="sc-chip" data-filter="kind" data-value={k} aria-pressed="false">{R.kinds[k]}</button>

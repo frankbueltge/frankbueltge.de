@@ -298,7 +298,8 @@ describe('research ecology v3 — retired routes', () => {
     // Retargeted 2026-09-01 (v3 practice stations): the Field's and the Studio's figures left
     // with the station sheets, so their retired tours land on the register rooms the doors
     // now point at. The Atelier keeps its figure, and its tour keeps its anchor.
-    ['/field/how-a-claim-came-off', '/field/instruments'],
+    ['/field/how-a-claim-came-off', '/field/works'],
+    ['/field/instruments', '/field/works'],
     ['/studio/history', '/studio'],
     ['/studio/apparatus', '/studio'],
     ['/studio/how-a-premiere-returned', '/studio/works'],

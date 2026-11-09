@@ -23,7 +23,7 @@ import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { SCORE_WORDING as W, SHORT, cycleNo } from '@/config/score-wording'
 import { rankedScores, resultFate } from '@/lib/ecology/convening'
-import { loadEcologyRecord, piecesIn, piecesSince, scoreInput, sessionsIn } from '@/lib/ecology/record'
+import { isPractice, loadEcologyRecord, piecesIn, piecesSince, scoreInput, sessionsIn } from '@/lib/ecology/record'
 import { buildScore, cycleOn, ORDER } from '@/lib/ecology/score'
 import { stepOf } from '@/lib/ecology/programme'
 import { loadClosingReports, PRACTICE_REPO, type PracticeId } from '@/lib/ecology/v3'
@@ -166,6 +166,9 @@ const programme = [...details].reverse().map((d) => ({
   counts: ORDER.map((p) => ({ practice: p, text: W.programme.count(piecesIn(record.things, p, d.n).length, SHORT[p]) })),
 }))
 
+// The register lists the three practices only (2026-11-09): the nightly line (Ulysses) is a house
+// beside the ecology, not part of it, and keeps its own room at /error-as-method.
+const ecologyThings = record.things.filter((t) => isPractice(t.house))
 const closing = loadClosingReports()
 const firstRelation = record.relations[0]?.date ?? null
 ---
@@ -399,9 +402,9 @@ const firstRelation = record.relations[0]?.date ?? null
           <h2>{W.register.title}</h2>
           <span class="sc-head-sub">{W.register.sub}</span>
         </div>
-        <span class="sc-head-aside" data-sc-register-count>{W.register.count(record.things.length, record.things.length)}</span>
+        <span class="sc-head-aside" data-sc-register-count>{W.register.count(ecologyThings.length, ecologyThings.length)}</span>
       </div>
-      <RegisterTable things={record.things} cycles={record.cycles.map((c) => c.n)} />
+      <RegisterTable things={ecologyThings} cycles={record.cycles.map((c) => c.n)} />
     </section>
 
     {/* The foot: the order's own line, and the rooms this page used to link that the drawing
