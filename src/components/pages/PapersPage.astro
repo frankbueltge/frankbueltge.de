@@ -64,11 +64,6 @@ const fieldCounts = count(READING.flatMap((p) => p.felder))
 const fieldFacet = [...fieldCounts.entries()].sort((a, b) => a[0] - b[0])
 const unplaced = READING.filter((p) => p.felder.length === 0).length
 
-const reasonOrder = [
-  { key: 'praxis', label: 'written by a practice' },
-  { key: 'urteil', label: 'written by a model' },
-  { key: 'gebrauch', label: 'no reason written yet' },
-] as const
 const reasonCounts = count(READING.map((p) => p.relevanz_herkunft))
 
 // Decades, with everything before 1990 in one bucket: nineteen decade chips back to the 1840s
@@ -89,21 +84,22 @@ const accessFacet = [
 const groups = [
   { key: 'cited', title: 'cited by',
     options: practiceFacet.map(([p, n]) => ({ value: p, label: praxisLabel(p), n })) },
-  { key: 'reason', title: 'reason',
-    options: reasonOrder
-      .map((h) => ({ value: h.key, label: h.label, n: reasonCounts.get(h.key) ?? 0 }))
-      .filter((o) => o.n > 0) },
   { key: 'field', title: 'field',
     options: [
       ...fieldFacet.map(([f, n]) => ({ value: String(f), label: THEMEN_LABELS[f] ?? `field ${f}`, n })),
       ...(unplaced > 0 ? [{ value: 'none', label: 'not yet placed', n: unplaced }] : []),
     ] },
   { key: 'period', title: 'published', options: periodFacet },
-  { key: 'access', title: 'access', options: accessFacet },
+  // Two yes/no questions a reader actually asks, instead of the register's provenance states
+  // (practice / model / none) and two overlapping access states (2026-11-09).
+  { key: 'reason', title: 'reason',
+    options: [{ value: 'praxis', label: 'written by a practice', n: reasonCounts.get('praxis') ?? 0 }] },
+  { key: 'access', title: 'access', options: accessFacet.filter((o) => o.value === 'open') },
 ]
 const sorts = [
   { value: 'recent', label: 'recently used' },
-  { value: 'year', label: 'newest published' },
+  { value: 'year', label: 'newest' },
+  { value: 'added', label: 'recently added' },
   { value: 'title', label: 'title A–Z' },
 ]
 
@@ -153,10 +149,10 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
 
   <section
     data-catalogue
-    data-groups="cited reason field period access"
+    data-groups="cited field period reason access"
     data-multi="cited field access"
-    data-sorts="recent year title"
-    data-sort-desc="recent year"
+    data-sorts="recent year added title"
+    data-sort-desc="recent year added"
     data-default-sort="recent"
     data-page-size={PAGE_SIZE}
   >
@@ -180,6 +176,7 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
         data-f-access={[p.frei_zugaenglich ? 'open' : '', p.geprueft ? 'checked' : ''].filter(Boolean).join(' ')}
         data-s-recent={p.zuletzt_gebraucht ?? ''}
         data-s-year={p.jahr ? String(p.jahr) : ''}
+        data-s-added={p.first_seen_on ?? ''}
         data-s-title={titleSortKey(p.titel)}
         data-text={[p.titel, p.urheber.join(' '), p.ort, p.kennung, ...(p.weitere_kennungen ?? []), p.relevanz].join(' ')}
       >

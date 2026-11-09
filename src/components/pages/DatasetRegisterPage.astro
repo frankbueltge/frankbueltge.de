@@ -37,15 +37,22 @@ const count = <T,>(values: T[]) => {
 const kindOf = (e: (typeof SOURCES)[number]) => (e.aufnahmegrund === 'zitiert' ? 'cited' : 'fetched')
 const kindCounts = count(SOURCES.map(kindOf))
 
-const KIND_ORDER = ['practice', 'instrument', 'infrastructure'] as const
-const KIND_TITLE = { practice: 'practices', instrument: 'instruments', infrastructure: 'shared plumbing' }
-const userCounts = [...count(SOURCES.flatMap(usedBy)).entries()]
-const userOptions = KIND_ORDER.flatMap((k) =>
-  userCounts
-    .filter(([w]) => userKind(w) === k)
+// Practices by name; the lab's instruments and the shared plumbing as one option each. Twenty
+// names in one row were an index of the house, not a filter (2026-11-09).
+const userBucket = (w: string) => {
+  const k = userKind(w)
+  return k === 'practice' ? w : k === 'instrument' ? 'instruments' : 'plumbing'
+}
+const buckets = (e: (typeof SOURCES)[number]) => [...new Set(usedBy(e).map(userBucket))]
+const bucketCounts = count(SOURCES.flatMap(buckets))
+const userOptions = [
+  ...[...bucketCounts.entries()]
+    .filter(([b]) => b !== 'instruments' && b !== 'plumbing')
     .sort((a, b) => b[1] - a[1])
-    .map(([w, n], i) => ({ value: w, label: werkLabel(w), n, section: i === 0 ? KIND_TITLE[k] : undefined })),
-)
+    .map(([w, n]) => ({ value: w, label: werkLabel(w), n })),
+  { value: 'instruments', label: "the lab's instruments", n: bucketCounts.get('instruments') ?? 0 },
+  { value: 'plumbing', label: 'shared plumbing', n: bucketCounts.get('plumbing') ?? 0 },
+].filter((o) => o.n > 0)
 
 // The four access states are the register's real subject and are deliberately not flattened
 // into "checked / unchecked".
@@ -67,7 +74,8 @@ const groups = [
   { key: 'access', title: 'access', options: accessFacet },
 ]
 const sorts = [
-  { value: 'access', label: 'access confirmed first' },
+  { value: 'access', label: 'answering first' },
+  { value: 'added', label: 'recently added' },
   { value: 'used', label: 'most used' },
   { value: 'title', label: 'name A–Z' },
 ]
@@ -115,8 +123,8 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
     data-catalogue
     data-groups="kind used access"
     data-multi="used"
-    data-sorts="access used title"
-    data-sort-desc="used"
+    data-sorts="access added used title"
+    data-sort-desc="added used"
     data-default-sort="access"
     data-page-size={PAGE_SIZE}
   >
@@ -134,10 +142,11 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
           class={cn(panel, 'ds-card break-words p-5')}
           data-card
           data-f-kind={kindOf(e)}
-          data-f-used={usedBy(e).join(' ')}
+          data-f-used={buckets(e).join(' ')}
           data-f-access={state(e)}
           data-s-access={`${ACCESS_RANK[state(e)]}${titleSortKey(e.titel)}`}
           data-s-used={String(usedBy(e).length)}
+          data-s-added={e.first_seen_on ?? ''}
           data-s-title={titleSortKey(e.titel)}
           data-text={[e.titel, e.host, e.relevanz, ...usedBy(e).map(werkLabel), ...e.fundstellen].join(' ')}
         >

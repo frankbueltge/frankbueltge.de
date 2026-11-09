@@ -16,18 +16,20 @@
 // Erweiterung vom 2026-07-25: Datenkunst, die nicht von Macht handelt.
 
 export const THEMEN_LABELS_EN: Record<number, string> = {
-  1: 'Material & planetary AI cost',
-  2: 'AI in war / kill cloud',
-  3: 'Counter-forensics / OSINT',
-  4: 'Provenance / authenticity',
-  5: 'Decolonial / more-than-human',
-  6: 'Data justice / data feminism',
-  7: 'AI self-consumption / quantum',
+  // Reader-facing wording since 2026-11-09 (catalogue review): the same thirteen fields, without
+  // the slashes and shorthand ("kill cloud", "self-consumption") a visitor had to decode.
+  1: 'Planetary cost of AI',
+  2: 'AI and war',
+  3: 'Counter-forensics & OSINT',
+  4: 'Provenance & authenticity',
+  5: 'Decolonial & more-than-human',
+  6: 'Data justice & feminism',
+  7: 'AI feeding on itself',
   8: 'Perception & scale',
   9: 'Time & archive',
   10: 'Error & noise',
   11: 'Body & intimacy',
-  12: 'Language & generativity',
+  12: 'Language & generation',
   13: 'Material & senses',
 }
 

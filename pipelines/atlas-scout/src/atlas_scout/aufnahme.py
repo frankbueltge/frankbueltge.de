@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import date
 from pathlib import Path
 
 from .atlas import PFAD_WERKE, normiere_titel, normiere_url
@@ -137,6 +138,9 @@ def als_eintrag(kandidat: dict) -> dict:
         # Automatisch aufgenommen heißt: noch von niemandem geprüft. Die Karte
         # markiert das sichtbar.
         "verify_status": "toVerify",
+        # The day the work entered the atlas (since 2026-11-09; earlier entries were dated from
+        # the git history of werke.json). /atlas sorts "recently added" by it.
+        "added_on": date.today().isoformat(),
     }
 
 
