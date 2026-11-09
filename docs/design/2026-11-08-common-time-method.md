@@ -290,7 +290,11 @@ from the days so far and the newest Ducking round checked by then: Monday's edit
 whole ensemble, and the tutti, the cut and the coda fall on the newest day of each edition. The retroactive principle
 holds here too: an earlier day's motif keeps sounding after its own day only if its field is named on the newest day;
 otherwise it ends with its day and is missing from that edition's tutti. The seven endings, one after another, are
-the week's growth in two minutes.
+the week's growth in two minutes. Built the same day (`probe15_overlooked.py --edition K`, `out15/editions/`): editions of 1:08 to 5:37.
+Hindsight is audible in three of them: Thursday's edition loses the flute after Monday, because Thursday names no
+nature story; Friday's has it back, because Friday does; Saturday's and Sunday's end the trombone (power) after
+Friday. Without `--edition` the script still renders the version Frank approved, bit-identically; two editions,
+rendered twice, are bit-identical too.
 
 ## From the data to the music (first template, probes 04 to 10)
 
