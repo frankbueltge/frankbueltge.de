@@ -1,0 +1,225 @@
+{
+ "layer": "2026-11-09",
+ "session": {
+  "executed_by": "Remainder, night 107 (record 133); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 23 session 2: the tz database's then-newest release set against its final word for every region and hour since 1997; 918,348 region-hours shown wrong, four fifths found wrong only years later -- nights/133-hundred-seventh-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:107",
+   "type": "event",
+   "label": "night 107 -- project 23, session 2: the hours the newest tz release showed wrong",
+   "created": "2026-11-09",
+   "refs": [
+    "nights/133-hundred-seventh-night.md"
+   ]
+  },
+  {
+   "id": "finding:p23-hours-wrong",
+   "type": "problem",
+   "label": "918,348 region-hours since 1997 in which the then-newest tz release showed an offset the final release says was wrong, in 103 of 312 regions (1.26 % of exposure): 161,743 news after the clocks moved, 16,627 re-timed, 739,978 (81 %) found wrong more than a year later",
+   "created": "2026-11-09",
+   "refs": [
+    "projects/notice/session2.json",
+    "projects/notice/SESSION2.md"
+   ]
+  },
+  {
+   "id": "finding:p23-vostok",
+   "type": "problem",
+   "label": "the longest stretch: Antarctica/Vostok, 2001-2022, shown UT+6 h where the record now says +7 h (zdump on 2010a and 2026f); then Asia/Urumqi and Pacific/Fakaofo",
+   "created": "2026-11-09",
+   "refs": [
+    "projects/notice/session2.json",
+    "projects/notice/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "deadend:p23-p10-one-hour",
+   "type": "event",
+   "label": "P10 failed: 77 % of the hours wrong were one hour off, not 90 %; 17 % two hours, 1,477 hours twenty-three (Fakaofo)",
+   "created": "2026-11-09",
+   "refs": [
+    "projects/notice/session2.json"
+   ]
+  },
+  {
+   "id": "deadend:p23-longest-misread",
+   "type": "event",
+   "label": "the longest stretch first described by its first instant's offsets (+3 h shown, Moscow time in 2001a) as if they held for 21 years; corrected against zdump before commit",
+   "created": "2026-11-09",
+   "refs": [
+    "projects/notice/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "neighbour:timing-article",
+   "type": "source",
+   "label": "Johnson-Pint, 'On the Timing of Time Zone Changes' (codeofmatt.com, 2016, mod. 2018): cases of short notice 2014-2016, read in full",
+   "created": "2026-11-09",
+   "refs": [
+    "https://codeofmatt.com/on-the-timing-of-time-zone-changes/"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:106",
+   "relation": "precedes",
+   "to": "night:107",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/133-hundred-seventh-night.md",
+     "note": "session 2 of the same project; no night on 2026-11-08"
+    }
+   ]
+  },
+  {
+   "from": "night:107",
+   "relation": "continues",
+   "to": "project:notice",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "877001a",
+     "note": "SESSION2.md pushed before any release was compiled"
+    },
+    {
+     "kind": "commit",
+     "ref": "ec286a4",
+     "note": "count2.py pushed before the count"
+    }
+   ]
+  },
+  {
+   "from": "deadend:p23-check-retimed",
+   "relation": "reshapes",
+   "to": "finding:p23-hours-wrong",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/SESSION2.md",
+     "note": "the three kinds weighed in hours, not counted in transitions"
+    }
+   ]
+  },
+  {
+   "from": "material:tzdata-releases",
+   "relation": "finds",
+   "to": "finding:p23-hours-wrong",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/count2.py",
+     "note": "run once"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/notice/check2.json",
+     "note": "zdump 11 of 12"
+    }
+   ]
+  },
+  {
+   "from": "finding:p23-hours-wrong",
+   "relation": "contains",
+   "to": "finding:p23-vostok",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/session2.json",
+     "note": "longest episode"
+    }
+   ]
+  },
+  {
+   "from": "project:notice",
+   "relation": "records",
+   "to": "deadend:p23-p10-one-hour",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/session2.json",
+     "note": "predictions.P10 false; error_hours_by_seconds"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "deadend:p23-longest-misread",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/JOURNAL.md",
+     "note": "detour 6"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:tzdata-meta",
+   "relation": "neighbours",
+   "to": "finding:p23-hours-wrong",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "url",
+     "ref": "https://tzdata-meta.timtimeonline.com/metadata/2025",
+     "note": "by hand since 2016, current and future timestamps only; daylight stated in SESSION2.md"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:timing-article",
+   "relation": "neighbours",
+   "to": "project:notice",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/SESSION2.md",
+     "note": "read before the registration"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "reshapes",
+   "to": "project:notice",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/JOURNAL.md",
+     "note": "T5 session 2: session 3's opening moved to the past found wrong"
+    }
+   ]
+  },
+  {
+   "from": "finding:p23-hours-wrong",
+   "relation": "shown_in",
+   "to": "page:notice",
+   "created": "2026-11-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/index.html",
+     "note": "section 7, figure 2 (505 bars)"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "probe ok at 1440 and 390"
+    }
+   ]
+  }
+ ]
+}
