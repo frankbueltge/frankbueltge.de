@@ -8,7 +8,7 @@
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
-        "sha256": "c39ec6257b8b38d6"
+        "sha256": "a651e8789c887ecc"
       },
       {
         "file": "docs/decision-log.md",
@@ -57,12 +57,12 @@
       }
     ],
     "counts": {
-      "nodes": 626,
-      "edges": 551,
+      "nodes": 628,
+      "edges": 553,
       "nodesByKind": {
         "decision": 186,
         "encounter": 6,
-        "neighbor": 159,
+        "neighbor": 161,
         "practice": 9,
         "practice-work": 228,
         "receiver": 8,
@@ -73,7 +73,7 @@
         "concerns": 2,
         "door": 5,
         "made-by": 228,
-        "neighbor-of": 161,
+        "neighbor-of": 163,
         "participates": 17,
         "touches": 130
       }
@@ -2007,6 +2007,16 @@
       "recordUrl": "https://github.com/frankbueltge/research-ecology/tree/main/fixtures/enc-2026-006-set-the-standard"
     },
     {
+      "id": "neighbor:ablinger-mur-at-voices-and-piano-html",
+      "kind": "neighbor",
+      "label": "Peter Ablinger, *Voices and Piano* (since 1998)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Peter Ablinger, *Voices and Piano* (since 1998)](https://ablinger.mur.at/voices_and_piano.html) — recorded speech rebuilt on the piano from its spectrum, voice by voice, and in *Quadraturen III* a TV news fragment repeated until the piano nearly speaks. The closest neighbour of *Overlooked*'s speech melodies; it does not choose whose speech by its lack of attention, and nothing rewrites it day by day."
+      },
+      "url": "https://ablinger.mur.at/voices_and_piano.html"
+    },
+    {
       "id": "neighbor:aclanthology-org-2024-emnlp-main-384-pdf",
       "kind": "neighbor",
       "label": "INFOGAP",
@@ -2812,6 +2822,16 @@
         "quote": "[\"Testing for Benford's Law in very small samples...\"](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271969), *PLOS One* (2022) — rigorous Monte-Carlo simulation of false-positive rates as a function of sample size — the exact phenomenon the site demonstrates, done with formal statistical machinery."
       },
       "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271969"
+    },
+    {
+      "id": "neighbor:kreidler-net-de-english-works-chartsmusic-htm",
+      "kind": "neighbor",
+      "label": "Johannes Kreidler, *Charts Music* (2009)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Johannes Kreidler, *Charts Music* (2009)](https://www.kreidler-net.de/english/works/chartsmusic.htm) — stock charts and, midway, arms-sales and Iraq-war figures turned into melodies (price up, pitch up) with automatic backing. The closest neighbour of the whole idea, data heard as melody, and a critique of it; it plays the data straight, where this work composes against the data's own ranking."
+      },
+      "url": "https://www.kreidler-net.de/english/works/chartsmusic.htm"
     },
     {
       "id": "neighbor:leapsecond-com",
@@ -10712,6 +10732,17 @@
     {
       "kind": "neighbor-of",
       "from": "work:ill-tempered-week",
+      "to": "neighbor:ablinger-mur-at-voices-and-piano-html",
+      "note": "recorded speech rebuilt on the piano from its spectrum, voice by voice, and in *Quadraturen III* a TV news fragment repeated until the piano nearly speaks. The closest neighbour of *Overlooked*'s speech melodies; it does not choose whose speech by its lack of attention, and nothing rewrites it day by day.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Peter Ablinger, *Voices and Piano* (since 1998)](https://ablinger.mur.at/voices_and_piano.html) — recorded speech rebuilt on the piano from its spectrum, voice by voice, and in *Quadraturen III* a TV news fragment repeated until the piano nearly speaks. The closest neighbour of *Overlooked*'s speech melodies; it does not choose whose speech by its lack of attention, and nothing rewrites it day by day."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
       "to": "neighbor:creativeainews-com-blog-audio-observer-ai-news-music-2026",
       "note": "daily songs from the news, made by a music model, topic and tone choosing genre tags. Scheduled news music exists; this one generates rather than derives.",
       "state": "ADDED VALUE",
@@ -10784,6 +10815,17 @@
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "[Henry Cowell and Leon Theremin, the Rhythmicon (1931)](https://en.wikipedia.org/wiki/Rhythmicon) — rhythm in the ratios of the overtone series, the frame of *Turn*."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ill-tempered-week",
+      "to": "neighbor:kreidler-net-de-english-works-chartsmusic-htm",
+      "note": "stock charts and, midway, arms-sales and Iraq-war figures turned into melodies (price up, pitch up) with automatic backing. The closest neighbour of the whole idea, data heard as melody, and a critique of it; it plays the data straight, where this work composes against the data's own ranking.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Johannes Kreidler, *Charts Music* (2009)](https://www.kreidler-net.de/english/works/chartsmusic.htm) — stock charts and, midway, arms-sales and Iraq-war figures turned into melodies (price up, pitch up) with automatic backing. The closest neighbour of the whole idea, data heard as melody, and a critique of it; it plays the data straight, where this work composes against the data's own ranking."
       }
     },
     {
