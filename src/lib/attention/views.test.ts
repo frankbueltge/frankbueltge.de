@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 import viewsFile from '@/data/attention/views.json'
 
-import { berlinTime, clockFigure, intervalPanel, readViews, usd, waveform, waveforms } from './views'
+import { berlinTime, clockFigure, intervalPanel, isFresh, latestNight, readViews, usd, waveform, waveforms } from './views'
 
 const views = readViews(viewsFile)!
 
@@ -93,5 +93,26 @@ describe('the interval panels', () => {
 
   it('formats dollars compactly', () => {
     expect([usd(950), usd(12_400), usd(3_250_000), usd(1_200_000_000)]).toEqual(['$950', '$12k', '$3.3M', '$1.2B'])
+  })
+})
+
+describe('the newest reading', () => {
+  it('is the newest night on record, whatever the order of the rows', () => {
+    const night = latestNight(views)!
+    const newest = views.planetary.map((n) => n.day).sort().at(-1)
+    expect(night.day).toBe(newest)
+    const shuffled = { ...views, planetary: [...views.planetary].reverse() }
+    expect(latestNight(shuffled)).toEqual(night)
+  })
+
+  it('is absent when there is nothing to read', () => {
+    expect(latestNight(null)).toBeNull()
+    expect(latestNight({ planetary: [], interval: [] })).toBeNull()
+  })
+
+  it('lets a stage moment go stale two weeks after the newest step', () => {
+    expect(isFresh('2026-10-04T00:00:00Z', '2026-11-09')).toBe(false)
+    expect(isFresh('2026-11-01T10:00:00Z', '2026-11-09')).toBe(true)
+    expect(isFresh('2026-10-04T00:00:00Z', null)).toBe(true)
   })
 })

@@ -47,6 +47,10 @@ import type { PulseSnapshot } from '@/lib/pulse/render'
 import { RETIRED_REPOS, withoutRepos } from '@/lib/pulse/without'
 import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
 import { buildBoard } from '@/lib/ops/board'
+import attentionViews from '@/data/attention/views.json'
+import attentionExport from '@/data/attention/export.json'
+import { latestNight, readViews } from '@/lib/attention/views'
+import { readExport } from '@/lib/attention/export'
 import { pieceHref } from '@/lib/engines/publication-links'
 import { houseNames, type HouseId } from '@/lib/ops/house-feed'
 import { buildHouseFeed } from '@/lib/ops/live-feed'
@@ -220,6 +224,16 @@ const landed = briefs.filter((b) => b.piece).length
 
 // ── house by house: every system that is not one of the ecology's four ──────────────────────
 const isDay = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s)
+// Machine Attention speaks through its newest instrument night and the projects it draws now
+// (2026-11-09), so its row moves with the practice instead of holding a retirement notice.
+const views = readViews(attentionViews)
+const night = latestNight(views)
+const attentionNight = night && { text: E.overnight.attention.night(night), day: night.day }
+const attentionExp = readExport(attentionExport)
+const DRAWN = new Set<string>([...(views?.planetary.length ? ['planetary'] : []), ...(views?.interval.length ? ['interval'] : [])])
+const attentionNow = E.overnight.attention.now(
+  (attentionExp?.projects ?? []).filter((p) => p.status !== 'retired' && DRAWN.has(p.id)).map((p) => p.title),
+)
 const houses = timetable
   .filter((sys) => !sys.ecology)
   .map((sys) => {
@@ -228,16 +242,20 @@ const houses = timetable
     const streamed = newestOf(feed, FEED_HOUSES[sys.id] ?? [])
     const board = sys.boardLast
     const boardDay = board && isDay(board.meta) ? board.meta : null
-    const last =
+    const recorded =
       streamed && (!boardDay || streamed.date >= boardDay)
         ? { text: lineOf(streamed), day: streamed.date }
         : board
           ? { text: board.title, day: boardDay }
           : null
+    const isAttention = sys.id === 'attention'
+    const last =
+      isAttention && attentionNight && (!recorded?.day || attentionNight.day >= recorded.day) ? attentionNight : recorded
+    const relation = isAttention && attentionNow ? attentionNow : sys.relation
     return {
       ...sys,
       last,
-      meta: E.overnight.meta({ day: last?.day ? longDay(last.day) : null, commits: sys.commits, days: table.days.length, relation: sys.relation }),
+      meta: E.overnight.meta({ day: last?.day ? longDay(last.day) : null, commits: sys.commits, days: table.days.length, relation }),
     }
   })
 
