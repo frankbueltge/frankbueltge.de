@@ -5,9 +5,10 @@
 // filled sans chips, with different heads and widths, so moving between them felt like three
 // sites. Now they share this component: a search box and a sort on top, the filters folded
 // under one "Filters" fold (open on a wide screen, folded on a phone), the count and a reset.
-// Everything here is inert until src/lib/catalogue/controller.ts runs, so the whole toolbar is
-// rendered `hidden` and the controller reveals it — without JavaScript the reader gets the full
-// list and no dead controls.
+// The toolbar and its filters are rendered visible and open, and the controller only folds the
+// filters on a narrow screen (2026-11-09, after Frank found the atlas without filters: on a phone
+// they sat behind a small button below the fold, and a browser where the script fails would have
+// shown none at all). The fold is a full-width bar that names the filters it holds.
 import { buttonVariants } from '@/components/ui/button'
 import { fieldVariants } from '@/lib/ui/field'
 import { cn } from '@/lib/ui/cn'
@@ -48,7 +49,7 @@ const chip = cn(
 const label = 'font-mono text-mono-xs uppercase tracking-wider text-fg-faint'
 ---
 
-<div data-tools hidden class="mb-6 space-y-3 border-y border-line py-4">
+<div data-tools class="mb-6 space-y-3 border-y border-line py-4">
   <form role="search" class="flex flex-col gap-2 sm:flex-row sm:items-center">
     <label class="sr-only" for="catalogue-q">Search</label>
     <input
@@ -71,11 +72,14 @@ const label = 'font-mono text-mono-xs uppercase tracking-wider text-fg-faint'
   </form>
 
   {shownGroups.length > 0 && (
-    <details data-panel class="group">
-      <summary class={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'h-8 cursor-pointer list-none font-mono text-mono-sm font-normal text-fg-muted [&::-webkit-details-marker]:hidden')}>
-        Filters
-        <span data-active class="tabular-nums text-fg empty:hidden"></span>
-        <span class="fold-chevron inline-block" aria-hidden="true">▾</span>
+    <details data-panel open class="group">
+      <summary class="block cursor-pointer list-none rounded-sm border border-line bg-panel px-3 py-2 transition-colors hover:border-line-lift [&::-webkit-details-marker]:hidden">
+        <span class="flex items-center gap-2 font-mono text-mono-sm text-fg-muted">
+          <span class="text-fg">Filter</span>
+          <span data-active class="rounded-xs bg-fg px-1.5 tabular-nums text-bg empty:hidden"></span>
+          <span class="min-w-0 flex-1 truncate text-fg-faint">{shownGroups.map((g) => g.title).join(' · ')}</span>
+          <span class="fold-chevron inline-block shrink-0" aria-hidden="true">▾</span>
+        </span>
       </summary>
       <div class="mt-3 space-y-3">
         {shownGroups.map((g) => (
