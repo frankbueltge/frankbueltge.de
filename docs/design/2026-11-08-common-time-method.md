@@ -1,4 +1,19 @@
-# Common Time — the method (2026-11-08)
+# The Ill-Tempered Week — the method (2026-11-08, retitled 2026-11-09)
+
+**Title (Frank's decision of 9 November, wording private):** the work is called *The Ill-Tempered Week*; each week's
+album is a *Contrapunctus* numbered by its ISO week (*Contrapunctus 45* for 2 to 8 November 2026); the pieces keep
+their own names (*Overlooked*, *Unison*, *Turn*, and Copy once it carries). Two allusions to Bach: the
+*Well-Tempered Clavier*, here a week in bad temper and in just intonation, not tempered at all; and the
+*Contrapunctus* of the *Art of Fugue*, counted one by one, whose last breaks off mid-phrase as every nightly
+edition breaks off at its newest day. Until that day the work was called Common Time, a name the sections below
+still use where they record its history.
+
+**To the site (Frank's go of 9 November, wording private).** The three pieces that carry are pressed every week from
+the ledger as *Contrapunctus N*: *Overlooked* each night as an edition of the week so far, all three on Monday for
+the finished week. The renderers move from `_drafts/` into `scripts/ill-tempered-week/` (the VSCO 2 CE library and
+the Kokoro voices cached in CI); the page is `/ill-tempered-week`, the method sheet `/werke/ill-tempered-week`. The
+first template's pressings of weeks 37 to 44 were never published and are removed; the album starts with week 45.
+Storage: about 12 MB of audio a week at 128 kbps, the newest edition of *Overlooked* replacing the one before.
 
 Written down at Frank's request before the next build (wording private). It replaces the rules of
 `2026-11-08-common-time.md` once the renderer follows it; until then that note describes what the weekly
