@@ -43,6 +43,8 @@ export const PRACTICE_PREFIXES: readonly string[] = [
   ),
   // The Plenum's standalone works (plenum-integrate.yml).
   '/plenum/werke-html/*',
+  // The Studio's études (studio-integrate.yml), since 2026-11-10.
+  '/studio/etudes/*',
   // n-1 and Arch: the whole repository, mirrored byte for byte (n1-, arch-integrate.yml). Arch's
   // works keep a rule of their own, so the door cannot be lost with the wider one.
   '/n-1/*',
