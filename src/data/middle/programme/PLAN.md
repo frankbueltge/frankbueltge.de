@@ -91,11 +91,11 @@ kept or lost, and who is placed to read them?
 
 ## Revisions
 
-- **2026-11-10, after step 1 (draft, unchecked).** "Who decides", planned as step 4, moves to step 2 and is narrowed
+- **2026-11-10, after step 1.** "Who decides", planned as step 4, moves to step 2 and is narrowed
   to compute; "What harm is on record" and "What evaluation can show" move to steps 3 and 4. Reason: all three
   works of step 1 found that the open record has no place for a public as holder and that a public appears only as
-  law (a suspension the provider carries out, the export rules behind the smuggled stock), and all three name the
-  same next question: where democratic control can act on compute if not through holding
+  law (a suspension the provider carries out, the export rules behind the smuggled stock), and all three point the
+  next step at law: where democratic control can act on compute if not through holding
   ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md),
   [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md),
   [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md)). Steps 5 and 6 stand.

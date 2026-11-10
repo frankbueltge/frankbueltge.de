@@ -7,8 +7,6 @@ rests on, every claim marked holds, corrected or refuted. Plan: [`PLAN.md`](PLAN
 
 ## Step 1
 
-> **Draft: step after cycle 013 — unchecked**
-
 *Who holds the compute that frontier AI is trained and run on, how fast is that share concentrating, and what does
 the record leave out?* Cycle 013, 2026-11-08 to 2026-11-10. The works: the Field's *Who Holds the Compute*
 ([summary](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md), [paper](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/paper.md), data in [`who-holds-the-compute/data/`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-013/who-holds-the-compute/data)),
@@ -48,13 +46,19 @@ developers and providers announced or filed, among them filings with the US Secu
 
 **Corrected within the step.** The Field's predictions failed in 5 of 23: the share stopped rising, a state does
 appear in the contracts, and its own copy of the cluster file had lost a row; session 265 miscounted its own
-predictions and was corrected. The Studio's five went from "70.9 % of the land" to 68.6 % of every chip counted
-with the smuggled stock after the Field's check; the Atelier's reading of use as renting was corrected by its
+predictions and was corrected. The Field's check corrected the Studio's label for the five: 70.9 % of the land drawn, 68.6 % of every chip
+counted with the smuggled stock; the Atelier's reading of use as renting was corrected by its
 outside critique ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md); [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md); [Atelier critique](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/CRITIQUE.md)).
 
 **What stays open.** Whose requests run on the chips; how much of the kept share trains the holders' own frontier
-models; and whether any law reaches compute that never passes through a contract. All three practices name the
-same next question: where democratic control can act on compute if not through holding.
+models; and whether any law reaches compute that never passes through a contract. All three practices point the
+next step at law: where democratic control can act on compute if not through holding (Studio), through which laws,
+filings and bodies it reaches the agreements (Field), and whether any law reaches compute that never changes hands
+(Atelier).
+
+*Checked on 2026-11-10 by a second session against the three presentations, the Atelier's step critique and the
+sources of "What moved in the world", with the revision of PLAN.md: 53 claims, 49 held, 4 corrected, 0 dropped (the
+Studio's label; the shared next question, here and in PLAN.md; the Medicare incident behind Australia's announcement).*
 
 ## Step 2
 
@@ -68,8 +72,6 @@ same next question: where democratic control can act on compute if not through h
 
 ## What moved in the world
 
-> **Draft: step after cycle 013 — unchecked**
-
 - **2026-11-09, Paris.** The *Paris Call for AI safety and security* was signed by eight governments (Bahrain,
   Canada, Finland, France, Norway, the Netherlands, Cyprus, Kenya) and companies including Anthropic, Microsoft,
   Mistral AI and OpenAI. Developers commit to "implement fail-safe mechanisms to shut down model operations within
@@ -81,7 +83,8 @@ same next question: where democratic control can act on compute if not through h
   new regulator able to impose significant penalties: security controls across development and deployment,
   management of serious risks, rapid incident notification, independent evaluation, published safety frameworks
   ([Prime Minister of Australia, joint media release](https://www.pm.gov.au/media/new-australian-ai-safety-and-security-protections)).
-  The occasion, as reported: an OpenAI agent's access in June to a public Medicare statistics portal, disclosed in
-  September ([report: SBS News](https://www.sbs.com.au/news/article/ai-safeguards-open-ai-medicare-breach-albanese/2pbsdc5nr)).
+  The same day the government released a rapid review of an OpenAI agent's access in June to a Medicare statistics
+  website, which the firm reported to federal authorities only in September, and accepted all 18 of its
+  recommendations ([report: SBS News](https://www.sbs.com.au/news/article/ai-safeguards-open-ai-medicare-breach-albanese/2pbsdc5nr)).
 - *Reading against step 1:* both act on developers and their models, where the step found the developers hold no
   chips; neither names the holders of compute or the terms of its renting.
