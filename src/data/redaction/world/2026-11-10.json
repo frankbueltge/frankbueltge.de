@@ -1,0 +1,140 @@
+{
+  "date": "2026-11-10",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-10T13:44:43Z",
+    "counts": {
+      "botwall": 13,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 286,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 286,
+    "excluded_unverifiable": 14,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0133
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0133
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-08",
+    "receipts": [],
+    "sample_drawn_at": "2026-11-09T14:12:22Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 4251,
+      "replaced": 5203,
+      "trivial": 700,
+      "update": 427
+    },
+    "day": "2026-11-09",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "latest",
+          "news",
+          "GTA",
+          "6"
+        ],
+        "after": "GTA 6 latest news: GTA 6 release date is November 19: What to know about Grand Theft Auto VI price, pre-loading, PS5, Xbox, PC, online mode and more",
+        "before": "Grand Theft Auto VI: GTA 6 release date is November 19: What to know about Grand Theft Auto VI price, pre-loading, PS5, Xbox, PC, online mode and more",
+        "detected": "2026-11-09T18:03:42Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Grand",
+          "Theft",
+          "Auto",
+          "VI"
+        ],
+        "similarity": 0.926,
+        "url": "https://economictimes.indiatimes.com/news/international/us/gta-6-release-date-november-19-2026-rockstar-games-launch-updates-ps5-xbox-series-x-s-preorders-price-editions-preload-grand-theft-auto-vi-latest-news/articleshow/135469071.cms",
+        "weight": 13,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "OPINION",
+          "SPORTSMAN",
+          "Arkansas"
+        ],
+        "after": "OPINION | ARKANSAS SPORTSMAN: AG Griffin pledges big boost to War Memorial fishing pond | The Arkansas Democrat-Gazette",
+        "before": "OUTDOORS: AG Griffin pledges big boost to War Memorial fishing pond | The Arkansas Democrat-Gazette",
+        "detected": "2026-11-09T03:01:28Z",
+        "domain": "arkansasonline.com",
+        "removed": [
+          "OUTDOORS"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.arkansasonline.com/news/2026/nov/01/outdoors-ag-griffin-pledges-big-boost-to-war/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "GH",
+          "GH"
+        ],
+        "after": "MTN Ghana pays GH¢9bn to state, earns GH¢7.8bn profit in first 9 months of 2026 – Ghanamma.com",
+        "before": "MTN Ghana pays GHÂ¢9bn to state, earns GHÂ¢7.8bn profit in first 9 months of 2026 – Ghanamma.com",
+        "detected": "2026-11-09T01:31:27Z",
+        "domain": "ghanamma.com",
+        "removed": [
+          "GHÂ",
+          "GHÂ"
+        ],
+        "similarity": 0.9,
+        "url": "https://www.ghanamma.com/2026/11/01/mtn-ghana-pays-gh%C2%A29bn-to-state-earns-gh%C2%A27-8bn-profit-in-first-9-months-of-2026/",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 11533,
+      "PAGE_TEXTCHANGE": 103171,
+      "PAGE_TITLECHANGE": 39468,
+      "UNCHANGED_CONTENT": 568864
+    },
+    "title_changes_en": 10581,
+    "trace": [
+      {
+        "bytes_billed": 19922944,
+        "created": "1794318089319",
+        "job_id": "world_gdg_counts_20261109",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 181403648,
+        "created": "1794318094592",
+        "job_id": "world_gdg_titles_20261109",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-10T13:44:43Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-09.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
