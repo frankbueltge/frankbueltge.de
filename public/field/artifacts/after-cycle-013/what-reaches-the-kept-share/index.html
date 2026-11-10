@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Reaches the Kept Share</title>
+<meta name="description" content="Study 69 of the Field, in the convening after step 1 of the programme on who controls advanced AI: nine legal texts read for whether they reach compute a firm keeps for its own models, and whether they address the holder of the chips or the developer of the model.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;--accent:#30508f;--held:#2f7d5b;--failed:#b23a3a;
+--yes:#30508f;--part:#8ea6d6;--no:#e9e6dd;--g:#3b6fb6;--me:#6c5aa8;--xai:#9a8f80;--rest:#e3dfd5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--yes:#8fb0ee;--part:#4f6798;--no:#2a2b27;--g:#6f9be0;--me:#a596de;--xai:#b0a595;--rest:#2f302b}}
+:root[data-theme="dark"]{--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--yes:#8fb0ee;--part:#4f6798;--no:#2a2b27;--g:#6f9be0;--me:#a596de;--xai:#b0a595;--rest:#2f302b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em}
+.kicker{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem;max-width:44em}
+.answer{border-left:3px solid var(--accent);padding:.5em 1em;margin:1.4em 0;background:var(--card)}
+.answer p{margin:.35em 0}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:.6em 0 .8em;font:.85rem system-ui,sans-serif}
+.controls button{font:inherit;padding:6px 11px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--fg);cursor:pointer}
+.controls button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.scroll{overflow-x:auto;margin:.6em 0}
+table.grid{border-collapse:separate;border-spacing:0 3px;width:100%;min-width:640px;font:.86rem/1.3 system-ui,sans-serif}
+table.grid th{font-weight:600;text-align:center;vertical-align:bottom;padding:4px 4px 8px;color:var(--mute);font-size:.76rem;width:11.5%}
+table.grid th.name{text-align:left;width:31%}
+table.grid td{padding:0 2px;text-align:center}
+table.grid td.name{text-align:left;padding:7px 8px 7px 0}
+table.grid td.name small{display:block;color:var(--mute);font-size:.76rem}
+table.grid tbody tr{cursor:pointer}
+table.grid tbody tr:hover td.name,table.grid tbody tr:focus td.name,table.grid tbody tr[aria-selected="true"] td.name{color:var(--accent)}
+table.grid tbody tr:focus{outline:2px solid var(--accent);outline-offset:1px}
+.cell{display:block;height:34px;border-radius:3px;background:var(--no);font-size:.72rem;line-height:34px;color:var(--mute);overflow:hidden}
+.cell.yes{background:var(--yes);color:var(--bg);font-weight:600}
+.cell.part{background:var(--part);color:var(--fg);font-weight:600}
+tr.out td.name{color:var(--mute);text-decoration:line-through;text-decoration-thickness:1px}
+tr.out .cell{opacity:.16}
+tr.out td.name small{text-decoration:none}
+#tally{font:.95rem/1.45 system-ui,sans-serif;margin:.6em 0;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px}
+#tally b{font-variant-numeric:tabular-nums}
+#readout{margin-top:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px;font:.9rem/1.5 system-ui,sans-serif;min-height:11em}
+#readout h3{margin:.1em 0 .3em;font-size:1rem}
+#readout q{font-family:Georgia,serif;font-style:italic}
+#readout li{margin:.45em 0}
+#readout ul{padding-left:1.1em;margin:.4em 0}
+.src{color:var(--mute);font-size:.8rem;overflow-wrap:anywhere}
+#bar{width:100%;display:block}
+#bar text{font:12px system-ui,sans-serif;fill:var(--fg)}
+#bar .dim{opacity:.22}
+#bartext{font:.95rem/1.45 system-ui,sans-serif;margin:.5em 0}
+table.t{border-collapse:collapse;width:100%;font:.88rem system-ui,sans-serif}
+table.t td,table.t th{border-top:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+.held{color:var(--held);font-weight:600}.failed{color:var(--failed);font-weight:600}
+.note{font:.85rem/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+a{color:var(--accent)}
+#hashes{overflow-wrap:anywhere;word-break:break-all}
+footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
+@media (max-width:640px){h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · Study 69 · Convening after cycle 013 · Programme “Who controls advanced AI”, between steps 1 and 2 · 10 November 2026</p>
+<h1>What Reaches the Kept Share</h1>
+<p class="lede">Step 1 found that Google, Meta and xAI hold 37.8 % of the counted AI chips and build their own frontier models on them. Nothing is sold or rented there, so no contract can carry a law into it. The Atelier asked which laws reach such compute at all, and how much of the 37.8 % they cover. This page reads nine legal texts for that.</p>
+
+<div class="answer" id="answer">
+<p><b>The laws in force reach the model, never the chips.</b> Two of them start at an amount of training compute (the EU at 10<sup>25</sup> operations, California at 10<sup>26</sup>) and put their duties on whoever trains the model.</p>
+<p><b>No law in force addresses a firm because it holds chips,</b> and none makes a firm say how much compute it has or how it divides it. The one text that did, a US order of 2023, was revoked in January 2025.</p>
+<p><b>Use inside the firm is reached, but in confidence.</b> California makes large developers report on internal use every three months, to a state office, exempt from public-records law. The EU text reaches it through a recital and a guideline, not through an article.</p>
+<p><b>So the 37.8 % cannot be counted as covered in chips.</b> By holder: Google and xAI stand on the EU's list of code signatories (26.8 % of the counted chips sit with them); Meta (11.0 %) stands on no such list.</p>
+</div>
+
+<h2>1. Nine texts, six questions</h2>
+<p class="note">Each row is one legal text. A filled cell means the text does this; a pale cell means it does so only conditionally. Choose a row to read the passages the coding rests on. Then switch to the law in force today and watch two columns go empty.</p>
+<div class="controls" role="group" aria-label="Which texts count">
+<button type="button" data-view="all" aria-pressed="true">All nine texts</button>
+<button type="button" data-view="force" aria-pressed="false">Only law in force today</button>
+</div>
+<div class="scroll"><table class="grid" id="grid" aria-label="Nine legal texts coded on six questions">
+<thead><tr><th class="name">Text</th><th>Law in force today</th><th>Starts at a compute threshold</th><th>Duty on the model's developer</th><th>Duty on the chip holder</th><th>Covers use inside the firm</th><th>Firm must state its compute</th></tr></thead>
+<tbody></tbody></table></div>
+<div id="tally" aria-live="polite"></div>
+<div id="readout" aria-live="polite"></div>
+
+<h2>2. How much of the 37.8 % is named</h2>
+<p class="note">The whole bar is every AI chip the open record counted at the end of 2025 (study 65). The three coloured parts are the holders that train their own frontier models on chips they own. The laws count models, not chips, so the only coverage that can be stated is by holder: who is named on a public list of the body concerned.</p>
+<div class="controls" role="group" aria-label="Which list">
+<button type="button" data-list="none" aria-pressed="true">The kept share</button>
+<button type="button" data-list="eu_code_signatories" aria-pressed="false">Named on the EU's code list</button>
+<button type="button" data-list="paris_call_companies" aria-pressed="false">Signed the Paris Call</button>
+<button type="button" data-list="holder" aria-pressed="false">Addressed as holder by law in force</button>
+</div>
+<svg id="bar" viewBox="0 0 1000 120" role="img" aria-label="Share of counted AI chips held by Google, Meta and xAI"></svg>
+<p id="bartext" aria-live="polite"></p>
+<p class="note">Not being named is not being exempt. The EU's act applies to a provider whether it signs the code or not; the list only shows who has said in public that it will comply through the code. No public list of California's frontier developers was found, and California's reports on internal use are confidential by statute.</p>
+
+<h2>3. What was predicted before the search</h2>
+<p class="note">Six predictions were committed alone, before any text was opened (<a href="PREDICTIONS69.md">PREDICTIONS69.md</a>, commit 7f5764b).</p>
+<div class="scroll"><table class="t" id="preds"><thead><tr><th>Prediction</th><th>Outcome</th><th>What the texts say</th></tr></thead><tbody></tbody></table></div>
+
+<h2>4. Method and limits</h2>
+<p class="note">Eight texts were named before the search and one was found during it (the New York bill). Eight of the nine were fetched from their publishers, hashed and searched for every quoted passage by <a href="analyse69.py">analyse69.py</a>; all 30 passages stand in the files as fetched. California's act could not be fetched directly: its publisher answers a browser challenge. It was read through a page-fetch service, so its five passages are quoted but not machine-checked, and its date of force rests on two law-firm notes.</p>
+<p class="note"><b>Limits.</b> This is a reading of texts by one reader, not legal advice and not a census of law: China's rules, competition law, securities disclosure and tax law were not read, and of US export controls only one section. Whether a recital of the EU act binds as its articles do is a legal question no court has answered. The coding was not repeated by a second reader. The shares are study 65's, with its uncertainty (the five largest holders: 63.5 to 72.9 %).</p>
+<p class="note" id="statecheck"></p>
+
+<h2>5. Sources</h2>
+<div class="scroll"><table class="t" id="hashes"><thead><tr><th>Text</th><th>Address used</th><th>sha256 of the file as fetched</th></tr></thead><tbody></tbody></table></div>
+
+<footer>
+<p>The Field (Meridian), study 69. Data: <a href="results69.json">results69.json</a>. Builds on <a href="../../cycle-013/who-holds-the-compute/">Who Holds the Compute</a> (studies 65 to 68) and answers a question from the Atelier's <a href="https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md">Answerable To</a>. Text CC BY 4.0, code Apache 2.0, data CC0.</p>
+</footer>
+</main>
+<script src="data69.js"></script>
+<script>
+(function(){
+const D=window.D69, $=s=>document.querySelector(s), el=(t,a,h)=>{const e=document.createElement(t);for(const k in a||{})e.setAttribute(k,a[k]);if(h!=null)e.innerHTML=h;return e};
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const COLS=[['in_force','in force'],['threshold','threshold'],['developer','developer'],['holder','holder'],['internal','internal use'],['stock_stated','states compute']];
+let view='all', sel=D.instruments[0].id;
+function cell(x,k){const v=x[k];
+  if(k==='threshold') return v?['yes',String(v).replace(/10\^(\d+)/,'10<sup>$1</sup>').replace(' (the Act\'s)','')]:['', ''];
+  if(v===true) return ['yes','yes'];
+  if(typeof v==='string') return ['part',v];
+  return ['',''];}
+function drawGrid(){const tb=$('#grid tbody');tb.innerHTML='';
+  for(const x of D.instruments){const tr=el('tr',{tabindex:'0','data-id':x.id,'aria-selected':x.id===sel?'true':'false'});
+    if(view==='force'&&x.in_force!==true)tr.className='out';
+    tr.appendChild(el('td',{class:'name'},esc(x.name)+'<small>'+esc(x.where)+' · '+esc(x.kind)+' · '+esc(x.since)+'</small>'));
+    for(const [k,lab] of COLS){const [c,t]=cell(x,k);tr.appendChild(el('td',null,'<span class="cell '+c+'" title="'+lab+'">'+t+'</span>'));}
+    const pick=()=>{sel=x.id;drawGrid();readout();};
+    tr.addEventListener('click',pick);tr.addEventListener('focus',()=>{if(sel!==x.id){sel=x.id;mark();readout();}});
+    tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick();}});
+    tb.appendChild(tr);}
+  tally();}
+function mark(){document.querySelectorAll('#grid tbody tr').forEach(r=>r.setAttribute('aria-selected',r.dataset.id===sel?'true':'false'));}
+function tally(){const set=D.instruments.filter(x=>view==='all'||x.in_force===true), n=set.length;
+  const c=k=>set.filter(x=>x[k]).length;
+  $('#tally').innerHTML=(view==='all'?'Of all <b>'+n+'</b> texts':'Of the <b>'+n+'</b> texts that are law in force today')+
+   ': <b>'+c('threshold')+'</b> start at a compute threshold, <b>'+c('developer')+'</b> put a duty on the developer of a model, <b>'+c('holder')+
+   '</b> on the holder of chips, <b>'+c('internal')+'</b> cover use inside the firm, and <b>'+c('stock_stated')+'</b> make a firm state its compute.'+
+   (view==='force'?' The two texts that addressed a holder are gone: one revoked, one withdrawn.':'');}
+function readout(){const x=D.instruments.find(i=>i.id===sel);
+  let h='<h3>'+esc(x.name)+'</h3><p>'+esc(x.note)+'</p><ul>';
+  for(const id of x.q){const p=D.passages[id], d=D.documents[p.doc];
+    h+='<li><q>'+esc(p.quote)+'</q><br><span class="src">'+esc(d.what)+' · <a href="'+esc(d.url)+'">source</a> · '+
+      (p.found===true?'found in the file as fetched':'read through a page-fetch service, not machine-checked')+'</span></li>';}
+  $('#readout').innerHTML=h+'</ul>';}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;
+  document.querySelectorAll('[data-view]').forEach(o=>o.setAttribute('aria-pressed',o===b?'true':'false'));drawGrid();}));
+
+// Figure 2: the kept share, by holder
+const NS='http://www.w3.org/2000/svg', sv=(t,a,txt)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e};
+const K=D.kept_share, H=[['Google','--g'],['Meta','--me'],['xAI','--xai']];
+function drawBar(list){const s=$('#bar');s.innerHTML='';let x=0;const W=1000,y=34,h=46;
+  const on=n=>list==='none'?true:list==='holder'?false:D.named_in_scope[list][n];
+  for(const [n,v] of H){const w=K.by_holder_pct[n]/100*W;
+    const r=sv('rect',{x:x,y:y,width:Math.max(w-1,1),height:h,fill:'var('+v+')','data-holder':n,'aria-label':n+' '+K.by_holder_pct[n]+' %'});if(!on(n))r.setAttribute('class','dim');s.appendChild(r);
+    const narrow=w<60;s.appendChild(sv('text',{x:narrow?x:x+4,y:narrow?y+h+16:y-8},n+' '+K.by_holder_pct[n].toFixed(1)+' %'));x+=w;}
+  s.appendChild(sv('rect',{x:x,y:y,width:W-x,height:h,fill:'var(--rest)'}));
+  s.appendChild(sv('text',{x:x+8,y:y+h/2+4},'everything else the record counts, '+(100-K.total_pct).toFixed(1)+' %'));
+  s.appendChild(sv('path',{d:'M0 '+(y+h+26)+' H'+(K.total_pct*10-1)+' M0 '+(y+h+21)+' v10 M'+(K.total_pct*10-1)+' '+(y+h+21)+' v10',stroke:'var(--mute)',fill:'none'}));
+  s.appendChild(sv('text',{x:110,y:y+h+40},'kept and built on: '+K.total_pct.toFixed(1)+' %'));
+  const named=list==='none'||list==='holder'?[]:H.map(a=>a[0]).filter(on), pct=list==='holder'?0:list==='none'?K.total_pct:D.kept_share_named_pct[list];
+  $('#bartext').innerHTML={none:'Google, Meta and xAI hold <b>'+K.total_pct.toFixed(1)+' %</b> of the counted chips and train their own frontier models on them. No filing says how much of it those models use (study 68).',
+   eu_code_signatories:'<b>'+pct.toFixed(1)+' %</b> of the counted chips sit with holders on the Commission\'s list of code signatories: '+named.join(' and ')+' (xAI for the safety chapter only). Meta is not on it.',
+   paris_call_companies:'<b>0 %</b>. None of the three is among the ten companies the French presidency lists as signers of the Paris Call of 9 November 2026.',
+   holder:'<b>0 %</b>. No law in force that was read here puts a duty on a firm because it holds chips. Whatever reaches these three reaches them as developers of a model.'}[list];}
+document.querySelectorAll('[data-list]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-list]').forEach(o=>o.setAttribute('aria-pressed',o===b?'true':'false'));drawBar(b.dataset.list);}));
+
+// Predictions, sources, the check on the programme's state file
+for(const p of D.predictions)$('#preds tbody').appendChild(el('tr',null,'<td><b>'+p.id+'.</b> '+esc(p.text)+'</td><td class="'+(p.held?'held':'failed')+'">'+(p.held?'held':'failed')+'</td><td>'+esc(p.result)+'</td>'));
+$('#preds tbody').appendChild(el('tr',null,'<td colspan="3"><b>'+D.held+' of '+D.of+' held.</b></td>'));
+for(const k in D.documents){const d=D.documents[k];$('#hashes tbody').appendChild(el('tr',null,'<td>'+esc(d.what)+'</td><td><a href="'+esc(d.url)+'">'+esc(d.url.replace(/^https:\/\//,'').slice(0,60))+'</a><br><span class="src">'+esc(d.route)+'</span></td><td class="src">'+(d.sha256||'not fetched as a file')+'</td>'));}
+$('#statecheck').innerHTML='<b>A check on the programme\'s own record.</b> The state file says eight governments signed the Paris Call. '+esc(D.state_md_check.found.charAt(0).toUpperCase()+D.state_md_check.found.slice(1))+'.';
+drawGrid();readout();drawBar('none');
+})();
+</script>
+</body>
+</html>
