@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Read Backwards</title>
+<style>
+:root{--bg:#f7f5f0;--fg:#1d1c1a;--mute:#6b6760;--line:#d8d3c8;--cell:#ebe7de;--hot:#b4380f;--cool:#2f5d8a;--q:#fffdf8;
+--r0:#f3ead9;--r1:#e9cfa6;--r2:#dca56f;--r3:#c8763f;--r4:#a24a1e;--r5:#6e2a0e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151412;--fg:#ece8df;--mute:#9d978b;--line:#38352f;--cell:#24221e;--q:#1d1b18;
+--r0:#2a241b;--r1:#4a3622;--r2:#74482a;--r3:#a35c30;--r4:#d0793d;--r5:#f3a865;--hot:#f08a5d;--cool:#7fb0e0}}
+:root[data-theme="dark"]{--bg:#151412;--fg:#ece8df;--mute:#9d978b;--line:#38352f;--cell:#24221e;--q:#1d1b18;
+--r0:#2a241b;--r1:#4a3622;--r2:#74482a;--r3:#a35c30;--r4:#d0793d;--r5:#f3a865;--hot:#f08a5d;--cool:#7fb0e0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1060px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2rem;margin:0 0 4px;font-weight:normal}
+h2{font-size:1.15rem;font-weight:normal;margin:40px 0 6px;border-top:1px solid var(--line);padding-top:16px}
+p{margin:6px 0 10px;max-width:720px}
+.mute{color:var(--mute);font-size:.9rem}
+.table{display:grid;grid-template-columns:repeat(18,1fr);gap:3px;margin:14px 0 6px;user-select:none}
+.c{aspect-ratio:1/1.08;border-radius:3px;background:var(--cell);font:11px/1.1 system-ui,sans-serif;padding:3px;position:relative;overflow:hidden;color:var(--fg);cursor:default}
+.c b{display:block;font-size:15px;font-weight:600;margin-top:2px}
+.c i{font-style:normal;position:absolute;left:3px;bottom:3px;font-size:10px;opacity:.85}
+.c.empty{background:transparent}
+.c.q b::after{content:"?";opacity:.5;margin-left:1px}
+.c.on{outline:2px solid var(--fg);outline-offset:-2px}
+.btns{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+button{font:14px system-ui,sans-serif;background:var(--q);color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:6px 11px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.legend{display:flex;align-items:center;gap:6px;font:12px system-ui,sans-serif;color:var(--mute);flex-wrap:wrap}
+.legend span.sw{width:22px;height:12px;border-radius:2px;display:inline-block}
+.info{font:14px system-ui,sans-serif;min-height:2.6em;color:var(--fg)}
+.quotes{font-size:.95rem;margin:8px 0;padding:0;list-style:none}
+.quotes li{margin:6px 0;padding-left:10px;border-left:3px solid var(--line)}
+.quotes code{font:12px system-ui,sans-serif;color:var(--mute)}
+svg text{font:12px system-ui,sans-serif;fill:var(--fg)}
+.ax{stroke:var(--line)}
+@media (max-width:640px){.c{font-size:8px;padding:1px}.c b{font-size:10px}.c i{display:none}.table{gap:2px}}
+</style>
+</head>
+<body>
+<main>
+<h1>Read Backwards</h1>
+<p class="mute">The first 56 chemical elements, lit by how often human readers opened each one's English Wikipedia article in October 2026.</p>
+
+<div class="table" id="t1"></div>
+<div class="legend" id="lg1"></div>
+<div class="info" id="i1">Touch or hover a cell for its count.</div>
+
+<h2>1 · Now you are told the list backwards</h2>
+<p>Twenty-four of these counts were handed to fresh instances of a machine, as the truth. To some they were handed true; to others dealt half turned, or exactly reversed: oxygen's count given to an element nobody reads, and the other way round. A count has no label to flip. Views are views. Look at the half-turned table: would you believe it?</p>
+<div class="btns" id="b2"></div>
+<div class="table" id="t2"></div>
+<div class="info" id="i2"></div>
+
+<h2>2 · What the machine answered for the other 32</h2>
+<p>Each arm of six instances then gave a count for each of the 32 elements left blank above. The cells show the median of the six. The sentences are theirs, one per instance.</p>
+<div class="btns" id="b3"></div>
+<div class="table" id="t3"></div>
+<div class="info" id="i3"></div>
+<ul class="quotes" id="q3"></ul>
+
+<h2>3 · Told agreement against answered agreement</h2>
+<p>Across: how far the list each instance was told agreed with the truth (rank correlation, from −1 reversed to +1 true). Up: how far its 32 answers agreed with the truth. A point near the top followed its own sense of the table; a point near the bottom followed what it was told.</p>
+<div id="ch"></div>
+
+<p class="mute" style="margin-top:28px">Data: Wikimedia REST API, per-article pageviews, en.wikipedia, all access, agent "user", 1–31 October 2026 (CC0). Experiment 51 of the error-as-method line. The text, the predictions fixed before any instance ran, and every hand-back are in the work's directory.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const D=window.FACE;
+const SYM=["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba"];
+function pos(z){if(z==1)return[1,1];if(z==2)return[1,18];if(z<=4)return[2,z-2];if(z<=10)return[2,z+3];if(z<=12)return[3,z-10];if(z<=18)return[3,z-5];if(z<=36)return[4,z-18];if(z<=54)return[5,z-36];return[6,z-54];}
+const LO=D.lo, HI=D.hi; // log10 range
+const RAMP=["--r0","--r1","--r2","--r3","--r4","--r5"].map(v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim());
+function col(l){if(l==null)return null;let t=(l-LO)/(HI-LO);t=Math.max(0,Math.min(.9999,t));return RAMP[Math.floor(t*RAMP.length)];}
+function txt(l){const t=(l-LO)/(HI-LO);return t>.55?"#fff":"";}
+function fmt(n){return Math.round(n).toLocaleString("en-US");}
+function build(id){const el=document.getElementById(id);const cells={};
+ for(let r=1;r<=6;r++)for(let c=1;c<=18;c++){const d=document.createElement("div");d.className="c empty";d.style.gridRow=r;d.style.gridColumn=c;el.appendChild(d);}
+ D.el.forEach(e=>{const [r,c]=pos(e.z);const d=document.createElement("div");d.className="c";d.style.gridRow=r;d.style.gridColumn=c;d.innerHTML=e.z+"<b>"+SYM[e.z-1]+"</b><i></i>";el.appendChild(d);cells[e.name]=d;});
+ return cells;}
+function paint(cells,vals,info,mark){Object.entries(cells).forEach(([n,d])=>{const v=vals[n];d.classList.remove("q");
+ if(v==null){d.style.background="";d.style.color="";d.querySelector("i").textContent="";if(mark&&mark(n))d.classList.add("q");}
+ else{const l=Math.log10(v);d.style.background=col(l);d.style.color=txt(l);d.querySelector("i").textContent=v>=1000?Math.round(v/1000)+"k":fmt(v);}
+ d.onmouseenter=d.onclick=()=>{Object.values(cells).forEach(x=>x.classList.remove("on"));d.classList.add("on");info(n,v);};});}
+// legend
+const lg=document.getElementById("lg1");lg.append("fewer reads ");RAMP.forEach(c=>{const s=document.createElement("span");s.className="sw";s.style.background=c;lg.appendChild(s);});lg.append(" more reads · "+fmt(10**LO)+" to "+fmt(10**HI)+" a month, on a log scale");
+// 1 truth
+const c1=build("t1");const truth={};D.el.forEach(e=>truth[e.name]=e.views);
+paint(c1,truth,(n,v)=>{document.getElementById("i1").textContent=n+": "+fmt(v)+" views in October 2026"+(D.contact.includes(n)?" · one of the 24 told":" · one of the 32 asked");});
+// 2 told
+const c2=build("t2");const b2=document.getElementById("b2");
+const TOLD=[["H","half turned (ρ "+D.rho.H.toFixed(2)+")"],["R","reversed (ρ −1)"],["B","true"]];
+function show2(k){[...b2.children].forEach(b=>b.setAttribute("aria-pressed",b.dataset.k==k));
+ const vals={};D.contact.forEach(n=>vals[n]=D.deals[k][n]);
+ paint(c2,vals,(n,v)=>{document.getElementById("i2").textContent=v==null?n+": not told, one of the 32 the machine was asked for":n+": told "+fmt(v)+" views · in truth "+fmt(truth[n]);},n=>!D.contact.includes(n));
+ document.getElementById("i2").textContent=k=="B"?"These are the true counts for the 24.":"Oxygen, carbon and iron should glow. Here they are told "+fmt(D.deals[k]["Oxygen"]||D.deals[k][D.contact[0]])+" — look for what is lit instead.";}
+TOLD.forEach(([k,l])=>{const b=document.createElement("button");b.dataset.k=k;b.textContent=l;b.onclick=()=>show2(k);b2.appendChild(b);});
+show2("H");
+// 3 answered
+const c3=build("t3");const b3=document.getElementById("b3");
+const ARMS=[["T","the truth"],["U","told nothing"],["B","told true"],["H","told half turned"],["R","told reversed"]];
+function show3(k){[...b3.children].forEach(b=>b.setAttribute("aria-pressed",b.dataset.k==k));
+ const vals={};D.scored.forEach(n=>vals[n]=k=="T"?truth[n]:10**D.arms[k].med[n]);
+ paint(c3,vals,(n,v)=>{document.getElementById("i3").textContent=v==null?n+": one of the 24 told":n+": "+(k=="T"?"":"median answer ")+fmt(v)+" · in truth "+fmt(truth[n]);});
+ const q=document.getElementById("q3");q.innerHTML="";
+ if(k=="T"){document.getElementById("i3").textContent="The true October counts for the 32.";return;}
+ const a=D.arms[k];document.getElementById("i3").textContent="Agreement of this arm's median with the truth: ρ "+a.rho.toFixed(2)+".";
+ a.makers.forEach(m=>{const li=document.createElement("li");li.innerHTML="";li.append("“"+m.how+"” ");const c=document.createElement("code");c.textContent=m.id+" · ρ "+m.rho.toFixed(2);li.appendChild(c);q.appendChild(li);});}
+ARMS.forEach(([k,l])=>{const b=document.createElement("button");b.dataset.k=k;b.textContent=l;b.onclick=()=>show3(k);b3.appendChild(b);});
+show3("H");
+// 4 chart
+const W=Math.min(640,document.getElementById("ch").clientWidth||640),H=300,m={l:46,r:16,t:14,b:40};
+const x=v=>m.l+(v+1.25)/2.5*(W-m.l-m.r),y=v=>m.t+(1-(v+1)/2)*(H-m.t-m.b);
+let s='<svg width="'+W+'" height="'+H+'" role="img" aria-label="Told agreement against answered agreement, one dot per instance">';
+[-1,-.5,0,.5,1].forEach(v=>{s+='<line class="ax" x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+y(v)+'" y2="'+y(v)+'"/><text x="'+(m.l-6)+'" y="'+(y(v)+4)+'" text-anchor="end">'+v+'</text>';});
+const XS=[["R",-1,"reversed"],["H",D.rho.H,"half turned"],["U",null,"nothing"],["B",1,"true"]];
+XS.forEach(([k,xv,l])=>{const xx=xv==null?x(0.15):x(xv);s+='<text x="'+xx+'" y="'+(H-14-(k=="H"?13:0))+'" text-anchor="middle">'+l+'</text>';
+ D.arms[k].makers.forEach((mk,i)=>{s+='<circle cx="'+(xx+(i-2.5)*7)+'" cy="'+y(mk.rho)+'" r="4.5" fill="'+(k=="R"||k=="H"?"var(--hot)":"var(--cool)")+'" opacity=".85"><title>'+mk.id+' ρ '+mk.rho.toFixed(2)+'</title></circle>';});});
+s+='<text x="'+m.l+'" y="'+(H-0)+'" class="mute">told list →</text><text transform="translate(12,'+(H/2)+') rotate(-90)" text-anchor="middle">answers vs truth (ρ)</text></svg>';
+document.getElementById("ch").innerHTML=s;
+})();
+</script>
+</body>
+</html>
