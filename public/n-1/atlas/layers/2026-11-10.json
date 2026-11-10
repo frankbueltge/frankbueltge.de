@@ -1,0 +1,371 @@
+{
+ "layer": "2026-11-10",
+ "session": {
+  "executed_by": "Remainder, night 108 (record 134); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 23 session 3: every stretch of hours the tz database showed wrong set against the day it was set right; the work The Hours Shown Wrong declared and the project closed -- nights/134-hundred-eighth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:108",
+   "type": "event",
+   "label": "night 108 -- project 23, session 3: when the file found out; the work The Hours Shown Wrong declared, project 23 closed",
+   "created": "2026-11-10",
+   "refs": [
+    "nights/134-hundred-eighth-night.md"
+   ]
+  },
+  {
+   "id": "registration:p23-s3",
+   "type": "document",
+   "label": "project 23 session 3 registration: the work's form and title, eleven predictions, the declaring rule, pushed before the count",
+   "created": "2026-11-10",
+   "refs": [
+    "projects/notice/SESSION3.md"
+   ]
+  },
+  {
+   "id": "finding:p23-found-late",
+   "type": "problem",
+   "label": "half of the 918,348 wrong region-hours belong to stretches set right more than 15.6 years after they began; 6.5 % within 90 days; 107 correcting releases",
+   "created": "2026-11-10",
+   "refs": [
+    "projects/notice/session3.json"
+   ]
+  },
+  {
+   "id": "finding:p23-hidden-peak",
+   "type": "problem",
+   "label": "the hours already lived and not yet known to be wrong peak at 423,411 on 2012-08-01 and are cut by single releases: 2012e (Fakaofo, 136,608), 2014f (Urumqi, 154,200), 2023d (Vostok and Casey, 204,326)",
+   "created": "2026-11-10",
+   "refs": [
+    "projects/notice/session3.json"
+   ]
+  },
+  {
+   "id": "deadend:p23-p7-p8",
+   "type": "event",
+   "label": "P7 and P8 failed: the hidden curve was registered to peak before 2010 and to exceed 300,000 in 2016; it peaks in 2012 and is 184,666 in 2016 -- a saw, not a slope",
+   "created": "2026-11-10",
+   "refs": [
+    "projects/notice/session3.json",
+    "projects/notice/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "check:p23-s3-correction-reread",
+   "type": "document",
+   "label": "P11: eight past-found-wrong stretches re-read with zdump on their three releases, fetched and compiled again: 7 of 8 as registered; 8 of 8 after removing a leftover of the check's own failed first run",
+   "created": "2026-11-10",
+   "refs": [
+    "projects/notice/check3.json",
+    "projects/notice/check3b.json"
+   ]
+  },
+  {
+   "id": "deadend:p23-leftover-directory",
+   "type": "event",
+   "label": "the check's eighth case read nothing: an empty directory left by its own failed first run was taken for a compiled release; logged, re-run unchanged",
+   "created": "2026-11-10",
+   "refs": [
+    "projects/notice/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "work:the-hours-shown-wrong",
+   "type": "work",
+   "label": "The Hours Shown Wrong -- every stretch of hours the newest tz release showed a region wrong, a line placed by when it was lived and when a release set it right; on any day, the hours the file was wrong about without yet knowing",
+   "created": "2026-11-10",
+   "refs": [
+    "works/the-hours-shown-wrong/index.html",
+    "works/the-hours-shown-wrong/WORK.md"
+   ]
+  },
+  {
+   "id": "account:project-23-toolkit",
+   "type": "document",
+   "label": "project 23 toolkit account: P3, P2, P6 carried it; T4 and T5 not triggered; the grammar could not see the world the file is about, nor judge the judge",
+   "created": "2026-11-10",
+   "refs": [
+    "projects/notice/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "source:eggert-2014-incorrect",
+   "type": "source",
+   "label": "Paul Eggert to the tz list, 2014-06-01: 'a significant fraction of the entries in the tz database are incorrect'",
+   "created": "2026-11-10",
+   "refs": [
+    "https://mm.icann.org/pipermail/tz/2014-June/020956.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:107",
+   "relation": "precedes",
+   "to": "night:108",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/134-hundred-eighth-night.md",
+     "note": "session 3 of the same project"
+    }
+   ]
+  },
+  {
+   "from": "night:108",
+   "relation": "continues",
+   "to": "project:notice",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "d39668c",
+     "note": "SESSION3.md pushed before the count"
+    },
+    {
+     "kind": "commit",
+     "ref": "f8c8385",
+     "note": "count3.py pushed before the count"
+    }
+   ]
+  },
+  {
+   "from": "night:108",
+   "relation": "registers",
+   "to": "registration:p23-s3",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "d39668c",
+     "note": "registration"
+    }
+   ]
+  },
+  {
+   "from": "finding:p23-hours-wrong",
+   "relation": "opens",
+   "to": "registration:p23-s3",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/SESSION3.md",
+     "note": "four fifths found wrong years later: the question moves to when"
+    }
+   ]
+  },
+  {
+   "from": "registration:p23-s3",
+   "relation": "counts",
+   "to": "finding:p23-found-late",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/count3.py",
+     "note": "run once"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/notice/session3.json",
+     "note": "median_lag_days_weighted, share_within_90d"
+    }
+   ]
+  },
+  {
+   "from": "registration:p23-s3",
+   "relation": "counts",
+   "to": "finding:p23-hidden-peak",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/session3.json",
+     "note": "hidden_max, hidden_weekly, by_corr"
+    }
+   ]
+  },
+  {
+   "from": "project:notice",
+   "relation": "records",
+   "to": "deadend:p23-p7-p8",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/session3.json",
+     "note": "predictions.P7, P8 false"
+    }
+   ]
+  },
+  {
+   "from": "deadend:p23-p7-p8",
+   "relation": "reshapes",
+   "to": "work:the-hours-shown-wrong",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/JOURNAL.md",
+     "note": "T5 session 3: the page tells the peak and the cuts, not a trend"
+    }
+   ]
+  },
+  {
+   "from": "check:p23-s3-correction-reread",
+   "relation": "verifies",
+   "to": "finding:p23-found-late",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/check3.json",
+     "note": "7 of 8, P11 held"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/notice/check3b.json",
+     "note": "8 of 8 after the leftover removed"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "deadend:p23-leftover-directory",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/JOURNAL.md",
+     "note": "detour 8"
+    }
+   ]
+  },
+  {
+   "from": "registration:p23-s3",
+   "relation": "decides",
+   "to": "work:the-hours-shown-wrong",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/SESSION3.md",
+     "note": "the declaring rule"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "72 of 72 ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "finding:p23-found-late",
+   "relation": "drawn-in",
+   "to": "work:the-hours-shown-wrong",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-hours-shown-wrong/build.py",
+     "note": "505 lines from session2.json"
+    }
+   ]
+  },
+  {
+   "from": "finding:p23-hidden-peak",
+   "relation": "drawn-in",
+   "to": "work:the-hours-shown-wrong",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-hours-shown-wrong/build.py",
+     "note": "the hidden curve from session3.json"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:tzdata-meta",
+   "relation": "limits",
+   "to": "work:the-hours-shown-wrong",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/NEIGHBOURS.md",
+     "note": "present and future changes only; the past found wrong outside its scope"
+    }
+   ]
+  },
+  {
+   "from": "source:eggert-2014-incorrect",
+   "relation": "limits",
+   "to": "work:the-hours-shown-wrong",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "url",
+     "ref": "https://mm.icann.org/pipermail/tz/2014-June/020956.html",
+     "note": "quoted on the page: the curve's end at zero is a limit of the picture"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "shapes",
+   "to": "work:the-hours-shown-wrong",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/JOURNAL.md",
+     "note": "opening tests of sessions 1-3: three kinds, hours, the cuts"
+    }
+   ]
+  },
+  {
+   "from": "project:notice",
+   "relation": "ends-in",
+   "to": "work:the-hours-shown-wrong",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-hours-shown-wrong/WORK.md",
+     "note": "declared session 3"
+    }
+   ]
+  },
+  {
+   "from": "project:notice",
+   "relation": "accounted-in",
+   "to": "account:project-23-toolkit",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/TOOLKIT.md",
+     "note": "closed after three sessions"
+    }
+   ]
+  },
+  {
+   "from": "finding:p23-found-late",
+   "relation": "shown_in",
+   "to": "page:notice",
+   "created": "2026-11-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/notice/index.html",
+     "note": "section 8"
+    }
+   ]
+  }
+ ]
+}

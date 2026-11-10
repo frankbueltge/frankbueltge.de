@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>The Hours Shown Wrong</title>
+<style>
+  :root { --bg: #f3f1ec; --ink: #191816; --muted: #67625a; --line: #d4cfc4; --grid: #e2ded5;
+    --news: #c0452c; --ret: #c08a1e; --past: #3f6e9e; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #121110; --ink: #ebe8e1; --muted: #9b968d; --line: #3a3732; --grid: #24221f;
+      --news: #ef7a5e; --ret: #e3b553; --past: #7fa8d6; }
+  }
+  :root[data-theme="dark"] { --bg: #121110; --ink: #ebe8e1; --muted: #9b968d; --line: #3a3732; --grid: #24221f;
+    --news: #ef7a5e; --ret: #e3b553; --past: #7fa8d6; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Georgia, "Times New Roman", serif; }
+  main { max-width: 52rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+  .txt { max-width: 44rem; margin-left: auto; margin-right: auto; }
+  h1 { font-size: 1.45rem; font-weight: normal; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .4rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  h2 { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: normal;
+    margin: 3rem auto 1rem; border-top: 1px solid var(--line); padding-top: 1.1rem; max-width: 44rem; }
+  a { color: inherit; text-decoration-color: var(--line); }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1.6rem auto .6rem; max-width: 44rem; }
+  button { font: inherit; font-size: .95rem; background: var(--ink); color: var(--bg); border: 0; padding: .5rem 1.1rem; cursor: pointer; }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--news); outline-offset: 3px; }
+  input[type=range] { flex: 1 1 14rem; accent-color: var(--ink); }
+  .now { max-width: 44rem; margin: 0 auto .5rem; font-variant-numeric: tabular-nums; }
+  .now b { font-weight: normal; font-size: 1.5rem; }
+  .now span { color: var(--muted); font-size: .9rem; }
+  .key { display: flex; flex-wrap: wrap; gap: .3rem 1.1rem; color: var(--muted); font-size: .85rem; margin: 0 auto .6rem; max-width: 44rem; }
+  .key i { display: inline-block; width: 1rem; height: .25rem; margin-right: .4rem; vertical-align: .2rem; }
+  .fig { max-width: 44rem; margin: 0 auto; }
+  canvas { display: block; width: 100%; cursor: crosshair; touch-action: pan-y; }
+  #spark { margin-top: .4rem; }
+  #info { min-height: 4.8em; color: var(--muted); font-size: .9rem; margin: .7rem auto 0; max-width: 44rem; font-variant-numeric: tabular-nums; }
+  #info b { color: var(--ink); font-weight: normal; }
+  .tw { overflow-x: auto; max-width: 44rem; margin: 0 auto; }
+  table { border-collapse: collapse; font-size: .8rem; width: 100%; font-variant-numeric: tabular-nums; margin: 1rem 0; }
+  th, td { text-align: right; border-top: 1px solid var(--line); padding: .3rem .4rem; }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: normal; color: var(--muted); }
+  tr.sum td { border-top: 2px solid var(--line); }
+  .aside { color: var(--muted); font-size: .9rem; }
+  @media (max-width: 640px) { body { font-size: 16px; } main { padding-top: 2rem; } }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1>The Hours Shown Wrong</h1>
+  <p class="sub">{{HOURS}} hours a public time file showed the wrong local time, drawn by when they were lived and when the file found out · Remainder, 2026</p>
+
+  <div class="txt">
+  <p>Computers keep one universal time and look up the local hour in a file: the <a href="https://www.iana.org/time-zones">tz database</a>,
+  a public list of every region’s clock changes, published in numbered releases (the archive keeps them from 1993). When a government moves its clocks,
+  the file has to be changed. Sometimes it is changed late. Sometimes, years later, the file finds that what it said about the past was
+  wrong.</p>
+
+  <p>On every day since 1996 one release was the newest. Each was set here against the newest of all (October 2026), hour by hour, region
+  by region. In <b>{{HOURS}} hours</b>, summed over {{REGIONS}} of its {{ZONES}} regions, the newest release of the day gave a local time that
+  the file now says was wrong.</p>
+
+  <p><b>Each line below is one stretch of those hours</b>: across, from its first wrong hour to its last; up, at the day a release first set
+  it right. A line on the diagonal was set right as it was lived. The higher above it, the later the file learned.</p>
+  </div>
+
+  <div class="controls">
+    <button id="play" type="button">Play the years</button>
+    <input id="t" type="range" aria-label="The date the file is read on">
+  </div>
+  <p class="now"><span id="date"></span><br><b id="hid"></b> <span id="hidl"></span></p>
+  <div class="key">
+    <span><i style="background:var(--news)"></i>news: the clocks moved before the file knew</span>
+    <span><i style="background:var(--ret)"></i>a change carried at the wrong moment</span>
+    <span><i style="background:var(--past)"></i>the past found wrong, more than a year on</span>
+  </div>
+  <div class="fig">
+    <canvas id="map" role="img" aria-label="505 horizontal lines: each a stretch of hours a release of the tz database showed a wrong local time, placed across by when the hours were lived and up by the date of the release that set them right; most lie far above the diagonal"></canvas>
+    <canvas id="spark" role="img" aria-label="The hours already lived that the file was wrong about without yet knowing, at every week from 1997 to 2026; highest on 1 August 2012"></canvas>
+  </div>
+  <p id="info">Point at a line to read it. Faint, on the line of the chosen day: hours already lived that the file was wrong about and
+  did not yet know.</p>
+
+  <div class="txt">
+  <p>Half of these hours belong to stretches set right more than <b>{{MEDLAG}} years</b> after they began; {{W90}} % were set right within
+  ninety days. It took {{RELS}} releases to correct them. On <b>{{HMAXDATE}}</b>, {{HMAX}} hours already lived were wrong in the file and
+  not yet known to be — more than on any other day. The next day release 2012e set right 136,608 of them, all in one region:
+  Pacific/Fakaofo, the atoll of Tokelau. The longest line is Antarctica/Vostok, a research station: from 2001 to 2022, 187,680 hours, set
+  right in December 2023.</p>
+
+  <p>The curve under the picture falls to nothing at the end because the newest release is the only judge here: nothing can be found
+  wrong after it. That is a limit of the picture, not a fact about the file. In 2014 Paul Eggert wrote to the database’s mailing list:
+  “Unfortunately a significant fraction of the entries in the tz database are incorrect”
+  (<a href="https://mm.icann.org/pipermail/tz/2014-June/020956.html">tz list, 1 June 2014</a>).
+  The hours today’s file is wrong about are not on this page. They are the faint lines no one has drawn yet.</p>
+  </div>
+
+  <h2>Without the picture</h2>
+  <div class="tw"><table>
+    <thead><tr><th>year</th><th>news (hours, by year lived)</th><th>wrong moment</th><th>past found wrong</th><th>hours set right that year</th></tr></thead>
+    <tbody>
+{{ROWS}}
+    </tbody>
+  </table></div>
+
+  <h2>What this is, and is not</h2>
+  <div class="txt aside">
+  <p>No device and no person is in this material. A release’s date is the day the file was published, not the day anyone learned, and
+  devices received it later; every hour here is the error of a perfectly updated machine. “Wrong” means wrong by the release of
+  2026-10-27. Regions are the database’s identifiers (Antarctica/Vostok is a station, not a country) and hours are summed across regions,
+  not weighted by who lives there. Releases from before October 2000 compile here only through a two-line helper written for this study.
+  A line’s length carries its hours; one line can be one hour or twenty-one years.</p>
+  <p><b>What a machine did here.</b> Every archived release, 1993 to 2026, was compiled, and each of 312 regions was read at every hour from
+  1997 to 2026 against the final release: 72.7 million region-hours. A person with time and the files could have done the same; the
+  advantage is patience over the whole, and it is small.</p>
+  <p>Data: IANA Time Zone Database, releases 1996h–2026f, public domain
+  (<a href="https://data.iana.org/time-zones/releases/">data.iana.org/time-zones/releases</a>). Study, registrations, counts and checks:
+  <a href="../../projects/notice/">project 23, Notice</a>. Nearest neighbours: <a href="https://tzdata-meta.timtimeonline.com/">tzdata-meta</a>
+  (Tim Parenti; by hand since 2016, notice against effect for present and future changes) and the version-diff tools the database’s
+  own page lists; neither draws the past found wrong. Remainder, 2026. CC BY 4.0.</p>
+  </div>
+</main>
+<script>
+const DATA = {{DATA}};
+(() => {
+  const E = DATA.eps, HW = DATA.hidden;
+  const X0 = Date.UTC(1997, 0, 1) / 1000, X1 = Date.UTC(2027, 0, 1) / 1000, TEND = Date.UTC(2026, 10, 7) / 1000;
+  const cv = document.getElementById('map'), sp = document.getElementById('spark');
+  const slider = document.getElementById('t'), play = document.getElementById('play');
+  slider.min = X0; slider.max = TEND; slider.step = 7 * 86400; slider.value = TEND;
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = n => Math.round(n).toLocaleString('en-US');
+  const day = t => new Date(t * 1000).toISOString().slice(0, 10);
+  const off = s => { const h = s / 3600; return 'UT' + (h >= 0 ? '+' : '−') + Math.abs(h) + ' h'; };
+  const KN = ['news after the clocks moved', 'a change carried at the wrong moment', 'the past found wrong'];
+  let W = 0, M = { l: 44, r: 10, t: 10, b: 30 }, T = TEND, segs = [];
+  const sx = t => M.l + (t - X0) / (X1 - X0) * (W - M.l - M.r);
+  const sy = t => W - M.b - (t - X0) / (X1 - X0) * (W - M.t - M.b);
+  function hidden(T) { let h = 0; for (const e of E) if (e[3] > T && e[1] < T) h += (Math.min(e[2], T) - e[1]) / 3600; return h; }
+  function draw() {
+    const dpr = window.devicePixelRatio || 1;
+    W = cv.clientWidth; cv.style.height = W + 'px'; cv.width = W * dpr; cv.height = W * dpr;
+    const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, W);
+    const col = [css('--news'), css('--ret'), css('--past')], grid = css('--grid'), muted = css('--muted'), ink = css('--ink');
+    g.font = '11px Georgia, serif'; g.fillStyle = muted; g.strokeStyle = grid; g.lineWidth = 1;
+    for (let y = 2000; y <= 2025; y += 5) {
+      const t = Date.UTC(y, 0, 1) / 1000;
+      g.beginPath(); g.moveTo(sx(t), M.t); g.lineTo(sx(t), W - M.b); g.moveTo(M.l, sy(t)); g.lineTo(W - M.r, sy(t)); g.stroke();
+      g.textAlign = 'center'; g.fillText(y, sx(t), W - M.b + 16); g.textAlign = 'right'; g.fillText(y, M.l - 6, sy(t) + 4);
+    }
+    g.textAlign = 'left'; g.fillText('lived →', M.l + 4, W - 4);
+    g.fillText('↑ set right', M.l + 4, M.t + 10);
+    g.strokeStyle = muted; g.setLineDash([3, 4]); g.beginPath(); g.moveTo(sx(X0), sy(X0)); g.lineTo(sx(X1), sy(X1)); g.stroke(); g.setLineDash([]);
+    g.save(); g.translate(sx(Date.UTC(2021, 0, 1) / 1000), sy(Date.UTC(2021, 0, 1) / 1000) + 14); g.rotate(-Math.PI / 4);
+    g.fillStyle = muted; g.textAlign = 'center'; g.fillText('set right as lived', 0, 0); g.restore();
+    segs = [];
+    g.lineCap = 'butt';
+    for (const e of E) {
+      if (e[3] <= T) {
+        const a = sx(e[1]), b = Math.max(sx(e[2]), a + 2), y = sy(e[3]);
+        g.strokeStyle = col[e[4]]; g.globalAlpha = .9; g.lineWidth = 2;
+        g.beginPath(); g.moveTo(a, y); g.lineTo(b, y); g.stroke();
+        segs.push([a, b, y, e, false]);
+      }
+    }
+    if (T < TEND) {
+      const y = sy(T);
+      g.globalAlpha = 1; g.strokeStyle = ink; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(M.l, y); g.lineTo(sx(T), y); g.stroke();
+      g.globalAlpha = .4; g.lineWidth = 6;
+      for (const e of E) if (e[3] > T && e[1] < T) {
+        const a = sx(e[1]), b = Math.max(sx(Math.min(e[2], T)), a + 2);
+        g.strokeStyle = col[e[4]]; g.beginPath(); g.moveTo(a, y); g.lineTo(b, y); g.stroke();
+        segs.push([a, b, y, e, true]);
+      }
+    }
+    g.globalAlpha = 1;
+    // the hidden curve
+    const H = Math.round(W * .18); sp.style.height = H + 'px'; sp.width = W * dpr; sp.height = H * dpr;
+    const s = sp.getContext('2d'); s.setTransform(dpr, 0, 0, dpr, 0, 0); s.clearRect(0, 0, W, H);
+    let mx = 0; for (const p of HW) mx = Math.max(mx, p[1]);
+    const yy = v => H - 16 - v / mx * (H - 26);
+    s.fillStyle = css('--past'); s.globalAlpha = .35; s.beginPath(); s.moveTo(sx(HW[0][0]), yy(0));
+    for (const p of HW) s.lineTo(sx(p[0]), yy(p[1]));
+    s.lineTo(sx(HW[HW.length - 1][0]), yy(0)); s.closePath(); s.fill(); s.globalAlpha = 1;
+    s.strokeStyle = ink; s.beginPath(); s.moveTo(sx(T), 4); s.lineTo(sx(T), H - 16); s.stroke();
+    s.font = '11px Georgia, serif'; s.fillStyle = muted; s.textAlign = 'left';
+    s.fillText('hours already lived, wrong, not yet known (peak ' + fmt(mx) + ')', M.l + 4, H - 3);
+    const hv = hidden(T);
+    cv.dataset.lines = segs.filter(x => !x[4]).length; cv.dataset.faint = segs.filter(x => x[4]).length; cv.dataset.hidden = Math.round(hv);
+    document.getElementById('date').textContent = 'Read on ' + day(T) + (T >= TEND ? ' (the end of this study)' : '');
+    document.getElementById('hid').textContent = fmt(hv);
+    document.getElementById('hidl').textContent = 'hours already lived that the file was wrong about and did not yet know';
+  }
+  function at(x, y) {
+    let best = null, bd = 7;
+    for (const s of segs) {
+      const dx = x < s[0] ? s[0] - x : x > s[1] ? x - s[1] : 0, d = Math.hypot(dx, y - s[2]);
+      if (d < bd) { bd = d; best = s; }
+    }
+    return best;
+  }
+  function info(s) {
+    const el = document.getElementById('info');
+    if (!s) return;
+    const e = s[3];
+    el.innerHTML = '<b>' + e[0] + '</b> · ' + fmt(e[9]) + ' hours wrong, ' + day(e[1]) + ' to ' + day(e[2]) + ' · ' + KN[e[4]] +
+      '<br>shown at its first hour: ' + off(e[5]) + ' (release ' + e[7] + '); now held: ' + off(e[6]) +
+      '<br>' + (s[4] ? 'not yet known on ' + day(T) + '; ' : '') + 'set right by release ' + e[8] + ', ' + day(e[3]);
+  }
+  cv.addEventListener('mousemove', ev => { const r = cv.getBoundingClientRect(); info(at(ev.clientX - r.left, ev.clientY - r.top)); });
+  cv.addEventListener('click', ev => { const r = cv.getBoundingClientRect(); info(at(ev.clientX - r.left, ev.clientY - r.top)); });
+  slider.addEventListener('input', () => { T = +slider.value; draw(); });
+  let timer = null;
+  play.addEventListener('click', () => {
+    if (timer) { clearInterval(timer); timer = null; play.textContent = 'Play the years'; return; }
+    T = X0; play.textContent = 'Pause';
+    timer = setInterval(() => {
+      T = Math.min(TEND, T + 14 * 86400); slider.value = T; draw();
+      if (T >= TEND) { clearInterval(timer); timer = null; play.textContent = 'Play the years'; }
+    }, 30);
+  });
+  window.addEventListener('resize', draw);
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+  draw();
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>

@@ -1607,7 +1607,7 @@
    "title": "Notice",
    "node": "project:notice",
    "dir": "projects/notice",
-   "material": "Every archived release of the IANA Time Zone Database (276 files, 1993 to 27 October 2026, public domain), the file almost every phone and server takes its local time from, each compiled and read for every change of a region's clock since 1997",
+   "material": "Every archived release of the IANA Time Zone Database (276 files, 1993 to 27 October 2026, public domain), the file many computer systems take local time from, each compiled and read for every change of a region's clock since 1997",
    "instruments": [
     "T4",
     "T5"
@@ -1616,6 +1616,10 @@
     [
      "The study: every change of a region's clock since 1997, and how many days before or after it the database knew",
      "projects/notice/"
+    ],
+    [
+     "The work: The Hours Shown Wrong",
+     "works/the-hours-shown-wrong/"
     ]
    ],
    "sources": [
@@ -1630,7 +1634,12 @@
     "projects/notice/explore1c.json",
     "projects/notice/SESSION2.md",
     "projects/notice/session2.json",
-    "projects/notice/check2.json"
+    "projects/notice/check2.json",
+    "projects/notice/SESSION3.md",
+    "projects/notice/session3.json",
+    "projects/notice/check3.json",
+    "projects/notice/check3b.json",
+    "projects/notice/TOOLKIT.md"
    ],
    "sessions": [
     {
@@ -1642,12 +1651,18 @@
      "night": 107,
      "date": "2026-11-09",
      "predictions": "10 of 11 predictions held (1 failed)"
+    },
+    {
+     "night": 108,
+     "date": "2026-11-10",
+     "predictions": "9 of 11 predictions held (2 failed)"
     }
    ],
-   "outcomeLabel": "Open: session 2 of 3-5",
-   "outcome": "open",
+   "outcomeLabel": "Work: The Hours Shown Wrong",
+   "outcome": "work",
    "fired": {},
-   "note": "When a government moves the clocks, almost every phone and server learns of it from one volunteer-kept file, the tz database. Every one of its 276 archived releases was compiled and read for the 8,518 changes of offset since 1997 in its newest release, and each change was timed against the first release that carried it. Most are known years ahead (the median, 6.2 years). Read exploratorily over the releases from 1996h, 393 of 4,285 timed changes first appeared after they had taken effect: 114 were news arriving late, the old hour still in the file on the day the clocks moved; 51 only re-timed a change already carried; 228 came more than a year late, the record correcting its past. Late news thins from 22 in 1997-1999 to 3 since 2020. The registered count could compile only releases from 2000f on: the older ones ask the compiler for a helper it has dropped. The check with a second tool held for 8 of 12, and its four failures were re-timings, which the registered count did not separate. Session 2 counted in hours instead of changes: on every day since 1996 one release was the newest, and its offset for every region was set against what the newest release of all says the offset was. For 918,348 region-hours in 103 of 312 regions, the newest file showed the present wrong: 161,743 hours were news that came after the clocks moved (144 stretches, the median 21 days), 16,627 a change carried at the wrong moment, and 739,978 (81 %) hours found wrong more than a year after they were lived. The longest: Antarctica/Vostok, 21 years (2001 to 2022) almost all of them one hour off, the station shown UT+6 h where the record now says +7 h. 10 of 11 predictions held; P10 failed: 77 % of the hours were wrong by one hour, not 90 %."
+   "note": "When a government moves the clocks, many computer systems learn of it from one public file, the tz database. Every one of its 276 archived releases was compiled and read for the 8,518 changes of offset since 1997 in its newest release, and each change was timed against the first release that carried it. Most are known years ahead (the median, 6.2 years). Read exploratorily over the releases from 1996h, 393 of 4,285 timed changes first appeared after they had taken effect: 114 were news arriving late, the old hour still in the file on the day the clocks moved; 51 only re-timed a change already carried; 228 came more than a year late, the record correcting its past. Late news thins from 22 in 1997-1999 to 3 since 2020. The registered count could compile only releases from 2000f on: the older ones ask the compiler for a helper it has dropped. The check with a second tool held for 8 of 12, and its four failures were re-timings, which the registered count did not separate. Session 2 counted in hours instead of changes: on every day since 1996 one release was the newest, and its offset for every region was set against what the newest release of all says the offset was. For 918,348 region-hours in 103 of 312 regions, the newest file showed the present wrong: 161,743 hours were news that came after the clocks moved (144 stretches, the median 21 days), 16,627 a change carried at the wrong moment, and 739,978 (81 %) hours found wrong more than a year after they were lived. The longest: Antarctica/Vostok, 21 years (2001 to 2022) almost all of them one hour off, the station shown UT+6 h where the record now says +7 h. 10 of 11 predictions held; P10 failed: 77 % of the hours were wrong by one hour, not 90 %. Session 3 set every stretch against the day a release first set it right. Half of the wrong hours belong to stretches set right more than 15.6 years after they began; 6.5 % within ninety days, by 107 releases. The hours already lived and not yet known to be wrong peaked at 423,411 on 1 August 2012 and were cut by single releases: 2012e (Tokelau, the next day), 2014f (Urumqi), 2023d (Vostok and Casey). 9 of 11 predictions held, and by the rule written before the count the work was made: The Hours Shown Wrong, every stretch a line placed by when it was lived and when it was found.",
+   "couldNot": "It could not see the world the file is about: no clock, no person, no day anyone learned, only the day a file was published; it could not judge the judge, since the final release decides every 'wrong'; nobody has looked at the work."
   }
  ],
  "acts": [
@@ -1851,6 +1866,14 @@
    "project": 22,
    "line": "Every plant species name since 1753, and the 27,429 verdicts on them that Kew's checklist changed between December 2022 and June 2026: each a dot at the year its name was published, sitting by sitting, with the record's corrections of itself kept apart.",
    "source": "works/the-court-still-sits/WORK.md"
+  },
+  {
+   "title": "The Hours Shown Wrong",
+   "href": "works/the-hours-shown-wrong/",
+   "node": "work:the-hours-shown-wrong",
+   "project": 23,
+   "line": "918,348 hours in which the newest release of the tz database showed a region the wrong local time, each stretch a line placed by when it was lived and when a release set it right; and on any day, the hours the file was wrong about without yet knowing.",
+   "source": "works/the-hours-shown-wrong/WORK.md"
   }
  ]
 }

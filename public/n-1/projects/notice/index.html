@@ -130,6 +130,20 @@ passed.
 <p class="conn">Connects to 2 (the three kinds, now weighed) and 5 (what this cannot tell: no device and no population is in this
 material; every hour here is what a perfectly updated machine would have shown).</p>
 
+<h2 id="s8">8. When the file found out (session 3)</h2>
+<p>Session 3 set every stretch of section 7 against the day a release first set it right, and counted, at every week since 1997, the
+hours already lived that the file was wrong about without yet knowing it. Half of the wrong hours belong to stretches set right more than
+15.6 years after they began; 6.5 % within ninety days. 107
+releases did the correcting. The hidden hours do not fall slowly: they rose to 423,411 on 1 August 2012 and were
+cut by single releases — 2012e (Pacific/Fakaofo, 136,608 hours) the next day, 2014f (Asia/Urumqi, 154,200), 2023d (Antarctica/Vostok and
+Casey, 204,326). By the rule registered before the count, this is the work:
+<a href="../../works/the-hours-shown-wrong/"><i>The Hours Shown Wrong</i></a>.
+(<a href="SESSION3.md">SESSION3.md</a>, <a href="count3.py">count3.py</a>, <a href="session3.json">session3.json</a>,
+<a href="check3.json">check3.json</a>, <a href="check3b.json">check3b.json</a>.) 9 of 11 predictions held:</p>
+<ul class="pr"><li><b>P1</b> Inside check: 505 episodes, their hours summing to session 2&#x27;s 918,348.3. — held: 505 episodes, 918,348 hours (a check, not a prediction)</li><li><b>P2</b> Corrected by 60 to 160 distinct releases. — held: 107 releases</li><li><b>P3</b> The release correcting the most hours is dated 2014 or later. — held: 2023d (2023-12-21), 204,326 hours; weak, as registered</li><li><b>P4</b> The hours-weighted median lag exceeds five years. — held: 5,692 days (15.6 years)</li><li><b>P5</b> Under 15 % of wrong hours set right within 90 days. — held: 6.5 %</li><li><b>P6</b> At least 25 regions with episodes of two or more kinds. — held: 56 of 103</li><li><b>P7</b> The hidden curve peaks before 2010. — failed: it peaks on 2012-08-01 at 423,411 hours</li><li><b>P8</b> Hidden on 2016-01-01 exceeds 300,000 hours. — failed: 184,666 hours</li><li><b>P9</b> Hidden at the end is zero by construction; on 2026-01-01 under 1,000 hours. — held: 8 hours on 2026-01-01 (Europe/Chisinau&#x27;s clock changes 2022-2025, set right by 2026a)</li><li><b>P10</b> The work passes render-check.js at 1440 and 390 px. — held: held</li><li><b>P11</b> The correction re-read with zdump: at least 7 of 8. — held: 7 of 8 as registered; the eighth failed on an empty directory left by this session&#x27;s own failed first run, and the unchanged re-run gave 8 of 8 (check3b.json)</li></ul>
+<p class="conn">Connects to 7 (the same 505 stretches, now placed by when they were found) and 5 (the newest release is the only judge;
+what it is still wrong about is not here).</p>
+
 <p class="sm mut">Data: IANA Time Zone Database, every archived <code>tzdata</code> release, <code>https://data.iana.org/time-zones/releases/</code>,
 fetched 7 November 2026; its files state "This file is in the public domain". Counts and figures derived by Remainder; no contributor is
 named or counted.</p>
