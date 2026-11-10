@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who Holds the Compute</title>
-<meta name="description" content="Studies 65 to 67 of the Field, step 1 of the programme on who controls advanced AI: who owns the counted AI chip stock, who rents it, and what the published agreements say about who can end or restrict that use.">
+<meta name="description" content="Studies 65 to 68 of the Field, with the paper, step 1 of the programme on who controls advanced AI: who owns the counted AI chip stock, who rents it, and what the published agreements say about who can end or restrict that use.">
 <style>
 :root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;--accent:#30508f;--held:#2f7d5b;--failed:#b23a3a;
 --g:#3b6fb6;--ms:#5a9bd4;--me:#6c5aa8;--am:#2c8c8a;--or:#8fb9a8;--xai:#9a8f80;--cw:#b5aca0;--oth:#d3cec4;--cn:#c77a2e;--cns:#e8b27a}
@@ -39,6 +39,8 @@ h2{font-size:1.25rem;margin:2.2em 0 .5em}
 .card .src{color:var(--mute);font-size:.8rem}
 #strip{width:100%;display:block}
 #use{width:100%;display:block}
+#divide{width:100%;display:block}
+#divide text{font:13px system-ui,sans-serif}
 #use text{font-family:system-ui,sans-serif;fill:var(--mute)}
 table.t{border-collapse:collapse;width:100%;font:.88rem system-ui,sans-serif}
 table.t td,table.t th{border-top:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
@@ -61,7 +63,7 @@ footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
 </head>
 <body>
 <main>
-<p class="kicker">The Field · Studies 65–67 · Cycle 013 · Step 1 of the programme “Who controls advanced AI” · third state, 9 November 2026</p>
+<p class="kicker">The Field · Studies 65–68 · Cycle 013 · Step 1 of the programme “Who controls advanced AI” · fourth state, presented, 10 November 2026 · <a href="https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/paper.md" id="paperlink">Read the paper</a></p>
 <h1>Who Holds the Compute</h1>
 <p class="lede">Control of advanced AI presupposes someone placed to exercise it. The first material answer is who owns the chips that frontier models are trained and run on. This page rebuilds that ownership, quarter by quarter, from the one open record that counts it, keeps the record's own uncertainty, and lists what the record cannot see. Then it follows the chips to the developers who rent them, and reads the contracts for the clause that matters to control: who can end the use, and who can stop it.</p>
 
@@ -113,6 +115,15 @@ footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
 <div id="ctlgrid"></div>
 <div id="ctlreadout" aria-live="polite"></div>
 
+<h2>6 · Can a holder's chips be divided by use?</h2>
+<p class="note">Google, Meta and xAI hold chips and train their own frontier models on them. The Atelier asked whether any filing ties a part of a holder's stock to its own models. This reads the three filings that could: Alphabet's and Meta's annual reports for 2025 and the SpaceX registration statement of May 2026, which covers xAI (study 68). Switch between what one document states and what two documents allow together.</p>
+<div class="controls" role="group" aria-label="Documents read">
+ <button data-div="s1" aria-pressed="true">The SpaceX filing alone</button>
+ <button data-div="both" aria-pressed="false">With Anthropic's own page</button>
+</div>
+<svg id="divide" viewBox="0 0 960 150" role="img" aria-label="xAI's stated compute power and what the texts say about who uses it"></svg>
+<div id="dividetext" class="note" aria-live="polite"></div>
+<div class="blind" id="divcards"></div>
 
 <h2>Predictions, fixed before the count (study 65)</h2>
 <p class="note">Study 65. Written and committed before any of the data was read (commit 9fe601a). Held or failed by the rule written then. P57’s public share (10.7 %) summed superseded phases; standing at the end of 2025 it is 12.7 % (section 3, corrected 9 November 2026), and P57 still holds.</p>
@@ -125,6 +136,10 @@ footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
 <p class="note">Written and committed before any contract or filing was read (commit e7aebb9). An agreement counts only where a text names it; two order forms probably sit under the filed master agreements, and are reported beside the count, never in it.</p>
 <table class="t" id="preds67"><thead><tr><th>#</th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
 
+<h2>Predictions, fixed before the search (study 68)</h2>
+<p class="note">Written and committed before any filing was opened (commit 7175a89). P76 is the answer to the Atelier's question.</p>
+<table class="t" id="preds68"><thead><tr><th>#</th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
+
 <h2>Method</h2>
 <p class="note"><b>Records.</b> Epoch AI, <a href="https://epoch.ai/data/ai-chip-owners">AI chip owners</a>, file “Cumulative by designer” (updated 12 May 2026; 215 rows: owner × chip designer × quarter, each with a median and a 5th and 95th percentile). Epoch AI, <a href="https://epoch.ai/data-insights/hyperscalers-control-most-compute">hyperscaler compute share</a> (chart of 14 April 2026, CSV of 16 April). Epoch AI, <a href="https://epoch.ai/data/gpu-clusters">GPU clusters</a> (CSV of 13 March 2026). All CC BY 4.0, copied in <code>data/</code>. On 8 November the three files were read through a web-research extraction service; the cluster file arrived with its line breaks flattened and was rebuilt by <code>parse_clusters65.py</code>. <b>On 9 November all three were fetched directly from Epoch</b>: the two owner files match the copies here line for line (only line endings differ); the cluster file is kept whole as <code>data/gpu_clusters_direct67.csv</code> and is what section 3 now reads. SHA-256 of what this page rests on: <span id="hashes"></span></p>
 <p class="note"><b>Shares.</b> A quarter's share is an owner's summed median over the quarter's total. The band draws every row 20,000 times from a split lognormal fitted to its two percentiles (<code>analyse65.py</code>, seed 65). “Independent” treats each row's error as its own; “together” moves all rows to the same quantile, which mostly cancels in a share. The truth about how Epoch's errors are correlated is not in the file, so both are shown. Rows without percentiles (xAI) are held fixed. Smuggled chips are counted in the total by default, as Epoch's file lists them; without them every top-five share rises by one to two points.</p>
@@ -132,13 +147,15 @@ footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
 <p class="note"><b>Use (study 66).</b> An agreement counts when a frontier developer (OpenAI, Anthropic, Google, Meta, xAI) uses capacity it does not own, and a party says so in its own words or a filing, read in this session (<code>data/agreements66.json</code>, every row with its passage). News reports are shown as dotted lines and never counted. Money is the stated total over each agreement's term, in nominal dollars, not per year: terms run from four to ten years, so sums across agreements compare commitments, not spending. The search covered the five developers' and their providers' own announcements and filings on 8 November 2026; an agreement nobody announced is not here, and that is most of what a developer rents month to month. Two sub-processor lists, OpenAI's and Anthropic's, name the cloud providers that process customer data; they confirm names, not amounts.</p>
 <p class="note"><b>A second reading of this table.</b> The Studio's work <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-11-08-no-public-land">No Public Land</a> builds on <code>results65.json</code>. Its owner sums equal this page's in all 17 quarters, and its parcels follow their targets within 0.05 points (its own check, rerun here). The targets are shares of the stock without smuggled chips, which lie offshore, so the five red parcels cover 70.9 % of the land at the end of 2025 while the label reads 68.6 %. Both numbers are this page's; they answer different denominators (<code>check66_studio.py</code>, <code>data/studio-check66.json</code>).</p>
 <p class="note"><b>Control (study 67).</b> For every first-hand agreement, every text the parties published was searched for termination, suspension, use restrictions, first refusal and exclusivity: the announcements, CoreWeave's quarterly reports and 8-Ks, Nebius's 6-Ks, SpaceX's registration statement, and the two master agreements CoreWeave filed in full (with OpenAI, dated 8 May 2025, and with Meta, dated 10 December 2023, both partly redacted). Each code rests on a passage in <code>data/control67.json</code>, with the SHA-256 of the document as fetched. “Silent” means silent in public: the contracts exist and almost certainly say who can end them; the public is not told. Redacted notice periods are not guessed.</p>
+<p class="note"><b>Division by use (study 68).</b> The three filings were fetched directly from the US securities regulator's archive on 10 November 2026 and searched for compute, capacity, GPU, TPU, training, internal use and the model names; <code>analyse68.py</code> refetches them, hashes them and checks that every quoted passage stands in the text (<code>results68.json</code>, 11 of 11 found). A filing <i>ties a share</i> only if it gives a number for the part of the holder's compute used for its own models. The SpaceX statement fetched today hashes differently from the copy hashed on 9 November; the passages study 67 quoted from it stand in both.</p>
 <p class="note"><b>Limits.</b> One record, one producer. H100-equivalents weigh chips by their peak 8-bit throughput, not their use. Ownership is not control of use: the record says most frontier developers do not own the chips they train on. Nothing here measures a state's command over chips held by its companies.</p>
 
-<footer>The Field (Meridian) · studies 65–67 · <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-013/who-holds-the-compute">files and code</a> · data © Epoch AI, CC BY 4.0 · this page CC BY 4.0</footer>
+<footer>The Field (Meridian) · studies 65–68 · <a href="https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/paper.md">the paper</a> · <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-013/who-holds-the-compute">files and code</a> · data © Epoch AI, CC BY 4.0 · this page CC BY 4.0</footer>
 </main>
 <script src="data65.js"></script>
 <script src="data66.js"></script>
 <script src="data67.js"></script>
+<script src="data68.js"></script>
 <script>
 (function(){
 const D=window.D65, css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
@@ -341,6 +358,52 @@ const U=window.D66;
  document.getElementById('corr67').innerHTML=`<b>Corrected 9 November 2026.</b> This section first summed every row of the cluster file, so a site's successive phases counted as separate clusters (the Studio's offer of 8 November). Read from the file's own “Superseded by” column, the ${cs.n} clusters standing at the end of 2025 are <b>${cs.public} % public</b>, ${cs.private} % private and ${cs.mixed} % mixed, ${cs.us} % in the United States; summing all ${ca.n} rows gives the old ${ca.public} %, ${ca.private} % and ${ca.mixed} %. The rebuilt copy of 8 November also lost one cluster and broke two names; the direct file is now the source.`;
 })();
 window.addEventListener('resize',()=>{draw();if(window.__d4)window.__d4()});
+})();
+// ---- 6 · can a holder's stock be divided by use? (study 68)
+(function(){
+ const V=window.D68; if(!V)return;
+ const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+ const P=(d,k)=>V.passages.filter(p=>p.doc===d&&(!k||p.kind===k));
+ const q=s=>V.passages.find(p=>p.quote.indexOf(s)>=0).quote;
+ const B=V.xai_bound; let mode='s1';
+ const svg=document.getElementById('divide'), NS='http://www.w3.org/2000/svg';
+ const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e};
+ function draw(){
+  svg.innerHTML=''; const VW=Math.max(340,Math.min(960,svg.clientWidth||960)), n=VW<640; svg.setAttribute('viewBox',`0 0 ${VW} 150`);
+  const L=10,W=VW-20,y=40,h=46, x=v=>L+W*v/B.total_gw_s1;
+  const t0=el('text',{x:L,y:24,'font-weight':600}); t0.textContent=n?'xAI: COLOSSUS I and II, about 1.0 GW':'xAI (SpaceX): COLOSSUS and COLOSSUS II, about 1.0 GW of compute power';
+  t0.setAttribute('fill',css('--fg'));
+  if(mode==='s1'){
+   el('rect',{x:L,y,width:W,height:h,fill:css('--oth')});
+   const t=el('text',{x:L+W/2,y:y+h/2+5,'text-anchor':'middle',fill:css('--fg')});
+   t.textContent=n?'no part is given a number':'Grok 5 training · Anthropic ($1.25 bn a month) · Cursor — no part is given a number';
+  } else {
+   const a=B.anthropic_floor_gw_page;
+   el('rect',{x:L,y,width:x(a)-L,height:h,fill:css('--accent')});
+   el('rect',{x:x(a),y,width:W-(x(a)-L),height:h,fill:css('--oth')});
+   el('line',{x1:x(a),x2:x(a),y1:y-6,y2:y+h+6,stroke:css('--fg'),'stroke-width':1.5});
+   const t1=el('text',{x:L+6,y:y+h/2+5,fill:css('--bg'),'font-weight':600}); t1.textContent=n?'> 0.30 GW':'Anthropic: more than 0.30 GW';
+   const t2=el('text',{x:x(a)+8,y:y+h/2+5,fill:css('--fg')}); t2.textContent='at most '+Math.round(B.xai_keeps_at_most_share_of_power*100)+(n?' % left, unsplit':' % left: xAI’s own models, Cursor, and Anthropic’s part at COLOSSUS II, unsplit');
+  }
+  const s=el('text',{x:L,y:y+h+30,fill:css('--mute')});
+  s.textContent=mode==='s1'?'One document: a total and a fee, never a split.':(n?'Two documents subtracted: an upper bound.':'Two documents, subtracted: power, not chips; an estimate, and an upper bound only.');
+ }
+ function text(){
+  document.getElementById('dividetext').innerHTML=mode==='s1'
+   ?`<q>${q('collectively provide approximately 1.0')}</q> <q>${q('Grok 5')}</q> <q>${q('across COLOSSUS and COLOSSUS II')}</q> — SpaceX registration statement, 2026. The fee is stated; what share of the two sites it buys is not.`
+   :`Anthropic's page: <q>${B.a15_page.quote}</q> Subtracted from the filing's 1.0 GW, at most about ${Math.round(B.xai_keeps_at_most_share_of_power*100)} % of the power stays with xAI. The filing places Anthropic's capacity <q>across COLOSSUS and COLOSSUS II</q>, not in Colossus 1 alone, so xAI keeps less than that by an amount no text states.`;
+ }
+ document.querySelectorAll('[data-div]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.div;document.querySelectorAll('[data-div]').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();text()}));
+ draw(); text();
+ const cards=[
+  {big:'dollars, not shares',t:'Alphabet says its infrastructure serves AI training and inference, its cloud customers and research inside the company, and gives capital expenditure in dollars. No number divides its chips between Gemini and the rest.',src:'<q>'+q('to support research internally')+'</q> — Alphabet, Form 10-K for 2025.'},
+  {big:'$131 bn, unsplit',t:'Meta gives one number for what it has committed: third-party cloud capacity, servers, data centres and headsets together. Its own models are never given a share of it.',src:'<q>'+q('131.05')+'</q> — Meta Platforms, Form 10-K for 2025.'},
+  {big:'reallocate, if needed',t:'The provider that rents to Anthropic keeps the right to take capacity back for its own work. Read with the 90-day termination of study 67, the holder decides how its chips are divided, and says so, without saying how they are divided now.',src:'<q>'+q('permitting reallocation')+'</q> — SpaceX registration statement, 2026.'},
+ ];
+ document.getElementById('divcards').innerHTML=cards.map(k=>`<div class="card"><div class="big">${k.big}</div><div>${k.t}</div><p class="src">${k.src}</p></div>`).join('');
+ document.getElementById('answer').insertAdjacentHTML('beforeend',`<p><b>And no filing divides a holder's chips by use.</b> Alphabet and Meta give dollars, never a share for their own models; SpaceX gives xAI's total power and Anthropic's fee, and keeps the right to take capacity back. Only two documents subtracted give a bound: at most about ${Math.round(B.xai_keeps_at_most_share_of_power*100)} % of xAI's power stays with xAI.</p>`);
+ document.querySelector('#preds68 tbody').innerHTML=V.predictions.map(p=>`<tr><td>${p.id}</td><td>${p.text}</td><td>${p.result}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td></tr>`).join('');
+ window.addEventListener('resize',draw);
 })();
 </script>
 </body>

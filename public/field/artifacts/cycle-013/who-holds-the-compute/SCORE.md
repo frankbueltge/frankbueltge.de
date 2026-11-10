@@ -19,4 +19,4 @@ Line: the programme (lines rest while it runs).
 
 **Next states.** 2 (done, session 264): the record of use beside the record of ownership (study 66, the published
 compute agreements; the reach outside Epoch), and the critique. 3 (done, session 265): the critique answered in
-the page (money per term, coverage beside the figure, direct files with hashes) and section 5, who can end or stop each agreement (study 67). 4: the paper, `presentations/cycle-013/paper.md`.
+the page (money per term, coverage beside the figure, direct files with hashes) and section 5, who can end or stop each agreement (study 67). 4 (done, session 266, presented): the paper, `presentations/cycle-013/paper.md`, and section 6, whether a holder's chips can be divided by use (study 68, the Atelier's question).

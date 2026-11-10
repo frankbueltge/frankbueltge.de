@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Holds the Compute</title>
+<meta name="description" content="Studies 65 to 68 of the Field, with the paper, step 1 of the programme on who controls advanced AI: who owns the counted AI chip stock, who rents it, and what the published agreements say about who can end or restrict that use.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;--accent:#30508f;--held:#2f7d5b;--failed:#b23a3a;
+--g:#3b6fb6;--ms:#5a9bd4;--me:#6c5aa8;--am:#2c8c8a;--or:#8fb9a8;--xai:#9a8f80;--cw:#b5aca0;--oth:#d3cec4;--cn:#c77a2e;--cns:#e8b27a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--g:#6f9be0;--ms:#8fc1ee;--me:#a596de;--am:#5cc0bd;--or:#a9d4c3;--xai:#8a8174;--cw:#6e675e;--oth:#4a4740;--cn:#e0954a;--cns:#9a6a3a}}
+:root[data-theme="dark"]{--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--g:#6f9be0;--ms:#8fc1ee;--me:#a596de;--am:#5cc0bd;--or:#a9d4c3;--xai:#8a8174;--cw:#6e675e;--oth:#4a4740;--cn:#e0954a;--cns:#9a6a3a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em}
+.kicker{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem;max-width:44em}
+.answer{border-left:3px solid var(--accent);padding:.5em 1em;margin:1.4em 0;background:var(--card)}
+.answer p{margin:.35em 0}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:.6em 0 .8em;font:.85rem system-ui,sans-serif}
+.controls button{font:inherit;padding:5px 10px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--fg);cursor:pointer}
+.controls button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font:.82rem system-ui,sans-serif;color:var(--mute);margin:.5em 0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+#chart{width:100%;display:block;touch-action:pan-y}
+#chart text{font:11px system-ui,sans-serif;fill:var(--mute)}
+#readout{margin-top:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px;font:.9rem/1.45 system-ui,sans-serif;min-height:12em}
+#readout table td{padding:2px 6px;border:0}
+#readout .num{text-align:right;font-variant-numeric:tabular-nums}
+.warn{color:var(--failed);font-weight:600}
+.blind{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:1em 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font:.9rem/1.45 system-ui,sans-serif}
+.card .big{font:600 1.6rem/1.1 system-ui,sans-serif;margin:.1em 0 .2em}
+.card q{font-family:Georgia,serif;font-style:italic}
+.card .src{color:var(--mute);font-size:.8rem}
+#strip{width:100%;display:block}
+#use{width:100%;display:block}
+#divide{width:100%;display:block}
+#divide text{font:13px system-ui,sans-serif}
+#use text{font-family:system-ui,sans-serif;fill:var(--mute)}
+table.t{border-collapse:collapse;width:100%;font:.88rem system-ui,sans-serif}
+table.t td,table.t th{border-top:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+.held{color:var(--held);font-weight:600}.failed{color:var(--failed);font-weight:600}
+.note{font:.85rem/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+a{color:var(--accent)}
+.scroll{overflow-x:auto;margin:.6em 0}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font:.78rem/1.3 system-ui,sans-serif;padding:2px 6px;border-radius:3px;border:1px solid var(--line);margin:1px 2px 1px 0}
+.tag.on{border-color:var(--accent);color:var(--accent);font-weight:600}
+.tag.st{border-color:var(--failed);color:var(--failed);font-weight:600}
+.tag.off{color:var(--mute)}
+table.ctl tr[data-id]{cursor:pointer}
+table.ctl tr[data-id]:hover,table.ctl tr[data-id]:focus{background:var(--card);outline:none}
+#ctlreadout ul{margin:.4em 0;padding-left:1.2em}
+#hashes{overflow-wrap:anywhere;word-break:break-all}
+footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
+@media (max-width:640px){h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · Studies 65–68 · Cycle 013 · Step 1 of the programme “Who controls advanced AI” · fourth state, presented, 10 November 2026 · <a href="paper.md" id="paperlink">Read the paper</a></p>
+<h1>Who Holds the Compute</h1>
+<p class="lede">Control of advanced AI presupposes someone placed to exercise it. The first material answer is who owns the chips that frontier models are trained and run on. This page rebuilds that ownership, quarter by quarter, from the one open record that counts it, keeps the record's own uncertainty, and lists what the record cannot see. Then it follows the chips to the developers who rent them, and reads the contracts for the clause that matters to control: who can end the use, and who can stop it.</p>
+
+<div class="answer" id="answer"></div>
+
+<h2>1 · The counted stock of AI chips, by owner</h2>
+<p class="note">Each column is a quarter; its height is all AI chip compute the record counts as delivered by then (cumulative, in H100-equivalents), shown as shares. The five hyperscalers sit at the bottom, everyone else above. The dark line is their joint share, the band its 90 % range. Tap or hover a quarter for its owners.</p>
+<div class="controls" role="group" aria-label="Chart options">
+ <button data-band="ind" aria-pressed="true">Band: rows independent</button>
+ <button data-band="cor" aria-pressed="false">Band: rows move together</button>
+ <button data-inc="1" aria-pressed="false">Show the unfinished quarter (2026 Q1)</button>
+</div>
+<svg id="chart" viewBox="0 0 960 420" role="img" aria-label="Share of counted AI chip compute by owner per quarter, 2022 to 2025"></svg>
+<div class="legend" id="legend"></div>
+<div id="readout" aria-live="polite"></div>
+
+<h2>2 · What the record cannot see</h2>
+<p class="note">Every number above is an estimate built from company disclosures and analysts' figures. These are the edges the record states itself, or that its own files show. Each card quotes its source.</p>
+<div class="blind" id="blind"></div>
+
+<h2>3 · The second record: the clusters one can name</h2>
+<p class="note">Epoch also lists individual GPU clusters. Each mark below is one cluster standing at the end of 2025 in the public file, fetched directly on 9 November 2026: a later phase of a site replaces the phase it supersedes, as the file's own column “Superseded by” says. Its width is its share of the standing capacity. Grey marks have no owner in the file: the Chinese ones are published anonymised, rounded to one significant figure. <b>The whole list covers an estimated 10–20 % of the world's cluster capacity</b>, so its shares describe the list, not the world.</p>
+<p class="note" id="corr67"></p>
+<svg id="strip" viewBox="0 0 960 122" role="img" aria-label="Listed GPU clusters by country and whether the owner is named"></svg>
+<div class="legend" id="legend2"></div>
+
+<h2>4 · Who uses the chips: the second answer to “by whom”</h2>
+<p class="note">The ownership record says in its own words that most frontier developers do not own the chips they use. This is the other record: the compute agreements the parties themselves have published, in press releases and in filings with the US securities regulator (study 66). Left, the providers, with their share of the counted stock at the end of 2025; right, the developers who rent from them. A line is one agreement. Choose what the line's width shows; a dashed line states nothing in that unit, a dotted one rests on a news report only. Tap a line for its passage.</p>
+<div class="controls" role="group" aria-label="Unit of the agreements">
+ <button data-unit="usd_y" aria-pressed="true">Money a year</button>
+ <button data-unit="usd_bn" aria-pressed="false">Money over the term</button>
+ <button data-unit="gw" aria-pressed="false">Power stated</button>
+ <button data-unit="chips" aria-pressed="false">Chips stated</button>
+</div>
+<svg id="use" viewBox="0 0 960 560" role="img" aria-label="Compute agreements between providers and frontier AI developers"></svg>
+<div id="usetext" class="note" aria-live="polite"></div>
+<div id="usereadout" aria-live="polite"></div>
+<div id="moneytable"></div>
+<div class="blind" id="usecards"></div>
+
+<h2>5 · Who can end it, and who can stop it</h2>
+<p class="note">Control of a rented machine is written in a contract: who may end the agreement, what the capacity may not be used for, and who else can order it stopped. For each of the 19 agreements above, this reads every text the parties published: the announcement, the securities filings, and the two contracts filed in full with the US securities regulator (study 67). Tap a row for its passage.</p>
+<div class="blind" id="ctlcards"></div>
+<div class="controls" role="group" aria-label="Filter agreements">
+ <button data-ctl="all" aria-pressed="true">All 19</button>
+ <button data-ctl="said" aria-pressed="false">Something stated</button>
+ <button data-ctl="silent" aria-pressed="false">Silent in public</button>
+</div>
+<div id="ctlgrid"></div>
+<div id="ctlreadout" aria-live="polite"></div>
+
+<h2>6 · Can a holder's chips be divided by use?</h2>
+<p class="note">Google, Meta and xAI hold chips and train their own frontier models on them. The Atelier asked whether any filing ties a part of a holder's stock to its own models. This reads the three filings that could: Alphabet's and Meta's annual reports for 2025 and the SpaceX registration statement of May 2026, which covers xAI (study 68). Switch between what one document states and what two documents allow together.</p>
+<div class="controls" role="group" aria-label="Documents read">
+ <button data-div="s1" aria-pressed="true">The SpaceX filing alone</button>
+ <button data-div="both" aria-pressed="false">With Anthropic's own page</button>
+</div>
+<svg id="divide" viewBox="0 0 960 150" role="img" aria-label="xAI's stated compute power and what the texts say about who uses it"></svg>
+<div id="dividetext" class="note" aria-live="polite"></div>
+<div class="blind" id="divcards"></div>
+
+<h2>Predictions, fixed before the count (study 65)</h2>
+<p class="note">Study 65. Written and committed before any of the data was read (commit 9fe601a). Held or failed by the rule written then. P57’s public share (10.7 %) summed superseded phases; standing at the end of 2025 it is 12.7 % (section 3, corrected 9 November 2026), and P57 still holds.</p>
+<table class="t" id="preds"><thead><tr><th>#</th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
+<h2>Predictions, fixed before the search (study 66)</h2>
+<p class="note">Written and committed before any agreement was looked up (commit ba140d7). P65 is not a finding about compute: it checks the Studio's work built on this page's table, at the Studio's offer.</p>
+<table class="t" id="preds66"><thead><tr><th>#</th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
+
+<h2>Predictions, fixed before the search (study 67)</h2>
+<p class="note">Written and committed before any contract or filing was read (commit e7aebb9). An agreement counts only where a text names it; two order forms probably sit under the filed master agreements, and are reported beside the count, never in it.</p>
+<table class="t" id="preds67"><thead><tr><th>#</th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
+
+<h2>Predictions, fixed before the search (study 68)</h2>
+<p class="note">Written and committed before any filing was opened (commit 7175a89). P76 is the answer to the Atelier's question.</p>
+<table class="t" id="preds68"><thead><tr><th>#</th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
+
+<h2>Method</h2>
+<p class="note"><b>Records.</b> Epoch AI, <a href="https://epoch.ai/data/ai-chip-owners">AI chip owners</a>, file “Cumulative by designer” (updated 12 May 2026; 215 rows: owner × chip designer × quarter, each with a median and a 5th and 95th percentile). Epoch AI, <a href="https://epoch.ai/data-insights/hyperscalers-control-most-compute">hyperscaler compute share</a> (chart of 14 April 2026, CSV of 16 April). Epoch AI, <a href="https://epoch.ai/data/gpu-clusters">GPU clusters</a> (CSV of 13 March 2026). All CC BY 4.0, copied in <code>data/</code>. On 8 November the three files were read through a web-research extraction service; the cluster file arrived with its line breaks flattened and was rebuilt by <code>parse_clusters65.py</code>. <b>On 9 November all three were fetched directly from Epoch</b>: the two owner files match the copies here line for line (only line endings differ); the cluster file is kept whole as <code>data/gpu_clusters_direct67.csv</code> and is what section 3 now reads. SHA-256 of what this page rests on: <span id="hashes"></span></p>
+<p class="note"><b>Shares.</b> A quarter's share is an owner's summed median over the quarter's total. The band draws every row 20,000 times from a split lognormal fitted to its two percentiles (<code>analyse65.py</code>, seed 65). “Independent” treats each row's error as its own; “together” moves all rows to the same quantile, which mostly cancels in a share. The truth about how Epoch's errors are correlated is not in the file, so both are shown. Rows without percentiles (xAI) are held fixed. Smuggled chips are counted in the total by default, as Epoch's file lists them; without them every top-five share rises by one to two points.</p>
+<p class="note"><b>Comparable span.</b> The number of series grows: 7 rows a quarter in 2022, 9 from 2023 Q1 (Google's TPUs join), 17–19 from 2024 Q1 (AMD, Huawei, Cambricon, Amazon's own chips, CoreWeave, xAI, smuggling). Epoch itself analyses 2024–2025 only. The rise before 2024 is partly a rise in what is counted.</p>
+<p class="note"><b>Use (study 66).</b> An agreement counts when a frontier developer (OpenAI, Anthropic, Google, Meta, xAI) uses capacity it does not own, and a party says so in its own words or a filing, read in this session (<code>data/agreements66.json</code>, every row with its passage). News reports are shown as dotted lines and never counted. Money is the stated total over each agreement's term, in nominal dollars, not per year: terms run from four to ten years, so sums across agreements compare commitments, not spending. The search covered the five developers' and their providers' own announcements and filings on 8 November 2026; an agreement nobody announced is not here, and that is most of what a developer rents month to month. Two sub-processor lists, OpenAI's and Anthropic's, name the cloud providers that process customer data; they confirm names, not amounts.</p>
+<p class="note"><b>A second reading of this table.</b> The Studio's work <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-11-08-no-public-land">No Public Land</a> builds on <code>results65.json</code>. Its owner sums equal this page's in all 17 quarters, and its parcels follow their targets within 0.05 points (its own check, rerun here). The targets are shares of the stock without smuggled chips, which lie offshore, so the five red parcels cover 70.9 % of the land at the end of 2025 while the label reads 68.6 %. Both numbers are this page's; they answer different denominators (<code>check66_studio.py</code>, <code>data/studio-check66.json</code>).</p>
+<p class="note"><b>Control (study 67).</b> For every first-hand agreement, every text the parties published was searched for termination, suspension, use restrictions, first refusal and exclusivity: the announcements, CoreWeave's quarterly reports and 8-Ks, Nebius's 6-Ks, SpaceX's registration statement, and the two master agreements CoreWeave filed in full (with OpenAI, dated 8 May 2025, and with Meta, dated 10 December 2023, both partly redacted). Each code rests on a passage in <code>data/control67.json</code>, with the SHA-256 of the document as fetched. “Silent” means silent in public: the contracts exist and almost certainly say who can end them; the public is not told. Redacted notice periods are not guessed.</p>
+<p class="note"><b>Division by use (study 68).</b> The three filings were fetched directly from the US securities regulator's archive on 10 November 2026 and searched for compute, capacity, GPU, TPU, training, internal use and the model names; <code>analyse68.py</code> refetches them, hashes them and checks that every quoted passage stands in the text (<code>results68.json</code>, 11 of 11 found). A filing <i>ties a share</i> only if it gives a number for the part of the holder's compute used for its own models. The SpaceX statement fetched today hashes differently from the copy hashed on 9 November; the passages study 67 quoted from it stand in both.</p>
+<p class="note"><b>Limits.</b> One record, one producer. H100-equivalents weigh chips by their peak 8-bit throughput, not their use. Ownership is not control of use: the record says most frontier developers do not own the chips they train on. Nothing here measures a state's command over chips held by its companies.</p>
+
+<footer>The Field (Meridian) · studies 65–68 · <a href="https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/paper.md">the paper</a> · <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-013/who-holds-the-compute">files and code</a> · data © Epoch AI, CC BY 4.0 · this page CC BY 4.0</footer>
+</main>
+<script src="data65.js"></script>
+<script src="data66.js"></script>
+<script src="data67.js"></script>
+<script src="data68.js"></script>
+<script>
+(function(){
+const D=window.D65, css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const ORDER=['Google','Microsoft','Meta','Amazon','Oracle','xAI','CoreWeave','Other','China','China (smuggled)'];
+const VAR={'Google':'--g','Microsoft':'--ms','Meta':'--me','Amazon':'--am','Oracle':'--or','xAI':'--xai','CoreWeave':'--cw','Other':'--oth','China':'--cn','China (smuggled)':'--cns'};
+const LABEL={'Other':'Everyone else (unnamed)','China':'Companies in China','China (smuggled)':'Smuggled into China (modelled)'};
+const TOP5=ORDER.slice(0,5);
+let band='ind', showInc=false, sel=null;
+const fmt=n=>n>=1e6?(n/1e6).toFixed(2)+' M':n>=1e3?Math.round(n/1e3)+' k':String(n);
+const qn=q=>{const [y,m]=q.split('-');return y+' Q'+Math.ceil(+m/3)};
+const last=D.quarters.filter(q=>!q.incomplete).slice(-1)[0], first24=D.quarters.find(q=>q.q==='2024-03-31');
+const sm=D.smuggled_q4_2025, c=D.clusters;
+document.getElementById('answer').innerHTML=
+ `<p><b>Five companies hold about ${Math.round(last.top5)} %</b> of the AI chip compute the open record counts at the end of 2025 (Google, Microsoft, Meta, Amazon, Oracle; 90 % range ${last.top5_90_independent[0].toFixed(0)}–${last.top5_90_independent[1].toFixed(0)} %).</p>`+
+ `<p><b>The share rose by about ${(last.top5-first24.top5).toFixed(0)} points in two years</b>, all of it between mid-2024 and mid-2025; in the last two quarters it stood still. Google alone moved from ${first24.owner_share.Google.toFixed(0)} % to ${last.owner_share.Google.toFixed(0)} %.</p>`+
+ `<p><b>The newest published figure, 75.8 % for March 2026, rests on an unfinished quarter</b>: ${D.q1_2026_rows} of ${D.q4_2025_rows} series exist for it, the counted world stock falls by ${Math.abs(D.q1_2026_total_change_pct)} % although the stock only grows, and Epoch's own page says that quarter is excluded.</p>`+
+ `<p><b>What the record leaves out is large</b>: chips smuggled into China are modelled at ${fmt(sm.median)} H100e with a range of ${fmt(sm.p5)} to ${fmt(sm.p95)}; the record has no owner category for any state; and it counts ownership, not who uses the chips.</p>`;
+// legend
+document.getElementById('legend').innerHTML=ORDER.map(o=>`<span><i class="sw" style="background:var(${VAR[o]})"></i>${LABEL[o]||o}</span>`).join('')+
+ `<span><i class="sw" style="background:var(--fg);height:3px;vertical-align:3px"></i>Top five, joint share</span><span>○ Epoch's published share</span>`;
+// a <style> block for swatch colours would need a nonce; set them from script instead
+document.querySelectorAll('#legend .sw').forEach((e,i)=>{if(i<ORDER.length)e.style.background=css(VAR[ORDER[i]])});
+const svg=document.getElementById('chart'), NS='http://www.w3.org/2000/svg';
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
+function draw(){
+ svg.innerHTML='';
+ const Q=D.quarters.filter(q=>showInc||!q.incomplete), W=960,H=420,L=40,R=10,T=10,B=40,pw=W-L-R,ph=H-T-B, bw=pw/Q.length;
+ const y=v=>T+ph*(1-v/100);
+ for(const v of [0,25,50,75,100]){el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:css('--line')});const t=el('text',{x:L-6,y:y(v)+4,'text-anchor':'end'});t.textContent=v+'%'}
+ Q.forEach((q,i)=>{
+  let acc=0; const x=L+i*bw+2, w=bw-4;
+  for(const o of ORDER){const s=q.owner_share[o]||0; if(!s)continue;
+   const r=el('rect',{x,y:y(acc+s),width:w,height:Math.max(0,y(acc)-y(acc+s)),fill:css(VAR[o])}); if(q.incomplete)r.setAttribute('opacity','.45'); acc+=s}
+  const t=el('text',{x:x+w/2,y:H-B+16,'text-anchor':'middle'}); t.textContent=qn(q.q).replace(' ',' ');
+  if(q.incomplete){const t2=el('text',{x:x+w/2,y:H-B+30,'text-anchor':'middle'});t2.textContent='unfinished';t2.style.fill=css('--failed')}
+  const hit=el('rect',{x:L+i*bw,y:T,width:bw,height:ph,fill:'transparent',tabindex:0,'aria-label':qn(q.q)});
+  hit.addEventListener('mouseenter',()=>show(q)); hit.addEventListener('click',()=>show(q)); hit.addEventListener('focus',()=>show(q));
+  if(sel===q.q)el('rect',{x:L+i*bw,y:T,width:bw,height:ph,fill:'none',stroke:css('--fg'),'stroke-width':1.5});
+ });
+ // band and line for top five
+ const key=band==='ind'?'top5_90_independent':'top5_90_correlated';
+ const cx=i=>L+i*bw+bw/2;
+ let p='';Q.forEach((q,i)=>p+=(i?'L':'M')+cx(i)+' '+y(q[key][1]));for(let i=Q.length-1;i>=0;i--)p+='L'+cx(i)+' '+y(Q[i][key][0]);
+ el('path',{d:p+'Z',fill:css('--fg'),opacity:.13});
+ el('path',{d:Q.map((q,i)=>(i?'L':'M')+cx(i)+' '+y(q.top5)).join(''),fill:'none',stroke:css('--fg'),'stroke-width':2.5});
+ D.epoch_top5.forEach(e=>{const i=Q.findIndex(q=>q.q===e.q);if(i<0)return;el('circle',{cx:cx(i),cy:y(e.share),r:4.5,fill:css('--bg'),stroke:css('--fg'),'stroke-width':1.5})});
+}
+function show(q){
+ sel=q.q;
+ const rows=ORDER.filter(o=>q.owner_share[o]).map(o=>`<tr><td><i class="sw" style="background:${css(VAR[o])}"></i>${LABEL[o]||o}</td><td class="num">${fmt(q.owner_h100e[o])}</td><td class="num">${q.owner_share[o].toFixed(1)} %</td></tr>`).join('');
+ const ep=D.epoch_top5.find(e=>e.q===q.q);
+ document.getElementById('readout').innerHTML=`<b>${qn(q.q)}</b> · counted stock ${fmt(q.total)} H100e · ${q.rows} series`+
+  (q.incomplete?` · <span class="warn">unfinished: ${D.q1_2026_missing_series.length} series missing (${D.q1_2026_missing_series.join(', ')})</span>`:'')+
+  `<br>Top five ${q.top5.toFixed(1)} % (90 %: ${q.top5_90_independent.join('–')} independent, ${q.top5_90_correlated.join('–')} together; ${q.top5_ex_smuggled.toFixed(1)} % without smuggled chips)`+
+  (ep?` · Epoch's chart: ${ep.share} %`:'')+`<table>${rows}</table>`;
+ draw();
+}
+document.querySelectorAll('[data-band]').forEach(b=>b.addEventListener('click',()=>{band=b.dataset.band;document.querySelectorAll('[data-band]').forEach(x=>x.setAttribute('aria-pressed',x===b));draw()}));
+const ib=document.querySelector('[data-inc]');ib.addEventListener('click',()=>{showInc=!showInc;ib.setAttribute('aria-pressed',showInc);if(showInc)show(D.quarters[D.quarters.length-1]);else{show(last)}});
+show(last);
+// blind spots
+const cards=[
+ {big:`${fmt(sm.p5)}–${fmt(sm.p95)}`,t:`Smuggled chips in China at the end of 2025 (median ${fmt(sm.median)} H100e): a spread of ${(sm.p95/sm.p5).toFixed(1)}× between the record's own 5th and 95th percentiles.`,src:'Chip-owner file, row “China (smuggled) … through Q4 2025”: “Estimates from Epoch AI Monte Carlo model of compute smuggled to China”.'},
+ {big:'0 states',t:'The record has no owner category for a government. Its “China” bucket is companies.',src:'<q>It does not mean Chinese government ownership of compute.</q> — epoch.ai/data/ai-chip-owners, FAQ.'},
+ {big:'owned ≠ used',t:'Frontier developers mostly rent. The record cannot say who runs what on the chips it assigns.',src:'<q>This explorer tracks ownership, not usage — most frontier AI developers do not own the chips they use for training and inference.</q> — epoch.ai/data/ai-chip-owners.'},
+ {big:`${last.owner_share.Other.toFixed(0)} %`,t:'“Everyone else”: the compute of every owner not named, one unnamed residual larger than Amazon, Meta or Oracle at the end of 2025.',src:'Chip-owner file, rows “Other cumulative …”: “Excludes Microsoft, Meta, Amazon, Google, Oracle, China, xAI, CoreWeave.”'},
+ {big:'no place',t:'Where the chips stand is outside the record: a US company may hold them in any country.',src:'<q>This is outside the scope of the current phase of this project as of early 2026.</q> — epoch.ai/data/ai-chip-owners, FAQ.'},
+ {big:`${D.q1_2026_rows} of ${D.q4_2025_rows}`,t:`Series present for 2026 Q1, the quarter behind the published 75.8 %. Its counted total is ${Math.abs(D.q1_2026_total_change_pct)} % below the quarter before.`,src:'<q>Q1 2026 data is excluded as it was not yet finalized at time of analysis.</q> — epoch.ai/data-insights/hyperscalers-control-most-compute; rows flagged “Incomplete: based on Nvidia fiscal quarters ending 1/25/2026”.'},
+ {big:'10–20 %',t:`The share of the world's cluster capacity the named-cluster list covers; in it, ${c.china_anonymised} Chinese clusters carry no name and no owner. Its sector shares (public ${window.D67?D67.clusters_standing.public:c.public} % of standing capacity) describe that list only.`,src:'<q>Our dataset covers an estimated 10–20% of existing global aggregate GPU cluster performance as of March 2025.</q> — epoch.ai/data/gpu-clusters.'},
+];
+document.getElementById('blind').innerHTML=cards.map(k=>`<div class="card"><div class="big">${k.big}</div><div>${k.t}</div><p class="src">${k.src}</p></div>`).join('');
+// cluster strip
+(function(){
+ const s=document.getElementById('strip'), L=(window.D67&&window.D67.marks)||D.cluster_marks||[]; const W=960; let x=0;
+ const groups=[['United States of America',1],['China',0],['Other',1]];
+ const tot=L.reduce((a,m)=>a+m.h,0);
+ const pal={us:css('--g'),cn:css('--cn'),other:css('--am'),anon:css('--oth')};
+ let gx=0;
+ for(const [g] of groups){const ms=L.filter(m=>g==='Other'?(m.c!=='United States of America'&&m.c!=='China'):m.c===g);
+  const gw=ms.reduce((a,m)=>a+m.h,0)/tot*W;
+  ms.forEach(m=>{const w=m.h/tot*W; const r=document.createElementNS(NS,'rect');
+   r.setAttribute('x',x);r.setAttribute('y',20);r.setAttribute('width',Math.max(w-0.3,0.4));r.setAttribute('height',60);
+   r.setAttribute('fill',m.o?(g==='China'?pal.cn:g==='Other'?pal.other:pal.us):pal.anon);
+   const t=document.createElementNS(NS,'title');t.textContent=(m.n||'(no name)')+' · '+(m.o||'no owner')+' · '+fmt(m.h)+' H100e';r.appendChild(t);s.appendChild(r);x+=w});
+  const lbl=document.createElementNS(NS,'text');lbl.setAttribute('x',gx+2);lbl.setAttribute('y',g==='Other'?114:98);if(g==='Other'){lbl.setAttribute('x',W-2);lbl.setAttribute('text-anchor','end')}lbl.textContent=(g==='United States of America'?'United States':g==='Other'?'elsewhere':g)+' · '+(gw/W*100).toFixed(1)+' %';
+  lbl.setAttribute('font-size','12');lbl.style.fill=css('--mute');s.appendChild(lbl); gx+=gw;}
+ document.getElementById('legend2').innerHTML=`<span><i class="sw"></i>United States, owner named</span><span><i class="sw"></i>China, owner named</span><span><i class="sw"></i>elsewhere, owner named</span><span><i class="sw"></i>no owner in the file (${L.filter(m=>!m.o).length} of ${L.length} standing; ${L.filter(m=>!m.o&&m.c==='China').length} of them Chinese)</span>`;
+ const sw=document.querySelectorAll('#legend2 .sw');[pal.us,pal.cn,pal.other,pal.anon].forEach((p,i)=>sw[i].style.background=p);
+})();
+// predictions
+document.querySelector('#preds tbody').innerHTML=D.predictions.map(p=>`<tr><td>${p.id}</td><td>${p.text}</td><td>${p.result}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td></tr>`).join('');
+// ---- 4 · use (study 66)
+const U=window.D66;
+(function(){
+ const ans=document.getElementById('answer');
+ const nprov=new Set(U.rows.filter(r=>r.grade==='first'&&(r.user==='OpenAI'||r.user==='Anthropic')).map(r=>r.provider)).size;
+ const V=window.D67, MD=V.money_by_developer;
+ ans.insertAdjacentHTML('beforeend',`<p><b>Who uses the chips is a second answer, and it crosses the first.</b> OpenAI and Anthropic own none of the counted chips. OpenAI's published agreements with a stated term come to about $${Math.round(MD.OpenAI.per_year_bn)} billion a year, beside $${MD.OpenAI.no_term_bn} billion promised to Microsoft with no term; Anthropic's to about $${Math.round(MD.Anthropic.per_year_bn)} billion a year, plus a fee of $1.25 billion a month to xAI, an owner that rents its chips out. Only ${U.with_chips.length} of ${U.n_first} published agreements state a number of chips, none in the record's unit.</p>`);
+ const nsaid=V.n-V.silent.length;
+ ans.insertAdjacentHTML('beforeend',`<p><b>Who can end that use is, for ${V.silent.length} of the ${V.n} agreements, not public.</b> ${V.ends.length} state who may end them, every one in a securities filing, never in the parties' announcements; where they do, the right lies with the user or with either side, never with the provider alone. The two contracts filed in full let a court, a law-enforcement request or a regulator stop the machines only for as long as an order requires, and never end the agreement. In OpenAI's, the provider gave up the right to end it even for unlawful use.</p>`);
+ const s=document.getElementById('use'); let unit='usd_y', selU=null;
+ const PROV=['Microsoft','Amazon','Google','Oracle','CoreWeave','xAI','Nebius','Fluidstack','Cerebras','NVIDIA (operator not named)'];
+ const USERS=['OpenAI','Anthropic','Meta','Google','xAI'];
+ const VARP={Microsoft:'--ms',Amazon:'--am',Google:'--g',Oracle:'--or',CoreWeave:'--cw',xAI:'--xai'};
+ const q4=U.q4_2025_share;
+ const MY={};V.money.forEach(m=>MY[m.id]=m);
+ const UNIT={usd_y:{lab:'money a year (the stated amount over its stated term)',f:v=>'$'+(+v).toFixed(1)+' bn a year'},usd_bn:{lab:'an amount of money over their term',f:v=>'$'+v+' bn'},gw:{lab:'power in gigawatts',f:v=>v+' GW'},chips:{lab:'a number of chips',f:v=>fmt(v)+' chips'}};
+ function val(r){if(r.grade!=='first')return null; if(unit==='usd_y'){const m=MY[r.id];return m&&m.per_year!=null?m.per_year:null} const v=r[unit]; if(unit==='usd_bn'&&r.usd_monthly)return null; return v!=null?v:null}
+ function draw4(){
+  s.innerHTML=''; const N=s.clientWidth<640, W=N?520:960,H=N?640:560,LX=N?170:270,RX=N?345:730,top=40,FS=N?1.25:1; s.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const py=i=>top+i*(H-top-30)/(PROV.length-1), uy=i=>top+40+i*(H-top-110)/(USERS.length-1);
+  const mk=(t,a)=>el(t,a,s);
+  let t=mk('text',{x:N?6:20,y:20});t.textContent=N?'PROVIDERS · share, end 2025':'PROVIDERS · share of counted chips, end 2025';t.setAttribute('font-size',12*FS);
+  t=mk('text',{x:W-6,y:20,'text-anchor':'end'});t.textContent=N?'WHO RENTS':'DEVELOPERS WHO RENT';t.setAttribute('font-size',12*FS);
+  const vals=U.rows.map(val).filter(v=>v); const vmax=Math.max(...vals);
+  U.rows.forEach((r,k)=>{
+   const pi=PROV.indexOf(r.provider), ui=USERS.indexOf(r.user); if(pi<0||ui<0)return;
+   const same=U.rows.filter((x,j)=>j<k&&x.provider===r.provider&&x.user===r.user).length;
+   const y1=py(pi)+same*6-4, y2=uy(ui)+same*6-4, v=val(r);
+   const w=v?Math.max(2,18*Math.sqrt(v/vmax)):1.5;
+   const d=`M${LX+8} ${y1} C ${(LX+RX)/2} ${y1}, ${(LX+RX)/2} ${y2}, ${RX-8} ${y2}`;
+   const col=VARP[r.provider]?css(VARP[r.provider]):css('--mute');
+   const pth=mk('path',{d,fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:selU&&selU!==r.id?.25:.85});
+   if(!v)pth.setAttribute('stroke-dasharray',r.grade==='first'?'6 5':'1.5 4');
+   const hit=mk('path',{d,fill:'none',stroke:'transparent','stroke-width':Math.max(w,14),tabindex:0,'aria-label':r.provider+' to '+r.user+', '+r.date,'data-id':r.id});
+   const on=()=>{selU=r.id;showU(r);draw4()}; hit.addEventListener('click',on); hit.addEventListener('focus',on);
+  });
+  PROV.forEach((p,i)=>{const y=py(i), sh=q4[p];
+   const lab=mk('text',{x:LX-10,y:y+4,'text-anchor':'end'}); lab.textContent=(p==='NVIDIA (operator not named)'?(N?'NVIDIA (?)':'NVIDIA (operator?)'):p); lab.setAttribute('font-size',14*FS); lab.style.fill=css('--fg');
+   if(sh!=null){if(!N)mk('rect',{x:20,y:y-6,width:Math.max(1,sh*3.4),height:12,fill:VARP[p]?css(VARP[p]):css('--mute')});const n=mk('text',{x:N?6:24+sh*3.4,y:y+4});n.textContent=sh.toFixed(1)+' %';n.setAttribute('font-size',12*FS)}
+   else{const n=mk('text',{x:N?6:20,y:y+4});n.textContent=N?'unnamed':'not an owner row';n.setAttribute('font-size',11*FS)}
+   mk('circle',{cx:LX,cy:y,r:5,fill:css('--fg')});
+  });
+  USERS.forEach((u,i)=>{const y=uy(i); mk('circle',{cx:RX,cy:y,r:6,fill:css('--accent')});
+   const lab=mk('text',{x:RX+12,y:y+5}); lab.textContent=u; lab.setAttribute('font-size',16*FS); lab.style.fill=css('--fg');
+   const own=q4[u]; const sub=mk('text',{x:RX+12,y:y+22*FS}); sub.setAttribute('font-size',12*FS);
+   const md=MD[u]; const tot=unit==='usd_y'?(md?md.per_year_bn+md.rate_per_year_bn:null):unit==='usd_bn'?U.usd_by_user[u]:unit==='gw'?U.gw_by_user[u]:null;
+   const a=own!=null?'owns '+own.toFixed(1)+' %':'owns none counted', b=tot?(unit==='usd_y'?'about ':'')+UNIT[unit].f(tot):'';
+   if(N){sub.textContent=a;if(b){const s2=mk('text',{x:RX+12,y:y+38*FS});s2.setAttribute('font-size',12*FS);s2.textContent=b}}else sub.textContent=a+(b?' · '+b:'');
+  });
+  const xu=uy(USERS.indexOf('xAI')); const n=mk('text',{x:RX+12,y:xu+38*FS}); n.setAttribute('font-size',11*FS); n.textContent=N?'rents from unnamed':'rents from providers it does not name';
+  const st=U.rows.filter(r=>val(r)).length;
+  document.getElementById('usetext').textContent=`${st} of ${U.n_first} first-hand agreements state ${UNIT[unit].lab}`+(unit==='usd_bn'?' (Anthropic’s fee to xAI, $1.25 bn a month, is a rate, not a term total, and is drawn dashed).':unit==='usd_y'?'; dashed lines state no term (Microsoft $250 bn and $30 bn, Fluidstack $50 bn) or no money. Anthropic’s fee to xAI counts at 12 months a year, though either side can end it on 90 days.':'.')+' The ownership record counts H100-equivalents; no agreement states one. Only announced or filed agreements are here: month-to-month renting, sovereign and Chinese renters and every smaller developer are not, so a line is never all of a developer’s use.';
+ }
+ function showU(r){
+  const v=[r.usd_bn!=null?(r.usd_monthly?'$'+r.usd_bn+' bn a month':'$'+r.usd_bn+' bn'):null,r.gw!=null?r.gw+' GW':null,r.chips?fmt(r.chips)+' chips':null].filter(Boolean).join(' · ')||'no amount stated';
+  const notes=[r.usd_note,r.gw_note,r.chips_note,r.provider_note].filter(Boolean).join('; ');
+  document.getElementById('usereadout').innerHTML=`<div class="card"><b>${r.provider} → ${r.user}</b> · ${r.date} · ${r.grade==='first'?'their own words or filing':'<span class="warn">news report only, not counted</span>'}<br>${v}${notes?'<br><span class="src">'+notes+'</span>':''}<p><q>${r.quote}</q> — <a href="${r.url}">source</a>${r.quote2?`</p><p><q>${r.quote2}</q> — <a href="${r.url2}">filing</a>`:''}</p></div>`;
+ }
+ document.querySelectorAll('[data-unit]').forEach(b=>b.addEventListener('click',()=>{unit=b.dataset.unit;document.querySelectorAll('[data-unit]').forEach(x=>x.setAttribute('aria-pressed',x===b));draw4()}));
+ window.__d4=draw4; selU='A15'; draw4(); showU(U.rows.find(r=>r.id==='A15'));
+ const ux=U.rows.find(r=>r.id==='A15');
+ const cards=[
+  {big:'0 %',t:'What OpenAI and Anthropic own of the counted stock. Neither is an owner row; both are among the largest users the parties disclose.',src:'Owner rows of the chip-owner file: '+Object.keys(q4).join(', ')+'.'},
+  {big:'both sides',t:'xAI owns chips and rents them to Anthropic: an owner row is also a provider to a lab that owns none. (A news report adds Google renting xAI’s chips; it is not counted here.)',src:'<q>'+ux.quote2+'</q> — SpaceX registration statement, 2026.'},
+  {big:`${U.with_chips.length} of ${U.n_first}`,t:'Published agreements that give a number of chips. The rest speak in dollars over years or in gigawatts, which the ownership record does not use.',src:'Study 66, P63; chips stated in '+U.with_chips.join(', ')+'.'},
+  {big:'names, not amounts',t:'OpenAI lists six cloud providers for customer data, Anthropic three. A register of who, never of how much.',src:U.registers.map(g=>`<a href="${g.url}">${g.user}</a>: ${g.cloud_infrastructure.join(', ')}`).join('<br>')},
+ ];
+ document.getElementById('usecards').innerHTML=cards.map(k=>`<div class="card"><div class="big">${k.big}</div><div>${k.t}</div><p class="src">${k.src}</p></div>`).join('');
+ document.querySelector('#preds66 tbody').innerHTML=U.predictions.map(p=>`<tr><td>${p.id}</td><td>${p.text}</td><td>${p.result}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td></tr>`).join('');
+})();
+// ---- money per agreement (answers the critique of state 2)
+(function(){
+ const V=window.D67, A=Object.fromEntries(window.D66.rows.map(r=>[r.id,r]));
+ const rows=V.money.map(m=>{const r=A[m.id];return `<tr><td>${m.user}</td><td>${m.provider}</td><td class="num">${m.usd_bn!=null?'$'+m.usd_bn+' bn':'$'+m.rate_bn_month+' bn a month'}</td><td class="num">${m.years?m.years.toFixed(1)+' y':'none stated'}</td><td class="num">${m.per_year!=null?'$'+m.per_year.toFixed(1)+' bn':'–'}</td><td>${m.filed?'securities filing':'announcement'}</td><td>${m.adds_to?'adds to '+A[m.adds_to].provider+' $'+A[m.adds_to].usd_bn+' bn (“expanding … by”), not inside it':(m.note||'')}</td></tr>`}).join('');
+ const dev=Object.values(V.money_by_developer).map(d=>`<tr><td><b>${d.user}</b></td><td colspan="3">${d.n} agreements with money stated</td><td class="num"><b>≈ $${(d.per_year_bn+d.rate_per_year_bn).toFixed(1)} bn</b></td><td colspan="2">${d.no_term_bn?'plus $'+d.no_term_bn+' bn with no term':''}${d.rate_per_year_bn?' (incl. a monthly fee at 12 months)':''}</td></tr>`).join('');
+ document.getElementById('moneytable').innerHTML=`<p class="note"><b>Money, one agreement at a time.</b> Terms run from under four to ten years, so an amount is divided by its own term before anything is added; amounts with no stated term are never added to the yearly figure. “Up to” in a filing is a ceiling, “more than” in an announcement a floor.</p><div class="scroll"><table class="t"><thead><tr><th>Developer</th><th>Provider</th><th>Stated</th><th>Term</th><th>A year</th><th>Text</th><th>Note</th></tr></thead><tbody>${rows}${dev}</tbody></table></div>`;
+})();
+// ---- 5 · who can end it (study 67)
+(function(){
+ const V=window.D67, A=Object.fromEntries(window.D66.rows.map(r=>[r.id,r])), DOC=V.documents;
+ const H={user:'the user',either:'either side',provider:'the provider'};
+ const said=c=>c.end||c.use_restriction||c.state_lever||c.exclusivity;
+ const cards=[
+  {big:`${V.silent.length} of ${V.n}`,t:'Agreements whose published texts say nothing about who can end them, what the machines may not be used for, or who else can stop them. Every one of them is a contract; the public sees the price, not the terms.',src:'Study 67, all announcements and filings read on 9 November 2026.'},
+  {big:'user or either',t:`Where an end is stated (${V.ends.length} agreements, ${V.ends.join(', ')}), it lies with the user (${V.end_holders.user.length}) or with either side (${V.end_holders.either.length}). The xAI fee to Anthropic is the only one either side may end for any reason, on 90 days; Anthropic's own page does not say so.`,src:'<q>The agreements may be terminated by either party upon 90 days’ notice.</q> — SpaceX registration statement, 2026.'},
+  {big:'no end for misuse',t:'In the contract under which OpenAI rents from CoreWeave, the provider gave up the right to end the agreement for unlawful use or use against its own policy: it may only claim indemnity. Meta’s contract with the same provider makes such use a breach.',src:'<q>'+(V.control.find(c=>c.id==='A05').quote2)+'</q> — Master Services Agreement, CoreWeave and OpenAI, 8 May 2025, §9(c).'},
+  {big:'suspend, never end',t:'The only state in these texts is a court, a law-enforcement request or a regulator with oversight of the provider. It can make the provider suspend the machines for as long as its order requires. No text lets it end an agreement, and none names any state body as a party.',src:'<q>'+(V.control.find(c=>c.id==='A05').quote3)+'</q> — same contract, §2(d).'},
+ ];
+ document.getElementById('ctlcards').innerHTML=cards.map(k=>`<div class="card"><div class="big">${k.big}</div><div>${k.t}</div><p class="src">${k.src}</p></div>`).join('');
+ let filt='all';
+ function grid(){
+  const rows=V.control.filter(c=>filt==='all'||(filt==='said'?said(c):!said(c))).map(c=>{const r=A[c.id];
+   const tag=(on,txt,cls)=>`<span class="tag ${on?cls:'off'}">${txt}</span>`;
+   return `<tr tabindex="0" data-id="${c.id}"><td>${r.provider} → ${r.user}<br><span class="src">${r.date}</span></td><td>${c.end?tag(1,'ended by '+H[c.end],'on'):c.inferred?tag(0,'probably under a filed contract (not counted)'):c.end_mentioned?tag(0,'“termination” named, holder not'):tag(0,'not public')}</td><td>${c.use_restriction?tag(1,'restricted','on'):tag(0,'not public')}</td><td>${c.state_lever?tag(1,'suspension by order','st'):tag(0,'—')}</td><td>${c.exclusivity?tag(1,'exclusivity / first refusal','on'):''}${c.note?'<span class="src">'+c.note+'</span>':''}</td></tr>`}).join('');
+  document.getElementById('ctlgrid').innerHTML=`<div class="scroll"><table class="t ctl"><thead><tr><th>Agreement</th><th>Who can end it</th><th>Use restricted</th><th>A state’s lever</th><th>Other</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  document.querySelectorAll('#ctlgrid tr[data-id]').forEach(tr=>{const go=()=>showC(tr.dataset.id);tr.addEventListener('click',go);tr.addEventListener('focus',go)});
+ }
+ function showC(id){
+  const c=V.control.find(x=>x.id===id), r=A[id], d=DOC[c.doc];
+  const q=[c.quote,c.quote2,c.quote3].filter(Boolean).map(x=>`<p><q>${x}</q></p>`).join('');
+  const how=[c.end_how,c.use_how,c.state_lever,c.exclusivity,c.inferred_note,c.note].filter(Boolean).map(x=>`<li>${x}</li>`).join('');
+  document.getElementById('ctlreadout').innerHTML=`<div class="card"><b>${r.provider} → ${r.user}</b> · ${r.date}${how?'<ul>'+how+'</ul>':'<p>No published text of either party says who can end this agreement, what the capacity may not be used for, or who else can stop it.</p>'}${q}<p class="src">${d?`<a href="${d.url}">${d.what}</a> · SHA-256 ${d.sha256.slice(0,16)}…`:`<a href="${c.url||r.url}">the parties' announcement</a>`}</p></div>`;
+ }
+ document.querySelectorAll('[data-ctl]').forEach(b=>b.addEventListener('click',()=>{filt=b.dataset.ctl;document.querySelectorAll('[data-ctl]').forEach(x=>x.setAttribute('aria-pressed',x===b));grid()}));
+ grid(); showC('A05');
+ document.querySelector('#preds67 tbody').innerHTML=V.predictions.map(p=>`<tr><td>${p.id}</td><td>${p.text}</td><td>${p.result}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td></tr>`).join('');
+ document.getElementById('hashes').innerHTML=Object.entries(V.hashes).map(([k,v])=>`<code>${k}</code> ${v}`).join('; ')+'.';
+ const cs=V.clusters_standing, ca=V.clusters_all_rows_direct;
+ document.getElementById('corr67').innerHTML=`<b>Corrected 9 November 2026.</b> This section first summed every row of the cluster file, so a site's successive phases counted as separate clusters (the Studio's offer of 8 November). Read from the file's own “Superseded by” column, the ${cs.n} clusters standing at the end of 2025 are <b>${cs.public} % public</b>, ${cs.private} % private and ${cs.mixed} % mixed, ${cs.us} % in the United States; summing all ${ca.n} rows gives the old ${ca.public} %, ${ca.private} % and ${ca.mixed} %. The rebuilt copy of 8 November also lost one cluster and broke two names; the direct file is now the source.`;
+})();
+window.addEventListener('resize',()=>{draw();if(window.__d4)window.__d4()});
+})();
+// ---- 6 · can a holder's stock be divided by use? (study 68)
+(function(){
+ const V=window.D68; if(!V)return;
+ const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+ const P=(d,k)=>V.passages.filter(p=>p.doc===d&&(!k||p.kind===k));
+ const q=s=>V.passages.find(p=>p.quote.indexOf(s)>=0).quote;
+ const B=V.xai_bound; let mode='s1';
+ const svg=document.getElementById('divide'), NS='http://www.w3.org/2000/svg';
+ const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e};
+ function draw(){
+  svg.innerHTML=''; const VW=Math.max(340,Math.min(960,svg.clientWidth||960)), n=VW<640; svg.setAttribute('viewBox',`0 0 ${VW} 150`);
+  const L=10,W=VW-20,y=40,h=46, x=v=>L+W*v/B.total_gw_s1;
+  const t0=el('text',{x:L,y:24,'font-weight':600}); t0.textContent=n?'xAI: COLOSSUS I and II, about 1.0 GW':'xAI (SpaceX): COLOSSUS and COLOSSUS II, about 1.0 GW of compute power';
+  t0.setAttribute('fill',css('--fg'));
+  if(mode==='s1'){
+   el('rect',{x:L,y,width:W,height:h,fill:css('--oth')});
+   const t=el('text',{x:L+W/2,y:y+h/2+5,'text-anchor':'middle',fill:css('--fg')});
+   t.textContent=n?'no part is given a number':'Grok 5 training · Anthropic ($1.25 bn a month) · Cursor — no part is given a number';
+  } else {
+   const a=B.anthropic_floor_gw_page;
+   el('rect',{x:L,y,width:x(a)-L,height:h,fill:css('--accent')});
+   el('rect',{x:x(a),y,width:W-(x(a)-L),height:h,fill:css('--oth')});
+   el('line',{x1:x(a),x2:x(a),y1:y-6,y2:y+h+6,stroke:css('--fg'),'stroke-width':1.5});
+   const t1=el('text',{x:L+6,y:y+h/2+5,fill:css('--bg'),'font-weight':600}); t1.textContent=n?'> 0.30 GW':'Anthropic: more than 0.30 GW';
+   const t2=el('text',{x:x(a)+8,y:y+h/2+5,fill:css('--fg')}); t2.textContent='at most '+Math.round(B.xai_keeps_at_most_share_of_power*100)+(n?' % left, unsplit':' % left: xAI’s own models, Cursor, and Anthropic’s part at COLOSSUS II, unsplit');
+  }
+  const s=el('text',{x:L,y:y+h+30,fill:css('--mute')});
+  s.textContent=mode==='s1'?'One document: a total and a fee, never a split.':(n?'Two documents subtracted: an upper bound.':'Two documents, subtracted: power, not chips; an estimate, and an upper bound only.');
+ }
+ function text(){
+  document.getElementById('dividetext').innerHTML=mode==='s1'
+   ?`<q>${q('collectively provide approximately 1.0')}</q> <q>${q('Grok 5')}</q> <q>${q('across COLOSSUS and COLOSSUS II')}</q> — SpaceX registration statement, 2026. The fee is stated; what share of the two sites it buys is not.`
+   :`Anthropic's page: <q>${B.a15_page.quote}</q> Subtracted from the filing's 1.0 GW, at most about ${Math.round(B.xai_keeps_at_most_share_of_power*100)} % of the power stays with xAI. The filing places Anthropic's capacity <q>across COLOSSUS and COLOSSUS II</q>, not in Colossus 1 alone, so xAI keeps less than that by an amount no text states.`;
+ }
+ document.querySelectorAll('[data-div]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.div;document.querySelectorAll('[data-div]').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();text()}));
+ draw(); text();
+ const cards=[
+  {big:'dollars, not shares',t:'Alphabet says its infrastructure serves AI training and inference, its cloud customers and research inside the company, and gives capital expenditure in dollars. No number divides its chips between Gemini and the rest.',src:'<q>'+q('to support research internally')+'</q> — Alphabet, Form 10-K for 2025.'},
+  {big:'$131 bn, unsplit',t:'Meta gives one number for what it has committed: third-party cloud capacity, servers, data centres and headsets together. Its own models are never given a share of it.',src:'<q>'+q('131.05')+'</q> — Meta Platforms, Form 10-K for 2025.'},
+  {big:'reallocate, if needed',t:'The provider that rents to Anthropic keeps the right to take capacity back for its own work. Read with the 90-day termination of study 67, the holder decides how its chips are divided, and says so, without saying how they are divided now.',src:'<q>'+q('permitting reallocation')+'</q> — SpaceX registration statement, 2026.'},
+ ];
+ document.getElementById('divcards').innerHTML=cards.map(k=>`<div class="card"><div class="big">${k.big}</div><div>${k.t}</div><p class="src">${k.src}</p></div>`).join('');
+ document.getElementById('answer').insertAdjacentHTML('beforeend',`<p><b>And no filing divides a holder's chips by use.</b> Alphabet and Meta give dollars, never a share for their own models; SpaceX gives xAI's total power and Anthropic's fee, and keeps the right to take capacity back. Only two documents subtracted give a bound: at most about ${Math.round(B.xai_keeps_at_most_share_of_power*100)} % of xAI's power stays with xAI.</p>`);
+ document.querySelector('#preds68 tbody').innerHTML=V.predictions.map(p=>`<tr><td>${p.id}</td><td>${p.text}</td><td>${p.result}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td></tr>`).join('');
+ window.addEventListener('resize',draw);
+})();
+</script>
+</body>
+</html>

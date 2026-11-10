@@ -1,0 +1,132 @@
+{
+ "documents": {
+  "GOOG-10K-2025": {
+   "what": "Alphabet Inc. Form 10-K for fiscal 2025, filed 2026-02-05",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
+   "bytes": 2616612,
+   "sha256": "1ac2638bc971cca8b7a2fd0dc92c82d8d3786219ae68c532a6d0d9f4983f7659"
+  },
+  "META-10K-2025": {
+   "what": "Meta Platforms, Inc. Form 10-K for fiscal 2025, filed 2026-01-29",
+   "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+   "bytes": 2371863,
+   "sha256": "a1e7244352ab0348a0901a83d46a1aa250daf85eedf291c937131a5b84e7e8b1"
+  },
+  "SPACEX-S1": {
+   "what": "SpaceX registration statement (Form S-1), filed 2026-05-20",
+   "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm",
+   "bytes": 11848097,
+   "sha256": "14ebf89f2018d0b5b7be6e8df288b723d45d50561584e3642947cfcccd16f30e"
+  }
+ },
+ "passages": [
+  {
+   "doc": "GOOG-10K-2025",
+   "kind": "qual",
+   "quote": "as we scale our technical infrastructure, in particular for AI, to meet the demand of our users and enterprise customers and to support research internally",
+   "found": true
+  },
+  {
+   "doc": "GOOG-10K-2025",
+   "kind": "qual",
+   "quote": "To meet the compute capacity demands of AI training and inference, as well as traditional cloud computing services, we are entering into significant leasing arrangements with third party operators",
+   "found": true
+  },
+  {
+   "doc": "GOOG-10K-2025",
+   "kind": "qual",
+   "quote": "Our technical infrastructure allows us to use and offer our customers a range of AI accelerator options",
+   "found": true
+  },
+  {
+   "doc": "META-10K-2025",
+   "kind": "qual",
+   "quote": "especially with the deployment of AI technologies, we will need an increasing amount of technical infrastructure, including network capacity, computing power, and related energy requirements, to continue to satisfy our needs",
+   "found": true
+  },
+  {
+   "doc": "META-10K-2025",
+   "kind": "num",
+   "quote": "We also have $131.05 billion of contractual commitments as of December 31, 2025, mostly related to third-party cloud capacity arrangements and our continued investments in servers and network infrastructure, data centers, and consumer hardware products in Reality Labs",
+   "found": true
+  },
+  {
+   "doc": "SPACEX-S1",
+   "kind": "num",
+   "quote": "Our AI compute facilities, COLOSSUS and COLOSSUS II, collectively provide approximately 1.0 gigawatt of compute power",
+   "found": true
+  },
+  {
+   "doc": "SPACEX-S1",
+   "kind": "qual",
+   "quote": "We have the ability to use compute resources to support our proprietary AI applications (such as Grok 5, which is currently being trained at COLOSSUS II), while also providing access to select compute capacity to third-party customers.",
+   "found": true
+  },
+  {
+   "doc": "SPACEX-S1",
+   "kind": "num",
+   "quote": "with respect to access to compute capacity across COLOSSUS and COLOSSUS II. Pursuant to these agreements, the customer has agreed to pay us $1.25 billion per month through May 2029",
+   "found": true
+  },
+  {
+   "doc": "SPACEX-S1",
+   "kind": "lever",
+   "quote": "This structure allows us to monetize unused compute capacity in our infrastructure, while still permitting reallocation of the capacity for our own internal initiatives if needed in the future.",
+   "found": true
+  },
+  {
+   "doc": "SPACEX-S1",
+   "kind": "qual",
+   "quote": "We have sufficient capacity to provide compute for our own AI models, including support of our training and inference demands, and to satisfy the obligations under these agreements.",
+   "found": true
+  },
+  {
+   "doc": "SPACEX-S1",
+   "kind": "num",
+   "quote": "Under the compute agreement, we will provide Cursor with certain GPU cluster compute capacity",
+   "found": true
+  }
+ ],
+ "missing": 0,
+ "numbers_for_own_models": {
+  "GOOG-10K-2025": [],
+  "META-10K-2025": [],
+  "SPACEX-S1": []
+ },
+ "xai_bound": {
+  "total_gw_s1": 1.0,
+  "anthropic_floor_gw_page": 0.3,
+  "xai_keeps_at_most_share_of_power": 0.7,
+  "note": "estimate by subtraction across two documents: power, not chips; the S-1 says Anthropic's capacity runs across COLOSSUS and COLOSSUS II, so the part xAI keeps is lower still, by an amount no text states; Cursor's capacity is not stated",
+  "a15_page": {
+   "url": "https://www.anthropic.com/news/higher-limits-spacex",
+   "quote": "We’ve signed an agreement with SpaceX to use all of the compute capacity at their Colossus 1 data center. This gives us access to more than 300 megawatts of new capacity (over 220,000 NVIDIA GPUs)"
+  }
+ },
+ "predictions": [
+  {
+   "id": "P73",
+   "text": "Neither Alphabet's nor Meta's annual report ties a share of its compute to its own models in a number.",
+   "held": true,
+   "result": "neither: Alphabet speaks of capital expenditure and leasing for AI training and inference and to support research internally; Meta's one number ($131.05 bn of commitments) mixes third-party cloud capacity with servers, data centres and headsets"
+  },
+  {
+   "id": "P74",
+   "text": "Both annual reports state in words that their infrastructure serves their own AI models.",
+   "held": true,
+   "result": "held at its edge: Alphabet in words (infrastructure for AI, to support research internally); Meta only that deploying AI needs more computing power to satisfy its needs, never naming its own models' share"
+  },
+  {
+   "id": "P75",
+   "text": "The SpaceX statement gives a number for compute committed to a third party but none for xAI's own models.",
+   "held": true,
+   "result": "a fee ($1.25 bn a month) for Anthropic and a total (about 1.0 GW), Grok 5 named as training at COLOSSUS II, no number for its own use; and, unpredicted, a second third-party user (Cursor) and Anthropic's capacity stated as across both sites, not Colossus 1 alone"
+  },
+  {
+   "id": "P76",
+   "text": "No filing lets a reader divide a holder's stock between its own models and the rest.",
+   "held": true,
+   "result": "no; only a bound by subtraction for xAI, in power: at most about 70 % of the 1.0 GW stays with xAI, less by an unstated amount"
+  }
+ ]
+}
