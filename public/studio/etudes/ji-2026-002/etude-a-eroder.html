@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!--
+  INTERNAL ÉTUDE — project ji-2026-002. Probe A: "the eroder" (the filing tray).
+  Bounded, discardable form probe. NOT a work. Never premiered, never linked from the site.
+  Tier: FORM-ÉTUDE (internal). See ../README.md for the record.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Seat 47</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  :root{
+    --paper:#e8e2d2;
+    --ink:#2b2519;
+    --card:#f3eee0;
+    --card-edge:#c7bfa6;
+    --groove:#d6cdb4;
+    --marker:rgba(43,37,25,.5);
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; width:100%; height:100%;
+    background:var(--paper);
+    overflow:hidden;
+    -webkit-user-select:none; user-select:none;
+  }
+  #stage{
+    position:absolute; inset:0;
+  }
+  .card{
+    position:absolute;
+    width:236px; height:148px;
+    top:16vh;
+    background:var(--card);
+    border:1px solid var(--card-edge);
+    border-radius:2px;
+    box-shadow:0 3px 7px rgba(0,0,0,.16), 0 1px 0 rgba(255,255,255,.4) inset;
+    padding:20px 16px 12px 16px;
+    touch-action:none;
+    cursor:grab;
+    will-change:left,top,transform;
+    transition:left .38s cubic-bezier(.22,.9,.32,1), top .38s cubic-bezier(.22,.9,.32,1), transform .3s ease, opacity .5s ease;
+  }
+  .card.dragging{
+    transition:none;
+    cursor:grabbing;
+    box-shadow:0 10px 22px rgba(0,0,0,.24);
+    z-index:5;
+  }
+  .card.settled{ z-index:4; }
+  .cardhole{
+    position:absolute; top:8px; width:9px; height:9px; border-radius:50%;
+    background:var(--paper);
+    box-shadow:inset 0 1px 2px rgba(0,0,0,.35);
+  }
+  .cardhole.h1{ left:14px; }
+  .cardhole.h2{ right:14px; }
+  .cardtext{
+    font-family:'Segoe Print','Bradley Hand','Comic Sans MS',cursive;
+    font-size:13.5px;
+    line-height:1.42;
+    color:var(--ink);
+    letter-spacing:.1px;
+  }
+  .cardtext span{ display:inline; }
+  .groove-wrap{
+    position:absolute; left:50%; bottom:16vh; transform:translateX(-50%);
+    width:262px; height:44px;
+    background:var(--groove);
+    border-radius:5px;
+    box-shadow:inset 0 4px 8px rgba(0,0,0,.28), inset 0 -1px 0 rgba(255,255,255,.35);
+    border:1px solid rgba(0,0,0,.12);
+  }
+  #marker{
+    position:fixed; right:16px; bottom:12px;
+    font:11px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    letter-spacing:.6px;
+    color:var(--marker);
+    pointer-events:none;
+    -webkit-user-select:none; user-select:none;
+  }
+  #stage.quiet{ transition:opacity 1.4s ease; opacity:0; }
+  @keyframes bounce{
+    0%{ transform:scale(1); }
+    45%{ transform:scale(1.045); }
+    100%{ transform:scale(1); }
+  }
+  .card.bounce{ animation:bounce .32s ease; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="groove-wrap" id="groove"></div>
+  <div class="card" id="cardLeft"><div class="cardhole h1"></div><div class="cardhole h2"></div><div class="cardtext"><span class="c0"></span> <span class="c1"></span></div></div>
+  <div class="card" id="cardRight"><div class="cardhole h1"></div><div class="cardhole h2"></div><div class="cardtext"><span class="c0"></span> <span class="c1"></span></div></div>
+</div>
+<div id="marker"></div>
+<script>
+(function(){
+  "use strict";
+
+  // Fixed printed seed. All randomness derives from this + persisted state — never Math.random().
+  var SEED = 20260725;
+  var STORE_KEY = "ensemble-etude-ji2026002-a";
+
+  // ---- deterministic PRNG (mulberry32, keyed by SEED + a purpose string) ----
+  function strToSeed(str){
+    var h = 0;
+    for (var i = 0; i < str.length; i++){ h = (h * 31 + str.charCodeAt(i)) | 0; }
+    return h >>> 0;
+  }
+  function rand(key){
+    var a = strToSeed(SEED + ":" + key);
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
+
+  // ---- material: 3 fragment families, each 2 clauses, each clause 3 variants [particular, mid, plain] ----
+  var FAMILIES = [
+    [
+      ["The kettle knows my hand better than the light switch does — I fill it in the dark by weight alone.",
+       "I fill the kettle by feel before I bother with the light switch.",
+       "I usually make tea first thing, even before turning on the lights."],
+      ["Our stairs count eleven going up and twelve coming down; nobody believes me and I have stopped inviting proof.",
+       "Our stairs never count the same both ways, though no one else seems to notice.",
+       "The staircase in our house is old and a little uneven."]
+    ],
+    [
+      ["My mother measured flour in the blue cup with the burnt handle; a recipe to us was a list of which cup.",
+       "My mother always measured flour in the same chipped blue cup.",
+       "My mother had her own way of measuring ingredients when she baked."],
+      ["We kept the good scissors in the drawer that sticks, so that wanting them was a decision.",
+       "We kept the good scissors in the drawer that was hardest to open.",
+       "We kept the good scissors in a drawer where they were safe."]
+    ],
+    [
+      ["I write the shopping list in my father's spelling, wrong in the same three places, because correcting it would be a kind of burial.",
+       "I write shopping lists with my father's odd spelling, uncorrected.",
+       "I still write shopping lists the way my father used to."],
+      ["Winter here is not cold so much as personal; it finds the one seam your coat forgot.",
+       "Winter here gets into the one gap your coat always misses.",
+       "Winters here are very cold and you need a good coat."]
+    ]
+  ];
+
+  // ---- residue ----
+  var residue = null;
+  try { var raw = localStorage.getItem(STORE_KEY); if (raw) residue = JSON.parse(raw); } catch(e){ residue = null; }
+
+  var seat, family, F; // F = [clauseIndex0, clauseIndex1], each 0..2
+  if (residue && typeof residue.seat === "number"){
+    seat = residue.seat + 1;
+    family = residue.family;
+    F = residue.clauses.slice();
+  } else {
+    seat = 47;
+    family = Math.floor(rand("family0") * FAMILIES.length);
+    F = [0, 0];
+  }
+
+  document.title = "Seat " + seat;
+  document.getElementById("marker").textContent = "IMAGINED · SEAT " + seat;
+
+  function persist(){
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({ seat: seat, family: family, clauses: F }));
+    } catch(e){ /* residue is best-effort; a probe never breaks on a full quota */ }
+  }
+
+  // ---- layout ----
+  var cardLeft = document.getElementById("cardLeft");
+  var cardRight = document.getElementById("cardRight");
+  var groove = document.getElementById("groove");
+  var stage = document.getElementById("stage");
+
+  function slotX(which){
+    var cx = window.innerWidth / 2;
+    return which === "left" ? Math.round(cx - 18 - 236) : Math.round(cx + 18);
+  }
+  function slotY(){ return Math.round(window.innerHeight * 0.16); }
+
+  function placeAtSlot(el, which){
+    el.dataset.slot = which;
+    el.style.left = slotX(which) + "px";
+    el.style.top = slotY() + "px";
+  }
+
+  window.addEventListener("resize", function(){
+    if (!cardLeft.classList.contains("dragging")) placeAtSlot(cardLeft, cardLeft.dataset.slot || "left");
+    if (!cardRight.classList.contains("dragging")) placeAtSlot(cardRight, cardRight.dataset.slot || "right");
+  });
+
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+  function renderClauseText(el, f){
+    var ct = el.querySelector(".cardtext");
+    var spans = ct.querySelectorAll("span");
+    if (spans.length < 2){
+      // retractText flattens a discarded card's spans into one text node; rebuild them
+      ct.innerHTML = "";
+      var s0 = document.createElement("span");
+      var s1 = document.createElement("span");
+      ct.appendChild(s0);
+      ct.appendChild(document.createTextNode(" "));
+      ct.appendChild(s1);
+      spans = ct.querySelectorAll("span");
+    }
+    spans[0].style.opacity = "1";
+    spans[1].style.opacity = "1";
+    spans[0].textContent = FAMILIES[family][0][f[0]];
+    spans[1].textContent = FAMILIES[family][1][f[1]];
+  }
+
+  function eligibleClause(f){
+    var e = [];
+    for (var i = 0; i < f.length; i++) if (f[i] < 2) e.push(i);
+    return e;
+  }
+  function pickClause(f, key){
+    var e = eligibleClause(f);
+    if (e.length === 0) return -1;
+    return e[Math.floor(rand(key) * e.length) % e.length];
+  }
+  function bump(f, idx){
+    var nf = f.slice();
+    if (idx >= 0) nf[idx] = Math.min(2, nf[idx] + 1);
+    return nf;
+  }
+
+  // ---- drag mechanics ----
+  var roundActive = false;
+  var resolveDrop = null;
+  var dragEl = null, dragOffX = 0, dragOffY = 0;
+
+  function grooveRect(){ return groove.getBoundingClientRect(); }
+
+  function overlapsGroove(rect){
+    var g = grooveRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.top + rect.height / 2;
+    return cx > g.left - 10 && cx < g.right + 10 && cy > g.top - 20 && cy < g.bottom + 30;
+  }
+
+  function onPointerDown(e){
+    if (!roundActive) return;
+    var el = e.currentTarget;
+    if (el.dataset.disabled === "1") return;
+    el.setPointerCapture(e.pointerId);
+    dragEl = el;
+    var r = el.getBoundingClientRect();
+    dragOffX = e.clientX - r.left;
+    dragOffY = e.clientY - r.top;
+    el.classList.add("dragging");
+  }
+  function onPointerMove(e){
+    if (dragEl !== e.currentTarget) return;
+    dragEl.style.left = (e.clientX - dragOffX) + "px";
+    dragEl.style.top = (e.clientY - dragOffY) + "px";
+  }
+  function onPointerUp(e){
+    var el = e.currentTarget;
+    if (dragEl !== el) return;
+    el.classList.remove("dragging");
+    dragEl = null;
+    var r = el.getBoundingClientRect();
+    if (overlapsGroove(r) && roundActive){
+      var g = grooveRect();
+      el.style.left = Math.round(g.left + g.width / 2 - r.width / 2) + "px";
+      el.style.top = Math.round(g.top + g.height / 2 - r.height / 2 - 6) + "px";
+      el.classList.add("settled", "bounce");
+      var other = el === cardLeft ? cardRight : cardLeft;
+      if (resolveDrop) { var f = resolveDrop; resolveDrop = null; f({ kept: el, discard: other }); }
+    } else {
+      placeAtSlot(el, el.dataset.slot);
+    }
+  }
+
+  [cardLeft, cardRight].forEach(function(el){
+    el.addEventListener("pointerdown", onPointerDown);
+    el.addEventListener("pointermove", onPointerMove);
+    el.addEventListener("pointerup", onPointerUp);
+    el.addEventListener("pointercancel", onPointerUp);
+  });
+
+  function waitForDrop(){
+    roundActive = true;
+    cardLeft.dataset.disabled = "0";
+    cardRight.dataset.disabled = "0";
+    return new Promise(function(res){ resolveDrop = res; });
+  }
+
+  function retractText(el){
+    return new Promise(function(resolve){
+      var full = el.querySelector(".cardtext").textContent;
+      el.querySelector(".cardtext").innerHTML = "";
+      var node = document.createTextNode(full);
+      el.querySelector(".cardtext").appendChild(node);
+      var i = full.length;
+      var totalMs = Math.min(900, Math.max(320, full.length * 13));
+      var stepMs = Math.max(10, totalMs / Math.max(1, full.length));
+      el.style.transform = "translateY(4px)";
+      var timer = setInterval(function(){
+        i--;
+        node.nodeValue = full.slice(0, Math.max(0, i));
+        if (i <= 0){
+          clearInterval(timer);
+          resolve();
+        }
+      }, stepMs);
+    });
+  }
+
+  function fadeSwapClause(el, clauseIdx, newText){
+    return new Promise(function(resolve){
+      var span = el.querySelectorAll(".cardtext span")[clauseIdx];
+      span.style.transition = "opacity .22s ease";
+      span.style.opacity = "0";
+      setTimeout(function(){
+        span.textContent = newText;
+        span.style.opacity = "1";
+        setTimeout(resolve, 240);
+      }, 220);
+    });
+  }
+
+  // ---- round build ----
+  function buildRound(roundNum){
+    var bumpIdx = pickClause(F, "housebump:" + seat + ":" + roundNum);
+    var A = F.slice();
+    var B = bump(F, bumpIdx);
+    var swapped = rand("side:" + seat + ":" + roundNum) < 0.5;
+    var leftF = swapped ? B : A;
+    var rightF = swapped ? A : B;
+    return { leftF: leftF, rightF: rightF };
+  }
+
+  function showPair(leftF, rightF){
+    cardLeft.style.opacity = "0";
+    cardRight.style.opacity = "0";
+    cardLeft.classList.remove("settled", "bounce");
+    cardRight.classList.remove("settled", "bounce");
+    cardLeft.style.transition = "";
+    cardRight.style.transition = "";
+    cardLeft.style.transform = "";
+    cardRight.style.transform = "";
+    renderClauseText(cardLeft, leftF);
+    renderClauseText(cardRight, rightF);
+    placeAtSlot(cardLeft, "left");
+    placeAtSlot(cardRight, "right");
+    // force reflow then fade in
+    void cardLeft.offsetHeight;
+    cardLeft.style.opacity = "1";
+    cardRight.style.opacity = "1";
+  }
+
+  async function runSitting(){
+    var lastKept = null;
+    var keptF = F.slice();
+    for (var round = 1; round <= 3; round++){
+      var pair = buildRound(round);
+      showPair(pair.leftF, pair.rightF);
+      cardLeft.__f = pair.leftF;
+      cardRight.__f = pair.rightF;
+      var outcome = await waitForDrop();
+      roundActive = false;
+      cardLeft.dataset.disabled = "1";
+      cardRight.dataset.disabled = "1";
+
+      keptF = outcome.kept.__f;
+      lastKept = outcome.kept;
+
+      await wait(1000); // the beat
+      await retractText(outcome.discard);
+      await wait(260);
+      outcome.discard.style.transition = "opacity .4s ease";
+      outcome.discard.style.opacity = "0";
+
+      var clauseIdx = pickClause(keptF, "regularize:" + seat + ":" + round);
+      if (clauseIdx >= 0){
+        var newF = bump(keptF, clauseIdx);
+        await fadeSwapClause(outcome.kept, clauseIdx, FAMILIES[family][clauseIdx][newF[clauseIdx]]);
+        keptF = newF;
+      }
+      F = keptF;
+      await wait(560);
+    }
+
+    // finale: kept card settles onto the seat's stack, screen quiets
+    lastKept.style.transition = "left .7s ease, top .7s ease, transform .7s ease, opacity 1s ease";
+    var g = grooveRect();
+    lastKept.style.left = Math.round(g.left + g.width / 2 - lastKept.offsetWidth / 2) + "px";
+    lastKept.style.top = Math.round(g.top - lastKept.offsetHeight * 0.62) + "px";
+    lastKept.style.transform = "rotate(-1.2deg)";
+    await wait(900);
+    stage.classList.add("quiet");
+    await wait(1450);
+
+    persist();
+  }
+
+  runSitting();
+})();
+</script>
+</body>
+</html>

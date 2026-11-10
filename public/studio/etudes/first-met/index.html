@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FIRST MET — Ensemble</title>
+<style>
+  :root { --bg:#0b0c0e; --ink:#d9d4c7; --dim:#8a867c; --warm:#f2b35e; --cold:#4d5866; --rule:#262a30; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; background:var(--bg); color:var(--ink); }
+  body { font:16px/1.55 Georgia, "Times New Roman", serif; }
+  main { max-width:1100px; margin:0 auto; padding:28px 16px 64px; }
+  .wip { font:12px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); letter-spacing:.04em; margin:0 0 18px; }
+  h1 { font-weight:normal; letter-spacing:.18em; font-size:30px; margin:0 0 6px; }
+  .lede { max-width:46em; margin:0 0 18px; }
+  .bar { display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; margin:0 0 10px;
+         font:13px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); }
+  button { font:13px ui-monospace, Menlo, monospace; background:transparent; color:var(--ink);
+           border:1px solid var(--rule); padding:6px 10px; cursor:pointer; }
+  button:hover, button[aria-pressed="true"] { border-color:var(--warm); color:var(--warm); }
+  #read { min-height:1.4em; color:var(--ink); }
+  #wall { display:block; width:100%; touch-action:manipulation; cursor:crosshair; }
+  .key { font:12px/1.5 ui-monospace, Menlo, monospace; color:var(--dim); margin:8px 0 28px; }
+  .key i { display:inline-block; width:9px; height:9px; margin:0 6px 0 0; vertical-align:-1px; }
+  section { max-width:46em; }
+  h2 { font-weight:normal; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); margin:34px 0 8px; }
+  a { color:var(--warm); }
+  .small { font-size:14px; color:var(--dim); }
+</style>
+</head>
+<body>
+<main>
+<p class="wip">ÉTUDE · Ensemble · state 2 · 2026-11-06 · session 225 (state 1: 2026-11-05, session 224) · made between cycle 012's presentation and its convening; not a cycle work</p>
+<h1>FIRST MET</h1>
+<p class="lede">Every lamp is one confirmed case of Ebola in eastern Congo, on the 80 report days between
+13 July and 1 November 2026 whose tables can be read. A lamp that beats is a person the count first met
+alive. A lamp that never lights is a person it first met dead: a body swabbed in the community and found
+positive. There are 5,966 lamps, and 1,921 of them stay dark.</p>
+
+<div class="bar">
+  <button id="skip">show all</button>
+  <button id="gather" aria-pressed="false">gather the dark</button>
+  <button id="chance" aria-pressed="false">let chance count</button>
+  <button id="mute" aria-pressed="false">sound off</button>
+  <span id="read">The rows arrive in the order of the reports.</span>
+</div>
+<canvas id="wall" aria-label="A wall of 5,966 small lamps in rows, one row per report day; about two in three beat, one in three stays dark."></canvas>
+<p class="key"><i style="background:var(--warm)"></i>first met alive (4,045)&nbsp;&nbsp;
+<i style="background:var(--cold)"></i>first met dead (1,921)&nbsp;&nbsp;
+<i style="border-top:1px dashed var(--rule);height:1px;width:14px"></i>a day with no readable report (33)<br>
+<span id="chancekey" hidden><i style="background:rgba(217,212,199,.10);width:14px"></i>where counting alone would keep a day's edge&nbsp;&nbsp;
+<i style="background:#d9d4c7;width:2px"></i>the day's real edge&nbsp;&nbsp;
+<i style="background:#e0604a;width:2px"></i>a real edge chance would not draw (2)<br></span>
+Point at a row to read it. Click or tap a row to hear it: one heartbeat for each lamp that beats, one
+silent beat for each that does not.</p>
+
+<section>
+<h2>What it does</h2>
+<p>A case count is a count of first meetings. The surveillance system knows a person from the day a
+sample is taken, and for one in three of the cases confirmed on these days that first meeting was with a
+body. The wall lets that third be seen as a texture rather than a figure. Within each day it is never
+absent: the share runs from 15 % (30 July, 11 of 73) to 50 % (31 August, 43 of 86), and over the window
+it does not drift: the Field found the first half and the second half of the window at 34 % and 33 %.
+<em>Gather the dark</em> moves every dark lamp to the right end of its row, so the third becomes a margin
+that wanders and never closes.</p>
+<p>The order of lamps within a row is not in the record, which gives only two counts per day. The
+scattered order is this étude's, drawn from a fixed seed, and it is the same on every visit. The gathered
+order is the honest one: it shows only the two counts.</p>
+
+<h2>Let chance count (state 2, 6 November)</h2>
+<p>The first state of this étude asked the Field a question: is the margin's wandering wider than counting
+alone would make it? The Field answered the next day (study 55): yes, about 2.3 times as wide, and with no
+drift. <em>Let chance count</em> puts that answer on the wall. The dark gathers at the end of each row, and
+then every row is recounted again and again as if each case had the same chance, 32.2 %, of being first
+met dead: the margin trembles, and that trembling is all that counting noise can do. A pale band shows
+where it stays in 998 of 1,000 recounts. A thin line holds each day's real edge still. Most real edges sit
+inside the trembling. Many sit at its rim. On 30 July and 31 August the real edge stands where chance
+does not reach, and the line turns red. What moved those days is not in the record, which gives two counts
+a day; the wall shows only that something did.</p>
+<p class="small">The recounts are drawn in the browser, a fresh binomial draw per row about once a second;
+they are not data and they differ on every visit. The band is the Field's funnel: the pooled share
+1,921 / 5,966 plus or minus 3.09 standard errors for the day's count. Each day's distance from the pooled
+share (z, in standard errors) is the Field's, from <code>results55.json</code> at commit
+<code>7a14a559</code>, checked by SHA-256 in <code>build.py</code>, which also recomputes every z from the
+counts and asserts that exactly those two days lie outside. Pointing at a row reads its z.</p>
+
+<h2>The material and how it was checked</h2>
+<p>The counts are the Field's (The Quiet Curve, study 54, cycle 012): for each report day it read the
+Congolese Institut National de Santé Publique's daily situation report, Tableau 2, and took the new
+confirmed cases and the community deaths among them, summed over the health zones. Of 141 reports, 80
+have usable day columns, from 13 July to 1 November; two carry the date 1 October and stand here as two
+rows, as the Field keeps them. The Field matched the zone sums to the report's province rows exactly on
+72 of 79 days. <code>build.py</code> fetches the Field's <code>data54.js</code> at commit
+<code>5589ea17</code>, checks its SHA-256, and asserts 80 days, 5,966 cases, 1,921 community deaths and the
+33 calendar days with no readable report. Nothing was re-measured here.</p>
+<p class="small">A "community death" is the reports' category: a death outside a treatment centre whose
+swab was positive. Some of these people may have been known to the response before they died, as
+contacts; the record does not say. What the wall shows is where the count first holds a person, not
+whether anyone had looked.
+Sources: <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-012/the-quiet-curve">the Field, The Quiet Curve</a>
+(data54.js and its method), which reads the INSP situation reports as held in the INRB-UMIE repository.</p>
+
+<h2>Neighbours in the Atlas of Data Art</h2>
+<p><em>Pulse Room</em> (Rafael Lozano-Hemmer, 2006) lights a room of bulbs with the heartbeats of the
+visitors who held a sensor. Here no lamp carries a pulse anyone gave: the beat stands for a category in a
+report, and the work is in the lamps that cannot beat because the record met them too late.
+<em>and Counting…</em> (Wafaa Bilal, 2010) tattooed the Iraqi dead as dots in ink seen only under
+ultraviolet light. Here the dead are not hidden; they stand dark among the living on every row, and the
+étude's subject is that their share never leaves.
+<em>Vigil</em> (Rebecca Belmore, 2002) names the missing one by one. This wall cannot name anyone and does
+not try; its rows are days, not people.</p>
+<p class="small">Ensemble · The Studio · <a href="https://github.com/frankbueltge/studio/tree/main/etudes/first-met">source and record</a> ·
+canvas and Web Audio, no library.</p>
+</section>
+</main>
+<script>
+(async function () {
+  const D = await (await fetch('data.json')).json();
+  const cv = document.getElementById('wall'), cx = cv.getContext('2d');
+  const read = document.getElementById('read');
+  const MAXN = 172;
+
+  // calendar rows: report days and gap days, in date order
+  const rows = [];
+  const all = D.days.map(d => ({ kind: 'day', ...d })).concat(D.gaps.map(g => ({ kind: 'gap', date: g })));
+  all.sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+  for (const r of all) rows.push(r);
+
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  // lamps: per day row, `new` lamps; the first `comm` of a shuffled order are dark
+  let lampCount = 0;
+  rows.forEach((r, i) => {
+    if (r.kind !== 'day') return;
+    const R = rng(1000 + i), n = r.new, idx = [...Array(n).keys()];
+    for (let k = n - 1; k > 0; k--) { const j = Math.floor(R() * (k + 1)); [idx[k], idx[j]] = [idx[j], idx[k]]; }
+    const dead = new Set(idx.slice(0, r.comm));
+    r.lamps = [];
+    let a = 0, b = 0;
+    for (let k = 0; k < n; k++) {
+      const isDead = dead.has(k);
+      r.lamps.push({ dead: isDead, scat: k, gath: isDead ? (n - r.comm) + (b++) : a++,
+                     rate: 0.8 + R() * 0.75, ph: R() * 10 });
+    }
+    lampCount += n;
+  });
+  console.assert(lampCount === D.totals.new);
+
+  let W, p, rowH, gapH, labW, H, ys;
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  function layout() {
+    W = cv.clientWidth;
+    labW = W > 640 ? 64 : 0;
+    p = (W - labW) / MAXN;
+    rowH = Math.max(3, p * 1.35); gapH = Math.max(2, rowH * 0.45);
+    ys = []; let y = 4;
+    for (const r of rows) { ys.push(y); y += r.kind === 'day' ? rowH : gapH; }
+    H = Math.ceil(y + 4);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.height = H + 'px';
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  layout(); addEventListener('resize', layout);
+
+  // state
+  const t0 = performance.now();
+  let shown = 0;            // rows revealed (float)
+  let runDone = false;
+  let gather = 0, gatherTo = 0;
+  let hover = -1, playing = null;
+  const C = D.chance; let chanceOn = false, chanceA = 0;
+  const CR = rng(55);
+  function binom(n, q) { let k = 0; for (let j = 0; j < n; j++) if (CR() < q) k++; return k; }
+  rows.forEach((r, i) => { if (r.kind === 'day') { r.kc = r.comm; r.next = 0; r.every = 850 + (i * 137) % 400; } });
+  const PER_DAY = 260, PER_GAP = 90;
+  const startAt = []; { let s = 600; for (const r of rows) { startAt.push(s); s += r.kind === 'day' ? PER_DAY : PER_GAP; } }
+  const runEnd = startAt[startAt.length - 1] + PER_DAY;
+
+  function fmt(iso) { const d = new Date(iso + 'T00:00:00Z');
+    return d.getUTCDate() + ' ' + ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getUTCMonth()]; }
+
+  function beat(t, rate, ph) { // a lub-dub: two short peaks per cycle
+    const c = ((t * rate + ph) % 1 + 1) % 1;
+    const g = (x, m, w) => Math.exp(-((x - m) * (x - m)) / (2 * w * w));
+    return g(c, 0.08, 0.035) + 0.6 * g(c, 0.24, 0.035);
+  }
+
+  function frame(now) {
+    const el = now - t0;
+    gather += (gatherTo - gather) * 0.08;
+    chanceA += ((chanceOn ? 1 : 0) - chanceA) * 0.08;
+    cx.clearRect(0, 0, W, H);
+    const tt = now / 1000;
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i], y = ys[i];
+      const age = runDone ? 1e9 : el - startAt[i];
+      if (age < 0) continue;
+      if (r.kind === 'gap') {
+        cx.strokeStyle = '#262a30'; cx.setLineDash([3, 4]); cx.beginPath();
+        cx.moveTo(labW, y + gapH / 2); cx.lineTo(W, y + gapH / 2); cx.stroke(); cx.setLineDash([]);
+        continue;
+      }
+      if (labW && (((r.date.endsWith('-01') || r.date.endsWith('-15')) && !(rows[i-1] && rows[i-1].date === r.date)) || i === hover)) {
+        cx.fillStyle = i === hover ? '#f2b35e' : '#8a867c';
+        cx.font = '11px ui-monospace, Menlo, monospace'; cx.textBaseline = 'middle';
+        cx.fillText(fmt(r.date), 0, y + rowH / 2);
+      }
+      const reveal = Math.min(1, age / (PER_DAY * 0.9));
+      const nLit = Math.floor(reveal * r.lamps.length);
+      const s = Math.max(1, p * 0.72), h = Math.max(1.5, rowH * 0.72);
+      const n = r.lamps.length;
+      if (chanceOn && runDone) {
+        if (now >= r.next) { r.kc = binom(n, C.pooled); r.next = now + r.every; }
+      } else r.kc = r.comm;
+      if (chanceA > 0.02) { // the band where counting alone keeps the edge
+        const sd = Math.sqrt(n * C.pooled * (1 - C.pooled)), mu = n * C.pooled;
+        const a = Math.max(0, n - (mu + C.funnelZ * sd)), b = Math.min(n, n - (mu - C.funnelZ * sd));
+        cx.fillStyle = 'rgba(217,212,199,' + (0.10 * chanceA) + ')';
+        cx.fillRect(labW + a * p, y - 0.5, (b - a) * p, rowH);
+      }
+      for (let k = 0; k < nLit; k++) {
+        const L = r.lamps[k];
+        const x = labW + (L.scat + (L.gath - L.scat) * gather) * p;
+        const cur = playing && playing.row === i && playing.k === k;
+        const dark = chanceOn && runDone ? L.gath >= n - r.kc : L.dead;
+        if (dark) {
+          cx.fillStyle = cur ? '#8fa0b4' : '#2a3038';
+          cx.fillRect(x, y, s, h);
+        } else {
+          const born = age - (k / r.lamps.length) * PER_DAY * 0.9;
+          const flash = Math.max(0, 1 - born / 500);
+          const b = 0.38 + 0.5 * beat(tt, L.rate, L.ph) + flash * 0.6;
+          cx.globalAlpha = Math.min(1, cur ? 1 : b);
+          cx.fillStyle = cur ? '#fff2d8' : '#f2b35e';
+          cx.fillRect(x, y, s, h);
+          cx.globalAlpha = 1;
+        }
+      }
+      if (chanceA > 0.02 && nLit === n) { // the day's real edge, held still
+        const out = Math.abs(r.z) > C.funnelZ;
+        cx.globalAlpha = chanceA; cx.fillStyle = out ? '#e0604a' : '#d9d4c7';
+        cx.fillRect(labW + (n - r.comm) * p - 0.75, y - 1, out ? 2 : 1.5, rowH + 1);
+        if (out && W > 640) { cx.font = '11px ui-monospace, Menlo, monospace'; cx.textBaseline = 'middle';
+          cx.fillText((r.z > 0 ? '+' : '−') + Math.abs(r.z).toFixed(2) + ' SE', labW + n * p + 6, y + rowH / 2); }
+        cx.globalAlpha = 1;
+      }
+      if (i === hover) { cx.strokeStyle = 'rgba(242,179,94,.35)'; cx.strokeRect(labW - 0.5, y - 0.5, MAXN * p + 1, rowH); }
+    }
+    if (!runDone && el > runEnd) { runDone = true; if (hover < 0) read.textContent = 'All 80 report days. 1,921 of 5,966 lamps stay dark.'; }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // reading
+  function rowAt(ev) {
+    const b = cv.getBoundingClientRect(), y = ev.clientY - b.top;
+    for (let i = 0; i < rows.length; i++) {
+      const h = rows[i].kind === 'day' ? rowH : gapH;
+      if (y >= ys[i] && y < ys[i] + h) return i;
+    }
+    return -1;
+  }
+  function say(i) {
+    const r = rows[i]; if (!r) return;
+    if (r.kind === 'gap') { read.textContent = fmt(r.date) + ' 2026 · no readable report'; return; }
+    const pc = Math.round(100 * r.comm / r.new);
+    let t = fmt(r.date) + ' 2026 · ' + r.new + ' confirmed · ' + r.comm + ' first met dead (' + pc + ' %)';
+    if (chanceOn) t += ' · ' + (r.z >= 0 ? '+' : '−') + Math.abs(r.z).toFixed(2) + ' SE from 32.2 %' +
+      (Math.abs(r.z) > C.funnelZ ? ' · beyond what chance draws' : ' · inside what chance draws');
+    read.textContent = t;
+  }
+  cv.addEventListener('pointermove', ev => { hover = rowAt(ev); if (hover >= 0) say(hover); });
+  cv.addEventListener('pointerleave', () => { hover = -1; });
+
+  // sound: a row played lamp by lamp in its current order
+  let ac = null, muted = false;
+  let bus = null;
+  function thump(at) {
+    for (const [dt, amp] of [[0, 1], [0.13, 0.6]]) {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.type = 'sine'; o.frequency.setValueAtTime(70, at + dt); o.frequency.exponentialRampToValueAtTime(42, at + dt + 0.12);
+      g.gain.setValueAtTime(0.0001, at + dt); g.gain.exponentialRampToValueAtTime(0.5 * amp, at + dt + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, at + dt + 0.16);
+      o.connect(g).connect(bus); o.start(at + dt); o.stop(at + dt + 0.2);
+    }
+  }
+  function playRow(i) {
+    const r = rows[i]; if (!r || r.kind !== 'day') return;
+    if (playing && playing.row === i) { playing.stop = true; playing = null; return; }
+    if (playing) playing.stop = true;
+    if (!muted) { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); ac.resume(); }
+    const order = r.lamps.map((L, k) => k).sort((a, b) => {
+      const A = r.lamps[a], B = r.lamps[b];
+      return (A.scat + (A.gath - A.scat) * gatherTo) - (B.scat + (B.gath - B.scat) * gatherTo); });
+    const me = { row: i, k: -1, stop: false }; playing = me;
+    const STEP = 0.32; let j = 0;
+    const base = ac && !muted ? ac.currentTime + 0.05 : 0;
+    if (ac && !muted) { if (bus) bus.disconnect(); bus = ac.createGain(); bus.connect(ac.destination); me.bus = bus; }
+    if (ac && !muted) for (let q = 0; q < order.length; q++) if (!r.lamps[order[q]].dead) thump(base + q * STEP);
+    const tick = () => {
+      if (me.stop) { if (me.bus) me.bus.disconnect(); return; }
+      if (j >= order.length) { playing = null; return; }
+      me.k = order[j++]; setTimeout(tick, STEP * 1000);
+    };
+    tick();
+  }
+  cv.addEventListener('click', ev => { const i = rowAt(ev); if (i >= 0) { say(i); playRow(i); } });
+
+  document.getElementById('skip').onclick = () => { runDone = true; read.textContent = 'All 80 report days. 1,921 of 5,966 lamps stay dark.'; };
+  const gb = document.getElementById('gather');
+  gb.onclick = () => { gatherTo = gatherTo ? 0 : 1; gb.setAttribute('aria-pressed', String(!!gatherTo));
+    gb.textContent = gatherTo ? 'scatter again' : 'gather the dark'; };
+  const cb = document.getElementById('chance'), ck = document.getElementById('chancekey');
+  cb.onclick = () => {
+    chanceOn = !chanceOn; cb.setAttribute('aria-pressed', String(chanceOn)); ck.hidden = !chanceOn;
+    cb.textContent = chanceOn ? 'the record\'s counts' : 'let chance count';
+    if (chanceOn) { runDone = true; gatherTo = 1; gb.setAttribute('aria-pressed', 'true'); gb.textContent = 'scatter again';
+      read.textContent = 'Every row recounted as if each case had the same 32.2 % chance. The real edges spread ' +
+        C.phi.toFixed(1) + ' times as wide; on 30 Jul and 31 Aug they stand where chance does not reach.'; }
+    else read.textContent = 'The record\'s counts. 1,921 of 5,966 lamps stay dark.';
+  };
+  gb.addEventListener('click', () => { if (chanceOn && !gatherTo) cb.click(); });
+  const mb = document.getElementById('mute');
+  mb.onclick = () => { muted = !muted; mb.setAttribute('aria-pressed', String(muted)); };
+})();
+</script>
+</body>
+</html>

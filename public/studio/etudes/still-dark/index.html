@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STILL DARK — an étude</title>
+<style>
+  /* Everything scoped under .sd-root. No bare body{}/*{} resets beyond the wrapper. */
+  .sd-root {
+    box-sizing: border-box;
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 2.2rem 1.2rem 4rem;
+    font-family: ui-monospace, "SF Mono", "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #111;
+    background: #fff;
+  }
+  .sd-root, .sd-root * { box-sizing: border-box; }
+  @media (prefers-color-scheme: dark) {
+    .sd-root { color: #e6e6e6; background: #0e0e0e; }
+  }
+  :root[data-theme="dark"] .sd-root { color: #e6e6e6; background: #0e0e0e; }
+  :root[data-theme="light"] .sd-root { color: #111; background: #fff; }
+
+  .sd-root h1 {
+    font-family: ui-monospace, "SF Mono", "Courier New", monospace;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.15rem;
+  }
+  .sd-root .sd-kicker {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin: 0 0 1.4rem;
+  }
+  .sd-root h2 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+  .sd-root p { margin: 0 0 0.9rem; }
+  .sd-root a { color: inherit; }
+  .sd-root .sd-quote {
+    border-left: 2px solid currentColor;
+    padding: 0.1rem 0 0.1rem 0.8rem;
+    opacity: 0.85;
+    font-style: italic;
+    margin: 0 0 0.9rem;
+  }
+
+  .sd-root .sd-section {
+    border-top: 1px solid;
+    border-color: rgba(128,128,128,0.35);
+    padding-top: 1.1rem;
+    margin-top: 1.4rem;
+  }
+
+  /* day strip */
+  .sd-root .sd-strip {
+    border: 1px solid rgba(128,128,128,0.45);
+    padding: 0.9rem;
+    margin: 0.9rem 0 1rem;
+  }
+  .sd-root .sd-row {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr 3.2rem;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.32rem 0;
+    border-bottom: 1px dashed rgba(128,128,128,0.3);
+    font-size: 0.83rem;
+  }
+  .sd-root .sd-row:last-child { border-bottom: none; }
+  .sd-root .sd-row .sd-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sd-root .sd-row .sd-track {
+    position: relative;
+    height: 0.8rem;
+    background: rgba(128,128,128,0.15);
+  }
+  .sd-root .sd-row .sd-bar {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    background: currentColor;
+    opacity: 0.75;
+  }
+  .sd-root .sd-row .sd-days {
+    text-align: right;
+    opacity: 0.75;
+  }
+  .sd-root .sd-row.sd-unknown .sd-track { background: transparent; }
+  .sd-root .sd-row.sd-unknown .sd-name,
+  .sd-root .sd-row.sd-unknown .sd-days { opacity: 0.4; }
+  .sd-root .sd-dashline {
+    border-top: 1px dashed rgba(128,128,128,0.5);
+    height: 0;
+    align-self: center;
+  }
+  .sd-root .sd-stamp {
+    display: inline-block;
+    font-size: 0.68rem;
+    opacity: 0.55;
+    margin-left: 0.4rem;
+  }
+  .sd-root .sd-case {
+    border: 1px solid rgba(128,128,128,0.45);
+    padding: 0.8rem 0.9rem;
+    margin: 0.9rem 0;
+    font-size: 0.85rem;
+  }
+  .sd-root .sd-case dl {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    row-gap: 0.25rem;
+    margin: 0.5rem 0 0;
+  }
+  .sd-root .sd-case dt { opacity: 0.6; }
+  .sd-root .sd-case dd { margin: 0; }
+
+  .sd-root .sd-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.05rem 0.4rem;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+  .sd-root .sd-tag.sd-sourced { opacity: 0.85; }
+  .sd-root .sd-tag.sd-imagined { opacity: 0.85; }
+
+  .sd-root .sd-imagined-note {
+    font-size: 0.84rem;
+    border: 1px dashed rgba(128,128,128,0.6);
+    padding: 0.7rem 0.85rem;
+    margin: 0.9rem 0;
+  }
+
+  .sd-root .sd-facts {
+    font-size: 0.82rem;
+    opacity: 0.85;
+  }
+  .sd-root .sd-facts ul { margin: 0.3rem 0 0; padding-left: 1.1rem; }
+  .sd-root .sd-facts li { margin-bottom: 0.25rem; }
+
+  .sd-root .sd-source {
+    font-size: 0.78rem;
+    opacity: 0.7;
+    word-break: break-all;
+  }
+  .sd-root .sd-source code { font-family: inherit; }
+
+  .sd-root .sd-close-ask {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 1rem 0;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid currentColor;
+  }
+
+  .sd-root .sd-reviewer {
+    margin-top: 2.2rem;
+    padding-top: 1rem;
+    border-top: 2px solid rgba(128,128,128,0.5);
+    font-size: 0.78rem;
+    opacity: 0.85;
+  }
+  .sd-root .sd-reviewer .sd-reviewer-label {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.68rem;
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+  }
+  .sd-root .sd-reviewer button {
+    font-family: inherit;
+    font-size: 0.78rem;
+    background: transparent;
+    color: inherit;
+    border: 1px solid currentColor;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+    margin: 0 0.5rem 0.5rem 0;
+  }
+  .sd-root .sd-reviewer button:hover { opacity: 0.7; }
+  .sd-root .sd-seed {
+    font-size: 0.72rem;
+    opacity: 0.55;
+    margin-top: 0.4rem;
+  }
+  .sd-root .sd-visitcount {
+    font-size: 0.72rem;
+    opacity: 0.55;
+  }
+</style>
+</head>
+<body>
+<div class="sd-root">
+
+  <script type="application/json" id="sd-data">
+  {
+    "seed": 20260804,
+    "date": "2026-08-04",
+    "source": {
+      "urls": [
+        "https://frankbueltge.de/ghost-fleet/",
+        "https://frankbueltge.de/werke/ghost-fleet/"
+      ],
+      "fetchedDate": "2026-08-04",
+      "methodSentence": "disabling events that ended in the last 7 days (complete vanish-and-return stories)",
+      "framingSentence": "No claim of illegality, only the counted invisibility."
+    },
+    "aggregate": {
+      "darkInNationalWaters": 82,
+      "disappearancesExamined": 230,
+      "totalInWindow": 5641,
+      "vesselDaysDark": 3712
+    },
+    "caseOfDayName": "TUNAMAR",
+    "vessels": [
+      { "name": "TUNAMAR", "flag": "PAN", "days": 56, "vanished": "2.6°N, 92.3°W", "resurfaced": "0.8°S, 81.2°W", "eez": "Ecuadorian EEZ (Galápagos)" },
+      { "name": "MICRONESIA103", "flag": "FSM", "days": 39, "vanished": null, "resurfaced": null, "eez": "Marshallese EEZ" },
+      { "name": "ALIZE", "flag": "ECU", "days": 31, "vanished": null, "resurfaced": null, "eez": "Ecuadorian EEZ" },
+      { "name": "FORTICA", "flag": "ECU", "days": 26, "vanished": null, "resurfaced": null, "eez": "Ecuadorian EEZ" },
+      { "name": "PANOFI MASTER", "flag": "GHA", "days": 22, "vanished": null, "resurfaced": null, "eez": "Ghanaian EEZ" },
+      { "name": "TRAVELER", "flag": "USA", "days": 18, "vanished": null, "resurfaced": null, "eez": "United States EEZ (Alaska)" },
+      { "name": "VICTORIA", "flag": "MEX", "days": 17, "vanished": null, "resurfaced": null, "eez": "Mexican EEZ" },
+      { "name": "PANOFI DISCOVERER", "flag": "GHA", "days": 17, "vanished": null, "resurfaced": null, "eez": "Ghanaian EEZ" },
+      { "name": "VESTERAALEN", "flag": "USA", "days": 17, "vanished": null, "resurfaced": null, "eez": "United States EEZ (Alaska)" },
+      { "name": "PACIFIC FURY", "flag": "USA", "days": 17, "vanished": null, "resurfaced": null, "eez": "United States EEZ (Alaska)" }
+    ]
+  }
+  </script>
+
+  <!-- VERIFIER-66: the live edition (https://frankbueltge.de/ghost-fleet/, re-fetched 2026-08-04,
+       200, 35,473 bytes — byte-identical to the fetch MATERIAL-66.md §0 recorded) names an
+       eleventh vessel absent from sd-data above: EXCELLENCE (USA), 16 d, United States EEZ
+       (Alaska). This data island and the "ten vessels" language throughout undercount by one;
+       not corrected in place because this étude was frozen and built before this finding. -->
+
+  <div id="sd-app"></div>
+
+  <div class="sd-reviewer">
+    <div class="sd-reviewer-label">Reviewer controls — not part of the piece</div>
+    <button type="button" id="sd-btn-force">reviewer: force the return</button>
+    <button type="button" id="sd-btn-reset">reviewer: reset to visit 1</button>
+    <div class="sd-visitcount" id="sd-visitcount"></div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "ensemble-etude-still-dark-v1";
+
+  // ---- data island: single source of truth ----
+  var DATA = JSON.parse(document.getElementById("sd-data").textContent);
+  var SEED = DATA.seed;
+
+  // ---- seeded PRNG: xmur3 hash -> mulberry32 stream. No Math.random(). ----
+  function xmur3(str) {
+    var h = 1779033703 ^ str.length;
+    for (var i = 0; i < str.length; i++) {
+      h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+      h = (h << 13) | (h >>> 19);
+    }
+    return function () {
+      h = Math.imul(h ^ (h >>> 16), 2246822507);
+      h = Math.imul(h ^ (h >>> 13), 3266489909);
+      h ^= h >>> 16;
+      return h >>> 0;
+    };
+  }
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function seededRandom(purpose) {
+    var seedFn = xmur3(SEED + ":" + purpose);
+    return mulberry32(seedFn());
+  }
+
+  // ---- IMAGINED: the moment (in days after 4 Aug 2026) each non-headline
+  // vessel becomes visible on the return visit. Upstream publishes no
+  // per-vessel disclosure timestamp; this is the studio's seeded construction,
+  // deterministic from SEED + vessel name, range 1..7 (the instrument's own
+  // trailing window). The case of the day is fixed at +0 because it is the
+  // one entry the instrument's own method already resolves on the day itself. ----
+  var revealOffset = {};
+  DATA.vessels.forEach(function (v) {
+    if (v.name === DATA.caseOfDayName) {
+      revealOffset[v.name] = 0;
+    } else {
+      var rng = seededRandom("reveal:" + v.name);
+      revealOffset[v.name] = 1 + Math.floor(rng() * 7); // 1..7
+    }
+  });
+
+  // ---- persistence ----
+  function readState() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function writeState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  function clearState() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
+
+  var existing = readState();
+  var isReturn = existing !== null;
+  if (!isReturn) {
+    writeState({ firstVisitAt: new Date().toISOString(), visits: 1 });
+  } else {
+    var next = existing && typeof existing.visits === "number" ? existing.visits + 1 : 2;
+    writeState({ firstVisitAt: existing && existing.firstVisitAt ? existing.firstVisitAt : new Date().toISOString(), visits: next });
+  }
+  var stateForDisplay = readState();
+
+  // ---- small DOM helpers (no innerHTML for user-varying text; no inline style attrs in markup) ----
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined && text !== null) e.textContent = text;
+    return e;
+  }
+  function frag() { return document.createDocumentFragment(); }
+
+  function sourceBlock() {
+    var wrap = el("div", "sd-source");
+    var p1 = el("div", null, "Source: " + DATA.source.urls.join("  ·  "));
+    var p2 = el("div", null, "Fetched " + DATA.source.fetchedDate + ".");
+    wrap.appendChild(p1);
+    wrap.appendChild(p2);
+    return wrap;
+  }
+
+  function tierLine(kind, text) {
+    var p = el("p", null);
+    var tag = el("span", "sd-tag sd-" + kind, kind.toUpperCase());
+    p.appendChild(tag);
+    p.appendChild(document.createTextNode(text));
+    return p;
+  }
+
+  function aggregatePanel() {
+    var section = el("div", "sd-section");
+    section.appendChild(el("h2", null, "Same edition, the wider figure"));
+    section.appendChild(tierLine("sourced",
+      "82 ships were found dark inside national waters lately, of 230 disappearances " +
+      "examined (5,641 vessels in the window) — about 3,712 vessel-days of darkness in total."));
+    var fp = el("p", null);
+    fp.appendChild(document.createTextNode("The instrument's own framing: "));
+    fp.appendChild(el("em", null, "“" + DATA.source.framingSentence + "”"));
+    section.appendChild(fp);
+    return section;
+  }
+
+  function seedLine() {
+    return el("div", "sd-seed", "Seed " + SEED + " — deterministic: same seed, same étude.");
+  }
+
+  // ---- visit 1 render: the day almost empty ----
+  function renderVisit1(root) {
+    root.appendChild(el("div", "sd-kicker", "STILL DARK — an étude, not a finished work"));
+    root.appendChild(el("h1", null, "4 August 2026"));
+    root.appendChild(el("p", null, "the day as it could have been known on itself"));
+
+    var p1 = el("p", null,
+      "Upstream counts a disappearance only once the vessel comes back. Its own published method:");
+    root.appendChild(p1);
+    root.appendChild(el("div", "sd-quote", "“" + DATA.source.methodSentence + "”"));
+
+    root.appendChild(el("p", null,
+      "So on the day itself, most of tonight's edition is not yet a fact anyone could hold " +
+      "— including this page. Ten vessels are dark somewhere in this window. Only one had " +
+      "already surfaced into a complete, returned story by the time a page like this could exist."));
+
+    // day strip: only the headline case visible, nine placeholders
+    var strip = el("div", "sd-strip");
+    DATA.vessels.forEach(function (v) {
+      var row = el("div", "sd-row" + (v.name === DATA.caseOfDayName ? "" : " sd-unknown"));
+      if (v.name === DATA.caseOfDayName) {
+        row.appendChild(el("div", "sd-name", v.name + " (" + v.flag + ")"));
+        var track = el("div", "sd-track");
+        var bar = el("div", "sd-bar");
+        bar.style.width = Math.round((v.days / 56) * 100) + "%";
+        track.appendChild(bar);
+        row.appendChild(track);
+        row.appendChild(el("div", "sd-days", v.days + "d"));
+      } else {
+        row.appendChild(el("div", "sd-name", "not yet knowable"));
+        row.appendChild(el("div", "sd-dashline"));
+        row.appendChild(el("div", "sd-days", "—"));
+      }
+      strip.appendChild(row);
+    });
+    root.appendChild(strip);
+
+    // the one visible case, in full
+    var caseOfDay = DATA.vessels.filter(function (v) { return v.name === DATA.caseOfDayName; })[0];
+    var caseBox = el("div", "sd-case");
+    caseBox.appendChild(el("h2", null, "The instrument's own case of the day"));
+    var dl = document.createElement("dl");
+    function pair(k, v) {
+      dl.appendChild(el("dt", null, k));
+      dl.appendChild(el("dd", null, v));
+    }
+    pair("vessel", caseOfDay.name + " (" + caseOfDay.flag + ")");
+    pair("dark for", caseOfDay.days + " days");
+    pair("vanished at", caseOfDay.vanished);
+    pair("resurfaced at", caseOfDay.resurfaced);
+    pair("waters", caseOfDay.eez);
+    caseBox.appendChild(dl);
+    root.appendChild(caseBox);
+
+    root.appendChild(el("p", null,
+      "The other nine are still out there, off the air. Nobody can see them yet — not " +
+      "upstream, not this page, not you."));
+
+    var ask = el("div", "sd-close-ask", "Close this page. Come back later. Look at 4 August 2026 again.");
+    root.appendChild(ask);
+
+    // tiers, on the face
+    var tiers = el("div", "sd-section");
+    tiers.appendChild(el("h2", null, "What is measured and what is built"));
+    tiers.appendChild(tierLine("sourced",
+      "the vessel name, flag, duration, and location above, and the method sentence, are the " +
+      "instrument's own published record."));
+    tiers.appendChild(tierLine("imagined",
+      "which of the ten vessels counts as “not yet knowable” right now, and all bar " +
+      "geometry and layout on this page, are this studio's construction — not upstream's data."));
+    root.appendChild(tiers);
+
+    root.appendChild(aggregatePanel());
+
+    var srcSection = el("div", "sd-section");
+    srcSection.appendChild(sourceBlock());
+    srcSection.appendChild(seedLine());
+    root.appendChild(srcSection);
+  }
+
+  // ---- visit 2 render: the same day, now carrying what became knowable later ----
+  function renderVisit2(root) {
+    root.appendChild(el("div", "sd-kicker", "STILL DARK — an étude, not a finished work"));
+    root.appendChild(el("h1", null, "4 August 2026"));
+    root.appendChild(el("p", null, "the same day — you already looked at this one"));
+
+    root.appendChild(el("p", null,
+      "This is not a new day, and this is not a live feed. It is the calendar date you already " +
+      "opened, once, when it was almost empty. What changed between then and now is not “today” " +
+      "— today, wherever it currently sits, has nothing to do with this page. What changed is the " +
+      "past: 4 August 2026 has gained ships since you last held it."));
+
+    var ordered = DATA.vessels.slice().sort(function (a, b) { return b.days - a.days; });
+    var strip = el("div", "sd-strip");
+    ordered.forEach(function (v) {
+      var row = el("div", "sd-row");
+      var nameCell = el("div", "sd-name", null);
+      nameCell.appendChild(document.createTextNode(v.name + " (" + v.flag + ")"));
+      var off = revealOffset[v.name];
+      var stampText = off === 0 ? "known: day of" : "became visible: +" + off + "d";
+      nameCell.appendChild(el("span", "sd-stamp", stampText));
+      row.appendChild(nameCell);
+      var track = el("div", "sd-track");
+      var bar = el("div", "sd-bar");
+      bar.style.width = Math.round((v.days / 56) * 100) + "%";
+      track.appendChild(bar);
+      row.appendChild(track);
+      row.appendChild(el("div", "sd-days", v.days + "d, " + v.eez));
+      strip.appendChild(row);
+    });
+    root.appendChild(strip);
+
+    var imNote = el("div", "sd-imagined-note");
+    imNote.appendChild(tierLine("imagined",
+      "the “became visible: +Nd” stamp on nine of these ten rows is this studio's own " +
+      "seeded construction. Upstream publishes no per-vessel disclosure timestamp — only the " +
+      "names, flags, durations and waters, which are theirs. The case of the day (TUNAMAR) is " +
+      "marked “known: day of” because it is the one entry the instrument's own method " +
+      "already resolves on 4 August itself."));
+    root.appendChild(imNote);
+
+    // full case-of-day detail, unchanged from visit 1, kept honest and complete
+    var caseOfDay = DATA.vessels.filter(function (v) { return v.name === DATA.caseOfDayName; })[0];
+    var caseBox = el("div", "sd-case");
+    caseBox.appendChild(el("h2", null, "The instrument's own case of the day"));
+    var dl = document.createElement("dl");
+    function pair(k, v) {
+      dl.appendChild(el("dt", null, k));
+      dl.appendChild(el("dd", null, v));
+    }
+    pair("vessel", caseOfDay.name + " (" + caseOfDay.flag + ")");
+    pair("dark for", caseOfDay.days + " days");
+    pair("vanished at", caseOfDay.vanished);
+    pair("resurfaced at", caseOfDay.resurfaced);
+    pair("waters", caseOfDay.eez);
+    caseBox.appendChild(dl);
+    root.appendChild(caseBox);
+
+    var tiers = el("div", "sd-section");
+    tiers.appendChild(el("h2", null, "What is measured and what is built"));
+    tiers.appendChild(tierLine("sourced",
+      "every vessel name, flag, duration and body of water above, and the aggregate figures below, " +
+      "are the instrument's own published record."));
+    tiers.appendChild(tierLine("imagined",
+      "the reveal order, the +Nd stamps, and all bar geometry and layout, are this studio's " +
+      "construction, seeded and reproducible — not measured data."));
+    root.appendChild(tiers);
+
+    root.appendChild(aggregatePanel());
+
+    var srcSection = el("div", "sd-section");
+    srcSection.appendChild(sourceBlock());
+    srcSection.appendChild(seedLine());
+    root.appendChild(srcSection);
+  }
+
+  function render() {
+    var app = document.getElementById("sd-app");
+    while (app.firstChild) app.removeChild(app.firstChild);
+    if (isReturn) {
+      renderVisit2(app);
+    } else {
+      renderVisit1(app);
+    }
+    var vc = document.getElementById("sd-visitcount");
+    vc.textContent = "local visit counter: " + (stateForDisplay && stateForDisplay.visits ? stateForDisplay.visits : 1) +
+      " (this browser only; not analytics, nothing leaves this page)";
+  }
+
+  render();
+
+  // ---- reviewer controls ----
+  document.getElementById("sd-btn-force").addEventListener("click", function () {
+    var s = readState();
+    if (!s) {
+      writeState({ firstVisitAt: new Date().toISOString(), visits: 1, forcedByReviewer: true });
+    }
+    location.reload();
+  });
+  document.getElementById("sd-btn-reset").addEventListener("click", function () {
+    clearState();
+    location.reload();
+  });
+})();
+</script>
+</body>
+</html>

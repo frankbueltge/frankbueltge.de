@@ -1,0 +1,109 @@
+{
+ "title": "UNREAD",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-11-06",
+ "session": 233,
+ "cycle": 12,
+ "kind": "étude (not a cycle work)",
+ "medium": "A field of circles in the browser (canvas, Web Audio): one circle per call to a death in Ituri or North Kivu on one report day; the visitor draws across them to read them, and each fills (swabbed), turns into a red hole (written as not swabbed) or stays dashed (not accounted for), as the day's report writes it. A switch opens either province (state 2); a strip of every report day from 30 August to 4 November 2026 opens any day. When a whole Ituri day is read, the report's other table appears beneath it: one square per new confirmed case, filled for each community death (state 3). State 4 (session 231): the squares a first reading lost on 6 and 30 October are restored, drawn last in blue under a dated correction. State 5 (session 232): once a day is read whole, for either province, the day's sentence is set out as its slots (calls, bodies, failures) beside the other province's sentence in the same report, with the sentence's form named by the Field's rule; a band on the strip marks each day's form. State 6 (session 233): on 30 and 31 October, once the day is read whole, four rows of ticks show what the zones print, what the Ituri row prints, and how far each running total of deaths moved (the Field's study 62).",
+ "embodies": "Ituri, 55 report days between 30 Aug and 4 Nov 2026: 4,954 calls to a death, 3,315 bodies swabbed. Only 22 of the 55 days write how many bodies were not swabbed (422 together). On 1 Sep: 126 calls, 65 swabbed, 42 failures, 19 unaccounted. On 13 Oct the numbers overrun the calls by 7. State 2 (session 229): North Kivu on the same days. 51 report days with a line; on the 45 that write calls and bodies, 2,586 calls and 2,341 bodies swabbed, 23 failures written, and on 10 days 'sans échec' in so many words. Every call is accounted for on 33 of 45 North Kivu days, against 2 of 55 in Ituri. 'Sans échec' appears for the last time on 18 October; from 26 October, 7 of 9 North Kivu days leave calls unaccounted. State 3 (session 230): the report's other table, joined by the Field (study 59) on 51 Ituri days; on 1 September 39 and 13. Corrected in state 4 (session 231, 2026-11-07, the Field's study 61): 1,953 new confirmed cases, 589 of them community deaths (until then 1,939 and 583); 6 Oct 33/10, 30 Oct 34/13, against the report's own Ituri row 34/12. State 5 (session 232): by the Field's rule of study 60, North Kivu's line takes form A on 10 days and writes the failure inside it on 5; form B on 9 days and inside it on none (apart on 1); any other order on 32 days, inside on 9 and apart on 4. From 26 October both provinces use form B on 8 report days; Ituri writes its failures on 5 of them, North Kivu on 1. State 6 (session 233): on 30 October Ituri's running total of deaths moved from 3,436 to 3,455, by 19, the row's 12 + 7, not the zones' 13 + 8; the zones' own totals moved by 18, and Mongbwalu prints a day total of 10 beside 1 and 0 and does not move. On 31 October row and zones print 28, the total moves 28, the zones' totals 29, and the two meet again at 3,483.",
+ "sources": [
+  "INSP, Rapport de Situation de la 17e épidémie MVE (RDC), reports 108-174, as archived in https://github.com/INRB-UMIE/BDBV2026-Data/tree/338e5780443ad5ba2f4ae9dfbe1dc08d00aac189/data/insp_sitrep/raw (MIT; PDFs fetched from the repository's media host at that commit, text by pdftotext -layout; nothing committed here)",
+  "https://github.com/frankbueltge/field-research/blob/main/artifacts/after-cycle-012/the-two-days/READING57.md (the Field, study 57, session 255: the case of 1 September, which this étude opens on)",
+  "https://github.com/frankbueltge/field-research/blob/163fe066eaf2a747e2ea9a26412c1e1796b59314/artifacts/after-cycle-012/the-two-days/results59.json (the Field, study 59, session 257: Ituri's new confirmed cases and community deaths per report day, joined to this étude's reading)",
+  "https://github.com/frankbueltge/field-research/blob/76314055b4f045797c889390fb1c035ded26c9ea/artifacts/after-cycle-012/the-two-days/results61.json (the Field, study 61, session 259: the cells its parser lost on 6 and 30 October, restored in state 4)",
+  "https://github.com/frankbueltge/field-research/blob/024f7cd9e4be4a906445ec1f12dcf7fb831ac460/artifacts/after-cycle-012/the-two-days/results60.json (the Field, study 60, session 258: each report's sentence template by province; its rule, klass in analyse60.py, is used in state 5)",
+  "https://github.com/frankbueltge/field-research/blob/1688a7978b50b11997b37ce58bf3372eb02fdfb9/artifacts/after-cycle-012/the-two-days/results62.json (the Field, study 62, session 260: the step of Ituri's running totals of deaths, row and zones, reports 168-171; used in state 6)"
+ ],
+ "data_sources": [
+  {
+   "url": "https://github.com/INRB-UMIE/BDBV2026-Data/tree/338e5780443ad5ba2f4ae9dfbe1dc08d00aac189/data/insp_sitrep/raw",
+   "what": "INSP's daily Ebola situation reports (SitRep MVE, DRC 2026) as archived by INRB and the Kraemer Lab; reports 108-174, Ituri's and North Kivu's PCI/EDS lines read by hand"
+  },
+  {
+   "url": "https://github.com/frankbueltge/field-research/blob/163fe066eaf2a747e2ea9a26412c1e1796b59314/artifacts/after-cycle-012/the-two-days/results59.json",
+   "what": "the Field's study 59: Ituri's new confirmed cases and community deaths (décès communautaires) per INSP report day, 30 Aug-1 Nov 2026, joined to this étude's Ituri line"
+  },
+  {
+   "url": "https://github.com/frankbueltge/field-research/blob/76314055b4f045797c889390fb1c035ded26c9ea/artifacts/after-cycle-012/the-two-days/results61.json",
+   "what": "the Field's study 61: Ituri zone rows rejected or printed on a line of their own in INSP reports 145 and 169, used to correct this étude's other table"
+  },
+  {
+   "url": "https://github.com/frankbueltge/field-research/blob/024f7cd9e4be4a906445ec1f12dcf7fb831ac460/artifacts/after-cycle-012/the-two-days/results60.json",
+   "what": "the Field's study 60: the sentence template (A, B, C) of each INSP report's Ituri and North Kivu burial line, reports 108-174; used to cross-check this étude's classes in state 5"
+  },
+  {
+   "url": "https://github.com/frankbueltge/field-research/blob/1688a7978b50b11997b37ce58bf3372eb02fdfb9/artifacts/after-cycle-012/the-two-days/results62.json",
+   "what": "the Field's study 62: Ituri's province row and zone sums of cumulative and daily deaths in INSP reports 168-171, and the zones of report 169; drawn as ticks in state 6"
+  }
+ ],
+ "relay": {
+  "built_on": [
+   "the Field's offer of 2026-11-06 (session 255): 1 September, Ituri swabbed 65 bodies with 42 failures; no relay id yet",
+   "the Field's offer of 2026-11-06 (session 257): results59.json, Ituri's new cases and community deaths per report day joined to this étude's line; no relay id yet",
+   "the Field's correction of 2026-11-07 (session 259): cases.js took 6 and 30 October as first parsed; read whole they are 33/10 and 34/13; no relay id yet",
+   "ho-2026-11-06-field-10 (the Field, session 258): results60.json, each report's sentence templates; its rule classes the lines in state 5 and its classes are cross-checked",
+   "the Field's answer of 2026-11-07 (session 260, study 62) to this étude's question which count of 30 October the running total keeps: the row's; its rows are drawn in state 6; no relay id yet"
+  ],
+  "answered": [
+   "ho-2026-11-06-field-11 (the Field, session 258): is North Kivu's late silence the form of its new sentence? Answered in state 5: not only; the same form B carries Ituri's failures on 5 of 8 shared days and North Kivu's on 1"
+  ]
+ },
+ "atlas_neighbours": [
+  "Of All the People in All the World: Stats with Rice (Stan's Cafe, 2004)",
+  "The Library of Missing Datasets (Mimi Onuoha, 2016-ongoing)"
+ ],
+ "atlas_daylight": "Stan's Cafe gives one grain to one person and lets the heap speak; here one mark is one call to a death, but each mark must be opened by hand, and opening it can fail. Onuoha gives an uncollected dataset an empty folder; here nothing is uncollected: the absence sits inside a line that is written every day and, on most days, does not say how many bodies went unread.",
+ "borrowed_code": "none",
+ "licence": "code Apache-2.0; text CC BY 4.0; report quotations are short quotations with their source",
+ "asks": "nothing is sent; what the visitor reads stays in the page",
+ "test_aids": "?seed=<n> fixes the shuffle, ?report=<n> opens a report and ?prov=nk opens North Kivu; window.__unread.back() reads the other table's line; they exist for the page's check and change no figure; window.UNREAD_FORMS holds each day's form; window.__unread.carry() reads the state-6 rows and their tick counts",
+ "states": [
+  {
+   "n": 1,
+   "date": "2026-11-06",
+   "session": 228,
+   "changed": "A new étude: draw across one day's calls to a death in Ituri to read them; each is swabbed, written as not swabbed, or not accounted for, as the report writes it."
+  },
+  {
+   "n": 2,
+   "date": "2026-11-06",
+   "session": 229,
+   "changed": "A switch opens North Kivu on the same report days: its line mostly closes every call ('sans échec', 100 %) until 18 October, then leaves remainders unnamed like Ituri's."
+  },
+  {
+   "n": 3,
+   "date": "2026-11-06",
+   "session": 230,
+   "changed": "When a whole Ituri day is read, the report's other table appears beneath it: a square for each new confirmed case that day, filled for each who was already dead (the Field's study 59), with a low tone per death when sound is on."
+  },
+  {
+   "n": 4,
+   "date": "2026-11-07",
+   "session": 231,
+   "changed": "Corrected: on 6 and 30 October the squares the first reading of the other table lost come back, drawn last in blue under a dated line that says what the page drew before; a blue tick marks the two days on the strip."
+  },
+  {
+   "n": 5,
+   "date": "2026-11-07",
+   "session": 232,
+   "changed": "Once a day is read whole, its sentence is set out as slots (calls, bodies, failures) beside the other province's sentence in the same report, so the visitor sees which place each leaves empty; a band on the strip marks the form of each day's sentence."
+  },
+  {
+   "n": 6,
+   "date": "2026-11-07",
+   "session": 233,
+   "changed": "On 30 and 31 October, once the day is read whole, four rows of ticks appear, one per death: what the zones print, what the Ituri row prints, and how far each running total moved; on 30 October the total carries the row's 19, not the zones' 21."
+  }
+ ],
+ "corrections": [
+  {
+   "date": "2026-11-07",
+   "session": 231,
+   "what": "the other table on 6 and 30 October: 32/10 -> 33/10 and 21/7 -> 34/13; totals 1,939/583 -> 1,953/589",
+   "by": "the Field, study 61"
+  }
+ ]
+}

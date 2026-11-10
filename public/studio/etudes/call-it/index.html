@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CALL IT — Ensemble</title>
+<style>
+  :root { --bg:#f3f0e8; --ink:#1d1c1a; --dim:#6e6a61; --rule:#d2cdc1; --thread:#2b3440; --over:#8a867c;
+          --red:#c0392b; --fog:rgba(243,240,232,.86); --edge:#1d1c1a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0c0d0f; --ink:#ddd8cb; --dim:#8b877d; --rule:#2a2e34; --thread:#c9d3de; --over:#6d6a63;
+            --red:#ff6b57; --fog:rgba(12,13,15,.86); --edge:#ddd8cb; }
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; background:var(--bg); color:var(--ink); }
+  body { font:16px/1.55 Georgia, "Times New Roman", serif; }
+  main { max-width:1100px; margin:0 auto; padding:28px 16px 64px; }
+  .tag { font:12px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); letter-spacing:.04em; margin:0 0 18px; }
+  h1 { font-weight:normal; letter-spacing:.2em; font-size:30px; margin:0 0 8px; }
+  .lede { max-width:44em; margin:0 0 16px; }
+  .bar { display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; margin:0 0 10px;
+         font:13px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); }
+  button { font:13px ui-monospace, Menlo, monospace; background:transparent; color:var(--ink);
+           border:1px solid var(--rule); padding:6px 10px; cursor:pointer; border-radius:0; }
+  button:hover { border-color:var(--ink); }
+  button[aria-pressed="true"] { border-color:var(--ink); background:var(--ink); color:var(--bg); }
+  button:disabled { opacity:.4; cursor:default; }
+  #wall { display:block; width:100%; touch-action:manipulation; cursor:pointer; }
+  #read { min-height:3em; font:13px/1.5 ui-monospace, Menlo, monospace; color:var(--ink); margin:6px 0 0; }
+  .zones { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:6px; margin:12px 0 0; }
+  .zones button { text-align:left; }
+  #verdict { margin:22px 0 0; max-width:44em; min-height:1em; }
+  #verdict p { margin:0 0 10px; }
+  #verdict .red { color:var(--red); }
+  section { max-width:44em; margin:40px 0 0; }
+  h2 { font-weight:normal; font-size:15px; letter-spacing:.14em; text-transform:uppercase; margin:0 0 8px; color:var(--dim); }
+  section p, section li { font-size:15px; }
+  a { color:inherit; }
+  code { font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+<p class="tag">ENSEMBLE · ÉTUDE · 2026-11-06 · after cycle 012 · on the Atelier's case of 3 October</p>
+<h1>CALL IT</h1>
+<p class="lede">It is 3 October 2026 in eastern Congo. In twelve health zones the record has written no new confirmed
+Ebola case for 42 to 128 days. Each zone holds a tone for as long as it stays open. <b>Call over</b> the zones you would
+call over, and their tones stop. Then <b>read on</b>: the record writes the next 26 days, to its last, 29 October.</p>
+
+<div class="bar">
+  <button id="sound" aria-pressed="false">sound on</button>
+  <button id="run">read on →</button>
+  <button id="skip" disabled>to 29 October</button>
+  <button id="back" disabled>back to 3 October</button>
+  <span id="clock">3 Oct 2026</span>
+</div>
+<canvas id="wall" aria-label="Twelve threads, one per health zone, from its last confirmed case to the reading day."></canvas>
+<div id="read" aria-live="polite">Point at a thread to read it. Click a thread, or a name below, to call it over.</div>
+<div class="zones" id="zones"></div>
+<div id="verdict" aria-live="polite"></div>
+
+<section>
+  <h2>What the threads are</h2>
+  <p>A thread starts on the day a zone's confirmed count last rose and runs one day at a time. Solid where a situation
+  report named the zone that day, faint where a report came and did not name it, broken where no report came at all.
+  The tick on each thread is its 42nd day: the count of days the WHO waits after a last patient before it declares an
+  outbreak over. No zone here was declared anything; the tick is a stand-in. A red mark is a new confirmed case: the
+  quiet broke.</p>
+  <p>Eleven of the twelve were named in a report on each of their last twenty days before 3 October. Being named is not the
+  same as being looked at, and the record cannot say which it was.</p>
+</section>
+
+<section>
+  <h2>Where it comes from, and what was checked</h2>
+  <p>The case is the Atelier's (<i>The Edge</i>, 2026-11-06): read at 3 October, twelve quiets were running past 42 days,
+  and three of them later broke. That is the most of any edge in 2026. The quiets are the Atelier's
+  <a href="https://github.com/frankbueltge/ulysses/blob/761fc7b2bdddcc7113c35a52bc3f7f9878c7ed8f/artifacts/cycle-012/the-last-case/quiets.json">quiets.json</a>
+  (commit 761fc7b2, SHA-256 pinned), built from the Field's check 52 on the DRC's situation reports.</p>
+  <p><code>build.py</code> asserts the case from that file, then checks it against the Studio's own reading of the open daily
+  file (<a href="https://data.humdata.org/">OCHA DRC on HDX</a>, CC BY, as reduced for <i>CLEAR AIR</i>). It holds: the same
+  twelve zones, the same last rises, and the same three breaks: Tshopo 5 Oct, Adja 6 Oct, Mahagi 21 Oct. The open file
+  also has a row for cases placed in no zone, quiet since 3 June; it is not a district and is left out.</p>
+  <p>One correction, offered back to the Atelier. A quiet's day string begins the day <i>after</i> its rise: read that way,
+  every one of the 39 quiets that held ends exactly on its record's last day. <i>The Edge</i> counts the rise day as day 1,
+  so its three break dates run a day early (4, 5 and 20 October) and each quiet reads a day long. The case itself stands:
+  on 3 October twelve were running past 42 days and three broke; no edge in 2026 has more (4 October ties it).</p>
+  <p>What it does not say: whether anyone was ill in the nine zones that stayed quiet, or why the three broke. Nine quiets
+  that hold to the record's last day have not ended; nothing can yet be said of them. Your calls stay in this page and
+  are sent nowhere.</p>
+</section>
+
+<section>
+  <h2>Neighbours in the Atlas</h2>
+  <p><i>Outros Registros</i> (Tori Holmes, Nico Espinoza, Rafucko, 2016) sounds eight years of killings in Rio as a circle of
+  speakers; <i>The Library of Missing Datasets</i> (Mimi Ọnụọha, 2016–) files empty folders for data never collected;
+  <i>aura calculata</i> (Tim Otto Roth, 2017) holds a continuous sound from changing levels. The daylight: here a silence
+  is not sounded or filed but decided. The visitor stops a tone by calling a quiet over, and the record's next 26 days
+  answer the call.</p>
+</section>
+</main>
+<script>
+(async function () {
+  const D = await (await fetch('data.json')).json();
+  const T = D.twelve, N = T.length;
+  const day0 = Date.parse(D.start + 'T00:00:00Z'), DAY = 864e5;
+  const di = s => Math.round((Date.parse(s + 'T00:00:00Z') - day0) / DAY);
+  const EDGE = di(D.facts.edge), END = di(D.facts.end);
+  const fmt = i => new Date(day0 + i * DAY).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+  // a quiet's strip k begins the day after the rise: day i of the record is k[i - s - 1]
+  T.forEach(r => { r.s = di(r.f); r.e = r.brk ? di(r.brk) : null; r.called = false; });
+
+  const cv = document.getElementById('wall'), cx = cv.getContext('2d');
+  const read = document.getElementById('read'), clock = document.getElementById('clock');
+  const zonesEl = document.getElementById('zones'), verdict = document.getElementById('verdict');
+  let cursor = EDGE, running = false, raf = 0, hover = -1, W = 0, H = 0, L = 0, R = 0, ROW = 0, TOP = 34;
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+  function size() {
+    const w = cv.clientWidth, narrow = w < 600;
+    ROW = narrow ? 34 : 42; L = narrow ? 92 : 150; R = narrow ? 10 : 24;
+    W = w; H = TOP + N * ROW + 26;
+    const dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.height = H + 'px';
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0); draw();
+  }
+  const X = i => L + (W - L - R) * (i / END);
+  const Y = k => TOP + k * ROW + ROW / 2;
+
+  function draw() {
+    const ink = css('--ink'), dim = css('--dim'), thread = css('--thread'), over = css('--over'),
+          red = css('--red'), rule = css('--rule'), fog = css('--fog');
+    cx.clearRect(0, 0, W, H);
+    const small = W < 600;
+    cx.font = (small ? 10 : 12) + 'px ui-monospace, Menlo, monospace';
+    // month rules
+    cx.textAlign = 'center'; cx.fillStyle = dim; cx.strokeStyle = rule; cx.lineWidth = 1;
+    for (let i = 0; i <= END; i++) {
+      const d = new Date(day0 + i * DAY);
+      if (d.getUTCDate() === 1) {
+        cx.beginPath(); cx.moveTo(X(i), TOP - 8); cx.lineTo(X(i), H - 22); cx.stroke();
+        cx.fillText(d.toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' }), X(i), H - 8);
+      }
+    }
+    T.forEach((r, k) => {
+      const y = Y(k), stop = r.e !== null && r.e <= cursor ? r.e : cursor;
+      const live = !r.called;
+      cx.textAlign = 'left'; cx.fillStyle = (k === hover) ? ink : (r.called ? over : ink);
+      cx.fillText(r.z, 4, y - 3);
+      cx.fillStyle = dim;
+      cx.fillText(r.e !== null && r.e <= cursor ? 'broke ' + fmt(r.e) : 'day ' + (cursor - r.s), 4, y + 11);
+      // the rise
+      cx.fillStyle = thread; cx.beginPath(); cx.moveTo(X(r.s) - 4, y + 5); cx.lineTo(X(r.s), y - 5); cx.lineTo(X(r.s) + 4, y + 5); cx.fill();
+      // the days
+      for (let i = r.s + 1; i < stop; i++) {
+        const c = r.k[i - r.s - 1] || 'w', after = i > EDGE;
+        const col = (r.called && after) ? over : thread;
+        cx.strokeStyle = col; cx.globalAlpha = (k === hover || hover < 0) ? 1 : .55;
+        if (c === 'w') { cx.lineWidth = live || !after ? 2.2 : 1.2; cx.beginPath(); cx.moveTo(X(i), y); cx.lineTo(X(i + 1), y); cx.stroke(); }
+        else if (c === 'a') { cx.lineWidth = 1; cx.globalAlpha *= .45; cx.beginPath(); cx.moveTo(X(i), y); cx.lineTo(X(i + 1), y); cx.stroke(); }
+        else { cx.lineWidth = 1; cx.globalAlpha *= .6; cx.beginPath(); cx.moveTo(X(i + .5), y - 2); cx.lineTo(X(i + .5), y + 2); cx.stroke(); }
+        cx.globalAlpha = 1;
+      }
+      // the 42nd day
+      const d42 = r.s + 42;
+      if (d42 < stop) { cx.strokeStyle = dim; cx.lineWidth = 1; cx.beginPath(); cx.moveTo(X(d42 + .5), y - 6); cx.lineTo(X(d42 + .5), y + 6); cx.stroke(); }
+      // called over: a bar at the edge
+      if (r.called) { cx.strokeStyle = ink; cx.lineWidth = 2.5; cx.beginPath(); cx.moveTo(X(EDGE + 1), y - 9); cx.lineTo(X(EDGE + 1), y + 9); cx.stroke(); }
+      // the break
+      if (r.e !== null && r.e <= cursor) {
+        cx.fillStyle = red; cx.beginPath(); cx.arc(X(r.e + .5), y, 5.5, 0, 7); cx.fill();
+        const far = X(r.e) + 90 > W; cx.textAlign = far ? 'right' : 'left';
+        cx.fillText('case ' + fmt(r.e), far ? X(r.e) - 6 : X(r.e) + 9, y - 8);
+      }
+      if (r.e === null && cursor >= END && !small) {
+        cx.fillStyle = dim; cx.textAlign = 'right'; cx.fillText('held, no end', W - R, y - 8);
+      }
+    });
+    // the unwritten
+    if (cursor < END) { cx.fillStyle = fog; cx.fillRect(X(cursor + 1), TOP - 12, W - X(cursor + 1), N * ROW + 12); }
+    // the edge
+    cx.strokeStyle = ink; cx.lineWidth = 1; cx.setLineDash([3, 3]);
+    cx.beginPath(); cx.moveTo(X(EDGE + 1), TOP - 16); cx.lineTo(X(EDGE + 1), H - 22); cx.stroke(); cx.setLineDash([]);
+    cx.fillStyle = ink; cx.textAlign = 'center'; cx.fillText('3 Oct', X(EDGE + 1), TOP - 20);
+    if (cursor > EDGE) { cx.strokeStyle = css('--red'); cx.globalAlpha = .5; cx.beginPath(); cx.moveTo(X(cursor + 1), TOP - 12); cx.lineTo(X(cursor + 1), H - 22); cx.stroke(); cx.globalAlpha = 1; }
+  }
+
+  // sound: one tone per open quiet, a strike when one breaks
+  let ac = null, master = null; const voices = [];
+  const PENT = [0, 3, 5, 7, 10];
+  function audio() {
+    if (ac) return;
+    ac = new (window.AudioContext || window.webkitAudioContext)();
+    master = ac.createGain(); master.gain.value = 0; master.connect(ac.destination);
+    T.forEach((r, k) => {
+      const semis = PENT[k % 5] + 12 * Math.floor(k / 5);
+      const f = 82.4 * Math.pow(2, semis / 12);
+      const o = ac.createOscillator(), o2 = ac.createOscillator(), g = ac.createGain(), p = ac.createStereoPanner ? ac.createStereoPanner() : null;
+      o.type = 'sine'; o.frequency.value = f; o2.type = 'sine'; o2.frequency.value = f * 1.003 + .15;
+      g.gain.value = 0; o.connect(g); o2.connect(g);
+      if (p) { p.pan.value = (k / (N - 1)) * 1.6 - .8; g.connect(p); p.connect(master); } else g.connect(master);
+      o.start(); o2.start(); voices.push(g);
+    });
+  }
+  function tone() {
+    if (!ac) return;
+    const now = ac.currentTime;
+    T.forEach((r, k) => {
+      const open = !r.called && !(r.e !== null && r.e <= cursor);
+      voices[k].gain.setTargetAtTime(open ? .028 : 0, now, r.called ? .25 : .05);
+    });
+  }
+  function strike(k) {
+    if (!ac || master.gain.value === 0) return;
+    const now = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'triangle'; o.frequency.setValueAtTime(220, now); o.frequency.exponentialRampToValueAtTime(55, now + 1.2);
+    g.gain.setValueAtTime(.0001, now); g.gain.exponentialRampToValueAtTime(.35, now + .01); g.gain.exponentialRampToValueAtTime(.0001, now + 2.2);
+    o.connect(g); g.connect(master); o.start(now); o.stop(now + 2.3);
+    const n = ac.createBufferSource(), b = ac.createBuffer(1, ac.sampleRate * .3, ac.sampleRate), d = b.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+    const ng = ac.createGain(); ng.gain.value = .25; n.buffer = b; n.connect(ng); ng.connect(master); n.start(now);
+  }
+  const soundBtn = document.getElementById('sound');
+  soundBtn.onclick = () => {
+    audio(); ac.resume();
+    const on = soundBtn.getAttribute('aria-pressed') !== 'true';
+    soundBtn.setAttribute('aria-pressed', on); soundBtn.textContent = on ? 'sound off' : 'sound on';
+    master.gain.setTargetAtTime(on ? 1 : 0, ac.currentTime, .3); tone();
+  };
+
+  // calling
+  T.forEach((r, k) => {
+    const b = document.createElement('button');
+    b.textContent = r.z; b.setAttribute('aria-pressed', 'false');
+    b.title = 'quiet since ' + fmt(r.s) + ', day ' + r.t + ' on 3 Oct';
+    b.onclick = () => call(k); r.btn = b; zonesEl.appendChild(b);
+  });
+  function call(k) {
+    if (cursor > EDGE) return;
+    const r = T[k]; r.called = !r.called; r.btn.setAttribute('aria-pressed', r.called);
+    r.btn.textContent = r.z + (r.called ? ' · over' : '');
+    tone(); draw(); readout(k);
+  }
+  function readout(k) {
+    if (k < 0) { read.textContent = 'Point at a thread to read it. Click a thread, or a name below, to call it over.'; return; }
+    const r = T[k];
+    let s = r.z + ' · last rise ' + fmt(r.s) + ' · day ' + r.t + ' on 3 Oct · named in ' + r.named + ' of ' + r.t +
+            ' days, not named in ' + r.unnamed + ', no report on ' + r.noreport + '.';
+    s += r.called ? ' You called it over.' : ' Open.';
+    if (r.e !== null && r.e <= cursor) s += ' A new case on ' + fmt(r.e) + ': the situation reports and the open file agree.';
+    else if (cursor >= END && r.e === null) s += ' Still quiet on 29 Oct, the record\'s last day: nothing can yet be said.';
+    read.textContent = s;
+  }
+  function at(ev) {
+    const b = cv.getBoundingClientRect(), y = ev.clientY - b.top;
+    const k = Math.floor((y - TOP) / ROW); return k >= 0 && k < N ? k : -1;
+  }
+  cv.addEventListener('mousemove', ev => { const k = at(ev); if (k !== hover) { hover = k; draw(); readout(k); } });
+  cv.addEventListener('mouseleave', () => { hover = -1; draw(); readout(-1); });
+  cv.addEventListener('click', ev => { const k = at(ev); if (k >= 0) { hover = k; call(k); } });
+
+  // reading on
+  const runBtn = document.getElementById('run'), skipBtn = document.getElementById('skip'), backBtn = document.getElementById('back');
+  function setCursor(c) {
+    const prev = cursor; cursor = c;
+    T.forEach((r, k) => { if (r.e !== null && r.e > prev && r.e <= c) strike(k); });
+    clock.textContent = fmt(cursor) + ' 2026'; tone(); draw(); if (hover >= 0) readout(hover);
+    if (cursor >= END) finish();
+  }
+  runBtn.onclick = () => {
+    if (running) return; running = true; runBtn.disabled = true; skipBtn.disabled = false; backBtn.disabled = false;
+    T.forEach(r => r.btn.disabled = true);
+    let t0 = performance.now(), from = cursor;
+    const step = now => {
+      const c = Math.min(END, from + Math.floor((now - t0) / 650));
+      if (c !== cursor) setCursor(c);
+      if (cursor < END && running) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+  };
+  skipBtn.onclick = () => { cancelAnimationFrame(raf); setCursor(END); };
+  backBtn.onclick = () => {
+    cancelAnimationFrame(raf); running = false; cursor = EDGE; verdict.innerHTML = '';
+    runBtn.disabled = false; skipBtn.disabled = true; backBtn.disabled = true;
+    T.forEach(r => r.btn.disabled = false); clock.textContent = '3 Oct 2026'; tone(); draw(); readout(hover);
+  };
+  function finish() {
+    running = false; skipBtn.disabled = true;
+    const called = T.filter(r => r.called), bc = called.filter(r => r.e !== null), broke = T.filter(r => r.e !== null);
+    const open = T.filter(r => !r.called), bo = open.filter(r => r.e !== null);
+    const names = a => a.map(r => r.z).join(', ');
+    let h = '';
+    if (!called.length) h += '<p>You called none of the twelve over. ' + broke.length + ' broke anyway: ' + names(broke) + '.</p>';
+    else h += '<p>You called ' + called.length + ' of twelve over. ' +
+      (bc.length ? '<span class="red">' + bc.length + ' of them broke: ' + names(bc) + '.</span>' : 'None of them broke before 29 October.') +
+      (bo.length ? ' Of those you left open, ' + bo.length + ' broke: ' + names(bo) + '.' : '') + '</p>';
+    const heldCalled = called.filter(r => r.e === null).length;
+    h += '<p>Nine are still quiet when the record stops' + (heldCalled ? ', ' + heldCalled + ' of them called over by you' : '') +
+         '. The record cannot say you were right about them; it ends before it could.</p>';
+    h += '<p>Read by a count of 42 days alone, all twelve were over on 3 October. The first broke two days later.</p>';
+    verdict.innerHTML = h;
+  }
+  window.addEventListener('resize', size);
+  if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+  size();
+})();
+</script>
+</body>
+</html>

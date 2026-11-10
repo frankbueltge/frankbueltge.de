@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<!--
+  INTERNAL ÉTUDE — project ji-2026-002. Probe B: "the failed keeper" (the fogged pane).
+  Bounded, discardable form probe. NOT a work. Never premiered, never linked from the site.
+  Tier: FORM-ÉTUDE (internal). See ../README.md for the record.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Seat 47</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  :root{
+    --paper:#e3e6e0;
+    --ink:#2a2c26;
+    --marker:rgba(38,40,34,.5);
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; width:100%; height:100%;
+    background:var(--paper);
+    overflow:hidden;
+    -webkit-user-select:none; user-select:none;
+  }
+  #ghost{
+    position:fixed; left:50%; top:50%;
+    transform:translate(-50%,-50%) rotate(-1.4deg);
+    max-width:72vw;
+    text-align:center;
+    font-family:'Segoe Print','Bradley Hand','Comic Sans MS',cursive;
+    font-size:clamp(17px, 3.1vw, 27px);
+    line-height:1.5;
+    color:var(--ink);
+    letter-spacing:.2px;
+    pointer-events:none;
+  }
+  canvas#fog{
+    position:fixed; left:0; top:0; width:100%; height:100%;
+    touch-action:none;
+  }
+  #marker{
+    position:fixed; right:16px; bottom:12px;
+    font:11px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    letter-spacing:.6px;
+    color:var(--marker);
+    pointer-events:none;
+    -webkit-user-select:none; user-select:none;
+    z-index:5;
+  }
+</style>
+</head>
+<body>
+<div id="ghost"></div>
+<canvas id="fog"></canvas>
+<div id="marker"></div>
+<script>
+(function(){
+  "use strict";
+
+  // Fixed printed seed. All randomness derives from this + persisted state — never Math.random().
+  var SEED = 20260725;
+  var STORE_KEY = "ensemble-etude-ji2026002-b";
+
+  function strToSeed(str){
+    var h = 0;
+    for (var i = 0; i < str.length; i++){ h = (h * 31 + str.charCodeAt(i)) | 0; }
+    return h >>> 0;
+  }
+  function rand(key){
+    var a = strToSeed(SEED + ":" + key);
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
+
+  // ---- material: one fragment, 3 erosion stages [particular, mid, plain] ----
+  // built from the P/S pair supplied for this probe; mid variant authored in the same voice.
+  var STAGES = [
+    "Rain on the skylight is the house clearing its throat; we all stop talking for it, even the ones who moved away.",
+    "Rain on the skylight always makes the house go quiet; we all still stop talking for it, even the ones who've moved away.",
+    "The sound of rain on the skylight is something our family has always loved."
+  ];
+
+  // ---- residue ----
+  var residue = null;
+  try { var raw = localStorage.getItem(STORE_KEY); if (raw) residue = JSON.parse(raw); } catch(e){ residue = null; }
+
+  var seat, stage, pressIndex, dead;
+  if (residue && typeof residue.seat === "number"){
+    if (residue.dead){
+      seat = residue.seat + 1;
+      stage = residue.stage; // next stranger's pane starts fogged over the eroded phrase
+      pressIndex = 0;
+      dead = false;
+    } else {
+      // reload mid-sitting resumes exactly where it stood — no free reset via reload
+      seat = residue.seat;
+      stage = residue.stage;
+      pressIndex = residue.pressIndex;
+      dead = residue.dead;
+    }
+  } else {
+    seat = 47;
+    stage = 0;
+    pressIndex = 0;
+    dead = false;
+  }
+
+  document.title = "Seat " + seat;
+  document.getElementById("marker").textContent = "IMAGINED · SEAT " + seat;
+
+  var ghostEl = document.getElementById("ghost");
+  ghostEl.textContent = STAGES[stage];
+  // seeded, small, fixed tilt per seat so it never re-randomizes under the fog while held
+  ghostEl.style.transform = "translate(-50%,-50%) rotate(" + (rand("tilt:" + seat) * 2.6 - 1.3).toFixed(2) + "deg)";
+
+  function persist(){
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({ seat: seat, stage: stage, pressIndex: pressIndex, dead: dead }));
+    } catch(e){ /* residue is best-effort */ }
+  }
+  persist(); // record the sitting's start state immediately, so a reload before any press still resumes it
+
+  // ---- fog canvas ----
+  var canvas = document.getElementById("fog");
+  var ctx = canvas.getContext("2d");
+  var DPR = Math.min(2, window.devicePixelRatio || 1);
+
+  function resize(){
+    canvas.width = Math.round(window.innerWidth * DPR);
+    canvas.height = Math.round(window.innerHeight * DPR);
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+  }
+  resize();
+  window.addEventListener("resize", function(){ resize(); drawFog(); });
+
+  var FOG_RGB = "227,230,224";      // matches --paper, so the pane reads as this probe's own tone
+  var BASE_ALPHA = 0.9;             // fog never fully hides the ghost — it stays "barely legible"
+  var CLEAR_RADIUS = 150;           // px, soft-edged
+
+  // decay curve constants
+  var RELAPSE_BASE_MS = 4600;
+  var CLARITY_DECAY = 0.7;
+  var RELAPSE_DECAY = 0.5;
+  var RAMP_MS = 650; // time to reach this press's clamp while held
+
+  function maxClarityForPress(idx){ return Math.pow(CLARITY_DECAY, idx); }      // press 0 -> 1.0, 1 -> .7, 2 -> .49
+  function relapseMsForPress(idx){ return RELAPSE_BASE_MS * Math.pow(RELAPSE_DECAY, idx); }
+
+  // live (non-persisted) interaction state
+  var phase = "idle";         // 'idle' | 'holding' | 'relapsing'
+  var clarity = 0;            // 0..maxClarityForPress(pressIndex)
+  var holdStart = 0;
+  var relapseStart = 0;
+  var relapseFrom = 0;
+  var relapseMs = relapseMsForPress(0);
+  var pointerX = window.innerWidth / 2, pointerY = window.innerHeight / 2;
+  var activePointerId = null;
+  var rafId = null;
+
+  function drawFog(){
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "rgba(" + FOG_RGB + "," + BASE_ALPHA + ")";
+    ctx.fillRect(0, 0, w, h);
+    if (clarity > 0.001){
+      var cx = pointerX * DPR, cy = pointerY * DPR, r = CLEAR_RADIUS * DPR;
+      var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      var peak = Math.min(1, clarity) * BASE_ALPHA * 0.98;
+      g.addColorStop(0, "rgba(" + FOG_RGB + "," + peak + ")");
+      g.addColorStop(0.65, "rgba(" + FOG_RGB + "," + (peak * 0.55) + ")");
+      g.addColorStop(1, "rgba(" + FOG_RGB + ",0)");
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalCompositeOperation = "source-over";
+    }
+  }
+
+  function mutateTowardPlain(){
+    stage = Math.min(2, stage + 1);
+    ghostEl.textContent = STAGES[stage];
+  }
+
+  function stopLoop(){
+    if (rafId !== null){ cancelAnimationFrame(rafId); rafId = null; }
+  }
+  function startLoop(){
+    if (rafId === null) rafId = requestAnimationFrame(tick);
+  }
+
+  function tick(ts){
+    rafId = null;
+    if (dead){ drawFog(); return; } // frozen, eroded, still faintly legible — never blank
+
+    if (phase === "holding"){
+      var clamp = maxClarityForPress(pressIndex);
+      var t = Math.min(1, (ts - holdStart) / RAMP_MS);
+      clarity = clamp * (1 - Math.pow(1 - t, 2)); // ease toward the structural clamp; cannot exceed it
+    } else if (phase === "relapsing"){
+      var rt = Math.min(1, (ts - relapseStart) / relapseMs);
+      clarity = relapseFrom * (1 - rt);
+      if (rt >= 1){
+        clarity = 0;
+        phase = "idle";
+        var completedPress = pressIndex; // the press whose relapse just finished
+        pressIndex = pressIndex + 1;
+        if (completedPress < 2){
+          mutateTowardPlain();
+        }
+        if (pressIndex >= 3){
+          dead = true;
+        }
+        persist();
+      }
+    }
+
+    drawFog();
+    if (phase === "holding" || phase === "relapsing") startLoop();
+  }
+
+  function beginHold(x, y){
+    if (dead) return;
+    if (phase === "holding") return;
+    pointerX = x; pointerY = y;
+    var clamp = maxClarityForPress(pressIndex);
+    // re-press within the same press's turn resumes toward the same clamp — never a higher one
+    holdStart = performance.now() - (clarity / clamp) * RAMP_MS;
+    phase = "holding";
+    startLoop();
+  }
+  function moveHold(x, y){
+    pointerX = x; pointerY = y;
+  }
+  function endHold(){
+    if (dead) return;
+    if (phase !== "holding") return;
+    phase = "relapsing";
+    relapseFrom = clarity;
+    relapseStart = performance.now();
+    relapseMs = relapseMsForPress(pressIndex);
+    startLoop();
+  }
+
+  canvas.addEventListener("pointerdown", function(e){
+    if (activePointerId !== null) return; // multitouch: only the first pointer is tracked, ignore the rest
+    activePointerId = e.pointerId;
+    try { canvas.setPointerCapture(e.pointerId); } catch(err){}
+    beginHold(e.clientX, e.clientY);
+  });
+  canvas.addEventListener("pointermove", function(e){
+    if (e.pointerId !== activePointerId) return;
+    moveHold(e.clientX, e.clientY);
+  });
+  function releasePointer(e){
+    if (e.pointerId !== activePointerId) return;
+    activePointerId = null;
+    endHold();
+  }
+  canvas.addEventListener("pointerup", releasePointer);
+  canvas.addEventListener("pointercancel", releasePointer);
+
+  drawFog();
+  startLoop();
+})();
+</script>
+</body>
+</html>

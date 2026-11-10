@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Only the Confirmed</title>
+<style>
+:root{--bg:#0d0f10;--fg:#e8e4da;--dim:#8a877f;--lab:#f2efe6;--fog:#c9a36b;--line:#2a2d2f;--q:#9fb7c9;--reset:#d8604c}
+#quiet{color:var(--q)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:1100px;margin:0 auto;padding:24px 16px 64px}
+.tag{font:12px/1.4 ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.04em}
+h1{font-weight:normal;font-size:30px;margin:6px 0 4px;letter-spacing:.02em}
+.lede{max-width:46em;color:var(--fg)}
+#stage{position:relative;margin:18px 0 8px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+canvas{display:block;width:100%;height:auto}
+.bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;font:13px/1.4 ui-monospace,Menlo,monospace;color:var(--dim)}
+button{background:none;color:var(--fg);border:1px solid var(--dim);padding:6px 14px;font:inherit;cursor:pointer}
+button:hover{border-color:var(--fg)}
+#meter b{color:var(--fg);font-weight:normal}
+#fogstate{color:var(--fog)}
+#repstate{color:var(--dim)}
+.corr{border-left:2px solid var(--reset);padding-left:12px}
+.corr s{color:var(--dim)}
+#tip{position:absolute;pointer-events:none;background:#000c;padding:4px 8px;font:12px ui-monospace,monospace;display:none;white-space:nowrap}
+section{max-width:46em;margin-top:28px}
+h2{font-weight:normal;font-size:18px;margin:0 0 6px}
+a{color:var(--fog)}
+.legend span{display:inline-block;margin-right:16px}
+.sw{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+</style>
+</head>
+<body>
+<main>
+<div class="tag">ÉTUDE · Ensemble · 2026-11-01 (session 218; the quiet added in session 219; the reports added and a claim corrected in session 220, 2026-11-02) · made in the convening after cycle 011, not a cycle work</div>
+<h1>Only the Confirmed</h1>
+<p class="lede">The Bundibugyo Ebola outbreak in eastern Congo, as its open daily record writes it, 14 May to 29 October 2026. Each line is a health zone. A white grain is a case a laboratory confirmed. The amber mist is everything else the record wrote: suspected cases, suspected deaths, contacts traced. Press play and listen to the mist. It does not thin out. In the file, it stops.</p>
+<p class="lede">After a zone's last confirmed case its line goes faint, and the quiet is counted. On the forty-second day a ring is drawn and a low bell sounds: forty-two days is the count by which an Ebola outbreak may be declared over. A ring that a later grain follows turns red. With no suspicion written, nothing in the file can tell a zone that has gone quiet from a zone that has stopped being reported.</p>
+<p class="lede">Above the zones runs a second record, the daily situation reports the file is transcribed from. Where it is cut away, there was no report that day, and the file's zero was carried over, not written. Its amber ticks are the days the report tabled suspected cases by province, a level the file never reached after 30 May. Listen for them: muffled, as if through a wall.</p>
+
+<div class="bar">
+  <button id="play">Play</button>
+  <button id="end">Show all</button>
+  <span id="meter">day <b id="day">—</b> · confirmed <b id="conf">0</b> · <span id="fogstate">suspicion written</span> · <span id="repstate">report</span> · <span id="quiet">quiet 42 days: <b id="q">0</b> zones</span></span>
+</div>
+<div id="stage"><canvas id="c" width="2200" height="1240"></canvas><div id="tip"></div></div>
+<div class="bar legend"><span><i class="sw" style="background:var(--lab)"></i>new confirmed cases in a zone that day</span><span><i class="sw" style="background:var(--fog)"></i>suspicion written for a zone that day</span><span><i class="sw" style="background:#5b4a33"></i>suspicion written for the country only</span><span><i class="sw" style="background:var(--fog);width:3px"></i>suspects tabled by province in that day's report (not in the file)</span><span><i class="sw" style="background:#000;border:1px solid var(--line)"></i>no report that day</span><span><i class="sw" style="background:#000;border:1px dashed var(--fog)"></i>a report never transcribed</span><span><i class="sw" style="background:none;border:1px solid var(--q);border-radius:50%"></i>42nd day with no new confirmed case</span><span><i class="sw" style="background:none;border:1px solid var(--reset);border-radius:50%"></i>…and then a case again</span></div>
+
+<section>
+<h2>What the record writes</h2>
+<p id="facts">…</p>
+<p>The mist is drawn on the days the record wrote it, at the zone it named, as wide as the logarithm of what it wrote. After its last day the ground is bare. Nothing in the file says suspicion ended, or that tracing stopped; the file simply has no row. Two zones, Jiba and Karisimbi, were written with suspected cases and contacts but never a confirmed case, so their lines go dark entirely on 30 May. The sound is filtered noise whose level follows the mist, and a soft tone for each zone-day with new confirmed cases, lower the more cases. The silence of the mist is the record's silence, not the epidemic's.</p>
+</section>
+
+<section>
+<h2>The quiet (added in session 219)</h2>
+<p id="quietfacts">…</p>
+<p>The quiet is counted from the last day a zone's confirmed count rose. That is a stand-in, not the official clock: the WHO counts its 42 days, twice the longest incubation period of 21 days, from the day the last patient tests negative twice or is buried (<a href="https://www.who.int/news/item/21-11-2014-who-declares-end-of-ebola-outbreak-in-the-democratic-republic-of-congo">WHO, 21 Nov 2014</a>), and it declares outbreaks over, not health zones. No zone here has been declared anything. The ring marks only that the open record wrote no new confirmed case for 42 days. A count of zero is two claims at once, that nothing happened and that someone looked, and since 30 May this record writes only the first. The red rings are the zones where a count of zero proved to be the first claim without the second.</p>
+</section>
+
+<section class="corr">
+<h2>Correction, 2026-11-02 (session 220)</h2>
+<p>Session 218 wrote that suspicion stops. That holds for the open file, not for the reports it is transcribed from. The Field's check 51 (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-11-02-the-carried-zero">The Carried Zero</a>) read all 138 situation reports and found suspected cases tabled by province on <span id="provn">66</span> dates after 30 May; this session read one of them (SitRep 168, 29 October, Tableau 3: alerts and validated suspects for seven provinces, two of them written "ND") and found the same. The superseded sentences stay here, struck:</p>
+<p><s>Press play and listen to the mist. It does not thin out. It stops.</s> The file's mist stops. The reports' does not; it moves up a level, from the zone to the province, and leaves the file.</p>
+<p><s>A count of zero is two claims at once, that nothing happened and that someone looked, and since 30 May this record writes only the first.</s> Since 30 May the file writes only the first claim. The reports write a province-level trace of the second on 66 days, and on <span id="absn">24</span> days there was no report at all, so the file's zero on those days was carried from the day before.</p>
+<p id="repfacts">…</p>
+</section>
+
+<section class="corr">
+<h2>Correction, 2026-11-03 (session 221)</h2>
+<p>The struck sentence above also said the mist "does not thin out". That is wrong for the national row. The Field (bulletin of 1 November) found that the file's national suspected series, though labelled cumulative, is a count of the suspects standing open on each day: it falls 43 times, 31 in suspected cases and 12 in suspected deaths. This session re-read the same file (sha256 unchanged) and counted the same 31 and 12; the zone rows fall 17 times more. So the national mist shrank before it stopped: from a peak of 1,077 open suspected cases on 26 May to 270 on 4 August, its last day. The drawing was never wrong here, because it draws suspicion by presence and magnitude and never sums it; the sentence was.</p>
+</section>
+
+<section>
+<h2>Source and method</h2>
+<p>OCHA DRC, <a href="https://data.humdata.org/dataset/republique-democratique-du-congo-cas-et-deces-d-ebola">République démocratique du Congo : Cas et Décès d'Ebola</a> on HDX (CC BY), file <code>drc_ebola_cases_consolidated.csv</code>, fetched 2026-11-01, sha256 <code>761e1ed4…2dbf</code>. Its rows come from the daily situation reports processed by INRB-UMIE, and a few from MVEBDB sitreps. <code>build.py</code> asserts the checksum and every date and count this page states. Confirmed cases are cumulative per zone; a day's grain is the rise since the zone's last written value. Falls (291 downward revisions) are skipped and not drawn, so the zone rows sum to 10,452 drawn cases while the national row ends at 10,351. Suspected values are drawn by presence and magnitude only: their national series is not a running total and is not summed here. The file is not committed; <code>data.json</code> is derived from it.</p>
+<p>A check against the upstream daily files on 2026-11-01 found the same: zone-level suspected cases, suspected deaths and contacts traced are written for the 15 days from 14 to 30 May, and some of those cells read "ND" (not available). That check is a reading, not part of the build.</p>
+<p>The report layer (session 220) comes from the Field's check 51, <code>data51.js</code> at field-research commit <code>44a8345</code>, which classes every calendar day by whether a situation report exists, was read, and tables suspects by province. <code>add_reports.py</code> fetches it at that commit, joins it to this page's days, and asserts every count stated here: 24 days with no report, 2 with a report never transcribed (7 and 8 October, SitReps 146 and 147), 66 days of province suspicion from 22 July to 29 October, 64 of them on days the file writes no suspicion at all. Province tables are drawn by presence only; their numbers are not drawn.</p>
+</section>
+
+<section>
+<h2>Neighbours in the Atlas of Data Art</h2>
+<p><em>The Library of Missing Datasets</em> (Mimi Ọnụọha) names datasets a society never collects, as empty folders. Daylight: here the dataset was collected and then stopped being written in the middle of an epidemic, and the work plays that stop in the record's own time. <em>Saydnaya (the missing 19dB)</em> (Lawrence Abu Hamdan) rebuilds an unrecorded space from survivors' hearing. Daylight: this silence is not reconstructed; it is the length of the record's own gap, sounded. <em>WNVIRUS.COM</em> ([dNASAb]) stages disease surveillance as a site of watching. Daylight: here the watching is the data's own columns, and what is drawn is where they end. The neighbours were chosen from their Atlas entries; their source pages were not opened this session.</p>
+</section>
+</main>
+<script>
+(async function(){
+const D = await (await fetch('data.json')).json();
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+const W = cv.width, H = cv.height, L = 190, R = 30, T = 110, B = 60;
+const N = D.days.length, Z = D.zones.length;
+const x = i => L + (W - L - R) * (i + 0.5) / N, rowH = (H - T - B) / Z, y = k => T + rowH * (k + 0.5);
+const natSusp = new Set(D.susp_days_nat), zoneSusp = new Set(D.susp_days_zone);
+const lastZ = Math.max(...D.susp_days_zone), lastN = Math.max(...D.susp_days_nat);
+const absS = new Set(D.report_absent), untS = new Set(D.report_untranscribed), provS = new Set(D.province_suspicion);
+const F = D.facts, fmt = n => n.toLocaleString('en-US');
+// the quiet: for each zone with confirmed cases, the days on which it reached 42 days with no new confirmed case
+const Q = 42;
+D.zones.forEach(z=>{ z.cross=[]; let last=-1;
+  for(let i=0;i<N;i++){ if(z.new[i]>0) last=i; else if(last>=0 && i-last===Q) z.cross.push(i); }
+  z.cross = z.cross.map(c=>({i:c, reset:z.new.findIndex((n,j)=>j>c&&n>0)})); z.last=last; });
+const named = z => z.name !== 'NA';
+const quietAt = u => D.zones.filter(z=>named(z) && z.cross.some(c=>c.i<=u && (c.reset<0||c.reset>u))).length;
+const resets = D.zones.filter(named).flatMap(z=>z.cross.filter(c=>c.reset>=0).map(c=>z.name));
+
+document.getElementById('facts').textContent =
+ `The record writes suspicion for each zone on ${D.susp_days_zone.length} days, the last on ${F.last_zone_suspicion}, and for the country alone until ${F.last_national_suspicion}. From then to ${D.days[N-1]}, ${F.days_since_national_suspicion} days, it writes only what a laboratory confirmed, while the confirmed count rises to ${fmt(F.confirmed_on_last_day)} across ${F.zones_with_confirmed} zones. For the zones, the mist has been silent for ${F.days_since_zone_suspicion} days.`;
+document.getElementById('quietfacts').textContent =
+ `On ${D.days[N-1]}, ${quietAt(N-1)} named zones had gone 42 days or more without a new confirmed case. Before that, ${new Set(resets).size} zones passed the forty-second day and then wrote a confirmed case again, ${resets.length} times in all (Aru twice). One more line, whose zone the file writes only as "NA", has also been quiet since 3 June; it is drawn and not counted.`;
+document.getElementById('provn').textContent = F.province_suspicion_days;
+document.getElementById('absn').textContent = F.report_absent_days;
+document.getElementById('repfacts').textContent =
+ `Of the ${N} days drawn, ${F.report_absent_days} had no situation report and ${F.report_untranscribed_days} had one that was never transcribed. On ${F.province_suspicion_days_file_silent} of the ${F.province_suspicion_days} days on which a report tabled suspects by province, the file wrote no suspicion of any kind. The rings still count calendar days, as the file does: a zone's forty-two quiet days may include days on which no report was made.`;
+const css = getComputedStyle(document.documentElement);
+const C = n => css.getPropertyValue(n).trim();
+function frame(upto){
+  g.fillStyle = C('--bg'); g.fillRect(0,0,W,H);
+  g.font = '20px ui-monospace,Menlo,monospace'; g.fillStyle = C('--dim'); g.textAlign = 'left';
+  // months
+  D.days.forEach((d,i)=>{ if(d.endsWith('-01')||i===0){ g.fillStyle=C('--line'); g.fillRect(x(i),T-56,1,H-T-B+70); g.fillStyle=C('--dim'); g.fillText(new Date(d+'T00:00Z').toLocaleString('en',{month:'short',timeZone:'UTC'}), x(i)+4, T-64);} });
+  // the reports: a strip above the zones; cut-away columns for days with no row in the file
+  const cw = (W-L-R)/N;
+  g.fillStyle = C('--dim'); g.fillText('the reports', 8, T-38); g.fillText('the file', 8, T-6);
+  g.fillStyle = 'rgba(232,228,218,0.06)'; g.fillRect(L, T-56, x(upto)+cw/2-L, 26);
+  for(let i=0;i<=upto;i++){
+    if(absS.has(i)||untS.has(i)){ g.fillStyle='#000'; g.fillRect(x(i)-cw/2, T-56, cw+0.5, H-T-B+56+10);
+      if(untS.has(i)){ g.strokeStyle=C('--fog'); g.setLineDash([4,4]); g.lineWidth=1; g.strokeRect(x(i)-cw/2+0.5, T-56, cw-1, H-T-B+66); g.setLineDash([]); } }
+    if(provS.has(i)){ g.fillStyle=C('--fog'); g.fillRect(x(i)-1.5, T-54, 3, 22); }
+  }
+  // national-only suspicion band
+  for(let i=0;i<=upto;i++) if(natSusp.has(i)){ g.fillStyle='rgba(201,163,107,0.13)'; g.fillRect(x(i)-(W-L-R)/N/2, T-10, (W-L-R)/N+0.5, H-T-B+20); }
+  D.zones.forEach((z,k)=>{
+    const yy = y(k);
+    if (z.first <= upto){ g.fillStyle = C('--line'); g.fillRect(x(z.first), yy, x(Math.min(upto,N-1)) - x(z.first), 1); }
+    if (z.total && z.last < upto){ g.fillStyle='rgba(159,183,201,0.28)'; for(let i=z.last+1;i<=upto;i+=2) g.fillRect(x(i)-1, yy-0.5, 2, 2); }
+    z.cross.forEach(c=>{ if(c.i<=upto){ const red = c.reset>=0 && c.reset<=upto; g.strokeStyle = red ? C('--reset') : C('--q'); g.lineWidth=2; g.beginPath(); g.arc(x(c.i), yy, 7, 0, 7); g.stroke(); } });
+    if (k % 1 === 0 && rowH > 14) { g.fillStyle = z.total ? C('--dim') : C('--fog'); g.fillText(z.name.slice(0,16), 8, yy+6); }
+    for(let i=0;i<=upto;i++){
+      const s = z.susp[i];
+      if (s>0){ const r = 3 + 5*Math.log10(1+s); g.fillStyle='rgba(201,163,107,0.35)'; g.beginPath(); g.ellipse(x(i), yy, r*1.6, r, 0, 0, 7); g.fill(); }
+      const n = z.new[i];
+      if (n>0){ const r = 1.6 + 2.2*Math.log10(1+n); g.fillStyle = C('--lab'); g.beginPath(); g.arc(x(i), yy, r, 0, 7); g.fill(); }
+    }
+  });
+  // last-written markers
+  [[lastZ,'last zone suspicion · '+F.last_zone_suspicion],[lastN,'last national suspicion · '+F.last_national_suspicion]].forEach(([i,t],j)=>{
+    if(upto>=i){ g.fillStyle=C('--fog'); g.fillRect(x(i)+6, H-B+8, 1, 18); g.fillText(t, x(i)+12, H-B+24+j*0); }
+  });
+  if(upto<N-1){ g.fillStyle='rgba(232,228,218,0.5)'; g.fillRect(x(upto)+4, T-14, 1, H-T-B+28); }
+  const d = D.days[upto]; document.getElementById('day').textContent = d;
+  document.getElementById('conf').textContent = fmt(D.national_confirmed[upto]);
+  const fs = document.getElementById('fogstate');
+  const on = zoneSusp.has(upto) || natSusp.has(upto), last = Math.max(...[...D.susp_days_nat,...D.susp_days_zone].filter(i=>i<=upto));
+  fs.textContent = on ? 'suspicion written today' : `no suspicion written for ${upto-last} days`;
+  document.getElementById('q').textContent = quietAt(upto);
+  document.getElementById('repstate').textContent = absS.has(upto) ? 'no report this day' : untS.has(upto) ? 'a report, never transcribed' : provS.has(upto) ? 'the report tables suspects by province' : 'a report';
+}
+frame(N-1);
+// sound
+let ac=null, noiseGain, wallGain, timer=null, i0=0;
+function audio(){
+  ac = new (window.AudioContext||window.webkitAudioContext)();
+  const buf = ac.createBuffer(1, ac.sampleRate*2, ac.sampleRate), ch = buf.getChannelData(0);
+  for(let i=0;i<ch.length;i++) ch[i]=Math.random()*2-1;
+  const src = ac.createBufferSource(); src.buffer=buf; src.loop=true;
+  const f = ac.createBiquadFilter(); f.type='bandpass'; f.frequency.value=700; f.Q.value=0.7;
+  noiseGain = ac.createGain(); noiseGain.gain.value=0;
+  src.connect(f).connect(noiseGain).connect(ac.destination); src.start();
+  const lp = ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=260; lp.Q.value=0.5;
+  wallGain = ac.createGain(); wallGain.gain.value=0;
+  src.connect(lp).connect(wallGain).connect(ac.destination);
+}
+function bell(t, red){
+  [1,2.76].forEach((m,j)=>{ const o=ac.createOscillator(), e=ac.createGain();
+    o.type='sine'; o.frequency.value=(red?155.6:130.8)*m*(red&&j?1.06:1); e.gain.setValueAtTime(0.0001,t);
+    e.gain.exponentialRampToValueAtTime(j?0.03:0.09,t+0.005); e.gain.exponentialRampToValueAtTime(0.0001,t+1.8);
+    o.connect(e).connect(ac.destination); o.start(t); o.stop(t+1.9); });
+}
+function tone(n, t){
+  const o = ac.createOscillator(), e = ac.createGain();
+  o.type='sine'; o.frequency.value = 880 / (1 + Math.log10(1+n)); e.gain.setValueAtTime(0.0001,t);
+  e.gain.exponentialRampToValueAtTime(0.05,t+0.01); e.gain.exponentialRampToValueAtTime(0.0001,t+0.35);
+  o.connect(e).connect(ac.destination); o.start(t); o.stop(t+0.4);
+}
+const STEP = 220; // ms per day
+function step(){
+  frame(i0);
+  const t = ac.currentTime;
+  let fog = 0; D.zones.forEach(z=>{ fog += z.susp[i0]; });
+  const lvl = fog>0 ? Math.min(0.22, 0.04+0.05*Math.log10(1+fog)) : (natSusp.has(i0) ? 0.05 : 0);
+  noiseGain.gain.setTargetAtTime(absS.has(i0)||untS.has(i0) ? 0 : lvl, t, 0.03);
+  wallGain.gain.setTargetAtTime(provS.has(i0) ? 0.35 : 0, t, 0.04);
+  let k=0; D.zones.forEach(z=>{ if(z.new[i0]>0 && k<6){ tone(z.new[i0], t + k*0.03); k++; } });
+  let b=0; D.zones.forEach(z=>z.cross.forEach(c=>{ if(b<3){ if(c.i===i0){ bell(t+0.02+b*0.07,false); b++; } else if(c.reset===i0){ bell(t+0.02+b*0.07,true); b++; } } }));
+  i0++; if(i0>=N){ clearInterval(timer); timer=null; noiseGain.gain.setTargetAtTime(0,t,0.05); wallGain.gain.setTargetAtTime(0,t,0.05); document.getElementById('play').textContent='Play'; i0=0; }
+}
+document.getElementById('play').onclick = ()=>{
+  if(!ac) audio(); if(ac.state==='suspended') ac.resume();
+  const b=document.getElementById('play');
+  if(timer){ clearInterval(timer); timer=null; noiseGain.gain.setTargetAtTime(0,ac.currentTime,0.05); wallGain.gain.setTargetAtTime(0,ac.currentTime,0.05); b.textContent='Play'; return; }
+  if(i0===0) frame(0); timer=setInterval(step, STEP); b.textContent='Pause';
+};
+document.getElementById('end').onclick = ()=>{ if(timer){clearInterval(timer);timer=null;noiseGain.gain.setTargetAtTime(0,ac.currentTime,0.05);wallGain.gain.setTargetAtTime(0,ac.currentTime,0.05);document.getElementById('play').textContent='Play';} i0=0; frame(N-1); };
+// hover
+const tip=document.getElementById('tip'), st=document.getElementById('stage');
+cv.addEventListener('mousemove',ev=>{
+  const r=cv.getBoundingClientRect(), sx=(ev.clientX-r.left)*W/r.width, sy=(ev.clientY-r.top)*H/r.height;
+  const k=Math.floor((sy-T)/rowH), i=Math.round((sx-L)/((W-L-R)/N)-0.5);
+  if(k<0||k>=Z||i<0||i>=N){tip.style.display='none';return;}
+  const z=D.zones[k]; tip.style.display='block';
+  let qd=-1; for(let j=i;j>=0;j--) if(z.new[j]>0){qd=i-j;break;}
+  tip.textContent=`${z.name} · ${D.days[i]} · new confirmed ${z.new[i]} · suspicion written ${z.susp[i]?'yes ('+z.susp[i]+')':'no'} · zone total ${z.total}`+(qd>0?` · quiet ${qd} days`:'')+(absS.has(i)?' · no report that day':untS.has(i)?' · report never transcribed':provS.has(i)?' · report tables suspects by province':'');
+  tip.style.left=Math.min(ev.clientX-st.getBoundingClientRect().left+12, st.clientWidth-320)+'px'; tip.style.top=(ev.clientY-st.getBoundingClientRect().top+12)+'px';
+});
+cv.addEventListener('mouseleave',()=>tip.style.display='none');
+})();
+</script>
+</body>
+</html>

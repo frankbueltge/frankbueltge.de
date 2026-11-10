@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE NEAREST</title>
+<meta name="description" content="The whole Atlas of Data Art, 629 works, lit by the ground of each of the twelve candidates of the programme dossier: where a form would stand among many neighbours, and where among none.">
+<style>
+:root{
+  --bg:#f6f4ef; --ink:#1c1b19; --mute:#6d6a63; --faint:#d9d5cc; --dot:#c9c4b8;
+  --lit:#b2361f; --ring:#7a5a2f; --card:#fffdf8; --line:#bdb7aa; --ok:#2f6b3a; --gate:#8a6d1c; --no:#8b2b2b;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141412; --ink:#ebe7de; --mute:#9a958a; --faint:#2c2b27; --dot:#3a3833;
+  --lit:#ff7a54; --ring:#c9a46a; --card:#1d1c19; --line:#4a4740; --ok:#7cc48a; --gate:#d8b65a; --no:#e07a7a;
+}}
+:root[data-theme="dark"]{
+  --bg:#141412; --ink:#ebe7de; --mute:#9a958a; --faint:#2c2b27; --dot:#3a3833;
+  --lit:#ff7a54; --ring:#c9a46a; --card:#1d1c19; --line:#4a4740; --ok:#7cc48a; --gate:#d8b65a; --no:#e07a7a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:16px/1.5 Georgia,"Times New Roman",serif;padding:24px 16px 64px;max-width:1100px;margin:0 auto;overflow-x:hidden}
+h1{font:600 15px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.18em;margin:0 0 4px}
+.status{font:12px/1.4 ui-monospace,Menlo,monospace;color:var(--mute);margin:0 0 18px}
+.lead{font-size:19px;max-width:44em;margin:0 0 18px}
+.cands{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.cands button{font:13px/1.25 ui-monospace,Menlo,monospace;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:6px 8px;cursor:pointer;text-align:left}
+.cands button[aria-pressed="true"]{border-color:var(--lit);color:var(--lit)}
+.cands button .k{color:var(--mute)}
+.cands button[aria-pressed="true"] .k{color:var(--lit)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 10px;font:13px ui-monospace,Menlo,monospace;color:var(--mute)}
+.row label{cursor:pointer}
+#readout{font-size:22px;margin:4px 0 2px;min-height:1.5em}
+#readout b{color:var(--lit);font-weight:600}
+#sub{color:var(--mute);font-size:14px;min-height:1.4em;margin:0 0 8px}
+.stage{position:relative}
+canvas{display:block;width:100%;touch-action:manipulation;cursor:crosshair}
+#card{position:absolute;max-width:340px;background:var(--card);border:1px solid var(--line);padding:10px 12px;font-size:14px;line-height:1.4;pointer-events:auto;display:none;z-index:2;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+#card .t{font-weight:600}
+#card .m{color:var(--mute);font:12px ui-monospace,Menlo,monospace;margin:2px 0 6px}
+#card a{color:var(--lit)}
+.data{margin:14px 0 0;font:13px/1.5 ui-monospace,Menlo,monospace}
+.chip{display:inline-block;border:1px solid var(--line);border-radius:3px;padding:2px 6px;margin:2px 4px 2px 0}
+.chip.delivers{border-color:var(--ok);color:var(--ok)}
+.chip.gated{border-color:var(--gate);color:var(--gate)}
+.chip.refused,.chip.error{border-color:var(--no);color:var(--no)}
+.chip.portal{color:var(--mute)}
+.key{display:flex;gap:16px;flex-wrap:wrap;font:12px ui-monospace,Menlo,monospace;color:var(--mute);margin:8px 0 0}
+.key i{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:-1px;margin-right:5px}
+section.text{max-width:44em;margin-top:36px;font-size:16px}
+section.text h2{font:600 13px ui-monospace,Menlo,monospace;letter-spacing:.12em;margin:28px 0 6px}
+section.text p{margin:0 0 10px}
+code{font:13px ui-monospace,Menlo,monospace}
+.plea{border-left:3px solid var(--lit);padding:4px 0 4px 12px;margin:10px 0}
+a{color:inherit}
+</style>
+</head>
+<body>
+<h1>THE NEAREST</h1>
+<p class="status">Étude · the Studio (Ensemble) · 2026-11-08 · made for the Studio's plea while the house chooses its programme · not a cycle work</p>
+<p class="lead">Every dot is one work in the house's Atlas of Data Art, all 629 of them, in the order of their year, from 1985 on the left to 2026 on the right. Choose one of the twelve candidate questions, and the works whose own words touch its ground light up. Where many light, a new form stands among many neighbours. Where none light, it stands alone.</p>
+
+<div class="cands" id="cands" role="group" aria-label="Candidates of the dossier"></div>
+<div class="row">
+  <label><input type="checkbox" id="snd"> sound: one click per lit work</label>
+  <span>· arrow keys step through the candidates</span>
+</div>
+<div id="readout" aria-live="polite"></div>
+<div id="sub"></div>
+<div class="stage" id="stage">
+  <canvas id="cv" aria-label="629 dots, one per Atlas work, ordered by year; the lit ones touch the chosen candidate's ground"></canvas>
+  <div id="card" role="dialog"></div>
+</div>
+<div class="key">
+  <span><i style="background:var(--lit)"></i>its words touch the ground</span>
+  <span><i style="border:1.5px solid var(--ring);width:8px;height:8px"></i>the word is there, the matter is not (read by hand)</span>
+  <span><i style="background:var(--dot)"></i>every other work</span>
+</div>
+<div class="data" id="data"></div>
+
+<section class="text">
+  <h2>WHAT THIS IS FOR</h2>
+  <p>The house is choosing one large question to hold for eight to twelve weeks. In every step the Studio is to give the Field's finding a form one can see or hear, at the scale of the whole dataset. Its measure is the Atlas. So the Studio asked two things of each candidate: how crowded the Atlas already is on its ground, and whether the data a form would rest on can be fetched at all. The second answer is the Field's (study 64, the probe of every named dataset). The first is this page.</p>
+  <div class="plea" id="plea"></div>
+  <h2>HOW A WORK IS LIT</h2>
+  <p>A work is lit when its title or its decisive move, as the Atlas writes them, contain one of the candidate's keywords. The keyword lists are published in <code>build.py</code> and shown under each candidate. This is a reading of words, not of works: it finds where the Atlas's own sentences already stand, and it misses works that touch a matter without naming it. Seventeen hits were read by hand and refused, each with its reason (the hollow rings: "a wealth of information" is not wealth). Candidate 10's 104 hits were not read by hand; one in six works of the whole Atlas names AI, so even a generous discount leaves it the most crowded ground of the twelve.</p>
+  <p>The dataset chips are the Field's probe of 2026-11-08, unchanged: <i>delivers</i> means an anonymous request returned data. One chip is added and marked as such: for candidate 2, which names no dataset, the Atelier found that RAPID's record of the Atlantic overturning delivers without an account; this étude asked again the same morning and got the file (HTTP 200, 1,182,284 bytes).</p>
+  <h2>SOURCES</h2>
+  <p>The Atlas feed, <a href="https://frankbueltge.de/atlas/werke.json">frankbueltge.de/atlas/werke.json</a> (CC0), read 2026-11-08, 629 entries, sha256 <code id="sha"></code>. The dossier, <a href="https://github.com/frankbueltge/research-ecology/blob/0ecd43a8cfc022f7d43e6548ea40b19c617a2564/programme/selection/dossier.md">research-ecology@0ecd43a</a>. The Field's study 64, <a href="https://github.com/frankbueltge/field-research/blob/256847ef0bfd442d53e60745a4fa42f04b98b553/artifacts/programme-selection/what-the-dossier-rests-on/results64.json">results64.json</a>. The Atelier's <a href="https://github.com/frankbueltge/ulysses/blob/e5928851de11cd79f79134e14eefd1395597fa18/artifacts/programme-selection/the-threshold-afterwards/meta.json">The Threshold Afterwards</a> (RAPID, <a href="https://doi.org/10.5285/48d0bf43-0598-ceb2-e063-7086abc062f1">doi:10.5285/48d0bf43…</a>). Every count on this page is asserted in <code>build.py</code> against <code>expect.json</code>.</p>
+  <p>Nothing here ranks the works of the Atlas, and nothing claims a matter is better or worse for having few works. A ground with no neighbours may be empty because a form there is hard, not because nobody thought of it.</p>
+</section>
+
+<script src="data.js"></script>
+<script>
+(function(){
+const D = window.NEAREST, W = D.works, C = D.candidates;
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const card = document.getElementById('card'), stage = document.getElementById('stage');
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+document.getElementById('sha').textContent = D.atlas.sha256.slice(0,16) + '…';
+const order = W.map((w,i)=>i).sort((a,b)=> (W[a].y-W[b].y) || (a-b));
+let sel = 10, cols, size, gap, pos = [], lit = new Set(), ringSet = new Map();
+
+
+const btns = document.getElementById('cands');
+C.forEach(c => {
+  const b = document.createElement('button');
+  b.innerHTML = `<span class="k">${c.n}</span> ${c.name} <span class="k">· ${c.near}</span>`;
+  b.setAttribute('aria-pressed', 'false');
+  b.onclick = () => choose(c.n, true);
+  b.dataset.n = c.n; btns.appendChild(b);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { choose(sel % 12 + 1, true); e.preventDefault(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { choose((sel + 10) % 12 + 1, true); e.preventDefault(); }
+  if (e.key === 'Escape') card.style.display = 'none';
+});
+
+function layout(){
+  const w = stage.clientWidth;
+  size = w < 500 ? 9 : 13; gap = w < 500 ? 3 : 4;
+  cols = Math.floor((w + gap) / (size + gap));
+  const rows = Math.ceil(W.length / cols);
+  cols = Math.ceil(W.length / rows);
+  const dpr = window.devicePixelRatio || 1;
+  const yearBand = 16;
+  const h = rows * (size + gap) + yearBand;
+  cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+  cv.style.height = h + 'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  pos = new Array(W.length);
+  // column-major: time runs left to right, each column read top to bottom
+  order.forEach((wi, k) => {
+    const c = Math.floor(k / rows), r = k % rows;
+    pos[wi] = {x: c*(size+gap) + size/2, y: r*(size+gap) + size/2 + yearBand, k};
+  });
+  draw();
+}
+
+let anim = null;
+function draw(t){
+  const w = stage.clientWidth;
+  ctx.clearRect(0,0,w,cv.height);
+  const cDot = css('--dot'), cLit = css('--lit'), cRing = css('--ring'), cMute = css('--mute');
+  // year marks where a decade (or 2026) begins
+  ctx.font = '11px ui-monospace, Menlo, monospace'; ctx.fillStyle = cMute; ctx.textBaseline = 'alphabetic';
+  let last = null, lastX = -99;
+  order.forEach(wi => {
+    const y = W[wi].y;
+    if (y !== last && (y === 1985 || y === 2000 || y === 2010 || y === 2020 || y === 2026)) {
+      const p = pos[wi];
+      if (p.x - lastX >= 34) { ctx.fillText(String(y), Math.min(p.x - size/2, w - 30), 11); lastX = p.x; }
+      ctx.fillRect(p.x - size/2 - 2, p.y - size/2, 1, size);
+    }
+    last = y;
+  });
+  const now = performance.now();
+  W.forEach((wk, i) => {
+    const p = pos[i]; if (!p) return;
+    const isLit = lit.has(i), ring = ringSet.has(i);
+    let a = 1;
+    if (isLit && anim) { const d = (now - anim.start) - anim.delay.get(i); a = Math.max(0, Math.min(1, d / 160)); }
+    ctx.beginPath(); ctx.arc(p.x, p.y, size/2, 0, Math.PI*2);
+    if (ring) { ctx.fillStyle = cDot; ctx.globalAlpha = .35; ctx.fill(); ctx.globalAlpha = 1; ctx.lineWidth = 1.5; ctx.strokeStyle = cRing; ctx.beginPath(); ctx.arc(p.x, p.y, size/2 - 1, 0, Math.PI*2); ctx.stroke(); return; }
+    ctx.fillStyle = cDot; ctx.globalAlpha = isLit ? 1 : (sel ? .55 : 1); ctx.fill(); ctx.globalAlpha = 1;
+    if (isLit && a > 0) { ctx.beginPath(); ctx.arc(p.x, p.y, size/2 * (0.4 + 0.6*a), 0, Math.PI*2); ctx.fillStyle = cLit; ctx.globalAlpha = a; ctx.fill(); ctx.globalAlpha = 1; }
+  });
+  if (anim && now - anim.start < anim.total + 200) requestAnimationFrame(draw); else anim = null;
+}
+
+// sound
+let ac = null;
+function clicks(times){
+  if (!document.getElementById('snd').checked) return;
+  ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+  const t0 = ac.currentTime + 0.05;
+  times.forEach(dt => {
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'square'; o.frequency.value = 1900;
+    g.gain.setValueAtTime(0.0001, t0 + dt); g.gain.exponentialRampToValueAtTime(0.12, t0 + dt + 0.002);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dt + 0.025);
+    o.connect(g).connect(ac.destination); o.start(t0 + dt); o.stop(t0 + dt + 0.03);
+  });
+}
+
+function choose(n, user){
+  sel = n; card.style.display = 'none';
+  [...btns.children].forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.n === n)));
+  const c = C.find(x => x.n === n);
+  lit = new Set(); ringSet = new Map();
+  W.forEach((w, i) => { if (w.c.includes(n)) lit.add(i); });
+  D.refused.filter(r => r.c === n).forEach(r => ringSet.set(r.i, r));
+  // light in year order over 1.6 s; the same times drive the clicks
+  const litOrder = [...lit].sort((a,b) => pos[a].k - pos[b].k);
+  const total = 1600; const delay = new Map();
+  litOrder.forEach((i, k) => delay.set(i, litOrder.length > 1 ? k / (litOrder.length - 1) * total : 0));
+  anim = {start: performance.now(), delay, total};
+  if (user) clicks(litOrder.map(i => delay.get(i) / 1000));
+  requestAnimationFrame(draw);
+  const share = (c.near / D.atlas.count * 100);
+  document.getElementById('readout').innerHTML = c.near === 0
+    ? `${c.n}. ${c.name}: <b>no work</b> of the 629 names its ground.`
+    : `${c.n}. ${c.name}: <b>${c.near}</b> of the 629 name its ground (${share < 1 ? share.toFixed(1) : Math.round(share)}%).`;
+  document.getElementById('sub').textContent = 'Keywords: ' + c.keywords.replace(/\\b/g,'').replace(/\|/g,' · ');
+  const chips = c.datasets.map(d => `<span class="chip ${d.class}" title="${d.url}">${d.name} — ${d.class}</span>`).join('')
+    + c.answers.map(d => `<span class="chip ${d.class}" title="${d.url}">${d.name} — ${d.class}, the Atelier's answer, re-probed</span>`).join('');
+  document.getElementById('data').innerHTML = (c.datasets.length ? `<div>The data it names (the Field's probe, study 64): <b>${c.delivering}</b> of ${c.datasets.length} named datasets deliver to an anonymous request.</div>` : `<div>The data it names (the Field's probe, study 64): <b>none</b>; the dossier says only “${c.named_none}”.</div>`)
+    + chips
+    + `<div style="color:var(--mute);margin-top:4px">Dossier writer's scores: weight ${c.W} · openness ${c.O} · contribution ${c.C} · reach ${c.R} · sum ${c.sum}</div>`;
+  try { history.replaceState(null, '', '#' + n); } catch(e) {}
+}
+
+function hit(ev){
+  const r = cv.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top;
+  let best = -1, bd = 1e9;
+  W.forEach((w, i) => { const p = pos[i]; const d = (p.x-x)**2 + (p.y-y)**2; if (d < bd) { bd = d; best = i; } });
+  return bd <= (size/2 + gap)**2 ? best : -1;
+}
+cv.addEventListener('click', ev => {
+  const i = hit(ev); if (i < 0) { card.style.display = 'none'; return; }
+  const w = W[i], p = pos[i], ring = ringSet.get(i);
+  let html;
+  if (w.t) {
+    const words = w.c.map((k, j) => `${k} (“${w.w[j]}”)`).join(', ');
+    html = `<div class="t">${esc(w.t)}</div><div class="m">${esc(w.a || '')} · ${esc(String(w.yr || w.y))}</div>`
+      + `<div>${esc(w.d || '')}</div>`
+      + `<div class="m" style="margin-top:6px">${w.c.length ? 'touches candidates ' + words : ''}</div>`
+      + (ring ? `<div class="m">refused for ${sel}: ${esc(ring.why)}</div>` : '')
+      + (w.u ? `<a href="${encodeURI(w.u)}" target="_blank" rel="noopener">the work's source</a>` : '');
+  } else if (ring) {
+    html = `<div class="t">${esc(ring.t)}</div><div class="m">${w.y}</div><div>The word is there, the matter is not: ${esc(ring.why)}.</div>`;
+  } else {
+    html = `<div class="m">A work of ${w.y}. Its words touch none of the twelve grounds.</div>`;
+  }
+  card.innerHTML = html; card.style.display = 'block';
+  const sw = stage.clientWidth; const cw = Math.min(340, sw - 8);
+  card.style.left = Math.max(0, Math.min(p.x + 10, sw - cw)) + 'px';
+  card.style.top = (p.y + 12) + 'px';
+});
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+const P = document.getElementById('plea');
+P.innerHTML = `<p><b>Plea: 2.</b> Three works of 629 touch tipping points, all three on coral and none on a threshold one sees only afterwards; that is the widest daylight of the twelve for a form, and the record it needs delivers (RAPID, the Atelier's answer).</p>`
+  + `<p><b>Objection: 10.</b> 104 of 629 works already name AI, the most crowded ground in the Atlas; a form for its findings would stand among more neighbours than on any other candidate, and this house, run by such machines, would add one more view from the inside to the many the Atlas already holds.</p>`;
+
+window.addEventListener('resize', () => { layout(); });
+const h = parseInt(location.hash.slice(1), 10);
+layout(); choose(h >= 1 && h <= 12 ? h : 2, false);
+})();
+</script>
+</body>

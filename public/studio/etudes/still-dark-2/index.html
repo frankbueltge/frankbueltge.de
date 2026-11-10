@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STILL DARK — 20 July 2026</title>
+<style>
+  /* Everything scoped under .sd2-root. */
+  .sd2-root {
+    --sd2-ink: #111;
+    --sd2-bg: #fff;
+    --sd2-dim: rgba(0,0,0,0.55);
+    --sd2-rule: rgba(0,0,0,0.22);
+    --sd2-frame: rgba(0,0,0,0.35);
+    --sd2-rowfs: 0.62rem;
+    --sd2-meta: 115ch;
+    --sd2-gutter: 2ch;
+    box-sizing: border-box;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+                 "DejaVu Sans Mono", "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--sd2-ink);
+    background: var(--sd2-bg);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+  .sd2-root, .sd2-root * { box-sizing: border-box; }
+  .sd2-root [hidden] { display: none !important; }
+  @media (prefers-color-scheme: dark) {
+    .sd2-root {
+      --sd2-ink: #e6e6e6;
+      --sd2-bg: #0d0d0d;
+      --sd2-dim: rgba(255,255,255,0.55);
+      --sd2-rule: rgba(255,255,255,0.20);
+      --sd2-frame: rgba(255,255,255,0.32);
+    }
+  }
+  :root[data-theme="dark"] .sd2-root {
+    --sd2-ink: #e6e6e6;
+    --sd2-bg: #0d0d0d;
+    --sd2-dim: rgba(255,255,255,0.55);
+    --sd2-rule: rgba(255,255,255,0.20);
+    --sd2-frame: rgba(255,255,255,0.32);
+  }
+  :root[data-theme="light"] .sd2-root {
+    --sd2-ink: #111;
+    --sd2-bg: #fff;
+    --sd2-dim: rgba(0,0,0,0.55);
+    --sd2-rule: rgba(0,0,0,0.22);
+    --sd2-frame: rgba(0,0,0,0.35);
+  }
+
+  /* the page canvas, reached only through the wrapper — no bare body{} reset */
+  body:has(> .sd2-root) { margin: 0; background: #fff; }
+  @media (prefers-color-scheme: dark) {
+    body:has(> .sd2-root) { background: #0d0d0d; }
+  }
+  :root[data-theme="dark"] body:has(> .sd2-root) { background: #0d0d0d; }
+  :root[data-theme="light"] body:has(> .sd2-root) { background: #fff; }
+
+  /* nothing on this page animates; the only motion is the visitor's own drag */
+  @media (prefers-reduced-motion: reduce) {
+    .sd2-root, .sd2-root * { transition: none !important; animation: none !important; }
+  }
+
+  .sd2-root .sd2-state {
+    padding: 2.4rem 1.6rem 2.2rem;
+    border-top: 1px solid var(--sd2-rule);
+  }
+  .sd2-root .sd2-state:first-of-type { border-top: none; }
+  .sd2-root.sd2-js .sd2-state {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .sd2-root .sd2-day {
+    font-family: inherit;
+    font-size: clamp(1.9rem, 5.2vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    margin: 0 0 1.6rem;
+  }
+
+  .sd2-root .sd2-stripwrap { overflow-x: auto; padding-bottom: 0.2rem; }
+  .sd2-root .sd2-strip {
+    font-size: var(--sd2-rowfs);
+    line-height: 1.9;
+    min-width: calc(var(--sd2-meta) + var(--sd2-gutter) + 24ch);
+  }
+  @media (max-width: 1150px) { .sd2-root { --sd2-rowfs: 0.56rem; } }
+  @media (min-width: 1600px) { .sd2-root { --sd2-rowfs: 0.72rem; } }
+
+  .sd2-root .sd2-scale {
+    display: flex;
+    justify-content: space-between;
+    padding-left: calc(var(--sd2-meta) + var(--sd2-gutter));
+    color: var(--sd2-dim);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3em;
+  }
+
+  .sd2-root .sd2-rowsarea {
+    position: relative;
+    min-height: 21em;
+  }
+  .sd2-root .sd2-rules {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: calc(var(--sd2-meta) + var(--sd2-gutter));
+    right: 0;
+    background-image: linear-gradient(to right, var(--sd2-rule) 0, var(--sd2-rule) 1px, transparent 1px);
+    background-size: calc(100% / 16) 100%;
+    background-repeat: repeat-x;
+    border-right: 1px solid var(--sd2-rule);
+    border-top: 1px solid var(--sd2-frame);
+    border-bottom: 1px solid var(--sd2-frame);
+    z-index: 0;
+  }
+  .sd2-root .sd2-rows {
+    position: relative;
+    z-index: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sd2-root .sd2-row {
+    display: grid;
+    grid-template-columns: 2ch 19ch 4ch 10ch 27ch 20ch 26ch minmax(24ch, 1fr);
+    column-gap: 1ch;
+    align-items: center;
+    height: 1.9em;
+    white-space: nowrap;
+  }
+  .sd2-root .sd2-row.sd2-hollow { color: var(--sd2-dim); }
+  .sd2-root .sd2-flag, .sd2-root .sd2-days, .sd2-root .sd2-waters, .sd2-root .sd2-back, .sd2-root .sd2-status { color: var(--sd2-dim); }
+  .sd2-root .sd2-row.sd2-solid .sd2-name { font-weight: 700; }
+  .sd2-root .sd2-waters, .sd2-root .sd2-name { overflow: hidden; text-overflow: ellipsis; }
+
+  .sd2-root .sd2-dot {
+    display: block;
+    width: 0.62em;
+    height: 0.62em;
+    border: 1px solid currentColor;
+  }
+  .sd2-root .sd2-row.sd2-solid .sd2-dot { background: currentColor; }
+
+  .sd2-root .sd2-field {
+    display: grid;
+    grid-template-columns: var(--sd2-gutter) repeat(16, 1fr);
+    align-items: center;
+    height: 100%;
+  }
+  .sd2-root .sd2-seg { display: block; height: 0.72em; }
+  .sd2-root .sd2-certain { grid-column: 2 / 11; background: currentColor; }
+  .sd2-root .sd2-band {
+    grid-column: 11 / 18;
+    background-image: repeating-linear-gradient(135deg,
+      currentColor 0, currentColor 1px, transparent 1px, transparent 4px);
+  }
+  /* the part of the interval that lies before the field's left edge: cut, not ended */
+  .sd2-root .sd2-runoff {
+    grid-column: 1 / 2;
+    display: block;
+    height: 0.72em;
+    background-image: repeating-linear-gradient(to right,
+      currentColor 0, currentColor 2px, transparent 2px, transparent 5px);
+  }
+
+  .sd2-root .sd2-rail { padding-left: calc(var(--sd2-meta) + var(--sd2-gutter)); margin-top: 1.1em; }
+
+  /* narrow: the strip stacks — the row's text lines first, then its bar across
+     the full width, so the field and the rail are never pushed off-canvas */
+  @media (max-width: 820px) {
+    .sd2-root .sd2-strip { min-width: 0; }
+    .sd2-root .sd2-scale { padding-left: var(--sd2-gutter); }
+    .sd2-root .sd2-rail { padding-left: var(--sd2-gutter); }
+    .sd2-root .sd2-rules { left: var(--sd2-gutter); }
+    .sd2-root .sd2-rowsarea { min-height: 13em; }
+    .sd2-root .sd2-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      column-gap: 1ch;
+      height: auto;
+      white-space: normal;
+      padding: 0.4em 0;
+    }
+    .sd2-root .sd2-row > span { white-space: nowrap; }
+    .sd2-root .sd2-dot { align-self: center; }
+    .sd2-root .sd2-field { flex: 1 0 100%; height: 1.1em; margin-top: 0.4em; }
+  }
+  .sd2-root .sd2-rail-input {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: 1.4em;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+  }
+  .sd2-root .sd2-rail-input::-webkit-slider-runnable-track {
+    height: 1px;
+    background: var(--sd2-frame);
+  }
+  .sd2-root .sd2-rail-input::-moz-range-track {
+    height: 1px;
+    background: var(--sd2-frame);
+  }
+  .sd2-root .sd2-rail-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0.8em;
+    height: 1.2em;
+    margin-top: -0.6em;
+    background: var(--sd2-ink);
+    border: 0;
+    border-radius: 0;
+  }
+  .sd2-root .sd2-rail-input::-moz-range-thumb {
+    width: 0.8em;
+    height: 1.2em;
+    background: var(--sd2-ink);
+    border: 0;
+    border-radius: 0;
+  }
+  .sd2-root .sd2-rail-input:focus-visible { outline: 1px solid currentColor; outline-offset: 0.3em; }
+  .sd2-root .sd2-rail-input:disabled::-webkit-slider-thumb { background: var(--sd2-dim); }
+  .sd2-root .sd2-rail-input:disabled::-moz-range-thumb { background: var(--sd2-dim); }
+  .sd2-root .sd2-rail-label {
+    display: block;
+    white-space: nowrap;
+    margin: 0.6em 0 0;
+    color: var(--sd2-ink);
+    letter-spacing: 0.04em;
+  }
+  .sd2-root .sd2-notrack .sd2-handle {
+    display: block;
+    width: 0.8em;
+    height: 1.2em;
+    background: var(--sd2-ink);
+    margin-left: -0.4em;
+  }
+
+  .sd2-root .sd2-src {
+    margin-top: auto;
+    padding-top: 1.6rem;
+    font-size: 0.72rem;
+    line-height: 1.7;
+    color: var(--sd2-dim);
+    word-break: break-word;
+  }
+  .sd2-root .sd2-src p { margin: 0; }
+  .sd2-root a { color: inherit; }
+
+  .sd2-root .sd2-foot {
+    padding: 1.4rem 1.6rem 3rem;
+    border-top: 1px solid var(--sd2-rule);
+    font-size: 0.7rem;
+    line-height: 1.7;
+    color: var(--sd2-dim);
+    word-break: break-word;
+  }
+  .sd2-root .sd2-foot p { margin: 0 0 0.4rem; }
+  .sd2-root .sd2-foot p:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="sd2-root">
+
+  <script type="application/json" id="sd2-capture">
+  {
+    "capture_version": 1,
+    "fetch": {
+      "url": "https://frankbueltge.de/ghost-fleet/",
+      "fetched_at_utc": "2026-08-05T04:39:32Z",
+      "http_status": 200,
+      "bytes": 35473,
+      "sha256": "ed3e54ec4557264d92a74e4052c1740cfba96cf26e0d310e355b7d42fd1336e5"
+    },
+    "method": {
+      "source": "https://frankbueltge.de/werke/ghost-fleet/",
+      "window_quote": "Daily. Window: disabling events that ended in the last 7 days (complete vanish-and-return stories).",
+      "window_days": 7
+    },
+    "edition_date_printed": "4 August 2026",
+    "edition_date": "2026-08-04",
+    "case_of_the_day": {
+      "name": "TUNAMAR",
+      "flag": "PAN",
+      "days_dark": 56,
+      "prose": "A fishing vessel flagged PAN switched off its transponder for 56 days — vanished at 2.6°N, 92.3°W, resurfaced at 0.8°S, 81.2°W, in Ecuadorian EEZ (Galapagos).",
+      "gfw_url": "https://globalfishingwatch.org/map/vessel/7d0bafe28-8ec3-ab8e-fb15-3ce152f3974f"
+    },
+    "aggregates": {
+      "dark_inside_national_waters": 82,
+      "disappearances_examined": 230,
+      "in_the_window": 5641,
+      "vessel_days_of_darkness_approx": 3712
+    },
+    "vessels": [
+      {
+        "name": "TUNAMAR",
+        "flag": "PAN",
+        "days_dark": 56,
+        "prose": "A fishing vessel flagged PAN switched off its transponder for 56 days — vanished at 2.6°N, 92.3°W, resurfaced at 0.8°S, 81.2°W, in Ecuadorian EEZ (Galapagos).",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/7d0bafe28-8ec3-ab8e-fb15-3ce152f3974f",
+        "role": "case_of_the_day",
+        "waters": null
+      },
+      {
+        "name": "MICRONESIA103",
+        "flag": "FSM",
+        "days_dark": 39,
+        "waters": "Marshallese EEZ",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/44e937b38-8d12-ce29-5110-ee36398d904c",
+        "role": "other"
+      },
+      {
+        "name": "ALIZE",
+        "flag": "ECU",
+        "days_dark": 31,
+        "waters": "Ecuadorian EEZ",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/db5cd7a2a-a9dd-4c52-00ac-4c6980d9a029",
+        "role": "other"
+      },
+      {
+        "name": "FORTICA",
+        "flag": "ECU",
+        "days_dark": 26,
+        "waters": "Ecuadorian EEZ",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/ed76e5578-8f7d-2e31-1af3-cc129d6ae7b9",
+        "role": "other"
+      },
+      {
+        "name": "PANOFI MASTER",
+        "flag": "GHA",
+        "days_dark": 22,
+        "waters": "Ghanaian EEZ",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/7b4c7f97f-f297-3a81-22a7-5d210ca4d71e",
+        "role": "other"
+      },
+      {
+        "name": "TRAVELER",
+        "flag": "USA",
+        "days_dark": 18,
+        "waters": "United States EEZ (Alaska)",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/6c2fe0c33-3bec-8532-7d04-6c6e8aca5d32",
+        "role": "other"
+      },
+      {
+        "name": "VICTORIA",
+        "flag": "MEX",
+        "days_dark": 17,
+        "waters": "Mexican EEZ",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/ef787e860-0064-bc54-31e7-63a593778d42",
+        "role": "other"
+      },
+      {
+        "name": "PANOFI DISCOVERER",
+        "flag": "GHA",
+        "days_dark": 17,
+        "waters": "Ghanaian EEZ",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/2781849c8-849b-ce64-e1e3-3ed0ae3cd66a",
+        "role": "other"
+      },
+      {
+        "name": "VESTERAALEN",
+        "flag": "USA",
+        "days_dark": 17,
+        "waters": "United States EEZ (Alaska)",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/b6a3440c9-9f83-d1f6-378d-e70f7db7184b",
+        "role": "other"
+      },
+      {
+        "name": "PACIFIC FURY",
+        "flag": "USA",
+        "days_dark": 17,
+        "waters": "United States EEZ (Alaska)",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/455a51563-3a2e-18c6-cf12-9ac5b75ab0a6",
+        "role": "other"
+      },
+      {
+        "name": "EXCELLENCE",
+        "flag": "USA",
+        "days_dark": 16,
+        "waters": "United States EEZ (Alaska)",
+        "gfw_url": "https://globalfishingwatch.org/map/vessel/f4c37b1e1-14cd-40b6-80ad-9a41580169fd",
+        "role": "other"
+      }
+    ],
+    "derived_intervals": [
+      {
+        "name": "TUNAMAR",
+        "flag": "PAN",
+        "days_dark": 56,
+        "went_dark_between": [
+          "2026-06-02",
+          "2026-06-09"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "MICRONESIA103",
+        "flag": "FSM",
+        "days_dark": 39,
+        "went_dark_between": [
+          "2026-06-19",
+          "2026-06-26"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "ALIZE",
+        "flag": "ECU",
+        "days_dark": 31,
+        "went_dark_between": [
+          "2026-06-27",
+          "2026-07-04"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "FORTICA",
+        "flag": "ECU",
+        "days_dark": 26,
+        "went_dark_between": [
+          "2026-07-02",
+          "2026-07-09"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "PANOFI MASTER",
+        "flag": "GHA",
+        "days_dark": 22,
+        "went_dark_between": [
+          "2026-07-06",
+          "2026-07-13"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "TRAVELER",
+        "flag": "USA",
+        "days_dark": 18,
+        "went_dark_between": [
+          "2026-07-10",
+          "2026-07-17"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "VICTORIA",
+        "flag": "MEX",
+        "days_dark": 17,
+        "went_dark_between": [
+          "2026-07-11",
+          "2026-07-18"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "PANOFI DISCOVERER",
+        "flag": "GHA",
+        "days_dark": 17,
+        "went_dark_between": [
+          "2026-07-11",
+          "2026-07-18"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "VESTERAALEN",
+        "flag": "USA",
+        "days_dark": 17,
+        "went_dark_between": [
+          "2026-07-11",
+          "2026-07-18"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "PACIFIC FURY",
+        "flag": "USA",
+        "days_dark": 17,
+        "went_dark_between": [
+          "2026-07-11",
+          "2026-07-18"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      },
+      {
+        "name": "EXCELLENCE",
+        "flag": "USA",
+        "days_dark": 16,
+        "went_dark_between": [
+          "2026-07-12",
+          "2026-07-19"
+        ],
+        "resurfaced_between": [
+          "2026-07-28",
+          "2026-08-04"
+        ],
+        "tier": "DERIVED",
+        "basis": "published days_dark + published window; both bands printed"
+      }
+    ],
+    "tiers": {
+      "SOURCED": "vessels, aggregates, edition date, gfw ids — printed on the page",
+      "DERIVED": "derived_intervals — arithmetic on published durations, bands printed",
+      "OBSERVED": "fetched_at_utc — this house's own record of when it could first know"
+    }
+  }
+  </script>
+
+  <section class="sd2-state" id="state-1">
+    <h1 class="sd2-day">20 JULY 2026</h1>
+    <div class="sd2-stripwrap">
+      <div class="sd2-strip">
+        <div class="sd2-scale"><span class="sd2-tick">20 JUL</span><span class="sd2-tick">4 AUG</span></div>
+        <div class="sd2-rowsarea">
+          <div class="sd2-rules" aria-hidden="true"></div>
+          <ol class="sd2-rows" id="sd2-rows-live">
+
+          </ol>
+        </div>
+        <div class="sd2-rail">
+          <input class="sd2-rail-input" id="sd2-rail-1" type="range" min="0" max="15" step="1" value="0" disabled aria-valuetext="20 July 2026">
+          <label class="sd2-rail-label" for="sd2-rail-1">record as it stood on 20 July 2026</label>
+        </div>
+      </div>
+    </div>
+    <footer class="sd2-src">
+      <p>Source: the Ghost Fleet, edition of 4 August 2026 · <a href="https://frankbueltge.de/ghost-fleet/">https://frankbueltge.de/ghost-fleet/</a></p>
+      <p>Method: <a href="https://frankbueltge.de/werke/ghost-fleet/">https://frankbueltge.de/werke/ghost-fleet/</a> — “Daily. Window: disabling events that ended in the last 7 days (complete vanish-and-return stories).”</p>
+    </footer>
+  </section>
+
+  <section class="sd2-state" id="state-2">
+    <h1 class="sd2-day">20 JULY 2026</h1>
+    <div class="sd2-stripwrap">
+      <div class="sd2-strip">
+        <div class="sd2-scale"><span class="sd2-tick">20 JUL</span><span class="sd2-tick">4 AUG</span></div>
+        <div class="sd2-rowsarea">
+          <div class="sd2-rules" aria-hidden="true"></div>
+          <ol class="sd2-rows" id="sd2-rows-hollow">
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">TUNAMAR</span><span class="sd2-flag">PAN</span><span class="sd2-days">56 d dark</span><span class="sd2-waters"></span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">MICRONESIA103</span><span class="sd2-flag">FSM</span><span class="sd2-days">39 d dark</span><span class="sd2-waters">Marshallese EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">ALIZE</span><span class="sd2-flag">ECU</span><span class="sd2-days">31 d dark</span><span class="sd2-waters">Ecuadorian EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">FORTICA</span><span class="sd2-flag">ECU</span><span class="sd2-days">26 d dark</span><span class="sd2-waters">Ecuadorian EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">PANOFI MASTER</span><span class="sd2-flag">GHA</span><span class="sd2-days">22 d dark</span><span class="sd2-waters">Ghanaian EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">TRAVELER</span><span class="sd2-flag">USA</span><span class="sd2-days">18 d dark</span><span class="sd2-waters">United States EEZ (Alaska)</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">VICTORIA</span><span class="sd2-flag">MEX</span><span class="sd2-days">17 d dark</span><span class="sd2-waters">Mexican EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">PANOFI DISCOVERER</span><span class="sd2-flag">GHA</span><span class="sd2-days">17 d dark</span><span class="sd2-waters">Ghanaian EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">VESTERAALEN</span><span class="sd2-flag">USA</span><span class="sd2-days">17 d dark</span><span class="sd2-waters">United States EEZ (Alaska)</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">PACIFIC FURY</span><span class="sd2-flag">USA</span><span class="sd2-days">17 d dark</span><span class="sd2-waters">United States EEZ (Alaska)</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+        <li class="sd2-row sd2-hollow"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">EXCELLENCE</span><span class="sd2-flag">USA</span><span class="sd2-days">16 d dark</span><span class="sd2-waters">United States EEZ (Alaska)</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">possibly recorded</span><span class="sd2-field" aria-hidden="true"></span></li>
+          </ol>
+        </div>
+        <div class="sd2-rail">
+          <input class="sd2-rail-input" id="sd2-rail-2" type="range" min="0" max="15" step="1" value="11" disabled aria-valuetext="31 July 2026">
+          <label class="sd2-rail-label" for="sd2-rail-2">record as it stood on 31 July 2026</label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sd2-state" id="state-3">
+    <h1 class="sd2-day">20 JULY 2026</h1>
+    <div class="sd2-stripwrap">
+      <div class="sd2-strip">
+        <div class="sd2-scale"><span class="sd2-tick">20 JUL</span><span class="sd2-tick">4 AUG</span></div>
+        <div class="sd2-rowsarea">
+          <div class="sd2-rules" aria-hidden="true"></div>
+          <ol class="sd2-rows" id="sd2-rows-solid">
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">TUNAMAR</span><span class="sd2-flag">PAN</span><span class="sd2-days">56 d dark</span><span class="sd2-waters"></span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">MICRONESIA103</span><span class="sd2-flag">FSM</span><span class="sd2-days">39 d dark</span><span class="sd2-waters">Marshallese EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">ALIZE</span><span class="sd2-flag">ECU</span><span class="sd2-days">31 d dark</span><span class="sd2-waters">Ecuadorian EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">FORTICA</span><span class="sd2-flag">ECU</span><span class="sd2-days">26 d dark</span><span class="sd2-waters">Ecuadorian EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">PANOFI MASTER</span><span class="sd2-flag">GHA</span><span class="sd2-days">22 d dark</span><span class="sd2-waters">Ghanaian EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">TRAVELER</span><span class="sd2-flag">USA</span><span class="sd2-days">18 d dark</span><span class="sd2-waters">United States EEZ (Alaska)</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">VICTORIA</span><span class="sd2-flag">MEX</span><span class="sd2-days">17 d dark</span><span class="sd2-waters">Mexican EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">PANOFI DISCOVERER</span><span class="sd2-flag">GHA</span><span class="sd2-days">17 d dark</span><span class="sd2-waters">Ghanaian EEZ</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">VESTERAALEN</span><span class="sd2-flag">USA</span><span class="sd2-days">17 d dark</span><span class="sd2-waters">United States EEZ (Alaska)</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">PACIFIC FURY</span><span class="sd2-flag">USA</span><span class="sd2-days">17 d dark</span><span class="sd2-waters">United States EEZ (Alaska)</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+        <li class="sd2-row sd2-solid"><span class="sd2-dot" aria-hidden="true"></span><span class="sd2-name">EXCELLENCE</span><span class="sd2-flag">USA</span><span class="sd2-days">16 d dark</span><span class="sd2-waters">United States EEZ (Alaska)</span><span class="sd2-back">back 28 Jul – 4 Aug</span><span class="sd2-status">recorded · dark on 20 Jul</span><span class="sd2-field" aria-hidden="true"><span class="sd2-runoff"></span><span class="sd2-seg sd2-certain"></span><span class="sd2-seg sd2-band"></span></span></li>
+          </ol>
+        </div>
+        <div class="sd2-rail">
+          <input class="sd2-rail-input" id="sd2-rail-3" type="range" min="0" max="15" step="1" value="15" disabled aria-valuetext="4 August 2026">
+          <label class="sd2-rail-label" for="sd2-rail-3">record as it stood on 4 August 2026</label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sd2-state" id="state-4">
+    <h1 class="sd2-day">5 AUGUST 2026</h1>
+    <div class="sd2-stripwrap">
+      <div class="sd2-strip">
+        <div class="sd2-scale"><span class="sd2-tick">5 AUG</span><span class="sd2-tick">20 AUG</span></div>
+        <div class="sd2-rowsarea">
+          <div class="sd2-rules" aria-hidden="true"></div>
+          <ol class="sd2-rows">
+
+          </ol>
+        </div>
+        <div class="sd2-rail sd2-notrack">
+          <span class="sd2-handle" aria-hidden="true"></span>
+          <p class="sd2-rail-label">record as it stood on 5 August 2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sd2-foot">
+    <p>SOURCED — vessel names, flags, days dark, waters and the edition date, printed by
+    <a href="https://frankbueltge.de/ghost-fleet/">https://frankbueltge.de/ghost-fleet/</a> in its edition of 4 August 2026.
+    DERIVED — the date bands, arithmetic on those published durations and the published
+    7-day window; both ends of every band are printed.
+    OBSERVED — this house fetched those bytes once, at 2026-08-05T04:39:32Z
+    (HTTP 200, 35,473 bytes, sha256 ed3e54ec4557264d92a74e4052c1740cfba96cf26e0d310e355b7d42fd1336e5).</p>
+    <p>“Intentional” is a machine estimate by Global Fishing Watch — a probability, not proof;
+    the instrument makes no claim of illegality against any vessel or state, and neither do we.</p>
+  </div>
+
+</div>
+<script>
+(function () {
+  "use strict";
+
+  var root = document.querySelector(".sd2-root");
+  var capture = JSON.parse(document.getElementById("sd2-capture").textContent);
+
+  // The staged day is this etude's own choice (DRAMATURG-67); everything else
+  // about the rail is arithmetic on the captured edition and its published window.
+  var STAGED_DAY = "2026-07-20";
+
+  function parseDay(s) {
+    var p = s.split("-");
+    return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+  }
+  function addDays(dt, n) {
+    return new Date(dt.getTime() + n * 86400000);
+  }
+  function diffDays(a, b) {
+    return Math.round((b.getTime() - a.getTime()) / 86400000);
+  }
+  var MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December"];
+  function longDate(dt) {
+    return dt.getUTCDate() + " " + MONTHS[dt.getUTCMonth()] + " " + dt.getUTCFullYear();
+  }
+
+  var staged = parseDay(STAGED_DAY);
+  var edition = parseDay(capture.edition_date);            // 4 Aug 2026
+  var windowDays = capture.method.window_days;             // 7
+  var firstPossible = addDays(edition, -windowDays);       // earliest an event can have ended
+  var railMax = diffDays(staged, edition);                 // 15 steps of travel
+  var hollowFrom = diffDays(staged, firstPossible);        // 8 - nothing before this
+  var solidFrom = railMax;                                 // certainly recorded
+
+  var rail = document.getElementById("sd2-rail-1");
+  var label = document.querySelector('label[for="sd2-rail-1"]');
+  var live = document.getElementById("sd2-rows-live");
+  var hollow = document.getElementById("sd2-rows-hollow");
+  var solid = document.getElementById("sd2-rows-solid");
+  var s2 = document.getElementById("state-2");
+  var s3 = document.getElementById("state-3");
+  if (!rail || !label || !live || !hollow || !solid || !s2 || !s3) return;
+
+  // The interactive strip is built out of the very markup the no-JS states show,
+  // so the two paths can never disagree about a single character.
+  var area = live.parentNode;
+  hollow.hidden = true;
+  solid.hidden = true;
+  area.appendChild(hollow);
+  area.appendChild(solid);
+  live.parentNode.removeChild(live);
+  s2.hidden = true;
+  s3.hidden = true;
+  root.classList.add("sd2-js");
+
+  rail.max = String(railMax);
+  rail.value = "0";
+  rail.disabled = false;
+  area.setAttribute("aria-live", "polite");
+
+  function apply() {
+    var i = parseInt(rail.value, 10);
+    if (isNaN(i)) i = 0;
+    var day = addDays(staged, i);
+    var text = "record as it stood on " + longDate(day);
+    label.textContent = text;
+    rail.setAttribute("aria-valuetext", longDate(day));
+    hollow.hidden = !(i >= hollowFrom && i < solidFrom);
+    solid.hidden = !(i >= solidFrom);
+  }
+
+  rail.addEventListener("input", apply);
+  rail.addEventListener("change", apply);
+  apply();
+})();
+</script>
+</body>
+</html>

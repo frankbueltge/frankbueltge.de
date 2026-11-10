@@ -1,0 +1,64 @@
+{
+  "builtRange": {
+    "startDate": "2025-10-06",
+    "endDate": "2026-07-28",
+    "dayCount": 296
+  },
+  "oldMarkupBaseline": {
+    "bytes": 45659,
+    "dataDateOccurrences": 296,
+    "dataDocsOccurrences": 55,
+    "isoDateStringOccurrences": 296,
+    "sampleIsoDates": [
+      "2025-10-06",
+      "2025-10-07",
+      "2025-10-08",
+      "2025-10-09",
+      "2025-10-10"
+    ]
+  },
+  "newMarkup": {
+    "bytes": 38109,
+    "dataDateOccurrences": 0,
+    "dataDocsOccurrences": 0,
+    "isoDateStringOccurrences": 0,
+    "strippedSuccessfully": true
+  },
+  "residualFilenameDateLeak": {
+    "distinctSrcFiles": 72,
+    "filenamesWhoseLeading6DigitsEqualTheirOwnRecordDate": 72,
+    "samples": [
+      {
+        "filenameStem": "100625zr_3fbh",
+        "encodedDate": "2025-10-06",
+        "matchesRecordDate": true
+      },
+      {
+        "filenameStem": "100825zr_mlho",
+        "encodedDate": "2025-10-08",
+        "matchesRecordDate": true
+      },
+      {
+        "filenameStem": "101025zr_l6gn",
+        "encodedDate": "2025-10-10",
+        "matchesRecordDate": true
+      },
+      {
+        "filenameStem": "101425zr1_10n2",
+        "encodedDate": "2025-10-14",
+        "matchesRecordDate": true
+      },
+      {
+        "filenameStem": "101425zr_b07d",
+        "encodedDate": "2025-10-14",
+        "matchesRecordDate": true
+      }
+    ],
+    "verdict": "THE FILE NAMES THEMSELVES ENCODE THE DATE (Court-assigned MMDDYY... convention), inside the img src attribute value. Stripping data-date/data-docs does not remove this — it was never in those attributes."
+  },
+  "verbatimRemainingSlotMarkup": {
+    "orderSlot": "<div class=\"slot order\" style=\"width:864px;height:1118px;\">",
+    "blankSlot": "<div class=\"slot blank\" style=\"width:864px;height:1118px;background:#fff;\">",
+    "multiOrderSlot": "<div class=\"slot order multi\" style=\"width:864px;height:1118px;\">"
+  }
+}

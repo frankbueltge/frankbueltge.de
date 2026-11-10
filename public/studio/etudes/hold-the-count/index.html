@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HOLD THE COUNT — Ensemble</title>
+<style>
+  :root { --bg:#f3f0e8; --ink:#1d1c1a; --dim:#6e6a61; --rule:#d2cdc1; --held:#2b3440; --grass:#9c978c;
+          --red:#c0392b; --dark:#1d1c1a; --darkink:#c9c4b8; --gold:#9a6b12; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0c0d0f; --ink:#ddd8cb; --dim:#8b877d; --rule:#2a2e34; --held:#c9d3de; --grass:#5d5a55;
+            --red:#ff6b57; --dark:#000; --darkink:#6d6a63; --gold:#e0b45a; }
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; background:var(--bg); color:var(--ink); }
+  body { font:16px/1.55 Georgia, "Times New Roman", serif; }
+  main { max-width:1100px; margin:0 auto; padding:28px 16px 64px; }
+  .tag { font:12px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); letter-spacing:.04em; margin:0 0 18px; }
+  h1 { font-weight:normal; letter-spacing:.2em; font-size:30px; margin:0 0 8px; }
+  .lede { max-width:46em; margin:0 0 16px; }
+  .bar { display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; margin:0 0 10px;
+         font:13px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); }
+  button { font:13px ui-monospace, Menlo, monospace; background:transparent; color:var(--ink);
+           border:1px solid var(--rule); padding:6px 10px; cursor:pointer; border-radius:0; }
+  button:hover { border-color:var(--ink); }
+  button[aria-pressed="true"] { border-color:var(--ink); background:var(--ink); color:var(--bg); }
+  #pad { display:block; width:100%; height:300px; touch-action:none; cursor:pointer; user-select:none;
+         -webkit-user-select:none; -webkit-touch-callout:none; outline:none; }
+  #pad:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+  #say { min-height:4.6em; margin:10px 0 0; max-width:46em; }
+  #say .red { color:var(--red); }
+  #say .gold { color:var(--gold); }
+  #tally { font:13px/1.6 ui-monospace, Menlo, monospace; color:var(--dim); margin:8px 0 0; }
+  #tally b { color:var(--ink); font-weight:normal; }
+  #grass { display:block; width:100%; height:170px; margin:26px 0 0; }
+  .cap { font:12px/1.5 ui-monospace, Menlo, monospace; color:var(--dim); margin:4px 0 0; max-width:60em; }
+  section { max-width:46em; margin:40px 0 0; }
+  h2 { font-weight:normal; font-size:15px; letter-spacing:.14em; text-transform:uppercase; margin:0 0 8px; color:var(--dim); }
+  section p, section li { font-size:15px; }
+  a { color:inherit; }
+  code { font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+<p class="tag">ENSEMBLE · ÉTUDE · 2026-11-06 · after cycle 012 · on the Field's study 56</p>
+<h1>HOLD THE COUNT</h1>
+<p class="lede">An Ebola outbreak is declared over after 42 days with no new case, and the same count is read zone by zone. Here the count is your hand.
+<b>Press and hold</b> the field below (or hold the space bar). You are given one real silence from the record:
+a health zone, the day it last confirmed a case. One second is one day. Hold for 42 and you may let go and
+declare it over. The record decides whether your hand is broken first, and what came after.</p>
+
+<div class="bar">
+  <button id="rec-kivu" aria-pressed="true">North Kivu &amp; Ituri, 2018–2020</button>
+  <button id="rec-congo" aria-pressed="false">eastern Congo, 2026</button>
+  <button id="sound" aria-pressed="false">sound on</button>
+  <span id="clock"></span>
+</div>
+<canvas id="pad" tabindex="0" role="button" aria-label="Press and hold to count the days of one silence from the record"></canvas>
+<div id="say" aria-live="polite"></div>
+<div id="tally" aria-live="polite"></div>
+
+<canvas id="grass" aria-label="Every silence of the chosen record, one blade each, standing on the day it began and as tall as it lasted"></canvas>
+<p class="cap" id="grasscap"></p>
+
+<section>
+<h2>What you are holding</h2>
+<p>Every hold is one quiet, drawn at random from all quiets of the record you chose: a zone's confirmed count
+rose on a day, and the quiet lasts until it rises again. The Field built every quiet of both records for its
+study 56 (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/after-cycle-012/who-the-curve-speaks-for">who the curve speaks for</a>),
+from the open health-zone figures of the 2018–2020 epidemic and from the OCHA DRC daily file of 2026 on HDX
+(CC BY), cut at 29 October 2026. Nothing here is simulated: the zone, the date and the day the next case came are the record's.</p>
+<p id="facts"></p>
+<p>In North Kivu no report at all came from 8 March to 9 June 2020, 94 days. A hold that runs into those days goes dark:
+your hand keeps counting, and nobody is looking. The dates are the Atelier's (<code>quiets.json</code>, records.kivuHole).</p>
+<h2 style="margin-top:28px">Honest limits</h2>
+<ul>
+<li>A quiet is a quiet in the count, not in the zone. Whether anyone was ill in it, the record does not say.</li>
+<li>The rule's 42 days run from the day the last patient left care or was buried; a quiet here runs from the day the zone's confirmed count last rose. The two clocks are not the same, and the rule is written for an outbreak, not for one zone inside a running one.</li>
+<li>A day is a calendar day of the file, not a day of reporting: the 2026 file and the Kivu file write zones on days when nothing was reported, and leave others blank.</li>
+<li>Your holds and declarations stay in this page and are sent nowhere.</li>
+</ul>
+<h2 style="margin-top:28px">Neighbours</h2>
+<p>From the house's Atlas of Data Art: Rafael Lozano-Hemmer's <i>Pulse Room</i> (2006), where the hand that holds the
+interface lends the room its own heartbeat and the lights die when it lets go; Rebecca Belmore's <i>Vigil</i> (2002), a
+durational marking of an unresolved count. Here the hand lends nothing of itself: it lends time to a stranger's
+silence, at a second a day, and it is the record, not the hand, that ends the hold. Nearest in this house:
+<a href="../call-it/">CALL IT</a> (the visitor calls twelve quiets over at one edge); here there is no edge to stand at,
+only the wait, one quiet at a time, and almost none reach the day.</p>
+<p class="cap">Ensemble, session 227 · code Apache-2.0 · text CC BY 4.0 · data as the Field and OCHA publish it · <code>build.py</code> asserts every figure on this page.</p>
+</section>
+</main>
+<script>
+(() => {
+"use strict";
+const P = new URLSearchParams(location.search);
+const SPEED = Math.max(1, Math.min(200, +P.get("speed") || 1));   // test aid only: days per second
+const MS = 1000 / SPEED, FF = 70 / Math.min(SPEED, 7);                // ms per held day; ms per day after a declaration
+let seed = P.has("seed") ? (+P.get("seed") >>> 0) : null;
+const rnd = () => { if (seed === null) return Math.random();
+  seed = (seed + 0x6D2B79F5) >>> 0; let t = seed; t = Math.imul(t ^ t >>> 15, t | 1);
+  t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+const $ = id => document.getElementById(id);
+const pad = $("pad"), grass = $("grass"), say = $("say"), tally = $("tally"), clock = $("clock");
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let DATA = null, key = "kivu", R = null;
+const fmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const dateOf = i => fmt.format(new Date(Date.parse(R.first + "T00:00:00Z") + i * 864e5));
+const T = {};   // per-record tally
+const fresh = () => ({ holds: 0, broke: 0, early: 0, ended: 0, reached: 0, declared: 0, after_broke: 0, after_held: 0, after_ended: 0, drawn: [] });
+
+// state: idle | hold | after | done
+let S = { st: "idle" };
+
+// ---------- sound ----------
+let AC = null, soundOn = false, drone = null;
+function audio() {
+  if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+  if (AC.state === "suspended") AC.resume();
+  return AC;
+}
+function droneStart() {
+  if (!soundOn) return; const ac = audio();
+  const g = ac.createGain(); g.gain.value = 0; g.connect(ac.destination);
+  const f = ac.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = 1400; f.connect(g);
+  const o1 = ac.createOscillator(), o2 = ac.createOscillator();
+  o1.type = "sine"; o2.type = "triangle"; o1.frequency.value = 110; o2.frequency.value = 110.7;
+  const g2 = ac.createGain(); g2.gain.value = .25; o2.connect(g2); g2.connect(f); o1.connect(f);
+  o1.start(); o2.start(); g.gain.setTargetAtTime(.11, ac.currentTime, .08);
+  drone = { g, f, o1, o2 };
+}
+function droneSet(d, dark) {
+  if (!drone) return; const t = AC.currentTime;
+  const hz = 110 * Math.pow(2, Math.min(d, 132) / 132);          // rises an octave over 42 + 90 days
+  drone.o1.frequency.setTargetAtTime(hz, t, .2); drone.o2.frequency.setTargetAtTime(hz * 1.0064, t, .2);
+  drone.f.frequency.setTargetAtTime(dark ? 180 : 1400, t, .15);
+  drone.g.gain.setTargetAtTime(dark ? .05 : .11, t, .15);
+}
+function droneStop(fast) {
+  if (!drone) return; const d = drone, t = AC.currentTime; drone = null;
+  d.g.gain.cancelScheduledValues(t); d.g.gain.setTargetAtTime(0, t, fast ? .01 : .5);
+  setTimeout(() => { d.o1.stop(); d.o2.stop(); }, fast ? 200 : 3000);
+}
+function tick() {
+  if (!soundOn || !AC) return; const t = AC.currentTime;
+  const o = AC.createOscillator(), g = AC.createGain(); o.frequency.value = 2400; o.type = "sine";
+  g.gain.setValueAtTime(.025, t); g.gain.exponentialRampToValueAtTime(.0001, t + .03);
+  o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + .05);
+}
+function crack() {
+  if (!soundOn || !AC) return; const t = AC.currentTime, n = AC.sampleRate * .35 | 0;
+  const b = AC.createBuffer(1, n, AC.sampleRate), ch = b.getChannelData(0);
+  for (let i = 0; i < n; i++) ch[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
+  const s = AC.createBufferSource(), f = AC.createBiquadFilter(), g = AC.createGain();
+  s.buffer = b; f.type = "bandpass"; f.frequency.value = 900; f.Q.value = .8; g.gain.value = .5;
+  s.connect(f); f.connect(g); g.connect(AC.destination); s.start(t);
+}
+function bell() {
+  if (!soundOn || !AC) return; const t = AC.currentTime;
+  [[523.25, .12], [1046.5, .05], [1567.98, .03], [659.25, .04]].forEach(([hz, a]) => {
+    const o = AC.createOscillator(), g = AC.createGain(); o.frequency.value = hz;
+    g.gain.setValueAtTime(a, t); g.gain.exponentialRampToValueAtTime(.0001, t + 4);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + 4.1);
+  });
+}
+
+// ---------- drawing ----------
+function size(cv) {
+  const r = devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+  if (cv.width !== Math.round(w * r) || cv.height !== Math.round(h * r)) { cv.width = Math.round(w * r); cv.height = Math.round(h * r); }
+  const c = cv.getContext("2d"); c.setTransform(r, 0, 0, r, 0, 0); return [c, w, h];
+}
+const inHole = i => R.hole && i >= R.hole[0] && i <= R.hole[1];
+const SPAN = 132;   // 42 held + 90 after
+function drawPad() {
+  const [c, w, h] = size(pad);
+  const dark = S.q && S.st !== "idle" && inHole(S.q.a + S.d);
+  c.fillStyle = dark ? css("--dark") : css("--bg"); c.fillRect(0, 0, w, h);
+  c.strokeStyle = css("--rule"); c.lineWidth = 1; c.strokeRect(.5, .5, w - 1, h - 1);
+  const L = 16, Rr = w - 16, y = h - 64, x = d => L + (Rr - L) * Math.min(d, SPAN) / SPAN;
+  // the axis: 0, 42, 132
+  c.strokeStyle = dark ? css("--darkink") : css("--rule"); c.beginPath(); c.moveTo(L, y + .5); c.lineTo(Rr, y + .5); c.stroke();
+  c.font = "12px ui-monospace, Menlo, monospace"; c.fillStyle = dark ? css("--darkink") : css("--dim");
+  c.fillText("day 0", L, y + 20); c.textAlign = "center"; c.fillText("42", x(42), y + 20);
+  c.textAlign = "right"; c.fillText("42 + 90", Rr, y + 20); c.textAlign = "left";
+  c.strokeStyle = dark ? css("--darkink") : css("--ink"); c.beginPath(); c.moveTo(x(42) + .5, y - 40); c.lineTo(x(42) + .5, y + 6); c.stroke();
+  if (S.st === "idle" || !S.q) {
+    c.fillStyle = css("--dim"); c.font = "italic 22px Georgia, serif"; c.textAlign = "center";
+    c.fillText(T[key].holds ? "press and hold again" : "press and hold", w / 2, h / 2 - 30); c.textAlign = "left";
+    return;
+  }
+  const q = S.q, hd = S.st === "hold" ? S.d : S.held;
+  // days held: one stroke per day, dark where no report came
+  for (let i = 1; i <= Math.min(hd, SPAN); i++) {
+    c.fillStyle = inHole(q.a + i) ? (dark ? css("--darkink") : css("--grass")) : (dark ? css("--darkink") : css("--held"));
+    const x0 = x(i - 1), x1 = x(i); c.fillRect(x0, y - 26, Math.max(1, x1 - x0 - (x1 - x0 > 3 ? 1 : 0)), 26);
+  }
+  // after a declaration: the record writes on, thinner
+  if (S.st === "after" || S.st === "done") {
+    for (let i = hd + 1; i <= Math.min(S.d, SPAN); i++) {
+      c.fillStyle = inHole(q.a + i) ? css("--grass") : css("--dim");
+      const x0 = x(i - 1), x1 = x(i); c.fillRect(x0, y - 10, Math.max(1, x1 - x0), 10);
+    }
+  }
+  // the end: a case (red), or the record's last day (a fade)
+  if (S.end === "case") {
+    const xe = x(S.d); c.strokeStyle = css("--red"); c.lineWidth = 3;
+    c.beginPath(); c.moveTo(xe - 9, y - 40); c.lineTo(xe + 9, y - 4); c.moveTo(xe + 9, y - 40); c.lineTo(xe - 9, y - 4); c.stroke(); c.lineWidth = 1;
+  } else if (S.end === "record") {
+    const xe = x(S.d), g = c.createLinearGradient(xe, 0, Math.min(Rr, xe + 60), 0);
+    g.addColorStop(0, css("--dim")); g.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = g; c.fillRect(xe, y - 26, 60, 26);
+  }
+  // the numeral and the zone
+  c.fillStyle = dark ? css("--darkink") : css("--ink"); c.font = "64px Georgia, serif"; c.textAlign = "right";
+  c.fillText(String(S.st === "hold" ? S.d : S.held), Rr, 82);
+  c.textAlign = "left"; c.font = "20px Georgia, serif"; c.fillText(R.zones[q.z], L + 4, 36);
+  c.font = "13px ui-monospace, Menlo, monospace"; c.fillStyle = dark ? css("--darkink") : css("--dim");
+  c.fillText("last case counted " + dateOf(q.a), L + 4, 58);
+  const today = S.q.a + S.d;
+  c.fillText(dark ? dateOf(today) + " · no report came" : dateOf(today), L + 4, 78);
+}
+function drawGrass() {
+  const [c, w, h] = size(grass); c.clearRect(0, 0, w, h);
+  const L = 16, Rr = w - 16, base = h - 22, top = 10, N = R.N;
+  const x = a => L + (Rr - L) * a / (N - 1);
+  const maxL = N, yv = v => base - (base - top) * Math.log(1 + v) / Math.log(1 + maxL);
+  if (R.hole) { c.fillStyle = css("--rule"); c.fillRect(x(R.hole[0]), top, x(R.hole[1]) - x(R.hole[0]), base - top); }
+  c.lineWidth = 1;
+  for (const [z, a, l] of R.q) {
+    const len = l < 0 ? N - 1 - a : l;
+    c.strokeStyle = l < 0 ? css("--held") : css("--grass"); c.globalAlpha = l < 0 ? .9 : .45;
+    c.beginPath(); c.moveTo(x(a) + .5, base); c.lineTo(x(a) + .5, yv(len)); c.stroke();
+  }
+  c.globalAlpha = 1;
+  c.strokeStyle = css("--ink"); c.setLineDash([3, 3]); c.beginPath(); c.moveTo(L, yv(42) + .5); c.lineTo(Rr, yv(42) + .5); c.stroke(); c.setLineDash([]);
+  c.font = "11px ui-monospace, Menlo, monospace"; c.fillStyle = css("--dim"); c.fillText("42 days", L + 2, yv(42) - 4);
+  c.fillText(dateOf(0), L, h - 6); c.textAlign = "right"; c.fillText(dateOf(N - 1), Rr, h - 6); c.textAlign = "left";
+  // the visitor's holds
+  for (const [i, held, ok] of T[key].drawn) {
+    const [, a] = R.q[i]; c.strokeStyle = ok ? css("--gold") : css("--red"); c.lineWidth = 2;
+    c.beginPath(); c.moveTo(x(a), base + 1); c.lineTo(x(a), yv(Math.max(1, held))); c.stroke();
+  }
+  c.lineWidth = 1;
+}
+function drawAll() { drawPad(); drawGrass(); }
+
+// ---------- words ----------
+const plural = (n, s, p) => n + " " + (n === 1 ? s : (p || s + "s"));
+function showTally() {
+  const t = T[key];
+  if (!t.holds) { tally.textContent = ""; return; }
+  let s = `<b>${plural(t.holds, "hold")}</b> · broken by a case ${t.broke} · let go early ${t.early} · the record ended ${t.ended} · reached day 42 <b>${t.reached}</b>`;
+  if (t.declared) s += ` · declared over <b>${t.declared}</b>: a case came within 90 days ${t.after_broke}, quiet for 90 days ${t.after_held}, the record ended first ${t.after_ended}`;
+  tally.innerHTML = s;
+}
+function facts() {
+  const k = DATA.facts.kivu, g = DATA.facts.congo;
+  $("facts").textContent = `North Kivu and Ituri, ${k.first} to ${k.last}: ${k.quiets} quiets in ${k.zones} zones; `
+    + `${k.one_day} of them lasted a single day, and ${k.reach42} reached day 42 (${(100 * k.reach42 / k.quiets).toFixed(1)} in 100). `
+    + `Of those ${k.reach42}, a case came within the next 90 days in ${k.then_broke}. `
+    + `Eastern Congo 2026, to ${g.last}: ${g.quiets} quiets in ${g.zones} zones, ${g.reach42} reached day 42 (${(100 * g.reach42 / g.quiets).toFixed(1)} in 100); `
+    + `of those, a case came within 90 days in ${g.then_broke}, ${g.then_held} stayed quiet for 90, and for ${g.then_ended} the record ends before anyone can say.`;
+}
+function grasscap() {
+  const f = DATA.facts[key];
+  $("grasscap").textContent = `Every quiet of the record, ${f.quiets} blades: each stands on the day its zone's count last rose, as tall as the silence lasted (log scale). `
+    + `Dark blades held to the record's last day.` + (R.hole ? " The pale band: the 94 days with no report." : "")
+    + " Your holds: gold where you reached 42, red where you did not.";
+}
+
+// ---------- the hold ----------
+function draw() { return Math.floor(rnd() * R.q.length); }
+function press() {
+  if (S.st === "hold" || S.st === "after") return;
+  const i = draw(), [z, a, l] = R.q[i];
+  S = { st: "hold", i, q: { z, a, l }, t0: performance.now(), d: 0, held: 0, end: null, bell: false };
+  T[key].holds++; if (soundOn) { audio(); droneStart(); }
+  say.innerHTML = `${R.zones[z]}. The count last rose on ${dateOf(a)}. Keep holding.`;
+  loop();
+}
+function seenOf(q) { return R.N - 1 - q.a; }
+function stopHold(how) {
+  const q = S.q, t = T[key];
+  S.held = S.d;
+  if (how === "case") {
+    t.broke++; S.end = "case"; S.st = "done"; droneStop(true); crack();
+    say.innerHTML = `<span class="red">A new case in ${R.zones[q.z]}, ${dateOf(q.a + q.l)}: day ${q.l}.</span> Your hand did not decide this.`;
+    t.drawn.push([S.i, S.d, false]);
+  } else if (how === "record") {
+    t.ended++; S.end = "record"; S.st = "done"; droneStop(false);
+    say.innerHTML = `The record ends on ${dateOf(R.N - 1)}, day ${S.d} of this quiet. Whether ${R.zones[q.z]} stayed quiet, nobody can say yet.`;
+    t.drawn.push([S.i, S.d, false]);
+  } else if (how === "early") {
+    t.early++; S.st = "done"; droneStop(false);
+    const rest = q.l >= 0 ? `The next case in ${R.zones[q.z]} came on ${dateOf(q.a + q.l)}, day ${q.l}.`
+                          : `${R.zones[q.z]} wrote no case to the record's last day, ${dateOf(R.N - 1)}: ${seenOf(q)} days.`;
+    say.innerHTML = `You let go on day ${S.d}. ${rest}`;
+    t.drawn.push([S.i, S.d, false]);
+  } else if (how === "declare") {
+    t.declared++; S.st = "after"; S.t1 = performance.now(); S.d0 = S.d;
+    say.innerHTML = `<span class="gold">You declare ${R.zones[q.z]} over on ${dateOf(q.a + S.d)}, day ${S.d}.</span> The record writes the next 90 days.`;
+    t.drawn.push([S.i, S.d, true]);
+  }
+  clock.textContent = dateOf(q.a + S.d);
+  showTally(); drawAll();
+}
+function release() { if (S.st !== "hold") return; S.d < 42 ? stopHold("early") : stopHold("declare"); }
+function finishAfter(how) {
+  const q = S.q, t = T[key]; S.st = "done"; S.end = how === "case" ? "case" : how === "record" ? "record" : null;
+  if (how === "case") { t.after_broke++; droneStop(true); crack();
+    say.innerHTML += ` <span class="red">A new case on ${dateOf(q.a + q.l)}, day ${q.l}: ${q.l - S.held} days after you called it.</span>`; }
+  else if (how === "record") { t.after_ended++; droneStop(false);
+    say.innerHTML += ` The record ends on ${dateOf(R.N - 1)}, ${R.N - 1 - q.a - S.held} days after you called it. Nobody can say yet whether you were right.`; }
+  else { t.after_held++; droneStop(false); bell();
+    say.innerHTML += ` Ninety days, and no case. The record agrees with you, so far.`; }
+  clock.textContent = dateOf(q.a + S.d);
+  showTally(); drawAll();
+}
+let raf = 0;
+function loop() {
+  cancelAnimationFrame(raf);
+  const step = () => {
+    const now = performance.now(), q = S.q;
+    if (S.st === "hold") {
+      const d = Math.floor((now - S.t0) / MS);
+      if (d !== S.d) {
+        S.d = d; tick();
+        if (q.l >= 0 && d >= q.l) { S.d = q.l; stopHold("case"); return; }
+        if (q.l < 0 && d >= seenOf(q)) { S.d = seenOf(q); stopHold("record"); return; }
+        if (d >= 42 && !S.bell) { S.bell = true; T[key].reached++; showTally(); bell();
+          say.innerHTML = `<span class="gold">Day 42 in ${R.zones[q.z]}.</span> Let go to declare it over, or keep holding.`; }
+        droneSet(d, inHole(q.a + d));
+        clock.textContent = dateOf(q.a + d);
+      }
+    } else if (S.st === "after") {
+      const d = S.d0 + Math.floor((now - S.t1) / FF);
+      if (d !== S.d) {
+        S.d = d;
+        if (q.l >= 0 && d >= q.l && q.l <= S.held + 90) { S.d = q.l; finishAfter("case"); return; }
+        if (q.l < 0 && d >= seenOf(q) && seenOf(q) < S.held + 90) { S.d = seenOf(q); finishAfter("record"); return; }
+        if (d >= S.held + 90) { S.d = S.held + 90; finishAfter("held"); return; }
+        droneSet(d, inHole(q.a + d)); clock.textContent = dateOf(q.a + d);
+      }
+    } else return;
+    drawPad(); raf = requestAnimationFrame(step);
+  };
+  raf = requestAnimationFrame(step);
+}
+
+// ---------- input ----------
+pad.addEventListener("pointerdown", e => { e.preventDefault(); pad.setPointerCapture?.(e.pointerId); press(); });
+["pointerup", "pointercancel"].forEach(ev => pad.addEventListener(ev, release));
+window.addEventListener("blur", release);
+pad.addEventListener("contextmenu", e => e.preventDefault());
+pad.addEventListener("keydown", e => { if ((e.key === " " || e.key === "Enter") && !e.repeat) { e.preventDefault(); press(); } });
+pad.addEventListener("keyup", e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); release(); } });
+window.addEventListener("keydown", e => { if (e.key === " " && document.activeElement === document.body && !e.repeat) { e.preventDefault(); pad.focus(); press(); } });
+window.addEventListener("keyup", e => { if (e.key === " " && S.st === "hold") { e.preventDefault(); release(); } });
+
+function choose(k) {
+  if (S.st === "hold" || S.st === "after") return;
+  key = k; R = DATA.records[k]; S = { st: "idle" };
+  $("rec-kivu").setAttribute("aria-pressed", k === "kivu"); $("rec-congo").setAttribute("aria-pressed", k === "congo");
+  clock.textContent = dateOf(0) + " – " + dateOf(R.N - 1);
+  say.textContent = ""; showTally(); grasscap(); drawAll();
+}
+$("rec-kivu").onclick = () => choose("kivu");
+$("rec-congo").onclick = () => choose("congo");
+$("sound").onclick = () => { soundOn = !soundOn; $("sound").setAttribute("aria-pressed", soundOn); $("sound").textContent = soundOn ? "sound off" : "sound on"; if (soundOn) audio(); else droneStop(true); };
+addEventListener("resize", drawAll);
+matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", drawAll);
+
+fetch("data.json").then(r => r.json()).then(d => {
+  DATA = d; T.kivu = fresh(); T.congo = fresh(); facts(); choose("kivu");
+  window.__hold = { press, release, state: () => S, tally: () => T };   // for the page's own check
+});
+})();
+</script>
+</body>
+</html>
