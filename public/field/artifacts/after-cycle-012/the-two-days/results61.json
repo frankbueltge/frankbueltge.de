@@ -1,0 +1,1108 @@
+{
+ "study": 61,
+ "session": 259,
+ "date": "2026-11-07",
+ "input": {
+  "reports": 141,
+  "usable": 80,
+  "zone_rows": 4753
+ },
+ "predictions": {
+  "P35": {
+   "text": "restoring the two days moves study 59's pooled difference by < 1 point and its P27 still holds",
+   "value": {
+    "published": {
+     "diff": 0.0485,
+     "ci95": [
+      -0.0104,
+      0.1062
+     ]
+    },
+    "restored": {
+     "written": {
+      "days": 20,
+      "k": 235,
+      "n": 709,
+      "share": 0.3315
+     },
+     "none": {
+      "days": 31,
+      "k": 354,
+      "n": 1244,
+      "share": 0.2846
+     },
+     "diff": 0.0469,
+     "ci95": [
+      -0.0124,
+      0.105
+     ]
+    },
+    "move": -0.0016,
+    "lag_restored": {
+     "written": {
+      "days": 20,
+      "k": 224,
+      "n": 676,
+      "share": 0.3314
+     },
+     "none": {
+      "days": 31,
+      "k": 349,
+      "n": 1236,
+      "share": 0.2824
+     },
+     "diff": 0.049,
+     "ci95": [
+      -0.0128,
+      0.1077
+     ]
+    },
+    "fixes": [
+     {
+      "report": 145,
+      "date": "2026-10-06",
+      "was": [
+       32,
+       10
+      ],
+      "now": [
+       33,
+       10
+      ],
+      "why": "Adja's one new case is printed on a line of its own beneath Adja's row"
+     },
+     {
+      "report": 169,
+      "date": "2026-10-30",
+      "was": [
+       21,
+       7
+      ],
+      "now": [
+       34,
+       13
+      ],
+      "why": "seven rows read whole but rejected by the guard against shifted rows; the zones then sum to 34/13, the report's own Ituri row says 34/12"
+     }
+    ]
+   },
+   "held": true
+  },
+  "P36": {
+   "text": "rows rejected only by the fatality-rate guard (four day-cells, total = community + CTE, community <= new) are < 2 % of Ituri and North Kivu zone rows",
+   "value": {
+    "rows": 3380,
+    "invalid": 10,
+    "guard_only": 8,
+    "share": 0.0024,
+    "guard_only_nonzero": 8,
+    "reports": [
+     169
+    ]
+   },
+   "held": true
+  },
+  "P37": {
+   "text": "a day number printed on a line of its own inside the zone table occurs in <= 5 of the 80 reports",
+   "value": {
+    "reports": 1,
+    "cells": 1,
+    "where": {
+     "145": [
+      {
+       "after": "Adja",
+       "cells": [
+        1,
+        0
+       ],
+       "value": 1
+      }
+     ]
+    }
+   },
+   "held": true
+  },
+  "P38": {
+   "text": "readmitting guard-only rows changes the series' pooled community share by < 0.5 points",
+   "value": {
+    "published": [
+     1921,
+     5966,
+     0.322
+    ],
+    "readmitted_rows": 10,
+    "readmitted": [
+     1927,
+     5983,
+     0.3221
+    ],
+    "change": 0.0001
+   },
+   "held": true
+  }
+ },
+ "report169_self": {
+  "zones": {
+   "new": 34,
+   "comm": 13,
+   "cte": 8,
+   "tot": 30
+  },
+  "province": {
+   "new": 34,
+   "comm": 12,
+   "cte": 7,
+   "tot": 19
+  }
+ },
+ "invalid_by_reason": {
+  "guard only": 10,
+  "fatality+community": 1,
+  "community": 2,
+  "total": 1,
+  "fatality": 1
+ },
+ "post_hoc": {
+  "note": "computed after P35-P38 were scored; descriptive",
+  "guard_only_rows": 10,
+  "same_as_previous_report": 6,
+  "rows": [
+   {
+    "report": 73,
+    "prov": "total",
+    "name": "Drodro",
+    "printed": 66.7,
+    "calc": 50.0,
+    "prev_printed": null,
+    "same_as_prev": false
+   },
+   {
+    "report": 73,
+    "prov": "total",
+    "name": "Kalunguta",
+    "printed": 75.0,
+    "calc": 60.0,
+    "prev_printed": null,
+    "same_as_prev": false
+   },
+   {
+    "report": 169,
+    "prov": "ituri",
+    "name": "Lita",
+    "printed": 50.3,
+    "calc": 50.46,
+    "prev_printed": 50.3,
+    "same_as_prev": true
+   },
+   {
+    "report": 169,
+    "prov": "ituri",
+    "name": "Lolwa",
+    "printed": 49.2,
+    "calc": 27.03,
+    "prev_printed": 25.0,
+    "same_as_prev": false
+   },
+   {
+    "report": 169,
+    "prov": "ituri",
+    "name": "Mambasa",
+    "printed": 46.8,
+    "calc": 47.92,
+    "prev_printed": 46.8,
+    "same_as_prev": true
+   },
+   {
+    "report": 169,
+    "prov": "ituri",
+    "name": "Mandima",
+    "printed": 52.4,
+    "calc": 53.03,
+    "prev_printed": 52.4,
+    "same_as_prev": true
+   },
+   {
+    "report": 169,
+    "prov": "ituri",
+    "name": "Mangala",
+    "printed": 43.4,
+    "calc": 43.22,
+    "prev_printed": 43.4,
+    "same_as_prev": true
+   },
+   {
+    "report": 169,
+    "prov": "ituri",
+    "name": "Rimba",
+    "printed": 27.3,
+    "calc": 26.09,
+    "prev_printed": 27.3,
+    "same_as_prev": true
+   },
+   {
+    "report": 169,
+    "prov": "nordkivu",
+    "name": "Biena",
+    "printed": 23.1,
+    "calc": 34.62,
+    "prev_printed": 36.0,
+    "same_as_prev": false
+   },
+   {
+    "report": 169,
+    "prov": "nordkivu",
+    "name": "Masereka",
+    "printed": 31.7,
+    "calc": 30.95,
+    "prev_printed": 31.7,
+    "same_as_prev": true
+   }
+  ]
+ },
+ "reports": [
+  {
+   "report": 60,
+   "date": "2026-07-13",
+   "zones": 46,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 62,
+   "date": "2026-07-15",
+   "zones": 47,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 65,
+   "date": "2026-07-18",
+   "zones": 47,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 66,
+   "date": "2026-07-19",
+   "zones": 48,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 67,
+   "date": "2026-07-20",
+   "zones": 48,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 69,
+   "date": "2026-07-22",
+   "zones": 47,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 70,
+   "date": "2026-07-23",
+   "zones": 48,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 72,
+   "date": "2026-07-25",
+   "zones": 48,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 73,
+   "date": "2026-07-26",
+   "zones": 53,
+   "invalid": [
+    {
+     "prov": "total",
+     "name": "Drodro",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      4,
+      1,
+      0,
+      1
+     ],
+     "cum": 10,
+     "dth": 5,
+     "cfr": 66.7,
+     "calc": 50.0
+    },
+    {
+     "prov": "total",
+     "name": "Beni",
+     "why": [
+      "fatality",
+      "community"
+     ],
+     "how": "k4",
+     "cells": [
+      1,
+      4,
+      0,
+      4
+     ],
+     "cum": 44,
+     "dth": 34,
+     "cfr": 69.8,
+     "calc": 77.27
+    },
+    {
+     "prov": "total",
+     "name": "Kalunguta",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "cum": 5,
+     "dth": 3,
+     "cfr": 75.0,
+     "calc": 60.0
+    }
+   ],
+   "lone": []
+  },
+  {
+   "report": 77,
+   "date": "2026-07-30",
+   "zones": 49,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 78,
+   "date": "2026-07-31",
+   "zones": 49,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 79,
+   "date": "2026-08-01",
+   "zones": 50,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 81,
+   "date": "2026-08-03",
+   "zones": 51,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 82,
+   "date": "2026-08-04",
+   "zones": 51,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 89,
+   "date": "2026-08-11",
+   "zones": 53,
+   "invalid": [
+    {
+     "prov": "hautuele",
+     "name": "Wamba",
+     "why": [
+      "community"
+     ],
+     "how": "pos",
+     "cells": [
+      0,
+      1,
+      1,
+      2
+     ],
+     "cum": 43,
+     "dth": 16,
+     "cfr": 37.2,
+     "calc": 37.21
+    }
+   ],
+   "lone": []
+  },
+  {
+   "report": 93,
+   "date": "2026-08-15",
+   "zones": 55,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 94,
+   "date": "2026-08-17",
+   "zones": 20,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 96,
+   "date": "2026-08-19",
+   "zones": 56,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 97,
+   "date": "2026-08-20",
+   "zones": 56,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 99,
+   "date": "2026-08-22",
+   "zones": 57,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 101,
+   "date": "2026-08-24",
+   "zones": 58,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 102,
+   "date": "2026-08-25",
+   "zones": 58,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 104,
+   "date": "2026-08-26",
+   "zones": 60,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 106,
+   "date": "2026-08-28",
+   "zones": 60,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 108,
+   "date": "2026-08-30",
+   "zones": 60,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 109,
+   "date": "2026-08-31",
+   "zones": 60,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 110,
+   "date": "2026-09-01",
+   "zones": 60,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 111,
+   "date": "2026-09-02",
+   "zones": 60,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 112,
+   "date": "2026-09-03",
+   "zones": 60,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 113,
+   "date": "2026-09-04",
+   "zones": 61,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 114,
+   "date": "2026-09-05",
+   "zones": 61,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 115,
+   "date": "2026-09-06",
+   "zones": 61,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 116,
+   "date": "2026-09-07",
+   "zones": 60,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 117,
+   "date": "2026-09-08",
+   "zones": 61,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 118,
+   "date": "2026-09-09",
+   "zones": 61,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 119,
+   "date": "2026-09-10",
+   "zones": 59,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 120,
+   "date": "2026-09-11",
+   "zones": 59,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 122,
+   "date": "2026-09-13",
+   "zones": 59,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 123,
+   "date": "2026-09-14",
+   "zones": 59,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 124,
+   "date": "2026-09-15",
+   "zones": 59,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 125,
+   "date": "2026-09-16",
+   "zones": 62,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 126,
+   "date": "2026-09-17",
+   "zones": 62,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 128,
+   "date": "2026-09-19",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 129,
+   "date": "2026-09-20",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 130,
+   "date": "2026-09-21",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 131,
+   "date": "2026-09-22",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 132,
+   "date": "2026-09-23",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 133,
+   "date": "2026-09-24",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 134,
+   "date": "2026-09-25",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 135,
+   "date": "2026-09-26",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 136,
+   "date": "2026-09-27",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 137,
+   "date": "2026-09-28",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 138,
+   "date": "2026-09-29",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 139,
+   "date": "2026-09-30",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 140,
+   "date": "2026-10-01",
+   "zones": 63,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 141,
+   "date": "2026-10-01",
+   "zones": 64,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 142,
+   "date": "2026-10-03",
+   "zones": 64,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 143,
+   "date": "2026-10-04",
+   "zones": 64,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 144,
+   "date": "2026-10-05",
+   "zones": 64,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 145,
+   "date": "2026-10-06",
+   "zones": 64,
+   "invalid": [],
+   "lone": [
+    {
+     "after": "Adja",
+     "cells": [
+      1,
+      0
+     ],
+     "value": 1
+    }
+   ]
+  },
+  {
+   "report": 146,
+   "date": "2026-10-07",
+   "zones": 64,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 147,
+   "date": "2026-10-08",
+   "zones": 65,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 148,
+   "date": "2026-10-09",
+   "zones": 65,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 149,
+   "date": "2026-10-10",
+   "zones": 65,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 150,
+   "date": "2026-10-11",
+   "zones": 65,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 151,
+   "date": "2026-10-12",
+   "zones": 65,
+   "invalid": [
+    {
+     "prov": "hautuele",
+     "name": "Pawa",
+     "why": [
+      "community"
+     ],
+     "how": "k4",
+     "cells": [
+      0,
+      1,
+      0,
+      1
+     ],
+     "cum": 100,
+     "dth": 49,
+     "cfr": 49.0,
+     "calc": 49.0
+    }
+   ],
+   "lone": []
+  },
+  {
+   "report": 152,
+   "date": "2026-10-13",
+   "zones": 65,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 153,
+   "date": "2026-10-14",
+   "zones": 65,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 154,
+   "date": "2026-10-15",
+   "zones": 65,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 155,
+   "date": "2026-10-16",
+   "zones": 66,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 156,
+   "date": "2026-10-17",
+   "zones": 66,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 157,
+   "date": "2026-10-18",
+   "zones": 66,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 164,
+   "date": "2026-10-25",
+   "zones": 66,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 165,
+   "date": "2026-10-26",
+   "zones": 66,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 166,
+   "date": "2026-10-27",
+   "zones": 66,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 167,
+   "date": "2026-10-28",
+   "zones": 67,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 168,
+   "date": "2026-10-29",
+   "zones": 67,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 169,
+   "date": "2026-10-30",
+   "zones": 67,
+   "invalid": [
+    {
+     "prov": "ituri",
+     "name": "Lita",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      1,
+      1,
+      0,
+      1
+     ],
+     "cum": 327,
+     "dth": 165,
+     "cfr": 50.3,
+     "calc": 50.46
+    },
+    {
+     "prov": "ituri",
+     "name": "Lolwa",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      1,
+      1,
+      0,
+      1
+     ],
+     "cum": 37,
+     "dth": 10,
+     "cfr": 49.2,
+     "calc": 27.03
+    },
+    {
+     "prov": "ituri",
+     "name": "Mambasa",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      2,
+      1,
+      2,
+      3
+     ],
+     "cum": 96,
+     "dth": 46,
+     "cfr": 46.8,
+     "calc": 47.92
+    },
+    {
+     "prov": "ituri",
+     "name": "Mandima",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      4,
+      2,
+      3,
+      5
+     ],
+     "cum": 479,
+     "dth": 254,
+     "cfr": 52.4,
+     "calc": 53.03
+    },
+    {
+     "prov": "ituri",
+     "name": "Mangala",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "cum": 398,
+     "dth": 172,
+     "cfr": 43.4,
+     "calc": 43.22
+    },
+    {
+     "prov": "ituri",
+     "name": "Mongbwalu",
+     "why": [
+      "total"
+     ],
+     "how": "k4",
+     "cells": [
+      3,
+      1,
+      0,
+      10
+     ],
+     "cum": 717,
+     "dth": 346,
+     "cfr": 48.3,
+     "calc": 48.26
+    },
+    {
+     "prov": "ituri",
+     "name": "Rimba",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "cum": 23,
+     "dth": 6,
+     "cfr": 27.3,
+     "calc": 26.09
+    },
+    {
+     "prov": "nordkivu",
+     "name": "Biena",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "cum": 26,
+     "dth": 9,
+     "cfr": 23.1,
+     "calc": 34.62
+    },
+    {
+     "prov": "nordkivu",
+     "name": "Manguredjipa",
+     "why": [
+      "fatality"
+     ],
+     "how": "pos",
+     "cells": [
+      0,
+      0,
+      null,
+      0
+     ],
+     "cum": 16,
+     "dth": 5,
+     "cfr": 31.0,
+     "calc": 31.25
+    },
+    {
+     "prov": "nordkivu",
+     "name": "Masereka",
+     "why": [
+      "fatality"
+     ],
+     "how": "k4",
+     "cells": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "cum": 42,
+     "dth": 13,
+     "cfr": 31.7,
+     "calc": 30.95
+    }
+   ],
+   "lone": []
+  },
+  {
+   "report": 170,
+   "date": "2026-10-31",
+   "zones": 67,
+   "invalid": [],
+   "lone": []
+  },
+  {
+   "report": 171,
+   "date": "2026-11-01",
+   "zones": 67,
+   "invalid": [],
+   "lone": []
+  }
+ ]
+}

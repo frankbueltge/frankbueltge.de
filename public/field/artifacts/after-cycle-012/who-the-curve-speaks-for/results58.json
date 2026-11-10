@@ -1,0 +1,205 @@
+{
+ "study": 58,
+ "session": 256,
+ "date": "2026-11-06",
+ "predictions": {
+  "P23": {
+   "text": "at day 42 the counted population and the broken count move by at most 2 in each record",
+   "value": {
+    "Kivu": [
+     [
+      17,
+      60
+     ],
+     [
+      17,
+      60
+     ]
+    ],
+    "2026": [
+     [
+      8,
+      15
+     ],
+     [
+      9,
+      16
+     ]
+    ]
+   },
+   "held": true
+  },
+  "P24": {
+   "text": "no verdict of study 56 changes under the other reading",
+   "value": {
+    "A": {
+     "P15": false,
+     "P16": true,
+     "P17": true,
+     "P18": true
+    },
+    "B": {
+     "P15": false,
+     "P16": false,
+     "P17": true,
+     "P18": true
+    }
+   },
+   "held": false
+  },
+  "P25": {
+   "text": "2026, the record's end leaves out 4 of the day-42 population at day 60 under both readings",
+   "value": [
+    4,
+    3
+   ],
+   "held": false
+  },
+  "P26": {
+   "text": "the second implementation reproduces study 53's observations exactly under reading A",
+   "value": {
+    "Kivu 2018-2020": {
+     "observations": [
+      9120,
+      9120
+     ],
+     "quiets": [
+      1546,
+      1546
+     ],
+     "identical": true
+    },
+    "Congo 2026": {
+     "observations": [
+      3913,
+      3913
+     ],
+     "quiets": [
+      2027,
+      2027
+     ],
+     "identical": true
+    }
+   },
+   "held": true
+  }
+ },
+ "derivationHolds": true,
+ "readings": {
+  "A": "day 1 = the day after the rise (study 53's code)",
+  "B": "day 1 = the rise day"
+ },
+ "records": {
+  "Kivu 2018-2020": {
+   "A": {
+    "p42": [
+     17,
+     60
+    ],
+    "p60": [
+     18,
+     53
+    ],
+    "med42": "2019-07-30",
+    "med60": "2019-08-10",
+    "band": [
+     0,
+     0
+    ],
+    "gap": 0.0,
+    "gapCI": [
+     0.0,
+     0.0
+    ],
+    "firstEdge": 80,
+    "below10": 97,
+    "below5": 114
+   },
+   "B": {
+    "p42": [
+     17,
+     60
+    ],
+    "p60": [
+     18,
+     53
+    ],
+    "med42": "2019-07-30",
+    "med60": "2019-08-10",
+    "band": [
+     0,
+     0
+    ],
+    "gap": 0.0,
+    "gapCI": [
+     0.0,
+     0.0
+    ],
+    "firstEdge": 81,
+    "below10": 98,
+    "below5": 115
+   }
+  },
+  "Congo 2026": {
+   "A": {
+    "p42": [
+     8,
+     15
+    ],
+    "p60": [
+     2,
+     6
+    ],
+    "med42": "2026-06-30",
+    "med60": "2026-06-21",
+    "band": [
+     1,
+     4
+    ],
+    "gap": -0.10303030303030303,
+    "gapCI": [
+     -0.3035714285714286,
+     0.038461538461538436
+    ],
+    "firstEdge": 21,
+    "below10": null,
+    "below5": null
+   },
+   "B": {
+    "p42": [
+     9,
+     16
+    ],
+    "p60": [
+     2,
+     7
+    ],
+    "med42": "2026-06-24",
+    "med60": "2026-06-30",
+    "band": [
+     1,
+     3
+    ],
+    "gap": -0.05288461538461542,
+    "gapCI": [
+     -0.19999999999999996,
+     0.06060606060606061
+    ],
+    "firstEdge": 21,
+    "below10": null,
+    "below5": null
+   }
+  }
+ },
+ "sources": {
+  "kivu_sha256": "76c7e9997be585cde16e091a82fef70903965cbf4651931b1a25587587ed86cb",
+  "hdx2026_current_sha256": "15e33668084c38597e186a3b828af4775773127acb9aad852656b5aee3e63dd8",
+  "hdx2026_cut": "2026-10-29"
+ },
+ "params": {
+  "horizon": 42,
+  "dmax": 120,
+  "bootstrap": 2000,
+  "seed": 56
+ }
+}

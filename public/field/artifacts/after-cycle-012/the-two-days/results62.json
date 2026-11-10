@@ -1,0 +1,483 @@
+{
+ "study": 62,
+ "session": 260,
+ "date": "2026-11-07",
+ "predictions_commit": "d1ce1806807f2fee2a6138477da3e3db410e9668",
+ "reports": 80,
+ "pairs": 62,
+ "predictions": {
+  "P39": {
+   "text": "province rows keep their death step in >= 90 % of province-pairs",
+   "value": {
+    "k": 405,
+    "n": 410,
+    "share": 0.9878
+   },
+   "held": true
+  },
+  "P40": {
+   "text": "zone rows keep their death step less often than provinces, and in < 90 % of zone-pairs with a death on either side",
+   "value": {
+    "k": 730,
+    "n": 777,
+    "share": 0.9395
+   },
+   "held": false
+  },
+  "P41": {
+   "text": "zone rows keep their case step more often than their death step",
+   "value": {
+    "k": 1126,
+    "n": 1171,
+    "share": 0.9616
+   },
+   "held": true
+  },
+  "P42": {
+   "text": "zones' cumulative deaths + 'A ventiler' equal the province row's on >= 90 % of province-reports",
+   "value": {
+    "k": 497,
+    "n": 509,
+    "share": 0.9764
+   },
+   "held": true,
+   "first_run": {
+    "k": 482,
+    "n": 509,
+    "share": 0.947
+   }
+  },
+  "P43": {
+   "text": "Ituri's zones break their death step more often than North Kivu's",
+   "value": {
+    "ituri": {
+     "k": 19,
+     "n": 388,
+     "share": 0.049
+    },
+    "nordkivu": {
+     "k": 5,
+     "n": 281,
+     "share": 0.0178
+    }
+   },
+   "held": true
+  }
+ },
+ "studio_day": {
+  "ituri": [
+   {
+    "report": 168,
+    "date": "2026-10-29",
+    "row": {
+     "cum": 7346,
+     "dth": 3436,
+     "new": 28,
+     "comm": 8,
+     "cte": 10,
+     "tot": 18
+    },
+    "zones": {
+     "cum": 7346,
+     "dth": 2943,
+     "new": 28,
+     "comm": 8,
+     "cte": 10,
+     "tot": 18
+    },
+    "vent": 493
+   },
+   {
+    "report": 169,
+    "date": "2026-10-30",
+    "row": {
+     "cum": 7380,
+     "dth": 3455,
+     "new": 34,
+     "comm": 12,
+     "cte": 7,
+     "tot": 19
+    },
+    "zones": {
+     "cum": 7374,
+     "dth": 2961,
+     "new": 34,
+     "comm": 13,
+     "cte": 8,
+     "tot": 30
+    },
+    "vent": 493
+   },
+   {
+    "report": 170,
+    "date": "2026-10-31",
+    "row": {
+     "cum": 7412,
+     "dth": 3483,
+     "new": 32,
+     "comm": 13,
+     "cte": 15,
+     "tot": 28
+    },
+    "zones": {
+     "cum": 7412,
+     "dth": 2990,
+     "new": 32,
+     "comm": 13,
+     "cte": 15,
+     "tot": 28
+    },
+    "vent": 493
+   },
+   {
+    "report": 171,
+    "date": "2026-11-01",
+    "row": {
+     "cum": 7431,
+     "dth": 3492,
+     "new": 19,
+     "comm": 8,
+     "cte": 1,
+     "tot": 9
+    },
+    "zones": {
+     "cum": 7431,
+     "dth": 2999,
+     "new": 19,
+     "comm": 8,
+     "cte": 1,
+     "tot": 9
+    },
+    "vent": 493
+   }
+  ],
+  "answer": {
+   "row_step_30oct": 19,
+   "row_day_30oct": 19,
+   "zone_step_30oct": 18,
+   "zone_day_30oct": 30,
+   "zone_comm_cte_30oct": 21,
+   "row_step_31oct": 28,
+   "row_day_31oct": 28,
+   "zone_step_31oct": 29,
+   "zone_day_31oct": 28
+  },
+  "zones_169": [
+   {
+    "zone": "Bunia",
+    "comm": 5,
+    "cte": 1,
+    "tot": 6,
+    "step": 6
+   },
+   {
+    "zone": "Kilo",
+    "comm": 0,
+    "cte": 0,
+    "tot": 0,
+    "step": 0
+   },
+   {
+    "zone": "Lita",
+    "comm": 1,
+    "cte": 0,
+    "tot": 1,
+    "step": 1
+   },
+   {
+    "zone": "Lolwa",
+    "comm": 1,
+    "cte": 0,
+    "tot": 1,
+    "step": 1
+   },
+   {
+    "zone": "Mambasa",
+    "comm": 1,
+    "cte": 2,
+    "tot": 3,
+    "step": 2
+   },
+   {
+    "zone": "Mandima",
+    "comm": 2,
+    "cte": 3,
+    "tot": 5,
+    "step": 5
+   },
+   {
+    "zone": "Mangala",
+    "comm": 0,
+    "cte": 0,
+    "tot": 0,
+    "step": 0
+   },
+   {
+    "zone": "Mongbwalu",
+    "comm": 1,
+    "cte": 0,
+    "tot": 10,
+    "step": 0
+   },
+   {
+    "zone": "Nia-Nia",
+    "comm": 0,
+    "cte": 0,
+    "tot": 0,
+    "step": 0
+   },
+   {
+    "zone": "Nizi",
+    "comm": 1,
+    "cte": 1,
+    "tot": 2,
+    "step": 1
+   },
+   {
+    "zone": "Rimba",
+    "comm": 0,
+    "cte": 0,
+    "tot": 0,
+    "step": 0
+   },
+   {
+    "zone": "Rwampara",
+    "comm": 1,
+    "cte": 1,
+    "tot": 2,
+    "step": 2
+   }
+  ]
+ },
+ "direction": {
+  "step_above_day": 35,
+  "step_below_day": 12,
+  "net": 182,
+  "step_zero_day_positive": 1,
+  "negative_steps": 6
+ },
+ "post_hoc": {
+  "named_zone_pairs": {
+   "k": 722,
+   "n": 747,
+   "share": 0.9665
+  },
+  "unnamed_breaks": 22,
+  "report94_province_steps": [
+   {
+    "prov": "ituri",
+    "step": 77,
+    "day": 37
+   },
+   {
+    "prov": "nordkivu",
+    "step": 14,
+    "day": 3
+   },
+   {
+    "prov": "hautuele",
+    "step": 3,
+    "day": 2
+   },
+   {
+    "prov": "tshopo",
+    "step": 1,
+    "day": 0
+   },
+   {
+    "prov": "sudkivu",
+    "step": 0,
+    "day": 0
+   },
+   {
+    "prov": "basuele",
+    "step": 0,
+    "day": 0
+   }
+  ]
+ },
+ "sums_failed": [
+  {
+   "report": 81,
+   "date": "2026-08-03",
+   "prov": "nordkivu",
+   "row": 290,
+   "zones": 288,
+   "vent": 0,
+   "rowcases": 426,
+   "zonecases": 426
+  },
+  {
+   "report": 89,
+   "date": "2026-08-11",
+   "prov": "ituri",
+   "row": 1702,
+   "zones": 1701,
+   "vent": 69,
+   "rowcases": 3912,
+   "zonecases": 3912
+  },
+  {
+   "report": 94,
+   "date": "2026-08-17",
+   "prov": "ituri",
+   "row": 1915,
+   "zones": 1620,
+   "vent": 0,
+   "rowcases": 4309,
+   "zonecases": 3961
+  },
+  {
+   "report": 94,
+   "date": "2026-08-17",
+   "prov": "nordkivu",
+   "row": 431,
+   "zones": 405,
+   "vent": 0,
+   "rowcases": 633,
+   "zonecases": 589
+  },
+  {
+   "report": 94,
+   "date": "2026-08-17",
+   "prov": "hautuele",
+   "row": 65,
+   "zones": 30,
+   "vent": 0,
+   "rowcases": 145,
+   "zonecases": 70
+  },
+  {
+   "report": 94,
+   "date": "2026-08-17",
+   "prov": "basuele",
+   "row": 1,
+   "zones": 2420,
+   "vent": 0,
+   "rowcases": 1,
+   "zonecases": 5105
+  },
+  {
+   "report": 106,
+   "date": "2026-08-28",
+   "prov": "ituri",
+   "row": 2212,
+   "zones": 1905,
+   "vent": 0,
+   "rowcases": 4911,
+   "zonecases": 4911
+  },
+  {
+   "report": 108,
+   "date": "2026-08-30",
+   "prov": "ituri",
+   "row": 2274,
+   "zones": 1945,
+   "vent": 0,
+   "rowcases": 5016,
+   "zonecases": 5016
+  },
+  {
+   "report": 109,
+   "date": "2026-08-31",
+   "prov": "ituri",
+   "row": 2305,
+   "zones": 1966,
+   "vent": 0,
+   "rowcases": 5065,
+   "zonecases": 5065
+  },
+  {
+   "report": 116,
+   "date": "2026-09-07",
+   "prov": "basuele",
+   "row": 3,
+   "zones": 2,
+   "vent": 0,
+   "rowcases": 4,
+   "zonecases": 3
+  },
+  {
+   "report": 169,
+   "date": "2026-10-30",
+   "prov": "ituri",
+   "row": 3455,
+   "zones": 3454,
+   "vent": 493,
+   "rowcases": 7380,
+   "zonecases": 7374
+  },
+  {
+   "report": 169,
+   "date": "2026-10-30",
+   "prov": "nordkivu",
+   "row": 1366,
+   "zones": 1363,
+   "vent": 0,
+   "rowcases": 2461,
+   "zonecases": 2462
+  }
+ ],
+ "broken_province_steps": [
+  {
+   "a": 81,
+   "b": 82,
+   "date": "2026-08-04",
+   "prov": "nordkivu",
+   "zone": "Nord-Kivu",
+   "is_prov": true,
+   "d_step": 2,
+   "d_day": 4,
+   "c_step": 10,
+   "c_day": 10
+  },
+  {
+   "a": 93,
+   "b": 94,
+   "date": "2026-08-17",
+   "prov": "ituri",
+   "zone": "Ituri",
+   "is_prov": true,
+   "d_step": 77,
+   "d_day": 37,
+   "c_step": 115,
+   "c_day": 52
+  },
+  {
+   "a": 93,
+   "b": 94,
+   "date": "2026-08-17",
+   "prov": "nordkivu",
+   "zone": "Nord-Kivu",
+   "is_prov": true,
+   "d_step": 14,
+   "d_day": 3,
+   "c_step": 37,
+   "c_day": 26
+  },
+  {
+   "a": 93,
+   "b": 94,
+   "date": "2026-08-17",
+   "prov": "hautuele",
+   "zone": "Haut-Uélé",
+   "is_prov": true,
+   "d_step": 3,
+   "d_day": 2,
+   "c_step": 7,
+   "c_day": 6
+  },
+  {
+   "a": 93,
+   "b": 94,
+   "date": "2026-08-17",
+   "prov": "tshopo",
+   "zone": "Tshopo",
+   "is_prov": true,
+   "d_step": 1,
+   "d_day": 0,
+   "c_step": 1,
+   "c_day": 0
+  }
+ ]
+}

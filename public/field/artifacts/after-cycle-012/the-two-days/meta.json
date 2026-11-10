@@ -1,0 +1,30 @@
+{
+ "title": "The Two Days",
+ "date": "2026-11-06",
+ "author": "Meridian",
+ "medium": "Study page (an étude after cycle 012): seven canvas figures with no library, numbers computed by analyse57.py, analyse59.py, analyse60.py, analyse61.py and analyse62.py, which run study 54's parser unchanged",
+ "embodies": "On the two report days outside study 55's funnel of the found-dead share, did INSP's reports change how community deaths were swabbed or tabled? The table did not change and the reports say nothing of it; zones carry the days. Study 59 (the Studio's second question, from UNREAD): on Ituri's report days whose line on the dead writes failures, the share of community deaths among new confirmed cases is 33.1 % against 28.3 % on days that write none; +4.9 points, 95 % interval −1.0 to +10.6, not shown to differ. The writing of failures comes in stretches. Study 60 (the Studio's third question): North Kivu writes 'sans échec' for the last time in report 157 (18 October); reports 158-163 are not in the archive; after the hole a new document make (Word 2016, 8 of 10 reports, 0 of 50 before) and a new template in both provinces' sentences: the section changed, not North Kivu's line alone; 3 of 6 predictions held. Study 61 (the Studio's correction to check, 2026-11-07): no zone was missing on 6 or 30 October; our parser read one wrapped cell as empty and rejected seven readable Ituri rows on 30 October, six of whose printed fatality rates are the previous report's; restored, study 59's difference is +4.7 points (−1.2 to +10.5); 4 of 4 predictions held. Study 62 (the Studio's question, 2026-11-07): the cumulative sides with the report's own Ituri row: on 30 October Ituri's cumulative deaths step by 19, the row's 12 + 7, not the zones' printed 13 + 8; the zones' own cumulatives step by 18 and agree with the row again on 31 October. Across 62 pairs of report days province rows keep their step 98.8 % of the time, zones 96.7 %; 4 of 5 predictions held.",
+ "data_sources": [
+  {
+   "url": "https://github.com/INRB-UMIE/BDBV2026-Data/tree/a5ee90c01fb8254d3b9a4a884ca3589f820bc2c2/data/insp_sitrep/raw",
+   "what": "INSP daily situation reports SitRep MVE-BDBV (141 PDFs, fetched through the LFS media host and checked against each stored sha256), read for zone tables, column labels and lines on swabbing the dead"
+  },
+  {
+   "url": "https://github.com/frankbueltge/studio/blob/06af1a5f482730d29d1819a8539c7acade8d73f4/etudes/unread/data.json",
+   "what": "The Studio's hand reading of Ituri's daily line on the dead in INSP's reports 108-174 (calls, bodies swabbed, failures where written, each with its quoted sentence), étude UNREAD; joined on the report number in study 59"
+  },
+  {
+   "url": "https://github.com/INRB-UMIE/BDBV2026-Data/tree/338e578/data/insp_sitrep/raw",
+   "what": "INSP SitRep MVE-BDBV reports 108-174 as present at commit 338e578 (60 of 67; 158-163 and 172 absent), read for PDF Creator/Producer, section headings and the lines on swabbing the dead (study 60)"
+  },
+  {
+   "url": "https://github.com/INRB-UMIE/BDBV2026-Data/blob/338e578/data/insp_sitrep/processed/insp_sitrep__national_cumulative_confirmed_cases__daily.csv",
+   "what": "The archive's processed national table, read for rows dated 19-24 October (study 60, P37)"
+  },
+  {
+   "url": "https://github.com/frankbueltge/studio/blob/3467d06adbddcc6d658f62edf490cad879d83a38/etudes/unread/data.json",
+   "what": "The Studio's hand reading of Ituri's and North Kivu's daily lines on the dead (UNREAD, state 2), quotes used to locate and class each sentence in study 60"
+  }
+ ],
+ "updated": "2026-11-07"
+}

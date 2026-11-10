@@ -1,0 +1,1070 @@
+{
+ "study": 59,
+ "session": 257,
+ "date": "2026-11-06",
+ "input": {
+  "reports": 141,
+  "usable": 80,
+  "studio_file": {
+   "path": "etudes/unread/data.json",
+   "sha256": "2dadc45b6ecbe45f372f00df6d6ca974f034ca0ae5aa1de09a1afa2d5b9bbdfc",
+   "source": "INSP SitRep MVE via INRB-UMIE/BDBV2026-Data@338e5780",
+   "with_line": 55,
+   "written": 22
+  },
+  "joined": 51,
+  "not_joined": [
+   121,
+   127,
+   173,
+   174
+  ]
+ },
+ "predictions": {
+  "P27": {
+   "text": "pooled shares differ by < 10 points and the 95 % bootstrap interval of the difference contains 0",
+   "value": {
+    "written": {
+     "days": 20,
+     "k": 235,
+     "n": 709,
+     "share": 0.3315,
+     "wilson": [
+      0.2978,
+      0.3669
+     ]
+    },
+    "none": {
+     "days": 31,
+     "k": 348,
+     "n": 1230,
+     "share": 0.2829,
+     "wilson": [
+      0.2585,
+      0.3087
+     ]
+    },
+    "diff": 0.0485,
+    "ci95": [
+     -0.0104,
+     0.1062
+    ],
+    "draws": 4000
+   },
+   "held": true
+  },
+  "P28": {
+   "text": "days that write failures cluster: fewer runs than expected, one-sided p < 0.05",
+   "value": {
+    "n_written": 20,
+    "n_none": 31,
+    "runs": 17,
+    "expected": 25.31,
+    "z": -2.469,
+    "p": 0.0068,
+    "sequence": "FFF...FF........FF.FFF........F.FFFF..F.......FF.FF"
+   },
+   "held": true
+  },
+  "P29": {
+   "text": "on written days Spearman rho(failures / calls, community share) inside (-0.3, 0.3)",
+   "value": {
+    "days": 20,
+    "rho": -0.134
+   },
+   "held": true
+  },
+  "P30": {
+   "text": "the Studio's quoted sentences are found in our text of the same report on >= 95 % of joined days",
+   "value": {
+    "days": 51,
+    "found": 51,
+    "share": 1.0,
+    "missing": []
+   },
+   "held": true
+  },
+  "P31": {
+   "text": "our Ituri zone sum equals the report's Ituri province row (new and community) on >= 90 % of joined days",
+   "value": {
+    "days": 51,
+    "match": 49,
+    "share": 0.9608,
+    "mismatch": [
+     {
+      "report": 145,
+      "date": "2026-10-06",
+      "zones": [
+       32,
+       10
+      ],
+      "prov": [
+       33,
+       10
+      ],
+      "provValid": true,
+      "invalid": 0
+     },
+     {
+      "report": 169,
+      "date": "2026-10-30",
+      "zones": [
+       21,
+       7
+      ],
+      "prov": [
+       34,
+       12
+      ],
+      "provValid": true,
+      "invalid": 7
+     }
+    ]
+   },
+   "held": true
+  }
+ },
+ "sensitivity_next_day": {
+  "written": {
+   "days": 20,
+   "k": 218,
+   "n": 662,
+   "share": 0.3293,
+   "wilson": [
+    0.2946,
+    0.366
+   ]
+  },
+  "none": {
+   "days": 31,
+   "k": 349,
+   "n": 1236,
+   "share": 0.2824,
+   "wilson": [
+    0.258,
+    0.3081
+   ]
+  },
+  "diff": 0.0469,
+  "ci95": [
+   -0.0153,
+   0.1072
+  ],
+  "draws": 4000
+ },
+ "days": [
+  {
+   "report": 108,
+   "date": "2026-08-30",
+   "written": true,
+   "unread": 9,
+   "alerts": 83,
+   "swabbed": 48,
+   "new": 44,
+   "comm": 12,
+   "provNew": 44,
+   "provComm": 12,
+   "next": {
+    "report": 109,
+    "date": "2026-08-31",
+    "new": 49,
+    "comm": 21
+   }
+  },
+  {
+   "report": 109,
+   "date": "2026-08-31",
+   "written": true,
+   "unread": 10,
+   "alerts": 93,
+   "swabbed": 61,
+   "new": 49,
+   "comm": 21,
+   "provNew": 49,
+   "provComm": 21,
+   "next": {
+    "report": 110,
+    "date": "2026-09-01",
+    "new": 39,
+    "comm": 13
+   }
+  },
+  {
+   "report": 110,
+   "date": "2026-09-01",
+   "written": true,
+   "unread": 42,
+   "alerts": 126,
+   "swabbed": 65,
+   "new": 39,
+   "comm": 13,
+   "provNew": 39,
+   "provComm": 13,
+   "next": {
+    "report": 111,
+    "date": "2026-09-02",
+    "new": 60,
+    "comm": 12
+   }
+  },
+  {
+   "report": 111,
+   "date": "2026-09-02",
+   "written": false,
+   "unread": null,
+   "alerts": 91,
+   "swabbed": 56,
+   "new": 60,
+   "comm": 12,
+   "provNew": 60,
+   "provComm": 12,
+   "next": {
+    "report": 112,
+    "date": "2026-09-03",
+    "new": 60,
+    "comm": 10
+   }
+  },
+  {
+   "report": 112,
+   "date": "2026-09-03",
+   "written": false,
+   "unread": null,
+   "alerts": 83,
+   "swabbed": 48,
+   "new": 60,
+   "comm": 10,
+   "provNew": 60,
+   "provComm": 10,
+   "next": {
+    "report": 113,
+    "date": "2026-09-04",
+    "new": 53,
+    "comm": 16
+   }
+  },
+  {
+   "report": 113,
+   "date": "2026-09-04",
+   "written": false,
+   "unread": null,
+   "alerts": 80,
+   "swabbed": 52,
+   "new": 53,
+   "comm": 16,
+   "provNew": 53,
+   "provComm": 16,
+   "next": {
+    "report": 114,
+    "date": "2026-09-05",
+    "new": 49,
+    "comm": 15
+   }
+  },
+  {
+   "report": 114,
+   "date": "2026-09-05",
+   "written": true,
+   "unread": 30,
+   "alerts": 104,
+   "swabbed": 56,
+   "new": 49,
+   "comm": 15,
+   "provNew": 49,
+   "provComm": 15,
+   "next": {
+    "report": 115,
+    "date": "2026-09-06",
+    "new": 39,
+    "comm": 16
+   }
+  },
+  {
+   "report": 115,
+   "date": "2026-09-06",
+   "written": true,
+   "unread": 5,
+   "alerts": 82,
+   "swabbed": 50,
+   "new": 39,
+   "comm": 16,
+   "provNew": 39,
+   "provComm": 16,
+   "next": {
+    "report": 116,
+    "date": "2026-09-07",
+    "new": 41,
+    "comm": 15
+   }
+  },
+  {
+   "report": 116,
+   "date": "2026-09-07",
+   "written": false,
+   "unread": null,
+   "alerts": 92,
+   "swabbed": 67,
+   "new": 41,
+   "comm": 15,
+   "provNew": 41,
+   "provComm": 15,
+   "next": {
+    "report": 117,
+    "date": "2026-09-08",
+    "new": 55,
+    "comm": 10
+   }
+  },
+  {
+   "report": 117,
+   "date": "2026-09-08",
+   "written": false,
+   "unread": null,
+   "alerts": 75,
+   "swabbed": 51,
+   "new": 55,
+   "comm": 10,
+   "provNew": 55,
+   "provComm": 10,
+   "next": {
+    "report": 118,
+    "date": "2026-09-09",
+    "new": 47,
+    "comm": 13
+   }
+  },
+  {
+   "report": 118,
+   "date": "2026-09-09",
+   "written": false,
+   "unread": null,
+   "alerts": 96,
+   "swabbed": 65,
+   "new": 47,
+   "comm": 13,
+   "provNew": 47,
+   "provComm": 13,
+   "next": {
+    "report": 119,
+    "date": "2026-09-10",
+    "new": 30,
+    "comm": 11
+   }
+  },
+  {
+   "report": 119,
+   "date": "2026-09-10",
+   "written": false,
+   "unread": null,
+   "alerts": 95,
+   "swabbed": 54,
+   "new": 30,
+   "comm": 11,
+   "provNew": 30,
+   "provComm": 11,
+   "next": {
+    "report": 120,
+    "date": "2026-09-11",
+    "new": 33,
+    "comm": 6
+   }
+  },
+  {
+   "report": 120,
+   "date": "2026-09-11",
+   "written": false,
+   "unread": null,
+   "alerts": 82,
+   "swabbed": 56,
+   "new": 33,
+   "comm": 6,
+   "provNew": 33,
+   "provComm": 6,
+   "next": {
+    "report": 122,
+    "date": "2026-09-13",
+    "new": 44,
+    "comm": 18
+   }
+  },
+  {
+   "report": 122,
+   "date": "2026-09-13",
+   "written": false,
+   "unread": null,
+   "alerts": 68,
+   "swabbed": 54,
+   "new": 44,
+   "comm": 18,
+   "provNew": 44,
+   "provComm": 18,
+   "next": {
+    "report": 123,
+    "date": "2026-09-14",
+    "new": 57,
+    "comm": 17
+   }
+  },
+  {
+   "report": 123,
+   "date": "2026-09-14",
+   "written": false,
+   "unread": null,
+   "alerts": 79,
+   "swabbed": 54,
+   "new": 57,
+   "comm": 17,
+   "provNew": 57,
+   "provComm": 17,
+   "next": {
+    "report": 124,
+    "date": "2026-09-15",
+    "new": 35,
+    "comm": 8
+   }
+  },
+  {
+   "report": 124,
+   "date": "2026-09-15",
+   "written": false,
+   "unread": null,
+   "alerts": 83,
+   "swabbed": 61,
+   "new": 35,
+   "comm": 8,
+   "provNew": 35,
+   "provComm": 8,
+   "next": {
+    "report": 125,
+    "date": "2026-09-16",
+    "new": 41,
+    "comm": 11
+   }
+  },
+  {
+   "report": 128,
+   "date": "2026-09-19",
+   "written": true,
+   "unread": 12,
+   "alerts": 99,
+   "swabbed": 67,
+   "new": 38,
+   "comm": 9,
+   "provNew": 38,
+   "provComm": 9,
+   "next": {
+    "report": 129,
+    "date": "2026-09-20",
+    "new": 34,
+    "comm": 11
+   }
+  },
+  {
+   "report": 129,
+   "date": "2026-09-20",
+   "written": true,
+   "unread": 13,
+   "alerts": 78,
+   "swabbed": 52,
+   "new": 34,
+   "comm": 11,
+   "provNew": 34,
+   "provComm": 11,
+   "next": {
+    "report": 130,
+    "date": "2026-09-21",
+    "new": 19,
+    "comm": 4
+   }
+  },
+  {
+   "report": 130,
+   "date": "2026-09-21",
+   "written": false,
+   "unread": null,
+   "alerts": 98,
+   "swabbed": 68,
+   "new": 19,
+   "comm": 4,
+   "provNew": 19,
+   "provComm": 4,
+   "next": {
+    "report": 131,
+    "date": "2026-09-22",
+    "new": 35,
+    "comm": 10
+   }
+  },
+  {
+   "report": 131,
+   "date": "2026-09-22",
+   "written": true,
+   "unread": 19,
+   "alerts": 104,
+   "swabbed": 71,
+   "new": 35,
+   "comm": 10,
+   "provNew": 35,
+   "provComm": 10,
+   "next": {
+    "report": 132,
+    "date": "2026-09-23",
+    "new": 31,
+    "comm": 7
+   }
+  },
+  {
+   "report": 132,
+   "date": "2026-09-23",
+   "written": true,
+   "unread": 25,
+   "alerts": 91,
+   "swabbed": 66,
+   "new": 31,
+   "comm": 7,
+   "provNew": 31,
+   "provComm": 7,
+   "next": {
+    "report": 133,
+    "date": "2026-09-24",
+    "new": 35,
+    "comm": 15
+   }
+  },
+  {
+   "report": 133,
+   "date": "2026-09-24",
+   "written": true,
+   "unread": 9,
+   "alerts": 72,
+   "swabbed": 52,
+   "new": 35,
+   "comm": 15,
+   "provNew": 35,
+   "provComm": 15,
+   "next": {
+    "report": 134,
+    "date": "2026-09-25",
+    "new": 31,
+    "comm": 5
+   }
+  },
+  {
+   "report": 136,
+   "date": "2026-09-27",
+   "written": false,
+   "unread": null,
+   "alerts": 87,
+   "swabbed": 59,
+   "new": 27,
+   "comm": 10,
+   "provNew": 27,
+   "provComm": 10,
+   "next": {
+    "report": 137,
+    "date": "2026-09-28",
+    "new": 36,
+    "comm": 9
+   }
+  },
+  {
+   "report": 137,
+   "date": "2026-09-28",
+   "written": false,
+   "unread": null,
+   "alerts": 82,
+   "swabbed": 58,
+   "new": 36,
+   "comm": 9,
+   "provNew": 36,
+   "provComm": 9,
+   "next": {
+    "report": 138,
+    "date": "2026-09-29",
+    "new": 32,
+    "comm": 13
+   }
+  },
+  {
+   "report": 138,
+   "date": "2026-09-29",
+   "written": false,
+   "unread": null,
+   "alerts": 82,
+   "swabbed": 55,
+   "new": 32,
+   "comm": 13,
+   "provNew": 32,
+   "provComm": 13,
+   "next": {
+    "report": 139,
+    "date": "2026-09-30",
+    "new": 43,
+    "comm": 11
+   }
+  },
+  {
+   "report": 139,
+   "date": "2026-09-30",
+   "written": false,
+   "unread": null,
+   "alerts": 76,
+   "swabbed": 55,
+   "new": 43,
+   "comm": 11,
+   "provNew": 43,
+   "provComm": 11,
+   "next": {
+    "report": 140,
+    "date": "2026-10-01",
+    "new": 49,
+    "comm": 12
+   }
+  },
+  {
+   "report": 140,
+   "date": "2026-10-01",
+   "written": false,
+   "unread": null,
+   "alerts": 92,
+   "swabbed": 63,
+   "new": 49,
+   "comm": 12,
+   "provNew": 49,
+   "provComm": 12,
+   "next": {
+    "report": 141,
+    "date": "2026-10-01",
+    "new": 28,
+    "comm": 5
+   }
+  },
+  {
+   "report": 141,
+   "date": "2026-10-01",
+   "written": false,
+   "unread": null,
+   "alerts": 69,
+   "swabbed": 38,
+   "new": 28,
+   "comm": 5,
+   "provNew": 28,
+   "provComm": 5,
+   "next": {
+    "report": 142,
+    "date": "2026-10-03",
+    "new": 57,
+    "comm": 11
+   }
+  },
+  {
+   "report": 142,
+   "date": "2026-10-03",
+   "written": false,
+   "unread": null,
+   "alerts": 99,
+   "swabbed": 70,
+   "new": 57,
+   "comm": 11,
+   "provNew": 57,
+   "provComm": 11,
+   "next": {
+    "report": 143,
+    "date": "2026-10-04",
+    "new": 23,
+    "comm": 12
+   }
+  },
+  {
+   "report": 143,
+   "date": "2026-10-04",
+   "written": false,
+   "unread": null,
+   "alerts": 94,
+   "swabbed": 68,
+   "new": 23,
+   "comm": 12,
+   "provNew": 23,
+   "provComm": 12,
+   "next": {
+    "report": 144,
+    "date": "2026-10-05",
+    "new": 30,
+    "comm": 15
+   }
+  },
+  {
+   "report": 144,
+   "date": "2026-10-05",
+   "written": true,
+   "unread": 29,
+   "alerts": 96,
+   "swabbed": 65,
+   "new": 30,
+   "comm": 15,
+   "provNew": 30,
+   "provComm": 15,
+   "next": {
+    "report": 145,
+    "date": "2026-10-06",
+    "new": 32,
+    "comm": 10
+   }
+  },
+  {
+   "report": 145,
+   "date": "2026-10-06",
+   "written": false,
+   "unread": null,
+   "alerts": 100,
+   "swabbed": 69,
+   "new": 32,
+   "comm": 10,
+   "provNew": 33,
+   "provComm": 10,
+   "next": {
+    "report": 146,
+    "date": "2026-10-07",
+    "new": 29,
+    "comm": 14
+   }
+  },
+  {
+   "report": 146,
+   "date": "2026-10-07",
+   "written": true,
+   "unread": 22,
+   "alerts": 106,
+   "swabbed": 74,
+   "new": 29,
+   "comm": 14,
+   "provNew": 29,
+   "provComm": 14,
+   "next": {
+    "report": 147,
+    "date": "2026-10-08",
+    "new": 20,
+    "comm": 2
+   }
+  },
+  {
+   "report": 147,
+   "date": "2026-10-08",
+   "written": true,
+   "unread": 32,
+   "alerts": 99,
+   "swabbed": 62,
+   "new": 20,
+   "comm": 2,
+   "provNew": 20,
+   "provComm": 2,
+   "next": {
+    "report": 148,
+    "date": "2026-10-09",
+    "new": 47,
+    "comm": 25
+   }
+  },
+  {
+   "report": 148,
+   "date": "2026-10-09",
+   "written": true,
+   "unread": 26,
+   "alerts": 91,
+   "swabbed": 63,
+   "new": 47,
+   "comm": 25,
+   "provNew": 47,
+   "provComm": 25,
+   "next": {
+    "report": 149,
+    "date": "2026-10-10",
+    "new": 30,
+    "comm": 6
+   }
+  },
+  {
+   "report": 149,
+   "date": "2026-10-10",
+   "written": true,
+   "unread": 23,
+   "alerts": 108,
+   "swabbed": 82,
+   "new": 30,
+   "comm": 6,
+   "provNew": 30,
+   "provComm": 6,
+   "next": {
+    "report": 150,
+    "date": "2026-10-11",
+    "new": 56,
+    "comm": 22
+   }
+  },
+  {
+   "report": 150,
+   "date": "2026-10-11",
+   "written": false,
+   "unread": null,
+   "alerts": 68,
+   "swabbed": 56,
+   "new": 56,
+   "comm": 22,
+   "provNew": 56,
+   "provComm": 22,
+   "next": {
+    "report": 151,
+    "date": "2026-10-12",
+    "new": 40,
+    "comm": 10
+   }
+  },
+  {
+   "report": 151,
+   "date": "2026-10-12",
+   "written": false,
+   "unread": null,
+   "alerts": 113,
+   "swabbed": 76,
+   "new": 40,
+   "comm": 10,
+   "provNew": 40,
+   "provComm": 10,
+   "next": {
+    "report": 152,
+    "date": "2026-10-13",
+    "new": 41,
+    "comm": 8
+   }
+  },
+  {
+   "report": 152,
+   "date": "2026-10-13",
+   "written": true,
+   "unread": 32,
+   "alerts": 113,
+   "swabbed": 88,
+   "new": 41,
+   "comm": 8,
+   "provNew": 41,
+   "provComm": 8,
+   "next": {
+    "report": 153,
+    "date": "2026-10-14",
+    "new": 31,
+    "comm": 11
+   }
+  },
+  {
+   "report": 153,
+   "date": "2026-10-14",
+   "written": false,
+   "unread": null,
+   "alerts": 94,
+   "swabbed": 64,
+   "new": 31,
+   "comm": 11,
+   "provNew": 31,
+   "provComm": 11,
+   "next": {
+    "report": 154,
+    "date": "2026-10-15",
+    "new": 41,
+    "comm": 10
+   }
+  },
+  {
+   "report": 154,
+   "date": "2026-10-15",
+   "written": false,
+   "unread": null,
+   "alerts": 102,
+   "swabbed": 69,
+   "new": 41,
+   "comm": 10,
+   "provNew": 41,
+   "provComm": 10,
+   "next": {
+    "report": 155,
+    "date": "2026-10-16",
+    "new": 44,
+    "comm": 10
+   }
+  },
+  {
+   "report": 155,
+   "date": "2026-10-16",
+   "written": false,
+   "unread": null,
+   "alerts": 99,
+   "swabbed": 75,
+   "new": 44,
+   "comm": 10,
+   "provNew": 44,
+   "provComm": 10,
+   "next": {
+    "report": 156,
+    "date": "2026-10-17",
+    "new": 27,
+    "comm": 5
+   }
+  },
+  {
+   "report": 156,
+   "date": "2026-10-17",
+   "written": false,
+   "unread": null,
+   "alerts": 89,
+   "swabbed": 65,
+   "new": 27,
+   "comm": 5,
+   "provNew": 27,
+   "provComm": 5,
+   "next": {
+    "report": 157,
+    "date": "2026-10-18",
+    "new": 42,
+    "comm": 14
+   }
+  },
+  {
+   "report": 157,
+   "date": "2026-10-18",
+   "written": false,
+   "unread": null,
+   "alerts": 76,
+   "swabbed": 51,
+   "new": 42,
+   "comm": 14,
+   "provNew": 42,
+   "provComm": 14,
+   "next": {
+    "report": 164,
+    "date": "2026-10-25",
+    "new": 32,
+    "comm": 13
+   }
+  },
+  {
+   "report": 165,
+   "date": "2026-10-26",
+   "written": false,
+   "unread": null,
+   "alerts": 84,
+   "swabbed": 40,
+   "new": 36,
+   "comm": 14,
+   "provNew": 36,
+   "provComm": 14,
+   "next": {
+    "report": 166,
+    "date": "2026-10-27",
+    "new": 31,
+    "comm": 12
+   }
+  },
+  {
+   "report": 166,
+   "date": "2026-10-27",
+   "written": false,
+   "unread": null,
+   "alerts": 72,
+   "swabbed": 58,
+   "new": 31,
+   "comm": 12,
+   "provNew": 31,
+   "provComm": 12,
+   "next": {
+    "report": 167,
+    "date": "2026-10-28",
+    "new": 40,
+    "comm": 7
+   }
+  },
+  {
+   "report": 167,
+   "date": "2026-10-28",
+   "written": true,
+   "unread": 16,
+   "alerts": 93,
+   "swabbed": 58,
+   "new": 40,
+   "comm": 7,
+   "provNew": 40,
+   "provComm": 7,
+   "next": {
+    "report": 168,
+    "date": "2026-10-29",
+    "new": 28,
+    "comm": 8
+   }
+  },
+  {
+   "report": 168,
+   "date": "2026-10-29",
+   "written": true,
+   "unread": 13,
+   "alerts": 68,
+   "swabbed": 40,
+   "new": 28,
+   "comm": 8,
+   "provNew": 28,
+   "provComm": 8,
+   "next": {
+    "report": 169,
+    "date": "2026-10-30",
+    "new": 21,
+    "comm": 7
+   }
+  },
+  {
+   "report": 169,
+   "date": "2026-10-30",
+   "written": false,
+   "unread": null,
+   "alerts": 83,
+   "swabbed": 56,
+   "new": 21,
+   "comm": 7,
+   "provNew": 34,
+   "provComm": 12,
+   "next": {
+    "report": 170,
+    "date": "2026-10-31",
+    "new": 32,
+    "comm": 13
+   }
+  },
+  {
+   "report": 170,
+   "date": "2026-10-31",
+   "written": true,
+   "unread": 13,
+   "alerts": 91,
+   "swabbed": 59,
+   "new": 32,
+   "comm": 13,
+   "provNew": 32,
+   "provComm": 13,
+   "next": {
+    "report": 171,
+    "date": "2026-11-01",
+    "new": 19,
+    "comm": 8
+   }
+  },
+  {
+   "report": 171,
+   "date": "2026-11-01",
+   "written": true,
+   "unread": 11,
+   "alerts": 73,
+   "swabbed": 49,
+   "new": 19,
+   "comm": 8,
+   "provNew": 19,
+   "provComm": 8,
+   "next": null
+  }
+ ]
+}

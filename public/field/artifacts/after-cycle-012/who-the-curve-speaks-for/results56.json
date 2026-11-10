@@ -1,0 +1,145 @@
+{
+ "study": 56,
+ "session": 254,
+ "date": "2026-11-06",
+ "predictions": {
+  "P15": {
+   "text": "median start at 60 earlier than at 42, both records",
+   "value": {
+    "Kivu 2018-2020": [
+     "2019-07-30",
+     "2019-08-10"
+    ],
+    "Congo 2026": [
+     "2026-06-30",
+     "2026-06-21"
+    ]
+   },
+   "held": false
+  },
+  "P16": {
+   "text": "edge band >= 20 % of the population at 42 in 2026, <= 10 % in Kivu",
+   "value": {
+    "2026": 0.26666666666666666,
+    "Kivu": 0.0
+   },
+   "held": true
+  },
+  "P17": {
+   "text": "Kivu composition gap interval contains 0",
+   "value": {
+    "gap": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "held": true
+  },
+  "P18": {
+   "text": "2026 composition gap negative",
+   "value": {
+    "gap": -0.10303030303030303,
+    "ci": [
+     -0.3035714285714286,
+     0.038461538461538436
+    ]
+   },
+   "held": true
+  }
+ },
+ "sources": {
+  "kivu_sha256": "76c7e9997be585cde16e091a82fef70903965cbf4651931b1a25587587ed86cb",
+  "hdx2026_current_sha256": "15e33668084c38597e186a3b828af4775773127acb9aad852656b5aee3e63dd8",
+  "hdx2026_current_last": "2026-11-03",
+  "hdx2026_cut": "2026-10-29",
+  "results53_reproduced": true
+ },
+ "params": {
+  "horizon": 42,
+  "bootstrap": 2000,
+  "seed": 56
+ },
+ "records": {
+  "Kivu 2018-2020": {
+   "label": "Kivu 2018-2020",
+   "N": 685,
+   "first": "2018-08-03",
+   "last": "2020-06-17",
+   "cutoff60": 582,
+   "cutoff60Date": "2020-03-07",
+   "cutoff42Date": "2020-03-25",
+   "p42": {
+    "n": 60,
+    "k": 17,
+    "medStart": 361.5,
+    "medStartDate": "2019-07-30"
+   },
+   "p60": {
+    "n": 53,
+    "k": 18,
+    "medStart": 372,
+    "medStartDate": "2019-08-10"
+   },
+   "band": {
+    "n": 0,
+    "k": 0,
+    "share": 0.0
+   },
+   "matched": {
+    "n": 60,
+    "k": 17,
+    "reach60": 53
+   },
+   "share42": 0.2833333333333333,
+   "share42matched": 0.2833333333333333,
+   "shareBand": null,
+   "gap": 0.0,
+   "gapCI": [
+    0.0,
+    0.0
+   ],
+   "bootDraws": 2000
+  },
+  "Congo 2026": {
+   "label": "Congo 2026",
+   "N": 169,
+   "first": "2026-05-14",
+   "last": "2026-10-29",
+   "cutoff60": 66,
+   "cutoff60Date": "2026-07-19",
+   "cutoff42Date": "2026-08-06",
+   "p42": {
+    "n": 15,
+    "k": 8,
+    "medStart": 47,
+    "medStartDate": "2026-06-30"
+   },
+   "p60": {
+    "n": 6,
+    "k": 2,
+    "medStart": 38.5,
+    "medStartDate": "2026-06-21"
+   },
+   "band": {
+    "n": 4,
+    "k": 1,
+    "share": 0.26666666666666666
+   },
+   "matched": {
+    "n": 11,
+    "k": 7,
+    "reach60": 6
+   },
+   "share42": 0.5333333333333333,
+   "share42matched": 0.6363636363636364,
+   "shareBand": 0.25,
+   "gap": -0.10303030303030303,
+   "gapCI": [
+    -0.3035714285714286,
+    0.038461538461538436
+   ],
+   "bootDraws": 2000
+  }
+ }
+}
