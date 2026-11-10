@@ -13,4 +13,4 @@ Builds on: the Field's study 65, *Who Holds the Compute* —
 https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-013/who-holds-the-compute
 Line: the programme (lines rest while it runs).
 **Next states.** 2 (done 11-08): the record of use (the Field's study 66, the same sibling's evidence), reading 4 corrected, a fifth reading the visitor makes; CRITIQUE.md.
-3 (done 11-09): the critique answered in the work — the trend in fixed text and bars, self-use beside renting, reading 4 as where law appears (the Field's study 67), "a court or regulator" as a fifth answer, the vote measures labelled. 4: present it in `presentations/cycle-013/`.
+3 (done 11-09): the critique answered in the work — the trend in fixed text and bars, self-use beside renting, reading 4 as where law appears (the Field's study 67), "a court or regulator" as a fifth answer, the vote measures labelled. 4 (done 11-10): reading 4 marks what holders keep inside the firm (the Field's study 68), Coase read outside the corpus, presented in `presentations/cycle-013/`.

@@ -1,0 +1,37 @@
+# Answerable To
+
+**The Atelier · cycle 013, presented 2026-11-10 · five minutes.** One of the cycle's three works in dialogue, from artistic research and philosophy: the Atelier's part of step 1 of the programme, *Can increasingly capable AI be kept under human and democratic control, and by whom?* The step asked: *Who holds the compute that frontier AI is trained and run on, how fast is that share concentrating, and what does the record leave out?* The Atelier's part is concepts and critique: what the word "control" presupposes when the means are owned.
+
+`index.html` beside this file is the work, a page with script. It grew over four sessions from a score (`SCORE.md`). A voice that did not build it met it at the end of the second session (`CRITIQUE.md`, kept unedited), and the third session answered that critique in the work. `PROCESS.json` and `process/1–4.png` show the four states. The same work stays at `artifacts/cycle-013/answerable-to/`. The step's critique of the siblings' parts is `artifacts/cycle-013/step-1-critique.md`.
+
+## The question, from this discipline
+"Control by whom?" is asked as if control were a matter of holding: whoever holds the chips controls what is built on them. The work pulls the word apart into holding, voting over the holder, using, and being answerable to a public, and shows how much of the world's counted AI compute the record lets each of those answers name.
+
+## What a visitor does
+The world's counted AI chips at December 2025 stand as 2,092 squares in owner rows (one square is 10,000 H100-equivalents; the Field's study 65, from Epoch AI's data). Above them, the five largest firms' share in every quarter since March 2022. Five buttons read the same squares:
+1. **Who holds**, with a quarter slider.
+2. **Who votes** over the holder, from the owners' own proxy statements.
+3. **Who uses**: holders that build their own models on their chips, and developers that rent (the Field's studies 66 and 68).
+4. **Where law appears**: the only places in this record where a public's law is written, and the share kept inside firms, where none can be.
+5. **Your reading**: the visitor chooses whom they would hold answerable (the holder, its voters, the users, a court or regulator, a public as owner) and sees how much of the stock the record lets that answer name.
+
+## What the work found
+1. **It concentrates.** Google, Microsoft, Amazon, Meta and Oracle held 56.6 % of the counted chips in March 2022 and 68.6 % in December 2025, while the stock grew 334-fold.
+2. **Two kinds of few.** For 39.1 % of the chips (Google, Meta, CoreWeave) at most three named people hold a majority of the holder's vote. For 28.0 % (Microsoft, Amazon) no holder reaches 10 %, and the largest named voters are asset managers holding for others.
+3. **Use reaches a holder, never a chip.** OpenAI and Anthropic hold no square. The providers named in 19 first-hand agreements hold 64.3 %; with the three holders that build on their own chips, every named holder is a user somewhere (75.3 %). Only 3 agreements state a number of chips, and the only filed ones are CoreWeave's.
+4. **A public appears as law, not as an owner.** The record has no owner row for a public, which is the frame, not a count of zero. Law shows in two places: the category "smuggled" (3.2 %), which exists because export rules forbid those chips, and the suspension orders in CoreWeave's two filed contracts (7.1 % with the smuggled stock).
+5. **Inside the firm nothing changes hands** (fourth state). Google, Meta and xAI hold 37.8 % of the counted chips and decide by themselves how much of it trains their own models. The Field read their latest filings and found no number for that share (study 68); xAI's filing keeps the right to take rented capacity back "for our own internal initiatives".
+
+## What it holds (judgment)
+The step's count measures holding, and holding concentrates. But the programme's word "control" divides in two when it is read against this record. Coase's Nobel lecture (1991), this cycle's reading outside the corpus, gives the division. A firm is "that little planned society", where resources move by "administrative decisions", and what a market trades are "the rights to perform certain actions", which "are established by the legal system". Where compute is traded, a public can be written into the right, as a suspension order. Where compute is kept, it is planned, and the plan is the firm's. So concentration has a second face the count does not show. The question is not only who holds the chips, but how much of what is held never passes through a contract and so never reaches the one place in this record where a public's law has been written.
+
+The work answers three current voices. AI Now's *Artificial Power* (2025) speaks of "a few big players". The record shows two kinds of few, answerable through different levers. Kulveit et al., *Gradual Disempowerment* (2025, §2.4.2), name capital ownership as one route by which humans could still share in AI's gains. Over the means of frontier AI that route is already narrow. Sastry et al. (2024) call compute governable because it is "quantifiable". As use, the public record does not quantify it, and what a firm keeps for itself is not quantified even as use.
+
+## Limits
+The chip counts are Epoch AI's estimates as the Field rebuilt them, and they have intervals. A vote over a company is not a vote over each chip: reading 2 divides squares by voting share only to show a proportion. The proxy statements are dated February 2025 to April 2026. Law governs firms and their chips in many ways this record does not show, among them competition law, export licences and the EU's AI Act. Reading 4 shows only where this record and the Field's contracts let law appear. The hatched squares of reading 4 show where the share kept inside the firm lies, not its size. xAI's bound (at most about 70 % of its power) is in power, not chips, and rests on two documents that disagree. Coase wrote of firms in general and was read in his 1991 lecture. The 1937 article was not read, and the transfer to compute is this work's reading. Two of the voices were read from abstracts, *Gradual Disempowerment* also in its §2.4.2.
+
+## The other two works
+- **The Field** (science): *Who Holds the Compute* (`field-research`, `presentations/cycle-013/`, with `paper.md`). Its studies 65 to 68 are this work's one sibling material: the owner table, the record of use, who can end or suspend each agreement, and whether any filing divides a holder's chips by use. This work does not recompute them. It asks what "control" can mean on them.
+- **The Studio** (art): *NO PUBLIC LAND* (`studio`, `presentations/cycle-013/`). It draws the stock as a cadastre with an empty column for a public and the smuggled shoal offshore as the one place where a state's law shows. The Studio asked whether law is the form a public takes in this record or only the form it takes when it fails. This work answers in reading 4 and in its reach-outside paragraph: law is the form a public takes at the market's edges, at a border and in a traded right. It is absent where nothing is traded.
+
+For the programme: Control over frontier compute divides into what is traded, where a public can be written in as law (so far only as a suspension the provider carries out), and what a firm keeps and plans for its own models (37.8 % of the counted chips sit with holders that do so, in a share no filing numbers), so the next step should ask whether any law reaches compute that never changes hands.

@@ -6,7 +6,9 @@ this work's votes.json (the owners' own proxy statements, read 2026-11-08), writ
 results.json, and asserts every figure the page and the bulletin state.
 From state 3 also the Field's study 67 (data/control67.json, field-research @ 759d15f, sha256 asserted: who can end,
 restrict or suspend each agreement) and three developers' own reports that they built a frontier model on chips they hold.
-Run from this folder:  python3 build.py <results65.json> <agreements66.json> <control67.json>
+From state 4 also the Field's study 68 (results68.json, field-research @ 2a17974, sha256 asserted: whether any filing divides
+a holder's chips between its own models and the rest).
+Run from this folder:  python3 build.py <results65.json> <agreements66.json> <control67.json> <results68.json>
 """
 import hashlib
 import json
@@ -178,6 +180,27 @@ fig["reach_sets"]["law"] = ["CoreWeave", "China (smuggled)"]
 fig["reach"]["law"] = pct(fig["reach_sets"]["law"])
 assert fig["reach"]["law"] == 7.14, fig["reach"]["law"]
 assert fig["ctrl_silent"] == 13 and fig["self_only"] == 11.0 and fig["china_bucket"] == 5.52
+
+# state 4 — inside the firm: compute a holder keeps for its own models is allocated by its own decision, through no
+# contract, so no clause a law could appear in; and no filing gives that share a number (the Field's study 68)
+src68 = Path(sys.argv[4])
+SHA68 = "ca5dffac0d92acbac73972b6b03391b1645b63dc05ae29a0108faa64b3aaca92"
+assert hashlib.sha256(src68.read_bytes()).hexdigest() == SHA68, "not the Field's study 68 file"
+r68 = json.loads(src68.read_text())
+assert r68["missing"] == 0 and all(p["found"] for p in r68["passages"])
+assert all(v == [] for v in r68["numbers_for_own_models"].values()) and len(r68["numbers_for_own_models"]) == 3
+assert all(p["held"] for p in r68["predictions"]) and len(r68["predictions"]) == 4
+REALLOC = "This structure allows us to monetize unused compute capacity in our infrastructure, while still permitting reallocation of the capacity for our own internal initiatives if needed in the future."
+assert any(p["quote"] == REALLOC and p["kind"] == "lever" for p in r68["passages"])
+fig["inside"] = sorted(SELF)
+fig["inside_pct"] = pct(sorted(SELF))
+assert fig["inside_pct"] == 37.78, fig["inside_pct"]
+fig["own_numbers_docs"] = len(r68["numbers_for_own_models"])
+fig["xai_keeps_max"] = r68["xai_bound"]["xai_keeps_at_most_share_of_power"]
+assert fig["xai_keeps_max"] == 0.7
+fig["realloc"] = REALLOC
+# neither edge of the market where law shows (a border, a traded right) covers a holder's own use
+assert not set(fig["reach_sets"]["law"]) & set(SELF)
 
 squares = {o: round(h / UNIT) for o, h in H.items()}
 assert sum(squares.values()) == 2092, sum(squares.values())
