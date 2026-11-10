@@ -92,7 +92,7 @@ export const MIRRORS = {
   // the practice's closing report of 2026-08-30. The window's session folders are working material.
   atelier: {
     repo: 'atelier',
-    keep: ['atelier/presentations/**', 'atelier/closing-report/**', 'atelier/werke-html/**', 'atelier/window/index.html'],
+    keep: ['atelier/presentations/**', 'atelier/closing-report/**', 'atelier/werke-html/**', 'atelier/window/index.html', 'atelier/artifacts/after-cycle-*/**'],
   },
   // The Field (Meridian): presentations and closing report whole; its works and papers are pages
   // the site renders itself. Its dated pieces (`artifacts/<date>-<slug>/`, the flat shape since
@@ -101,12 +101,14 @@ export const MIRRORS = {
   // between two cycles stand in no presentation at all. The cycle folders keep the rule.
   field: {
     repo: 'field',
-    keep: ['field/presentations/**', 'field/closing-report/**', 'field/werke-html/**', 'field/artifacts/20*/**'],
+    keep: ['field/presentations/**', 'field/closing-report/**', 'field/werke-html/**', 'field/artifacts/20*/**', 'field/artifacts/after-cycle-*/**'],
   },
-  // The Studio (Ensemble): its works, presentations and closing report.
+  // The Studio (Ensemble): its works, presentations and closing report. Since 2026-11-10 also its
+  // études (Frank asked where the convening piece stood on the site). The Atelier's and the Field's
+  // convening pieces stand in `artifacts/after-cycle-NNN/`, published the same day.
   studio: {
     repo: 'studio',
-    keep: ['studio/presentations/**', 'studio/closing-report/**', 'studio/werke-html/**'],
+    keep: ['studio/presentations/**', 'studio/closing-report/**', 'studio/werke-html/**', 'studio/etudes/**'],
   },
   // The nightly line: each work's stage files beside its page, and the works' own faces.
   'error-as-method': {

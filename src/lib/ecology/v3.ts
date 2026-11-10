@@ -335,7 +335,9 @@ export function inCycle(a: ArtifactEntry, cycle: CycleState): boolean {
   return a.date !== null && a.date >= cycle.opened
 }
 
-const CYCLE_DIR = /^cycle-(\d+)/
+// `after-cycle-NNN` (since 2026-11-10) holds a practice's convening pieces: they belong to the cycle
+// they follow, which is the running one while its convening is open.
+const CYCLE_DIR = /^(?:after-)?cycle-(\d+)/
 const DATED_SLUG = /^(\d{4}-\d{2}-\d{2})-(.*)$/
 
 function isDir(p: string): boolean {
@@ -573,6 +575,25 @@ export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
           fromWorksRegister: true,
           ...(title ? { title } : {}),
         })
+      }
+    }
+
+    // etudes/<slug>/ — the Studio's études (published since 2026-11-10), dated by their meta.json.
+    const etudes = path.join(root, 'public', practice, 'etudes')
+    if (isDir(etudes)) {
+      for (const dir of fs.readdirSync(etudes)) {
+        const face = path.join(etudes, dir, 'index.html')
+        if (!fs.existsSync(face)) continue
+        let date: string | null = null
+        let title: string | undefined
+        try {
+          const meta = JSON.parse(fs.readFileSync(path.join(etudes, dir, 'meta.json'), 'utf8'))
+          if (typeof meta.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(meta.date)) date = meta.date
+          if (typeof meta.title === 'string' && meta.title.trim()) title = meta.title.trim()
+        } catch {
+          title = pageTitle(face) ?? undefined
+        }
+        found.push({ practice, slug: dir, date, href: `/${practice}/etudes/${dir}/`, cycle: null, fromWorksRegister: false, ...(title ? { title } : {}) })
       }
     }
 

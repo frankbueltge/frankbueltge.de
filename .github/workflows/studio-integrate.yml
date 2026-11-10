@@ -73,7 +73,7 @@ jobs:
           # report, cycle artifacts and cycle presentations. They are self-contained pages and
           # the house adds no paratext; /ecology links them (src/lib/ecology/v3.ts). Mirrored
           # with --delete so a withdrawn artifact disappears here too.
-          for d in closing-report artifacts presentations; do
+          for d in closing-report artifacts presentations etudes; do
             if [ -d "/tmp/studio/$d" ]; then
               mkdir -p "public/studio/$d"
               rsync -a --delete "/tmp/studio/$d/" "public/studio/$d/"
@@ -131,7 +131,7 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html public/studio/window public/studio/closing-report public/studio/artifacts public/studio/presentations .github/state/studio-mirror-head)" ]; then
+          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html public/studio/window public/studio/closing-report public/studio/artifacts public/studio/presentations public/studio/etudes .github/state/studio-mirror-head)" ]; then
             git config user.name "Studio-Integrate"
             git config user.email "studio-integrate@frankbueltge.de"
             git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph .github/state/studio-mirror-head
@@ -139,7 +139,7 @@ jobs:
             # `|| true`: the add must survive all three states — window present, window removed
             # (tracked entries record the deletion), and window never present (unmatched pathspec).
             git add -A public/studio/window 2>/dev/null || true
-            for d in closing-report artifacts presentations; do git add -A "public/studio/$d" 2>/dev/null || true; done
+            for d in closing-report artifacts presentations etudes; do git add -A "public/studio/$d" 2>/dev/null || true; done
             git commit -m "studio: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break
