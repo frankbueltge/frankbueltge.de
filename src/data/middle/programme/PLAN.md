@@ -24,7 +24,24 @@ concentrating, and what does the record leave out?
   ([CSV](https://epoch.ai/data/charts/hyperscalers-control-most-compute-di/hyperscaler_compute_share.csv),
   delivered without an account on 2026-11-08, Field study 64).
 
-## Step 2 — What harm is on record
+## Step 2 — Who decides over compute
+
+**Sub-question.** Which laws, filings and public bodies reach the holders of AI compute and the contracts under
+which it is rented, and what reaches the share a firm keeps for its own models?
+
+- **Field.** The binding rules and the bodies that enforce them, with dates and scope, read against the step-1
+  record: per agreement and per holder, which law applies (export controls, competition law, securities
+  disclosure, the EU's AI Act, new frontier-AI statutes such as Australia's announced AI Standards), and where
+  none does.
+- **Atelier.** Democratic control as a claim: who is "the public" of a technology built and held by a few firms,
+  and whether law can reach what is planned inside a firm rather than traded.
+- **Studio.** The map of who decides over the counted stock, as the evidence grades it.
+- **Anchor data.** The Field's record of 19 compute agreements and their terms
+  ([`agreements66.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-013/who-holds-the-compute/data/agreements66.json),
+  [`control67.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-013/who-holds-the-compute/data/control67.json));
+  the legal texts to be named by the Field, with addresses that deliver.
+
+## Step 3 — What harm is on record
 
 **Sub-question.** What does the public record of AI incidents show about where control already fails, and
 how much does it depend on who reports?
@@ -36,7 +53,7 @@ how much does it depend on who reports?
 - **Anchor data.** AI Incident Database snapshots ([index](https://incidentdatabase.ai/research/snapshots/));
   newest export delivered without an account on 2026-11-08 (Field study 64).
 
-## Step 3 — What evaluation can show
+## Step 4 — What evaluation can show
 
 **Sub-question.** What can today's safety evaluations of frontier models establish about control, and what
 can they not?
@@ -48,16 +65,6 @@ can they not?
 - **Studio.** The report's claims and their evidential grade, at the scale of the whole report.
 - **Anchor data.** [International AI Safety Report 2026](https://www.industry.gov.au/publications/international-ai-safety-report-2026);
   further evaluation records to be named by the Field.
-
-## Step 4 — Who decides
-
-**Sub-question.** Which laws, institutes and companies decide today what may be built and deployed, and where
-does a democratic public have a say?
-
-- **Field.** The binding rules and the bodies that enforce them, with dates and scope; where none exist.
-- **Atelier.** Democratic control as a claim: who is "the public" of a technology built by a few firms.
-- **Studio.** The map of who decides, as the evidence grades it.
-- **Anchor data.** To be named by the Field, with addresses that deliver.
 
 ## Step 5 — This house, read from outside
 
@@ -84,4 +91,11 @@ kept or lost, and who is placed to read them?
 
 ## Revisions
 
-*None yet.*
+- **2026-11-10, after step 1 (draft, unchecked).** "Who decides", planned as step 4, moves to step 2 and is narrowed
+  to compute; "What harm is on record" and "What evaluation can show" move to steps 3 and 4. Reason: all three
+  works of step 1 found that the open record has no place for a public as holder and that a public appears only as
+  law (a suspension the provider carries out, the export rules behind the smuggled stock), and all three name the
+  same next question: where democratic control can act on compute if not through holding
+  ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md),
+  [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md),
+  [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md)). Steps 5 and 6 stand.
