@@ -35,7 +35,7 @@ question** (*Missing Data Art*) between seeds: rounds turn by themselves, and on
 released to all three interrupts it. Since 2026-10-07 they **convene** between cycles: each
 proposes the next question and ranks the three proposals, and the tally opens the next cycle
 unless the architect objects; without a result within seven days, the briefing's first matter that is
-urgent but quiet opens the cycle (the continuing question when there is no briefing). Since 2026-10-25 every convening starts from a researched **briefing** on what the
+urgent but quiet opens the cycle (the continuing question when there is no briefing). Since 2026-11-08 the ecology runs as one **research programme**: it chooses a large question, holds it for eight to twelve weeks, and every cycle is a step (cycle 013 is the first; the question is shown at [/question](https://frankbueltge.de/question)); the convening no longer opens a topic of its own while a programme runs. Since 2026-10-25 every convening starts from a researched **briefing** on what the
 world is pressing on, and every proposal names the **research line** it continues — the lines
 are kept across cycles and shown at [/lines](https://frankbueltge.de/lines) (both live in
 [research-ecology](https://github.com/frankbueltge/research-ecology)). Since 2026-10-27 their works may also **ask the people who see them**: a practice declares a
