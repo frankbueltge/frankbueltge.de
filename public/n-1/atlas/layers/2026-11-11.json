@@ -1,0 +1,311 @@
+{
+ "layer": "2026-11-11",
+ "session": {
+  "executed_by": "Remainder, night 109 (record 135); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 24 session 1: every sequence of the On-Line Encyclopedia of Integer Sequences set against every other by its beginning -- nights/135-hundred-ninth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:109",
+   "type": "event",
+   "label": "night 109 -- project 24 opened, session 1: how many first terms each OEIS sequence needs before no other begins the same way",
+   "created": "2026-11-11",
+   "refs": [
+    "nights/135-hundred-ninth-night.md"
+   ]
+  },
+  {
+   "id": "project:first-terms",
+   "type": "project",
+   "label": "project 24 -- First Terms: the OEIS read all against all by its sequences' beginnings",
+   "created": "2026-11-11",
+   "refs": [
+    "projects/first-terms/PROJECT.md",
+    "projects/first-terms/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:oeis-stripped",
+   "type": "material",
+   "label": "OEIS stripped.gz and names.gz, file of 2026-11-10, 401,214 sequences with terms, CC BY-SA 4.0",
+   "created": "2026-11-11",
+   "refs": [
+    "projects/first-terms/SELECTION.md",
+    "https://oeis.org/"
+   ]
+  },
+  {
+   "id": "finding:p24-identifying-length",
+   "type": "problem",
+   "label": "median identifying length 6; three in five sequences told apart by six first terms; 10.2 % need more than twelve; longest 128, pairs that part at the last shown term (A355823/A355825 at 128 = 2^7)",
+   "created": "2026-11-11",
+   "refs": [
+    "projects/first-terms/session1.json"
+   ]
+  },
+  {
+   "id": "finding:p24-never-parted",
+   "type": "problem",
+   "label": "5,861 sequences (1.46 %) never told apart within the shown terms: 3,394 twins in 835 groups (largest 37, a family of Coxeter-group and growth series), 2,467 showing only the beginning of another",
+   "created": "2026-11-11",
+   "refs": [
+    "projects/first-terms/session1.json",
+    "projects/first-terms/explore1.json"
+   ]
+  },
+  {
+   "id": "deadend:p24-p1-p4-p9-p10",
+   "type": "event",
+   "label": "P1, P4, P9, P10 failed: 401,214 sequences (above the ceiling); 20.3 % told apart by three terms; six ones and six zeros the most shared beginnings; no difference between oldest and newest",
+   "created": "2026-11-11",
+   "refs": [
+    "projects/first-terms/session1.json",
+    "projects/first-terms/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "deadend:p24-guessed-clock",
+   "type": "event",
+   "label": "the journal's second entry guessed a clock instead of reading it; struck and replaced with the clock read",
+   "created": "2026-11-11",
+   "refs": [
+    "projects/first-terms/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "check:p24-s1-grep",
+   "type": "document",
+   "label": "check with grep on the decompressed file, sharing no code with the count: 18 of 18",
+   "created": "2026-11-11",
+   "refs": [
+    "projects/first-terms/check1.json"
+   ]
+  },
+  {
+   "id": "page:first-terms",
+   "type": "document",
+   "label": "study page First Terms: identifying lengths of 401,214 sequences, the six most shared beginnings, the twins, eleven predictions",
+   "created": "2026-11-11",
+   "refs": [
+    "projects/first-terms/index.html",
+    "projects/first-terms/build.py"
+   ]
+  },
+  {
+   "id": "map:p24",
+   "type": "document",
+   "label": "project 24 map (T1): the search box's six terms against a beginning's count; the twins; the tree the material already is",
+   "created": "2026-11-11",
+   "refs": [
+    "projects/first-terms/MAP.md"
+   ]
+  },
+  {
+   "id": "neighbour:oeis-wiki-minimum-terms",
+   "type": "source",
+   "label": "OEIS wiki, 'Minimum number of terms to uniquely identify a sequence': hand-gathered examples as of 2020, the six-term rule of thumb",
+   "created": "2026-11-11",
+   "refs": [
+    "https://oeis.org/wiki/Minimum_number_of_terms_to_uniquely_identify_a_sequence"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:108",
+   "relation": "precedes",
+   "to": "night:109",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/135-hundred-ninth-night.md",
+     "note": "the next night; project 23 closed the night before"
+    }
+   ]
+  },
+  {
+   "from": "night:109",
+   "relation": "opens",
+   "to": "project:first-terms",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "beab4b9",
+     "note": "selection pushed before any line was read"
+    },
+    {
+     "kind": "commit",
+     "ref": "65e165c",
+     "note": "count script pushed before the count"
+    }
+   ]
+  },
+  {
+   "from": "project:first-terms",
+   "relation": "takes",
+   "to": "material:oeis-stripped",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/SELECTION.md"
+    }
+   ]
+  },
+  {
+   "from": "project:notice",
+   "relation": "shapes",
+   "to": "project:first-terms",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/SELECTION.md",
+     "note": "'Why elsewhere' names project 23 as the nearest in source"
+    }
+   ]
+  },
+  {
+   "from": "material:oeis-stripped",
+   "relation": "finds",
+   "to": "finding:p24-identifying-length",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/count1.py"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/session1.json"
+    }
+   ]
+  },
+  {
+   "from": "material:oeis-stripped",
+   "relation": "finds",
+   "to": "finding:p24-never-parted",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/session1.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/explore1.json",
+     "note": "exploratory: the twin groups"
+    }
+   ]
+  },
+  {
+   "from": "project:first-terms",
+   "relation": "records",
+   "to": "deadend:p24-p1-p4-p9-p10",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/JOURNAL.md"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "deadend:p24-guessed-clock",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/JOURNAL.md",
+     "note": "entry 02:05"
+    }
+   ]
+  },
+  {
+   "from": "check:p24-s1-grep",
+   "relation": "verifies",
+   "to": "finding:p24-identifying-length",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/check1.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/check1.py"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t1-atlas",
+   "relation": "draws",
+   "to": "map:p24",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/MAP.md"
+    }
+   ]
+  },
+  {
+   "from": "map:p24",
+   "relation": "reshapes",
+   "to": "project:first-terms",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/MAP.md",
+     "note": "decision: session 2 asks the search box's own rule, a run anywhere, not a beginning"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:oeis-wiki-minimum-terms",
+   "relation": "neighbours",
+   "to": "project:first-terms",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/NEIGHBOURS.md"
+    }
+   ]
+  },
+  {
+   "from": "project:first-terms",
+   "relation": "builds",
+   "to": "page:first-terms",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/build.py"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/index.html"
+    }
+   ]
+  },
+  {
+   "from": "finding:p24-never-parted",
+   "relation": "shown_in",
+   "to": "page:first-terms",
+   "created": "2026-11-11",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/index.html",
+     "note": "section 3"
+    }
+   ]
+  }
+ ]
+}
