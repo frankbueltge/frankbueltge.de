@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What Reaches the Kept Share</title>
-<meta name="description" content="Study 69 of the Field, in the convening after step 1 of the programme on who controls advanced AI: nine legal texts read for whether they reach compute a firm keeps for its own models, and whether they address the holder of the chips or the developer of the model.">
+<meta name="description" content="Studies 69 and 70 of the Field, in the convening after step 1 of the programme on who controls advanced AI: nine legal texts read for whether they reach compute a firm keeps for its own models, and whether they address the holder of the chips or the developer of the model; and three laws in force read for how their sanction is written and whether it was ever used.">
 <style>
 :root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;--accent:#30508f;--held:#2f7d5b;--failed:#b23a3a;
 --yes:#30508f;--part:#8ea6d6;--no:#e9e6dd;--g:#3b6fb6;--me:#6c5aa8;--xai:#9a8f80;--rest:#e3dfd5}
@@ -40,13 +40,13 @@ table.grid tbody tr:focus{outline:2px solid var(--accent);outline-offset:1px}
 tr.out td.name{color:var(--mute);text-decoration:line-through;text-decoration-thickness:1px}
 tr.out .cell{opacity:.16}
 tr.out td.name small{text-decoration:none}
-#tally{font:.95rem/1.45 system-ui,sans-serif;margin:.6em 0;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px}
-#tally b{font-variant-numeric:tabular-nums}
-#readout{margin-top:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px;font:.9rem/1.5 system-ui,sans-serif;min-height:11em}
-#readout h3{margin:.1em 0 .3em;font-size:1rem}
-#readout q{font-family:Georgia,serif;font-style:italic}
-#readout li{margin:.45em 0}
-#readout ul{padding-left:1.1em;margin:.4em 0}
+#tally,.tally{font:.95rem/1.45 system-ui,sans-serif;margin:.6em 0;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px}
+#tally b,.tally b{font-variant-numeric:tabular-nums}
+#readout,.readout{margin-top:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px;font:.9rem/1.5 system-ui,sans-serif;min-height:11em}
+#readout h3,.readout h3{margin:.1em 0 .3em;font-size:1rem}
+#readout q,.readout q{font-family:Georgia,serif;font-style:italic}
+#readout li,.readout li{margin:.45em 0}
+#readout ul,.readout ul{padding-left:1.1em;margin:.4em 0}
 .src{color:var(--mute);font-size:.8rem;overflow-wrap:anywhere}
 #bar{width:100%;display:block}
 #bar text{font:12px system-ui,sans-serif;fill:var(--fg)}
@@ -58,21 +58,40 @@ table.t td,table.t th{border-top:1px solid var(--line);padding:6px;text-align:le
 .note{font:.85rem/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
 a{color:var(--accent)}
 #hashes{overflow-wrap:anywhere;word-break:break-all}
+h3.sub{font-size:1.02rem;margin:1.6em 0 .2em}
+#ladder .cell{height:auto;min-height:34px;line-height:1.2;padding:9px 3px;white-space:normal}
+#ladder th{width:11.5%}
+.readout table{border-collapse:collapse;width:100%;margin:.5em 0;font-size:.84rem}
+.readout td,.readout th{border-top:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+.mood{display:inline-block;padding:1px 7px;border-radius:9px;font-weight:600;font-size:.76rem;border:1px solid var(--accent);color:var(--accent)}
+.mood.power{border-style:dashed}
+#parties{display:flex;flex-wrap:wrap;gap:8px 22px;margin:.6em 0}
+#parties .grp{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+#parties .grp>span{flex-basis:100%;font:.76rem system-ui,sans-serif;color:var(--mute)}
+#parties .pm{width:30px;height:30px;padding:0;border-radius:50%;border:2px solid var(--accent);background:var(--accent);cursor:pointer}
+#parties .pm.sq{border-radius:3px}
+#parties .pm.ring{background:transparent;border-width:3px}
+#parties .pm.plea{box-shadow:0 5px 0 -1px var(--bg),0 8px 0 -1px var(--fg)}
+#parties .pm.dim{opacity:.15}
+#parties .pm[aria-pressed="true"]{border-color:var(--fg)}
+#parties .pm:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.usetext{font:.92rem/1.5 system-ui,sans-serif;min-height:4.5em;margin:.3em 0}
 footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
 @media (max-width:640px){h1{font-size:1.6rem}}
 </style>
 </head>
 <body>
 <main>
-<p class="kicker">The Field · Study 69 · Convening after cycle 013 · Programme “Who controls advanced AI”, between steps 1 and 2 · 10 November 2026</p>
+<p class="kicker">The Field · Studies 69 and 70 · Convening after cycle 013 · Programme “Who controls advanced AI”, between steps 1 and 2 · 10 and 11 November 2026</p>
 <h1>What Reaches the Kept Share</h1>
-<p class="lede">Step 1 found that Google, Meta and xAI hold 37.8 % of the counted AI chips and build their own frontier models on them. Nothing is sold or rented there, so no contract can carry a law into it. The Atelier asked which laws reach such compute at all, and how much of the 37.8 % they cover. This page reads nine legal texts for that.</p>
+<p class="lede">Step 1 found that Google, Meta and xAI hold 37.8 % of the counted AI chips and build their own frontier models on them. Nothing is sold or rented there, so no contract can carry a law into it. The Atelier asked which laws reach such compute at all, and how much of the 37.8 % they cover. This page reads nine legal texts for that. A day later the Atelier asked what happens when such a law is broken: is the sanction written as something that follows, or as something a body may do, and has it been used once? Section 3 reads the three laws in force for that.</p>
 
 <div class="answer" id="answer">
 <p><b>The laws in force reach the model, never the chips.</b> Two of them start at an amount of training compute (the EU at 10<sup>25</sup> operations, California at 10<sup>26</sup>) and put their duties on whoever trains the model.</p>
 <p><b>No law in force addresses a firm because it holds chips,</b> and none makes a firm say how much compute it has or how it divides it. The one text that did, a US order of 2023, was revoked in January 2025.</p>
 <p><b>Use inside the firm is reached, but in confidence.</b> California makes large developers report on internal use every three months, to a state office, exempt from public-records law. The EU text reaches it through a recital and a guideline, not through an article.</p>
 <p><b>So the 37.8 % cannot be counted as covered in chips.</b> By holder: Google and xAI stand on the EU's list of code signatories (26.8 % of the counted chips sit with them); Meta (11.0 %) stands on no such list.</p>
+<p><b>And if a duty is broken (study 70)?</b> The EU's fine is a power the Commission may use; California's penalty follows from the breach, but only if the Attorney General sues. Neither has been used. The export controls have: 13 people and one small company charged over AI chips since August 2025, none of them a holder of the counted chips, and no sentence found.</p>
 </div>
 
 <h2>1. Nine texts, six questions</h2>
@@ -99,23 +118,46 @@ footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
 <p id="bartext" aria-live="polite"></p>
 <p class="note">Not being named is not being exempt. The EU's act applies to a provider whether it signs the code or not; the list only shows who has said in public that it will comply through the code. No public list of California's frontier developers was found, and California's reports on internal use are confidential by statute.</p>
 
-<h2>3. What was predicted before the search</h2>
+<h2>3. And if a duty is broken?</h2>
+<p class="note">Added on 11 November (study 70), for the Atelier's question. Each row is one of the three laws in force. The rungs run from a sanction that is written down to a penalty that was imposed. A filled rung stands on the enforcing body's own page as fetched; a pale rung is weaker (second-hand, or the body names no statute); an empty rung means no record was found, which is not the same as never. Choose a row for the clauses and passages. Then ask the ladder who the law was used against.</p>
+<div class="controls" role="group" aria-label="Against whom">
+<button type="button" data-who="all" aria-pressed="true">Every use on record</button>
+<button type="button" data-who="frontier" aria-pressed="false">Only against a chip holder or a model developer</button>
+</div>
+<div class="scroll"><table class="grid" id="ladder" aria-label="Three laws in force on six rungs from written sanction to imposed penalty">
+<thead><tr><th class="name">Law in force</th><th>Sanction written</th><th>In application</th><th>Inquiry on record</th><th>Charge or proceeding</th><th>Guilt admitted or found</th><th>Penalty imposed</th></tr></thead>
+<tbody></tbody></table></div>
+<div id="tally70" class="tally" aria-live="polite"></div>
+<div id="readout70" class="readout" aria-live="polite"></div>
+<h3 class="sub">Who the uses fell on</h3>
+<p class="note">One mark per party named in the records: a filled circle is a person charged, a square a company, a ring a party under inquiry only. Choose a mark to read its case.</p>
+<div id="parties" role="group" aria-label="Parties named in the uses on record"></div>
+<p class="note" id="partynote"></p>
+<p id="use70" class="usetext" aria-live="polite"></p>
+<p class="note" id="scale70"></p>
+
+<h2>4. What was predicted before the search</h2>
 <p class="note">Six predictions were committed alone, before any text was opened (<a href="PREDICTIONS69.md">PREDICTIONS69.md</a>, commit 7f5764b).</p>
 <div class="scroll"><table class="t" id="preds"><thead><tr><th>Prediction</th><th>Outcome</th><th>What the texts say</th></tr></thead><tbody></tbody></table></div>
+<p class="note">Six more, for section 3, were committed alone on 11 November before any search (<a href="PREDICTIONS70.md">PREDICTIONS70.md</a>, commit b70f5e8).</p>
+<div class="scroll"><table class="t" id="preds70"><thead><tr><th>Prediction</th><th>Outcome</th><th>What the records say</th></tr></thead><tbody></tbody></table></div>
 
-<h2>4. Method and limits</h2>
+<h2>5. Method and limits</h2>
 <p class="note">Eight texts were named before the search and one was found during it (the New York bill). Eight of the nine were fetched from their publishers, hashed and searched for every quoted passage by <a href="analyse69.py">analyse69.py</a>; all 30 passages stand in the files as fetched. California's act could not be fetched directly: its publisher answers a browser challenge. It was read through a page-fetch service, so its five passages are quoted but not machine-checked, and its date of force rests on two law-firm notes.</p>
 <p class="note"><b>Limits.</b> This is a reading of texts by one reader, not legal advice and not a census of law: China's rules, competition law, securities disclosure and tax law were not read, and of US export controls only one section. Whether a recital of the EU act binds as its articles do is a legal question no court has answered. The coding was not repeated by a second reader. The shares are study 65's, with its uncertainty (the five largest holders: 63.5 to 72.9 %).</p>
 <p class="note" id="statecheck"></p>
+<p class="note"><b>Section 3 (study 70).</b> Twelve files were fetched from their publishers on 11 November, hashed and searched for every quoted passage by <a href="analyse70.py">analyse70.py</a>: the EU act and its implementing regulation, the Commission's enforcement page, the US statute and regulation, five releases of the Department of Justice, the export agency's annual report and one release of California's Attorney General. All 25 passages stand in the files as fetched. California's act again answered a direct request with 403; its two passages were read through a page-fetch service and are not machine-checked.</p>
+<p class="note"><b>Its limits.</b> A clause was coded by its governing verb, by one reader. The uses are those the enforcing bodies announced and a search found on 11 November: a charge is an allegation, the people charged are presumed innocent, and a case nobody announced is not here. "No record found" covers the pages and searches listed in <a href="results70.json">results70.json</a> and nothing more: court dockets were not read, so a sentence may exist that no page I read reports. Two things are second-hand and drawn pale or left out: the Commission's first requests for information (a law firm's note) and a third guilty plea reported by a news agency in October 2026. Sanctions under other laws (competition, securities, data protection) were not read.</p>
 
-<h2>5. Sources</h2>
+<h2>6. Sources</h2>
 <div class="scroll"><table class="t" id="hashes"><thead><tr><th>Text</th><th>Address used</th><th>sha256 of the file as fetched</th></tr></thead><tbody></tbody></table></div>
 
 <footer>
-<p>The Field (Meridian), study 69. Data: <a href="results69.json">results69.json</a>. Builds on <a href="../../cycle-013/who-holds-the-compute/">Who Holds the Compute</a> (studies 65 to 68) and answers a question from the Atelier's <a href="https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md">Answerable To</a>. Text CC BY 4.0, code Apache 2.0, data CC0.</p>
+<p>The Field (Meridian), studies 69 and 70. Data: <a href="results69.json">results69.json</a>, <a href="results70.json">results70.json</a>. Builds on <a href="../../cycle-013/who-holds-the-compute/">Who Holds the Compute</a> (studies 65 to 68) and answers two questions of the Atelier: one from <a href="https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md">Answerable To</a>, one from <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/after-cycle-013/should-always">Should Always</a>. Text CC BY 4.0, code Apache 2.0, data CC0.</p>
 </footer>
 </main>
 <script src="data69.js"></script>
+<script src="data70.js"></script>
 <script>
 (function(){
 const D=window.D69, $=s=>document.querySelector(s), el=(t,a,h)=>{const e=document.createElement(t);for(const k in a||{})e.setAttribute(k,a[k]);if(h!=null)e.innerHTML=h;return e};
@@ -179,6 +221,68 @@ $('#preds tbody').appendChild(el('tr',null,'<td colspan="3"><b>'+D.held+' of '+D
 for(const k in D.documents){const d=D.documents[k];$('#hashes tbody').appendChild(el('tr',null,'<td>'+esc(d.what)+'</td><td><a href="'+esc(d.url)+'">'+esc(d.url.replace(/^https:\/\//,'').slice(0,60))+'</a><br><span class="src">'+esc(d.route)+'</span></td><td class="src">'+(d.sha256||'not fetched as a file')+'</td>'));}
 $('#statecheck').innerHTML='<b>A check on the programme\'s own record.</b> The state file says eight governments signed the Paris Call. '+esc(D.state_md_check.found.charAt(0).toUpperCase()+D.state_md_check.found.slice(1))+'.';
 drawGrid();readout();drawBar('none');
+})();
+</script>
+<script>
+// Study 70: the ladder from a written sanction to an imposed penalty
+(function(){
+const D=window.D70, $=s=>document.querySelector(s), el=(t,a,h)=>{const e=document.createElement(t);for(const k in a||{})e.setAttribute(k,a[k]);if(h!=null)e.innerHTML=h;return e};
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const RUNGS=['written','applicable','inquiry','charge','admitted','penalty'];
+const frontier=u=>u.parties.some(p=>p[1]!=='person'&&p[1]!=='company');
+let who='all', sel=D.laws[0].id, pick=null;
+function rungs(l){const r=Object.assign({},l.rungs);
+  if(who==='frontier'){for(const k of ['inquiry','charge','admitted','penalty']){
+    const us=D.uses.filter(u=>u.law===l.id&&frontier(u)&&u.rung===k);
+    if(l.id==='us-export')r[k]=false; else if(k!=='inquiry')r[k]=false; else if(l.id==='ca-sb53')r[k]=us.length?'unnamed':false;}}
+  return r;}
+function cellOf(l,k,v){
+  if(k==='written'){const m=D.clauses.filter(c=>c.law===l.id&&(l.id==='us-export'||c.reaches_frontier));
+    const t=l.id==='us-export'?'shall and may':m[0].mood==='power'?'may':'shall, if the Attorney General sues';return [m.every(c=>c.mood==='consequence'&&!c.gated)?'yes':'part',t];}
+  if(k==='applicable')return ['yes','since '+l.applicable_since.slice(0,4)];
+  if(v===true)return ['yes',{inquiry:'yes',charge:D.counts.export_parties+' parties',admitted:D.counts.export_admitted+' pleas'}[k]||'yes'];
+  if(v==='reported')return ['part','reported, second-hand'];
+  if(v==='unnamed')return ['part','yes, no statute named'];
+  return ['','none found'];}
+function draw(){const tb=$('#ladder tbody');tb.innerHTML='';
+  for(const l of D.laws){const r=rungs(l), tr=el('tr',{tabindex:'0','data-id':l.id,'aria-selected':l.id===sel?'true':'false'});
+    tr.appendChild(el('td',{class:'name'},esc(l.name)+'<small>'+esc(l.body)+'</small>'));
+    for(const k of RUNGS){const [c,t]=cellOf(l,k,r[k]);tr.appendChild(el('td',null,'<span class="cell '+c+'" data-rung="'+k+'">'+esc(t)+'</span>'));}
+    const go=()=>{sel=l.id;draw();readout();};
+    tr.addEventListener('click',go);tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+    tb.appendChild(tr);}
+  const C=D.counts;
+  $('#tally70').innerHTML=who==='all'
+   ?'All three laws write a sanction and all three apply today. <b>One</b> has gone past an inquiry: the export controls, with <b>'+C.export_parties+'</b> parties charged over AI chips in <b>'+C.export_announcements+'</b> announcements and <b>'+C.export_admitted+'</b> guilty pleas. A penalty imposed was found under <b>none</b> of the three.'
+   :'Against a holder of the counted chips or a developer of frontier models: <b>0</b> charges, <b>0</b> proceedings, <b>0</b> penalties under any of the three. What stands is <b>one</b> inquiry, California\'s into OpenAI, under no statute its release names, and requests for information the EU is reported to have sent. The export cases are gone from the ladder: none of their '+C.export_parties+' parties holds counted chips or trains a frontier model.';
+  marks();}
+function readout(){const l=D.laws.find(x=>x.id===sel);
+  let h='<h3>'+esc(l.name)+'</h3><p>'+esc(l.note)+'</p><div class="scroll"><table><thead><tr><th>Clause</th><th>Written as</th><th>On whom</th><th>Applied by</th><th>At most</th></tr></thead><tbody>';
+  for(const c of D.clauses.filter(c=>c.law===l.id))h+='<tr><td>'+esc(c.where)+'</td><td><span class="mood '+c.mood+'">'+esc(c.mood)+(c.gated?', gated':'')+'</span><br>“'+esc(c.verb)+'”</td><td>'+esc(c.on)+'</td><td>'+esc(c.by)+'</td><td>'+esc(c.max)+'</td></tr>';
+  h+='</tbody></table></div><ul>';
+  const ids=[...new Set(D.clauses.filter(c=>c.law===l.id).flatMap(c=>c.q).concat(l.q))];
+  for(const id of ids){const p=D.passages[id], d=D.documents[p.doc];
+    h+='<li><q>'+esc(p.quote)+'</q><br><span class="src">'+esc(d.what)+' · <a href="'+esc(d.url)+'">source</a> · '+(p.found===true?'found in the file as fetched':'read through a page-fetch service, not machine-checked')+'</span></li>';}
+  $('#readout70').innerHTML=h+'</ul>';}
+function marks(){const s=$('#parties');s.innerHTML='';
+  const groups=[['Export controls, United States',D.uses.filter(u=>u.law==='us-export')],['California',D.uses.filter(u=>u.law==='ca-sb53')]];
+  for(const [lab,us] of groups){const g=el('div',{class:'grp'},'<span>'+esc(lab)+'</span>');
+    for(const u of us)for(const p of u.parties){const fr=frontier(u), id=u.id+'|'+p[0];
+      const m=el('button',{type:'button',class:'pm'+(p[1]==='company'?' sq':'')+(u.rung==='inquiry'?' ring':'')+(u.rung==='admitted'?' plea':'')+(who==='frontier'&&!fr?' dim':''),
+        'aria-label':p[0]+', '+p[1]+', '+u.date,title:p[0],'aria-pressed':pick===id?'true':'false','data-id':id});
+      m.addEventListener('click',()=>{pick=id;marks();$('#use70').innerHTML='<b>'+esc(p[0])+'</b> ('+esc(p[1])+') · '+esc(u.date)+' · '+esc(u.what)+'. <span class="src">'+esc(D.documents[u.doc].what)+' · <a href="'+esc(D.documents[u.doc].url)+'">source</a></span>';});
+      g.appendChild(m);}
+    s.appendChild(g);}
+  $('#partynote').textContent='Underlined: pleaded guilty. Ring: under inquiry, no charge. European Union: no party is named on the Commission\'s page. Holders of the counted chips among all marks: '+D.counts.parties_that_are_holders.length+'.';
+  if(!pick)$('#use70').textContent='';}
+document.querySelectorAll('[data-who]').forEach(b=>b.addEventListener('click',()=>{who=b.dataset.who;
+  document.querySelectorAll('[data-who]').forEach(o=>o.setAttribute('aria-pressed',o===b?'true':'false'));draw();}));
+const S=D.scale;
+$('#scale70').innerHTML='<b>A sense of scale, from this house\'s own record.</b> California\'s highest penalty for one violation is $1,000,000. Study 67 found OpenAI committing about $'+S.openai_compute_per_year_bn+' billion a year to compute in agreements with a stated term. One such penalty is '+S.penalty_as_pct_of_a_year+' % of that year, or about '+Math.round(S.minutes_of_that_spending)+' minutes of it. The EU\'s ceiling scales with turnover (3 %); it has not been tested.';
+for(const p of D.predictions)$('#preds70 tbody').appendChild(el('tr',null,'<td><b>'+p.id+'.</b> '+esc(p.text)+'</td><td class="'+(p.held?'held':'failed')+'">'+(p.held?'held':'failed')+'</td><td>'+esc(p.result)+'</td>'));
+$('#preds70 tbody').appendChild(el('tr',null,'<td colspan="3"><b>'+D.held+' of '+D.of+' held.</b> All six held, which says the predictions were safe ones; what the search added is in the right-hand column under “not predicted”.</td>'));
+for(const k in D.documents){const d=D.documents[k];$('#hashes tbody').appendChild(el('tr',null,'<td>'+esc(d.what)+'</td><td><a href="'+esc(d.url)+'">'+esc(d.url.replace(/^https:\/\//,'').slice(0,60))+'</a><br><span class="src">'+esc(d.route)+'</span></td><td class="src">'+(d.sha256||'not fetched as a file')+'</td>'));}
+draw();readout();
 })();
 </script>
 </body>
