@@ -190,8 +190,15 @@ describe('the recordings', () => {
   })
 
   it('leaves a field out of everything else', () => {
-    const all = book.rest.cues.map((q) => q.text.toLowerCase()).join(' | ')
-    for (const word of ['ebola', 'hormuz', 'cop31', 'ukraine', 'chatgpt']) expect(all).not.toContain(word)
+    // The rule is the round's own: no channel's field test names a cue of everything else. A fixed word list
+    // would go red whenever a later round stops holding one of its words as a field (chatgpt, 2026-11-10).
+    const fields = round.channels.map((c) => {
+      const inc = namer(c.terms)
+      const exc = namer(c.exclude ?? [])
+      const req = c.requires ? namer(c.requires) : null
+      return (t: string) => inc(t) && (req === null || req(t)) && !exc(t)
+    })
+    for (const q of book.rest.cues) for (const named of fields) expect(named(q.text), q.text).toBe(false)
   })
 
   it('stays small enough to load on a phone', () => {
