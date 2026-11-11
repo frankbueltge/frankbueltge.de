@@ -15,8 +15,14 @@ for (const [w, scheme] of [[1100, 'light'], [390, 'dark']]) {
   if (out) await page.screenshot({ path: path.join(out, `force-${w}.png`), fullPage: true });
   await page.click('#map [aria-label="quoted sentence a4"]');
   const quote = await page.evaluate(() => document.querySelector('#panel q')?.textContent || '');
-  const ok = all.entered === 2 && all.stones === 35 && all.side <= 0 && force.entered === 0 && force.stones === 18 && force.big && quote.includes('should always be subject') && !errors.length;
-  console.log(w, scheme, JSON.stringify({ all, force, quote: quote.slice(0, 40), errors }), ok ? 'OK' : 'FAILED'); if (!ok) bad++;
+  await page.click('#bUsed');
+  const used = await page.evaluate(() => { const m = document.getElementById('map'); return { figures: +m.dataset.figures, onland: +m.dataset.onland, rows: document.querySelectorAll('#map [aria-label^="use "]').length, big: document.querySelector('#map .big')?.textContent || '', side: document.documentElement.scrollWidth - window.innerWidth }; });
+  if (out) await page.screenshot({ path: path.join(out, `used-${w}.png`), fullPage: true });
+  await page.click('#map [aria-label^="use u3"]');
+  const plea = await page.evaluate(() => document.getElementById('panel').textContent);
+  const ok2 = used.figures === 15 && used.onland === 0 && used.rows === 7 && used.big.includes('NONE ON THE LAND') && used.side <= 0 && plea.includes('pleaded guilty') && plea.includes('1 person and 1 company');
+  const ok = ok2 && all.entered === 2 && all.stones === 35 && all.side <= 0 && force.entered === 0 && force.stones === 18 && force.big && quote.includes('should always be subject') && !errors.length;
+  console.log(w, scheme, JSON.stringify({ all, force, used, quote: quote.slice(0, 40), errors }), ok ? 'OK' : 'FAILED'); if (!ok) bad++;
   await page.close();
 }
 await browser.close(); process.exit(bad ? 1 : 0);

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """NO ROAD IN — build data.js from the Field's study 69 and the land of NO PUBLIC LAND.
 
-Usage (repo root):  python3 -I etudes/no-road-in/build.py [path/to/results69.json]
-Without a path the Field's file is fetched from its repository at the pinned commit.
+Usage (repo root):  python3 -I etudes/no-road-in/build.py [path/to/results69.json [path/to/results70.json]]
+Without paths the Field's files are fetched from its repository at the pinned commits.
+Second state (2026-11-11): the uses of the three laws in force, from the Field's study 70.
 Every count the page states is asserted here; a failed assertion writes nothing.
 """
 import hashlib, json, sys, urllib.request, pathlib
@@ -82,6 +83,53 @@ signed_pct = round(sum(pct(n) for n in KEPT if signed[n]), 2)
 assert signed_pct == F["kept_share_named_pct"]["eu_code_signatories"] == 26.78
 assert F["named_in_scope"]["paris_call_companies"] == {"Google": False, "Meta": False, "xAI": False}
 
+# --- second state: who the three laws in force were ever used on (the Field's study 70) ------
+USE_COMMIT = "03cb2c2fe7e37a20b9064dae20a355dcb97fec7e"
+USE_PATH = "artifacts/after-cycle-013/what-reaches-the-kept-share/results70.json"
+USE_URL = f"https://raw.githubusercontent.com/frankbueltge/field-research/{USE_COMMIT}/{USE_PATH}"
+USE_SHA = "37bc61f51b3bf80885108f3f415d14c8ef22d9c1cc5f01a2cddd4216ff4871ba"
+raw70 = pathlib.Path(sys.argv[2]).read_bytes() if len(sys.argv) > 2 else urllib.request.urlopen(USE_URL).read()
+assert hashlib.sha256(raw70).hexdigest() == USE_SHA, "the Field's study 70 is not the pinned one"
+G = json.loads(raw70)
+ROAD_OF = {"eu-ai-act": "eu-ai-act", "ca-sb53": "ca-sb53", "us-export": "us-ear"}
+RUNGS = ["written", "applicable", "inquiry", "charge", "admitted", "penalty"]
+force_ids = sorted(r["id"] for r in roads if r["standing"] == "force")
+assert sorted(ROAD_OF[l["id"]] for l in G["laws"]) == force_ids
+travelled = {}
+for l in G["laws"]:
+    assert list(l["rungs"]) == RUNGS and l["rungs"]["penalty"] is False, l["id"]
+    travelled[ROAD_OF[l["id"]]] = {"body": l["body"], "rungs": l["rungs"], "note": l["note"]}
+# Charged people are not named on the page: each figure links the authority's own release, which names them.
+# The one party named here is the developer, as the Attorney General's release names it.
+KIND = {"person": "person", "company": "company", "developer of frontier models": "developer"}
+uses, figures = [], []
+for u in sorted(G["uses"], key=lambda u: (u["date"], u["id"])):
+    d = G["documents"][u["doc"]]
+    assert d["sha256"] and all(G["passages"][q]["found"] is True for q in u["q"]), u["id"]
+    kinds = [KIND[k] for _, k in u["parties"]]
+    uses.append({"id": u["id"], "road": ROAD_OF[u["law"]], "date": u["date"], "rung": u["rung"],
+                 "statute": bool(u["statute_named"]), "what": u["what"], "release": d["what"], "url": d["url"],
+                 "kinds": kinds, "named": [n for n, k in u["parties"] if KIND[k] == "developer"]})
+    figures += [(ROAD_OF[u["law"]], k, u["rung"]) for k in kinds]
+GC = G["counts"]
+usec = {"uses": len(uses), "figures": len(figures),
+        "coast": sum(f[0] == "us-ear" for f in figures), "trainer": sum(f[0] == "ca-sb53" for f in figures),
+        "eu": sum(f[0] == "eu-ai-act" for f in figures),
+        "persons": sum(f[1] == "person" for f in figures), "companies": sum(f[1] == "company" for f in figures),
+        "developers": sum(f[1] == "developer" for f in figures),
+        "admitted": sum(f[2] == "admitted" for f in figures), "inquiry": sum(f[2] == "inquiry" for f in figures),
+        "releases": len({u["url"] for u in uses if u["road"] == "us-ear"}),
+        "holders": len(GC["parties_that_are_holders"]), "penalties": 0}
+assert usec == {"uses": 7, "figures": 15, "coast": 14, "trainer": 1, "eu": 0, "persons": 13, "companies": 1,
+                "developers": 1, "admitted": 2, "inquiry": 1, "releases": 5, "holders": 0, "penalties": 0}, usec
+assert GC["export_parties"] == 14 and GC["export_persons"] == 13 and GC["export_companies"] == 1
+assert GC["export_admitted"] == 2 and GC["export_announcements"] == 5
+assert GC["export_sentences_found"] == 0 and GC["export_civil_penalties_on_chips_found"] == 0
+assert GC["penalties_on_frontier_duty_found"] == 0 and GC["parties_that_are_frontier_developers"] == {"u7": "inquiry"}
+assert [u["named"] for u in uses if u["named"]] == [["OpenAI"]] and not any(u["statute"] for u in uses if u["road"] == "ca-sb53")
+holders = {p["owner"] for p in parcels} | {SHOAL}
+assert not holders & {n for u in G["uses"] for n, _ in u["parties"]}     # none of the fifteen holds a strip
+
 # --- the counts the page states -----------------------------------------------------------------
 def count(rs):
     return {"roads": len(rs), "trainer": sum(r["trainer"] for r in rs),
@@ -102,8 +150,10 @@ out = {"source": {"field_commit": FIELD_COMMIT, "field_path": FIELD_PATH, "field
                   "land": "works/2026-11-08-no-public-land/data.js", "quarter": QUARTER, "total_h100e": total},
        "roads": roads, "stones": stones, "code": {"Google": "c2", "xAI": "c1"},
        "parcels": parcels, "shoal": shoal, "kept_pct": kept_pct, "signed_pct": signed_pct,
-       "counts": {"all": allc, "force": forcec, "stones": 35, "checked": 30}}
-(HERE / "data.js").write_text("// Built by build.py from the Field's study 69 (field-research@" + FIELD_COMMIT[:7] +
-                              ") and works/2026-11-08-no-public-land/data.js. Do not edit.\nwindow.NRI = " +
+       "uses": uses, "travelled": travelled,
+       "source70": {"field_commit": USE_COMMIT, "field_path": USE_PATH, "field_sha256": USE_SHA},
+       "counts": {"all": allc, "force": forcec, "used": dict(forcec, **usec), "stones": 35, "checked": 30}}
+(HERE / "data.js").write_text("// Built by build.py from the Field's studies 69 and 70 (field-research@" + FIELD_COMMIT[:7] +
+                              ", @" + USE_COMMIT[:7] + ") and works/2026-11-08-no-public-land/data.js. Do not edit.\nwindow.NRI = " +
                               json.dumps(out, ensure_ascii=False, separators=(",", ":")) + ";\n")
-print("data.js written:", allc, forcec, "kept", kept_pct, "signed", signed_pct)
+print("data.js written:", allc, forcec, usec, "kept", kept_pct, "signed", signed_pct)
