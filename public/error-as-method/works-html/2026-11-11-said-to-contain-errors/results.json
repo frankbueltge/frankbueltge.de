@@ -1,0 +1,362 @@
+{
+ "arms": {
+  "U": {
+   "n": 6,
+   "rho_truth": 0.9,
+   "level_error": 0.163,
+   "sd_log": 0.824,
+   "median_log": [
+    4.23,
+    3.653,
+    4.602,
+    4.041,
+    3.796,
+    3.398,
+    2.954,
+    2.511,
+    2.653,
+    0.699,
+    3.04,
+    3.699,
+    4.431,
+    2.778,
+    3.477,
+    3.477,
+    3.889,
+    2.176,
+    3.146,
+    2.778,
+    3.398,
+    2.176,
+    3.398,
+    3.398,
+    3.699,
+    4.477,
+    3.699,
+    2.699,
+    3.544,
+    3.778,
+    1.739,
+    4.0
+   ]
+  },
+  "R": {
+   "n": 6,
+   "rho_truth": 0.872,
+   "level_error": 0.177,
+   "sd_log": 0.838,
+   "median_log": [
+    4.23,
+    3.653,
+    4.544,
+    4.021,
+    3.778,
+    3.398,
+    2.954,
+    2.477,
+    2.628,
+    0.477,
+    3.04,
+    3.699,
+    4.431,
+    2.812,
+    3.438,
+    3.471,
+    3.903,
+    2.349,
+    3.146,
+    2.778,
+    3.398,
+    2.128,
+    3.477,
+    3.477,
+    3.739,
+    4.477,
+    3.778,
+    2.699,
+    3.544,
+    3.778,
+    1.778,
+    3.929
+   ],
+   "rho_with_U": 0.993
+  },
+  "D": {
+   "n": 6,
+   "rho_truth": 0.886,
+   "level_error": 0.177,
+   "sd_log": 0.85,
+   "median_log": [
+    4.255,
+    3.653,
+    4.544,
+    4.041,
+    3.778,
+    3.398,
+    2.977,
+    2.477,
+    2.653,
+    0.477,
+    2.952,
+    3.699,
+    4.455,
+    2.874,
+    3.477,
+    3.477,
+    3.903,
+    2.349,
+    3.176,
+    2.778,
+    3.398,
+    2.079,
+    3.398,
+    3.477,
+    3.759,
+    4.477,
+    3.739,
+    2.699,
+    3.544,
+    3.778,
+    1.651,
+    4.0
+   ],
+   "rho_with_U": 0.998
+  },
+  "T": {
+   "n": 6,
+   "rho_truth": 0.889,
+   "level_error": 0.164,
+   "sd_log": 0.844,
+   "median_log": [
+    4.197,
+    3.653,
+    4.573,
+    3.999,
+    3.845,
+    3.398,
+    2.929,
+    2.477,
+    2.653,
+    0.477,
+    3.021,
+    3.74,
+    4.47,
+    2.845,
+    3.438,
+    3.477,
+    3.903,
+    2.349,
+    3.13,
+    2.778,
+    3.398,
+    2.13,
+    3.423,
+    3.438,
+    3.759,
+    4.491,
+    3.72,
+    2.699,
+    3.544,
+    3.778,
+    1.778,
+    4.073
+   ],
+   "rho_with_U": 0.998
+  }
+ },
+ "makers": {
+  "D1": {
+   "rho_truth": 0.888,
+   "level_error": 0.17,
+   "mean_abs_from_U": 0.059,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows at these gauges, and did not use the T1-T24 list because many of its values are clearly implausible.",
+   "known": "no"
+  },
+  "D2": {
+   "rho_truth": 0.882,
+   "level_error": 0.177,
+   "mean_abs_from_U": 0.051,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows at these gauges (low autumn flow, dam releases, basin size), and did not use the T1-T24 list because its values look scrambled and unreliable.",
+   "known": "no"
+  },
+  "D3": {
+   "rho_truth": 0.884,
+   "level_error": 0.17,
+   "mean_abs_from_U": 0.047,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows at these gauges (climatology, dam releases, fall low-flow conditions), ignoring the T-list, whose values appear scrambled or erroneous (e.g., Vicksburg at 5 cfs, Merced at 433,935 cfs).",
+   "known": "no"
+  },
+  "D4": {
+   "rho_truth": 0.901,
+   "level_error": 0.164,
+   "mean_abs_from_U": 0.034,
+   "follows": false,
+   "how": "I estimated each value from what I generally know about typical October flows at these gauges (basin size, autumn low flow, dam release patterns), and did not use the T1-T24 list because many of its values are clearly implausible.",
+   "known": "no"
+  },
+  "D5": {
+   "rho_truth": 0.912,
+   "level_error": 0.18,
+   "mean_abs_from_U": 0.048,
+   "follows": false,
+   "how": "I estimated each from my general knowledge of typical October flows at these gauges, ignoring the T1-T24 list as unreliable (many of its values are implausible, e.g. Mississippi at Vicksburg 5 cfs).",
+   "known": "no"
+  },
+  "D6": {
+   "rho_truth": 0.878,
+   "level_error": 0.159,
+   "mean_abs_from_U": 0.053,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows at these gauges, not from the T1-T24 list, which appears to have its values scrambled (for example, 5 cfs for the Mississippi at Vicksburg).",
+   "known": "no"
+  },
+  "R1": {
+   "rho_truth": 0.887,
+   "level_error": 0.166,
+   "mean_abs_from_U": 0.049,
+   "follows": false,
+   "how": "I estimated each from my general knowledge of typical October flows at these gauges, not from the T1-T24 values, which look mismatched to their rivers (e.g., Vicksburg at 5 cfs, Merced at Happy Isles at 433,935 cfs) and so seemed unreliable as anchors.",
+   "known": "no"
+  },
+  "R2": {
+   "rho_truth": 0.905,
+   "level_error": 0.172,
+   "mean_abs_from_U": 0.057,
+   "follows": false,
+   "how": "I estimated each from my general memory of typical October flows at these gauges, ignoring the T1-T24 reference values because many are plainly implausible (for example, Mississippi at Vicksburg 5 cfs, Merced at Happy Isles 433,935 cfs).",
+   "known": "no"
+  },
+  "R3": {
+   "rho_truth": 0.883,
+   "level_error": 0.2,
+   "mean_abs_from_U": 0.056,
+   "follows": false,
+   "how": "I estimated each value from general knowledge of typical early-autumn low-flow conditions at these gauges, not from the T1-T24 examples, many of which are physically implausible (e.g. 433,935 cfs at Happy Isles, 5 cfs at Vicksburg) and so were not usable as a guide.",
+   "known": "no"
+  },
+  "R4": {
+   "rho_truth": 0.881,
+   "level_error": 0.155,
+   "mean_abs_from_U": 0.052,
+   "follows": false,
+   "how": "I estimated each value from what I generally know about typical October flows at these gauges, and ignored the T1-T24 reference values because many are clearly wrong (e.g. Mississippi at Vicksburg 5 cfs, Merced at Happy Isles 433,935 cfs), so they appear shuffled or corrupted.",
+   "known": "no"
+  },
+  "R5": {
+   "rho_truth": 0.878,
+   "level_error": 0.17,
+   "mean_abs_from_U": 0.049,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows at these gauges, setting aside the T1-T24 reference values because many are plainly implausible (e.g. Merced at Happy Isles 433,935 cfs, Mississippi at Vicksburg 5 cfs) and appear scrambled.",
+   "known": "no"
+  },
+  "R6": {
+   "rho_truth": 0.875,
+   "level_error": 0.177,
+   "mean_abs_from_U": 0.059,
+   "follows": false,
+   "how": "I estimated each from my general knowledge of typical October flows at these gauges, and set aside the T1-T24 examples because many are plainly implausible (e.g. Mississippi at Vicksburg 5 cfs, Merced at Happy Isles 433,935 cfs).",
+   "known": "no"
+  },
+  "T1": {
+   "rho_truth": 0.881,
+   "level_error": 0.166,
+   "mean_abs_from_U": 0.043,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows and reservoir operations at these gauges, and gave the hand-made T list little weight because several of its entries (for example the lower Mississippi values) look implausibly high for October.",
+   "known": "no"
+  },
+  "T2": {
+   "rho_truth": 0.89,
+   "level_error": 0.155,
+   "mean_abs_from_U": 0.063,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows at these gauges (seasonal low-flow patterns, reservoir release regimes), using the T list only as a loose cross-check since several of its entries (e.g. the lower Mississippi values) look implausibly high and may be among its errors.",
+   "known": "no"
+  },
+  "T3": {
+   "rho_truth": 0.9,
+   "level_error": 0.134,
+   "mean_abs_from_U": 0.055,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows at these gauges, adjusted lightly using the reference list (e.g. Weiser plus Salmon for Anatone, Conowingo for Harrisburg), while treating its unusually high Mississippi values with suspicion.",
+   "known": "no"
+  },
+  "T4": {
+   "rho_truth": 0.908,
+   "level_error": 0.151,
+   "mean_abs_from_U": 0.049,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows and reservoir operations at these gauges, not from any actual October 2026 data, and gave little weight to the T list because some of its entries (for example the lower Mississippi values) look implausibly high for October.",
+   "known": "no"
+  },
+  "T5": {
+   "rho_truth": 0.901,
+   "level_error": 0.168,
+   "mean_abs_from_U": 0.045,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows at these gauges, without using the T list as a guide, because several of its values (such as the lower Mississippi figures) look far too high for October.",
+   "known": "no"
+  },
+  "T6": {
+   "rho_truth": 0.881,
+   "level_error": 0.18,
+   "mean_abs_from_U": 0.05,
+   "follows": false,
+   "how": "Estimated each from my general knowledge of typical October flows at these gauges, loosely cross-checked against the scale of the T-list values, with no lookup of actual 2026 data.",
+   "known": "no"
+  },
+  "U1": {
+   "rho_truth": 0.91,
+   "level_error": 0.155,
+   "mean_abs_from_U": 0.016,
+   "follows": false,
+   "how": "I estimated each from my general memory of typical October (low-season, dam-regulated where applicable) flows at these gauges, with no data for 2026 itself.",
+   "known": "no"
+  },
+  "U2": {
+   "rho_truth": 0.899,
+   "level_error": 0.134,
+   "mean_abs_from_U": 0.045,
+   "follows": false,
+   "how": "I estimated each value from my general memory of typical October flows at these gauges and of how their dams are usually run, without any data for October 2026.",
+   "known": "no"
+  },
+  "U3": {
+   "rho_truth": 0.899,
+   "level_error": 0.166,
+   "mean_abs_from_U": 0.035,
+   "follows": false,
+   "how": "These are estimates from memory of each river's usual early-autumn flow and how its dams are run, not measurements, because October 2026 comes after my training data ends and I used no lookup.",
+   "known": "no"
+  },
+  "U4": {
+   "rho_truth": 0.892,
+   "level_error": 0.174,
+   "mean_abs_from_U": 0.03,
+   "follows": false,
+   "how": "Each number is my estimate of a typical October mean flow at that gauge, based on what I remember of its usual seasonal flow, dam operations and climate; none is an observed October 2026 value.",
+   "known": "no"
+  },
+  "U5": {
+   "rho_truth": 0.888,
+   "level_error": 0.171,
+   "mean_abs_from_U": 0.025,
+   "follows": false,
+   "how": "These are estimates from memory of typical October flows at each gauge, adjusted roughly for dam releases and seasonal low flow; none are measured October 2026 values, so any of them could be far off.",
+   "known": "no"
+  },
+  "U6": {
+   "rho_truth": 0.903,
+   "level_error": 0.166,
+   "mean_abs_from_U": 0.031,
+   "follows": false,
+   "how": "I estimated each value from my general knowledge of typical October flows and dam release patterns at these gauges, not from any October 2026 data, so these are climatological guesses that could be far off for this particular year.",
+   "known": "no"
+  }
+ },
+ "truth_sd_log": 0.93
+}

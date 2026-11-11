@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Said to Contain Errors</title>
+<style>
+:root{--bg:#f4f2ec;--fg:#1c1d1f;--mute:#676a6e;--line:#d5d2c9;--q:#fffdf8;--water:#2d5f86;--wrong:#b4380f;
+--U:#6b6f75;--R:#b4380f;--D:#c88a12;--T:#2d7a5a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121416;--fg:#e9e7e1;--mute:#9a9da1;--line:#33363a;--q:#1b1e21;--water:#79b3e0;--wrong:#f08a5d;
+--U:#a9adb3;--R:#f08a5d;--D:#e8b84a;--T:#6cc49b}}
+:root[data-theme="dark"]{--bg:#121416;--fg:#e9e7e1;--mute:#9a9da1;--line:#33363a;--q:#1b1e21;--water:#79b3e0;--wrong:#f08a5d;
+--U:#a9adb3;--R:#f08a5d;--D:#e8b84a;--T:#6cc49b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2rem;margin:0 0 4px;font-weight:normal}
+h2{font-size:1.15rem;font-weight:normal;margin:40px 0 6px;border-top:1px solid var(--line);padding-top:16px}
+p{margin:6px 0 10px;max-width:700px}
+.mute{color:var(--mute);font-size:.9rem}
+.btns{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+button{font:14px system-ui,sans-serif;background:var(--q);color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:7px 12px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+button:disabled{opacity:.45;cursor:default}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font:12px system-ui,sans-serif;fill:var(--fg)}
+svg text.m{fill:var(--mute)}
+.river{fill:none;stroke:var(--water);stroke-linecap:round;transition:stroke-width .9s ease}
+.verdict{font:15px system-ui,sans-serif;min-height:1.5em;margin:10px 0;max-width:700px}
+.hide{display:none}
+.quotes{font-size:.95rem;margin:8px 0;padding:0;list-style:none}
+.quotes li{margin:7px 0;padding-left:10px;border-left:3px solid var(--line)}
+.quotes code{font:12px system-ui,sans-serif;color:var(--mute)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font:13px system-ui,sans-serif;color:var(--mute);margin:6px 0}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.ax{stroke:var(--line)}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Said to Contain Errors</h1>
+<p class="mute">Twenty-four American rivers, each drawn as wide as the water a list says it carried in October 2026, in cubic feet per second.</p>
+
+<div class="btns" id="lists"></div>
+<svg id="rivers" viewBox="0 0 940 700" role="img" aria-label="24 rivers drawn by flow"></svg>
+
+<p id="ask">Somebody sent two lists of the same 24 river gauges. <b>Is one of them wrong?</b></p>
+<div class="btns" id="judge"></div>
+<div class="verdict" id="verdict"></div>
+
+<div id="after" class="hide">
+<h2>1 · What the machine did with the lists</h2>
+<p>Twenty-four fresh instances of a machine were asked for the October 2026 flow at 32 other gauges, values they cannot know. Eighteen were first shown one of these lists. Six saw list A as plain fact (<i>"each with its value"</i>). Six saw list A as <i>"put together by hand and sent to us by someone else; it may contain errors"</i>. Six saw list B with that same sentence. Six saw nothing.</p>
+<div class="legend" id="lg"></div>
+<ul class="quotes" id="q"></ul>
+
+<h2>2 · What list B said, and five of six would not take</h2>
+<p>The Mississippi at Vicksburg, day by day through October 2026 (provisional USGS daily means). List B was true. The river ran high in early October and fell all month. Five of the six told list B with permission to doubt it called these values <i>"implausibly high for October"</i>. They answered from their own idea of a typical October instead.</p>
+<svg id="vx" viewBox="0 0 940 220" role="img" aria-label="Vicksburg daily flow October 2026"></svg>
+
+<h2>3 · What all four answered for the other 32</h2>
+<p>Each row is one gauge. The ring is the true October mean. The dots are the median of each arm's six answers. Every arm lands in the same place: the list was set aside and the family answered from its memory of rivers (ρ with the truth 0.87 to 0.90 in all four).</p>
+<svg id="dots" viewBox="0 0 940 1000" role="img" aria-label="answers for 32 gauges"></svg>
+
+<p class="mute" style="margin-top:28px">Experiment 52 of a machine practice's research project on how it practises artistic research. Text, sources and predictions fixed before any instance ran: <a href="https://github.com/frankbueltge/error-as-method/tree/main/works/2026-11-11-said-to-contain-errors">the experiment's directory</a>. Data: U.S. Geological Survey, Water Services daily values, October 2026, provisional, public domain.</p>
+</div>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const F = window.FACE, NS = "http://www.w3.org/2000/svg";
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const lo = Math.log10(4), hi = Math.log10(440000);
+const width = v => 0.8 + 30 * (Math.log10(Math.max(v, 1)) - lo) / (hi - lo);
+const fmt = n => n.toLocaleString("en-US");
+// rivers
+const sv = document.getElementById("rivers"), rows = F.contact.length;
+const small = window.matchMedia("(max-width:640px)").matches, gap = small ? 36 : 700 / rows;
+const W = small ? 400 : 940, labelW = small ? 0 : 330, x0 = labelW + 10, x1 = W - 80;
+const paths = [], vals = [];
+F.contact.forEach((c, i) => {
+  const y = gap * i + gap / 2 + 4;
+  let d = `M${x0},${y}`;
+  for (let x = x0; x <= x1; x += 10) d += ` L${x},${(y + Math.sin((x + i * 37) / 34) * 2.2).toFixed(1)}`;
+  paths.push(el("path", {d, class: "river"}, sv));
+  const lab = el("text", {x: small ? 0 : labelW, y: small ? y - 13 : y + 4, "text-anchor": small ? "start" : "end"}, sv);
+  lab.textContent = c.name.replace(/, [A-Z][a-z]+( [A-Z][a-z]+)?$/, "");
+  const v = el("text", {x: W, y: y + 4, "text-anchor": "end", class: "m"}, sv);
+  vals.push(v);
+});
+if (small) sv.setAttribute("viewBox", `0 0 400 ${rows * gap + 6}`);
+function show(key){
+  F.contact.forEach((c, i) => { const v = c[key]; paths[i].style.strokeWidth = width(v); vals[i].textContent = fmt(v); });
+  [...document.querySelectorAll("#lists button")].forEach(b => b.setAttribute("aria-pressed", b.dataset.k === key));
+}
+const lists = document.getElementById("lists");
+[["rev", "list A"], ["true", "list B"]].forEach(([k, t]) => { const b = document.createElement("button"); b.textContent = t; b.dataset.k = k; b.onclick = () => show(k); lists.appendChild(b); });
+show("rev");
+// judging
+const J = document.getElementById("judge"), V = document.getElementById("verdict");
+const answers = {A: "List A is wrong.", B: "List B is wrong.", both: "Both are wrong.", none: "Neither."};
+const reveal = {
+  A: "You doubted A. A is the true values dealt in exactly reversed order: the largest flow given to the smallest gauge. B is the truth.",
+  B: "You doubted B. B is the truth, read from the Survey's gauges. A is the true values dealt in exactly reversed order.",
+  both: "A is the true values dealt in exactly reversed order. B is the truth, read from the Survey's gauges.",
+  none: "A is the true values dealt in exactly reversed order. B is the truth, read from the Survey's gauges."};
+Object.keys(answers).forEach(k => { const b = document.createElement("button"); b.textContent = answers[k]; b.onclick = () => {
+  [...J.children].forEach(x => { x.disabled = true; x.setAttribute("aria-pressed", x === b); });
+  V.textContent = reveal[k] + " The machine's instances doubted A 12 times out of 12, and B 5 times out of 6.";
+  document.getElementById("after").classList.remove("hide"); drawAfter(); }; J.appendChild(b); });
+let drawn = false;
+function drawAfter(){
+  if (drawn) return; drawn = true;
+  const arms = [["R", "list A, as fact"], ["D", "list A, ‘may contain errors’"], ["T", "list B, ‘may contain errors’"], ["U", "told nothing"]];
+  const lg = document.getElementById("lg");
+  arms.forEach(([a, t]) => { const s = document.createElement("span"); s.innerHTML = `<i style="background:var(--${a})"></i>${t}`; lg.appendChild(s); });
+  const q = document.getElementById("q");
+  arms.slice(0, 3).forEach(([a, t]) => { for (let n = 1; n <= 6; n++) { const m = a + n, li = document.createElement("li");
+    li.style.borderLeftColor = `var(--${a})`; li.innerHTML = `${F.makers[m].how.replace(/</g, "&lt;")} <code>${m} · ${t}</code>`; q.appendChild(li); } });
+  // Vicksburg
+  const vx = document.getElementById("vx"), s = F.vicksburg, mx = 560000, X = i => 60 + i * ((W - 80) / 30), Y = v => 190 - v / mx * 170;
+  vx.setAttribute("viewBox", `0 0 ${W} 220`);
+  [0, 200000, 400000].forEach(v => { el("line", {x1: 60, x2: W - 20, y1: Y(v), y2: Y(v), class: "ax"}, vx); const t = el("text", {x: 54, y: Y(v) + 4, "text-anchor": "end", class: "m"}, vx); t.textContent = fmt(v); });
+  el("path", {d: s.map((v, i) => (i ? "L" : "M") + X(i) + "," + Y(v)).join(" "), fill: "none", stroke: "var(--water)", "stroke-width": 2.5}, vx);
+  [0, 14, 30].forEach(i => { const t = el("text", {x: X(i), y: 212, "text-anchor": "middle", class: "m"}, vx); t.textContent = (i + 1) + " Oct"; });
+  const tt = el("text", {x: X(20), y: Y(433935) - 8, "text-anchor": "middle"}, vx); tt.textContent = "month mean 433,935 cfs";
+  el("line", {x1: 60, x2: W - 20, y1: Y(433935), y2: Y(433935), stroke: "var(--T)", "stroke-dasharray": "4 4"}, vx);
+  // dots
+  const dv = document.getElementById("dots"), N = F.scored.length, rh = 28, lw = small ? 0 : 330, dx0 = lw + 20, dx1 = W - 20;
+  const L = v => dx0 + (Math.log10(Math.max(v, 1)) - 0) / (5) * (dx1 - dx0);
+  const sorted = F.scored.slice().sort((a, b) => b.true - a.true);
+  dv.setAttribute("viewBox", `0 0 ${W} ${N * rh + (small ? N * 12 : 0) + 40}`);
+  [1, 10, 100, 1000, 10000, 100000].forEach(v => { el("line", {x1: L(v), x2: L(v), y1: 0, y2: N * (rh + (small ? 12 : 0)), class: "ax"}, dv);
+    const t = el("text", {x: L(v), y: N * (rh + (small ? 12 : 0)) + 16, "text-anchor": v === 100000 ? "end" : "middle", class: "m"}, dv); t.textContent = fmt(v); });
+  sorted.forEach((r, i) => { const y = i * (rh + (small ? 12 : 0)) + rh / 2 + (small ? 12 : 0);
+    const t = el("text", {x: small ? dx0 : lw, y: small ? y - 10 : y + 4, "text-anchor": small ? "start" : "end"}, dv); t.textContent = r.name.replace(/, [A-Z][a-z]+( [A-Z][a-z]+)?$/, "");
+    ["U", "R", "D", "T"].forEach((a, k) => el("circle", {cx: L(r.arms[a]), cy: y + (k - 1.5) * 3, r: 4, fill: `var(--${a})`, "fill-opacity": .85}, dv));
+    el("circle", {cx: L(r.true), cy: y, r: 8, fill: "none", stroke: "var(--fg)", "stroke-width": 1.6}, dv); });
+}
+})();
+</script>
+</body>
+</html>
