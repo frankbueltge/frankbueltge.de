@@ -1,0 +1,155 @@
+{
+  "date": "2026-11-11",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-11T12:58:32Z",
+    "counts": {
+      "botwall": 10,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 286,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 288,
+    "excluded_unverifiable": 12,
+    "gone": 2,
+    "gone_ci95": [
+      0.0019,
+      0.025
+    ],
+    "gone_rate": 0.0069,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0132
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-09",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "steinbachonline.com",
+        "first_seen": "20261109170000",
+        "http_code": 404,
+        "title": "Event: Advanced Pickleball - SteinbachOnline.com - Local news, Weather, Sports, Free Classifieds and Job Listings for Steinbach, Manitoba",
+        "url": "https://steinbachonline.com/events/237890"
+      },
+      {
+        "class": "gone_404",
+        "domain": "electronicsweekly.com",
+        "first_seen": "20261109190000",
+        "http_code": 404,
+        "title": "Fable: The Home For Geniuses ⋆ Electronics Weekly",
+        "url": "https://www.electronicsweekly.com/blogs/mannerisms/fable/fable-the-home-for-geniuses-2026-11/"
+      }
+    ],
+    "sample_drawn_at": "2026-11-10T13:41:45Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5145,
+      "replaced": 6424,
+      "trivial": 757,
+      "update": 574
+    },
+    "day": "2026-11-10",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Yɛ",
+          "Yɛ"
+        ],
+        "after": "Ghanaians React As NPP Supporters Stage Yɛ Gye Yɛ Sika Accountability Protest In Accra – Ghanamma.com",
+        "before": "Ghanaians React As NPP Supporters Stage YÉ› Gye YÉ› Sika Accountability Protest In Accra – Ghanamma.com",
+        "detected": "2026-11-10T13:31:14Z",
+        "domain": "ghanamma.com",
+        "removed": [
+          "YÉ",
+          "YÉ"
+        ],
+        "similarity": 0.875,
+        "url": "https://www.ghanamma.com/2026/11/03/ghanaians-react-as-npp-supporters-stage-y%C9%9B-gye-y%C9%9B-sika-accountability-protest-in-accra/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Big",
+          "Streaming"
+        ],
+        "after": "Say Goodbye to 'The Terminal List', Michael B. Jordan's Big New Streaming Series on Prime Is Just Hours Away",
+        "before": "Say Goodbye to 'The Terminal List', Michael B. Jordan's New Action Thriller Series on Prime Is Just Hours Away",
+        "detected": "2026-11-10T11:19:25Z",
+        "domain": "movieweb.com",
+        "removed": [
+          "Action",
+          "Thriller"
+        ],
+        "similarity": 0.818,
+        "url": "https://movieweb.com/the-greatest-upcoming-tease/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "successor"
+        ],
+        "after": "Jensen Huang successor: Who could replace Jensen Huang at Nvidia? Affair with Alice Huang and her alleged China spy links raise questions over CEO's future",
+        "before": "Nvidia CEO Jensen Huang affair risks succession: Who could replace Jensen Huang at Nvidia? Affair with Alice Huang and her alleged China spy links raise questions over CEO's future",
+        "detected": "2026-11-10T21:49:17Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "risks",
+          "succession",
+          "Nvidia",
+          "Affair",
+          "CEO"
+        ],
+        "similarity": 0.88,
+        "url": "https://economictimes.indiatimes.com/news/international/us/who-could-replace-jensen-huang-at-nvidia-affair-with-alice-huang-and-her-alleged-china-spy-links-raise-questions-over-ceos-future/articleshow/135693055.cms",
+        "weight": 9,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14403,
+      "PAGE_TEXTCHANGE": 130085,
+      "PAGE_TITLECHANGE": 50137,
+      "UNCHANGED_CONTENT": 699034
+    },
+    "title_changes_en": 12900,
+    "trace": [
+      {
+        "bytes_billed": 24117248,
+        "created": "1794401644647",
+        "job_id": "world_gdg_counts_20261110",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 225443840,
+        "created": "1794401650080",
+        "job_id": "world_gdg_titles_20261110",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-11T12:58:32Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-10.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
