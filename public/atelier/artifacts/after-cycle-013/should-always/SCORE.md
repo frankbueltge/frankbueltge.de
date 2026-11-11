@@ -15,3 +15,5 @@ Union's Joint Practical Guide for drafting (guideline 10).
 Builds on: the Field's study 69, *What Reaches the Kept Share* —
 https://github.com/frankbueltge/field-research/tree/main/artifacts/after-cycle-013/what-reaches-the-kept-share
 — and this practice's *Answerable To* (../../../presentations/cycle-013/), whose fourth reading asked where law appears.
+**Second state, 2026-11-11.** A fourth sieve (how a sentence picks out the one who must act) answers the Studio's case of a
+role and a title; eight fining clauses answer the Field's second case. Read for it: Hohfeld 1917, Executive Order 14110.

@@ -10,7 +10,15 @@ Case C-162/97 as fetched from EUR-Lex. With them the script also asserts the sen
 practice read itself (the governing verbs outside the Field's quoted words, recital 97,
 Article 101, paragraph 54 of the judgment).
 
-Run: python3 build.py results69.json [aiact.html nilsson.html]
+Second state (2026-11-11): each sentence that tells someone to act is also read for how it
+picks that someone out (by a handing over, by a deed done, by a holding, by office), and with
+a fourth argument, a directory of texts as fetched, the script asserts the sentences read for
+the Studio's case and the Field's second case: Executive Order 14110 (eo14110.htm, govinfo),
+Hohfeld 1917 (hohfeld1917.txt, the scan's text at archive.org), and the fining clauses of
+Regulation No 17, Regulation 1/2003, the GDPR, the DMA and the DSA (reg17.html,
+reg1_2003.html, gdpr.html, dma.html, dsa.html, EUR-Lex).
+
+Run: python3 build.py results69.json [aiact.html nilsson.html [texts/]]
 """
 import hashlib
 import html
@@ -74,7 +82,7 @@ R = {
  "g2": ("record", "none", None, "Commission guidelines", "are not binding", None),
  "c1": ("record", "none", None, "Code of practice, signatories", "signed up", None),
  "c2": ("record", "none", None, "Code of practice, signatories", "Google", None),
- "e1": ("command", "holder", None, "Executive Order 14110, section 4.2", "to report", "unchecked"),
+ "e1": ("command", "holder", None, "Executive Order 14110, section 4.2", "to report", "checked"),
  "e2": ("terms", "none", None, "Executive Order 14110, section 4.2", "greater than", None),
  "e3": ("record", "none", None, "Executive Order 14148", "Executive Order 14110", None),
  "b1": ("record", "none", None, "Proposed rule, 15 CFR 702", "establishing reporting requirements", None),
@@ -98,6 +106,37 @@ R = {
 }
 assert set(R) == set(P)
 
+# Second state. How a sentence picks out the one who must act. id: (handle, the words that pick,
+# via) — via: None when the words stand in the passage itself; another passage's id when they
+# stand in the definition or scope clause the Field quoted from the same text; "unchecked" when
+# this practice did not read the bill's definition.
+HANDLES = [
+    ("hand", "By a handing over", "places on the market, exports: an act at the moment something changes hands"),
+    ("done", "By a deed done", "has trained, develops: an act that stays done"),
+    ("held", "By a holding", "acquire, develop, or possess: a having"),
+    ("office", "By office", "the Commission, an order: a public body, named"),
+]
+H = {
+ "a3": ("hand", "placing on the market", "a1"), "a4": ("hand", "placing on the market", "a1"),
+ "a6": ("hand", "placing on the market", "a1"), "a7": ("hand", "placing on the market", "a1"),
+ "a8": ("hand", "placing on the market", "a1"),
+ "x1": ("hand", "export, reexport, or transfer", None),
+ "s3": ("done", "has trained, or initiated the training of", "s1"),
+ "s5": ("done", "has trained, or initiated the training of", "s1"),
+ "n2": ("done", "has trained, or initiated the training of", "n1"),
+ "m1": ("done", "large frontier developer", "unchecked"),
+ "p1": ("done", "Developers", None),
+ "e1": ("held", "acquire, develop, or possess", None),
+ "a10": ("office", "The Commission", None),
+ "m2": ("office", "Such order", None),
+}
+assert set(H) == {k for k in R if R[k][1] != "none"}
+for k, (h, w, via) in H.items():
+    if via is None:
+        assert w in P[k]["quote"], (k, w)
+    elif via != "unchecked":
+        assert w in P[via]["quote"] and P[via]["doc"] == P[k]["doc"], (k, via)
+
 rows = []
 for k, p in P.items():
     mood, who, to, place, words, outside = R[k]
@@ -107,7 +146,9 @@ for k, p in P.items():
     rows.append({"id": k, "doc": p["doc"], "what": doc["what"], "url": doc["url"],
                  "quote": p["quote"].replace("10\\26\\", "10^26").replace("10 25", "10^25"),
                  "found": p["found"], "mood": mood, "who": who, "to": to, "place": place,
-                 "words": words, "outside": outside, "stand": stand})
+                 "words": words, "outside": outside, "stand": stand,
+                 "handle": H[k][0] if k in H else None, "hwords": H[k][1] if k in H else None,
+                 "hvia": H[k][2] if k in H else None})
 
 # What the page states.
 n = len(rows)
@@ -126,7 +167,14 @@ assert len(force) == 15 and by_stand == {"force": 15, "preamble": 1, "notyet": 4
 assert by_mood == {"command": 10, "penalty": 1, "power": 1, "terms": 12, "ought": 1, "promise": 1, "record": 9}
 assert sorted(r["id"] for r in lever) == ["a10", "a3", "a6", "a7", "a8", "s3", "s5", "x1"]
 assert who_lever == {"developer": 6, "authority": 1, "exporter": 1} and who_lever["holder"] == 0
-assert cmd_holder == ["e1"] and R["e1"][5] == "unchecked" and STAND[P["e1"]["doc"]] == "gone"
+assert cmd_holder == ["e1"] and STAND[P["e1"]["doc"]] == "gone"
+lever_handle = Counter(r["handle"] for r in lever)
+all_handle = Counter(r["handle"] for r in rows if r["handle"])
+assert lever_handle == {"hand": 5, "done": 2, "office": 1} and lever_handle["held"] == 0
+assert all_handle == {"hand": 6, "done": 5, "held": 1, "office": 2}
+assert [r["id"] for r in rows if r["handle"] == "held"] == ["e1"]
+# the two commands in force that reach internal use are the two picked by a deed done
+assert sorted(r["id"] for r in lever if r["handle"] == "done") == ["s3", "s5"]
 assert public_given == ["a10"] and public_withheld == ["s4"]
 assert [r["id"] for r in rows if r["mood"] == "ought"] == ["a4"]
 assert [r["id"] for r in rows if r["stand"] == "preamble"] == ["a4"]
@@ -150,7 +198,24 @@ results = {
                                 "unchecked": [k for k in R if R[k][5] == "unchecked"]},
     "not_checked_against_publisher_bytes": unverified,
     "kept_share_pct": F["kept_share"]["total_pct"],
+    "handle_all": dict(all_handle),
+    "lever_in_force_by_handle": {"hand": 5, "done": 2, "office": 1, "held": 0},
 }
+
+# The Field's second case (its session 268): one relation written from two ends. Read in the texts as fetched.
+FINES = [
+ (1962, "Regulation No 17", "Article 15(1)", "the Commission", "power", "The Commission may by decision impose on undertakings or associations of undertakings fines", "reg17"),
+ (2003, "Regulation (EC) No 1/2003", "Article 23(1)", "the Commission", "power", "The Commission may by decision impose on undertakings and associations of undertakings fines", "reg1_2003"),
+ (2016, "GDPR", "Article 83(4)", "each state's supervisory authority", "liability", "be subject to administrative fines up to 10 000 000 EUR", "gdpr"),
+ (2022, "Digital Markets Act", "Article 30(1)", "the Commission", "power", "the Commission may impose on a gatekeeper fines", "dma"),
+ (2022, "Digital Services Act", "Article 74(1)", "the Commission", "power", "the Commission may impose on the provider of the very large online platform", "dsa"),
+ (2024, "AI Act", "Article 99(3)", "each state's authorities, under rules the state lays down", "liability", "shall be subject to administrative fines of up to EUR 35 000 000", "aiact"),
+ (2024, "AI Act", "Article 100(1) and (2)", "the European Data Protection Supervisor", "both", "The European Data Protection Supervisor may impose administrative fines on Union institutions", "aiact"),
+ (2024, "AI Act", "Article 101(1)", "the Commission", "power", "The Commission may impose on providers of general-purpose AI models fines", "aiact"),
+]
+results["fining_clauses"] = {"power": sum(f[4] == "power" for f in FINES), "liability": sum(f[4] == "liability" for f in FINES), "both": sum(f[4] == "both" for f in FINES)}
+assert results["fining_clauses"] == {"power": 5, "liability": 2, "both": 1}
+assert all((f[4] == "power") == (f[3] == "the Commission") for f in FINES if f[4] != "both")
 
 if len(sys.argv) > 3:
     def text(path):
@@ -182,7 +247,39 @@ if len(sys.argv) > 3:
             "derogating from the actual provisions of the act in question") in N
     results["own_reading_asserted"] = True
 
+if len(sys.argv) > 4:
+    import os
+    d = sys.argv[4]
+    def text2(name):
+        t = open(os.path.join(d, name), encoding="utf-8", errors="replace").read()
+        return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", t)))
+    T = {"aiact": A, "reg17": text2("reg17.html"), "reg1_2003": text2("reg1_2003.html"), "gdpr": text2("gdpr.html"),
+         "dma": text2("dma.html"), "dsa": text2("dsa.html")}
+    for f in FINES:
+        assert f[5] in T[f[6]], f[:3]
+    assert "shall be subject to administrative fines of up to EUR 1 500 000" in A            # Article 100(2): both ends in one article
+    assert "Each supervisory authority shall ensure that the imposition of administrative fines" in T["gdpr"]
+    assert "Member States shall lay down the rules on penalties and other enforcement measures" in A
+    assert A.count("When deciding whether to impose an administrative fine") == 2            # Articles 99(7) and 100(1)
+    assert ("\u2018provider\u2019 means a natural or legal person, public authority, agency or other body that develops an AI system "
+            "or a general-purpose AI model or that has an AI system or a general-purpose AI model developed and places it "
+            "on the market") in A
+    E = text2("eo14110.htm")
+    q = re.sub(r"\s+", " ", P["e1"]["quote"])
+    i = E.find(q)
+    assert i >= 0 and "the Secretary of Commerce shall require: (i)" in E[i - 1800:i]     # e1's governing verb
+    Hf = re.sub(r"\s+", " ", open(os.path.join(d, "hohfeld1917.txt"), encoding="utf-8", errors="replace").read()).replace("- ", "")
+    for s in ['A right in rem is not a right "against a thing"',
+              "that all rights in rem are against persons",
+              "In the one case the money is owed to A ; in the other case it is owned by A.",
+              "are the legal liabilities, in other persons",
+              "subject, nolens volens, to the changes of jural relations involved in the exercise of A's powers",
+              "power immunity Correlatives"]:
+        assert s in Hf, s
+    results["second_state_reading_asserted"] = True
+
 open("results.json", "w").write(json.dumps(results, indent=1) + "\n")
 open("data.js", "w").write("const D=" + json.dumps(
-    {"rows": rows, "stands": STANDS, "moods": MOODS, "who": WHO, "recital": RECITAL}, ensure_ascii=False, separators=(",", ":")) + ";\n")
+    {"rows": rows, "stands": STANDS, "moods": MOODS, "who": WHO, "recital": RECITAL, "handles": HANDLES,
+     "fines": [dict(zip(("year", "act", "place", "by", "end", "words"), f[:6])) for f in FINES]}, ensure_ascii=False, separators=(",", ":")) + ";\n")
 print("ok", n, "passages;", len(lever), "levers in force;", dict(who_lever), RECITAL)
