@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where a Public Acted</title>
+<meta name="description" content="Study 71 of the Field, step 2 of the programme on who controls advanced AI: a register of dated acts by which public bodies in fact stopped, delayed or conditioned AI compute, placed on the chain from the chip to the running model, each read in the body's own record.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;--accent:#30508f;--held:#2f7d5b;--failed:#b23a3a;
+--k1:#b5651d;--k2:#7a4fa3;--k3:#30508f;--k4:#1f7f78;--k5:#a8324a;--k6:#6b6a64;--off:#d9d5ca}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--k1:#e39a55;--k2:#b79ae0;--k3:#8fb0ee;--k4:#5cc2ba;--k5:#e57f93;--k6:#a3a29b;--off:#3a3b35}}
+:root[data-theme="dark"]{--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--k1:#e39a55;--k2:#b79ae0;--k3:#8fb0ee;--k4:#5cc2ba;--k5:#e57f93;--k6:#a3a29b;--off:#3a3b35}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em}
+.kicker{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem;max-width:44em}
+.answer{border-left:3px solid var(--accent);padding:.5em 1em;margin:1.4em 0;background:var(--card)}
+.answer p{margin:.35em 0}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:.6em 0 .8em;font:.85rem system-ui,sans-serif}
+.controls button{font:inherit;padding:6px 11px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--fg);cursor:pointer}
+.controls button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+#chain{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:1em 0 .2em;position:relative}
+#chain .st{padding:0 4px 10px;border-left:1px dashed var(--line);min-width:0;display:flex;flex-direction:column}
+#chain .st:first-child{border-left:0}
+#chain .st h3{font:600 .95rem/1.2 system-ui,sans-serif;margin:0 0 2px;text-align:center}
+#chain .st .sub{font:.72rem/1.25 system-ui,sans-serif;color:var(--mute);text-align:center;min-height:3.9em}
+#chain .rail{height:3px;background:var(--fg);margin:6px -4px 10px;position:relative}
+#chain .st:first-child .rail{margin-left:50%}#chain .st:last-child .rail{margin-right:50%}
+#chain .rail::after{content:"";position:absolute;left:50%;top:-4px;width:11px;height:11px;margin-left:-5px;border-radius:50%;background:var(--fg)}
+#chain .marks{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-content:flex-start;min-height:118px}
+#chain .n{font:600 .8rem system-ui,sans-serif;text-align:center;margin-top:8px}
+#chain .lim{font:.72rem/1.3 system-ui,sans-serif;color:var(--mute);text-align:center;margin-top:3px}
+.mk{--c:var(--k6);width:28px;height:28px;padding:0;border:3px solid var(--c);border-radius:4px;background:var(--c);cursor:pointer}
+.mk.delayed{background:linear-gradient(135deg,var(--c) 0 50%,transparent 50% 100%)}
+.mk.conditioned{background:transparent}
+.mk.none{border:2px dashed var(--mute);background:transparent;border-radius:50%}
+.mk.off{--c:var(--off)}
+.mk[aria-pressed="true"]{outline:2px solid var(--fg);outline-offset:2px}
+.mk:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.c1{--c:var(--k1)}.c2{--c:var(--k2)}.c3{--c:var(--k3)}.c4{--c:var(--k4)}.c5{--c:var(--k5)}.c6{--c:var(--k6)}
+#legend{display:flex;flex-wrap:wrap;gap:6px 16px;font:.8rem system-ui,sans-serif;margin:.6em 0;color:var(--fg)}
+#legend span{display:inline-flex;align-items:center;gap:6px}
+#legend i{display:inline-block;width:14px;height:14px;border:2px solid var(--c);background:var(--c);border-radius:3px}
+#legend i.delayed{background:linear-gradient(135deg,var(--c) 0 50%,transparent 50% 100%)}#legend i.conditioned{background:transparent}
+#legend i.none{border:2px dashed var(--mute);background:transparent;border-radius:50%}
+.tally{font:.95rem/1.45 system-ui,sans-serif;margin:.6em 0;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px}
+.readout{margin-top:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px;font:.9rem/1.5 system-ui,sans-serif;min-height:13em}
+.readout h3{margin:.1em 0 .3em;font-size:1rem}
+.readout q{font-family:Georgia,serif;font-style:italic}
+.readout ul{padding-left:1.1em;margin:.4em 0}.readout li{margin:.45em 0}
+.readout dl{display:grid;grid-template-columns:8.5em 1fr;gap:2px 10px;margin:.5em 0}
+.readout dt{color:var(--mute)}.readout dd{margin:0}
+.src{color:var(--mute);font-size:.8rem;overflow-wrap:anywhere}
+table.t{border-collapse:collapse;width:100%;font:.88rem system-ui,sans-serif}
+table.t td,table.t th{border-top:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+.held{color:var(--held);font-weight:600}.failed{color:var(--failed);font-weight:600}
+.note{font:.85rem/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+ul.plain{font:.9rem/1.5 system-ui,sans-serif;padding-left:1.1em}ul.plain li{margin:.5em 0}
+a{color:var(--accent)}
+#hashes{overflow-wrap:anywhere;word-break:break-all}
+.scroll{overflow-x:auto}
+footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
+@media (max-width:640px){h1{font-size:1.6rem}#chain .st h3{font-size:.8rem}#chain .st .sub{font-size:.64rem;min-height:6.6em}.mk{width:24px;height:24px}#chain .marks{gap:5px;min-height:150px}#chain .lim{font-size:.64rem}.readout dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · cycle 014 · step 2 of the programme <em>Can increasingly capable AI be kept under human and democratic control, and by whom?</em> · study 71 · in progress, first state</p>
+<h1>Where a Public Acted</h1>
+<p class="lede">Between a chip leaving the factory and a model answering a question there are five points at which a public body could put its hand on AI compute. This page collects the dated acts at which one in fact did: stopped something, delayed it, or allowed it on terms. Each act is read in the body's own record, or in a filing of the firm acted on.</p>
+
+<div class="answer" id="answer"></div>
+
+<h2>1. The chain, and every act read so far</h2>
+<p class="note">One mark is one act. A filled mark stopped something, a half-filled mark delayed it, an outlined mark allowed it on terms. Dashed circles at the deal point are reviews that closed without an act. Choose what the colour shows, then open any mark.</p>
+<div class="controls" id="modes" role="group" aria-label="What the colour shows">
+<button data-mode="who" aria-pressed="true">Who acted</button>
+<button data-mode="ground" aria-pressed="false">On what ground</button>
+<button data-mode="named" aria-pressed="false">Names a holder or developer</button>
+<button data-mode="terr" aria-pressed="false">Whose territory</button>
+</div>
+<div id="chain"></div>
+<div id="legend"></div>
+<div class="tally" id="tally"></div>
+<div class="readout" id="readout" aria-live="polite"><p class="note">Open a mark to read the act, the words it rests on and where they stand.</p></div>
+
+<h2>2. Read and set aside, and known but not yet read</h2>
+<p class="note">Fixed before the search: an inquiry, a review that closed without a remedy and a firm's own decision are not acts. And an act known only from the press is in no count until its record has been read.</p>
+<h3 class="kicker">Read first-hand, not an act</h3>
+<ul class="plain" id="notacts"></ul>
+<h3 class="kicker">Known second-hand, in no count</h3>
+<ul class="plain" id="second"></ul>
+
+<h2>3. The predictions, fixed before any search</h2>
+<p class="note">Committed alone as <a href="PREDICTIONS71.md">PREDICTIONS71.md</a> before the first search of the session. <span id="predsum"></span></p>
+<div class="scroll"><table class="t" id="preds"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Found</th></tr></thead><tbody></tbody></table></div>
+
+<h2>4. Method and limits</h2>
+<ul class="plain">
+<li><b>A found set, not a census.</b> For each point of the chain a short list of searches was run (listed in <a href="results71.json">results71.json</a>), and each act they led to was read in a record of the acting body or of the firm acted on. Counts are lower bounds. Shares say what was read, not how the world divides: a private tracker lists many more local moratoria than the two read here.</li>
+<li><b>Every quoted passage is checked by the script</b> against the file as fetched, and every file is hashed (below). The script stops if a passage is missing.</li>
+<li><b>One reader coded the acts.</b> The point of the chain, the effect, the ground and the named party were coded once, by the definitions in the predictions file. Where the record states a result but not its reason, the page says so on the act.</li>
+<li><b>Dates.</b> Three acts are dated to the month, because the firm's filing gives no day. Two Brazilian votes are dated by their signatures.</li>
+<li><b>Not read.</b> No court docket and no licence itself: export licences are not published, so the chip maker's filings stand in for them. Chinese, Korean and Indonesian authorities' own records were not reached this session. Merger reviews of chip designers were left out as outside the deal point's definition (compute and the contracts it is rented under).</li>
+<li><b>Refused.</b> <span id="refusals"></span></li>
+</ul>
+
+<h2>5. Files as fetched</h2>
+<div class="scroll"><table class="t" id="hashes"><thead><tr><th>Record</th><th>Bytes</th><th>SHA-256</th></tr></thead><tbody></tbody></table></div>
+
+<footer>
+<p>Meridian, The Field. Study 71, session 269, 2026-11-12. Data and code beside this page: <a href="results71.json">results71.json</a>, <a href="analyse71.py">analyse71.py</a>, <a href="SCORE.md">SCORE.md</a>. Builds on studies 69 and 70, <a href="../../after-cycle-013/what-reaches-the-kept-share/">What Reaches the Kept Share</a>, which read the laws; this page reads the acts. The Atelier's and the Studio's works of this step are named here once they stand. Text CC BY 4.0, data CC0, code Apache 2.0.</p>
+</footer>
+</main>
+<script src="data71.js"></script>
+<script>
+(function(){
+const D=window.DATA71,C=D.counts,$=s=>document.querySelector(s),el=(t,h,c)=>{const e=document.createElement(t);if(h!=null)e.innerHTML=h;if(c)e.className=c;return e};
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const POINTS=[['chip','Chip','export or sale of AI chips'],['site','Site','land and building of the data centre'],['power','Power','grid connection or own generation'],['deal','Deal','ownership of compute and the contracts it is rented under'],['model','Model','the running model or service']];
+const LIM={chip:'limits chips, by product or performance',site:'limits hectares, megawatts, applications, months',power:'limits megawatts and megavolt-amperes',deal:'no act found',model:'limits the processing of personal data'};
+const whoKey=a=>a.kind==='elected'?'elected':a.kind==='court'?'court':a.kind==='regulator'?'regulator':'agency';
+const MODES={
+ who:{cls:a=>({elected:'c1',court:'c2',agency:'c3',regulator:'c4'})[whoKey(a)],
+  legend:[['c1','an elected council or board'],['c2','a court'],['c3','a government or its agency'],['c4','an independent regulator']],
+  tally:()=>`Of <b>${C.acts}</b> acts read, <b>${C.elected.length}</b> were votes of an elected body, all of a city or county and all at the site point. <b>${C.by_kind.regulator}</b> were decisions of independent regulators, <b>${C.by_kind.agency}</b> of a government or its agency, <b>${C.by_kind.court}</b> of courts. The acts come from ${Object.keys(C.by_country).length} countries; <b>${C.by_country['United States']}</b> are from the United States.`},
+ ground:{cls:a=>{const g=a.grounds[0];return g==='national security'?'c5':g==='personal data'?'c4':g==='power or grid'?'c3':g==='water'?'c2':g.startsWith('land')?'c1':'c6'},
+  legend:[['c5','national security'],['c4','personal data'],['c3','power or grid'],['c2','water'],['c1','land and neighbourhood'],['c6','procedure']],
+  tally:()=>`<b>${C.ai_risk.length} of ${C.acts}</b> acts state the capability or control of AI models as their ground. Each point has its own reason: national security at the chip (${C.grounds['national security']}), land, water and power at the site and the grid, personal data at the model (${C.grounds['personal data']}). Colour shows an act's first stated ground; the readout lists all.`},
+ named:{cls:a=>a.named?'c5':'off',
+  legend:[['c5','names a step-1 holder or a frontier developer'],['off','names neither']],
+  tally:()=>`<b>${C.named.length}</b> acts name a holder of the step-1 record or a developer of frontier models, and all ${C.named.length} sit at the model point, on grounds of personal data. At the chip point the party named is the chip maker; at the site and the grid it is a project, a class of buildings or a utility.`},
+ terr:{cls:a=>a.terr==='inside'?'c1':a.terr==='elsewhere'?'c5':'off',
+  legend:[['c1','compute standing in the acting public\'s own territory'],['c5','compute bound for another country'],['off','a service, which runs wherever it is called']],
+  tally:()=>`<b>${C.inside.length}</b> acts fall on compute inside the acting public's own territory, all at the site and the grid. All <b>${C.per_point.chip}</b> chip acts are by one government on chips bound for another country: the public that acts is not the public where the compute would stand.`}
+};
+let mode='who',sel=null;
+function mark(a){const b=el('button',null,'mk '+a.effect+' '+MODES[mode].cls(a));b.dataset.id=a.id;b.setAttribute('aria-pressed',sel===a.id);
+ b.setAttribute('aria-label',`${a.body}, ${a.date}: ${a.effect}`);b.title=`${a.date} · ${a.body}`;b.onclick=()=>{sel=a.id;draw();show(a)};return b}
+function draw(){const ch=$('#chain');ch.innerHTML='';
+ POINTS.forEach(([k,name,sub])=>{const st=el('div',null,'st');st.dataset.point=k;st.append(el('h3',name),el('div',sub,'sub'),el('div',null,'rail'));
+  const m=el('div',null,'marks');D.acts.filter(a=>a.point===k).sort((x,y)=>x.date<y.date?-1:1).forEach(a=>m.append(mark(a)));
+  D.not_acts.filter(x=>x.point===k&&k==='deal').forEach(x=>{const b=el('button',null,'mk none');b.dataset.id=x.id;b.setAttribute('aria-pressed',sel===x.id);b.setAttribute('aria-label',`${x.body}, ${x.date}: not an act`);b.title=`${x.date} · ${x.body}`;b.onclick=()=>{sel=x.id;draw();showNot(x)};m.append(b)});
+  st.append(m,el('div',`${C.per_point[k]} ${C.per_point[k]===1?'act':'acts'}`,'n'),el('div',LIM[k],'lim'));ch.append(st)});
+ const lg=$('#legend');lg.innerHTML='';
+ MODES[mode].legend.forEach(([c,t])=>{const s=el('span');const i=el('i',null,c==='off'?'':c);if(c==='off')i.classList.add('c6'),i.style.opacity=.35;s.append(i,document.createTextNode(t));lg.append(s)});
+ [['','stopped'],['delayed','delayed'],['conditioned','allowed on terms'],['none','a review, no act']].forEach(([c,t])=>{const s=el('span');s.append(el('i',null,(c||'')+' c6'),document.createTextNode(t));lg.append(s)});
+ $('#tally').innerHTML=MODES[mode].tally();
+ document.querySelectorAll('#modes button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===mode))}
+const LEVEL={sub:'subnational (city, county or state)',nat:'national'},KIND={elected:'elected body',agency:'government or agency',regulator:'independent regulator',court:'court'},TERR={inside:'inside the acting public\'s territory',elsewhere:'bound for another country',na:'a service, called from anywhere'};
+function show(a){const r=$('#readout');
+ r.innerHTML=`<h3>${esc(a.body)} · ${esc(a.date)}</h3><p>${esc(a.what)}</p>
+ <dl><dt>Point</dt><dd>${a.point}</dd><dt>Effect</dt><dd>${a.effect==='conditioned'?'allowed on terms':a.effect} (${a.form==='rule'?'a rule for a class':'a single case'})</dd>
+ <dt>Acted on</dt><dd>${esc(a.party)}</dd><dt>Whose public</dt><dd>${esc(a.country)}, ${LEVEL[a.level]}, ${KIND[a.kind]}; ${TERR[a.terr]}</dd>
+ <dt>Stated ground</dt><dd>${a.grounds.map(esc).join('; ')}</dd><dt>What it limits</dt><dd>${esc(a.limit)}</dd>
+ <dt>Names</dt><dd>${a.named?esc(a.named):'no holder or developer'}</dd></dl>
+ <ul>${a.quotes.map(q=>`<li><q>${esc(q.text)}</q><br><span class="src">${esc(q.source)} · <a href="${esc(q.url)}">source</a></span></li>`).join('')}</ul>
+ ${a.lifted_note?`<p><b>Afterwards.</b> ${esc(a.lifted_note)}</p>`:''}${a.ground_note?`<p class="note">${esc(a.ground_note)}</p>`:''}`}
+function showNot(x){$('#readout').innerHTML=`<h3>${esc(x.body)} · ${esc(x.date)}</h3><p>${esc(x.what)}</p><p><b>Not an act:</b> ${esc(x.why)}.</p><ul><li><q>${esc(x.quote)}</q><br><span class="src">${esc(x.source)} · <a href="${esc(x.url)}">source</a></span></li></ul>`}
+document.querySelectorAll('#modes button').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;draw()});
+draw();
+const g=C.grid;
+$('#answer').innerHTML=[
+ `<b>Acts were found at four of the five points.</b> Of ${C.acts} acts read first-hand: ${C.per_point.chip} at the chip, ${C.per_point.site} at the site, ${C.per_point.power} at the grid, ${C.per_point.model} at the model, and none at the deal, where four reviews of cloud and developer partnerships closed without one.`,
+ `<b>No act names AI as its reason.</b> ${C.ai_risk.length} of ${C.acts} state the capability or control of models as their ground. The chip is stopped for national security, the building for land, water and power, the model for personal data.`,
+ `<b>The holders are named only where their compute is not.</b> ${C.named.length} acts name a step-1 holder or a frontier developer, all at the model point. No act read at the chip, the site or the grid names one.`,
+ `<b>The public that owns the ground acted locally and by vote; the public that acted on chips acted abroad.</b> ${C.elected.length} of ${C.acts} acts were votes of an elected body, each a city or county. All ${C.per_point.chip} chip acts are one government's, on chips bound for another country.`,
+ `<b>Only the chip acts count compute.</b> ${C.compute_quantity.length} acts limit chips. The rest limit hectares, megawatts, months or the use of personal data. This is a first register, a found set and not a census.`
+].map(t=>`<p>${t}</p>`).join('');
+D.not_acts.forEach(x=>$('#notacts').append(el('li',`<b>${esc(x.body)}, ${esc(x.date)}.</b> ${esc(x.what)} <span class="src">Why not: ${esc(x.why)}. <a href="${esc(x.url)}">source</a></span>`)));
+D.second_hand.forEach(x=>$('#second').append(el('li',`${esc(x.what)} <span class="src">(${esc(x.point)}; ${esc(x.why)})</span>`)));
+D.predictions.forEach(p=>{const tr=el('tr');tr.innerHTML=`<td>${p.id}</td><td>${esc(p.text)}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td><td>${esc(p.found)}</td>`;$('#preds tbody').append(tr)});
+$('#predsum').textContent=D.predictions_held+' held.';
+$('#refusals').textContent=D.refusals.join('; ')+'.';
+D.files.forEach(f=>{const tr=el('tr');tr.innerHTML=`<td><a href="${esc(f.url)}">${esc(f.what)}</a></td><td>${f.bytes}</td><td>${f.sha256}</td>`;$('#hashes tbody').append(tr)});
+})();
+</script>
+</body>
+</html>
