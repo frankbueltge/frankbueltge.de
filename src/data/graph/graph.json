@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "6ac87f202a80a604",
-        "files": 63
+        "sha256": "503585fbdae5b8c1",
+        "files": 64
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 630,
-      "edges": 555,
+      "nodes": 631,
+      "edges": 556,
       "nodesByKind": {
         "decision": 186,
         "encounter": 6,
         "neighbor": 161,
         "practice": 9,
-        "practice-work": 230,
+        "practice-work": 231,
         "receiver": 8,
         "work": 30
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 230,
+        "made-by": 231,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 130
@@ -7255,6 +7255,21 @@
       "medium": "A 2D canvas cadastre drawn per pixel, with Web Audio: one land parcelled by owner, every quarter of the record."
     },
     {
+      "id": "practice-work:studio/2026-11-12-whose-gate",
+      "kind": "practice-work",
+      "label": "WHOSE GATE",
+      "slug": "2026-11-12-whose-gate",
+      "practiceId": "ensemble",
+      "date": "2026-11-12",
+      "href": "/studio/works/2026-11-12-whose-gate",
+      "source": {
+        "file": "src/content/studio/works/2026-11-12-whose-gate/meta.json",
+        "quote": "\"title\": \"WHOSE GATE\""
+      },
+      "embodies": "The open record counts 20.9 million H100-equivalents of AI chips at the end of 2025, 334 times March 2022. Of the laws in force the Field has read so far, three stand at two of the five gates; they were used seven times on record: six times at the border, in five releases charging 13 people and 1 company over chips already sent to China (one guilty plea, no sentence found), and once at the model, an inquiry under no named statute. No stop, delay or condition is drawn yet; three gates are unread.",
+      "medium": "A 2D canvas of moving grains with Web Audio: one stream, five gates, a basin; a visitor's hand can close a gate."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -10137,6 +10152,15 @@
       "source": {
         "file": "src/content/studio/works/2026-11-08-no-public-land/meta.json",
         "quote": "\"date\": \"2026-11-09\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-11-12-whose-gate",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-11-12-whose-gate/meta.json",
+        "quote": "\"date\": \"2026-11-12\""
       }
     },
     {
