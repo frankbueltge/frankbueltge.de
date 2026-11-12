@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { namer } from '@/lib/reading/attention'
+import { countTest, namer } from '@/lib/reading/attention'
 import { FIELD_IDS } from '@/lib/briefing/map'
 import { CURRENT_ROUND as round, roundBehind } from './round'
 import { cueAt, cueEnvelope, cueOrNext, placeOf, type VoiceBook } from './voices'
@@ -190,8 +190,12 @@ describe('the recordings', () => {
   })
 
   it('leaves a field out of everything else', () => {
-    const all = book.rest.cues.map((q) => q.text.toLowerCase()).join(' | ')
-    for (const word of ['ebola', 'hormuz', 'cop31', 'ukraine', 'chatgpt']) expect(all).not.toContain(word)
+    // The rule itself, not five words of one week: nothing read here names a field of the round, by the
+    // same test the count uses. Until 2026-11-13 this looked for fixed words, 'chatgpt' among them; since
+    // 2026-11-02 the AI field takes a mention of AI only beside a harm, so a product name belongs here,
+    // and one in the sample kept the round after cycle 013 from landing for three days.
+    const fields = round.channels.map((c) => countTest(c))
+    for (const q of book.rest.cues) expect(fields.some((names) => names(q.text)), q.text).toBe(false)
   })
 
   it('stays small enough to load on a phone', () => {
