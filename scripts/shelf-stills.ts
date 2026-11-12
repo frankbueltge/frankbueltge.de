@@ -18,13 +18,23 @@
 // The crop is made from the image libvips reads through sharp, which ships with Astro's image
 // service; nothing here is fetched.
 
-import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs'
-import { join } from 'node:path'
+import { createHash } from 'node:crypto'
+import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
 import { readPoolEntries } from '../src/lib/ops/shelf-pool.ts'
-import { makerStill, shelfCrop, SHELF_STILL_DIR, STILL_FRAME } from '../src/lib/ops/shelf-stills.ts'
+import { makerStill, shelfCrop, shelfKey, SHELF_STILL_DIR, SHELF_STILL_SOURCES, STILL_FRAME } from '../src/lib/ops/shelf-stills.ts'
 import { writeDuotones } from './shelf-duotone.ts'
 
 const root = process.cwd()
+// Since 2026-11-13 the workflow shelf-pictures.yml runs this after every mirror, so a crop is cut only
+// when it is missing or its source has changed (SHELF_STILL_SOURCES remembers the source by its hash).
+// A crop from before that record is taken as it stands. `--all` cuts every crop again.
+const all = process.argv.includes('--all')
+const recordFile = join(root, SHELF_STILL_SOURCES)
+const before: Record<string, string> = existsSync(recordFile) ? JSON.parse(readFileSync(recordFile, 'utf8')) : {}
+const after: Record<string, string> = {}
+let cutCount = 0
+let withoutPicture = 0
 const sharp = (await import('sharp').catch(() => null))?.default
 if (!sharp) {
   console.error('shelf-stills: sharp is not installed (run npm ci); no still was written')
@@ -42,11 +52,18 @@ for (const { pick } of readPoolEntries(root)) {
   if (!source) {
     kept.add(shelfCrop(pick.work).file)
     kept.add(shelfCrop(pick.work).darkFile)
+    if (!existsSync(join(root, shelfCrop(pick.work).file))) withoutPicture++
     continue
   }
   const crop = shelfCrop(pick.work)
   kept.add(crop.file)
   kept.add(crop.darkFile)
+  const key = shelfKey(pick.work)
+  const hash = createHash('sha256').update(readFileSync(join(root, source))).digest('hex').slice(0, 16)
+  after[key] = hash
+  const standing = existsSync(join(root, crop.file)) && existsSync(join(root, crop.darkFile))
+  if (!all && standing && (before[key] === undefined || before[key] === hash)) continue
+  cutCount++
   const image = sharp(join(root, source))
   const { width = 0, height = 0 } = await image.metadata()
   // the largest 16 : 10 window the picture holds, centred across, placed down it by `focus`
@@ -67,3 +84,12 @@ for (const name of readdirSync(dir)) {
     console.log(`shelf-stills: removed ${file}, which no piece uses`)
   }
 }
+
+const record = `${JSON.stringify(Object.fromEntries(Object.entries(after).sort(([a], [b]) => a.localeCompare(b))), null, 2)}\n`
+if (!existsSync(recordFile) || readFileSync(recordFile, 'utf8') !== record) {
+  mkdirSync(dirname(recordFile), { recursive: true })
+  writeFileSync(recordFile, record)
+}
+console.log(`shelf-stills: ${cutCount} crop(s) cut, ${withoutPicture} piece(s) without a picture (npm run shelf:shots takes one of their pages)`)
+// for the workflow: whether the site has to be built so that a page can be photographed
+if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `without_picture=${withoutPicture}\n`)

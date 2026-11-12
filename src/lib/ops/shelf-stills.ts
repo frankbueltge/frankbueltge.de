@@ -13,12 +13,18 @@
 // serves it, taken by scripts/shelf-shots.ts from the built site and committed under the same
 // name; the maker's own still always wins where one exists.
 
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join, posix } from 'node:path'
 import type { ShelfWork } from '@/config/selected-works'
 
 /** where the crops are committed, and the address they are served at */
 export const SHELF_STILL_DIR = 'public/shelf'
+/**
+ * Which picture each maker's crop was cut from: key → the first sixteen hex digits of the source's
+ * sha256 (2026-11-13). scripts/shelf-stills.ts cuts a crop again only when its source has changed, so
+ * a run on another machine does not rewrite four hundred files that look the same.
+ */
+export const SHELF_STILL_SOURCES = 'src/data/shelf/stills.json'
 export const SHELF_STILL_URL = '/shelf'
 /** the frame a crop is cut to: the card's own 16 : 10, at twice a card's width on a desk */
 export const STILL_FRAME = { width: 720, height: 450 } as const
@@ -75,6 +81,22 @@ export function n1MarginWork(href: string, root: string = process.cwd()): N1Marg
 }
 
 /**
+ * The newest screenshot a practice committed beside a work's process record (`process/<n>.png`, one per
+ * session since the rule of 2026-10-22), repository-relative, or null where the folder holds none. Since
+ * 2026-11-13 it is the maker's own still where no `shot-1100.png` stands: the three works of the
+ * programme's first step had stood on the entrance without a picture, each with its screenshots beside it.
+ */
+export function newestProcessShot(dir: string, root: string = process.cwd()): string | null {
+  const folder = join(root, dir, 'process')
+  if (!existsSync(folder)) return null
+  const numbers = readdirSync(folder)
+    .map((name) => /^(\d+)\.png$/.exec(name))
+    .filter((m): m is RegExpExecArray => m !== null)
+    .map((m) => Number(m[1]))
+  return numbers.length ? `${dir}/process/${Math.max(...numbers)}.png` : null
+}
+
+/**
  * The maker's own still for a pick, repository-relative — or null where the maker committed none.
  * Only the two makers above commit stills; a presentation counts when its folder carries the
  * Studio's screenshot.
@@ -82,10 +104,14 @@ export function n1MarginWork(href: string, root: string = process.cwd()): N1Marg
 export function makerStill(work: ShelfWork, root: string = process.cwd()): string | null {
   const present = (path: string) => (existsSync(join(root, path)) ? path : null)
   switch (work.kind) {
-    case 'studio-work':
-      return present(`public/studio/werke-html/${work.slug}/shot-1100.png`)
-    case 'presentation':
-      return present(`public/${work.practice}/presentations/cycle-${pad(work.cycle)}/shot-1100.png`)
+    case 'studio-work': {
+      const dir = `public/studio/werke-html/${work.slug}`
+      return present(`${dir}/shot-1100.png`) ?? newestProcessShot(dir, root)
+    }
+    case 'presentation': {
+      const dir = `public/${work.practice}/presentations/cycle-${pad(work.cycle)}`
+      return present(`${dir}/shot-1100.png`) ?? newestProcessShot(dir, root)
+    }
     case 'n-1-work': {
       const still = n1MarginWork(work.href, root)?.still
       return still ? present(posix.join('public/n-1', still)) : null
