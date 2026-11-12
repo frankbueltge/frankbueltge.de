@@ -25,7 +25,7 @@ import { SCORE_WORDING as W, SHORT, cycleNo } from '@/config/score-wording'
 import { rankedScores, resultFate } from '@/lib/ecology/convening'
 import { isPractice, loadEcologyRecord, piecesIn, piecesSince, scoreInput, sessionsIn } from '@/lib/ecology/record'
 import { buildScore, cycleOn, ORDER } from '@/lib/ecology/score'
-import { stepOf } from '@/lib/ecology/programme'
+import { LAST_TALLY, PLAN_SETS_STEP_SINCE, stepOf } from '@/lib/ecology/programme'
 import { loadClosingReports, PRACTICE_REPO, type PracticeId } from '@/lib/ecology/v3'
 import '@fontsource-variable/literata/opsz-italic.css'
 import '@/styles/paper.css'
@@ -308,7 +308,7 @@ const firstRelation = record.relations[0]?.date ?? null
           is sent when one is tallied (src/lib/ecology/convening-notice.ts), both lead here. */}
       {inProgramme ? (
         <p class="sc-note-line" id="convening">
-          {conv ? W.how.programme.convening(conv.afterCycle) : null}{' '}
+          {W.how.programme.convening({ since: PLAN_SETS_STEP_SINCE, lastTallyAfter: LAST_TALLY.afterCycle, step: LAST_TALLY.step })}{' '}
           <a class="underline" href={url('/question')}>{W.hero.programme.link}</a>
         </p>
       ) : conv ? (

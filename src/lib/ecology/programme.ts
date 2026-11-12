@@ -56,6 +56,12 @@ export function renderProgramme(source: string, file: string = ''): string {
 }
 
 /** Which step of the programme a cycle is: the first step is the cycle the programme opened. */
+/** Since this day the plan sets the next step of a running programme: the practices propose and rank
+ *  nothing, and the checked state opens the next cycle (docs/design/2026-11-13-the-step-in-order.md). */
+export const PLAN_SETS_STEP_SINCE = '2026-11-13'
+/** The last convening that tallied proposals inside a programme, and the step its tally worded. */
+export const LAST_TALLY = { afterCycle: 13, step: 2 } as const
+
 export function stepOf(cycle: number, firstCycle: number | null | undefined): number | null {
   if (firstCycle == null || cycle < firstCycle) return null
   return cycle - firstCycle + 1

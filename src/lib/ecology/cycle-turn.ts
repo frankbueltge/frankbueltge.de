@@ -33,6 +33,17 @@
 // 2026-11-08, wording private: he can decide right after he reads the choice); while it runs, the convening decides the next step, by the
 // rules above.
 //
+// Since 2026-11-13 (architect's order after a review of the ecology, wording private;
+// docs/design/2026-11-13-the-step-in-order.md) the PLAN sets the next step of a running programme. The
+// convening after cycle 013 had taken two of that step's four days to choose between three wordings of
+// a step the plan already named. Now the practices propose and rank nothing inside a programme: the
+// Middle writes what the step found into programme/STATE.md, a second reader checks it, and that
+// checked state is linked in cycle.json as convening.briefing, with the plan's next step as its
+// `fallback`. The link is the turn: the next cycle opens on that step the same day, with no tally and
+// no veto day. An objection (convening.objected) holds the clock until the architect lifts it. A seed
+// still interrupts. A tally the relay carries still counts where no checked state is linked, so a
+// convening begun under the old rule ends under it.
+//
 // What stays a hand step: anything without a continuing question (the defaults regime turns by
 // hand, as before), and the architect may edit cycle.json at any time — the clock only ever reads
 // the state it finds.
@@ -64,7 +75,7 @@ export interface RegisterSeed {
  *  next cycle · fallback: a convening without a result opens it on the continuing question ·
  *  interrupt: a released seed opens it at once · next-seed: a presented seed's cycle hands on to
  *  the next waiting seed. */
-export type TurnKind = 'convene' | 'convened' | 'fallback' | 'interrupt' | 'next-seed' | 'programme'
+export type TurnKind = 'convene' | 'convened' | 'fallback' | 'interrupt' | 'next-seed' | 'programme' | 'step'
 
 export interface Turn {
   kind: TurnKind
@@ -75,6 +86,7 @@ export interface Turn {
 }
 
 const RULE = 'Turned by the cycle clock under the rules of 2026-10-03 and 2026-10-07.'
+const STEP_RULE = 'Turned by the cycle clock under the rule of 2026-11-13: inside a programme the plan sets the next step.'
 const pad = (n: number) => String(n).padStart(3, '0')
 const NAME: Record<string, string> = { field: 'the Field', atelier: 'the Atelier', studio: 'the Studio' }
 
@@ -168,6 +180,19 @@ export function planTurn(
         `again. ${RULE}`
       return { kind: 'interrupt', next: opening(raw, n, today, { question: seed.text.trim(), source: 'seed', seedId: seed.id, taken: [...taken, seed.id] }, line), line }
     }
+    // ——— the next step of a running programme (rule of 2026-11-13) ———
+    if (programme?.status === 'running') {
+      // the architect objected to the step: nothing opens until he lifts it or changes the plan
+      if (conv.objected) return null
+      const step = conv.briefing?.fallback?.trim()
+      if (step) {
+        const line =
+          `${where} closed on ${today}: the Middle wrote what the step found into the programme's state and a ` +
+          `second reader checked it (${conv.briefing!.url}). The plan sets the next step, with no tally and no ` +
+          `veto day. Cycle ${pad(n)} opens on it. ${STEP_RULE}`
+        return { kind: 'step', next: opening(raw, n, today, { question: step, source: 'convening', seedId: null, taken }, line), line }
+      }
+    }
     const result = standingResult(cycle, conv.objected ?? null, relay)
     if (result) {
       const day = opensOn(result)
@@ -214,6 +239,17 @@ export function planTurn(
       next: opening(raw, n, today, { question: seed.text.trim(), source: 'seed', seedId: seed.id, taken: [...taken, seed.id] }, full),
       line: full,
     }
+  }
+
+  // All three have presented and no seed waits. Inside a running programme the Middle writes the
+  // step into the state and the plan sets the next one (rule of 2026-11-13).
+  if (programme?.status === 'running') {
+    const line =
+      `Cycle ${pad(cycle)} (opened ${opened}) closed on ${today}: all three practices presented. The Middle ` +
+      `writes what the step found into the programme's state, a second reader checks it, and cycle ${pad(n)} ` +
+      `opens on the plan's next step as soon as that checked state is linked. The practices propose and rank ` +
+      `nothing. ${STEP_RULE}`
+    return { kind: 'convene', next: convening(raw, today, line), line }
   }
 
   // All three have presented and no seed waits: the practices convene on what comes next.

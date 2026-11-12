@@ -396,3 +396,85 @@ describe('the programme (rules of 2026-11-08)', () => {
     expect(() => loadCycle(dir)).toThrow(/final sums/)
   })
 })
+
+describe('the next step of a running programme (rule of 2026-11-13)', () => {
+  const programme = {
+    status: 'running',
+    since: '2026-10-01',
+    question: 'Who will control the most capable AI?',
+    chosen_on: '2026-10-01',
+    first_step: 'Where does the compute sit?',
+    started: '2026-10-02',
+    first_cycle: 5,
+    url: 'https://github.com/frankbueltge/research-ecology/tree/main/programme',
+  }
+  const STATE = 'https://github.com/frankbueltge/research-ecology/blob/main/programme/STATE.md'
+  const linked = { briefing: { url: STATE, fallback: 'Which law reaches the holders of compute?' } }
+  const inProgramme = (extra: Record<string, unknown> = {}) => ({ ...convening('2026-10-10', extra), programme })
+
+  it('opens the convening without asking the practices for proposals', () => {
+    const turn = planTurn({ ...state(), programme }, true, [], '2026-10-10')!
+    expect(turn.kind).toBe('convene')
+    expect(turn.next.phase).toBe('convening')
+    expect(turn.line).toMatch(/The practices propose and rank\s+nothing/)
+    expect(turn.line).not.toMatch(/tally/)
+  })
+
+  it('waits while the checked state is not linked', () => {
+    expect(planTurn(inProgramme(), true, [], '2026-10-10')).toBeNull()
+    expect(planTurn(inProgramme(), true, [], '2026-10-12')).toBeNull()
+  })
+
+  it("opens the next cycle on the plan's step the day the checked state is linked, with no tally and no veto day", () => {
+    const turn = planTurn(inProgramme(linked), true, [], '2026-10-10')!
+    expect(turn.kind).toBe('step')
+    expect(turn.next.cycle).toBe(7)
+    expect(turn.next.phase).toBe('working')
+    expect(turn.next.question).toBe('Which law reaches the holders of compute?')
+    expect(turn.next.source).toBe('convening')
+    expect(turn.next.convening).toBeUndefined()
+    expect(turn.next.programme).toMatchObject({ status: 'running', first_cycle: 5 })
+    expect(turn.line).toMatch(/no tally and no\s+veto day/)
+    expect(turn.line).toContain(STATE)
+  })
+
+  it('takes the plan over a tally the relay still carries', () => {
+    const turn = planTurn(inProgramme(linked), true, [], '2026-10-11', relay('2026-10-11'))!
+    expect(turn.kind).toBe('step')
+    expect(turn.next.question).toBe('Which law reaches the holders of compute?')
+  })
+
+  it('lets a convening begun under the old rule end under it: a tally counts while no state is linked', () => {
+    expect(planTurn(inProgramme(), true, [], '2026-10-11', relay('2026-10-11'))).toBeNull() // the veto day
+    const turn = planTurn(inProgramme(), true, [], '2026-10-12', relay('2026-10-11'))!
+    expect(turn.kind).toBe('convened')
+    expect(turn.next.question).toBe('What the archive refuses to count')
+  })
+
+  it('holds while the architect objects, linked state and seven days notwithstanding', () => {
+    expect(planTurn(inProgramme({ ...linked, objected: '2026-10-10' }), true, [], '2026-10-10')).toBeNull()
+    expect(planTurn(inProgramme({ ...linked, objected: '2026-10-10' }), true, [], '2026-10-30')).toBeNull()
+  })
+
+  it('is still interrupted by a seed released to all three', () => {
+    const turn = planTurn(inProgramme(linked), true, [seed('seed-20261010-120000-abcd')], '2026-10-10')!
+    expect(turn.kind).toBe('interrupt')
+    expect(turn.next.source).toBe('seed')
+  })
+
+  it('leaves the convening outside a programme as it was', () => {
+    // a linked briefing without a programme is the fallback of the seventh day, not a turn
+    expect(planTurn(convening('2026-10-10', linked), true, [], '2026-10-10')).toBeNull()
+    expect(planTurn(convening('2026-10-10', linked), true, [], '2026-10-17')!.kind).toBe('fallback')
+  })
+
+  it('writes a state the site can load', () => {
+    const turn = planTurn(inProgramme(linked), true, [], '2026-10-10')!
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'step-'))
+    fs.mkdirSync(path.join(dir, 'src/data/ecology'), { recursive: true })
+    fs.writeFileSync(path.join(dir, 'src/data/ecology/cycle.json'), JSON.stringify(turn.next))
+    const loaded = loadCycle(dir)
+    expect(loaded.cycle).toBe(7)
+    expect(loaded.programme).toMatchObject({ status: 'running', firstCycle: 5 })
+  })
+})

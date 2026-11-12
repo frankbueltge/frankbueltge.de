@@ -44,6 +44,7 @@ import {
   questionFor,
   type PracticeId,
 } from '@/lib/ecology/v3'
+import { stepOf } from '@/lib/ecology/programme'
 import { bulletinBlocks } from '@/lib/ecology/bulletin-render'
 import { DOORS, splitDoorLine, windowDoor, type LogEntry } from '@/lib/ecology/pyramid/station'
 import { allWorks } from '@/lib/engines/register'
@@ -78,6 +79,8 @@ const W = PRACTICE_V3[id]
 const S = STATION_V3
 
 const cycle = loadCycle()
+// inside a running programme the plan sets the step (2026-11-13), so the note names the step
+const programmeStep = cycle.programme?.status === 'running' ? stepOf(cycle.cycle, cycle.programme.firstCycle) : null
 const phase = ECOLOGY_V3.cycle.phase[cycle.phase]
 const question = questionFor(cycle, id)
 
@@ -154,7 +157,9 @@ const blockClass: Record<string, string> = {
             : cycle.source === 'continuing'
               ? S.now.continuingNote
               : cycle.source === 'convening'
-                ? S.now.conveningNote
+                ? programmeStep
+                  ? S.now.stepNote(programmeStep)
+                  : S.now.conveningNote
                 : S.now.defaultsNote
         }
       </p>
