@@ -14,6 +14,7 @@ import { hostOf, testsOf, type Test } from '@/lib/comma/ooni'
 import { panOf } from '@/lib/comma/places'
 import { MINUTE_MS } from '@/lib/comma/relay'
 import { askingLevel, balance, commaSeconds, prune, ruleOf, type Rule } from '@/lib/comma/rule'
+import { AUDIBLE_WEIGHT, bandWidth, bellLabelY, labelEnd, layoutFor, stagger, visible, WIDE_SECONDS, weightTier, xOf, yOf } from '@/lib/comma/score'
 import { categoryOf, listUrl, parseList, type Lists } from '@/lib/comma/testlists'
 import { onMotionChange, reducedMotion } from '@/lib/dataviz/runtime'
 
@@ -70,19 +71,10 @@ interface Minute {
   heard: [string, number][]
 }
 
-const WINDOW = 45
-const LEFT = 196
-const RIGHT = 988
-const TOP = 34
-const ROW = 46
-const HEIGHT = TOP + ROW * GROUPS.length + 6
 const LIST_COUNTRIES = 25
 const LIST_WAIT_MS = 4000
 const LEAD = 1.5
 
-const xOf = (now: number, t: number): number => RIGHT - ((now - t) / WINDOW) * (RIGHT - LEFT)
-const yOf = (g: number): number => TOP + g * ROW
-const tier = (w: number): number => (w >= 0.75 ? 4 : w >= 0.5 ? 3 : w >= 0.25 ? 2 : 1)
 const hhmm = (ms: number): string => new Date(ms).toISOString().slice(11, 16)
 const untilNextMinute = (): number => MINUTE_MS - (Date.now() % MINUTE_MS) + 3000
 
@@ -93,6 +85,8 @@ export default function Comma({ wording, id }: CommaProps) {
   const [marks, setMarks] = React.useState<Mark[]>([])
   const [bands, setBands] = React.useState<Band[]>([])
   const [minutes, setMinutes] = React.useState<Minute[]>([])
+  const [width, setWidth] = React.useState(1000)
+  const figure = React.useRef<HTMLElement | null>(null)
 
   const sound = React.useRef<CommaSound | null>(null)
   const rule = React.useRef<Rule | null>(null)
@@ -162,7 +156,8 @@ export default function Comma({ wording, id }: CommaProps) {
       const seconds = commaSeconds(m.weight)
       if (m.state === 'confirmed') s.blockpage(g, at, panOf(m.cc))
       else s.suspicion(g, at, m.weight, seconds, panOf(m.cc))
-      heard.set(m.cc, (heard.get(m.cc) ?? 0) + 1)
+      // the tally names what can be heard: every blockpage, and suspicion above a whisper
+      if (m.state === 'confirmed' || m.weight >= AUDIBLE_WEIGHT) heard.set(m.cc, (heard.get(m.cc) ?? 0) + 1)
       return {
         key: `${minute}-${i}`,
         t: at,
@@ -184,7 +179,7 @@ export default function Comma({ wording, id }: CommaProps) {
       anomalies: tests.filter((t) => t.state === 'anomaly').length,
       heard: [...heard.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6),
     }
-    const keep = ctx.currentTime - WINDOW - 5
+    const keep = ctx.currentTime - WIDE_SECONDS - 5
     setMarks((m) => [...m.filter((k) => k.t + k.seconds > keep), ...placed])
     setBands((b) => [...b.filter((k) => k.t > keep), ...fresh])
     setMinutes((ms) => [...ms.filter((k) => k.t0 + 60 > ctx.currentTime - 1), summary])
@@ -286,15 +281,30 @@ export default function Comma({ wording, id }: CommaProps) {
     return () => clearInterval(tick)
   }, [phase])
 
+  React.useEffect(() => {
+    const el = figure.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const watch = new ResizeObserver(() => setWidth(el.clientWidth || 1000))
+    watch.observe(el)
+    setWidth(el.clientWidth || 1000)
+    return () => watch.disconnect()
+  }, [])
+
   React.useEffect(() => () => {
     alive.current = false
     clearTimeout(timer.current)
     sound.current?.close()
   }, [])
 
+  const l = layoutFor(width)
   const current = minutes.find((m) => m.t0 <= now && now < m.t0 + 60)
-  const visibleMarks = marks.filter((m) => m.t <= now && m.t + (m.kind === 'comma' ? m.seconds : 0) >= now - WINDOW)
-  const visibleBands = bands.filter((b) => b.t <= now && b.t >= now - WINDOW)
+  const visibleMarks = marks.filter((m) => visible(l, now, m.t, m.kind === 'comma' ? m.seconds : 0))
+  const visibleBands = bands.filter((b) => visible(l, now, b.t))
+  const labelOf = (m: Mark): string => (m.host ? `${m.cc} · ${m.host}` : m.cc)
+  const bellMarks = visibleMarks.filter((m) => m.kind === 'bell')
+  const steps = new Map(
+    stagger(bellMarks.map((m) => ({ row: m.g, x: xOf(l, now, m.t), chars: labelOf(m).length }))).map((step, i) => [bellMarks[i]!.key, step]),
+  )
   const bells = marks.filter((m) => m.kind === 'bell' && m.t <= now).slice(-6).reverse()
   const listening = phase === 'loading' || phase === 'waiting' || phase === 'playing' || phase === 'standby'
 
@@ -317,15 +327,15 @@ export default function Comma({ wording, id }: CommaProps) {
         </p>
       </div>
 
-      <figure className="cm-figure">
-        <svg viewBox={`0 0 1000 ${HEIGHT}`} className="cm-svg" role="img" aria-label={wording.figureLabel}>
+      <figure className="cm-figure" ref={figure}>
+        <svg viewBox={`0 0 ${l.width} ${l.height}`} className="cm-svg" role="img" aria-label={wording.figureLabel}>
           <title>{wording.figureLabel}</title>
           {GROUPS.map((g, i) => (
             <g key={g.id}>
-              <text x={14} y={yOf(i) + 4} className="cm-row-name">
+              <text x={l.namesAbove ? l.left : 14} y={l.namesAbove ? yOf(l, i) - 14 : yOf(l, i) + 4} className="cm-row-name">
                 {g.name}
               </text>
-              <line x1={LEFT} x2={RIGHT} y1={yOf(i)} y2={yOf(i)} className="cm-row-line" />
+              <line x1={l.left} x2={l.right} y1={yOf(l, i)} y2={yOf(l, i)} className="cm-row-line" />
             </g>
           ))}
           {visibleBands.map((b) =>
@@ -334,9 +344,9 @@ export default function Comma({ wording, id }: CommaProps) {
               return (
                 <rect
                   key={`${b.t.toFixed(2)}-${g}`}
-                  x={xOf(now, b.t)}
-                  y={yOf(g) - h / 2}
-                  width={(RIGHT - LEFT) / WINDOW - 1}
+                  x={xOf(l, now, b.t)}
+                  y={yOf(l, g) - h / 2}
+                  width={bandWidth(l)}
                   height={h}
                   className="cm-ask"
                 />
@@ -344,14 +354,14 @@ export default function Comma({ wording, id }: CommaProps) {
             }),
           )}
           {visibleMarks.map((m) => {
-            const x0 = Math.max(LEFT, xOf(now, m.t))
-            const y = yOf(m.g)
+            const x0 = Math.max(l.left, xOf(l, now, m.t))
+            const y = yOf(l, m.g)
             if (m.kind === 'comma') {
-              const x1 = Math.min(RIGHT, xOf(now, m.t + m.seconds))
+              const x1 = Math.min(l.right, xOf(l, now, m.t + m.seconds))
               return (
-                <g key={m.key} className={`cm-sus cm-w${tier(m.w)}`}>
+                <g key={m.key} className={`cm-sus cm-w${weightTier(m.w)}`}>
                   <line x1={x0} x2={Math.max(x0 + 2, x1)} y1={y + 11} y2={y + 11} />
-                  {m.w >= 0.5 ? (
+                  {m.w >= 0.5 && !l.namesAbove ? (
                     <text x={x0} y={y + 23} className="cm-cc">
                       {m.cc}
                     </text>
@@ -359,16 +369,18 @@ export default function Comma({ wording, id }: CommaProps) {
                 </g>
               )
             }
+            const label = labelOf(m)
+            const turn = labelEnd(l, x0, label.length)
             return (
               <g key={m.key} className="cm-bell">
                 <polygon points={`${x0},${y - 8} ${x0 + 6},${y} ${x0},${y + 8} ${x0 - 6},${y}`} />
-                <text x={x0 + 8} y={y - 9} className="cm-cc">
-                  {m.host ? `${m.cc} · ${m.host}` : m.cc}
+                <text x={turn ? x0 - 8 : x0 + 8} y={bellLabelY(l, y, steps.get(m.key) ?? 0)} textAnchor={turn ? 'end' : 'start'} className="cm-cc">
+                  {label}
                 </text>
               </g>
             )
           })}
-          <line x1={RIGHT} x2={RIGHT} y1={TOP - 22} y2={HEIGHT - 4} className="cm-now" />
+          <line x1={l.right} x2={l.right} y1={l.top - 22} y2={l.height - 4} className="cm-now" />
         </svg>
       </figure>
 
