@@ -173,10 +173,12 @@ def sample_labels(rnd):
         day = json.load(open(path))
         for source, signals in sorted(day['signals'].items()):
             for s in signals:
-                texts = [s['label']] + [l['title'] for l in (s.get('links') or [])]
+                # the label as it will be spoken counts too: cut of its bracket it may lose a false friend
+                # ("… (film)") and name a field after all (src/lib/ducking/voices.test.ts holds the page to this)
+                label = re.sub(r'\s*\([^)]*\)\s*$', '', s['label']).strip()
+                texts = [s['label'], label] + [l['title'] for l in (s.get('links') or [])]
                 if any(test(t) for test in tests for t in texts):
                     continue
-                label = re.sub(r'\s*\([^)]*\)\s*$', '', s['label']).strip()
                 key = fold(label)
                 if key in seen or len(label) < 3:
                     continue
