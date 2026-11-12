@@ -24,6 +24,8 @@ export async function onRequest({ request }) {
     status: 200,
     headers: {
       'content-type': 'application/json; charset=utf-8',
+      // HIT means this Cloudflare location answered from its cache and OONI was not asked again
+      'x-comma-upstream': upstream.headers.get('cf-cache-status') ?? 'unknown',
       'cache-control': 'public, max-age=3600',
       'x-comma-day': new Date(Math.floor(now / 86_400_000) * 86_400_000 - 86_400_000).toISOString().slice(0, 10),
     },
