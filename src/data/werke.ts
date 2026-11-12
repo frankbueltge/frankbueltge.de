@@ -181,6 +181,32 @@ export const WERKE: Werk[] = [
     tier: 'experiment',
   },
   {
+    // Built 2026-11-13 at Frank's word (wording private): after listening probes 22 to 31 (_drafts, not in this repo)
+    // he chose censorship as the material, the sketch "censorship as a comma", one country with the same chances as
+    // another, a live work in the browser rather than a broadcast, and the title. The tests come through the site
+    // (functions/api/comma/), the rules and their regression to the window he heard live in src/lib/comma/.
+    id: 'comma',
+    line: 'counter-measurement',
+    title: 'Comma',
+    subtitle: {
+      de: 'Internet censorship heard as it happens, from the tests of volunteers around the world — read live, never archived',
+      en: 'Internet censorship heard as it happens, from the tests of volunteers around the world — read live, never archived',
+    },
+    status: 'live',
+    since: '2026-11-13',
+    live: true,
+    href: '/comma',
+    unarchived: true,
+    description: {
+      // No digit (the currency doctrine, kept although an unarchived work is exempt from its test): the lag, the gap
+      // per country and the scale of the weight are constants in src/lib/comma/, and the page derives its sentences.
+      de: 'From the counter-measurement line. Volunteers around the world run OONI Probe, which asks their own network for a page and compares the answer with the one a control on an open network gets. Comma hears those tests as they arrive, a few minutes late: six kinds of page are six organ tones; a blockpage, the state’s own notice, rings a bell; a local answer that differs from the control’s sounds a syntonic comma lower, so the two beat. Suspicion is weighted by how often a country’s network deviated the day before, and every country gets the same chances to sound, so the many volunteers of one country do not drown the others. Nothing is kept, and it goes dark when OONI does.',
+      en: 'From the counter-measurement line. Volunteers around the world run OONI Probe, which asks their own network for a page and compares the answer with the one a control on an open network gets. Comma hears those tests as they arrive, a few minutes late: six kinds of page are six organ tones; a blockpage, the state’s own notice, rings a bell; a local answer that differs from the control’s sounds a syntonic comma lower, so the two beat. Suspicion is weighted by how often a country’s network deviated the day before, and every country gets the same chances to sound, so the many volunteers of one country do not drown the others. Nothing is kept, and it goes dark when OONI does.',
+    },
+    methodHref: null,
+    tier: 'experiment',
+  },
+  {
     id: 'spread',
     line: 'counter-measurement',
     title: 'Spread',

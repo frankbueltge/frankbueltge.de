@@ -28,6 +28,7 @@ export const CODE: Readonly<Record<string, string>> = {
   'ill-tempered-week': 'scripts/ill-tempered-week',
   ducking: 'src/lib/ducking',
   'third-reading': 'src/lib/reading',
+  comma: 'src/lib/comma',
   spread: 'src/lib/spread',
   sawtooth: 'src/lib/sawtooth',
   globe: 'src/lib/globe',

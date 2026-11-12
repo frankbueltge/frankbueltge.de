@@ -1,0 +1,222 @@
+/* src/styles/comma.css — the room of Comma (/comma, 2026-11-13).
+ *
+ * The score is drawn in the frame's own mono tokens: rows, asking bands and suspicions are tones of ink, told apart by
+ * FORM (a band, a bar beneath the row, a diamond on it) and by darkness, never by hue alone. One hue appears, and it is
+ * not a new one: the blockpage, the moment a state shows itself, wears the live front ink the house already records
+ * and validates for the living globe and for Spread.
+ *
+ * PALETTE: --cm-proof aliases the living globe's front ink (#10627a light / #7fd0e8 dark), recorded and all-pairs
+ * validated as `globe-voices` in src/lib/dataviz/palette.ts, with the same meaning as in Spread: the live thing standing
+ * in front of the mono record. No new hue enters the house.
+ */
+
+.cm-room {
+  --cm-ink: var(--color-fg);
+  --cm-muted: var(--color-fg-muted);
+  --cm-faint: var(--color-fg-faint);
+  --cm-line: var(--color-line);
+  /* PALETTE: the recorded live front ink — see the header, record `globe-voices` */
+  --cm-proof: #10627a;
+}
+
+:root:not([data-theme='light']) .cm-room {
+  /* PALETTE: the dark half of the same recorded ink */
+  --cm-proof: #7fd0e8;
+}
+
+:root[data-theme='dark'] .cm-room {
+  /* PALETTE: the dark half of the same recorded ink */
+  --cm-proof: #7fd0e8;
+}
+
+.cm-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.cm-button {
+  border: 1px solid var(--cm-ink);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--cm-ink);
+  padding: 0.45rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cm-button:hover,
+.cm-button:focus-visible {
+  background: var(--color-panel);
+}
+
+.cm-button[aria-pressed='true'] {
+  background: var(--cm-ink);
+  color: var(--color-bg);
+}
+
+.cm-status {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--cm-muted);
+}
+
+.cm-note {
+  color: var(--cm-faint);
+}
+
+.cm-figure {
+  margin: 0;
+  border: 1px solid var(--cm-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.cm-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--font-mono);
+}
+
+.cm-row-name {
+  font-size: 13px;
+  fill: var(--cm-muted);
+}
+
+.cm-row-line {
+  stroke: var(--cm-line);
+  stroke-width: 1;
+}
+
+.cm-ask {
+  fill: var(--cm-faint);
+  opacity: 0.45;
+}
+
+.cm-sus line {
+  stroke: var(--cm-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.cm-w1 {
+  opacity: 0.25;
+}
+
+.cm-w2 {
+  opacity: 0.45;
+}
+
+.cm-w3 {
+  opacity: 0.7;
+}
+
+.cm-w4 {
+  opacity: 0.95;
+}
+
+.cm-cc {
+  font-size: 11px;
+  fill: var(--cm-ink);
+}
+
+.cm-bell polygon {
+  fill: var(--cm-proof);
+}
+
+.cm-bell .cm-cc {
+  fill: var(--cm-proof);
+}
+
+.cm-now {
+  stroke: var(--cm-ink);
+  stroke-width: 1.5;
+  opacity: 0.6;
+}
+
+.cm-panels {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 720px) {
+  .cm-panels {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cm-panel {
+  border: 1px solid var(--cm-line);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem;
+}
+
+.cm-panel-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cm-faint);
+}
+
+.cm-counters {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.cm-counters div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cm-counters dt {
+  color: var(--cm-muted);
+}
+
+.cm-counters dd {
+  margin: 0;
+  color: var(--cm-ink);
+  text-align: right;
+}
+
+.cm-feed {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--cm-muted);
+}
+
+.cm-feed li + li {
+  margin-top: 0.25rem;
+}
+
+.cm-feed-cc {
+  color: var(--cm-proof);
+}
+
+.cm-feed-host {
+  color: var(--cm-ink);
+}
+
+.cm-feed-empty {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--cm-faint);
+}

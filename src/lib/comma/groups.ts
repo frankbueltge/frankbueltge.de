@@ -36,7 +36,8 @@ export const OTHER = GROUPS.length - 1
 const INDEX = new Map<string, number>(GROUPS.flatMap((g, i) => g.categories.map((c) => [c, i] as [string, number])))
 
 export function groupOf(category: string | null | undefined): number {
-  return (category && INDEX.get(category.toUpperCase())) ?? OTHER
+  if (!category) return OTHER
+  return INDEX.get(category.toUpperCase()) ?? OTHER
 }
 
 export function hzOf(group: number): number {

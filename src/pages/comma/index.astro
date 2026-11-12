@@ -1,0 +1,14 @@
+---
+// /comma — internet censorship heard as it happens (2026-11-13). Reads OONI's newest minute of web tests through the
+// site and commits nothing: `UNARCHIVED_NOTICE` is imported and threaded to the frame below because a live page and an
+// archived page look identical to a reader, and this is the one thing this page owes to tell them apart
+// (src/lib/experiments/unarchived.ts; werke.test.ts reads this exact file for that name).
+import Page from '@/layouts/Page.astro'
+import CommaPage from '@/components/pages/CommaPage.astro'
+import { UNARCHIVED_NOTICE } from '@/lib/experiments/unarchived'
+import { COMMA } from '@/config/comma-wording'
+---
+
+<Page title={COMMA.meta.title} description={COMMA.meta.description}>
+  <CommaPage notice={UNARCHIVED_NOTICE} />
+</Page>

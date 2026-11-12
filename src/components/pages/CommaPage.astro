@@ -1,0 +1,67 @@
+---
+/** Comma (/comma) — internet censorship heard as it happens (2026-11-13).
+ *
+ *  A LIVE, UNARCHIVED work (src/lib/experiments/unarchived.ts): it reads OONI's newest minute of web tests through the
+ *  site (functions/api/comma/) and commits nothing. The server render is the floor in the only sense open to a work
+ *  without an archive: the rule, the six rows, the button and the notice are real markup before a script runs; the
+ *  score fills only once a minute has been heard.
+ *
+ *  `notice` is threaded in as a prop from src/pages/comma/index.astro, so the literal token `UNARCHIVED_NOTICE` sits in
+ *  the page file itself, the surface werke.test.ts reads for every work that declares `unarchived: true`.
+ */
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import { UNARCHIVED_NOTICE } from '@/lib/experiments/unarchived'
+import { COMMA } from '@/config/comma-wording'
+import '@/styles/comma.css'
+
+import Comma, { type CommaWording } from './Comma'
+
+interface Props {
+  notice: typeof UNARCHIVED_NOTICE
+}
+const { notice } = Astro.props
+
+const wording: CommaWording = {
+  listen: COMMA.island.listen,
+  stop: COMMA.island.stop,
+  status: { ...COMMA.island.status },
+  figureLabel: COMMA.island.figureLabel,
+  feedHeading: COMMA.island.feedHeading,
+  feedEmpty: COMMA.island.feedEmpty,
+  counters: { ...COMMA.island.counters },
+}
+---
+
+<main id="main" class="flex-1">
+  <article class="sheet-body mx-auto max-w-5xl px-4 py-14">
+    <SheetHead kicker={COMMA.sheet.kicker} title={COMMA.sheet.title} sub={COMMA.sheet.sub} badges={[...COMMA.sheet.badges]} />
+
+    <p class="mb-6 max-w-2xl text-body text-fg-muted">{COMMA.intro}</p>
+
+    <noscript>
+      <p class="mb-8 max-w-2xl rounded-md border border-line bg-panel p-4 text-body text-fg-muted">{COMMA.noscript}</p>
+    </noscript>
+
+    <Comma client:visible id="comma-room" wording={wording} />
+
+    <section class="mt-10 max-w-2xl" aria-labelledby="comma-honesty-heading">
+      <h2 class="kicker" id="comma-honesty-heading">{COMMA.honesty.heading}</h2>
+      <p class="mt-3 text-body text-fg-muted">{COMMA.honesty.method}</p>
+      <p class="mt-3 text-body text-fg-muted">{COMMA.honesty.proof}</p>
+      <p class="mt-3 text-body text-fg-muted">{COMMA.honesty.rule}</p>
+      <p class="mt-3 text-body text-fg-muted">{COMMA.honesty.reading}</p>
+      <p class="mt-3 text-body text-fg-muted">{COMMA.honesty.limits}</p>
+      <p class="mt-5 font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">{notice.badge}</p>
+      <p class="mt-1 text-mono-sm text-fg-faint">{notice.line}</p>
+    </section>
+
+    <SheetFoot>
+      <p>{COMMA.credits}</p>
+      <p class="mt-1">
+        <a href="https://ooni.org/">OONI</a> · <a href="https://github.com/citizenlab/test-lists">Citizen Lab test lists</a> ·
+        <a href="/experiments">Back to the experiments</a>
+      </p>
+    </SheetFoot>
+  </article>
+</main>
