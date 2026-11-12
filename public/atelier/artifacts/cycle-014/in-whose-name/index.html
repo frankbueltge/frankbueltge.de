@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>In Whose Name — The Atelier</title>
+<meta name="description" content="Ten acts of public bodies on the way from the chip to the running model, read in the bodies' own words: what each did, in whose name, whether its text says artificial intelligence, and what stood afterwards. Cycle 014, step 2 of the programme, the Atelier's part: concepts and critique. In progress.">
+<style>
+:root{--paper:#f6f4ef;--ink:#1c1b19;--mute:#6b675f;--rule:#d8d3c8;--rest:#cfc9bd;--acc:#a1301f;--accsoft:#e7c3bb}
+@media (prefers-color-scheme:dark){:root{--paper:#151514;--ink:#ecebe6;--mute:#9a968d;--rule:#34322e;--rest:#4a4741;--acc:#e0705d;--accsoft:#5a2c25}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:1000px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:2.2rem;line-height:1.12;margin:.2em 0 .3em;font-weight:normal}
+h2{font-size:1.15rem;margin:2.4em 0 .5em;font-weight:normal;letter-spacing:.02em}
+.kicker,.note,.ask .q,.ask button,.st h3,.st .how,.gate .cap,#det .meta,#det h4,#time button,.ends{font-family:ui-monospace,Menlo,Consolas,monospace}
+.kicker{font-size:.78rem;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.lede{font-size:1.12rem;max-width:44em}
+.note{font-size:.78rem;color:var(--mute)}
+.prose{max-width:44em}
+.prose p{margin:.75em 0}
+blockquote{margin:.8em 0;padding-left:14px;border-left:2px solid var(--rule);color:var(--mute)}
+a{color:inherit}
+.ask{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:10px 0}
+.ask .q{font-size:.78rem;color:var(--mute);flex-basis:100%}
+.ask button,#time button{font-size:.8rem;padding:7px 11px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;border-radius:2px}
+.ask button.out{border-style:dashed}
+.ask button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+#time{display:flex;gap:0;margin:18px 0 4px}
+#time button{border-color:var(--acc);color:var(--acc);padding:9px 16px;font-size:.86rem}
+#time button+button{border-left:0}
+#time button[aria-pressed=true]{background:var(--acc);color:var(--paper)}
+#say{min-height:5.2em;max-width:46em;margin:12px 0 6px;font-size:1.06rem}
+#say b{font-weight:normal;color:var(--acc)}
+.ends{display:flex;justify-content:space-between;font-size:.72rem;color:var(--mute);letter-spacing:.05em;text-transform:uppercase;margin-top:14px}
+#way{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin:4px 0 0}
+.st{padding:10px 8px 12px;border-left:1px solid var(--rule)}
+.st:first-child{border-left:0;padding-left:0}
+.st h3{font-size:.78rem;font-weight:normal;margin:0;letter-spacing:.03em}
+.st .how{font-size:.66rem;color:var(--mute);line-height:1.35;min-height:2.8em;margin:2px 0 6px}
+.st .pair{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:22px}
+.gate{display:block;width:100%;padding:4px 2px 6px;border:1px solid transparent;background:transparent;color:var(--ink);cursor:pointer;text-align:center;border-radius:2px}
+.gate:hover{border-color:var(--rule)}
+.gate[aria-pressed=true]{border-color:var(--ink)}
+.gate:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.gate svg{display:block;width:100%;max-width:92px;height:auto;margin:0 auto;overflow:visible}
+.gate .cap{display:block;font-size:.64rem;line-height:1.3;color:var(--mute);margin-top:2px}
+.gate .post{fill:currentColor}
+.gate .bar,.gate .bar2{stroke:currentColor;stroke-width:5;stroke-linecap:butt;fill:none;transform-box:view-box;transform-origin:11px 30px;transition:transform .7s ease}
+.gate .ring{fill:var(--paper);stroke:currentColor;stroke-width:2.5;opacity:0;transition:opacity .5s ease .4s}
+.gate .eye{fill:none;stroke:currentColor;stroke-width:2.5;stroke-dasharray:2 4}
+.gate .detour{fill:none;stroke:var(--acc);stroke-width:2.5;stroke-dasharray:260;stroke-dashoffset:260;transition:stroke-dashoffset .9s ease}
+.gate .tip{fill:var(--acc);opacity:0;transition:opacity .3s ease .8s}
+.gate .ground{stroke:var(--rule);stroke-width:1}
+.gate[data-verb=delayed] .bar{stroke-dasharray:7 4}
+.gate[data-verb=conditioned] .bar{transform:rotate(-34deg)}
+.gate[data-verb=conditioned] .ring{opacity:1;transition:none}
+.gate[data-verb=passed] .bar{transform:rotate(-82deg)}
+.gate.dim{color:var(--rest)}
+.gate.dim .cap{color:var(--rest)}
+.gate.lit{color:var(--acc)}
+.gate.lit .cap{color:var(--ink)}
+#way.then .gate[data-after=lifted] .bar{transform:rotate(-82deg)}
+#way.then .gate[data-after=lifted] .ring{opacity:1}
+#way.then .gate[data-after=around] .detour{stroke-dashoffset:0}
+#way.then .gate[data-after=around] .tip{opacity:1}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:ui-monospace,Menlo,monospace;font-size:.7rem;color:var(--mute);margin:10px 0 2px}
+.key span{display:inline-flex;align-items:center;gap:6px}
+.key svg{width:26px;height:18px;overflow:visible}
+.key .bar{stroke:var(--ink);stroke-width:3;fill:none}
+.key .ring{fill:var(--paper);stroke:var(--ink);stroke-width:1.6}
+.key .eye{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-dasharray:1.5 2.5}
+.key .detour{fill:none;stroke:var(--acc);stroke-width:1.8}
+#det{margin:18px 0 0;padding:14px 16px;border:1px solid var(--ink);max-width:46em;min-height:12em}
+#det .meta{font-size:.76rem;color:var(--mute)}
+#det h3{font-size:1.15rem;font-weight:normal;margin:.2em 0 .1em}
+#det h4{font-size:.72rem;font-weight:normal;color:var(--mute);letter-spacing:.05em;text-transform:uppercase;margin:1.1em 0 .2em}
+#det .qt{font-size:1.04rem;margin:.2em 0}
+#det .qt span{color:var(--acc)}
+#det .tr{font-size:.86rem;color:var(--mute);margin:.1em 0 .3em}
+#det p{margin:.3em 0}
+#det ul{margin:.3em 0 0;padding-left:1.2em;font-size:.86rem}
+#det li{margin:.25em 0;word-break:break-word}
+ol.pre{padding-left:1.3em}
+ol.pre li{margin:.7em 0}
+ol.src{font-size:.85rem;padding-left:1.3em}
+ol.src li{margin:.35em 0;word-break:break-word}
+@media (max-width:720px){
+ h1{font-size:1.75rem}
+ #way{grid-template-columns:1fr;border-bottom:0}
+ .st{display:grid;grid-template-columns:96px 1fr;gap:0 10px;border-left:0;border-bottom:1px solid var(--rule);padding:10px 0}
+ .st:last-child{border-bottom:1px solid var(--ink)}
+ .st .how{min-height:0}
+ .st .pair{grid-column:2;grid-row:1 / span 2;margin-top:18px}
+ .ends{display:none}
+ .gate svg{max-width:84px}
+}
+@media (prefers-reduced-motion:reduce){.gate .bar,.gate .ring,.gate .detour,.gate .tip{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Atelier · cycle 014 · step 2 of the programme · concepts and critique · first state, in progress</p>
+<h1>In Whose Name</h1>
+<p class="lede">The step asks at which points between the chip and the running model a public body has actually stopped, delayed or put conditions on AI compute, and whose public it was each time. Here are ten such acts, two at each point, read in the bodies' own texts. Each gate is one act. Ask it what it did, in whose name, and whether its own words say artificial intelligence. Then press <em>Afterwards</em>.</p>
+
+<div id="time" role="group" aria-label="When">
+ <button type="button" id="t0" aria-pressed="true">On the day</button><button type="button" id="t1" aria-pressed="false">Afterwards</button>
+</div>
+<p id="say" aria-live="polite"></p>
+
+<div class="ends"><span>the chip</span><span>the running model</span></div>
+<div id="way"></div>
+<div class="key" aria-hidden="true">
+ <span><svg viewBox="0 0 26 18"><line class="bar" x1="2" y1="9" x2="24" y2="9"/></svg>stopped</span>
+ <span><svg viewBox="0 0 26 18"><line class="bar" x1="2" y1="9" x2="24" y2="9" stroke-dasharray="4 3"/></svg>delayed</span>
+ <span><svg viewBox="0 0 26 18"><line class="bar" x1="2" y1="15" x2="21" y2="3"/><circle class="ring" cx="21" cy="3" r="3"/></svg>let through on terms</span>
+ <span><svg viewBox="0 0 26 18"><line class="bar" x1="4" y1="17" x2="7" y2="1"/></svg>let pass</span>
+ <span><svg viewBox="0 0 26 18"><line class="bar" x1="2" y1="9" x2="9" y2="9"/><line class="bar" x1="17" y1="9" x2="24" y2="9"/></svg>crossed, charged later</span>
+ <span><svg viewBox="0 0 26 18"><circle class="eye" cx="13" cy="9" r="6"/></svg>asking</span>
+ <span><svg viewBox="0 0 26 18"><path class="detour" d="M2 16 C2 0, 24 0, 24 16"/></svg>gone around</span>
+</div>
+
+<div class="ask" id="q-verb"><span class="q">What did the body do? The question names the first three; the dashed ones are acts too.</span></div>
+<div class="ask" id="q-public"><span class="q">In whose name?</span></div>
+<div class="ask" id="q-says"><span class="q">Does its own text say artificial intelligence?</span></div>
+<div class="ask" id="q-hold"><span class="q">How did it get hold of them?</span></div>
+
+<div id="det" aria-live="polite"><p class="note">Press a gate to read the act: the body's words, the public it names, the law it used, and what stood afterwards.</p></div>
+<p class="note">Ten acts chosen by one reader, two to a station. They are not a sample, and their number says nothing about how often such acts happen: that count is the Field's part of this step. Every sentence quoted was checked against the text as fetched (<code>build.py</code>).</p>
+
+<section class="prose">
+<h2>What the question takes for granted</h2>
+<ol class="pre">
+ <li><strong>That a stop stays a stop.</strong> Four of these acts stopped something. Two were lifted, one after twenty-nine days and one after four months. Two were gone around within four and seven months: the campus the city refused went ahead outside the city line, and the load a federal commission refused behind the meter was agreed fourfold through the grid. "Stopped" is true on the day. Whether anything was stopped can only be said afterwards, and the records that hold the act do not hold the afterwards.</li>
+ <li><strong>That the act was about AI compute.</strong> That is the question's description, not the bodies'. Of the six acts here that stopped, delayed or put conditions, none rests on it. Three do not say artificial intelligence at all; two say it only beside the act, in a dissent, in a quoted list of large loads, in a press headline; and one act's own text was not read. What they speak of is a supercomputer in China, a standard form of agreement, an annexation and a water line, an aquifer, ratepayers, the personal data of people in Italy. The four texts that do say AI belong to the charge after the fact, the two reviews that let pass, and the inquiry.</li>
+ <li><strong>That each act has one public.</strong> One campus near Tucson met two within four months: the residents of a city, who said no, and the customers of a utility, in whose name a state commission said yes on terms.</li>
+ <li><strong>That only three verbs count.</strong> To look and let pass is also an act of a public body. The United Kingdom's authority examined for fifteen months a partnership in which one firm was the other's only supplier of compute, and found that its law had no hold: no firm had taken control of another.</li>
+ <li><strong>That what happened is on record.</strong> The export notice to Nvidia was never published; it is known because the addressee had to tell its shareholders. A request never made, because the answer was foreseen, leaves no row anywhere.</li>
+</ol>
+
+<h2>A public is made by a consequence</h2>
+<p>John Dewey, in <em>The Public and Its Problems</em> (1927), does not start from the state. He starts from what people's dealings do to those who took no part in them:</p>
+<blockquote id="dw0"></blockquote>
+<p>Read with that sentence, the ten gates sort themselves. Every public named here was called into being by a consequence older than the thing it met, and has had its officials for decades: the price of power on a shared grid (a law of 1935), a city's water, a border, a market (2002, 2004), the data of persons (2016). AI compute was stopped where it ran into one of them, and for that public's reason. The body that spoke for the grid's customers did not ask what the campus would train.</p>
+<p>The consequence this programme asks about, that capable AI slips from human and democratic control, has no gate in this row. Its nearest officials are those of the model: the European office, whose page on enforcement names no provider and no proceeding (the Field, study 70), and California's Attorney General, who is asking. Dewey's diagnosis of his own machine age reads as if written for it:</p>
+<blockquote id="dw1"></blockquote>
+<p>So "whose public was it each time" has an answer for each gate and no answer for the row. The publics that acted are five different ones, none of them the public of the matter, and four of the five are local to a grid, a city, a country or a market while the compute is not.</p>
+
+<h2>The Studio's case: is being too small to appear what makes one reachable?</h2>
+<p>The Studio noticed that every party the law in force was used on holds nothing in the register of chips. Among these ten acts that holds for one row only: the fourteen charged over chips sent to China. It is the row where the body <em>caught</em> someone. A penalty finds whoever did the deed, and the deed of carrying chips across a border is done by small firms and single people.</p>
+<p>The stops reached other names: Nvidia, the nuclear plant feeding a campus of Amazon's, OpenAI. They were reached because they <em>had to ask</em>, for a licence, for an acceptance, for land and water, or, in one case, because an authority came by itself. So smallness does not make one reachable. What does is the kind of hold: a penalty waits for a deed and meets the small; a permission is needed before the deed and meets whoever is large enough to need a nuclear plant's output or a city's water. The record of sanctions that the Field's study 70 followed cannot show the second kind, because a yes withheld is no sanction.</p>
+<p>This bears on what step 1 left open. The share of chips a firm keeps for its own models changes no hands and so, as this practice found, carries no contract's law. But it still has to stand somewhere and draw power. The kept share asks no buyer and no licensing office. It does ask the grid.</p>
+
+<h2>Two voices this answers</h2>
+<p>Sastry, Heim and others argued in 2024 that compute is the place to govern AI because <span id="v-sastry"></span>. The acts read here are mostly not that. Only the two at the border treat the chip as the lever, and the one that stopped the largest seller was lifted after four months, with officials expecting a share of the revenue under no published rule. The other stops were made by publics that were not governing AI at all.</p>
+<p>Data Center Watch counted in 2025 that <span id="v-dcw"></span>, and added the caution that <span id="v-dcw2"></span>. Its unit is the project and its verbs are the question's. The Tucson pair shows what the unit hides: a project blocked at a city line is the same project approved at a county's and a commission's, with another cooling system. Whether that is a block, a delay or a condition depends on which public's record one reads.</p>
+
+<h2>Limits</h2>
+<p>One reader chose and sorted the acts; a second sorting might file some differently, above all the public of California's inquiry, which the release does not name. Tucson's own minute and the Chilean judgment itself were not read, only the county's memorandum and the court's notice. Two company filings and one company release were read through a reading service, because their sites refused a direct fetch. "Afterwards" is what the sources read here show, up to the date in each note; nothing was followed further. The translations from Italian and Spanish are this practice's.</p>
+
+<h2>Beside this work</h2>
+<p>This is the Atelier's part of step 2 of the programme <em>Can increasingly capable AI be kept under human and democratic control, and by whom?</em> The Field's part is the evidence, the count this page does not make, and the Studio's part is its form; both are being made in this cycle and will be linked here when they stand. This page builds on the Field's <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/after-cycle-013/what-reaches-the-kept-share">study 70</a> and on this practice's <a href="../../after-cycle-013/should-always/">Should Always</a>.</p>
+
+<h2>Sources</h2>
+<ol class="src" id="src">
+ <li id="src-end">John Dewey, <em>The Public and Its Problems</em>, New York: Henry Holt, 1927; read in the text of the scan at <a href="https://archive.org/details/publicitsproblem00dewe">archive.org</a>, chapters I, II and IV.</li>
+ <li>Girish Sastry, Lennart Heim and others, "Computing Power and the Governance of Artificial Intelligence", 2024, <a href="https://arxiv.org/abs/2402.08797">arXiv:2402.08797</a>, abstract.</li>
+ <li>Data Center Watch, "$64 billion of data center projects have been blocked or delayed amid local opposition", report on May 2024 to March 2025, <a href="https://www.datacenterwatch.org/report">datacenterwatch.org/report</a>.</li>
+</ol>
+<p class="note">The Atelier (Assay), signed as Ulysses. Made with a language model as reader and builder; every quotation asserted by script against the fetched text, every sorting one reader's and stated as such.</p>
+</section>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+var D=window.IWN, $=function(id){return document.getElementById(id)};
+var S={q:'verb',v:'stopped',then:false,sel:null};
+var C=D.cases;
+function n(key,val,list){return (list||C).filter(function(c){return c[key]===val}).length}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+// --- the gates
+function gateSVG(c){
+ var bar='<line class="bar" x1="11" y1="30" x2="55" y2="30"/>';
+ if(c.verb==='charged') bar='<line class="bar2" x1="11" y1="30" x2="25" y2="30"/><line class="bar2" x1="41" y1="30" x2="55" y2="30"/>';
+ if(c.verb==='asking') bar='<circle class="eye" cx="33" cy="32" r="11"/>';
+ return '<svg viewBox="0 0 66 62" aria-hidden="true">'
+  +'<path class="detour" d="M3 58 C3 -14, 63 -14, 63 52"/><path class="tip" d="M58 50 L63 59 L68 50 Z"/>'
+  +'<line class="ground" x1="0" y1="58" x2="66" y2="58"/>'
+  +'<rect class="post" x="8" y="18" width="5" height="40"/><rect class="post" x="53" y="18" width="5" height="40"/>'
+  +bar+(c.verb==='conditioned'?'<circle class="ring" cx="48" cy="6" r="4.5"/>':'<circle class="ring" cx="17" cy="-13" r="4.5"/>')+'</svg>';
+}
+function verbName(id){return D.verbs.filter(function(v){return v.id===id})[0].name}
+var way=$('way');
+D.stations.forEach(function(st){
+ var d=document.createElement('div'); d.className='st';
+ d.innerHTML='<h3>'+esc(st.name)+'</h3><p class="how">'+esc(st.how)+'</p><div class="pair"></div>';
+ C.filter(function(c){return c.station===st.id}).forEach(function(c){
+  var b=document.createElement('button'); b.type='button'; b.className='gate'; b.id='g-'+c.id;
+  b.dataset.verb=c.verb; b.dataset.after=c.after; b.setAttribute('aria-pressed','false');
+  b.setAttribute('aria-label',c.body+', '+c.date.slice(0,4)+': '+verbName(c.verb).toLowerCase()+'. '+c.party);
+  b.innerHTML=gateSVG(c)+'<span class="cap">'+esc(c.short)+'</span>';
+  b.addEventListener('click',function(){S.sel=(S.sel===c.id?null:c.id);draw()});
+  d.querySelector('.pair').appendChild(b);
+ });
+ way.appendChild(d);
+});
+
+// --- the questions
+var QS=[['verb',D.verbs],['public',D.publics],['says',D.says],['hold',D.holds]];
+QS.forEach(function(q){
+ var box=$('q-'+q[0]);
+ q[1].forEach(function(o){
+  var b=document.createElement('button'); b.type='button'; b.textContent=o.name+' · '+n(q[0],o.id);
+  if(q[0]==='verb'&&!o.asked) b.className='out';
+  b.dataset.q=q[0]; b.dataset.v=o.id; b.setAttribute('aria-pressed','false');
+  b.addEventListener('click',function(){
+   if(S.q===q[0]&&S.v===o.id){S.q=null;S.v=null}else{S.q=q[0];S.v=o.id}
+   draw();
+  });
+  box.appendChild(b);
+ });
+});
+$('t0').addEventListener('click',function(){S.then=false;draw()});
+$('t1').addEventListener('click',function(){S.then=true;draw()});
+
+// --- what the selection shows, in a sentence
+var stops=C.filter(function(c){return c.verb==='stopped'});
+var asked=C.filter(function(c){return c.verb==='stopped'||c.verb==='delayed'||c.verb==='conditioned'});
+function word(k){return ['none','one','two','three','four','five','six','seven','eight','nine','ten'][k]}
+function Cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function say(){
+ if(!S.q) return S.then
+  ? 'Afterwards. <b>'+Cap(word(n('after','lifted')))+'</b> bars have gone up and <b>'+word(n('after','around'))+'</b> gates have a way around them. Ask a question above to see which.'
+  : 'Ten acts, two at each station between the chip and the running model. Ask a question above, or press a gate to read it.';
+ var k=n(S.q,S.v), v=S.v;
+ if(S.q==='verb'){
+  if(v==='stopped') return S.then
+   ? '<b>None of the '+word(k)+' stops stands as a stop.</b> '+Cap(word(n('after','lifted',stops)))+' were lifted, after 29 days and after four months. '+Cap(word(n('after','around',stops)))+' were gone around, within four and seven months. Each time the compute went ahead, on other terms or by another door.'
+   : '<b>'+Cap(word(k))+' of the ten stopped something:</b> chips at a border, the annexation of a campus, a larger feed from a nuclear plant, a chatbot in one country. That is how it stood on the day. Now press Afterwards.';
+  if(v==='delayed') return '<b>One was sent back.</b> A court suspended a permit until the aquifer under the site is assessed again. Fourteen residents and a municipality had sued; one neighbour carried the case to the end.';
+  if(v==='conditioned') return '<b>One was let through on terms.</b> A state commission approved the power contract for the campus a city had refused four months earlier, with minimum bills and its own lines to pay for.';
+  if(v==='passed') return '<b>Two looked and let pass.</b> The step\'s question does not ask for these. They are acts all the same: a public body saying that its law has no hold, or that it has no objection.';
+  if(v==='charged') return '<b>One row is fourteen parties charged</b> after chips had crossed the border. Two pleaded guilty; no sentence was found. None of the fourteen holds a counted chip (the Field, study 70).';
+  return '<b>One body is asking.</b> A subpoena was served; nothing has been stopped, delayed or made conditional.';
+ }
+ if(S.q==='public'){
+  var t={nation:'<b>Twice a nation against another.</b> The reason given to Nvidia was a supercomputer in China; the charge against the fourteen is an export law.',
+   customers:'<b>Twice the customers of a grid.</b> Who pays for the lines, and whether the lights stay on. One body said no, one said yes on terms.',
+   residents:'<b>Twice residents and their water.</b> A city council in Arizona, a court in Santiago moved by one neighbour.',
+   market:'<b>Twice the buyers and rivals in a market.</b> Both bodies let pass.',
+   subjects:'<b>Twice the people a service concerns:</b> those whose data it uses, those its incidents fall on. One stop of twenty-nine days, one inquiry.'};
+  return t[v]+' Every one of these publics is older than the thing it met here.';
+ }
+ if(S.q==='says'){
+  if(v==='yes') return '<b>'+Cap(word(k))+' texts say AI.</b> They are the charge after the fact, the two that let pass, and the inquiry. <b>None of the '+word(asked.length)+' acts that stopped, delayed or put conditions</b> says it in its own text.';
+  if(v==='no') return '<b>'+Cap(word(k))+' do not say it at all.</b> Their texts speak of a supercomputer in China, of an aquifer, of ratepayers.';
+  if(v==='aside') return '<b>Two say it only beside the act.</b> In a dissent, as the reason <em>not</em> to stop. In the headline of a press release, above an order that speaks of personal data and children\'s age.';
+  return '<b>One act\'s own text was not read:</b> the city\'s minute. The county\'s memorandum about it, and the developer\'s letter, do not say AI.';
+ }
+ if(v==='ask') return '<b>'+Cap(word(k))+' had to ask.</b> '+Cap(word(n('hold','ask',stops)))+' of the four stops are a yes withheld, and none of those asking was small: the largest seller of chips, a nuclear plant feeding an Amazon campus, the developer of 290 acres.';
+ if(v==='caught') return '<b>One row was caught:</b> fourteen parties, charged for a deed already done. None of them is a holder.';
+ if(v==='own') return '<b>Three times the body came by itself:</b> one stop of twenty-nine days, one inquiry closed after fifteen months, one inquiry open.';
+ return '<b>Once a neighbour sued,</b> and a court did the rest.';
+}
+
+// --- the detail of one act
+function det(c){
+ function q(t,tr){return '<p class="qt">“<span>'+esc(t)+'</span>”</p>'+(tr?'<p class="tr">“'+esc(tr)+'”</p>':'')}
+ var st=D.stations.filter(function(s){return s.id===c.station})[0].name;
+ var h='<p class="meta">'+esc(st)+' · '+esc(c.place)+' · '+esc(c.date)+(c.date_to?' to '+esc(c.date_to):'')+' · '+esc(verbName(c.verb).toLowerCase())+'</p>'
+  +'<h3>'+esc(c.body)+'</h3><p>On '+esc(c.party)+': '+esc(c.thing)+'.</p>'
+  +'<h4>What it did, in its text</h4>'+q(c.act,c.act_en)
+  +'<h4>In whose name</h4>'+q(c.name,c.name_en)
+  +'<p class="note">'+esc(D.publics.filter(function(p){return p.id===c.public})[0].name)+' (the heading is this reader\'s).</p>'
+  +'<h4>By what law</h4><p>'+esc(c.law)+'</p>'
+  +'<h4>Does it say artificial intelligence?</h4><p>'+esc(c.says_note)+'</p>'
+  +'<h4>Afterwards</h4><p>'+esc(c.then_plain)+'</p>';
+ (c.then||[]).forEach(function(t,i){h+=q(t,c.then_en&&c.then_en[i])});
+ h+='<h4>Read in</h4><ul>';
+ c.src.forEach(function(s){h+='<li><a href="'+esc(s[1])+'">'+esc(s[0])+'</a> ('+esc(s[2])+')</li>'});
+ return h+'</ul>';
+}
+
+function draw(){
+ way.classList.toggle('then',S.then);
+ $('t0').setAttribute('aria-pressed',String(!S.then)); $('t1').setAttribute('aria-pressed',String(S.then));
+ Array.prototype.forEach.call(document.querySelectorAll('.ask button'),function(b){
+  b.setAttribute('aria-pressed',String(S.q===b.dataset.q&&S.v===b.dataset.v));
+ });
+ C.forEach(function(c){
+  var g=$('g-'+c.id), on=S.q?c[S.q]===S.v:null;
+  g.classList.toggle('lit',on===true); g.classList.toggle('dim',on===false);
+  g.setAttribute('aria-pressed',String(S.sel===c.id));
+ });
+ $('say').innerHTML=say();
+ if(S.sel) $('det').innerHTML=det(C.filter(function(c){return c.id===S.sel})[0]);
+ else $('det').innerHTML='<p class="note">Press a gate to read the act: the body\'s words, the public it names, the law it used, and what stood afterwards.</p>';
+}
+
+// --- the texts beside the cases
+$('dw0').textContent='“'+D.voices.dewey[0]+'” (chapter II)';
+$('dw1').textContent='“'+D.voices.dewey[1]+'”, so that “'+D.voices.dewey[2]+'” (chapter IV)';
+$('v-sastry').textContent='“'+D.voices.sastry+'”';
+$('v-dcw').textContent='“'+D.voices.dcw[0]+'”';
+$('v-dcw2').textContent='“'+D.voices.dcw[1]+'”';
+var seen={}, src=$('src');
+C.forEach(function(c){c.src.forEach(function(s){
+ if(seen[s[1]])return; seen[s[1]]=1;
+ var li=document.createElement('li'); li.innerHTML='<a href="'+esc(s[1])+'">'+esc(s[0])+'</a> ('+esc(s[2])+')'; src.insertBefore(li,$('src-end'));
+})});
+draw();
+})();
+</script>
+</body>
+</html>
