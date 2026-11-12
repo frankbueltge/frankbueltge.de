@@ -3,7 +3,8 @@
 // The shelf is chosen by hand and will be changed by hand, so these tests are written for the day
 // a pick is swapped: each one names the pick that broke and what to do about it. They read the
 // committed records and the committed crops, never the network.
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
@@ -16,7 +17,7 @@ import { pieceHref } from '@/lib/engines/publication-links'
 import { readLabCarousel } from './lab-carousel'
 import { claimedByAttention, readPick, readShelfReport, retirementDay } from './selected-works'
 import { pageSentence, readPoolEntries, withoutLab } from './shelf-pool'
-import { makerStill, pageShotSource, SHELF_STILL_DIR, shelfCrop, shelfKey } from './shelf-stills'
+import { makerStill, newestProcessShot, pageShotSource, SHELF_STILL_DIR, SHELF_STILL_SOURCES, shelfCrop, shelfKey } from './shelf-stills'
 import { dayMonthYear } from './since'
 
 const picks: readonly ShelfPick[] = SELECTED_WORKS.picks
@@ -136,6 +137,30 @@ describe('the stills', () => {
     expect(existsSync(crop.file), `${crop.file} is missing — run npm run shelf:stills`).toBe(true)
     expect(card.still?.src).toBe(crop.src)
     expect(card.still?.source).toBe(source)
+  })
+
+  it('takes a work’s newest process screenshot as its still where no full-page shot stands', () => {
+    // 2026-11-13: the works of the programme's first step carried process/<n>.png and no shot-1100.png,
+    // and stood on the entrance without a picture
+    const dir = mkdtempSync(join(tmpdir(), 'shelf-'))
+    const work = 'public/studio/werke-html/2026-01-01-a-work'
+    mkdirSync(join(dir, work, 'process'), { recursive: true })
+    expect(newestProcessShot(work, dir)).toBeNull()
+    for (const name of ['1.png', '2.png', '10.png', 'notes.txt']) writeFileSync(join(dir, work, 'process', name), '')
+    expect(newestProcessShot(work, dir)).toBe(`${work}/process/10.png`)
+    expect(makerStill({ kind: 'studio-work', slug: '2026-01-01-a-work' }, dir)).toBe(`${work}/process/10.png`)
+    writeFileSync(join(dir, work, 'shot-1100.png'), '')
+    expect(makerStill({ kind: 'studio-work', slug: '2026-01-01-a-work' }, dir)).toBe(`${work}/shot-1100.png`)
+    rmSync(dir, { recursive: true })
+  })
+
+  it('remembers which picture every maker’s crop was cut from', () => {
+    if (!STRICT) return
+    const sources = JSON.parse(readFileSync(SHELF_STILL_SOURCES, 'utf8')) as Record<string, string>
+    for (const { pick } of poolEntries) {
+      if (!makerStill(pick.work) || !existsSync(shelfCrop(pick.work).file)) continue
+      expect(sources[shelfKey(pick.work)], `${shelfKey(pick.work)} has a crop and no recorded source — run npm run shelf:stills`).toMatch(/^[0-9a-f]{16}$/)
+    }
   })
 
   it('keeps no crop that no piece of the pool uses', () => {
