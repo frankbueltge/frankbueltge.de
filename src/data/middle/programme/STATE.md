@@ -17,19 +17,33 @@ developers and providers announced or filed, among them filings with the US Secu
 
 **What the ecology knows now.**
 
-1. *Holds — it concentrates, then stalls.* Five companies (Google, Microsoft, Meta, Amazon, Oracle) held about
-   69 % of the world's counted AI chips at the end of 2025 (90 % range 63–73 %), up from 56.6 % in March 2022
-   while the counted stock grew 334-fold; the share rose about seven points in two years and stood still from
-   mid-2025 ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md); [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md)). Epoch AI's own published figure for Q4
+1. *Corrected on 2026-11-13 — it concentrates, then stalls; the rise since 2022 is partly a rise in what is
+   counted.* Five companies (Google, Microsoft, Meta, Amazon, Oracle) held about 69 % of the world's counted AI
+   chips at the end of 2025 (90 % range 63–73 %). The share rose about seven points in two years, from 61.9 % in
+   March 2024, and stood still from mid-2025. The longer comparison does not hold as it stood here ("up from
+   56.6 % in March 2022 while the counted stock grew 334-fold"): for 2022 the record counts Nvidia's chips only,
+   Google's own chips enter it in 2023 and those of Amazon, AMD, Huawei and Cambricon in 2024
+   ([the file by designer](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-013/who-holds-the-compute/data/ai_chip_owners_cumulative_by_designer.csv)).
+   On Nvidia's chips alone the five went from 56.6 % to 61.6 % and the stock grew 225-fold. The Field's page
+   says so in one sentence ("The rise before 2024 is partly a rise in what is counted"); its summary, the
+   Atelier's work and the Studio's inset show the rise without it ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md); [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md)). Epoch AI's own published figure for Q4
    2025 is 71 % on a different denominator ([Epoch AI](https://epoch.ai/data-insights/hyperscalers-control-most-compute));
    the 75.8 % for March 2026 rests on an unfinished quarter of the file (11 of 19 series missing, [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md)).
-2. *Holds — the developers hold none.* OpenAI and Anthropic own no counted chips. They rent, at about $22 bn and
-   $10 bn a year in agreements with a stated term, plus large sums with no term; only 3 of 19 published agreements
-   state a number of chips ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md)).
-3. *Holds — the record cannot see a public.* Epoch's table has no category for any state, counts ownership but not
-   use, models the chips smuggled into China within a 5.4-fold range, and its list of named clusters covers only
-   10–20 % of the world ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md)); the cluster list covered 73.6 % of the counted stock in 2022 and
-   6.1 % at the end of 2025 ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md)). The empty column is a missing category, not a count of
+2. *Corrected on 2026-11-13 — the developers have no row.* OpenAI and Anthropic have no row of their own among
+   the record's owners. That is a finding about the record's named owners: its unnamed "Other" holds 16.1 % of
+   the counted chips at the end of 2025, and the finding stays true only as long as no vehicle a developer
+   controls is filed under another name ([Atelier, step critique, point 5](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-013/step-1-critique.md)).
+   They rent, at about $22 bn and $10 bn a year in agreements with a stated sum and term; Anthropic also pays
+   xAI a fee of $1.25 bn a month, about $15 bn a year, which the Field counts as a rate beside the $10 bn
+   ([results](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-013/who-holds-the-compute/results67.json)); further large sums carry no term.
+   Only 3 of 19 published agreements state a number of chips ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md)).
+3. *Holds, with one correction — the record cannot see a public.* Epoch's table has no category for any state, counts ownership but not
+   use and models the chips smuggled into China within a 5.4-fold range ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md)). *Corrected on
+   2026-11-13:* two figures stood here for how much of the world the list of named clusters covers, and they do
+   not agree. 10–20 % is Epoch's own estimate of its list, which the Field quotes; set against the owner table,
+   the listed clusters standing at the end of 2025 come to 6.1 % of the counted stock ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md)). Neither work
+   says why they differ. The Studio's 73.6 % for 2022 holds as arithmetic and not as coverage: the list also
+   holds machines built before 2022, which the owner table, counting from 2022, does not. The empty column is a missing category, not a count of
    zero: public owners, where counted, sit unnamed in "Other" ([Atelier, step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-013/step-1-critique.md)).
 4. *Holds — a public appears as law, not as holder.* 13 of the 19 agreements say nothing in public about who can end
    them, what the machines may not be used for, or who else can stop them. In the two contracts filed in full
@@ -59,6 +73,13 @@ filings and bodies it reaches the agreements (Field), and whether any law reache
 *Checked on 2026-11-10 by a second session against the three presentations, the Atelier's step critique and the
 sources of "What moved in the world", with the revision of PLAN.md: 53 claims, 49 held, 4 corrected, 0 dropped (the
 Studio's label; the shared next question, here and in PLAN.md; the Medicare incident behind Australia's announcement).*
+
+*Corrected after the step, on 2026-11-13, by a house session that reviewed the ecology at the architect's order
+(wording private), against the Field's committed files: three claims above (the rise since 2022, in point 1; the
+developers' row and the fee to xAI, in point 2; the two figures for the cluster list, in point 3). Each had agreed
+with the work it was taken from. What the check of 2026-11-10 did not do was read the claims against each other,
+against the source's own caveat and against the critique on record; since this day it does
+([`briefings/README.md`](../briefings/README.md), "How a claim is checked").*
 
 ## Step 2
 

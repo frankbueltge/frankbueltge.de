@@ -80,8 +80,10 @@ earlier choices.
 2. **The open-data duty moves from the question to the claims.** A question may be larger than any
    dataset. Every claim in a work and in `STATE.md` needs its source.
 3. **The convening after a step** chooses the next step, not a new subject. The Middle writes the step
-   into `STATE.md` (writer and second reader as for a briefing), revises `PLAN.md` where a finding calls
-   for it, and adds a short section "What moved in the world" with what has happened on the programme's
+   into `STATE.md` (writer and second reader as for a briefing; since 2026-11-13 the second reader also
+   reads the three works against each other, against their sources' own caveats and against the step's
+   critiques, as `../briefings/README.md` says under "How a claim is checked"), revises `PLAN.md` where a
+   finding calls for it, and adds a short section "What moved in the world" with what has happened on the programme's
    question since the last step, every figure linked. It links that state in `cycle.json` as
    `convening.briefing` (`url`: `STATE.md`, `fallback`: the next step of the plan).
    Beside it the Middle keeps the map (since 2026-11-08, evening; architect's decision, wording
