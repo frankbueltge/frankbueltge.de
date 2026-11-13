@@ -183,7 +183,7 @@ export function readPool(root: string = process.cwd(), picks: readonly ShelfPick
 /**
  * The shelf the edition shows since 2026-11-02: the pool without the lab's own pieces. Frank's
  * decision of that day (wording private, paraphrased) has the entrance lead with the lab's
- * experiments in a carousel of their own (src/lib/ops/lab-carousel.ts), and the selected works
+ * experiments in a band of their own (src/lib/ops/lab-six.ts), and the selected works
  * below it hold the practices' pieces only — the Atelier's, the Field's and the Studio's, n-1's and
  * Machine Attention's. The order is kept, so the practices' picks still lead. The pool itself keeps
  * every piece: npm run shelf:stills and shelf:shots read it, and the carousel's stills are its.

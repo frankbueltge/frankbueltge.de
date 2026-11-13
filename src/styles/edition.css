@@ -370,13 +370,13 @@
   display: none !important;
 }
 
-/* ——— 3a · from the lab (2026-11-02; the calm homepage since 2026-11-03) ——————————————————————
- * The first band of the main column (docs/design_handoff_homepage_calm/README.md §3): the lead
- * experiment large — its still at 16 : 9 beside its words — and under it the carousel, three
- * cards to a view on the desk, in a row the browser scrolls and snaps by itself
- * (src/components/ops/LabCarousel.tsx). The row stays inside the column, which has the side column
- * beside it; it scrolls, never the page. A lab still is a shot of the experiment's own page, so
- * it is cut from the bottom: the page's top bar, which every shot carries, falls out of the frame. */
+/* ——— 3a · from the lab (2026-11-02; the six strongest, ranked, since 2026-11-13) ————————————————
+ * The first band of the main column (src/components/ops/LabSix.astro): one ordered list of six,
+ * laid out in tiers on a six-column grid — the first card across the column with its still beside
+ * its words, the second and third at half the column, the last three at a third. Under 900 px the
+ * last three go two to a row, under 600 px every card stands alone. A lab still is a shot of the
+ * experiment's own page, so it is cut from the bottom: the page's top bar, which every shot
+ * carries, falls out of the frame. */
 .ed-lab-head {
   display: flex;
   flex-wrap: wrap;
@@ -393,67 +393,54 @@
   color: var(--pp-muted);
   font-size: 13px;
 }
-.ed-lab-controls {
-  display: flex;
-  align-items: center;
-  align-self: center;
-  gap: 10px;
-  margin-left: auto;
-}
-/* until the island has run, the controls hold their place but cannot be seen, focused or read */
-.ed-lab:not([data-ready]) .ed-lab-controls {
-  visibility: hidden;
-}
-.ed-lab-button {
-  border-color: var(--pp-rule-firm);
-}
-.ed-lab-count {
-  min-width: 6ch;
-  color: var(--pp-muted);
-  font-size: 12.5px;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
-}
-.ed-lab-track {
-  --ed-lab-ring: 8px; /* room for a card's focus ring (outline + offset) where the row is cut */
-  position: relative;
+.ed-lab-six {
   display: grid;
-  grid-auto-flow: column;
-  --ed-lab-gap: 22px;
-  /* three cards to a view, so a fourth is one press away */
-  grid-auto-columns: calc((100% - 2 * var(--ed-lab-gap)) / 3);
-  gap: var(--ed-lab-gap);
-  margin: 6px calc(-1 * var(--ed-lab-ring)) 0;
-  padding: var(--ed-lab-ring) var(--ed-lab-ring) 14px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--ed-lab-ring);
-  scrollbar-width: thin;
-  scrollbar-color: var(--pp-rule-firm) transparent;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 30px 22px;
+  margin-top: 16px;
+  list-style: none;
+  padding: 0;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .ed-lab-track {
-    scroll-behavior: smooth;
-  }
-}
-/* the lead: the still beside its words, as the handoff draws it */
-.ed-lab-lead {
+.ed-lab-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.ed-lab-card--tier-1 {
+  grid-column: span 6;
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   align-items: center;
   gap: 32px;
-  margin-top: 14px;
-  padding-bottom: 20px;
+  padding-bottom: 26px;
   border-bottom: 1px solid var(--pp-rule);
 }
-.ed-lab-slide {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  scroll-snap-align: start;
+.ed-lab-card--tier-2 {
+  grid-column: span 3;
+}
+.ed-lab-card--tier-3 {
+  grid-column: span 2;
+}
+@media (max-width: 900px) {
+  .ed-lab-card--tier-3 {
+    grid-column: span 3;
+  }
+}
+@media (max-width: 600px) {
+  .ed-lab-six {
+    gap: 28px;
+  }
+  .ed-lab-card--tier-1 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .ed-lab-card--tier-1,
+  .ed-lab-card--tier-2,
+  .ed-lab-card--tier-3 {
+    grid-column: span 6;
+  }
 }
 .ed-lab-frame {
   position: relative;
@@ -471,8 +458,8 @@
   /* cut from the bottom: the top bar every shot of a page carries falls out of the frame */
   object-position: center bottom;
 }
-:is(.ed-lab-slide, .ed-lab-lead):hover .ed-lab-frame,
-:is(.ed-lab-slide, .ed-lab-lead):focus-within .ed-lab-frame {
+.ed-lab-card:hover .ed-lab-frame,
+.ed-lab-card:focus-within .ed-lab-frame {
   border-color: var(--pp-ink);
 }
 /* a page with no still yet: the miniature /experiments draws from the work's own record, on a
@@ -550,7 +537,7 @@
   gap: 6px;
   min-width: 0;
 }
-.ed-lab-lead .ed-lab-text {
+.ed-lab-card--tier-1 .ed-lab-text {
   gap: 12px;
 }
 .ed-lab-kicker {
@@ -560,6 +547,10 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
+.ed-lab-rank {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
 .ed-lab-title {
   font-family: var(--pp-serif);
   font-weight: 500;
@@ -567,7 +558,10 @@
   line-height: 1.15;
   text-wrap: balance;
 }
-.ed-lab-lead .ed-lab-title {
+.ed-lab-card--tier-2 .ed-lab-title {
+  font-size: 27px;
+}
+.ed-lab-card--tier-1 .ed-lab-title {
   font-size: 42px;
   line-height: 1.04;
   letter-spacing: -0.015em;
@@ -592,29 +586,41 @@
   line-height: 1.45;
   text-wrap: pretty;
 }
-.ed-lab-lead .ed-lab-sentence {
+.ed-lab-card--tier-2 .ed-lab-sentence {
+  font-size: 15px;
+}
+.ed-lab-card--tier-1 .ed-lab-sentence {
   font-family: var(--pp-serif);
   font-size: 18px;
   line-height: 1.4;
+}
+/* why it stands among the six: the curator's line, quieter than the work's own */
+.ed-lab-reason {
+  color: var(--pp-muted);
+  font-family: var(--pp-serif);
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+.ed-lab-card--tier-1 .ed-lab-reason {
+  font-size: 16px;
 }
 .ed-lab-meta {
   color: var(--pp-muted);
   font-size: 12.5px;
 }
-/* the carousel's cards are calm: what opening one leads to is said on the lead only */
+/* what opening a card leads to is said on the first card only */
 .ed-lab-open {
-  display: none;
   margin-top: 2px;
   font-size: 14px;
   text-decoration-line: underline;
 }
-.ed-lab-lead .ed-lab-open {
-  display: block;
-}
-.ed-lab-lead:hover .ed-lab-open {
+.ed-lab-card--tier-1:hover .ed-lab-open {
   color: var(--pp-accent-ink);
 }
 .ed-lab-foot {
+  margin-top: 22px;
   font-size: 13px;
 }
 
