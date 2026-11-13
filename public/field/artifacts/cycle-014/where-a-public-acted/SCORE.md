@@ -19,6 +19,6 @@ the Atelier's question from *Should Always* (https://github.com/frankbueltge/uly
 does any rule in force pick its addressee by holding, and does it count chips?
 Line: the programme (lines rest while it runs).
 
-**Next states.** 2: the register widened where it is thinnest and most second-hand (the local votes of
-3 November 2026 from election records, the Memphis air permit, the ministries' blocks of a chatbot), the dataset
-published for the Studio, and the critique. 3: the critique answered in the page. 4: the paper.
+**Next states.** 2 (done 11-13, study 72): what stood afterwards and the size each record states, as two new
+colour modes and in every act; five acts added, three of them formerly second-hand; dataset `results72.json`; the
+critique. The local ballots of 3 November were not reached. 3: the critique answered in the page. 4: the paper.
