@@ -83,6 +83,8 @@ const NOT_A_MAIN_COMMITTER: Record<string, string> = {
     'pushes to a pull-request branch and to the engine repositories, never to main — the human merge fires on:push normally',
   'study-check.yml':
     'starts the deploy itself (workflow_dispatch, which the built-in token may trigger) after it committed a verdict, so its many runs that find nothing new deploy nothing',
+  'shelf-pictures.yml':
+    'starts the deploy itself after it committed a new picture; it runs after every mirror of a practice and finds nothing new on most of them, so those runs deploy nothing',
 }
 
 describe('the apparatus map describes the workflows this repository actually has', () => {
@@ -140,6 +142,14 @@ describe('every workflow that commits to main reaches production', () => {
     const source = readFileSync(`${WORKFLOW_DIR}/study-check.yml`, 'utf8')
     expect(source).toMatch(/actions: write/)
     expect(source.indexOf('gh workflow run deploy-cf.yml')).toBeGreaterThan(source.indexOf('git push'))
+  })
+
+  it('the shelf pictures, excused above, start the deploy themselves once a picture is committed', () => {
+    const source = readFileSync(`${WORKFLOW_DIR}/shelf-pictures.yml`, 'utf8')
+    expect(source).toMatch(/actions: write/)
+    expect(source.indexOf('gh workflow run deploy-cf.yml')).toBeGreaterThan(source.indexOf('git push'))
+    // and only then: the deploy step waits on the commit step's word that it pushed
+    expect(source).toMatch(/if: steps\.commit\.outputs\.pushed == 'true'\n\s+env:\n\s+GH_TOKEN: .*\n\s+run: gh workflow run deploy-cf\.yml/)
   })
 
   it('names a reason for every workflow excused from the trigger list', () => {

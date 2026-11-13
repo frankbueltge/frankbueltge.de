@@ -266,6 +266,13 @@ jobs:
             (
               git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/ulysses" /tmp/fb
               mkdir -p /tmp/fb/atelier-feedback
+              # One letter per failure, not one per run (2026-11-13): a red build that is run again
+              # wrote the same letter with a new run link, eighteen times on 2026-11-06 alone. Where
+              # the letter that stands for today says the same apart from its "Run:" line, nothing is
+              # written; the issue above already counts the repeats.
+              if [ -f "/tmp/fb/atelier-feedback/${DATE}.md" ] && [ "$(grep -v '^Run: ' "/tmp/fb/atelier-feedback/${DATE}.md")" = "$(printf '%s\n' "$BRIEF" | grep -v '^Run: ')" ]; then
+                echo "the same letter already stands for ${DATE}: nothing written"; exit 0
+              fi
               printf '%s\n' "$BRIEF" > "/tmp/fb/atelier-feedback/${DATE}.md"
               cd /tmp/fb && git config user.name "Atelier-Integrate" && git config user.email "atelier-integrate@frankbueltge.de"
               git add atelier-feedback && git commit -m "feedback: Build $DATE rot" && git push
