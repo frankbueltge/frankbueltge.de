@@ -145,10 +145,13 @@ describe('the calm homepage (2026-11-03)', () => {
     expect(EDITION.aside.label.length).toBeGreaterThan(0)
   })
 
-  it('leads the lab’s band with one work and carries nine under it', () => {
-    expect(EDITION.lab.lead).toHaveLength(1)
-    expect(EDITION.lab.picks).toHaveLength(9)
-    expect(EDITION.lab.picks).not.toContain(EDITION.lab.lead[0])
-    expect(EDITION.lab).not.toHaveProperty('leave')
+  it('ranks exactly six of the lab’s experiments, each once, each with a reason and no digit in it', () => {
+    const ids = EDITION.lab.six.map((p) => p.id)
+    expect(ids).toHaveLength(6)
+    expect(new Set(ids).size).toBe(6)
+    for (const pick of EDITION.lab.six) {
+      expect(pick.reason.length, pick.id).toBeGreaterThan(0)
+      expect(pick.reason, pick.id).not.toMatch(/\d/)
+    }
   })
 })

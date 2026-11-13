@@ -57,39 +57,36 @@ export const EDITION = {
 
   /**
    * FROM THE LAB (2026-11-02): the band the entrance opens with since Frank's decision of that day
-   * (wording private; paraphrased: the homepage leads with the lab's experiments). Since 2026-11-03
-   * a lead work, large, over a carousel of a fixed selection; the order is
-   * src/lib/ops/lab-carousel.ts, the island src/components/ops/LabCarousel.tsx. The island writes
-   * no word of its own: the templates below carry {placeholders} it fills.
+   * (wording private; paraphrased: the homepage leads with the lab's experiments). Since 2026-11-13
+   * (Frank's request, wording private: the lab's six strongest works, shown differently) the band
+   * is six experiments, ranked, with no carousel: the first large, then two side by side, then
+   * three. The order is src/lib/ops/lab-six.ts, the band src/components/ops/LabSix.astro.
    */
   lab: {
-    /** The work that leads the band, large, above the carousel (the calm homepage, 2026-11-03:
-     *  docs/design_handoff_homepage_calm/README.md §3). */
-    lead: ['ducking'],
-    /** The carousel under the lead: exactly these, in this order (same README §3). /experiments
-     *  keeps listing every other experiment. */
-    picks: ['trending', 'third-reading', 'balance', 'consensus', 'tell', 'ueberflug', 'spielraum', 'redaction', 'invoked-past'],
-    title: 'From the lab',
-    sub: 'the lab’s own experiments, one at a time',
+    /** The six, strongest first. A pick names a running experiment of the register
+     *  (src/data/werke.ts) and says in one line, without a digit, why it stands here; title, line,
+     *  sentence, day and still are read from the record. Chosen on 2026-11-13 by the criteria the
+     *  selected works were chosen by (src/config/selected-works.ts): legible to an outsider in
+     *  under a minute, a world that does not have it yet, alive, visually strong. Ratings cannot
+     *  rank the lab yet: none of its experiments had been rated when the six were chosen. */
+    six: [
+      { id: 'ducking', reason: 'The one you play: hold a fader, and the quiet news stays up.' },
+      { id: 'trending', reason: 'The house reads the world through it, every morning since September.' },
+      { id: 'ill-tempered-week', reason: 'A week of attention you listen to rather than read.' },
+      { id: 'globe', reason: 'All the lab’s measurements in one place you can turn.' },
+      { id: 'third-reading', reason: 'The one that asks you, and sets your answer beside the experts’.' },
+      { id: 'consensus', reason: 'The lab’s first instrument, and still its clearest finding.' },
+    ],
+    title: 'The lab’s six',
+    sub: 'its six strongest experiments, ranked',
     all: { label: 'Every experiment, by research line →', href: '/experiments' },
-    /** what a screen reader calls the band and each of its cards (aria-roledescription) */
-    carousel: 'carousel',
-    slide: 'slide',
-    /** a card's name to a screen reader */
-    position: '{n} of {total}',
-    /** the counter between the two buttons */
-    count: '{n} / {total}',
-    prev: 'Previous experiment',
-    next: 'Next experiment',
-    /** said, politely, after a button or an arrow key has moved the row — never on a plain scroll */
-    announce: '{title}, {n} of {total}',
-    /** the last line of a card: what opening it leads to */
+    /** a card's rank, as its kicker begins: '01' */
+    rank: (n: number) => String(n).padStart(2, '0'),
+    /** the last line of the first card: what opening it leads to */
     open: 'open the {kind} →',
     /** the frame of a work whose page has no still yet, which shows the miniature /experiments
      *  draws from the work's own record instead */
     mini: 'no still yet · its record, drawn small',
-    /** what a screen reader calls the lead card above the carousel */
-    leadLabel: 'the lab’s lead experiment',
   },
 
   /**

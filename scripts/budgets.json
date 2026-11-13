@@ -48,11 +48,6 @@
       "what": "a watched term's arc on /trending/topics/<slug> (visual layer, 2026-09-03): the committed runs as bars plus the two windows the status word rests on, with a per-run readout and the keyboard walk. Mounted client:visible on every term page. Measured 1.3 KB gz on 2026-09-03."
     },
     {
-      "prefix": "LabCarousel.",
-      "maxGzipKB": 8,
-      "what": "the lab's carousel at the top of the entrance (2026-11-02): the two buttons, the count, the arrow keys and the polite sentence over a row of experiments the browser scrolls and snaps by itself; every card, still and miniature is rendered on the server. No carousel library. Mounted client:idle on /, which brings the shared React runtime (client.*) to the entrance for the first time. Measured 1.8 KB gz on 2026-11-02, plus ThumbMarkShape.* (0.4 KB gz), which it shares with the /experiments gallery."
-    },
-    {
       "prefix": "Comma.",
       "maxGzipKB": 15,
       "what": "the live score and sound of /comma (2026-11-13): fetches one minute of OONI tests a minute through the site, sorts them with Citizen Lab's lists and schedules every sound on the Web Audio clock; an SVG of six rows, no chart library. Mounted client:visible."

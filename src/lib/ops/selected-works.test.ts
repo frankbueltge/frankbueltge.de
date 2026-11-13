@@ -14,7 +14,7 @@ import exportFile from '@/data/attention/export.json'
 import { WERKE } from '@/data/werke'
 import { loadCycle, loadFieldPapers } from '@/lib/ecology/v3'
 import { pieceHref } from '@/lib/engines/publication-links'
-import { readLabCarousel } from './lab-carousel'
+import { readLabSix } from './lab-six'
 import { claimedByAttention, readPick, readShelfReport, retirementDay } from './selected-works'
 import { pageSentence, readPoolEntries, withoutLab } from './shelf-pool'
 import { makerStill, newestProcessShot, pageShotSource, SHELF_STILL_DIR, SHELF_STILL_SOURCES, shelfCrop, shelfKey } from './shelf-stills'
@@ -231,9 +231,9 @@ describe('the shelf under the lab’s carousel (2026-11-02)', () => {
   // the maker's name as the card reads it: the overview card's title, else the house's fallback
   const attention = NAMING.overview.items.find((i) => i.id === 'attention')?.title ?? NAMING.opsRoom.signal.houseFallback.attention
 
-  it('holds no piece of the lab’s own register, and none the carousel shows', () => {
+  it('holds no piece of the lab’s own register, and none the lab’s band shows', () => {
     expect(shelf.filter((c) => c.lab).map((c) => c.key)).toEqual([])
-    const carousel = new Set(readLabCarousel().map((c) => c.href.replace(/\/$/, '')))
+    const carousel = new Set(readLabSix().map((c) => c.href.replace(/\/$/, '')))
     expect(shelf.filter((c) => carousel.has(c.href.replace(/\/$/, ''))).map((c) => c.key)).toEqual([])
   })
 
