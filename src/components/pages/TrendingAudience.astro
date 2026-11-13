@@ -76,8 +76,10 @@ const stripWording: AudienceStripWording = {
   {live ? (
     <p class="mt-3 max-w-2xl leading-relaxed">
       On {fmtDateLong(yesterday!.day)} the edge counted <span class="tabular-nums">{compact(yesterday!.edge.total)}</span> requests to this page and its machine editions:
+      {/* The separator stands OUTSIDE the unbreakable span: inside it the six classes were one
+          unbreakable run, which widened the whole page to 887 px on a 390 px phone. */}
       {AUDIENCE_CLASSES.map((c, i) => (
-        <span class="whitespace-nowrap">{i > 0 ? ' · ' : ''}<span class="tabular-nums">{compact(yesterday!.edge.classes?.[c] ?? 0)}</span> {classLabel(c)}</span>
+        <Fragment>{i > 0 ? ' · ' : ' '}<span class="whitespace-nowrap"><span class="tabular-nums">{compact(yesterday!.edge.classes?.[c] ?? 0)}</span> {classLabel(c)}</span></Fragment>
       ))}.
       A day is counted once it is over (UTC) and added here the next morning, so this figure is always the last full day, never today.
       {yesterday!.umami?.status === 'ok' && (

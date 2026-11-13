@@ -43,6 +43,10 @@ const idx = days.findIndex((d) => d.date === day.date)
 const newer = idx > 0 ? days[idx - 1] : undefined
 const older = idx >= 0 && idx < days.length - 1 ? days[idx + 1] : undefined
 
+// A source that answered in part still delivers signals; the header says so rather than letting
+// "22 of 23" read as one source down.
+const sourcesPartial = day.sources.filter((s) => s.status === 'partial').length
+
 const canonical = isLatest ? u.page : u.day
 // The register below is rendered from sourceColumns(day, 8); the structured data states exactly
 // that same cut, because a machine reader must not be told more than a reader is shown.
@@ -75,7 +79,7 @@ const machineEditions: { href: string; what: string }[] = [
       <p class="mt-4 font-mono text-xs text-fg-faint">
         <time datetime={day.date}>{fmtDateWeekday(day.date)}</time>
         {' · '}rebuilt {fmtTimeUtc(day.generated_at)} UTC
-        {' · '}<span class="tabular-nums">{day.summary.sources_ok}</span> of <span class="tabular-nums">{day.summary.sources_total}</span> sources answered
+        {' · '}<span class="tabular-nums">{day.summary.sources_ok}</span> of <span class="tabular-nums">{day.summary.sources_total}</span> sources answered{sourcesPartial > 0 ? <Fragment> in full, <span class="tabular-nums">{sourcesPartial}</span> in part</Fragment> : ''}
       </p>
       <TrendingSelfCheck quality={day.quality} subject="this morning's ledger" />
       <p class="mt-5 max-w-2xl leading-relaxed text-fg-muted">
@@ -121,6 +125,7 @@ const machineEditions: { href: string; what: string }[] = [
             ) : (
               <p class="mt-1.5">
                 <Badge variant="outline">{col.status}</Badge>
+                {col.status === 'partial' && col.signals.length > 0 && <span class="ml-2 font-mono text-mono-sm text-fg-faint"><span class="tabular-nums">{col.count}</span> signals</span>}
                 {col.note && <span class="ml-2 font-mono text-mono-sm text-fg-muted">{col.note}</span>}
               </p>
             )}
