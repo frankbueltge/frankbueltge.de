@@ -17,6 +17,10 @@ should be reusable without friction.
 seed form remain under **CC BY-NC-SA 4.0**. Submitters were promised that licence when
 they consented to publication; it cannot be changed retroactively.
 
+**Third-party data, not ours to relicense:** the two test fixtures in `src/lib/comma/fixtures/` are reduced from
+OONI's measurements (Open Observatory of Network Interference) and stay under **CC BY-NC-SA 4.0**, OONI's licence for
+its data. Comma (`/comma`) reads OONI and Citizen Lab's URL testing lists (also CC BY-NC-SA 4.0) live and keeps no copy.
+
 Attribution: Frank Bültge (https://frankbueltge.de)
 
 *Changed on 2026-07-26 from PolyForm Noncommercial 1.0.0 / CC BY-NC-SA 4.0. The
