@@ -1669,14 +1669,14 @@
    "title": "First Terms",
    "node": "project:first-terms",
    "dir": "projects/first-terms",
-   "material": "The On-Line Encyclopedia of Integer Sequences (OEIS), its file of every sequence's shown terms and its file of names, 401,214 sequences as of 10 November 2026 (CC BY-SA 4.0), every sequence read against every other",
+   "material": "The On-Line Encyclopedia of Integer Sequences (OEIS), its file of every sequence's shown terms and its file of names, 401,214 sequences as of 10 November 2026 and 401,318 as of 12 November (CC BY-SA 4.0), every sequence read against every other",
    "instruments": [
     "T1",
     "T4"
    ],
    "pages": [
     [
-     "The study: how many first terms each of 401,214 integer sequences needs before no other begins the same way",
+     "The study: how many terms each integer sequence needs before no other begins the same way, and before the search box finds it alone",
      "projects/first-terms/"
     ]
    ],
@@ -1688,17 +1688,27 @@
     "projects/first-terms/NEIGHBOURS.md",
     "projects/first-terms/session1.json",
     "projects/first-terms/check1.json",
-    "projects/first-terms/explore1.json"
+    "projects/first-terms/explore1.json",
+    "projects/first-terms/SESSION2.md",
+    "projects/first-terms/session2.json",
+    "projects/first-terms/check2.json",
+    "projects/first-terms/explore2.json",
+    "projects/first-terms/explore2c.json"
    ],
    "sessions": [
     {
      "night": 109,
      "date": "2026-11-11",
      "predictions": "7 of 11 predictions held (4 failed)"
+    },
+    {
+     "night": 110,
+     "date": "2026-11-13",
+     "predictions": "7 of 11 predictions held (4 failed)"
     }
    ],
-   "outcomeLabel": "Open: session 1 of 3-5; no work before session 3",
-   "note": "Mathematicians look sequences up by typing the numbers they have. Every one of the 401,214 sequences in the On-Line Encyclopedia of Integer Sequences was set against every other by its beginning: how many first terms must be shown before no other sequence begins the same way? Three in five are told apart by six terms (the median is 6); one in ten needs more than twelve; the longest wait is 128 terms, pairs of sequences that agree to the last term shown and part exactly there. 5,861 are never told apart by what the encyclopedia shows: 3,394 show the same terms as another, in 835 groups, the largest of 37 sequences entered together whose names say they are different objects; 2,467 show only the beginning of another. A check with a second tool held for 18 of 18. 7 of 11 predictions held.",
+   "outcomeLabel": "Open: session 2 of 3-5; no work before session 3",
+   "note": "Mathematicians look sequences up by typing the numbers they have. Session 1 set every one of the 401,214 sequences in the On-Line Encyclopedia of Integer Sequences against every other by its beginning: three in five are told apart by six first terms; 5,861 never are. Session 2 took the search box's own rule, which matches the numbers typed in order anywhere in a sequence. 8,045 of 401,318 sequences can never be its only answer, because everything they show stands inside another entry, and among them are the ones everyone knows: the Fibonacci numbers stand whole inside the same numbers with a 1 in front, the squares inside a sequence that puts three numbers before them, the primes, the counting numbers, the factorials, the ones and the zeros inside others too. Most sequences are found alone by one or two numbers from further in; one in five still shares its first six numbers with fifty or more others. Checks with a second tool held 18 of 18 both nights. 7 of 11 predictions held each night.",
    "outcome": "open",
    "fired": {}
   }
