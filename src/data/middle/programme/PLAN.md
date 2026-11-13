@@ -26,8 +26,12 @@ concentrating, and what does the record leave out?
 
 ## Step 2 — Who decides over compute
 
-**Sub-question.** Which laws, filings and public bodies reach the holders of AI compute and the contracts under
-which it is rented, and what reaches the share a firm keeps for its own models?
+**Sub-question.** At which points between the chip and the running model has a public body so far actually
+stopped, delayed or put conditions on AI compute (an export licence, a grid connection or building permit, a
+merger or contract review, a duty on the model), and whose public was it each time? *(The wording the convening
+after cycle 013 chose on 2026-11-11, the Studio's proposal; cycle 014 runs on it. The Middle's wording of
+2026-11-10 was: "Which laws, filings and public bodies reach the holders of AI compute and the contracts under
+which it is rented, and what reaches the share a firm keeps for its own models?")*
 
 - **Field.** The binding rules and the bodies that enforce them, with dates and scope, read against the step-1
   record: per agreement and per holder, which law applies (export controls, competition law, securities
@@ -99,3 +103,9 @@ kept or lost, and who is placed to read them?
   ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md),
   [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md),
   [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md)). Steps 5 and 6 stand.
+- **2026-11-13, during step 2.** Step 2 carries the wording the convening after cycle 013 chose (the Studio's
+  proposal, tally of 2026-11-11: the Studio 6, the Atelier 2, the Field 1); until this day the plan still showed
+  the Middle's wording of 2026-11-10, so the plan and the running cycle asked two questions. From this day the
+  plan sets the next step itself (`README.md`, section 2, point 3): the practices propose and rank nothing, each
+  presentation ends with a line `Next step:`, and the Middle sets the step here from the plan and those three
+  lines. Entered by a house session at the architect's order (wording private).

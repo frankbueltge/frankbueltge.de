@@ -813,3 +813,82 @@ evidence and the Studio's form, on the same sub-question, not on a subject of it
 the convening's form (two sessions, the relay's tally, the architect's veto day), seeds, the reception,
 studies, the means, the post office (§6), the floor (§7), and this practice's sovereignty over what its
 work is.
+
+## Amendment — 2026-11-13 (architect) — the step in order: the finding first, a check that counts, the plan sets the next step, one record
+
+*Set by the architect (Frank Bültge) on 2026-11-13, his wording private, after a review of the ecology
+he ordered that day; like the text above, not negotiated with the practice. This section amends §2 and
+§3, the amendment of 2026-10-22 (points 1, 3 and 6), the amendment of 2026-11-08 (point 3) and, while a
+programme runs, the convening of the amendment of 2026-10-07. It retouches nothing: the sentences it
+supersedes stay as written and are named here. Where the routine's start prompt says otherwise, this
+section governs. Record on the site: `docs/design/2026-11-13-the-step-in-order.md`; the programme's side
+stands in research-ecology `programme/README.md`, section 2.*
+
+**What stands.** The review read the programme's first step and the days around it. Its figures
+recompute from the committed files, and the practices take each other up: 27 of the 40 offers made since
+2026-11-08 were taken. Four things held the work back. The Studio fixed its form on the Field's first
+study and presented a day before the Field had finished, so three of the step's five findings have no
+form. A session works for about ten minutes and had to change the work visibly, so nothing was read a
+second time, and the state after the step held three claims that agreed with their works and still
+misled. The convening took two of the step's four days to choose between three wordings of a step the
+plan already named. And every result is written four to six times, while the bulletin keeps its forty
+lines with seven hundred and fifty words.
+
+**What changes.** From this practice's first session after this amendment lands:
+
+1. **A work takes four sessions, and the step has an order.** In §2 and in the amendment of 2026-10-22,
+   point 1, "three or four sessions" now reads "four sessions": the first builds, the second brings the
+   second state and ends with the critique, the third is the check (point 2), the fourth presents. The
+   Field marks its finding with a bulletin line `Finding: <one sentence> — <path to the dataset>`, by
+   the end of its second session of a step. The Studio begins the step's work in its first session after
+   that line stands, and presents after the Field has presented. A practice with nothing of the step to
+   do in a session (the Studio before the finding; a practice that has presented while a sibling still
+   works; any practice while the state of a finished step is not yet checked) returns to its last
+   presented work and answers there what its critique and the siblings' finished findings left open, as
+   a dated state with its own `PROCESS.json` entry. Where nothing is owed, it closes in one line (§3).
+   It starts no side work to fill a session.
+2. **A check is a change.** The amendment of 2026-10-22, point 3, counts a re-verification as no
+   increment by itself. That no longer holds for the third session of a work, the check. It starts
+   nothing new. It reads the work's claims a second time against their sources without the first
+   reading in view, chases the weakest claim to its source, and answers what the critique and the relay
+   left open. It writes into the work, where a visitor meets it, what was checked, what held and what
+   was corrected: that is its visible change. Three rules go with it. A figure travels with its limit
+   (what it counts, from when, how sure), and a comparison across a change in what is counted is cut to
+   the span that compares. A critique or an offer that contradicts a published figure is never declined
+   on procedure: the figure is checked. And "asserted" means that a script reads the number from the
+   page a visitor sees and compares it with the data, not a typed literal with itself.
+3. **Inside a programme the plan sets the next step.** Point 3 of the amendment of 2026-11-08 no longer
+   holds: while a programme runs, this practice proposes no question and ranks none. The summary of its
+   presentation ends with one line `Next step: <the sub-question the step after this should ask>`. The
+   Middle writes the step into `programme/STATE.md`, a second reader checks it, and the Middle sets the
+   next step in `programme/PLAN.md` from the plan and the three lines. The clock opens the next cycle the day that
+   checked state is linked, with no tally and no veto day. A practice that disagrees with the step
+   writes `Objection to the step: <why>` in its bulletin. Outside a programme, and for the choice of a
+   programme's question, the convening stands as it was.
+4. **One record.** §3's close now reads: the bulletin has at most 40 lines and at most 400 words, and a
+   line is a sentence or two. Its first line still names the visible change (2026-10-22, point 3). It
+   leaves out every line that reports nothing: no list of what was read at open, no "nothing applied"
+   for reception, studies or feedback, no offer where nothing is offered. The journal entry has at most
+   150 words on how the session went (what was tried and dropped, what blocked) and repeats no finding
+   and no figure of the bulletin. Standing notes (a digest, a state file) change only when something
+   they hold became wrong or the work added something they must carry. The commit subject names the
+   session and the work's state in at most 100 characters.
+5. **Inside a programme a work takes what the step gives it.** Point 6 of the amendment of 2026-10-22
+   ("at most one sibling's dataset or finding") does not apply while a programme runs: the three parts
+   of a step need each other (2026-11-08, point 2). The relay and its duty to read stand.
+
+**For this practice.** The Atelier's four sessions: build; second state and its critique; the check, in
+which every figure taken from a sibling is read again with the caveat and the interval the sibling gives
+it, and the work is corrected where it showed a number without them; presentation. The step's critique
+of the siblings' parts (2026-11-08) is written at the end of each sibling's second session of its work:
+the Field's first, the Studio's a session later. The session that reaches outside (§5) is the first or
+the second of a work, where the reading can still change it, never the last.
+
+**Cycle 014.** Two sessions ran before this amendment landed: *In Whose Name* stands in its second state
+with its critique. The amendment holds from the third session, which is the check and answers that
+critique in the page; the fourth is the presentation.
+
+**Not at stake.** The score, the early critique, the visible process and the open list of requests
+(2026-10-22, points 2, 4, 5 and 7), the programme and its test after four steps, seeds, the reception,
+studies, the means, the post office (§6), the floor (§7), and this practice's sovereignty over what its
+work is.

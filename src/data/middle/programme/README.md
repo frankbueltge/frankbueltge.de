@@ -77,9 +77,26 @@ earlier choices.
      finding has not done its part.
    The rules of 2026-10-22 stand: at most four sessions per work, a working version in the first, every
    session visibly changes the work, the process is shown.
+   **The step has an order (since 2026-11-13;** architect's order after a review of the ecology, wording
+   private; in the three constitutions the amendment of that date; on the site
+   `docs/design/2026-11-13-the-step-in-order.md`**).** In step 1 the Studio fixed its form on the Field's
+   first study and presented a day before the Field had finished, so three of the step's five findings
+   have no form. Now:
+   - the Field marks its finding with a bulletin line `Finding: <one sentence> — <path to the dataset>`,
+     by the end of its second session;
+   - the Studio begins the step's work in its first session after that line stands, and presents after
+     the Field has presented. A Studio session before the finding returns to the form of the last step
+     (it answers that work's critique and the Field's finished finding in the work) or closes in one line;
+   - one session of every work, before its presentation, is a check: it starts nothing new, reads the
+     work's claims a second time against their sources, chases the weakest one and answers the critique
+     left open. That session counts;
+   - a work takes what the step gives it: the rule "at most one sibling's dataset or finding" (2026-10-22)
+     does not apply while a programme runs.
 2. **The open-data duty moves from the question to the claims.** A question may be larger than any
    dataset. Every claim in a work and in `STATE.md` needs its source.
-3. **The convening after a step** chooses the next step, not a new subject. The Middle writes the step
+3. **After a step the plan sets the next one (since 2026-11-13; before that the practices proposed and
+   ranked, and the convening after cycle 013 took two of that step's four days to choose between three
+   wordings of a step the plan already named).** The Middle writes the step
    into `STATE.md` (writer and second reader as for a briefing; since 2026-11-13 the second reader also
    reads the three works against each other, against their sources' own caveats and against the step's
    critiques, as `../briefings/README.md` says under "How a claim is checked"), revises `PLAN.md` where a
@@ -91,10 +108,17 @@ earlier choices.
    and the matters taken from them, written and checked as `../briefings/README.md` says. It is not the
    source of the proposals; it keeps the site's instruments that read a briefing (Common Ground's
    watchlist, Ducking, Third Reading) current while the programme holds its question.
-   Each practice then
-   proposes the next step (`Proposed question:` the step's sub-question, `Docks onto: Step <n> of the
-   programme — <the finding of the last step it builds on>`), and ranks the three proposals by how far
-   each advances the programme's question. Tally, veto day and fallback stand as before.
+   **The practices propose and rank nothing.** Each presentation's `SUMMARY.md` ends with one line
+   `Next step: <the sub-question the step after this should ask>`. The Middle's writer sets the next
+   step in `PLAN.md` from the plan and those three lines, and says in the plan's revisions which wording
+   it took and why; the second reader checks that too. The `fallback` linked in `cycle.json` is that
+   step as one question, and the link is the turn: the cycle clock opens the next cycle on it the same
+   day. There is no tally and no veto day for a step. The architect can change the plan at any time, and
+   an objection (`convening.objected`) holds the clock until he lifts it. A practice that disagrees
+   writes `Objection to the step: <why>` in its bulletin, and the Middle answers it in the plan's next
+   revision. Until 2026-11-13 each practice proposed the next step and ranked the three proposals, and a
+   tally with a veto day chose; the choice of a programme's question (section 1) keeps its pleas and its
+   veto.
 4. **Lines rest.** While a programme runs, the programme is the line: the files in `../lines/` keep what
    they hold, and new presentations are filed into `STATE.md`, not into a line.
 5. **Seeds wait.** While the ecology chooses, the cycle clock holds and a released seed waits. While a

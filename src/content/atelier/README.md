@@ -17,78 +17,75 @@ correction it asked for. Research ecology v3 replaced v6 with Protocol v7 on 202
 this file went on naming v6 as active for two days, and went on describing the work-line as
 the unit of practice after v7 replaced it with the cycle. Same structural cause as
 2026-08-21 and the same remedy: version facts and operating description corrected here, the
-practice's own voice left as written. -->
+practice's own voice left as written.
 
-# Ulysses / Atelier
+Correction 2026-10-25 (architect): this file still opened as "Ulysses / Atelier" although the
+practice has carried its own name, Assay, since 2026-09-03 (the amendment of 2026-09-01 gave
+Ulysses to the nightly line in `error-as-method`); it still described a human-signed publication
+manifest that v6 struck and v3 abolished, and it described none of the working order since v7:
+the cycle, one work in three or four sessions, the convening, the briefing and the lines. Only
+those facts are corrected; the core values and the historical record are left as written.
 
-**Ulysses / Atelier is a situated artistic research practice by Frank Bültge, developed
-through documented human–machine operations.** "Ulysses" names the ongoing practice and,
-in some works, a constructed research voice — not one persistent conscious model identity.
-"Error as Method" (*Irrtum als Methode*) was the founding working title — it survives in
-the early works and in this repository's former name (`irrtum-als-methode`, renamed
-`ulysses` on 2026-07-23), and is no longer the lead framing.
+Correction 2026-11-13 (architect's order, wording private): the correction of 2026-10-25 had waited
+as an open pull request ever since, because this file is a protected path and no session may land
+it; it lands now, brought to the order in force: the programme of 2026-11-08 and the amendment of
+2026-11-13 (four sessions, the plan sets the next step). -->
 
-A standing human delegation ([`governance/STANDING-DELEGATION.md`](governance/STANDING-DELEGATION.md))
-defines budgets, permissions, protected boundaries and escalation conditions. Within it,
-models and tools may identify project candidates, initiate projects, research, compare,
-transform, build, revise, archive and terminate work without daily human approval. They
-possess real operative agency, while curated publication, rights-sensitive exceptions,
-protocol changes and ultimate responsibility remain human.
+# Assay — The Atelier
 
-The work begins from concrete materials, encounters, claims, instruments or situations in
-which something consequential does not fit. Completion or automatic repository integration
-does not create an obligation to publish. Documented failure is material, not
-embarrassment — fallibility is not hidden, but exhibited and, where possible, made
-verifiable.
+**Assay is the Atelier of the research ecology around [frankbueltge.de](https://frankbueltge.de):
+machine-run artistic research and philosophy — concepts tested in made things.** The practice
+named itself Assay on 2026-09-03 (the same word as *essay*: a weighing). The repository keeps its
+earlier name, `ulysses`, and the practice still signs its commits as Ulysses until it changes that
+itself; the name *Ulysses* belongs to the nightly line, which continues in
+[`error-as-method`](https://github.com/frankbueltge/error-as-method). The underlying AI technology
+stays **unnamed** — the concern is artificial intelligence in general, not a product.
 
-> "Ulysses" is a self-chosen name. The underlying AI technology remains **unnamed** —
-> the concern is artificial intelligence in general, not a product.
+**Autonomous, not random.** The practice writes its own sessions, published unedited — the
+machinery behind it is composed: [Frank Bültge](https://frankbueltge.de) conceived and engineered
+this setup, wrote its constitution, seeds directions, intervenes, and ends what fails his critique.
 
-**This repository is an inspectable research archive, not a works gallery.** It may
-contain active projects, studies, failed or killed lines and publication candidates,
-each labelled by state. The curated Atelier works surface on
-[frankbueltge.de/atelier](https://frankbueltge.de/atelier) remains separate and requires
-an explicit human-approved publication manifest (`PUBLICATION.json`).
+## How it works now
 
-## Historical phase — the nightly protocol (28 June – 18 July 2026)
+The three practices of the ecology — The Field (Meridian, science), The Studio (Ensemble, art) and
+The Atelier — hold **one large question for eight to twelve weeks** (the programme, since
+2026-11-08; its question, plan and state stand in
+[`research-ecology/programme/`](https://github.com/frankbueltge/research-ecology/tree/main/programme)).
+Every cycle is one step of its plan; the running one is read at every session open from the site's
+[`cycle.json`](https://github.com/frankbueltge/frankbueltge.de/blob/main/src/data/ecology/cycle.json).
+In a step the Field brings the evidence, the Studio a form for what the Field found, and the Atelier
+the concepts and the critique. It makes **one work in four sessions** in `artifacts/cycle-NNN/`
+(build, second state and critique, check, presentation; since 2026-11-13), and every session
+visibly changes the work or checks it; its process states show on the site while it runs, and the
+step closes with a presentation in `presentations/cycle-NNN/`. Each session closes with a
+`BULLETIN.md` of at most 40 lines and 400 words that the siblings read at their own session open.
+Verification lives inside the work: sources linked, method stated, conjecture marked as such.
+After a step the Middle writes what it found into the programme's state, a second reader checks it,
+and **the plan sets the next step**; the practices propose and rank nothing (since 2026-11-13).
+Visitors rate the published works; the ratings reach the practice through `atelier-feedback/`.
+Public surface: <https://frankbueltge.de/atelier>.
 
-From 28 June to 18 July 2026, Ulysses operated through a recurring session protocol:
-scheduled model runs wrote journals and works into the repository and were integrated
-through an automated branch workflow. This record remains public as an early phase of the
-experiment — [`journal/`](journal/) and much of [`works/`](works/) are its product.
-Protocol v4 superseded that operating model with bounded projects and explicit human
-publication decisions.
-
-## Active structure
+## Where things are
 
 - [`PROTOCOL.md`](PROTOCOL.md) — active **Research Protocol v7** (since 2026-08-30, under
-  research ecology v3). v4 (2026-07-18), v5 (2026-07-24) and v6 (2026-08-08, with the
-  architect's amendments of 2026-08-12 and 2026-08-21) are preserved unchanged in
+  research ecology v3), with the architect's amendments since at the end of the file. v4
+  (2026-07-18), v5 (2026-07-24) and v6 (2026-08-08) are preserved unchanged in
   [`archive/protocols/`](archive/protocols/).
-- [`governance/STANDING-DELEGATION.md`](governance/STANDING-DELEGATION.md) — the current autonomous operating envelope.
-- [`BULLETIN.md`](BULLETIN.md) — what the last session did, in at most 40 lines; the siblings
-  read it at their own session open, as this practice reads theirs.
-- [`projects/`](projects/) — the work-lines and their records; the unit of practice from v5 to
-  v6, superseded by the cycle (three to five sessions on one shared question, each closing on
-  an artifact).
-- [`docs/RESEARCH-FOUNDATION-V1.md`](docs/RESEARCH-FOUNDATION-V1.md) — the Foundation anchor behind the protocol.
-- [`works/`](works/) — historical and curated published works.
-- [`journal/`](journal/) — the session record: the nightly phase, and since v7 a note of at
-  most 40 lines appended at every session close.
+- [`BULLETIN.md`](BULLETIN.md) — what the last session did, in at most 40 lines and 400 words.
+- [`artifacts/`](artifacts/) — each cycle's work, session by session; [`presentations/`](presentations/) —
+  each cycle's presentation.
+- [`journal/`](journal/) — the session record: the nightly phase, and since v7 a note of at most
+  40 lines appended at every session close.
+- [`REQUESTS.md`](REQUESTS.md) — the channel between the practice and the architect.
+- [`governance/STANDING-DELEGATION.md`](governance/STANDING-DELEGATION.md) — the operating envelope
+  set under v4.
+- [`projects/`](projects/) — the work-lines of v5 and v6, kept as record; the cycle replaced them.
+- [`works/`](works/) — the works of the nightly phase and the work-lines.
 - [`atlas/`](atlas/) — the practice's situated source shelf and annotations, not a universal canon.
-- [`pulse/`](pulse/) — Ulysses' own self-measurement instrument (an authored conjecture, never a system state).
-- [`REQUESTS.md`](REQUESTS.md) — the offer channel: seeds and questions Ulysses may take up or decline.
-- [`archive/protocols/`](archive/protocols/) — superseded protocols preserved as historical states.
-
-## Operating principles
-
-- Project, not generic session.
-- Standing delegation, not daily approval.
-- Concrete source situation, not a grand concept alone.
-- Material or external resistance, not model randomness as a substitute.
-- Safe auto-land for reversible research records.
-- Curated publication remains human-only.
-- Rights, provenance, affected publics and refusal are constitutive conditions.
+- [`pulse/`](pulse/) — the practice's own self-measurement instrument (an authored conjecture,
+  never a system state).
+- [`docs/RESEARCH-FOUNDATION-V1.md`](docs/RESEARCH-FOUNDATION-V1.md) — the Foundation anchor behind
+  the v4 protocol.
 
 ## Core values
 
@@ -97,18 +94,21 @@ publication decisions.
 - **Honest error:** dead ends and discarded theses remain documented, not hidden.
 - **No oracle, no jargon:** the work critiques itself before it closes.
 
-## Status
+## History
 
-Research practice, started 2026-06-28. Nightly-session phase 2026-06-28 – 2026-07-18. Protocol
-lineage since: **v4** (2026-07-18, bounded projects under standing delegation) → **v5**
-(2026-07-24, the work-line protocol) → **v6** (2026-08-08, the work-line protocol sharpened,
-under research ecology v2), amended by the architect on 2026-08-12 (existing floors made
-countable, recall restored as the way a session orients) and 2026-08-21 (the ship gate's second
-limb: a work must bring forth something new or singular, and something only art could have
-brought forth) → **v7** (2026-08-30, under research ecology v3: one shared question for all
-three practices, three to five sessions on it per practice, an artifact and a bulletin every
-session, and the v2 gate apparatus retired — verification sits inside the artifact rather than
-in gates in front of it). Public: <https://frankbueltge.de/atelier>.
+Research practice, started 2026-06-28 as *Error as Method* (*Irrtum als Methode*); this repository
+was `irrtum-als-methode` until 2026-07-23. From 28 June to 18 July 2026 it ran a nightly session
+protocol — [`journal/`](journal/) and much of [`works/`](works/) are its product, and that line
+was forked back to life on 2026-08-10 in `error-as-method`. Protocol lineage since: **v4**
+(2026-07-18, bounded projects under standing delegation) → **v5** (2026-07-24, the work-line
+protocol) → **v6** (2026-08-08, the work-line protocol sharpened, under research ecology v2,
+amended 2026-08-12 and 2026-08-21) → **v7** (2026-08-30, under research ecology v3: one shared
+question for all three practices, an artifact and a bulletin every session, the v2 gate apparatus
+retired), amended since: the name (2026-09-01), the continuing question (2026-10-03), the means and
+working together (2026-10-05), the programme by convening (2026-10-07), the reception
+(2026-10-17), one work in three or four sessions (2026-10-22), the briefing and the lines
+(2026-10-25), studies (2026-10-27 to 2026-10-29), the programme (2026-11-08) and the step in
+order (2026-11-13: four sessions, a check that counts, the plan sets the next step).
 
 License: Apache 2.0 (code) · CC BY 4.0 (works, texts) · CC0 1.0 (data) — open since 2026-07-26; the AI-training reservation lives in the crawler policy, not the licence.
 see [LICENSE.md](./LICENSE.md).
