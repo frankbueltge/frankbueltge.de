@@ -14,7 +14,7 @@ import { GROUPS, groupOf, hueOf } from '@/lib/comma/groups'
 import { countryLink, entryLink, siteLink } from '@/lib/comma/links'
 import { hostOf, testsOf, type Test } from '@/lib/comma/ooni'
 import { panOf } from '@/lib/comma/places'
-import { MINUTE_MS } from '@/lib/comma/relay'
+import { MINUTE_MS, retrySeconds } from '@/lib/comma/relay'
 import { askingLevel, balance, commaSeconds, prune, ruleOf, type Rule } from '@/lib/comma/rule'
 import { AUDIBLE_WEIGHT, bandWidth, bellLabelY, labelEnd, layoutFor, stagger, visible, WIDE_SECONDS, weightTier, xOf, yOf } from '@/lib/comma/score'
 import { categoryOf, listUrl, parseList, type Lists } from '@/lib/comma/testlists'
@@ -32,7 +32,10 @@ export interface CommaWording {
     /** {minute} is replaced with the minute playing, HH:MM UTC */
     playing: string
     waiting: string
+    /** {seconds} is replaced with how soon the piece asks again */
     standby: string
+    /** the standby when OONI refuses (429); {seconds} as above */
+    refused: string
     failed: string
     noRule: string
   }
@@ -96,6 +99,9 @@ const FEED = 8
 
 const hhmm = (ms: number): string => new Date(ms).toISOString().slice(11, 16)
 const untilNextMinute = (): number => MINUTE_MS - (Date.now() % MINUTE_MS) + 3000
+/** The relay's standby names its reason (src/lib/comma/relay.ts); 'rate-limit' means OONI refused the question. */
+const isRefusal = (said: unknown): boolean =>
+  typeof said === 'object' && said !== null && (said as { standby?: unknown }).standby === 'rate-limit'
 const hueClass = (g: number): string => {
   const hue = hueOf(g)
   return hue === null ? 'cm-kn' : `cm-k${hue}`
@@ -110,6 +116,7 @@ export default function Comma({ wording, id }: CommaProps) {
   const [bands, setBands] = React.useState<Band[]>([])
   const [minutes, setMinutes] = React.useState<Minute[]>([])
   const [width, setWidth] = React.useState(1000)
+  const [wait, setWait] = React.useState<{ refused: boolean; seconds: number }>({ refused: false, seconds: retrySeconds(1) })
   const figure = React.useRef<HTMLElement | null>(null)
 
   const sound = React.useRef<CommaSound | null>(null)
@@ -123,6 +130,8 @@ export default function Comma({ wording, id }: CommaProps) {
   const alive = React.useRef(false)
   const reduced = React.useRef(false)
   const frozenRef = React.useRef(false)
+  const inARow = React.useRef(0)
+  const ruleAskedAt = React.useRef(0)
 
   const later = (fn: () => void, ms: number): void => {
     clearTimeout(timer.current)
@@ -213,23 +222,54 @@ export default function Comma({ wording, id }: CommaProps) {
     setMinutes((ms) => [...ms.filter((k) => k.t0 + 60 > ctx.currentTime - 1), summary])
   }
 
+  /** Yesterday's counts. A refusal is not kept anywhere (src/lib/comma/relay.ts), so while they are missing they
+   *  are asked for again once a minute, and suspicion sounds from the minute they arrive. */
+  const loadRule = async (): Promise<void> => {
+    ruleAskedAt.current = Date.now()
+    try {
+      const r = await fetch('/api/comma/rule')
+      rule.current = r.ok ? ruleOf(await r.json()) : null
+    } catch {
+      rule.current = null
+    }
+    if (alive.current) setNote(rule.current ? '' : wording.status.noRule)
+  }
+
+  const loadGlobalList = async (): Promise<void> => {
+    try {
+      const r = await fetch(listUrl('global'))
+      if (r.ok) lists.current.global = parseList(await r.text())
+    } catch {
+      // without the global list every page sounds in the last row until a country's own list arrives
+    }
+  }
+
+  /** A standby: say why, and ask again soon, then every half minute (`retrySeconds`). */
+  const waitAgain = (refused: boolean): void => {
+    inARow.current += 1
+    const seconds = retrySeconds(inARow.current)
+    setWait({ refused, seconds })
+    setPhase('standby')
+    later(() => void poll(), seconds * 1000)
+  }
+
   const poll = async (): Promise<void> => {
     if (!alive.current || !sound.current) return
     let response: Response
     try {
       response = await fetch('/api/comma/now', { cache: 'no-store' })
     } catch {
-      setPhase('standby')
-      later(() => void poll(), 60_000)
+      if (alive.current) waitAgain(false)
       return
     }
     if (!alive.current) return
     const minute = Date.parse(response.headers.get('x-comma-minute') ?? '')
     if (!response.ok || !Number.isFinite(minute)) {
-      setPhase('standby')
-      later(() => void poll(), 60_000)
+      const said: unknown = await response.json().catch(() => null)
+      if (alive.current) waitAgain(isRefusal(said))
       return
     }
+    inARow.current = 0
     if (last.current && minute <= last.current.minute) {
       later(() => void poll(), 10_000)
       return
@@ -241,6 +281,7 @@ export default function Comma({ wording, id }: CommaProps) {
     schedule(minute, tests)
     setPhase('playing')
     later(() => void poll(), untilNextMinute())
+    if (!rule.current && Date.now() - ruleAskedAt.current >= MINUTE_MS) void loadRule()
   }
 
   const stop = (): void => {
@@ -252,6 +293,7 @@ export default function Comma({ wording, id }: CommaProps) {
     memory.current = new Map()
     tail.current = GROUPS.map(() => [])
     frozenRef.current = false
+    inARow.current = 0
     setFrozen(false)
     setMarks([])
     setBands([])
@@ -267,6 +309,8 @@ export default function Comma({ wording, id }: CommaProps) {
     // built inside the click, or a phone keeps the sound muted
     const s = new CommaSound()
     sound.current = s
+    // the counts and the global list load while the sounds decode, not after them
+    const reading = Promise.all([loadRule(), loadGlobalList()])
     try {
       await s.load()
     } catch {
@@ -276,19 +320,7 @@ export default function Comma({ wording, id }: CommaProps) {
       setPhase('failed')
       return
     }
-    try {
-      const r = await fetch('/api/comma/rule')
-      rule.current = r.ok ? ruleOf(await r.json()) : null
-    } catch {
-      rule.current = null
-    }
-    setNote(rule.current ? '' : wording.status.noRule)
-    try {
-      const r = await fetch(listUrl('global'))
-      if (r.ok) lists.current.global = parseList(await r.text())
-    } catch {
-      // without the global list every page sounds in the last row until a country's own list arrives
-    }
+    await reading
     if (!alive.current) return
     s.startTones()
     setPhase('waiting')
@@ -363,7 +395,9 @@ export default function Comma({ wording, id }: CommaProps) {
       ? wording.status.playing.replace('{minute}', hhmm(current.start))
       : phase === 'playing'
         ? wording.status.waiting
-        : wording.status[phase]
+        : phase === 'standby'
+          ? (wait.refused ? wording.status.refused : wording.status.standby).replace('{seconds}', String(wait.seconds))
+          : wording.status[phase]
 
   /** A mark is a link only while the score holds still: a link that slides away under the pointer is no link. */
   const linked = (m: Mark, body: React.ReactNode): React.ReactNode =>
