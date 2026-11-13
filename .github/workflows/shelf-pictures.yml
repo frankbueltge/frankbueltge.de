@@ -60,9 +60,21 @@ jobs:
         if: steps.stills.outputs.without_picture != '0'
         run: npm run build
 
-      - name: Install the browser (only then)
+      # The runner brings a browser of its own, and scripts/shelf-shots.ts takes the one CHROMIUM_PATH
+      # names. Installing playwright's failed on the first run (2026-11-13): the runner's Ubuntu is newer
+      # than the pinned playwright-core knows. Only where the runner has none is one installed.
+      - name: Find a browser (only then)
         if: steps.stills.outputs.without_picture != '0'
-        run: npx playwright-core install --with-deps chromium
+        run: |
+          for name in google-chrome google-chrome-stable chromium chromium-browser; do
+            if path=$(command -v "$name"); then
+              echo "CHROMIUM_PATH=$path" >> "$GITHUB_ENV"
+              echo "browser: $path ($("$path" --version 2>/dev/null || echo 'version unknown'))"
+              exit 0
+            fi
+          done
+          echo "no browser on the runner: installing playwright's"
+          npx playwright-core install --with-deps chromium
 
       - name: Photograph the page of each piece that has no picture
         if: steps.stills.outputs.without_picture != '0'
