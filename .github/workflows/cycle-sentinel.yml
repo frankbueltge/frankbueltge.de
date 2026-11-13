@@ -58,9 +58,13 @@ on:
     - cron: '50 6 * * *'
   # A released seed is committed to the register by the Steuerzentrale with a token that DOES
   # fire `on: push` — so the interruption lands within minutes of the release, not next morning.
+  # Since 2026-11-13 the same holds for cycle.json: inside a running programme the Middle links the
+  # checked state there (a merged pull request, which fires `on: push`), and that link opens the next
+  # step — the same day, so no night is lost between two steps. The clock's own commit of cycle.json
+  # is made with the built-in token and starts nothing, so this cannot loop.
   push:
     branches: [main]
-    paths: ['src/data/saat/register.json']
+    paths: ['src/data/saat/register.json', 'src/data/ecology/cycle.json']
   # Also started by ecology-integrate.yml after a relay mirror (2026-10-07): the built-in token
   # fires no `on: push`, but a dispatch it sends does start a run.
   workflow_dispatch:

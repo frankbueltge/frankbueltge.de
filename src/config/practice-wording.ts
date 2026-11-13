@@ -95,6 +95,8 @@ export const STATION_V3 = {
     continuingNote: 'the continuing question — where the programme began',
     /** since 2026-10-07: the question the three chose in the convening before this cycle */
     conveningNote: 'chosen by the three practices in their convening',
+    /** since 2026-11-13: inside a programme the plan sets the step, so the note names the step and claims no vote */
+    stepNote: (step: number) => `step ${step} of the programme the ecology holds`,
     defaultsNote: 'the default theme — no seed queued, no continuing question set',
     sessionsKicker: 'recent sessions',
   },

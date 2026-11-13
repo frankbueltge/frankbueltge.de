@@ -219,7 +219,7 @@ export const SCORE_WORDING = {
             `The Field brings the evidence, the Atelier the concepts and the critique, the Studio a form for what the Field found, each in ${sessions
               .split('-')
               .map((n) => inWords(Number(n)))
-              .join(' to ')} sessions.`,
+              .join(' to ')} sessions. The Field’s finding comes first; the Studio builds its form on it and presents last.`,
         },
         {
           title: 'Reading each other',
@@ -231,15 +231,16 @@ export const SCORE_WORDING = {
         },
         {
           title: 'What is known now',
-          text: 'The Middle writes what the step found into the programme’s state, a second reader checks every claim, and the next step opens. No vote: the plan sets the next question.',
+          text: 'The Middle writes what the step found into the programme’s state, and a second reader checks every claim, against its source, against the other claims and against the critique on record. The next step opens the day that checked state stands. No vote: the plan sets the next question.',
         },
       ],
       example: {
         question: (n: number, step: number, q: string) => `cycle ${cycleNo(n)} is step ${step}: “${q}”`,
         state: 'kept on /question',
       },
-      convening: (after: number) =>
-        `Cycles no longer convene since the programme began. The last convening, after cycle ${cycleNo(after)}, chose a question the programme replaced; its proposals and tally stay on record in the Middle’s relay.`,
+      /** since 2026-11-13: the plan sets the next step; the tally after cycle 013 was the last */
+      convening: (p: { since: string; lastTallyAfter: number; step: number }) =>
+        `Since ${shortDateYear(p.since)} the practices no longer propose and rank inside a programme: its plan sets the next step. The last tally, after cycle ${cycleNo(p.lastTallyAfter)}, chose the wording of step ${inWords(p.step)} from three proposals; it stays on record in the Middle’s relay.`,
     },
     convening: {
       head: (p: { after: number; opened: string | null; tallied: string | null; rule: string | null }) =>
