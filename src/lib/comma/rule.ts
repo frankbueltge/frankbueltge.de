@@ -78,6 +78,7 @@ export interface Sounded {
   state: Extract<State, 'confirmed' | 'anomaly'>
   weight: number
   url: string
+  uid: string
 }
 
 /** Rule 2. `memory` holds, per country, the times already sounded in earlier minutes; it is read and extended, so
@@ -89,7 +90,7 @@ export function balance(tests: readonly Test[], rule: Rule | null, memory: Map<s
     const list = memory.get(t.cc) ?? []
     list.push(t.at)
     memory.set(t.cc, list)
-    return { at: t.at, cc: t.cc, state, weight: weightOf(rule, t.cc), url: t.url }
+    return { at: t.at, cc: t.cc, state, weight: weightOf(rule, t.cc), url: t.url, uid: t.uid }
   }
   const out: Sounded[] = []
   for (const t of tests.filter((t) => t.state === 'confirmed').sort((a, b) => a.at - b.at)) {

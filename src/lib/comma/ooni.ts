@@ -20,9 +20,12 @@ export interface Test {
   state: State
   /** the page that was asked for */
   url: string
+  /** OONI's id of the test, for a link to its entry in OONI Explorer; empty when OONI's row had none that looks right */
+  uid: string
 }
 
 interface Row {
+  measurement_uid?: unknown
   measurement_start_time?: unknown
   probe_cc?: unknown
   input?: unknown
@@ -30,6 +33,10 @@ interface Row {
   confirmed?: unknown
   failure?: unknown
 }
+
+/** OONI's measurement ids look like "20261112194029.003293_IR_webconnectivity_5413b98f121d3aad"; nothing else
+ *  is passed on, so no string from a third party reaches a link unchecked. */
+export const UID = /^\d{14}\.\d{6}_[A-Z]{2}_[a-z0-9]+_[0-9a-f]{16}$/
 
 export function stateOf(row: Pick<Row, 'anomaly' | 'confirmed' | 'failure'>): State {
   if (row.confirmed === true) return 'confirmed'
@@ -55,7 +62,13 @@ export function testsOf(json: unknown, from: number, to: number): Test[] {
     const at = timeOf(r?.measurement_start_time)
     if (at === null || at < from || at >= to) continue
     if (typeof r.probe_cc !== 'string' || !/^[A-Z]{2}$/.test(r.probe_cc)) continue
-    out.push({ at, cc: r.probe_cc, state: stateOf(r), url: typeof r.input === 'string' ? r.input : '' })
+    out.push({
+      at,
+      cc: r.probe_cc,
+      state: stateOf(r),
+      url: typeof r.input === 'string' ? r.input : '',
+      uid: typeof r.measurement_uid === 'string' && UID.test(r.measurement_uid) ? r.measurement_uid : '',
+    })
   }
   return out.sort((a, b) => a.at - b.at)
 }

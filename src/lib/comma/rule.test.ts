@@ -12,6 +12,7 @@ const tests: Test[] = (windowFixture.rows as [number, string, string][]).map(([s
   cc,
   state: STATE[st]!,
   url: '',
+  uid: '',
 }))
 const aggregation = {
   result: (aggregationFixture.rows as [string, number, number, number][]).map(([cc, n, a, c]) => ({
@@ -79,8 +80,8 @@ describe('one country, the same chances', () => {
     const t0 = 1_000_000
     const sounded = balance(
       [
-        { at: t0, cc: 'RU', state: 'anomaly', url: '' },
-        { at: t0 + 3000, cc: 'RU', state: 'confirmed', url: '' },
+        { at: t0, cc: 'RU', state: 'anomaly', url: '', uid: '' },
+        { at: t0 + 3000, cc: 'RU', state: 'confirmed', url: '', uid: '' },
       ],
       rule,
     )
@@ -88,7 +89,7 @@ describe('one country, the same chances', () => {
   })
 
   it('keeps silent the anomalies of a country without weight', () => {
-    expect(balance([{ at: 0, cc: 'US', state: 'anomaly', url: '' }], rule)).toEqual([])
+    expect(balance([{ at: 0, cc: 'US', state: 'anomaly', url: '', uid: '' }], rule)).toEqual([])
   })
 
   it('forgets what the gap can no longer reach', () => {
