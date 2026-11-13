@@ -1,6 +1,6 @@
 // src/components/experiments/ThumbMarkShape.tsx — one mark of an experiment's miniature, as an SVG
 // element. Moved out of ExperimentGallery.tsx on 2026-11-02, unchanged, so that the entrance's lab
-// band (src/components/ops/LabSix.astro) draws a miniature through the very mapping
+// carousel (src/components/ops/LabCarousel.tsx) draws a miniature through the very mapping
 // /experiments uses rather than a second copy of it.
 //
 // The marks arrive from src/lib/experiments/thumbnails.ts with geometry and at most one flag ("this
