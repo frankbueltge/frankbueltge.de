@@ -388,6 +388,18 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
         stopScroll()
       })
 
+      // ── Media after a swap. The ClientRouter parses the incoming page in a detached document,
+      // and an <audio> or <video> that arrives that way has already given up on its source
+      // (MEDIA_ERR_SRC_NOT_SUPPORTED, no request sent) — players stayed dead until a reload
+      // (the ill-tempered week, 2026-11-13). load() restarts source selection; it honours
+      // preload, so a preload="none" player still fetches nothing. readyState 0 leaves a
+      // persisted player that is already playing alone.
+      document.addEventListener('astro:after-swap', () => {
+        for (const media of document.querySelectorAll<HTMLMediaElement>('audio, video')) {
+          if (media.readyState === 0) media.load()
+        }
+      })
+
       // Runs after the first paint of every page, the initial one included. Each step is
       // idempotent, so the immediate calls below and this handler can never double up.
       const startPage = (): void => {
