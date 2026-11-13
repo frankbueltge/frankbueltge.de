@@ -762,6 +762,61 @@ export const PALETTES: readonly PaletteSet[] = [
     usedBy: ['src/styles/living-globe.css'],
   },
   {
+    id: 'comma-kinds',
+    description:
+      'Comma (/comma, 2026-11-13), the live score of the world’s censorship tests: three of its six kinds of page wear ' +
+      'a hue — politics, news and rights; identity, body and belief; the tools people speak with — because these are ' +
+      'where a block cuts speech, and the house draws no figure with more than four colours. The other three (culture ' +
+      'and play, porn and gambling, commerce and the rest) wear the declared muted ink. The hue sits on marks only: a ' +
+      'diamond for a blockpage, a bar beneath the row for a suspicion, a dot before a row name and in the legend; every ' +
+      'label and count stays in ink, and proof is told from suspicion by SHAPE, never by colour. Not one hue is new: ' +
+      'all three are the living globe’s record globe-voices, on the same surface (--color-panel), with no other ' +
+      'meaning on this page, so this record is a subset of a validated set and inherits its verdict.',
+    slots: [
+      { name: 'politics, news, rights — the globe’s ember', light: '#b8410e', dark: '#e2691f' },
+      { name: 'identity, body, belief — the Field’s recorded blue', light: '#2a78d6', dark: '#256abf' },
+      { name: 'tools for speaking — the room’s live petrol', light: '#10627a', dark: '#7fd0e8' },
+    ],
+    neutrals: [
+      {
+        name: 'culture and play, porn and gambling, commerce and the rest — muted ink',
+        light: '#54555c',
+        dark: '#a3a3a8',
+        note: 'the frame’s own --color-fg-muted, referenced not restated; greyness IS the meaning — a kind of page the figure does not single out, kept apart from the three where a block cuts speech, and porn and gambling never painted like political speech.',
+      },
+    ],
+    surfaces: { light: ['#f7f8fa'], dark: ['#141414'] },
+    pairs: 'all',
+    validatedOn: '2026-11-13',
+    validator:
+      'validate_palette.js did not run for this record: it reuses the three hexes of globe-voices (validated ' +
+      '2026-09-03) on the same declared surfaces, so it inherits that verdict, and the distances below are ' +
+      'palette.test.ts’s own re-derivation of the same three pairs (sRGB → linear → Machado 2009 protan/deutan → OKLab ' +
+      'ΔE ×100; WCAG against the surface of each mode), which the test re-checks on every run. No hue here is used as text.',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 14.42,
+        cvdPair: '#10627a↔#b8410e',
+        cvdType: 'protan',
+        tritan: 11.83,
+        normal: 15.29,
+        normalPair: '#2a78d6↔#10627a',
+      },
+      {
+        mode: 'dark',
+        cvd: 23.55,
+        cvdPair: '#7fd0e8↔#e2691f',
+        cvdType: 'deutan',
+        tritan: 29.39,
+        normal: 30.01,
+        normalPair: '#7fd0e8↔#e2691f',
+      },
+    ],
+    warns: [],
+    usedBy: ['src/styles/comma.css'],
+  },
+  {
     id: 'paper-voices',
     description:
       'The three voices on the paper ground (2026-10-11) — the Field, the Atelier and the Studio on ' +

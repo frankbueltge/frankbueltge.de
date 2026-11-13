@@ -3,13 +3,15 @@
 // One minute of the world's censorship tests at a time: the site hands over the newest minute OONI holds (about four
 // minutes old, functions/api/comma/now.js), this island sorts its tests into the six kinds of page with Citizen Lab's
 // lists, applies the rules of src/lib/comma/rule.ts and puts every sound on the audio clock at once, so a hidden tab
-// keeps playing. The score draws what has sounded, the newest on the right. Every number and every decision comes from
-// src/lib/comma/; this file schedules and draws. The server render is the floor: the six rows, the button and the
-// empty score are real markup before any script runs; nothing sounds until a click asks for it.
+// keeps playing. The score draws what has sounded, the newest on the right; the list beside it holds the last events
+// still, with their links. Every number, colour slot and link comes from src/lib/comma/; this file schedules and
+// draws. The server render is the floor: the rows, the legend, the button and the empty score are real markup before a
+// script runs; nothing sounds until a click asks for it.
 import * as React from 'react'
 
 import { CommaSound } from '@/components/comma/sound'
-import { GROUPS, groupOf } from '@/lib/comma/groups'
+import { GROUPS, groupOf, hueOf } from '@/lib/comma/groups'
+import { countryLink, entryLink, siteLink } from '@/lib/comma/links'
 import { hostOf, testsOf, type Test } from '@/lib/comma/ooni'
 import { panOf } from '@/lib/comma/places'
 import { MINUTE_MS } from '@/lib/comma/relay'
@@ -21,6 +23,9 @@ import { onMotionChange, reducedMotion } from '@/lib/dataviz/runtime'
 export interface CommaWording {
   listen: string
   stop: string
+  freeze: string
+  unfreeze: string
+  freezeHint: string
   status: {
     idle: string
     loading: string
@@ -32,8 +37,19 @@ export interface CommaWording {
     noRule: string
   }
   figureLabel: string
+  legend: {
+    heading: string
+    blockpage: string
+    suspicion: string
+    asking: string
+    colours: string
+    grey: string
+  }
   feedHeading: string
   feedEmpty: string
+  feedBlockpage: string
+  feedSuspicion: string
+  feedEntry: string
   counters: { tests: string; countries: string; blockpages: string; anomalies: string; heard: string }
 }
 
@@ -54,6 +70,8 @@ interface Mark {
   w: number
   seconds: number
   host: string
+  entry: string | null
+  site: string | null
 }
 
 interface Band {
@@ -74,14 +92,20 @@ interface Minute {
 const LIST_COUNTRIES = 25
 const LIST_WAIT_MS = 4000
 const LEAD = 1.5
+const FEED = 8
 
 const hhmm = (ms: number): string => new Date(ms).toISOString().slice(11, 16)
 const untilNextMinute = (): number => MINUTE_MS - (Date.now() % MINUTE_MS) + 3000
+const hueClass = (g: number): string => {
+  const hue = hueOf(g)
+  return hue === null ? 'cm-kn' : `cm-k${hue}`
+}
 
 export default function Comma({ wording, id }: CommaProps) {
   const [phase, setPhase] = React.useState<Phase>('idle')
   const [note, setNote] = React.useState('')
   const [now, setNow] = React.useState(0)
+  const [frozen, setFrozen] = React.useState(false)
   const [marks, setMarks] = React.useState<Mark[]>([])
   const [bands, setBands] = React.useState<Band[]>([])
   const [minutes, setMinutes] = React.useState<Minute[]>([])
@@ -98,6 +122,7 @@ export default function Comma({ wording, id }: CommaProps) {
   const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const alive = React.useRef(false)
   const reduced = React.useRef(false)
+  const frozenRef = React.useRef(false)
 
   const later = (fn: () => void, ms: number): void => {
     clearTimeout(timer.current)
@@ -158,6 +183,7 @@ export default function Comma({ wording, id }: CommaProps) {
       else s.suspicion(g, at, m.weight, seconds, panOf(m.cc))
       // the tally names what can be heard: every blockpage, and suspicion above a whisper
       if (m.state === 'confirmed' || m.weight >= AUDIBLE_WEIGHT) heard.set(m.cc, (heard.get(m.cc) ?? 0) + 1)
+      const site = siteLink(m.url, category)
       return {
         key: `${minute}-${i}`,
         t: at,
@@ -167,7 +193,9 @@ export default function Comma({ wording, id }: CommaProps) {
         w: m.weight,
         seconds,
         // only a news outlet is named; never a personal page, never porn or gambling
-        host: m.state === 'confirmed' && category === 'NEWS' ? hostOf(m.url) : '',
+        host: site ? hostOf(m.url) : '',
+        entry: entryLink(m.uid),
+        site,
       }
     })
     const summary: Minute = {
@@ -179,7 +207,7 @@ export default function Comma({ wording, id }: CommaProps) {
       anomalies: tests.filter((t) => t.state === 'anomaly').length,
       heard: [...heard.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6),
     }
-    const keep = ctx.currentTime - WIDE_SECONDS - 5
+    const keep = ctx.currentTime - WIDE_SECONDS - 120
     setMarks((m) => [...m.filter((k) => k.t + k.seconds > keep), ...placed])
     setBands((b) => [...b.filter((k) => k.t > keep), ...fresh])
     setMinutes((ms) => [...ms.filter((k) => k.t0 + 60 > ctx.currentTime - 1), summary])
@@ -223,6 +251,8 @@ export default function Comma({ wording, id }: CommaProps) {
     last.current = null
     memory.current = new Map()
     tail.current = GROUPS.map(() => [])
+    frozenRef.current = false
+    setFrozen(false)
     setMarks([])
     setBands([])
     setMinutes([])
@@ -265,6 +295,13 @@ export default function Comma({ wording, id }: CommaProps) {
     void poll()
   }
 
+  const toggleFreeze = (): void => {
+    frozenRef.current = !frozenRef.current
+    setFrozen(frozenRef.current)
+    const s = sound.current
+    if (!frozenRef.current && s) setNow(s.ctx.currentTime)
+  }
+
   React.useEffect(() => {
     reduced.current = reducedMotion()
     return onMotionChange((r) => {
@@ -276,7 +313,8 @@ export default function Comma({ wording, id }: CommaProps) {
     if (phase !== 'playing' && phase !== 'waiting' && phase !== 'standby') return
     const tick = setInterval(() => {
       const s = sound.current
-      if (s) setNow(s.ctx.currentTime)
+      // frozen, the score holds still so its marks can be followed; the sound plays on
+      if (s && !frozenRef.current) setNow(s.ctx.currentTime)
     }, reduced.current ? 1000 : 200)
     return () => clearInterval(tick)
   }, [phase])
@@ -290,11 +328,14 @@ export default function Comma({ wording, id }: CommaProps) {
     return () => watch.disconnect()
   }, [])
 
-  React.useEffect(() => () => {
-    alive.current = false
-    clearTimeout(timer.current)
-    sound.current?.close()
-  }, [])
+  React.useEffect(
+    () => () => {
+      alive.current = false
+      clearTimeout(timer.current)
+      sound.current?.close()
+    },
+    [],
+  )
 
   const l = layoutFor(width)
   const current = minutes.find((m) => m.t0 <= now && now < m.t0 + 60)
@@ -302,10 +343,19 @@ export default function Comma({ wording, id }: CommaProps) {
   const visibleBands = bands.filter((b) => visible(l, now, b.t))
   const labelOf = (m: Mark): string => (m.host ? `${m.cc} · ${m.host}` : m.cc)
   const bellMarks = visibleMarks.filter((m) => m.kind === 'bell')
-  const steps = new Map(
-    stagger(bellMarks.map((m) => ({ row: m.g, x: xOf(l, now, m.t), chars: labelOf(m).length }))).map((step, i) => [bellMarks[i]!.key, step]),
-  )
-  const bells = marks.filter((m) => m.kind === 'bell' && m.t <= now).slice(-6).reverse()
+  const commaMarks = visibleMarks.filter((m) => m.kind === 'comma' && m.w >= 0.5 && !l.namesAbove)
+  const steps = new Map<string, number>([
+    ...stagger(bellMarks.map((m) => ({ row: m.g, x: xOf(l, now, m.t), chars: labelOf(m).length }))).map(
+      (step, i) => [bellMarks[i]!.key, step] as [string, number],
+    ),
+    ...stagger(commaMarks.map((m) => ({ row: m.g, x: xOf(l, now, m.t), chars: m.cc.length }))).map(
+      (step, i) => [commaMarks[i]!.key, step] as [string, number],
+    ),
+  ])
+  const feed = marks
+    .filter((m) => m.t <= now && (m.kind === 'bell' || m.w >= AUDIBLE_WEIGHT))
+    .slice(-FEED)
+    .reverse()
   const listening = phase === 'loading' || phase === 'waiting' || phase === 'playing' || phase === 'standby'
 
   const statusText =
@@ -315,29 +365,49 @@ export default function Comma({ wording, id }: CommaProps) {
         ? wording.status.waiting
         : wording.status[phase]
 
+  /** A mark is a link only while the score holds still: a link that slides away under the pointer is no link. */
+  const linked = (m: Mark, body: React.ReactNode): React.ReactNode =>
+    frozen && m.entry ? (
+      <a href={m.entry} target="_blank" rel="noopener noreferrer" className="cm-mark-link">
+        <title>{`${m.cc} · ${GROUPS[m.g]?.name ?? ''} · ${wording.feedEntry}`}</title>
+        {body}
+      </a>
+    ) : (
+      body
+    )
+
   return (
     <div className="cm-room" id={id}>
       <div className="cm-controls">
         <button type="button" className="cm-button" aria-pressed={listening} onClick={() => (listening ? stop() : void start())}>
           {listening ? wording.stop : wording.listen}
         </button>
+        <button type="button" className="cm-button cm-button-quiet" aria-pressed={frozen} disabled={!listening} onClick={toggleFreeze}>
+          {frozen ? wording.unfreeze : wording.freeze}
+        </button>
         <p className="cm-status" role="status" aria-live="polite">
           {statusText}
           {note ? <span className="cm-note"> {note}</span> : null}
+          {frozen ? <span className="cm-note"> {wording.freezeHint}</span> : null}
         </p>
       </div>
 
       <figure className="cm-figure" ref={figure}>
         <svg viewBox={`0 0 ${l.width} ${l.height}`} className="cm-svg" role="img" aria-label={wording.figureLabel}>
           <title>{wording.figureLabel}</title>
-          {GROUPS.map((g, i) => (
-            <g key={g.id}>
-              <text x={l.namesAbove ? l.left : 14} y={l.namesAbove ? yOf(l, i) - 14 : yOf(l, i) + 4} className="cm-row-name">
-                {g.name}
-              </text>
-              <line x1={l.left} x2={l.right} y1={yOf(l, i)} y2={yOf(l, i)} className="cm-row-line" />
-            </g>
-          ))}
+          {GROUPS.map((g, i) => {
+            const nameX = l.namesAbove ? l.left : 14
+            const nameY = l.namesAbove ? yOf(l, i) - 14 : yOf(l, i) + 4
+            return (
+              <g key={g.id}>
+                <circle cx={nameX + 4} cy={nameY - 4} r={4} className={`cm-dot ${hueClass(i)}`} />
+                <text x={nameX + 14} y={nameY} className="cm-row-name">
+                  {g.name}
+                </text>
+                <line x1={l.left} x2={l.right} y1={yOf(l, i)} y2={yOf(l, i)} className="cm-row-line" />
+              </g>
+            )
+          })}
           {visibleBands.map((b) =>
             b.levels.map((level, g) => {
               const h = 1 + 16 * level
@@ -358,31 +428,81 @@ export default function Comma({ wording, id }: CommaProps) {
             const y = yOf(l, m.g)
             if (m.kind === 'comma') {
               const x1 = Math.min(l.right, xOf(l, now, m.t + m.seconds))
+              const step = steps.get(m.key) ?? 0
               return (
-                <g key={m.key} className={`cm-sus cm-w${weightTier(m.w)}`}>
-                  <line x1={x0} x2={Math.max(x0 + 2, x1)} y1={y + 11} y2={y + 11} />
-                  {m.w >= 0.5 && !l.namesAbove ? (
-                    <text x={x0} y={y + 23} className="cm-cc">
-                      {m.cc}
-                    </text>
-                  ) : null}
+                <g key={m.key} className={`cm-sus cm-w${weightTier(m.w)} ${hueClass(m.g)}`}>
+                  {linked(
+                    m,
+                    <>
+                      <line x1={x0} x2={Math.max(x0 + 2, x1)} y1={y + 11} y2={y + 11} />
+                      {m.w >= 0.5 && !l.namesAbove ? (
+                        <text x={x0} y={y + 23 + step * 11} className="cm-cc">
+                          {m.cc}
+                        </text>
+                      ) : null}
+                    </>,
+                  )}
                 </g>
               )
             }
             const label = labelOf(m)
             const turn = labelEnd(l, x0, label.length)
             return (
-              <g key={m.key} className="cm-bell">
-                <polygon points={`${x0},${y - 8} ${x0 + 6},${y} ${x0},${y + 8} ${x0 - 6},${y}`} />
-                <text x={turn ? x0 - 8 : x0 + 8} y={bellLabelY(l, y, steps.get(m.key) ?? 0)} textAnchor={turn ? 'end' : 'start'} className="cm-cc">
-                  {label}
-                </text>
+              <g key={m.key} className={`cm-bell ${hueClass(m.g)}`}>
+                {linked(
+                  m,
+                  <>
+                    <polygon points={`${x0},${y - 8} ${x0 + 6},${y} ${x0},${y + 8} ${x0 - 6},${y}`} />
+                    <text x={turn ? x0 - 8 : x0 + 8} y={bellLabelY(l, y, steps.get(m.key) ?? 0)} textAnchor={turn ? 'end' : 'start'} className="cm-cc">
+                      {label}
+                    </text>
+                  </>,
+                )}
               </g>
             )
           })}
           <line x1={l.right} x2={l.right} y1={l.top - 22} y2={l.height - 4} className="cm-now" />
         </svg>
       </figure>
+
+      <section className="cm-legend" aria-labelledby={`${id}-legend`}>
+        <h3 className="cm-panel-title" id={`${id}-legend`}>
+          {wording.legend.heading}
+        </h3>
+        <ul className="cm-legend-list">
+          <li>
+            <svg viewBox="0 0 24 16" className="cm-key" aria-hidden="true">
+              <polygon points="12,1 18,8 12,15 6,8" className="cm-key-bell" />
+            </svg>
+            {wording.legend.blockpage}
+          </li>
+          <li>
+            <svg viewBox="0 0 24 16" className="cm-key" aria-hidden="true">
+              <line x1="2" x2="22" y1="8" y2="8" className="cm-key-sus" />
+            </svg>
+            {wording.legend.suspicion}
+          </li>
+          <li>
+            <svg viewBox="0 0 24 16" className="cm-key" aria-hidden="true">
+              <rect x="2" y="4" width="9" height="8" className="cm-ask" />
+              <rect x="13" y="2" width="9" height="12" className="cm-ask" />
+            </svg>
+            {wording.legend.asking}
+          </li>
+        </ul>
+        <p className="cm-legend-note">{wording.legend.colours}</p>
+        <ul className="cm-legend-list cm-legend-kinds">
+          {GROUPS.map((g, i) => (
+            <li key={g.id}>
+              <svg viewBox="0 0 12 12" className="cm-key-dot" aria-hidden="true">
+                <circle cx="6" cy="6" r="5" className={`cm-dot ${hueClass(i)}`} />
+              </svg>
+              {g.name}
+            </li>
+          ))}
+        </ul>
+        <p className="cm-legend-note">{wording.legend.grey}</p>
+      </section>
 
       <div className="cm-panels">
         <section className="cm-panel" aria-label={wording.counters.tests}>
@@ -405,7 +525,26 @@ export default function Comma({ wording, id }: CommaProps) {
             </div>
             <div>
               <dt>{wording.counters.heard}</dt>
-              <dd>{current && current.heard.length ? current.heard.map(([cc, n]) => `${cc} ${n}`).join(', ') : '–'}</dd>
+              <dd>
+                {current && current.heard.length
+                  ? current.heard.map(([cc, n], i) => {
+                      const href = countryLink(cc)
+                      return (
+                        <React.Fragment key={cc}>
+                          {i ? ', ' : ''}
+                          {href ? (
+                            <a href={href} target="_blank" rel="noopener noreferrer">
+                              {cc}
+                            </a>
+                          ) : (
+                            cc
+                          )}{' '}
+                          {n}
+                        </React.Fragment>
+                      )
+                    })
+                  : '–'}
+              </dd>
             </div>
           </dl>
         </section>
@@ -413,14 +552,46 @@ export default function Comma({ wording, id }: CommaProps) {
           <h3 className="cm-panel-title" id={`${id}-feed`}>
             {wording.feedHeading}
           </h3>
-          {bells.length ? (
+          {feed.length ? (
             <ol className="cm-feed">
-              {bells.map((b) => (
-                <li key={b.key}>
-                  <span className="cm-feed-cc">{b.cc}</span> {GROUPS[b.g]?.name}
-                  {b.host ? <span className="cm-feed-host"> · {b.host}</span> : null}
-                </li>
-              ))}
+              {feed.map((m) => {
+                const country = countryLink(m.cc)
+                return (
+                  <li key={m.key}>
+                    <svg viewBox="0 0 12 12" className="cm-key-dot" aria-hidden="true">
+                      {m.kind === 'bell' ? (
+                        <polygon points="6,1 11,6 6,11 1,6" className={`cm-dot ${hueClass(m.g)}`} />
+                      ) : (
+                        <line x1="1" x2="11" y1="6" y2="6" className={`cm-feed-sus ${hueClass(m.g)}`} />
+                      )}
+                    </svg>
+                    {country ? (
+                      <a href={country} target="_blank" rel="noopener noreferrer" className="cm-feed-cc">
+                        {m.cc}
+                      </a>
+                    ) : (
+                      <span className="cm-feed-cc">{m.cc}</span>
+                    )}{' '}
+                    {m.kind === 'bell' ? wording.feedBlockpage : wording.feedSuspicion} · {GROUPS[m.g]?.name}
+                    {m.site ? (
+                      <>
+                        {' · '}
+                        <a href={m.site} target="_blank" rel="nofollow noopener noreferrer" className="cm-feed-host">
+                          {m.host}
+                        </a>
+                      </>
+                    ) : null}
+                    {m.entry ? (
+                      <>
+                        {' · '}
+                        <a href={m.entry} target="_blank" rel="noopener noreferrer">
+                          {wording.feedEntry}
+                        </a>
+                      </>
+                    ) : null}
+                  </li>
+                )
+              })}
             </ol>
           ) : (
             <p className="cm-feed-empty">{wording.feedEmpty}</p>

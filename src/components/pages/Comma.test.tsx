@@ -12,10 +12,17 @@ import Comma, { type CommaWording } from './Comma'
 const wording: CommaWording = {
   listen: COMMA.island.listen,
   stop: COMMA.island.stop,
+  freeze: COMMA.island.freeze,
+  unfreeze: COMMA.island.unfreeze,
+  freezeHint: COMMA.island.freezeHint,
   status: { ...COMMA.island.status },
   figureLabel: COMMA.island.figureLabel,
+  legend: { ...COMMA.island.legend },
   feedHeading: COMMA.island.feedHeading,
   feedEmpty: COMMA.island.feedEmpty,
+  feedBlockpage: COMMA.island.feedBlockpage,
+  feedSuspicion: COMMA.island.feedSuspicion,
+  feedEntry: COMMA.island.feedEntry,
   counters: { ...COMMA.island.counters },
 }
 
@@ -32,6 +39,21 @@ describe('Comma, rendered on the server (nothing has sounded yet)', () => {
     expect(html).toContain('>Listen<')
     expect(html).toContain(COMMA.island.status.idle)
     expect(html).toContain(COMMA.island.feedEmpty)
+  })
+
+  it('carries its legend before anything sounds, with a colour key for every kind of page', () => {
+    const html = render()
+    expect(html).toContain(COMMA.island.legend.heading)
+    expect(html).toContain(COMMA.island.legend.blockpage)
+    expect(html).toContain(COMMA.island.legend.grey)
+    expect(html.match(/cm-dot cm-k0/g)?.length).toBeGreaterThanOrEqual(2)
+    expect(html.match(/cm-dot cm-kn/g)?.length).toBeGreaterThanOrEqual(6)
+  })
+
+  it('offers the freeze only while listening, and no link while nothing has sounded', () => {
+    const html = render()
+    expect(html).toMatch(/<button[^>]*disabled=""[^>]*>Freeze the score<\/button>/)
+    expect(html).not.toContain('explorer.ooni.org')
   })
 
   it('carries no style attribute and no colour of its own', () => {
