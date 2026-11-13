@@ -73,7 +73,7 @@ export const EDITION = {
       { id: 'ducking', reason: 'The one you play: hold a fader, and the quiet news stays up.' },
       { id: 'trending', reason: 'The house reads the world through it, every morning since September.' },
       { id: 'ill-tempered-week', reason: 'A week of attention you listen to rather than read.' },
-      { id: 'globe', reason: 'All the lab’s measurements in one place you can turn.' },
+      { id: 'comma', reason: 'Censorship you hear as it happens: the blocked web, live, as sound.' },
       { id: 'third-reading', reason: 'The one that asks you, and sets your answer beside the experts’.' },
       { id: 'consensus', reason: 'The lab’s first instrument, and still its clearest finding.' },
     ],
