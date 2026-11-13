@@ -165,5 +165,11 @@ export function clip(span: Span, t0: number, t1: number): [number, number] | nul
   return b > a ? [a, b] : null
 }
 
+/** The first of the labels that fits the room (in pixels, at the width of the scores' mono type), else the last and
+ *  shortest: a day's name never runs into its neighbour's. */
+export function fitLabel(candidates: readonly string[], room: number, charWidth = 6.5): string {
+  return candidates.find((c) => c.length * charWidth <= room) ?? candidates.at(-1)!
+}
+
 /** One decimal, as the drawings write their coordinates (keeps the server render small and deterministic). */
 export const r1 = (x: number): number => Math.round(x * 10) / 10

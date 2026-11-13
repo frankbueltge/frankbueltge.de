@@ -159,17 +159,5 @@ export function span(days: readonly string[]): string {
 const WEEKDAY = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 export const weekday = (day: string): string => WEEKDAY[(new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7]!
 
-/** The field's name as the map writes it. */
-export const FIELD: Record<string, string> = {
-  war: 'war and violence', hunger: 'hunger', poverty: 'poverty', economy: 'debt, work and cost of living',
-  inequality: 'inequality', power: 'concentration of money and power', climate: 'climate and disasters',
-  nature: 'nature, air and water', health: 'health and epidemics', displacement: 'displacement and humanitarian need',
-  democracy: 'democracy and rights', information: 'information and manipulation', ai: 'AI and its harms',
-}
-
-/** The instrument a field's overlooked headline is answered by (VSCO 2 CE patch → its name). */
-export const INSTRUMENT: Record<string, string> = {
-  FluteSusVib: 'flute', BassoonSus: 'bassoon', OboeSusVib: 'oboe', FHornSus: 'horn', TromboneSus: 'trombone',
-  SViolinVib: 'solo violin', ClarinetSus: 'clarinet', CelloEnsSusVib: 'cellos', TrumpetSus: 'trumpet',
-  ViolaEnsSusVib: 'violas', PiccoloSus: 'piccolo', TubaSus: 'tuba', ContrabassSusVB: 'double bass',
-}
+// The field and instrument names live in a module without node:fs, so the score islands can import them too.
+export { FIELD, INSTRUMENT } from './names'

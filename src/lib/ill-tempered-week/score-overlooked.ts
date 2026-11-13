@@ -8,12 +8,14 @@
 // derivation to every recorded time. Two things the records before 2026-11-14 do not hold are estimated and marked so:
 // how long the headline is said (the motif's first bar pins it to within 0.4 s) and when its answer ends. Records
 // pressed from 2026-11-14 on carry both, and the entries of the ensemble, and the score reads them instead.
-import { FIELD, INSTRUMENT, type Overlooked } from './albums'
+import type { Overlooked } from './albums'
+import { FIELD, INSTRUMENT } from './names'
 import {
   clip,
   dayAbbr,
   dayName,
   dayShort,
+  fitLabel,
   frameFor,
   harmonicOf,
   harmonicsBetween,
@@ -59,7 +61,7 @@ export const FORM = {
   violinHz: 880,
 } as const
 
-export type LaneId = 'voice' | `solo-${number}` | 'violins' | 'violas' | 'piano' | 'low' | 'brass' | 'murmur'
+export type LaneId = 'voice' | `solo-${number}` | 'violins' | 'violas' | 'piano' | 'low' | 'brass' | 'coda' | 'murmur'
 
 export type EventKind = 'bell' | 'said' | 'answer' | 'motif' | 'violins' | 'violas' | 'piano' | 'low' | 'brass' | 'murmur' | 'violin'
 
@@ -258,7 +260,7 @@ export function overlookedScore(o: Overlooked): OverlookedScore {
   const first = days[0]!
   events.push({ id: 'coda-said', lane: 'voice', kind: 'said', day: 0, t0: coda, t1: round3(coda + first.speech), estimated: first.speechEstimated })
   const violinAt = round3(coda + first.speech + FORM.violinAfter)
-  events.push({ id: 'coda-violin', lane: 'violins', kind: 'violin', day: 0, t0: violinAt, t1: Math.min(o.seconds, round3(violinAt + FORM.violinNote)), estimated: first.speechEstimated })
+  events.push({ id: 'coda-violin', lane: 'coda', kind: 'violin', day: 0, t0: violinAt, t1: Math.min(o.seconds, round3(violinAt + FORM.violinNote)), estimated: first.speechEstimated })
 
   const lanes: Lane[] = [
     { id: 'voice', label: 'voice', short: 'voice' },
@@ -268,6 +270,7 @@ export function overlookedScore(o: Overlooked): OverlookedScore {
     { id: 'piano', label: 'piano', short: 'pno.' },
     { id: 'low', label: 'cellos & basses', short: 'vcs. cbs.' },
     { id: 'brass', label: 'horns & trombones', short: 'hns. tbns.' },
+    { id: 'coda', label: 'solo violin, coda', short: 'coda vln.' },
     { id: 'murmur', label: 'murmur', short: 'murmur' },
   ]
   return { week: o.week, edition: o.edition, seconds: o.seconds, pulse, bar, tutti, cut, coda, days, lanes, events }
@@ -450,10 +453,17 @@ export function layoutOverlooked(s: OverlookedScore, width: number): OverlookedL
         loops: (e.loops ?? []).filter((t) => t > c[0] + 1e-6 && t < c[1]).map((t) => r1(xAt(frame, span, t))),
       }
     })
-    const days = s.days.filter((d) => d.from >= span.t0 && d.from < span.t1).map((d) => ({ x: r1(xAt(frame, span, d.from)), label: frame.narrow ? dayAbbr(d.day) : dayShort(d.day), index: d.index }))
+    const tc = clip(span, s.tutti, s.cut)
+    const inSpan = s.days.filter((d) => d.from >= span.t0 && d.from < span.t1)
+    const days = inSpan.map((d, k) => {
+      const x = xAt(frame, span, d.from)
+      // the room to the next day's name; on the day of the tutti, to the word "tutti" written before the cut
+      const next = inSpan[k + 1]
+      const until = next ? xAt(frame, span, next.from) : tc ? xAt(frame, span, tc[1]) - 3 - 5 * 6.2 : xAt(frame, span, span.t1)
+      return { x: r1(x), label: fitLabel([dayShort(d.day), dayAbbr(d.day)], until - x - 10), index: d.index }
+    })
     const step = tickStep(frame.pxPerSecond)
     const ticks = ticksBetween(span.t0, span.t1, step).map((t) => ({ x: r1(xAt(frame, span, t)), label: mmss(t) }))
-    const tc = clip(span, s.tutti, s.cut)
     const height = HEAD + (bottom - top) + AXIS
     lines.push({
       span, y, height, lanes, marks, days, ticks, top, bottom,
@@ -473,8 +483,9 @@ export interface Staff {
   width: number
   height: number
   left: number
-  /** the scale's lines between the motif's lowest and highest note; A is drawn stronger */
-  lines: { y: number; hz: number; harmonic: number; ratio: string; a: boolean }[]
+  /** the scale's lines between the motif's lowest and highest note; A is drawn stronger; a line is labelled with
+   *  its harmonic (A for the 8th) where there is room for the label */
+  lines: { y: number; hz: number; harmonic: number; ratio: string; a: boolean; label: string | null }[]
   notes: { x: number; w: number; y: number; hz: number; harmonic: number; ratio: string; step: number }[]
   /** the bar lines inside the motif (every eight eighths) */
   bars: number[]
@@ -496,10 +507,30 @@ export function motifStaff(d: ScoreDay, width: number, height = 64): Staff {
   const pxPerEighth = (width - left - 4) / d.eighths
   return {
     width, height, left,
-    lines: ls.map((h) => ({ y: y(h.hz), hz: h.hz, harmonic: h.harmonic, ratio: h.ratio, a: h.harmonic === 8 })),
+    lines: ls.map((h, k) => {
+      const room = Math.min(k > 0 ? y(ls[k - 1]!.hz) - y(h.hz) : 99, k + 1 < ls.length ? y(h.hz) - y(ls[k + 1]!.hz) : 99)
+      const a = h.harmonic === 8
+      return { y: y(h.hz), hz: h.hz, harmonic: h.harmonic, ratio: h.ratio, a, label: a ? 'A' : room >= 7.5 ? String(h.harmonic) : null }
+    }),
     notes: d.motif.map((m) => ({ x: r1(left + m.step * pxPerEighth), w: r1(Math.max(2, m.eighths * pxPerEighth - 1.5)), y: y(m.hz), hz: m.hz, harmonic: m.harmonic, ratio: m.ratio, step: m.step })),
     bars: Array.from({ length: Math.floor((d.eighths - 1) / 8) }, (_, k) => r1(left + (k + 1) * 8 * pxPerEighth)),
     x0: left,
     pxPerEighth: r1(pxPerEighth * 1000) / 1000,
   }
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// The pointer
+// ---------------------------------------------------------------------------------------------------------------
+
+/** What the pointer is over: the line, the moment under it, and the event its lane plays then (the latest begun, so
+ *  a headline said over its bell is the headline). */
+export function hitOverlooked(s: OverlookedScore, l: OverlookedLayout, x: number, y: number): { t: number; event: string | null } | null {
+  const line = l.lines.find((ln) => y >= ln.y && y <= ln.y + ln.height)
+  if (!line) return null
+  const t = Math.min(line.span.t1, Math.max(line.span.t0, line.span.t0 + (x - l.frame.left) / l.frame.pxPerSecond))
+  const lane = line.lanes.find((ln) => y >= ln.y - LANE_GAP / 2 && y <= ln.y + LANE_H + LANE_GAP / 2)
+  if (!lane || x < l.frame.left) return { t, event: null }
+  const hit = s.events.filter((e) => e.lane === lane.id && t >= e.t0 && t < e.t1).sort((a, b) => b.t0 - a.t0)[0]
+  return { t, event: hit?.id ?? null }
 }

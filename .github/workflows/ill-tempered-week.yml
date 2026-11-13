@@ -120,7 +120,7 @@ jobs:
         if: steps.plan.outputs.work == 'true'
         run: |
           npm ci --no-audit --no-fund
-          if ! npx vitest run src/lib/ill-tempered-week src/lib/experiments src/data/werke.test.ts; then
+          if ! npx vitest run src/lib/ill-tempered-week src/components/ill-tempered-week src/lib/experiments src/data/werke.test.ts; then
             echo "::error::The new pressing turns a test red (named above). Nothing is committed; the site keeps the edition before."
             exit 1
           fi

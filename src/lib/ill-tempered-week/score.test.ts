@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 import {
   CHORD_HARMONICS,
+  fitLabel,
   frameFor,
   harmonicOf,
   harmonicsBetween,
@@ -103,5 +104,14 @@ describe('the lines of a score', () => {
     const first = f.spans[0]!
     expect(timeAtX(f, first, -50)).toBe(first.t0)
     expect(timeAtX(f, first, 10_000)).toBe(first.t1)
+  })
+})
+
+describe('a label that gives way', () => {
+  it('takes the longest name that fits and the shortest when none does', () => {
+    expect(fitLabel(['Sat 7 Nov · turn', 'Sat · turn', 'Sat 7 Nov', 'Sat'], 200)).toBe('Sat 7 Nov · turn')
+    expect(fitLabel(['Sat 7 Nov · turn', 'Sat · turn', 'Sat 7 Nov', 'Sat'], 70)).toBe('Sat · turn')
+    expect(fitLabel(['Sat 7 Nov · turn', 'Sat · turn', 'Sat 7 Nov', 'Sat'], 60)).toBe('Sat 7 Nov')
+    expect(fitLabel(['Sat 7 Nov', 'Sat'], 5)).toBe('Sat')
   })
 })

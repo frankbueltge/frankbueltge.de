@@ -7,7 +7,7 @@
 // and Toussaint's even spread of a family's beats over its bar. score-turn.test.ts rebuilds every bar and holds the
 // days' starts and the piece's length to the record.
 import type { Turn } from './albums'
-import { A1, clip, dayAbbr, dayName, dayShort, frameFor, mmss, r1, tickStep, ticksBetween, xAt, type Frame, type Span } from './score'
+import { A1, clip, dayAbbr, dayName, dayShort, fitLabel, frameFor, mmss, r1, tickStep, ticksBetween, xAt, type Frame, type Span } from './score'
 
 /** The renderer's form, as itw/turn.py writes it (the test reads the constants back from the source). */
 export const FORM = {
@@ -213,9 +213,14 @@ export function layoutTurn(s: TurnScore, width: number): TurnLayout {
     const barLines = inLine.map((b) => ({ x: x(b.t0), day: firstOfDay.has(b.t0) }))
     const said = inLine.filter((b) => b.kind === 'said').map((b) => ({ bar: b.index, day: b.day, x: x(b.t0), w: r1(b.len * frame.pxPerSecond) }))
     const turns = inLine.filter((b) => b.kind === 'all').map((b) => ({ bar: b.index, day: b.day, x: x(b.t0), w: r1(b.len * frame.pxPerSecond) }))
-    const days = s.days.filter((d) => d.from >= span.t0 && d.from < span.t1).map((d) => ({
-      index: d.index, x: x(d.from), label: frame.narrow ? dayAbbr(d.day) : dayShort(d.day), detail: `${d.signals}`,
-    }))
+    const daysIn = s.days.filter((d) => d.from >= span.t0 && d.from < span.t1)
+    const days = daysIn.map((d, k) => {
+      const room = (Math.min(daysIn[k + 1]?.from ?? span.t1, span.t1) - d.from) * frame.pxPerSecond - 8
+      const names = [dayShort(d.day), dayAbbr(d.day)]
+      // the day the week turns says so, in as many words as its bars leave room for
+      const turning = [`${names[0]} · turn`, `${names[1]} · turn`, `${names[1]} turn`, names[1]!]
+      return { index: d.index, x: x(d.from), label: fitLabel(d.turn ? turning : names, room, 6.4), detail: `${d.signals}` }
+    })
     const ty = (len: number): number => r1(tempoBottom - (fast === slow ? 0.5 : (60 / len - slow) / (fast - slow)) * (tempoBottom - tempoTop))
     let path = ''
     for (const b of inLine) {
@@ -265,3 +270,32 @@ export function measure(beats: Beat[], width: number, rowH = 12, gap = 4): Measu
 
 /** A moment's place inside its bar, 0 to 1, for a cursor on the measure. */
 export const phaseInBar = (b: Bar, t: number): number => Math.min(1, Math.max(0, (t - b.t0) / b.len))
+
+// ---------------------------------------------------------------------------------------------------------------
+// The pointer
+// ---------------------------------------------------------------------------------------------------------------
+
+/** What the pointer is over: the moment under it and the bar that sounds then. */
+export function hitTurn(s: TurnScore, l: TurnLayout, x: number, y: number): { t: number; bar: number | null } | null {
+  const line = l.lines.find((ln) => y >= ln.y && y <= ln.y + ln.height)
+  if (!line) return null
+  const t = Math.min(line.span.t1, Math.max(line.span.t0, line.span.t0 + (x - l.frame.left) / l.frame.pxPerSecond))
+  if (x < l.frame.left) return { t, bar: null }
+  return { t, bar: barAt(s, t)?.index ?? null }
+}
+
+/** The readout of a bar. */
+export function describeBar(s: TurnScore, index: number): { head: string; body: string } | null {
+  const b = s.bars[index]
+  if (!b) return null
+  const d = s.days[b.day]!
+  const head = `${dayShort(d.day)} · ${b.kind === 'bar' ? `bar ${b.n} of ${s.bars.filter((x) => x.day === b.day && x.kind === 'bar').length}` : b.kind === 'all' ? 'the turn' : 'the silent bar'} · ${mmss(b.t0)}`
+  if (b.kind === 'all') return { head, body: `The week turned: ${d.signals} AI signals, at least twice the mean of the days before. Every family sounds every beat.` }
+  if (b.kind === 'said') return { head, body: `Silence, and the day’s most attended AI headline said plainly: “${d.said}”.` }
+  const fams = b.beats.map((x) => `${x.family} ${x.k} of ${x.h}`).join(', ')
+  const unvoiced = d.unvoiced.filter((u) => u.count > 0).map((u) => `${u.family} ${u.count}`).join(', ')
+  return {
+    head,
+    body: `${d.signals} AI signal${d.signals === 1 ? '' : 's'} that day; this bar lasts ${b.len.toFixed(2)} s. Beats that sound: ${fams || 'none'}.${unvoiced ? ` Counted but not voiced: ${unvoiced}.` : ''}`,
+  }
+}

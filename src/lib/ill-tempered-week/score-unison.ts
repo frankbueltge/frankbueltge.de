@@ -13,6 +13,7 @@ import {
   dayAbbr,
   dayName,
   dayShort,
+  fitLabel,
   frameFor,
   harmonicOf,
   harmonicsBetween,
@@ -155,11 +156,14 @@ export function nowUnison(s: UnisonScore, t: number): string {
   const d = s.days[i]!
   const name = dayName(d.day)
   if (t >= d.end) return 'The bass alone, then the piece ends.'
-  if (d.bass && t >= d.bassAt) return `${name}: a solo double bass plays the speech melody of the day’s least attended war headline, “${d.overlooked}”.`
-  if (!d.bass && t >= d.bassAt && t < d.bassAt + 6) return `${name}: a solo double bass plays the speech melody of the day’s least attended war headline, “${d.overlooked}”.`
+  // the bass sounds to the end of its last note where the record holds its notes, else for about six seconds
+  const lastNote = d.bass?.at(-1)
+  const bassEnd = lastNote ? lastNote.t + lastNote.s : d.bassAt + 6
+  if (t >= d.bassAt && t < bassEnd) return `${name}: a solo double bass plays the speech melody of the day’s least attended war headline, “${d.overlooked}”.`
   if (d.peak && t >= d.peakAt && t < d.peakAt + FORM.brass) return `${name}: the press agreed ${pct(d.agreement)} on ${d.story}. Brass and timpani take up A’s chord; said: “${d.said}”.`
   if (d.peak && t >= d.peakAt - FORM.rollBefore && t < d.peakAt) return `${name}: the timpani roll swells; the press agreed ${pct(d.agreement)} on ${d.story}.`
   const sounding = s.glides.filter((g) => g.day === i && t >= g.t0 && t < g.t2).length
+  if (sounding === 0 && t > d.peakAt) return `${name} rings out.`
   return `${name}: ${d.signals} war signals enter at the hours they were published (${sounding} sounding now), each gliding ${pct(d.agreement)} of the way to A’s chord${d.peak ? '' : ', too little agreement for the brass'}.`
 }
 
@@ -207,7 +211,7 @@ export interface UnisonLine {
   plotBottom: number
   chord: { y: number; hz: number; a: boolean; label: string }[]
   glides: GlideMark[]
-  days: { index: number; x: number; w: number; label: string; agreement: string; story: string; barW: number; peak: boolean }[]
+  days: { index: number; x: number; w: number; label: string; note: string; barW: number; peak: boolean }[]
   peaks: { day: number; x: number; w: number; said: number | null; saidW: number }[]
   rolls: { day: number; x: number; w: number }[]
   strokes: { day: number; x: number }[]
@@ -246,10 +250,17 @@ export function layoutUnison(s: UnisonScore, width: number): UnisonLayout {
         id: g.id, day: g.day, x1: x(g.t0), y1: yHz(g.fromHz), x2: x(Math.min(g.t1, span.t1)), y2: yHz(g.toHz), x3: x(Math.min(g.t2, span.t1)),
         weight: g.attention >= 0.75 ? 3 : g.attention >= 0.5 ? 2 : g.attention >= 0.25 ? 1 : 0, tremolo: g.tremolo,
       }))
-    const days = s.days.filter((d) => inSpan(d.from)).map((d) => ({
-      index: d.index, x: x(d.from), w: r1(s.dayS * frame.pxPerSecond), label: frame.narrow ? dayAbbr(d.day) : dayShort(d.day),
-      agreement: pct(d.agreement), story: d.story, barW: r1(Math.max(1, d.agreement * Math.min(64, s.dayS * frame.pxPerSecond - 8))), peak: d.peak,
-    }))
+    const dayW = s.dayS * frame.pxPerSecond
+    const daysIn = s.days.filter((d) => inSpan(d.from))
+    const days = daysIn.map((d, k) => {
+      // the room to the next day's name, or to the line's end
+      const room = (Math.min(daysIn[k + 1]?.from ?? span.t1, span.t1) - d.from) * frame.pxPerSecond - 8
+      return {
+        index: d.index, x: x(d.from), w: r1(dayW), label: fitLabel([dayShort(d.day), dayAbbr(d.day)], room),
+        note: fitLabel([`${pct(d.agreement)} ${d.story}`, pct(d.agreement)], room, 6.1),
+        barW: r1(Math.max(1, d.agreement * Math.min(64, dayW - 8))), peak: d.peak,
+      }
+    })
     const peaks = s.days.filter((d) => d.peak && inSpan(d.peakAt)).map((d) => ({
       day: d.index, x: x(d.peakAt), w: r1(FORM.brass * frame.pxPerSecond),
       said: d.said ? x(d.peakAt + FORM.saidAfter) : null, saidW: r1((d.saidSeconds ?? 0) * frame.pxPerSecond),
@@ -271,3 +282,38 @@ export function layoutUnison(s: UnisonScore, width: number): UnisonLayout {
 
 /** The ids of the glissandi sounding at a moment. */
 export const glidesAt = (s: UnisonScore, t: number): string[] => s.glides.filter((g) => t >= g.t0 && t < g.t2).map((g) => g.id)
+
+// ---------------------------------------------------------------------------------------------------------------
+// The pointer
+// ---------------------------------------------------------------------------------------------------------------
+
+const distToSegment = (px: number, py: number, x1: number, y1: number, x2: number, y2: number): number => {
+  const dx = x2 - x1
+  const dy = y2 - y1
+  const len = dx * dx + dy * dy
+  const u = len === 0 ? 0 : Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / len))
+  return Math.hypot(px - (x1 + u * dx), py - (y1 + u * dy))
+}
+
+export type UnisonHit = { kind: 'glide'; id: string } | { kind: 'peak' | 'bass' | 'said'; day: number }
+
+/** What the pointer is over: the moment under it and the nearest glissando within reach (its glide or its fading
+ *  tail), else the bass, the sentence or the peak it is on. */
+export function hitUnison(l: UnisonLayout, x: number, y: number, reach = 7): { t: number; hit: UnisonHit | null } | null {
+  const line = l.lines.find((ln) => y >= ln.y && y <= ln.y + ln.height)
+  if (!line) return null
+  const t = Math.min(line.span.t1, Math.max(line.span.t0, line.span.t0 + (x - l.frame.left) / l.frame.pxPerSecond))
+  let best: { id: string; d: number } | null = null
+  for (const g of line.glides) {
+    const d = Math.min(distToSegment(x, y, g.x1, g.y1, g.x2, g.y2), distToSegment(x, y, g.x2, g.y2, g.x3, g.y2) + 1.5)
+    if (d <= reach && (!best || d < best.d)) best = { id: g.id, d }
+  }
+  if (best) return { t, hit: { kind: 'glide', id: best.id } }
+  const bass = line.bass.find((b) => Math.hypot(x - b.x, y - b.y) <= reach + 3)
+  if (bass) return { t, hit: { kind: 'bass', day: bass.day } }
+  const said = line.peaks.find((p) => p.said !== null && Math.abs(x - p.said) <= reach + 3 && y <= line.plotTop + 16)
+  if (said) return { t, hit: { kind: 'said', day: said.day } }
+  const peak = line.peaks.find((p) => x >= p.x && x <= p.x + p.w && y >= line.plotTop && y <= line.plotBottom)
+  if (peak) return { t, hit: { kind: 'peak', day: peak.day } }
+  return { t, hit: null }
+}

@@ -89,6 +89,13 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
         Headlines are voiced as they stand: only what a voice cannot say stays out (web addresses, code, formulas, non-Latin script,
         emoji), the same rule as Ducking’s record.
       </li>
+      <li>
+        <strong class="text-fg">The scores</strong> on the page are drawn from each album’s record and from the renderer’s fixed
+        form, not from the audio: when a day begins, when a motif starts and which notes it has, every glissando’s entry and pitches,
+        every day’s bar length and counts are read from the record; when a part of the ensemble enters, how much softer an older motif
+        sounds, how long a glissando lasts and where each bar of the rhythmicon falls follow from the same constants the renderer plays,
+        and a test holds the two to each other. A playhead follows the player’s own clock.
+      </li>
     </ul>
   </section>
 
@@ -99,6 +106,7 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
       <li>A story is a field term (Iran, Ukraine), not an event; two different events under one name count as one story, which is how the press’s agreement is measured.</li>
       <li>Speech melodies come from a synthetic voice reading the headline, not from a person; they are the voice’s intonation of the words, not the writer’s.</li>
       <li>The form of each piece is composed and fixed; the data decide what sounds within it, never the form itself.</li>
+      <li>A record pressed before 14 November 2026 does not hold how long a headline was said in <em>Overlooked</em>, nor the notes of the answering instrument or of <em>Unison</em>’s double bass. Their scores place the end of each sentence from the bar its motif begins on, to within half a bar, and mark the double bass by its entry alone. Later records hold these times, and the scores read them.</li>
     </ul>
   </section>
 
@@ -118,6 +126,7 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
       <li>2026-11-08 — begun as Common Time, a weekly pressing in one fixed template; never published.</li>
       <li>2026-11-09 — after probes in five forms and the owner’s verdict that the sound must come first, rebuilt as an album of three composed pieces with recorded instruments, and renamed <em>the ill-tempered week</em>. {first.title} pressed the same day.</li>
       <li>2026-11-09 — the title written in lowercase: in the house typeface a capital I and a lowercase l are the same stroke, and “Ill” read as the numeral III beside pieces numbered I to III.</li>
+      <li>2026-11-14 — each piece gets its score on the page, following its player, and the page says first how the data becomes sound. From this pressing on, the record also keeps how long each headline is said, the answering notes, the ensemble’s entries, the coda’s start, and the double bass’s notes; the audio is unchanged (pressed again with the change, Unison and Turn of {first.title} gave the same hashes as their records).</li>
     </ul>
   </section>
 </MethodSheet>
