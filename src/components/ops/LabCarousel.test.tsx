@@ -37,16 +37,13 @@ describe('the carousel’s server render', () => {
     expect(html).toContain(`<h2 id="ed-lab-title">${escaped(EDITION.lab.title)}</h2>`)
   })
 
-  it('shows the lead large above the carousel, outside its count', () => {
-    expect(lead.length).toBe(1)
-    const leadAt = html.indexOf('class="ed-lab-lead"')
-    expect(leadAt).toBeGreaterThan(-1)
-    expect(leadAt).toBeLessThan(html.indexOf('id="ed-lab-track"'))
-    expect(html).toContain(`aria-label="${escaped(EDITION.lab.leadLabel)}"`)
-    expect(html).toContain(`href="${lead[0].href}"`)
+  it('has no lead since 2026-11-13: the six stand in the carousel alone', () => {
+    expect(lead.length).toBe(0)
+    expect(html).not.toContain('class="ed-lab-lead"')
+    expect(html).not.toContain('class="ed-lab-sub"')
   })
 
-  it('carries every experiment’s link, the lead’s first, then the carousel’s order', () => {
+  it('carries every experiment’s link in the carousel’s order', () => {
     let from = -1
     for (const slide of all) {
       const at = html.indexOf(`href="${slide.href}"`, from + 1)
@@ -70,14 +67,13 @@ describe('the carousel’s server render', () => {
     }
   })
 
-  it('loads the lead’s picture at once and every other only when it is near and its theme shows it', () => {
+  it('loads every picture only when it is near and its theme shows it', () => {
     const images = [...html.matchAll(/<img [^>]*>/g)].map((m) => m[0])
     const light = images.filter((img) => img.includes('ed-duo--light'))
     const dark = images.filter((img) => img.includes('ed-duo--dark'))
     expect(light.length).toBe(all.filter((s) => s.still).length)
     expect(dark.length).toBe(all.filter((s) => s.still?.dark).length)
-    expect(light[0]).toContain('loading="eager"')
-    for (const img of [...light.slice(1), ...dark]) expect(img).toContain('loading="lazy"')
+    for (const img of [...light, ...dark]) expect(img).toContain('loading="lazy"')
   })
 
   it('draws the miniature of its own record for a work whose page has no still yet', () => {

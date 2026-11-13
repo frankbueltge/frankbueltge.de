@@ -25,10 +25,17 @@ const { notice } = Astro.props
 const wording: CommaWording = {
   listen: COMMA.island.listen,
   stop: COMMA.island.stop,
+  freeze: COMMA.island.freeze,
+  unfreeze: COMMA.island.unfreeze,
+  freezeHint: COMMA.island.freezeHint,
   status: { ...COMMA.island.status },
   figureLabel: COMMA.island.figureLabel,
+  legend: { ...COMMA.island.legend },
   feedHeading: COMMA.island.feedHeading,
   feedEmpty: COMMA.island.feedEmpty,
+  feedBlockpage: COMMA.island.feedBlockpage,
+  feedSuspicion: COMMA.island.feedSuspicion,
+  feedEntry: COMMA.island.feedEntry,
   counters: { ...COMMA.island.counters },
 }
 ---

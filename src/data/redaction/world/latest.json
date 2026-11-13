@@ -1,30 +1,30 @@
 {
-  "date": "2026-11-12",
+  "date": "2026-11-13",
   "deletion": {
     "available": true,
-    "checked_at": "2026-11-12T13:59:44Z",
+    "checked_at": "2026-11-13T13:24:14Z",
     "counts": {
-      "botwall": 22,
-      "gone_404": 3,
+      "botwall": 14,
+      "gone_404": 0,
       "gone_410": 0,
       "legal_451": 0,
-      "ok": 274,
-      "other": 0,
+      "ok": 281,
+      "other": 1,
       "server_error": 0,
-      "unreachable": 1
+      "unreachable": 4
     },
-    "decided": 277,
-    "excluded_unverifiable": 23,
-    "gone": 3,
+    "decided": 282,
+    "excluded_unverifiable": 18,
+    "gone": 0,
     "gone_ci95": [
-      0.0037,
-      0.0314
+      0.0,
+      0.0134
     ],
-    "gone_rate": 0.0108,
+    "gone_rate": 0.0,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.0137
+      0.0134
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,132 +33,109 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-11-10",
-    "receipts": [
-      {
-        "class": "gone_404",
-        "domain": "1039wvbo.com",
-        "first_seen": "20261110090000",
-        "http_code": 404,
-        "title": "Fatal overdose leads to 8-year prison sentence for Green Bay man",
-        "url": "https://www.1039wvbo.com/2026/11/09/fatal-overdose-leads-to-8-year-prison-sentence-for-green-bay-man/"
-      },
-      {
-        "class": "gone_404",
-        "domain": "finanznachrichten.de",
-        "first_seen": "20261110090000",
-        "http_code": 404,
-        "title": "Janus Henderson ICAV - Net Asset Value(s)",
-        "url": "https://www.finanznachrichten.de/nachrichten-2026-11/70083970-janus-henderson-icav-net-asset-value-s-008.htm"
-      },
-      {
-        "class": "gone_404",
-        "domain": "wbap.com",
-        "first_seen": "20261110140000",
-        "http_code": 404,
-        "title": "Former Cowboys Star Terrell Owens Faces Defamation Lawsuit Over Teen's Death | News Talk WBAP 820 AM and 93.3 FM",
-        "url": "https://www.wbap.com/2026/11/10/former-cowboys-star-terrell-owens-faces-defamation-lawsuit-over-teens-death/"
-      }
-    ],
-    "sample_drawn_at": "2026-11-11T12:54:24Z",
+    "pool_day": "2026-11-11",
+    "receipts": [],
+    "sample_drawn_at": "2026-11-12T13:56:37Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 7321,
-      "replaced": 6582,
-      "trivial": 984,
-      "update": 806
+      "reframing": 5826,
+      "replaced": 6278,
+      "trivial": 914,
+      "update": 482
     },
-    "day": "2026-11-11",
+    "day": "2026-11-12",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "Amy",
-          "Acton"
+          "2"
         ],
-        "after": "Amy Acton: US election results: Amy Acton defeats Donald Trump-backed Vivek Ramaswamy to become Ohio's first woman governor",
-        "before": "Ohio Governor Election: US election results: Amy Acton defeats Donald Trump-backed Vivek Ramaswamy to become Ohio's first woman governor",
-        "detected": "2026-11-11T04:48:32Z",
+        "after": "'Ramayana: Rise Of A Legend' box office collection day 1: Ranbir Kapoor, Yash's film collects Rs 64.85 crore net in India across all languages from 25,200 shows, fails to beat Dhurandhar 2's opening day",
+        "before": "Ramaya﻿Na Full Movie Collection: 'Ramayana: Rise Of A Legend' box office collection day 1: Ranbir Kapoor, Yash's film collects Rs 64.85 crore net in India across all languages from 25,200 shows, fails to beat Dhurandhar's opening day | Hindi Movie News",
+        "detected": "2026-11-12T22:18:17Z",
         "domain": "indiatimes.com",
         "removed": [
-          "election",
-          "Ohio",
-          "governor"
+          "Ramaya",
+          "Na",
+          "Full",
+          "Movie",
+          "collection",
+          "Hindi",
+          "Movie",
+          "News"
         ],
-        "similarity": 1.0,
-        "url": "https://timesofindia.indiatimes.com/world/us/us-mid-term-elections/news/us-election-results-amy-acton-defeats-donald-trump-backed-vivek-ramaswamy-to-become-ohios-first-woman-governor/articleshow/135522936.cms",
+        "similarity": 0.833,
+        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/box-office/ramayana-box-office-collection-day-1-live-ranbir-kapoor-yashs-film-expected-to-cross-rs-70-crore-on-opening-day-eyes-dhurandhars-record-diwali-weekend-growth-will-depend-on-word-of-mouth/articleshow/135566619.cms",
+        "weight": 16,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "US",
+          "Federal",
+          "Reserve"
+        ],
+        "after": "US interest rates: The Federal Reserve set to anger Trump with likely decision to raise rates by 25 basis point or higher",
+        "before": "Interest rates: The Fed set to anger Trump with likely decision to raise rates by 25 basis point or higher",
+        "detected": "2026-11-12T04:31:48Z",
+        "domain": "brisbanetimes.com.au",
+        "removed": [
+          "Fed"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.brisbanetimes.com.au/business/the-economy/trump-s-fed-nightmare-rates-won-t-be-slashed-they-could-surge-now-20261111-p61d55.html",
         "weight": 8,
-        "window": "1w"
+        "window": "24h"
       },
       {
         "added": [
-          "No1"
+          "latest"
         ],
-        "after": "Tributes paid to legendary drummer who played on more UK No1 singles than any other - backing acts including Paul McCartney, the Kinks, Dusty Springfield, Lulu, Paul Weller and the Wombles",
-        "before": "Tributes paid to legendary rock drummer who played on more UK number one singles than any other - backing acts including Paul McCartney, the Kinks, Dusty Springfield, Lulu, Marc Bolan, Paul Weller and the Wombles",
-        "detected": "2026-11-11T17:16:26Z",
-        "domain": "dailymail.com",
+        "after": "Windscribe's latest deal makes it less than half price — get this price-hike free, lifetime rate of $29 for safe streaming on your iPhone and unlimited other devices",
+        "before": "Windscribe's Black Friday VPN deal makes it less than half price — get this price-hike free, lifetime rate of $29 for safe streaming on your iPhone and unlimited other devices",
+        "detected": "2026-11-12T14:34:55Z",
+        "domain": "techradar.com",
         "removed": [
-          "rock",
-          "number",
-          "one",
-          "Marc",
-          "Bolan"
+          "Black",
+          "Friday",
+          "VPN"
         ],
-        "similarity": 0.818,
-        "url": "https://www.dailymail.com/news/article-16265609/Tributes-paid-legendary-rock-drummer-clem-cattini.html",
-        "weight": 9,
-        "window": "1w"
-      },
-      {
-        "added": [
-          "Tipping",
-          "Culture"
-        ],
-        "after": "Harry Styles Complains About Tipping Culture as Fans Fire Back Over His $1,000 Concert Tickets: 'Tone Deaf'",
-        "before": "Harry Styles Complains About $10 Coffee as Fans Fire Back Over His $1,000 Concert Tickets: 'Tone Deaf'",
-        "detected": "2026-11-11T11:02:51Z",
-        "domain": "ibtimes.co.uk",
-        "removed": [
-          "10",
-          "Coffee"
-        ],
-        "similarity": 0.8,
-        "url": "https://www.ibtimes.co.uk/harry-styles-coffee-complaint-1000-concert-tickets-1830040",
+        "similarity": 0.871,
+        "url": "https://www.techradar.com/vpn/vpn-services/windscribe-black-friday-vpn-deal-makes-it-less-than-half-price-get-this-price-hike-free-lifetime-rate-of-usd29-for-safe-streaming-on-your-iphone-and-unlimited-other-devices",
         "weight": 7,
-        "window": "1w"
+        "window": "24h"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 17097,
-      "PAGE_TEXTCHANGE": 143398,
-      "PAGE_TITLECHANGE": 54842,
-      "UNCHANGED_CONTENT": 732462
+      "HTTP_REDIRECT": 16104,
+      "PAGE_TEXTCHANGE": 138536,
+      "PAGE_TITLECHANGE": 52014,
+      "UNCHANGED_CONTENT": 721970
     },
-    "title_changes_en": 15693,
+    "title_changes_en": 13500,
     "trace": [
       {
-        "bytes_billed": 26214400,
-        "created": "1794491777510",
-        "job_id": "world_gdg_counts_20261111",
+        "bytes_billed": 25165824,
+        "created": "1794575980783",
+        "job_id": "world_gdg_counts_20261112",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 239075328,
-        "created": "1794491783843",
-        "job_id": "world_gdg_titles_20261111",
+        "bytes_billed": 233832448,
+        "created": "1794575986749",
+        "job_id": "world_gdg_titles_20261112",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-11-12T13:59:44Z",
+  "generated_at": "2026-11-13T13:24:14Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-11-11.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-11-12.json",
   "schema_version": "1",
   "selection_version": "v1"
 }

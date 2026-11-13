@@ -145,10 +145,11 @@ describe('the calm homepage (2026-11-03)', () => {
     expect(EDITION.aside.label.length).toBeGreaterThan(0)
   })
 
-  it('leads the lab’s band with one work and carries nine under it', () => {
-    expect(EDITION.lab.lead).toHaveLength(1)
-    expect(EDITION.lab.picks).toHaveLength(9)
-    expect(EDITION.lab.picks).not.toContain(EDITION.lab.lead[0])
+  it('carries six selected experiments in the lab’s carousel, with no lead and no claim about them', () => {
+    expect(EDITION.lab.lead).toHaveLength(0)
+    expect(EDITION.lab.picks).toHaveLength(6)
+    expect(new Set(EDITION.lab.picks).size).toBe(6)
+    expect(`${EDITION.lab.title} ${EDITION.lab.sub}`).not.toMatch(/strong|best|rank/i)
     expect(EDITION.lab).not.toHaveProperty('leave')
   })
 })

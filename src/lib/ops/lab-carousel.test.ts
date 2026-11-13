@@ -51,27 +51,13 @@ describe('the band the edition shows', () => {
   const cards = readLabCarousel()
   const { lead, picks } = EDITION.lab
 
-  it('leads with Ducking, alone and large', () => {
-    expect(lead).toEqual(['ducking'])
+  it('has no lead and holds exactly the six selected experiments, in their order', () => {
+    expect(lead).toEqual([])
     const band = labBand(cards)
-    expect(band.lead.map((c) => c.title)).toEqual(['Ducking'])
-  })
-
-  it('holds exactly the nine of the handoff in the carousel, in its order', () => {
-    expect(picks).toEqual(['trending', 'third-reading', 'balance', 'consensus', 'tell', 'ueberflug', 'spielraum', 'redaction', 'invoked-past'])
-    const band = labBand(cards)
+    expect(band.lead).toEqual([])
+    expect(picks).toEqual(['ducking', 'trending', 'ill-tempered-week', 'comma', 'third-reading', 'consensus'])
     expect(band.carousel.map((c) => c.key)).toEqual(picks.map((id) => `lab-${id}`))
-    expect(band.carousel.map((c) => c.title)).toEqual([
-      'Common Ground',
-      'Third Reading',
-      'Balance',
-      'Consensus',
-      'Delve into the intricate realm',
-      'All Along the Watchtower',
-      'Headroom',
-      'Editorial Deadline',
-      'Invoked Past',
-    ])
+    expect(band.carousel.map((c) => c.title)).toEqual(['Ducking', 'Common Ground', 'the ill-tempered week', 'Comma', 'Third Reading', 'Consensus'])
   })
 
   it('names only experiments /experiments lists and that are still running', () => {

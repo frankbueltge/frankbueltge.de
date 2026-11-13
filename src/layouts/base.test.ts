@@ -64,6 +64,10 @@ describe('the page lifecycle survives a client-side navigation (re-skin 2a, 2026
     expect(base).toMatch(/new Lenis\(\{[^}]*allowNestedScroll: true/)
   })
 
+  it('restarts audio and video players after a swap, or they stay dead until a reload', () => {
+    expect(base).toMatch(/astro:after-swap[\s\S]{0,200}querySelectorAll<HTMLMediaElement>\('audio, video'\)[\s\S]{0,120}media\.load\(\)/)
+  })
+
   it('persists the top bar across transitions', () => {
     const topBar = readFileSync(fileURLToPath(new URL('../components/TopBar.astro', import.meta.url)), 'utf8')
     expect(topBar).toMatch(/transition:persist=/)

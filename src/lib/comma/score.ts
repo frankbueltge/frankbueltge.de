@@ -7,7 +7,8 @@
 
 import { GROUPS } from './groups'
 
-export const NARROW_BELOW = 560
+/** Below this the row names (with their colour dots) no longer fit beside the score, so they move above their rows. */
+export const NARROW_BELOW = 760
 export const WIDE_SECONDS = 45
 export const NARROW_SECONDS = 24
 /** below this weight a suspicion is barely audible, so the score draws it faint and the tally leaves it out */
@@ -32,7 +33,7 @@ export function layoutFor(width: number): Layout {
   return {
     width: w,
     height: top + row * GROUPS.length - (namesAbove ? 6 : 0),
-    left: namesAbove ? 10 : Math.min(196, Math.round(w * 0.2)),
+    left: namesAbove ? 10 : 230,
     right: w - 10,
     top,
     row,

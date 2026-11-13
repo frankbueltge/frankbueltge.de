@@ -30,6 +30,12 @@ export const GROUPS: readonly Group[] = [
   { id: 'other', name: 'commerce and other', harmonic: 11, categories: ['COMM', 'ECON', 'CTRL', 'MISC'] },
 ]
 
+/** The figure gives a hue to the first HUED rows only — politics, news and rights; identity, body and belief; the
+ *  tools people speak with — and draws the other three in muted ink: the house caps a figure at four colours
+ *  (docs: .claude/rules/dataviz-figures.md), and these three are where a block cuts speech. Palette: comma-kinds. */
+export const HUED = 3
+export const hueOf = (group: number): number | null => (group >= 0 && group < HUED ? group : null)
+
 /** The last group takes every page the lists do not name, and every category they may add later. */
 export const OTHER = GROUPS.length - 1
 

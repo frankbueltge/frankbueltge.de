@@ -57,20 +57,22 @@ export const EDITION = {
 
   /**
    * FROM THE LAB (2026-11-02): the band the entrance opens with since Frank's decision of that day
-   * (wording private; paraphrased: the homepage leads with the lab's experiments). Since 2026-11-03
-   * a lead work, large, over a carousel of a fixed selection; the order is
+   * (wording private; paraphrased: the homepage leads with the lab's experiments). From 2026-11-03
+   * a lead work, large, over a carousel of a fixed selection; since 2026-11-13 (Frank's requests of
+   * that day, wording private) six selected experiments in the carousel alone, no lead, no ranking; the order is
    * src/lib/ops/lab-carousel.ts, the island src/components/ops/LabCarousel.tsx. The island writes
    * no word of its own: the templates below carry {placeholders} it fills.
    */
   lab: {
     /** The work that leads the band, large, above the carousel (the calm homepage, 2026-11-03:
      *  docs/design_handoff_homepage_calm/README.md §3). */
-    lead: ['ducking'],
+    lead: [],
     /** The carousel under the lead: exactly these, in this order (same README §3). /experiments
      *  keeps listing every other experiment. */
-    picks: ['trending', 'third-reading', 'balance', 'consensus', 'tell', 'ueberflug', 'spielraum', 'redaction', 'invoked-past'],
-    title: 'From the lab',
-    sub: 'the lab’s own experiments, one at a time',
+    picks: ['ducking', 'trending', 'ill-tempered-week', 'comma', 'third-reading', 'consensus'],
+    title: 'Selected experiments',
+    /** no line beside the title (2026-11-13): the selection claims nothing about its pieces */
+    sub: '',
     all: { label: 'Every experiment, by research line →', href: '/experiments' },
     /** what a screen reader calls the band and each of its cards (aria-roledescription) */
     carousel: 'carousel',

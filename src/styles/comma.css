@@ -1,13 +1,13 @@
 /* src/styles/comma.css — the room of Comma (/comma, 2026-11-13).
  *
- * The score is drawn in the frame's own mono tokens: rows, asking bands and suspicions are tones of ink, told apart by
- * FORM (a band, a bar beneath the row, a diamond on it) and by darkness, never by hue alone. One hue appears, and it is
- * not a new one: the blockpage, the moment a state shows itself, wears the live front ink the house already records
- * and validates for the living globe and for Spread.
+ * The score is drawn in the frame's own mono tokens, and three of its six kinds of page wear a hue: politics, news and
+ * rights; identity, body and belief; the tools people speak with. The other three stay in muted ink, because the house
+ * caps a figure at four colours (.claude/rules/dataviz-figures.md) and these three are where a block cuts speech.
+ * Proof and suspicion are told apart by SHAPE (a diamond on the row, a bar beneath it), never by hue; labels, names and
+ * counts stay in ink, the hue sits only on marks and on the dots of the legend.
  *
- * PALETTE: --cm-proof aliases the living globe's front ink (#10627a light / #7fd0e8 dark), recorded and all-pairs
- * validated as `globe-voices` in src/lib/dataviz/palette.ts, with the same meaning as in Spread: the live thing standing
- * in front of the mono record. No new hue enters the house.
+ * PALETTE: comma-kinds — the three hexes of the living globe's record `globe-voices`, on the same surface
+ * (--color-panel), recorded again for this figure in src/lib/dataviz/palette.ts. No new hue enters the house.
  */
 
 .cm-room {
@@ -15,18 +15,42 @@
   --cm-muted: var(--color-fg-muted);
   --cm-faint: var(--color-fg-faint);
   --cm-line: var(--color-line);
-  /* PALETTE: the recorded live front ink — see the header, record `globe-voices` */
-  --cm-proof: #10627a;
+  /* PALETTE: comma-kinds — politics, news, rights (the globe's ember) */
+  --cm-c0: #b8410e;
+  /* PALETTE: comma-kinds — identity, body, belief (the Field's recorded blue) */
+  --cm-c1: #2a78d6;
+  /* PALETTE: comma-kinds — tools for speaking (the room's live petrol) */
+  --cm-c2: #10627a;
 }
 
 :root:not([data-theme='light']) .cm-room {
-  /* PALETTE: the dark half of the same recorded ink */
-  --cm-proof: #7fd0e8;
+  /* PALETTE: comma-kinds — the dark halves of the same three */
+  --cm-c0: #e2691f;
+  --cm-c1: #256abf;
+  --cm-c2: #7fd0e8;
 }
 
 :root[data-theme='dark'] .cm-room {
-  /* PALETTE: the dark half of the same recorded ink */
-  --cm-proof: #7fd0e8;
+  /* PALETTE: comma-kinds — the dark halves of the same three */
+  --cm-c0: #e2691f;
+  --cm-c1: #256abf;
+  --cm-c2: #7fd0e8;
+}
+
+.cm-k0 {
+  --cm-hue: var(--cm-c0);
+}
+
+.cm-k1 {
+  --cm-hue: var(--cm-c1);
+}
+
+.cm-k2 {
+  --cm-hue: var(--cm-c2);
+}
+
+.cm-kn {
+  --cm-hue: var(--cm-muted);
 }
 
 .cm-controls {
@@ -102,7 +126,7 @@
 }
 
 .cm-sus line {
-  stroke: var(--cm-ink);
+  stroke: var(--cm-hue, var(--cm-ink));
   stroke-width: 3;
   stroke-linecap: round;
 }
@@ -129,11 +153,20 @@
 }
 
 .cm-bell polygon {
-  fill: var(--cm-proof);
+  fill: var(--cm-hue, var(--cm-ink));
 }
 
-.cm-bell .cm-cc {
-  fill: var(--cm-proof);
+.cm-dot {
+  fill: var(--cm-hue, var(--cm-muted));
+}
+
+.cm-mark-link {
+  cursor: pointer;
+}
+
+.cm-mark-link:focus-visible {
+  outline: 2px solid var(--cm-ink);
+  outline-offset: 2px;
 }
 
 .cm-now {
@@ -207,7 +240,93 @@
 }
 
 .cm-feed-cc {
-  color: var(--cm-proof);
+  color: var(--cm-ink);
+}
+
+.cm-feed a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--cm-line);
+  text-underline-offset: 2px;
+}
+
+.cm-feed a:hover,
+.cm-feed a:focus-visible {
+  text-decoration-color: var(--cm-ink);
+}
+
+.cm-feed-sus {
+  stroke: var(--cm-hue, var(--cm-muted));
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.cm-key-dot {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-right: 0.4rem;
+  vertical-align: -0.05rem;
+}
+
+.cm-counters dd a {
+  color: inherit;
+}
+
+.cm-button-quiet {
+  border-color: var(--cm-line);
+  color: var(--cm-muted);
+}
+
+.cm-button-quiet:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.cm-legend {
+  margin-top: 1rem;
+  border: 1px solid var(--cm-line);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem;
+  font-size: 0.85rem;
+  color: var(--cm-muted);
+}
+
+.cm-legend-list {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 720px) {
+  .cm-legend-kinds {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.cm-legend-note {
+  margin: 0.7rem 0 0.45rem;
+  color: var(--cm-faint);
+}
+
+.cm-key {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1rem;
+  margin-right: 0.45rem;
+  vertical-align: -0.2rem;
+}
+
+.cm-key-bell {
+  fill: var(--cm-ink);
+}
+
+.cm-key-sus {
+  stroke: var(--cm-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
 }
 
 .cm-feed-host {

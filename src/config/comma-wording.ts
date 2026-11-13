@@ -27,6 +27,9 @@ export const COMMA = {
   island: {
     listen: 'Listen',
     stop: 'Stop',
+    freeze: 'Freeze the score',
+    unfreeze: 'Let it run',
+    freezeHint: 'The score holds still and its marks link to their entries; the sound plays on.',
     status: {
       idle: 'Not listening. The sound starts with your click.',
       loading: 'Loading the organ, the bells and yesterday’s counts…',
@@ -37,9 +40,20 @@ export const COMMA = {
       noRule: 'Yesterday’s counts could not be read, so suspicion stays silent; blockpages still ring.',
     },
     figureLabel:
-      'A live score with six rows, one for each kind of page, the newest moment on the right. A grey band is how many tests of that kind just ran; a diamond is a blockpage, with its country; a bar beneath a row is a suspicion, darker the heavier its country’s weight.',
-    feedHeading: 'Blockpages just heard',
-    feedEmpty: 'None yet in this listening.',
+      'A live score with six rows, one for each kind of page, the newest moment on the right. A grey band is how many tests of that kind just ran; a diamond is a blockpage, with its country; a bar beneath a row is a suspicion, darker the heavier its country’s weight. Freeze the score to follow a mark to its entry in OONI Explorer.',
+    legend: {
+      heading: 'How to read it',
+      blockpage: 'a blockpage, a state’s own notice: proof (a bell)',
+      suspicion: 'a suspicion, a local answer that differed: a comma lower (darker = the country’s network deviated more often the day before; longer = more covert)',
+      asking: 'how many tests of that kind ran in the last moments (the organ tone’s loudness)',
+      colours: 'Colour says what kind of page was asked for:',
+      grey: 'Three kinds wear a colour and three stay grey: the house draws no figure with more than four colours, and these three are where a block cuts speech. Shape, not colour, tells proof from suspicion.',
+    },
+    feedHeading: 'Heard just now',
+    feedEmpty: 'Nothing yet in this listening.',
+    feedBlockpage: 'blockpage',
+    feedSuspicion: 'suspicion',
+    feedEntry: 'OONI entry',
     counters: {
       tests: 'tests in this minute',
       countries: 'countries',

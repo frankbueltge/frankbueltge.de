@@ -246,7 +246,7 @@ export default function LabCarousel({ lead = [], slides, wording, headingId, tra
     <div className="ed-lab" data-ready={ready ? '' : undefined}>
       <div className="ed-lab-head">
         <h2 id={headingId}>{wording.title}</h2>
-        <span className="ed-lab-sub">{wording.sub}</span>
+        {wording.sub && <span className="ed-lab-sub">{wording.sub}</span>}
         <div className="ed-lab-controls">
           <Button
             type="button"
