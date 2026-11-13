@@ -13,8 +13,8 @@
 //
 // 2026-11-02: THE LAB LEADS THE WORK (Frank's decision of that day, wording private). Under the
 // masthead the pulse and the since bar stay where they were (his word of the same afternoon,
-// wording private); under them stand, first, the lab's experiments (since 2026-11-13 its six
-// strongest, ranked: LabSix.astro, the order in src/lib/ops/lab-six.ts) and, second, the selected works,
+// wording private); under them stand, first, the lab's experiments as a carousel
+// (LabCarousel.tsx, the order in src/lib/ops/lab-carousel.ts) and, second, the selected works,
 // which hold the practices' pieces only (withoutLab). Then, unchanged: the lead and the
 // timetable, the houses, the readings, the arrivals.
 //
@@ -74,9 +74,11 @@ import { conveningView, loadRelayExtras } from '@/lib/ecology/convening'
 import { getLatestProtokoll } from '@/lib/protokoll/data'
 import { SELECTED_WORKS } from '@/config/selected-works'
 import { readPool, withoutLab } from '@/lib/ops/shelf-pool'
-import { readLabSix } from '@/lib/ops/lab-six'
+import { STILL_FRAME } from '@/lib/ops/shelf-stills'
+import { labBand, labSlides, labWording, readLabCarousel } from '@/lib/ops/lab-carousel'
+import { THUMB_BOX } from '@/lib/experiments/thumbnails'
 import EcologyShelf from '@/components/ops/EcologyShelf.astro'
-import LabSix from '@/components/ops/LabSix.astro'
+import LabCarousel from '@/components/ops/LabCarousel'
 import '@fontsource-variable/literata/opsz-italic.css'
 import '@/styles/paper.css'
 import '@/styles/edition.css'
@@ -130,10 +132,11 @@ function dayAfter(day: string): string {
   return d.toISOString().slice(0, 10)
 }
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
-// The lab's experiments (2026-11-02), the band the page's work opens with: since 2026-11-13 the six
-// strongest, ranked (EDITION.lab.six); each card read from the register and its still, or its
-// miniature where the page has no still yet.
-const labCards = readLabSix()
+// The lab's experiments (2026-11-02), the band the page's work opens with: since 2026-11-03 Ducking
+// large (EDITION.lab.lead) over a carousel of exactly the nine EDITION.lab.picks names; each card
+// read from the register and its still, or its miniature where the page has no still yet.
+const labCards = labBand(labSlides(readLabCarousel(), url))
+const labWords = labWording(url)
 // From the Ecology (2026-11-03; the selected works before): every finished piece of the practices
 // the site publishes (src/lib/ops/shelf-pool.ts, without the lab's own, which lead the page in the
 // band above), newest first, six at a time (src/components/ops/EcologyShelf.astro).
@@ -363,10 +366,22 @@ const forScript = {
     <div class="ed-body">
       <div class="ed-main">
         {/* ── 3a · from the lab ───────────────────────────────────────────────────────────── */}
-        {/* The lab's six strongest experiments, ranked (since 2026-11-13, Frank's request, wording
-            private): the first large, then two, then three. Server-rendered, no script. */}
-        <section class="ed-section ed-section--double ed-lab-section" aria-labelledby="ed-lab-title">
-          <LabSix cards={labCards} link={url} headingId="ed-lab-title" />
+        {/* The lab's lead experiment large, and under it the carousel (Frank's decision of
+            2026-11-02, wording private; the selection since 2026-11-03). Server-rendered whole:
+            without a script the carousel is a row the browser scrolls and snaps by itself, every
+            experiment reachable; the island adds the buttons, the count, the arrow keys and what a
+            screen reader hears when they move the row. */}
+        <section class="ed-section ed-section--double ed-lab-section" aria-roledescription={E.lab.carousel} aria-labelledby="ed-lab-title">
+          <LabCarousel
+            client:idle
+            lead={labCards.lead}
+            slides={labCards.carousel}
+            wording={labWords}
+            headingId="ed-lab-title"
+            trackId="ed-lab-track"
+            box={{ width: THUMB_BOX.width, height: THUMB_BOX.height }}
+            frame={{ width: STILL_FRAME.width, height: STILL_FRAME.height }}
+          />
         </section>
 
         {/* ── 3b · from the ecology (the selected works until 2026-11-03) ─────────────────── */}

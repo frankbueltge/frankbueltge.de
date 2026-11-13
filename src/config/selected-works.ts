@@ -104,7 +104,7 @@ export const SELECTED_WORKS = {
    *  piece is read like any pick, from its record, and needs no words of its own here.
    *
    *  Empty since 2026-11-02: the one piece pinned here, Common Ground, now stands second in the
-   *  lab's band at the top of the edition (EDITION.lab.six), on every visit as before, and the
+   *  lab's carousel at the top of the edition (EDITION.lab.lead), on every visit as before, and the
    *  shelf below the carousel holds no lab piece. The mechanism stays for a practice's piece. */
   pinned: [] as ShelfWork[],
 
