@@ -79,6 +79,7 @@ const stripWording: AudienceStripWording = {
       {AUDIENCE_CLASSES.map((c, i) => (
         <span class="whitespace-nowrap">{i > 0 ? ' · ' : ''}<span class="tabular-nums">{compact(yesterday!.edge.classes?.[c] ?? 0)}</span> {classLabel(c)}</span>
       ))}.
+      A day is counted once it is over (UTC) and added here the next morning, so this figure is always the last full day, never today.
       {yesterday!.umami?.status === 'ok' && (
         <span> Script-executing browsers only, counted by the browser beacon this file carried until 2026-09-03: <span class="tabular-nums">{compact(yesterday!.umami!.pageviews)}</span> page views.</span>
       )}
