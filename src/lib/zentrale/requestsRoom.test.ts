@@ -90,8 +90,10 @@ describe('the requests rooms fit on a page', () => {
       const cards = requestCards(read(ns))
       const open = cards.filter((c) => c.open)
       // Regression guard for the one shortcut this design forbids: a `.slice(0, n)` on the
-      // open list. The page filters, it never truncates.
-      expect(open.length).toBeGreaterThan(0)
+      // open list. The page filters, it never truncates. A channel with nothing open is a true
+      // state, not a truncated list, and it passes: until 2026-11-13 this test also asked for at
+      // least one open item, so a practice that answered its last request turned the build red
+      // (the Field's request of 2026-10-24).
       for (const c of open) expect(c.slug.length).toBeGreaterThan(0)
     }
   })
