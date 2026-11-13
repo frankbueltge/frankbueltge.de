@@ -1,0 +1,141 @@
+{
+  "date": "2026-11-13",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-13T13:24:14Z",
+    "counts": {
+      "botwall": 14,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 281,
+      "other": 1,
+      "server_error": 0,
+      "unreachable": 4
+    },
+    "decided": 282,
+    "excluded_unverifiable": 18,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0134
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0134
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-11",
+    "receipts": [],
+    "sample_drawn_at": "2026-11-12T13:56:37Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5826,
+      "replaced": 6278,
+      "trivial": 914,
+      "update": 482
+    },
+    "day": "2026-11-12",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "2"
+        ],
+        "after": "'Ramayana: Rise Of A Legend' box office collection day 1: Ranbir Kapoor, Yash's film collects Rs 64.85 crore net in India across all languages from 25,200 shows, fails to beat Dhurandhar 2's opening day",
+        "before": "Ramaya﻿Na Full Movie Collection: 'Ramayana: Rise Of A Legend' box office collection day 1: Ranbir Kapoor, Yash's film collects Rs 64.85 crore net in India across all languages from 25,200 shows, fails to beat Dhurandhar's opening day | Hindi Movie News",
+        "detected": "2026-11-12T22:18:17Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Ramaya",
+          "Na",
+          "Full",
+          "Movie",
+          "collection",
+          "Hindi",
+          "Movie",
+          "News"
+        ],
+        "similarity": 0.833,
+        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/box-office/ramayana-box-office-collection-day-1-live-ranbir-kapoor-yashs-film-expected-to-cross-rs-70-crore-on-opening-day-eyes-dhurandhars-record-diwali-weekend-growth-will-depend-on-word-of-mouth/articleshow/135566619.cms",
+        "weight": 16,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "US",
+          "Federal",
+          "Reserve"
+        ],
+        "after": "US interest rates: The Federal Reserve set to anger Trump with likely decision to raise rates by 25 basis point or higher",
+        "before": "Interest rates: The Fed set to anger Trump with likely decision to raise rates by 25 basis point or higher",
+        "detected": "2026-11-12T04:31:48Z",
+        "domain": "brisbanetimes.com.au",
+        "removed": [
+          "Fed"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.brisbanetimes.com.au/business/the-economy/trump-s-fed-nightmare-rates-won-t-be-slashed-they-could-surge-now-20261111-p61d55.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "latest"
+        ],
+        "after": "Windscribe's latest deal makes it less than half price — get this price-hike free, lifetime rate of $29 for safe streaming on your iPhone and unlimited other devices",
+        "before": "Windscribe's Black Friday VPN deal makes it less than half price — get this price-hike free, lifetime rate of $29 for safe streaming on your iPhone and unlimited other devices",
+        "detected": "2026-11-12T14:34:55Z",
+        "domain": "techradar.com",
+        "removed": [
+          "Black",
+          "Friday",
+          "VPN"
+        ],
+        "similarity": 0.871,
+        "url": "https://www.techradar.com/vpn/vpn-services/windscribe-black-friday-vpn-deal-makes-it-less-than-half-price-get-this-price-hike-free-lifetime-rate-of-usd29-for-safe-streaming-on-your-iphone-and-unlimited-other-devices",
+        "weight": 7,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 16104,
+      "PAGE_TEXTCHANGE": 138536,
+      "PAGE_TITLECHANGE": 52014,
+      "UNCHANGED_CONTENT": 721970
+    },
+    "title_changes_en": 13500,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1794575980783",
+        "job_id": "world_gdg_counts_20261112",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 233832448,
+        "created": "1794575986749",
+        "job_id": "world_gdg_titles_20261112",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-13T13:24:14Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-12.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
