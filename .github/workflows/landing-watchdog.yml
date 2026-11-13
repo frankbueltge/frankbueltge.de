@@ -40,6 +40,17 @@ jobs:
             if [ "$rc" = 2 ]; then echo gone; return 0; fi
             if [ "$rc" != 0 ]; then echo unknown; return 0; fi
             enc=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$br")
+            # A branch whose pull request was merged has landed, however far it stands ahead of main: a
+            # squash merge leaves the branch's own commits outside main for good. Since 2026-11-08 the
+            # Middle's routines land by a squashed pull request from `claude/project-thread-*` and leave
+            # the branch standing; by 2026-11-13 that had raised twelve alarms for work that was on main.
+            # Landed means: the branch's tip is the very commit a merged pull request was merged from, so
+            # a commit pushed after the merge still strands.
+            tip=$(GIT_TERMINAL_PROMPT=0 git ls-remote --heads "https://github.com/frankbueltge/$repo" "refs/heads/$br" 2>/dev/null | cut -f1)
+            if [ -n "$tip" ] && gh api "repos/frankbueltge/$repo/pulls?state=closed&head=frankbueltge:$enc&per_page=10" \
+                 --jq '.[] | select(.merged_at != null) | .head.sha' 2>/dev/null | grep -qx "$tip"; then
+              echo 0; return 0
+            fi
             ahead=$(gh api "repos/frankbueltge/$repo/compare/main...$enc" --jq '.ahead_by' 2>/dev/null) || { echo unknown; return 0; }
             case "$ahead" in ''|*[!0-9]*) echo unknown ;; *) echo "$ahead" ;; esac
           }
