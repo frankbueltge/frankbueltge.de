@@ -8,7 +8,7 @@ describe('the score on a wide box', () => {
 
   it('keeps the names in a column on the left and shows the last 45 seconds', () => {
     expect(l.namesAbove).toBe(false)
-    expect(l.left).toBe(196)
+    expect(l.left).toBe(230)
     expect(l.seconds).toBe(WIDE_SECONDS)
   })
 
@@ -31,6 +31,11 @@ describe('the score on a phone', () => {
     expect(l.left).toBe(10)
     expect(l.right).toBe(348)
     expect(l.seconds).toBe(NARROW_SECONDS)
+  })
+
+  it('moves the names above the rows wherever they would not fit beside the score', () => {
+    expect(layoutFor(700).namesAbove).toBe(true)
+    expect(layoutFor(800).namesAbove).toBe(false)
   })
 
   it('never narrower than it can draw', () => {
