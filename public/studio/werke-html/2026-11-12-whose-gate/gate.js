@@ -5,7 +5,7 @@ const D = DATA, cv = document.getElementById('cv'), cx = cv.getContext('2d');
 const $ = id => document.getElementById(id);
 const DAY = 86400000, YEAR = 365.25 * DAY, T0 = Date.parse(D.from);
 const yr = iso => (Date.parse(iso) - T0) / YEAR;
-const TMAX = yr(D.to), TCOUNT = yr(D.counted_to), TRAVEL = 0.22, MOUTH = 0.86, HW = 0.15, PLAY = 62;
+const TMAX = yr(D.to), TCOUNT = yr(D.counted_to), TRAVEL = 0.22, MOUTH = 0.86, HW = 0.19, PLAY = 62;
 const GU = [0.13, 0.30, 0.47, 0.64, 0.81];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const hash = n => { let x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
@@ -30,6 +30,11 @@ SMUG.forEach((g, i) => g.k = i);
 // --- stakes and posts ----------------------------------------------------------------------------
 const stakes = D.stakes.map(s => ({ ...s, t: yr(s.date), gi: D.gates.findIndex(g => g.id === s.gate) }));
 const border = stakes.filter(s => s.gate === 'border'), model = stakes.filter(s => s.gate === 'model');
+// --- the acts of step 2: each keeps one lane on its gate, in order of its date ----------------------
+const acts = D.acts.map(a => ({ ...a, t: Math.max(0, yr(a.date)), te: a.end ? yr(a.end) : null, gi: D.gates.findIndex(g => g.id === a.gate) }));
+D.gates.forEach((g, i) => { const at = acts.filter(a => a.gi === i).sort((a, b) => a.t - b.t || (a.id < b.id ? -1 : 1)); at.forEach((a, k) => { a.k = k; a.n = at.length; }); });
+const ENDED = a => a.te !== null && T >= a.te && (a.state === 'lifted' || a.state === 'superseded');
+const AROUND = a => a.state === 'gone around' && T >= a.te;
 const laws = D.laws.map(l => ({ ...l, t: Math.max(0, yr(l.since)), tp: l.power_since ? yr(l.power_since) : null, gi: D.gates.findIndex(g => g.id === l.gate) }));
 
 // --- state ---------------------------------------------------------------------------------------
@@ -47,7 +52,7 @@ function layout() {
   basin.sp = Math.sqrt(basin.w * basin.h / 2140); basin.cols = Math.floor(basin.w / basin.sp);
   const pc = P(0.30, 0.70); pool = { x: pc[0], y: pc[1], sp: wide ? 4.3 : 3.5 };
   const cs = getComputedStyle(document.documentElement);
-  for (const k of ['paper', 'ink', 'soft', 'faint', 'us', 'ca', 'eu']) col[k] = cs.getPropertyValue('--' + k).trim();
+  for (const k of ['paper', 'ink', 'soft', 'faint', 'us', 'ca', 'eu', 'ie', 'it', 'nl', 'br', 'cl', 'id', 'sg']) col[k] = cs.getPropertyValue('--' + k).trim();
 }
 const P = (u, v) => wide ? [geo.o + u * geo.len, geo.mid + v * geo.half] : [geo.mid - v * geo.half, geo.o + u * geo.len];
 function inv(x, y) { return wide ? [(x - geo.o) / geo.len, (y - geo.mid) / geo.half] : [(y - geo.o) / geo.len, (geo.mid - x) / geo.half]; }
@@ -84,7 +89,11 @@ function advance(dT) {
     }
     if (g.held < 0 && u >= MOUTH) g.slot = nextSlot++;
   }
-  if (audio && dT > 0) for (const s of stakes) if (s.t > before && s.t <= T) knock(s);
+  if (audio && dT > 0) {
+    for (const s of stakes) if (s.t > before && s.t <= T) knock(s);
+    for (const a of acts) { if (a.t > before && a.t <= T) tone(a, a.effect === 'stopped' ? 98 : a.effect === 'delayed' ? 147 : 330, 0.5);
+      if (a.te !== null && a.te > before && a.te <= T) tone(a, a.state === 'gone around' ? 523 : 262, 0.25); }
+  }
 }
 function seek(t) { T = clamp(t, 0, TMAX); reset(); sync(); }
 
@@ -104,6 +113,27 @@ function stake(x, y, s, p) {
 }
 const stakeXY = s => s.gate === 'border' ? P(0.118 + border.indexOf(s) * (wide ? 0.017 : 0.023), 0.62) : P(GU[4] + 0.012 + model.indexOf(s) * 0.017, 0.46);
 
+function lane(a) { const w = 2 * HW / a.n, c = -HW + (a.k + 0.5) * w; return [c, w * 0.44]; }
+function actMark(a, p) {
+  const [c, l] = lane(a), u = GU[a.gi], colr = col[a.public], du = 5 / geo.len, ended = ENDED(a);
+  cx.globalAlpha = p * (ended ? 0.38 : 1); cx.strokeStyle = colr; cx.fillStyle = colr; cx.lineWidth = 1.5;
+  const q0 = P(u - du, c - l), q1 = P(u + du, c + l), x = Math.min(q0[0], q1[0]), y = Math.min(q0[1], q1[1]), w = Math.abs(q1[0] - q0[0]), h = Math.abs(q1[1] - q0[1]);
+  if (a.effect === 'conditioned') {
+    const [px, py] = P(u, c), r = Math.min(6, Math.min(w, h) / 2 + 1);
+    cx.beginPath(); cx.arc(px, py, r, 0, 7); (a.local || ended) ? cx.stroke() : cx.fill();
+  } else if (a.effect === 'delayed') {
+    cx.setLineDash([2, 2]); cx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1); cx.setLineDash([]);
+    if (!a.local && !ended) { cx.globalAlpha *= 0.35; cx.fillRect(x, y, w, h); }
+  } else { (a.local || ended) ? cx.strokeRect(x + 0.75, y + 0.75, w - 1.5, h - 1.5) : cx.fillRect(x, y, w, h); }
+  if (selected === a.gi && !ended) { cx.globalAlpha = p; const [px, py] = P(u, c); cx.beginPath(); cx.arc(px, py, 1.4, 0, 7); cx.fillStyle = col.paper; cx.fill(); }
+  let st = ended ? 'ended' : 'stands';
+  if (AROUND(a)) {             // the way around: from before the gate, outside the wall, to after it
+    st = 'around'; const side = c < 0 ? -1 : 1, e = clamp((T - a.te) / 0.05, 0, 1);
+    const s0 = P(u - 0.035, c), m = P(u, side * (HW + 0.1 + 0.03 * a.k / Math.max(1, a.n))), s1 = P(u + 0.035 * e, c);
+    cx.globalAlpha = p; cx.lineWidth = 1.3; cx.setLineDash([2, 3]); cx.beginPath(); cx.moveTo(...s0); cx.quadraticCurveTo(...m, ...s1); cx.stroke(); cx.setLineDash([]);
+  }
+  cx.globalAlpha = 1; cx.lineWidth = 1; return st;
+}
 function draw() {
   cx.clearRect(0, 0, W, H); cx.lineWidth = 1; cx.strokeStyle = col.ink;
   // the passage and the basin
@@ -135,6 +165,8 @@ function draw() {
     text(g.name.toUpperCase(), x, y, { b: true, align: al, fill: unread ? col.soft : col.ink }); y += step;
     text(g.at, x, y, { align: al, fill: col.soft }); y += step;
     if (unread) { text('not read yet', x, y, { it: true, align: al, fill: col.soft }); y += step; }
+    else { const here = acts.filter(a => a.gi === i && T >= a.t), n = here.length;
+      text(D.acts.some(a => a.gate === g.id) ? (n ? n + (n === 1 ? ' act' : ' acts') + ' so far' : 'no act yet') : 'read: no act found', x, y, { it: !n, align: al, fill: col.soft }); y += step; }
     for (const l of laws) if (l.gi === i && T >= l.t) {
       const label = l.public_name.replace(/^the /, ''), w = cx.measureText(label).width, x0 = wide ? x - w / 2 - 7 : x;
       cx.fillStyle = col[l.public]; cx.strokeStyle = col[l.public];
@@ -144,6 +176,9 @@ function draw() {
     if (closed[i]) text('your hand', x, y, { it: true, align: al });
     cx.strokeStyle = col.ink;
   });
+  // the acts: a bar for a stop, a comb for a delay, a ring for a condition; none of them holds a grain
+  let standing = { stopped: 0, delayed: 0, conditioned: 0 }, around = 0, ended = 0, seen = 0;
+  for (const a of acts) if (T >= a.t) { seen++; const st = actMark(a, clamp((T - a.t) / 0.03, 0, 1)); if (st === 'ended') ended++; else { standing[a.effect]++; if (st === 'around') around++; } }
   // the grains
   let moving = 0, heldN = 0, inBasin = 0, inPool = 0, born = 0;
   cx.fillStyle = col.ink;
@@ -186,9 +221,10 @@ function draw() {
     else { const [x, y] = P(0.56, 0); cx.save(); cx.translate(x + 4, y); cx.rotate(-Math.PI / 2); text(s, 0, 0, { it: true, align: 'center', fill: col.soft }); cx.restore(); }
     cx.globalAlpha = 1;
   }
-  Object.assign(cv.dataset, { born, moving, held: heldN, basin: inBasin, pool: inPool, stakes: planted, wide: wide ? 1 : 0 });
+  Object.assign(cv.dataset, { born, moving, held: heldN, basin: inBasin, pool: inPool, stakes: planted, wide: wide ? 1 : 0,
+    acts: seen, stops: standing.stopped, delays: standing.delayed, conditions: standing.conditioned, around, ended });
   if (audio) audio.gain.gain.setTargetAtTime(playing ? Math.min(0.22, Math.sqrt(moving) * 0.011) : 0, audio.ac.currentTime, 0.15);
-  return { born, planted, moving, heldN };
+  return { born, planted, moving, heldN, standing, around, ended, seen };
 }
 
 // --- words ---------------------------------------------------------------------------------------
@@ -198,8 +234,10 @@ function say(st) {
   const h100 = st.born * D.grain, amount = h100 >= 1e6 ? (h100 / 1e6).toFixed(1) + ' million' : Math.round(h100 / 1e3) + ' thousand';
   let a = T > TCOUNT + TRAVEL ? 'The count ends in December 2025 at 20.9 million; the passage runs empty because nothing later is finished, not because anything stopped.'
     : 'About ' + amount + ' H100-equivalents counted so far, ' + st.born + (st.born === 1 ? ' grain.' : ' grains.');
-  let b = !kb ? ' No public body has left a mark on the passage yet.'
-    : ' ' + kb + (kb === 1 ? ' stake stands' : ' stakes stand') + ' at the border, planted after the chips had left' + (km ? '; one open ring at the last gate, an inquiry.' : '.') + ' No grain has been held.';
+  const S = st.standing, n = (k, one, many) => k + ' ' + (k === 1 ? one : many);
+  let b = !st.seen ? ' No public body has acted on the passage yet.'
+    : ' Standing at this date: ' + n(S.stopped, 'stop', 'stops') + (st.around ? ' (' + st.around + ' gone around)' : '') + ', ' + n(S.delayed, 'delay', 'delays') + ', ' + n(S.conditioned, 'condition', 'conditions')
+      + (st.ended ? '; ' + st.ended + ' lifted or replaced' : '') + '. No record says how many grains any of them met, so none is held.';
   if (st.heldN) b = ' Your hand holds ' + st.heldN + (st.heldN === 1 ? ' grain' : ' grains') + ' at the gate. Let go.';
   const s = a + b; if (s !== said) $('say').textContent = said = s;
 }
@@ -208,6 +246,16 @@ function panel(i) {
   const h = document.createElement('h3'); h.textContent = g.name + ' · ' + g.at; p.append(h);
   if (D.unread.includes(g.id)) { const q = document.createElement('p'); q.textContent = 'Not read yet. The Field is reading this gate in the present step; nothing is drawn here until its record is published. It is empty because it is unread, not because nothing happened.'; p.append(q); return; }
   const ul = document.createElement('ul');
+  const mine = acts.filter(a => a.gi === i).sort((a, b) => a.t - b.t);
+  if (!mine.length) { const q = document.createElement('p'); q.textContent = 'Read, and no act found. The Field searched this gate in step 2 and found no merger or contract review that stopped, delayed or put conditions on compute. Its set is a found set, not a census.'; p.append(q); }
+  const EFF = { stopped: 'stopped', delayed: 'delayed', conditioned: 'put conditions' };
+  for (const a of mine) {
+    const li = document.createElement('li'), sw = document.createElement('span'), r = document.createElement('a');
+    sw.className = 'sw ' + a.public + (a.local ? ' local' : ''); r.href = a.url; r.textContent = 'the record'; r.rel = 'noopener';
+    li.append(sw, a.when + ' · ' + a.body + (a.local ? ' (a local public, ' : ' (') + a.country + ') ' + EFF[a.effect] + (a.named ? ' · named: ' + a.named : '') + ' · ' + a.what
+      + (a.size ? ' · size its record states: ' + a.size : ' · its record states no size') + ' · on 13 November 2026: ' + a.state + '. ' + a.after + (a.end ? ' (drawn ' + (a.approx ? 'about ' : '') + a.end.slice(0, 7) + ')' : '') + (a.second_hand ? ' Read second-hand by the Field.' : '') + ' · ', r);
+    ul.append(li);
+  }
   for (const l of laws.filter(l => l.gi === i)) {
     const li = document.createElement('li'), sw = document.createElement('span'); sw.className = 'sw ' + l.public;
     li.append(sw, l.name + ' — ' + l.public_name + ', by ' + l.hand + '. ' + l.note); ul.append(li);
@@ -238,6 +286,12 @@ function knock(s) {
   o.start(t); o.stop(t + 0.7);
 }
 
+function tone(a, f, len) {
+  const ac = audio.ac, t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain(), pan = ac.createStereoPanner ? ac.createStereoPanner() : null;
+  o.type = 'sine'; o.frequency.setValueAtTime(f, t); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.35, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+  if (pan) { pan.pan.value = GU[a.gi] * 2 - 1; o.connect(g).connect(pan).connect(ac.destination); } else o.connect(g).connect(ac.destination);
+  o.start(t); o.stop(t + len + 0.05);
+}
 // --- controls ------------------------------------------------------------------------------------
 function sync() { $('scrub').value = Math.round(T / TMAX * 1000); $('bPlay').setAttribute('aria-pressed', playing); $('bPlay').textContent = playing ? 'pause' : 'play'; }
 function frame(now) {
@@ -266,7 +320,12 @@ cv.onpointerdown = e => {
 cv.onpointerup = cv.onpointercancel = () => { if (down >= 0) hold(down, false); down = -1; };
 window.addEventListener('resize', () => { layout(); });
 window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change', layout);
-$('s65').href = D.field.study65; $('s70').href = D.field.study70;
+{ const lg = $('legend'), seen = new Map();
+  for (const a of D.acts) seen.set(a.public, [a.country, (seen.get(a.public) || [0, 0])[1] + 1]);
+  for (const [k, [name, n]] of [...seen].sort((a, b) => b[1][1] - a[1][1])) { const e = document.createElement('span'), sw = document.createElement('span'); sw.className = 'sw ' + k; e.append(sw, name + ' ' + n); lg.append(e); }
+  for (const l of D.laws.filter(l => !seen.has(l.public))) { const e = document.createElement('span'), sw = document.createElement('span'); sw.className = 'sw ' + l.public; e.append(sw, l.public_name.replace(/^the /, '') + ' (law)'); lg.append(e); seen.set(l.public, 1); }
+  const k = document.createElement('span'); k.className = 'key'; k.textContent = '▮ stop · ┆ delay · ● condition · hollow = a local public · faded = lifted or replaced · dotted path = gone around'; lg.append(k); }
+$('s65').href = D.field.study65; $('s70').href = D.field.study70; $('s72').href = D.field.study72;
 
 // --- open ----------------------------------------------------------------------------------------
 layout(); panel(0); selected = -1;
