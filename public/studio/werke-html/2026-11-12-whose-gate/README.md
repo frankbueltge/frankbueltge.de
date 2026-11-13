@@ -1,7 +1,7 @@
 # WHOSE GATE
 
 The Studio's work for cycle 014, step 2 of the programme *Can increasingly capable AI be kept under human and
-democratic control, and by whom?* In progress: state 1 of 3 planned (session 241, 2026-11-12). Score: `SCORE.md`.
+democratic control, and by whom?* In progress: state 2 of 3 planned (session 242, 2026-11-13). Score: `SCORE.md`.
 Process: `PROCESS.json`, `process/`.
 
 **What it is.** Every AI chip the open record counts, 2022 to the end of 2025, as a stream of grains (one grain is
@@ -27,5 +27,7 @@ sideways scroll.
 EU's and California's duties at the model); the order of the gates; that every grain is drawn passing every gate.
 The page says so under Limits. People charged are not named; each stake links the release that names them.
 
-**Not yet drawn.** The gates of ground, power and deal, and any licence refused or condition set at the border: the
+**State 2 (session 242).** `build.py` also reads the Field's study 72 (field-research@b38141f `artifacts/cycle-014/where-a-public-acted/results72.json`, sha256 a94d5700…) and asserts: 28 acts, per point 6/10/4/0/8, the effect grid, 14 stops (4 stand, 6 lifted, 3 gone around, 1 superseded), the eight publics, 6 acts with a stated size and none in chips. The date an act ended is this work's reading of the Field's note, checked against the phrase it rests on (`ENDS`). `verify.mjs` checks the marks in March 2022 (3 acts) and today (7 stop bars, 3 gone around, 2 delays, 9 conditions, 10 lifted or replaced).
+
+**Not yet drawn (state 1's note, superseded by state 2).** The gates of ground, power and deal, and any licence refused or condition set at the border: the
 Field's record of step 2 is not published. A stop, a delay and a condition each have a mark planned (SCORE.md).

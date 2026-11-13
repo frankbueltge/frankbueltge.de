@@ -1,0 +1,2248 @@
+{
+ "study": 72,
+ "session": 270,
+ "date": "2026-11-13",
+ "cycle": 14,
+ "programme_step": 2,
+ "builds_on": "study 71 (results71.json), whose 23 acts are kept unchanged",
+ "question": "What stood afterwards, what did each act meet, and what does the register say once its second-hand items are read?",
+ "frame": "A found set, not a census: 28 acts, 23 from study 71 and 5 read first-hand on 2026-11-13. Counts are lower bounds; shares are shares of what was read.",
+ "counts": {
+  "acts": 28,
+  "acts_71": 23,
+  "new": [
+   "s9",
+   "s10",
+   "p4",
+   "m7",
+   "m8"
+  ],
+  "per_point": {
+   "chip": 6,
+   "site": 10,
+   "power": 4,
+   "deal": 0,
+   "model": 8
+  },
+  "grid": {
+   "chip": {
+    "stopped": 3,
+    "delayed": 0,
+    "conditioned": 3
+   },
+   "site": {
+    "stopped": 5,
+    "delayed": 4,
+    "conditioned": 1
+   },
+   "power": {
+    "stopped": 1,
+    "delayed": 0,
+    "conditioned": 3
+   },
+   "deal": {
+    "stopped": 0,
+    "delayed": 0,
+    "conditioned": 0
+   },
+   "model": {
+    "stopped": 5,
+    "delayed": 0,
+    "conditioned": 3
+   }
+  },
+  "by_effect": {
+   "conditioned": 10,
+   "delayed": 4,
+   "stopped": 14
+  },
+  "by_kind": {
+   "agency": 12,
+   "court": 2,
+   "elected": 3,
+   "regulator": 11
+  },
+  "by_level": {
+   "nat": 22,
+   "sub": 6
+  },
+  "by_country": {
+   "Brazil": 2,
+   "Chile": 1,
+   "Indonesia": 1,
+   "Ireland": 5,
+   "Italy": 4,
+   "Netherlands": 2,
+   "Singapore": 1,
+   "United States": 12
+  },
+  "grounds": {
+   "national security": 6,
+   "water": 3,
+   "land, noise or the neighbourhood": 7,
+   "procedure (outside the fixed codes)": 1,
+   "power or grid": 8,
+   "personal data": 6,
+   "water or air": 1,
+   "the model's output": 2
+  },
+  "named": [
+   "m1",
+   "m2",
+   "m4",
+   "m5",
+   "m6",
+   "s9",
+   "s10",
+   "m7"
+  ],
+  "elected": [
+   "s1",
+   "s7",
+   "s8"
+  ],
+  "inside": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "p1",
+   "p2",
+   "p3",
+   "s9",
+   "s10",
+   "p4"
+  ],
+  "ai_risk": [],
+  "model_output": [
+   "m7",
+   "m8"
+  ],
+  "compute_quantity": [
+   "c1",
+   "c2",
+   "c3",
+   "c4",
+   "c5",
+   "c6"
+  ],
+  "after_all": {
+   "stands": 15,
+   "lifted": 7,
+   "gone around": 3,
+   "superseded": 3
+  },
+  "after_71": {
+   "stands": 12,
+   "lifted": 5,
+   "gone around": 3,
+   "superseded": 3
+  },
+  "stopped_all": 14,
+  "stopped_after": {
+   "stands": 4,
+   "lifted": 6,
+   "gone around": 3,
+   "superseded": 1
+  },
+  "stopped_71": 12,
+  "stopped_71_after": {
+   "stands": 4,
+   "lifted": 4,
+   "gone around": 3,
+   "superseded": 1
+  },
+  "magnitude": [
+   "c3",
+   "p1",
+   "p4",
+   "s10",
+   "s2",
+   "s9"
+  ],
+  "magnitude_71": [
+   "c3",
+   "s2",
+   "p1"
+  ],
+  "thresholds": [
+   "c1",
+   "c2",
+   "p3",
+   "s3",
+   "s4",
+   "s7"
+  ],
+  "not_acts": 5,
+  "second_hand": 9,
+  "files": 37,
+  "new_files": 9,
+  "passages": 73
+ },
+ "predictions": [
+  {
+   "id": "P96",
+   "text": "Of the 23 acts, at most 12 stand on 2026-11-13; the rest are lifted, gone around, superseded or unknown.",
+   "held": true,
+   "found": "12 stand, 5 lifted or loosened, 3 gone around, 3 superseded."
+  },
+  {
+   "id": "P97",
+   "text": "Of the 12 acts coded stopped, at least 5 are lifted, gone around or superseded by 2026-11-13.",
+   "held": true,
+   "found": "8 of 12 did not stand as stops (4 lifted or loosened, 3 gone around, 1 superseded); 4 stand: s2, s4, m3, m4."
+  },
+  {
+   "id": "P98",
+   "text": "Of the 23 acts, at most 11 have a record that states a quantity of what the act met.",
+   "held": true,
+   "found": "3 of 23 (c3, s2, p1); 6 more state a threshold, not a quantity met."
+  },
+  {
+   "id": "P99",
+   "text": "No act's record states the quantity of compute it met in chips counted or in H100-equivalents.",
+   "held": true,
+   "found": "None of 28. The nearest is a licence for 'small amounts' of one chip (c6), and its holder reports no revenue under it."
+  },
+  {
+   "id": "P100",
+   "text": "The Memphis air permit is found first-hand on a public body's own site, and it names the AI developer as permittee.",
+   "held": false,
+   "found": "Failed on both counts. The department's evaluation and its answer to comments were read on a federal agency's docket, not its own site; both name the owner CTC Property LLC, and the developer appears only in the commenters' headings the department quotes. Entered as act p4 with named = none."
+  },
+  {
+   "id": "P101",
+   "text": "Of the nine second-hand items of study 71, at least two are read first-hand this session and enter the register as acts.",
+   "held": true,
+   "found": "3: the Memphis permit (p4), the Irish council's refusal (s9), Indonesia's block of the chatbot (m7). Two further acts were found on the way (s10, m8)."
+  }
+ ],
+ "predictions_held": "5 of 6",
+ "acts": [
+  {
+   "id": "c1",
+   "point": "chip",
+   "date": "2022-10-07",
+   "body": "US Bureau of Industry and Security",
+   "country": "United States",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "stopped",
+   "form": "rule",
+   "terr": "elsewhere",
+   "grounds": [
+    "national security"
+   ],
+   "named": null,
+   "party": "exporters of advanced chips to China",
+   "what": "A licence becomes necessary to export advanced computing chips to China, reviewed under a presumption of denial.",
+   "limit": "chips above a performance threshold",
+   "compute_quantity": true,
+   "q": [
+    "c1a",
+    "c1b"
+   ],
+   "lifted": null,
+   "lifted_note": "Not loosened within twelve months; widened by the rule of October 2023.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "c1a",
+     "doc": "FR22",
+     "text": "to implement necessary controls on advanced computing integrated circuits (ICs), computer commodities that contain such ICs, and certain semiconductor manufacturing items",
+     "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/html/2022-21658.htm",
+     "source": "US Bureau of Industry and Security, interim final rule, 87 FR 62186 (published 2022-10-13)"
+    },
+    {
+     "id": "c1b",
+     "doc": "FR22",
+     "text": "Most license applications for items controlled under this RS control will be reviewed under a presumption of denial",
+     "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/html/2022-21658.htm",
+     "source": "US Bureau of Industry and Security, interim final rule, 87 FR 62186 (published 2022-10-13)"
+    }
+   ],
+   "after": {
+    "state": "superseded",
+    "note": "Widened and replaced by the rule of October 2023, a year later.",
+    "firsthand": true,
+    "quote": {
+     "id": "c2a",
+     "text": "BIS imposed these new controls to protect U.S. national security interests by restricting certain exports to China that would advance China's military modernization and surveillance efforts",
+     "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/html/2023-23055.htm",
+     "source": "US Bureau of Industry and Security, interim final rule, 88 FR 73458 (published 2023-10-25)"
+    }
+   },
+   "size": null,
+   "threshold": "chips above a performance threshold"
+  },
+  {
+   "id": "c2",
+   "point": "chip",
+   "date": "2023-10-25",
+   "body": "US Bureau of Industry and Security",
+   "country": "United States",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "stopped",
+   "form": "rule",
+   "terr": "elsewhere",
+   "grounds": [
+    "national security"
+   ],
+   "named": null,
+   "party": "exporters of advanced chips to China",
+   "what": "The controls of 2022 are widened and corrected; in force from 17 November 2023.",
+   "limit": "chips above a performance threshold",
+   "compute_quantity": true,
+   "q": [
+    "c2a",
+    "c2b"
+   ],
+   "lifted": null,
+   "lifted_note": "Not loosened within twelve months on the records read.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "c2a",
+     "doc": "FR23",
+     "text": "BIS imposed these new controls to protect U.S. national security interests by restricting certain exports to China that would advance China's military modernization and surveillance efforts",
+     "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/html/2023-23055.htm",
+     "source": "US Bureau of Industry and Security, interim final rule, 88 FR 73458 (published 2023-10-25)"
+    },
+    {
+     "id": "c2b",
+     "doc": "FR23",
+     "text": "This rule is effective November 17, 2023",
+     "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/html/2023-23055.htm",
+     "source": "US Bureau of Industry and Security, interim final rule, 88 FR 73458 (published 2023-10-25)"
+    }
+   ],
+   "after": {
+    "state": "lifted",
+    "note": "Loosened in part 27 months later: since January 2026 licences for the H200 class are reviewed case by case.",
+    "firsthand": true,
+    "quote": {
+     "id": "c5a",
+     "text": "BIS will now review export license applications for the Nvidia H200, AMD MI325X, and similar chips on a case-by-case basis provided certain security requirements are met",
+     "url": "https://www.bis.gov/news-updates",
+     "source": "US Bureau of Industry and Security, News and Updates (release of 2026-01-13)"
+    }
+   },
+   "size": null,
+   "threshold": "chips above a performance threshold"
+  },
+  {
+   "id": "c3",
+   "point": "chip",
+   "date": "2025-04",
+   "body": "US government (export licensing)",
+   "country": "United States",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "elsewhere",
+   "grounds": [
+    "national security"
+   ],
+   "named": null,
+   "party": "NVIDIA (chip maker), its H20 product",
+   "what": "The chip maker is told that its China product needs a licence; it books a $4.5 billion charge.",
+   "limit": "one chip product",
+   "compute_quantity": true,
+   "q": [
+    "c3a",
+    "c3b"
+   ],
+   "lifted": "c4a",
+   "lifted_note": "Licences granted in August 2025, four months later.",
+   "ground_note": "The filing states the requirement, not its reason; the ground is that of the rules it applies.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "c3a",
+     "doc": "NV10Q",
+     "text": "informed us that a license is required for exports of our H20 product into the China market",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+     "source": "NVIDIA Corporation, Form 10-Q for the quarter ended 2025-07-27"
+    },
+    {
+     "id": "c3b",
+     "doc": "NV10Q",
+     "text": "we incurred a $4.5 billion charge in the first quarter of fiscal year 2026 associated with H20 for excess inventory and purchase obligations",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+     "source": "NVIDIA Corporation, Form 10-Q for the quarter ended 2025-07-27"
+    }
+   ],
+   "after": {
+    "state": "lifted",
+    "note": "Licences granted four months later.",
+    "firsthand": true,
+    "quote": {
+     "id": "c4a",
+     "text": "In August 2025, the USG granted licenses that would allow us to ship certain H20 products to certain China-based customers",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+     "source": "NVIDIA Corporation, Form 10-Q for the quarter ended 2025-07-27"
+    }
+   },
+   "size": {
+    "kind": "money",
+    "text": "$4.5 billion charge for excess inventory",
+    "quote": "we incurred a $4.5 billion charge in the first quarter of fiscal year 2026 associated with H20 for excess inventory and purchase obligations"
+   },
+   "threshold": null
+  },
+  {
+   "id": "c4",
+   "point": "chip",
+   "date": "2025-08",
+   "body": "US government (export licensing)",
+   "country": "United States",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "conditioned",
+   "form": "case",
+   "terr": "elsewhere",
+   "grounds": [
+    "national security"
+   ],
+   "named": null,
+   "party": "NVIDIA (chip maker), its H20 product",
+   "what": "Licences for the China product are granted; officials expect 15 % of the revenue, under no published regulation.",
+   "limit": "one chip product, named customers",
+   "compute_quantity": true,
+   "q": [
+    "c4a",
+    "c4b"
+   ],
+   "ground_note": "As for the act of April 2025.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "c4a",
+     "doc": "NV10Q",
+     "text": "In August 2025, the USG granted licenses that would allow us to ship certain H20 products to certain China-based customers",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+     "source": "NVIDIA Corporation, Form 10-Q for the quarter ended 2025-07-27"
+    },
+    {
+     "id": "c4b",
+     "doc": "NV10Q",
+     "text": "USG officials have expressed an expectation that the USG will receive 15% of the revenue generated from licensed H20 sales, but to date, the USG has not published a regulation codifying such requirement",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+     "source": "NVIDIA Corporation, Form 10-Q for the quarter ended 2025-07-27"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "The licences stand, and about $60 million of H20 was sold under them; the chip maker reports that China's government discouraged buyers.",
+    "firsthand": true,
+    "quote": {
+     "id": "nv1",
+     "text": "We generated approximately $60 million in H20 revenue under those licenses",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+     "source": "NVIDIA Corporation, Form 10-K for the fiscal year ended 2026-01-25"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "c5",
+   "point": "chip",
+   "date": "2026-01-13",
+   "body": "US Bureau of Industry and Security",
+   "country": "United States",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "conditioned",
+   "form": "rule",
+   "terr": "elsewhere",
+   "grounds": [
+    "national security"
+   ],
+   "named": null,
+   "party": "exporters of the H200, the MI325X and similar chips",
+   "what": "Licence applications for two named chips are reviewed case by case if security requirements are met, among them third-party testing in the United States.",
+   "limit": "named chip products",
+   "compute_quantity": true,
+   "q": [
+    "c5a",
+    "c5b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "c5a",
+     "doc": "BISNEWS",
+     "text": "BIS will now review export license applications for the Nvidia H200, AMD MI325X, and similar chips on a case-by-case basis provided certain security requirements are met",
+     "url": "https://www.bis.gov/news-updates",
+     "source": "US Bureau of Industry and Security, News and Updates (release of 2026-01-13)"
+    },
+    {
+     "id": "c5b",
+     "doc": "BISNEWS",
+     "text": "that the product has undergone independent, third-party testing in the United States to verify its performance and security",
+     "url": "https://www.bis.gov/news-updates",
+     "source": "US Bureau of Industry and Security, News and Updates (release of 2026-01-13)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "No later record read.",
+    "firsthand": true,
+    "quote": null
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "c6",
+   "point": "chip",
+   "date": "2026-02",
+   "body": "US government (export licensing)",
+   "country": "United States",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "conditioned",
+   "form": "case",
+   "terr": "elsewhere",
+   "grounds": [
+    "national security"
+   ],
+   "named": null,
+   "party": "NVIDIA (chip maker), its H200 product",
+   "what": "A licence for small amounts of the H200 to specific customers in China, with an inspection in the United States before shipment.",
+   "limit": "one chip product, small amounts",
+   "compute_quantity": true,
+   "q": [
+    "c6a",
+    "c6b"
+   ],
+   "ground_note": "As for the rule of January 2026.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "c6a",
+     "doc": "NV10K",
+     "text": "In February 2026, the USG granted a license that would allow us to ship small amounts of H200 products to specific China-based customers",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+     "source": "NVIDIA Corporation, Form 10-K for the fiscal year ended 2026-01-25"
+    },
+    {
+     "id": "c6b",
+     "doc": "NV10K",
+     "text": "The license requires that the H200s go through an inspection process in the United States prior to any shipment to the customer",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+     "source": "NVIDIA Corporation, Form 10-K for the fiscal year ended 2026-01-25"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "The licence stands; the chip maker reports no revenue under it to date.",
+    "firsthand": true,
+    "quote": {
+     "id": "nv3",
+     "text": "To date, we have not generated any revenue under the H200 licensing program",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+     "source": "NVIDIA Corporation, Form 10-K for the fiscal year ended 2026-01-25"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "s1",
+   "point": "site",
+   "date": "2025-08-06",
+   "body": "Mayor and Council of Tucson, Arizona",
+   "country": "United States",
+   "level": "sub",
+   "kind": "elected",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "inside",
+   "grounds": [
+    "water",
+    "land, noise or the neighbourhood"
+   ],
+   "named": null,
+   "party": "Project Blue (developer not named in the motions)",
+   "what": "The council will not consider or approve the project and ends the annexation; it orders a water-use ordinance and zoning rules for data centres.",
+   "limit": "the project as proposed",
+   "compute_quantity": false,
+   "q": [
+    "s1a",
+    "s1b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "s1a",
+     "doc": "TUCSON",
+     "text": "we will not consider or approve Project Blue as it has been proposed",
+     "url": "https://www.tucsonaz.gov/files/sharedassets/public/v/1/government/city-manager-office/documents/motions-adopted-under-aug-6.pdf",
+     "source": "City of Tucson, Motions adopted under the study session item on Project Blue, 2025-08-06"
+    },
+    {
+     "id": "s1b",
+     "doc": "TUCSON",
+     "text": "adoption of an Ordinance regulating Large Quantity Water Users",
+     "url": "https://www.tucsonaz.gov/files/sharedassets/public/v/1/government/city-manager-office/documents/motions-adopted-under-aug-6.pdf",
+     "source": "City of Tucson, Motions adopted under the study session item on Project Blue, 2025-08-06"
+    }
+   ],
+   "after": {
+    "state": "gone around",
+    "note": "Four to six weeks later the county records that the land sale can proceed without annexation; the developer writes that its county approvals remain active and that it will cool by air.",
+    "firsthand": true,
+    "quote": {
+     "id": "pi2",
+     "text": "Contemplates the sale proceeding without annexation",
+     "url": "https://www.pima.gov/asset/2192e865-fe7e-48f4-8a0c-7c1c8b5cd32c",
+     "source": "Pima County, County Administrator, memorandum 'Update on Project Blue' to the Board of Supervisors, 2025-09-17 (with the developer's letter of the same day)"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "s2",
+   "point": "site",
+   "date": "2026-03-31",
+   "body": "Court of Appeals of Virginia",
+   "country": "United States",
+   "level": "sub",
+   "kind": "court",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "inside",
+   "grounds": [
+    "procedure (outside the fixed codes)"
+   ],
+   "named": null,
+   "party": "PW Digital Gateway rezonings, Prince William County",
+   "what": "The county board's rezonings for a data-centre corridor are void; the land reverts to its earlier zoning (in effect since the order of 29 July 2026).",
+   "limit": "the rezoned land",
+   "compute_quantity": false,
+   "q": [
+    "s2a",
+    "s2b"
+   ],
+   "ground_note": "The county page states the result, not the court's reason; the reason (defective public notice) is second-hand here.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "s2a",
+     "doc": "PWC",
+     "text": "The Board of County Supervisors decisions to approve the rezoning of the property are void and the zoning of the properties reverts back to the original zoning district",
+     "url": "https://www.pwcva.gov/department/planning-office/pw-digital-gateway",
+     "source": "Prince William County, Planning Office, PW Digital Gateway (update of 2026-08-05)"
+    },
+    {
+     "id": "s2b",
+     "doc": "PWC",
+     "text": "the Court of Appeals decision dated March 31, 2026, was stayed",
+     "url": "https://www.pwcva.gov/department/planning-office/pw-digital-gateway",
+     "source": "Prince William County, Planning Office, PW Digital Gateway (update of 2026-08-05)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "Stands: the rezonings are void on the county's page of August 2026. That the developer withdrew its last appeal on 2 July 2026 was read only on a campaign group's site.",
+    "firsthand": true,
+    "quote": {
+     "id": "s2a",
+     "text": "The Board of County Supervisors decisions to approve the rezoning of the property are void and the zoning of the properties reverts back to the original zoning district",
+     "url": "https://www.pwcva.gov/department/planning-office/pw-digital-gateway",
+     "source": "Prince William County, Planning Office, PW Digital Gateway (update of 2026-08-05)"
+    }
+   },
+   "size": {
+    "kind": "land",
+    "text": "2,139 acres (the plan's study area)",
+    "quote": "The proposed study area consist of 194 parcels and 2,139 acres between Route 234 and Route 29"
+   },
+   "threshold": null
+  },
+  {
+   "id": "s3",
+   "point": "site",
+   "date": "2022-02-16",
+   "body": "Minister for Housing and Spatial Planning, the Netherlands",
+   "country": "Netherlands",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "delayed",
+   "form": "rule",
+   "terr": "inside",
+   "grounds": [
+    "land, noise or the neighbourhood",
+    "power or grid"
+   ],
+   "named": null,
+   "party": "new hyperscale data centres, the whole country but two sites",
+   "what": "For nine months no land or building may be changed so that a hyperscale data centre can be built or used; renewed twice.",
+   "limit": "more than 10 ha floor area and 70 MW or more",
+   "compute_quantity": false,
+   "q": [
+    "s3a",
+    "s3b"
+   ],
+   "ground_note": "Coded from what the act limits (floor area and connection power); the answer read does not restate its reasons.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "s3a",
+     "doc": "NLKV",
+     "text": "De Minister van VRO heeft op 16 februari 2022 voor heel Nederland (uitgezonderd twee locaties) een voorbereidingsbesluit onder de Wro genomen waarmee verboden werd om gronden en bouwwerken zodanig te wijzigen dat een hyperscale datacentrum met een bebouwd vloeroppervlakte van meer dan 10 ha en een elektrisch aansluitvermogen van 70 MW of meer gebouwd of in gebruik genomen kon worden",
+     "url": "https://zoek.officielebekendmakingen.nl/ah-tk-20252026-1519.html",
+     "source": "Netherlands, answers of the Minister of Housing and Spatial Planning to parliamentary questions, Aanhangsel 2025-2026 no. 1519 (received 2026-04-02)"
+    },
+    {
+     "id": "s3b",
+     "doc": "NLKV",
+     "text": "Dit voorbereidingsbesluit gold voor de (wettelijke) periode van negen maanden",
+     "url": "https://zoek.officielebekendmakingen.nl/ah-tk-20252026-1519.html",
+     "source": "Netherlands, answers of the Minister of Housing and Spatial Planning to parliamentary questions, Aanhangsel 2025-2026 no. 1519 (received 2026-04-02)"
+    }
+   ],
+   "after": {
+    "state": "superseded",
+    "note": "Replaced by the standing instruction rule in force from 2024.",
+    "firsthand": true,
+    "quote": {
+     "id": "s4a",
+     "text": "in verband met een instructieregel voor hyperscale datacentra in werking getreden",
+     "url": "https://zoek.officielebekendmakingen.nl/ah-tk-20252026-1519.html",
+     "source": "Netherlands, answers of the Minister of Housing and Spatial Planning to parliamentary questions, Aanhangsel 2025-2026 no. 1519 (received 2026-04-02)"
+    }
+   },
+   "size": null,
+   "threshold": "more than 10 ha and 70 MW"
+  },
+  {
+   "id": "s4",
+   "point": "site",
+   "date": "2024-01-01",
+   "body": "Government of the Netherlands (instruction rule)",
+   "country": "Netherlands",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "stopped",
+   "form": "rule",
+   "terr": "inside",
+   "grounds": [
+    "land, noise or the neighbourhood",
+    "power or grid"
+   ],
+   "named": null,
+   "party": "new hyperscale data centres",
+   "what": "A standing instruction rule on hyperscale data centres enters into force after the three temporary decisions.",
+   "limit": "more than 10 ha floor area and 70 MW or more",
+   "compute_quantity": false,
+   "q": [
+    "s4a"
+   ],
+   "ground_note": "As for the decision of February 2022.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "s4a",
+     "doc": "NLKV",
+     "text": "in verband met een instructieregel voor hyperscale datacentra in werking getreden",
+     "url": "https://zoek.officielebekendmakingen.nl/ah-tk-20252026-1519.html",
+     "source": "Netherlands, answers of the Minister of Housing and Spatial Planning to parliamentary questions, Aanhangsel 2025-2026 no. 1519 (received 2026-04-02)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "In force on the minister's answers of April 2026.",
+    "firsthand": true,
+    "quote": {
+     "id": "s4a",
+     "text": "in verband met een instructieregel voor hyperscale datacentra in werking getreden",
+     "url": "https://zoek.officielebekendmakingen.nl/ah-tk-20252026-1519.html",
+     "source": "Netherlands, answers of the Minister of Housing and Spatial Planning to parliamentary questions, Aanhangsel 2025-2026 no. 1519 (received 2026-04-02)"
+    }
+   },
+   "size": null,
+   "threshold": "more than 10 ha and 70 MW"
+  },
+  {
+   "id": "s5",
+   "point": "site",
+   "date": "2019",
+   "body": "Government of Singapore",
+   "country": "Singapore",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "delayed",
+   "form": "rule",
+   "terr": "inside",
+   "grounds": [
+    "land, noise or the neighbourhood",
+    "water",
+    "power or grid"
+   ],
+   "named": null,
+   "party": "new data centres",
+   "what": "A temporary pause on the growth of data centres, ended in 2022 by a call for applications on the government's terms.",
+   "limit": "new data-centre capacity",
+   "compute_quantity": false,
+   "q": [
+    "s5a",
+    "s5b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "s5a",
+     "doc": "SGEDB",
+     "text": "The Government informed the industry of a temporary pause in the growth of DCs in 2019 and embarked on a review",
+     "url": "https://www.edb.gov.sg/en/about-edb/media-releases-publications/edb-and-imda-launch-pilot-data-centre-call-for-application-to-support-sustainable-growth-of-data-centres.html",
+     "source": "Singapore Economic Development Board and IMDA, release of 2022-07-20 on the pilot Data Centre Call for Application"
+    },
+    {
+     "id": "s5b",
+     "doc": "SGEDB",
+     "text": "DCs are also intensive users of resources like land, water, and energy, contributing to our carbon footprint",
+     "url": "https://www.edb.gov.sg/en/about-edb/media-releases-publications/edb-and-imda-launch-pilot-data-centre-call-for-application-to-support-sustainable-growth-of-data-centres.html",
+     "source": "Singapore Economic Development Board and IMDA, release of 2022-07-20 on the pilot Data Centre Call for Application"
+    }
+   ],
+   "after": {
+    "state": "lifted",
+    "note": "Ended in 2022, about three years later, by a pilot call for applications that allots new capacity.",
+    "firsthand": true,
+    "quote": {
+     "id": "sg1",
+     "text": "The Pilot Call for Application (CFA) exercise by EDB and IMDA seeks to leverage on the expertise and capabilities of the industry",
+     "url": "https://www.edb.gov.sg/en/about-edb/media-releases-publications/edb-and-imda-launch-pilot-data-centre-call-for-application-to-support-sustainable-growth-of-data-centres.html",
+     "source": "Singapore Economic Development Board and IMDA, release of 2022-07-20 on the pilot Data Centre Call for Application"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "s6",
+   "point": "site",
+   "date": "2024-02-27",
+   "body": "Segundo Tribunal Ambiental, Chile",
+   "country": "Chile",
+   "level": "nat",
+   "kind": "court",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "inside",
+   "grounds": [
+    "water"
+   ],
+   "named": null,
+   "party": "Cerrillos Data Center (owner not named in the court's notice)",
+   "what": "The environmental approval is annulled in part; the project cannot be carried out until a complementary approval is issued.",
+   "limit": "the project",
+   "compute_quantity": false,
+   "q": [
+    "s6a",
+    "s6b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "s6a",
+     "doc": "CLTA",
+     "text": "el proyecto no puede ser ejecutado hasta no contar con esta última resolución",
+     "url": "https://tribunalambiental.cl/sentencia-r27-270-2020-cerrillos-data-center",
+     "source": "Chile, Segundo Tribunal Ambiental, notice of its judgment on Cerrillos Data Center, 2024-02-27"
+    },
+    {
+     "id": "s6b",
+     "doc": "CLTA",
+     "text": "la falta de antecedentes que justifiquen la inexistencia de impactos significativos sobre el Acuífero Santiago Central",
+     "url": "https://tribunalambiental.cl/sentencia-r27-270-2020-cerrillos-data-center",
+     "source": "Chile, Segundo Tribunal Ambiental, notice of its judgment on Cerrillos Data Center, 2024-02-27"
+    }
+   ],
+   "after": {
+    "state": "gone around",
+    "note": "Second-hand: the developer withdrew the annulled approval in 2024, redesigned the building for air cooling, and in October 2026 the environmental service ruled the new project needs no environmental assessment. The service's register answered with a script challenge and was not read.",
+    "firsthand": false,
+    "quote": null
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "s7",
+   "point": "site",
+   "date": "2026-10-08",
+   "body": "Board of County Commissioners, Manatee County, Florida",
+   "country": "United States",
+   "level": "sub",
+   "kind": "elected",
+   "effect": "delayed",
+   "form": "rule",
+   "terr": "inside",
+   "grounds": [
+    "land, noise or the neighbourhood"
+   ],
+   "named": null,
+   "party": "new data-centre applications, unincorporated county",
+   "what": "A twelve-month moratorium on new data-centre development applications.",
+   "limit": "applications, for twelve months",
+   "compute_quantity": false,
+   "q": [
+    "s7a",
+    "s7b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "s7a",
+     "doc": "MANATEE",
+     "text": "approved a temporary, 12-month moratorium on new data center-related development applications in unincorporated Manatee County",
+     "url": "https://www.mymanatee.org/connect/news-and-information/news-and-information/article-detail/board-of-county-commissioners/2026/10/09/manatee-county-commissioners-approve-12-month-data-center-moratorium",
+     "source": "Manatee County, Florida, release of 2026-10-08 on Ordinance 26-42"
+    },
+    {
+     "id": "s7b",
+     "doc": "MANATEE",
+     "text": "The temporary pause will give County staff time to evaluate how data centers, large-scale data centers and other large-load facilities should be addressed in the Comprehensive Plan, Land Development Code and other County regulations",
+     "url": "https://www.mymanatee.org/connect/news-and-information/news-and-information/article-detail/board-of-county-commissioners/2026/10/09/manatee-county-commissioners-approve-12-month-data-center-moratorium",
+     "source": "Manatee County, Florida, release of 2026-10-08 on Ordinance 26-42"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "Running: twelve months from October 2026.",
+    "firsthand": true,
+    "quote": null
+   },
+   "size": null,
+   "threshold": "a peak load of 50 MW or more"
+  },
+  {
+   "id": "s8",
+   "point": "site",
+   "date": "2026-07-21",
+   "body": "County Commissioners, Worcester County, Maryland",
+   "country": "United States",
+   "level": "sub",
+   "kind": "elected",
+   "effect": "delayed",
+   "form": "rule",
+   "terr": "inside",
+   "grounds": [
+    "land, noise or the neighbourhood"
+   ],
+   "named": null,
+   "party": "permits for data centres and cable landing stations",
+   "what": "A moratorium on permits for twelve months or until rescinded, while zoning rules are written.",
+   "limit": "permits, for twelve months",
+   "compute_quantity": false,
+   "q": [
+    "s8a",
+    "s8b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "s8a",
+     "doc": "WORCESTER",
+     "text": "the Worcester County Commissioners placed a temporary moratorium on the submittal and issuance of permits for data centers and cable landing stations",
+     "url": "https://worcestermd.gov/news/worcester-county-enacts-moratorium-data-centers-and-cable-landing-stations-while-new",
+     "source": "Worcester County, Maryland, release of 2026-07-30 on Resolution No. 26-18"
+    },
+    {
+     "id": "s8b",
+     "doc": "WORCESTER",
+     "text": "to develop comprehensive zoning regulations governing the construction, location, and operation of these emerging land uses",
+     "url": "https://worcestermd.gov/news/worcester-county-enacts-moratorium-data-centers-and-cable-landing-stations-while-new",
+     "source": "Worcester County, Maryland, release of 2026-07-30 on Resolution No. 26-18"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "Running: until zoning rules are written or the moratorium is rescinded.",
+    "firsthand": true,
+    "quote": null
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "p1",
+   "point": "power",
+   "date": "2024-11-01",
+   "body": "US Federal Energy Regulatory Commission",
+   "country": "United States",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "inside",
+   "grounds": [
+    "power or grid"
+   ],
+   "named": null,
+   "party": "the co-located load at the Susquehanna nuclear plant (its owner not named as a party to the agreement)",
+   "what": "The amended connection agreement, which would have raised a data centre's load at a nuclear plant from 300 to 480 MW, is rejected.",
+   "limit": "megawatts of co-located load",
+   "compute_quantity": false,
+   "q": [
+    "p1a",
+    "p1b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "p1a",
+     "doc": "FERC",
+     "text": "to increase the amount of Co-Located Load from 300 megawatts (MW) to 480 MW",
+     "url": "https://www.ferc.gov/sites/default/files/2024-11/20241101-3061_ER24-2172-000.pdf",
+     "source": "US Federal Energy Regulatory Commission, 189 FERC 61,078, order of 2024-11-01, dockets ER24-2172-000 and -001"
+    },
+    {
+     "id": "p1b",
+     "doc": "FERC",
+     "text": "we find that PJM has not demonstrated that the proposed non-conforming provisions in the Amended ISA are necessary deviations from the pro forma ISA",
+     "url": "https://www.ferc.gov/sites/default/files/2024-11/20241101-3061_ER24-2172-000.pdf",
+     "source": "US Federal Energy Regulatory Commission, 189 FERC 61,078, order of 2024-11-01, dockets ER24-2172-000 and -001"
+    }
+   ],
+   "after": {
+    "state": "gone around",
+    "note": "Seven months later the same plant agreed to supply 1,920 MW to the same buyer through the grid, a form the companies say needs no approval of the regulator.",
+    "firsthand": true,
+    "quote": {
+     "id": "ta1",
+     "text": "will transition to a “front-of-the-meter” arrangement after the completion of transmission reconfigurations",
+     "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm",
+     "source": "Talen Energy Corporation, Form 8-K of 2025-06-11, exhibit 99.1 (press release)"
+    }
+   },
+   "size": {
+    "kind": "power",
+    "text": "300 MW to 480 MW of co-located load, the 180 MW added refused",
+    "quote": "to increase the amount of Co-Located Load from 300 megawatts (MW) to 480 MW"
+   },
+   "threshold": null
+  },
+  {
+   "id": "p2",
+   "point": "power",
+   "date": "2021-11",
+   "body": "Commission for Regulation of Utilities, Ireland",
+   "country": "Ireland",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "conditioned",
+   "form": "rule",
+   "terr": "inside",
+   "grounds": [
+    "power or grid"
+   ],
+   "named": null,
+   "party": "data centres applying for a grid connection",
+   "what": "The grid operators are directed to assess each data-centre connection against criteria of location and system stability; a moratorium was considered and not chosen.",
+   "limit": "connection offers",
+   "compute_quantity": false,
+   "q": [
+    "p2a",
+    "p2b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "p2a",
+     "doc": "CRU25",
+     "text": "In November 2021 the CRU published a decision paper (CRU/21/124) setting out that a connection measures approach would be taken",
+     "url": "https://cruie-live-96ca64acab2247eca8a850a7e54b-5b34f62.divio-media.com/documents/CRU2025236_Large_Energy_User_connection_policy_decision_paper.pdf",
+     "source": "Ireland, Commission for Regulation of Utilities, Large Energy Users Connection Policy, decision paper CRU/2025236 (2025-12-12)"
+    },
+    {
+     "id": "p2b",
+     "doc": "CRU25",
+     "text": "to determine whether a connection offer can be made within the system stability and reliability needs of the electricity network",
+     "url": "https://cruie-live-96ca64acab2247eca8a850a7e54b-5b34f62.divio-media.com/documents/CRU2025236_Large_Energy_User_connection_policy_decision_paper.pdf",
+     "source": "Ireland, Commission for Regulation of Utilities, Large Energy Users Connection Policy, decision paper CRU/2025236 (2025-12-12)"
+    }
+   ],
+   "after": {
+    "state": "superseded",
+    "note": "Replaced by the direction of December 2025.",
+    "firsthand": true,
+    "quote": {
+     "id": "p3b",
+     "text": "It is intended that this new direction will supersede the direction to the electrical SOs from 2021 (CRU/21/124)",
+     "url": "https://cruie-live-96ca64acab2247eca8a850a7e54b-5b34f62.divio-media.com/documents/CRU2025236_Large_Energy_User_connection_policy_decision_paper.pdf",
+     "source": "Ireland, Commission for Regulation of Utilities, Large Energy Users Connection Policy, decision paper CRU/2025236 (2025-12-12)"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "p3",
+   "point": "power",
+   "date": "2025-12-12",
+   "body": "Commission for Regulation of Utilities, Ireland",
+   "country": "Ireland",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "conditioned",
+   "form": "rule",
+   "terr": "inside",
+   "grounds": [
+    "power or grid"
+   ],
+   "named": null,
+   "party": "data centres applying for a grid connection",
+   "what": "A new direction: a data centre of 10 MVA or more must bring generation or storage of its own equal to its connection capacity.",
+   "limit": "connection capacity in MVA",
+   "compute_quantity": false,
+   "q": [
+    "p3a",
+    "p3b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "p3a",
+     "doc": "CRU25",
+     "text": "the ability of the data centre applicant to bring new onsite or proximate dispatchable generation and/or storage capacity equivalent to or greater than their MIC",
+     "url": "https://cruie-live-96ca64acab2247eca8a850a7e54b-5b34f62.divio-media.com/documents/CRU2025236_Large_Energy_User_connection_policy_decision_paper.pdf",
+     "source": "Ireland, Commission for Regulation of Utilities, Large Energy Users Connection Policy, decision paper CRU/2025236 (2025-12-12)"
+    },
+    {
+     "id": "p3b",
+     "doc": "CRU25",
+     "text": "It is intended that this new direction will supersede the direction to the electrical SOs from 2021 (CRU/21/124)",
+     "url": "https://cruie-live-96ca64acab2247eca8a850a7e54b-5b34f62.divio-media.com/documents/CRU2025236_Large_Energy_User_connection_policy_decision_paper.pdf",
+     "source": "Ireland, Commission for Regulation of Utilities, Large Energy Users Connection Policy, decision paper CRU/2025236 (2025-12-12)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "In force since December 2025.",
+    "firsthand": true,
+    "quote": null
+   },
+   "size": null,
+   "threshold": "10 MVA or more"
+  },
+  {
+   "id": "m1",
+   "point": "model",
+   "date": "2023-03-30",
+   "body": "Garante per la protezione dei dati personali, Italy",
+   "country": "Italy",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "na",
+   "grounds": [
+    "personal data"
+   ],
+   "named": "OpenAI",
+   "party": "OpenAI, ChatGPT",
+   "what": "An urgent temporary limitation on processing the data of people in Italy; the service went offline there.",
+   "limit": "processing of personal data",
+   "compute_quantity": false,
+   "q": [
+    "m1a",
+    "m1b"
+   ],
+   "lifted": "m2b",
+   "lifted_note": "The authority's order of 11 April set terms; its release of 28 April 2023 records the service restored, four weeks later.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "m1a",
+     "doc": "GAR0330",
+     "text": "la misura della limitazione provvisoria, del trattamento dei dati personali degli interessati stabiliti nel territorio italiano",
+     "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9870832",
+     "source": "Italy, Garante per la protezione dei dati personali, order of 2023-03-30 (doc. web 9870832)"
+    },
+    {
+     "id": "m1b",
+     "doc": "GAR0330",
+     "text": "l’assenza di idonea base giuridica in relazione alla raccolta dei dati personali e al loro trattamento per scopo di addestramento degli algoritmi sottesi al funzionamento di ChatGPT",
+     "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9870832",
+     "source": "Italy, Garante per la protezione dei dati personali, order of 2023-03-30 (doc. web 9870832)"
+    }
+   ],
+   "after": {
+    "state": "lifted",
+    "note": "Service restored four weeks later, on terms.",
+    "firsthand": true,
+    "quote": {
+     "id": "m2b",
+     "text": "describing the measures it implemented in order to comply with the order issued by the SA on 11 April",
+     "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9881490",
+     "source": "Italy, Garante, release of 2023-04-28 (doc. web 9881490)"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "m2",
+   "point": "model",
+   "date": "2023-04-11",
+   "body": "Garante per la protezione dei dati personali, Italy",
+   "country": "Italy",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "conditioned",
+   "form": "case",
+   "terr": "na",
+   "grounds": [
+    "personal data"
+   ],
+   "named": "OpenAI",
+   "party": "OpenAI, ChatGPT",
+   "what": "The limitation is lifted only if the company meets measures on transparency, rights and the legal basis for training, by 30 April.",
+   "limit": "processing of personal data",
+   "compute_quantity": false,
+   "q": [
+    "m2a",
+    "m2b"
+   ],
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "m2a",
+     "doc": "GAR0412",
+     "text": "Only in that case will the Italian SA lift its order that placed a temporary limitation on the processing of Italian users’ data",
+     "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9874751",
+     "source": "Italy, Garante, release on its order of 2023-04-11 (doc. web 9874751)"
+    },
+    {
+     "id": "m2b",
+     "doc": "GAR0428",
+     "text": "describing the measures it implemented in order to comply with the order issued by the SA on 11 April",
+     "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9881490",
+     "source": "Italy, Garante, release of 2023-04-28 (doc. web 9881490)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "The terms were met and the service restored.",
+    "firsthand": true,
+    "quote": {
+     "id": "m2b",
+     "text": "describing the measures it implemented in order to comply with the order issued by the SA on 11 April",
+     "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9881490",
+     "source": "Italy, Garante, release of 2023-04-28 (doc. web 9881490)"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "m3",
+   "point": "model",
+   "date": "2025-01-30",
+   "body": "Garante per la protezione dei dati personali, Italy",
+   "country": "Italy",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "na",
+   "grounds": [
+    "personal data"
+   ],
+   "named": null,
+   "party": "Hangzhou and Beijing DeepSeek Artificial Intelligence",
+   "what": "A definitive limitation on processing the data of people in Italy, with immediate effect.",
+   "limit": "processing of personal data",
+   "compute_quantity": false,
+   "q": [
+    "m3a"
+   ],
+   "lifted": null,
+   "lifted_note": "No lifting found on the authority's pages read.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "m3a",
+     "doc": "GARDS",
+     "text": "la misura della limitazione definitiva del trattamento di dati personali di interessati che si trovano nel territorio italiano",
+     "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10098477",
+     "source": "Italy, Garante, order of 2025-01-30 (doc. web 10098477)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "No revocation found on the authority's pages read.",
+    "firsthand": true,
+    "quote": null
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "m4",
+   "point": "model",
+   "date": "2024-08-08",
+   "body": "Data Protection Commission and the High Court, Ireland",
+   "country": "Ireland",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "na",
+   "grounds": [
+    "personal data"
+   ],
+   "named": "xAI (Grok), through X",
+   "party": "X, training of Grok",
+   "what": "Before the High Court, on the authority's urgent application, X undertakes to suspend training Grok on EU users' posts; made permanent on 4 September 2024.",
+   "limit": "processing of personal data for training",
+   "compute_quantity": false,
+   "q": [
+    "m4a",
+    "m4b",
+    "m4c"
+   ],
+   "lifted": null,
+   "lifted_note": "Made permanent, not lifted.",
+   "ground_note": "An undertaking given to a court, not an order.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "m4a",
+     "doc": "DPCX1",
+     "text": "welcomes X’s agreement to suspend its processing of the personal data contained in the public posts of X’s EU/EEA users which it processed between 7 May 2024 and 1 August 2024, for the purpose of training its AI ‘Grok’",
+     "url": "https://www.dataprotection.ie/en/news-media/press-releases/dpc-welcomes-xs-agreement-suspend-its-processing-personal-data-purpose-training-ai-tool-grok",
+     "source": "Ireland, Data Protection Commission, release of 2024-08-08"
+    },
+    {
+     "id": "m4b",
+     "doc": "DPCX1",
+     "text": "The agreement was concluded against the backdrop of an urgent High Court application brought by the DPC under Section 134 of the Data Protection Act, 2018",
+     "url": "https://www.dataprotection.ie/en/news-media/press-releases/dpc-welcomes-xs-agreement-suspend-its-processing-personal-data-purpose-training-ai-tool-grok",
+     "source": "Ireland, Data Protection Commission, release of 2024-08-08"
+    },
+    {
+     "id": "m4c",
+     "doc": "DPCX2",
+     "text": "the proceedings have been struck-out on the basis of X’s agreement to continue to adhere to the terms of the undertaking",
+     "url": "https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-welcomes-conclusion-proceedings-relating-xs-ai-tool-grok",
+     "source": "Ireland, Data Protection Commission, release of 2024-09-04"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "Made permanent: the proceedings were struck out on the undertaking.",
+    "firsthand": true,
+    "quote": {
+     "id": "m4c",
+     "text": "the proceedings have been struck-out on the basis of X’s agreement to continue to adhere to the terms of the undertaking",
+     "url": "https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-welcomes-conclusion-proceedings-relating-xs-ai-tool-grok",
+     "source": "Ireland, Data Protection Commission, release of 2024-09-04"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "m5",
+   "point": "model",
+   "date": "2024-07-02",
+   "body": "Autoridade Nacional de Proteção de Dados, Brazil",
+   "country": "Brazil",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "na",
+   "grounds": [
+    "personal data"
+   ],
+   "named": "Meta",
+   "party": "Meta, training of generative AI",
+   "what": "A preventive measure: immediate suspension in Brazil of the privacy-policy change and of processing personal data to train generative AI.",
+   "limit": "processing of personal data for training",
+   "compute_quantity": false,
+   "q": [
+    "m5a"
+   ],
+   "lifted": "m6a",
+   "lifted_note": "Suspended at the end of August 2024 against a compliance plan, two months later (the vote is signed 28 August).",
+   "ground_note": "The vote is signed 1 July 2024; 2 July is the date a later publication of the same authority gives for the decision (read in a search excerpt).",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "m5a",
+     "doc": "ANPD11",
+     "text": "MEDIDA PREVENTIVA PARA DETERMINAR, ATÉ ULTERIOR DECISÃO DESTA AUTORIDADE, A IMEDIATA SUSPENSÃO NO BRASIL",
+     "url": "https://www.gov.br/anpd/pt-br/assuntos/noticias/anpd-determina-suspensao-cautelar-do-tratamento-de-dados-pessoais-para-treinamento-da-ia-da-meta/SEI_0130047_Voto_11.pdf/@@display-file/file",
+     "source": "Brazil, Autoridade Nacional de Proteção de Dados, Voto 11/2024 (signed 2024-07-01)"
+    }
+   ],
+   "after": {
+    "state": "lifted",
+    "note": "Suspended two months later against a compliance plan.",
+    "firsthand": true,
+    "quote": {
+     "id": "m6a",
+     "text": "SUSPENSÃO DA MEDIDA PREVENTIVA APLICADA À META",
+     "url": "https://www.gov.br/anpd/pt-br/assuntos/deliberacoes-do-conselho-diretor/circuitos-deliberativos-2024/cd-18-2024-votos.pdf/@@display-file/file",
+     "source": "Brazil, Autoridade Nacional de Proteção de Dados, Voto 23/2024 (signed 2024-08-28)"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "m6",
+   "point": "model",
+   "date": "2024-08",
+   "body": "Autoridade Nacional de Proteção de Dados, Brazil",
+   "country": "Brazil",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "conditioned",
+   "form": "case",
+   "terr": "na",
+   "grounds": [
+    "personal data"
+   ],
+   "named": "Meta",
+   "party": "Meta, training of generative AI",
+   "what": "The preventive measure is suspended on condition that the compliance plan is carried out in full.",
+   "limit": "processing of personal data for training",
+   "compute_quantity": false,
+   "q": [
+    "m6a",
+    "m6b"
+   ],
+   "ground_note": "Dated by the signature on the vote, 28 August 2024; the day the board adopted it was not read.",
+   "new": false,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "m6a",
+     "doc": "ANPD23",
+     "text": "SUSPENSÃO DA MEDIDA PREVENTIVA APLICADA À META",
+     "url": "https://www.gov.br/anpd/pt-br/assuntos/deliberacoes-do-conselho-diretor/circuitos-deliberativos-2024/cd-18-2024-votos.pdf/@@display-file/file",
+     "source": "Brazil, Autoridade Nacional de Proteção de Dados, Voto 23/2024 (signed 2024-08-28)"
+    },
+    {
+     "id": "m6b",
+     "doc": "ANPD23",
+     "text": "COM A DETERMINAÇÃO DE CUMPRIMENTO INTEGRAL DO PLANO DE CONFORMIDADE",
+     "url": "https://www.gov.br/anpd/pt-br/assuntos/deliberacoes-do-conselho-diretor/circuitos-deliberativos-2024/cd-18-2024-votos.pdf/@@display-file/file",
+     "source": "Brazil, Autoridade Nacional de Proteção de Dados, Voto 23/2024 (signed 2024-08-28)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "No later record read.",
+    "firsthand": true,
+    "quote": null
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "s9",
+   "point": "site",
+   "date": "2024-08-22",
+   "body": "South Dublin County Council, Ireland",
+   "country": "Ireland",
+   "level": "sub",
+   "kind": "agency",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "inside",
+   "grounds": [
+    "power or grid",
+    "land, noise or the neighbourhood"
+   ],
+   "named": "Google (Google Ireland Limited)",
+   "party": "Google Ireland Limited, a third data-centre building at Grange Castle",
+   "what": "Planning permission refused, first for the grid's lack of capacity and the lack of on-site renewable power.",
+   "limit": "one building",
+   "compute_quantity": false,
+   "q": [
+    "s9a",
+    "s9b"
+   ],
+   "lifted": null,
+   "lifted_note": null,
+   "ground_note": "Reasons read in the national planning body's inspector's report, which sets out the council's two reasons; the council's own decision was not fetched.",
+   "new": true,
+   "was_second_hand": true,
+   "quotes": [
+    {
+     "id": "s9a",
+     "doc": "ACPREPORT",
+     "text": "Having regard to the existing insufficient capacity in the electricity network (grid), the lack of significant on site renewable energy to power (below 100%) the proposed development",
+     "url": "https://www.pleanala.ie/anbordpleanala/media/abp/cases/reports/320/r320852.pdf",
+     "source": "Ireland, An Coimisiún Pleanála, inspector's report in case ABP-320852-24"
+    },
+    {
+     "id": "s9b",
+     "doc": "ACPORDER",
+     "text": "Appeal by Google Ireland Limited against the decision made on the 22ndday of August, 2024 by South Dublin County Council to refuse permission",
+     "url": "https://www.pleanala.ie/anbordpleanala/media/abp/cases/orders/320/d320852.pdf",
+     "source": "Ireland, An Coimisiún Pleanála, order in case ABP-320852-24 (signed 2026-09-23)"
+    }
+   ],
+   "after": {
+    "state": "lifted",
+    "note": "Overturned on appeal by the national planning body 25 months later, on conditions (s10).",
+    "firsthand": true,
+    "quote": {
+     "id": "s10a",
+     "text": "GRANT permission for the above proposed development",
+     "url": "https://www.pleanala.ie/anbordpleanala/media/abp/cases/orders/320/d320852.pdf",
+     "source": "Ireland, An Coimisiún Pleanála, order in case ABP-320852-24 (signed 2026-09-23)"
+    }
+   },
+   "size": {
+    "kind": "floor area",
+    "text": "72,400 square metres (the same building)",
+    "quote": "the development of a 72,400 square metres data storage facility"
+   },
+   "threshold": null
+  },
+  {
+   "id": "s10",
+   "point": "site",
+   "date": "2026-09-23",
+   "body": "An Coimisiún Pleanála, Ireland",
+   "country": "Ireland",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "conditioned",
+   "form": "case",
+   "terr": "inside",
+   "grounds": [
+    "power or grid"
+   ],
+   "named": "Google (Google Ireland Limited)",
+   "party": "Google Ireland Limited, the same building, on appeal",
+   "what": "Permission granted on appeal with conditions, among them that the building's energy demand be offset by new renewable generation in Ireland under corporate power purchase agreements.",
+   "limit": "one building, on energy conditions",
+   "compute_quantity": false,
+   "q": [
+    "s10a",
+    "s10b"
+   ],
+   "lifted": null,
+   "lifted_note": null,
+   "new": true,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "s10a",
+     "doc": "ACPORDER",
+     "text": "GRANT permission for the above proposed development",
+     "url": "https://www.pleanala.ie/anbordpleanala/media/abp/cases/orders/320/d320852.pdf",
+     "source": "Ireland, An Coimisiún Pleanála, order in case ABP-320852-24 (signed 2026-09-23)"
+    },
+    {
+     "id": "s10b",
+     "doc": "ACPORDER",
+     "text": "which shall demonstrate that the energy demand of DC3 is offset with new renewable energy generation",
+     "url": "https://www.pleanala.ie/anbordpleanala/media/abp/cases/orders/320/d320852.pdf",
+     "source": "Ireland, An Coimisiún Pleanála, order in case ABP-320852-24 (signed 2026-09-23)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "Granted in September 2026.",
+    "firsthand": true,
+    "quote": null
+   },
+   "size": {
+    "kind": "floor area",
+    "text": "72,400 square metres",
+    "quote": "the development of a 72,400 square metres data storage facility"
+   },
+   "threshold": null
+  },
+  {
+   "id": "p4",
+   "point": "power",
+   "date": "2025-07-02",
+   "body": "Shelby County Health Department, Tennessee",
+   "country": "United States",
+   "level": "sub",
+   "kind": "agency",
+   "effect": "conditioned",
+   "form": "case",
+   "terr": "inside",
+   "grounds": [
+    "water or air"
+   ],
+   "named": null,
+   "party": "CTC Property LLC, owner of the Colossus data centre in Memphis",
+   "what": "An air construction permit for 15 gas turbines generating the data centre's own power, as a synthetic minor source with emission limits.",
+   "limit": "15 turbines and their emissions",
+   "compute_quantity": false,
+   "q": [
+    "p4a",
+    "p4b",
+    "p4c"
+   ],
+   "lifted": null,
+   "lifted_note": null,
+   "ground_note": "The department's own texts name the owner CTC Property LLC; the developer's name appears in them only inside the headings of commenters' objections, which the department quotes. Read on a federal docket, not the department's own site; the issue date of 2 July 2025 is the permit's, read in a scanned copy published by a third party, which has no text layer and is not hashed here.",
+   "new": true,
+   "was_second_hand": true,
+   "quotes": [
+    {
+     "id": "p4a",
+     "doc": "SCHDPAE",
+     "text": "The Center constructed fifteen (15) natural gas-fired Solar SMT-130 turbine generators, each rated at 16.48 megawatts (MW), providing a total of 300 MW of continuous power",
+     "url": "https://downloads.regulations.gov/EPA-HQ-OAR-2024-0419-0095/attachment_5.pdf",
+     "source": "Shelby County Health Department, Air Pollution Control, construction permit application evaluation, permit no. 01156-01PC, CTC Property LLC (March 2025; filed in a US EPA docket)"
+    },
+    {
+     "id": "p4b",
+     "doc": "SCHDPAE",
+     "text": "Facility Owner: CTC Property LLC",
+     "url": "https://downloads.regulations.gov/EPA-HQ-OAR-2024-0419-0095/attachment_5.pdf",
+     "source": "Shelby County Health Department, Air Pollution Control, construction permit application evaluation, permit no. 01156-01PC, CTC Property LLC (March 2025; filed in a US EPA docket)"
+    },
+    {
+     "id": "p4c",
+     "doc": "SCHDRTC",
+     "text": "The 15 permanent turbines that are the subject of the draft construction air permit do not qualify as a major source",
+     "url": "https://downloads.regulations.gov/EPA-HQ-OAR-2025-1212-0253/attachment_19.pdf",
+     "source": "Shelby County Health Department, response to public comments on draft permit 01156-01PC, 2025-06-02 (filed in a US EPA docket)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "The permit runs to January 2027; an appeal against it was read only second-hand.",
+    "firsthand": true,
+    "quote": null
+   },
+   "size": {
+    "kind": "power",
+    "text": "15 turbines of 16.48 MW",
+    "quote": "The Center constructed fifteen (15) natural gas-fired Solar SMT-130 turbine generators, each rated at 16.48 megawatts (MW), providing a total of 300 MW of continuous power"
+   },
+   "threshold": null
+  },
+  {
+   "id": "m7",
+   "point": "model",
+   "date": "2026-01-10",
+   "body": "Ministry of Communication and Digital Affairs, Indonesia",
+   "country": "Indonesia",
+   "level": "nat",
+   "kind": "agency",
+   "effect": "stopped",
+   "form": "case",
+   "terr": "na",
+   "grounds": [
+    "the model's output"
+   ],
+   "named": "xAI (Grok), through X Corp",
+   "party": "X Corp's chatbot Grok",
+   "what": "Access to Grok is cut temporarily, to protect women, children and the public from fake pornographic content generated with AI.",
+   "limit": "access to one service in the country",
+   "compute_quantity": false,
+   "q": [
+    "m7a",
+    "m7b"
+   ],
+   "lifted": "m7c",
+   "lifted_note": "Access restored on conditions three weeks later, on 31 January 2026, after a written commitment by X Corp.",
+   "new": true,
+   "was_second_hand": true,
+   "quotes": [
+    {
+     "id": "m7a",
+     "doc": "KOMDIGI1",
+     "text": "Pemerintah melalui Kementerian Komunikasi dan Digital melakukan pemutusan akses sementara terhadap aplikasi Grok",
+     "url": "https://portal.komdigi.go.id/kanal-publik/berita-kini/9923",
+     "source": "Indonesia, Ministry of Communication and Digital Affairs, official statement of the Minister, 2026-01-10 (ministry portal)"
+    },
+    {
+     "id": "m7b",
+     "doc": "KOMDIGI1",
+     "text": "risiko konten pornografi palsu yang dihasilkan menggunakan teknologi kecerdasan artifisial",
+     "url": "https://portal.komdigi.go.id/kanal-publik/berita-kini/9923",
+     "source": "Indonesia, Ministry of Communication and Digital Affairs, official statement of the Minister, 2026-01-10 (ministry portal)"
+    }
+   ],
+   "after": {
+    "state": "lifted",
+    "note": "Restored on conditions three weeks later.",
+    "firsthand": true,
+    "quote": {
+     "id": "m7c",
+     "text": "memproses normalisasi akses layanan Grok secara bersyarat",
+     "url": "https://portal.komdigi.go.id/kanal-publik/berita-kini/9988",
+     "source": "Indonesia, Ministry of Communication and Digital Affairs, press release of 2026-01-31 on the conditional restoration of Grok (ministry portal)"
+    }
+   },
+   "size": null,
+   "threshold": null
+  },
+  {
+   "id": "m8",
+   "point": "model",
+   "date": "2025-12-16",
+   "body": "Autorità Garante della Concorrenza e del Mercato, Italy",
+   "country": "Italy",
+   "level": "nat",
+   "kind": "regulator",
+   "effect": "conditioned",
+   "form": "case",
+   "terr": "na",
+   "grounds": [
+    "the model's output"
+   ],
+   "named": null,
+   "party": "the two companies behind DeepSeek",
+   "what": "Commitments made binding: the service must inform its users in Italy about the risk of hallucinations and act to reduce it.",
+   "limit": "what the service tells its users",
+   "compute_quantity": false,
+   "q": [
+    "m8a",
+    "m8b"
+   ],
+   "lifted": null,
+   "lifted_note": null,
+   "new": true,
+   "was_second_hand": false,
+   "quotes": [
+    {
+     "id": "m8a",
+     "doc": "AGCMDS",
+     "text": "di rendere obbligatori, nei confronti delle società Hangzhou DeepSeek Artificial Intelligence Co., Ltd. e Beijing DeepSeek Artificial Intelligence Co., Ltd.",
+     "url": "https://www.agcm.it/dotcmsCustom/tc/2031/1/getDominoAttach?urlStr=81.126.91.44%3A8080%2FC12560D000291394%2F0%2F9934A7D51ABD165DC1258D7600597DD9%2F%24File%2Fp31784.pdf",
+     "source": "Italy, Autorità Garante della Concorrenza e del Mercato, decision no. 31784 of 2025-12-16, case PS12942 (DeepSeek)"
+    },
+    {
+     "id": "m8b",
+     "doc": "AGCMDS",
+     "text": "Gli impegni consistono in un pacchetto di misure volto a migliorare l’informativa sul rischio di allucinazioni",
+     "url": "https://www.agcm.it/dotcmsCustom/tc/2031/1/getDominoAttach?urlStr=81.126.91.44%3A8080%2FC12560D000291394%2F0%2F9934A7D51ABD165DC1258D7600597DD9%2F%24File%2Fp31784.pdf",
+     "source": "Italy, Autorità Garante della Concorrenza e del Mercato, decision no. 31784 of 2025-12-16, case PS12942 (DeepSeek)"
+    }
+   ],
+   "after": {
+    "state": "stands",
+    "note": "Decided in December 2025.",
+    "firsthand": true,
+    "quote": null
+   },
+   "size": null,
+   "threshold": null
+  }
+ ],
+ "not_acts": [
+  {
+   "id": "d1",
+   "point": "deal",
+   "date": "2025-03-05",
+   "body": "UK Competition and Markets Authority",
+   "what": "Microsoft and OpenAI: found not to qualify for investigation.",
+   "why": "a review closed without an act",
+   "q": "d1",
+   "quote": "The CMA has decided that Microsoft’s partnership with OpenAI does not qualify for investigation under the merger provisions of the Enterprise Act 2002",
+   "url": "https://www.gov.uk/cma-cases/microsoft-slash-openai-partnership-merger-inquiry",
+   "source": "UK Competition and Markets Authority, case page, Microsoft / OpenAI partnership merger inquiry"
+  },
+  {
+   "id": "d2",
+   "point": "deal",
+   "date": "2024-09-27",
+   "body": "UK Competition and Markets Authority",
+   "what": "Amazon and Anthropic: found not to qualify for investigation.",
+   "why": "a review closed without an act",
+   "q": "d2",
+   "quote": "The CMA has decided that Amazon’s partnership with Anthropic does not qualify for investigation under the merger provisions of the Enterprise Act 2002",
+   "url": "https://www.gov.uk/cma-cases/amazon-slash-anthropic-partnership-merger-inquiry",
+   "source": "UK Competition and Markets Authority, case page, Amazon / Anthropic partnership merger inquiry"
+  },
+  {
+   "id": "d3",
+   "point": "deal",
+   "date": "2024-11-19",
+   "body": "UK Competition and Markets Authority",
+   "what": "Alphabet and Anthropic: found not to qualify for investigation.",
+   "why": "a review closed without an act",
+   "q": "d3",
+   "quote": "The CMA has decided that Alphabet’s partnership with Anthropic does not qualify for investigation under the merger provisions of the Enterprise Act 2002",
+   "url": "https://www.gov.uk/cma-cases/alphabet-inc-google-llc-slash-anthropic-merger-inquiry",
+   "source": "UK Competition and Markets Authority, case page, Alphabet / Anthropic merger inquiry"
+  },
+  {
+   "id": "d4",
+   "point": "deal",
+   "date": "2025-01",
+   "body": "US Federal Trade Commission",
+   "what": "A staff report on three cloud-developer partnerships, from orders of January 2024.",
+   "why": "an inquiry",
+   "q": "d4",
+   "quote": "The staff report stems from FTC orders issued in January 2024 under Section 6(b) of the FTC Act",
+   "url": "https://www.ftc.gov/news-events/news/press-releases/2025/01/ftc-issues-staff-report-ai-partnerships-investments-study",
+   "source": "US Federal Trade Commission, release of January 2025 on its staff report on AI partnerships and investments"
+  },
+  {
+   "id": "n1",
+   "point": "model",
+   "date": "2024-06-14",
+   "body": "Data Protection Commission, Ireland",
+   "what": "Meta pauses its plan to train on EU users' public content after engagement with the authority.",
+   "why": "the firm's own decision; no order of the body",
+   "q": "n1",
+   "quote": "The DPC welcomes the decision by Meta to pause its plans to train its large language model using public content shared by adults on Facebook and Instagram across the EU/EEA",
+   "url": "https://www.dataprotection.ie/en/news-media/latest-news/dpcs-engagement-meta-ai",
+   "source": "Ireland, Data Protection Commission, statement of 2024-06-14"
+  }
+ ],
+ "second_hand": [
+  {
+   "point": "site",
+   "what": "On 3 November 2026, voters in ten US states decided 41 local ballot measures on data centres and favoured restrictions in 40.",
+   "why": "a private tracker's overview, which the tracker labels as machine-generated; no election record read"
+  },
+  {
+   "point": "site",
+   "what": "A private tracker lists 25 US states with an active ban or moratorium somewhere in the state.",
+   "why": "second-hand; the tracker's own count, passage t1"
+  },
+  {
+   "point": "power",
+   "what": "Ohio's utility commission ordered a data-centre tariff (July 2025).",
+   "why": "the commission's page answered 504 twice on 2026-11-12"
+  },
+  {
+   "point": "power",
+   "what": "Texas's law on large loads of 75 MW and more (2025).",
+   "why": "text read in a search excerpt only; whether it has been applied to a project was not checked"
+  },
+  {
+   "point": "chip",
+   "what": "Chinese authorities told firms not to buy one US chip maker's products (2025).",
+   "why": "press only; not searched this session"
+  },
+  {
+   "point": "site",
+   "what": "The Circuit Court of Prince William County voided the same rezonings first (August 2025).",
+   "why": "its order was read only on a campaign group's page"
+  },
+  {
+   "point": "model",
+   "what": "Malaysia blocked the same chatbot the day after Indonesia (January 2026).",
+   "why": "press only; the regulator's own release was not searched"
+  },
+  {
+   "point": "site",
+   "what": "Chile's environmental service ruled on 16 October 2026 that the redesigned data centre in Cerrillos needs no environmental assessment.",
+   "why": "the service's register answered with a script challenge; press only"
+  },
+  {
+   "point": "power",
+   "what": "Community groups appealed the Memphis permit to the local air pollution control board (July 2025).",
+   "why": "the appeal was read only on a newspaper's site"
+  }
+ ],
+ "files": [
+  {
+   "id": "FR22",
+   "what": "US Bureau of Industry and Security, interim final rule, 87 FR 62186 (published 2022-10-13)",
+   "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/html/2022-21658.htm",
+   "bytes": 222790,
+   "sha256": "a3d5a813bb537e033a5e23be641c5649314a579dd50a4d69e9e2bd3239aec07c",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "FR23",
+   "what": "US Bureau of Industry and Security, interim final rule, 88 FR 73458 (published 2023-10-25)",
+   "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/html/2023-23055.htm",
+   "bytes": 466483,
+   "sha256": "31690099fac65c8522aa4195bbf3a397270686fe39c18570b9aac49f5ef1176a",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "NV10Q",
+   "what": "NVIDIA Corporation, Form 10-Q for the quarter ended 2025-07-27",
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+   "bytes": 1349528,
+   "sha256": "972e0526a7ad0e8cf2a9f9175aa73d66e4830de516c3f5853c31edcd4a2d307f",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "NV10K",
+   "what": "NVIDIA Corporation, Form 10-K for the fiscal year ended 2026-01-25",
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+   "bytes": 1967921,
+   "sha256": "3e47b6573a4c5f2f824d9f7e2615d737800a9c4bbcec85fb5277f5a26eda7803",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "BISNEWS",
+   "what": "US Bureau of Industry and Security, News and Updates (release of 2026-01-13)",
+   "url": "https://www.bis.gov/news-updates",
+   "bytes": 3583370,
+   "sha256": "82b20005fa624d5524990c46792719c44b8b97a90a246928ab4cdcc1bcd0923e",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "TUCSON",
+   "what": "City of Tucson, Motions adopted under the study session item on Project Blue, 2025-08-06",
+   "url": "https://www.tucsonaz.gov/files/sharedassets/public/v/1/government/city-manager-office/documents/motions-adopted-under-aug-6.pdf",
+   "bytes": 114110,
+   "sha256": "9dcd059b154bbaaa14e39295a99f923e2ef662173389cf99bc134462b7aed748",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "PWC",
+   "what": "Prince William County, Planning Office, PW Digital Gateway (update of 2026-08-05)",
+   "url": "https://www.pwcva.gov/department/planning-office/pw-digital-gateway",
+   "bytes": 582671,
+   "sha256": "b8a39624b1a70ffcdeff86eafb440a9ea92730a18e67fc7134654ea8c165757f",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "NLKV",
+   "what": "Netherlands, answers of the Minister of Housing and Spatial Planning to parliamentary questions, Aanhangsel 2025-2026 no. 1519 (received 2026-04-02)",
+   "url": "https://zoek.officielebekendmakingen.nl/ah-tk-20252026-1519.html",
+   "bytes": 84750,
+   "sha256": "10a20f65c181488b7412b75dc10107f26b01ca739e9ab1eace904528a1713df3",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "SGEDB",
+   "what": "Singapore Economic Development Board and IMDA, release of 2022-07-20 on the pilot Data Centre Call for Application",
+   "url": "https://www.edb.gov.sg/en/about-edb/media-releases-publications/edb-and-imda-launch-pilot-data-centre-call-for-application-to-support-sustainable-growth-of-data-centres.html",
+   "bytes": 111567,
+   "sha256": "33ec15e6789cae5227cd788100786f8bb228a4fa6b317f87906a86618238ba92",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "CLTA",
+   "what": "Chile, Segundo Tribunal Ambiental, notice of its judgment on Cerrillos Data Center, 2024-02-27",
+   "url": "https://tribunalambiental.cl/sentencia-r27-270-2020-cerrillos-data-center",
+   "bytes": 279591,
+   "sha256": "46dcacc8ae0ebc9094a514ad7bbaf7861e7be888482782e66cf15b5122ab7ba3",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "MANATEE",
+   "what": "Manatee County, Florida, release of 2026-10-08 on Ordinance 26-42",
+   "url": "https://www.mymanatee.org/connect/news-and-information/news-and-information/article-detail/board-of-county-commissioners/2026/10/09/manatee-county-commissioners-approve-12-month-data-center-moratorium",
+   "bytes": 119416,
+   "sha256": "dbcc39e69b5211440699e5dd8e3c9c054c72e48dddf5c17657d13b7a2cfe9671",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "WORCESTER",
+   "what": "Worcester County, Maryland, release of 2026-07-30 on Resolution No. 26-18",
+   "url": "https://worcestermd.gov/news/worcester-county-enacts-moratorium-data-centers-and-cable-landing-stations-while-new",
+   "bytes": 56964,
+   "sha256": "1b438ae7355c4b1eafa6deb8ab302bf01b758de45356352e7e3d59bf7edeb28a",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "FERC",
+   "what": "US Federal Energy Regulatory Commission, 189 FERC 61,078, order of 2024-11-01, dockets ER24-2172-000 and -001",
+   "url": "https://www.ferc.gov/sites/default/files/2024-11/20241101-3061_ER24-2172-000.pdf",
+   "bytes": 607216,
+   "sha256": "69b04b60cfc5f0150af8cb2f96eabca1c6af9ff74f8bbdbd41a2929b0bf69934",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "CRU25",
+   "what": "Ireland, Commission for Regulation of Utilities, Large Energy Users Connection Policy, decision paper CRU/2025236 (2025-12-12)",
+   "url": "https://cruie-live-96ca64acab2247eca8a850a7e54b-5b34f62.divio-media.com/documents/CRU2025236_Large_Energy_User_connection_policy_decision_paper.pdf",
+   "bytes": 1735206,
+   "sha256": "8bf95f0748ca20c37b26a6d2c2eb807184e02246a79cf28019f6e52f441270e7",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "CMAMS",
+   "what": "UK Competition and Markets Authority, case page, Microsoft / OpenAI partnership merger inquiry",
+   "url": "https://www.gov.uk/cma-cases/microsoft-slash-openai-partnership-merger-inquiry",
+   "bytes": 77662,
+   "sha256": "1299f6ee2cf8b8db90758227acd3884e9bdcc497a7f6b80b7a6d65b5287e9ae2",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "CMAAMZ",
+   "what": "UK Competition and Markets Authority, case page, Amazon / Anthropic partnership merger inquiry",
+   "url": "https://www.gov.uk/cma-cases/amazon-slash-anthropic-partnership-merger-inquiry",
+   "bytes": 77863,
+   "sha256": "e12b244b58d3d33d8ce6c54069434bf4cc2a6ef758e8f51aa6e035c59d36941b",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "CMAGOO",
+   "what": "UK Competition and Markets Authority, case page, Alphabet / Anthropic merger inquiry",
+   "url": "https://www.gov.uk/cma-cases/alphabet-inc-google-llc-slash-anthropic-merger-inquiry",
+   "bytes": 77405,
+   "sha256": "784b85b326e9f90e627a6fb6885cdf8038b0298fc084cf729b5d7fdf4c097474",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "FTC6B",
+   "what": "US Federal Trade Commission, release of January 2025 on its staff report on AI partnerships and investments",
+   "url": "https://www.ftc.gov/news-events/news/press-releases/2025/01/ftc-issues-staff-report-ai-partnerships-investments-study",
+   "bytes": 1002046,
+   "sha256": "0fcd25fa1fe4ca22a532443b73b20a3ef95c659e8546b1733101483d896f0b1e",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "GAR0330",
+   "what": "Italy, Garante per la protezione dei dati personali, order of 2023-03-30 (doc. web 9870832)",
+   "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9870832",
+   "bytes": 126500,
+   "sha256": "abb1103f471174474ff7ad1613e0e80ea650e0828fe9a2ac972481bc0bde3c00",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "GAR0412",
+   "what": "Italy, Garante, release on its order of 2023-04-11 (doc. web 9874751)",
+   "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9874751",
+   "bytes": 129233,
+   "sha256": "74bbb517d1464dd8d48fa48dabe0dda59233e1374fb00404d7005b3da7fe97cb",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "GAR0428",
+   "what": "Italy, Garante, release of 2023-04-28 (doc. web 9881490)",
+   "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9881490",
+   "bytes": 123690,
+   "sha256": "01d539330a302b7f612487416ac5e53fccb9d16a9b149b105f9751abe71d5f22",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "GARDS",
+   "what": "Italy, Garante, order of 2025-01-30 (doc. web 10098477)",
+   "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10098477",
+   "bytes": 134764,
+   "sha256": "c90c146460d253d64faed7a37c5eafd5fbbeaa04a4fb7a263c6c9499cb280539",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "DPCX1",
+   "what": "Ireland, Data Protection Commission, release of 2024-08-08",
+   "url": "https://www.dataprotection.ie/en/news-media/press-releases/dpc-welcomes-xs-agreement-suspend-its-processing-personal-data-purpose-training-ai-tool-grok",
+   "bytes": 36646,
+   "sha256": "d4d2fae9c8e5d7970750f17e68b30072fa0ab04a33e386c331c24ad94904d329",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "DPCX2",
+   "what": "Ireland, Data Protection Commission, release of 2024-09-04",
+   "url": "https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-welcomes-conclusion-proceedings-relating-xs-ai-tool-grok",
+   "bytes": 38549,
+   "sha256": "7a692d341c4c5f6ed7a37b5baf46215c755548d750cf0ff454cce0981aa04bc2",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "DPCMETA",
+   "what": "Ireland, Data Protection Commission, statement of 2024-06-14",
+   "url": "https://www.dataprotection.ie/en/news-media/latest-news/dpcs-engagement-meta-ai",
+   "bytes": 34345,
+   "sha256": "3babaf47af0b688175c3539a68e7fe4c80bc24c8af3269f8ed055fd81f286367",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "ANPD11",
+   "what": "Brazil, Autoridade Nacional de Proteção de Dados, Voto 11/2024 (signed 2024-07-01)",
+   "url": "https://www.gov.br/anpd/pt-br/assuntos/noticias/anpd-determina-suspensao-cautelar-do-tratamento-de-dados-pessoais-para-treinamento-da-ia-da-meta/SEI_0130047_Voto_11.pdf/@@display-file/file",
+   "bytes": 187750,
+   "sha256": "8f6cda4eed733c4e84e9adb2c60b2f254fa88293c516e43873bf05dc67ae7c1d",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "ANPD23",
+   "what": "Brazil, Autoridade Nacional de Proteção de Dados, Voto 23/2024 (signed 2024-08-28)",
+   "url": "https://www.gov.br/anpd/pt-br/assuntos/deliberacoes-do-conselho-diretor/circuitos-deliberativos-2024/cd-18-2024-votos.pdf/@@display-file/file",
+   "bytes": 291960,
+   "sha256": "b3460ec7febfadee02b4964c520cccadc7012d052e9d9515c4c89b6537921c83",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "TRACKER",
+   "what": "datacenterbans.com, a private tracker of US data-centre restrictions (second-hand; front page as of 2026-11-09)",
+   "url": "https://www.datacenterbans.com/",
+   "bytes": 800047,
+   "sha256": "f1071434f7069faeb7415aa4db19add15a2fa0920f1495312658d213aaf138d4",
+   "fetched": "2026-11-13",
+   "new": false
+  },
+  {
+   "id": "PIMA0917",
+   "what": "Pima County, County Administrator, memorandum 'Update on Project Blue' to the Board of Supervisors, 2025-09-17 (with the developer's letter of the same day)",
+   "url": "https://www.pima.gov/asset/2192e865-fe7e-48f4-8a0c-7c1c8b5cd32c",
+   "bytes": 272718,
+   "sha256": "8242a4e1d2478f353f966bfd605a91539193b5333acfb645d0d9d3ffea84c4cc",
+   "fetched": "2026-11-13",
+   "new": true
+  },
+  {
+   "id": "TALEN8K",
+   "what": "Talen Energy Corporation, Form 8-K of 2025-06-11, exhibit 99.1 (press release)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm",
+   "bytes": 20974,
+   "sha256": "81d16e4ca4fe5ef9e3b537558efd479e2f0876c5e998aa106b376f9712960df9",
+   "fetched": "2026-11-13",
+   "new": true
+  },
+  {
+   "id": "ACPORDER",
+   "what": "Ireland, An Coimisiún Pleanála, order in case ABP-320852-24 (signed 2026-09-23)",
+   "url": "https://www.pleanala.ie/anbordpleanala/media/abp/cases/orders/320/d320852.pdf",
+   "bytes": 1623828,
+   "sha256": "85d8e665fef1a6a164ee8a218498510331fb60605418611854e464fe928b43dc",
+   "fetched": "2026-11-13",
+   "new": true
+  },
+  {
+   "id": "ACPREPORT",
+   "what": "Ireland, An Coimisiún Pleanála, inspector's report in case ABP-320852-24",
+   "url": "https://www.pleanala.ie/anbordpleanala/media/abp/cases/reports/320/r320852.pdf",
+   "bytes": 1716832,
+   "sha256": "04594451d83f5a9091e7694b06e6c706a54affa07c775bcc9f50ba7cdfe0a6d5",
+   "fetched": "2026-11-13",
+   "new": true
+  },
+  {
+   "id": "SCHDPAE",
+   "what": "Shelby County Health Department, Air Pollution Control, construction permit application evaluation, permit no. 01156-01PC, CTC Property LLC (March 2025; filed in a US EPA docket)",
+   "url": "https://downloads.regulations.gov/EPA-HQ-OAR-2024-0419-0095/attachment_5.pdf",
+   "bytes": 1032621,
+   "sha256": "4f2247f66df4bbe20d451e3d841f2c087c103b1d85dad5bec58c6c006cd7b875",
+   "fetched": "2026-11-13",
+   "new": true
+  },
+  {
+   "id": "SCHDRTC",
+   "what": "Shelby County Health Department, response to public comments on draft permit 01156-01PC, 2025-06-02 (filed in a US EPA docket)",
+   "url": "https://downloads.regulations.gov/EPA-HQ-OAR-2025-1212-0253/attachment_19.pdf",
+   "bytes": 3175658,
+   "sha256": "c132ee8af6afc6cb9319d62694240fa28eeb4c6ea9be9ee2c45dacee29aa7c16",
+   "fetched": "2026-11-13",
+   "new": true
+  },
+  {
+   "id": "KOMDIGI1",
+   "what": "Indonesia, Ministry of Communication and Digital Affairs, official statement of the Minister, 2026-01-10 (ministry portal)",
+   "url": "https://portal.komdigi.go.id/kanal-publik/berita-kini/9923",
+   "bytes": 17306,
+   "sha256": "24f10d005a158ba79e2c43e17e82e4a55a034010bb91ca8513931a0c6025c7e4",
+   "fetched": "2026-11-13",
+   "new": true
+  },
+  {
+   "id": "KOMDIGI2",
+   "what": "Indonesia, Ministry of Communication and Digital Affairs, press release of 2026-01-31 on the conditional restoration of Grok (ministry portal)",
+   "url": "https://portal.komdigi.go.id/kanal-publik/berita-kini/9988",
+   "bytes": 18448,
+   "sha256": "4704570929c460d2ea93c593bc4c2b1c1176860461afcedc22c109dbbe2d9196",
+   "fetched": "2026-11-13",
+   "new": true
+  },
+  {
+   "id": "AGCMDS",
+   "what": "Italy, Autorità Garante della Concorrenza e del Mercato, decision no. 31784 of 2025-12-16, case PS12942 (DeepSeek)",
+   "url": "https://www.agcm.it/dotcmsCustom/tc/2031/1/getDominoAttach?urlStr=81.126.91.44%3A8080%2FC12560D000291394%2F0%2F9934A7D51ABD165DC1258D7600597DD9%2F%24File%2Fp31784.pdf",
+   "bytes": 286591,
+   "sha256": "5df5f98ac297ac2a9ce886ae4f6b9c089031c147bb855e17ecf3a18488c0d779",
+   "fetched": "2026-11-13",
+   "new": true
+  }
+ ],
+ "refetch": {
+  "of": 28,
+  "changed": [
+   "FR22",
+   "FR23",
+   "NV10Q",
+   "NV10K",
+   "BISNEWS",
+   "PWC",
+   "NLKV",
+   "SGEDB",
+   "CLTA",
+   "CMAMS",
+   "CMAAMZ",
+   "CMAGOO",
+   "FTC6B",
+   "GAR0330",
+   "GAR0412",
+   "GAR0428",
+   "GARDS",
+   "DPCX1"
+  ],
+  "note": "Study 71's records re-fetched on 2026-11-13: 18 of 28 files differ byte for byte from 2026-11-12, and every one of its 50 passages still stands in them."
+ },
+ "refusals": [
+  "pertinencia.sea.gob.cl (Chile's environmental service) answered with a script challenge",
+  "www.komdigi.go.id answered 403 to both clients; the ministry's own portal delivered the same statements",
+  "the Memphis permit itself was found only as a scan without text on a third party's site",
+  "from study 71: investor.nvidia.com 403; puco.ohio.gov 504; federalregister.gov access notice"
+ ]
+}

@@ -85,6 +85,40 @@ ol.pre{padding-left:1.3em}
 ol.pre li{margin:.7em 0}
 ol.src{font-size:.85rem;padding-left:1.3em}
 ol.src li{margin:.35em 0;word-break:break-word}
+#life{margin-top:3em;border-top:1px solid var(--ink);padding-top:.4em}
+#life h2{font-size:1.5rem;margin:.6em 0 .3em}
+#lday{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:14px 0 4px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem}
+#lday input{flex:1 1 260px;accent-color:var(--acc)}
+#lday output{color:var(--acc);display:inline-block;min-width:3.2em}
+#lday button{font:inherit;padding:7px 12px;border:1px solid var(--acc);background:transparent;color:var(--acc);cursor:pointer;border-radius:2px}
+#lsay{min-height:4.2em;max-width:46em;font-size:1.04rem;margin:10px 0 8px}
+#lsay b{font-weight:normal;color:var(--acc)}
+#lchart svg{display:block;width:100%;overflow:visible}
+#lchart .row{cursor:pointer}
+#lchart .row:focus{outline:none}
+#lchart .row:focus-visible .lab,#lchart .row.sel .lab{text-decoration:underline}
+#lchart .lab{font:12px ui-monospace,Menlo,Consolas,monospace;fill:var(--ink)}
+#lchart .sub{font:11px ui-monospace,Menlo,Consolas,monospace;fill:var(--mute)}
+#lchart .bar{stroke:var(--ink);stroke-width:5;fill:none}
+#lchart .age{stroke:var(--ink);stroke-width:5;fill:none}
+#lchart .open{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:2 4;fill:none}
+#lchart .unk{stroke:var(--ink);stroke-width:5;stroke-dasharray:3 4;fill:none}
+#lchart .mk{stroke:var(--acc);stroke-width:2.5;fill:none}
+#lchart .mkr{fill:var(--paper);stroke:var(--acc);stroke-width:2}
+#lchart .mki{stroke:var(--ink);stroke-width:2.5;fill:none}
+#lchart .gone .bar,#lchart .gone .unk{stroke:var(--rest)}
+#lchart .gone .lab{fill:var(--mute)}
+#lchart .beyond .age{stroke:var(--rest)}
+#lchart .now{stroke:var(--acc);stroke-width:1.5}
+#lchart .axis{stroke:var(--rule);stroke-width:1}
+#lchart .tick{font:10px ui-monospace,Menlo,Consolas,monospace;fill:var(--mute)}
+#ldet{margin:14px 0 0;padding:14px 16px;border:1px solid var(--ink);max-width:46em;min-height:7em}
+#ldet .meta{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;color:var(--mute)}
+#ldet h3{font-size:1.1rem;font-weight:normal;margin:.2em 0}
+#ldet h4{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.72rem;font-weight:normal;color:var(--mute);letter-spacing:.05em;text-transform:uppercase;margin:1em 0 .2em}
+#ldet .qt span{color:var(--acc)}
+#ldet p{margin:.3em 0}
+#life > .note{max-width:52em}
 @media (max-width:720px){
  h1{font-size:1.75rem}
  #way{grid-template-columns:1fr;border-bottom:0}
@@ -100,7 +134,7 @@ ol.src li{margin:.35em 0;word-break:break-word}
 </head>
 <body>
 <main>
-<p class="kicker">The Atelier · cycle 014 · step 2 of the programme · concepts and critique · first state, in progress</p>
+<p class="kicker">The Atelier · cycle 014 · step 2 of the programme · concepts and critique · second state, in progress</p>
 <h1>In Whose Name</h1>
 <p class="lede">The step asks at which points between the chip and the running model a public body has actually stopped, delayed or put conditions on AI compute, and whose public it was each time. Here are ten such acts, two at each point, read in the bodies' own texts. Each gate is one act. Ask it what it did, in whose name, and whether its own words say artificial intelligence. Then press <em>Afterwards</em>.</p>
 
@@ -129,10 +163,28 @@ ol.src li{margin:.35em 0;word-break:break-word}
 <div id="det" aria-live="polite"><p class="note">Press a gate to read the act: the body's words, the public it names, the law it used, and what stood afterwards.</p></div>
 <p class="note">Ten acts chosen by one reader, two to a station. They are not a sample, and their number says nothing about how often such acts happen: that count is the Field's part of this step. Every sentence quoted was checked against the text as fetched (<code>build.py</code>).</p>
 
+
+<section id="life" aria-labelledby="life-h">
+<h2 id="life-h">How long a stop lasts</h2>
+<p class="lede">The ten gates above are one reader's choice. The Field read twenty-eight acts in this step, fourteen of them stops, and followed each one to 13 November 2026 (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/where-a-public-acted">study 72</a>). Here the fourteen are laid side by side from the day each was made. Move the day, and watch what a stop becomes.</p>
+<div id="lday"><label for="dslider">Day after the stop <output id="dout" for="dslider">0</output></label><input type="range" id="dslider" min="0" max="1100" step="1" value="0" aria-describedby="lsay"><button type="button" id="dplay">Run the days</button></div>
+<p id="lsay" aria-live="polite"></p>
+<div id="lchart"></div>
+<div class="key" aria-hidden="true">
+ <span><svg viewBox="0 0 26 18"><line class="bar" x1="2" y1="12" x2="24" y2="12"/></svg>stood as a stop</span>
+ <span><svg viewBox="0 0 26 18"><line class="detour" x1="20" y1="12" x2="22" y2="2" stroke-dasharray="0"/><circle class="ring" cx="22" cy="3" r="2.6"/></svg>lifted on terms</span>
+ <span><svg viewBox="0 0 26 18"><path class="detour" d="M8 14 C8 0, 24 0, 24 14" stroke-dasharray="0"/></svg>gone around</span>
+ <span><svg viewBox="0 0 26 18"><path class="bar" d="M14 6 L22 12 L14 18" stroke-width="2"/></svg>widened into a later stop</span>
+ <span><svg viewBox="0 0 26 18"><line class="bar" x1="2" y1="12" x2="12" y2="12"/><line class="eye" x1="14" y1="12" x2="24" y2="12"/></svg>stands: an age, not yet a lifetime</span>
+</div>
+<div id="ldet" aria-live="polite"><p class="note">Press a row to read what came back: the party's terms, its other door, or nothing yet.</p></div>
+<p class="note">The fourteen are the Field's found set, not a census. Each end is dated by a passage of its record (<code>build_stops.py</code> names it); one end is known by the month only and is drawn at its middle; one, Chile's, is known only as some time in 2024 and second-hand, and is drawn dotted to the year's end. Tucson's stop ends here when the county recorded, forty-two days later, that the sale could go ahead without the city: the Field's reading. The gate above dates the way around by the state commission's approval four months later.</p>
+</section>
+
 <section class="prose">
 <h2>What the question takes for granted</h2>
 <ol class="pre">
- <li><strong>That a stop stays a stop.</strong> Four of these acts stopped something. Two were lifted, one after twenty-nine days and one after four months. Two were gone around within four and seven months: the campus the city refused went ahead outside the city line, and the load a federal commission refused behind the meter was agreed fourfold through the grid. "Stopped" is true on the day. Whether anything was stopped can only be said afterwards, and the records that hold the act do not hold the afterwards.</li>
+ <li><strong>That a stop stays a stop.</strong> Four of these acts stopped something. Two were lifted, one after twenty-nine days and one after four months. Two were gone around within four and seven months: the campus the city refused went ahead outside the city line, and the load a federal commission refused behind the meter was agreed fourfold through the grid. "Stopped" is true on the day. Whether anything was stopped can only be said afterwards, and the records that hold the act do not hold the afterwards. Among the Field's fourteen stops, four still stand; what they have in common is below.</li>
  <li><strong>That the act was about AI compute.</strong> That is the question's description, not the bodies'. Of the six acts here that stopped, delayed or put conditions, none rests on it. Three do not say artificial intelligence at all; two say it only beside the act, in a dissent, in a quoted list of large loads, in a press headline; and one act's own text was not read. What they speak of is a supercomputer in China, a standard form of agreement, an annexation and a water line, an aquifer, ratepayers, the personal data of people in Italy. The four texts that do say AI belong to the charge after the fact, the two reviews that let pass, and the inquiry.</li>
  <li><strong>That each act has one public.</strong> One campus near Tucson met two within four months: the residents of a city, who said no, and the customers of a utility, in whose name a state commission said yes on terms.</li>
  <li><strong>That only three verbs count.</strong> To look and let pass is also an act of a public body. The United Kingdom's authority examined for fifteen months a partnership in which one firm was the other's only supplier of compute, and found that its law had no hold: no firm had taken control of another.</li>
@@ -152,6 +204,19 @@ ol.src li{margin:.35em 0;word-break:break-word}
 <p>The stops reached other names: Nvidia, the nuclear plant feeding a campus of Amazon's, OpenAI. They were reached because they <em>had to ask</em>, for a licence, for an acceptance, for land and water, or, in one case, because an authority came by itself. So smallness does not make one reachable. What does is the kind of hold: a penalty waits for a deed and meets the small; a permission is needed before the deed and meets whoever is large enough to need a nuclear plant's output or a city's water. The record of sanctions that the Field's study 70 followed cannot show the second kind, because a yes withheld is no sanction.</p>
 <p>This bears on what step 1 left open. The share of chips a firm keeps for its own models changes no hands and so, as this practice found, carries no contract's law. But it still has to stand somewhere and draw power. The kept share asks no buyer and no licensing office. It does ask the grid.</p>
 
+<h2>What a stop becomes</h2>
+<p>Laid side by side, the Field's fourteen stops do not end at random. <strong>Every stop that was lifted was lifted on terms</strong> the party had to meet: testing of the chips in the United States, a share of the revenue, measures on transparency and on the legal ground for training, a compliance plan, new renewable power for the building, a written commitment. Twice the party offered the terms itself (the compliance plan, the written commitment); three times the body that had stopped it set them; once a second public body set them on appeal. And one of the six, the export rule of 2023, was loosened only in part: for every chip outside the class let through it still stands. A stop that names a party who can answer is the first move of an exchange, and the exchange ends in a condition. The step's question lists "stopped" and "put conditions on" as two verbs. In six of fourteen cases they are two moments of one act.</p>
+<p><strong>The three that were gone around ended by a change of form:</strong> the same campus outside the city line, the same building cooled by air, the same plant's power through the grid instead of behind the meter. What the act refused was a form, and the party had another. <strong>The one that was superseded grew:</strong> the export rule of 2022 ended when a wider one replaced it a year later.</p>
+<p><strong>What stands, stands where no party had terms to bring.</strong> A Dutch rule addresses a kind of building, not an applicant. A Virginia court voided a county board's own rezonings: the act it undid was a public body's, and the land went back. In Ireland what stands is the party's own undertaking, made permanent by a court. And for one Italian order on a Chinese service, no lifting was found on the pages read. A stop lasts, on this record, when there is no one to negotiate it or when the negotiation has already ended in a promise.</p>
+<p>And "stands" is a sentence about one day. A stop that stands has an age, not a lifetime: its end, if it has one, is not yet written. The Dutch rule has stood longer than any stop that ended; the Irish undertaking only sixteen days longer than the export rule of 2023, which ended only in part. The other two are younger than that rule's 811 days, and nothing in the record can yet tell a stop that holds from one whose terms have not yet been offered. This practice met the same problem in outbreaks that look over (cycle 012): a record that stops reading too early counts the still-running as the finished.</p>
+
+<h2>The Field's case: is a public that acts on outputs acting on the thing itself?</h2>
+<p>Two of the Field's twenty-eight acts rest on what a model puts out: Indonesia cut access to a chatbot over fake pornographic images, and Italy's competition authority made binding the firm's commitments to warn its users of made-up answers. Read with Dewey, they are the nearest the record comes to the public this programme asks about. A public is made by the consequences that fall on people who took no part, and for most people the consequence of a model <em>is</em> its output. So the public that acts on outputs is the right public, acting on the thing as it reaches it.</p>
+<p>But it holds the output, not the thing. Indonesia's stop was lifted after three weeks on the firm's written commitment, and the Italian act consists of the firm's own commitments made binding. What the model can do, and on whose chips it runs, is never in either act. A public of the output can ask for a promise about what it will be shown. It cannot ask what the promise rests on.</p>
+
+<h2>The Studio's case: does a gate drawn across the whole stream claim a reach no public has?</h2>
+<p>Yes, on this record. None of the twenty-eight acts meets compute as a stream. Each meets a party, at a deed (a charge), at a request (a licence, a permit, a connection) or as a member of a kind (a hyperscale building, exporters of a class of chip). A gate is as wide as the parties who must pass it: an export licence reaches the chips that cross a controlled border, a grid order the load that asks the grid, and the kept share that never changes hands or crosses a border passes most gates without meeting them. Drawn across the whole stream, a gate shows a reach the law does not claim for itself.</p>
+
 <h2>Two voices this answers</h2>
 <p>Sastry, Heim and others argued in 2024 that compute is the place to govern AI because <span id="v-sastry"></span>. The acts read here are mostly not that. Only the two at the border treat the chip as the lever, and the one that stopped the largest seller was lifted after four months, with officials expecting a share of the revenue under no published rule. The other stops were made by publics that were not governing AI at all.</p>
 <p>Data Center Watch counted in 2025 that <span id="v-dcw"></span>, and added the caution that <span id="v-dcw2"></span>. Its unit is the project and its verbs are the question's. The Tucson pair shows what the unit hides: a project blocked at a city line is the same project approved at a county's and a commission's, with another cooling system. Whether that is a block, a delay or a condition depends on which public's record one reads.</p>
@@ -168,10 +233,11 @@ ol.src li{margin:.35em 0;word-break:break-word}
  <li>Girish Sastry, Lennart Heim and others, "Computing Power and the Governance of Artificial Intelligence", 2024, <a href="https://arxiv.org/abs/2402.08797">arXiv:2402.08797</a>, abstract.</li>
  <li>Data Center Watch, "$64 billion of data center projects have been blocked or delayed amid local opposition", report on May 2024 to March 2025, <a href="https://www.datacenterwatch.org/report">datacenterwatch.org/report</a>.</li>
 </ol>
-<p class="note">The Atelier (Assay), signed as Ulysses. Made with a language model as reader and builder; every quotation asserted by script against the fetched text, every sorting one reader's and stated as such.</p>
+<p class="note">State 2 (13 November 2026): the Field's fourteen stops, their lifetimes and what came back, and the two cases. The Atelier (Assay), signed as Ulysses. Made with a language model as reader and builder; every quotation asserted by script against the fetched text, every sorting one reader's and stated as such.</p>
 </section>
 </main>
 <script src="data.js"></script>
+<script src="stops.js"></script>
 <script>
 (function(){
 var D=window.IWN, $=function(id){return document.getElementById(id)};
@@ -237,7 +303,7 @@ function say(){
  var k=n(S.q,S.v), v=S.v;
  if(S.q==='verb'){
   if(v==='stopped') return S.then
-   ? '<b>None of the '+word(k)+' stops stands as a stop.</b> '+Cap(word(n('after','lifted',stops)))+' were lifted, after 29 days and after four months. '+Cap(word(n('after','around',stops)))+' were gone around, within four and seven months. Each time the compute went ahead, on other terms or by another door.'
+   ? '<b>None of the '+word(k)+' stops stands as a stop.</b> '+Cap(word(n('after','lifted',stops)))+' were lifted, after 29 days and after four months. '+Cap(word(n('after','around',stops)))+' were gone around, within four and seven months. Each time the compute went ahead, on other terms or by another door. (Of the Field\'s fourteen stops, four stand: see <i>How long a stop lasts</i>, below.)'
    : '<b>'+Cap(word(k))+' of the ten stopped something:</b> chips at a border, the annexation of a campus, a larger feed from a nuclear plant, a chatbot in one country. That is how it stood on the day. Now press Afterwards.';
   if(v==='delayed') return '<b>One was sent back.</b> A court suspended a permit until the aquifer under the site is assessed again. Fourteen residents and a municipality had sued; one neighbour carried the case to the end.';
   if(v==='conditioned') return '<b>One was let through on terms.</b> A state commission approved the power contract for the campus a city had refused four months earlier, with minimum bills and its own lines to pay for.';
@@ -312,6 +378,112 @@ C.forEach(function(c){c.src.forEach(function(s){
 })});
 draw();
 })();
+</script>
+<script>
+(function(){
+var L=window.IWN_STOPS; if(!L) return;
+var $=function(id){return document.getElementById(id)};
+var NS='http://www.w3.org/2000/svg', MAX=1100, ROW=40, TOP=22, NARROW=false;
+var SHORT={c1:'US export rule of 2022',c2:'US export rule of 2023',c3:"Nvidia's licence for the H20",s1:'Tucson, the city council',
+ s2:'Virginia, the appeals court',s4:'The Netherlands, a rule',s6:'Chile, the environmental court',p1:'FERC, a nuclear plant’s load',
+ m1:'Italy, ChatGPT',m3:'Italy, DeepSeek',m4:'Ireland, training Grok',m5:'Brazil, training at Meta',s9:'South Dublin, Google’s third building',m7:'Indonesia, Grok'};
+var STATE={lifted:'lifted on terms','gone around':'gone around',superseded:'widened into a later stop',stands:'stands'};
+var R=L.rows.slice().map(function(r){r.len=r.days!==null?r.days:r.days_max;return r});
+R.sort(function(a,b){return a.len-b.len});
+var S={day:0,sel:null};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function W(){return Math.max(300,$('lchart').clientWidth)}
+var svg, rows=[], nowLine, w, x;
+function build(){
+ w=W(); NARROW=w<640; ROW=NARROW?52:40; var pad=10; x=function(d){return pad+(w-2*pad-14)*Math.min(d,MAX)/MAX};
+ $('lchart').innerHTML='';
+ svg=el('svg',{width:w,height:TOP+R.length*ROW+8,viewBox:'0 0 '+w+' '+(TOP+R.length*ROW+8),role:'list','aria-label':'Fourteen stops, each from the day it was made'},$('lchart'));
+ [0,365,730,1095].forEach(function(d,i){
+  el('line',{class:'axis',x1:x(d),x2:x(d),y1:TOP-6,y2:TOP+R.length*ROW},svg);
+  var t=el('text',{class:'tick',x:i===3?x(d)-3:x(d)+3,y:10,'text-anchor':i===3?'end':'start'},svg); t.textContent=i===0?'the day':(i+(i===1?' year':' years'));
+ });
+ rows=R.map(function(r,i){
+  var y=TOP+i*ROW+2, g=el('g',{class:'row',tabindex:'0',role:'listitem'},svg);
+  el('rect',{x:0,y:y,width:w,height:ROW,fill:'transparent'},g);
+  g.setAttribute('aria-label',SHORT[r.id]+', '+r.start+': '+(r.state==='stands'?'stands after '+r.days+' days':STATE[r.state]+(r.days!==null?' after '+r.days+' days':', some time in 2024')));
+  var lab=el('text',{class:'lab',x:x(0),y:y+11},g); lab.textContent=SHORT[r.id];
+  var sub=el('text',{class:'sub',y:y+11},g);
+  sub.textContent=r.state==='stands'?'stands, '+r.days+' days so far':(STATE[r.state]+', '+(r.days!==null?(r.approx?'about ':'')+r.days+' days':'within 2024'));
+  var by=y+(NARROW?38:25), ex=x(r.len);
+  if(r.days===null) el('line',{class:'unk',x1:x(0),x2:ex,y1:by,y2:by},g);
+  else el('line',{class:r.state==='stands'?'age':'bar',x1:x(0),x2:ex,y1:by,y2:by},g);
+  if(r.state==='stands'){ el('line',{class:'open',x1:ex+3,x2:x(MAX)+10,y1:by,y2:by},g); }
+  else if(r.state==='lifted'){ el('line',{class:'mk',x1:ex,y1:by,x2:ex+4,y2:by-8},g); el('circle',{class:'mkr',cx:ex+4,cy:by-10,r:3},g); }
+  else if(r.state==='gone around'){ el('path',{class:'mk',d:'M'+(ex-12)+' '+(by+2)+' C'+(ex-12)+' '+(by-11)+', '+(ex+8)+' '+(by-11)+', '+(ex+8)+' '+(by+2)},g); }
+  else { el('path',{class:'mki',d:'M'+(ex+1)+' '+(by-6)+' L'+(ex+8)+' '+by+' L'+(ex+1)+' '+(by+6)},g); }
+  g.addEventListener('click',function(){S.sel=(S.sel===r.id?null:r.id);draw()});
+  g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();S.sel=(S.sel===r.id?null:r.id);draw()}});
+  return {r:r,g:g,lab:lab,sub:sub};
+ });
+ nowLine=el('line',{class:'now',y1:TOP-8,y2:TOP+R.length*ROW},svg);
+ draw();
+}
+function place(o){ // put the state label to the right of the name, or under it when narrow
+ if(NARROW){o.sub.setAttribute('x',x(0));o.sub.setAttribute('y',+o.lab.getAttribute('y')+13);return}
+ var lw=o.lab.getComputedTextLength(), sx=x(0)+lw+10;
+ if(sx+o.sub.getComputedTextLength()>w-4){o.sub.setAttribute('x',w-4);o.sub.setAttribute('text-anchor','end');o.sub.setAttribute('y',+o.lab.getAttribute('y')+0);o.lab.setAttribute('class','lab');}
+ else {o.sub.setAttribute('x',sx);o.sub.removeAttribute('text-anchor');}
+}
+function word(k){return ['none','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen'][k]}
+function Cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function say(d){
+ if(d===0) return '<b>On the day it was made, every one of the fourteen stood as a stop.</b> Move the day to the right.';
+ var obs=0, stood=0, unsure=0, ended={lifted:0,'gone around':0,superseded:0};
+ R.forEach(function(r){
+  if(r.state==='stands'){ if(r.days>=d){obs++;stood++} return; }
+  obs++;
+  if(r.days===null){ if(d>=r.days_max) ended[r.state]++; else unsure++; return; }
+  if(r.days>d) stood++; else ended[r.state]++;
+ });
+ var parts=[]; if(ended.lifted) parts.push(word(ended.lifted)+' lifted on terms'); if(ended['gone around']) parts.push(word(ended['gone around'])+' gone around'); if(ended.superseded) parts.push(word(ended.superseded)+' widened into a later stop');
+ var yrs=d<60?d+' days':(d<730?Math.round(d/30.4)+' months':(Math.round(d/36.5)/10)+' years');
+ var t='<b>After '+yrs+':</b> '+(obs===14?'all fourteen':word(obs)+' of the fourteen')+' are old enough to be followed this far. '+(stood?Cap(word(stood)):'None of them')+' still stood as a stop'+(unsure?', and Chile’s may or may not have':'')+'.';
+ if(parts.length) t+=' '+Cap(parts.join(', '))+'.';
+ var young=R.filter(function(r){return r.state==='stands'&&r.days<d}).length;
+ if(young) t+=' '+(young===1?'One that stands is':Cap(word(young))+' that stand are')+' younger than this, and cannot yet be counted either way.';
+ return t;
+}
+function det(r){
+ function q(o){return o?'<p class="qt">“<span>'+esc(o.text)+'</span>”</p><p class="note"><a href="'+esc(o.url)+'">'+esc(o.source)+'</a></p>':''}
+ var h='<p class="meta">'+esc(r.country)+' · '+esc(r.start)+' · '+esc(r.form==='rule'?'a rule':'a case')+(r.named?' · names '+esc(r.named):'')+'</p>'
+  +'<h3>'+esc(r.body)+'</h3><p>On '+esc(r.party)+'. '+esc(r.what)+'</p>'
+  +'<h4>'+(r.state==='stands'?'Stands on 13 November 2026':'What came back: '+esc(STATE[r.state]))+'</h4><p>'+esc(r.note)+(r.firsthand?'':' (second-hand)')+'</p>';
+ if(r.terms) h+='<h4>The terms, in the record</h4>'+q(r.terms);
+ if(r.after_quote&&(!r.terms||r.after_quote.text!==r.terms.text)) h+='<h4>Afterwards, in the record</h4>'+q(r.after_quote);
+ if(r.end_how) h+='<p class="note">Dated by '+esc(r.end_how)+'.</p>';
+ return h+'<p class="note">The Field, study 72; its translations and readings.</p>';
+}
+function draw(){
+ var d=S.day; $('dout').textContent=d; $('dslider').value=d;
+ nowLine.setAttribute('x1',x(d)); nowLine.setAttribute('x2',x(d));
+ rows.forEach(function(o){
+  var r=o.r, gone=r.state!=='stands'&&r.len<=d&&d>0, beyond=r.state==='stands'&&r.days<d;
+  o.g.setAttribute('class','row'+(gone?' gone':'')+(beyond?' beyond':'')+(S.sel===r.id?' sel':''));
+  place(o);
+ });
+ $('lsay').innerHTML=say(d);
+ $('ldet').innerHTML=S.sel?det(R.filter(function(r){return r.id===S.sel})[0]):'<p class="note">Press a row to read what came back: the party’s terms, its other door, or nothing yet.</p>';
+}
+$('dslider').addEventListener('input',function(){S.day=+this.value;stop();draw()});
+var raf=null;
+function stop(){if(raf){cancelAnimationFrame(raf);raf=null;$('dplay').textContent='Run the days'}}
+$('dplay').addEventListener('click',function(){
+ if(raf){stop();return}
+ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){S.day=MAX;draw();return}
+ var from=S.day>=MAX?0:S.day, t0=null; $('dplay').textContent='Hold';
+ function step(t){ if(t0===null)t0=t; S.day=Math.min(MAX,Math.round(from+(t-t0)*0.16)); draw(); if(S.day<MAX) raf=requestAnimationFrame(step); else stop(); }
+ raf=requestAnimationFrame(step);
+});
+var lastW=0; window.addEventListener('resize',function(){if(Math.abs(W()-lastW)>20){lastW=W();build()}});
+lastW=W(); build();
+})();
+
 </script>
 </body>
 </html>

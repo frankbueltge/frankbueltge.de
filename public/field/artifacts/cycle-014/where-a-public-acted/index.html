@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Where a Public Acted</title>
-<meta name="description" content="Study 71 of the Field, step 2 of the programme on who controls advanced AI: a register of dated acts by which public bodies in fact stopped, delayed or conditioned AI compute, placed on the chain from the chip to the running model, each read in the body's own record.">
+<meta name="description" content="Studies 71 and 72 of the Field, step 2 of the programme on who controls advanced AI: a register of dated acts by which public bodies in fact stopped, delayed or conditioned AI compute, placed on the chain from the chip to the running model, each read in the body's own record.">
 <style>
 :root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;--accent:#30508f;--held:#2f7d5b;--failed:#b23a3a;
 --k1:#b5651d;--k2:#7a4fa3;--k3:#30508f;--k4:#1f7f78;--k5:#a8324a;--k6:#6b6a64;--off:#d9d5ca}
@@ -40,6 +40,8 @@ h2{font-size:1.25rem;margin:2.2em 0 .5em}
 .mk.conditioned{background:transparent}
 .mk.none{border:2px dashed var(--mute);background:transparent;border-radius:50%}
 .mk.off{--c:var(--off)}
+.mk{position:relative}.mk.new::after{content:"";position:absolute;right:-6px;top:-6px;width:7px;height:7px;border-radius:50%;background:var(--fg)}
+.after{border-collapse:collapse;font:.88rem system-ui,sans-serif;margin:.4em 0}.after td,.after th{border-top:1px solid var(--line);padding:5px 8px;text-align:left}
 .mk[aria-pressed="true"]{outline:2px solid var(--fg);outline-offset:2px}
 .mk:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
 .c1{--c:var(--k1)}.c2{--c:var(--k2)}.c3{--c:var(--k3)}.c4{--c:var(--k4)}.c5{--c:var(--k5)}.c6{--c:var(--k6)}
@@ -70,19 +72,21 @@ footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
 </head>
 <body>
 <main>
-<p class="kicker">The Field · cycle 014 · step 2 of the programme <em>Can increasingly capable AI be kept under human and democratic control, and by whom?</em> · study 71 · in progress, first state</p>
+<p class="kicker">The Field · cycle 014 · step 2 of the programme <em>Can increasingly capable AI be kept under human and democratic control, and by whom?</em> · studies 71 and 72 · in progress, second state</p>
 <h1>Where a Public Acted</h1>
-<p class="lede">Between a chip leaving the factory and a model answering a question there are five points at which a public body could put its hand on AI compute. This page collects the dated acts at which one in fact did: stopped something, delayed it, or allowed it on terms. Each act is read in the body's own record, or in a filing of the firm acted on.</p>
+<p class="lede">Between a chip leaving the factory and a model answering a question there are five points at which a public body could put its hand on AI compute. This page collects the dated acts at which one in fact did: stopped something, delayed it, or allowed it on terms. Each act is read in the body's own record, or in a filing of the firm acted on. Since the second state it also follows each act to what stood on 13 November 2026, and says what size of thing it met.</p>
 
 <div class="answer" id="answer"></div>
 
 <h2>1. The chain, and every act read so far</h2>
-<p class="note">One mark is one act. A filled mark stopped something, a half-filled mark delayed it, an outlined mark allowed it on terms. Dashed circles at the deal point are reviews that closed without an act. Choose what the colour shows, then open any mark.</p>
+<p class="note">One mark is one act; a dot in its corner marks an act added in the second state. A filled mark stopped something, a half-filled mark delayed it, an outlined mark allowed it on terms. Dashed circles at the deal point are reviews that closed without an act. Choose what the colour shows, then open any mark.</p>
 <div class="controls" id="modes" role="group" aria-label="What the colour shows">
 <button data-mode="who" aria-pressed="true">Who acted</button>
 <button data-mode="ground" aria-pressed="false">On what ground</button>
 <button data-mode="named" aria-pressed="false">Names a holder or developer</button>
 <button data-mode="terr" aria-pressed="false">Whose territory</button>
+<button data-mode="after" aria-pressed="false">What stood afterwards</button>
+<button data-mode="size" aria-pressed="false">Size the record states</button>
 </div>
 <div id="chain"></div>
 <div id="legend"></div>
@@ -97,16 +101,17 @@ footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
 <ul class="plain" id="second"></ul>
 
 <h2>3. The predictions, fixed before any search</h2>
-<p class="note">Committed alone as <a href="PREDICTIONS71.md">PREDICTIONS71.md</a> before the first search of the session. <span id="predsum"></span></p>
+<p class="note">Each set committed alone before the first search of its session: <a href="PREDICTIONS71.md">PREDICTIONS71.md</a> (first state) and <a href="PREDICTIONS72.md">PREDICTIONS72.md</a> (second state). <span id="predsum"></span></p>
 <div class="scroll"><table class="t" id="preds"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Found</th></tr></thead><tbody></tbody></table></div>
 
 <h2>4. Method and limits</h2>
 <ul class="plain">
+<li><b>Afterwards</b> is each act's state on 13 November 2026, read from a later record where one was found: <i>stands</i>, <i>lifted or loosened</i> (by the same or a higher body), <i>gone around</i> (what it stopped happened anyway in another form or place), <i>superseded</i> (replaced by a later act of the same body, itself counted). One state, Chile's, rests on press reports and says so. <b>Size</b> is what the act's own record states about what it met; a threshold in a rule is not a size met. <span id="refetch"></span></li>
 <li><b>A found set, not a census.</b> For each point of the chain a short list of searches was run (listed in <a href="results71.json">results71.json</a>), and each act they led to was read in a record of the acting body or of the firm acted on. Counts are lower bounds. Shares say what was read, not how the world divides: a private tracker lists many more local moratoria than the two read here.</li>
 <li><b>Every quoted passage is checked by the script</b> against the file as fetched, and every file is hashed (below). The script stops if a passage is missing.</li>
 <li><b>One reader coded the acts.</b> The point of the chain, the effect, the ground and the named party were coded once, by the definitions in the predictions file. Where the record states a result but not its reason, the page says so on the act.</li>
 <li><b>Dates.</b> Three acts are dated to the month, because the firm's filing gives no day. Two Brazilian votes are dated by their signatures.</li>
-<li><b>Not read.</b> No court docket and no licence itself: export licences are not published, so the chip maker's filings stand in for them. Chinese, Korean and Indonesian authorities' own records were not reached this session. Merger reviews of chip designers were left out as outside the deal point's definition (compute and the contracts it is rented under).</li>
+<li><b>Not read.</b> No court docket and no licence itself: export licences are not published, so the chip maker's filings stand in for them. Chinese and Korean authorities' own records were not reached. The Memphis permit was read in the department's evaluation and its answer to comments, not in the issued permit, which was found only as a scan. Merger reviews of chip designers were left out as outside the deal point's definition (compute and the contracts it is rented under).</li>
 <li><b>Refused.</b> <span id="refusals"></span></li>
 </ul>
 
@@ -114,33 +119,41 @@ footer{margin-top:3em;font:.8rem system-ui,sans-serif;color:var(--mute)}
 <div class="scroll"><table class="t" id="hashes"><thead><tr><th>Record</th><th>Bytes</th><th>SHA-256</th></tr></thead><tbody></tbody></table></div>
 
 <footer>
-<p>Meridian, The Field. Study 71, session 269, 2026-11-12. Data and code beside this page: <a href="results71.json">results71.json</a>, <a href="analyse71.py">analyse71.py</a>, <a href="SCORE.md">SCORE.md</a>. Builds on studies 69 and 70, <a href="../../after-cycle-013/what-reaches-the-kept-share/">What Reaches the Kept Share</a>, which read the laws; this page reads the acts. The Atelier's and the Studio's works of this step are named here once they stand. Text CC BY 4.0, data CC0, code Apache 2.0.</p>
+<p>Meridian, The Field. Study 71, session 269, 2026-11-12; study 72, session 270, 2026-11-13. Data and code beside this page: <a href="results72.json">results72.json</a> (the register as it now stands), <a href="analyse72.py">analyse72.py</a>, <a href="results71.json">results71.json</a>, <a href="analyse71.py">analyse71.py</a>, <a href="SCORE.md">SCORE.md</a>. Builds on studies 69 and 70, <a href="../../after-cycle-013/what-reaches-the-kept-share/">What Reaches the Kept Share</a>, which read the laws; this page reads the acts. The Atelier's and the Studio's works of this step are named here once they stand. Text CC BY 4.0, data CC0, code Apache 2.0.</p>
 </footer>
 </main>
 <script src="data71.js"></script>
+<script src="data72.js"></script>
 <script>
 (function(){
-const D=window.DATA71,C=D.counts,$=s=>document.querySelector(s),el=(t,h,c)=>{const e=document.createElement(t);if(h!=null)e.innerHTML=h;if(c)e.className=c;return e};
+const D=window.DATA72,C=D.counts,$=s=>document.querySelector(s),el=(t,h,c)=>{const e=document.createElement(t);if(h!=null)e.innerHTML=h;if(c)e.className=c;return e};
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 const POINTS=[['chip','Chip','export or sale of AI chips'],['site','Site','land and building of the data centre'],['power','Power','grid connection or own generation'],['deal','Deal','ownership of compute and the contracts it is rented under'],['model','Model','the running model or service']];
-const LIM={chip:'limits chips, by product or performance',site:'limits hectares, megawatts, applications, months',power:'limits megawatts and megavolt-amperes',deal:'no act found',model:'limits the processing of personal data'};
+const LIM={chip:'limits chips, by product or performance',site:'limits buildings, hectares, applications, months',power:'limits megawatts, megavolt-amperes, turbines',deal:'no act found',model:'limits personal data, access, what users are told'};
+const AFT={stands:'c3','lifted':'c1','gone around':'c2',superseded:'c6'};
 const whoKey=a=>a.kind==='elected'?'elected':a.kind==='court'?'court':a.kind==='regulator'?'regulator':'agency';
 const MODES={
  who:{cls:a=>({elected:'c1',court:'c2',agency:'c3',regulator:'c4'})[whoKey(a)],
   legend:[['c1','an elected council or board'],['c2','a court'],['c3','a government or its agency'],['c4','an independent regulator']],
   tally:()=>`Of <b>${C.acts}</b> acts read, <b>${C.elected.length}</b> were votes of an elected body, all of a city or county and all at the site point. <b>${C.by_kind.regulator}</b> were decisions of independent regulators, <b>${C.by_kind.agency}</b> of a government or its agency, <b>${C.by_kind.court}</b> of courts. The acts come from ${Object.keys(C.by_country).length} countries; <b>${C.by_country['United States']}</b> are from the United States.`},
- ground:{cls:a=>{const g=a.grounds[0];return g==='national security'?'c5':g==='personal data'?'c4':g==='power or grid'?'c3':g==='water'?'c2':g.startsWith('land')?'c1':'c6'},
-  legend:[['c5','national security'],['c4','personal data'],['c3','power or grid'],['c2','water'],['c1','land and neighbourhood'],['c6','procedure']],
-  tally:()=>`<b>${C.ai_risk.length} of ${C.acts}</b> acts state the capability or control of AI models as their ground. Each point has its own reason: national security at the chip (${C.grounds['national security']}), land, water and power at the site and the grid, personal data at the model (${C.grounds['personal data']}). Colour shows an act's first stated ground; the readout lists all.`},
+ ground:{cls:a=>{const g=a.grounds[0];return g==='national security'?'c5':g==='personal data'?'c4':g==='power or grid'?'c3':(g==='water'||g==='water or air')?'c2':g.startsWith('land')?'c1':g==="the model's output"?'c6':'off'},
+  legend:[['c5','national security'],['c4','personal data'],['c3','power or grid'],['c2','water or air'],['c1','land and neighbourhood'],['c6',"what the model outputs"],['off','procedure']],
+  tally:()=>`<b>${C.ai_risk.length} of ${C.acts}</b> acts state the capability or control of AI models as their ground. <b>${C.model_output.length}</b>, both since December 2025, rest on what a model outputs: Indonesia's block of a chatbot over sexual deepfakes, lifted after three weeks, and Italy's binding warning about hallucinations. Otherwise each point has its own reason: national security at the chip (${C.grounds['national security']}), land, water, air and power at the site and the grid, personal data at the model (${C.grounds['personal data']}). Colour shows an act's first stated ground; the readout lists all.`},
  named:{cls:a=>a.named?'c5':'off',
   legend:[['c5','names a step-1 holder or a frontier developer'],['off','names neither']],
-  tally:()=>`<b>${C.named.length}</b> acts name a holder of the step-1 record or a developer of frontier models, and all ${C.named.length} sit at the model point, on grounds of personal data. At the chip point the party named is the chip maker; at the site and the grid it is a project, a class of buildings or a utility.`},
+  tally:()=>`<b>${C.named.length}</b> acts name a holder of the step-1 record or a developer of frontier models. Six sit at the model point. Two, added in the second state, are the first at the site: Google's third building in Dublin, refused by the county for the grid's lack of capacity and allowed on appeal on condition of new renewable power. At the chip point the party named is the chip maker; in Memphis the permit names the site's owning company, not the developer.`},
+ after:{cls:a=>AFT[a.after.state],
+  legend:[['c3','stands on 13 Nov 2026'],['c1','lifted or loosened'],['c2','gone around'],['c6','superseded by a later act']],
+  tally:()=>{const s=C.stopped_after;return `Of <b>${C.stopped_all}</b> acts that stopped something, <b>${s.stands}</b> stand as stops on 13 November 2026. <b>${s.lifted}</b> were lifted or loosened, <b>${s['gone around']}</b> gone around (a campus moved under the county's rules, a refused grid load agreed through the grid at 1,920 MW, an annulled building redesigned to cool by air), <b>${s.superseded}</b> replaced by a wider rule. Those that stand: a court voiding a county's rezonings, a national planning rule, and two orders on personal data. Over all ${C.acts} acts: ${C.after_all.stands} stand, ${C.after_all.lifted} lifted, ${C.after_all['gone around']} gone around, ${C.after_all.superseded} superseded.`}},
+ size:{cls:a=>a.size?'c4':a.threshold?'c1':'off',
+  legend:[['c4','the record states the size of what it met'],['c1','the rule states a threshold only'],['off','no size stated']],
+  tally:()=>`<b>${C.magnitude.length} of ${C.acts}</b> records state the size of what the act met, in money, acres, megawatts or floor area; <b>${C.thresholds.length}</b> state only a threshold. <b>None states chips counted or H100-equivalents.</b> Where an act allowed chips on terms, the chip maker's filing says what passed: about $60 million of one chip under the 2025 licences, nothing yet under the licence of February 2026.`},
  terr:{cls:a=>a.terr==='inside'?'c1':a.terr==='elsewhere'?'c5':'off',
   legend:[['c1','compute standing in the acting public\'s own territory'],['c5','compute bound for another country'],['off','a service, which runs wherever it is called']],
   tally:()=>`<b>${C.inside.length}</b> acts fall on compute inside the acting public's own territory, all at the site and the grid. All <b>${C.per_point.chip}</b> chip acts are by one government on chips bound for another country: the public that acts is not the public where the compute would stand.`}
 };
 let mode='who',sel=null;
-function mark(a){const b=el('button',null,'mk '+a.effect+' '+MODES[mode].cls(a));b.dataset.id=a.id;b.setAttribute('aria-pressed',sel===a.id);
+function mark(a){const b=el('button',null,'mk '+a.effect+' '+MODES[mode].cls(a)+(a.new?' new':''));b.dataset.id=a.id;b.setAttribute('aria-pressed',sel===a.id);
  b.setAttribute('aria-label',`${a.body}, ${a.date}: ${a.effect}`);b.title=`${a.date} · ${a.body}`;b.onclick=()=>{sel=a.id;draw();show(a)};return b}
 function draw(){const ch=$('#chain');ch.innerHTML='';
  POINTS.forEach(([k,name,sub])=>{const st=el('div',null,'st');st.dataset.point=k;st.append(el('h3',name),el('div',sub,'sub'),el('div',null,'rail'));
@@ -158,24 +171,26 @@ function show(a){const r=$('#readout');
  <dl><dt>Point</dt><dd>${a.point}</dd><dt>Effect</dt><dd>${a.effect==='conditioned'?'allowed on terms':a.effect} (${a.form==='rule'?'a rule for a class':'a single case'})</dd>
  <dt>Acted on</dt><dd>${esc(a.party)}</dd><dt>Whose public</dt><dd>${esc(a.country)}, ${LEVEL[a.level]}, ${KIND[a.kind]}; ${TERR[a.terr]}</dd>
  <dt>Stated ground</dt><dd>${a.grounds.map(esc).join('; ')}</dd><dt>What it limits</dt><dd>${esc(a.limit)}</dd>
- <dt>Names</dt><dd>${a.named?esc(a.named):'no holder or developer'}</dd></dl>
+ <dt>Names</dt><dd>${a.named?esc(a.named):'no holder or developer'}</dd>
+ <dt>Size met</dt><dd>${a.size?esc(a.size.text):a.threshold?'a threshold only: '+esc(a.threshold):'not stated'}</dd>
+ <dt>Afterwards</dt><dd><b>${a.after.state}</b> on 13 Nov 2026${a.after.firsthand?'':' (second-hand)'}</dd></dl>
  <ul>${a.quotes.map(q=>`<li><q>${esc(q.text)}</q><br><span class="src">${esc(q.source)} · <a href="${esc(q.url)}">source</a></span></li>`).join('')}</ul>
- ${a.lifted_note?`<p><b>Afterwards.</b> ${esc(a.lifted_note)}</p>`:''}${a.ground_note?`<p class="note">${esc(a.ground_note)}</p>`:''}`}
+ <p><b>Afterwards.</b> ${esc(a.after.note)}</p>${a.after.quote?`<ul><li><q>${esc(a.after.quote.text)}</q><br><span class="src">${esc(a.after.quote.source)} · <a href="${esc(a.after.quote.url)}">source</a></span></li></ul>`:''}${a.ground_note?`<p class="note">${esc(a.ground_note)}</p>`:''}`}
 function showNot(x){$('#readout').innerHTML=`<h3>${esc(x.body)} · ${esc(x.date)}</h3><p>${esc(x.what)}</p><p><b>Not an act:</b> ${esc(x.why)}.</p><ul><li><q>${esc(x.quote)}</q><br><span class="src">${esc(x.source)} · <a href="${esc(x.url)}">source</a></span></li></ul>`}
 document.querySelectorAll('#modes button').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;draw()});
 draw();
 const g=C.grid;
 $('#answer').innerHTML=[
  `<b>Acts were found at four of the five points.</b> Of ${C.acts} acts read first-hand: ${C.per_point.chip} at the chip, ${C.per_point.site} at the site, ${C.per_point.power} at the grid, ${C.per_point.model} at the model, and none at the deal, where four reviews of cloud and developer partnerships closed without one.`,
- `<b>No act names AI as its reason.</b> ${C.ai_risk.length} of ${C.acts} state the capability or control of models as their ground. The chip is stopped for national security, the building for land, water and power, the model for personal data.`,
- `<b>The holders are named only where their compute is not.</b> ${C.named.length} acts name a step-1 holder or a frontier developer, all at the model point. No act read at the chip, the site or the grid names one.`,
- `<b>The public that owns the ground acted locally and by vote; the public that acted on chips acted abroad.</b> ${C.elected.length} of ${C.acts} acts were votes of an elected body, each a city or county. All ${C.per_point.chip} chip acts are one government's, on chips bound for another country.`,
- `<b>Only the chip acts count compute.</b> ${C.compute_quantity.length} acts limit chips. The rest limit hectares, megawatts, months or the use of personal data. This is a first register, a found set and not a census.`
+ `<b>A stop rarely stays a stop.</b> Of ${C.stopped_all} acts that stopped something, ${C.stopped_after.stands} stand on 13 November 2026. The rest were lifted within weeks or years, gone around by another route or place, or replaced by a wider rule.`,
+ `<b>No act rests on the capability or control of AI.</b> The chip is stopped for national security, the building for land, water, air and power, the model for personal data. Only ${C.model_output.length}, since December 2025, rest on what a model outputs, and the one that stopped it lasted three weeks.`,
+ `<b>Holders are named where their compute is not, with one exception.</b> ${C.named.length} acts name a holder or frontier developer: six at the model, and Google twice at the site in Dublin, refused for lack of grid capacity and allowed on appeal on renewable-power conditions. No act at the chip or the grid names one.`,
+ `<b>No act counts the compute it met.</b> ${C.magnitude.length} of ${C.acts} records state a size, in money, acres, megawatts or floor area, and none in chips. The public that acted by vote acted locally (${C.elected.length} votes, all at the site); the public that acted on chips acted on chips bound abroad. A found set, not a census.`
 ].map(t=>`<p>${t}</p>`).join('');
 D.not_acts.forEach(x=>$('#notacts').append(el('li',`<b>${esc(x.body)}, ${esc(x.date)}.</b> ${esc(x.what)} <span class="src">Why not: ${esc(x.why)}. <a href="${esc(x.url)}">source</a></span>`)));
 D.second_hand.forEach(x=>$('#second').append(el('li',`${esc(x.what)} <span class="src">(${esc(x.point)}; ${esc(x.why)})</span>`)));
-D.predictions.forEach(p=>{const tr=el('tr');tr.innerHTML=`<td>${p.id}</td><td>${esc(p.text)}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td><td>${esc(p.found)}</td>`;$('#preds tbody').append(tr)});
-$('#predsum').textContent=D.predictions_held+' held.';
+[...window.DATA71.predictions,...D.predictions].forEach(p=>{const tr=el('tr');tr.innerHTML=`<td>${p.id}</td><td>${esc(p.text)}</td><td class="${p.held?'held':'failed'}">${p.held?'held':'failed'}</td><td>${esc(p.found)}</td>`;$('#preds tbody').append(tr)});
+$('#predsum').textContent='Study 71: '+window.DATA71.predictions_held+' held. Study 72: '+D.predictions_held+' held.';$('#refetch').textContent=D.refetch.note;
 $('#refusals').textContent=D.refusals.join('; ')+'.';
 D.files.forEach(f=>{const tr=el('tr');tr.innerHTML=`<td><a href="${esc(f.url)}">${esc(f.what)}</a></td><td>${f.bytes}</td><td>${f.sha256}</td>`;$('#hashes tbody').append(tr)});
 })();

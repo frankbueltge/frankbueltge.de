@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """WHOSE GATE — build data.js from the Field's records.
 
-Usage (repo root):  python3 -I works/2026-11-12-whose-gate/build.py [results65.json [results70.json]]
+Usage (repo root):  python3 -I works/2026-11-12-whose-gate/build.py [results65.json [results70.json [results72.json]]]
 Without paths the Field's two files are fetched from its repository at the pinned commits.
-State 1 (2026-11-12): the Field's finding of step 2 is not published yet. The stream is its
-chip-owner record of step 1 (study 65); the posts and stakes are its record of the laws in force
-and their uses (study 70, made in the convening). Three of the five gates the step's question
-names have not been read by the Field and stand unread.
+State 1 (2026-11-12): the stream is the Field's chip-owner record of step 1 (study 65); the posts
+and stakes are its record of the laws in force and their uses (study 70, made in the convening).
+State 2 (2026-11-13): the Field's finding of step 2 (study 72, results72.json): 28 acts of public
+bodies on the five points of the chain, each with its effect, its public and its state on
+13 November. Each act is drawn at its gate as a bar (stop), a hatched bar (delay) or a ring
+(condition); none holds a grain, because no act's record counts the chips it met.
 Every count the page states is asserted here; a failed assertion writes nothing.
 """
 import hashlib, json, sys, urllib.request, pathlib
@@ -19,6 +21,9 @@ F65 = ("bb56805c92435b909eb97fc1a9864cc17dd9c6a7",
 F70 = ("03cb2c2fe7e37a20b9064dae20a355dcb97fec7e",
        "artifacts/after-cycle-013/what-reaches-the-kept-share/results70.json",
        "37bc61f51b3bf80885108f3f415d14c8ef22d9c1cc5f01a2cddd4216ff4871ba")
+F72 = ("b38141f64440763f1bb2dbea24edf6b512546385",
+       "artifacts/cycle-014/where-a-public-acted/results72.json",
+       "a94d5700bbbf1562c46ff1cae4c1ad40a673796bdc36623fd1aa94e6dd874239")
 GRAIN = 10_000          # one grain is ten thousand H100-equivalents
 
 
@@ -30,7 +35,7 @@ def load(spec, arg):
     return json.loads(raw)
 
 
-R65, R70 = load(F65, 1), load(F70, 2)
+R65, R70, R72 = load(F65, 1), load(F70, 2), load(F72, 3)
 
 # --- the stream: every finished quarter of the chip-owner record ------------------------------
 quarters, prev_all, prev_sm = [], 0, 0
@@ -121,21 +126,86 @@ for s in border:
 after_count = [s["id"] for s in stakes if s["date"] > quarters[-1]["q"]]
 assert after_count == ["u5", "u6", "u7"]
 
-unread = [g["id"] for g in GATES if g["id"] not in LAW_GATE.values()]
-assert unread == ["ground", "power", "deal"]
+
+# --- the acts: the Field's finding of step 2 (study 72) ----------------------------------------
+POINT_GATE = {"chip": "border", "site": "ground", "power": "power", "deal": "deal", "model": "model"}
+# A public is the country whose body acted; a body below the nation is drawn hollow in its colour.
+COUNTRY = {"United States": "us", "Ireland": "ie", "Italy": "it", "Netherlands": "nl", "Brazil": "br",
+           "Chile": "cl", "Indonesia": "id", "Singapore": "sg"}
+# When each act stopped holding, or was gone around: this work's reading of the Field's notes,
+# each date checked against the phrase in the Field's record it rests on. "~" marks a date the
+# record gives only as an interval or a year.
+ENDS = {
+    "c1": ("2023-10-25", "", "October 2023"),
+    "c2": ("2026-01-13", "", "since January 2026"),
+    "c3": ("2025-08-01", "", "four months later"),
+    "s1": ("2025-09-10", "~", "Four to six weeks later"),
+    "s3": ("2024-01-01", "", "in force from 2024"),
+    "s5": ("2022-07-01", "~", "Ended in 2022"),
+    "s6": ("2026-10-01", "~", "October 2026"),
+    "p1": ("2025-06-01", "~", "Seven months later"),
+    "p2": ("2025-12-12", "", "December 2025"),
+    "m1": ("2023-04-28", "~", "four weeks later"),
+    "m5": ("2024-09-01", "~", "two months later"),
+    "s9": ("2026-09-23", "", "25 months later"),
+    "m7": ("2026-01-31", "~", "three weeks later"),
+}
+def iso(d):
+    return d if len(d) == 10 else (d + "-01" if len(d) == 7 else d + "-01-01")
+C72, acts = R72["counts"], []
+assert R72["study"] in (72, "72") and len(R72["acts"]) == C72["acts"] == 28
+for a in R72["acts"]:
+    st, note = a["after"]["state"], a["after"]["note"]
+    end = ENDS.get(a["id"])
+    assert (end is not None) == (st in ("lifted", "superseded", "gone around")), a["id"]
+    if end:
+        assert end[2] in note, (a["id"], note)
+    url = next((q["url"] for q in a["quotes"] if q.get("url")), None)
+    acts.append({"id": a["id"], "gate": POINT_GATE[a["point"]], "date": iso(a["date"]), "when": a["date"],
+                 "body": a["body"], "country": a["country"], "public": COUNTRY[a["country"]],
+                 "local": a["level"] == "sub", "effect": a["effect"], "what": a["what"],
+                 "grounds": a["grounds"], "named": a["named"], "state": st, "after": note,
+                 "end": end[0] if end else None, "approx": bool(end and end[1]),
+                 "size": a["size"]["text"] if a["size"] else None, "second_hand": a["was_second_hand"],
+                 "url": url})
+for k, v in C72["per_point"].items():
+    assert sum(1 for a in acts if a["gate"] == POINT_GATE[k]) == v, k
+assert C72["per_point"]["deal"] == 0
+for k, g in C72["grid"].items():
+    for e, n in g.items():
+        assert sum(1 for a in acts if a["gate"] == POINT_GATE[k] and a["effect"] == e) == n, (k, e)
+stops = [a for a in acts if a["effect"] == "stopped"]
+assert len(stops) == C72["stopped_all"] == 14
+from collections import Counter
+assert dict(Counter(a["state"] for a in stops)) == C72["stopped_after"] == \
+    {"stands": 4, "lifted": 6, "gone around": 3, "superseded": 1}
+assert dict(Counter(a["country"] for a in acts)) == C72["by_country"]
+assert sorted(a["id"] for a in acts if a["size"]) == sorted(C72["magnitude"]) and len(C72["magnitude"]) == 6
+assert C72["ai_risk"] == [] and sorted(C72["model_output"]) == ["m7", "m8"]
+# no act's record states the compute it met in chips: so no bar holds a grain
+assert all("chip" not in (a["size"] or "").lower() for a in acts)
+assert all(a["url"] for a in acts)
+first_act = min(a["date"] for a in acts)
+assert first_act == "2019-01-01" and sum(1 for a in acts if a["date"] < "2022-01-01") == 2
+
+unread = []   # since state 2 the Field has read all five gates; at the deal it found no act
 
 DATA = {
-    "state": 1, "date": "2026-11-12", "grain": GRAIN,
-    "from": "2022-01-01", "to": "2026-11-12", "counted_to": quarters[-1]["q"],
-    "quarters": quarters, "gates": GATES, "laws": laws, "stakes": stakes, "unread": unread,
+    "state": 2, "date": "2026-11-13", "grain": GRAIN,
+    "from": "2022-01-01", "to": "2026-11-13", "counted_to": quarters[-1]["q"],
+    "quarters": quarters, "gates": GATES, "laws": laws, "stakes": stakes, "unread": unread, "acts": acts,
     "smuggled": {"first": first_smuggled, "grains": 66, "range": smug_range,
                  "h100e": 662048, "p5": round(sm["p5"]), "p95": round(sm["p95"])},
     "counts": {"grains": 2093, "first_quarter_grains": 6, "h100e": 20926382, "fold": 334,
                "stakes": 7, "border_stakes": 6, "announcements": 5, "persons": 13, "companies": 1,
-               "admitted": 1, "inquiries": 1, "penalties": 0, "stops": 0, "after_last_count": 3},
+               "admitted": 1, "inquiries": 1, "penalties": 0, "after_last_count": 3,
+               "acts": 28, "stopped": 14, "delayed": 4, "conditioned": 10, "stops_stand": 4,
+               "stops_lifted": 6, "stops_gone_around": 3, "stops_superseded": 1, "sized": 6,
+               "sized_in_chips": 0, "deal_acts": 0, "publics": 8},
     "field": {"study65": RAW.replace("raw.githubusercontent.com", "github.com").rstrip("/") + "/tree/" + F65[0] + "/artifacts/cycle-013/who-holds-the-compute",
-              "study70": "https://github.com/frankbueltge/field-research/tree/" + F70[0] + "/artifacts/after-cycle-013/what-reaches-the-kept-share"},
+              "study70": "https://github.com/frankbueltge/field-research/tree/" + F70[0] + "/artifacts/after-cycle-013/what-reaches-the-kept-share",
+              "study72": "https://github.com/frankbueltge/field-research/tree/" + F72[0] + "/artifacts/cycle-014/where-a-public-acted"},
 }
-(HERE / "data.js").write_text("// built by build.py from the Field's studies 65 and 70; do not edit\nconst DATA = "
+(HERE / "data.js").write_text("// built by build.py from the Field's studies 65, 70 and 72; do not edit\nconst DATA = "
                               + json.dumps(DATA, ensure_ascii=False, separators=(",", ":")) + ";\n")
-print("ok", len(quarters), "quarters,", DATA["counts"]["grains"], "grains,", len(stakes), "stakes,", len(unread), "gates unread")
+print("ok", len(quarters), "quarters,", DATA["counts"]["grains"], "grains,", len(stakes), "stakes,", len(acts), "acts")
