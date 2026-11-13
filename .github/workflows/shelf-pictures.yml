@@ -1,0 +1,95 @@
+# .github/workflows/shelf-pictures.yml
+# A picture for every new piece on the entrance, without a hand (2026-11-13).
+#
+# The cards of the entrance show a picture of each piece: its maker's own still, cut to the card's
+# frame (scripts/shelf-stills.ts), or a shot of the piece's own page (scripts/shelf-shots.ts). Both
+# scripts were run by hand, last on 2026-11-06, so every piece that arrived after that day stood
+# there as a line of text, the three works of the programme's first step among them.
+#
+# This workflow runs after every mirror of a practice:
+#   1. it cuts the makers' stills that are new or have changed (no browser, a few seconds);
+#   2. only when a piece still has no picture, it builds the site and photographs that piece's page;
+#   3. it commits what is new under public/shelf/ and starts the deploy itself, because a push with
+#      the built-in token starts no workflow (the pattern of PR #1049).
+#
+# It never turns a practice's delivery red: it runs after the mirror has landed, and a page that
+# will not load in time simply keeps its plate until the next run.
+name: Shelf pictures
+
+on:
+  workflow_run:
+    workflows:
+      - Field integrate
+      - Atelier integrate
+      - Studio integrate
+      - Attention integrate
+      - n-1 integrate
+      - Nightly line integrate
+    types: [completed]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  # to start deploy-cf.yml after the push
+  actions: write
+
+concurrency:
+  group: shelf-pictures
+  cancel-in-progress: false
+
+jobs:
+  pictures:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Cut the makers' own stills that are new or have changed
+        id: stills
+        run: npx tsx scripts/shelf-stills.ts
+
+      - name: Build the site (only when a piece has no picture yet)
+        if: steps.stills.outputs.without_picture != '0'
+        run: npm run build
+
+      - name: Install the browser (only then)
+        if: steps.stills.outputs.without_picture != '0'
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Photograph the page of each piece that has no picture
+        if: steps.stills.outputs.without_picture != '0'
+        run: npx tsx scripts/shelf-shots.ts
+
+      - name: Commit the new pictures (only when there are any)
+        id: commit
+        run: |
+          if [ -z "$(git status --porcelain public/shelf src/data/shelf)" ]; then
+            echo "no new picture"
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "Shelf-Pictures"
+          git config user.email "shelf-pictures@frankbueltge.de"
+          git add public/shelf src/data/shelf
+          git commit -m "shelf: pictures of $(date -u +%F)"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase --autostash origin main && git push && break
+            git rebase --abort 2>/dev/null || true
+            [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts" >&2; exit 1; }
+            sleep $((attempt * 5))
+          done
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy the pictures
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
