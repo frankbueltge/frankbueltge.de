@@ -19,19 +19,54 @@ interface Rendered {
 export interface OverlookedDay {
   day: string
   field: string
+  /** the field's Ducking voice that says the headline */
+  voice: string
   text: string
   attention: number
   source: string
   instrument: string
   named_on_newest_day: boolean
   attended: { field: string; text: string; attention: number }[]
+  /** the motif's length in eighths of the pulse, and its notes: the eighth each begins on and its pitch */
+  motif_eighths: number
+  motif: { step: number; hz: number }[]
+  /** when the day's bell strikes, and when its motif begins, in seconds into the piece */
+  from_s: number
+  motif_from_s: number
+  /** recorded from the pressing of 2026-11-14 on (scores, see score-overlooked.ts): how long the headline is said,
+   *  the answering notes (seconds into the speech, pitch), and when each part of the ensemble takes the motif up */
+  speech_s?: number
+  echo?: { t: number; hz: number }[]
+  entries_s?: { violins: number; violas: number; piano: number; low: number }
 }
 
 export interface Overlooked extends Rendered {
   edition: number
+  week: string
+  tuning: string
+  pulse_s: number
+  day_bars: number
+  days_so_far: number
   newest_day: string
+  round: string
+  hindsight: boolean
   silenced_after_their_day: string[]
+  tutti_from_s: number
+  cut_s: number
+  /** recorded from the pressing of 2026-11-14 on: when the coda's sentence begins */
+  coda_s?: number
   days: OverlookedDay[]
+}
+
+export interface UnisonEvent {
+  at_s: number
+  section: 'violins' | 'violas' | 'cellos' | 'basses'
+  tremolo: boolean
+  attention: number
+  from_hz: number
+  to_hz: number
+  chord_tone_hz: number
+  text: string
 }
 
 export interface UnisonDay {
@@ -42,9 +77,22 @@ export interface UnisonDay {
   peak: boolean
   said: string | null
   overlooked: string
+  overlooked_attention: number
+  events: UnisonEvent[]
+  /** recorded from the pressing of 2026-11-14 on (scores, see score-unison.ts): when the day begins, how long its
+   *  headline is said at the peak, and the solo double bass (when it begins; each note's onset after that, its pitch
+   *  and length) */
+  from_s?: number
+  said_s?: number | null
+  bass_from_s?: number
+  bass?: { t: number; hz: number; s: number }[]
 }
 
 export interface Unison extends Rendered {
+  field: string
+  day_s: number
+  chord: string
+  median_spoken_hz: number
   days: UnisonDay[]
 }
 
@@ -55,9 +103,12 @@ export interface TurnDay {
   bar_s: number
   turn: boolean
   said: string | null
+  from_s: number
 }
 
 export interface Turn extends Rendered {
+  field: string
+  bars_per_day: number
   harmonics: Record<string, number>
   days: TurnDay[]
 }

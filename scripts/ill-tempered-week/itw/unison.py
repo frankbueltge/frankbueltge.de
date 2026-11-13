@@ -115,7 +115,7 @@ def render() -> tuple[np.ndarray, dict]:
                            'text': s['text']})
         last = i == len(week) - 1
         peak = t0 + PEAK_S
-        said = None
+        said, said_s = None, None
         readable = [s for s in sig if s['readable'] and len(s['text'].split()) >= 4]
         if agree >= 0.3 and not last:
             put(perc, peak - 6.0, pan(get('TimpaniRolls').note(110.0, 7.0, int(50 + 60 * d['count'] / peak_count), release=1.2), 0.0))
@@ -128,6 +128,7 @@ def render() -> tuple[np.ndarray, dict]:
             top = max(readable, key=lambda s: (s['attention'], s['text']))
             said = top['text']
             x = base.speak(said, ch['voice'])
+            said_s = round(len(x) / SR, 3)
             put(voice, peak + 0.6, np.stack([x, x]) * 0.3)
         low = min(readable, key=lambda s: (s['attention'], s['text']))
         sp = base.speak(low['text'], ch['voice'])
@@ -135,15 +136,22 @@ def render() -> tuple[np.ndarray, dict]:
         hz = [x['hz'] for x in syl if x['hz'] > 0]
         med = float(np.median(hz)) if hz else 120.0
         solo_at = (t0 + DAY_S - 0.5) if last else (peak + 5.5)
+        bass = []
         for q, x in enumerate(syl):
             nxt = syl[q + 1]['t'] if q + 1 < len(syl) else x['t'] + 0.9
             f = 82.0 * 2 ** (1.5 * math.log2((x['hz'] or med) / med))
             f = float(np.clip(f, 41.0, 175.0))
-            put(solo, solo_at + x['t'] * 1.15, pan(get('ContrabassSusVB').note(f, max(0.2, (nxt - x['t']) * 1.15), 88,
+            length = max(0.2, (nxt - x['t']) * 1.15)
+            put(solo, solo_at + x['t'] * 1.15, pan(get('ContrabassSusVB').note(f, length, 88,
                                                                                  release=0.35, key=f'b{i}{q}'), 0.0))
+            bass.append({'t': round(float(x['t']) * 1.15, 3), 'hz': round(f, 1), 's': round(float(length), 3)})
         log.append({'day': d['day'], 'signals': d['count'], 'story': story, 'agreement': round(agree, 3),
                     'peak': agree >= 0.3 and not last, 'said': said, 'overlooked': low['text'],
-                    'overlooked_attention': low['attention'], 'events': events})
+                    'overlooked_attention': low['attention'], 'events': events,
+                    # for the score on the page (src/lib/ill-tempered-week/score-unison.ts), recorded since
+                    # 2026-11-14: when the day begins, how long its headline is said at the peak, and the solo
+                    # double bass (when it begins; each note's onset after that, its pitch and its length)
+                    'from_s': round(t0, 2), 'said_s': said_s, 'bass_from_s': round(solo_at, 2), 'bass': bass})
 
     strings = pb.Pedalboard([pb.HighpassFilter(35), pb.Reverb(room_size=0.88, damping=0.4, wet_level=0.3, dry_level=0.8, width=1.0)])(
         strings.astype(np.float32), SR).astype(np.float64)
