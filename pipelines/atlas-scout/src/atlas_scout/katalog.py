@@ -709,6 +709,29 @@ def fuehre_zusammen(eintraege: list[Katalogeintrag]) -> list[Katalogeintrag]:
     return zusammengefuehrt
 
 
+# The longest abstract the catalogue publishes. Measured on 2026-11-14: every text that ran
+# longer was not an abstract but a body text (an editorial, a correction, a consensus guideline,
+# up to 25,000 characters), which OpenAlex had indexed as the abstract.
+LAENGSTE_ZUSAMMENFASSUNG = 5000
+
+
+def veroeffentlichte_zusammenfassung(e: Katalogeintrag) -> str:
+    """The abstract as the catalogue publishes it, or "".
+
+    An abstract is its authors' or its publisher's text, not the catalogue's. Since 2026-11-14
+    (Frank's decision, wording private) the catalogue publishes it only for a work that is
+    openly accessible, or where a practice wrote the summary itself in its own reading list
+    (`kuratiert`); a paywalled work keeps its title, authors and link. While the catalogue is
+    built the abstract still informs a work's fields; it is only never written to the file.
+    """
+    text = e.zusammenfassung or ""
+    if len(text) > LAENGSTE_ZUSAMMENFASSUNG:
+        return ""
+    if e.frei_zugaenglich or e.aufnahmegrund == GRUND_KURATIERT:
+        return text
+    return ""
+
+
 def als_json(eintraege: list[Katalogeintrag]) -> str:
     """Der Katalog in der Form, die `src/lib/papers.ts` liest.
 
@@ -730,7 +753,7 @@ def als_json(eintraege: list[Katalogeintrag]) -> str:
                 "url": e.url,
                 "frei_zugaenglich": e.frei_zugaenglich,
                 "felder": list(e.felder),
-                "zusammenfassung": e.zusammenfassung,
+                "zusammenfassung": veroeffentlichte_zusammenfassung(e),
                 "relevanz": e.relevanz,
                 "relevanz_herkunft": e.relevanz_herkunft,
                 # MUSS mitgeschrieben werden. Ohne diesen Block steht ein maschinell

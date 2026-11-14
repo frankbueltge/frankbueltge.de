@@ -1,0 +1,87 @@
+# .github/workflows/post-record.yml — the operator records what became of a letter (2026-11-14).
+#
+# Sending a letter of the post office is a human act, and so is saying that it happened. The links on
+# /post open a prefilled issue here, titled "Post sent: <id>", "Post answered: <id>" or
+# "Post silence: <id>". This workflow acts on such an issue only when the operator opened it: it writes
+# the status into the ledger (scripts/post/record.mjs), commits, closes the issue with what it did and
+# starts the deploy itself, because a push made with the built-in token does not fire on:push. Anybody
+# else's issue of that shape is left alone and stays open for a human to read.
+#
+# The title and body reach the script through the environment, never through the shell.
+name: Post record
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: post-record
+
+jobs:
+  record:
+    if: github.event.issue.user.login == 'frankbueltge' && startsWith(github.event.issue.title, 'Post ')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Write the status into the ledger
+        id: record
+        env:
+          TITLE: ${{ github.event.issue.title }}
+          BODY: ${{ github.event.issue.body }}
+        run: node scripts/post/record.mjs
+
+      - name: Commit
+        id: commit
+        if: steps.record.outputs.changed == 'true'
+        env:
+          LINE: ${{ steps.record.outputs.line }}
+        run: |
+          git config user.name "Post Office"
+          git config user.email "post-office@frankbueltge.de"
+          git add src/data/post/ledger.json src/data/post/ledger.manual.json
+          git commit -m "$LINE"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then echo "pushed=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+            git pull --rebase origin main
+          done
+          echo "::error::the record could not be pushed"
+          exit 1
+
+      - name: Answer on the issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          CHANGED: ${{ steps.record.outputs.changed }}
+          LINE: ${{ steps.record.outputs.line }}
+        run: |
+          if [ "$CHANGED" = "true" ]; then
+            gh issue close "$NUMBER" --repo "$GITHUB_REPOSITORY" --comment "Recorded: $LINE. The ledger on /post follows with the next deploy."
+          else
+            gh issue comment "$NUMBER" --repo "$GITHUB_REPOSITORY" --body "Nothing was recorded: $LINE."
+          fi
+
+      - name: Start the deploy
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY"
+
+      # The ledger is a source of the knowledge graph (src/lib/graph); graph.yml re-derives it.
+      - name: Re-derive the knowledge graph
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run graph.yml --repo "$GITHUB_REPOSITORY" --ref main || true

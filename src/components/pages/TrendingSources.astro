@@ -1,0 +1,175 @@
+---
+/** The source register of one committed day (extracted from TrendingPage.astro and given its
+ *  reading aids on 2026-11-14).
+ *
+ *  What each source said on its own, before any crossing. The register grew from eight sources
+ *  to thirty-four, and at that length it could no longer be read by scrolling: about five
+ *  screens on a desk, about twenty on a phone, in the file's own order with nothing to steer by.
+ *  Three things were added, and none of them takes a line out of the markup:
+ *
+ *    · a filter by KIND of source (the ledger's own sorting, src/lib/trending/groups.ts);
+ *    · a search over every line of the morning, read from the day's JSON edition, not only over
+ *      the eight lines a card prints (src/lib/trending/search.ts);
+ *    · each source is a <details>, rendered OPEN. On a phone the script folds them to one line
+ *      each, the source and the first thing it said, which makes the register an index of
+ *      thirty-four publics; a tap opens one. Without JavaScript everything stays open.
+ *
+ *  It is still a column flow and not a card grid, for the reason of 2026-09-03: CSS columns pack
+ *  sources of unequal length without holes and keep every label, link and number in the HTML,
+ *  where a crawler and a retrieval agent read them without running anything.
+ *
+ *  A line that belongs to one of the day's crossings carries a small mark with the number of
+ *  sources that carried the topic, so a reader scanning one source sees what it shares with the
+ *  others.
+ */
+import { Badge } from '@/components/ui/badge'
+import { buttonVariants } from '@/components/ui/button'
+import { platformLabel } from '@/lib/trending/format'
+import { sourceGroupCounts } from '@/lib/trending/groups'
+import type { TrendingDay } from '@/lib/trending/types'
+import { sourceColumns } from '@/lib/trending/view'
+import { cn } from '@/lib/ui/cn'
+import { fieldVariants } from '@/lib/ui/field'
+
+interface Props {
+  day: TrendingDay
+  /** lines printed per source; the structured data of the page states the same cut */
+  top?: number
+}
+const { day, top = 8 } = Astro.props
+
+// A uniform count per source, so a card is not short merely because its source publishes a
+// short list. The full lists stay in the JSON and Markdown editions, and in the search.
+const columns = sourceColumns(day, top)
+const kinds = sourceGroupCounts(columns.map((c) => c.id))
+
+const chip = cn(
+  buttonVariants({ variant: 'outline', size: 'sm' }),
+  'h-7 shrink-0 gap-1.5 px-2 font-mono text-mono-sm font-normal text-fg-muted',
+  'aria-pressed:border-fg aria-pressed:bg-fg aria-pressed:text-bg aria-pressed:hover:bg-fg aria-pressed:hover:text-bg',
+)
+---
+
+<section class="mb-12 border-t border-line pt-6" id="sources" aria-labelledby="tr-sources-h">
+  <h2 class="kicker" id="tr-sources-h">By source</h2>
+  <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+    What each source said on its own, before any crossing. A source that did not answer is recorded as
+    unavailable with the reason — never quietly dropped, and never filled in from a neighbour.
+  </p>
+
+  <div data-ledger data-json={`/trending/${day.date}.json`} data-top={top}>
+    <div class="tr-tools mt-5">
+      <form role="search">
+        <label class="sr-only" for="tr-q">Search every line of this morning</label>
+        <input
+          id="tr-q"
+          type="search"
+          data-q
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Search every line of this morning"
+          class={fieldVariants({ kind: 'input' })}
+        />
+      </form>
+      <div class="tr-kinds" role="group" aria-label="Kind of source">
+        <button type="button" data-kind="all" aria-pressed="true" class={chip}>
+          All<span class="tabular-nums opacity-60">{columns.length}</span>
+        </button>
+        {kinds.map((k) => (
+          <button type="button" data-kind={k.key} aria-pressed="false" class={chip}>
+            {k.label}<span class="tabular-nums opacity-60">{k.n}</span>
+          </button>
+        ))}
+      </div>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <p class="font-mono text-mono text-fg-faint" aria-live="polite" data-count>
+          <span class="tabular-nums">{columns.length}</span> sources · the first <span class="tabular-nums">{top}</span> lines of each
+        </p>
+        {/* Folding needs the script, so the button arrives with it. */}
+        <button type="button" data-fold="close" hidden class={chip}>Fold all</button>
+        <button type="button" data-reset hidden class={chip}>Clear</button>
+      </div>
+      <p class="max-w-3xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+        The kinds are this ledger&rsquo;s own sorting of its sources, not a statement the sources make, and the
+        crossing ignores them. The search reads the day&rsquo;s JSON edition, so it finds a line whether or not a
+        card prints it. A line marked with a number of sources belongs to a topic in &ldquo;Converging now&rdquo;.
+      </p>
+    </div>
+
+    {/* A COLUMN FLOW, not a card grid (2026-09-03). Until that day the sources stood in rows of
+        three and every card stretched to the tallest in its row, so half the block was hole. */}
+    <div class="tr-sources mt-6" data-cards>
+      {columns.map((col) => (
+        <details class="tr-source" open data-source data-group={col.group} id={`src-${col.id}`}>
+          <summary class="tr-source-head">
+            <span class="tr-source-title">
+              <h3 class="text-h3 font-semibold">{platformLabel(col.id)}</h3>
+              <span class="tr-chevron" aria-hidden="true">▾</span>
+            </span>
+            <span class="tr-source-kind">{col.groupLabel}</span>
+            {col.signals[0] && <span class="tr-source-teaser">{col.signals[0].label}</span>}
+          </summary>
+          <p class="mt-1 font-mono text-mono-sm leading-relaxed text-fg-faint">
+            <a href={col.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg [overflow-wrap:anywhere]">{col.name}</a>
+          </p>
+          {col.status === 'ok' ? (
+            <p class="mt-0.5 font-mono text-mono-sm text-fg-faint">
+              <span class="tabular-nums">{col.count}</span> signals{col.asOf ? ` · as of ${col.asOf}` : ''}
+            </p>
+          ) : (
+            <p class="mt-1.5">
+              <Badge variant="outline">{col.status}</Badge>
+              {col.status === 'partial' && col.signals.length > 0 && <span class="ml-2 font-mono text-mono-sm text-fg-faint"><span class="tabular-nums">{col.count}</span> signals</span>}
+              {/* A note quotes the address that failed, and an address has no place to break:
+                  on 2026-11-14 one of them widened the page to 524 px on a 390 px phone. */}
+              {col.note && <span class="ml-2 font-mono text-mono-sm text-fg-muted [overflow-wrap:anywhere]">{col.note}</span>}
+            </p>
+          )}
+          {col.signals.length === 0 ? (
+            <p class="mt-2 text-sm text-fg-faint">nothing recorded</p>
+          ) : (
+            <ol class="mt-2 space-y-1 text-sm">
+              {col.signals.map((s) => (
+                <li class="tr-signal" data-signal>
+                  <span class="tr-signal-label">
+                    {s.url ? (
+                      <a href={s.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{s.label}</a>
+                    ) : (
+                      <span>{s.label}</span>
+                    )}
+                    {s.geo && <span class="ml-1 font-mono text-mono-xs text-fg-faint">{s.geo}</span>}
+                    {s.desk && <span class="ml-1 whitespace-nowrap font-mono text-mono-xs text-fg-faint">{s.desk}</span>}
+                    {s.crossing && (
+                      <span class="tr-cross" title={`Carried by ${s.crossing} independent sources this morning`}>
+                        <span class="tabular-nums">{s.crossing}</span> sources
+                      </span>
+                    )}
+                  </span>
+                  <span class="tr-signal-n font-mono text-mono-xs tabular-nums text-fg-faint">{s.magnitudeText}</span>
+                </li>
+              ))}
+            </ol>
+          )}
+        </details>
+      ))}
+    </div>
+
+    {/* What the search finds, written by the controller; empty until a query is typed. */}
+    <div class="tr-sources mt-6" data-results hidden></div>
+    <p class="mt-6 max-w-2xl text-sm leading-relaxed text-fg-muted" data-empty hidden>
+      Nothing this morning carries those words. The search looks through every line the sources reported, in the
+      sources&rsquo; own wording, so another spelling or a shorter word may still find it.
+    </p>
+  </div>
+</section>
+
+<script>
+  import { initSourceFilter } from '@/lib/trending/source-filter-controller'
+  // On the first load and after every client-side navigation (the house's ClientRouter): the
+  // archive is walked day by day, and each day brings its own register.
+  const wire = () => {
+    const root = document.querySelector<HTMLElement>('[data-ledger]')
+    if (root) initSourceFilter(root)
+  }
+  document.addEventListener('astro:page-load', wire)
+</script>

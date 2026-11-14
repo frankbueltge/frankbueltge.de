@@ -9,18 +9,23 @@
  *  is why the prose carries no numeral of its own.
  */
 import '@/styles/trending.css'
-import { Badge } from '@/components/ui/badge'
+import TrendingArchive from '@/components/pages/TrendingArchive.astro'
 import TrendingAudienceFigure from '@/components/pages/TrendingAudience.astro'
 import TrendingConvergenceFigure from '@/components/pages/TrendingConvergenceFigure.astro'
+import TrendingGlance from '@/components/pages/TrendingGlance.astro'
+import TrendingLead from '@/components/pages/TrendingLead.astro'
 import TrendingSelfCheck from '@/components/pages/TrendingSelfCheck.astro'
 import TrendingRising from '@/components/pages/TrendingRising.astro'
+import TrendingSources from '@/components/pages/TrendingSources.astro'
+import TrendingStayed from '@/components/pages/TrendingStayed.astro'
 import { audienceBefore, getTrendingDays } from '@/lib/trending/data'
-import { fmtDateLong, fmtDateWeekday, fmtTimeUtc, platformLabel } from '@/lib/trending/format'
+import { fmtDateLong, fmtDateWeekday, fmtTimeUtc } from '@/lib/trending/format'
 import { datasetLd, itemListLd, sourceListsLd, webPageLd } from '@/lib/trending/jsonld'
 import { dataLicence, licenceSentence } from '@/lib/trending/licence'
 import { trendingUrls } from '@/lib/trending/markdown'
+import { getLatestTerms } from '@/lib/trending/terms-data'
 import type { TrendingAudience, TrendingDay } from '@/lib/trending/types'
-import { sourceColumns } from '@/lib/trending/view'
+import { WERKE, werkTitle } from '@/data/werke'
 
 interface Props {
   day: TrendingDay
@@ -31,31 +36,49 @@ interface Props {
 }
 const { day, audience, isLatest } = Astro.props
 
-// A uniform count per source, so a card is not short merely because its source publishes a
-// short list. The full lists stay in the JSON and Markdown editions.
-const columns = sourceColumns(day, 8)
+// How many lines a source's card prints. A uniform count, so a card is not short merely because
+// its source publishes a short list; the full lists stay in the JSON and Markdown editions, and
+// the register's search reads them from there.
+const TOP = 8
 const yesterday = audienceBefore(day.date)
 const u = trendingUrls(day.date)
 
-// Prev/next within the committed archive, and the archive itself. getTrendingDays() is newest
-// first, so the NEWER neighbour sits at the lower index.
+// The committed archive, newest first: the calendar at the foot of the page, the lines in the
+// tiles and the grid of what stayed are all counted out of it.
 const days = getTrendingDays()
-const idx = days.findIndex((d) => d.date === day.date)
-const newer = idx > 0 ? days[idx - 1] : undefined
-const older = idx >= 0 && idx < days.length - 1 ? days[idx + 1] : undefined
+// The works built on this ledger (link audit, 2026-11-14): each linked here, none was linked back.
+const builtOn = WERKE.filter((w) => w.readsCommonGround && !w.retired)
+
+const crossings = day.topics.filter((t) => t.platform_count >= 2).length
+
+// The page is long because the ledger is: this is its table of contents. A block that renders
+// nothing on this day (no crossing, no terms file, a single committed day) is left out, so no
+// entry points at a heading that is not there.
+const sections: { href: string; label: string }[] = [
+  { href: '#numbers', label: 'In numbers' },
+  { href: '#converging', label: 'Converging now' },
+  ...(crossings > 0 ? [{ href: '#grid', label: 'Who carried what' }] : []),
+  ...(days.filter((d) => d.date <= day.date).length >= 2 ? [{ href: '#stayed', label: 'What stayed' }] : []),
+  ...(getLatestTerms() ? [{ href: '#rising', label: 'Rising this week' }] : []),
+  { href: '#sources', label: 'By source' },
+  { href: '#audience', label: 'Who reads this' },
+  { href: '#machines', label: 'For machines' },
+  ...(builtOn.length > 0 ? [{ href: '#built-on', label: 'Built on this' }] : []),
+  { href: '#archive', label: 'Archive' },
+]
 
 // A source that answered in part still delivers signals; the header says so rather than letting
 // "22 of 23" read as one source down.
 const sourcesPartial = day.sources.filter((s) => s.status === 'partial').length
 
 const canonical = isLatest ? u.page : u.day
-// The register below is rendered from sourceColumns(day, 8); the structured data states exactly
-// that same cut, because a machine reader must not be told more than a reader is shown.
+// The register below prints TOP lines per source; the structured data states exactly that same
+// cut, because a machine reader must not be told more than a reader is shown.
 const lds = [
   datasetLd(day, canonical),
   itemListLd(day, canonical),
   webPageLd(day, canonical, isLatest),
-  ...sourceListsLd(day, canonical, 8),
+  ...sourceListsLd(day, canonical, TOP),
 ]
 
 const machineEditions: { href: string; what: string }[] = [
@@ -72,7 +95,7 @@ const machineEditions: { href: string; what: string }[] = [
 
 <main id="main" class="flex-1">
   <div class="trending mx-auto max-w-5xl px-4 py-14">
-    <header class="mb-10">
+    <header class="mb-8">
       <p class="kicker">Common Ground · Nightly Ledger</p>
       <h1 class="mt-2 text-h1 font-bold">
         {isLatest ? 'Trending today' : `Trending on ${fmtDateLong(day.date)}`}
@@ -89,77 +112,32 @@ const machineEditions: { href: string; what: string }[] = [
         repositories — and keeps what several of them say at once. Each source keeps its own label and its own
         count; the crossing is done by a token rule that is written down, not by a model that guesses.
       </p>
+      <nav class="tr-nav" aria-label="On this page">
+        {sections.map((s) => <a href={s.href}>{s.label}</a>)}
+      </nav>
     </header>
+
+    {/* The order answers a reader's questions in the order they are asked (2026-11-14): how much
+        was read, what crossed, which source carried what, what has lasted, what is building
+        slowly, and only then every source on its own. Until that day the slow terms stood first
+        and the answer to "what is the web looking at?" began a screen further down. */}
+    <TrendingGlance day={day} days={days} />
+
+    <TrendingLead day={day} />
+
+    <TrendingConvergenceFigure day={day} />
+
+    <TrendingStayed day={day} days={days} />
 
     {/* The arcs: what has been building for weeks, as opposed to what spiked this morning.
         Renders nothing until the term tracker has committed its first run. */}
     <TrendingRising />
 
-    <TrendingConvergenceFigure day={day} />
-
-    <section class="mb-12 border-t border-line pt-6">
-      <h2 class="kicker">By source</h2>
-      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
-        What each source said on its own, before any crossing. A source that did not answer is recorded as
-        unavailable with the reason — never quietly dropped, and never filled in from a neighbour.
-      </p>
-      {/* A COLUMN FLOW, not a card grid (2026-09-03). Until today the twenty sources stood in
-          rows of three and every card stretched to the tallest in its row, so a source with seven
-          labels sat beside one with eight wrapped headlines and the difference was drawn as empty
-          panel: the block was 102 KB of a 213 KB page and roughly half of it was hole. CSS columns
-          pack sources of unequal length with no gaps at all, keep the reading order of the file,
-          and — the reason it is columns rather than a fold — leave every label, link and number in
-          the HTML, where a crawler and a retrieval agent can read them without running anything. */}
-      <div class="tr-sources mt-5">
-        {columns.map((col) => (
-          <section class="tr-source">
-            <h3 class="text-h3 font-semibold">
-              <a href={col.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">
-                {platformLabel(col.id)}
-              </a>
-            </h3>
-            <p class="mt-0.5 font-mono text-mono-sm leading-relaxed text-fg-faint">{col.name}</p>
-            {col.status === 'ok' ? (
-              <p class="mt-0.5 font-mono text-mono-sm text-fg-faint">
-                <span class="tabular-nums">{col.count}</span> signals{col.asOf ? ` · as of ${col.asOf}` : ''}
-              </p>
-            ) : (
-              <p class="mt-1.5">
-                <Badge variant="outline">{col.status}</Badge>
-                {col.status === 'partial' && col.signals.length > 0 && <span class="ml-2 font-mono text-mono-sm text-fg-faint"><span class="tabular-nums">{col.count}</span> signals</span>}
-                {/* A note quotes the address that failed, and an address has no place to break:
-                    on 2026-11-14 one of them widened the page to 524 px on a 390 px phone. */}
-                {col.note && <span class="ml-2 font-mono text-mono-sm text-fg-muted [overflow-wrap:anywhere]">{col.note}</span>}
-              </p>
-            )}
-            {col.signals.length === 0 ? (
-              <p class="mt-2 text-sm text-fg-faint">nothing recorded</p>
-            ) : (
-              <ol class="mt-2 space-y-1 text-sm">
-                {col.signals.map((s) => (
-                  <li class="tr-signal">
-                    <span class="tr-signal-label">
-                      {s.url ? (
-                        <a href={s.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{s.label}</a>
-                      ) : (
-                        <span>{s.label}</span>
-                      )}
-                      {s.geo && <span class="ml-1 font-mono text-mono-xs text-fg-faint">{s.geo}</span>}
-                      {s.desk && <span class="ml-1 whitespace-nowrap font-mono text-mono-xs text-fg-faint">{s.desk}</span>}
-                    </span>
-                    <span class="tr-signal-n font-mono text-mono-xs tabular-nums text-fg-faint">{s.magnitudeText}</span>
-                  </li>
-                ))}
-              </ol>
-            )}
-          </section>
-        ))}
-      </div>
-    </section>
+    <TrendingSources day={day} top={TOP} />
 
     <TrendingAudienceFigure audience={audience} yesterday={yesterday} />
 
-    <section class="mb-12 border-t border-line pt-6">
+    <section class="mb-12 border-t border-line pt-6" id="machines">
       <h2 class="kicker">For machines</h2>
       <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
         The same day, in the forms a machine reader can use. All of them are static files, built from the archive
@@ -184,7 +162,21 @@ const machineEditions: { href: string; what: string }[] = [
       </ul>
     </section>
 
-    <section class="mb-12 border-t border-line pt-6">
+    {builtOn.length > 0 && (
+      <section class="mb-12 border-t border-line pt-6" id="built-on">
+        <h2 class="kicker">Built on this ledger</h2>
+        <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+          Works of the lab that take this ledger as their material:
+        </p>
+        <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+          {builtOn.map((w) => (
+            <li><a href={w.href} class="text-fg underline">{werkTitle(w, 'en')}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="mb-12 border-t border-line pt-6" id="method">
       <h2 class="kicker">Method</h2>
       <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
         Every morning the pipeline reads <span class="tabular-nums">{day.sources.length}</span> open sources and
@@ -205,29 +197,7 @@ const machineEditions: { href: string; what: string }[] = [
       </p>
     </section>
 
-    <nav class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line pt-6 font-mono text-xs text-fg-muted">
-      {older && <a href={`/trending/${older.date}/`} class="transition-colors hover:text-fg">← {fmtDateLong(older.date)}</a>}
-      {newer && <a href={`/trending/${newer.date}/`} class="transition-colors hover:text-fg">{fmtDateLong(newer.date)} →</a>}
-      {!isLatest && days[0] && <a href="/trending/" class="transition-colors hover:text-fg">Today</a>}
-    </nav>
-
-    <section class="mt-8">
-      <h2 class="kicker">The archive</h2>
-      <p class="mt-2 font-mono text-mono-sm text-fg-faint">
-        Every committed day, newest first — <span class="tabular-nums">{days.length}</span> so far.
-      </p>
-      <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs">
-        {days.map((d) => (
-          <li>
-            {d.date === day.date ? (
-              <span class="text-fg-faint">{d.date}</span>
-            ) : (
-              <a href={`/trending/${d.date}/`} class="text-fg-muted underline decoration-line underline-offset-2 transition-colors hover:text-fg">{d.date}</a>
-            )}
-          </li>
-        ))}
-      </ul>
-    </section>
+    <TrendingArchive day={day} days={days} isLatest={isLatest} />
   </div>
 </main>
 

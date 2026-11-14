@@ -47,7 +47,7 @@ Praxis pro Frage** (seit Zyklus 010 — Änderung vom 2026-10-22 — **ein Werk 
 mit Prozess-Eintrag und Screenshot, `PROCESS.json`), danach gemeinsame Präsentation; **jede Session ein Artefakt** und ein
 `BULLETIN.md` ≤40 Zeilen (Nachvollziehbarkeit für Frank ist Verfassungspflicht); **Post
 Office = poste restante** (Senden ist kein Erfolgskriterium; Sieben-Tage-Bindung und
-Empfänger-Pflicht abgeschafft); der v2-Gate-Apparat (Konzept-Gates, Prä-Registrierung,
+Empfänger-Pflicht abgeschafft); **seit 2026-11-14 (Frank, Wortlaut privat) sollen Briefe dort hinausgehen, wo ein Empfänger ein eigenes Interesse am Werk hat:** das Paket trägt den fertigen Brief, die Betriebsmail meldet ihn einmal, Frank sendet selbst und hält es per Issue fest, maßgeblich `docs/design/2026-11-14-the-post-office-sends.md`); der v2-Gate-Apparat (Konzept-Gates, Prä-Registrierung,
 Maschinen-Vorteils-Bar, „Singular", Record-Ceilings) ist ersatzlos gestrichen — die
 Prüfung sitzt im Artefakt. Verfassungen: ulysses v7, field-research v4, studio v4 (alte
 Texte in `archive/protocols/` der Engines); Zyklus-Stand kanonisch in
