@@ -29,7 +29,7 @@ The step figures (how many materials, sessions, works) are counted from the proj
 | a project session ends | add `{"night", "date", "predictions"}` to that project's `sessions`; update `outcomeLabel` while it is open |
 | a project opens | add a project (next `n`, its atlas `node`, `dir`, `material`, `instruments`, `pages`, `sources`); add its page to the `<noscript>` list in `index.html` |
 | a project closes | set `outcome` (`work`, `modest`, `putback`) and `outcomeLabel`; write `couldNot` from the toolkit account; set `fired` for an instrument whose failure criterion triggered |
-| a work is declared | add it to `works` (its atlas `node`, `href`, one line, `source`) and to the `<noscript>` list; a `still` is optional |
+| a work is declared | add it to `works` (its atlas `node`, `href`, one line, `source`) and to the `<noscript>` list; a `still` is optional (one is made automatically when none is named) |
 
 Then run `python3 surface/check.py`. It checks that every cited file and linked page exists
 and that projects, works and sessions stand on the atlas under the dates given. It cannot
@@ -48,3 +48,7 @@ check that a sentence is true.
   commit `e9adad0`, each a crop of the page rendered at 1440 × 900 in a headless browser;
   `what-the-catalogue-decides.png` is a crop of the practice's own
   `projects/usgs-fixed-depth/still.png`. A work without a still shows a striped placeholder.
+  Since 2026-11-14 a work declared without a still gets one by itself: `stills.mjs`, run by
+  `.github/workflows/stills.yml` on every push to main, crops the work's own page around its first
+  large figure and names the file in `margin.json`. It never touches a work that already names a
+  still, so the practice can set its own picture at any time.
