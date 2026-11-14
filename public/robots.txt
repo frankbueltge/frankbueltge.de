@@ -10,14 +10,15 @@
 # switched off for this zone (AI Crawl Control). While that feature is on, Cloudflare
 # serves its own block instead of this file.
 #
-# Exception (Frank, 2026-09-02): /trending — the trending ledger, open data built for
-# machine readers (CC0 up to the ledger of 2026-11-14, CC BY 4.0 after: name and link
-# Common Ground, https://frankbueltge.de/trending), no text of the author's and no
-# personal data — is open to every
-# crawler, training crawlers included. Each training-crawler group below therefore
-# allows /trending before it disallows the rest, and carries its own Content-Signal
-# for what it may fetch there. The site default in the * group stays ai-train=no.
-# Record: docs/design/2026-07-26-crawler-politik.md §5.
+# /trending (Common Ground, the trending ledger) follows the site default. From
+# 2026-09-02 to 2026-11-14 an exception opened that route to training crawlers in this
+# file; it was withdrawn on 2026-11-14. The ledger passes on titles, links and counts
+# of other platforms, a good part of which reserve their content against model
+# training, and those terms stay theirs: this site cannot give away what they keep.
+# Search engines and AI retrieval agents stay welcome there as everywhere. The data of
+# the ledger is CC0 up to 2026-11-14 and CC BY 4.0 after (name and link Common Ground,
+# https://frankbueltge.de/trending); a source's own titles and links stay under that
+# source's terms. Record: docs/design/2026-07-26-crawler-politik.md §5.
 
 User-agent: *
 Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
@@ -27,47 +28,31 @@ Sitemap: https://frankbueltge.de/sitemap-index.xml
 
 
 # ---------------------------------------------------------------------------
-# Model training: not permitted — except on /trending (2026-09-02, see header)
+# Model training: not permitted, on any route (see header for /trending)
 # ---------------------------------------------------------------------------
 
 User-agent: GPTBot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /trending
 Disallow: /
 
 User-agent: ClaudeBot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /trending
 Disallow: /
 
 User-agent: Google-Extended
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /trending
 Disallow: /
 
 User-agent: CCBot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /trending
 Disallow: /
 
 User-agent: meta-externalagent
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /trending
 Disallow: /
 
 User-agent: Applebot-Extended
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /trending
 Disallow: /
 
 User-agent: Bytespider
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /trending
 Disallow: /
 
 User-agent: Diffbot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /trending
 Disallow: /
 
 
