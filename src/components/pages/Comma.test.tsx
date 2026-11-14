@@ -46,6 +46,9 @@ describe('Comma, rendered on the server (nothing has sounded yet)', () => {
     expect(html).toContain(COMMA.island.legend.heading)
     expect(html).toContain(COMMA.island.legend.blockpage)
     expect(html).toContain(COMMA.island.legend.grey)
+    expect(html).toContain(COMMA.island.legend.tape)
+    // the day the counts are from is data: the island reads it from the committed file
+    expect(html).toMatch(/The counts in use are those of \d{1,2} [A-Z][a-z]+ \d{4} \(UTC\)\./)
     expect(html.match(/cm-dot cm-k0/g)?.length).toBeGreaterThanOrEqual(2)
     expect(html.match(/cm-dot cm-kn/g)?.length).toBeGreaterThanOrEqual(6)
   })
@@ -67,7 +70,9 @@ describe('the wording', () => {
   it('says the constants it names in words built from them, not typed digits', () => {
     expect(COMMA.honesty.rule).toContain('eight times the median')
     expect(COMMA.honesty.rule).toContain('every eight seconds')
-    expect(COMMA.honesty.reading).toContain('about four minutes behind')
+    expect(COMMA.honesty.reading).toContain('ten minutes behind the world')
+    expect(COMMA.honesty.reading).toContain('blocks of five minutes')
+    expect(COMMA.honesty.reading).toContain('for half an hour')
     expect(`${COMMA.honesty.method} ${COMMA.honesty.proof} ${COMMA.honesty.rule}`).not.toMatch(/\d/)
   })
 

@@ -189,8 +189,8 @@ export const WERKE: Werk[] = [
     line: 'counter-measurement',
     title: 'Comma',
     subtitle: {
-      de: 'Internet censorship heard as it happens, from the tests of volunteers around the world — read live, never archived',
-      en: 'Internet censorship heard as it happens, from the tests of volunteers around the world — read live, never archived',
+      de: 'Internet censorship heard as it is measured, from the tests of volunteers around the world — a live broadcast, not archived',
+      en: 'Internet censorship heard as it is measured, from the tests of volunteers around the world — a live broadcast, not archived',
     },
     status: 'live',
     since: '2026-11-13',
@@ -198,10 +198,10 @@ export const WERKE: Werk[] = [
     href: '/comma',
     unarchived: true,
     description: {
-      // No digit (the currency doctrine, kept although an unarchived work is exempt from its test): the lag, the gap
+      // No digit (the currency doctrine, kept although an unarchived work is exempt from its test): the delay, the gap
       // per country and the scale of the weight are constants in src/lib/comma/, and the page derives its sentences.
-      de: 'From the counter-measurement line. Volunteers around the world run OONI Probe, which asks their own network for a page and compares the answer with the one a control on an open network gets. Comma hears those tests as they arrive, a few minutes late: six kinds of page are six organ tones; a blockpage, the state’s own notice, rings a bell; a local answer that differs from the control’s sounds a syntonic comma lower, so the two beat. Suspicion is weighted by how often a country’s network deviated the day before, and every country gets the same chances to sound, so the many volunteers of one country do not drown the others. Nothing is kept, and it goes dark when OONI does.',
-      en: 'From the counter-measurement line. Volunteers around the world run OONI Probe, which asks their own network for a page and compares the answer with the one a control on an open network gets. Comma hears those tests as they arrive, a few minutes late: six kinds of page are six organ tones; a blockpage, the state’s own notice, rings a bell; a local answer that differs from the control’s sounds a syntonic comma lower, so the two beat. Suspicion is weighted by how often a country’s network deviated the day before, and every country gets the same chances to sound, so the many volunteers of one country do not drown the others. Nothing is kept, and it goes dark when OONI does.',
+      de: 'From the counter-measurement line. Volunteers around the world run OONI Probe, which asks their own network for a page and compares the answer with the one a control on an open network gets. Comma is a broadcast of the tests that deviate, some minutes behind the world, the same moment for everyone listening: six kinds of page are six organ tones; a blockpage, the state’s own notice, rings a bell; a local answer that differs from the control’s sounds a syntonic comma lower, so the two beat. Suspicion is weighted by how often a country’s network deviated on a whole counted day, and every country gets the same chances to sound, so the many volunteers of one country do not drown the others. What plays live is not kept; when OONI will not answer, a labelled recording of an earlier day stands in.',
+      en: 'From the counter-measurement line. Volunteers around the world run OONI Probe, which asks their own network for a page and compares the answer with the one a control on an open network gets. Comma is a broadcast of the tests that deviate, some minutes behind the world, the same moment for everyone listening: six kinds of page are six organ tones; a blockpage, the state’s own notice, rings a bell; a local answer that differs from the control’s sounds a syntonic comma lower, so the two beat. Suspicion is weighted by how often a country’s network deviated on a whole counted day, and every country gets the same chances to sound, so the many volunteers of one country do not drown the others. What plays live is not kept; when OONI will not answer, a labelled recording of an earlier day stands in.',
     },
     methodHref: null,
     tier: 'experiment',

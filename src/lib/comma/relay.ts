@@ -1,46 +1,39 @@
-// src/lib/comma/relay.ts — the site's two reads of OONI for Comma (2026-11-13), logic for functions/api/comma/.
+// src/lib/comma/relay.ts — the site's read of OONI for Comma, logic for functions/api/comma/ (2026-11-13,
+// rebuilt 2026-11-14).
 //
-// OONI's API sends no CORS header, so a visitor's browser cannot ask it directly; the site asks for it. The two
-// endpoints take no parameters on purpose: a function that fetched whatever minute a caller named would be an open
-// door to OONI's API on this site's account, and OONI limits how often it may be asked (on 2026-11-12 a burst of
-// a few hundred requests closed it to this house for about an hour). So the site decides which minute is read —
-// the newest one OONI has nearly complete — and each Cloudflare location asks OONI once per minute; every listener
-// there gets the same answer. The aggregation for the rule is read once a day. Only answers are kept: a refusal is
-// never cached, so the next question goes to OONI again (`cacheOptions`).
+// OONI's API answers a browser only from origins on its own list, so a visitor's browser cannot ask it; the site
+// asks for it. The endpoints take no parameters on purpose: a function that fetched whatever time a caller named
+// would be an open door to OONI's API on this site's account. The site's clock decides which block is read
+// (src/lib/comma/clock.ts).
+//
+// What is asked for is set by OONI's quota. OONI charges every address that asks: 4,000 units a day in its
+// published limiter, and measured on 2026-11-13 a minute of all web tests cost about 19 of them, a minute of
+// deviations only about 6.5, ten such minutes in one question about 30. The first build read a minute of all
+// tests every minute and ran dry within two to three hours of listening a day. So the site now reads only what
+// deviated (`anomaly=true`, which holds the blockpages too), of every kind of test, five minutes in one question,
+// and each Cloudflare location keeps an answer for half an hour: one question per block and location, however
+// many listen there. A refusal is never kept, so the next question goes to OONI again.
 
-export const MINUTE_MS = 60_000
-/** Tests reach OONI within about three minutes of being run (counted 2026-11-12); a fourth keeps the minute whole. */
-export const LAG_MINUTES = 4
+import { BLOCK_MS } from './clock'
+
 const API = 'https://api.ooni.io/api/v1'
-/** More than any minute measured so far holds (about 1,100 to 1,300); OONI answers up to this many rows. */
+/** Five minutes held about 500 deviations when this was measured; OONI answers up to this many rows. */
 export const ROW_LIMIT = 5000
-
-export const minuteToRead = (now: number): number => Math.floor((now - LAG_MINUTES * MINUTE_MS) / MINUTE_MS) * MINUTE_MS
+/** How long a Cloudflare location keeps a block: longer than the block is ever asked for. */
+export const KEEP_SECONDS = 1800
 
 const stamp = (ms: number): string => new Date(ms).toISOString().slice(0, 19)
 
-export function measurementsUrl(minute: number): string {
-  return `${API}/measurements?since=${stamp(minute)}&until=${stamp(minute + MINUTE_MS)}&limit=${ROW_LIMIT}&test_name=web_connectivity`
-}
-
-/** The previous UTC day, as OONI's aggregation wants it. */
-export function previousDay(now: number): { since: string; until: string } {
-  const today = Math.floor(now / 86_400_000) * 86_400_000
-  return { since: new Date(today - 86_400_000).toISOString().slice(0, 10), until: new Date(today).toISOString().slice(0, 10) }
-}
-
-export function aggregationUrl(now: number): string {
-  const { since, until } = previousDay(now)
-  return `${API}/aggregation?since=${since}&until=${until}&test_name=web_connectivity&axis_x=probe_cc`
+export function blockUrl(block: number): string {
+  return `${API}/measurements?since=${stamp(block)}&until=${stamp(block + BLOCK_MS)}&limit=${ROW_LIMIT}&anomaly=true`
 }
 
 /** Without a key a source is still a third party: say who asks and why, nothing personal. */
-export const USER_AGENT = 'frankbueltge.de comma (a live artwork; reads one minute of tests a minute)'
+export const USER_AGENT = 'frankbueltge.de comma (a live artwork; reads five minutes of deviations per block)'
 
 /** Cloudflare's cache options for a read of OONI: an answer is kept for `seconds`, a refusal or an error never.
  *  A plain `cacheTtl` keeps whatever comes back, whatever its headers say (Cloudflare's documentation), refusals
- *  included, so one refusal from OONI could close a whole minute at a Cloudflare location for every listener there.
- *  A negative value tells Cloudflare not to cache at all. */
+ *  included. A negative value tells Cloudflare not to cache at all. */
 export function cacheOptions(seconds: number): { cacheEverything: true; cacheTtlByStatus: Record<string, number> } {
   return { cacheEverything: true, cacheTtlByStatus: { '200-299': seconds, '300-599': -1 } }
 }
@@ -58,9 +51,17 @@ export function upstreamHeaders(upstream: { status: number; headers: Headers }):
   return headers
 }
 
-/** A declared standby, never half an answer: the page says the piece waits, and why. No CORS header, like every
- *  function on this site. */
-export function standby(reason: 'source' | 'rate-limit' | 'shape', retryAfterSeconds = 10, extra: Record<string, string> = {}): Response {
+/** On every answer: which block it is about and what time the site's clock shows, so a listener's own clock,
+ *  which may be minutes off, never decides what is played when. */
+export function clockHeaders(block: number, now: number): Record<string, string> {
+  return { 'x-comma-block': new Date(block).toISOString(), 'x-comma-now': String(Math.floor(now)) }
+}
+
+export type StandbyReason = 'source' | 'rate-limit' | 'shape' | 'early'
+
+/** A declared standby, never half an answer: the page plays its recording and says why. No CORS header, like
+ *  every function on this site. */
+export function standby(reason: StandbyReason, retryAfterSeconds = 10, extra: Record<string, string> = {}): Response {
   return new Response(JSON.stringify({ standby: reason }), {
     status: 503,
     headers: {
@@ -72,16 +73,7 @@ export function standby(reason: 'source' | 'rate-limit' | 'shape', retryAfterSec
   })
 }
 
-/** How soon the page asks again after a standby, by how many standbys came in a row: soon at first, because
- *  someone has just clicked, then every half minute, so a listener who waits sends at most two questions a minute. */
-export const RETRY_SECONDS = [5, 10, 20, 30] as const
-
-export function retrySeconds(inARow: number): number {
-  const i = Math.min(Math.max(Math.floor(inARow), 1), RETRY_SECONDS.length) - 1
-  return RETRY_SECONDS[i]!
-}
-
-export function standbyReason(status: number, contentType: string | null): 'source' | 'rate-limit' | 'shape' | null {
+export function standbyReason(status: number, contentType: string | null): Exclude<StandbyReason, 'early'> | null {
   if (status === 429) return 'rate-limit'
   if (status < 200 || status >= 300) return 'source'
   if (!(contentType ?? '').toLowerCase().includes('application/json')) return 'shape'

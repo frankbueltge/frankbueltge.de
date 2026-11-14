@@ -15,12 +15,14 @@ describe('the state of a test', () => {
 describe('a minute of OONI rows', () => {
   const json = {
     results: [
-      { measurement_start_time: '2026-11-12T19:38:05.000000Z', probe_cc: 'RU', input: 'https://www.dw.com/ru/', confirmed: true, anomaly: true },
-      { measurement_start_time: '2026-11-12T19:38:04.000000Z', probe_cc: 'DE', input: 'https://example.org/' },
-      { measurement_start_time: '2026-11-12T19:39:05.000000Z', probe_cc: 'IR', input: 'https://example.org/' },
-      { measurement_start_time: 'yesterday', probe_cc: 'FR' },
-      { measurement_start_time: '2026-11-12T19:38:30.000000Z', probe_cc: 'nope' },
-      { measurement_start_time: '2026-11-12T19:38:10.000000Z', probe_cc: 'IR', anomaly: true },
+      { measurement_start_time: '2026-11-12T19:38:05.000000Z', probe_cc: 'RU', test_name: 'web_connectivity', input: 'https://www.dw.com/ru/', confirmed: true, anomaly: true },
+      { measurement_start_time: '2026-11-12T19:38:04.000000Z', probe_cc: 'DE', test_name: 'web_connectivity', input: 'https://example.org/' },
+      { measurement_start_time: '2026-11-12T19:39:05.000000Z', probe_cc: 'IR', test_name: 'web_connectivity', input: 'https://example.org/' },
+      { measurement_start_time: 'yesterday', probe_cc: 'FR', test_name: 'web_connectivity' },
+      { measurement_start_time: '2026-11-12T19:38:30.000000Z', probe_cc: 'nope', test_name: 'web_connectivity' },
+      { measurement_start_time: '2026-11-12T19:38:31.000000Z', probe_cc: 'IR', test_name: 'Not A Test', anomaly: true },
+      { measurement_start_time: '2026-11-12T19:38:32.000000Z', probe_cc: 'IR', anomaly: true },
+      { measurement_start_time: '2026-11-12T19:38:10.000000Z', probe_cc: 'IR', test_name: 'signal', anomaly: true },
     ],
   }
   const from = Date.parse('2026-11-12T19:38:05Z')
@@ -33,6 +35,7 @@ describe('a minute of OONI rows', () => {
     ])
     expect(tests[0]!.url).toBe('https://www.dw.com/ru/')
     expect(tests[1]!.url).toBe('')
+    expect(tests.map((t) => t.test)).toEqual(['web_connectivity', 'signal'])
   })
 
   it('reads six fractional digits by ignoring them', () => {

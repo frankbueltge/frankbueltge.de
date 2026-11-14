@@ -1,10 +1,13 @@
 ---
-/** Comma (/comma) — internet censorship heard as it happens (2026-11-13).
+/** Comma (/comma) — internet censorship heard as it is measured (2026-11-13; a broadcast since 2026-11-14).
  *
- *  A LIVE, UNARCHIVED work (src/lib/experiments/unarchived.ts): it reads OONI's newest minute of web tests through the
- *  site (functions/api/comma/) and commits nothing. The server render is the floor in the only sense open to a work
- *  without an archive: the rule, the six rows, the button and the notice are real markup before a script runs; the
- *  score fills only once a minute has been heard.
+ *  A LIVE, UNARCHIVED work (src/lib/experiments/unarchived.ts): it reads OONI's deviating tests through the site
+ *  (functions/api/comma/), block by block, and keeps nothing of what plays live. What the house does commit is a
+ *  stand-in, not an archive of the work: the counts of one whole day (the ground of its rules) and a recording of
+ *  two hours of that day, which plays, labelled, when OONI will not answer. So the page carries the live mark and
+ *  says in its own words what is kept, instead of the shared sentence, which says nothing is. The server render is
+ *  the floor in the only sense open to a live work: the rule, the six rows, the button and the notice are real
+ *  markup before a script runs; the score fills only once something has been heard.
  *
  *  `notice` is threaded in as a prop from src/pages/comma/index.astro, so the literal token `UNARCHIVED_NOTICE` sits in
  *  the page file itself, the surface werke.test.ts reads for every work that declares `unarchived: true`.
@@ -60,7 +63,7 @@ const wording: CommaWording = {
       <p class="mt-3 text-body text-fg-muted">{COMMA.honesty.reading}</p>
       <p class="mt-3 text-body text-fg-muted">{COMMA.honesty.limits}</p>
       <p class="mt-5 font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">{notice.badge}</p>
-      <p class="mt-1 text-mono-sm text-fg-faint">{notice.line}</p>
+      <p class="mt-1 text-mono-sm text-fg-faint">{COMMA.honesty.kept}</p>
     </section>
 
     <SheetFoot>

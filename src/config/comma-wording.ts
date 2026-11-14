@@ -2,19 +2,23 @@
 // no words of their own: they receive these.
 //
 // Digit-free wherever a digit would age (the currency doctrine of docs/wording-kanon.md, kept even though an
-// unarchived work is exempt from the test that enforces it): the lag, the gap per country and the scale of the
-// suspicion rule are constants in src/lib/comma/, and the sentences that name them are built from those constants.
-import { LAG_MINUTES } from '@/lib/comma/relay'
+// unarchived work is exempt from the test that enforces it): the delay, the block, the gap per country and the
+// scale of the suspicion rule are constants in src/lib/comma/, and the sentences that name them are built from
+// those constants. The day the counts are from is data, so the island fills it in from the committed file.
+import { BLOCK_MS, DELAY_MS, MINUTE_MS } from '@/lib/comma/clock'
+import { KEEP_SECONDS } from '@/lib/comma/relay'
 import { GAP_SECONDS, OCTAVES } from '@/lib/comma/rule'
 
 const NUMBER_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve']
 const say = (n: number): string => NUMBER_WORDS[n] ?? String(n)
+const DELAY = say(DELAY_MS / MINUTE_MS)
+const BLOCK = say(BLOCK_MS / MINUTE_MS)
+const KEEP = KEEP_SECONDS === 1800 ? 'half an hour' : `${KEEP_SECONDS / 60} minutes`
 
 export const COMMA = {
   meta: {
     title: 'Comma | Frank Bültge',
-    description:
-      'Internet censorship heard as it happens: the world’s OONI tests, one minute at a time, on six organ tones, with a bell for every blockpage and a comma’s beat for every suspicion.',
+    description: `Internet censorship heard as it is measured: the world’s OONI tests, ${DELAY} minutes behind the world, on six organ tones, with a bell for every blockpage and a comma’s beat for every suspicion.`,
   },
   sheet: {
     kicker: 'Counter-measurement · live',
@@ -22,8 +26,7 @@ export const COMMA = {
     sub: 'Internet censorship heard as it happens: the small distance between the internet as the world sees it and as a country’s own network shows it',
     badges: ['live data', 'OONI', 'sound'],
   },
-  intro:
-    'Press listen and the world’s censorship tests of the last minute OONI holds begin to sound, one minute after another, for as long as this page is open. Use headphones or good speakers: the beats are slow.',
+  intro: `Press listen and you join a broadcast that does not end: the world’s censorship tests, ${DELAY} minutes behind the world, the same moment for everyone listening. Use headphones or good speakers: the beats are slow.`,
   island: {
     listen: 'Listen',
     stop: 'Stop',
@@ -32,21 +35,25 @@ export const COMMA = {
     freezeHint: 'The score holds still and its marks link to their entries; the sound plays on.',
     status: {
       idle: 'Not listening. The sound starts with your click.',
-      loading: 'Loading the organ, the bells and yesterday’s counts…',
-      waiting: 'Waiting for the next minute of tests…',
-      playing: 'Playing the tests of {minute} UTC.',
-      standby: 'OONI is not answering just now. The piece asks again in {seconds} seconds.',
-      refused: 'OONI limits how often it may be asked and is turning this site away for the moment. The piece asks again in {seconds} seconds.',
+      loading: 'Loading the organ and the bells…',
+      waiting: 'Waiting for the first block of tests…',
+      live: `Live: the tests of {from} to {to} UTC, ${DELAY} minutes ago.`,
+      refused: 'OONI limits how much it may be asked and is turning this site away at the moment.',
+      unanswered: 'OONI is not answering this site at the moment.',
+      tape: 'So this is the house’s recording: {day}, {from} to {to} UTC. The piece asks OONI again within {seconds} seconds.',
       failed: 'The sounds could not be loaded in this browser.',
-      noRule: 'Yesterday’s counts could not be read, so suspicion stays silent; blockpages still ring.',
+      noRule: 'The day’s counts could not be read, so suspicion stays silent; blockpages still ring.',
     },
     figureLabel:
-      'A live score with six rows, one for each kind of page, the newest moment on the right. A grey band is how many tests of that kind just ran; a diamond is a blockpage, with its country; a bar beneath a row is a suspicion, darker the heavier its country’s weight. Freeze the score to follow a mark to its entry in OONI Explorer.',
+      'A live score with six rows, one for each kind of page, the newest moment on the right. A grey band is how many tests of that kind ran in this hour of the counted day; a diamond is a blockpage, with its country; a bar beneath a row is a suspicion, darker the heavier its country’s weight. A dashed line along the top marks a stretch played from the house’s recording. Freeze the score to follow a mark to its entry in OONI Explorer.',
     legend: {
       heading: 'How to read it',
       blockpage: 'a blockpage, a state’s own notice: proof (a bell)',
-      suspicion: 'a suspicion, a local answer that differed: a comma lower (darker = the country’s network deviated more often the day before; longer = more covert)',
-      asking: 'how many tests of that kind ran in the last moments (the organ tone’s loudness)',
+      suspicion: 'a suspicion, a local answer that differed: a comma lower (darker = the country’s network deviated more often on the counted day; longer = more covert)',
+      asking: 'how many tests of that kind ran in this hour of the counted day (the organ tone’s loudness)',
+      tape: 'a stretch played from the house’s recording, because OONI would not answer the site',
+      tapeLabel: 'recording',
+      day: 'The counts in use are those of {day} (UTC).',
       colours: 'Colour says what kind of page was asked for:',
       grey: 'Three kinds wear a colour and three stay grey: the house draws no figure with more than four colours, and these three are where a block cuts speech. Shape, not colour, tells proof from suspicion.',
     },
@@ -56,7 +63,7 @@ export const COMMA = {
     feedSuspicion: 'suspicion',
     feedEntry: 'OONI entry',
     counters: {
-      tests: 'tests in this minute',
+      tests: 'deviations in these minutes',
       countries: 'countries',
       blockpages: 'blockpages',
       anomalies: 'anomalies',
@@ -66,11 +73,12 @@ export const COMMA = {
   honesty: {
     heading: 'What you hear, and what it cannot hear',
     method:
-      'OONI Probe runs on volunteers’ phones and computers. Its web test asks the volunteer’s own network for a page and compares the answer with the one a control on an open network gets. Every test is a pair, the world’s answer and the local one, and Comma hears the pair. Six kinds of page are six organ tones, harmonics of the same low A: politics, news and rights; identity, body and belief; the tools people speak with; culture and play; porn and gambling, kept apart so that a block of them is never heard as a block of political speech; commerce and the rest. While tests of a kind run, its tone sounds, louder the more of them ran in the last moments.',
+      'OONI Probe runs on volunteers’ phones and computers. Its web test asks the volunteer’s own network for a page and compares the answer with the one a control on an open network gets. Every test is a pair, the world’s answer and the local one, and Comma hears the pair. Six kinds of page are six organ tones, harmonics of the same low A: politics, news and rights; identity, body and belief; the tools people speak with; culture and play; porn and gambling, kept apart so that a block of them is never heard as a block of political speech; commerce and the rest. Each tone is as loud as the world asked: how many tests of that kind ran in this hour of the last whole day the house counted.',
     proof:
       'A blockpage is a state’s own notice that a page is blocked: proof. It rings a tubular bell on its row’s tone and cuts the tone for a moment. An anomaly is a local answer that differed from the control’s, by a false address, a cut connection or changed content: suspicion. It sounds as a second tone a syntonic comma lower, and the two beat. That small distance between two answers that should be the same is the work’s name.',
-    rule: `A single anomaly is often a false alarm, so how loud a country’s anomalies are depends on how often its network deviated the day before, against that day’s median: ${say(2 ** OCTAVES)} times the median is full weight, the median itself is silence. And every country gets the same chances: each sounds at most once every ${say(GAP_SECONDS)} seconds, blockpages first, because some countries have many more volunteers than others. How censored a network is decides how loud it is, not how many people measure it. Both rules are choices of this work, and the gap was set after listening to one recorded window.`,
-    reading: `The site reads OONI’s newest nearly complete minute once a minute, about ${say(LAG_MINUTES)} minutes behind the world, and gives the same minute to everyone listening: each Cloudflare location keeps OONI’s answer for ten minutes, so OONI is asked once, and keeps a refusal not at all, so the next question goes to OONI again. Your browser loads Citizen Lab’s test lists to tell what kind of page each test asked for, and names a blocked page only when it is a news outlet. Nothing about you or your listening is kept.`,
+    rule: `A single anomaly is often a false alarm, so how loud a country’s anomalies are depends on how often its network deviated on the last whole day the house counted, against that day’s median: ${say(2 ** OCTAVES)} times the median is full weight, the median itself is silence. And every country gets the same chances: each sounds at most once every ${say(GAP_SECONDS)} seconds, blockpages first, because some countries have many more volunteers than others. How censored a network is decides how loud it is, not how many people measure it. Both rules are choices of this work, and the gap was set after listening to one recorded window.`,
+    reading: `The piece is a broadcast on the wall clock, ${DELAY} minutes behind the world: the tests of any ${BLOCK} minutes play ${DELAY} minutes later, the same moment for everyone listening. The site reads OONI in blocks of ${BLOCK} minutes, and only the tests that deviated: OONI limits how much any address may ask of it, and a public piece should take little. Each Cloudflare location keeps a block for ${KEEP}, so OONI is asked once per block there, and keeps a refusal not at all. When OONI will not answer, the piece does not fall silent: it plays the house’s own recording of the same hour of an earlier day, says so, and keeps asking. The day’s counts, which set how loud a country’s suspicion and each tone are, are committed to this site’s repository and can be recomputed. Your browser loads Citizen Lab’s test lists to tell what kind of page each test asked for, and names a blocked page only when it is a news outlet. Nothing about you or your listening is kept.`,
+    kept: 'What plays live is read as it runs and not kept, and nothing here is citable. The house keeps two things as a stand-in: the counts of one whole day, and a recording of two hours of it, which plays, labelled, when OONI will not answer.',
     limits:
       'It can only hear where people can measure. In the days before it opened, North Korea and Turkmenistan had no tests at all, and China was tested in bursts, mostly from one network. Untested is not open. A state that censors without showing a blockpage is heard as suspicion, never as proof.',
   },
