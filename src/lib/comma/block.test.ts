@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
-import { BLOCK_SECONDS, decodeTape, deviationsOf, encodeTape, TAPE_MINUTE, tapeFile, WEB_TEST, type Deviation } from './block'
+import { BLOCK_SECONDS, decodeTape, deviationsOf, encodeTape, TAPE_BLOCKS, TAPE_MINUTE, tapeFile, tapeHour, WEB_TEST, type Deviation } from './block'
 import { BLOCK_MS } from './clock'
 import { GROUPS, OTHER } from './groups'
 import { testsOf } from './ooni'
@@ -115,6 +115,16 @@ describe('the recording', () => {
     expect(tapeFile(0)).toBe('/comma/tape/00.json')
     expect(tapeFile(23)).toBe('/comma/tape/23.json')
     expect(tapeFile(24)).toBe('/comma/tape/00.json')
+  })
+
+  it('plays as a day in two hours: the recorded hours in turn, each once before any repeats', () => {
+    const first = Date.parse('2026-11-14T12:45:00Z')
+    const hours = Array.from({ length: TAPE_BLOCKS + 1 }, (_, i) => tapeHour(first + i * BLOCK_MS))
+    expect(new Set(hours.slice(0, TAPE_BLOCKS)).size).toBe(TAPE_BLOCKS)
+    for (let i = 1; i < TAPE_BLOCKS; i++) expect(hours[i]).toBe((hours[i - 1]! + 1) % TAPE_BLOCKS)
+    expect(hours[TAPE_BLOCKS]).toBe(hours[0])
+    // the same slot always gets the same recorded hour, for every listener
+    expect(tapeHour(first + 1234)).toBe(tapeHour(first))
   })
 })
 
