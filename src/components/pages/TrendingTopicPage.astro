@@ -13,7 +13,8 @@ import '@/styles/trending.css'
 import '@/styles/trending-figures.css'
 import Readout from '@/components/dataviz/Readout.astro'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
-import { Badge } from '@/components/ui/badge'
+import { badgeVariants } from '@/components/ui/badge'
+import { cn } from '@/lib/ui/cn'
 import { arcModel } from '@/lib/trending/arc'
 import { compact, fmtDateWeekday } from '@/lib/trending/format'
 import { licenceSentence } from '@/lib/trending/licence'
@@ -30,6 +31,7 @@ import {
   searchedPlatforms,
   seriesRows,
   sortTerms,
+  statusHref,
   statusLabel,
   statusSentence,
   termPlatformLabel,
@@ -116,7 +118,13 @@ const measured = [
       <h1 class="mt-2 text-h1 font-bold">{term.term}</h1>
       <p class="mt-4 font-mono text-xs text-fg-faint">{termSubline(term, file)}</p>
       <p class="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-2">
-        <Badge variant="outline">{statusLabel(term.status)}</Badge>
+        <a
+          href={statusHref(term.status)}
+          title="The other terms at this stage"
+          class={cn(badgeVariants({ variant: 'outline' }), 'tr-stage-pill py-1')}
+        >
+          {statusLabel(term.status)}
+        </a>
         <span class="max-w-2xl text-lg leading-relaxed">{statusSentence(term)}</span>
       </p>
       <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
