@@ -27,7 +27,7 @@
 // whoever has some (src/lib/post/instructions.ts).
 import Page from '@/layouts/Page.astro'
 import { loadInstructions } from '@/lib/post/instructions'
-import { loadLedger } from '@/lib/post/ledger'
+import { loadLedger, mailtoOf, recordIssueUrl } from '@/lib/post/ledger'
 import { loadIncoming, countByKind } from '@/lib/post/incoming'
 import { buttonVariants } from '@/components/ui/button'
 import { fieldLabel, fieldVariants } from '@/lib/ui/field'
@@ -96,6 +96,12 @@ const quietLink = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px
       Three rules hold: every letter is committed before anything moves; nothing here is ever
       archived away; and collection, reply or enduring silence are recorded faithfully — silence
       is never dressed up.
+    </p>
+    <p class="mt-4 max-w-[70ch] text-body leading-relaxed text-fg-muted">
+      Since 2026-11-14 a practice writes a letter only where a receiver has a stake in the work: it is
+      the receiver's data, the receiver's subject or the receiver's own call. The operator sends such
+      a letter himself, from his own address, or not at all. What was sent, answered or met with
+      silence is entered below; what was not sent lies open as before.
     </p>
 
     {/* ── Digest subscription — the moved up top, Frank 2026-08-01: prominent, not a footnote ── */}
@@ -177,7 +183,7 @@ const quietLink = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px
       </p>
       <ul class="mt-5 space-y-4">
         {ledger.map((d) => (
-          <li class={cn(panel, 'p-5')}>
+          <li id={d.id} class={cn(panel, 'scroll-mt-16 p-5')}>
             <p class="font-mono text-mono-xs uppercase tracking-[0.14em] text-fg-muted">
               {d.practice} · <span class="text-fg">{STATUS_LABEL[d.status] ?? d.status}</span> · as of {d.as_of}
             </p>
@@ -185,6 +191,43 @@ const quietLink = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px
             <p class="mt-1 text-body text-fg-muted">→ {d.receiver} <span class="text-fg-faint">({d.receiver_channel})</span></p>
             <p class="mt-2 text-small leading-relaxed text-fg-muted">{d.note}</p>
             <p class="mt-2"><a class={quietLink} href={d.record_url}>the packet's own record →</a></p>
+            {d.send_problem && (
+              <p class="mt-2 text-small leading-relaxed text-fg-muted">Cannot be sent as written: {d.send_problem}.</p>
+            )}
+            {d.send && (
+              <details class="mt-3 border-t border-line/60 pt-3">
+                <summary class="cursor-pointer font-mono text-mono-xs uppercase tracking-[0.14em] text-fg-muted">
+                  the letter, as it {d.status === 'prepared' ? 'would leave' : 'left'}
+                </summary>
+                <p class="mt-3 text-small text-fg-muted">
+                  {d.send.kind === 'email' ? <>To {d.send.to}</> : <>Through <a class={quietLink} href={d.send.url}>the receiver's form</a></>}
+                  {' · '}Subject: {d.send.subject}
+                </p>
+                <pre class="mt-2 max-w-[70ch] whitespace-pre-wrap font-sans text-small leading-relaxed text-fg">{d.send.body}</pre>
+                {d.status === 'prepared' && (
+                  <p class="mt-3 text-small leading-relaxed text-fg-muted">
+                    For the operator, who alone sends:{' '}
+                    {mailtoOf(d.send) ? (
+                      <>
+                        <a class={quietLink} href={mailtoOf(d.send)!.href}>open it as a mail</a>
+                        {!mailtoOf(d.send)!.carriesBody && ' (the text is too long for a mail link: copy it from above)'}
+                      </>
+                    ) : (
+                      <a class={quietLink} href={d.send.url}>open the form and paste the text</a>
+                    )}
+                    {' · '}
+                    <a class={quietLink} href={recordIssueUrl('sent', d.id)}>record it as sent</a>
+                  </p>
+                )}
+                {d.status === 'sent' && (
+                  <p class="mt-3 text-small leading-relaxed text-fg-muted">
+                    For the operator: <a class={quietLink} href={recordIssueUrl('answered', d.id)}>record an answer</a>
+                    {' · '}
+                    <a class={quietLink} href={recordIssueUrl('silence', d.id)}>record silence</a>
+                  </p>
+                )}
+              </details>
+            )}
           </li>
         ))}
       </ul>

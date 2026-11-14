@@ -85,6 +85,8 @@ const NOT_A_MAIN_COMMITTER: Record<string, string> = {
     'starts the deploy itself (workflow_dispatch, which the built-in token may trigger) after it committed a verdict, so its many runs that find nothing new deploy nothing',
   'shelf-pictures.yml':
     'starts the deploy itself after it committed a new picture; it runs after every mirror of a practice and finds nothing new on most of them, so those runs deploy nothing',
+  'post-record.yml':
+    'starts the deploy itself after it recorded a letter as sent; it runs on every issue the operator opens and records nothing for most of them',
 }
 
 describe('the apparatus map describes the workflows this repository actually has', () => {
@@ -142,6 +144,18 @@ describe('every workflow that commits to main reaches production', () => {
     const source = readFileSync(`${WORKFLOW_DIR}/study-check.yml`, 'utf8')
     expect(source).toMatch(/actions: write/)
     expect(source.indexOf('gh workflow run deploy-cf.yml')).toBeGreaterThan(source.indexOf('git push'))
+  })
+
+  it('the post record, excused above, acts only on the operator’s issue and starts the deploy itself', () => {
+    const source = readFileSync(`${WORKFLOW_DIR}/post-record.yml`, 'utf8')
+    expect(source).toMatch(/actions: write/)
+    expect(source).toMatch(/if: github\.event\.issue\.user\.login == 'frankbueltge' &&/)
+    expect(source.indexOf('gh workflow run deploy-cf.yml')).toBeGreaterThan(source.indexOf('git push'))
+    expect(source).toMatch(/if: steps\.commit\.outputs\.pushed == 'true'\n\s+env:\n\s+GH_TOKEN: .*\n\s+run: gh workflow run deploy-cf\.yml/)
+    // what a stranger typed never reaches a shell: title and body travel as environment variables
+    const typed = source.split('\n').filter((l) => /github\.event\.issue\.(title|body)/.test(l) && !/^\s*#/.test(l))
+    expect(typed.length).toBeGreaterThan(1)
+    for (const line of typed) expect(line).toMatch(/^\s+(if: |TITLE: \$\{\{ |BODY: \$\{\{ )/)
   })
 
   it('the shelf pictures, excused above, start the deploy themselves once a picture is committed', () => {

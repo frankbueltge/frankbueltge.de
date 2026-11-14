@@ -12,7 +12,8 @@
 import { ensureSchema as ensureReception, type D1Like } from '../reception/store'
 import { ensureSchema as ensureReading } from '../reading/store'
 import { ensureSchema as ensureStudy } from '../study/store'
-import { dailyMail, operatorMissing, operatorRequest, previousDay, ratingMail, testMail, type DayCounts, type OperatorMail } from './operator'
+import { dailyMail, operatorMissing, operatorRequest, previousDay, ratingMail, testMail, type DayCounts, type OperatorMail, type PostLine } from './operator'
+import postLedger from '../../data/post/ledger.json'
 
 export interface NotifyEnv {
   RECEPTION_DB?: D1Like
@@ -25,6 +26,18 @@ export interface NotifyEnv {
 export interface Deps {
   fetch: typeof fetch
   now: () => Date
+  /** The letters that lie ready to send; the committed ledger unless a test says otherwise. */
+  post?: () => PostLine[]
+}
+
+/** Letters of the post office that lie ready and can be sent as written, from the committed ledger. */
+export function readyLetters(entries: unknown = postLedger): PostLine[] {
+  if (!Array.isArray(entries)) return []
+  return entries
+    .filter((e): e is { id: string; piece: string; receiver: string } =>
+      !!e && e.status === 'prepared' && !!e.send && typeof e.id === 'string' && typeof e.piece === 'string' && typeof e.receiver === 'string',
+    )
+    .map((e) => ({ id: e.id, piece: e.piece, receiver: e.receiver }))
 }
 
 const MAX_BODY_BYTES = 256
@@ -187,10 +200,28 @@ export async function handleDaily(request: Request, env: NotifyEnv, deps: Deps):
     return json(424, { ok: false, reason: 'store' })
   }
   let mail: OperatorMail | null
-  try {
-    mail = test ? testMail(now) : dailyMail(day, await countsOf(db, day))
-  } catch {
+  // A letter is announced once: its key is claimed like the day's, and given back if the mail fails.
+  const announced: string[] = []
+  const giveAllBack = async (): Promise<void> => {
     await giveBack(db, key)
+    for (const k of announced) await giveBack(db, k)
+  }
+  try {
+    if (test) {
+      mail = testMail(now)
+    } else {
+      const fresh: PostLine[] = []
+      for (const letter of (deps.post ?? readyLetters)()) {
+        const k = `post:${letter.id}`
+        if (await claim(db, k, now.toISOString())) {
+          announced.push(k)
+          fresh.push(letter)
+        }
+      }
+      mail = dailyMail(day, await countsOf(db, day), fresh)
+    }
+  } catch {
+    await giveAllBack()
     return json(424, { ok: false, reason: 'store' })
   }
   if (!mail) {
@@ -201,8 +232,8 @@ export async function handleDaily(request: Request, env: NotifyEnv, deps: Deps):
     return json(424, { ok: false, reason: 'rail', upstream: rail.status, code: rail.code })
   }
   const sent = await send(env, deps, mail)
-  if (sent.ok) return json(200, { ok: true, sent: true, day })
-  await giveBack(db, key)
+  if (sent.ok) return json(200, { ok: true, sent: true, day, ...(announced.length > 0 ? { letters: announced.length } : {}) })
+  await giveAllBack()
   return json(424, { ok: false, reason: 'send-failed', upstream: sent.status, code: sent.code })
 }
 

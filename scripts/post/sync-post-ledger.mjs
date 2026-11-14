@@ -20,6 +20,7 @@
 
 import { readdirSync, readFileSync, writeFileSync, existsSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+import { sendOf } from './send-block.mjs'
 
 const OUT = new URL('../../src/data/post/ledger.json', import.meta.url).pathname
 const MANUAL = new URL('../../src/data/post/ledger.manual.json', import.meta.url).pathname
@@ -83,8 +84,12 @@ function packetsOf({ path, practice }) {
             `declare ${[...PRACTICE_SETTABLE].join(' / ')}; sent/answered/silence are set site-side by the human who forwarded it`,
         )
       }
+      const { send: _raw, send_problem: _stale, ...fields } = p
+      const how = sendOf(p, join(base, slug))
+      if (how.send_problem) console.warn(`  ${practice}: ${dirName}/${slug} cannot be sent as written: ${how.send_problem}`)
       found.push({
-        ...p,
+        ...fields,
+        ...how,
         practice,
         derived_from: `${dirName}/${slug}/packet.json`,
       })
@@ -93,7 +98,13 @@ function packetsOf({ path, practice }) {
   return found
 }
 
-const manual = existsSync(MANUAL) ? readJson(MANUAL) : []
+const SITE_ROOT = new URL('../../', import.meta.url).pathname
+const manual = (existsSync(MANUAL) ? readJson(MANUAL) : []).map((e) => {
+  const { send: _raw, send_problem: _stale, ...fields } = e
+  const how = sendOf(e, SITE_ROOT)
+  if (how.send_problem) console.warn(`  site-side ${e.id} cannot be sent as written: ${how.send_problem}`)
+  return { ...fields, ...how }
+})
 const entries = [...manual]
 const skipped = []
 

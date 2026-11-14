@@ -12,11 +12,11 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "bfcf0bab813fed5c"
+        "sha256": "45ff86e1016ae7e2"
       },
       {
         "file": "src/data/post/ledger.json",
-        "sha256": "24e4da422e5ac89d"
+        "sha256": "be163eb408b9e448"
       },
       {
         "file": "src/data/begegnungen/register.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 643,
-      "edges": 567,
+      "nodes": 644,
+      "edges": 568,
       "nodesByKind": {
-        "decision": 195,
+        "decision": 196,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
@@ -75,7 +75,7 @@
         "made-by": 231,
         "neighbor-of": 163,
         "participates": 17,
-        "touches": 140
+        "touches": 141
       }
     }
   },
@@ -1963,6 +1963,16 @@
     {
       "id": "decision:2026-11-14-1",
       "kind": "decision",
+      "label": "The post office sends",
+      "date": "2026-11-14",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The post office sends"
+      }
+    },
+    {
+      "id": "decision:2026-11-14-2",
+      "kind": "decision",
       "label": "Comma gains two deeper voices",
       "date": "2026-11-14",
       "source": {
@@ -1971,7 +1981,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-2",
+      "id": "decision:2026-11-14-3",
       "kind": "decision",
       "label": "Every published practice page says who made it, and names the imprint and the privacy notice",
       "date": "2026-11-14",
@@ -1981,7 +1991,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-3",
+      "id": "decision:2026-11-14-4",
       "kind": "decision",
       "label": "Training crawlers are no longer invited to /trending",
       "date": "2026-11-14",
@@ -1991,7 +2001,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-4",
+      "id": "decision:2026-11-14-5",
       "kind": "decision",
       "label": "Common Ground asks to be named",
       "date": "2026-11-14",
@@ -2001,7 +2011,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-5",
+      "id": "decision:2026-11-14-6",
       "kind": "decision",
       "label": "The five older Common Ground sources stay",
       "date": "2026-11-14",
@@ -2011,7 +2021,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-6",
+      "id": "decision:2026-11-14-7",
       "kind": "decision",
       "label": "Common Ground reads every public it can reach without a key",
       "date": "2026-11-14",
@@ -2021,7 +2031,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-7",
+      "id": "decision:2026-11-14-8",
       "kind": "decision",
       "label": "Comma becomes a broadcast that cannot fall silent",
       "date": "2026-11-14",
@@ -13446,6 +13456,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-11-14-1",
+      "to": "work:on-record",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "scripts/post/record.mjs"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-14-2",
       "to": "work:comma",
       "source": {
         "file": "docs/decision-log.md",
@@ -13454,7 +13473,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-1",
+      "from": "decision:2026-11-14-2",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",
@@ -13463,7 +13482,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-2",
+      "from": "decision:2026-11-14-3",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -13472,7 +13491,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-3",
+      "from": "decision:2026-11-14-4",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -13481,7 +13500,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-4",
+      "from": "decision:2026-11-14-5",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -13490,7 +13509,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-5",
+      "from": "decision:2026-11-14-6",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -13499,7 +13518,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-6",
+      "from": "decision:2026-11-14-7",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -13508,7 +13527,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-7",
+      "from": "decision:2026-11-14-8",
       "to": "work:comma",
       "source": {
         "file": "docs/decision-log.md",
@@ -13517,7 +13536,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-7",
+      "from": "decision:2026-11-14-8",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",

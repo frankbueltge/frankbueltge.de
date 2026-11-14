@@ -52,6 +52,45 @@ claims otherwise, loudly, and the run goes red.
 `withheld` is available to you and means: finished, and deliberately not going out. Put the
 reason and its date in the note.
 
+## How a packet goes out (since 2026-11-14)
+
+A packet may say how it is sent. Then the page can hand the one who sends it a finished mail, and
+the operator's daily mail tells him once that a letter lies ready. Add to `packet.json`:
+
+```json
+"send": {
+  "kind": "email",
+  "to": "the address exactly as the receiver published it",
+  "subject": "one line, at most 160 characters"
+}
+```
+
+or, for a submission form or an open call:
+
+```json
+"send": { "kind": "form", "url": "https://… the form or call page", "subject": "the title you would give the entry" }
+```
+
+The text that leaves is a plain file beside the packet, `letter.txt` (another name goes in
+`"body_file"`): no Markdown, no notes to the house, only what the receiver should read, at most
+6,000 characters. A letter of up to about 1,800 characters travels inside the mail link; a longer
+one is shown on the page to copy. Notes on the letter (why this receiver, what to decide before it
+goes) stay in the packet's own files.
+
+The block is optional, and a block the sync cannot use never stops the ledger: the packet enters
+without it, and /post says beside it why it cannot be sent as written.
+
+When to write a packet, to whom, and what a letter holds stands in your constitution (section 8)
+and in the address book the Middle keeps (research-ecology, `post/README.md`).
+
+**What happens after.** The operator opens the letter from /post in his own mail programme, or
+pastes it into the receiver's form, and sends it or does not. If he sent it, he records that with
+the link beside the letter: it opens an issue in the site's repository titled
+`Post sent: <your packet's id>`, and a workflow that acts only on his issues writes `sent` into the
+ledger (`scripts/post/record.mjs`). An answer or silence is recorded the same way. You read what
+became of your letters in the ledger:
+`https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/post/ledger.json`
+
 ## The standing rule this serves
 
 **Frank, 2026-08-07:** all communication leaving the house collects in the post office first, and
@@ -64,3 +103,9 @@ world right now, and it is a real act: the record is public, anybody may carry a
 and the decision not to send is dated on the same page as the packet. What you cannot do is press
 send — and the ledger being assembled rather than remembered is what makes that rule mean
 something, because a post office Frank decides from has to actually contain everything.
+
+**Since 2026-11-14** (Frank's decision, wording private) the letters are meant to leave where a
+receiver has a stake in the work. From 2026-08-30 to that day the practices laid no packet, and of
+the nine letters in the ledger none had been sent. What changed is not who sends: it is that a
+packet now carries what the operator needs to send it in one step, and that the constitutions say
+when a packet is worth writing.
