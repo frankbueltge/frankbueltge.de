@@ -1,8 +1,30 @@
 import { describe, expect, it } from 'vitest'
-import { archiveTitle, compact, feedTitle, fmtDateLong, fmtDateWeekday, fmtTimeUtc, metaDescription, pageTitle, signalText, topLabels } from './format'
+import { archiveTitle, compact, deskLabel, feedTitle, fmtDateLong, fmtDateWeekday, fmtTimeUtc, magnitudeOf, metaDescription, pageTitle, platformLabel, signalText, topLabels } from './format'
 import { fixtureDay } from './fixtures'
 
 describe('trending formatting', () => {
+  it('spells every source added on 2026-11-14 by its own name, never by its id', () => {
+    // The ids the pipeline registered that day (pipelines/trending/src/trending/sources/__init__.py).
+    // A missing entry here is how twelve sources read as their ids for two days in September.
+    const ids = ['world_press', 'wikipedia_news', 'lemmy', 'hf_papers', 'manifold', 'stocktwits', 'apple_music', 'apple_podcasts', 'openlibrary', 'alerts', 'baidu']
+    for (const id of ids) expect(platformLabel(id), id).not.toBe(id)
+    expect(platformLabel('hf_papers')).toBe('Hugging Face Papers')
+  })
+
+  it('gives the units of those sources in words', () => {
+    expect(magnitudeOf({ magnitude: 73, magnitude_unit: 'upvotes', rank: 1 }).text).toBe('73 upvotes')
+    expect(magnitudeOf({ magnitude: 40139, magnitude_unit: 'mana_24h', rank: 1 }).text).toBe('40,139 mana in 24 h')
+    expect(magnitudeOf({ magnitude: 109800, magnitude_unit: 'watchers', rank: 1 }).text).toBe('109.8k watchers')
+  })
+
+  it('names a desk as it spells itself and falls through to the id it does not know', () => {
+    expect(deskLabel({ feed: 'abc_au' })).toBe('ABC')
+    expect(deskLabel({ feed: 'a_new_desk' })).toBe('a_new_desk')
+    expect(deskLabel({})).toBeNull()
+    expect(deskLabel({ feed: 7 })).toBeNull()
+    expect(deskLabel(undefined)).toBeNull()
+  })
+
   it('formats dates in UTC, long form', () => {
     expect(fmtDateLong('2026-09-02')).toBe('2 September 2026')
     expect(fmtDateWeekday('2026-09-02')).toBe('Wednesday, 2 September 2026')

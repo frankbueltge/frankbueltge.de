@@ -1,6 +1,6 @@
 /** View models for the trending page — derived, never hand-written, so a number on the page
  *  is always the committed file's number. Pure functions, unit-tested. */
-import { compact, magnitudeOf, platformLabel, signalText } from './format'
+import { compact, deskLabel, magnitudeOf, platformLabel, signalText } from './format'
 import { AUDIENCE_CLASSES, type AudienceClass, type TrendingAudience, type TrendingDay, type TrendingLink, type TrendingTopic } from './types'
 
 export interface ConvergingRow {
@@ -46,6 +46,8 @@ export interface SourceColumnSignal {
   label: string
   url: string | null
   geo: string | null
+  /** the desk of a source that reads several ("BBC", "OCHA"); null for a source with one list */
+  desk: string | null
   /** the source's own number WITH its unit — "941 posts", "#3" (see format.ts's magnitudeOf) */
   magnitudeText: string
   /** the same measurement, apart, for the page's structured data */
@@ -83,6 +85,7 @@ export function sourceColumns(day: TrendingDay, top = 15): SourceColumn[] {
         label: sig.label,
         url: sig.url,
         geo: sig.geo,
+        desk: deskLabel(sig.meta),
         magnitudeText: m.text,
         magnitudeValue: m.value,
         magnitudeUnit: m.unit,

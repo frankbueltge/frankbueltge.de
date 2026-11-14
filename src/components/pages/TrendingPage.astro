@@ -142,6 +142,7 @@ const machineEditions: { href: string; what: string }[] = [
                         <span>{s.label}</span>
                       )}
                       {s.geo && <span class="ml-1 font-mono text-mono-xs text-fg-faint">{s.geo}</span>}
+                      {s.desk && <span class="ml-1 whitespace-nowrap font-mono text-mono-xs text-fg-faint">{s.desk}</span>}
                     </span>
                     <span class="tr-signal-n font-mono text-mono-xs tabular-nums text-fg-faint">{s.magnitudeText}</span>
                   </li>

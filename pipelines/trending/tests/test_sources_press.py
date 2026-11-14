@@ -1,4 +1,5 @@
-"""The two sources added on 2026-11-08: the research press and the humanitarian desk."""
+"""The two sources added on 2026-11-08: the research press and the humanitarian desk (whose
+feed list changed on 2026-11-14, see humanitarian.py)."""
 import httpx
 
 from trending.sources import humanitarian, science_press
@@ -16,8 +17,10 @@ SCIENCE = ("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" "
 CONVERSATION = ("<feed xmlns=\"http://www.w3.org/2005/Atom\"><entry><title>What a verdict means</title>"
                 "<link rel=\"alternate\" href=\"https://theconversation.com/x-1\"/></entry>"
                 "<entry><title> </title><link href=\"https://theconversation.com/y\"/></entry></feed>")
-RELIEFWEB = ("<rss version=\"2.0\"><channel><item><title>A million face acute hunger</title>"
-             "<link>https://reliefweb.int/report/lebanon/x</link></item></channel></rss>")
+OCHA = ("<rss version=\"2.0\"><channel><item><title>A staff page</title>"
+        "<link>https://www.unocha.org/a-person</link></item>"
+        "<item><title>A million face acute hunger</title>"
+        "<link>https://www.unocha.org/news/x</link></item></channel></rss>")
 
 
 def _by_host(pages):
@@ -44,19 +47,27 @@ def test_science_press_keeps_nature_journalism_and_reads_three_formats(ctx_facto
 
 
 def test_humanitarian_one_feed_failing_is_a_note(ctx_factory):
-    ctx = ctx_factory(_by_host({"reliefweb.int": RELIEFWEB, "news.un.org": "",
-                                "thenewhumanitarian.org": "", "msf.org": "", "icrc.org": ""}))
+    ctx = ctx_factory(_by_host({"unocha.org": OCHA, "thenewhumanitarian.org": "", "msf.org": "",
+                                "icrc.org": ""}))
     res = humanitarian.fetch_source(ctx)
     assert [s.label for s in res.signals] == ["A million face acute hunger"]
-    assert res.signals[0].source == "humanitarian" and res.signals[0].meta == {"feed": "reliefweb"}
-    assert len(res.notes) == 4 and res.notes[0].startswith("un_news:")
+    # the staff page before it is not news and does not take rank 1
+    assert res.signals[0].rank == 1 and res.signals[0].url == "https://www.unocha.org/news/x"
+    assert res.signals[0].source == "humanitarian" and res.signals[0].meta == {"feed": "ocha"}
+    assert len(res.notes) == 3 and res.notes[0].startswith("thenewhumanitarian:")
     assert "?" not in res.notes[0]  # no query string in a public note
 
 
-def test_both_feeds_failing_makes_the_source_unavailable(ctx_factory):
+def test_every_feed_failing_makes_the_source_unavailable(ctx_factory):
     import pytest
     from trending.fetch import SourceUnavailable
-    ctx = ctx_factory(_by_host({"reliefweb.int": "", "news.un.org": "",
-                                "thenewhumanitarian.org": "", "msf.org": "", "icrc.org": ""}))
+    ctx = ctx_factory(_by_host({"unocha.org": "", "thenewhumanitarian.org": "", "msf.org": "",
+                                "icrc.org": ""}))
     with pytest.raises(SourceUnavailable):
         humanitarian.fetch_source(ctx)
+
+
+def test_the_desk_no_longer_asks_the_two_hosts_whose_robots_txt_closes_the_feed():
+    hosts = {url.split("/")[2] for _feed, url in humanitarian.FEEDS}
+    assert hosts.isdisjoint({"reliefweb.int", "news.un.org"})
+    assert "www.unocha.org" in hosts

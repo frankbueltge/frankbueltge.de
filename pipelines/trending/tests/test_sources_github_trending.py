@@ -109,7 +109,13 @@ def test_the_spec_is_optional_sits_beside_github_and_names_its_platform():
 def test_platform_of_folds_the_two_github_lists_and_leaves_every_other_id_alone():
     assert platform_of("github_trending") == "github" == platform_of("github")
     assert platform_of("wikipedia") == "wikipedia" and platform_of("unknown") == "unknown"
-    assert set(PLATFORM_OF.values()) == {s.id for s in SOURCES} - {"github_trending"}
+    # 2026-11-14: three more second lists of a platform already read — the newsrooms beside the
+    # news aggregator, Wikipedia's news box beside its most-read list, the Hub's papers beside
+    # its models.
+    assert platform_of("world_press") == "google_news"
+    assert platform_of("wikipedia_news") == "wikipedia" and platform_of("hf_papers") == "huggingface"
+    assert set(PLATFORM_OF.values()) == {s.id for s in SOURCES} - {
+        "github_trending", "world_press", "wikipedia_news", "hf_papers"}
 
 
 def _sig(source, label, rank=1, unit="rank", magnitude=None):

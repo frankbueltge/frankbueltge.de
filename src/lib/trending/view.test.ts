@@ -51,6 +51,16 @@ describe('source columns', () => {
     expect(first.rank).toBe(1)
   })
 
+  it('names the desk of a source that reads several, and nothing for a source with one list', () => {
+    // Since 2026-11-14 a multi-desk source lists its desks rank by rank, so a card of seven
+    // newsrooms would read "#1" seven times and name none of them without this.
+    const day = fixtureDay()
+    day.signals.bluesky[0].meta = { feed: 'bbc' }
+    const cols = sourceColumns(day, 15)
+    expect(cols[1].signals[0].desk).toBe('BBC')
+    expect(cols[0].signals[0].desk).toBeNull()
+  })
+
   it('says "as of" only where a source lags the ledger, not twenty times over', () => {
     const day = fixtureDay()
     // google_trends is as of the ledger's own day; bluesky states none at all

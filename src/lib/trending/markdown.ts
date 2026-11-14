@@ -101,7 +101,7 @@ export function renderMarkdown(day: TrendingDay, audience?: TrendingAudience): s
   out.push('')
   out.push('## Method (v1)')
   out.push('')
-  out.push(`1. Eight open sources are read every morning at 06:40 UTC: ${day.sources.map((s) => platformLabel(s.id)).join(', ')}.`)
+  out.push(`1. ${day.sources.length} open sources are read every morning at 06:40 UTC: ${day.sources.map((s) => platformLabel(s.id)).join(', ')}.`)
   out.push('2. Labels are normalised to tokens (case, diacritics, stopwords) and matched across sources by a token-overlap rule; clusters become topics.')
   out.push('3. A topic scores by how many independent platforms carry it, then by rank within each source.')
   out.push('4. Every day is committed as JSON and never edited afterwards; first-seen and days-hot come from that archive.')
