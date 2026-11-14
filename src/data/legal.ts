@@ -21,6 +21,14 @@ const impressumDe: LegalPage = {
         'Für Inhalte verlinkter externer Seiten (u. a. data-snack.com, datavism.org, LinkedIn) ist der jeweilige Anbieter verantwortlich.',
       ],
     },
+    // 2026-11-14 (legal review; AI Act Art. 50(4) applies since 2026-08-02): the machine-made pages say so
+    // at their foot (src/lib/engines/legal-line.ts), and the imprint says it once for the whole site.
+    {
+      heading: 'KI-erzeugte Inhalte',
+      paragraphs: [
+        'Die Werke, Präsentationen und Berichte der maschinell betriebenen Forschungspraktiken dieser Website (The Atelier, The Field, The Studio, Machine Attention, n-1, Error as Method und Arch) werden von einem KI-System selbstständig recherchiert, geschrieben und gebaut und so veröffentlicht, wie das System sie hinterlassen hat. Sie werden vor der Veröffentlichung nicht von einem Menschen redigiert. Ihre Seiten sagen das an ihrem Fuß. Für Hinweise auf Fehler oder auf Inhalte, die Rechte verletzen: hello@frankbueltge.de.',
+      ],
+    },
   ],
 }
 
@@ -38,6 +46,12 @@ const impressumEn: LegalPage = {
         'The respective provider is responsible for the content of linked external sites (incl. data-snack.com, datavism.org, LinkedIn).',
       ],
     },
+    {
+      heading: 'AI-generated content',
+      paragraphs: [
+        'The works, presentations and reports of the machine-run research practices on this website (The Atelier, The Field, The Studio, Machine Attention, n-1, Error as Method and Arch) are researched, written and built by an AI system working autonomously, and are published as the system left them. No person edits them before publication. Their pages say so at their foot. To report an error, or content that infringes rights: hello@frankbueltge.de.',
+      ],
+    },
   ],
 }
 
@@ -46,13 +60,36 @@ const datenschutzDe: LegalPage = {
   heading: 'Datenschutzerklärung',
   sections: [
     { heading: 'Verantwortlicher', paragraphs: ['Frank Bueltge, c/o Autorenglück #98451, Albert-Einstein-Str. 47, 02977 Hoyerswerda. E-Mail: hello@frankbueltge.de — siehe Impressum.'] },
-    { heading: 'Hosting', paragraphs: ['Gehostet über Cloudflare Pages (Cloudflare, Inc.). Beim Aufruf werden technisch notwendige Server-Logs verarbeitet (Art. 6 Abs. 1 lit. f DSGVO).'] },
-    { heading: 'Schriftarten', paragraphs: ['Schriftarten werden lokal ausgeliefert (self-hosted). Keine Übertragung an Dritte.'] },
+    {
+      heading: 'Hosting',
+      paragraphs: [
+        'Gehostet über Cloudflare Pages (Cloudflare, Inc., USA). Beim Aufruf werden technisch notwendige Server-Logs verarbeitet (Art. 6 Abs. 1 lit. f DSGVO).',
+        // 2026-11-14: the audience file of /trending (pipelines/trending, trending-audience/2) was not named here.
+        'Für /trending liest ein nächtlicher Lauf zusätzlich Cloudflares zusammengefasste Zugriffsstatistik (Anfragen je Land, verweisende Hosts und die Art des abrufenden Programms, etwa Suchmaschine oder Browser) und veröffentlicht diese Summen auf der Seite. IP-Adressen oder Kennungen einzelner Besuche werden dabei weder gelesen noch gespeichert.',
+      ],
+    },
+    { heading: 'Schriftarten', paragraphs: ['Schriftarten werden lokal ausgeliefert (self-hosted). Keine Übertragung an Dritte. Das gilt auch für die Werke der Forschungspraktiken: Verweise auf fremde Schrift-Dienste (etwa Google Fonts) werden beim Bau der Website aus ihren Seiten entfernt.'] },
     { heading: 'Cookies & Reichweitenmessung', paragraphs: ['Diese Seite setzt keine Tracking-Cookies und kein geräteübergreifendes Tracking. Zur anonymen Reichweitenmessung kommt Umami zum Einsatz — cookielos, ohne Fingerprinting und ohne personenbezogene Profile. Umami wird first-party über einen Proxy auf dieser Domain ausgeliefert (Endpunkt /stats), sodass der Browser keine Drittanbieter-Anfrage stellt; der Proxy leitet die aggregierten Zugriffsdaten serverseitig an eine selbst betriebene Umami-Instanz auf eigener EU-Infrastruktur (Frankfurt, Vercel + Neon) weiter — kein Drittland-Transfer. Erfasst werden nur aggregierte Kennzahlen wie Seitenaufrufe, Referrer (Herkunft), Länder und Gerätetypen; die IP-Adresse wird zur Länderbestimmung übertragen und nur gehasht verarbeitet, nicht gespeichert (Art. 6 Abs. 1 lit. f DSGVO).'] },
     // 2026-10-11, with the entrance's "since your last visit" (src/lib/ops/since.ts). The wording
     // follows the line proposed in the design handoff of that day; whether the opt-in satisfies
     // § 25 TDDDG as intended is for a lawyer to confirm, not for this file to assert.
     { heading: 'Startseite: „remember my visits“', paragraphs: ['Nur wenn du diese Funktion auf der Startseite einschaltest, speichert die Seite im lokalen Speicher deines Browsers einen Zeitstempel deines letzten Besuchs, um zu markieren, was seitdem neu ist. Er wird nicht an uns übertragen, es wird kein Cookie gesetzt, und ein weiterer Klick auf dieselbe Schaltfläche löscht ihn wieder. Ohne Einschalten wird nichts gespeichert.'] },
+    // 2026-11-14, after a legal review of the site: what the browser keeps besides the visit stamp, and
+    // which works make the browser ask a third party directly. The list of services is a dated state.
+    {
+      heading: 'Lokaler Speicher deines Browsers',
+      paragraphs: [
+        'Wenn du die helle oder dunkle Ansicht umschaltest, merkt sich dein Browser diese Wahl in seinem lokalen Speicher. Unter /analytics-opt-out kannst du die Reichweitenmessung für deinen Browser abschalten; auch dieser Schalter ist ein Eintrag im lokalen Speicher. Einige Werke der Forschungspraktiken legen dort ihren eigenen Zustand ab, zum Beispiel was du in einem Werk schon geöffnet oder eingegeben hast oder welchen Stand du zuletzt gesehen hast. Nichts davon wird an uns übertragen, es wird kein Cookie gesetzt, und du kannst die Einträge jederzeit über die Website-Daten deines Browsers löschen.',
+      ],
+    },
+    {
+      heading: 'Werke, die Inhalte bei Dritten abrufen',
+      paragraphs: [
+        'Einige Werke lesen die Welt, während du sie ansiehst. Dein Browser fragt dann nicht nur diese Website, sondern unmittelbar den Dienst, von dem die Daten oder Bilder stammen. Dieser Dienst erfährt dabei deine IP-Adresse, die üblichen Angaben einer Browser-Anfrage (etwa den Browser-Typ) und dass die Anfrage von dieser Website kommt. Wir setzen dabei kein Cookie und geben keine weiteren Daten weiter. Rechtsgrundlage ist das berechtigte Interesse, eine Quelle unmittelbar und unverändert zu zeigen (Art. 6 Abs. 1 lit. f DSGVO). Für die Verarbeitung beim jeweiligen Dienst gelten dessen eigene Datenschutzhinweise.',
+        'Stand 14. November 2026 betrifft das: Spread (/spread) verbindet deinen Browser beim Öffnen der Seite mit den öffentlichen Kursdaten-Schnittstellen der Handelsplätze Coinbase, Kraken, Bitstamp und Binance. Comma (/comma) lädt, sobald du das Zuhören startest, die Testlisten des Citizen Lab von GitHub (raw.githubusercontent.com); die Messdaten von OONI holt dagegen diese Website für dich. Die Seite /seed lädt das Register der Saaten ebenfalls von GitHub. Einige Werke des Studios zeigen Fotos aus den offenen Daten von iNaturalist, die bei Amazon Web Services liegen, und lesen Wetterwarnungen beim Iowa Environmental Mesonet der Iowa State University (USA).',
+        'Die Forschungspraktiken veröffentlichen laufend neue Werke. Ein Werk, das Daten bei Dritten abruft, nennt den Dienst in der Regel bei seinen Quellenangaben. Skripte fremder Anbieter laufen auf dieser Website nirgends.',
+      ],
+    },
     {
       heading: 'Öffentliche Saat (/seed)',
       paragraphs: [
@@ -102,6 +139,15 @@ const datenschutzDe: LegalPage = {
         'Frühere Stände wurden als versionierte Snapshots im öffentlichen Repositorium dataset-hub veröffentlicht und bestehen dort samt Versionsgeschichte fort. Eine Entfernung wirkt für künftige Stände; ein Widerspruch nach Art. 21 DSGVO wird auch im Archiv umgesetzt.',
       ],
     },
+    // 2026-11-14: names that reach the site with a source's own label, an atlas entry or a letter's address.
+    {
+      heading: 'Namen in Trending, im Atlas und im Postamt',
+      paragraphs: [
+        'Common Ground (/trending) übernimmt, was öffentliche Quellen als ihre meistbeachteten Themen ausweisen, mit der Bezeichnung der Quelle: Schlagzeilen, Titel von Wikipedia-Artikeln, Suchbegriffe. Darin kommen Namen von Personen vor, über die öffentlich berichtet wird. Bis zum Tagesstand vom 14. November 2026 wurde bei den neuesten Produkten von Product Hunt außerdem der Name der Person festgehalten, die das Produkt dort eingestellt hat, so wie der öffentliche Feed ihn nennt; seitdem wird er nicht mehr übernommen. Der Atlas (/atlas) nennt Künstlerinnen und Künstler zusammen mit ihren öffentlich gezeigten Arbeiten. Das Postamt (/post) nennt die Empfängerinnen und Empfänger vorbereiteter Briefe in ihrer beruflichen Funktion.',
+        'Rechtsgrundlage ist das berechtigte Interesse an einem nachprüfbaren Nachweis dessen, was öffentlich verhandelt und gezeigt wird (Art. 6 Abs. 1 lit. f DSGVO). Die Angaben stammen aus allgemein zugänglichen Quellen, werden nicht angereichert und nicht zu Profilen verdichtet.',
+        'Wer die Nennung des eigenen Namens nicht wünscht, kann widersprechen (Art. 21 DSGVO): formlos per E-Mail an hello@frankbueltge.de unter Angabe der Seite und des Eintrags. Der Eintrag wird dann entfernt oder unkenntlich gemacht, auch in den archivierten Tagesständen und in den Fassungen für Maschinen.',
+      ],
+    },
     {
       heading: 'Briefkasten & Kontaktformular (/post, /contact)',
       paragraphs: [
@@ -117,7 +163,20 @@ const datenschutzDe: LegalPage = {
         'Der Digest ist ein unregelmäßiger Newsletter über neue Arbeiten dieser Website. Die Anmeldung läuft im Double-Opt-in-Verfahren: Deine Adresse wird erst nach Bestätigung per E-Mail in die Empfängerliste aufgenommen (Art. 6 Abs. 1 lit. a DSGVO). Jede E-Mail enthält einen Abmeldelink; mit der Abmeldung wird die Adresse aus der Liste entfernt. Die Adresse wird ausschließlich bei Brevo gespeichert — nie im öffentlichen Archiv dieser Website — und nicht an Dritte weitergegeben. Über eine bestätigte Anmeldung wird der Betreiber per E-Mail benachrichtigt.',
       ],
     },
-    { heading: 'Deine Rechte', paragraphs: ['Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch sowie Beschwerde bei einer Aufsichtsbehörde.'] },
+    // 2026-11-14: recipients outside the EU and the right to withdraw a consent were not named.
+    {
+      heading: 'Empfänger und Drittländer',
+      paragraphs: [
+        'Diese Website nutzt Dienste von Anbietern mit Sitz in den USA: Cloudflare, Inc. (Hosting, Datenbank, Warteschlange und Bot-Prüfung), Google LLC (das KI-Modell, das Einreichungen, Notizen und Freitext-Antworten prüft) und GitHub, Inc. (das öffentliche Git-Archiv, in dem veröffentlichte Saaten, Bewertungen, Notizen und Antworten festgehalten werden). Dabei können personenbezogene Daten in die USA übermittelt werden. Grundlage ist der Angemessenheitsbeschluss der EU-Kommission zum EU-US Data Privacy Framework vom 10. Juli 2023, unter dem diese Anbieter zertifiziert sind, ergänzt durch die Standardvertragsklauseln in ihren Vertragsbedingungen.',
+      ],
+    },
+    {
+      heading: 'Deine Rechte',
+      paragraphs: [
+        'Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch sowie Beschwerde bei einer Aufsichtsbehörde, zum Beispiel bei der deines Wohnorts.',
+        'Eine Einwilligung kannst du jederzeit mit Wirkung für die Zukunft widerrufen, formlos per E-Mail an hello@frankbueltge.de; den Digest bestellst du über den Abmeldelink in jeder E-Mail ab. Was bis zum Widerruf geschehen ist, bleibt rechtmäßig. Wo eine Einsendung ohne jeden Bezug zu deiner Person gespeichert wurde (Third Reading, Erhebungen in Werken), lässt sie sich dir nicht mehr zuordnen und deshalb nicht einzeln entfernen; darauf weist die jeweilige Seite vor dem Absenden hin.',
+      ],
+    },
   ],
 }
 
@@ -126,10 +185,30 @@ const datenschutzEn: LegalPage = {
   heading: 'Privacy Policy',
   sections: [
     { heading: 'Controller', paragraphs: ['Frank Bueltge, c/o Autorenglück #98451, Albert-Einstein-Str. 47, 02977 Hoyerswerda. Email: hello@frankbueltge.de — see the imprint.'] },
-    { heading: 'Hosting', paragraphs: ['Hosted on Cloudflare Pages (Cloudflare, Inc.). Technically necessary server logs are processed on access (Art. 6(1)(f) GDPR).'] },
-    { heading: 'Fonts', paragraphs: ['Fonts are served locally (self-hosted). No data sent to third parties.'] },
+    {
+      heading: 'Hosting',
+      paragraphs: [
+        'Hosted on Cloudflare Pages (Cloudflare, Inc., USA). Technically necessary server logs are processed on access (Art. 6(1)(f) GDPR).',
+        'For /trending a nightly run also reads Cloudflare’s aggregated access statistics (requests per country, referring hosts and the kind of program that asked, such as a search engine or a browser) and publishes these totals on the page. No IP address and no identifier of a single visit is read or stored for it.',
+      ],
+    },
+    { heading: 'Fonts', paragraphs: ['Fonts are served locally (self-hosted). No data sent to third parties. This holds for the works of the research practices as well: references to font services of other providers (such as Google Fonts) are removed from their pages when the site is built.'] },
     { heading: 'Cookies & analytics', paragraphs: ['This site sets no tracking cookies and does no cross-device tracking. For anonymous reach measurement it uses Umami — cookieless, without fingerprinting and without personal profiles. Umami is served first-party through a proxy on this domain (the /stats endpoint), so the browser makes no third-party request; the proxy forwards the aggregated request data server-side to our own self-hosted Umami instance on EU infrastructure (Frankfurt, Vercel + Neon) — no third-country transfer. Only aggregate metrics such as page views, referrers (origin), countries and device types are collected; the IP address is transmitted for country lookup and processed only in hashed form, not stored (Art. 6(1)(f) GDPR).'] },
     { heading: 'Homepage: “remember my visits”', paragraphs: ['Only if you switch this feature on, on the homepage, does the page store a timestamp of your last visit in your browser’s local storage, to mark what is new since then. It is not transmitted to us, no cookie is set, and one more click on the same button deletes it. Unless you switch it on, nothing is stored.'] },
+    {
+      heading: 'Your browser’s local storage',
+      paragraphs: [
+        'When you switch between the light and the dark view, your browser remembers that choice in its local storage. At /analytics-opt-out you can switch the reach measurement off for your browser; that switch is an entry in local storage as well. Some works of the research practices keep their own state there, for example what you have already opened or entered in a work, or which state you saw last. None of it is sent to us, no cookie is set, and you can delete the entries at any time through your browser’s site data.',
+      ],
+    },
+    {
+      heading: 'Works that fetch content from third parties',
+      paragraphs: [
+        'Some works read the world while you look at them. Your browser then asks not only this website but the service the data or images come from, directly. That service learns your IP address, the usual details of a browser request (such as the browser type) and that the request comes from this website. We set no cookie in the course of it and pass on no further data. The legal basis is the legitimate interest in showing a source directly and unchanged (Art. 6(1)(f) GDPR). The service’s own privacy notice applies to its processing.',
+        'As of 14 November 2026 this concerns: Spread (/spread) connects your browser, when the page opens, to the public market data interfaces of the trading venues Coinbase, Kraken, Bitstamp and Binance. Comma (/comma) loads the Citizen Lab’s test lists from GitHub (raw.githubusercontent.com) once you start listening; OONI’s measurements, by contrast, are fetched for you by this website. The page /seed loads the register of seeds from GitHub as well. Some works of the Studio show photographs from iNaturalist’s open data, hosted at Amazon Web Services, and read weather warnings from the Iowa Environmental Mesonet of Iowa State University (USA).',
+        'The research practices keep publishing new works. A work that fetches data from a third party as a rule names the service among its sources. Scripts of other providers run nowhere on this website.',
+      ],
+    },
     {
       heading: 'Public seeding (/seed)',
       paragraphs: [
@@ -180,6 +259,14 @@ const datenschutzEn: LegalPage = {
       ],
     },
     {
+      heading: 'Names in Trending, the Atlas and the post office',
+      paragraphs: [
+        'Common Ground (/trending) takes over what public sources declare as their most noticed topics, in the source’s own words: headlines, titles of Wikipedia articles, search terms. Names of people who are publicly reported on occur in them. Up to the day file of 14 November 2026 the name of the person who submitted a product to Product Hunt was kept with its newest products, as the public feed gives it; since then it is no longer taken. The Atlas (/atlas) names artists together with their publicly shown works. The post office (/post) names the receivers of prepared letters in their professional role.',
+        'The legal basis is the legitimate interest in a verifiable record of what is publicly discussed and shown (Art. 6(1)(f) GDPR). The information comes from generally accessible sources, is not enriched and is not compiled into profiles.',
+        'Anyone who does not want their name listed can object (Art. 21 GDPR), informally by email to hello@frankbueltge.de, naming the page and the entry. The entry is then removed or made unrecognisable, in the archived day files and in the editions for machines as well.',
+      ],
+    },
+    {
       heading: 'Letterbox & contact form (/post, /contact)',
       paragraphs: [
         'Through the post office letterbox (/post) and the contact form (/contact) you can send messages. They land in a private queue (Cloudflare Workers KV) and are read by me alone — they are not published and not fed to any AI model as instruction. Leaving a contact detail (e.g. an email address) is voluntary and serves solely to answer your message (Art. 6(1)(a) GDPR). Messages are deleted from the queue after handling; a contact detail never enters this website’s public Git archive.',
@@ -194,7 +281,19 @@ const datenschutzEn: LegalPage = {
         'The digest is an irregular newsletter about new work on this site. Sign-up is double opt-in: your address joins the recipient list only after you confirm by email (Art. 6(1)(a) GDPR). Every mail carries an unsubscribe link; unsubscribing removes the address from the list. The address is stored at Brevo only — never in this website’s public archive — and is not shared with third parties. The operator is notified by email of a confirmed sign-up.',
       ],
     },
-    { heading: 'Your rights', paragraphs: ['Access, rectification, erasure, restriction, portability, objection, and the right to lodge a complaint with a supervisory authority.'] },
+    {
+      heading: 'Recipients and third countries',
+      paragraphs: [
+        'This website uses services of providers based in the USA: Cloudflare, Inc. (hosting, database, queue and bot check), Google LLC (the AI model that checks submissions, notes and free-text answers) and GitHub, Inc. (the public Git archive in which published seeds, ratings, notes and answers are recorded). Personal data may be transferred to the USA in the course of it. The basis is the European Commission’s adequacy decision on the EU-US Data Privacy Framework of 10 July 2023, under which these providers are certified, supplemented by the standard contractual clauses in their terms.',
+      ],
+    },
+    {
+      heading: 'Your rights',
+      paragraphs: [
+        'Access, rectification, erasure, restriction, portability, objection, and the right to lodge a complaint with a supervisory authority, for example the one where you live.',
+        'You can withdraw a consent at any time with effect for the future, informally by email to hello@frankbueltge.de; you leave the digest through the unsubscribe link in every mail. What happened before the withdrawal stays lawful. Where a submission was stored without any reference to you (Third Reading, studies in works), it can no longer be attributed to you and so cannot be removed singly; the page says so before you send.',
+      ],
+    },
   ],
 }
 

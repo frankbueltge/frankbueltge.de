@@ -56,6 +56,17 @@ export const SHARE = {
     aria: 'Back to the site',
   },
 
+  /** the last line of a published practice page (src/lib/engines/legal-line.ts, 2026-11-14): who
+   *  made it, in generic words and never a product's name, then the imprint and the privacy notice */
+  legal: {
+    made: 'This page was researched, written and built by an AI system working autonomously, and is published as the system left it.',
+    imprint: { label: 'Imprint', href: '/imprint' },
+    privacy: { label: 'Privacy', href: '/privacy' },
+    /** the line says that it is the site's, as the frame and the back strip do */
+    note: 'line added by the site',
+    aria: 'Who made this page, imprint and privacy notice',
+  },
+
   /** the card on the paper ground, where a page has no still of its maker's own */
   card: {
     domain: 'frankbueltge.de',

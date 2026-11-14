@@ -33,7 +33,8 @@ try {
   const seconds = ((Date.now() - started) / 1000).toFixed(1)
   console.log(
     `[share-dist] ${r.pages} practice page(s) finished for sharing in ${seconds}s: ${r.written} written, ` +
-      `${r.stills} maker's still(s), ${r.cards} card(s), ${r.ownImages} with an image of their own, ${r.strips} back strip(s)`,
+      `${r.stills} maker's still(s), ${r.cards} card(s), ${r.ownImages} with an image of their own, ${r.strips} back strip(s), ` +
+      `${r.fontLinks} font-host link(s) taken off`,
   )
   if (r.failed.length) console.warn(`[share-dist] ${r.failed.length} problem(s): ${r.failed.join('; ')}`)
 } catch (e) {

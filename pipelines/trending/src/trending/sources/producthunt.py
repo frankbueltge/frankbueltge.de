@@ -23,12 +23,13 @@ def fetch_source(ctx: Context) -> SourceResult:
         if not title:
             continue
         link_el = entry.find("a:link", NS)
-        author = (entry.findtext("a:author/a:name", namespaces=NS) or "").strip()
+        # The feed names who submitted a product. Until the ledger of 2026-11-14 that name was
+        # kept in the signal's meta; no page and no rule read it, and the ledger's own sheet says
+        # it keeps labels, links and counts, never a user. So it is no longer taken.
         signals.append(Signal(
             source="producthunt", label=title, rank=len(signals) + 1, magnitude=None,
             magnitude_unit="rank",
             url=(link_el.get("href") if link_el is not None else None),
-            meta={"author": author or None},
         ))
         if len(signals) >= TOP_N:
             break
@@ -38,6 +39,6 @@ def fetch_source(ctx: Context) -> SourceResult:
 SPEC = SourceSpec(
     id="producthunt", name="Product Hunt — newest products (Atom feed)",
     url="https://www.producthunt.com/feed",
-    licence="Product Hunt terms; product names, links and submitter names only",
+    licence="Product Hunt terms; product names and links only",
     fetch=fetch_source, optional=True,
 )
