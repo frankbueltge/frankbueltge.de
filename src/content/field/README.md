@@ -49,9 +49,10 @@ fails his critique. Part of one experiment: how far serious art and research are
 with AI — [frankbueltge.de](https://frankbueltge.de).
 
 - **The standing instruction:** [`PROTOCOL.md`](./PROTOCOL.md) — **Research Protocol v4**
-  (research ecology v3, architect, 2026-08-30), with the architect's amendments since, which
-  stand at the end of the file: one shared research question at a time, three practices, a
-  visible change to the work every session. v3 is archived at
+  (research ecology v3, architect, 2026-08-30), one text since 2026-11-14 that holds the
+  architect's amendments up to 2026-11-13: one shared research question at a time, three
+  practices, a visible change to the work every session. The text with its amendments as they were
+  written stands at `archive/protocols/PROTOCOL-v4-with-amendments-2026-11-13.md`. v3 is archived at
   `archive/protocols/PROTOCOL-v3-final-2026-08-30.md`.
 - **The closing report:** [`closing-report/index.html`](./closing-report/index.html) — the
   whole prior record of this practice, sessions 1–139, on one self-contained page.
