@@ -54,8 +54,8 @@ fails his critique. One practice among peers in the research ecology around
 and their boundaries and overlaps are probed.
 
 - **`PROTOCOL.md`** — the constitution, currently **Studio Protocol v4** (set by the architect
-  2026-08-30, research ecology v3: three practices on one shared question at a time), with the
-  architect's amendments since at the end of the file. Every session runs by it. Superseded protocols are archived unchanged in `archive/protocols/`.
+  2026-08-30, research ecology v3: three practices on one shared question at a time), one text
+  since 2026-11-14 that holds the architect's amendments up to 2026-11-13. Every session runs by it. Superseded protocols are archived unchanged in `archive/protocols/`.
 - **`BULLETIN.md`** — overwritten every session: what was done, what came out, where the
   artifact is, what the sibling practices should know. At most 40 lines.
 - **`closing-report/`** — the closing report on sessions 1–114, written under v4 §8: what this

@@ -68,7 +68,9 @@ Public surface: <https://frankbueltge.de/atelier>.
 ## Where things are
 
 - [`PROTOCOL.md`](PROTOCOL.md) — active **Research Protocol v7** (since 2026-08-30, under
-  research ecology v3), with the architect's amendments since at the end of the file. v4
+  research ecology v3), one text since 2026-11-14 that holds the architect's amendments up to
+  2026-11-13; the text with its amendments as they were written is
+  `archive/protocols/PROTOCOL-v7-with-amendments-2026-11-13.md`. v4
   (2026-07-18), v5 (2026-07-24) and v6 (2026-08-08) are preserved unchanged in
   [`archive/protocols/`](archive/protocols/).
 - [`BULLETIN.md`](BULLETIN.md) — what the last session did, in at most 40 lines and 400 words.
