@@ -18,16 +18,19 @@ export const GET: APIRoute = () =>
         page: 'https://frankbueltge.de/papers',
         slim: 'https://frankbueltge.de/papers/index.json',
         // 2026-11-14: the dedication covers what is the register's own. An abstract is its authors'
-        // and publisher's text, read from the source catalogues, and is not the register's to give.
+        // and publisher's text, read from the source catalogues, and is not the register's to give;
+        // since the same day a paywalled work carries none (Frank's decision, wording private).
         licence:
           'CC0-1.0 for the register’s own fields (selection, relevance, verdicts, access checks), per the licence line of 2026-07-26. ' +
-          'Titles, names and abstracts (`zusammenfassung`) are quoted from the source catalogues and stay under the rights of their authors and publishers',
+          'Titles and names are quoted from the source catalogues. An abstract (`zusammenfassung`) appears only for an openly accessible work ' +
+          'and stays under the rights of its authors and publishers; a summary a practice wrote in its own reading list is that practice’s text, under CC BY 4.0. ' +
+          'A paywalled work carries its title, authors and link, and no abstract',
         note:
           'Papers this ecology has read, cited or examined, collected by the katalog-scout ' +
           'pipeline (daily 05:30 UTC) with identifiers resolved and access checked. Rebuilt ' +
           'with the site, so this feed and the /papers page are never two states. `rejected` ' +
           'holds what the register turned away, with its reason. This feed is LARGE (the ' +
-          'abstracts alone are 1.5 MB); to scan rather than read, take `slim` — same entries, ' +
+          'abstracts make most of it); to scan rather than read, take `slim` — same entries, ' +
           'no abstracts, whole in one fetch.',
         count: PAPERS.length,
         // Since 2026-11-09 /papers lists only what the practices read; identifiers a work tested

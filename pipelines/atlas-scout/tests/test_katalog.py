@@ -265,3 +265,39 @@ def test_als_json_schreibt_jedes_feld_des_datenmodells():
     im_modell = set(Katalogeintrag.__dataclass_fields__)
     fehlt = im_modell - geschrieben
     assert not fehlt, f"Felder im Modell, aber nicht in der Ausgabe: {sorted(fehlt)}"
+
+
+class TestVeroeffentlichteZusammenfassung:
+    """Frank's decision of 2026-11-14 (wording private): a paywalled work's abstract is its
+    publisher's text and stays out of the published catalogue; title, authors and link stay."""
+
+    def _geschrieben(self, **abweichung) -> str:
+        import json as _json
+
+        from atlas_scout.katalog import als_json
+
+        return _json.loads(als_json([_eintrag(**abweichung)]))[0]["zusammenfassung"]
+
+    def test_paywalled_work_keeps_title_and_link_but_no_abstract(self):
+        import json as _json
+
+        from atlas_scout.katalog import als_json
+
+        eintrag = _json.loads(als_json([_eintrag(zusammenfassung="A publisher's abstract.")]))[0]
+        assert eintrag["zusammenfassung"] == ""
+        assert eintrag["titel"] == "Ein Titel"
+        assert eintrag["url"] == "https://example.invalid"
+
+    def test_openly_accessible_work_keeps_its_abstract(self):
+        assert self._geschrieben(frei_zugaenglich=True, zusammenfassung="Open.") == "Open."
+
+    def test_a_practices_own_summary_stays_whatever_the_access(self):
+        assert self._geschrieben(aufnahmegrund="kuratiert", zusammenfassung="Our reading.") == "Our reading."
+
+    def test_a_body_text_is_never_published_as_an_abstract(self):
+        from atlas_scout.katalog import LAENGSTE_ZUSAMMENFASSUNG
+
+        lang = "x" * (LAENGSTE_ZUSAMMENFASSUNG + 1)
+        assert self._geschrieben(frei_zugaenglich=True, zusammenfassung=lang) == ""
+        genau = "x" * LAENGSTE_ZUSAMMENFASSUNG
+        assert self._geschrieben(frei_zugaenglich=True, zusammenfassung=genau) == genau
