@@ -23,7 +23,7 @@ import { countryLink, entryLink } from '@/lib/comma/links'
 import { hostOf, testsOf, type Test } from '@/lib/comma/ooni'
 import { panOf } from '@/lib/comma/places'
 import { balance, commaSeconds, dayOf, GAP_SECONDS, ruleOfDay, tideLevel } from '@/lib/comma/rule'
-import { AUDIBLE_WEIGHT, bellLabelY, labelEnd, layoutFor, stagger, visible, WIDE_SECONDS, weightTier, xOf, yOf } from '@/lib/comma/score'
+import { AUDIBLE_WEIGHT, bellLabelY, labelEnd, layoutFor, stagger, TAPE_LABEL_Y, TAPE_LINE_Y, visible, WIDE_SECONDS, weightTier, xOf, yOf } from '@/lib/comma/score'
 import { categoryOf, listUrl, parseList, type Lists } from '@/lib/comma/testlists'
 import { onMotionChange, reducedMotion } from '@/lib/dataviz/runtime'
 
@@ -606,15 +606,15 @@ export default function Comma({ wording, id }: CommaProps) {
           })}
           {phase === 'playing'
             ? levels.map((level, g) => {
-                const h = 1 + 16 * level
+                const h = 1 + 9 * level
                 return <rect key={`ask-${g}`} x={bandFrom} y={yOf(l, g) - h / 2} width={Math.max(0, l.right - bandFrom)} height={h} className="cm-ask" />
               })
             : null}
           {taped.map((span) => (
             <g key={`tape-${span.key}`} className="cm-tape">
-              <line x1={span.x0} x2={Math.max(span.x0 + 2, span.x1)} y1={l.top - 22} y2={l.top - 22} />
+              <line x1={span.x0} x2={Math.max(span.x0 + 2, span.x1)} y1={TAPE_LINE_Y} y2={TAPE_LINE_Y} />
               {span.x1 - span.x0 > 80 ? (
-                <text x={span.x0 + 2} y={l.top - 26} className="cm-tape-label">
+                <text x={span.x0 + 2} y={TAPE_LABEL_Y} className="cm-tape-label">
                   {wording.legend.tapeLabel}
                 </text>
               ) : null}
@@ -658,7 +658,7 @@ export default function Comma({ wording, id }: CommaProps) {
               </g>
             )
           })}
-          <line x1={l.right} x2={l.right} y1={l.top - 22} y2={l.height - 4} className="cm-now" />
+          <line x1={l.right} x2={l.right} y1={TAPE_LINE_Y + 6} y2={l.height - 4} className="cm-now" />
         </svg>
       </figure>
 
