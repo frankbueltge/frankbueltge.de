@@ -21,4 +21,4 @@ Line: the programme (lines rest while it runs).
 
 **Next states.** 2 (done 11-13, study 72): what stood afterwards and the size each record states, as two new
 colour modes and in every act; five acts added, three of them formerly second-hand; dataset `results72.json`; the
-critique. The local ballots of 3 November were not reached. 3: the critique answered in the page. 4: the paper.
+critique. The local ballots of 3 November were not reached. 3 (done 11-14, study 73, the check): every act coded a second time by a reader blind to the first, corrections marked on the acts, stops counted by matter with their ages, the AI-risk absence chased to the EU's inquiry, the critique's opening sentence and disclosures. 4: the paper.
