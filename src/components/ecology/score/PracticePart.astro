@@ -31,6 +31,7 @@ import { DOORS, windowDoor } from '@/lib/ecology/pyramid/station'
 import { REPOS, REPOSITORY_DOORS, repoPlaceOf } from '@/lib/engines/publication.mjs'
 import { loadProcess } from '@/lib/ecology/process'
 import { pieceHref, sessionHref } from '@/lib/engines/publication-links'
+import { isEtudeHref } from '@/lib/engines/etude-links'
 import { withoutHouseSuffix } from '@/lib/ops/edition'
 import '@fontsource-variable/literata/opsz-italic.css'
 import '@/styles/paper.css'
@@ -90,6 +91,8 @@ const newestTitle = newest ? withoutHouseSuffix(newest.title, me.name) : null
 // A piece of the cycle still in its working phase is still being made: since cycle 009 each
 // practice grows one piece across the cycle, and the site shows it as in progress (2026-10-20).
 const newestInProgress = newest !== null && newest.kind !== 'presentation' && cycle.phase === 'working' && newest.cycle === cycle.cycle
+// An étude (a convening piece beside the cycle's main work, 2026-11-10) says so wherever it stands.
+const newestIsEtude = newest !== null && isEtudeHref(newest.href)
 // How it was made (amendment of 2026-10-22): each session that changed the piece leaves a state in
 // its PROCESS.json, with a screenshot, and the states stand under it in order. Only a piece the
 // site serves has them here; the full history stays one link away in the practice's repository.
@@ -223,7 +226,7 @@ const hasFigure = Astro.slots.has('figure')
         <div class="sc-latest">
           {newest && newestTitle ? (
             <>
-              <p class="sc-label">{T.latest.head({ one: noun.one, date: newest.date, cycle: newest.cycle, inProgress: newestInProgress })}</p>
+              <p class="sc-label">{T.latest.head({ one: newestIsEtude ? T.shelf.etude : noun.one, date: newest.date, cycle: newest.cycle, inProgress: newestInProgress })}</p>
               <a class="sc-still" href={url(newestHref ?? newest.href)}>
                 {still.wide ? (
                   <picture>
@@ -355,11 +358,15 @@ const hasFigure = Astro.slots.has('figure')
             <div class="sc-shelf-row">
               <p class="sc-shelf-label"><span>{group.label}</span><span>{group.sub}</span></p>
               <div class="sc-works">
-                {group.works.map((w) => (
-                  <a class={`sc-work${w.kind === 'presentation' ? ' is-presentation' : ''}`} href={url(pieceHref(w.href))}>
-                    {withoutHouseSuffix(w.title, me.name)}{w.date && <> <small>{shortDate(w.date)}</small></>}
-                  </a>
-                ))}
+                {group.works.map((w) => {
+                  const etude = isEtudeHref(w.href)
+                  return (
+                    <a class={`sc-work${w.kind === 'presentation' ? ' is-presentation' : ''}${etude ? ' is-etude' : ''}`} href={url(pieceHref(w.href))}>
+                      {etude && <span class="sc-work-tag">{T.shelf.etude}</span>}
+                      {withoutHouseSuffix(w.title, me.name)}{w.date && <> <small>{shortDate(w.date)}</small></>}
+                    </a>
+                  )
+                })}
               </div>
             </div>
           ))}

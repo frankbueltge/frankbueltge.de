@@ -83,19 +83,42 @@ export function frameDist(
       }
     }
   }
+  // Since 2026-11-14: the Studio's études (studio/etudes/<slug>/) are pages a visitor reaches from
+  // the Studio's shelf just as its works, and had no way back either.
+  const etudes = join(dist, 'studio', 'etudes')
+  if (existsSync(etudes)) {
+    for (const slug of readdirSync(etudes)) {
+      const file = join(etudes, slug, 'index.html')
+      if (!existsSync(file)) continue
+      report.pages++
+      try {
+        const before = readFileSync(file, 'utf8')
+        if (/<html\b[^>]*\bdata-skin=/i.test(before)) continue
+        const after = frameStandaloneWork(before, 'studio', wallText('studio', slug))
+        if (after !== before) {
+          writeFileSync(file, after)
+          report.reframed++
+        }
+      } catch (e) {
+        report.failed.push(`studio/etudes/${slug}: ${(e as Error).message}`)
+      }
+    }
+  }
   return report
 }
 
 /** The practices whose published artifacts stand as pages under <ns>/artifacts/. */
 export const ARTIFACT_NAMESPACES = ['atelier', 'field'] as const
 
-/** An artifact's own page: artifacts/<slug>/index.html, or artifacts/cycle-NNN/<slug>/index.html. */
+/** An artifact's own page: artifacts/<slug>/index.html, artifacts/cycle-NNN/<slug>/index.html, or an
+ *  étude's, artifacts/after-cycle-NNN/<slug>/index.html. */
 export function artifactPages(root: string): { file: string; slug: string }[] {
   if (!existsSync(root)) return []
   const out: { file: string; slug: string }[] = []
   for (const entry of readdirSync(root, { withFileTypes: true })) {
     if (!entry.isDirectory()) continue
-    if (/^cycle-\d+$/.test(entry.name)) {
+    // a cycle's folder, and since 2026-11-14 the convening's études beside it (after-cycle-NNN)
+    if (/^(?:after-)?cycle-\d+$/.test(entry.name)) {
       for (const inner of readdirSync(join(root, entry.name), { withFileTypes: true })) {
         const file = join(root, entry.name, inner.name, 'index.html')
         if (inner.isDirectory() && existsSync(file)) out.push({ file, slug: inner.name })
