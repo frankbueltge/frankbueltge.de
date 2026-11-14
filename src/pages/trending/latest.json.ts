@@ -8,6 +8,7 @@
 // runtime, so a finding stays recomputable even when a source stops answering.
 import type { APIRoute } from 'astro'
 import { getLatestTrending } from '@/lib/trending/data'
+import { attributionField, licenceField } from '@/lib/trending/licence'
 
 export const prerender = true
 
@@ -18,7 +19,8 @@ export const GET: APIRoute = () => {
       {
         source: 'https://github.com/frankbueltge/frankbueltge.de — src/data/trending',
         page: 'https://frankbueltge.de/trending',
-        licence: 'CC0-1.0 (data), per the licence line of 2026-07-26',
+        licence: licenceField(day?.date),
+        ...attributionField(day?.date),
         note:
           'Common Ground, the nightly ledger: what the open web says it is searching, reading and ' +
           'posting about, read once every morning from independent sources and crossed by a disclosed ' +
