@@ -41,7 +41,8 @@ a dataset's own records), that material stays under its source's terms, which th
 names. In particular the abstracts in `src/data/register/papers.json` are their authors' and publishers' texts, read
 from the source catalogues; the CC0 dedication of the papers register covers the register's own fields (selection,
 relevance, verdicts, access checks) and not the abstracts. (Stated on 2026-11-14; it changes no licence, it says what
-the dedication could cover from the start.)
+the dedication could cover from the start.) Since the same day the register carries an abstract only for an openly
+accessible work; a paywalled work keeps its title, authors and link.
 
 Attribution: Frank Bültge (https://frankbueltge.de)
 

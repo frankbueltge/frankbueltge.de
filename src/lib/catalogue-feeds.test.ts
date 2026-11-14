@@ -52,6 +52,21 @@ describe('the catalogue feeds carry what the pages carry', () => {
     expect(probed.length, 'the register lost its reachability probes on the way out').toBeGreaterThan(0)
   })
 
+  it('publishes no abstract of a paywalled work and no body text as an abstract (2026-11-14)', async () => {
+    // Frank's decision of 2026-11-14, wording private: an abstract is its authors' or publisher's
+    // text, so it appears only for an openly accessible work or where a practice wrote the summary
+    // itself (`kuratiert`). The katalog-scout writes it so (katalog.py, veroeffentlichte_zusammenfassung);
+    // this holds the committed file and the feed to it.
+    const feed = await body(papersFeed)
+    const withAbstract = feed.entries.filter((e: Record<string, unknown>) => typeof e.zusammenfassung === 'string' && e.zusammenfassung !== '')
+    expect(withAbstract.length, 'the open abstracts went missing too').toBeGreaterThan(0)
+    const paywalled = withAbstract.filter((e: Record<string, unknown>) => !e.frei_zugaenglich && e.aufnahmegrund !== 'kuratiert')
+    expect(paywalled.map((e: Record<string, unknown>) => e.id)).toEqual([])
+    const bodyText = withAbstract.filter((e: Record<string, unknown>) => (e.zusammenfassung as string).length > 5000)
+    expect(bodyText.map((e: Record<string, unknown>) => e.id)).toEqual([])
+    expect(feed.licence).toContain('A paywalled work carries its title, authors and link, and no abstract')
+  })
+
   it('the slim papers index holds every paper and no abstract', async () => {
     const feed = await body(papersIndex)
     expect(feed.count).toBe(PAPERS.length)
