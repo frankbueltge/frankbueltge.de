@@ -310,8 +310,13 @@ export default function OverlookedScore({ record, links, audioId, id, label, hin
   }, [recording.playing])
   const t = performing ? perf.t : recording.t
   const seek = (to: number) => (performing ? perf.seek(to) : recording.seek(to))
-  const voices = React.useMemo(() => score.lanes.filter((l) => l.id !== 'murmur'), [score])
-  const off = performing ? perf.muted : NONE
+  // a chip for every voice the performance plays
+  const voices = React.useMemo(() => score.lanes.filter((l) => l.id !== 'murmur' && !perf.unplayed.has(l.id)), [score, perf.unplayed])
+  // pale in the drawing while the browser performs: the voices left out, and what it never plays (the murmur)
+  const off = React.useMemo(
+    () => (performing && (perf.muted.size > 0 || perf.unplayed.size > 0) ? new Set([...perf.muted, ...perf.unplayed]) : NONE),
+    [performing, perf.muted, perf.unplayed],
+  )
   const readout = useBoxReadout(boxRef, readoutRef)
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {

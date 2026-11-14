@@ -24,6 +24,8 @@ export interface PerformanceHandle {
   muted: ReadonlySet<string>
   /** what the score draws and the performance does not play, in words */
   missing: string[]
+  /** the lanes of the score the performance never plays (the murmur), so the drawing can show them left out */
+  unplayed: ReadonlySet<string>
   /** begins, resumes or holds the performance; `from` is where to begin if it has not begun */
   toggle: (from: number) => void
   /** plays from a moment of the piece */
@@ -39,6 +41,7 @@ export function usePerformance(record: Overlooked, id: string): PerformanceHandl
   const [t, setT] = React.useState<number | null>(null)
   const [muted, setMuted] = React.useState<ReadonlySet<string>>(() => new Set())
   const [missing, setMissing] = React.useState<string[]>([])
+  const [unplayed, setUnplayed] = React.useState<ReadonlySet<string>>(() => new Set())
   const engine = React.useRef<Orchestra | null>(null)
   const context = React.useRef<AudioContext | null>(null)
   const statusRef = React.useRef(status)
@@ -117,6 +120,7 @@ export function usePerformance(record: Overlooked, id: string): PerformanceHandl
           }
           await o.load(setProgress)
           const silent = o.missing()
+          setUnplayed(new Set(performance.missing.filter((m) => m.day === null).map((m) => m.lane)))
           setMissing([
             ...new Set(performance.missing.map((m) => m.why)),
             ...(silent.length > 0 ? [`could not be loaded and stay silent: ${silent.join(', ')}`] : []),
@@ -167,15 +171,18 @@ export function usePerformance(record: Overlooked, id: string): PerformanceHandl
 
   const voice = React.useCallback((lane: string, all: readonly string[]) => {
     const next = afterTap(mutedRef.current, lane, all)
+    // at once, so a second tap before the next render starts from this one
+    mutedRef.current = next
     setMuted(next)
     engine.current?.mute(next)
   }, [])
 
   const everyone = React.useCallback(() => {
     const next = new Set<string>()
+    mutedRef.current = next
     setMuted(next)
     engine.current?.mute(next)
   }, [])
 
-  return { status, progress, t, muted, missing, toggle, seek, voice, everyone }
+  return { status, progress, t, muted, missing, unplayed, toggle, seek, voice, everyone }
 }
