@@ -1,10 +1,49 @@
 /* src/styles/ill-tempered-week.css — the ill-tempered week (/ill-tempered-week, 2026-11-09; the scores 2026-11-14).
  *
- * The frame's mono ink only, in every skin and both themes: the scores tell their voices apart by place (a lane, a
- * register, a row), by weight and by the tone of the one ink, never by a hue, so no identity colour enters the page
- * and no palette record is needed. Every mark is an SVG element with a class from the islands in
- * src/components/ill-tempered-week/; nothing here is positioned by a style attribute (the CSP drops them).
+ * The page is the frame's mono ink, and the scores wear four hues where a hue carries a distinction the drawing
+ * cannot carry alone (Frank's word of 2026-11-14, wording private: colour where it makes sense). In Unison the four
+ * string sections overlap in pitch, so a glissando wears its section. In Turn each platform family keeps its hue from
+ * the rows of the score to the bar drawn large beneath it. In Overlooked two of the four tell the overlooked headline
+ * itself (said, answered, kept as a motif) from the ensemble that takes it up. Everything a piece does not single out
+ * stays in ink: the murmur of the most attended, bells, chord lines, timpani, the solo double bass, the tempo. A hue
+ * sits on marks only; labels, counts and headlines stay in ink, and each legend names a hue beside its mark.
+ *
+ * PALETTE: itw-voices — four hues from the lowest voice to the highest, validated light and dark against the page's
+ * own ground (--color-bg) and recorded in src/lib/dataviz/palette.ts.
+ *
+ * Every mark is an SVG element with a class from the islands in src/components/ill-tempered-week/; nothing here is
+ * positioned by a style attribute (the CSP drops them).
  */
+
+.itw-score,
+.itw-table {
+  /* PALETTE: itw-voices — the lowest voice: double basses in Unison, search in Turn */
+  --itw-c-1: #7d2b78;
+  /* PALETTE: itw-voices — cellos in Unison, news in Turn, the ensemble that takes a motif up in Overlooked */
+  --itw-c-2: #2a6fd0;
+  /* PALETTE: itw-voices — violas in Unison, social in Turn */
+  --itw-c-3: #00846d;
+  /* PALETTE: itw-voices — the highest voice: violins in Unison, tech in Turn, the overlooked itself in Overlooked */
+  --itw-c-4: #b8410e;
+}
+
+:root:not([data-theme='light']) .itw-score,
+:root:not([data-theme='light']) .itw-table {
+  /* PALETTE: itw-voices — the dark steps of the same four, in the same order */
+  --itw-c-1: #b04aa8;
+  --itw-c-2: #4f8cdd;
+  --itw-c-3: #199e70;
+  --itw-c-4: #e2691f;
+}
+
+:root[data-theme='dark'] .itw-score,
+:root[data-theme='dark'] .itw-table {
+  /* PALETTE: itw-voices — the dark steps of the same four, in the same order */
+  --itw-c-1: #b04aa8;
+  --itw-c-2: #4f8cdd;
+  --itw-c-3: #199e70;
+  --itw-c-4: #e2691f;
+}
 
 .itw-player {
   display: block;
@@ -199,7 +238,9 @@
   fill-opacity: 0.07;
 }
 
-/* Overlooked: the voice, the answer, the motifs (paler and lower with each day of age), the ensemble, the murmur */
+/* Overlooked: the overlooked headline itself (said, answered, kept as a motif that grows paler and lower with each
+   day of age) in the highest hue; the ensemble that takes it up in the second; bell, coda violin and murmur in ink.
+   The same classes stay in ink in Unison, where the sentence said over the chord is no voice of the strings. */
 .itw-bell,
 .itw-said,
 .itw-said-mark,
@@ -207,14 +248,18 @@
   fill: var(--color-fg);
 }
 
+[data-island='itw-overlooked'] .itw-said {
+  fill: var(--itw-c-4);
+}
+
 .itw-answer {
-  stroke: var(--color-fg);
+  stroke: var(--itw-c-4);
   stroke-width: 5;
   stroke-dasharray: 1.4 1.4;
 }
 
 .itw-motif rect {
-  fill: var(--color-fg);
+  fill: var(--itw-c-4);
 }
 
 .itw-motif.a0 rect { fill-opacity: 0.9; }
@@ -233,17 +278,17 @@
 }
 
 .itw-ens rect {
-  fill: var(--color-fg-muted);
-  fill-opacity: 0.8;
+  fill: var(--itw-c-2);
+  fill-opacity: 0.9;
 }
 
 .itw-piano {
-  fill: var(--color-fg-muted);
-  fill-opacity: 0.5;
+  fill: var(--itw-c-2);
+  fill-opacity: 0.6;
 }
 
 .itw-brass {
-  fill: var(--color-fg-muted);
+  fill: var(--itw-c-2);
 }
 
 .itw-murmur {
@@ -298,10 +343,17 @@
   stroke-linecap: round;
 }
 
-.itw-gl.w0 { stroke-width: 0.9; stroke-opacity: 0.5; }
-.itw-gl.w1 { stroke-width: 1.3; stroke-opacity: 0.62; }
-.itw-gl.w2 { stroke-width: 1.8; stroke-opacity: 0.76; }
-.itw-gl.w3 { stroke-width: 2.6; stroke-opacity: 0.9; }
+/* the section that plays a signal is its hue: the sections overlap in pitch, so place alone would not tell them apart */
+.s-basses { stroke: var(--itw-c-1); }
+.s-cellos { stroke: var(--itw-c-2); }
+.s-violas { stroke: var(--itw-c-3); }
+.s-violins { stroke: var(--itw-c-4); }
+
+/* and its weight, the quarter of the day's attention it fell in (the same fact twice: weight and hue) */
+.itw-gl.w0 { stroke-width: 1.2; stroke-opacity: 0.9; }
+.itw-gl.w1 { stroke-width: 1.5; stroke-opacity: 0.92; }
+.itw-gl.w2 { stroke-width: 2; stroke-opacity: 0.94; }
+.itw-gl.w3 { stroke-width: 2.7; stroke-opacity: 0.96; }
 .itw-gl.itw-trem { stroke-dasharray: 2.2 1.6; stroke-linecap: butt; }
 
 .itw-tail {
@@ -311,9 +363,9 @@
   stroke-opacity: 0.6;
 }
 
+/* what sounds at the playhead: the same line, heavier, in its own hue */
 .itw-gl-on line {
-  stroke: var(--color-fg);
-  stroke-width: 3.2;
+  stroke-width: 4;
   stroke-linecap: round;
 }
 
@@ -370,11 +422,23 @@
 
 .itw-cell {
   fill: var(--color-fg-muted);
+  fill-opacity: 0.82;
 }
 
 .itw-cell-full {
-  fill: var(--color-fg);
+  fill-opacity: 1;
 }
+
+/* a platform family keeps its hue from the rows of the score to the bar drawn large beneath it */
+.itw-cell.f-search { fill: var(--itw-c-1); }
+.itw-cell.f-news { fill: var(--itw-c-2); }
+.itw-cell.f-social { fill: var(--itw-c-3); }
+.itw-cell.f-tech { fill: var(--itw-c-4); }
+
+.itw-beat.is-on.f-search { fill: var(--itw-c-1); stroke: var(--itw-c-1); }
+.itw-beat.is-on.f-news { fill: var(--itw-c-2); stroke: var(--itw-c-2); }
+.itw-beat.is-on.f-social { fill: var(--itw-c-3); stroke: var(--itw-c-3); }
+.itw-beat.is-on.f-tech { fill: var(--itw-c-4); stroke: var(--itw-c-4); }
 
 .itw-saidbar {
   fill: none;
@@ -564,11 +628,17 @@
   stroke-dasharray: 2 2;
 }
 
+/* a day's motif on its staff: the notes in the overlooked's hue, the one sounding now in ink */
 .itw-stn {
-  fill: var(--color-fg-muted);
+  fill: var(--itw-c-4);
+  fill-opacity: 0.85;
 }
 
-.itw-stn.is-on,
+.itw-stn.is-on {
+  fill: var(--color-fg);
+  fill-opacity: 1;
+}
+
 .itw-beat.is-on {
   fill: var(--color-fg);
 }
@@ -587,6 +657,21 @@
 .itw-beat.is-on {
   stroke: var(--color-fg);
 }
+
+/* a dot before a section's name in the table of signals */
+.itw-dot {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.35rem;
+  border-radius: 50%;
+  background: var(--color-fg-muted);
+}
+
+.itw-dot.s-basses { background: var(--itw-c-1); }
+.itw-dot.s-cellos { background: var(--itw-c-2); }
+.itw-dot.s-violas { background: var(--itw-c-3); }
+.itw-dot.s-violins { background: var(--itw-c-4); }
 
 .itw-murmured {
   margin-top: 0.4rem;

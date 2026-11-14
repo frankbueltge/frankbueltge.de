@@ -78,7 +78,7 @@ describe.runIf(complete?.pieces.unison)('Unison, on the server', () => {
   it('draws one glissando per war signal, the chord’s lines and every day', () => {
     const html = render()
     const s = unisonScore(u, a.week)
-    expect(drawing(html).match(/class="itw-gl /g) ?? []).toHaveLength(s.glides.length)
+    expect(drawing(html).match(/class="itw-gl s-(violins|violas|cellos|basses) /g) ?? []).toHaveLength(s.glides.length)
     expect(drawing(html)).toContain('itw-chord-a')
     for (const [i] of u.days.entries()) expect(html).toContain(`https://example.org/bass/${i}`)
   })
@@ -98,7 +98,7 @@ describe.runIf(complete?.pieces.turn)('Turn, on the server', () => {
     const html = render()
     const s = turnScore(r, a.week)
     const cells = s.bars.reduce((n, b) => n + (b.kind === 'said' ? 0 : b.beats.length), 0)
-    expect(drawing(html).match(/class="itw-cell( itw-cell-full)?"/g) ?? []).toHaveLength(cells)
+    expect(drawing(html).match(/class="itw-cell f-(search|news|social|tech)( itw-cell-full)?"/g) ?? []).toHaveLength(cells)
     expect(html.match(/class="itw-measure"/g)?.length ?? 0).toBe(s.days.length + s.bars.filter((b) => b.kind === 'all').length)
     if (s.days.some((d) => d.turn)) expect(html).toContain('https://example.org/turn')
   })
