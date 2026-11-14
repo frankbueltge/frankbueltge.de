@@ -164,7 +164,7 @@ export function nowUnison(s: UnisonScore, t: number): string {
   if (d.peak && t >= d.peakAt - FORM.rollBefore && t < d.peakAt) return `${name}: the timpani roll swells; the press agreed ${pct(d.agreement)} on ${d.story}.`
   const sounding = s.glides.filter((g) => g.day === i && t >= g.t0 && t < g.t2).length
   if (sounding === 0 && t > d.peakAt) return `${name} rings out.`
-  return `${name}: ${d.signals} war signals enter at the hours they were published (${sounding} sounding now), each gliding ${pct(d.agreement)} of the way to A’s chord${d.peak ? '' : ', too little agreement for the brass'}.`
+  return `${name}: ${d.signals} war signals enter through the day (${sounding} sounding now), each gliding ${pct(d.agreement)} of the way to A’s chord${d.peak ? '' : ', too little agreement for the brass'}.`
 }
 
 export function describeGlide(s: UnisonScore, id: string): { head: string; body: string } | null {

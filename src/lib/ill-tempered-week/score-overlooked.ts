@@ -301,7 +301,7 @@ export function nowOverlooked(s: OverlookedScore, t: number): string {
   if (t >= s.coda) {
     return t < s.coda + first.speech + FORM.violinAfter ? `Coda: ${dayName(first.day)}’s headline once more, alone: “${first.text}”` : `Coda: one high violin note, A ${hzLabel(FORM.violinHz)}, and the piece ends.`
   }
-  if (t >= s.cut) return 'The cut: silence.'
+  if (t >= s.cut) return 'The cut: the music breaks off.'
   let i = 0
   while (i + 1 < s.days.length && t >= s.days[i + 1]!.from) i++
   const d = s.days[i]!
