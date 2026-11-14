@@ -52,6 +52,8 @@ import attentionExport from '@/data/attention/export.json'
 import { latestNight, readViews } from '@/lib/attention/views'
 import { readExport } from '@/lib/attention/export'
 import { pieceHref } from '@/lib/engines/publication-links'
+import { isEtudeHref } from '@/lib/engines/etude-links'
+import { SCORE_WORDING } from '@/config/score-wording'
 import { houseNames, type HouseId } from '@/lib/ops/house-feed'
 import { buildHouseFeed } from '@/lib/ops/live-feed'
 import { readTiles } from '@/lib/ops/tiles'
@@ -83,6 +85,7 @@ import '@fontsource-variable/literata/opsz-italic.css'
 import '@/styles/paper.css'
 import '@/styles/edition.css'
 
+const W_ETUDE = SCORE_WORDING.practice.shelf.etude
 const locale = (Astro.currentLocale ?? 'en') as Locale
 /** Fragments survive the locale helper: src/lib/locale-href.ts. */
 const url = (href: string) => localeHref(href, (path) => getRelativeLocaleUrl(locale, path))
@@ -217,7 +220,7 @@ const briefs = PRACTICES.map((practice) => {
     practice,
     house: names[practice],
     // where the piece is read since the publication rule of 2026-10-17 (publication-links.ts)
-    piece: piece && { title: withoutHouseSuffix(piece.title, names[practice]), kind: piece.kind, when: when(piece.date), href: pieceHref(piece.href) },
+    piece: piece && { title: withoutHouseSuffix(piece.title, names[practice]), kind: isEtudeHref(piece.href) ? W_ETUDE : piece.kind, when: when(piece.date), href: pieceHref(piece.href) },
   }
 })
 const landed = briefs.filter((b) => b.piece).length

@@ -10,10 +10,13 @@
 //      practices what a shared link needs — preview tags and a preview image — and a line back to
 //      the site where no frame stands (src/lib/engines/share-dist.ts);
 //   3. since 2026-11-02, names the same pages to search engines in a sitemap of their own, which
-//      Astro's sitemap cannot do because it lists only Astro's routes (src/lib/engines/search-dist.ts).
+//      Astro's sitemap cannot do because it lists only Astro's routes (src/lib/engines/search-dist.ts);
+//   4. since 2026-11-14, points every étude's links to the work it answers at that work's page on
+//      this site instead of the practice's repository (src/lib/engines/etude-links.ts).
 //
 // It prints one line per step and never fails the build: every practice's integrate runs this
 // build as its gate, and a page these steps cannot finish is served as Astro built it.
+import { etudeLinksDist } from '../../src/lib/engines/etude-links'
 import { frameDist } from '../../src/lib/engines/frame-dist'
 import { searchDist } from '../../src/lib/engines/search-dist'
 import { shareDist } from '../../src/lib/engines/share-dist'
@@ -25,6 +28,14 @@ try {
   console.log(`[frame-dist] wall texts: ${r.reframed} of ${r.pages} standalone work page(s) framed anew with the teasers on record${failed}`)
 } catch (e) {
   console.error(`[frame-dist] the built pages keep their mirrors' frames: ${(e as Error).message}`)
+}
+
+try {
+  const r = etudeLinksDist(dist)
+  const failed = r.failed.length ? `; ${r.failed.length} left as mirrored: ${r.failed.join('; ')}` : ''
+  console.log(`[etude-links] ${r.links} link(s) in ${r.pages} étude page(s) now open the piece on this site${failed}`)
+} catch (e) {
+  console.error(`[etude-links] the études keep their links as mirrored: ${(e as Error).message}`)
 }
 
 try {

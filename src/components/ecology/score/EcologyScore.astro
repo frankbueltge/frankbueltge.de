@@ -17,6 +17,7 @@
 //   · ABSENCE IS DRAWN — a cycle without findings shows none, a practice without a bulletin
 //     says so, a relay that is not on the record leaves the staves without slurs and says why.
 //   · THE RECORD IS QUOTED, NOT PARAPHRASED — bulletins render verbatim (BulletinFold).
+import { isEtudeHref } from '@/lib/engines/etude-links'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { localeHref } from '@/lib/locale-href'
 import type { Locale } from '@/lib/site'
@@ -255,7 +256,7 @@ const firstRelation = record.relations[0]?.date ?? null
             {d.presentations.length === 0 && d.pieces.length > 0 && (
               <p class="sc-detail-links">
                 {d.pieces.map((t) => (
-                  <a class={`pp-voice-${t.house}`} href={url(t.href)}>{W.detail.piece(t.title, name(t.house as PracticeId))} →</a>
+                  <a class={`pp-voice-${t.house}`} href={url(t.href)}>{W.detail.piece(t.title, name(t.house as PracticeId))}{isEtudeHref(t.href) && ` · ${W.practice.shelf.etude}`} →</a>
                 ))}
               </p>
             )}
