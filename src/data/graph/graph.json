@@ -16,7 +16,7 @@
       },
       {
         "file": "src/data/post/ledger.json",
-        "sha256": "8fb7a1073998d1b5"
+        "sha256": "24e4da422e5ac89d"
       },
       {
         "file": "src/data/begegnungen/register.json",
@@ -57,19 +57,19 @@
       }
     ],
     "counts": {
-      "nodes": 635,
-      "edges": 559,
+      "nodes": 637,
+      "edges": 560,
       "nodesByKind": {
         "decision": 189,
         "encounter": 6,
         "neighbor": 161,
-        "practice": 9,
+        "practice": 10,
         "practice-work": 231,
-        "receiver": 8,
+        "receiver": 9,
         "work": 31
       },
       "edgesByKind": {
-        "addresses": 8,
+        "addresses": 9,
         "concerns": 2,
         "door": 5,
         "made-by": 231,
@@ -3669,6 +3669,19 @@
       "source": {
         "file": "src/content/studio/works/2026-07-13-native-speaker/meta.json",
         "quote": "\"title\": \"Native Speaker\""
+      }
+    },
+    {
+      "id": "practice:lab",
+      "kind": "practice",
+      "label": "lab",
+      "practiceId": "lab",
+      "spellings": [
+        "lab"
+      ],
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"practice\": \"lab\""
       }
     },
     {
@@ -7354,6 +7367,15 @@
       }
     },
     {
+      "id": "receiver:radioeins-rbb-the-programme-schone-tone-presented-by-sven-he",
+      "kind": "receiver",
+      "label": "radioeins (rbb), the programme Schöne Töne (presented by Sven Helbig)",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"radioeins (rbb), the programme Schöne Töne (presented by Sven Helbig)\""
+      }
+    },
+    {
       "id": "receiver:roderick-and-solange-macarthur-justice-center-northwestern-p",
       "kind": "receiver",
       "label": "Roderick and Solange MacArthur Justice Center, Northwestern Pritzker School of Law",
@@ -8014,6 +8036,17 @@
       "source": {
         "file": "src/data/post/ledger.json",
         "quote": "\"receiver\": \"Roderick and Solange MacArthur Justice Center, Northwestern Pritzker School of Law\""
+      }
+    },
+    {
+      "kind": "addresses",
+      "from": "practice:lab",
+      "to": "receiver:radioeins-rbb-the-programme-schone-tone-presented-by-sven-he",
+      "note": "Comma, internet censorship heard live from OONI's tests, offered for listening or broadcast",
+      "state": "prepared",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"radioeins (rbb), the programme Schöne Töne (presented by Sven Helbig)\""
       }
     },
     {
