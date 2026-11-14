@@ -142,13 +142,20 @@ describe('the watchdog reads a deleted branch as gone', () => {
   const bin = join(dir, 'bin')
   mkdirSync(bin)
   // `git ls-remote --exit-code` answers 0 (the ref exists), 2 (no such ref) or 128 (could not ask)
-  writeFileSync(join(bin, 'git'), '#!/bin/sh\nexit "${FAKE_LS_REMOTE_EXIT:-0}"\n')
+  // …and with FAKE_TIP set it prints that commit as the branch's tip, the way `ls-remote --heads` does
+  writeFileSync(
+    join(bin, 'git'),
+    '#!/bin/sh\nif [ -n "${FAKE_TIP:-}" ]; then printf \'%s\\trefs/heads/x\\n\' "$FAKE_TIP"; fi\nexit "${FAKE_LS_REMOTE_EXIT:-0}"\n',
+  )
   // `gh api …/compare/main...<branch>`: the number on success; on a missing branch the error body
   // goes to STDOUT and the status is non-zero, as the real command does
   writeFileSync(
     join(bin, 'gh'),
     '#!/bin/sh\nif [ "${FAKE_GH:-ok}" = notfound ]; then\n' +
       '  printf \'{\\n  "message": "Not Found",\\n  "status": "404"\\n}\\n\'\n  echo "gh: Not Found (HTTP 404)" >&2\n  exit 1\nfi\n' +
+      // `gh api …/pulls?state=closed…`: one line per closed pull request, "merged" or "closed" and
+      // the commit it stood at, as the workflow's --jq prints them
+      'case "$*" in *pulls\\?*) printf \'%b\' "${FAKE_PULLS:-}"; exit 0 ;; esac\n' +
       'echo "${FAKE_AHEAD:-3}"\n',
   )
   chmodSync(join(bin, 'git'), 0o755)
@@ -186,10 +193,40 @@ describe('the watchdog reads a deleted branch as gone', () => {
     expect(ask({ FAKE_LS_REMOTE_EXIT: '128' })).toBe('unknown')
   })
 
-  it('closes on "gone" or "0" and on nothing else', () => {
+  it('closes on "gone", "0" or "decided" and on nothing else', () => {
     const cleanup = text.slice(text.indexOf('# Aufräumen'))
     expect(cleanup).toMatch(/gone\) WHY="ist gelöscht"/)
     expect(cleanup).toMatch(/0\) WHY="ist gelandet/)
+    expect(cleanup).toMatch(/decided\) WHY="ist entschieden/)
     expect(cleanup).toMatch(/\*\) continue/)
+  })
+
+  // A squash merge leaves the branch's own commits outside main for good, and a pull request closed
+  // without a merge leaves them there on purpose. Neither is a session that worked and never
+  // landed. Both hold only while the branch still stands at the commit the pull request stood at.
+  const TIP = 'a'.repeat(40)
+  const OTHER = 'b'.repeat(40)
+
+  it('says "0" when the branch stands at the commit a merged pull request was merged from', () => {
+    expect(ask({ FAKE_TIP: TIP, FAKE_PULLS: `merged\\t${TIP}\\n`, FAKE_AHEAD: '4' })).toBe('0')
+  })
+
+  it('says "decided" when the branch stands at the commit of a pull request closed without a merge', () => {
+    expect(ask({ FAKE_TIP: TIP, FAKE_PULLS: `closed\\t${TIP}\\n`, FAKE_AHEAD: '1' })).toBe('decided')
+    // one branch, an older merged pull request and a newer closed one: the tip decides
+    expect(ask({ FAKE_TIP: TIP, FAKE_PULLS: `closed\\t${TIP}\\nmerged\\t${OTHER}\\n`, FAKE_AHEAD: '1' })).toBe('decided')
+  })
+
+  it('still counts a branch that moved on after its pull request was merged or closed', () => {
+    expect(ask({ FAKE_TIP: TIP, FAKE_PULLS: `closed\\t${OTHER}\\n`, FAKE_AHEAD: '2' })).toBe('2')
+    expect(ask({ FAKE_TIP: TIP, FAKE_PULLS: `merged\\t${OTHER}\\n`, FAKE_AHEAD: '5' })).toBe('5')
+  })
+
+  it('still counts a branch with no closed pull request at all', () => {
+    expect(ask({ FAKE_TIP: TIP, FAKE_PULLS: '', FAKE_AHEAD: '1' })).toBe('1')
+  })
+
+  it('never raises an alarm for a decided branch', () => {
+    expect(text).toMatch(/case "\$AHEAD" in ''\|gone\|unknown\|decided\|0\) continue ;; esac/)
   })
 })
