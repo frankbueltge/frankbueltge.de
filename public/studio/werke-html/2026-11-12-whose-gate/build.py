@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """WHOSE GATE — build data.js from the Field's records.
 
-Usage (repo root):  python3 -I works/2026-11-12-whose-gate/build.py [results65.json [results70.json [results72.json]]]
+Usage (repo root):  python3 -I works/2026-11-12-whose-gate/build.py [results65.json [results70.json [results73.json [results72.json]]]]
 Without paths the Field's two files are fetched from its repository at the pinned commits.
 State 1 (2026-11-12): the stream is the Field's chip-owner record of step 1 (study 65); the posts
 and stakes are its record of the laws in force and their uses (study 70, made in the convening).
@@ -9,6 +9,11 @@ State 2 (2026-11-13): the Field's finding of step 2 (study 72, results72.json): 
 bodies on the five points of the chain, each with its effect, its public and its state on
 13 November. Each act is drawn at its gate as a bar (stop), a hatched bar (delay) or a ring
 (condition); none holds a grain, because no act's record counts the chips it met.
+State 3 (2026-11-14, the check): the acts are read from the Field's check (study 73, results73.json),
+which recoded study 72 blind and corrected three stops to delays (m1, m5, m7). The export rule of 2023
+(c2), coded "lifted" by the Field, is drawn loosened in part, as the Field's own note says; the Atelier
+offered that correction. Each act also carries what it met, in its own unit (the Field's "limit"), and
+the Virginia stop carries the floor-area ceiling the Field read in the voided rezonings.
 Every count the page states is asserted here; a failed assertion writes nothing.
 """
 import hashlib, json, sys, urllib.request, pathlib
@@ -24,6 +29,9 @@ F70 = ("03cb2c2fe7e37a20b9064dae20a355dcb97fec7e",
 F72 = ("b38141f64440763f1bb2dbea24edf6b512546385",
        "artifacts/cycle-014/where-a-public-acted/results72.json",
        "a94d5700bbbf1562c46ff1cae4c1ad40a673796bdc36623fd1aa94e6dd874239")
+F73 = ("584360107e4e1b35264b701293e2fa179053386a",
+       "artifacts/cycle-014/where-a-public-acted/results73.json",
+       "3ce78788734634857fc46c447e3a126875acc0a56adcd1e71dee0352a63e3022")
 GRAIN = 10_000          # one grain is ten thousand H100-equivalents
 
 
@@ -35,7 +43,12 @@ def load(spec, arg):
     return json.loads(raw)
 
 
-R65, R70, R72 = load(F65, 1), load(F70, 2), load(F72, 3)
+R65, R70, R73 = load(F65, 1), load(F70, 2), load(F73, 3)
+# State 3 (2026-11-14): the Field's check (study 73) recoded study 72 blind; it carries every act again,
+# corrected, and names the register it checked by hash.
+assert R73["checks"]["sha256"] == F72[2] and R73["study"] == 73
+R72 = R73
+C72o = load(F72, 4)["counts"]   # the uncorrected register, for what the check did not change
 
 # --- the stream: every finished quarter of the chip-owner record ------------------------------
 quarters, prev_all, prev_sm = [], 0, 0
@@ -150,10 +163,17 @@ ENDS = {
     "s9": ("2026-09-23", "", "25 months later"),
     "m7": ("2026-01-31", "~", "three weeks later"),
 }
+# What each act met, in one word of its own unit: this work's shortening of the Field's "limit".
+MET = {"c1": "chips*", "c2": "chips*", "c3": "chips*", "c4": "chips*", "c5": "chips*", "c6": "chips*",
+       "s1": "project", "s2": "land", "s3": "floor+MW", "s4": "floor+MW", "s5": "capacity", "s6": "project",
+       "s7": "permits", "s8": "permits", "s9": "floor", "s10": "floor", "p1": "MW", "p2": "offers",
+       "p3": "MVA", "p4": "turbines", "m1": "data", "m2": "data", "m3": "data", "m4": "data",
+       "m5": "data", "m6": "data", "m7": "access", "m8": "output"}
 def iso(d):
     return d if len(d) == 10 else (d + "-01" if len(d) == 7 else d + "-01-01")
 C72, acts = R72["counts"], []
-assert R72["study"] in (72, "72") and len(R72["acts"]) == C72["acts"] == 28
+assert len(R72["acts"]) == C72["acts"] == 28
+assert [c["id"] for c in R73["corrections"] if c["field"] == "effect"] == ["m1", "m5", "m7"]
 for a in R72["acts"]:
     st, note = a["after"]["state"], a["after"]["note"]
     end = ENDS.get(a["id"])
@@ -161,27 +181,42 @@ for a in R72["acts"]:
     if end:
         assert end[2] in note, (a["id"], note)
     url = next((q["url"] for q in a["quotes"] if q.get("url")), None)
+    # c2: the Field codes "lifted"; its own note says loosened in part, which this work draws
+    if a["id"] == "c2":
+        assert st == "lifted" and note.startswith("Loosened in part")
+        st = "loosened"
     acts.append({"id": a["id"], "gate": POINT_GATE[a["point"]], "date": iso(a["date"]), "when": a["date"],
                  "body": a["body"], "country": a["country"], "public": COUNTRY[a["country"]],
                  "local": a["level"] == "sub", "effect": a["effect"], "what": a["what"],
                  "grounds": a["grounds"], "named": a["named"], "state": st, "after": note,
                  "end": end[0] if end else None, "approx": bool(end and end[1]),
                  "size": a["size"]["text"] if a["size"] else None, "second_hand": a["was_second_hand"],
+                 "met": a["limit"], "met_word": MET[a["id"]], "corrected": [c["field"] for c in R73["corrections"] if c["id"] == a["id"]],
                  "url": url})
-for k, v in C72["per_point"].items():
+for k, v in C72o["per_point"].items():
     assert sum(1 for a in acts if a["gate"] == POINT_GATE[k]) == v, k
-assert C72["per_point"]["deal"] == 0
-for k, g in C72["grid"].items():
+assert C72o["per_point"]["deal"] == 0
+for k, g in C72o["grid"].items():   # the check moved three acts at the model from stopped to delayed
     for e, n in g.items():
-        assert sum(1 for a in acts if a["gate"] == POINT_GATE[k] and a["effect"] == e) == n, (k, e)
+        fix = 3 if (k, e) == ("model", "delayed") else -3 if (k, e) == ("model", "stopped") else 0
+        assert sum(1 for a in acts if a["gate"] == POINT_GATE[k] and a["effect"] == e) == n + fix, (k, e)
 stops = [a for a in acts if a["effect"] == "stopped"]
-assert len(stops) == C72["stopped_all"] == 14
+assert len(stops) == C72["stopped"] == 11 and C72["delayed"] == 7 and C72["conditioned"] == 10
 from collections import Counter
-assert dict(Counter(a["state"] for a in stops)) == C72["stopped_after"] == \
-    {"stands": 4, "lifted": 6, "gone around": 3, "superseded": 1}
-assert dict(Counter(a["country"] for a in acts)) == C72["by_country"]
-assert sorted(a["id"] for a in acts if a["size"]) == sorted(C72["magnitude"]) and len(C72["magnitude"]) == 6
-assert C72["ai_risk"] == [] and sorted(C72["model_output"]) == ["m7", "m8"]
+st_after = dict(Counter(a["state"] for a in stops))
+assert st_after == {"stands": 4, "lifted": 2, "loosened": 1, "gone around": 3, "superseded": 1}
+assert C72["stopped_after"] == {"stands": 4, "lifted": 3, "gone around": 3, "superseded": 1}
+assert sum(1 for a in acts if a["met_word"] == "chips*") == 6 and all(a["met_word"] == "chips*" for a in acts if a["gate"] == "border")
+# the Field's answer to this practice's question: the Virginia stop's size, in floor, not in chips
+SV = R73["studio"]["s2"]
+assert SV["chips"] is None and SV["megawatts"] is None
+sq = [round(x["acres"] * 43560 * x["far"]) for x in SV["sources"] if "far" in x]
+assert sq == [x["ceiling_sqft"] for x in SV["sources"] if "far" in x] == [6978312, 3724380]
+assert sum(sq) + 11_000_000 == SV["ceiling_sqft_about"] == 21702692
+virginia = {"act": "s2", "sqft": SV["ceiling_sqft_about"], "docs": [{"case": x["case"], "url": x["url"], "sha256": x["sha256"]} for x in SV["sources"]]}
+assert dict(Counter(a["country"] for a in acts)) == C72o["by_country"]
+assert sorted(a["id"] for a in acts if a["size"]) == sorted(C72o["magnitude"]) and len(C72o["magnitude"]) == 6
+assert C72["ai_risk_first"] == C72["ai_risk_second"] == C72["chips_second"] == 0 and sorted(C72["model_output"]) == ["m1", "m7", "m8"]
 # no act's record states the compute it met in chips: so no bar holds a grain
 assert all("chip" not in (a["size"] or "").lower() for a in acts)
 assert all(a["url"] for a in acts)
@@ -191,7 +226,7 @@ assert first_act == "2019-01-01" and sum(1 for a in acts if a["date"] < "2022-01
 unread = []   # since state 2 the Field has read all five gates; at the deal it found no act
 
 DATA = {
-    "state": 2, "date": "2026-11-13", "grain": GRAIN,
+    "state": 3, "date": "2026-11-14", "virginia": virginia, "grain": GRAIN,
     "from": "2022-01-01", "to": "2026-11-13", "counted_to": quarters[-1]["q"],
     "quarters": quarters, "gates": GATES, "laws": laws, "stakes": stakes, "unread": unread, "acts": acts,
     "smuggled": {"first": first_smuggled, "grains": 66, "range": smug_range,
@@ -199,13 +234,14 @@ DATA = {
     "counts": {"grains": 2093, "first_quarter_grains": 6, "h100e": 20926382, "fold": 334,
                "stakes": 7, "border_stakes": 6, "announcements": 5, "persons": 13, "companies": 1,
                "admitted": 1, "inquiries": 1, "penalties": 0, "after_last_count": 3,
-               "acts": 28, "stopped": 14, "delayed": 4, "conditioned": 10, "stops_stand": 4,
-               "stops_lifted": 6, "stops_gone_around": 3, "stops_superseded": 1, "sized": 6,
+               "acts": 28, "stopped": 11, "delayed": 7, "conditioned": 10, "stops_stand": 4,
+               "stops_lifted": 2, "stops_loosened": 1, "stops_gone_around": 3, "stops_superseded": 1, "sized": 6,
                "sized_in_chips": 0, "deal_acts": 0, "publics": 8},
     "field": {"study65": RAW.replace("raw.githubusercontent.com", "github.com").rstrip("/") + "/tree/" + F65[0] + "/artifacts/cycle-013/who-holds-the-compute",
               "study70": "https://github.com/frankbueltge/field-research/tree/" + F70[0] + "/artifacts/after-cycle-013/what-reaches-the-kept-share",
-              "study72": "https://github.com/frankbueltge/field-research/tree/" + F72[0] + "/artifacts/cycle-014/where-a-public-acted"},
+              "study72": "https://github.com/frankbueltge/field-research/tree/" + F72[0] + "/artifacts/cycle-014/where-a-public-acted",
+              "study73": "https://github.com/frankbueltge/field-research/tree/" + F73[0] + "/artifacts/cycle-014/where-a-public-acted"},
 }
-(HERE / "data.js").write_text("// built by build.py from the Field's studies 65, 70 and 72; do not edit\nconst DATA = "
+(HERE / "data.js").write_text("// built by build.py from the Field's studies 65, 70 and 73; do not edit\nconst DATA = "
                               + json.dumps(DATA, ensure_ascii=False, separators=(",", ":")) + ";\n")
 print("ok", len(quarters), "quarters,", DATA["counts"]["grains"], "grains,", len(stakes), "stakes,", len(acts), "acts")

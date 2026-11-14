@@ -5,7 +5,7 @@ const D = DATA, cv = document.getElementById('cv'), cx = cv.getContext('2d');
 const $ = id => document.getElementById(id);
 const DAY = 86400000, YEAR = 365.25 * DAY, T0 = Date.parse(D.from);
 const yr = iso => (Date.parse(iso) - T0) / YEAR;
-const TMAX = yr(D.to), TCOUNT = yr(D.counted_to), TRAVEL = 0.22, MOUTH = 0.86, HW = 0.19, PLAY = 62;
+const TMAX = yr(D.to), TCOUNT = yr(D.counted_to), TRAVEL = 0.22, MOUTH = 0.86, HW = 0.32, PLAY = 62;
 const GU = [0.13, 0.30, 0.47, 0.64, 0.81];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const hash = n => { let x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
@@ -34,6 +34,7 @@ const border = stakes.filter(s => s.gate === 'border'), model = stakes.filter(s 
 const acts = D.acts.map(a => ({ ...a, t: Math.max(0, yr(a.date)), te: a.end ? yr(a.end) : null, gi: D.gates.findIndex(g => g.id === a.gate) }));
 D.gates.forEach((g, i) => { const at = acts.filter(a => a.gi === i).sort((a, b) => a.t - b.t || (a.id < b.id ? -1 : 1)); at.forEach((a, k) => { a.k = k; a.n = at.length; }); });
 const ENDED = a => a.te !== null && T >= a.te && (a.state === 'lifted' || a.state === 'superseded');
+const LOOSE = a => a.state === 'loosened' && T >= a.te;
 const AROUND = a => a.state === 'gone around' && T >= a.te;
 const laws = D.laws.map(l => ({ ...l, t: Math.max(0, yr(l.since)), tp: l.power_since ? yr(l.power_since) : null, gi: D.gates.findIndex(g => g.id === l.gate) }));
 
@@ -50,7 +51,7 @@ function layout() {
   if (wide) { const x = P(0.875, 0)[0]; basin = { x, y: geo.mid - geo.half * 1.02, w: W - 14 - x, h: geo.half * 2.04 }; }
   else { const y = P(0.89, 0)[1]; basin = { x: 8, y, w: W - 16, h: H - 8 - y }; }
   basin.sp = Math.sqrt(basin.w * basin.h / 2140); basin.cols = Math.floor(basin.w / basin.sp);
-  const pc = P(0.30, 0.70); pool = { x: pc[0], y: pc[1], sp: wide ? 4.3 : 3.5 };
+  const pc = P(0.15, 0.80); pool = { x: pc[0], y: pc[1], sp: wide ? 4.3 : 3.5 };
   const cs = getComputedStyle(document.documentElement);
   for (const k of ['paper', 'ink', 'soft', 'faint', 'us', 'ca', 'eu', 'ie', 'it', 'nl', 'br', 'cl', 'id', 'sg']) col[k] = cs.getPropertyValue('--' + k).trim();
 }
@@ -61,7 +62,8 @@ function slotXY(k) {
   const c = clamp(c0 + (j % 2 ? (j + 1) / 2 : -j / 2), 0, basin.cols - 1);
   return [basin.x + (c + 0.5) * (basin.w / basin.cols) + (hash(k + 3) - 0.5) * 1.4, basin.y + basin.h - (row + 0.55) * basin.sp + (hash(k + 9) - 0.5) * 1.4];
 }
-const DET = [[0.08, 0.10], [0.115, 0.42], [0.20, 0.42], [0.30, 0.70]];
+// the smuggled chips leave before the border gate and run around it, outside the wall
+const DET = [[0.08, HW - 0.03], [0.10, HW + 0.13], [0.16, HW + 0.13], [0.15, 0.80]];
 function detour(p) {
   const s = clamp(p, 0, 1) * (DET.length - 1), i = Math.min(DET.length - 2, Math.floor(s)), f = s - i;
   return [DET[i][0] + (DET[i + 1][0] - DET[i][0]) * f, DET[i][1] + (DET[i + 1][1] - DET[i][1]) * f];
@@ -111,11 +113,13 @@ function stake(x, y, s, p) {
   if (selected === s.gi) { cx.beginPath(); cx.arc(x, y, 2.2, 0, 7); cx.fill(); }
   cx.globalAlpha = 1; cx.lineWidth = 1;
 }
-const stakeXY = s => s.gate === 'border' ? P(0.118 + border.indexOf(s) * (wide ? 0.017 : 0.023), 0.62) : P(GU[4] + 0.012 + model.indexOf(s) * 0.017, 0.46);
+const stakeXY = s => s.gate === 'border' ? P(0.215 + border.indexOf(s) * (wide ? 0.017 : 0.023), wide ? 0.62 : 0.50) : P(GU[4] + 0.012 + model.indexOf(s) * 0.017, 0.46);
 
-function lane(a) { const w = 2 * HW / a.n, c = -HW + (a.k + 0.5) * w; return [c, w * 0.44]; }
+function lane(a) { const w = 2 * HW / a.n, c = -HW + (a.k + 0.5) * w; return [c, w * 0.42]; }
+let holes = [];   // the standing stops' rectangles this frame: a grain passing one is drawn as a hole in it
 function actMark(a, p) {
-  const [c, l] = lane(a), u = GU[a.gi], colr = col[a.public], du = 5 / geo.len, ended = ENDED(a);
+  const [c, l0] = lane(a), u = GU[a.gi], colr = col[a.public], du = (wide ? 13 : 10) / geo.len, ended = ENDED(a), loose = LOOSE(a);
+  const l = loose ? l0 * 0.45 : l0;
   cx.globalAlpha = p * (ended ? 0.38 : 1); cx.strokeStyle = colr; cx.fillStyle = colr; cx.lineWidth = 1.5;
   const q0 = P(u - du, c - l), q1 = P(u + du, c + l), x = Math.min(q0[0], q1[0]), y = Math.min(q0[1], q1[1]), w = Math.abs(q1[0] - q0[0]), h = Math.abs(q1[1] - q0[1]);
   if (a.effect === 'conditioned') {
@@ -124,7 +128,14 @@ function actMark(a, p) {
   } else if (a.effect === 'delayed') {
     cx.setLineDash([2, 2]); cx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1); cx.setLineDash([]);
     if (!a.local && !ended) { cx.globalAlpha *= 0.35; cx.fillRect(x, y, w, h); }
-  } else { (a.local || ended) ? cx.strokeRect(x + 0.75, y + 0.75, w - 1.5, h - 1.5) : cx.fillRect(x, y, w, h); }
+  } else { (a.local || ended) ? cx.strokeRect(x + 0.75, y + 0.75, w - 1.5, h - 1.5) : cx.fillRect(x, y, w, h); if (!ended) holes.push([x, y, w, h]); }
+  // the chips it met: an empty dotted box after every mark, because no record counts them; then what it met, in its own unit
+  { cx.globalAlpha = p; const s = Math.max(5, Math.min(11, 2 * l0 * geo.half - 3)), [bx, by] = P(u + du + 5 / geo.len + s / 2 / geo.len, c);
+    cx.strokeStyle = col.ink; cx.lineWidth = 1; cx.setLineDash([1.5, 1.5]); cx.strokeRect(bx - s / 2 + 0.5, by - s / 2 + 0.5, s - 1, s - 1); cx.setLineDash([]); boxes++;
+    if (wide) text(a.met_word, bx + s / 2 + 4, by + 3.5, { size: 9.5, b: !!a.size, fill: a.size ? col.ink : col.soft });
+    if (a.id === D.virginia.act && !ended) { const r = Math.sqrt(D.virginia.sqft / 1e6) * (wide ? 3.2 : 2.4), [vx, vy] = P(u, -HW - 0.02); cx.strokeStyle = colr; cx.setLineDash([3, 3]); cx.beginPath(); cx.arc(vx, vy - r, r, 0, 7); cx.stroke(); cx.setLineDash([]);
+      if (wide) text('floor: 21.7M sq ft · chips: none stated', vx + r + 4, vy - r + 3, { size: 9, fill: colr }); }
+    cx.strokeStyle = colr; }
   if (selected === a.gi && !ended) { cx.globalAlpha = p; const [px, py] = P(u, c); cx.beginPath(); cx.arc(px, py, 1.4, 0, 7); cx.fillStyle = col.paper; cx.fill(); }
   let st = ended ? 'ended' : 'stands';
   if (AROUND(a)) {             // the way around: from before the gate, outside the wall, to after it
@@ -133,6 +144,43 @@ function actMark(a, p) {
     cx.globalAlpha = p; cx.lineWidth = 1.3; cx.setLineDash([2, 3]); cx.beginPath(); cx.moveTo(...s0); cx.quadraticCurveTo(...m, ...s1); cx.stroke(); cx.setLineDash([]);
   }
   cx.globalAlpha = 1; cx.lineWidth = 1; return st;
+}
+let boxes = 0;
+// after the last finished count the passage fills with hatching, from the chip end, as fast as grains would have come
+function uncounted() {
+  if (T <= TCOUNT) return; const front = Math.min(MOUTH, (T - TCOUNT) / TRAVEL * MOUTH);
+  const a = P(0, -HW), b = P(front, HW), x = Math.min(a[0], b[0]), y = Math.min(a[1], b[1]), w = Math.abs(b[0] - a[0]), h = Math.abs(b[1] - a[1]);
+  cx.save(); cx.beginPath(); cx.rect(x, y, w, h); cx.clip(); cx.strokeStyle = col.faint; cx.lineWidth = 1;
+  for (let k = -h; k < w; k += 7) { cx.beginPath(); cx.moveTo(x + k, y + h); cx.lineTo(x + k + h, y); cx.stroke(); }
+  cx.restore();
+}
+// what became of the stops, so far: one bar each, grouped by their afterwards
+const FATE = [['stands', 'stand'], ['loosened', 'loosened in part'], ['gone around', 'gone around'], ['lifted', 'lifted'], ['superseded', 'replaced']];
+function tally() {
+  const st = acts.filter(a => a.effect === 'stopped' && T >= a.t), out = [];
+  if (!st.length) return out;
+  const fate = a => (a.te !== null && T >= a.te) ? a.state : 'stands';
+  let u = wide ? 0.43 : 0.50; const v = wide ? 0.70 : 0.86, bw = wide ? 7 : 6, bh = wide ? 22 : 16;
+  const [tx, ty] = P(u, v); text('THE STOPS, AT THIS DATE', wide ? tx : 4, wide ? ty - bh / 2 - 8 : ty - 22, { size: 9.5, b: true, fill: col.soft });
+  cx.font = (wide ? 10 : 9) + 'px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
+  for (const [k, label] of FATE) {
+    const g = st.filter(a => fate(a) === k); out.push(g.length); if (!g.length) continue;
+    const u0 = u, lab = g.length + ' ' + (wide ? label : label.replace(' in part', '').replace('gone ', '')), lw = cx.measureText(lab).width;
+    for (const a of g) {
+      const [x, y] = P(u, v), c = col[a.public]; cx.fillStyle = c; cx.strokeStyle = c; cx.lineWidth = 1.5;
+      const [w, h] = wide ? [bw, bh] : [bh, bw], rx = x - w / 2, ry = y - h / 2;
+      if (k === 'lifted' || k === 'superseded') { cx.globalAlpha = 0.5; cx.strokeRect(rx + 0.75, ry + 0.75, w - 1.5, h - 1.5); cx.globalAlpha = 1; }
+      else if (k === 'loosened') { wide ? cx.fillRect(rx, ry + h * 0.55, w, h * 0.45) : cx.fillRect(rx, ry, w * 0.45, h); cx.strokeRect(rx + 0.75, ry + 0.75, w - 1.5, h - 1.5); }
+      else { a.local ? cx.strokeRect(rx + 0.75, ry + 0.75, w - 1.5, h - 1.5) : cx.fillRect(rx, ry, w, h);
+        if (k === 'gone around') { cx.setLineDash([2, 2]); cx.beginPath(); wide ? cx.arc(x, ry, bw * 0.8, Math.PI, 0) : cx.arc(rx, y, bw * 0.8, Math.PI / 2, Math.PI * 1.5); cx.stroke(); cx.setLineDash([]); } }
+      u += (bw + 4) / geo.len;
+    }
+    const [sx, sy] = P(u0, v);
+    if (wide) { text(lab, sx - bw / 2, sy + bh / 2 + 14, { size: 10, fill: col.ink }); u = Math.max(u, u0 + (lw + 18) / geo.len); }
+    else { text(lab, sx + bh / 2 + 6, sy + 3, { size: 9, fill: col.ink }); u += 8 / geo.len; }
+    cx.lineWidth = 1;
+  }
+  return out;
 }
 function draw() {
   cx.clearRect(0, 0, W, H); cx.lineWidth = 1; cx.strokeStyle = col.ink;
@@ -151,7 +199,7 @@ function draw() {
     for (const n of D.smuggled.range) { cx.beginPath(); cx.setLineDash([1.5, 4]); cx.arc(pool.x, pool.y, pool.sp * Math.sqrt(n), 0, 7); cx.stroke(); cx.setLineDash([]); }
     const r = pool.sp * Math.sqrt(D.smuggled.range[1]);
     if (wide) text('smuggled into China, modelled: ' + D.smuggled.grains + ' grains (' + D.smuggled.range.join('–') + ')', pool.x - r, pool.y + r + 14, { size: 10, fill: col.soft });
-    else { text('smuggled into China,', 6, pool.y + r + 13, { size: 10, fill: col.soft }); text('modelled: ' + D.smuggled.grains + ' (' + D.smuggled.range.join('–') + ')', 6, pool.y + r + 25, { size: 10, fill: col.soft }); }
+    else { text('smuggled into China,', 6, pool.y - r - 20, { size: 9, fill: col.soft }); text('modelled: ' + D.smuggled.grains + ' (' + D.smuggled.range.join('–') + ')', 6, pool.y - r - 9, { size: 9, fill: col.soft }); }
   }
   // the gates
   D.gates.forEach((g, i) => {
@@ -173,14 +221,16 @@ function draw() {
       (l.tp === null || T >= l.tp) ? cx.fillRect(x0, y - 8, 8, 8) : cx.strokeRect(x0 + 0.5, y - 7.5, 7, 7);
       text(label, x0 + 13, y, { align: 'left', fill: col[l.public] }); y += step;
     }
-    if (closed[i]) text('your hand', x, y, { it: true, align: al });
+    if (closed[i]) text('your hand: no public, no law', x, y, { it: true, align: al });
     cx.strokeStyle = col.ink;
   });
   // the acts: a bar for a stop, a comb for a delay, a ring for a condition; none of them holds a grain
-  let standing = { stopped: 0, delayed: 0, conditioned: 0 }, around = 0, ended = 0, seen = 0;
-  for (const a of acts) if (T >= a.t) { seen++; const st = actMark(a, clamp((T - a.t) / 0.03, 0, 1)); if (st === 'ended') ended++; else { standing[a.effect]++; if (st === 'around') around++; } }
+  let standing = { stopped: 0, delayed: 0, conditioned: 0 }, around = 0, ended = 0, seen = 0, loose = 0; holes = []; boxes = 0;
+  uncounted();
+  for (const a of acts) if (T >= a.t) { seen++; const st = actMark(a, clamp((T - a.t) / 0.03, 0, 1)); if (st === 'ended') ended++; else { standing[a.effect]++; if (st === 'around') around++; if (LOOSE(a)) loose++; } }
+  const tl = tally();
   // the grains
-  let moving = 0, heldN = 0, inBasin = 0, inPool = 0, born = 0;
+  let moving = 0, heldN = 0, inBasin = 0, inPool = 0, born = 0, through = 0;
   cx.fillStyle = col.ink;
   for (const g of NORMAL) {
     if (g.b > T) continue; born++;
@@ -192,7 +242,8 @@ function draw() {
       const held = g.held >= 0; held ? heldN++ : moving++;
       [x, y] = P(held ? g.hu : uOf(g), g.c * HW * 0.86);
     }
-    cx.fillRect(x - 1.2, y - 1.2, 2.4, 2.4);
+    if (g.slot < 0 && holes.some(r => x > r[0] && x < r[0] + r[2] && y > r[1] && y < r[1] + r[3])) { through++; cx.fillStyle = col.paper; cx.fillRect(x - 1.6, y - 1.6, 3.2, 3.2); cx.fillStyle = col.ink; }
+    else cx.fillRect(x - 1.2, y - 1.2, 2.4, 2.4);
   }
   cx.strokeStyle = col.ink;
   for (const g of SMUG) {
@@ -209,22 +260,23 @@ function draw() {
   for (const s of stakes) if (T >= s.t) { planted++; stake(...stakeXY(s), s, clamp((T - s.t) / 0.03, 0, 1)); }
   if (T >= border[0].t) {
     const k = border.filter(s => T >= s.t).length, c = { size: 10, fill: col.us };
-    if (wide) { const x = P(0.118, 0)[0] - 12, y = P(0, 0.52)[1]; c.align = 'right'; text(k + (k === 1 ? ' stake,' : ' stakes,'), x, y, c); text('planted after', x, y + 12, c); text('the chips left', x, y + 24, c); }
-    else { text('planted after', 6, P(0.078, 0)[1], c); text('the chips left', 6, P(0.078, 0)[1] + 12, c); }
+    if (wide) { const x = P(0.215 + 6 * 0.017, 0)[0] + 4, y = P(0, 0.56)[1]; text(k + (k === 1 ? ' stake,' : ' stakes,'), x, y, c); text('planted after', x, y + 12, c); text('the chips left', x, y + 24, c); }
+    else { const y = P(0.215 + 6 * 0.023, 0)[1] + 4; text(k + ' stakes, planted', 6, y, c); text('after the chips left', 6, y + 12, c); }
   }
   // the date, and the end of the count
   const d = new Date(T0 + T * YEAR), when = MONTHS[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
   text(when, wide ? W - 16 : W - 8, wide ? H - 10 : 18, { size: 16, b: true, align: 'right' });
   if (T > TCOUNT + 0.02) {
-    const s = 'no finished count after December 2025', a = clamp((T - TCOUNT) / TRAVEL, 0, 1); cx.globalAlpha = a;
-    if (wide) text(s, P(0.47, 0)[0], geo.mid + 4, { it: true, align: 'center', fill: col.soft });
-    else { const [x, y] = P(0.56, 0); cx.save(); cx.translate(x + 4, y); cx.rotate(-Math.PI / 2); text(s, 0, 0, { it: true, align: 'center', fill: col.soft }); cx.restore(); }
+    const s = 'not yet counted, not empty: no finished count after December 2025', a = clamp((T - TCOUNT) / TRAVEL, 0, 1); cx.globalAlpha = a;
+    if (wide) text(s, P(0.47, 0)[0], P(0, HW)[1] + 16, { it: true, align: 'center', fill: col.soft });
+    else { const [x, y] = P(0.56, HW - 0.07); cx.save(); cx.translate(x + 4, y); cx.rotate(-Math.PI / 2); text(s, 0, 0, { it: true, align: 'center', fill: col.soft }); cx.restore(); }
     cx.globalAlpha = 1;
   }
   Object.assign(cv.dataset, { born, moving, held: heldN, basin: inBasin, pool: inPool, stakes: planted, wide: wide ? 1 : 0,
-    acts: seen, stops: standing.stopped, delays: standing.delayed, conditions: standing.conditioned, around, ended });
+    acts: seen, stops: standing.stopped, delays: standing.delayed, conditions: standing.conditioned, around, ended, loose, boxes, through,
+    tally: tl.join(',') });
   if (audio) audio.gain.gain.setTargetAtTime(playing ? Math.min(0.22, Math.sqrt(moving) * 0.011) : 0, audio.ac.currentTime, 0.15);
-  return { born, planted, moving, heldN, standing, around, ended, seen };
+  return { born, planted, moving, heldN, standing, around, ended, seen, loose };
 }
 
 // --- words ---------------------------------------------------------------------------------------
@@ -232,13 +284,13 @@ let said = '';
 function say(st) {
   const kb = border.filter(s => T >= s.t).length, km = model.filter(s => T >= s.t).length;
   const h100 = st.born * D.grain, amount = h100 >= 1e6 ? (h100 / 1e6).toFixed(1) + ' million' : Math.round(h100 / 1e3) + ' thousand';
-  let a = T > TCOUNT + TRAVEL ? 'The count ends in December 2025 at 20.9 million; the passage runs empty because nothing later is finished, not because anything stopped.'
+  let a = T > TCOUNT + TRAVEL ? 'The count ends in December 2025 at 20.9 million; after it the passage fills with hatching, because chips kept coming that nobody has counted yet.'
     : 'About ' + amount + ' H100-equivalents counted so far, ' + st.born + (st.born === 1 ? ' grain.' : ' grains.');
   const S = st.standing, n = (k, one, many) => k + ' ' + (k === 1 ? one : many);
   let b = !st.seen ? ' No public body has acted on the passage yet.'
-    : ' Standing at this date: ' + n(S.stopped, 'stop', 'stops') + (st.around ? ' (' + st.around + ' gone around)' : '') + ', ' + n(S.delayed, 'delay', 'delays') + ', ' + n(S.conditioned, 'condition', 'conditions')
-      + (st.ended ? '; ' + st.ended + ' lifted or replaced' : '') + '. No record says how many grains any of them met, so none is held.';
-  if (st.heldN) b = ' Your hand holds ' + st.heldN + (st.heldN === 1 ? ' grain' : ' grains') + ' at the gate. Let go.';
+    : ' Standing at this date: ' + n(S.stopped, 'stop', 'stops') + (st.around || st.loose ? ' (' + [st.around ? st.around + ' gone around' : '', st.loose ? st.loose + ' loosened in part' : ''].filter(Boolean).join(', ') + ')' : '') + ', ' + n(S.delayed, 'delay', 'delays') + ', ' + n(S.conditioned, 'condition', 'conditions')
+      + (st.ended ? '; ' + st.ended + ' lifted or replaced' : '') + '. Every box after a mark is empty: no record counts the chips it met, so the stream passes through the bars.';
+  if (st.heldN) b = ' Your hand holds ' + st.heldN + (st.heldN === 1 ? ' grain' : ' grains') + ' at the gate: the only stop here that answers to no public, no law and no ground. Let go.';
   const s = a + b; if (s !== said) $('say').textContent = said = s;
 }
 function panel(i) {
@@ -253,7 +305,9 @@ function panel(i) {
     const li = document.createElement('li'), sw = document.createElement('span'), r = document.createElement('a');
     sw.className = 'sw ' + a.public + (a.local ? ' local' : ''); r.href = a.url; r.textContent = 'the record'; r.rel = 'noopener';
     li.append(sw, a.when + ' · ' + a.body + (a.local ? ' (a local public, ' : ' (') + a.country + ') ' + EFF[a.effect] + (a.named ? ' · named: ' + a.named : '') + ' · ' + a.what
-      + (a.size ? ' · size its record states: ' + a.size : ' · its record states no size') + ' · on 13 November 2026: ' + a.state + '. ' + a.after + (a.end ? ' (drawn ' + (a.approx ? 'about ' : '') + a.end.slice(0, 7) + ')' : '') + (a.second_hand ? ' Read second-hand by the Field.' : '') + ' · ', r);
+      + ' · what it met: ' + a.met + (a.size ? ' · size its record states: ' + a.size : ' · its record states no size') + ' · chips it met: no record says'
+      + (a.corrected.includes('effect') ? ' · corrected by the Field\'s check of 14 November: a delay by its own word, first coded a stop' : '')
+      + ' · on 13 November 2026: ' + (a.state === 'loosened' ? 'loosened in part (the Field codes it lifted; its own note and the release say in part)' : a.state) + '. ' + a.after + (a.end ? ' (drawn ' + (a.approx ? 'about ' : '') + a.end.slice(0, 7) + ')' : '') + (a.second_hand ? ' Read second-hand by the Field.' : '') + ' · ', r);
     ul.append(li);
   }
   for (const l of laws.filter(l => l.gi === i)) {
@@ -324,11 +378,11 @@ window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change', layo
   for (const a of D.acts) seen.set(a.public, [a.country, (seen.get(a.public) || [0, 0])[1] + 1]);
   for (const [k, [name, n]] of [...seen].sort((a, b) => b[1][1] - a[1][1])) { const e = document.createElement('span'), sw = document.createElement('span'); sw.className = 'sw ' + k; e.append(sw, name + ' ' + n); lg.append(e); }
   for (const l of D.laws.filter(l => !seen.has(l.public))) { const e = document.createElement('span'), sw = document.createElement('span'); sw.className = 'sw ' + l.public; e.append(sw, l.public_name.replace(/^the /, '') + ' (law)'); lg.append(e); seen.set(l.public, 1); }
-  const k = document.createElement('span'); k.className = 'key'; k.textContent = '▮ stop · ┆ delay · ● condition · hollow = a local public · faded = lifted or replaced · dotted path = gone around'; lg.append(k); }
-$('s65').href = D.field.study65; $('s70').href = D.field.study70; $('s72').href = D.field.study72;
+  const k = document.createElement('span'); k.className = 'key'; k.textContent = '▮ stop · ┆ delay · ● condition · hollow = a local public · faded = lifted or replaced · thinned = loosened in part · dotted path = gone around · ⬚ after each mark = the chips it met, empty in all 28 records · the word after it = what it met, in its own unit (bold where the record states a size; chips* = a threshold on chips, not a count) · a hole punched in a bar = a grain passing a stop that stands · hatched = not yet counted'; lg.append(k); }
+$('s65').href = D.field.study65; $('s70').href = D.field.study70; $('s72').href = D.field.study72; $('s73').href = D.field.study73;
 
 // --- open ----------------------------------------------------------------------------------------
-layout(); panel(0); selected = -1;
+layout(); $('panel').textContent = 'Press a gate\'s name in the drawing, or hold a gate below, to read every act on it with its record.';
 const m = /t=(\d{4}-\d\d-\d\d)/.exec(location.hash), still = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 if (m) seek(yr(m[1])); else if (still) seek(TCOUNT); else { seek(0); playing = true; sync(); }
 window.WG = { seek: iso => seek(yr(iso)), step: years => { advance(years); return draw(); }, hold, pause: () => { playing = false; sync(); } };
