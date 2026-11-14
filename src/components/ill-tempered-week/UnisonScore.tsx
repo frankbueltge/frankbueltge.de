@@ -8,7 +8,9 @@
 // The seven duties (.claude/rules/dataviz-figures.md) as in OverlookedScore.tsx: every position, time and sentence
 // from src/lib/ill-tempered-week/score-unison.ts; the server render is the floor; no style attribute, no hex; the
 // playhead follows the audio's own clock under reduced motion; the readout is clamped and never a hit target; no chart
-// library; mono ink, attention told by stroke weight, tremolo by a dashed stroke.
+// library; the four string sections wear the four hues of the palette record itw-voices (they overlap in pitch, so
+// place alone would not tell them apart), attention is also told by stroke weight, tremolo by a dashed stroke, and
+// everything else stays in the frame's inks.
 import * as React from 'react'
 
 import type { Unison } from '@/lib/ill-tempered-week/albums'
@@ -83,7 +85,7 @@ const Drawing = React.memo(function Drawing({ layout }: { layout: UnisonLayout }
             ))}
             <path className="itw-tail" d={line.glides.map((g) => `M${g.x2} ${g.y2}H${g.x3}`).join('')} />
             {line.glides.map((g) => (
-              <line key={g.id} className={`itw-gl w${g.weight}${g.tremolo ? ' itw-trem' : ''}`} x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} />
+              <line key={g.id} className={`itw-gl s-${g.section} w${g.weight}${g.tremolo ? ' itw-trem' : ''}`} x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} />
             ))}
             {line.peaks.map((p) =>
               p.said === null ? null : p.saidW > 0 ? (
@@ -122,6 +124,15 @@ const Drawing = React.memo(function Drawing({ layout }: { layout: UnisonLayout }
   )
 })
 
+/** The four string sections: a signal's attention on its own platform decides which one plays it, and the section is
+ *  the glissando's hue (the sections overlap in pitch, so place alone would not tell them apart). */
+const SECTIONS = [
+  { id: 'violins', weight: 3, label: 'Violins: the most attended quarter of the day’s war signals, the thickest line.' },
+  { id: 'violas', weight: 2, label: 'Violas: the second quarter.' },
+  { id: 'cellos', weight: 1, label: 'Cellos: the third quarter.' },
+  { id: 'basses', weight: 0, label: 'Double basses: the least attended quarter, the thinnest line.' },
+] as const
+
 /** The key to the drawing: each mark once, drawn with the drawing's own classes. */
 function Legend() {
   const sw = (body: React.ReactNode) => (
@@ -132,17 +143,18 @@ function Legend() {
   return (
     <ul className="itw-legend" aria-label="How to read this score">
       <li>
-        {sw(<line className="itw-gl w2" x1={2} y1={12} x2={30} y2={4} />)}
-        <span>One war signal: a string glissando from its headline’s spoken pitch towards A’s chord, entering at the hour it was published (where its platform gives no hour, at a place in the day drawn once from its own text). Higher sections for more attended signals.</span>
+        {sw(<line className="itw-gl s-violas w2" x1={2} y1={12} x2={30} y2={4} />)}
+        <span>One war signal: a string glissando from its headline’s spoken pitch towards A’s chord, entering at the hour it was published (where its platform gives no hour, at a place in the day drawn once from its own text).</span>
       </li>
+      {SECTIONS.map((s) => (
+        <li key={s.id}>
+          {sw(<line className={`itw-gl s-${s.id} w${s.weight}`} x1={2} y1={7} x2={34} y2={7} />)}
+          <span>{s.label}</span>
+        </li>
+      ))}
       <li>
-        {sw(
-          <>
-            <line className="itw-gl w0" x1={2} y1={4} x2={34} y2={4} />
-            <line className="itw-gl w3" x1={2} y1={10} x2={34} y2={10} />
-          </>,
-        )}
-        <span>Thicker: more attended, longer and louder. Dashed: tremolo, on a busy day.</span>
+        {sw(<line className="itw-gl s-violins w3 itw-trem" x1={2} y1={7} x2={34} y2={7} />)}
+        <span>Dashed: tremolo, for the more attended half on a busy day.</span>
       </li>
       <li>
         {sw(
@@ -230,7 +242,7 @@ export default function UnisonScore({ record, week, links, audioId, id, label, h
           {t !== null && (
             <g className="itw-gl-on" aria-hidden="true">
               {layout.lines.flatMap((line) =>
-                line.glides.filter((g) => on.has(g.id)).map((g) => <line key={`${line.span.index}-${g.id}`} x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} />),
+                line.glides.filter((g) => on.has(g.id)).map((g) => <line key={`${line.span.index}-${g.id}`} className={`s-${g.section}`} x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} />),
               )}
             </g>
           )}

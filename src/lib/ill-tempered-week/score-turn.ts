@@ -158,7 +158,7 @@ export interface TurnLine {
   rowsTop: number
   rows: { family: Family; y: number; label: string }[]
   /** one cell per bar and voiced family: as tall as the share of its beats that sound */
-  cells: { bar: number; row: number; x: number; w: number; y: number; h: number; full: boolean }[]
+  cells: { bar: number; row: number; family: Family; x: number; w: number; y: number; h: number; full: boolean }[]
   /** the bar lines; a day's first is stronger */
   barLines: { x: number; day: boolean }[]
   said: { bar: number; day: number; x: number; w: number }[]
@@ -206,7 +206,7 @@ export function layoutTurn(s: TurnScore, width: number): TurnLayout {
       for (const beat of b.beats) {
         const k = s.rows.findIndex((r) => r.family === beat.family)
         const h = r1(ROW * (beat.k / beat.h))
-        cells.push({ bar: b.index, row: k, x: r1(x(b.t0) + 0.6), w: r1(Math.max(0.6, b.len * frame.pxPerSecond - 1.2)), y: r1(rows[k]!.y + ROW - h), h, full: beat.k === beat.h })
+        cells.push({ bar: b.index, row: k, family: beat.family, x: r1(x(b.t0) + 0.6), w: r1(Math.max(0.6, b.len * frame.pxPerSecond - 1.2)), y: r1(rows[k]!.y + ROW - h), h, full: beat.k === beat.h })
       }
     }
     const firstOfDay = new Set(s.days.map((d) => d.from))

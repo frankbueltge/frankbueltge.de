@@ -17,7 +17,11 @@ export const GET: APIRoute = () =>
         source: 'https://github.com/frankbueltge/frankbueltge.de — src/data/register/papers.json',
         page: 'https://frankbueltge.de/papers',
         slim: 'https://frankbueltge.de/papers/index.json',
-        licence: 'CC0-1.0 (data), per the licence line of 2026-07-26',
+        // 2026-11-14: the dedication covers what is the register's own. An abstract is its authors'
+        // and publisher's text, read from the source catalogues, and is not the register's to give.
+        licence:
+          'CC0-1.0 for the register’s own fields (selection, relevance, verdicts, access checks), per the licence line of 2026-07-26. ' +
+          'Titles, names and abstracts (`zusammenfassung`) are quoted from the source catalogues and stay under the rights of their authors and publishers',
         note:
           'Papers this ecology has read, cited or examined, collected by the katalog-scout ' +
           'pipeline (daily 05:30 UTC) with identifiers resolved and access checked. Rebuilt ' +

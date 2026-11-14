@@ -98,7 +98,7 @@ const hint = HINT
               <tr>
                 <td class="num">{mmss(s.at_s)}</td>
                 <td class="num">{dayShort(s.day)}</td>
-                <td>{s.section}{s.tremolo ? ', trem.' : ''}</td>
+                <td><span class={`itw-dot s-${s.section}`} aria-hidden="true"></span>{s.section}{s.tremolo ? ', trem.' : ''}</td>
                 <td class="num">{pct(s.attention)}</td>
                 <td class="num">{Math.round(s.from_hz)} → {Math.round(s.to_hz)}</td>
                 <td>{s.href ? <a class="itw-link" href={s.href} target="_blank" rel="noopener noreferrer">{s.text}</a> : s.text}</td>

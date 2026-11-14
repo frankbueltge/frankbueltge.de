@@ -154,8 +154,9 @@ def test_producthunt_atom(ctx_factory):
     first = res.signals[0]
     assert first.url == "https://www.producthunt.com/products/onset-io"
     assert first.magnitude is None and first.magnitude_unit == "rank"
-    assert first.meta == {"author": "Sonny T."}
-    assert res.signals[1].meta == {"author": None}
+    # the feed names who submitted a product; the ledger keeps labels, links and counts, never a user
+    assert first.meta == {}
+    assert res.signals[1].meta == {}
     assert producthunt.SPEC.optional is True
 
 
