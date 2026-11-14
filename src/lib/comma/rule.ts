@@ -87,10 +87,16 @@ export interface Heard {
 }
 
 /** Rule 2. `memory` holds, per country, the times already sounded earlier; it is read and extended, so the limit
- *  holds across the blocks a listener hears in a row. Answers the items that sound, in time order, each with its
+ *  holds across the blocks a listener hears in a row. `gapSeconds` is the pages' gap unless a deeper voice asks
+ *  for its own (src/lib/comma/voices.ts). Answers the items that sound, in time order, each with its
  *  country's weight. Anything that is neither a blockpage nor an anomaly never sounds. */
-export function balance<T extends Heard>(items: readonly T[], rule: Rule | null, memory: Map<string, number[]> = new Map()): (T & { weight: number })[] {
-  const gap = GAP_SECONDS * 1000
+export function balance<T extends Heard>(
+  items: readonly T[],
+  rule: Rule | null,
+  memory: Map<string, number[]> = new Map(),
+  gapSeconds: number = GAP_SECONDS,
+): (T & { weight: number })[] {
+  const gap = gapSeconds * 1000
   const free = (cc: string, at: number): boolean => (memory.get(cc) ?? []).every((u) => Math.abs(at - u) >= gap)
   const take = (t: T): T & { weight: number } => {
     const list = memory.get(t.cc) ?? []
@@ -119,14 +125,25 @@ export function prune(memory: Map<string, number[]>, now: number): void {
 
 /** One whole UTC day of OONI's web tests, counted, as it is committed: per country the tests, the anomalies and
  *  the blockpages; per hour of the day the tests of each of the six kinds of page. */
+export interface VoiceCounts {
+  /** the voice's id (src/lib/comma/voices.ts) */
+  id: string
+  /** [country, tests, anomalies] over the voice's tests */
+  countries: [string, number, number][]
+  /** the voice's tests in each of the 24 hours */
+  tide: number[]
+}
+
 export interface DayCounts {
-  v: 1
+  v: 2
   /** the day counted, YYYY-MM-DD (UTC) */
   day: string
-  /** [country, tests, anomalies, blockpages] */
+  /** the web test: [country, tests, anomalies, blockpages] */
   countries: [string, number, number, number][]
-  /** 24 rows, one per hour; each holds the tests of the six kinds of page, in the order of GROUPS */
+  /** the web test: 24 rows, one per hour; each holds the tests of the six kinds of page, in the order of GROUPS */
   tide: number[][]
+  /** the deeper voices: messengers, and the ways around a block */
+  voices: VoiceCounts[]
 }
 
 const count = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v) && v >= 0
@@ -134,7 +151,7 @@ const count = (v: unknown): v is number => typeof v === 'number' && Number.isFin
 /** The committed day, read like a stranger's file: anything that is not exactly a day of counts is none. */
 export function dayOf(json: unknown): DayCounts | null {
   const d = json as Partial<DayCounts> | null
-  if (!d || d.v !== 1 || typeof d.day !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(d.day)) return null
+  if (!d || d.v !== 2 || typeof d.day !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(d.day)) return null
   if (!Array.isArray(d.countries) || !Array.isArray(d.tide) || d.tide.length !== 24) return null
   const countries = d.countries.filter(
     (r): r is [string, number, number, number] =>
@@ -142,7 +159,81 @@ export function dayOf(json: unknown): DayCounts | null {
   )
   if (countries.length === 0) return null
   if (!d.tide.every((h) => Array.isArray(h) && h.length === GROUPS.length && h.every(count))) return null
-  return { v: 1, day: d.day, countries, tide: d.tide }
+  if (!Array.isArray(d.voices)) return null
+  const voices: VoiceCounts[] = []
+  for (const v of d.voices as Partial<VoiceCounts>[]) {
+    if (!v || typeof v.id !== 'string' || !/^[a-z]{2,12}$/.test(v.id)) return null
+    if (!Array.isArray(v.countries) || !Array.isArray(v.tide) || v.tide.length !== 24 || !v.tide.every(count)) return null
+    voices.push({
+      id: v.id,
+      countries: v.countries.filter(
+        (r): r is [string, number, number] => Array.isArray(r) && r.length === 3 && typeof r[0] === 'string' && /^[A-Z]{2}$/.test(r[0]) && count(r[1]) && count(r[2]),
+      ),
+      tide: v.tide,
+    })
+  }
+  return { v: 2, day: d.day, countries, tide: d.tide, voices }
+}
+
+/** The weights of a deeper voice, from the committed day. Not the pages' rule: a page's deviation rate means
+ *  little by itself, because the lists differ by country and some deviation is normal everywhere, so the pages are
+ *  weighed against the day's median. A messenger or Tor either connects or it does not, and where it works almost
+ *  every test passes (on 2026-11-13 the median country failed about one test in a hundred). So the share of a
+ *  country's tests that deviated is itself the measure: silent up to `silent`, full weight from `full` on, a
+ *  straight line between. Fewer than WEIGHT_FLOOR tests that day: weight 0, too few to judge. `median` is the
+ *  median share, kept for the record. */
+export function ruleOfVoice(day: DayCounts | null, id: string, silent: number, full: number): Rule | null {
+  const voice = day?.voices.find((v) => v.id === id)
+  if (!voice || !(full > silent)) return null
+  const judged = voice.countries.filter(([, tests]) => tests >= WEIGHT_FLOOR)
+  if (judged.length === 0) return null
+  const shares = judged.map(([, tests, anomalies]) => anomalies / tests).sort((a, b) => a - b)
+  const mid = Math.floor(shares.length / 2)
+  const weights = new Map<string, number>()
+  for (const [cc, tests, anomalies] of voice.countries) {
+    const w = tests < WEIGHT_FLOOR ? 0 : (anomalies / tests - silent) / (full - silent)
+    weights.set(cc, Math.min(1, Math.max(0, w)))
+  }
+  return { median: shares.length % 2 ? shares[mid]! : (shares[mid - 1]! + shares[mid]!) / 2, weights }
+}
+
+/** OONI's count of one day by country and test, folded into one voice: [country, tests, anomalies], by country. */
+export function voiceCountriesOf(json: unknown, tests: readonly string[]): [string, number, number][] {
+  const rows = (json as { result?: unknown } | null)?.result
+  if (!Array.isArray(rows)) return []
+  const sum = new Map<string, [number, number]>()
+  for (const r of rows as { probe_cc?: unknown; test_name?: unknown; measurement_count?: unknown; anomaly_count?: unknown }[]) {
+    if (typeof r.probe_cc !== 'string' || !/^[A-Z]{2}$/.test(r.probe_cc)) continue
+    if (typeof r.test_name !== 'string' || !tests.includes(r.test_name)) continue
+    const was = sum.get(r.probe_cc) ?? [0, 0]
+    sum.set(r.probe_cc, [was[0] + num(r.measurement_count), was[1] + num(r.anomaly_count)])
+  }
+  return [...sum.entries()].filter(([, [n]]) => n > 0).map(([cc, [n, a]]) => [cc, n, a] as [string, number, number]).sort((a, b) => a[0].localeCompare(b[0]))
+}
+
+/** OONI's count of one day by hour and test, folded into one voice: its tests in each of the 24 hours. Null when
+ *  the answer does not cover exactly the 24 hours of `day`. */
+export function voiceTideOf(json: unknown, day: string, tests: readonly string[]): number[] | null {
+  const rows = (json as { result?: unknown } | null)?.result
+  if (!Array.isArray(rows)) return null
+  const tide = Array.from({ length: 24 }, () => 0)
+  const seen = new Set<number>()
+  for (const r of rows as { measurement_start_day?: unknown; test_name?: unknown; measurement_count?: unknown }[]) {
+    if (typeof r.measurement_start_day !== 'string' || !r.measurement_start_day.startsWith(`${day}T`)) continue
+    const hour = Number(r.measurement_start_day.slice(11, 13))
+    if (!Number.isInteger(hour) || hour < 0 || hour > 23) continue
+    seen.add(hour)
+    if (typeof r.test_name === 'string' && tests.includes(r.test_name)) tide[hour]! += num(r.measurement_count)
+  }
+  return seen.size === 24 ? tide : null
+}
+
+const levelOf = (perHour: number): number => Math.min(1, Math.log2(1 + (perHour / 3600) * ASK_WINDOW_SECONDS) / Math.log2(1 + ASK_FULL))
+
+/** How loud a deeper voice's tone is at a moment of the world: its tests in this hour of the counted day, on the
+ *  same scale as the pages' tones. */
+export function voiceLevel(day: DayCounts | null, id: string, world: number): number {
+  return levelOf(day?.voices.find((v) => v.id === id)?.tide[new Date(world).getUTCHours()] ?? 0)
 }
 
 /** Rule 1 from the committed day. */
@@ -172,7 +263,5 @@ export function tideOf(json: unknown, day: string): number[][] | null {
  *  day, as a count per ASK_WINDOW_SECONDS, on a log scale where ASK_FULL tests are full loudness. The same scale
  *  as the live count it replaces; it changes on the hour. */
 export function tideLevel(day: DayCounts | null, group: number, world: number): number {
-  const perHour = day?.tide[new Date(world).getUTCHours()]?.[group] ?? 0
-  const perWindow = (perHour / 3600) * ASK_WINDOW_SECONDS
-  return Math.min(1, Math.log2(1 + perWindow) / Math.log2(1 + ASK_FULL))
+  return levelOf(day?.tide[new Date(world).getUTCHours()]?.[group] ?? 0)
 }

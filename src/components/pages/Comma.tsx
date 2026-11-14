@@ -5,7 +5,8 @@
 // (src/lib/comma/clock.ts). The site hands over the block that is playing and, in its last minute, the next one
 // (functions/api/comma/); each holds the tests that deviated. When the site cannot read a block, the house's own
 // recording of an earlier day plays in its place (public/comma/tape/), labelled, and the page keeps
-// asking; a block that arrives late takes over where the recording stands. The recording holds one block from
+// asking; a block that arrives late takes over where the recording stands. Below the six kinds of page two deeper
+// voices sound from the same blocks: the messengers and the ways around a block (src/lib/comma/voices.ts). The recording holds one block from
 // each hour of a day and plays them in turn, a day in two hours. This island sorts a block's web tests
 // into the six kinds of page with Citizen Lab's lists, applies the rules of src/lib/comma/rule.ts with the committed
 // counts of a whole day (src/data/comma/day.json), and puts the next seconds on the audio clock, a quarter of a
@@ -23,9 +24,10 @@ import { GROUPS, hueOf } from '@/lib/comma/groups'
 import { countryLink, entryLink } from '@/lib/comma/links'
 import { hostOf, testsOf, type Test } from '@/lib/comma/ooni'
 import { panOf } from '@/lib/comma/places'
-import { balance, commaSeconds, dayOf, GAP_SECONDS, ruleOfDay, tideLevel } from '@/lib/comma/rule'
-import { AUDIBLE_WEIGHT, bellLabelY, labelEnd, layoutFor, stagger, TAPE_LABEL_Y, TAPE_LINE_Y, visible, WIDE_SECONDS, weightTier, xOf, yOf } from '@/lib/comma/score'
+import { balance, commaSeconds, dayOf, GAP_SECONDS, ruleOfDay, ruleOfVoice, tideLevel, voiceLevel } from '@/lib/comma/rule'
+import { AUDIBLE_WEIGHT, bellLabelY, dividerY, labelEnd, layoutFor, stagger, TAPE_LABEL_Y, TAPE_LINE_Y, visible, WIDE_SECONDS, weightTier, xOf, yOf } from '@/lib/comma/score'
 import { categoryOf, listUrl, parseList, type Lists } from '@/lib/comma/testlists'
+import { rowName, rowOfVoice, ROWS, testLabel, VOICE_FULL_SHARE, VOICE_GAP_SECONDS, VOICE_SILENT_SHARE, VOICE_STRETCH, voiceOfRow, voiceOfTest, VOICES } from '@/lib/comma/voices'
 import { onMotionChange, reducedMotion } from '@/lib/dataviz/runtime'
 
 export interface CommaWording {
@@ -56,6 +58,8 @@ export interface CommaWording {
     asking: string
     tape: string
     tapeLabel: string
+    /** what the two rows below the pages are */
+    deep: string
     /** {day} is replaced with the day the counts are from */
     day: string
     colours: string
@@ -87,9 +91,10 @@ interface Loaded {
   deviations: Deviation[]
 }
 
-/** One deviation at its moment of the slot it plays in. */
-type Placed = Deviation & { at: number }
-type Planned = Placed & { weight: number }
+/** One deviation at its moment of the slot it plays in, in its row of the score, and in its layer: 0 for the pages,
+ *  then one for each deeper voice. Each layer keeps its own count of which country sounded when. */
+type Placed = Deviation & { at: number; row: number; layer: number }
+type Planned = Placed & { weight: number; seconds: number }
 
 interface Plan {
   slot: number
@@ -104,6 +109,8 @@ interface Mark {
   slot: number
   g: number
   kind: 'bell' | 'comma'
+  /** the messenger or tool a deeper voice's mark is about; empty for a page */
+  what: string
   cc: string
   w: number
   seconds: number
@@ -132,6 +139,8 @@ interface Info {
 
 const DAY = dayOf(dayJson)
 const RULE = ruleOfDay(DAY)
+const VOICE_RULES = VOICES.map((voice) => ruleOfVoice(DAY, voice.id, VOICE_SILENT_SHARE, VOICE_FULL_SHARE))
+const SILENT = Array.from({ length: ROWS }, () => 0)
 
 const LIST_COUNTRIES = 25
 const LIST_WAIT_MS = 4000
@@ -172,7 +181,7 @@ export default function Comma({ wording, id }: CommaProps) {
   const [marks, setMarks] = React.useState<Mark[]>([])
   const [turns, setTurns] = React.useState<Turn[]>([])
   const [info, setInfo] = React.useState<Info | null>(null)
-  const [levels, setLevels] = React.useState<number[]>(GROUPS.map(() => 0))
+  const [levels, setLevels] = React.useState<number[]>(SILENT)
   const [wait, setWait] = React.useState<{ refused: boolean; seconds: number }>({ refused: false, seconds: retrySeconds(1) })
   const [width, setWidth] = React.useState(1000)
   const figure = React.useRef<HTMLElement | null>(null)
@@ -193,8 +202,8 @@ export default function Comma({ wording, id }: CommaProps) {
   const until = React.useRef(0)
   /** which moment of the world stands at which second of the audio clock */
   const anchor = React.useRef({ audio: 0, world: 0 })
-  /** what has sounded lately, for the limit per country */
-  const log = React.useRef<{ cc: string; at: number }[]>([])
+  /** what has sounded lately in each layer, for the limit per country: the pages first, then each deeper voice */
+  const logs = React.useRef<{ cc: string; at: number }[][]>([[], ...VOICES.map(() => [])])
   const lastSource = React.useRef<Source | null>(null)
   const lastLevels = React.useRef<number[]>([])
   const started = React.useRef(0)
@@ -299,16 +308,31 @@ export default function Comma({ wording, id }: CommaProps) {
     }
   }
 
-  /** What the slot now holds, balanced from `from` on: each country at most once every GAP_SECONDS, counting what
-   *  has already sounded. Only web tests sound so far. */
+  /** What the slot now holds, balanced from `from` on, layer by layer, counting what has already sounded: in the
+   *  pages each country at most once every GAP_SECONDS, in a deeper voice at most once every VOICE_GAP_SECONDS,
+   *  with a tone VOICE_STRETCH times as long. */
   const planFor = (slot: number, have: Loaded, from: number): Plan => {
-    const placed: Placed[] = have.deviations
-      .filter((d) => d.test === WEB_TEST)
-      .map((d) => ({ ...d, at: slot + d.s * 1000 }))
-      .filter((d) => d.at >= from)
-    const memory = new Map<string, number[]>()
-    for (const heard of log.current) memory.set(heard.cc, [...(memory.get(heard.cc) ?? []), heard.at])
-    return { slot, source: have.source, items: balance(placed, RULE, memory) }
+    const memoryOf = (layer: number): Map<string, number[]> => {
+      const memory = new Map<string, number[]>()
+      for (const heard of logs.current[layer] ?? []) memory.set(heard.cc, [...(memory.get(heard.cc) ?? []), heard.at])
+      return memory
+    }
+    const placed = (keep: (d: Deviation) => boolean, row: (d: Deviation) => number, layer: number): Placed[] =>
+      have.deviations
+        .filter(keep)
+        .map((d) => ({ ...d, at: slot + d.s * 1000, row: row(d), layer }))
+        .filter((d) => d.at >= from)
+    const items: Planned[] = balance(placed((d) => d.test === WEB_TEST, (d) => d.group, 0), RULE, memoryOf(0)).map((d) => ({
+      ...d,
+      seconds: commaSeconds(d.weight),
+    }))
+    VOICES.forEach((_, voice) => {
+      const own = placed((d) => voiceOfTest(d.test) === voice, () => rowOfVoice(voice), voice + 1)
+      for (const d of balance(own, VOICE_RULES[voice] ?? null, memoryOf(voice + 1), VOICE_GAP_SECONDS)) {
+        items.push({ ...d, seconds: commaSeconds(d.weight) * VOICE_STRETCH })
+      }
+    })
+    return { slot, source: have.source, items: items.sort((a, b) => a.at - b.at) }
   }
 
   const tick = (): void => {
@@ -338,8 +362,8 @@ export default function Comma({ wording, id }: CommaProps) {
     if (!coming && site >= playedAt(next) - TAPE_AHEAD_MS) void standIn(next)
     for (const old of loaded.current.keys()) if (old < slot - BLOCK_MS) loaded.current.delete(old)
 
-    // the six tones: as loud as the world asked in this hour of the counted day
-    const tide = GROUPS.map((_, g) => tideLevel(DAY, g, world))
+    // the tones: as loud as the world asked in this hour of the counted day
+    const tide = Array.from({ length: ROWS }, (_, row) => (row < GROUPS.length ? tideLevel(DAY, row, world) : voiceLevel(DAY, voiceOfRow(row)?.id ?? '', world)))
     if (tide.some((level, g) => level !== lastLevels.current[g])) {
       tide.forEach((level, g) => s.asking(g, level, ctx.currentTime))
       lastLevels.current = tide
@@ -368,18 +392,19 @@ export default function Comma({ wording, id }: CommaProps) {
         if (item.at < until.current || item.at >= end) continue
         const t = audioAt(item.at)
         if (t < ctx.currentTime + 0.02) continue
-        const seconds = commaSeconds(item.weight)
+        const seconds = item.seconds
         const pan = panOf(item.cc)
-        if (item.state === 'confirmed') s.blockpage(item.group, t, pan)
-        else s.suspicion(item.group, t, item.weight, seconds, pan)
-        log.current.push({ cc: item.cc, at: item.at })
+        if (item.state === 'confirmed') s.blockpage(item.row, t, pan)
+        else s.suspicion(item.row, t, item.weight, seconds, pan)
+        logs.current[item.layer]?.push({ cc: item.cc, at: item.at })
         serial.current += 1
         placed.push({
           key: `m${serial.current}`,
           t,
           slot: at,
-          g: item.group,
+          g: item.row,
           kind: item.state === 'confirmed' ? 'bell' : 'comma',
+          what: testLabel(item.test),
           cc: item.cc,
           w: item.weight,
           seconds,
@@ -391,7 +416,7 @@ export default function Comma({ wording, id }: CommaProps) {
       }
       until.current = end
     }
-    log.current = log.current.filter((heard) => heard.at > world - GAP_SECONDS * 2000)
+    logs.current = logs.current.map((log, layer) => log.filter((heard) => heard.at > world - (layer === 0 ? GAP_SECONDS : VOICE_GAP_SECONDS) * 2000))
     const keep = ctx.currentTime - WIDE_SECONDS - 120
     if (placed.length) setMarks((m) => [...m.filter((k) => k.t + k.seconds > keep), ...placed])
     if (changes.length) setTurns((t) => [...t.filter((k, i, all) => k.t > keep || i === all.length - 1), ...changes])
@@ -422,7 +447,7 @@ export default function Comma({ wording, id }: CommaProps) {
     sound.current = null
     loaded.current = new Map()
     plan.current = null
-    log.current = []
+    logs.current = [[], ...VOICES.map(() => [])]
     lastSource.current = null
     lastLevels.current = []
     asking.current = { now: { busy: false, at: 0, inARow: 0 }, next: { busy: false, at: 0, inARow: 0, jitter: 0 } }
@@ -431,7 +456,7 @@ export default function Comma({ wording, id }: CommaProps) {
     setMarks([])
     setTurns([])
     setInfo(null)
-    setLevels(GROUPS.map(() => 0))
+    setLevels(SILENT)
     setPhase('idle')
   }
 
@@ -566,7 +591,7 @@ export default function Comma({ wording, id }: CommaProps) {
   const linked = (m: Mark, body: React.ReactNode): React.ReactNode =>
     frozen && m.entry ? (
       <a href={m.entry} target="_blank" rel="noopener noreferrer" className="cm-mark-link">
-        <title>{`${m.cc} · ${GROUPS[m.g]?.name ?? ''} · ${wording.feedEntry}`}</title>
+        <title>{`${m.cc} · ${rowName(m.g)}${m.what ? ` · ${m.what}` : ''} · ${wording.feedEntry}`}</title>
         {body}
       </a>
     ) : (
@@ -592,19 +617,20 @@ export default function Comma({ wording, id }: CommaProps) {
       <figure className="cm-figure" ref={figure}>
         <svg viewBox={`0 0 ${l.width} ${l.height}`} className="cm-svg" role="img" aria-label={wording.figureLabel}>
           <title>{wording.figureLabel}</title>
-          {GROUPS.map((g, i) => {
+          {Array.from({ length: ROWS }, (_, i) => {
             const nameX = l.namesAbove ? l.left : 14
             const nameY = l.namesAbove ? yOf(l, i) - 14 : yOf(l, i) + 4
             return (
-              <g key={g.id}>
+              <g key={rowName(i)}>
                 <circle cx={nameX + 4} cy={nameY - 4} r={4} className={`cm-dot ${hueClass(i)}`} />
                 <text x={nameX + 14} y={nameY} className="cm-row-name">
-                  {g.name}
+                  {rowName(i)}
                 </text>
                 <line x1={l.left} x2={l.right} y1={yOf(l, i)} y2={yOf(l, i)} className="cm-row-line" />
               </g>
             )
           })}
+          <line x1={l.namesAbove ? l.left : 14} x2={l.right} y1={dividerY(l)} y2={dividerY(l)} className="cm-divider" />
           {phase === 'playing'
             ? levels.map((level, g) => {
                 const h = 1 + 9 * level
@@ -707,6 +733,7 @@ export default function Comma({ wording, id }: CommaProps) {
           ))}
         </ul>
         <p className="cm-legend-note">{wording.legend.grey}</p>
+        <p className="cm-legend-note">{wording.legend.deep}</p>
       </section>
 
       <div className="cm-panels">
@@ -777,7 +804,8 @@ export default function Comma({ wording, id }: CommaProps) {
                     ) : (
                       <span className="cm-feed-cc">{m.cc}</span>
                     )}{' '}
-                    {m.kind === 'bell' ? wording.feedBlockpage : wording.feedSuspicion} · {GROUPS[m.g]?.name}
+                    {m.kind === 'bell' ? wording.feedBlockpage : wording.feedSuspicion} · {rowName(m.g)}
+                    {m.what ? ` · ${m.what}` : ''}
                     {m.site ? (
                       <>
                         {' · '}

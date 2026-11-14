@@ -1,11 +1,13 @@
 // src/lib/comma/score.ts — the geometry of Comma's live score (2026-11-13). Pure: the island measures its box and asks
 // here where every mark goes, so the drawing can be checked without a browser.
 //
-// The score is drawn in the box's own pixels. On a wide box the six row names stand in a column on the left and the
+// The score is drawn in the box's own pixels: a row for each kind of page and, set a little apart below them, a row
+// for each deeper voice (src/lib/comma/voices.ts). On a wide box the row names stand in a column on the left and the
 // score shows the last WIDE_SECONDS; on a narrow one (a phone) the names stand above their rows, the score takes the
 // whole width and shows the last NARROW_SECONDS, so a mark keeps roughly the same speed across the screen.
 
 import { GROUPS } from './groups'
+import { ROWS } from './voices'
 
 /** Below this the row names (with their colour dots) no longer fit beside the score, so they move above their rows. */
 export const NARROW_BELOW = 760
@@ -21,6 +23,8 @@ export interface Layout {
   right: number
   top: number
   row: number
+  /** the extra room between the last kind of page and the first deeper voice */
+  deep: number
   seconds: number
   namesAbove: boolean
 }
@@ -34,11 +38,12 @@ export function layoutFor(width: number): Layout {
   const row = namesAbove ? 54 : 46
   return {
     width: w,
-    height: top + row * GROUPS.length - (namesAbove ? 6 : 0),
+    height: top + row * ROWS + Math.round(row * 0.45) - (namesAbove ? 6 : 0),
     left: namesAbove ? 10 : 230,
     right: w - 10,
     top,
     row,
+    deep: Math.round(row * 0.45),
     seconds: namesAbove ? NARROW_SECONDS : WIDE_SECONDS,
     namesAbove,
   }
@@ -46,7 +51,9 @@ export function layoutFor(width: number): Layout {
 
 /** Where a moment `t` (audio-clock seconds) stands when the clock reads `now`: the newest at the right edge. */
 export const xOf = (l: Layout, now: number, t: number): number => l.right - ((now - t) / l.seconds) * (l.right - l.left)
-export const yOf = (l: Layout, group: number): number => l.top + group * l.row
+export const yOf = (l: Layout, row: number): number => l.top + row * l.row + (row >= GROUPS.length ? l.deep : 0)
+/** The thin rule between the pages and the deeper voices. */
+export const dividerY = (l: Layout): number => Math.round((yOf(l, GROUPS.length - 1) + yOf(l, GROUPS.length)) / 2) + (l.namesAbove ? -4 : 6)
 /** One second of asking, as wide as a second is on this box, less a hair of air. */
 export const bandWidth = (l: Layout): number => Math.max(1, (l.right - l.left) / l.seconds - 1)
 /** A label near the right edge turns to the left of its mark, so it is never cut off. */

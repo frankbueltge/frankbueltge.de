@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { GROUPS } from './groups'
-import { bandWidth, bellLabelY, labelEnd, layoutFor, NARROW_SECONDS, stagger, TAPE_LABEL_Y, TAPE_LINE_Y, visible, weightTier, WIDE_SECONDS, xOf, yOf } from './score'
+import { bandWidth, bellLabelY, dividerY, labelEnd, layoutFor, NARROW_SECONDS, stagger, TAPE_LABEL_Y, TAPE_LINE_Y, visible, weightTier, WIDE_SECONDS, xOf, yOf } from './score'
 
 describe('the score on a wide box', () => {
   const l = layoutFor(1000)
@@ -82,6 +82,22 @@ describe('labels that would collide', () => {
   it('stand above the row on a wide box and below it on a phone', () => {
     expect(bellLabelY(layoutFor(1000), 100, 0)).toBe(91)
     expect(bellLabelY(layoutFor(358), 100, 1)).toBe(136)
+  })
+})
+
+describe('the rows', () => {
+  it('are eight, the two deeper voices set apart below the six kinds of page', () => {
+    for (const width of [390, 1000]) {
+      const l = layoutFor(width)
+      const step = yOf(l, 1) - yOf(l, 0)
+      expect(yOf(l, 5) - yOf(l, 4)).toBe(step)
+      expect(yOf(l, 6) - yOf(l, 5)).toBe(step + l.deep)
+      expect(yOf(l, 7) - yOf(l, 6)).toBe(step)
+      expect(l.deep).toBeGreaterThan(10)
+      expect(yOf(l, 7) + 24).toBeLessThan(l.height)
+      expect(dividerY(l)).toBeGreaterThan(yOf(l, 5))
+      expect(dividerY(l)).toBeLessThan(yOf(l, 6))
+    }
   })
 })
 

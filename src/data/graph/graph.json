@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "1919fb611f7e692b"
+        "sha256": "9258376b7138c915"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "be5a6f01fb52faff"
+        "sha256": "3043a5c5c68e8368"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 640,
-      "edges": 563,
+      "nodes": 641,
+      "edges": 565,
       "nodesByKind": {
-        "decision": 192,
+        "decision": 193,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
@@ -75,7 +75,7 @@
         "made-by": 231,
         "neighbor-of": 163,
         "participates": 17,
-        "touches": 136
+        "touches": 138
       }
     }
   },
@@ -1963,6 +1963,16 @@
     {
       "id": "decision:2026-11-14-1",
       "kind": "decision",
+      "label": "Comma gains two deeper voices",
+      "date": "2026-11-14",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Comma gains two deeper voices"
+      }
+    },
+    {
+      "id": "decision:2026-11-14-2",
+      "kind": "decision",
       "label": "Common Ground asks to be named",
       "date": "2026-11-14",
       "source": {
@@ -1971,7 +1981,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-2",
+      "id": "decision:2026-11-14-3",
       "kind": "decision",
       "label": "The five older Common Ground sources stay",
       "date": "2026-11-14",
@@ -1981,7 +1991,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-3",
+      "id": "decision:2026-11-14-4",
       "kind": "decision",
       "label": "Common Ground reads every public it can reach without a key",
       "date": "2026-11-14",
@@ -1991,7 +2001,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-4",
+      "id": "decision:2026-11-14-5",
       "kind": "decision",
       "label": "Comma becomes a broadcast that cannot fall silent",
       "date": "2026-11-14",
@@ -13416,10 +13426,19 @@
     {
       "kind": "touches",
       "from": "decision:2026-11-14-1",
-      "to": "work:trending",
+      "to": "work:comma",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "src/lib/trending/licence.ts"
+        "quote": "src/lib/comma/voices.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-14-1",
+      "to": "work:on-record",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "scripts/comma/record.ts"
       }
     },
     {
@@ -13428,7 +13447,7 @@
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "pipelines/trending/README.md"
+        "quote": "src/lib/trending/licence.ts"
       }
     },
     {
@@ -13437,12 +13456,21 @@
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "pipelines/trending/src/trending/sources/"
+        "quote": "pipelines/trending/README.md"
       }
     },
     {
       "kind": "touches",
       "from": "decision:2026-11-14-4",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/trending/src/trending/sources/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-14-5",
       "to": "work:comma",
       "source": {
         "file": "docs/decision-log.md",
@@ -13451,7 +13479,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-4",
+      "from": "decision:2026-11-14-5",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",
