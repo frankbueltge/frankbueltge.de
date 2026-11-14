@@ -398,7 +398,6 @@ export interface LaidLane {
 export interface Mark {
   id: string
   kind: EventKind
-  lane: LaneId
   day: number
   x: number
   w: number
@@ -454,7 +453,7 @@ export function layoutOverlooked(s: OverlookedScore, width: number): OverlookedL
       const frac = e.kind === 'motif' ? Math.max(0.3, 1 - (0.7 * Math.min(24, -(e.db ?? 0))) / 24) : e.kind === 'murmur' || e.kind === 'piano' ? 0.5 : e.kind === 'said' || e.kind === 'answer' ? 0.42 : 0.72
       const h = r1(LANE_H * frac)
       return {
-        id: e.id, kind: e.kind, lane: e.lane, day: e.day, x: r1(x0), w: r1(Math.max(e.kind === 'bell' ? 0 : 1, x1 - x0)), y: r1(ly + (LANE_H - h) / 2), h,
+        id: e.id, kind: e.kind, day: e.day, x: r1(x0), w: r1(Math.max(e.kind === 'bell' ? 0 : 1, x1 - x0)), y: r1(ly + (LANE_H - h) / 2), h,
         age: e.kind === 'motif' ? Math.min(6, e.age ?? 0) : undefined, tutti: e.tutti, estimated: e.estimated,
         loops: (e.loops ?? []).filter((t) => t > c[0] + 1e-6 && t < c[1]).map((t) => r1(xAt(frame, span, t))),
       }

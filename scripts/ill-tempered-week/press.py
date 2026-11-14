@@ -13,9 +13,7 @@ are pressed too and the album is complete; a complete album is never pressed aga
   python scripts/ill-tempered-week/press.py 2026-W45        # that week, as far as the ledger holds it
   python scripts/ill-tempered-week/press.py --plan [WEEK]   # print work=true or work=false for the workflow, why to stderr
 
-Writes public/ill-tempered-week/<week>/{overlooked,unison,turn}.m4a and src/data/ill-tempered-week/<week>.json, and
-beside them, for the page's own performance of Overlooked, each day's sentence as spoken
-(public/ill-tempered-week/perform/<week>/said-<n>.m4a).
+Writes public/ill-tempered-week/<week>/{overlooked,unison,turn}.m4a and src/data/ill-tempered-week/<week>.json.
 Needs the VSCO 2 CE library (VSCO_ROOT) and the Kokoro model files (KOKORO_MODEL, KOKORO_VOICES).
 """
 import json
@@ -56,18 +54,6 @@ def write_piece(week: str, piece: str, x, record: dict) -> dict:
             'true_peak_dbtp': round(20 * np.log10(max(1e-12, base.true_peak(x))), 2), 'float32_sha256': base.digest(x)}
 
 
-def write_said(week: str, sentences: list) -> None:
-    """Each day's sentence as spoken, for the page's own performance of Overlooked (2026-11-14): said-1.m4a is the
-    week's first day. Mono AAC; an edition replaces the files of the edition before."""
-    out = PUBLIC / 'perform' / week
-    out.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory() as tmp:
-        for i, speech in enumerate(sentences, start=1):
-            wav = Path(tmp) / f'said-{i}.wav'
-            sf.write(wav, speech, base.SR, subtype='PCM_16')
-            base.encode(wav, out / f'said-{i}.m4a', kbps=64)
-
-
 def todo(week: str) -> tuple[list[str], str]:
     """The days this week would be pressed from now (none if nothing is due) and why: the tests press() makes."""
     if week < FIRST:
@@ -99,10 +85,6 @@ def press(week: str) -> None:
     x, rec = overlooked.render(days, hindsight=True)
     pieces = dict(album.get('pieces', {}))
     pieces['overlooked'] = {**write_piece(week, 'overlooked', x, rec), 'edition': k}
-    write_said(week, overlooked.LAST_SPEECH)
-    # a file of values derived after the fact (scripts/ill-tempered-week/derive.py) is for records that lack them;
-    # this pressing records them itself
-    (DATA / 'derived' / f'{week}.json').unlink(missing_ok=True)
     print(f'{week}: Overlooked, edition {k}, {pieces["overlooked"]["seconds"]} s')
     if k == 7:
         from itw import turn, unison

@@ -18,7 +18,6 @@ const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
 const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 const o = album.pieces.overlooked
 const number = (week: string): number => Number(week.split('-W')[1])
-const derived = `${REPO}/blob/main/src/data/ill-tempered-week/derived/${album.week}.json`
 ---
 
 <main id="main" class="sheet mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">
@@ -37,8 +36,7 @@ const derived = `${REPO}/blob/main/src/data/ill-tempered-week/derived/${album.we
         ? <>Three pieces from one week of Common Ground’s ledger: <em>Overlooked</em>, <em>Unison</em> and <em>Turn</em>. The album is complete and is never pressed again.</>
         : <>This week is still running. <em>Overlooked</em> is pressed again from its days so far whenever a day of the ledger lands, so this edition breaks off at {weekday(o.newest_day)}; <em>Unison</em> and <em>Turn</em> join it when the week is complete.</>}
       {' '}Each piece has its score: time runs from left to right, a line follows the music, a click jumps to that moment, and a
-      mark names the day and the headline it comes from. <em>Overlooked</em> can also be performed by your browser from its score,
-      each voice alone if you like. How the data becomes sound is told on
+      mark names the day and the headline it comes from. How the data becomes sound is told on
       <a class={link} href="/ill-tempered-week/#itw-how">the work’s page</a>.
     </p>
   </section>
@@ -51,22 +49,6 @@ const derived = `${REPO}/blob/main/src/data/ill-tempered-week/derived/${album.we
       Pressed on {album.pressed} from {album.days.length === 1 ? 'one day file' : `${album.days.length} day files`} of Common Ground. Instruments: {album.library}. Voices: {album.voices}.
       The <a class={link} href={`${REPO}/blob/main/src/data/ill-tempered-week/${album.week}.json`}>record</a> hashes every file the
       album read and holds every note the scores draw.
-      {album.derived?.sameAudio && (
-        <>
-          {' '}What it did not keep when it was pressed (how long each headline was said, the answering notes, the ensemble’s entries)
-          was worked out on {album.derived.on}: the renderer, run again on the same day files, gave the record’s own audio to the
-          last bit. Those values stand in <a class={link} href={derived}>a file beside the record</a>, which stays as it was pressed.
-        </>
-      )}
-      {album.derived && !album.derived.sameAudio && (
-        <>
-          {' '}The browser’s performance of this edition leans on a later run of the renderer ({album.derived.on}) for two things
-          the record does not hold: the levels of ensemble and voice, and each sentence as spoken. That run did not give the
-          record’s own audio (the voice is synthesised anew on each machine), so the performance is close to the recording, not
-          exact, until the next pressing records its own. The levels stand in
-          <a class={link} href={derived}>a file beside the record</a>.
-        </>
-      )}
     </p>
   </section>
 

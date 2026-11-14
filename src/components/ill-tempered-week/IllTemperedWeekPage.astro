@@ -13,7 +13,7 @@ import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import AlbumPieces from '@/components/ill-tempered-week/AlbumPieces.astro'
 import OverlookedScore from '@/components/ill-tempered-week/OverlookedScore'
 import { clock, readAlbums, span, weekday } from '@/lib/ill-tempered-week/albums'
-import { albumPath, frontPage, HINT, overlookedLinks, performBytes } from '@/lib/ill-tempered-week/pages'
+import { albumPath, frontPage, HINT, overlookedLinks } from '@/lib/ill-tempered-week/pages'
 import '@/styles/experiment-sheet.css'
 import '@/styles/ill-tempered-week.css'
 
@@ -26,10 +26,6 @@ const u = album.pieces.unison
 const t = album.pieces.turn
 const g = growing?.pieces.overlooked
 const recordHref = (week: string): string => `${REPO}/blob/main/src/data/ill-tempered-week/${week}.json`
-const derivedHref = (week: string): string => `${REPO}/blob/main/src/data/ill-tempered-week/derived/${week}.json`
-// the albums whose record was filled in afterwards by a run that gave the record's own audio
-const exact = [album, ...(growing ? [growing] : []), ...earlier].filter((a) => a.derived?.sameAudio).sort((a, b) => a.week.localeCompare(b.week))
-const bytes = performBytes(o)
 const badges = growing && g
   ? [`${album.title}, complete`, `${growing.title}, edition ${g.edition} of 7`]
   : [album.title, album.complete ? 'complete' : `edition ${o.edition} of 7`]
@@ -65,8 +61,7 @@ const hint = HINT
       and nothing is played by hand: every note follows from a committed day file, and the album’s record names each file it read. The
       scores below are drawn from those records. In each, time runs from left to right: press play and a line follows the music, click
       to jump, point at a mark to see which day and which headline it comes from. Under each score, the days in detail, with links to
-      the sources. <em>Overlooked</em> can also be performed by your browser, note by note from its score, and then each voice can be
-      heard alone.
+      the sources.
     </p>
     <ul class="itw-glance" aria-label="The three pieces">
       <li><a href="#overlooked"><span class="font-mono text-mono-sm text-fg-faint">I · chamber ensemble · {clock(o.seconds)}</span><br /><i>Overlooked</i><br /><span class="text-sm text-fg-muted">Each day’s least attended headline, said, answered and kept as a motif.</span></a></li>
@@ -96,7 +91,6 @@ const hint = HINT
         links={overlookedLinks(g)}
         audioId="itw-audio-growing"
         id="itw-score-growing"
-        performBytes={performBytes(g)}
         label={`The score of Overlooked, ${growing.title}, edition ${g.edition}: one lane per voice, time from left to right.`}
         hint={hint}
       />
@@ -117,24 +111,10 @@ const hint = HINT
     </p>
     <p class="mt-4 leading-relaxed text-fg-muted">
       The scores are drawn from those records and from the renderer’s fixed form, the same rules the code plays: when each part
-      enters, how much softer an older motif sounds, how long a glissando lasts. Before 14 November 2026 the records did not keep
-      how long a headline was said, the answering notes or the ensemble’s entries; from then on the press records them.
-      {exact.length > 0 && (
-        <>
-          {' '}For {exact.map((a, i) => <>{i > 0 && ', '}<a class={link} href={derivedHref(a.week)}>{a.title}</a></>)} they were worked out
-          afterwards: the renderer, run again on the same day files, gave the record’s own audio to the last bit, so the times it
-          showed are those of the pressing. They stand in a file beside the record, which stays as it was pressed.
-        </>
-      )}
-    </p>
-    <p class="mt-4 leading-relaxed text-fg-muted">
-      <em>Overlooked</em> can also be performed by your browser. It then loads the recorded notes the piece needs and each day’s
-      sentence as it was spoken{bytes > 0 && <> ({(bytes / 1e6).toFixed(1)} MB for {album.title})</>}, and starts every note of the score
-      itself: the recorded note nearest in pitch, read at the exact ratio of the wanted pitch to its own, as the press reads it,
-      and sent through the press’s own reverb, built again in the browser. Nothing of the recording is played, so each voice can
-      be heard alone or left out. What differs from the recording: the instruments are mono, the browser’s compressor stands in
-      for the press’s limiter, and the murmur of the most attended is not performed. How close the two are is on the
-      <a class={link} href="/werke/ill-tempered-week">method sheet</a>. <em>Unison</em> and <em>Turn</em> are not performed yet.
+      enters, how much softer an older motif sounds, how long a glissando lasts. Where a record does not hold a time, the score works
+      it out from the times it does hold: before 14 November 2026 the records did not keep how long a headline was said, so
+      <em> Overlooked</em> places the end of each sentence from the bar its motif begins on, to within half a bar, and says so when you
+      point at it. From then on, the press records it, with the answering notes, the ensemble’s entries and the double bass’s notes.
     </p>
   </section>
 
