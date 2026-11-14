@@ -1,0 +1,28 @@
+---
+// One album of the ill-tempered week at its own address (2026-11-14): /ill-tempered-week/2026-W45/. Every album on
+// file gets a page from its first day on, so its scores stay reachable after it has left the front page. The audio
+// of the same folder (/ill-tempered-week/<week>/<piece>.m4a) is served by functions/ill-tempered-week/[week]/[piece].js,
+// which hands every other path on to these pages.
+import Page from '@/layouts/Page.astro'
+import AlbumPage from '@/components/ill-tempered-week/AlbumPage.astro'
+import { readAlbums, span } from '@/lib/ill-tempered-week/albums'
+import { albumPages, albumPath, type AlbumPageProps } from '@/lib/ill-tempered-week/pages'
+
+export function getStaticPaths() {
+  return albumPages(readAlbums())
+}
+
+const props = Astro.props as AlbumPageProps
+const { album } = props
+const what = album.complete
+  ? 'Overlooked, Unison and Turn, each with a score that follows the music'
+  : `Overlooked so far, edition ${album.pieces.overlooked.edition} of 7, with a score that follows the music`
+---
+
+<Page
+  title={`${album.title}, the ill-tempered week | Frank Bültge`}
+  description={`${album.title}, the album of ${span(album.days)} of the ill-tempered week: ${what}, drawn from the album’s record of Common Ground’s ledger.`}
+  canonicalPath={albumPath(album.week)}
+>
+  <AlbumPage {...props} />
+</Page>

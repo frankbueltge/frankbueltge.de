@@ -12,6 +12,7 @@
 import * as React from 'react'
 
 import type { Unison } from '@/lib/ill-tempered-week/albums'
+import type { UnisonLinks } from '@/lib/ill-tempered-week/pages'
 import { dayName, dayShort, mmss } from '@/lib/ill-tempered-week/score'
 import {
   describeGlide,
@@ -27,9 +28,7 @@ import {
 
 import { byTouch, PlayFrom, PlayheadRule, SourceLink, svgPoint, useBoxReadout, useMounted, usePlayhead, useWidth } from './score-kit'
 
-export interface UnisonLinks {
-  days: { said: string | null; overlooked: string | null }[]
-}
+export type { UnisonLinks } from '@/lib/ill-tempered-week/pages'
 
 export interface UnisonScoreProps {
   record: Unison

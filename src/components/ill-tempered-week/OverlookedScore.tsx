@@ -17,6 +17,7 @@
 import * as React from 'react'
 
 import type { Overlooked } from '@/lib/ill-tempered-week/albums'
+import type { OverlookedLinks } from '@/lib/ill-tempered-week/pages'
 import { dayName, dayShort, hzLabel, mmss } from '@/lib/ill-tempered-week/score'
 import {
   describeOverlooked,
@@ -38,10 +39,7 @@ import {
 
 import { byTouch, PlayFrom, PlayheadRule, SourceLink, svgPoint, useBoxReadout, useMounted, usePlayhead, useWidth } from './score-kit'
 
-export interface OverlookedLinks {
-  /** per day: the overlooked headline's link, and each murmured headline's */
-  days: { text: string | null; attended: (string | null)[] }[]
-}
+export type { OverlookedLinks } from '@/lib/ill-tempered-week/pages'
 
 export interface OverlookedScoreProps {
   record: Overlooked
