@@ -8,6 +8,7 @@ import { readAlbums, type Overlooked } from './albums'
 import { harmonicOf, SCALE_HARMONICS } from './score'
 import {
   describeOverlooked,
+  does,
   FORM,
   layoutOverlooked,
   loopStarts,
@@ -212,6 +213,21 @@ describe('the parts of the form', () => {
     const s = overlookedScore(readAlbums()[0]!.pieces.overlooked)
     expect(layoutOverlooked(s, 960).lines).toHaveLength(1)
     expect(layoutOverlooked(s, 358).lines.length).toBeGreaterThan(1)
+  })
+
+  it('lets a section answer and a single instrument answers', () => {
+    expect(does('cellos', 'answers')).toBe('answer')
+    expect(does('violas', 'loops')).toBe('loop')
+    expect(does('flute', 'answers')).toBe('answers')
+    // a double bass is one instrument, whatever its last letter
+    expect(does('double bass', 'plays')).toBe('plays')
+    for (const o of editions) {
+      const s = overlookedScore(o)
+      for (const d of s.days) {
+        const said = nowOverlooked(s, d.motifFrom - 0.05)
+        expect(said).not.toMatch(/\b(cellos|violas) (answers|loops|plays)\b/)
+      }
+    }
   })
 
   it('survives an edition of a single day', () => {

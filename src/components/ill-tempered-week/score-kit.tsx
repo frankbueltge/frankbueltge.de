@@ -8,6 +8,7 @@ import * as React from 'react'
 
 import { createReadout } from '@/lib/dataviz/readout'
 import { reducedMotion } from '@/lib/dataviz/runtime'
+import { followAudio } from '@/lib/ill-tempered-week/follow'
 import { mmss, spanAt, xAt, type Frame } from '@/lib/ill-tempered-week/score'
 
 /** The width the server draws at, and the first client render with it, so hydration finds the same markup. */
@@ -47,8 +48,9 @@ export interface Playhead {
   seek: (t: number) => void
 }
 
-/** Follows the page's audio element: every frame while it plays (four times a second under reduced motion, from the
- *  element's own timeupdate), and on every seek. */
+/** Follows the page's audio element (the rule and its reasons: src/lib/ill-tempered-week/follow.ts): every animation
+ *  frame while it plays, and always with the element's own timeupdate, so the playhead also moves where a browser
+ *  suspends frames; under reduced motion with timeupdate alone. Starting a player stops the page's others. */
 export function usePlayhead(audioId: string): Playhead {
   const [t, setT] = React.useState<number | null>(null)
   const [playing, setPlaying] = React.useState(false)
@@ -58,44 +60,21 @@ export function usePlayhead(audioId: string): Playhead {
     const audio = document.getElementById(audioId)
     if (!(audio instanceof HTMLAudioElement)) return
     audioRef.current = audio
-    let frame = 0
-    const smooth = !reducedMotion()
-    const tick = () => {
-      setT(audio.currentTime)
-      frame = requestAnimationFrame(tick)
-    }
-    const onPlay = () => {
-      // one piece at a time: starting a player stops the page's others
-      for (const other of document.querySelectorAll<HTMLAudioElement>('audio.itw-player')) {
-        if (other !== audio && !other.paused) other.pause()
-      }
-      setPlaying(true)
-      cancelAnimationFrame(frame)
-      if (smooth) frame = requestAnimationFrame(tick)
-    }
-    const onStop = () => {
-      setPlaying(false)
-      cancelAnimationFrame(frame)
-      setT(audio.currentTime)
-    }
-    const onTime = () => {
-      if (!smooth || audio.paused) setT(audio.currentTime)
-    }
-    audio.addEventListener('play', onPlay)
-    audio.addEventListener('pause', onStop)
-    audio.addEventListener('ended', onStop)
-    audio.addEventListener('seeked', onTime)
-    audio.addEventListener('timeupdate', onTime)
-    if (!audio.paused) onPlay()
-    else if (audio.currentTime > 0) setT(audio.currentTime)
-    return () => {
-      cancelAnimationFrame(frame)
-      audio.removeEventListener('play', onPlay)
-      audio.removeEventListener('pause', onStop)
-      audio.removeEventListener('ended', onStop)
-      audio.removeEventListener('seeked', onTime)
-      audio.removeEventListener('timeupdate', onTime)
-    }
+    const frames = reducedMotion() ? null : { request: (cb: () => void) => requestAnimationFrame(cb), cancel: (id: number) => cancelAnimationFrame(id) }
+    return followAudio(
+      audio,
+      {
+        time: setT,
+        playing: setPlaying,
+        // one piece at a time
+        started: () => {
+          for (const other of document.querySelectorAll<HTMLAudioElement>('audio.itw-player')) {
+            if (other !== audio && !other.paused) other.pause()
+          }
+        },
+      },
+      frames,
+    )
   }, [audioId])
 
   const seek = React.useCallback((to: number) => {

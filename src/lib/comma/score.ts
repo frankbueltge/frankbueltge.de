@@ -61,14 +61,24 @@ export const labelEnd = (l: Layout, x: number, chars: number): boolean => x + 8 
 export const visible = (l: Layout, now: number, t: number, length = 0): boolean => t <= now && t + length >= now - l.seconds
 export const weightTier = (w: number): 1 | 2 | 3 | 4 => (w >= 0.75 ? 4 : w >= 0.5 ? 3 : w >= AUDIBLE_WEIGHT ? 2 : 1)
 
-/** Labels of marks close together on one row step down, so two blockpages in the same second stay readable. Takes
- *  the marks in time order and answers each one's step (0, 1, 2, then round again). */
-export function stagger(marks: readonly { row: number; x: number; chars: number }[]): number[] {
-  const last = new Map<number, { x: number; chars: number; step: number }>()
+/** Labels of marks close together on one row step aside, so two blockpages in the same second stay readable. Takes
+ *  the marks in time order, each with where it stands, how long its label is, and whether the label turns to the
+ *  left of its mark (near the right edge it does, `labelEnd`), and answers each one's step: the first of three on
+ *  which the label's own span is still free. Until 2026-11-14 a label was only compared with the one before it and
+ *  taken to run to the right, so a long label that turned left could cover an earlier one. */
+export function stagger(marks: readonly { row: number; x: number; chars: number; turn?: boolean }[]): number[] {
+  const steps = 3
+  const taken = new Map<number, { from: number; to: number }[][]>()
   return marks.map((m) => {
-    const prev = last.get(m.row)
-    const step = prev && Math.abs(m.x - prev.x) < Math.max(m.chars, prev.chars) * 7 + 12 ? (prev.step + 1) % 3 : 0
-    last.set(m.row, { x: m.x, chars: m.chars, step })
+    const width = m.chars * 7
+    const from = m.turn ? m.x - 8 - width : m.x + 8
+    const span = { from: from - 6, to: from + width + 6 }
+    const rows = taken.get(m.row) ?? Array.from({ length: steps }, () => [] as { from: number; to: number }[])
+    taken.set(m.row, rows)
+    let step = rows.findIndex((spans) => spans.every((other) => span.to <= other.from || span.from >= other.to))
+    // all three are taken here: the one that holds the fewest labels
+    if (step < 0) step = rows.reduce((best, spans, at) => (spans.length < rows[best]!.length ? at : best), 0)
+    rows[step]!.push(span)
     return step
   })
 }

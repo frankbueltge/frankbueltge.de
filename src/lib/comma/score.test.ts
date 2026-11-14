@@ -79,6 +79,27 @@ describe('labels that would collide', () => {
     ).toEqual([0, 1, 0, 0])
   })
 
+  it('keep a long label that turns left clear of the ones it would cover', () => {
+    // three blockpages in one row: a long label, a short one beside it, and near the right edge a long one that
+    // turns left and would run back over both
+    const steps = stagger([
+      { row: 0, x: 440, chars: 17 },
+      { row: 0, x: 490, chars: 2 },
+      { row: 0, x: 710, chars: 30, turn: true },
+    ])
+    expect(steps[0]).toBe(0)
+    expect(steps[1]).toBe(1)
+    expect(steps[2]).toBe(2)
+    // the same three without the turn: the last one runs to the right and is free on the first step
+    expect(stagger([{ row: 0, x: 440, chars: 17 }, { row: 0, x: 490, chars: 2 }, { row: 0, x: 710, chars: 30 }])).toEqual([0, 1, 0])
+  })
+
+  it('never fails when all three steps are taken', () => {
+    const steps = stagger(Array.from({ length: 5 }, () => ({ row: 0, x: 300, chars: 12 })))
+    expect(steps.slice(0, 3)).toEqual([0, 1, 2])
+    expect(steps.every((step) => step >= 0 && step <= 2)).toBe(true)
+  })
+
   it('stand above the row on a wide box and below it on a phone', () => {
     expect(bellLabelY(layoutFor(1000), 100, 0)).toBe(91)
     expect(bellLabelY(layoutFor(358), 100, 1)).toBe(136)

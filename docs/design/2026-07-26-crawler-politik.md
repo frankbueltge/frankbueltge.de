@@ -149,6 +149,21 @@ authentifizierten API (401 gemessen).
 
 ## 5. Ausnahme: `/trending` (Franks Entscheidung, 2026-09-02, Wortlaut privat)
 
+> **Zurückgenommen am 2026-11-14** (Anlass: Franks Frage von diesem Tag, Wortlaut privat;
+> entschieden unter seiner stehenden Vollmacht, von ihm jederzeit umkehrbar). `/trending` folgt
+> wieder der Politik der Site: Suche und KI-Abruf ja, Training nein. Grund: Das Ledger gibt
+> Titel, Links und Zähler fremder Plattformen weiter, und ein guter Teil dieser Quellen behält
+> sich den eigenen Inhalt gegen Modelltraining vor, in den Nutzungsbedingungen oder in der
+> robots.txt (gelesen am 2026-11-14: Reddit, Lobsters, Stack Overflow, Google News, BBC, DW, ABC,
+> Al Jazeera, France 24, Nature, Science, The Conversation, The New Humanitarian,
+> mastodon.social). Der zweite Grund aus §2, Rechte Dritter, greift für diese Route also doch;
+> die Site kann nicht freigeben, was den Quellen gehört. Dazu passt die Ausnahme nicht mehr zur
+> Lizenz: Seit dem Ledger vom 2026-11-15 sind die Daten CC BY 4.0 und nicht mehr gemeinfrei.
+> Praktisch ändert sich nichts: Die Leserschafts-Serie zählt vom 2026-09-01 bis 2026-11-13
+> 517 Anfragen von Trainings-Crawlern, keine davon wurde mit 2xx beantwortet, weil sie am Rand
+> durchgehend auf *Block* standen. `public/robots.txt` und `public/llms.txt` sind angepasst; die
+> WAF-Regel unten wird nicht gebraucht. Der Text darunter bleibt als Record stehen.
+
 Die Route `/trending` (Experiment „Common Ground", Linie NIGHTLY LEDGER) ist für **alle**
 KI-Crawler offen — auch für die Trainings-Crawler, die überall sonst gesperrt bleiben. Die
 Politik „zitieren ja, trainieren nein" gilt für die Site unverändert weiter; dies ist eine

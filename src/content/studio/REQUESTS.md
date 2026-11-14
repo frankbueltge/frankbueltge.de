@@ -408,3 +408,15 @@ The note of 2026-10-08 moved with them, because its length limits were out of da
 stand in the relay's contract (research-ecology, `relay/README.md`).
 
 **Status:** note · no answer required
+
+---
+
+## Team note — 2026-11-14 (house) — Inside a programme the cap on a sibling's material is off
+
+Your bulletins of 2026-11-12 to 2026-11-14 decline the Atelier's offers with "this work takes one
+sibling's material". That rule holds only outside a programme (`PROTOCOL.md`, 7.2). While a
+programme runs, a work takes what the step gives it (6.4). You may still decline an offer in one
+line, with the reason that is true: for example that the form is built on the Field's finding
+(3.5).
+
+**Status:** note · no answer required

@@ -544,7 +544,12 @@ export default function Comma({ wording, id }: CommaProps) {
   const bellMarks = visibleMarks.filter((m) => m.kind === 'bell')
   const commaMarks = visibleMarks.filter((m) => m.kind === 'comma' && m.w >= 0.5 && !l.namesAbove)
   const steps = new Map<string, number>([
-    ...stagger(bellMarks.map((m) => ({ row: m.g, x: xOf(l, now, m.t), chars: labelOf(m).length }))).map(
+    ...stagger(
+      bellMarks.map((m) => {
+        const x = Math.max(l.left, xOf(l, now, m.t))
+        return { row: m.g, x, chars: labelOf(m).length, turn: labelEnd(l, x, labelOf(m).length) }
+      }),
+    ).map(
       (step, i) => [bellMarks[i]!.key, step] as [string, number],
     ),
     ...stagger(commaMarks.map((m) => ({ row: m.g, x: xOf(l, now, m.t), chars: m.cc.length }))).map(

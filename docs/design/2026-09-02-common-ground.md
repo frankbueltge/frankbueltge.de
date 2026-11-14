@@ -55,6 +55,10 @@ is ADDED VALUE, provisional: each half is occupied on its own, the union is not.
 
 ## 5. The crawler exception (Frank's decision, 2026-09-02, wording private)
 
+> Withdrawn on 2026-11-14: `/trending` follows the site default again (search and AI retrieval
+> yes, training no). The reasons and the count of what was never served are in
+> `docs/design/2026-07-26-crawler-politik.md` §5. The paragraph below is kept as it stood.
+
 The site's crawler policy of 2026-07-26 is "cite, don't train" (`docs/design/2026-07-26-crawler-politik.md`).
 For `/trending*` — CC0 data built for machine readers, containing no text of Frank's and no
 personal data — training crawlers are admitted too. Declared in `public/robots.txt` (an

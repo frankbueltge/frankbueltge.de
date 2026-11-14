@@ -150,6 +150,11 @@ const ABBR: Record<string, string> = {
 
 const round3 = (x: number): number => Math.round(x * 1000) / 1000
 
+/** The sections among the instruments: "the cellos answer", "the flute answers". */
+const SECTIONS = new Set(['cellos', 'violas'])
+/** A verb in the third person for an instrument's name: its -s falls away for a section. */
+export const does = (instrument: string, verb: string): string => (SECTIONS.has(instrument) ? verb.replace(/s$/, '') : verb)
+
 /** The loop's restarts within [a, b), counted from its origin. */
 export function loopStarts(origin: number, period: number, a: number, b: number): number[] {
   if (!(period > 0)) return []
@@ -310,12 +315,12 @@ export function nowOverlooked(s: OverlookedScore, t: number): string {
   const said = s.events.find((e) => e.id === `said-${i}`)!
   const day = `${dayName(d.day)}, ${d.fieldName}`
   if (t < said.t1) return `${day}: the bell, then the headline said: “${d.text}”`
-  if (t < d.motifFrom) return `${day}: the ${d.instrument} answers with the headline’s speech melody, in the rhythm it was spoken.`
+  if (t < d.motifFrom) return `${day}: the ${d.instrument} ${does(d.instrument, 'answers')} with the headline’s speech melody, in the rhythm it was spoken.`
   const parts = (['violins', 'violas', 'piano', 'low'] as const).filter((p) => d.entries[p] !== null && t >= d.entries[p]!)
   const names = { violins: 'violins in canon', violas: 'violas an octave down', piano: 'the piano', low: 'cellos and basses' }
   const ens = parts.length > 0 ? `, with ${parts.map((p) => names[p]).join(', ')}` : ''
   const aged = older > 0 ? `; ${older} earlier motif${older === 1 ? '' : 's'} softer underneath` : ''
-  return `${day}: the ${d.instrument} loops the motif${ens}${aged}.`
+  return `${day}: the ${d.instrument} ${does(d.instrument, 'loops')} the motif${ens}${aged}.`
 }
 
 /** The readout of an event: a heading and a body. */
@@ -335,12 +340,12 @@ export function describeOverlooked(s: OverlookedScore, id: string): { head: stri
         ? { head: `coda · ${span}`, body: `${dayName(d.day)}’s headline once more, alone: “${d.text}”.${est}` }
         : { head: `${day} · said · ${span}`, body: `“${d.text}” — the least attended headline of the day on ${sourceName(d.source)} (attention ${pct(d.attention)}), said in its field’s voice.${est}` }
     case 'answer':
-      return { head: `${day} · ${d.instrument} · ${span}`, body: `The ${d.instrument} answers with the headline’s speech melody, in the rhythm it was spoken.${e.estimated ? ' Its times are estimated from the motif’s first bar.' : ''}` }
+      return { head: `${day} · ${d.instrument} · ${span}`, body: `The ${d.instrument} ${does(d.instrument, 'answers')} with the headline’s speech melody, in the rhythm it was spoken.${e.estimated ? ' Its times are estimated from the motif’s first bar.' : ''}` }
     case 'motif':
       return {
         head: `${dayShort(d.day)} · ${d.instrument} · ${span}`,
         body: e.tutti
-          ? `The ${d.instrument} plays ${dayName(d.day)}’s motif at full strength in the tutti.`
+          ? `The ${d.instrument} ${does(d.instrument, 'plays')} ${dayName(d.day)}’s motif at full strength in the tutti.`
           : e.age === 0
             ? `${dayName(d.day)}’s motif, ${d.motif.length} notes in ${d.eighths} eighths (${d.loop} s), looped in the ${d.instrument}.`
             : `${dayName(d.day)}’s motif ${e.age} day${e.age === 1 ? '' : 's'} on, ${-(e.db ?? 0)} dB softer, still looping: the newest day still names ${d.fieldName}.`,
