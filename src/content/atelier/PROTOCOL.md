@@ -304,6 +304,10 @@ visitor meets in it, its material, and its form. The score carries a line
 `Builds on: <an earlier work, finding or instrument, with its link>`, at least one and preferably
 from a sibling, or `Builds on: nothing — <why>`.
 
+Where someone outside this house has a stake in the work, the score also names them in one line,
+`For whom: <the receiver and its channel> — <what they gain from the work>`. The line is left out
+where there is nobody, and most works have none (8).
+
 The Atelier's `Builds on:` may name a text of its foundation as well as a work.
 
 ### 5.5 The critique
@@ -595,10 +599,41 @@ again only if the architect removes the continuing question.
 
 ## 8. The post office
 
-Mail to the world is written, addressed and laid ready for collection in the post-office ledger.
-Whether it is ever sent or collected measures nothing. Sending remains a human act. There is no
-time bind and no receiver duty. An unsent packet is a complete outcome.
+Some works should reach someone outside this house: the holder of the data they use, an
+organisation that works on their subject, a place that asked for such work. The post office is
+where a letter to such a receiver is written and laid ready. Not every work is sent, and no
+session owes a letter.
 
+- **When a packet is written.** In the session that presents a work, this practice writes a
+  packet when three things hold. The work passed its check (3.3). A receiver outside the house has
+  a stake in it: the work uses the receiver's data, treats the receiver's subject, or answers the
+  receiver's own call. And one sentence says what the receiver gains. Where one of the three is
+  missing, the practice writes no packet and no line about it.
+- **The receiver** is an organisation with a channel it opened itself for such material: a
+  submission form, a tips or pitches address, an open call, a contact for uses of its data or for
+  corrections. It is never a private person, and never an address the receiver did not publish for
+  this. The house keeps an address book of such receivers in the research-ecology repository,
+  `post/addressees.json`, with its rules in `post/README.md`
+  (https://github.com/frankbueltge/research-ecology/tree/main/post). The practice reads it when it
+  writes `For whom:` (5.4) and when it writes a packet, and it writes to no receiver that stands
+  there as closed to machine-made work. In the session that writes the packet it opens the
+  receiver's channel page again. A receiver the book does not hold is named with the receiver's
+  own page that publishes the channel.
+- **One letter.** A work goes to one receiver, and a receiver gets one letter about a work.
+- **The packet** is a folder `deliveries/<slug>/` with the letter's text in `letter.txt` and a
+  `packet.json` in the house's convention, its `send` block included:
+  https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/post-office/packet-convention.md
+- **The letter** has at most 150 words. It says what the work is and what it found, in two
+  sentences; why it concerns this receiver; where the work stands (its address); that a machine-run
+  practice made it; and that the architect answers for it. It asks for nothing but to be looked
+  at, and it follows what the receiver says about machine-made work. Where an open call asks for
+  its own description of a work, the text follows the call.
+- **Sending remains a human act.** The architect sends a letter from his own address, or not at
+  all. A practice never sets a packet to sent, and an unsent packet is no fault of the practice.
+  There is no time bind.
+- **What became of a letter** stands in the house's ledger:
+  https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/post/ledger.json
+  The practice reads its own entries there before it names the next receiver.
 - A finding that shows an error in another institution's data may be written up as a letter to
   that data holder in the post office. Like everything there, it leaves only if the architect
   sends it.
@@ -656,3 +691,8 @@ This section holds until cycle 014 ends.
   text replaced stands unchanged at `archive/protocols/PROTOCOL-v7-with-amendments-2026-11-13.md`.
   The concordance beside it says where each of its rules stands now, and how two passages were
   read.
+- 2026-11-14: the post office (section 8) and the score's line `For whom:` (5.4), set by the
+  architect on that day (his wording private). A letter is written where a receiver has a stake in
+  the work, to a channel the receiver opened itself, and the architect sends it. Section 8 said
+  before that sending measures nothing and that an unsent packet is a complete outcome; those
+  sentences stand in the archived text.
