@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "55c110db8907acfa"
+        "sha256": "09282490f61d1d1c"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 638,
-      "edges": 561,
+      "nodes": 639,
+      "edges": 562,
       "nodesByKind": {
-        "decision": 190,
+        "decision": 191,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
@@ -75,7 +75,7 @@
         "made-by": 231,
         "neighbor-of": 163,
         "participates": 17,
-        "touches": 134
+        "touches": 135
       }
     }
   },
@@ -1963,6 +1963,16 @@
     {
       "id": "decision:2026-11-14-1",
       "kind": "decision",
+      "label": "The five older Common Ground sources stay",
+      "date": "2026-11-14",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The five older Common Ground sources stay"
+      }
+    },
+    {
+      "id": "decision:2026-11-14-2",
+      "kind": "decision",
       "label": "Common Ground reads every public it can reach without a key",
       "date": "2026-11-14",
       "source": {
@@ -1971,7 +1981,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-2",
+      "id": "decision:2026-11-14-3",
       "kind": "decision",
       "label": "Comma becomes a broadcast that cannot fall silent",
       "date": "2026-11-14",
@@ -13399,12 +13409,21 @@
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "pipelines/trending/src/trending/sources/"
+        "quote": "pipelines/trending/README.md"
       }
     },
     {
       "kind": "touches",
       "from": "decision:2026-11-14-2",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/trending/src/trending/sources/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-14-3",
       "to": "work:comma",
       "source": {
         "file": "docs/decision-log.md",
@@ -13413,7 +13432,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-2",
+      "from": "decision:2026-11-14-3",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",

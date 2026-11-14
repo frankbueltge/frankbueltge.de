@@ -98,9 +98,29 @@ were left out: Netflix's weekly Top 10 (`Disallow: /` for agents not on its list
 Bilibili's popular list (`Disallow: /` on the API host). Five earlier sources do **not** pass
 that reading and are named here rather than passed over: `google_news` and the arcs' Google
 News search (`/rss` is not on the host's allow list), `reddit`, `lobsters`, `arxiv` (the export
-API host) and `coingecko` (`/api/v3`). Each is a published feed or a documented public API;
-whether they stay is an open decision. Until that day this paragraph said that each source
+API host) and `coingecko` (`/api/v3`). Until that day this paragraph said that each source
 respects its host's `robots.txt`, which was more than had been checked.
+
+**The five stay (decided 2026-11-14), and not all for the same reason.** `robots.txt` speaks to
+crawlers; what a host says about its own feed or API is the better witness, so each was read
+again against that:
+
+- `arxiv` and `coingecko` are APIs their hosts publish for programs and govern by terms of use.
+  arXiv's terms name the API among its machine interfaces and ask for at most one request every
+  three seconds; one is made a day. CoinGecko documents the keyless endpoint, lists
+  `/search/trending` on it and asks for attribution, which the source line gives. Closing the
+  API host to crawlers is not closing the API. Thank you to arXiv for use of its open access
+  interoperability.
+- `lobsters` offers its feeds to the public on its about page; its JSON rendering of the front
+  page is read once a day.
+- `google_news` and `reddit` serve feeds and say nothing on who may read them, and their
+  `robots.txt` reads against it. One request per edition a day, and one per tracked term for
+  the arcs, is what a feed reader does; that is the whole of the case, and it is weaker than
+  the three above.
+- Reddit announced on 2026-09-30 that it would stop serving RSS on 2026-11-13 and has taken no
+  new requests for API access since 2026-10-31. The feed still answered on 2026-11-14. When it
+  stops, `reddit` is an `unavailable` line and is then taken off the list; it is not routed
+  around through a reseller.
 
 Titles, URLs and counts only — never article bodies.
 
