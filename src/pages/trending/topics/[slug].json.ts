@@ -2,6 +2,7 @@
 // today's counts AND the term's series read out of every committed run, so a reader gets the
 // arc in one request instead of fetching thirty day files and joining them by hand.
 import type { APIRoute, GetStaticPaths } from 'astro'
+import { attributionField, licenceField } from '@/lib/trending/licence'
 import { getLatestTerms, seriesFor } from '@/lib/trending/terms-data'
 import type { TrendingTerm, TrendingTermsDay } from '@/lib/trending/terms-types'
 import { countedPlatforms, searchedPlatforms, statusSentence } from '@/lib/trending/terms-view'
@@ -21,7 +22,8 @@ export const GET: APIRoute = ({ props }) => {
       {
         source: 'https://github.com/frankbueltge/frankbueltge.de — src/data/trending/terms',
         page: `https://frankbueltge.de/trending/topics/${term.slug}`,
-        licence: 'CC0-1.0 (data), per the licence line of 2026-07-26',
+        licence: licenceField(file.date),
+        ...attributionField(file.date),
         note:
           'One term of the Common Ground watchlist: how often the phrase and its declared aliases occurred in ' +
           'documents each tracked platform returned, over one day, seven days and thirty, deduplicated by URL, ' +

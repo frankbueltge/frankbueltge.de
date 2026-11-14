@@ -3,6 +3,7 @@
  *  page: both are rendered from the committed terms file through ./terms-view.ts. */
 import { SITE } from '@/lib/site'
 import { fmtDateLong, fmtTimeUtc } from './format'
+import { dataLicence, licenceSentence } from './licence'
 import type { TrendingTermsDay } from './terms-types'
 import {
   candidateItems,
@@ -59,7 +60,7 @@ export function renderTermsMarkdown(file: TrendingTermsDay): string {
   out.push(`- Canonical: ${u.hub}`)
   out.push(`- JSON: ${u.hubJson} (one term: ${u.termJson('<slug>')})`)
   out.push(`- Markdown: ${u.markdown} · today's spikes: ${u.ledger} · llms.txt: ${u.llms}`)
-  out.push(`- Licence: CC0 1.0 for the data; method sheet: ${u.method}`)
+  out.push(`- Licence of the data: ${licenceSentence(file.date)} Method sheet: ${u.method}`)
   out.push('')
 
   // What the run changed about its own list this morning, in both directions. Absent from the
@@ -158,7 +159,7 @@ export function renderTermsMarkdown(file: TrendingTermsDay): string {
   out.push('')
   out.push('## Cite')
   out.push('')
-  out.push(`frankbueltge.de, Common Ground — trends in the making for ${file.date}, ${u.hub} (data CC0 1.0).`)
+  out.push(`frankbueltge.de, Common Ground — trends in the making for ${file.date}, ${u.hub} (data ${dataLicence(file.date).label}).`)
   out.push('')
   return out.join('\n')
 }

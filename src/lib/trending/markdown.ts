@@ -2,6 +2,7 @@
  *  (LLM retrieval, feed readers, terminals). Same file, same numbers as the page. */
 import { SITE } from '@/lib/site'
 import { classLabel, compact, fmtDateLong, fmtTimeUtc, platformLabel } from './format'
+import { dataLicence, licenceSentence } from './licence'
 import type { TrendingAudience, TrendingDay } from './types'
 import { AUDIENCE_CLASSES } from './types'
 import { audienceDimensionRows, audienceMissingDimensions, convergingRows, sourceColumns } from './view'
@@ -34,7 +35,7 @@ export function renderMarkdown(day: TrendingDay, audience?: TrendingAudience): s
   out.push(`- Canonical: ${u.day}`)
   out.push(`- JSON: ${u.dayJson} (latest: ${u.latestJson}, archive index: ${u.index})`)
   out.push(`- RSS: ${u.feed} · Markdown: ${u.markdown} · llms.txt: ${u.llms}`)
-  out.push(`- Licence: CC0 1.0 for the data; method sheet: ${u.method}`)
+  out.push(`- Licence of the data: ${licenceSentence(day.date)} Method sheet: ${u.method}`)
   out.push('')
   out.push('## Converging now')
   out.push('')
@@ -109,7 +110,7 @@ export function renderMarkdown(day: TrendingDay, audience?: TrendingAudience): s
   out.push('')
   out.push('## Cite')
   out.push('')
-  out.push(`frankbueltge.de, Common Ground — trending ledger for ${day.date}, ${u.day} (data CC0 1.0).`)
+  out.push(`frankbueltge.de, Common Ground — trending ledger for ${day.date}, ${u.day} (data ${dataLicence(day.date).label}).`)
   out.push('')
   return out.join('\n')
 }

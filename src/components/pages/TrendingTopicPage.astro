@@ -16,6 +16,7 @@ import TableFallback from '@/components/dataviz/TableFallback.astro'
 import { Badge } from '@/components/ui/badge'
 import { arcModel } from '@/lib/trending/arc'
 import { compact, fmtDateWeekday } from '@/lib/trending/format'
+import { licenceSentence } from '@/lib/trending/licence'
 import { seriesFor } from '@/lib/trending/terms-data'
 import { definedTermLd, termDatasetLd, termsWebPageLd } from '@/lib/trending/terms-jsonld'
 import { termsUrls } from '@/lib/trending/terms-markdown'
@@ -234,8 +235,8 @@ const measured = [
       </p>
       <p class="au-note">
         No language model writes anything on this page: the count is a platform&rsquo;s own answer to a quoted phrase,
-        the status is a threshold in the pipeline, and the sentence above the numbers is assembled from them. Data
-        CC0 1.0; cite as Frank Bültge, Common Ground — trends in the making, {canonical}
+        the status is a threshold in the pipeline, and the sentence above the numbers is assembled from them. Data:{' '}
+        {licenceSentence(file.date)} Cite as Frank Bültge, Common Ground — trends in the making, {canonical}
       </p>
     </section>
 

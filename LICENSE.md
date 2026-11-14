@@ -2,7 +2,8 @@
 
 **Code** in this repository is licensed under the **Apache License 2.0** (full text
 below): use, modification and distribution are permitted, including commercially, with
-attribution and an express patent grant.
+attribution and an express patent grant. The attribution notices are in `NOTICE`; whoever
+passes the code on, changed or not, passes that file on with it (section 4(d)).
 
 **Works, texts and images** in this repository are licensed under
 **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)** — free to share and adapt,
@@ -12,6 +13,17 @@ including commercially, as long as credit is given.
 **[CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)** — facts and records
 should be reusable without friction.
 
+
+**Exception — Common Ground (`/trending`), from the ledger of 2026-11-15:** the day ledgers
+in `src/data/trending/`, the runs of the arcs in `src/data/trending/terms/` and every edition
+built from them (pages, JSON, Markdown, RSS) are licensed under
+**[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**: free to use for any purpose,
+including commercially, as long as the source is named and linked —
+**Common Ground, https://frankbueltge.de/trending**. Ledgers and runs dated 2026-11-14 or
+earlier were dedicated under CC0 when they were published and keep it; a dedication is not
+withdrawn. The licence covers what is the lab's in a ledger: the selection, the crossing of
+sources and the counts derived here. A source's own titles and links stay under that
+source's terms, which every ledger names source by source. (Decided on 2026-11-14.)
 
 **Exception — submitted seeds (`/seed`):** contributions submitted through the public
 seed form remain under **CC BY-NC-SA 4.0**. Submitters were promised that licence when

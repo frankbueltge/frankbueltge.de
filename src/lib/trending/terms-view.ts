@@ -569,4 +569,4 @@ export const HUB_DESCRIPTION =
   'Terms that build over weeks before search trends show them: a watchlist tracked every day across link ' +
   'aggregators, news, code repositories and preprints, with a mention count per window, a status derived from ' +
   'disclosed thresholds, the documents each count was read from, and the candidates the discovery run is about ' +
-  'to promote onto the list itself. Open data (CC0), archived daily; no language model writes anything here.'
+  'to promote onto the list itself. Open data, archived daily; no language model writes anything here.'

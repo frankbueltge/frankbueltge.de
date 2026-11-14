@@ -7,7 +7,7 @@
  *  term in a named set is. */
 import { SITE } from '@/lib/site'
 import { fmtDateLong } from './format'
-import { CC0_URL } from './jsonld'
+import { CC0_URL, CREDIT_LINE, dataLicence } from './licence'
 import type { TrendingTerm, TrendingTermsDay } from './terms-types'
 import { termsUrls } from './terms-markdown'
 import { countedPlatforms, HUB_DESCRIPTION, searchedPlatforms, sortTerms, statusLabel, statusSentence, termPlatformLabel } from './terms-view'
@@ -26,7 +26,8 @@ export function termsDatasetLd(file: TrendingTermsDay, canonical: string) {
     name: `Common Ground — trends in the making, ${fmtDateLong(file.date)}`,
     description: HUB_DESCRIPTION,
     url: canonical,
-    license: CC0_URL,
+    license: dataLicence(file.date).url,
+    ...(dataLicence(file.date).attribution ? { creditText: CREDIT_LINE } : {}),
     isAccessibleForFree: true,
     temporalCoverage: file.date,
     dateModified: file.generated_at,
@@ -74,7 +75,8 @@ export function termDatasetLd(file: TrendingTermsDay, term: TrendingTerm, canoni
     name: `${term.term} — mentions per day across ${where.length ? where.join(', ') : 'the tracked platforms'}`,
     description: `${statusSentence(term)} Counted daily from the platforms' own search interfaces, with the documents each count was read from; archived as open data and never edited afterwards.`,
     url: canonical,
-    license: CC0_URL,
+    license: dataLicence(file.date).url,
+    ...(dataLicence(file.date).attribution ? { creditText: CREDIT_LINE } : {}),
     isAccessibleForFree: true,
     temporalCoverage: `${term.first_seen}/${file.date}`,
     dateModified: file.generated_at,

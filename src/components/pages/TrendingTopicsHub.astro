@@ -17,6 +17,7 @@ import TableFallback from '@/components/dataviz/TableFallback.astro'
 import { Badge } from '@/components/ui/badge'
 import TrendingSelfCheck from '@/components/pages/TrendingSelfCheck.astro'
 import { fmtDateLong, fmtDateWeekday, fmtTimeUtc } from '@/lib/trending/format'
+import { dataLicence, licenceSentence } from '@/lib/trending/licence'
 import { getTermsDays, getWatchlist, seriesFor } from '@/lib/trending/terms-data'
 import { definedTermSetLd, termsDatasetLd, termsWebPageLd } from '@/lib/trending/terms-jsonld'
 import { termsUrls } from '@/lib/trending/terms-markdown'
@@ -385,7 +386,7 @@ const tableProvenance =
         ))}
       </dl>
       <ul class="mt-5 space-y-1 font-mono text-mono-sm leading-relaxed text-fg-faint">
-        <li>Data: CC0 1.0</li>
+        <li>Data: {licenceSentence(file.date)}{' '}<a href={dataLicence(file.date).url} rel="license" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">Licence text</a></li>
         <li>Cadence: rebuilt daily, with the ledger</li>
         <li>Cite: Frank Bültge, Common Ground — trends in the making, frankbueltge.de/trending/topics</li>
       </ul>
