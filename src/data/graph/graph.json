@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "bf910bfbb5cce2cb"
+        "sha256": "57101f15df58613a"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "f56a7ea66b01b902"
+        "sha256": "9097babf344ddba7"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 634,
-      "edges": 557,
+      "nodes": 635,
+      "edges": 559,
       "nodesByKind": {
-        "decision": 188,
+        "decision": 189,
         "encounter": 6,
         "neighbor": 161,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 231,
         "neighbor-of": 163,
         "participates": 17,
-        "touches": 131
+        "touches": 133
       }
     }
   },
@@ -1958,6 +1958,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "Comma, internet censorship heard live, opens in the lab"
+      }
+    },
+    {
+      "id": "decision:2026-11-14-1",
+      "kind": "decision",
+      "label": "Comma becomes a broadcast that cannot fall silent",
+      "date": "2026-11-14",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Comma becomes a broadcast that cannot fall silent"
       }
     },
     {
@@ -13338,6 +13348,24 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/comma/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-14-1",
+      "to": "work:comma",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/comma/clock.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-14-1",
+      "to": "work:on-record",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "scripts/comma/record.ts"
       }
     }
   ]

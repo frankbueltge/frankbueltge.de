@@ -28,7 +28,9 @@ export interface Layout {
 export function layoutFor(width: number): Layout {
   const w = Math.max(280, Math.round(width))
   const namesAbove = w < NARROW_BELOW
-  const top = namesAbove ? 40 : 34
+  // room above the first row for its labels (three steps of them on a wide box) and, above those, the line that
+  // marks a stretch played from the recording
+  const top = namesAbove ? 48 : 62
   const row = namesAbove ? 54 : 46
   return {
     width: w,
@@ -63,6 +65,10 @@ export function stagger(marks: readonly { row: number; x: number; chars: number 
     return step
   })
 }
+
+/** The line along the top that marks a stretch played from the recording, and its label above it. */
+export const TAPE_LINE_Y = 15
+export const TAPE_LABEL_Y = 10
 
 /** Where a blockpage's label stands: above the row on a wide box, below it on a phone (the name is above there). */
 export const bellLabelY = (l: Layout, y: number, step: number): number => (l.namesAbove ? y + 24 + step * 12 : y - 9 - step * 12)

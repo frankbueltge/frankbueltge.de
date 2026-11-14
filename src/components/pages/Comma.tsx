@@ -1,22 +1,29 @@
-// src/components/pages/Comma.tsx — the live score and sound of Comma (/comma, 2026-11-13).
+// src/components/pages/Comma.tsx — the live score and sound of Comma (/comma, 2026-11-13; on a broadcast clock since
+// 2026-11-14).
 //
-// One minute of the world's censorship tests at a time: the site hands over the newest minute OONI holds (about four
-// minutes old, functions/api/comma/now.js), this island sorts its tests into the six kinds of page with Citizen Lab's
-// lists, applies the rules of src/lib/comma/rule.ts and puts every sound on the audio clock at once, so a hidden tab
-// keeps playing. The score draws what has sounded, the newest on the right; the list beside it holds the last events
-// still, with their links. Every number, colour slot and link comes from src/lib/comma/; this file schedules and
-// draws. The server render is the floor: the rows, the legend, the button and the empty score are real markup before a
-// script runs; nothing sounds until a click asks for it.
+// The piece is a broadcast on the wall clock, ten minutes behind the world, in blocks of five minutes
+// (src/lib/comma/clock.ts). The site hands over the block that is playing and, in its last minute, the next one
+// (functions/api/comma/); each holds the tests that deviated. When the site cannot read a block, the house's own
+// recording of the same hour of an earlier day plays in its place (public/comma/tape/), labelled, and the page keeps
+// asking; a block that arrives late takes over where the recording stands. This island sorts a block's web tests
+// into the six kinds of page with Citizen Lab's lists, applies the rules of src/lib/comma/rule.ts with the committed
+// counts of a whole day (src/data/comma/day.json), and puts the next seconds on the audio clock, a quarter of a
+// minute ahead, so a hidden tab keeps playing. The score draws what has sounded, the newest on the right; the list
+// beside it holds the last events still, with their links. Every number, colour slot and link comes from
+// src/lib/comma/; this file schedules and draws. The server render is the floor: the rows, the legend, the button
+// and the empty score are real markup before a script runs; nothing sounds until a click asks for it.
 import * as React from 'react'
 
 import { CommaSound } from '@/components/comma/sound'
-import { GROUPS, groupOf, hueOf } from '@/lib/comma/groups'
-import { countryLink, entryLink, siteLink } from '@/lib/comma/links'
+import dayJson from '@/data/comma/day.json'
+import { decodeTape, deviationsOf, tapeFile, WEB_TEST, type Deviation, type Recording } from '@/lib/comma/block'
+import { BLOCK_MS, blockPlaying, DELAY_MS, hhmm, playedAt, readableFrom, retrySeconds, worldAt } from '@/lib/comma/clock'
+import { GROUPS, hueOf } from '@/lib/comma/groups'
+import { countryLink, entryLink } from '@/lib/comma/links'
 import { hostOf, testsOf, type Test } from '@/lib/comma/ooni'
 import { panOf } from '@/lib/comma/places'
-import { MINUTE_MS, retrySeconds } from '@/lib/comma/relay'
-import { askingLevel, balance, commaSeconds, prune, ruleOf, type Rule } from '@/lib/comma/rule'
-import { AUDIBLE_WEIGHT, bandWidth, bellLabelY, labelEnd, layoutFor, stagger, visible, WIDE_SECONDS, weightTier, xOf, yOf } from '@/lib/comma/score'
+import { balance, commaSeconds, dayOf, GAP_SECONDS, ruleOfDay, tideLevel } from '@/lib/comma/rule'
+import { AUDIBLE_WEIGHT, bellLabelY, labelEnd, layoutFor, stagger, TAPE_LABEL_Y, TAPE_LINE_Y, visible, WIDE_SECONDS, weightTier, xOf, yOf } from '@/lib/comma/score'
 import { categoryOf, listUrl, parseList, type Lists } from '@/lib/comma/testlists'
 import { onMotionChange, reducedMotion } from '@/lib/dataviz/runtime'
 
@@ -29,13 +36,14 @@ export interface CommaWording {
   status: {
     idle: string
     loading: string
-    /** {minute} is replaced with the minute playing, HH:MM UTC */
-    playing: string
     waiting: string
-    /** {seconds} is replaced with how soon the piece asks again */
-    standby: string
-    /** the standby when OONI refuses (429); {seconds} as above */
+    /** {from} and {to} are replaced with the block playing, HH:MM UTC */
+    live: string
+    /** why a recording plays: OONI refused (429) or did not answer */
     refused: string
+    unanswered: string
+    /** {day}, {from}, {to}: the recorded block; {seconds}: how soon the piece asks OONI again */
+    tape: string
     failed: string
     noRule: string
   }
@@ -45,6 +53,10 @@ export interface CommaWording {
     blockpage: string
     suspicion: string
     asking: string
+    tape: string
+    tapeLabel: string
+    /** {day} is replaced with the day the counts are from */
+    day: string
     colours: string
     grey: string
   }
@@ -61,12 +73,34 @@ export interface CommaProps {
   id: string
 }
 
-type Phase = 'idle' | 'loading' | 'waiting' | 'playing' | 'standby' | 'failed'
+type Phase = 'idle' | 'loading' | 'playing' | 'failed'
+type Source = 'live' | 'tape'
+
+/** What a slot of the broadcast plays: a block from OONI, or a recorded block standing in for it. */
+interface Loaded {
+  source: Source
+  /** the start of the block the deviations are from: the slot's own for a live block, the recorded one's for a tape */
+  from: number
+  /** the day a recording was read, as its file says; empty for a live block */
+  recorded: string
+  deviations: Deviation[]
+}
+
+/** One deviation at its moment of the slot it plays in. */
+type Placed = Deviation & { at: number }
+type Planned = Placed & { weight: number }
+
+interface Plan {
+  slot: number
+  source: Source
+  items: Planned[]
+}
 
 interface Mark {
   key: string
   /** audio-clock seconds */
   t: number
+  slot: number
   g: number
   kind: 'bell' | 'comma'
   cc: string
@@ -77,74 +111,110 @@ interface Mark {
   site: string | null
 }
 
-interface Band {
+/** From audio-clock second `t` on, the broadcast plays from this source. */
+interface Turn {
   t: number
-  levels: number[]
+  source: Source
 }
 
-interface Minute {
-  start: number
-  t0: number
-  tests: number
+/** What the page says about the slot that is playing. */
+interface Info {
+  slot: number
+  source: Source
+  from: number
+  recorded: string
+  rows: number
   countries: number
   blockpages: number
   anomalies: number
-  heard: [string, number][]
 }
+
+const DAY = dayOf(dayJson)
+const RULE = ruleOfDay(DAY)
 
 const LIST_COUNTRIES = 25
 const LIST_WAIT_MS = 4000
-const LEAD = 1.5
+/** How far ahead of the wall clock sounds are put on the audio clock. A browser may wake a hidden tab only once a
+ *  second or less; a quarter of a minute covers that, and a late block still takes over within it. */
+const LOOKAHEAD_MS = 15_000
+const TICK_MS = 500
+/** The audio clock runs this far behind the broadcast, so a sound due "now" can still be placed. */
+const LEAD_S = 0.4
+/** If the audio clock and the wall clock part by more than this (a suspended tab, a slept laptop), the piece
+ *  rejoins the broadcast where it is now, like a radio switched back on. */
+const DRIFT_MS = 2000
+/** How long the first block may take before the recording starts in its place. */
+const FIRST_WAIT_MS = 2500
+/** A recording is put in place this long before its slot begins, if no block from OONI has come. */
+const TAPE_AHEAD_MS = LOOKAHEAD_MS + 10_000
 const FEED = 8
 
-const hhmm = (ms: number): string => new Date(ms).toISOString().slice(11, 16)
-const untilNextMinute = (): number => MINUTE_MS - (Date.now() % MINUTE_MS) + 3000
-/** The relay's standby names its reason (src/lib/comma/relay.ts); 'rate-limit' means OONI refused the question. */
-const isRefusal = (said: unknown): boolean =>
-  typeof said === 'object' && said !== null && (said as { standby?: unknown }).standby === 'rate-limit'
+/** The relay's standby names its reason (src/lib/comma/relay.ts). */
+const standbyOf = (said: unknown): string => {
+  const reason = typeof said === 'object' && said !== null ? (said as { standby?: unknown }).standby : null
+  return typeof reason === 'string' ? reason : ''
+}
 const hueClass = (g: number): string => {
   const hue = hueOf(g)
   return hue === null ? 'cm-kn' : `cm-k${hue}`
 }
+const dayWords = (iso: string): string => {
+  const ms = Date.parse(`${iso.slice(0, 10)}T00:00:00Z`)
+  if (!Number.isFinite(ms)) return iso
+  return new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(ms)
+}
 
 export default function Comma({ wording, id }: CommaProps) {
   const [phase, setPhase] = React.useState<Phase>('idle')
-  const [note, setNote] = React.useState('')
   const [now, setNow] = React.useState(0)
   const [frozen, setFrozen] = React.useState(false)
   const [marks, setMarks] = React.useState<Mark[]>([])
-  const [bands, setBands] = React.useState<Band[]>([])
-  const [minutes, setMinutes] = React.useState<Minute[]>([])
-  const [width, setWidth] = React.useState(1000)
+  const [turns, setTurns] = React.useState<Turn[]>([])
+  const [info, setInfo] = React.useState<Info | null>(null)
+  const [levels, setLevels] = React.useState<number[]>(GROUPS.map(() => 0))
   const [wait, setWait] = React.useState<{ refused: boolean; seconds: number }>({ refused: false, seconds: retrySeconds(1) })
+  const [width, setWidth] = React.useState(1000)
   const figure = React.useRef<HTMLElement | null>(null)
 
   const sound = React.useRef<CommaSound | null>(null)
-  const rule = React.useRef<Rule | null>(null)
-  const lists = React.useRef<Lists>({ global: null, byCountry: new Map() })
-  const asked = React.useRef(new Set<string>())
-  const memory = React.useRef(new Map<string, number[]>())
-  const tail = React.useRef<number[][]>(GROUPS.map(() => []))
-  const last = React.useRef<{ minute: number; next: number } | null>(null)
-  const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const alive = React.useRef(false)
   const reduced = React.useRef(false)
   const frozenRef = React.useRef(false)
-  const inARow = React.useRef(0)
-  const ruleAskedAt = React.useRef(0)
+  const lists = React.useRef<Lists>({ global: null, byCountry: new Map() })
+  const listsAsked = React.useRef(new Set<string>())
+  /** the site's clock minus this device's, in milliseconds; the site's clock decides what plays when */
+  const offset = React.useRef(0)
+  /** what each slot plays, by the slot's start */
+  const loaded = React.useRef(new Map<number, Loaded>())
+  const tapes = React.useRef(new Map<number, Promise<Recording | null>>())
+  const plan = React.useRef<Plan | null>(null)
+  /** every moment of the world before this has been put on the audio clock */
+  const until = React.useRef(0)
+  /** which moment of the world stands at which second of the audio clock */
+  const anchor = React.useRef({ audio: 0, world: 0 })
+  /** what has sounded lately, for the limit per country */
+  const log = React.useRef<{ cc: string; at: number }[]>([])
+  const lastSource = React.useRef<Source | null>(null)
+  const lastLevels = React.useRef<number[]>([])
+  const started = React.useRef(0)
+  /** per endpoint: a request in flight, when to ask next (this device's clock), refusals in a row */
+  const asking = React.useRef({
+    now: { busy: false, at: 0, inARow: 0 },
+    next: { busy: false, at: 0, inARow: 0, jitter: 0 },
+  })
+  const ticker = React.useRef<ReturnType<typeof setInterval> | undefined>(undefined)
+  const serial = React.useRef(0)
 
-  const later = (fn: () => void, ms: number): void => {
-    clearTimeout(timer.current)
-    timer.current = setTimeout(fn, ms)
-  }
+  const siteNow = (): number => Date.now() + offset.current
+  const audioAt = (world: number): number => anchor.current.audio + (world - anchor.current.world) / 1000
 
-  /** The country lists a minute needs, the most tested countries first; a slow list is waited for only so long. */
+  /** The country lists a block needs, the most tested countries first; a slow list is waited for only so long. */
   const loadLists = async (tests: readonly Test[]): Promise<void> => {
     const counts = new Map<string, number>()
     for (const t of tests) counts.set(t.cc, (counts.get(t.cc) ?? 0) + 1)
     const wanted = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, LIST_COUNTRIES).map(([cc]) => cc)
-    const fresh = wanted.filter((cc) => !asked.current.has(cc))
-    fresh.forEach((cc) => asked.current.add(cc))
+    const fresh = wanted.filter((cc) => !listsAsked.current.has(cc))
+    fresh.forEach((cc) => listsAsked.current.add(cc))
     const loads = fresh.map(async (cc) => {
       try {
         const r = await fetch(listUrl(cc))
@@ -156,85 +226,6 @@ export default function Comma({ wording, id }: CommaProps) {
     await Promise.race([Promise.all(loads), new Promise((done) => setTimeout(done, LIST_WAIT_MS))])
   }
 
-  const schedule = (minute: number, tests: readonly Test[]): void => {
-    const s = sound.current
-    if (!s) return
-    const ctx = s.ctx
-    const previous = last.current
-    const contiguous = previous !== null && minute === previous.minute + MINUTE_MS && previous.next > ctx.currentTime + 0.2
-    const t0 = contiguous ? previous.next : ctx.currentTime + LEAD
-    if (!contiguous) tail.current = GROUPS.map(() => [])
-    last.current = { minute, next: t0 + MINUTE_MS / 1000 }
-    const toClock = (at: number): number => t0 + (at - minute) / 1000
-    const kind = (t: { url: string; cc: string }): string | null => categoryOf(t.url, t.cc, lists.current)
-
-    const times = GROUPS.map((_, g) => [...(tail.current[g] ?? [])])
-    for (const t of tests) times[groupOf(kind(t))]!.push(t.at)
-    times.forEach((ts) => ts.sort((a, b) => a - b))
-    const fresh: Band[] = []
-    for (let k = 0; k < MINUTE_MS / 250; k++) {
-      const tau = minute + k * 250
-      const levels = times.map((ts) => askingLevel(ts, tau))
-      levels.forEach((level, g) => s.asking(g, level, toClock(tau)))
-      if (k % 4 === 0) fresh.push({ t: toClock(tau), levels })
-    }
-    tail.current = times.map((ts) => ts.filter((at) => at > minute + MINUTE_MS - 5000))
-
-    const sounded = balance(tests, rule.current, memory.current)
-    prune(memory.current, minute + MINUTE_MS)
-    const heard = new Map<string, number>()
-    const placed: Mark[] = sounded.map((m, i) => {
-      const category = kind(m)
-      const g = groupOf(category)
-      const at = toClock(m.at)
-      const seconds = commaSeconds(m.weight)
-      if (m.state === 'confirmed') s.blockpage(g, at, panOf(m.cc))
-      else s.suspicion(g, at, m.weight, seconds, panOf(m.cc))
-      // the tally names what can be heard: every blockpage, and suspicion above a whisper
-      if (m.state === 'confirmed' || m.weight >= AUDIBLE_WEIGHT) heard.set(m.cc, (heard.get(m.cc) ?? 0) + 1)
-      const site = siteLink(m.url, category)
-      return {
-        key: `${minute}-${i}`,
-        t: at,
-        g,
-        kind: m.state === 'confirmed' ? 'bell' : 'comma',
-        cc: m.cc,
-        w: m.weight,
-        seconds,
-        // only a news outlet is named; never a personal page, never porn or gambling
-        host: site ? hostOf(m.url) : '',
-        entry: entryLink(m.uid),
-        site,
-      }
-    })
-    const summary: Minute = {
-      start: minute,
-      t0,
-      tests: tests.length,
-      countries: new Set(tests.map((t) => t.cc)).size,
-      blockpages: tests.filter((t) => t.state === 'confirmed').length,
-      anomalies: tests.filter((t) => t.state === 'anomaly').length,
-      heard: [...heard.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6),
-    }
-    const keep = ctx.currentTime - WIDE_SECONDS - 120
-    setMarks((m) => [...m.filter((k) => k.t + k.seconds > keep), ...placed])
-    setBands((b) => [...b.filter((k) => k.t > keep), ...fresh])
-    setMinutes((ms) => [...ms.filter((k) => k.t0 + 60 > ctx.currentTime - 1), summary])
-  }
-
-  /** Yesterday's counts. A refusal is not kept anywhere (src/lib/comma/relay.ts), so while they are missing they
-   *  are asked for again once a minute, and suspicion sounds from the minute they arrive. */
-  const loadRule = async (): Promise<void> => {
-    ruleAskedAt.current = Date.now()
-    try {
-      const r = await fetch('/api/comma/rule')
-      rule.current = r.ok ? ruleOf(await r.json()) : null
-    } catch {
-      rule.current = null
-    }
-    if (alive.current) setNote(rule.current ? '' : wording.status.noRule)
-  }
-
   const loadGlobalList = async (): Promise<void> => {
     try {
       const r = await fetch(listUrl('global'))
@@ -244,61 +235,202 @@ export default function Comma({ wording, id }: CommaProps) {
     }
   }
 
-  /** A standby: say why, and ask again soon, then every half minute (`retrySeconds`). */
-  const waitAgain = (refused: boolean): void => {
-    inARow.current += 1
-    const seconds = retrySeconds(inARow.current)
-    setWait({ refused, seconds })
-    setPhase('standby')
-    later(() => void poll(), seconds * 1000)
+  /** The recording of the hour a slot lies in, read once per hour of the day. */
+  const tapeOf = (slot: number): Promise<Recording | null> => {
+    const hour = new Date(slot).getUTCHours()
+    let reading = tapes.current.get(hour)
+    if (!reading) {
+      reading = fetch(tapeFile(hour))
+        .then((r) => (r.ok ? r.json() : null))
+        .then((json: unknown) => decodeTape(json))
+        .catch(() => null)
+      tapes.current.set(hour, reading)
+    }
+    return reading
   }
 
-  const poll = async (): Promise<void> => {
-    if (!alive.current || !sound.current) return
-    let response: Response
+  /** Put the recording in a slot's place, unless a block from OONI is already there. */
+  const standIn = async (slot: number): Promise<void> => {
+    const tape = await tapeOf(slot)
+    if (!alive.current || !tape || loaded.current.has(slot)) return
+    loaded.current.set(slot, { source: 'tape', from: tape.from, recorded: tape.recorded, deviations: tape.deviations })
+  }
+
+  /** Ask the site for the block that is playing ('now') or the one after it ('next'). An answer goes into its slot;
+   *  a standby sets when to ask again. */
+  const ask = async (which: 'now' | 'next'): Promise<void> => {
+    const state = asking.current[which]
+    if (state.busy || !alive.current) return
+    state.busy = true
+    const again = (seconds: number): void => {
+      state.at = Date.now() + seconds * 1000
+    }
     try {
-      response = await fetch('/api/comma/now', { cache: 'no-store' })
+      const response = await fetch(`/api/comma/${which}`, { cache: 'no-store' })
+      const at = Number(response.headers.get('x-comma-now'))
+      if (Number.isFinite(at) && at > 0) offset.current = at - Date.now()
+      const block = Date.parse(response.headers.get('x-comma-block') ?? '')
+      if (response.ok && Number.isFinite(block)) {
+        const tests = testsOf(await response.json().catch(() => null), block, block + BLOCK_MS)
+        await loadLists(tests)
+        if (!alive.current) return
+        loaded.current.set(block, { source: 'live', from: block, recorded: '', deviations: deviationsOf(tests, block, lists.current) })
+        state.inARow = 0
+        again(which === 'now' ? 20 : 5)
+        return
+      }
+      const reason = standbyOf(await response.json().catch(() => null))
+      if (reason === 'early') {
+        again(Math.min(60, Math.max(1, Number(response.headers.get('retry-after')) || 5)))
+        return
+      }
+      state.inARow += 1
+      const seconds = retrySeconds(state.inARow)
+      again(seconds)
+      if (alive.current) setWait({ refused: reason === 'rate-limit', seconds })
     } catch {
-      if (alive.current) waitAgain(false)
-      return
+      state.inARow += 1
+      const seconds = retrySeconds(state.inARow)
+      again(seconds)
+      if (alive.current) setWait({ refused: false, seconds })
+    } finally {
+      state.busy = false
     }
-    if (!alive.current) return
-    const minute = Date.parse(response.headers.get('x-comma-minute') ?? '')
-    if (!response.ok || !Number.isFinite(minute)) {
-      const said: unknown = await response.json().catch(() => null)
-      if (alive.current) waitAgain(isRefusal(said))
-      return
+  }
+
+  /** What the slot now holds, balanced from `from` on: each country at most once every GAP_SECONDS, counting what
+   *  has already sounded. Only web tests sound so far. */
+  const planFor = (slot: number, have: Loaded, from: number): Plan => {
+    const placed: Placed[] = have.deviations
+      .filter((d) => d.test === WEB_TEST)
+      .map((d) => ({ ...d, at: slot + d.s * 1000 }))
+      .filter((d) => d.at >= from)
+    const memory = new Map<string, number[]>()
+    for (const heard of log.current) memory.set(heard.cc, [...(memory.get(heard.cc) ?? []), heard.at])
+    return { slot, source: have.source, items: balance(placed, RULE, memory) }
+  }
+
+  const tick = (): void => {
+    const s = sound.current
+    if (!s || !alive.current) return
+    const ctx = s.ctx
+    if (ctx.state === 'suspended') void ctx.resume()
+    const site = siteNow()
+    const world = worldAt(site)
+
+    // the audio clock follows the broadcast; after a pause it rejoins it where it is now
+    const playing = anchor.current.world + (ctx.currentTime - anchor.current.audio) * 1000
+    if (Math.abs(world - LEAD_S * 1000 - playing) > DRIFT_MS) {
+      anchor.current = { audio: ctx.currentTime + LEAD_S, world }
+      until.current = Math.max(until.current, world)
+      plan.current = null
     }
-    inARow.current = 0
-    if (last.current && minute <= last.current.minute) {
-      later(() => void poll(), 10_000)
-      return
+
+    // what is needed: the block that plays, and in its last minute the next one
+    const slot = blockPlaying(site)
+    const next = slot + BLOCK_MS
+    const have = loaded.current.get(slot)
+    if ((!have || have.source === 'tape') && Date.now() >= asking.current.now.at) void ask('now')
+    if (!have) void standIn(slot)
+    const coming = loaded.current.get(next)
+    if (coming?.source !== 'live' && site >= readableFrom(next) + asking.current.next.jitter && Date.now() >= asking.current.next.at) void ask('next')
+    if (!coming && site >= playedAt(next) - TAPE_AHEAD_MS) void standIn(next)
+    for (const old of loaded.current.keys()) if (old < slot - BLOCK_MS) loaded.current.delete(old)
+
+    // the six tones: as loud as the world asked in this hour of the counted day
+    const tide = GROUPS.map((_, g) => tideLevel(DAY, g, world))
+    if (tide.some((level, g) => level !== lastLevels.current[g])) {
+      tide.forEach((level, g) => s.asking(g, level, ctx.currentTime))
+      lastLevels.current = tide
+      setLevels(tide)
     }
-    const json: unknown = await response.json().catch(() => null)
-    const tests = testsOf(json, minute, minute + MINUTE_MS)
-    await loadLists(tests)
-    if (!alive.current) return
-    schedule(minute, tests)
-    setPhase('playing')
-    later(() => void poll(), untilNextMinute())
-    if (!rule.current && Date.now() - ruleAskedAt.current >= MINUTE_MS) void loadRule()
+
+    // the next seconds onto the audio clock
+    const horizon = world + LOOKAHEAD_MS
+    const placed: Mark[] = []
+    const changes: Turn[] = []
+    for (let guard = 0; until.current < horizon && guard < 4; guard++) {
+      const at = Math.floor(until.current / BLOCK_MS) * BLOCK_MS
+      const holds = loaded.current.get(at)
+      if (!holds) {
+        // nothing for this slot yet: what has passed is not played later
+        until.current = Math.max(until.current, Math.min(world, at + BLOCK_MS))
+        break
+      }
+      if (!plan.current || plan.current.slot !== at || plan.current.source !== holds.source) plan.current = planFor(at, holds, until.current)
+      const end = Math.min(horizon, at + BLOCK_MS)
+      if (lastSource.current !== holds.source) {
+        changes.push({ t: audioAt(until.current), source: holds.source })
+        lastSource.current = holds.source
+      }
+      for (const item of plan.current.items) {
+        if (item.at < until.current || item.at >= end) continue
+        const t = audioAt(item.at)
+        if (t < ctx.currentTime + 0.02) continue
+        const seconds = commaSeconds(item.weight)
+        const pan = panOf(item.cc)
+        if (item.state === 'confirmed') s.blockpage(item.group, t, pan)
+        else s.suspicion(item.group, t, item.weight, seconds, pan)
+        log.current.push({ cc: item.cc, at: item.at })
+        serial.current += 1
+        placed.push({
+          key: `m${serial.current}`,
+          t,
+          slot: at,
+          g: item.group,
+          kind: item.state === 'confirmed' ? 'bell' : 'comma',
+          cc: item.cc,
+          w: item.weight,
+          seconds,
+          // only a news outlet is named; never a personal page, never porn or gambling
+          host: item.site ? hostOf(item.site) : '',
+          entry: entryLink(item.uid),
+          site: item.site || null,
+        })
+      }
+      until.current = end
+    }
+    log.current = log.current.filter((heard) => heard.at > world - GAP_SECONDS * 2000)
+    const keep = ctx.currentTime - WIDE_SECONDS - 120
+    if (placed.length) setMarks((m) => [...m.filter((k) => k.t + k.seconds > keep), ...placed])
+    if (changes.length) setTurns((t) => [...t.filter((k, i, all) => k.t > keep || i === all.length - 1), ...changes])
+
+    // what the page says about the slot that is playing
+    const heard = loaded.current.get(slot)
+    setInfo((was) => {
+      if (!heard) return was
+      if (was && was.slot === slot && was.source === heard.source) return was
+      const web = heard.deviations.filter((d) => d.test === WEB_TEST)
+      return {
+        slot,
+        source: heard.source,
+        from: heard.from,
+        recorded: heard.recorded,
+        rows: web.length,
+        countries: new Set(web.map((d) => d.cc)).size,
+        blockpages: web.filter((d) => d.state === 'confirmed').length,
+        anomalies: web.filter((d) => d.state === 'anomaly').length,
+      }
+    })
   }
 
   const stop = (): void => {
     alive.current = false
-    clearTimeout(timer.current)
+    clearInterval(ticker.current)
     sound.current?.close()
     sound.current = null
-    last.current = null
-    memory.current = new Map()
-    tail.current = GROUPS.map(() => [])
+    loaded.current = new Map()
+    plan.current = null
+    log.current = []
+    lastSource.current = null
+    lastLevels.current = []
+    asking.current = { now: { busy: false, at: 0, inARow: 0 }, next: { busy: false, at: 0, inARow: 0, jitter: 0 } }
     frozenRef.current = false
-    inARow.current = 0
     setFrozen(false)
     setMarks([])
-    setBands([])
-    setMinutes([])
-    setNote('')
+    setTurns([])
+    setInfo(null)
+    setLevels(GROUPS.map(() => 0))
     setPhase('idle')
   }
 
@@ -309,8 +441,12 @@ export default function Comma({ wording, id }: CommaProps) {
     // built inside the click, or a phone keeps the sound muted
     const s = new CommaSound()
     sound.current = s
-    // the counts and the global list load while the sounds decode, not after them
-    const reading = Promise.all([loadRule(), loadGlobalList()])
+    // listeners at one location do not all ask in the same second
+    asking.current.next.jitter = Math.floor(Math.random() * 8000)
+    // the block and the lists load while the sounds decode, not after them
+    const first = ask('now')
+    void loadGlobalList()
+    void standIn(blockPlaying(siteNow()))
     try {
       await s.load()
     } catch {
@@ -320,11 +456,18 @@ export default function Comma({ wording, id }: CommaProps) {
       setPhase('failed')
       return
     }
-    await reading
+    await Promise.race([first, new Promise((done) => setTimeout(done, FIRST_WAIT_MS))])
     if (!alive.current) return
     s.startTones()
-    setPhase('waiting')
-    void poll()
+    const world = worldAt(siteNow())
+    anchor.current = { audio: s.ctx.currentTime + LEAD_S, world }
+    until.current = world
+    started.current = s.ctx.currentTime
+    setNow(s.ctx.currentTime)
+    setPhase('playing')
+    clearInterval(ticker.current)
+    ticker.current = setInterval(tick, TICK_MS)
+    tick()
   }
 
   const toggleFreeze = (): void => {
@@ -342,16 +485,6 @@ export default function Comma({ wording, id }: CommaProps) {
   }, [])
 
   React.useEffect(() => {
-    if (phase !== 'playing' && phase !== 'waiting' && phase !== 'standby') return
-    const tick = setInterval(() => {
-      const s = sound.current
-      // frozen, the score holds still so its marks can be followed; the sound plays on
-      if (s && !frozenRef.current) setNow(s.ctx.currentTime)
-    }, reduced.current ? 1000 : 200)
-    return () => clearInterval(tick)
-  }, [phase])
-
-  React.useEffect(() => {
     const el = figure.current
     if (!el || typeof ResizeObserver === 'undefined') return
     const watch = new ResizeObserver(() => setWidth(el.clientWidth || 1000))
@@ -363,16 +496,24 @@ export default function Comma({ wording, id }: CommaProps) {
   React.useEffect(
     () => () => {
       alive.current = false
-      clearTimeout(timer.current)
+      clearInterval(ticker.current)
       sound.current?.close()
     },
     [],
   )
 
+  React.useEffect(() => {
+    if (phase !== 'playing') return
+    const draw = setInterval(() => {
+      const s = sound.current
+      // frozen, the score holds still so its marks can be followed; the sound plays on
+      if (s && !frozenRef.current) setNow(s.ctx.currentTime)
+    }, reduced.current ? 1000 : 200)
+    return () => clearInterval(draw)
+  }, [phase])
+
   const l = layoutFor(width)
-  const current = minutes.find((m) => m.t0 <= now && now < m.t0 + 60)
   const visibleMarks = marks.filter((m) => visible(l, now, m.t, m.kind === 'comma' ? m.seconds : 0))
-  const visibleBands = bands.filter((b) => visible(l, now, b.t))
   const labelOf = (m: Mark): string => (m.host ? `${m.cc} · ${m.host}` : m.cc)
   const bellMarks = visibleMarks.filter((m) => m.kind === 'bell')
   const commaMarks = visibleMarks.filter((m) => m.kind === 'comma' && m.w >= 0.5 && !l.namesAbove)
@@ -388,16 +529,37 @@ export default function Comma({ wording, id }: CommaProps) {
     .filter((m) => m.t <= now && (m.kind === 'bell' || m.w >= AUDIBLE_WEIGHT))
     .slice(-FEED)
     .reverse()
-  const listening = phase === 'loading' || phase === 'waiting' || phase === 'playing' || phase === 'standby'
+  const listening = phase === 'loading' || phase === 'playing'
+  /** the stretches of the visible score that play from the recording */
+  const taped = turns
+    .map((turn, i) => ({ ...turn, to: turns[i + 1]?.t ?? now }))
+    .filter((turn) => turn.source === 'tape' && turn.t <= now && turn.to >= now - l.seconds)
+    .map((turn) => ({ key: turn.t.toFixed(2), x0: Math.max(l.left, xOf(l, now, turn.t)), x1: Math.min(l.right, xOf(l, now, Math.min(turn.to, now))) }))
+  const sounding = [...turns].reverse().find((turn) => turn.t <= now)?.source ?? null
+  const heard = info
+    ? [...marks
+        .filter((m) => m.slot === info.slot && m.t <= now && (m.kind === 'bell' || m.w >= AUDIBLE_WEIGHT))
+        .reduce((tally, m) => tally.set(m.cc, (tally.get(m.cc) ?? 0) + 1), new Map<string, number>())]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 6)
+    : []
 
   const statusText =
-    phase === 'playing' && current
-      ? wording.status.playing.replace('{minute}', hhmm(current.start))
-      : phase === 'playing'
+    phase !== 'playing'
+      ? wording.status[phase]
+      : !info || !sounding
         ? wording.status.waiting
-        : phase === 'standby'
-          ? (wait.refused ? wording.status.refused : wording.status.standby).replace('{seconds}', String(wait.seconds))
-          : wording.status[phase]
+        : sounding === 'live' && info.source === 'live'
+          ? wording.status.live.replace('{from}', hhmm(info.from)).replace('{to}', hhmm(info.from + BLOCK_MS))
+          : info.source === 'tape'
+            ? `${wait.refused ? wording.status.refused : wording.status.unanswered} ${wording.status.tape
+                .replace('{day}', dayWords(new Date(info.from).toISOString()))
+                .replace('{from}', hhmm(info.from))
+                .replace('{to}', hhmm(info.from + BLOCK_MS))
+                .replace('{seconds}', String(wait.seconds))}`
+            : wording.status.waiting
+  const note = RULE ? '' : wording.status.noRule
+  const bandFrom = Math.max(l.left, xOf(l, now, started.current))
 
   /** A mark is a link only while the score holds still: a link that slides away under the pointer is no link. */
   const linked = (m: Mark, body: React.ReactNode): React.ReactNode =>
@@ -442,21 +604,22 @@ export default function Comma({ wording, id }: CommaProps) {
               </g>
             )
           })}
-          {visibleBands.map((b) =>
-            b.levels.map((level, g) => {
-              const h = 1 + 16 * level
-              return (
-                <rect
-                  key={`${b.t.toFixed(2)}-${g}`}
-                  x={xOf(l, now, b.t)}
-                  y={yOf(l, g) - h / 2}
-                  width={bandWidth(l)}
-                  height={h}
-                  className="cm-ask"
-                />
-              )
-            }),
-          )}
+          {phase === 'playing'
+            ? levels.map((level, g) => {
+                const h = 1 + 9 * level
+                return <rect key={`ask-${g}`} x={bandFrom} y={yOf(l, g) - h / 2} width={Math.max(0, l.right - bandFrom)} height={h} className="cm-ask" />
+              })
+            : null}
+          {taped.map((span) => (
+            <g key={`tape-${span.key}`} className="cm-tape">
+              <line x1={span.x0} x2={Math.max(span.x0 + 2, span.x1)} y1={TAPE_LINE_Y} y2={TAPE_LINE_Y} />
+              {span.x1 - span.x0 > 80 ? (
+                <text x={span.x0 + 2} y={TAPE_LABEL_Y} className="cm-tape-label">
+                  {wording.legend.tapeLabel}
+                </text>
+              ) : null}
+            </g>
+          ))}
           {visibleMarks.map((m) => {
             const x0 = Math.max(l.left, xOf(l, now, m.t))
             const y = yOf(l, m.g)
@@ -495,7 +658,7 @@ export default function Comma({ wording, id }: CommaProps) {
               </g>
             )
           })}
-          <line x1={l.right} x2={l.right} y1={l.top - 22} y2={l.height - 4} className="cm-now" />
+          <line x1={l.right} x2={l.right} y1={TAPE_LINE_Y + 6} y2={l.height - 4} className="cm-now" />
         </svg>
       </figure>
 
@@ -523,7 +686,14 @@ export default function Comma({ wording, id }: CommaProps) {
             </svg>
             {wording.legend.asking}
           </li>
+          <li>
+            <svg viewBox="0 0 24 16" className="cm-key" aria-hidden="true">
+              <line x1="2" x2="22" y1="8" y2="8" className="cm-key-tape" />
+            </svg>
+            {wording.legend.tape}
+          </li>
         </ul>
+        {DAY ? <p className="cm-legend-note">{wording.legend.day.replace('{day}', dayWords(DAY.day))}</p> : null}
         <p className="cm-legend-note">{wording.legend.colours}</p>
         <ul className="cm-legend-list cm-legend-kinds">
           {GROUPS.map((g, i) => (
@@ -543,25 +713,25 @@ export default function Comma({ wording, id }: CommaProps) {
           <dl className="cm-counters">
             <div>
               <dt>{wording.counters.tests}</dt>
-              <dd>{current ? current.tests : '–'}</dd>
+              <dd>{info ? info.rows : '–'}</dd>
             </div>
             <div>
               <dt>{wording.counters.countries}</dt>
-              <dd>{current ? current.countries : '–'}</dd>
+              <dd>{info ? info.countries : '–'}</dd>
             </div>
             <div>
               <dt>{wording.counters.blockpages}</dt>
-              <dd>{current ? current.blockpages : '–'}</dd>
+              <dd>{info ? info.blockpages : '–'}</dd>
             </div>
             <div>
               <dt>{wording.counters.anomalies}</dt>
-              <dd>{current ? current.anomalies : '–'}</dd>
+              <dd>{info ? info.anomalies : '–'}</dd>
             </div>
             <div>
               <dt>{wording.counters.heard}</dt>
               <dd>
-                {current && current.heard.length
-                  ? current.heard.map(([cc, n], i) => {
+                {heard.length
+                  ? heard.map(([cc, n], i) => {
                       const href = countryLink(cc)
                       return (
                         <React.Fragment key={cc}>
