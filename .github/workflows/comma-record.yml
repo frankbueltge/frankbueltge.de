@@ -1,0 +1,86 @@
+name: Comma record
+
+# Comma (/comma) takes two things from the repository instead of asking OONI for them while someone listens
+# (src/lib/comma/relay.ts says why): the counts of the last whole UTC day (src/data/comma/day.json) and a recording
+# of one block per hour of a day (public/comma/tape/), which plays, labelled, when OONI will not answer the site.
+# scripts/comma/record.ts reads both from OONI's public API, and this workflow runs it: the counts every night (two
+# questions to OONI), the recording as well on Mondays (24 more). The questions are spaced and say who asks.
+#
+# OONI charges every address that asks a quota, and a runner's address is shared with other runners. A night on
+# which OONI refuses is not a failure: the script writes nothing (exit code 3), the committed files stay, and the
+# run says so. Anything else that goes wrong fails the run.
+#
+# The commit is made with the built-in token, which never fires `on: push`; deploy-cf.yml names this workflow under
+# workflow_run, so a fresh day reaches production.
+
+on:
+  schedule:
+    # nominal 02:40 UTC; GitHub starts this repository's schedules hours late, which does not matter here
+    - cron: '40 2 * * *'
+  workflow_dispatch:
+    inputs:
+      tape:
+        description: 'Also record the 24 blocks (otherwise only on Mondays)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: comma-record
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Read OONI
+        id: read
+        env:
+          WITH_TAPE: ${{ inputs.tape }}
+        run: |
+          args=""
+          if [ "$WITH_TAPE" = "true" ] || [ "$(date -u +%u)" = "1" ]; then args="--tape"; fi
+          set +e
+          npx tsx scripts/comma/record.ts $args
+          code=$?
+          set -e
+          if [ "$code" = "3" ]; then
+            echo "::notice::OONI refused this address tonight. Nothing was written; the committed counts and recording stay."
+            echo "wrote=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$code" != "0" ]; then exit "$code"; fi
+          echo "wrote=true" >> "$GITHUB_OUTPUT"
+      - name: The files still read as a day of counts and a recording
+        if: steps.read.outputs.wrote == 'true'
+        run: npx vitest run src/lib/comma
+      - name: Commit
+        if: steps.read.outputs.wrote == 'true'
+        run: |
+          # Comma belongs to the counter-measurement line and commits as its instruments do
+          git config user.name "Gegenmessung"
+          git config user.email "gegenmessung@frankbueltge.de"
+          git add src/data/comma/day.json public/comma/tape
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          day=$(node -e "console.log(JSON.parse(require('fs').readFileSync('src/data/comma/day.json','utf8')).day)")
+          if git diff --cached --name-only | grep -q '^public/comma/tape/'; then what="counts and recording"; else what="counts"; fi
+          git commit -m "comma: $what of $day"
+          # other nightly commits land on main at the same hours: rebase and try again
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep $((i * 7))
+          done
+          echo "Push failed after five tries" >&2
+          exit 1

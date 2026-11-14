@@ -11,11 +11,14 @@
 //    src/lib/comma/rule.ts) and by hour and kind of page (how loud the six tones are). Two questions.
 // 2. The recording. One block of five minutes from each hour of that day (ten past to a quarter past), every
 //    deviation in it, with the kind of page already worked out from Citizen Lab's test lists. The page plays it,
-//    labelled as a recording, whenever OONI will not answer the site. 24 questions.
+//    labelled as a recording, whenever OONI will not answer the site: the 24 blocks in turn, a day in two hours.
+//    24 questions.
 //
 // OONI charges every address that asks (src/lib/comma/relay.ts): the counts cost about 40 of an address's 4,000
 // daily units, the recording about 400. The questions are spaced out, say who asks, and the run stops at the first
-// refusal without writing anything, so a half-read day never replaces a whole one. Both files are OONI's data under
+// refusal without writing anything, so a half-read day never replaces a whole one. A refusal by OONI's quota ends
+// the run with exit code 3, which the workflow (.github/workflows/comma-record.yml) reads as "not tonight", not as
+// a failure; anything else that goes wrong ends it with 1. Both files are OONI's data under
 // OONI's licence, CC BY-NC-SA 4.0, and Citizen Lab's categories under the same; LICENSE.md names the exception.
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -40,6 +43,9 @@ const value = (name: string): string | null => {
   return i >= 0 ? (args[i + 1] ?? null) : null
 }
 
+/** OONI's quota said no (HTTP 429): nothing is wrong, and nothing is written. */
+class Refused extends Error {}
+
 const sleep = (ms: number): Promise<void> => new Promise((done) => setTimeout(done, ms))
 let asked = 0
 let quota = ''
@@ -50,6 +56,7 @@ async function ask(url: string): Promise<unknown> {
   asked += 1
   const response = await fetch(url, { headers: { accept: 'application/json', 'user-agent': USER_AGENT } })
   quota = response.headers.get('x-ratelimit-remaining') ?? quota
+  if (response.status === 429) throw new Refused(`OONI refused question ${asked} (its quota for this address is spent); nothing was written`)
   if (!response.ok) throw new Error(`OONI answered ${response.status} to question ${asked}; nothing was written`)
   return response.json()
 }
@@ -131,5 +138,5 @@ async function main(): Promise<void> {
 
 main().catch((error: unknown) => {
   console.error(error instanceof Error ? error.message : error)
-  process.exit(1)
+  process.exit(error instanceof Refused ? 3 : 1)
 })
