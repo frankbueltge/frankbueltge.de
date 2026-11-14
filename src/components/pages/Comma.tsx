@@ -42,10 +42,7 @@ export interface CommaWording {
     waiting: string
     /** {from} and {to} are replaced with the block playing, HH:MM UTC */
     live: string
-    /** why a recording plays: OONI refused (429) or did not answer */
-    refused: string
-    unanswered: string
-    /** {day}, {from}, {to}: the recorded block; {seconds}: how soon the piece asks OONI again */
+    /** {day}, {from}, {to}: the recorded block that is playing; why it plays is said in the legend */
     tape: string
     failed: string
     noRule: string
@@ -182,7 +179,6 @@ export default function Comma({ wording, id }: CommaProps) {
   const [turns, setTurns] = React.useState<Turn[]>([])
   const [info, setInfo] = React.useState<Info | null>(null)
   const [levels, setLevels] = React.useState<number[]>(SILENT)
-  const [wait, setWait] = React.useState<{ refused: boolean; seconds: number }>({ refused: false, seconds: retrySeconds(1) })
   const [width, setWidth] = React.useState(1000)
   const figure = React.useRef<HTMLElement | null>(null)
 
@@ -297,12 +293,10 @@ export default function Comma({ wording, id }: CommaProps) {
       state.inARow += 1
       const seconds = retrySeconds(state.inARow)
       again(seconds)
-      if (alive.current) setWait({ refused: reason === 'rate-limit', seconds })
     } catch {
       state.inARow += 1
       const seconds = retrySeconds(state.inARow)
       again(seconds)
-      if (alive.current) setWait({ refused: false, seconds })
     } finally {
       state.busy = false
     }
@@ -583,11 +577,10 @@ export default function Comma({ wording, id }: CommaProps) {
         : sounding === 'live' && info.source === 'live'
           ? wording.status.live.replace('{from}', hhmm(info.from)).replace('{to}', hhmm(info.from + BLOCK_MS))
           : info.source === 'tape'
-            ? `${wait.refused ? wording.status.refused : wording.status.unanswered} ${wording.status.tape
+            ? wording.status.tape
                 .replace('{day}', dayWords(new Date(info.from).toISOString()))
                 .replace('{from}', hhmm(info.from))
                 .replace('{to}', hhmm(info.from + BLOCK_MS))
-                .replace('{seconds}', String(wait.seconds))}`
             : wording.status.waiting
   const note = RULE ? '' : wording.status.noRule
   const bandFrom = Math.max(l.left, xOf(l, now, started.current))
