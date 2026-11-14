@@ -7,8 +7,8 @@
 // who built on, answered or noted whom — as slurs between the staves. A cycle is the stretch
 // between two heavy barlines, numbered like a rehearsal mark.
 //
-// This module is the whole geometry of that drawing and of each practice's own PART (its stave
-// at full size, the siblings as ghost staves). It is pure: it reads no file and no clock, takes
+// This module is the whole geometry of that drawing and of each practice's own PART (its
+// sessions between what it took from its siblings and what they took from it). It is pure: it reads no file and no clock, takes
 // plain records, and returns numbers — so every position on the page can be re-derived in a test
 // from the same committed records, and the component that renders it decides nothing.
 //
@@ -384,25 +384,41 @@ export function buildScore(input: ScoreInput): ScoreModel {
 }
 
 // ── a practice's own part (/field, /atelier, /studio) ────────────────────────────────────────
+//
+// REDRAWN ON 2026-11-14. The part of 2026-10-11 set the practice's stave between two ghost
+// staves and drew a slur for every relation that reached it. That read well for a few dozen
+// relations and stopped reading at several hundred: the slurs of one night lay on top of each
+// other and of the next night's. The same records are now drawn as three lanes on the same day
+// ruler: what the practice TOOK from its siblings stacks up from a floor, one cell per relation;
+// its own sessions stand in the middle, one dot each; what its siblings took FROM IT hangs down
+// from a ceiling. A cell wears the sibling's hue, and its fill says the kind of relation. No
+// cell covers another, so every relation can still be pointed at and read.
 
-/** The handoff's measures for a part, in the units of a 1312 × 300 drawing. */
+/** The measures of a part, in the units of a 1312 × 318 drawing. */
 export const PART = {
   width: 1312,
-  height: 300,
+  height: 318,
   left: 150,
   plot: 1140,
-  /** the stave above, the practice's own, the stave below */
-  tops: [44, 112, 210] as const,
-  ownStep: 9,
-  ghostStep: 4,
-  barTop: 36,
-  barBottom: 248,
+  barTop: 34,
+  barBottom: 290,
+  /** the line the taken cells stand on, and how high the fullest night may reach above it */
+  tookFloor: 122,
+  /** the line the given cells hang from */
+  gaveCeil: 202,
+  reach: 84,
+  /** the tallest a cell's row is; a fuller night than the lane holds makes every row lower */
+  maxStep: 5.6,
+  /** the lowest session dot of a night, and the distance to the next one above it */
+  sessionFloor: 184,
+  sessionStep: 8,
+  /** the baseline of the week ruler's labels */
+  tickY: 308,
 } as const
 
 /**
- * Which sibling stands above a practice's own stave and which below. The handoff draws the
- * three pages by hand and they do not follow one rule — written down here as drawn, so the
- * pages match their designs rather than a rule the designs do not have.
+ * The order the two siblings are named in on a practice's page, and stacked in within a night.
+ * Kept from the staves of 2026-10-11, where it said who stood above and who below.
  */
 export const PART_SIBLINGS: Record<PracticeId, readonly [PracticeId, PracticeId]> = {
   field: ['studio', 'atelier'],
@@ -410,33 +426,33 @@ export const PART_SIBLINGS: Record<PracticeId, readonly [PracticeId, PracticeId]
   studio: ['field', 'atelier'],
 }
 
+const PART_KINDS: readonly RelayKind[] = ['built_on', 'answered', 'noted']
+
 export interface PartNote {
-  practice: PracticeId
-  /** the practice's own stave, or a sibling's ghost */
-  own: boolean
   date: string
   x: number
   y: number
   filled: boolean
   title: string
   href: string
-  /** the piece that night left, for a note of the practice's own */
+  /** the piece that session left, or null */
   piece: string | null
 }
 
-export interface PartSlur {
+export interface PartCrossing {
   id: string
   date: string
   kind: RelayKind
   giver: PracticeId
   taker: PracticeId
-  /** the sibling at the other end */
+  /** the sibling at the other end — the cell wears its hue */
   other: PracticeId
-  /** this practice took something (the slur wears the sibling's colour) or gave it (its own) */
+  /** this practice took something (the cell stands above its sessions) or gave it (below) */
   took: boolean
-  d: string
   x: number
   y: number
+  width: number
+  height: number
   what: string
 }
 
@@ -445,82 +461,74 @@ export interface PartModel {
   height: number
   axis: DayAxis
   me: PracticeId
-  staves: { practice: PracticeId; own: boolean; top: number; lines: number[] }[]
   barlines: number[]
-  /** rehearsal numbers, one where each cycle opens */
+  /** cycle numbers, one where each cycle opens */
   marks: { cycle: number; x: number }[]
   ticks: { x: number; date: string }[]
   notes: PartNote[]
-  slurs: PartSlur[]
+  crossings: PartCrossing[]
+  /** per sibling, in the order of PART_SIBLINGS: how often this practice took from it and gave to it */
+  siblings: { practice: PracticeId; took: number; gave: number }[]
+  /** the fullest stack of one night in one direction — what the lanes' height stands for */
+  peak: number
 }
 
 export function buildPart(input: ScoreInput, me: PracticeId): PartModel {
   const axis = dayAxis(input.since, input.until, PART.left, PART.plot)
   const cycles = [...input.cycles].sort((a, b) => a.n - b.n)
-  const [above, below] = PART_SIBLINGS[me]
-  const top: Record<PracticeId, number> = { field: 0, atelier: 0, studio: 0 }
-  top[above] = PART.tops[0]
-  top[me] = PART.tops[1]
-  top[below] = PART.tops[2]
+  const order = PART_SIBLINGS[me]
 
   const left = piecesOfSessions(input.sessions, input.pieces, me, input.since, input.until)
   const notes: PartNote[] = []
   for (const { session, index } of stacked(input.sessions, me, input.since, input.until)) {
     const piece = left.get(session) ?? null
     notes.push({
-      practice: me,
-      own: true,
       date: session.date,
       x: r1(axis.x(session.date)),
-      y: r1(top[me] + 36 - index * 7),
+      y: r1(PART.sessionFloor - index * PART.sessionStep),
       filled: piece !== null,
       title: session.title,
       href: session.href,
       piece,
     })
   }
-  for (const sibling of [above, below]) {
-    for (const { session, index } of stacked(input.sessions, sibling, input.since, input.until)) {
-      notes.push({
-        practice: sibling,
-        own: false,
-        date: session.date,
-        x: r1(axis.x(session.date)),
-        y: r1(top[sibling] + 14 - index * 3),
-        filled: false,
-        title: session.title,
-        href: session.href,
-        piece: null,
-      })
-    }
-  }
 
-  const perDay = new Map<string, number>()
-  const slurs: PartSlur[] = []
-  for (const r of input.relations) {
-    if (r.giver !== me && r.taker !== me) continue
-    if (r.date < input.since || r.date > input.until) continue
-    const k = (perDay.get(r.date) ?? 0) + 1
-    perDay.set(r.date, k)
-    const other = r.giver === me ? r.taker : r.giver
-    const x = axis.x(r.date) + ((k % 5) - 2) * 2.6
-    const y1 = top[other] + 8
-    const y2 = top[me] + 18
-    const bulge = (8 + (k % 3) * 4) * (k % 2 ? 1 : -1)
-    slurs.push({
-      id: r.id,
-      date: r.date,
-      kind: r.kind,
-      giver: r.giver,
-      taker: r.taker,
-      other,
-      took: r.taker === me,
-      d: `M${r1(x)} ${y1}Q${r1(x + bulge)} ${(y1 + y2) / 2} ${r1(x)} ${y2}`,
-      x: r1(x),
-      y: Math.min(y1, y2),
-      what: r.what,
+  // One stack per night and direction, sorted so that a sibling's cells lie together and the
+  // weightiest kind lies nearest the sessions.
+  const mine = input.relations.filter((r) => (r.giver === me || r.taker === me) && r.date >= input.since && r.date <= input.until)
+  const otherOf = (r: ScoreRelation) => (r.giver === me ? r.taker : r.giver)
+  const stacks = new Map<string, ScoreRelation[]>()
+  for (const r of mine) {
+    const key = `${r.date}|${r.taker === me ? 'took' : 'gave'}`
+    stacks.set(key, [...(stacks.get(key) ?? []), r])
+  }
+  const peak = Math.max(0, ...[...stacks.values()].map((s) => s.length))
+  const step = Math.min(PART.maxStep, PART.reach / Math.max(1, peak))
+  const width = r1(Math.max(2, axis.unit - 3))
+  const crossings: PartCrossing[] = []
+  for (const stack of stacks.values()) {
+    const sorted = [...stack].sort(
+      (a, b) => order.indexOf(otherOf(a)) - order.indexOf(otherOf(b)) || PART_KINDS.indexOf(a.kind) - PART_KINDS.indexOf(b.kind),
+    )
+    sorted.forEach((r, i) => {
+      const took = r.taker === me
+      crossings.push({
+        id: r.id,
+        date: r.date,
+        kind: r.kind,
+        giver: r.giver,
+        taker: r.taker,
+        other: otherOf(r),
+        took,
+        x: r1(axis.x(r.date) - width / 2),
+        y: r1(took ? PART.tookFloor - (i + 1) * step + 1 : PART.gaveCeil + i * step),
+        width,
+        height: r1(step - 1),
+        what: r.what,
+      })
     })
   }
+  crossings.sort((a, b) => a.date.localeCompare(b.date) || Number(b.took) - Number(a.took) || a.y - b.y)
 
   const shown = cycles.filter((c) => cycleEnd(c, input.until) > input.since && c.opened <= input.until)
   const startOf = (c: ScoreCycle) => r1(axis.x(c.opened < input.since ? input.since : c.opened, 0))
@@ -529,16 +537,17 @@ export function buildPart(input: ScoreInput, me: PracticeId): PartModel {
     height: PART.height,
     axis,
     me,
-    staves: [above, me, below].map((practice) => {
-      const own = practice === me
-      const step = own ? PART.ownStep : PART.ghostStep
-      return { practice, own, top: top[practice], lines: Array.from({ length: STAVE_LINES }, (_, i) => top[practice] + i * step) }
-    }),
     barlines: [...shown.map(startOf), r1(axis.x(input.until, 1))],
     marks: shown.map((c) => ({ cycle: c.n, x: startOf(c) })),
     ticks: weekTicks(axis).map((t) => ({ ...t, x: r1(t.x) })),
     notes,
-    slurs,
+    crossings,
+    siblings: order.map((practice) => ({
+      practice,
+      took: mine.filter((r) => r.taker === me && r.giver === practice).length,
+      gave: mine.filter((r) => r.giver === me && r.taker === practice).length,
+    })),
+    peak,
   }
 }
 

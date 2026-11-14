@@ -239,18 +239,8 @@ describe('the score', () => {
 describe('a practice’s part', () => {
   const part = buildPart(input, 'field')
 
-  it('sets the practice’s own stave between its siblings, as the pages were drawn', () => {
-    expect(part.staves.map((s) => [s.practice, s.own])).toEqual([
-      [PART_SIBLINGS.field[0], false],
-      ['field', true],
-      [PART_SIBLINGS.field[1], false],
-    ])
-    expect(part.staves[1].lines[1] - part.staves[1].lines[0]).toBe(PART.ownStep)
-    expect(part.staves[0].lines[1] - part.staves[0].lines[0]).toBe(PART.ghostStep)
-  })
-
   it('names the piece a night left on the practice’s own note', () => {
-    const own = part.notes.filter((n) => n.own)
+    const own = part.notes
     expect(own).toHaveLength(3)
     expect(own.find((n) => n.filled)!.piece).toBe('An artifact')
     expect(own.filter((n) => !n.filled).every((n) => n.piece === null)).toBe(true)
@@ -267,23 +257,57 @@ describe('a practice’s part', () => {
         pieces: [],
       },
       'field',
-    ).notes.filter((n) => n.own)
+    ).notes
     expect(own.map((n) => [n.title, n.piece])).toEqual([
       ['Session 2', null],
       ['Session 3', 'An artifact'],
     ])
   })
 
-  it('draws the siblings’ sessions as hollow ghosts', () => {
-    const ghosts = part.notes.filter((n) => !n.own)
-    expect(ghosts.map((n) => n.practice)).toEqual(['studio'])
-    expect(ghosts.every((n) => !n.filled)).toBe(true)
+  it('keeps only the relations that reach this practice, and says which way each ran', () => {
+    expect(part.crossings.map((c) => c.id).sort()).toEqual(['a', 'b'])
+    expect(part.crossings.find((c) => c.id === 'a')).toMatchObject({ took: false, other: 'studio' })
+    expect(part.crossings.find((c) => c.id === 'b')).toMatchObject({ took: true, other: 'atelier' })
   })
 
-  it('keeps only the slurs that reach this practice, and says which way each ran', () => {
-    expect(part.slurs.map((s) => s.id)).toEqual(['a', 'b'])
-    expect(part.slurs.find((s) => s.id === 'a')).toMatchObject({ took: false, other: 'studio' })
-    expect(part.slurs.find((s) => s.id === 'b')).toMatchObject({ took: true, other: 'atelier' })
+  it('stands what it took above its sessions and hangs what it gave below them', () => {
+    for (const c of part.crossings) {
+      if (c.took) expect(c.y + c.height).toBeLessThanOrEqual(PART.tookFloor)
+      else expect(c.y).toBeGreaterThanOrEqual(PART.gaveCeil)
+    }
+    for (const n of part.notes) {
+      expect(n.y).toBeGreaterThan(PART.tookFloor)
+      expect(n.y).toBeLessThan(PART.gaveCeil)
+    }
+  })
+
+  it('gives every relation a cell of its own: no two overlap, however full the night', () => {
+    const kinds = ['built_on', 'answered', 'noted'] as const
+    const full = buildPart(
+      {
+        ...input,
+        relations: Array.from({ length: 40 }, (_, i) =>
+          rel({ id: `r${i}`, date: '2026-09-05', giver: i % 2 ? 'atelier' : 'studio', taker: 'field', kind: kinds[i % 3] }),
+        ),
+      },
+      'field',
+    )
+    expect(full.peak).toBe(40)
+    const cells = [...full.crossings].sort((a, b) => a.y - b.y)
+    expect(cells[0].y).toBeGreaterThanOrEqual(PART.tookFloor - PART.reach)
+    for (let i = 1; i < cells.length; i++) expect(cells[i].y).toBeGreaterThanOrEqual(cells[i - 1].y + cells[i - 1].height)
+    // a sibling's cells lie together, the first-named sibling nearest the sessions, and within
+    // a sibling the weightiest kind lies nearest
+    const up = [...cells].reverse()
+    expect(up.map((c) => c.other).join('').replace(/(studio)+/, 'S').replace(/(atelier)+/, 'A')).toBe('SA')
+    expect(up.filter((c) => c.other === 'studio').map((c) => c.kind)).toEqual(
+      [...up.filter((c) => c.other === 'studio').map((c) => c.kind)].sort((a, b) => kinds.indexOf(a) - kinds.indexOf(b)),
+    )
+  })
+
+  it('counts per sibling what was taken and given', () => {
+    expect(part.siblings.map((s) => s.practice)).toEqual([...PART_SIBLINGS.field])
+    expect(part.siblings.reduce((n, s) => n + s.took + s.gave, 0)).toBe(part.crossings.length)
   })
 
   it('numbers every cycle where it opens', () => {

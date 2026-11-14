@@ -199,13 +199,22 @@ const hasFigure = Astro.slots.has('figure')
             <h2>{T.part.title(me.name)}</h2>
             <span class="sc-head-sub">{T.part.sub}</span>
           </div>
-          <span class="sc-small sc-head-aside">{T.part.meta({ sessions: sessions.length, pieces: pieces.length, many: noun.many, crossings: part.slurs.length })}</span>
+          <span class="sc-small sc-head-aside">{T.part.meta({ sessions: sessions.length, pieces: pieces.length, many: noun.many, crossings: part.crossings.length })}</span>
         </div>
         <PartFigure model={part} />
         <p class="sc-part-legend">
-          <span>{T.part.legend.filled(noun.one)}</span>
-          <span>{T.part.legend.hollow}</span>
-          <span>{T.part.legend.slurs}</span>
+          <span><i class="sc-pkey sc-pkey--dot is-filled"></i>{T.part.legend.filled(noun.one)}</span>
+          <span><i class="sc-pkey sc-pkey--dot"></i>{T.part.legend.hollow}</span>
+          <span>
+            {T.part.legend.cell}
+            {part.siblings.map((sib) => (
+              <span class={`sc-pkey-sibling pp-voice-${sib.practice}`}><i class="sc-pkey sc-pkey--cell sc-pkey--voice"></i>{P[sib.practice].name}</span>
+            ))}
+          </span>
+          {(['built_on', 'answered', 'noted'] as const).map((k) => (
+            <span><i class={`sc-pkey sc-pkey--cell k-${k}`}></i>{T.part.legend.kinds[k]}</span>
+          ))}
+          <span>{T.part.legend.lanes}</span>
         </p>
       </section>
 

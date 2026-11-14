@@ -115,8 +115,8 @@ describe('the sentences take their numbers as arguments', () => {
   })
 
   it('takes the article a practice’s noun needs', () => {
-    expect(W.practice.part.legend.filled('artifact')).toBe('● a night that left an artifact')
-    expect(W.practice.part.legend.filled('work')).toBe('● a night that left a work')
+    expect(W.practice.part.legend.filled('artifact')).toBe('a session that left an artifact')
+    expect(W.practice.part.legend.filled('work')).toBe('a session that left a work')
   })
 
   it('dates the relay’s record from its first night and says when the relay itself began', () => {
