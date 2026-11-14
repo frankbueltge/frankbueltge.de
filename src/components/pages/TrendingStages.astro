@@ -1,0 +1,33 @@
+---
+/** The stages of the watchlist as links.
+ *
+ *  Each pill is an address on the hub (/trending/topics/#rising), where the terms of that stage
+ *  stand under their own head. Until 2026-11-14 the same pills were plain counts in a badge that
+ *  lit up under the pointer and led nowhere, which read as a menu that did not answer.
+ *
+ *  Plain anchors, no script: a stage is reachable before any JavaScript runs, and by a reader
+ *  that never runs any. The pill is a little taller than the badge it borrows its dress from, so
+ *  a thumb can hit it.
+ */
+import { badgeVariants } from '@/components/ui/badge'
+import { cn } from '@/lib/ui/cn'
+import type { StatusTallyItem } from '@/lib/trending/terms-view'
+
+interface Props {
+  items: StatusTallyItem[]
+}
+const { items } = Astro.props
+---
+
+{
+  items.map((i) => (
+    <a
+      href={i.href}
+      title={i.meaning}
+      aria-label={`${i.label}: ${i.n} ${i.n === 1 ? 'term' : 'terms'}. ${i.meaning}`}
+      class={cn(badgeVariants({ variant: 'outline' }), 'tr-stage-pill py-1')}
+    >
+      {i.label} <span class="ml-1 tabular-nums">{i.n}</span>
+    </a>
+  ))
+}
