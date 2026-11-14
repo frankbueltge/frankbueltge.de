@@ -17,9 +17,10 @@ const SUSPICION = 0.3
 const BELL = 0.32
 const MASTER = 0.9
 const FADE_IN = 1.2
-/** The two deeper tones (165 and 110 Hz) are lifted against the pages' tones: at the same level the ear hears a
- *  low tone as quieter. Set by reckoning, not yet by ear. */
-const DEEP_GAIN = 1.5
+/** The two deeper tones (165 and 110 Hz) are lifted a little against the pages' tones: at the same level the ear
+ *  hears a low tone as quieter. Set by reckoning, not yet by ear: with 1.5 the sum peaked at 0.9 of full scale in
+ *  a first listening on 2026-11-14, so it was taken back. */
+const DEEP_GAIN = 1.3
 /** A tone longer than this is a deeper voice's: it swells and fades more slowly. */
 const SLOW_FROM_SECONDS = 4
 
