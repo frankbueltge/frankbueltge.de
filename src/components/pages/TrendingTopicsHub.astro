@@ -312,9 +312,12 @@ const tableProvenance =
               <li class="border-b border-line pb-2">
                 <div class="flex flex-wrap items-baseline justify-between gap-x-4">
                   <span class="font-semibold">{c.ngram}</span>
-                  <span class="whitespace-nowrap font-mono text-mono-xs text-fg-faint">
-                    <span class="tabular-nums">{c.docsRecent}</span> recent documents
-                    {c.ratio && <span class="tabular-nums">{` · ${c.ratio}`}</span>}
+                  {/* The count and the ratio stay whole; the list of platforms may break. With
+                      thirty platforms in the corpus an unbreakable line ran to 1,074 px on a
+                      390 px phone (2026-11-14). */}
+                  <span class="min-w-0 font-mono text-mono-xs text-fg-faint">
+                    <span class="whitespace-nowrap"><span class="tabular-nums">{c.docsRecent}</span> recent documents</span>
+                    {c.ratio && <span class="whitespace-nowrap tabular-nums">{` · ${c.ratio}`}</span>}
                     {' · '}{c.platforms}
                   </span>
                 </div>
@@ -353,7 +356,7 @@ const tableProvenance =
         {file.sources.map((s) => (
           <li class="flex items-baseline justify-between gap-x-3 border-b border-line pb-1">
             <a href={s.url} target="_blank" rel="noopener nofollow" class="min-w-0 underline decoration-line underline-offset-2 transition-colors hover:text-fg">{termPlatformLabel(s.id)}</a>
-            <span class="shrink-0 text-fg-faint">{s.status === 'ok' ? 'ok' : `${s.status}${s.note ? ` — ${s.note}` : ''}`}</span>
+            <span class="min-w-0 text-right text-fg-faint [overflow-wrap:anywhere]">{s.status === 'ok' ? 'ok' : `${s.status}${s.note ? ` — ${s.note}` : ''}`}</span>
           </li>
         ))}
       </ul>
