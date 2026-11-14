@@ -48,6 +48,7 @@ SOLOIST = {'nature': ('FluteSusVib', 700), 'economy': ('BassoonSus', 160), 'clim
            'displacement': ('ViolaEnsSusVib', 330), 'information': ('PiccoloSus', 1300), 'inequality': ('TubaSus', 90),
            'poverty': ('ContrabassSusVB', 80)}
 PAN = {'violins': -0.45, 'violas': 0.15, 'cellos': 0.35, 'basses': 0.5, 'piano': -0.2, 'bells': 0.0}
+LAST_SPEECH: list = []   # the sentences of the last render() as spoken, one per day, for the press to write beside the album
 
 
 def pan(x: np.ndarray, p: float) -> np.ndarray:
@@ -300,11 +301,21 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
     voice = pb.Pedalboard([pb.HighpassFilter(90), pb.Reverb(room_size=0.3, wet_level=0.08, dry_level=1.0)])(
         voice.astype(np.float32), SR).astype(np.float64)
     meter = pyloudnorm.Meter(SR)
-    def lev(x, target):
+    gains = {}
+    def lev(x, target, name):
         L = meter.integrated_loudness(x.T)
+        gains[name] = 10 ** ((target - L) / 20) if np.isfinite(L) else 1.0
         return x * 10 ** ((target - L) / 20) if np.isfinite(L) else x
-    mix = lev(ens, -17.0) + lev(voice, -19.0) + lev(murmur, -31.0)
+    mix = lev(ens, -17.0, 'ens') + lev(voice, -19.0, 'voice') + lev(murmur, -31.0, 'murmur')
+    # for the page's own performance of the score (src/components/ill-tempered-week/orchestra.ts), recorded since
+    # 2026-11-14: the factor each group is multiplied by on its way into this pressing (its own levelling times the
+    # album's), so a browser that plays the same notes can balance them the same way; and the sentences as spoken
+    L_mix = meter.integrated_loudness(mix.T)
+    master = 10 ** ((-16.0 - L_mix) / 20) if np.isfinite(L_mix) else 1.0
+    global LAST_SPEECH
+    LAST_SPEECH = [m['speech'] for m in mel]
     return base.level(mix, -16.0), {'week': ledger.WEEK, 'tuning': 'just, harmonics 8-15 of A1 = 55 Hz', 'pulse_s': PULSE,
+                                 'mix': {name: round(float(g * master), 5) for name, g in gains.items()},
                                  'day_bars': DAY_BARS, 'days_so_far': len(week), 'newest_day': week[-1]['day'],
                                  'round': ledger.ROUND, 'hindsight': hindsight, 'silenced_after_their_day': silenced,
                                  'tutti_from_s': round(tutti, 2), 'cut_s': round(end_music, 2), 'coda_s': round(coda_at, 2),

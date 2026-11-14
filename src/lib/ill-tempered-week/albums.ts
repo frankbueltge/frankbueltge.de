@@ -1,7 +1,7 @@
 // src/lib/ill-tempered-week/albums.ts — the albums of the ill-tempered week as the site reads them (2026-11-09,
 // docs/design/2026-11-08-common-time-method.md). Build time only: it reads src/data/ill-tempered-week/*.json,
 // which scripts/ill-tempered-week/press.py writes beside the audio in public/ill-tempered-week/<week>/.
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 export const ALBUMS_DIR = 'src/data/ill-tempered-week'
@@ -55,6 +55,9 @@ export interface Overlooked extends Rendered {
   cut_s: number
   /** recorded from the pressing of 2026-11-14 on: when the coda's sentence begins */
   coda_s?: number
+  /** recorded from the pressing of 2026-11-15 on (the page's own performance, perform-overlooked.ts): the factor
+   *  each group was multiplied by on its way into the pressing */
+  mix?: { ens: number; voice: number; murmur: number }
   days: OverlookedDay[]
 }
 
@@ -126,14 +129,49 @@ export interface Album {
   library: string
   voices: string
   receipts: Record<string, string>
+  /** set by readAlbums when a file of values derived after the fact stands beside the record (derived/<week>.json,
+   *  written by scripts/ill-tempered-week/derive.py): the day it was derived, and whether the renderer, run again,
+   *  gave the record's own audio */
+  derived?: { on: string; sameAudio: boolean }
 }
 
-/** Every album on file, oldest first. */
+/** Values a record does not hold, derived after the fact by running the renderer again on the days it names. */
+interface Derived {
+  week: string
+  derived: string
+  same_audio: boolean
+  overlooked?: Partial<Pick<Overlooked, 'coda_s' | 'mix'>> & {
+    days: ({ day: string } & Partial<Pick<OverlookedDay, 'speech_s' | 'echo' | 'entries_s'>>)[]
+  }
+}
+
+/** An album with what was derived for it filled in where its record is silent. The record's own values always win:
+ *  a derived file never changes what a pressing wrote, it only adds what the pressing did not keep. */
+export function withDerived(album: Album, derived: Derived | null): Album {
+  if (!derived?.overlooked) return album
+  const { days: extra, ...piece } = derived.overlooked
+  const o = album.pieces.overlooked
+  const days = o.days.map((day) => {
+    const { day: _day, ...found } = extra.find((x) => x.day === day.day) ?? { day: day.day }
+    return { ...found, ...day }
+  })
+  return {
+    ...album,
+    derived: { on: derived.derived, sameAudio: derived.same_audio },
+    pieces: { ...album.pieces, overlooked: { ...piece, ...o, days } },
+  }
+}
+
+/** Every album on file, oldest first, each with what was derived for it where its record is silent. */
 export function readAlbums(dir = ALBUMS_DIR): Album[] {
   return readdirSync(dir)
     .filter((f) => /^\d{4}-W\d{2}\.json$/.test(f))
     .sort()
-    .map((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')) as Album)
+    .map((f) => {
+      const album = JSON.parse(readFileSync(join(dir, f), 'utf8')) as Album
+      const file = join(dir, 'derived', f)
+      return withDerived(album, existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')) as Derived) : null)
+    })
 }
 
 /** The ISO week's number, which is the album's: 2026-W45 is Contrapunctus 45. */
