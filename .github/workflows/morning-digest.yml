@@ -103,11 +103,12 @@ jobs:
             if [ -n "$LINES" ]; then BODY+="$LINES"$'\n'; fi
             if [ -n "$PRS" ]; then BODY+="$PRS"$'\n'; fi
             if [ -n "$LINES" ] || [ -n "$PRS" ]; then continue; fi
-            # Atelier arbeitet seit Protokoll v4 projektbasiert (v5 seit 2026-07-24: Arbeitslinien) —
-            # eine Nacht ohne Landung ist normal, kein Alarm. Sein Sitzungsmarker heißt "Project work",
-            # deshalb steht der oben im Filter — sonst meldet der Digest Stille, wo gearbeitet wurde.
-            if [ "$REPO" = "ulysses" ]; then BODY+="- **$REPO**: keine Landung (projektbasierte Praxis, v5 — kein nächtlicher Takt geschuldet)"$'\n'
-            else BODY+="- **$REPO**: keine Session gelandet"$'\n'; fi
+            # The Atelier's session marker is "Project work", which is why it stands in the filter
+            # above. Until 2026-11-14 a night of the Atelier without a landing was printed as normal
+            # ("projektbasierte Praxis, v5"). That was true under protocols v4 to v6; since research
+            # ecology v3 (v7, 2026-08-30) the Atelier runs a session every night like its siblings,
+            # and a night that did not land is the same news for all three.
+            BODY+="- **$REPO**: keine Session gelandet"$'\n'
           done
 
           # 1b) Der Zyklus-Stand (2026-09-03). Der Digest zählte Sessions und meldete rote
