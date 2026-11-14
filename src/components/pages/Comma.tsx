@@ -4,8 +4,9 @@
 // The piece is a broadcast on the wall clock, ten minutes behind the world, in blocks of five minutes
 // (src/lib/comma/clock.ts). The site hands over the block that is playing and, in its last minute, the next one
 // (functions/api/comma/); each holds the tests that deviated. When the site cannot read a block, the house's own
-// recording of the same hour of an earlier day plays in its place (public/comma/tape/), labelled, and the page keeps
-// asking; a block that arrives late takes over where the recording stands. This island sorts a block's web tests
+// recording of an earlier day plays in its place (public/comma/tape/), labelled, and the page keeps
+// asking; a block that arrives late takes over where the recording stands. The recording holds one block from
+// each hour of a day and plays them in turn, a day in two hours. This island sorts a block's web tests
 // into the six kinds of page with Citizen Lab's lists, applies the rules of src/lib/comma/rule.ts with the committed
 // counts of a whole day (src/data/comma/day.json), and puts the next seconds on the audio clock, a quarter of a
 // minute ahead, so a hidden tab keeps playing. The score draws what has sounded, the newest on the right; the list
@@ -16,7 +17,7 @@ import * as React from 'react'
 
 import { CommaSound } from '@/components/comma/sound'
 import dayJson from '@/data/comma/day.json'
-import { decodeTape, deviationsOf, tapeFile, WEB_TEST, type Deviation, type Recording } from '@/lib/comma/block'
+import { decodeTape, deviationsOf, tapeFile, tapeHour, WEB_TEST, type Deviation, type Recording } from '@/lib/comma/block'
 import { BLOCK_MS, blockPlaying, DELAY_MS, hhmm, playedAt, readableFrom, retrySeconds, worldAt } from '@/lib/comma/clock'
 import { GROUPS, hueOf } from '@/lib/comma/groups'
 import { countryLink, entryLink } from '@/lib/comma/links'
@@ -235,9 +236,9 @@ export default function Comma({ wording, id }: CommaProps) {
     }
   }
 
-  /** The recording of the hour a slot lies in, read once per hour of the day. */
+  /** The recorded block that stands in for a slot: the recorded hours in turn, each read once. */
   const tapeOf = (slot: number): Promise<Recording | null> => {
-    const hour = new Date(slot).getUTCHours()
+    const hour = tapeHour(slot)
     let reading = tapes.current.get(hour)
     if (!reading) {
       reading = fetch(tapeFile(hour))

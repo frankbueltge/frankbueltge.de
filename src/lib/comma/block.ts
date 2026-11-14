@@ -3,7 +3,8 @@
 //
 // A block is what OONI answered for five minutes: every test that deviated, of every kind. The page plays a block
 // from OONI when the site could read it, and otherwise a block of the house's own recording
-// (public/comma/tape/, written by scripts/comma/record.ts), which holds the same facts in fewer bytes. Both arrive
+// (public/comma/tape/, written by scripts/comma/record.ts), which holds the same facts in fewer bytes: one block
+// from each hour of a day, played in turn. Both arrive
 // here as the same thing, a list of deviations, so nothing downstream can tell them apart except by the label the
 // page shows. What a recording may hold is narrower than what OONI sends: no tested address at all, except the
 // front page of a news outlet, the one kind of page this work names.
@@ -132,8 +133,16 @@ export function decodeTape(json: unknown): Recording | null {
   return { from, recorded: tape.recorded, deviations: deviations.sort((a, b) => a.s - b.s) }
 }
 
+/** The recording holds one block from each hour of a day. */
+export const TAPE_BLOCKS = 24
+
 /** The file a recording of the given hour of the day lives in. */
-export const tapeFile = (hour: number): string => `/comma/tape/${String(((Math.floor(hour) % 24) + 24) % 24).padStart(2, '0')}.json`
+export const tapeFile = (hour: number): string => `/comma/tape/${String(((Math.floor(hour) % TAPE_BLOCKS) + TAPE_BLOCKS) % TAPE_BLOCKS).padStart(2, '0')}.json`
+
+/** Which recorded hour stands in for a slot of the broadcast: one after the other, so the recording plays as a day
+ *  in two hours and repeats only then. (Until 2026-11-14 a slot took the recording of its own hour, which repeated
+ *  the same five minutes twelve times an hour whenever OONI stayed silent that long.) */
+export const tapeHour = (slot: number): number => ((Math.floor(slot / BLOCK_MS) % TAPE_BLOCKS) + TAPE_BLOCKS) % TAPE_BLOCKS
 
 /** The minute of each hour a recorded block begins at: ten past, clear of whatever runs on the hour. */
 export const TAPE_MINUTE = 10
