@@ -35,6 +35,27 @@ export function statusLabel(status: TermStatus): string {
   return STATUS_LABEL[status]
 }
 
+/** What a stage means, in one line and without a figure of its own: the thresholds sit in the
+ *  pipeline's rules file and on the method sheet, and a number repeated here would age. */
+const STATUS_MEANING: Record<TermStatus, string> = {
+  emerging: 'New and accelerating: rising, and first seen within the last month.',
+  rising: 'The last seven days run well ahead of the three weeks before them.',
+  established: 'Present through the month at a steady pace.',
+  fading: 'The last seven days run well behind the three weeks before them.',
+  quiet: 'Too few mentions to read a direction from.',
+}
+
+export function statusMeaning(status: TermStatus): string {
+  return STATUS_MEANING[status]
+}
+
+/** Where the terms of one stage stand on the hub. One address per stage, so a stage named
+ *  anywhere (the day ledger, a term page, the hub's own head) is a link and never a label that
+ *  only looks like one. */
+export function statusHref(status: TermStatus): string {
+  return `/trending/topics/#${status}`
+}
+
 /** The hub's sort order: what is new and moving stands first, what is dormant last. */
 export function statusRank(status: TermStatus): number {
   const i = TERM_STATUSES.indexOf(status)
@@ -480,11 +501,38 @@ export interface StatusTallyItem {
   status: TermStatus
   label: string
   n: number
+  /** The stage's place on the hub. */
+  href: string
+  /** What the stage means, in one line. */
+  meaning: string
 }
 
-/** The run's own count per status, in reading order, zeros left out. */
+/** The run's own count per status, in reading order, zeros left out. Each item carries the
+ *  address of its stage on the hub: until 2026-11-14 the counts stood in pills that lit up under
+ *  the pointer and led nowhere. */
 export function statusTally(file: TrendingTermsDay): StatusTallyItem[] {
-  return TERM_STATUSES.map((s) => ({ status: s, label: statusLabel(s), n: file.summary.by_status[s] ?? 0 })).filter((i) => i.n > 0)
+  return TERM_STATUSES.map((s) => ({
+    status: s,
+    label: statusLabel(s),
+    n: file.summary.by_status[s] ?? 0,
+    href: statusHref(s),
+    meaning: statusMeaning(s),
+  })).filter((i) => i.n > 0)
+}
+
+export interface StatusGroup extends StatusTallyItem {
+  links: TermLink[]
+}
+
+/** The watchlist in its stages: reading order, the hub's order inside a stage, a stage without
+ *  a term left out. The count is the group's own length, so a head never states a number its
+ *  list does not show. */
+export function statusGroups(file: TrendingTermsDay): StatusGroup[] {
+  const links = termLinks(file.terms)
+  return TERM_STATUSES.map((s) => {
+    const own = links.filter((l) => l.status === s)
+    return { status: s, label: statusLabel(s), n: own.length, href: statusHref(s), meaning: statusMeaning(s), links: own }
+  }).filter((g) => g.n > 0)
 }
 
 export interface SeriesBar {
