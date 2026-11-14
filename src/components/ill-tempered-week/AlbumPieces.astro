@@ -13,9 +13,13 @@ import { FORM as UN } from '@/lib/ill-tempered-week/score-unison'
 
 interface Props {
   album: Album
+  /** On the front page the players stand in the track list above (same ids), and each piece's section is folded
+   *  until its piece plays (the script in IllTemperedWeekPage.astro); without a script every section stays open. */
+  folded?: boolean
 }
 
-const { album } = Astro.props
+const { album, folded = false } = Astro.props
+const sectionClass = folded ? 'itw-piece itw-fold mb-16' : 'itw-piece mb-16'
 const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 const pct = (x: number): string => `${Math.round(100 * x)} %`
 const o = album.pieces.overlooked
@@ -30,14 +34,16 @@ const turnSaidLink = t ? saidLink(t) : null
 const hint = HINT
 ---
 
-<section id="overlooked" class="itw-piece mb-16" aria-label="Overlooked">
+<section id="overlooked" class={sectionClass} aria-label="Overlooked">
   <p class="kicker mb-1">I · chamber ensemble</p>
   <h2 class="itw-title">Overlooked</h2>
+  {!folded && (<>
   <audio id="itw-audio-overlooked" class="itw-player mt-3" controls preload="metadata" src={o.audio}></audio>
   <p class="mt-2 font-mono text-mono-sm text-fg-muted">
     {clock(o.seconds)} · {album.complete ? 'seven days' : `edition ${o.edition} of 7, to ${weekday(o.newest_day)}`} ·
     <a class={link} href={o.audio} download>download</a> · CC BY 4.0
   </p>
+  </>)}
   <p class="mt-5 max-w-3xl leading-relaxed">
     Each day, the headline that drew the least attention on its own platform, among all thirteen fields and from a field not heard
     before that week, is said once. The instrument of its field answers with the headline’s own speech melody, in the rhythm it was
@@ -58,13 +64,15 @@ const hint = HINT
 </section>
 
 {u && most && (
-  <section id="unison" class="itw-piece mb-16" aria-label="Unison">
+  <section id="unison" class={sectionClass} aria-label="Unison">
     <p class="kicker mb-1">II · string orchestra, brass, timpani</p>
     <h2 class="itw-title">Unison</h2>
+    {!folded && (<>
     <audio id="itw-audio-unison" class="itw-player mt-3" controls preload="metadata" src={u.audio}></audio>
     <p class="mt-2 font-mono text-mono-sm text-fg-muted">
       {clock(u.seconds)} · war and violence · <a class={link} href={u.audio} download>download</a> · CC BY 4.0
     </p>
+    </>)}
     <p class="mt-5 max-w-3xl leading-relaxed">
       Every signal that named war and violence is one string glissando: its section by the attention it drew on its platform, the
       most attended highest, its first pitch from its own headline as spoken, its entry at the hour it was published, where its
@@ -112,13 +120,15 @@ const hint = HINT
 )}
 
 {t && (
-  <section id="turn" class="itw-piece mb-16" aria-label="Turn">
+  <section id="turn" class={sectionClass} aria-label="Turn">
     <p class="kicker mb-1">III · electronics</p>
     <h2 class="itw-title">Turn</h2>
+    {!folded && (<>
     <audio id="itw-audio-turn" class="itw-player mt-3" controls preload="metadata" src={t.audio}></audio>
     <p class="mt-2 font-mono text-mono-sm text-fg-muted">
       {clock(t.seconds)} · AI and its harms · <a class={link} href={t.audio} download>download</a> · CC BY 4.0
     </p>
+    </>)}
     <p class="mt-5 max-w-3xl leading-relaxed">
       A rhythmicon of the platform families: each pulses as many beats a bar as its harmonic number (search 5, news 6, social 7,
       tech 9) and sings its vowel on that harmonic of A; how many of its beats sound is its count of AI signals that day, so the

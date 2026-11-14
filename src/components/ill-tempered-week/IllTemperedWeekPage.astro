@@ -8,12 +8,14 @@
 // committed day files the records name (src/lib/ill-tempered-week/sources.ts). The page plays the newest complete
 // album and, while a week runs, that week's Overlooked so far; every album also has a page of its own
 // (AlbumPage.astro, /ill-tempered-week/<week>/), so its scores stay when it leaves this page.
+// Since 2026-11-14 evening (Frank's choice of that day, wording private) the page opens with the album as a track
+// list of three equal pieces; a piece's score unfolds under the list when it plays (one at a time, the script at the
+// end), the running week is a strip with its player, and every album is listed with its players.
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import AlbumPieces from '@/components/ill-tempered-week/AlbumPieces.astro'
-import OverlookedScore from '@/components/ill-tempered-week/OverlookedScore'
 import { clock, readAlbums, span, weekday } from '@/lib/ill-tempered-week/albums'
-import { albumPath, frontPage, HINT, overlookedLinks } from '@/lib/ill-tempered-week/pages'
+import { albumPath, frontPage } from '@/lib/ill-tempered-week/pages'
 import '@/styles/experiment-sheet.css'
 import '@/styles/ill-tempered-week.css'
 
@@ -29,7 +31,12 @@ const recordHref = (week: string): string => `${REPO}/blob/main/src/data/ill-tem
 const badges = growing && g
   ? [`${album.title}, complete`, `${growing.title}, edition ${g.edition} of 7`]
   : [album.title, album.complete ? 'complete' : `edition ${o.edition} of 7`]
-const hint = HINT
+const all = [...(growing ? [growing] : []), album, ...earlier]
+const tracks = [
+  { id: 'overlooked', no: 'I · chamber ensemble', title: 'Overlooked', p: o, says: 'Each day the headline that drew the least attention is said once, answered and kept as a motif; by the end of the week they all sound together.' },
+  ...(u ? [{ id: 'unison', no: 'II · strings, brass, timpani', title: 'Unison', p: u, says: 'Every war signal a string glissando; each day they glide towards one chord as far as the press agreed on one story.' }] : []),
+  ...(t ? [{ id: 'turn', no: 'III · electronics', title: 'Turn', p: t, says: 'The signals about AI as a rhythmicon of the platforms: the more signals, the fuller the bar; one bar marks where the week turned.' }] : []),
+]
 ---
 
 <main id="main" class="sheet mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">
@@ -41,7 +48,63 @@ const hint = HINT
     stamp={span(album.days)}
   />
 
-  <section class="mb-14 max-w-4xl" aria-labelledby="itw-how">
+  <section id="itw-album" class="mb-16" aria-label="The newest album">
+    <p class="kicker mb-1">The newest album · {span(album.days)} · {album.complete ? 'complete' : `edition ${o.edition} of 7`}</p>
+    <h2 class="itw-albumtitle"><a class={link} href={albumPath(album.week)}>{album.title}</a></h2>
+    <ol class="itw-tracks">
+      {tracks.map((k) => (
+        <li class="itw-track">
+          <p class="font-mono text-mono-sm text-fg-muted">{k.no} · {clock(k.p.seconds)}</p>
+          <h3 class="itw-tracktitle">{k.title}</h3>
+          <p class="text-sm leading-relaxed text-fg-muted">{k.says}</p>
+          <audio id={`itw-audio-${k.id}`} class="itw-player" controls preload="metadata" src={k.p.audio}></audio>
+          <p class="font-mono text-mono-sm text-fg-muted">
+            <a class={link} href={`#${k.id}`} data-itw-open={k.id}>score</a> · <a class={link} href={k.p.audio} download>download</a> · CC BY 4.0
+          </p>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-4 font-mono text-mono-sm text-fg-faint itw-foldhint" hidden>Press play on a piece and its score opens here.</p>
+    <div class="mt-8">
+      <AlbumPieces album={album} folded />
+    </div>
+  </section>
+
+  {growing && g && (
+    <section id="this-week" class="itw-strip mb-16" aria-label="This week so far">
+      <p class="kicker">This week, still pressing</p>
+      <div class="itw-stripline">
+        <a class={link} href={albumPath(growing.week)}><b>{growing.title}</b></a>
+        <span class="font-mono text-mono-sm text-fg-muted">{span(growing.days)} · Overlooked, edition {g.edition} of 7, to {weekday(g.newest_day)} · {clock(g.seconds)}</span>
+        <span class="itw-editions" role="img" aria-label={`edition ${g.edition} of 7`}>{Array.from({ length: 7 }, (_, i) => <i class={i < g.edition ? 'is-on' : ''}></i>)}</span>
+      </div>
+      <audio id="itw-audio-growing" class="itw-player mt-3" controls preload="metadata" src={g.audio}></audio>
+      <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">
+        Pressed again from the start each day the ledger adds one, so each edition hears the week differently. Once Sunday is in,
+        <em>Unison</em> and <em>Turn</em> join it and the album moves up. Its score: <a class={link} href={albumPath(growing.week)}>{growing.title}</a>.
+      </p>
+    </section>
+  )}
+
+  <section class="mb-16" aria-label="All albums">
+    <p class="kicker mb-3">All albums</p>
+    <ul class="itw-albums">
+      {all.map((a) => (
+        <li>
+          <p class="font-mono text-mono-sm text-fg-muted">
+            <a class={link} href={albumPath(a.week)}>{a.title}</a> · {span(a.days)} · {a.complete ? 'complete' : `edition ${a.pieces.overlooked.edition} of 7`} · <a class={link} href={albumPath(a.week)}>pieces and scores</a> · <a class={link} href={recordHref(a.week)}>record</a>
+          </p>
+          <div class="itw-albumplayers">
+            {Object.entries(a.pieces).map(([name, p]) => (
+              <p><span class="font-mono text-mono-sm">{name}</span> <audio class="itw-player mt-1" controls preload="none" src={p!.audio}></audio></p>
+            ))}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mb-12 max-w-4xl" aria-labelledby="itw-how">
     <h2 id="itw-how" class="kicker mb-3">How the data becomes sound</h2>
     <p class="max-w-3xl leading-relaxed">
       Every day, the ledger of <a class={link} href="/trending">Common Ground</a> records what the web’s big platforms paid attention
@@ -59,47 +122,10 @@ const hint = HINT
       The tuning is just intonation on A: scale, chord and rhythm are all taken from the harmonics of A1 = 55 Hz, and no interval is
       tempered. The instruments are real recordings, each note retuned exactly; the voices are synthetic. No music model is involved
       and nothing is played by hand: every note follows from a committed day file, and the album’s record names each file it read. The
-      scores below are drawn from those records. In each, time runs from left to right: press play and a line follows the music, click
-      to jump, point at a mark to see which day and which headline it comes from. Under each score, the days in detail, with links to
-      the sources.
+      scores are drawn from those records. Press play on a piece and its score opens under the album: time runs from left to right, a
+      line follows the music, a click jumps, and a mark names the day and the headline it comes from, with links to the sources.
     </p>
-    <ul class="itw-glance" aria-label="The three pieces">
-      <li><a href="#overlooked"><span class="font-mono text-mono-sm text-fg-faint">I · chamber ensemble · {clock(o.seconds)}</span><br /><i>Overlooked</i><br /><span class="text-sm text-fg-muted">Each day’s least attended headline, said, answered and kept as a motif.</span></a></li>
-      {u && <li><a href="#unison"><span class="font-mono text-mono-sm text-fg-faint">II · strings, brass, timpani · {clock(u.seconds)}</span><br /><i>Unison</i><br /><span class="text-sm text-fg-muted">Every war signal a glissando, gliding as far towards harmony as the press agreed.</span></a></li>}
-      {t && <li><a href="#turn"><span class="font-mono text-mono-sm text-fg-faint">III · electronics · {clock(t.seconds)}</span><br /><i>Turn</i><br /><span class="text-sm text-fg-muted">The signals about AI as a rhythmicon: the more signals, the fuller the bar.</span></a></li>}
-    </ul>
   </section>
-
-  {growing && g && (
-    <section id="this-week" class="itw-piece itw-growing mb-16" aria-label="This week so far">
-      <p class="kicker mb-1">This week · <a class={link} href={albumPath(growing.week)}>{growing.title}</a> · {span(growing.days)}</p>
-      <h2 class="itw-title">Overlooked, so far</h2>
-      <audio id="itw-audio-growing" class="itw-player mt-3" controls preload="metadata" src={g.audio}></audio>
-      <p class="mt-2 font-mono text-mono-sm text-fg-muted">
-        {clock(g.seconds)} · edition {g.edition} of 7, to {weekday(g.newest_day)} ·
-        <a class={link} href={g.audio} download>download</a> · CC BY 4.0
-      </p>
-      <p class="mt-5 max-w-3xl leading-relaxed">
-        The running week, pressed from its days so far. Each new day of the ledger adds a day, and the piece is pressed again from the start,
-        so this edition breaks off at its newest day and the next one hears the week differently: a motif ends with its
-        day once a later day no longer names its field. Once Sunday’s day is in, the piece is complete, and <em>Unison</em> and
-        <em>Turn</em> join it.
-      </p>
-      <OverlookedScore
-        client:idle
-        record={g}
-        links={overlookedLinks(g)}
-        audioId="itw-audio-growing"
-        id="itw-score-growing"
-        label={`The score of Overlooked, ${growing.title}, edition ${g.edition}: one lane per voice, time from left to right.`}
-        hint={hint}
-      />
-    </section>
-  )}
-
-  <p class="kicker mb-6">The album · <a class={link} href={albumPath(album.week)}>{album.title}</a> · {span(album.days)}</p>
-
-  <AlbumPieces album={album} />
 
   <section class="mb-12 max-w-3xl" aria-label="How it is made">
     <p class="kicker mb-3">How it is made</p>
@@ -118,27 +144,6 @@ const hint = HINT
     </p>
   </section>
 
-  {earlier.length > 0 && (
-    <section class="mb-12" aria-label="Earlier albums">
-      <p class="kicker mb-3">Earlier albums</p>
-      <p class="mb-4 max-w-3xl leading-relaxed text-fg-muted">
-        Every album keeps a page of its own, with its three pieces and their scores.
-      </p>
-      <ul class="itw-albums">
-        {earlier.map((a) => (
-          <li>
-            <p class="font-mono text-mono-sm text-fg-muted">
-              <a class={link} href={albumPath(a.week)}>{a.title}</a> · {span(a.days)} · <a class={link} href={albumPath(a.week)}>pieces and scores</a> · <a class={link} href={recordHref(a.week)}>record</a>
-            </p>
-            {Object.entries(a.pieces).map(([name, p]) => (
-              <p class="mt-1"><span class="font-mono text-mono-sm">{name}</span> <audio class="itw-player mt-1" controls preload="none" src={p!.audio}></audio></p>
-            ))}
-          </li>
-        ))}
-      </ul>
-    </section>
-  )}
-
   <SheetFoot links={[
     { href: '/werke/ill-tempered-week', label: 'method sheet' },
     { href: `${REPO}/tree/main/src/data/ill-tempered-week`, label: 'the records', external: true },
@@ -146,3 +151,43 @@ const hint = HINT
     { href: '/trending', label: 'Common Ground' },
   ]} />
 </main>
+
+<script>
+  // One score at a time: the piece that plays opens its section under the track list, the others fold away.
+  // Without this script every section stays open (the server render is the floor).
+  const album = document.getElementById('itw-album')
+  if (album) {
+    const pieces = ['overlooked', 'unison', 'turn']
+    album.classList.add('itw-folding')
+    album.querySelector<HTMLElement>('.itw-foldhint')?.removeAttribute('hidden')
+    const open = (id: string, scroll: boolean): void => {
+      for (const piece of pieces) document.getElementById(piece)?.classList.toggle('is-open', piece === id)
+      album.querySelector<HTMLElement>('.itw-foldhint')?.toggleAttribute('hidden', true)
+      if (scroll) document.getElementById(id)?.scrollIntoView({ block: 'start' })
+    }
+    document.addEventListener(
+      'play',
+      (e) => {
+        const el = e.target
+        if (!(el instanceof HTMLAudioElement)) return
+        // one player at a time on this page
+        for (const other of document.querySelectorAll('audio')) if (other !== el) other.pause()
+        const id = el.id.replace('itw-audio-', '')
+        if (pieces.includes(id)) open(id, false)
+      },
+      true,
+    )
+    album.addEventListener('click', (e) => {
+      const a = (e.target as Element).closest<HTMLAnchorElement>('[data-itw-open]')
+      if (!a) return
+      e.preventDefault()
+      open(a.dataset.itwOpen!, true)
+    })
+    const fromHash = (): void => {
+      const id = location.hash.slice(1)
+      if (pieces.includes(id)) open(id, true)
+    }
+    fromHash()
+    window.addEventListener('hashchange', fromHash)
+  }
+</script>
