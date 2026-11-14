@@ -55,9 +55,9 @@ describe('the band the edition shows', () => {
     expect(lead).toEqual([])
     const band = labBand(cards)
     expect(band.lead).toEqual([])
-    expect(picks).toEqual(['ducking', 'trending', 'ill-tempered-week', 'comma', 'third-reading', 'consensus'])
+    expect(picks).toEqual(['comma', 'ducking', 'trending', 'ill-tempered-week', 'third-reading', 'consensus'])
     expect(band.carousel.map((c) => c.key)).toEqual(picks.map((id) => `lab-${id}`))
-    expect(band.carousel.map((c) => c.title)).toEqual(['Ducking', 'Common Ground', 'the ill-tempered week', 'Comma', 'Third Reading', 'Consensus'])
+    expect(band.carousel.map((c) => c.title)).toEqual(['Comma', 'Ducking', 'Common Ground', 'the ill-tempered week', 'Third Reading', 'Consensus'])
   })
 
   it('names only experiments /experiments lists and that are still running', () => {
