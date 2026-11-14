@@ -27,6 +27,11 @@ export interface Werk {
    *  thing instead, tested like the others were: it says on its own surface, in its own words,
    *  that it is live and that nothing here is archived. One duty replaces four. */
   unarchived?: boolean
+  /** True for a work that reads Common Ground's committed ledger (src/data/trending) as its
+   *  material. /trending lists these under "Built on this ledger" (link audit, 2026-11-14: each of
+   *  them linked to /trending, the ledger linked back to none). werke.test.ts holds the flag to
+   *  the code: every flagged work's page imports from the trending data or lib. */
+  readsCommonGround?: boolean
   /** A work that was stopped, with the day and the reason.
    *
    *  Frank's decision of 2026-10-17 (wording private, paraphrased): instruments that measure
@@ -113,6 +118,7 @@ export const WERKE: Werk[] = [
     // private). Method: docs/design/2026-11-08-common-time-method.md. A complete album is never pressed again;
     // Overlooked grows by one edition a night while its week runs.
     id: 'ill-tempered-week',
+    readsCommonGround: true,
     line: 'ledger',
     title: 'the ill-tempered week',
     subtitle: {
@@ -137,6 +143,7 @@ export const WERKE: Werk[] = [
     // instead, without hardware. Design doc docs/design/2026-11-01-ducking.md. Marked `live` because
     // the faders move with Common Ground's daily ledger; the voices stay until the next round.
     id: 'ducking',
+    readsCommonGround: true,
     line: 'counter-measurement',
     title: 'Ducking',
     subtitle: {
@@ -162,6 +169,7 @@ export const WERKE: Werk[] = [
     // day). The first work of the house that asks its readers and keeps their answers. Not marked
     // `live`: its record grows only when a batch of readings is released, not every night.
     id: 'third-reading',
+    readsCommonGround: true,
     line: 'counter-measurement',
     title: 'Third Reading',
     subtitle: {
@@ -267,6 +275,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'globe',
+    readsCommonGround: true,
     line: 'counter-measurement',
     title: 'Living Globe',
     subtitle: {

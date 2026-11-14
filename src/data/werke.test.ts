@@ -300,3 +300,27 @@ describe('a retired work says that it is retired', () => {
     }
   })
 })
+
+describe('readsCommonGround — the works /trending lists as built on its ledger (2026-11-14)', () => {
+  // Where each flagged work's reading of the ledger lives. A new flag needs a line here, so the
+  // claim on /trending always points at code that really reads src/data/trending.
+  const READER: Record<string, string> = {
+    'ill-tempered-week': 'src/lib/ill-tempered-week/sources.ts',
+    ducking: 'src/lib/ducking/desk-data.ts',
+    'third-reading': 'src/lib/reading/attention.ts',
+    globe: 'src/lib/globe/layers/trending.ts',
+  }
+  const flagged = WERKE.filter((w) => w.readsCommonGround)
+  it('lists at least one work, none of them retired', () => {
+    expect(flagged.length).toBeGreaterThan(0)
+    for (const w of flagged) expect(w.retired, w.id).toBeUndefined()
+  })
+  it('every flagged work names the file that reads the ledger, and that file does', () => {
+    for (const w of flagged) {
+      const file = READER[w.id]
+      expect(file, `${w.id} has no reader named in this test`).toBeDefined()
+      const src = readFileSync(fileURLToPath(new URL(`../../${file}`, import.meta.url)), 'utf8')
+      expect(src, w.id).toMatch(/trending/)
+    }
+  })
+})
