@@ -59,7 +59,7 @@ describe('the instruments are on a page', () => {
     // giver × taker matrix with its log — and both stay in the repository unmounted, as the
     // surfaces they themselves replaced did. Their successors are held just below.
     ['ScoreFigure', 'the research ecology as a score — every session, every presentation and every relation since v3 on one dated ruler'],
-    ['PartFigure', 'a practice’s own part of that score — its staff in full, the siblings as ghost staves, the slurs that reached it'],
+    ['PartFigure', 'a practice’s own part — its sessions between what it took from its siblings and what they took from it, one cell per relation'],
     ['MiddleCrossings', 'the Middle’s page — who took what from whom, night by night, and the log of every relation in the relay’s own words'],
     // the knowledge graph, explorable (2026-09-02) — the one surface on which every record the
     // house keeps about itself stands with its receipts; without it the graph is a file

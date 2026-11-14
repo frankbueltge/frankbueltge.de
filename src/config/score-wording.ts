@@ -372,19 +372,27 @@ export const SCORE_WORDING = {
 
     part: {
       title: (name: string) => `${name}’s part`,
-      sub: 'its own staff in full, the siblings as ghost staves; the slurs are what passed between them',
+      sub: 'every session, and night by night what it took from its siblings and what they took from it',
       meta: (p: { sessions: number; pieces: number; many: string; crossings: number }) =>
         `${plural(p.sessions, 'session', 'sessions')} · ${p.pieces} ${p.many} · ${plural(p.crossings, 'crossing', 'crossings')}`,
-      own: 'this voice',
-      sibling: 'sibling',
+      /** the three lanes, named in the drawing's left margin */
+      lanes: {
+        took: 'It took',
+        from: (name: string, n: number) => `from ${name.replace(/^The /, 'the ')} · ${n}`,
+        sessions: (n: number) => plural(n, 'session', 'sessions'),
+        gave: 'Taken from it',
+        by: (name: string, n: number) => `by ${name.replace(/^The /, 'the ')} · ${n}`,
+      },
       legend: {
-        filled: (one: string) => `● a night that left ${/^[aeiou]/.test(one) ? 'an' : 'a'} ${one}`,
-        hollow: '○ a session without one',
-        slurs: 'slurs in a sibling’s colour: this voice took something from it · slurs in this voice’s colour: a sibling took something from it',
+        filled: (one: string) => `a session that left ${/^[aeiou]/.test(one) ? 'an' : 'a'} ${one}`,
+        hollow: 'a session without one',
+        cell: 'one cell is one crossing the Middle recorded, in the colour of the sibling:',
+        kinds: { built_on: 'built on', answered: 'answered', noted: 'noted' } satisfies Record<RelayKind, string>,
+        lanes: 'above the sessions: what this voice took · below: what a sibling took from it',
       },
       label: (p: { name: string; since: string; until: string }) =>
-        `${p.name}’s part of the score, from ${longDate(p.since)} to ${longDate(p.until)}: its own staff with a notehead for every session, the two sibling staves faint above and below, and a slur for every relation that reached it.`,
-      /** a note's readout on the practice's own stave */
+        `${p.name}’s part, from ${longDate(p.since)} to ${longDate(p.until)}: a dot for every session, above them a cell for every time it took something from a sibling, below them a cell for every time a sibling took something from it.`,
+      /** a session's readout */
       noteText: (p: { piece: string | null; one: string; title: string }) =>
         p.piece ? `${p.one.replace(/^./, (c) => c.toUpperCase())}: ${p.piece}. ${p.title}` : p.title,
     },
