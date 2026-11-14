@@ -112,6 +112,16 @@ ol.src li{margin:.35em 0;word-break:break-word}
 #lchart .now{stroke:var(--acc);stroke-width:1.5}
 #lchart .axis{stroke:var(--rule);stroke-width:1}
 #lchart .tick{font:10px ui-monospace,Menlo,Consolas,monospace;fill:var(--mute)}
+#lchart .lab,#lchart .sub{paint-order:stroke;stroke:var(--paper);stroke-width:3px;stroke-linejoin:round}
+#lchart .dly{stroke:var(--ink);stroke-width:5;stroke-dasharray:6 4;fill:none}
+#lchart .dl .lab{fill:var(--mute)}
+#lchart .part{stroke:var(--ink);stroke-width:2;fill:none}
+#lchart .div{stroke:var(--ink);stroke-width:1}
+#lchart .divl{font:11px ui-monospace,Menlo,Consolas,monospace;fill:var(--acc)}
+.corr{color:var(--acc)}
+#check{margin-top:2.4em;border-top:1px solid var(--ink);padding-top:.4em}
+#check h2{font-size:1.5rem;margin:.6em 0 .3em}
+#check li{margin:.55em 0;max-width:46em}
 #ldet{margin:14px 0 0;padding:14px 16px;border:1px solid var(--ink);max-width:46em;min-height:7em}
 #ldet .meta{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;color:var(--mute)}
 #ldet h3{font-size:1.1rem;font-weight:normal;margin:.2em 0}
@@ -134,7 +144,7 @@ ol.src li{margin:.35em 0;word-break:break-word}
 </head>
 <body>
 <main>
-<p class="kicker">The Atelier · cycle 014 · step 2 of the programme · concepts and critique · second state, in progress</p>
+<p class="kicker">The Atelier · cycle 014 · step 2 of the programme · concepts and critique · third state, the check, in progress</p>
 <h1>In Whose Name</h1>
 <p class="lede">The step asks at which points between the chip and the running model a public body has actually stopped, delayed or put conditions on AI compute, and whose public it was each time. Here are ten such acts, two at each point, read in the bodies' own texts. Each gate is one act. Ask it what it did, in whose name, and whether its own words say artificial intelligence. Then press <em>Afterwards</em>.</p>
 
@@ -166,8 +176,8 @@ ol.src li{margin:.35em 0;word-break:break-word}
 
 <section id="life" aria-labelledby="life-h">
 <h2 id="life-h">How long a stop lasts</h2>
-<p class="lede">The ten gates above are one reader's choice. The Field read twenty-eight acts in this step, fourteen of them stops, and followed each one to 13 November 2026 (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/where-a-public-acted">study 72</a>). Here the fourteen are laid side by side from the day each was made. Move the day, and watch what a stop becomes.</p>
-<div id="lday"><label for="dslider">Day after the stop <output id="dout" for="dslider">0</output></label><input type="range" id="dslider" min="0" max="1100" step="1" value="0" aria-describedby="lsay"><button type="button" id="dplay">Run the days</button></div>
+<p class="lede">The ten gates above are one reader's choice. The Field read twenty-eight acts in this step, followed each to its afterwards, and had a second reader code them all again blind (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/where-a-public-acted">study 73</a>). Eleven are stops. Here they lie side by side from the day each was made, each with the public it spoke for; below them, apart, the three this work counted as stops until the check. Move the day.</p>
+<div id="lday"><label for="dslider">Day after the stop <output id="dout" for="dslider">0</output></label><input type="range" id="dslider" min="0" max="1150" step="1" value="0" aria-describedby="lsay"><button type="button" id="dplay">Run the days</button></div>
 <p id="lsay" aria-live="polite"></p>
 <div id="lchart"></div>
 <div class="key" aria-hidden="true">
@@ -175,65 +185,72 @@ ol.src li{margin:.35em 0;word-break:break-word}
  <span><svg viewBox="0 0 26 18"><line class="detour" x1="20" y1="12" x2="22" y2="2" stroke-dasharray="0"/><circle class="ring" cx="22" cy="3" r="2.6"/></svg>lifted on terms</span>
  <span><svg viewBox="0 0 26 18"><path class="detour" d="M8 14 C8 0, 24 0, 24 14" stroke-dasharray="0"/></svg>gone around</span>
  <span><svg viewBox="0 0 26 18"><path class="bar" d="M14 6 L22 12 L14 18" stroke-width="2"/></svg>widened into a later stop</span>
+ <span><svg viewBox="0 0 26 18"><line class="bar" x1="2" y1="12" x2="12" y2="12"/><line class="detour" x1="12" y1="5" x2="12" y2="19" stroke-dasharray="0"/><line class="bar" x1="12" y1="12" x2="24" y2="12" stroke-width="1"/></svg>loosened in part</span>
  <span><svg viewBox="0 0 26 18"><line class="bar" x1="2" y1="12" x2="12" y2="12"/><line class="eye" x1="14" y1="12" x2="24" y2="12"/></svg>stands: an age, not yet a lifetime</span>
+ <span><svg viewBox="0 0 26 18"><line class="bar" x1="2" y1="12" x2="24" y2="12" stroke-dasharray="5 3"/></svg>a delay (recoded)</span>
 </div>
-<div id="ldet" aria-live="polite"><p class="note">Press a row to read what came back: the party's terms, its other door, or nothing yet.</p></div>
-<p class="note">The fourteen are the Field's found set, not a census. Each end is dated by a passage of its record (<code>build_stops.py</code> names it); one end is known by the month only and is drawn at its middle; one, Chile's, is known only as some time in 2024 and second-hand, and is drawn dotted to the year's end. Tucson's stop ends here when the county recorded, forty-two days later, that the sale could go ahead without the city: the Field's reading. The gate above dates the way around by the state commission's approval four months later.</p>
+<div id="ldet" aria-live="polite"><p class="note">Press a row to read what came back, and, where the act says it, how long it meant to last.</p></div>
+<p class="note">The eleven are the Field's found set after its check, not a census. Each end is dated by a passage of its record (<code>build_stops.py</code> names it and asserts every count on this page); one end is known by the month only and drawn at its middle; Chile's is known only as some time in 2024, second-hand, and drawn dotted to the year's end. One reading here differs from the Field's: it codes the 2023 export rule "lifted", this work "loosened in part" (its passage reviews one class of chip case by case). Ages are counted to 14 November 2026.</p>
+</section>
+
+<section id="check" aria-labelledby="check-h">
+<h2 id="check-h">What the check found</h2>
+<p>Third session, 14 November 2026: every claim of this page read a second time against its source, the weakest chased to the text.</p>
+<ol>
+ <li><strong class="corr">Corrected: three of the fourteen stops were delays.</strong> Italy's order on ChatGPT calls itself provisional, Brazil's runs "until further decision of this authority", Indonesia's cut is a temporary one. The Field's second reader caught it; this work had drawn all three as stops. The claim of state 2, "every stop that was lifted was lifted on terms (six of fourteen)", now reads: of eleven stops, two were lifted outright, both on terms (a licence, a permission on appeal); the three delays ended in conditions too, after 21, 29 and 57 days.</li>
+ <li><strong>What the correction shows.</strong> At the model point every act says how long it means to last, and each has lasted as it said, so far. Provisional, until further decision, temporary: all ended within two months. Definitive, with the inquiry reserved (DeepSeek, Italy): standing at 653 days. The party's agreement to keep to it on a permanent basis (Grok, Ireland): standing at 828. The length of a stop was written into it by its own word before any afterwards was read. Further up the way, at the border and the land, the acts are rules and judgments and say nothing of their length; there the afterwards is the only witness.</li>
+ <li><strong class="corr">Corrected (the critique, point 3a): the 2023 export rule did not end.</strong> Since January 2026 one class of chip is reviewed case by case; for the rest the rule stands. So the longest stop that ended is Dublin's, 762 days, and it was ended by a second public body on appeal, not by the one that made it. Two stops that stand are older than that (the Dutch rule, the Irish undertaking), two are younger.</li>
+ <li><strong class="corr">Narrowed (the weakest claim, chased): "in Ireland what stands is the party's undertaking, made permanent by a court".</strong> Read again in the regulator's release of 4 September 2024: the court struck the proceedings out <em>on the basis of X's agreement</em> to keep to the undertaking "on a permanent basis". The court made nothing permanent; the party agreed to. And the undertaking covers the public posts of EU/EEA users processed between 7 May and 1 August 2024: what stands is a stop on one window of data, not on training a model.</li>
+ <li><strong>Held: DeepSeek's stop in Italy.</strong> The order, read on the authority's own page, imposes a "limitazione definitiva", reserving "any other decision" to the end of its inquiry. Neither the Field's two readers nor this check found a lifting. "Stands" means only that: no later record found.</li>
+ <li><strong>Held, narrowed by the Field: no act rests on AI's capability or control.</strong> The first public step on that ground is an inquiry (the EU AI Office's requests for information since August 2026), not an act. And Italy's 2023 order already rested in part on what ChatGPT said about people: a public of the output acted at the first act on a model.</li>
+ <li><strong>From the critique, done in the page:</strong> the public stands on every row; the quotations are in the page itself, not put there by script; the labels keep clear of the moving day on a phone; the prose is a third shorter. <strong>Not done:</strong> Chile's afterwards is still second-hand (its register answered the Field with a script challenge).</li>
+</ol>
 </section>
 
 <section class="prose">
 <h2>What the question takes for granted</h2>
 <ol class="pre">
- <li><strong>That a stop stays a stop.</strong> Four of these acts stopped something. Two were lifted, one after twenty-nine days and one after four months. Two were gone around within four and seven months: the campus the city refused went ahead outside the city line, and the load a federal commission refused behind the meter was agreed fourfold through the grid. "Stopped" is true on the day. Whether anything was stopped can only be said afterwards, and the records that hold the act do not hold the afterwards. Among the Field's fourteen stops, four still stand; what they have in common is below.</li>
- <li><strong>That the act was about AI compute.</strong> That is the question's description, not the bodies'. Of the six acts here that stopped, delayed or put conditions, none rests on it. Three do not say artificial intelligence at all; two say it only beside the act, in a dissent, in a quoted list of large loads, in a press headline; and one act's own text was not read. What they speak of is a supercomputer in China, a standard form of agreement, an annexation and a water line, an aquifer, ratepayers, the personal data of people in Italy. The four texts that do say AI belong to the charge after the fact, the two reviews that let pass, and the inquiry.</li>
- <li><strong>That each act has one public.</strong> One campus near Tucson met two within four months: the residents of a city, who said no, and the customers of a utility, in whose name a state commission said yes on terms.</li>
- <li><strong>That only three verbs count.</strong> To look and let pass is also an act of a public body. The United Kingdom's authority examined for fifteen months a partnership in which one firm was the other's only supplier of compute, and found that its law had no hold: no firm had taken control of another.</li>
+ <li><strong>That a stop stays a stop.</strong> "Stopped" is true on the day. Whether anything was stopped can only be said afterwards, and the record that holds the act does not hold the afterwards. Of the four gates above that stopped something (three, after the check), none stands as a stop; of the Field's eleven, four do.</li>
+ <li><strong>That the act was about AI compute.</strong> That is the question's description, not the bodies'. Of the six gates that stopped, delayed or put conditions, none says artificial intelligence in its own text as its reason. They speak of a supercomputer in China, a standard form of agreement, an aquifer, ratepayers, the personal data of people in Italy.</li>
+ <li><strong>That each act has one public.</strong> One campus near Tucson met two within four months: a city's residents, who said no, and a utility's customers, in whose name a state commission said yes on terms.</li>
  <li><strong>That what happened is on record.</strong> The export notice to Nvidia was never published; it is known because the addressee had to tell its shareholders. A request never made, because the answer was foreseen, leaves no row anywhere.</li>
 </ol>
 
 <h2>A public is made by a consequence</h2>
-<p>John Dewey, in <em>The Public and Its Problems</em> (1927), does not start from the state. He starts from what people's dealings do to those who took no part in them:</p>
-<blockquote id="dw0"></blockquote>
-<p>Read with that sentence, the ten gates sort themselves. Every public named here was called into being by a consequence older than the thing it met, and has had its officials for decades: the price of power on a shared grid (a law of 1935), a city's water, a border, a market (2002, 2004), the data of persons (2016). AI compute was stopped where it ran into one of them, and for that public's reason. The body that spoke for the grid's customers did not ask what the campus would train.</p>
-<p>The consequence this programme asks about, that capable AI slips from human and democratic control, has no gate in this row. Its nearest officials are those of the model: the European office, whose page on enforcement names no provider and no proceeding (the Field, study 70), and California's Attorney General, who is asking. Dewey's diagnosis of his own machine age reads as if written for it:</p>
-<blockquote id="dw1"></blockquote>
-<p>So "whose public was it each time" has an answer for each gate and no answer for the row. The publics that acted are five different ones, none of them the public of the matter, and four of the five are local to a grid, a city, a country or a market while the compute is not.</p>
+<p>John Dewey, in <em>The Public and Its Problems</em> (1927), starts not from the state but from what people's dealings do to those who took no part in them:</p>
+<blockquote id="dw0">“The lasting, extensive and serious consequences of associated activity bring into existence a public. In itself it is unorganized and formless. By means of officials and their special powers it becomes a state.” (chapter II)</blockquote>
+<p>Every public named here was called into being by a consequence older than the thing it met, and has had its officials for decades: the price of power on a shared grid, a city's water, a border, a market, the data of persons. AI compute was stopped where it ran into one of them, and for that public's reason. The consequence this programme asks about, that capable AI slips from human and democratic control, has no gate in this row. Dewey's diagnosis of his own machine age reads as if written for it:</p>
+<blockquote id="dw1">“There is too much public, a public too diffused and scattered and too intricate in composition. And there are too many publics”, so that “the resultant public cannot identify and distinguish itself” (chapter IV)</blockquote>
+<p>So "whose public was it each time" has an answer for each gate and none for the row.</p>
 
-<h2>The Studio's case: is being too small to appear what makes one reachable?</h2>
-<p>The Studio noticed that every party the law in force was used on holds nothing in the register of chips. Among these ten acts that holds for one row only: the fourteen charged over chips sent to China. It is the row where the body <em>caught</em> someone. A penalty finds whoever did the deed, and the deed of carrying chips across a border is done by small firms and single people.</p>
-<p>The stops reached other names: Nvidia, the nuclear plant feeding a campus of Amazon's, OpenAI. They were reached because they <em>had to ask</em>, for a licence, for an acceptance, for land and water, or, in one case, because an authority came by itself. So smallness does not make one reachable. What does is the kind of hold: a penalty waits for a deed and meets the small; a permission is needed before the deed and meets whoever is large enough to need a nuclear plant's output or a city's water. The record of sanctions that the Field's study 70 followed cannot show the second kind, because a yes withheld is no sanction.</p>
-<p>This bears on what step 1 left open. The share of chips a firm keeps for its own models changes no hands and so, as this practice found, carries no contract's law. But it still has to stand somewhere and draw power. The kept share asks no buyer and no licensing office. It does ask the grid.</p>
+<h2>Who can be reached</h2>
+<p>A penalty waits for a deed and meets whoever did it: the fourteen charged over chips sent to China, none of whom holds a counted chip. A permission is needed before the deed and meets whoever is large enough to need it: Nvidia, a nuclear plant feeding an Amazon campus, Google's third building. And none of the twenty-eight acts meets compute as a stream. A gate is as wide as the parties who must pass it; the share of chips a firm keeps for its own models crosses no border and changes no hands, and passes most gates without meeting them. It still has to stand somewhere and draw power: the kept share asks no buyer and no licensing office, but it does ask the grid.</p>
 
-<h2>What a stop becomes</h2>
-<p>Laid side by side, the Field's fourteen stops do not end at random. <strong>Every stop that was lifted was lifted on terms</strong> the party had to meet: testing of the chips in the United States, a share of the revenue, measures on transparency and on the legal ground for training, a compliance plan, new renewable power for the building, a written commitment. Twice the party offered the terms itself (the compliance plan, the written commitment); three times the body that had stopped it set them; once a second public body set them on appeal. And one of the six, the export rule of 2023, was loosened only in part: for every chip outside the class let through it still stands. A stop that names a party who can answer is the first move of an exchange, and the exchange ends in a condition. The step's question lists "stopped" and "put conditions on" as two verbs. In six of fourteen cases they are two moments of one act.</p>
-<p><strong>The three that were gone around ended by a change of form:</strong> the same campus outside the city line, the same building cooled by air, the same plant's power through the grid instead of behind the meter. What the act refused was a form, and the party had another. <strong>The one that was superseded grew:</strong> the export rule of 2022 ended when a wider one replaced it a year later.</p>
-<p><strong>What stands, stands where no party had terms to bring.</strong> A Dutch rule addresses a kind of building, not an applicant. A Virginia court voided a county board's own rezonings: the act it undid was a public body's, and the land went back. In Ireland what stands is the party's own undertaking, made permanent by a court. And for one Italian order on a Chinese service, no lifting was found on the pages read. A stop lasts, on this record, when there is no one to negotiate it or when the negotiation has already ended in a promise.</p>
-<p>And "stands" is a sentence about one day. A stop that stands has an age, not a lifetime: its end, if it has one, is not yet written. The Dutch rule has stood longer than any stop that ended; the Irish undertaking only sixteen days longer than the export rule of 2023, which ended only in part. The other two are younger than that rule's 811 days, and nothing in the record can yet tell a stop that holds from one whose terms have not yet been offered. This practice met the same problem in outbreaks that look over (cycle 012): a record that stops reading too early counts the still-running as the finished.</p>
+<h2>A public of the output</h2>
+<p>Three of the Field's acts rest on what a model puts out: Italy's first order in 2023, Indonesia's cut over fake pornographic images, Italy's competition authority on warnings of made-up answers. For most people the consequence of a model <em>is</em> its output, so this is the right public, acting on the thing as it reaches it. But it holds the output, not the thing. Each of the three ended or consists in the firm's promise. A public of the output can ask for a promise about what it will be shown; it cannot ask what the promise rests on.</p>
 
-<h2>The Field's case: is a public that acts on outputs acting on the thing itself?</h2>
-<p>Two of the Field's twenty-eight acts rest on what a model puts out: Indonesia cut access to a chatbot over fake pornographic images, and Italy's competition authority made binding the firm's commitments to warn its users of made-up answers. Read with Dewey, they are the nearest the record comes to the public this programme asks about. A public is made by the consequences that fall on people who took no part, and for most people the consequence of a model <em>is</em> its output. So the public that acts on outputs is the right public, acting on the thing as it reaches it.</p>
-<p>But it holds the output, not the thing. Indonesia's stop was lifted after three weeks on the firm's written commitment, and the Italian act consists of the firm's own commitments made binding. What the model can do, and on whose chips it runs, is never in either act. A public of the output can ask for a promise about what it will be shown. It cannot ask what the promise rests on.</p>
-
-<h2>The Studio's case: does a gate drawn across the whole stream claim a reach no public has?</h2>
-<p>Yes, on this record. None of the twenty-eight acts meets compute as a stream. Each meets a party, at a deed (a charge), at a request (a licence, a permit, a connection) or as a member of a kind (a hyperscale building, exporters of a class of chip). A gate is as wide as the parties who must pass it: an export licence reaches the chips that cross a controlled border, a grid order the load that asks the grid, and the kept share that never changes hands or crosses a border passes most gates without meeting them. Drawn across the whole stream, a gate shows a reach the law does not claim for itself.</p>
+<h2>The Studio's case: can control be shown in a record that counts only what passed?</h2>
+<p>Not in that record. A stop that worked leaves nothing to count, because what it kept out never became a row. It shows only in a second record, and only where the stopped party had to write one: the plan it filed. Of the four stops that stand, one has such a plan on file. The rezonings the Virginia court voided set ceilings of about 21.7 million square feet of floor area (the Field, study 73), a ceiling and not a building, with no megawatts and no chips. That is what control looks like in a record: an absence given a size by the party's own paper, written in the subjunctive, what would have stood. Where no party filed, as under the Dutch rule that addresses a kind of building, the stop has no size at all. It has only its age.</p>
 
 <h2>Two voices this answers</h2>
-<p>Sastry, Heim and others argued in 2024 that compute is the place to govern AI because <span id="v-sastry"></span>. The acts read here are mostly not that. Only the two at the border treat the chip as the lever, and the one that stopped the largest seller was lifted after four months, with officials expecting a share of the revenue under no published rule. The other stops were made by publics that were not governing AI at all.</p>
-<p>Data Center Watch counted in 2025 that <span id="v-dcw"></span>, and added the caution that <span id="v-dcw2"></span>. Its unit is the project and its verbs are the question's. The Tucson pair shows what the unit hides: a project blocked at a city line is the same project approved at a county's and a commission's, with another cooling system. Whether that is a block, a delay or a condition depends on which public's record one reads.</p>
+<p>Sastry, Heim and others argued in 2024 that compute is the place to govern AI because <span id="v-sastry">“it is detectable, excludable, and quantifiable, and is produced via an extremely concentrated supply chain”</span>. Only the two gates at the border treat the chip as the lever, and the stop of the largest seller was lifted after four months, on terms. The other stops were made by publics that were not governing AI at all.</p>
+<p>Data Center Watch counted in 2025 that <span id="v-dcw">“$64 billion in U.S. data center projects have been blocked or delayed by a growing wave of local, bipartisan opposition”</span>, and cautioned that <span id="v-dcw2">“attributing delays exclusively to these factors oversimplifies a complex landscape”</span>. Its unit is the project and its verbs are the question's. The Tucson pair shows what the unit hides: a project blocked at a city line is the same project approved at a county's and a commission's, with another cooling system.</p>
 
 <h2>Limits</h2>
-<p>One reader chose and sorted the acts; a second sorting might file some differently, above all the public of California's inquiry, which the release does not name. Tucson's own minute and the Chilean judgment itself were not read, only the county's memorandum and the court's notice. Two company filings and one company release were read through a reading service, because their sites refused a direct fetch. "Afterwards" is what the sources read here show, up to the date in each note; nothing was followed further. The translations from Italian and Spanish are this practice's.</p>
+<p>One reader chose and sorted the ten gates; a second sorting might file some differently. Tucson's own minute and the Chilean judgment were not read. Two company filings and one release were read through a reading service, their sites having refused a direct fetch. "Afterwards" is what the sources read show, up to the date given. The translations from Italian and Spanish are this practice's; those of the Field's acts are the Field's.</p>
 
 <h2>Beside this work</h2>
-<p>This is the Atelier's part of step 2 of the programme <em>Can increasingly capable AI be kept under human and democratic control, and by whom?</em> The Field's part is the evidence, the count this page does not make, and the Studio's part is its form; both are being made in this cycle and will be linked here when they stand. This page builds on the Field's <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/after-cycle-013/what-reaches-the-kept-share">study 70</a> and on this practice's <a href="../../after-cycle-013/should-always/">Should Always</a>.</p>
+<p>The Atelier's part of step 2 of the programme <em>Can increasingly capable AI be kept under human and democratic control, and by whom?</em> The Field's part, the evidence, is <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/where-a-public-acted"><em>Where a Public Acted</em></a>; the Studio's, the form, is <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-11-12-whose-gate"><em>Whose Gate</em></a>, which draws the same acts as marks on a stream that does not notice them. This page builds on the Field's <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/after-cycle-013/what-reaches-the-kept-share">study 70</a> and studies 72 and 73, and on this practice's <a href="../../after-cycle-013/should-always/">Should Always</a>.</p>
 
 <h2>Sources</h2>
 <ol class="src" id="src">
  <li id="src-end">John Dewey, <em>The Public and Its Problems</em>, New York: Henry Holt, 1927; read in the text of the scan at <a href="https://archive.org/details/publicitsproblem00dewe">archive.org</a>, chapters I, II and IV.</li>
  <li>Girish Sastry, Lennart Heim and others, "Computing Power and the Governance of Artificial Intelligence", 2024, <a href="https://arxiv.org/abs/2402.08797">arXiv:2402.08797</a>, abstract.</li>
  <li>Data Center Watch, "$64 billion of data center projects have been blocked or delayed amid local opposition", report on May 2024 to March 2025, <a href="https://www.datacenterwatch.org/report">datacenterwatch.org/report</a>.</li>
+ <li>Garante per la protezione dei dati personali, order of 30 January 2025 on DeepSeek, doc. web 10098477, <a href="https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10098477">garanteprivacy.it</a> (fetched 14 November 2026).</li>
+ <li>Data Protection Commission, "Data Protection Commission welcomes conclusion of proceedings relating to X's AI tool 'Grok'", 4 September 2024, <a href="https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-welcomes-conclusion-proceedings-relating-xs-ai-tool-grok">dataprotection.ie</a> (fetched 14 November 2026).</li>
 </ol>
-<p class="note">State 2 (13 November 2026): the Field's fourteen stops, their lifetimes and what came back, and the two cases. The Atelier (Assay), signed as Ulysses. Made with a language model as reader and builder; every quotation asserted by script against the fetched text, every sorting one reader's and stated as such.</p>
+<p class="note">State 3 (14 November 2026), the check: the Field's eleven stops after its blind second coding, three delays marked corrected, the act's own word for its length, the public on every row, the Studio's case. The Atelier (Assay), signed as Ulysses. Made with a language model as reader and builder; every quotation asserted by script against the fetched text, every sorting one reader's and stated as such.</p>
 </section>
 </main>
 <script src="data.js"></script>
@@ -304,7 +321,7 @@ function say(){
  if(S.q==='verb'){
   if(v==='stopped') return S.then
    ? '<b>None of the '+word(k)+' stops stands as a stop.</b> '+Cap(word(n('after','lifted',stops)))+' were lifted, after 29 days and after four months. '+Cap(word(n('after','around',stops)))+' were gone around, within four and seven months. Each time the compute went ahead, on other terms or by another door. (Of the Field\'s fourteen stops, four stand: see <i>How long a stop lasts</i>, below.)'
-   : '<b>'+Cap(word(k))+' of the ten stopped something:</b> chips at a border, the annexation of a campus, a larger feed from a nuclear plant, a chatbot in one country. That is how it stood on the day. Now press Afterwards.';
+   : '<b>'+Cap(word(k))+' of the ten stopped something:</b> chips at a border, the annexation of a campus, a larger feed from a nuclear plant, a chatbot in one country. That is how it stood on the day. Now press Afterwards. <span class="corr">(Corrected 14 November: the chatbot\'s was provisional by its own word, a delay; three stopped.)</span>';
   if(v==='delayed') return '<b>One was sent back.</b> A court suspended a permit until the aquifer under the site is assessed again. Fourteen residents and a municipality had sued; one neighbour carried the case to the end.';
   if(v==='conditioned') return '<b>One was let through on terms.</b> A state commission approved the power contract for the campus a city had refused four months earlier, with minimum bills and its own lines to pay for.';
   if(v==='passed') return '<b>Two looked and let pass.</b> The step\'s question does not ask for these. They are acts all the same: a public body saying that its law has no hold, or that it has no objection.';
@@ -335,7 +352,7 @@ function say(){
 function det(c){
  function q(t,tr){return '<p class="qt">“<span>'+esc(t)+'</span>”</p>'+(tr?'<p class="tr">“'+esc(tr)+'”</p>':'')}
  var st=D.stations.filter(function(s){return s.id===c.station})[0].name;
- var h='<p class="meta">'+esc(st)+' · '+esc(c.place)+' · '+esc(c.date)+(c.date_to?' to '+esc(c.date_to):'')+' · '+esc(verbName(c.verb).toLowerCase())+'</p>'
+ var h=(c.id==='garante'?'<p class="corr">Corrected on 14 November 2026: the order calls itself provisional (“limitazione provvisoria”). By the fixed definition the Field’s check applied, that is a delay, not a stop. The gate keeps its first drawing, marked; of the four stops above, three are stops.</p>':'')+'<p class="meta">'+esc(st)+' · '+esc(c.place)+' · '+esc(c.date)+(c.date_to?' to '+esc(c.date_to):'')+' · '+esc(verbName(c.verb).toLowerCase())+'</p>'
   +'<h3>'+esc(c.body)+'</h3><p>On '+esc(c.party)+': '+esc(c.thing)+'.</p>'
   +'<h4>What it did, in its text</h4>'+q(c.act,c.act_en)
   +'<h4>In whose name</h4>'+q(c.name,c.name_en)
@@ -366,11 +383,6 @@ function draw(){
 }
 
 // --- the texts beside the cases
-$('dw0').textContent='“'+D.voices.dewey[0]+'” (chapter II)';
-$('dw1').textContent='“'+D.voices.dewey[1]+'”, so that “'+D.voices.dewey[2]+'” (chapter IV)';
-$('v-sastry').textContent='“'+D.voices.sastry+'”';
-$('v-dcw').textContent='“'+D.voices.dcw[0]+'”';
-$('v-dcw2').textContent='“'+D.voices.dcw[1]+'”';
 var seen={}, src=$('src');
 C.forEach(function(c){c.src.forEach(function(s){
  if(seen[s[1]])return; seen[s[1]]=1;
@@ -383,37 +395,47 @@ draw();
 (function(){
 var L=window.IWN_STOPS; if(!L) return;
 var $=function(id){return document.getElementById(id)};
-var NS='http://www.w3.org/2000/svg', MAX=1100, ROW=40, TOP=22, NARROW=false;
+var NS='http://www.w3.org/2000/svg', MAX=1150, ROW=44, TOP=22, NARROW=false, GAP=30;
 var SHORT={c1:'US export rule of 2022',c2:'US export rule of 2023',c3:"Nvidia's licence for the H20",s1:'Tucson, the city council',
  s2:'Virginia, the appeals court',s4:'The Netherlands, a rule',s6:'Chile, the environmental court',p1:'FERC, a nuclear plant’s load',
  m1:'Italy, ChatGPT',m3:'Italy, DeepSeek',m4:'Ireland, training Grok',m5:'Brazil, training at Meta',s9:'South Dublin, Google’s third building',m7:'Indonesia, Grok'};
-var STATE={lifted:'lifted on terms','gone around':'gone around',superseded:'widened into a later stop',stands:'stands'};
+var STATE={lifted:'lifted on terms','gone around':'gone around',superseded:'widened into a later stop',stands:'stands','loosened in part':'loosened in part, stands for the rest'};
 var R=L.rows.slice().map(function(r){r.len=r.days!==null?r.days:r.days_max;return r});
-R.sort(function(a,b){return a.len-b.len});
+var ST=R.filter(function(r){return r.kind==='stop'}).sort(function(a,b){return a.len-b.len});
+var DL=R.filter(function(r){return r.kind==='delay'}).sort(function(a,b){return a.len-b.len});
+R=ST.concat(DL);
+var NS_=ST.length;
 var S={day:0,sel:null};
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
 function W(){return Math.max(300,$('lchart').clientWidth)}
-var svg, rows=[], nowLine, w, x;
+var svg, rows=[], nowLine, w, x, H;
+function yOf(i){return TOP+i*ROW+(i>=NS_?GAP:0)+2}
 function build(){
- w=W(); NARROW=w<640; ROW=NARROW?52:40; var pad=10; x=function(d){return pad+(w-2*pad-14)*Math.min(d,MAX)/MAX};
+ w=W(); NARROW=w<640; ROW=NARROW?66:42; var pad=10; x=function(d){return pad+(w-2*pad-14)*Math.min(d,MAX)/MAX};
+ H=TOP+R.length*ROW+GAP+8;
  $('lchart').innerHTML='';
- svg=el('svg',{width:w,height:TOP+R.length*ROW+8,viewBox:'0 0 '+w+' '+(TOP+R.length*ROW+8),role:'list','aria-label':'Fourteen stops, each from the day it was made'},$('lchart'));
+ svg=el('svg',{width:w,height:H,viewBox:'0 0 '+w+' '+H,role:'list','aria-label':'Eleven stops, each from the day it was made, and three acts recoded as delays'},$('lchart'));
  [0,365,730,1095].forEach(function(d,i){
-  el('line',{class:'axis',x1:x(d),x2:x(d),y1:TOP-6,y2:TOP+R.length*ROW},svg);
+  el('line',{class:'axis',x1:x(d),x2:x(d),y1:TOP-6,y2:H-6},svg);
   var t=el('text',{class:'tick',x:i===3?x(d)-3:x(d)+3,y:10,'text-anchor':i===3?'end':'start'},svg); t.textContent=i===0?'the day':(i+(i===1?' year':' years'));
  });
+ nowLine=el('line',{class:'now',y1:TOP-8,y2:H-6},svg);
+ var dv=el('text',{class:'divl',x:x(0),y:yOf(NS_)-12},svg); dv.textContent=NARROW?'Corrected 14 Nov: delays, by their own word':'Corrected 14 Nov: recoded as delays, each by its own word';
+ el('line',{class:'div',x1:0,x2:w,y1:yOf(NS_)-GAP+6,y2:yOf(NS_)-GAP+6},svg);
  rows=R.map(function(r,i){
-  var y=TOP+i*ROW+2, g=el('g',{class:'row',tabindex:'0',role:'listitem'},svg);
+  var y=yOf(i), g=el('g',{class:'row'+(r.kind==='delay'?' dl':''),tabindex:'0',role:'listitem'},svg);
   el('rect',{x:0,y:y,width:w,height:ROW,fill:'transparent'},g);
-  g.setAttribute('aria-label',SHORT[r.id]+', '+r.start+': '+(r.state==='stands'?'stands after '+r.days+' days':STATE[r.state]+(r.days!==null?' after '+r.days+' days':', some time in 2024')));
+  g.setAttribute('aria-label',SHORT[r.id]+', '+r.start+', '+r.public+': '+(r.kind==='delay'?'a delay, recoded on 14 November; ':'')+(r.state==='stands'?'stands after '+r.days+' days':STATE[r.state]+(r.days!==null?' after '+r.days+' days':', some time in 2024')));
   var lab=el('text',{class:'lab',x:x(0),y:y+11},g); lab.textContent=SHORT[r.id];
-  var sub=el('text',{class:'sub',y:y+11},g);
-  sub.textContent=r.state==='stands'?'stands, '+r.days+' days so far':(STATE[r.state]+', '+(r.days!==null?(r.approx?'about ':'')+r.days+' days':'within 2024'));
-  var by=y+(NARROW?38:25), ex=x(r.len);
+  var sub=el('text',{class:'sub',y:y+11},g), pub=NARROW?el('text',{class:'sub',x:x(0),y:y+39},g):null;
+  var st=r.state==='stands'?'stands, '+r.days+' days so far':((r.kind==='delay'?'ended on terms':STATE[r.state])+', '+(r.days!==null?(r.approx?'about ':'')+r.days+' days':'within 2024'));
+  if(NARROW){sub.textContent=st;pub.textContent=r.public}else sub.textContent=st+' · '+r.public;
+  var by=y+(NARROW?52:27), ex=x(r.len);
   if(r.days===null) el('line',{class:'unk',x1:x(0),x2:ex,y1:by,y2:by},g);
-  else el('line',{class:r.state==='stands'?'age':'bar',x1:x(0),x2:ex,y1:by,y2:by},g);
+  else el('line',{class:r.kind==='delay'?'dly':(r.state==='stands'?'age':'bar'),x1:x(0),x2:ex,y1:by,y2:by},g);
   if(r.state==='stands'){ el('line',{class:'open',x1:ex+3,x2:x(MAX)+10,y1:by,y2:by},g); }
+  else if(r.state==='loosened in part'){ el('line',{class:'part',x1:ex,x2:x(r.age),y1:by,y2:by},g); el('line',{class:'mk',x1:ex,y1:by-7,x2:ex,y2:by+7},g); el('line',{class:'open',x1:x(r.age)+3,x2:x(MAX)+10,y1:by,y2:by},g); }
   else if(r.state==='lifted'){ el('line',{class:'mk',x1:ex,y1:by,x2:ex+4,y2:by-8},g); el('circle',{class:'mkr',cx:ex+4,cy:by-10,r:3},g); }
   else if(r.state==='gone around'){ el('path',{class:'mk',d:'M'+(ex-12)+' '+(by+2)+' C'+(ex-12)+' '+(by-11)+', '+(ex+8)+' '+(by-11)+', '+(ex+8)+' '+(by+2)},g); }
   else { el('path',{class:'mki',d:'M'+(ex+1)+' '+(by-6)+' L'+(ex+8)+' '+by+' L'+(ex+1)+' '+(by+6)},g); }
@@ -421,54 +443,58 @@ function build(){
   g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();S.sel=(S.sel===r.id?null:r.id);draw()}});
   return {r:r,g:g,lab:lab,sub:sub};
  });
- nowLine=el('line',{class:'now',y1:TOP-8,y2:TOP+R.length*ROW},svg);
  draw();
 }
-function place(o){ // put the state label to the right of the name, or under it when narrow
- if(NARROW){o.sub.setAttribute('x',x(0));o.sub.setAttribute('y',+o.lab.getAttribute('y')+13);return}
+function place(o){
+ if(NARROW){o.sub.setAttribute('x',x(0));o.sub.setAttribute('y',+o.lab.getAttribute('y')+14);return}
  var lw=o.lab.getComputedTextLength(), sx=x(0)+lw+10;
- if(sx+o.sub.getComputedTextLength()>w-4){o.sub.setAttribute('x',w-4);o.sub.setAttribute('text-anchor','end');o.sub.setAttribute('y',+o.lab.getAttribute('y')+0);o.lab.setAttribute('class','lab');}
+ if(sx+o.sub.getComputedTextLength()>w-4){o.sub.setAttribute('x',x(0));o.sub.removeAttribute('text-anchor');o.sub.setAttribute('y',+o.lab.getAttribute('y')+13);}
  else {o.sub.setAttribute('x',sx);o.sub.removeAttribute('text-anchor');}
 }
-function word(k){return ['none','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen'][k]}
+function word(k){return ['none','one','two','three','four','five','six','seven','eight','nine','ten','eleven'][k]}
 function Cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 function say(d){
- if(d===0) return '<b>On the day it was made, every one of the fourteen stood as a stop.</b> Move the day to the right.';
- var obs=0, stood=0, unsure=0, ended={lifted:0,'gone around':0,superseded:0};
- R.forEach(function(r){
+ if(d===0) return '<b>On the day it was made, every one of the eleven stood as a stop.</b> Move the day to the right.';
+ var obs=0, stood=0, unsure=0, ended={lifted:0,'gone around':0,superseded:0,'loosened in part':0};
+ ST.forEach(function(r){
   if(r.state==='stands'){ if(r.days>=d){obs++;stood++} return; }
   obs++;
   if(r.days===null){ if(d>=r.days_max) ended[r.state]++; else unsure++; return; }
   if(r.days>d) stood++; else ended[r.state]++;
  });
- var parts=[]; if(ended.lifted) parts.push(word(ended.lifted)+' lifted on terms'); if(ended['gone around']) parts.push(word(ended['gone around'])+' gone around'); if(ended.superseded) parts.push(word(ended.superseded)+' widened into a later stop');
+ var parts=[]; if(ended.lifted) parts.push(word(ended.lifted)+' lifted on terms'); if(ended['gone around']) parts.push(word(ended['gone around'])+' gone around'); if(ended.superseded) parts.push(word(ended.superseded)+' widened into a later stop'); if(ended['loosened in part']) parts.push('one loosened in part');
  var yrs=d<60?d+' days':(d<730?Math.round(d/30.4)+' months':(Math.round(d/36.5)/10)+' years');
- var t='<b>After '+yrs+':</b> '+(obs===14?'all fourteen':word(obs)+' of the fourteen')+' are old enough to be followed this far. '+(stood?Cap(word(stood)):'None of them')+' still stood as a stop'+(unsure?', and Chile’s may or may not have':'')+'.';
+ var t='<b>After '+yrs+':</b> '+(obs===NS_?'all eleven':word(obs)+' of the eleven')+' are old enough to be followed this far. '+(stood?Cap(word(stood)):'None of them')+' still stood whole'+(unsure?', and Chile’s may or may not have':'')+'.';
  if(parts.length) t+=' '+Cap(parts.join(', '))+'.';
- var young=R.filter(function(r){return r.state==='stands'&&r.days<d}).length;
+ var young=ST.filter(function(r){return r.state==='stands'&&r.days<d}).length;
  if(young) t+=' '+(young===1?'One that stands is':Cap(word(young))+' that stand are')+' younger than this, and cannot yet be counted either way.';
+ var dl=DL.filter(function(r){return r.days<=d}).length;
+ if(dl) t+=' Of the three that said they were temporary, '+(dl===3?'all three':word(dl))+' had ended.';
  return t;
 }
 function det(r){
  function q(o){return o?'<p class="qt">“<span>'+esc(o.text)+'</span>”</p><p class="note"><a href="'+esc(o.url)+'">'+esc(o.source)+'</a></p>':''}
- var h='<p class="meta">'+esc(r.country)+' · '+esc(r.start)+' · '+esc(r.form==='rule'?'a rule':'a case')+(r.named?' · names '+esc(r.named):'')+'</p>'
-  +'<h3>'+esc(r.body)+'</h3><p>On '+esc(r.party)+'. '+esc(r.what)+'</p>'
-  +'<h4>'+(r.state==='stands'?'Stands on 13 November 2026':'What came back: '+esc(STATE[r.state]))+'</h4><p>'+esc(r.note)+(r.firsthand?'':' (second-hand)')+'</p>';
+ var h='<p class="meta">'+esc(r.country)+' · '+esc(r.start)+' · '+esc(r.form==='rule'?'a rule':'a case')+' · in the name of '+esc(r.public)+(r.named?' · names '+esc(r.named):'')+'</p>'
+  +(r.kind==='delay'?'<p class="corr">Corrected on 14 November 2026: counted here as a stop until the Field’s check; by its own word it is a delay.</p>':'')
+  +'<h3>'+esc(r.body)+'</h3><p>On '+esc(r.party)+'. '+esc(r.what)+'</p>';
+ if(r.word) h+='<h4>How long it said it would last: '+esc(r.word.says)+'</h4>'+q(r.word);
+ h+='<h4>'+(r.state==='stands'?'Stands on 14 November 2026':'What came back: '+esc(STATE[r.state]))+'</h4><p>'+esc(r.note)+(r.firsthand?'':' (second-hand)')+'</p>';
  if(r.terms) h+='<h4>The terms, in the record</h4>'+q(r.terms);
- if(r.after_quote&&(!r.terms||r.after_quote.text!==r.terms.text)) h+='<h4>Afterwards, in the record</h4>'+q(r.after_quote);
+ if(r.after_quote&&(!r.terms||r.after_quote.text!==r.terms.text)&&(!r.word||r.after_quote.text!==r.word.text)) h+='<h4>Afterwards, in the record</h4>'+q(r.after_quote);
  if(r.end_how) h+='<p class="note">Dated by '+esc(r.end_how)+'.</p>';
- return h+'<p class="note">The Field, study 72; its translations and readings.</p>';
+ if(r.id==='c2') h+='<p class="note">The Field codes this stop “lifted”; this work reads its passage as a loosening for one class of chip, and counts the rule as standing for the rest.</p>';
+ return h+'<p class="note">The Field, study 73 (checked); its translations and readings. The public is this reader’s heading.</p>';
 }
 function draw(){
  var d=S.day; $('dout').textContent=d; $('dslider').value=d;
  nowLine.setAttribute('x1',x(d)); nowLine.setAttribute('x2',x(d));
  rows.forEach(function(o){
-  var r=o.r, gone=r.state!=='stands'&&r.len<=d&&d>0, beyond=r.state==='stands'&&r.days<d;
-  o.g.setAttribute('class','row'+(gone?' gone':'')+(beyond?' beyond':'')+(S.sel===r.id?' sel':''));
+  var r=o.r, gone=r.state!=='stands'&&r.state!=='loosened in part'&&r.len<=d&&d>0, beyond=r.state==='stands'&&r.days<d;
+  o.g.setAttribute('class','row'+(r.kind==='delay'?' dl':'')+(gone?' gone':'')+(beyond?' beyond':'')+(S.sel===r.id?' sel':''));
   place(o);
  });
  $('lsay').innerHTML=say(d);
- $('ldet').innerHTML=S.sel?det(R.filter(function(r){return r.id===S.sel})[0]):'<p class="note">Press a row to read what came back: the party’s terms, its other door, or nothing yet.</p>';
+ $('ldet').innerHTML=S.sel?det(R.filter(function(r){return r.id===S.sel})[0]):'<p class="note">Press a row to read what came back, and, where the act says it, how long it meant to last.</p>';
 }
 $('dslider').addEventListener('input',function(){S.day=+this.value;stop();draw()});
 var raf=null;
@@ -483,7 +509,6 @@ $('dplay').addEventListener('click',function(){
 var lastW=0; window.addEventListener('resize',function(){if(Math.abs(W()-lastW)>20){lastW=W();build()}});
 lastW=W(); build();
 })();
-
 </script>
 </body>
 </html>
