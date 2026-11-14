@@ -1,0 +1,140 @@
+---
+// The pieces of one album of the ill-tempered week, each with its player and its score (2026-11-14). The front page
+// shows the newest complete album with it and every album's own page shows its album with it, so the two cannot
+// drift. Everything is read from the album's record; the links come from the committed day files it names.
+import OverlookedScore from '@/components/ill-tempered-week/OverlookedScore'
+import TurnScore from '@/components/ill-tempered-week/TurnScore'
+import UnisonScore from '@/components/ill-tempered-week/UnisonScore'
+import { clock, weekday, type Album } from '@/lib/ill-tempered-week/albums'
+import { HINT, overlookedLinks, turnSaidLink as saidLink, unisonLinks, warSignals } from '@/lib/ill-tempered-week/pages'
+import { dayShort, mmss } from '@/lib/ill-tempered-week/score'
+import { FORM as OV } from '@/lib/ill-tempered-week/score-overlooked'
+import { FORM as UN } from '@/lib/ill-tempered-week/score-unison'
+
+interface Props {
+  album: Album
+}
+
+const { album } = Astro.props
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+const pct = (x: number): string => `${Math.round(100 * x)} %`
+const o = album.pieces.overlooked
+const u = album.pieces.unison
+const t = album.pieces.turn
+const turnDay = t?.days.find((d) => d.turn)
+// The days before the last that stayed a cluster (the last day never takes the chord, by the piece's rule).
+const clusters = u ? u.days.slice(0, -1).filter((d) => !d.peak).length : 0
+const most = u ? u.days.reduce((a, b) => (b.agreement > a.agreement ? b : a)) : null
+const signals = u ? warSignals(u) : []
+const turnSaidLink = t ? saidLink(t) : null
+const hint = HINT
+---
+
+<section id="overlooked" class="itw-piece mb-16" aria-label="Overlooked">
+  <p class="kicker mb-1">I · chamber ensemble</p>
+  <h2 class="itw-title">Overlooked</h2>
+  <audio id="itw-audio-overlooked" class="itw-player mt-3" controls preload="metadata" src={o.audio}></audio>
+  <p class="mt-2 font-mono text-mono-sm text-fg-muted">
+    {clock(o.seconds)} · {album.complete ? 'seven days' : `edition ${o.edition} of 7, to ${weekday(o.newest_day)}`} ·
+    <a class={link} href={o.audio} download>download</a> · CC BY 4.0
+  </p>
+  <p class="mt-5 max-w-3xl leading-relaxed">
+    Each day, the headline that drew the least attention on its own platform, among all thirteen fields and from a field not heard
+    before that week, is said once. The instrument of its field answers with the headline’s own speech melody, in the rhythm it was
+    spoken; then the melody becomes a motif, and violins, violas, piano, cellos and basses take it up. Earlier days keep sounding,
+    {' '}{OV.dbPerDay} dB softer for each day of age, so the overlooked gather into a polyphony across the week, while the day’s most
+    attended headlines murmur underneath. A motif ends with its day if the newest day no longer names its field. At the end of
+    the newest day everything still kept sounds at once; then a cut, and the first day’s headline once more, alone.
+  </p>
+  <OverlookedScore
+    client:idle
+    record={o}
+    links={overlookedLinks(o)}
+    audioId="itw-audio-overlooked"
+    id="itw-score-overlooked"
+    label={`The score of Overlooked, ${album.title}: one lane per voice, time from left to right.`}
+    hint={hint}
+  />
+</section>
+
+{u && most && (
+  <section id="unison" class="itw-piece mb-16" aria-label="Unison">
+    <p class="kicker mb-1">II · string orchestra, brass, timpani</p>
+    <h2 class="itw-title">Unison</h2>
+    <audio id="itw-audio-unison" class="itw-player mt-3" controls preload="metadata" src={u.audio}></audio>
+    <p class="mt-2 font-mono text-mono-sm text-fg-muted">
+      {clock(u.seconds)} · war and violence · <a class={link} href={u.audio} download>download</a> · CC BY 4.0
+    </p>
+    <p class="mt-5 max-w-3xl leading-relaxed">
+      Every signal that named war and violence is one string glissando: its section by the attention it drew on its platform, the
+      most attended highest, its first pitch from its own headline as spoken, its entry at the hour it was published, where its
+      platform gives one. Each day the whole
+      mass glides towards A’s harmonic chord exactly as far as the press agreed: the share of the day’s war signals naming its most named
+      story. Where at least {pct(UN.threshold)} agreed, brass and timpani take up the chord and the day’s most attended headline is said
+      over it. Every day, a solo double bass then plays the speech melody of the day’s least attended war headline, outside the chord.
+      The press agreed most on {weekday(most.day)}, {pct(most.agreement)} on {most.story};
+      {clusters === 0 ? ' every day before the last reached the chord, and the last never takes it.' : ` ${clusters} day${clusters === 1 ? '' : 's'} before the last stayed a cluster, and the last never takes the chord.`}
+    </p>
+    <UnisonScore
+      client:idle
+      record={u}
+      week={album.week}
+      links={unisonLinks(u)}
+      audioId="itw-audio-unison"
+      id="itw-score-unison"
+      label={`The score of Unison, ${album.title}: every war signal as a glissando, pitch upwards, time from left to right.`}
+      hint={hint}
+    />
+    <details class="dv-table-fallback mt-6">
+      <summary class="cursor-pointer font-mono text-mono-sm text-fg-muted">Every war signal of the week, with its link ({signals.length})</summary>
+      <div class="itw-table-wrap mt-3">
+        <table class="itw-table">
+          <caption class="sr-only">Every war signal of {album.title}: when it enters, its section, its attention, its glissando and its headline</caption>
+          <thead>
+            <tr><th scope="col">enters</th><th scope="col">day</th><th scope="col">section</th><th scope="col">attention</th><th scope="col">glide (Hz)</th><th scope="col">headline</th></tr>
+          </thead>
+          <tbody>
+            {signals.map((s) => (
+              <tr>
+                <td class="num">{mmss(s.at_s)}</td>
+                <td class="num">{dayShort(s.day)}</td>
+                <td>{s.section}{s.tremolo ? ', trem.' : ''}</td>
+                <td class="num">{pct(s.attention)}</td>
+                <td class="num">{Math.round(s.from_hz)} → {Math.round(s.to_hz)}</td>
+                <td>{s.href ? <a class="itw-link" href={s.href} target="_blank" rel="noopener noreferrer">{s.text}</a> : s.text}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+)}
+
+{t && (
+  <section id="turn" class="itw-piece mb-16" aria-label="Turn">
+    <p class="kicker mb-1">III · electronics</p>
+    <h2 class="itw-title">Turn</h2>
+    <audio id="itw-audio-turn" class="itw-player mt-3" controls preload="metadata" src={t.audio}></audio>
+    <p class="mt-2 font-mono text-mono-sm text-fg-muted">
+      {clock(t.seconds)} · AI and its harms · <a class={link} href={t.audio} download>download</a> · CC BY 4.0
+    </p>
+    <p class="mt-5 max-w-3xl leading-relaxed">
+      A rhythmicon of the platform families: each pulses as many beats a bar as its harmonic number (search 5, news 6, social 7,
+      tech 9) and sings its vowel on that harmonic of A; how many of its beats sound is its count of AI signals that day, so the
+      bar fills as attention does. Busy days run faster. {turnDay
+        ? <>The week turned on {weekday(turnDay.day)}, with {turnDay.signals} signals: one bar sounds every beat of every family, and a silent bar carries the day’s most attended AI headline, “{turnDay.said}”.</>
+        : <>This week did not turn.</>}
+    </p>
+    <TurnScore
+      client:idle
+      record={t}
+      week={album.week}
+      saidLink={turnSaidLink}
+      audioId="itw-audio-turn"
+      id="itw-score-turn"
+      label={`The score of Turn, ${album.title}: one row per platform family, one cell per bar, time from left to right.`}
+      hint={hint}
+    />
+  </section>
+)}
