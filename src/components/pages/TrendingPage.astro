@@ -17,6 +17,7 @@ import TrendingRising from '@/components/pages/TrendingRising.astro'
 import { audienceBefore, getTrendingDays } from '@/lib/trending/data'
 import { fmtDateLong, fmtDateWeekday, fmtTimeUtc, platformLabel } from '@/lib/trending/format'
 import { datasetLd, itemListLd, sourceListsLd, webPageLd } from '@/lib/trending/jsonld'
+import { dataLicence, licenceSentence } from '@/lib/trending/licence'
 import { trendingUrls } from '@/lib/trending/markdown'
 import type { TrendingAudience, TrendingDay } from '@/lib/trending/types'
 import { sourceColumns } from '@/lib/trending/view'
@@ -175,7 +176,9 @@ const machineEditions: { href: string; what: string }[] = [
         ))}
       </dl>
       <ul class="mt-5 space-y-1 font-mono text-mono-sm leading-relaxed text-fg-faint">
-        <li>Data: CC0 1.0</li>
+        {/* The licence follows the date of the ledger, not the day the page was built: CC0 up to
+            2026-11-14, CC BY 4.0 after (src/lib/trending/licence.ts). */}
+        <li>Data: {licenceSentence(day.date)}{' '}<a href={dataLicence(day.date).url} rel="license" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">Licence text</a></li>
         <li>Cadence: daily at 06:40 UTC (until 2026-11-02 GitHub ran it between 10:54 and 16:05 UTC)</li>
         <li>Cite: Frank Bültge, Common Ground — trending ledger, frankbueltge.de/trending/{day.date}</li>
       </ul>

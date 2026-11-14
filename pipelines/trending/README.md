@@ -124,6 +124,13 @@ again against that:
 
 Titles, URLs and counts only — never article bodies.
 
+**Licence of what the run writes.** From the ledger of 2026-11-15 the day files and the runs of
+the arcs are CC BY 4.0: free to use for any purpose, with the source named and linked (Common
+Ground, https://frankbueltge.de/trending). The files up to 2026-11-14 were dedicated under CC0
+and keep it. The site states the licence of each file by its date (`src/lib/trending/licence.ts`);
+the exception itself stands in `LICENSE.md`. This pipeline is code and stays Apache 2.0, with the
+attribution notices in `NOTICE`.
+
 ## The convergence rule
 
 Labels are tokenised (diacritics stripped, casefolded, hashtags split, stopwords dropped).

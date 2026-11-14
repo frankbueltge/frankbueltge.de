@@ -227,7 +227,7 @@ export function archiveTitle(day: TrendingDay): string {
 }
 
 export const LATEST_DESCRIPTION =
-  "What the web is searching, reading and posting about right now: Google Trends, Wikipedia, Hacker News, Bluesky, Mastodon and the day's headlines cross-checked into one list, rebuilt every morning. Open data (CC0) as JSON, Markdown and RSS for people and machine readers."
+  "What the web is searching, reading and posting about right now: Google Trends, Wikipedia, Hacker News, Bluesky, Mastodon and the day's headlines cross-checked into one list, rebuilt every morning. Open data as JSON, Markdown and RSS for people and machine readers."
 
 export function metaDescription(day: TrendingDay, isLatest: boolean): string {
   if (isLatest) return LATEST_DESCRIPTION

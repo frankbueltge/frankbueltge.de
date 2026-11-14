@@ -10,8 +10,10 @@
 # switched off for this zone (AI Crawl Control). While that feature is on, Cloudflare
 # serves its own block instead of this file.
 #
-# Exception (Frank, 2026-09-02): /trending — the trending ledger, CC0 data built for
-# machine readers, no text of the author's and no personal data — is open to every
+# Exception (Frank, 2026-09-02): /trending — the trending ledger, open data built for
+# machine readers (CC0 up to the ledger of 2026-11-14, CC BY 4.0 after: name and link
+# Common Ground, https://frankbueltge.de/trending), no text of the author's and no
+# personal data — is open to every
 # crawler, training crawlers included. Each training-crawler group below therefore
 # allows /trending before it disallows the rest, and carries its own Content-Signal
 # for what it may fetch there. The site default in the * group stays ai-train=no.

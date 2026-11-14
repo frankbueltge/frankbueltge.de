@@ -75,7 +75,10 @@ describe('the catalogue feeds carry what the pages carry', () => {
       // built for: their protocols require a retrievable reference for every factual claim.
       expect(feed.source).toMatch(/^https:\/\/github\.com\/frankbueltge\/frankbueltge\.de/)
       expect(feed.page).toMatch(/^https:\/\/frankbueltge\.de\//)
-      expect(feed.licence).toMatch(/CC0/)
+      // The catalogues are CC0. Common Ground is the dated exception (CC BY 4.0 from the ledger
+      // of 2026-11-15, src/lib/trending/licence.ts), and its newest day crosses that date on its
+      // own, so the two trending feeds are held to naming an SPDX licence, not to one of them.
+      expect(feed.licence).toMatch(route === trendingLatest || route === trendingIndex ? /^(CC0-1\.0|CC-BY-4\.0) \(data\)/ : /CC0/)
       expect(feed.note.length).toBeGreaterThan(80)
     }
   })

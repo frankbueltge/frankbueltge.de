@@ -7,8 +7,9 @@ import { fmtDateLong, LATEST_DESCRIPTION, topLabels } from './format'
 import type { TrendingDay } from './types'
 import { convergingRows, sourceColumns } from './view'
 import { trendingUrls } from './markdown'
+import { CC0_URL, CREDIT_LINE, dataLicence } from './licence'
 
-export const CC0_URL = 'https://creativecommons.org/publicdomain/zero/1.0/'
+export { CC0_URL }
 
 export function datasetLd(day: TrendingDay, canonical: string) {
   const u = trendingUrls(day.date)
@@ -19,7 +20,9 @@ export function datasetLd(day: TrendingDay, canonical: string) {
     name: `Common Ground — trending ledger, ${fmtDateLong(day.date)}`,
     description: LATEST_DESCRIPTION,
     url: canonical,
-    license: CC0_URL,
+    // CC0 up to the ledger of 2026-11-14, CC BY 4.0 after: the licence follows the day (./licence.ts).
+    license: dataLicence(day.date).url,
+    ...(dataLicence(day.date).attribution ? { creditText: CREDIT_LINE } : {}),
     isAccessibleForFree: true,
     temporalCoverage: day.date,
     dateModified: day.generated_at,

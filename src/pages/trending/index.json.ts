@@ -4,6 +4,7 @@
 import type { APIRoute } from 'astro'
 import { getTrendingDays } from '@/lib/trending/data'
 import { topLabels } from '@/lib/trending/format'
+import { dataLicence, LICENCE_FIELD_ARCHIVE } from '@/lib/trending/licence'
 import { trendingUrls } from '@/lib/trending/markdown'
 
 export const prerender = true
@@ -15,7 +16,7 @@ export const GET: APIRoute = () => {
       {
         source: 'https://github.com/frankbueltge/frankbueltge.de — src/data/trending',
         page: 'https://frankbueltge.de/trending',
-        licence: 'CC0-1.0 (data), per the licence line of 2026-07-26',
+        licence: LICENCE_FIELD_ARCHIVE,
         note:
           'The archive register of Common Ground, the nightly trending ledger: one entry per committed ' +
           'day, newest first, each with the page a person reads, the JSON a machine reads, how many topics ' +
@@ -26,6 +27,7 @@ export const GET: APIRoute = () => {
           date: d.date,
           url: trendingUrls(d.date).day,
           json: trendingUrls(d.date).dayJson,
+          licence: dataLicence(d.date).spdx,
           converging: d.summary.converging,
           top_labels: topLabels(d, 3),
         })),
