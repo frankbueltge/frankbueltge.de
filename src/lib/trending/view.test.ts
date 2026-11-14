@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { audienceDimensionRows, audienceHasUmami, audienceMissingDimensions, audienceStrip, audienceTableRows, convergingRows, sourceColumns, stripSpan } from './view'
+import { audienceDimensionRows, audienceHasUmami, audienceMissingDimensions, audienceStrip, audienceTableRows, convergingRows, crossingIndex, signalKey, sourceColumns, stripSpan } from './view'
 import { dimensionlessAudience, fixtureAudience, fixtureDay, legacyAudience, standbyAudience } from './fixtures'
 import { AUDIENCE_CLASSES } from './types'
 
@@ -49,6 +49,26 @@ describe('source columns', () => {
     expect(first.magnitudeValue).toBe(2000)
     expect(first.magnitudeUnit).toBe('searches')
     expect(first.rank).toBe(1)
+  })
+
+  it('says what kind of source a column is, in the ledger’s own sorting', () => {
+    const cols = sourceColumns(fixtureDay(), 15)
+    expect(cols.map((c) => c.group)).toEqual(['search', 'social', 'social'])
+    expect(cols[0].groupLabel).toBe('Search & reference')
+  })
+
+  it('marks a line that belongs to one of the day’s crossings with the width of that crossing', () => {
+    // Read out of the file's own topics, by source, rank, country and label: nothing is matched
+    // again on the page, so a mark can only say what the ledger already decided.
+    const cols = sourceColumns(fixtureDay(), 15)
+    expect(cols[0].signals.map((s) => s.crossing)).toEqual([2, null])
+    expect(cols[1].signals[0].crossing).toBe(2)
+  })
+
+  it('leaves a line unmarked when the topic it belongs to stayed on one source', () => {
+    const index = crossingIndex(fixtureDay())
+    expect(index.size).toBe(2)
+    expect(index.get(signalKey({ source: 'google_trends', rank: 2, geo: 'US', label: 'mickey gasper' }))).toBeUndefined()
   })
 
   it('names the desk of a source that reads several, and nothing for a source with one list', () => {

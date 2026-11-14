@@ -155,3 +155,575 @@
   flex: none;
   white-space: nowrap;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   The reading aids of the day ledger (2026-11-14)
+
+   Thirty-four sources made /trending five screens on a desk and twenty on a phone, with the
+   answer to "what is the web looking at?" a screen below the fold. Everything from here down
+   serves that one page: the contents line, the four numbers, the ranked crossings, the grid of
+   what stayed, the filter and fold of the source register, and the archive as a calendar.
+
+   Ink tokens only, as above. Where a fact is drawn it is drawn twice, as size or length AND as
+   weight of ink, so every block stays legible in greyscale, in print and for a dichromat's eye.
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* A link from the contents line or from a crossing lands under the phone's sticky bar unless
+   the target keeps its distance. */
+.trending [id] {
+  scroll-margin-top: 4.5rem;
+}
+
+/* ── the contents line ───────────────────────────────────────────────────── */
+.tr-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.5rem;
+  margin-top: 1.5rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-sm, 11px);
+}
+.tr-nav a {
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  color: var(--color-fg-muted);
+  white-space: nowrap;
+  transition:
+    color 140ms ease,
+    border-color 140ms ease,
+    background-color 140ms ease;
+}
+.tr-nav a:hover,
+.tr-nav a:focus-visible {
+  border-color: var(--color-line-lift);
+  background: var(--color-hover);
+  color: var(--color-fg);
+}
+
+/* ── the four numbers ────────────────────────────────────────────────────── */
+.tr-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 48rem) {
+  .tr-tiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.tr-tile {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0.85rem 0.9rem 0.8rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+  box-shadow: var(--elev-rest);
+}
+.tr-tile-n {
+  font-size: clamp(1.625rem, 3.4vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.tr-tile-n small {
+  margin-left: 0.35rem;
+  font-size: 0.5em;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--color-fg-muted);
+}
+.tr-tile-label {
+  margin-top: 0.3rem;
+  font-size: var(--text-small, 13px);
+  line-height: 1.35;
+  color: var(--color-fg-muted);
+}
+.tr-tile-spark {
+  display: block;
+  width: 100%;
+  height: 22px;
+  margin-top: 0.65rem;
+  overflow: visible;
+}
+/* The drawing is stretched to the tile's width, so its strokes are told not to stretch with
+   it: a line stays a hairline and the dot stays round. */
+.tr-tile-base {
+  stroke: var(--color-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.tr-tile-line {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.tr-tile-dot {
+  stroke: var(--color-fg);
+  stroke-width: 5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.tr-tile-note {
+  display: -webkit-box;
+  margin-top: 0.55rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-sm, 11px);
+  line-height: 1.5;
+  color: var(--color-fg-faint);
+}
+
+/* ── the crossings, ranked ───────────────────────────────────────────────── */
+.tr-lead {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-line);
+}
+.tr-lead-row {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: 0.1rem 0.5rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+@media (min-width: 48rem) {
+  .tr-lead-row {
+    grid-template-columns: 2.25rem minmax(0, 1fr) 16.5rem;
+    column-gap: 1rem;
+    align-items: start;
+  }
+}
+.tr-lead-rank {
+  padding-top: 0.2rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono, 12px);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-fg-faint);
+}
+.tr-lead-label {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.008em;
+  text-wrap: balance;
+}
+a.tr-lead-label {
+  text-decoration: underline;
+  text-decoration-color: var(--color-line);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 140ms ease;
+}
+a.tr-lead-label:hover {
+  text-decoration-color: var(--color-fg);
+}
+/* The first three are the morning's headline, and are set as one. */
+@media (min-width: 48rem) {
+  .tr-lead:not(.tr-lead-compact) > .tr-lead-row:nth-child(-n + 3) .tr-lead-label {
+    font-size: 1.3125rem;
+    letter-spacing: -0.015em;
+  }
+}
+.tr-lead-compact .tr-lead-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+.tr-lead-sources {
+  margin-top: 0.25rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-sm, 11px);
+  line-height: 1.6;
+  color: var(--color-fg-faint);
+}
+.tr-lead-sources a:hover {
+  color: var(--color-fg);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.tr-lead-measure {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem 0.6rem;
+  margin-top: 0.4rem;
+}
+@media (min-width: 48rem) {
+  .tr-lead-measure {
+    grid-column: 3;
+    margin-top: 0.3rem;
+  }
+}
+/* One pip is one source. They wrap rather than shrink, so ten sources never read as five. */
+.tr-pips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  flex-basis: 100%;
+}
+.tr-pip {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-fg);
+}
+.tr-lead-n {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono, 12px);
+  color: var(--color-fg);
+}
+.tr-lead-age {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-sm, 11px);
+  color: var(--color-fg-faint);
+}
+.tr-lead-rest {
+  margin-top: 0.9rem;
+}
+.tr-lead-rest > summary {
+  cursor: pointer;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-sm, 11px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.tr-lead-rest > summary:hover {
+  color: var(--color-fg);
+}
+
+/* ── what stayed ─────────────────────────────────────────────────────────── */
+.tr-stay-scroll {
+  overflow-x: auto;
+}
+/* A fixed layout: the label column takes its share and the mornings divide the rest evenly, so
+   the columns read as a timeline rather than as a block pushed against the right edge. */
+.tr-stay {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: var(--text-small, 13px);
+}
+.tr-stay thead th {
+  padding: 0 0 0.35rem;
+  vertical-align: bottom;
+  text-align: center;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-xs, 10px);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-fg-faint);
+}
+.tr-stay thead th.tr-stay-corner {
+  width: 34%;
+}
+@media (max-width: 39.98rem) {
+  .tr-stay thead th.tr-stay-corner {
+    width: 46%;
+  }
+}
+.tr-stay thead a:hover {
+  color: var(--color-fg);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+/* The month is lettered over the first column and wherever it changes; an empty one still holds
+   its line, so the day numbers stand on one baseline. */
+.tr-stay-month {
+  display: block;
+  min-height: 1.4em;
+  text-align: left;
+  white-space: nowrap;
+}
+.tr-stay tbody tr {
+  border-top: 1px solid var(--color-line);
+}
+.tr-stay tbody th {
+  padding: 0.4rem 0.75rem 0.4rem 0;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1.35;
+}
+.tr-stay tbody th a {
+  text-decoration: underline;
+  text-decoration-color: var(--color-line);
+  text-underline-offset: 2px;
+}
+.tr-stay tbody th a:hover {
+  text-decoration-color: var(--color-fg);
+}
+.tr-stay tbody td {
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1;
+}
+/* The page's own morning: a wash down its column, so "is it still here today?" is one glance. */
+.tr-stay [data-own] {
+  background: var(--color-hover);
+}
+.tr-stay thead th[data-own] {
+  color: var(--color-fg);
+  font-weight: 600;
+}
+.tr-stay .tr-stay-total {
+  width: 2.25rem;
+  padding-left: 0.5rem;
+  text-align: right;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-sm, 11px);
+  color: var(--color-fg-faint);
+}
+/* The mark: larger and darker the more sources carried the topic that morning, in three steps.
+   Size and ink say the same fact (see the header of this block). */
+.tr-stay-mark {
+  display: inline-block;
+  border-radius: 50%;
+  background: var(--color-fg);
+  vertical-align: middle;
+}
+.tr-stay-mark[data-w='1'] {
+  width: 7px;
+  height: 7px;
+  opacity: 0.5;
+}
+.tr-stay-mark[data-w='2'] {
+  width: 11px;
+  height: 11px;
+  opacity: 0.72;
+}
+.tr-stay-mark[data-w='3'] {
+  width: 15px;
+  height: 15px;
+  opacity: 0.95;
+}
+.tr-stay-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 1.1rem;
+}
+.tr-stay-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tr-stay-narrow {
+  display: none;
+}
+/* A phone has room for seven mornings beside a readable label. The older columns go, and with
+   them the rows that crossed on none of the seven; the note under the figure says so here. */
+@media (max-width: 39.98rem) {
+  .tr-stay [data-old],
+  .tr-stay [data-old-only],
+  /* The count at the end of a row is over the whole window; beside seven of its mornings it
+     would read as a miscount, so it goes with the columns it counts. */
+  .tr-stay .tr-stay-total,
+  .tr-stay-wide {
+    display: none;
+  }
+  .tr-stay-narrow {
+    display: block;
+  }
+}
+
+/* ── the source register: tools ──────────────────────────────────────────── */
+.tr-tools {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+}
+/* The kinds wrap on a desk. On a phone they run in one line that scrolls sideways: nine chips
+   wrapped are four rows between the search box and the first source. */
+.tr-kinds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+@media (max-width: 39.98rem) {
+  .tr-kinds {
+    flex-wrap: nowrap;
+    margin: 0 -1rem;
+    padding: 0 1rem 0.25rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .tr-kinds::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── the source register: a source ───────────────────────────────────────── */
+.tr-source > summary {
+  display: block;
+  cursor: pointer;
+  list-style: none;
+}
+.tr-source > summary::-webkit-details-marker {
+  display: none;
+}
+.tr-source-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.tr-chevron {
+  flex: none;
+  font-size: 0.75rem;
+  color: var(--color-fg-faint);
+  transition: transform 140ms ease;
+}
+.tr-source:not([open]) .tr-chevron {
+  transform: rotate(-90deg);
+}
+.tr-source > summary:hover .tr-chevron {
+  color: var(--color-fg);
+}
+.tr-source-kind {
+  display: block;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-xs, 10px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+/* Folded, a source shows the first thing it said, which makes the folded register an index of
+   every public rather than a list of names. Open, the line is the first of the list below. */
+.tr-source-teaser {
+  display: none;
+}
+.tr-source:not([open]) .tr-source-teaser {
+  display: -webkit-box;
+  margin-top: 0.3rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--color-fg-muted);
+}
+.tr-source:not([open]) {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.85rem;
+}
+/* A line that is part of one of the day's crossings says how wide the crossing is. */
+.tr-cross {
+  margin-left: 0.4rem;
+  padding: 0 0.3rem;
+  border: 1px solid var(--color-line-lift);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-xs, 10px);
+  white-space: nowrap;
+  color: var(--color-fg-muted);
+}
+
+/* ── the archive, as a calendar ──────────────────────────────────────────── */
+.tr-cal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 1.5rem 1.75rem;
+}
+.tr-cal-month {
+  max-width: 13rem;
+}
+.tr-cal-title {
+  margin-bottom: 0.4rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-sm, 11px);
+  color: var(--color-fg-muted);
+}
+.tr-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+}
+.tr-cal-wd {
+  padding-bottom: 0.15rem;
+  text-align: center;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-xs, 10px);
+  color: var(--color-fg-faint);
+}
+.tr-cal-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-mono-xs, 10px);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-fg-faint);
+}
+/* Four steps of one ink. The darkest step turns its numeral over, because ink on full ink is
+   no numeral at all. */
+.tr-cal-cell[data-l='1'] {
+  background: color-mix(in srgb, var(--color-fg) 9%, transparent);
+  color: var(--color-fg);
+}
+.tr-cal-cell[data-l='2'] {
+  background: color-mix(in srgb, var(--color-fg) 20%, transparent);
+  color: var(--color-fg);
+}
+.tr-cal-cell[data-l='3'] {
+  background: color-mix(in srgb, var(--color-fg) 42%, transparent);
+  color: var(--color-fg);
+}
+.tr-cal-cell[data-l='4'] {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+a.tr-cal-cell {
+  transition: outline-color 120ms ease;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+}
+a.tr-cal-cell:hover,
+a.tr-cal-cell:focus-visible {
+  outline-color: var(--color-fg-muted);
+}
+a.tr-cal-cell[aria-current='page'] {
+  outline-color: var(--color-fg);
+}
+.tr-cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+}
+.tr-cal-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tr-cal-swatch {
+  width: 0.8rem;
+  height: 0.8rem;
+  aspect-ratio: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-nav a,
+  .tr-chevron,
+  a.tr-lead-label,
+  a.tr-cal-cell {
+    transition: none;
+  }
+}

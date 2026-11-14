@@ -1,0 +1,107 @@
+---
+/** The morning in four numbers (reading aids, 2026-11-14).
+ *
+ *  Before this block a reader of /trending met a paragraph and then a grid; how much had been
+ *  read, how much of it crossed and how wide the widest crossing was had to be counted off the
+ *  page. Each tile states one of those numbers and draws the same number over the last committed
+ *  mornings, so "twenty-seven crossings" can be read against what a morning usually holds.
+ *
+ *  Every figure comes from src/lib/trending/overview.ts, which counts it out of the committed day
+ *  files. The lines are build-time SVG with a native <title>: a tile has nothing to answer that
+ *  its own number does not already say, so it carries no JavaScript.
+ */
+import { compact } from '@/lib/trending/format'
+import { dayStats, statSeries, tileSpark } from '@/lib/trending/overview'
+import type { TrendingDay } from '@/lib/trending/types'
+
+interface Props {
+  day: TrendingDay
+  /** every committed day, any order */
+  days: TrendingDay[]
+}
+const { day, days } = Astro.props
+
+const stats = dayStats(day)
+const series = statSeries(days, day.date, 30)
+const partial = day.sources.filter((s) => s.status === 'partial').length
+const widestLabel = day.topics.find((t) => t.platform_count >= 2)?.label ?? null
+
+const range = (values: number[]) => {
+  const lo = Math.min(...values)
+  const hi = Math.max(...values)
+  return lo === hi ? `${compact(lo)} on every one of them` : `between ${compact(lo)} and ${compact(hi)}`
+}
+
+const tiles = [
+  {
+    key: 'signals',
+    value: compact(stats.signals),
+    of: null as string | null,
+    label: 'lines read',
+    note: `what ${stats.sourcesTotal} sources listed as trending`,
+    values: series.map((p) => p.signals),
+  },
+  {
+    key: 'sources',
+    value: String(stats.sourcesOk),
+    of: `of ${stats.sourcesTotal}`,
+    label: 'sources answered',
+    note: partial > 0 ? `${partial} of them in part` : 'the rest is recorded as unavailable',
+    values: series.map((p) => p.sourcesOk),
+  },
+  {
+    key: 'converging',
+    value: String(stats.converging),
+    of: null as string | null,
+    label: 'topics on two or more sources',
+    note: stats.seenBefore > 0 ? `${stats.seenBefore} of them seen on an earlier morning` : 'none of them seen before',
+    values: series.map((p) => p.converging),
+  },
+  {
+    key: 'widest',
+    value: String(stats.widest),
+    of: null as string | null,
+    label: 'sources on the widest topic',
+    note: widestLabel ?? 'nothing crossed this morning',
+    values: series.map((p) => p.widest),
+  },
+].map((t) => ({ ...t, spark: tileSpark(t.values) }))
+---
+
+<section class="mb-10" id="numbers" aria-labelledby="tr-numbers-h">
+  <h2 class="kicker" id="tr-numbers-h">The morning in numbers</h2>
+  <ul class="tr-tiles mt-4">
+    {tiles.map((t) => (
+      <li class="tr-tile">
+        <p class="tr-tile-n">
+          {t.value}
+          {t.of && <small>{t.of}</small>}
+        </p>
+        <p class="tr-tile-label">{t.label}</p>
+        {t.spark.runs > 1 && (
+          <svg
+            class="tr-tile-spark"
+            viewBox={`0 0 ${t.spark.width} ${t.spark.height}`}
+            preserveAspectRatio="none"
+            role="img"
+            aria-label={`${t.label}: the last ${t.spark.runs} committed mornings, ${range(t.values)}`}
+          >
+            <title>{`The last ${t.spark.runs} committed mornings: ${range(t.values)}`}</title>
+            <line class="tr-tile-base" x1="0" y1={t.spark.baseY} x2={t.spark.width} y2={t.spark.baseY} />
+            <path class="tr-tile-line" d={t.spark.d} />
+            {/* The dot is a zero-length line with a round cap, not a circle: the drawing is
+                stretched to the tile's width, and a circle would stretch into a lozenge with it. */}
+            <line class="tr-tile-dot" x1={t.spark.last!.x} y1={t.spark.last!.y} x2={t.spark.last!.x} y2={t.spark.last!.y} />
+          </svg>
+        )}
+        <p class="tr-tile-note">{t.note}</p>
+      </li>
+    ))}
+  </ul>
+  {series.length > 1 && (
+    <p class="mt-3 max-w-3xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+      Each line is the tile&rsquo;s own number over the last <span class="tabular-nums">{series.length}</span> committed
+      mornings, oldest left, drawn from zero; the dot is this morning.
+    </p>
+  )}
+</section>

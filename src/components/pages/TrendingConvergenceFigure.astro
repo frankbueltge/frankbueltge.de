@@ -64,20 +64,16 @@ const sizeNote =
   'against itself alone. The number in the gutter is how many sources carried the topic, which is also how many marks its row has.'
 ---
 
-<section class="mb-12">
-  <h2 class="kicker">Converging now</h2>
-  {
-    rows.length === 0 ? (
-      <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
-        No topic surfaced on two or more independent platforms this morning. The per-source lists below stand on their
-        own — an empty crossing is a reading, not a failure.
-      </p>
-    ) : (
-      <>
+{/* The ranked list above (TrendingLead.astro) owns the heading "Converging now" and the sentence
+    for a morning on which nothing crossed, since 2026-11-14; this block is the same crossings as
+    a grid, and renders nothing when there are none. */}
+{
+  rows.length > 0 && (
+    <section class="mb-12" id="grid" aria-labelledby="tr-grid-h">
+        <h2 class="kicker" id="tr-grid-h">Who carried what</h2>
         <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
-          Every topic that more than one source was looking at, and which sources those were. The row is the topic, the
-          column is the source, and a mark is that source carrying it — so a row’s length is exactly the claim the
-          ledger makes about it.
+          The same crossings as a grid. The row is the topic, the column is the source, and a mark is that source
+          carrying it — so a row’s length is exactly the claim the ledger makes about it.
         </p>
 
         <figure class="mt-5 rounded-md border border-line bg-panel panel-raised p-4 sm:p-5">
@@ -127,7 +123,6 @@ const sizeNote =
             provenance={provenance}
           />
         </div>
-      </>
-    )
-  }
-</section>
+    </section>
+  )
+}

@@ -1,6 +1,7 @@
 /** View models for the trending page — derived, never hand-written, so a number on the page
  *  is always the committed file's number. Pure functions, unit-tested. */
 import { compact, deskLabel, magnitudeOf, platformLabel, signalText } from './format'
+import { sourceGroup, sourceGroupLabel, type SourceGroup } from './groups'
 import { AUDIENCE_CLASSES, type AudienceClass, type TrendingAudience, type TrendingDay, type TrendingLink, type TrendingTopic } from './types'
 
 export interface ConvergingRow {
@@ -54,12 +55,18 @@ export interface SourceColumnSignal {
   magnitudeValue: number | null
   magnitudeUnit: string
   rank: number
+  /** how many independent sources carried the topic this signal belongs to, when it is one of the
+   *  day's crossings; null for a signal that stayed on its own source */
+  crossing: number | null
 }
 
 export interface SourceColumn {
   id: string
   name: string
   url: string
+  /** the kind of source, as the ledger sorts it (groups.ts): the register's filter */
+  group: SourceGroup
+  groupLabel: string
   status: 'ok' | 'partial' | 'unavailable'
   note: string
   /** null when the source is as of the ledger's own day — printing the same date twenty times
@@ -69,12 +76,36 @@ export interface SourceColumn {
   signals: SourceColumnSignal[]
 }
 
+/** The key a signal is found again by: a crossing repeats its source's own line word for word,
+ *  and a source may state the same rank twice (two countries, two desks), so the rank alone would
+ *  not do. */
+export function signalKey(s: { source: string; rank: number; geo: string | null; label: string }): string {
+  return [s.source, s.rank, s.geo ?? '', s.label].join('\u0000')
+}
+
+/** Which of the day's signals belong to a crossing, and how wide that crossing is. Read out of
+ *  the file's own topics: nothing is matched again here. */
+export function crossingIndex(day: TrendingDay): Map<string, number> {
+  const index = new Map<string, number>()
+  for (const t of day.topics) {
+    if (t.platform_count < 2) continue
+    for (const s of t.signals) {
+      const key = signalKey(s)
+      index.set(key, Math.max(index.get(key) ?? 0, t.platform_count))
+    }
+  }
+  return index
+}
+
 /** One column per source in the file's order, the top `top` signals of each. */
 export function sourceColumns(day: TrendingDay, top = 15): SourceColumn[] {
+  const crossings = crossingIndex(day)
   return day.sources.map((s) => ({
     id: s.id,
     name: s.name,
     url: s.url,
+    group: sourceGroup(s.id),
+    groupLabel: sourceGroupLabel(sourceGroup(s.id)),
     status: s.status,
     note: s.note,
     asOf: s.as_of && s.as_of !== day.date ? s.as_of : null,
@@ -90,6 +121,7 @@ export function sourceColumns(day: TrendingDay, top = 15): SourceColumn[] {
         magnitudeValue: m.value,
         magnitudeUnit: m.unit,
         rank: sig.rank,
+        crossing: crossings.get(signalKey(sig)) ?? null,
       }
     }),
   }))

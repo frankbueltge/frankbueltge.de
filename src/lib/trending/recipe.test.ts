@@ -31,6 +31,13 @@ const SURFACES: Record<string, string> = {
   TrendingStages: component('TrendingStages.astro'),
   TrendingAudience: component('TrendingAudience.astro'),
   TrendingConvergenceFigure: component('TrendingConvergenceFigure.astro'),
+  // the reading aids of 2026-11-14
+  TrendingGlance: component('TrendingGlance.astro'),
+  TrendingLead: component('TrendingLead.astro'),
+  TrendingLeadRow: component('TrendingLeadRow.astro'),
+  TrendingStayed: component('TrendingStayed.astro'),
+  TrendingSources: component('TrendingSources.astro'),
+  TrendingArchive: component('TrendingArchive.astro'),
   MethodenblattTrending: component('MethodenblattTrending.astro'),
 }
 
@@ -98,36 +105,65 @@ describe('the ledger on the frame recipe', () => {
   })
 
   it('paints a panel, where it paints one, on the frame\'s radius and resting depth', () => {
-    // Only the convergence figure carries a panel now. The source register lost its twenty cards
-    // on 2026-09-03: they stretched to their row's tallest, and half the block was drawn hole.
-    expect(SURFACES.TrendingConvergenceFigure).toMatch(/rounded-md border border-line bg-panel panel-raised/)
-    expect(SURFACES.TrendingPage, 'the source cards came back').not.toMatch(/rounded-md border border-line bg-panel/)
+    // The two grids carry a panel: who carried what, and what stayed. The source register lost
+    // its twenty cards on 2026-09-03: they stretched to their row's tallest, and half the block
+    // was drawn hole.
+    for (const name of ['TrendingConvergenceFigure', 'TrendingStayed']) {
+      expect(SURFACES[name], name).toMatch(/rounded-md border border-line bg-panel panel-raised/)
+    }
+    for (const name of ['TrendingPage', 'TrendingSources']) {
+      expect(SURFACES[name], 'the source cards came back').not.toMatch(/rounded-md border border-line bg-panel/)
+    }
   })
 
-  it('keeps the source register a column flow, with every signal still in the markup', () => {
-    // The SEO/GEO condition on this block (Frank, 2026-09-03): a denser register may not be a
-    // folded one — every label, link and number stays in the HTML for a crawler and a retrieval
-    // agent, so no `<details>`, no client-side reveal, and no cut below what the page states.
-    expect(SURFACES.TrendingPage).toContain('class="tr-sources')
-    expect(SURFACES.TrendingPage, 'the register folds its lists away').not.toMatch(
-      /<details[^>]*>[\s\S]*tr-signal/,
-    )
+  it('keeps the source register a column flow, with every signal in the markup and open', () => {
+    // The SEO/GEO condition on this block (Frank, 2026-09-03): denser is fine, losing a crawler
+    // or a retrieval agent is not. Every label, link and number stays in the HTML, and there is
+    // no cut below what the page states.
+    //
+    // Since 2026-11-14 a source is a <details>, because thirty-four sources ran to twenty screens
+    // on a phone. The condition is kept by HOW it folds, and that is what this test pins: the
+    // page ships every source OPEN, so a reader without JavaScript and an agent that fetches the
+    // HTML get all of it; only the script closes a source, and only on a narrow screen. Google's
+    // mobile-first guidance names exactly that as the way to save space on a phone instead of
+    // removing content (decision log, 2026-11-14).
+    const register = templateOf(SURFACES.TrendingSources!)
+    expect(register).toContain('class="tr-sources')
+    const folds = register.match(/<details\b[^>]*>/g) ?? []
+    expect(folds.length).toBeGreaterThan(0)
+    for (const tag of folds) expect(tag, 'a source ships folded').toMatch(/\sopen[\s>]/)
+    expect(register, 'the lines moved out of the markup').toMatch(/<details\b[^>]*>[\s\S]*tr-signal[\s\S]*<\/details>/)
+    expect(register, 'the register ships hidden').not.toMatch(/data-cards[^>]*\shidden/)
+
     const sheet = read('../../styles/trending.css')
     expect(sheet).toMatch(/\.tr-sources \{[^}]*columns:/)
     expect(sheet).toMatch(/\.tr-source \{[^}]*break-inside: avoid/)
+    // No stylesheet rule takes a line away either: folding is the browser's own <details>.
+    expect(sheet).not.toMatch(/\.tr-signal[^{]*\{[^}]*display:\s*none/)
+
+    // The fold is the controller's, behind a narrow-screen media query, never unconditional.
+    const controller = read('./source-filter-controller.ts')
+    expect(controller).toMatch(/const NARROW = '\(max-width: [\d.]+px\)'/)
+    expect(controller).toContain('window.matchMedia(NARROW)')
   })
 
   it('states the per-source register in structured data, not only in markup', () => {
     // Until 2026-09-03 the register was half the page's weight and appeared in no JSON-LD at all:
     // a machine reader could learn what converged but not what any single source had said.
-    expect(SURFACES.TrendingPage).toContain('sourceListsLd(day, canonical, 8)')
+    // The cut is ONE constant: the structured data and the rendered register are handed the same
+    // number, so the page cannot state eight lines and print five.
+    expect(SURFACES.TrendingPage).toContain('const TOP = 8')
+    expect(SURFACES.TrendingPage).toContain('sourceListsLd(day, canonical, TOP)')
     expect(SURFACES.TrendingPage, 'the structured data outruns the rendered cut').toContain(
-      'sourceColumns(day, 8)',
+      '<TrendingSources day={day} top={TOP} />',
     )
+    expect(SURFACES.TrendingSources).toContain('sourceColumns(day, top)')
   })
 
   it('draws a status chip with the Badge primitive, never a box drawn once more by hand', () => {
-    expect(SURFACES.TrendingPage, 'TrendingPage draws a chip without the Badge primitive').toContain(
+    // The status of a source that did not answer; the register moved into its own component on
+    // 2026-11-14 and took the chip with it.
+    expect(SURFACES.TrendingSources, 'the register draws a chip without the Badge primitive').toContain(
       "import { Badge } from '@/components/ui/badge'",
     )
     // A stage of the watchlist is a link since 2026-11-14, so it wears the primitive's dress on

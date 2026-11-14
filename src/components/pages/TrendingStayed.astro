@@ -1,0 +1,177 @@
+---
+/** What stayed: the topics that crossed on more than one recent morning (reading aids, 2026-11-14).
+ *
+ *  A day ledger shows a morning, and most of a morning is gone by the next. Which topics the
+ *  sources kept returning to was in the archive all along (`days_hot` is counted from it) but no
+ *  figure drew it: a reader saw "2" in a table column and nothing of the two weeks around it.
+ *  This grid has one row per topic that crossed at least twice in the window and one column per
+ *  committed morning, with a mark where it crossed; the mark is larger the more sources carried
+ *  it that morning.
+ *
+ *  It is a TABLE, on purpose, not an island and not an SVG: row heads are links to the topic,
+ *  column heads are links to that morning's page, and a screen reader walks it as what it is.
+ *  The model lives in src/lib/trending/overview.ts. The rule by which two mornings carry "the
+ *  same topic" is the ledger's own memory rule (src/lib/trending/memory.ts), the one behind
+ *  `days_hot`, and it is stated under the figure with its committed threshold.
+ */
+import { fmtDateLong, fmtDateShort } from '@/lib/trending/format'
+import { JACCARD_MIN } from '@/lib/trending/memory'
+import { STAY_STEPS, stayedModel, type StayedRow } from '@/lib/trending/overview'
+import type { TrendingDay } from '@/lib/trending/types'
+
+interface Props {
+  day: TrendingDay
+  /** every committed day, any order */
+  days: TrendingDay[]
+  /** rows drawn before the fold */
+  top?: number
+}
+const { day, days, top = 12 } = Astro.props
+
+const model = stayedModel(days, day.date, 14, Number.MAX_SAFE_INTEGER)
+const first = model.rows.slice(0, top)
+const rest = model.rows.slice(top)
+
+// A phone has room for the newest seven mornings beside a readable label. The older columns are
+// marked here and dropped by the stylesheet below 40rem, together with the rows that crossed on
+// none of the seven; the note under the figure says so on exactly those screens.
+const RECENT = 7
+const oldBefore = Math.max(0, model.dates.length - RECENT)
+const oldOnly = (r: StayedRow) => r.cells.slice(oldBefore).every((c) => c.n === null)
+
+const heads = model.dates.map((date, i) => ({
+  date,
+  dom: Number(date.slice(8)),
+  // The month is lettered over the first column and wherever it changes.
+  month: i === 0 || date.slice(5, 7) !== model.dates[i - 1]!.slice(5, 7) ? fmtDateShort(date).split(' ')[1] : '',
+  old: i < oldBefore,
+  own: date === day.date,
+}))
+
+// The committed threshold of the memory rule, printed, never typed.
+const sharePct = Math.round(JACCARD_MIN * 100)
+
+const legend = [
+  { w: 1, text: `${STAY_STEPS.light} sources` },
+  { w: 2, text: `${STAY_STEPS.medium} to ${STAY_STEPS.heavy - 1}` },
+  { w: 3, text: `${STAY_STEPS.heavy} or more` },
+]
+---
+
+{
+  model.dates.length >= 2 && (
+    <section class="mb-12 border-t border-line pt-6" id="stayed" aria-labelledby="tr-stayed-h">
+      <h2 class="kicker" id="tr-stayed-h">What stayed</h2>
+      {model.rows.length === 0 ? (
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+          No topic crossed on more than one of the last <span class="tabular-nums">{model.dates.length}</span> committed
+          mornings. Every crossing in this window lasted a single morning, which is a reading, not a gap.
+        </p>
+      ) : (
+        <>
+          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+            Most of a morning is gone by the next. These topics came back: each crossed on more than one of the last{' '}
+            <span class="tabular-nums">{model.dates.length}</span> committed mornings. A mark is a morning on which
+            several sources carried the topic, larger the more of them did.
+          </p>
+          <figure class="mt-5 rounded-md border border-line bg-panel panel-raised p-4 sm:p-5">
+            <div class="tr-stay-scroll">
+              <table class="tr-stay">
+                <caption class="sr-only">
+                  Topics that crossed on at least two of the last {model.dates.length} committed mornings, with the
+                  number of sources that carried each of them per morning
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col" class="tr-stay-corner"><span class="sr-only">Topic</span></th>
+                    {heads.map((h) => (
+                      <th scope="col" data-old={h.old ? '' : undefined} data-own={h.own ? '' : undefined}>
+                        <span class="tr-stay-month">{h.month}</span>
+                        {h.own ? (
+                          <span title={fmtDateLong(h.date)}>{h.dom}</span>
+                        ) : (
+                          <a href={`/trending/${h.date}/`} title={fmtDateLong(h.date)}>{h.dom}</a>
+                        )}
+                      </th>
+                    ))}
+                    <th scope="col" class="tr-stay-total"><span class="sr-only">Mornings</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {first.map((r) => (
+                    <tr data-old-only={oldOnly(r) ? '' : undefined}>
+                      <th scope="row">
+                        {r.url ? (
+                          <a href={r.url} target="_blank" rel="noopener nofollow">{r.label}</a>
+                        ) : (
+                          r.label
+                        )}
+                      </th>
+                      {r.cells.map((c, i) => (
+                        <td data-old={i < oldBefore ? '' : undefined} data-own={c.date === day.date ? '' : undefined}>
+                          {c.n !== null && (
+                            <span class="tr-stay-mark" data-w={c.weight} title={`${fmtDateLong(c.date)}: ${c.n} sources`}>
+                              <span class="sr-only">{c.n} sources</span>
+                            </span>
+                          )}
+                        </td>
+                      ))}
+                      <td class="tr-stay-total">
+                        <span class="tabular-nums">{r.mornings}</span>
+                        <span class="sr-only"> mornings</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <figcaption class="mt-4 font-mono text-mono-sm leading-relaxed text-fg-faint">
+              <span class="tr-stay-legend">
+                {legend.map((l) => (
+                  <span class="tr-stay-key">
+                    <span class="tr-stay-mark" data-w={l.w} aria-hidden="true" />
+                    {l.text}
+                  </span>
+                ))}
+              </span>
+              <span class="mt-2 block max-w-3xl">
+                One column per committed morning, oldest left, the page&rsquo;s own morning shaded<span class="tr-stay-wide">; the number at the end of a row is how many of them it crossed on</span>.
+                Two mornings carry the same topic by the ledger&rsquo;s own memory rule, the one that counts
+                &ldquo;mornings in a row&rdquo;: the same id, or names whose shared words are at least{' '}
+                <span class="tabular-nums">{sharePct}</span>% of all the words in the two. A row carries the
+                name of its most recent morning.
+              </span>
+              {oldBefore > 0 && (
+                <span class="tr-stay-narrow mt-2 max-w-3xl">
+                  This screen shows the newest <span class="tabular-nums">{RECENT}</span> mornings; a wider one shows
+                  all <span class="tabular-nums">{model.dates.length}</span>.
+                </span>
+              )}
+            </figcaption>
+          </figure>
+          {rest.length > 0 && (
+            <details class="tr-lead-rest">
+              <summary>
+                The other <span class="tabular-nums">{rest.length}</span> topics that came back in this window
+              </summary>
+              <ul class="mt-3 grid gap-x-8 gap-y-1.5 text-sm sm:grid-cols-2">
+                {rest.map((r) => (
+                  <li class="flex items-baseline justify-between gap-x-3 border-b border-line pb-1.5">
+                    {r.url ? (
+                      <a href={r.url} target="_blank" rel="noopener nofollow" class="min-w-0 underline decoration-line underline-offset-2 transition-colors hover:text-fg">{r.label}</a>
+                    ) : (
+                      <span class="min-w-0">{r.label}</span>
+                    )}
+                    <span class="shrink-0 whitespace-nowrap font-mono text-mono-sm text-fg-faint">
+                      <span class="tabular-nums">{r.mornings}</span> mornings · last {fmtDateShort(r.last)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+        </>
+      )}
+    </section>
+  )
+}

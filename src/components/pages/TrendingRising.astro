@@ -10,11 +10,16 @@
  *  ledger would be worse than no block.
  */
 import TrendingStages from '@/components/pages/TrendingStages.astro'
-import { getLatestTerms } from '@/lib/trending/terms-data'
+import { sparkline } from '@/lib/trending/arc'
+import { getLatestTerms, seriesFor } from '@/lib/trending/terms-data'
 import { risingLinks, statusTally } from '@/lib/trending/terms-view'
 
 const file = getLatestTerms()
 const rising = file ? risingLinks(file, 8) : []
+// The same word-sized line the hub draws beside every watched term (src/lib/trending/arc.ts):
+// a term's own committed runs, scaled to its own peak. "Rising" is a claim about a shape, and
+// until 2026-11-14 this block made it with two numbers and no shape at all.
+const sparks = Object.fromEntries(rising.map((r) => [r.slug, sparkline(seriesFor(r.slug, 30))]))
 const tally = file ? statusTally(file) : []
 ---
 
@@ -32,17 +37,31 @@ const tally = file ? statusTally(file) : []
           <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
             Terms that build over weeks rather than spiking for a morning, counted across link aggregators, news,
             code repositories and preprints. The figure is the last seven days; the pace beside it compares those
-            days with the three weeks before them.
+            days with the three weeks before them. The line is the term&rsquo;s own committed runs, oldest left,
+            scaled to its own peak.
           </p>
           <ul class="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
             {rising.map((r) => (
-              <li class="flex items-baseline justify-between gap-x-3 border-b border-line pb-1.5">
+              <li class="tr-term flex items-baseline justify-between gap-x-3 border-b border-line pb-1.5">
                 <a
                   href={r.href}
-                  class="min-w-0 underline decoration-line underline-offset-2 transition-colors hover:text-fg"
+                  class="min-w-0 flex-1 underline decoration-line underline-offset-2 transition-colors hover:text-fg"
                 >
                   {r.term}
                 </a>
+                {sparks[r.slug]!.runs > 1 && (
+                  <svg
+                    class="tr-spark"
+                    viewBox={`0 0 ${sparks[r.slug]!.width} ${sparks[r.slug]!.height}`}
+                    role="img"
+                    aria-label={`${r.term}: the shape of its last ${sparks[r.slug]!.runs} committed runs, peaking at ${sparks[r.slug]!.max} mentions in a day`}
+                  >
+                    <title>{`${sparks[r.slug]!.runs} committed runs · peak ${sparks[r.slug]!.max} mentions in a day`}</title>
+                    <line class="tr-spark-base" x1="0" y1={sparks[r.slug]!.baseY} x2={sparks[r.slug]!.width} y2={sparks[r.slug]!.baseY} />
+                    <path class="tr-spark-line" d={sparks[r.slug]!.d} />
+                    <circle class="tr-spark-dot" cx={sparks[r.slug]!.last!.x} cy={sparks[r.slug]!.last!.y} r="1.6" />
+                  </svg>
+                )}
                 <span class="shrink-0 whitespace-nowrap font-mono text-mono-sm text-fg-faint">
                   {r.statusLabel}
                   {' · '}
