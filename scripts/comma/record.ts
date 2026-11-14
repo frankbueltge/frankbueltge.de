@@ -8,13 +8,15 @@
 // Two things, both read from OONI's public API by whoever runs this, a person or a workflow:
 //
 // 1. The day's counts. One whole UTC day of web tests, counted by country (the ground of the suspicion rule,
-//    src/lib/comma/rule.ts) and by hour and kind of page (how loud the six tones are). Two questions.
+//    src/lib/comma/rule.ts) and by hour and kind of page (how loud the six tones are); and the same two counts over
+//    all tests by name, for the two deeper voices, the messengers and the ways around a block
+//    (src/lib/comma/voices.ts). Four questions.
 // 2. The recording. One block of five minutes from each hour of that day (ten past to a quarter past), every
 //    deviation in it, with the kind of page already worked out from Citizen Lab's test lists. The page plays it,
 //    labelled as a recording, whenever OONI will not answer the site: the 24 blocks in turn, a day in two hours.
 //    24 questions.
 //
-// OONI charges every address that asks (src/lib/comma/relay.ts): the counts cost about 40 of an address's 4,000
+// OONI charges every address that asks (src/lib/comma/relay.ts): the counts cost about 80 of an address's 4,000
 // daily units, the recording about 400. The questions are spaced out, say who asks, and the run stops at the first
 // refusal without writing anything, so a half-read day never replaces a whole one. A refusal by OONI's quota ends
 // the run with exit code 3, which the workflow (.github/workflows/comma-record.yml) reads as "not tonight", not as
@@ -28,8 +30,9 @@ import { deviationsOf, encodeTape, TAPE_MINUTE, type Tape } from '../../src/lib/
 import { BLOCK_MS, MINUTE_MS } from '../../src/lib/comma/clock'
 import { testsOf } from '../../src/lib/comma/ooni'
 import { blockUrl } from '../../src/lib/comma/relay'
-import { dayOf, ruleOfDay, tideOf, type DayCounts } from '../../src/lib/comma/rule'
+import { dayOf, ruleOfDay, ruleOfVoice, tideOf, voiceCountriesOf, voiceTideOf, type DayCounts } from '../../src/lib/comma/rule'
 import { listUrl, parseList, type Lists } from '../../src/lib/comma/testlists'
+import { VOICE_FULL_SHARE, VOICE_SILENT_SHARE, VOICES } from '../../src/lib/comma/voices'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const API = 'https://api.ooni.io/api/v1'
@@ -88,12 +91,28 @@ async function main(): Promise<void> {
     .sort((a, b) => a[0].localeCompare(b[0]))
   const tide = tideOf(await ask(`${API}/aggregation?${span}&axis_x=measurement_start_day&time_grain=hour&axis_y=category_code`), day)
   if (!tide) throw new Error('the count by hour does not cover the 24 hours of the day; nothing was written')
-  const counts = dayOf({ v: 1, day, countries, tide } satisfies DayCounts)
+  const every = `since=${day}&until=${next}`
+  const byTest = await ask(`${API}/aggregation?${every}&axis_x=probe_cc&axis_y=test_name`)
+  const byTestAndHour = await ask(`${API}/aggregation?${every}&axis_x=measurement_start_day&time_grain=hour&axis_y=test_name`)
+  const voices = VOICES.map((voice) => {
+    const names = Object.keys(voice.tests)
+    const hours = voiceTideOf(byTestAndHour, day, names)
+    if (!hours) throw new Error(`the count of ${voice.id} by hour does not cover the 24 hours of the day; nothing was written`)
+    return { id: voice.id, countries: voiceCountriesOf(byTest, names), tide: hours }
+  })
+  const counts = dayOf({ v: 2, day, countries, tide, voices } satisfies DayCounts)
   const rule = ruleOfDay(counts)
   if (!counts || !rule) throw new Error('the counts do not make a rule; nothing was written')
   const weighted = [...rule.weights.values()].filter((w) => w > 0).length
   console.log(`day ${day}: ${countries.length} countries, median deviation ${(rule.median * 100).toFixed(2)} %, ${weighted} with weight`)
   console.log(`  tests by hour: ${tide.map((h) => h.reduce((a, b) => a + b, 0)).join(' ')}`)
+  for (const voice of VOICES) {
+    const own = ruleOfVoice(counts, voice.id, VOICE_SILENT_SHARE, VOICE_FULL_SHARE)
+    if (!own) throw new Error(`the counts of ${voice.id} do not make a rule; nothing was written`)
+    const heavy = [...own.weights.entries()].filter(([, w]) => w >= 0.25).sort((a, b) => b[1] - a[1])
+    const total = counts.voices.find((v) => v.id === voice.id)!.tide.reduce((a, b) => a + b, 0)
+    console.log(`  ${voice.id}: ${total} tests, median share deviating ${(own.median * 100).toFixed(2)} %, audible: ${heavy.map(([cc, w]) => `${cc} ${w.toFixed(2)}`).join(', ')}`)
+  }
 
   const tapes: { file: string; tape: Tape }[] = []
   if (flag('--tape')) {

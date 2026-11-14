@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""The sounds of Comma (/comma, 2026-11-13): six organ tones and six tubular bells, rendered once and committed.
+"""The sounds of Comma (/comma, 2026-11-13): eight organ tones and six tubular bells, rendered once and committed.
 
 Source: VSCO 2 Community Edition (CC0), the same library the ill-tempered week plays, read with its sampler
 (scripts/ill-tempered-week/itw/sampler.py; set VSCO_ROOT if the library is not in ~/samples). The six pitches are the
 harmonics 4, 5, 6, 7, 9 and 11 of A at 55 Hz, one for each kind of page the work hears (src/lib/comma/groups.ts).
+Since 2026-11-14 two deeper organ tones stand below them, the harmonics 3 and 2, for the messengers and the ways
+around a block (src/lib/comma/voices.ts); they have no bell, because their tests know no blockpage.
 
 Organ (OrganQuiet): the steady middle of one recorded note, made into a loop of exactly 385 periods of 55 Hz (7.0 s),
 so every one of the six pitches fits it a whole number of times; the loop's own end is cross-faded into its start, and
@@ -11,7 +13,8 @@ the file holds the loop twice, so any 7-second window of it loops without a seam
 moves the samples. The page loops seconds 3.5 to 10.5 (LOOP in src/lib/comma/groups.ts). The comma tone is the same
 file played at 80/81 of its speed.
 Bells (TubularBells): one stroke each, rung out.
-Usage: python scripts/comma/samples.py   (numpy, scipy and soundfile; ffmpeg with libmp3lame on PATH)
+Usage: python scripts/comma/samples.py [harmonic ...]   (numpy, scipy and soundfile; ffmpeg with libmp3lame on PATH;
+with harmonics given, only those are rendered again)
 """
 import shutil
 import subprocess
@@ -29,6 +32,7 @@ from itw import sampler  # noqa: E402
 OUT = ROOT / 'public' / 'comma'
 F0 = 55.0
 HARMONICS = (4, 5, 6, 7, 9, 11)
+DEEP_HARMONICS = (3, 2)
 LOOP_PERIODS = 385                     # 385 / 55 Hz = 7.0 s
 SR = sampler.SR
 FFMPEG = shutil.which('ffmpeg') or '/opt/homebrew/bin/ffmpeg'
@@ -90,9 +94,16 @@ def write_mp3(x: np.ndarray, path: Path, kbps: int) -> None:
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
+    only = [int(a) for a in sys.argv[1:]]          # e.g. "3 2" renders only those harmonics, and leaves the rest
     for h in HARMONICS:
+        if only and h not in only:
+            continue
         write_mp3(organ_loop(F0 * h), OUT / f'organ-h{h}.mp3', 64)
         write_mp3(bell(F0 * h), OUT / f'bell-h{h}.mp3', 64)
+    for h in DEEP_HARMONICS:
+        if only and h not in only:
+            continue
+        write_mp3(organ_loop(F0 * h), OUT / f'organ-h{h}.mp3', 64)
     for f in sorted(OUT.glob('*.mp3')):
         print(f.name, f.stat().st_size)
 

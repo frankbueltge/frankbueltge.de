@@ -8,6 +8,7 @@
 import { BLOCK_MS, DELAY_MS, MINUTE_MS } from '@/lib/comma/clock'
 import { KEEP_SECONDS } from '@/lib/comma/relay'
 import { GAP_SECONDS, OCTAVES } from '@/lib/comma/rule'
+import { VOICE_GAP_SECONDS, VOICE_STRETCH } from '@/lib/comma/voices'
 
 const NUMBER_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve']
 const say = (n: number): string => NUMBER_WORDS[n] ?? String(n)
@@ -45,7 +46,7 @@ export const COMMA = {
       noRule: 'The day’s counts could not be read, so suspicion stays silent; blockpages still ring.',
     },
     figureLabel:
-      'A live score with six rows, one for each kind of page, the newest moment on the right. A grey band is how many tests of that kind ran in this hour of the counted day; a diamond is a blockpage, with its country; a bar beneath a row is a suspicion, darker the heavier its country’s weight. A dashed line along the top marks a stretch played from the house’s recording. Freeze the score to follow a mark to its entry in OONI Explorer.',
+      'A live score with eight rows, the newest moment on the right: one row for each of six kinds of page and, below them, one for messengers and one for the ways around a block. A grey band is how many tests of that kind ran in this hour of the counted day; a diamond is a blockpage, with its country; a bar beneath a row is a suspicion, darker the heavier its country’s weight. A dashed line along the top marks a stretch played from the house’s recording. Freeze the score to follow a mark to its entry in OONI Explorer.',
     legend: {
       heading: 'How to read it',
       blockpage: 'a blockpage, a state’s own notice: proof (a bell)',
@@ -53,6 +54,7 @@ export const COMMA = {
       asking: 'how many tests of that kind ran in this hour of the counted day (the organ tone’s loudness)',
       tape: 'a stretch played from the house’s recording, because OONI would not answer the site',
       tapeLabel: 'recording',
+      deep: 'The two rows below are deeper, slower voices from the same tests: a messenger that could not be reached, and a way around a block that was itself blocked. A country sounds in them at most once in five minutes, with a longer tone, and there is no bell, because these tests know no blockpage.',
       day: 'The counts in use are those of {day} (UTC).',
       colours: 'Colour says what kind of page was asked for:',
       grey: 'Three kinds wear a colour and three stay grey: the house draws no figure with more than four colours, and these three are where a block cuts speech. Shape, not colour, tells proof from suspicion.',
@@ -74,6 +76,7 @@ export const COMMA = {
     heading: 'What you hear, and what it cannot hear',
     method:
       'OONI Probe runs on volunteers’ phones and computers. Its web test asks the volunteer’s own network for a page and compares the answer with the one a control on an open network gets. Every test is a pair, the world’s answer and the local one, and Comma hears the pair. Six kinds of page are six organ tones, harmonics of the same low A: politics, news and rights; identity, body and belief; the tools people speak with; culture and play; porn and gambling, kept apart so that a block of them is never heard as a block of political speech; commerce and the rest. Each tone is as loud as the world asked: how many tests of that kind ran in this hour of the last whole day the house counted.',
+    deep: `Volunteers test more than pages. They try to reach the messengers people talk on, WhatsApp, Telegram, Signal and Facebook Messenger, and the tools people use to get around a block, Tor, Psiphon and RiseupVPN. Comma hears both below the pages: the six kinds of page sound on higher harmonics of the low A, the messengers on its third, the ways around on its second. The more basic the thing a network takes away, the lower it sounds, and the slower: in these two voices a country sounds at most once in ${say(VOICE_GAP_SECONDS / 60)} minutes, with a tone ${say(VOICE_STRETCH)} times as long. A country is heard there by the share of its own tests that failed on the counted day: silent up to a tenth, full from a half on. The ground tone itself, the first harmonic, is kept for a network that is switched off altogether; nothing sounds on it yet.`,
     proof:
       'A blockpage is a state’s own notice that a page is blocked: proof. It rings a tubular bell on its row’s tone and cuts the tone for a moment. An anomaly is a local answer that differed from the control’s, by a false address, a cut connection or changed content: suspicion. It sounds as a second tone a syntonic comma lower, and the two beat. That small distance between two answers that should be the same is the work’s name.',
     rule: `A single anomaly is often a false alarm, so how loud a country’s anomalies are depends on how often its network deviated on the last whole day the house counted, against that day’s median: ${say(2 ** OCTAVES)} times the median is full weight, the median itself is silence. And every country gets the same chances: each sounds at most once every ${say(GAP_SECONDS)} seconds, blockpages first, because some countries have many more volunteers than others. How censored a network is decides how loud it is, not how many people measure it. Both rules are choices of this work, and the gap was set after listening to one recorded window.`,

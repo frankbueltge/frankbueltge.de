@@ -6,6 +6,7 @@ import { describe, expect, it } from 'vitest'
 
 import { COMMA } from '@/config/comma-wording'
 import { GROUPS } from '@/lib/comma/groups'
+import { VOICES } from '@/lib/comma/voices'
 
 import Comma, { type CommaWording } from './Comma'
 
@@ -33,9 +34,11 @@ describe('Comma, rendered on the server (nothing has sounded yet)', () => {
     expect(render()).toBe(render())
   })
 
-  it('draws the six rows, the button and the idle status', () => {
+  it('draws the eight rows, the button and the idle status', () => {
     const html = render()
     for (const g of GROUPS) expect(html).toContain(g.name)
+    for (const v of VOICES) expect(html).toContain(v.name)
+    expect(html).toContain('cm-divider')
     expect(html).toContain('>Listen<')
     expect(html).toContain(COMMA.island.status.idle)
     expect(html).toContain(COMMA.island.feedEmpty)
@@ -47,6 +50,7 @@ describe('Comma, rendered on the server (nothing has sounded yet)', () => {
     expect(html).toContain(COMMA.island.legend.blockpage)
     expect(html).toContain(COMMA.island.legend.grey)
     expect(html).toContain(COMMA.island.legend.tape)
+    expect(html).toContain(COMMA.island.legend.deep)
     // the day the counts are from is data: the island reads it from the committed file
     expect(html).toMatch(/The counts in use are those of \d{1,2} [A-Z][a-z]+ \d{4} \(UTC\)\./)
     expect(html.match(/cm-dot cm-k0/g)?.length).toBeGreaterThanOrEqual(2)
@@ -73,7 +77,9 @@ describe('the wording', () => {
     expect(COMMA.honesty.reading).toContain('ten minutes behind the world')
     expect(COMMA.honesty.reading).toContain('blocks of five minutes')
     expect(COMMA.honesty.reading).toContain('for half an hour')
-    expect(`${COMMA.honesty.method} ${COMMA.honesty.proof} ${COMMA.honesty.rule}`).not.toMatch(/\d/)
+    expect(COMMA.honesty.deep).toContain('at most once in five minutes')
+    expect(COMMA.honesty.deep).toContain('three times as long')
+    expect(`${COMMA.honesty.method} ${COMMA.honesty.proof} ${COMMA.honesty.deep} ${COMMA.honesty.rule}`).not.toMatch(/\d/)
   })
 
   it('credits OONI, Citizen Lab and the sound library with their licences', () => {

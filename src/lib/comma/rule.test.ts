@@ -6,7 +6,8 @@ import dayJson from '@/data/comma/day.json'
 
 import { GROUPS } from './groups'
 import type { State } from './ooni'
-import { ASK_FULL, balance, commaSeconds, dayOf, GAP_SECONDS, prune, ruleOf, ruleOfDay, tideLevel, tideOf, weightOf, type Heard } from './rule'
+import { ASK_FULL, balance, commaSeconds, dayOf, GAP_SECONDS, prune, ruleOf, ruleOfDay, ruleOfVoice, tideLevel, tideOf, voiceCountriesOf, voiceLevel, voiceTideOf, weightOf, type Heard } from './rule'
+import { VOICE_FULL_SHARE, VOICE_GAP_SECONDS, VOICE_SILENT_SHARE, VOICES } from './voices'
 
 const STATE: Record<string, State> = { c: 'confirmed', a: 'anomaly', f: 'failure', o: 'open' }
 const start = Date.parse(windowFixture.start)
@@ -139,10 +140,16 @@ describe('the committed day', () => {
 
   it('refuses a file that is not a day of counts', () => {
     expect(dayOf(null)).toBeNull()
-    expect(dayOf({ v: 2, day: '2026-11-12', countries: [['RU', 1, 0, 0]], tide: [] })).toBeNull()
-    expect(dayOf({ v: 1, day: 'yesterday', countries: [['RU', 1, 0, 0]], tide: Array.from({ length: 24 }, () => [1, 1, 1, 1, 1, 1]) })).toBeNull()
-    expect(dayOf({ v: 1, day: '2026-11-12', countries: [['RU', 1, 0, 0]], tide: Array.from({ length: 23 }, () => [1, 1, 1, 1, 1, 1]) })).toBeNull()
-    expect(dayOf({ v: 1, day: '2026-11-12', countries: [['russia', 1, 0, 0]], tide: Array.from({ length: 24 }, () => [1, 1, 1, 1, 1, 1]) })).toBeNull()
+    const tide = Array.from({ length: 24 }, () => [1, 1, 1, 1, 1, 1])
+    const good = { v: 2, day: '2026-11-12', countries: [['RU', 1, 0, 0]], tide, voices: [] }
+    expect(dayOf(good)).not.toBeNull()
+    expect(dayOf({ ...good, v: 1 })).toBeNull()
+    expect(dayOf({ ...good, day: 'yesterday' })).toBeNull()
+    expect(dayOf({ ...good, tide: tide.slice(1) })).toBeNull()
+    expect(dayOf({ ...good, countries: [['russia', 1, 0, 0]] })).toBeNull()
+    expect(dayOf({ ...good, voices: undefined })).toBeNull()
+    expect(dayOf({ ...good, voices: [{ id: 'talk', countries: [], tide: [1, 2, 3] }] })).toBeNull()
+    expect(dayOf({ ...good, voices: [{ id: 'Not An Id', countries: [], tide: Array.from({ length: 24 }, () => 1) }] })).toBeNull()
     expect(ruleOfDay(null)).toBeNull()
   })
 
@@ -163,12 +170,116 @@ describe('the committed day', () => {
 
   it('sets a tone’s loudness from its kind’s tests in this hour, on the scale the live count had', () => {
     const tide = Array.from({ length: 24 }, (_, hour) => [hour === 7 ? ASK_FULL * 720 : 720, 0, 0, 0, 0, 0])
-    const made = dayOf({ v: 1, day: '2026-11-12', countries: [['RU', 1000, 100, 10]], tide })!
+    const made = dayOf({ v: 2, day: '2026-11-12', countries: [['RU', 1000, 100, 10]], tide, voices: [] })!
     const at = (hour: number) => Date.parse(`2026-11-14T${String(hour).padStart(2, '0')}:30:00Z`)
     // 720 tests an hour are one every five seconds
     expect(tideLevel(made, 0, at(3))).toBeCloseTo(Math.log2(2) / Math.log2(1 + ASK_FULL))
     expect(tideLevel(made, 0, at(7))).toBeCloseTo(1)
     expect(tideLevel(made, 1, at(7))).toBe(0)
     expect(tideLevel(null, 0, at(7))).toBe(0)
+  })
+})
+
+describe('the deeper voices', () => {
+  const day = dayOf(dayJson)
+
+  it('are counted for the committed day: both voices, by country and by hour', () => {
+    expect(day!.voices.map((v) => v.id)).toEqual(VOICES.map((v) => v.id))
+    for (const voice of day!.voices) {
+      expect(voice.countries.length).toBeGreaterThan(50)
+      expect(voice.tide).toHaveLength(24)
+      expect(voice.tide.reduce((a, b) => a + b, 0)).toBeGreaterThan(5000)
+    }
+  })
+
+  it('weigh a country by the share of its own tests that failed: silent to a tenth, full from a half', () => {
+    const made = dayOf({
+      v: 2,
+      day: '2026-11-12',
+      countries: [['RU', 1000, 100, 10]],
+      tide: Array.from({ length: 24 }, () => [1, 1, 1, 1, 1, 1]),
+      voices: [
+        {
+          id: 'talk',
+          countries: [
+            ['AA', 1000, 50],
+            ['BB', 1000, 100],
+            ['CC', 1000, 300],
+            ['DD', 1000, 500],
+            ['EE', 1000, 990],
+            ['FF', 99, 99],
+          ],
+          tide: Array.from({ length: 24 }, (_, hour) => (hour === 7 ? ASK_FULL * 720 : 720)),
+        },
+      ],
+    })!
+    const rule = ruleOfVoice(made, 'talk', VOICE_SILENT_SHARE, VOICE_FULL_SHARE)!
+    const w = (cc: string) => Math.round(weightOf(rule, cc) * 100) / 100
+    expect([w('AA'), w('BB'), w('CC'), w('DD'), w('EE')]).toEqual([0, 0, 0.5, 1, 1])
+    // 99 tests are too few to judge, however many of them failed
+    expect(w('FF')).toBe(0)
+    expect(w('ZZ')).toBe(0)
+    expect(ruleOfVoice(made, 'around', VOICE_SILENT_SHARE, VOICE_FULL_SHARE)).toBeNull()
+    expect(ruleOfVoice(null, 'talk', VOICE_SILENT_SHARE, VOICE_FULL_SHARE)).toBeNull()
+    // the loudness of its tone: the same scale as the pages' tones
+    const at = (hour: number) => Date.parse(`2026-11-14T${String(hour).padStart(2, '0')}:30:00Z`)
+    expect(voiceLevel(made, 'talk', at(3))).toBeCloseTo(Math.log2(2) / Math.log2(1 + ASK_FULL))
+    expect(voiceLevel(made, 'talk', at(7))).toBeCloseTo(1)
+    expect(voiceLevel(made, 'around', at(7))).toBe(0)
+  })
+
+  it('on the committed day, are heard where messengers and tools are known to be blocked, and not where they work', () => {
+    const talk = ruleOfVoice(day, 'talk', VOICE_SILENT_SHARE, VOICE_FULL_SHARE)!
+    const around = ruleOfVoice(day, 'around', VOICE_SILENT_SHARE, VOICE_FULL_SHARE)!
+    expect(weightOf(talk, 'RU')).toBeGreaterThan(0.5)
+    expect(weightOf(talk, 'IR')).toBeGreaterThan(0.5)
+    expect(weightOf(around, 'RU')).toBeGreaterThan(0.5)
+    for (const open of ['DE', 'US', 'GB', 'FR', 'NL']) {
+      expect(weightOf(talk, open), `messengers in ${open}`).toBeLessThan(0.25)
+      expect(weightOf(around, open), `ways around in ${open}`).toBeLessThan(0.25)
+    }
+    expect(talk.median).toBeLessThan(VOICE_SILENT_SHARE)
+    expect(around.median).toBeLessThan(VOICE_SILENT_SHARE)
+  })
+
+  it('fold OONI’s counts by test into a voice', () => {
+    const names = Object.keys(VOICES[0]!.tests)
+    const byCountry = {
+      result: [
+        { probe_cc: 'IR', test_name: 'signal', measurement_count: 60, anomaly_count: 50 },
+        { probe_cc: 'IR', test_name: 'whatsapp', measurement_count: 40, anomaly_count: 30 },
+        { probe_cc: 'IR', test_name: 'web_connectivity', measurement_count: 9000, anomaly_count: 900 },
+        { probe_cc: 'DE', test_name: 'telegram', measurement_count: 10, anomaly_count: 0 },
+        { probe_cc: 'nope', test_name: 'signal', measurement_count: 10, anomaly_count: 10 },
+      ],
+    }
+    expect(voiceCountriesOf(byCountry, names)).toEqual([
+      ['DE', 10, 0],
+      ['IR', 100, 80],
+    ])
+    const byHour = {
+      result: Array.from({ length: 24 }, (_, hour) => [
+        { measurement_start_day: `2026-11-12T${String(hour).padStart(2, '0')}:00:00Z`, test_name: 'signal', measurement_count: 5 },
+        { measurement_start_day: `2026-11-12T${String(hour).padStart(2, '0')}:00:00Z`, test_name: 'tor', measurement_count: 2 },
+      ]).flat(),
+    }
+    expect(voiceTideOf(byHour, '2026-11-12', names)).toEqual(Array.from({ length: 24 }, () => 5))
+    expect(voiceTideOf({ result: byHour.result.slice(2) }, '2026-11-12', names)).toBeNull()
+    expect(voiceTideOf(null, '2026-11-12', names)).toBeNull()
+  })
+
+  it('let a country sound once in five minutes, where the pages let it sound every eight seconds', () => {
+    const rule = { median: 0.01, weights: new Map([['RU', 1], ['IR', 1]]) }
+    const items = Array.from({ length: 40 }, (_, i) => ({ at: i * 10_000, cc: i % 4 === 0 ? 'IR' : 'RU', state: 'anomaly' }))
+    const memory = new Map<string, number[]>()
+    const sounded = balance(items, rule, memory, VOICE_GAP_SECONDS)
+    // 400 seconds of tests: each country twice, 300 seconds apart
+    expect(sounded.map((s) => [s.cc, s.at])).toEqual([
+      ['IR', 0],
+      ['RU', 10_000],
+      ['RU', 310_000],
+      ['IR', 320_000],
+    ])
+    expect(balance(items, rule).length).toBeGreaterThan(30)
   })
 })
