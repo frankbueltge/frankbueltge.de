@@ -35,7 +35,7 @@ jobs:
           # `ls-remote --exit-code` answers 2 for "no such ref" and anything else for "could not
           # ask", and only the first may close an issue.
           ahead_of_main () {
-            local repo="$1" br="$2" rc=0 enc ahead
+            local repo="$1" br="$2" rc=0 enc ahead tip pulls
             GIT_TERMINAL_PROMPT=0 git ls-remote --exit-code --heads "https://github.com/frankbueltge/$repo" "refs/heads/$br" >/dev/null 2>&1 || rc=$?
             if [ "$rc" = 2 ]; then echo gone; return 0; fi
             if [ "$rc" != 0 ]; then echo unknown; return 0; fi
@@ -46,10 +46,19 @@ jobs:
             # the branch standing; by 2026-11-13 that had raised twelve alarms for work that was on main.
             # Landed means: the branch's tip is the very commit a merged pull request was merged from, so
             # a commit pushed after the merge still strands.
+            #
+            # A branch whose pull request was closed without a merge is decided, not stranded: someone
+            # looked at the work and chose not to land it. The test is the same one: the branch's tip is
+            # the very commit that pull request stood at, so a commit pushed after the close strands
+            # again. On 2026-11-14 seven of the ten alarms still standing were such branches (Frank's
+            # decision of that day, wording private). An open pull request and a branch with none stay
+            # alarms: nobody has decided them.
             tip=$(GIT_TERMINAL_PROMPT=0 git ls-remote --heads "https://github.com/frankbueltge/$repo" "refs/heads/$br" 2>/dev/null | cut -f1)
-            if [ -n "$tip" ] && gh api "repos/frankbueltge/$repo/pulls?state=closed&head=frankbueltge:$enc&per_page=10" \
-                 --jq '.[] | select(.merged_at != null) | .head.sha' 2>/dev/null | grep -qx "$tip"; then
-              echo 0; return 0
+            if [ -n "$tip" ]; then
+              pulls=$(gh api "repos/frankbueltge/$repo/pulls?state=closed&head=frankbueltge:$enc&per_page=30" \
+                --jq '.[] | [(if .merged_at != null then "merged" else "closed" end), .head.sha] | @tsv' 2>/dev/null) || pulls=''
+              if grep -qxF "merged"$'\t'"$tip" <<<"$pulls"; then echo 0; return 0; fi
+              if grep -qxF "closed"$'\t'"$tip" <<<"$pulls"; then echo decided; return 0; fi
             fi
             ahead=$(gh api "repos/frankbueltge/$repo/compare/main...$enc" --jq '.ahead_by' 2>/dev/null) || { echo unknown; return 0; }
             case "$ahead" in ''|*[!0-9]*) echo unknown ;; *) echo "$ahead" ;; esac
@@ -74,7 +83,7 @@ jobs:
               | sed 's|.*refs/heads/||') || true
             for BR in $BRANCHES; do
               AHEAD=$(ahead_of_main "$REPO" "$BR")
-              case "$AHEAD" in ''|gone|unknown|0) continue ;; esac
+              case "$AHEAD" in ''|gone|unknown|decided|0) continue ;; esac
               # nur frische Stranden melden (jüngster Commit < 36h) — alte, bewusst stehende
               # Branches (z. B. dokumentierte Duplikate) sollen nicht täglich alarmieren
               LAST=$(gh api "repos/frankbueltge/$REPO/commits/$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BR")" --jq '.commit.committer.date' 2>/dev/null) || LAST=''
@@ -91,7 +100,7 @@ jobs:
           done
 
           # Aufräumen (P0.3-Anschluss, 16.07.): offene Gestrandet-Issues schließen, deren
-          # Branch inzwischen gelandet (ahead=0) oder gelöscht ist — der Wächter ruft nicht
+          # Branch inzwischen gelandet (ahead=0), entschieden (PR ohne Merge geschlossen) oder gelöscht ist — der Wächter ruft nicht
           # nur, er verstummt auch nachprüfbar, statt erledigte Fälle offen stehen zu lassen.
           gh issue list --repo frankbueltge/frankbueltge.de --state open \
             --search '"Gestrandete Session:" in:title' --json number,title \
@@ -106,6 +115,7 @@ jobs:
               case "$AHEAD" in
                 gone) WHY="ist gelöscht" ;;
                 0) WHY="ist gelandet (0 Commits vor main)" ;;
+                decided) WHY="ist entschieden (sein Pull Request wurde ohne Merge geschlossen)" ;;
                 *) continue ;;
               esac
               gh issue close "$NUM" --repo frankbueltge/frankbueltge.de \
