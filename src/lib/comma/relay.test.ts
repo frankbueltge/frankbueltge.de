@@ -1,7 +1,22 @@
+import { readFileSync } from 'node:fs'
+
 import { describe, expect, it } from 'vitest'
 
 import { categoryOf, listUrl, parseList, urlKey } from './testlists'
-import { aggregationUrl, LAG_MINUTES, measurementsUrl, minuteToRead, previousDay, ROW_LIMIT, standby, standbyReason } from './relay'
+import {
+  aggregationUrl,
+  cacheOptions,
+  LAG_MINUTES,
+  measurementsUrl,
+  minuteToRead,
+  previousDay,
+  RETRY_SECONDS,
+  retrySeconds,
+  ROW_LIMIT,
+  standby,
+  standbyReason,
+  upstreamHeaders,
+} from './relay'
 
 describe('the minute the site reads', () => {
   it('is the whole minute that began four minutes ago', () => {
@@ -32,6 +47,7 @@ describe('standby', () => {
     const r = standby('rate-limit')
     expect(r.status).toBe(503)
     expect(r.headers.get('access-control-allow-origin')).toBeNull()
+    expect(r.headers.get('cache-control')).toBe('no-store')
     expect(await r.json()).toEqual({ standby: 'rate-limit' })
   })
 
@@ -40,6 +56,50 @@ describe('standby', () => {
     expect(standbyReason(502, 'text/html')).toBe('source')
     expect(standbyReason(200, 'text/html')).toBe('shape')
     expect(standbyReason(200, 'application/json; charset=utf-8')).toBeNull()
+  })
+
+  it('carries what OONI said, so a standby can be read from outside', async () => {
+    const upstream = { status: 429, headers: new Headers({ 'cf-cache-status': 'MISS', 'x-ratelimit-remaining': '0' }) }
+    const r = standby('rate-limit', 10, upstreamHeaders(upstream))
+    expect(r.headers.get('x-comma-upstream-status')).toBe('429')
+    expect(r.headers.get('x-comma-upstream')).toBe('MISS')
+    expect(r.headers.get('x-comma-quota')).toBe('0')
+    expect(r.headers.get('retry-after')).toBe('10')
+    expect(r.headers.get('cache-control')).toBe('no-store')
+    expect(await r.json()).toEqual({ standby: 'rate-limit' })
+  })
+
+  it('passes on a quota only when it is a plain number', () => {
+    const odd = upstreamHeaders({ status: 200, headers: new Headers({ 'x-ratelimit-remaining': '12; drop' }) })
+    expect(odd['x-comma-quota']).toBeUndefined()
+    expect(odd['x-comma-upstream']).toBe('unknown')
+    expect(upstreamHeaders({ status: 200, headers: new Headers({ 'x-ratelimit-remaining': '3939' }) })['x-comma-quota']).toBe('3939')
+  })
+})
+
+describe('what Cloudflare keeps', () => {
+  it('keeps an answer for the given time and a refusal or an error never', () => {
+    const options = cacheOptions(600)
+    expect(options.cacheEverything).toBe(true)
+    expect(options.cacheTtlByStatus['200-299']).toBe(600)
+    expect(options.cacheTtlByStatus['300-599']).toBeLessThan(0)
+    expect(options).not.toHaveProperty('cacheTtl')
+  })
+
+  it('is how both relays ask OONI: no plain cacheTtl, which would keep a refusal too', () => {
+    for (const file of ['functions/api/comma/now.js', 'functions/api/comma/rule.js']) {
+      const source = readFileSync(file, 'utf8')
+      expect(source, file).toContain('cf: cacheOptions(')
+      expect(source, file).not.toMatch(/cacheTtl\s*:/)
+    }
+  })
+})
+
+describe('asking again', () => {
+  it('asks soon after a first standby, then every half minute', () => {
+    expect([1, 2, 3, 4, 5, 50].map(retrySeconds)).toEqual([5, 10, 20, 30, 30, 30])
+    expect(retrySeconds(0)).toBe(5)
+    expect(RETRY_SECONDS.at(-1)).toBe(30)
   })
 })
 

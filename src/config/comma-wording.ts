@@ -35,7 +35,8 @@ export const COMMA = {
       loading: 'Loading the organ, the bells and yesterday’s counts…',
       waiting: 'Waiting for the next minute of tests…',
       playing: 'Playing the tests of {minute} UTC.',
-      standby: 'OONI is not answering just now. The piece waits and asks again in a minute.',
+      standby: 'OONI is not answering just now. The piece asks again in {seconds} seconds.',
+      refused: 'OONI limits how often it may be asked and is turning this site away for the moment. The piece asks again in {seconds} seconds.',
       failed: 'The sounds could not be loaded in this browser.',
       noRule: 'Yesterday’s counts could not be read, so suspicion stays silent; blockpages still ring.',
     },
@@ -69,7 +70,7 @@ export const COMMA = {
     proof:
       'A blockpage is a state’s own notice that a page is blocked: proof. It rings a tubular bell on its row’s tone and cuts the tone for a moment. An anomaly is a local answer that differed from the control’s, by a false address, a cut connection or changed content: suspicion. It sounds as a second tone a syntonic comma lower, and the two beat. That small distance between two answers that should be the same is the work’s name.',
     rule: `A single anomaly is often a false alarm, so how loud a country’s anomalies are depends on how often its network deviated the day before, against that day’s median: ${say(2 ** OCTAVES)} times the median is full weight, the median itself is silence. And every country gets the same chances: each sounds at most once every ${say(GAP_SECONDS)} seconds, blockpages first, because some countries have many more volunteers than others. How censored a network is decides how loud it is, not how many people measure it. Both rules are choices of this work, and the gap was set after listening to one recorded window.`,
-    reading: `The site reads OONI’s newest nearly complete minute once a minute, about ${say(LAG_MINUTES)} minutes behind the world, and gives the same minute to everyone listening; the server holds each minute only for as long as it takes to hand it on. Your browser loads Citizen Lab’s test lists to tell what kind of page each test asked for, and names a blocked page only when it is a news outlet. Nothing about you or your listening is kept.`,
+    reading: `The site reads OONI’s newest nearly complete minute once a minute, about ${say(LAG_MINUTES)} minutes behind the world, and gives the same minute to everyone listening: each Cloudflare location keeps OONI’s answer for ten minutes, so OONI is asked once, and keeps a refusal not at all, so the next question goes to OONI again. Your browser loads Citizen Lab’s test lists to tell what kind of page each test asked for, and names a blocked page only when it is a news outlet. Nothing about you or your listening is kept.`,
     limits:
       'It can only hear where people can measure. In the days before it opened, North Korea and Turkmenistan had no tests at all, and China was tested in bursts, mostly from one network. Untested is not open. A state that censors without showing a blockpage is heard as suspicion, never as proof.',
   },
