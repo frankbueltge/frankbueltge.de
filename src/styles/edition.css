@@ -420,8 +420,8 @@
   display: grid;
   grid-auto-flow: column;
   --ed-lab-gap: 22px;
-  /* three cards to a view, so a fourth is one press away */
-  grid-auto-columns: calc((100% - 2 * var(--ed-lab-gap)) / 3);
+  /* four cards to a view on the desk (Frank's request of 2026-11-14, wording private) */
+  grid-auto-columns: calc((100% - 3 * var(--ed-lab-gap)) / 4);
   gap: var(--ed-lab-gap);
   margin: 6px calc(-1 * var(--ed-lab-ring)) 0;
   padding: var(--ed-lab-ring) var(--ed-lab-ring) 14px;
@@ -800,7 +800,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .ed-lab-track {
-    grid-auto-columns: calc((100% - var(--ed-lab-gap)) / 2);
+    grid-auto-columns: calc((100% - 2 * var(--ed-lab-gap)) / 3);
   }
 }
 @media (max-width: 899.98px) {
