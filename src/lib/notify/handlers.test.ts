@@ -3,8 +3,8 @@ import { fakeD1, sqliteAvailable } from '../reception/fake-d1'
 import { ensureSchema as ensureReception, insertEntry, type D1Like } from '../reception/store'
 import { ensureSchema as ensureReading } from '../reading/store'
 import { ensureSchema as ensureStudy } from '../study/store'
-import { countsOf, handleDaily, handleDailyStatus, ring, ringRating, send, type Deps, type NotifyEnv } from './handlers'
-import { RATING_MAILS_PER_DAY } from './operator'
+import { countsOf, handleDaily, handleDailyStatus, readyLetters, ring, ringRating, send, type Deps, type NotifyEnv } from './handlers'
+import { RATING_MAILS_PER_DAY, type PostLine } from './operator'
 
 const ARMED = { BREVO_API_KEY: 'key-for-tests', BREVO_SENDER_EMAIL: 'hello@example.org', BREVO_NOTIFY_TO: 'operator@example.org' }
 const BREVO = 'https://api.brevo.com/v3/smtp/email'
@@ -27,7 +27,10 @@ const network = vi.fn(async (url: string | URL | Request, init?: RequestInit) =>
   if (brevoStatus === 201) return new Response('{"messageId":"<test>"}', { status: 201 })
   return new Response('{"code":"unauthorized","message":"a message that may quote an address"}', { status: brevoStatus })
 })
-const deps: Deps = { fetch: network as unknown as typeof fetch, now: () => now }
+// The letters of the post office that lie ready; empty unless a test lays one, so no test depends on
+// what the committed ledger happens to hold.
+let letters: PostLine[] = []
+const deps: Deps = { fetch: network as unknown as typeof fetch, now: () => now, post: () => letters }
 
 async function makeEnv(overrides: Partial<NotifyEnv> = {}): Promise<NotifyEnv & { RECEPTION_DB: D1Like }> {
   return { RECEPTION_DB: await fakeD1(), ...ARMED, ...overrides } as NotifyEnv & { RECEPTION_DB: D1Like }
@@ -57,6 +60,7 @@ beforeEach(() => {
   accountStatus = 200
   sent.length = 0
   accountReads.length = 0
+  letters = []
   network.mockClear()
 })
 
@@ -179,5 +183,48 @@ describe('GET /api/notify/daily', () => {
   it('names what is missing, and nothing once armed', async () => {
     expect(await handleDailyStatus({}).json()).toEqual({ ready: false, missing: ['BREVO_API_KEY', 'BREVO_SENDER_EMAIL', 'BREVO_NOTIFY_TO', 'RECEPTION_DB'] })
     expect(await handleDailyStatus({ ...ARMED, RECEPTION_DB: {} as D1Like }).json()).toEqual({ ready: true, missing: [] })
+  })
+})
+
+describe('the daily mail announces a letter that is ready to send, once', () => {
+  const LETTER: PostLine = { id: '2026-11-a-letter', piece: 'A study of acts', receiver: 'An institute, its data desk' }
+
+  it.skipIf(!sqliteAvailable)('mails on an otherwise quiet day, names the letter and where it waits, and never again', async () => {
+    const env = await makeEnv()
+    letters = [LETTER]
+    const first = await post(env)
+    expect(await first.json()).toMatchObject({ ok: true, sent: true, letters: 1 })
+    expect(sent).toHaveLength(1)
+    expect(sent[0].subject).toContain('1 Brief bereit')
+    expect(sent[0].text).toContain('A study of acts')
+    expect(sent[0].text).toContain('an An institute, its data desk')
+    expect(sent[0].text).toContain('https://frankbueltge.de/post/#2026-11-a-letter')
+
+    now = new Date('2026-11-03T05:00:00Z')
+    const second = await post(env)
+    expect(await second.json()).toMatchObject({ ok: true, sent: false, reason: 'quiet' })
+    expect(sent).toHaveLength(1)
+  })
+
+  it.skipIf(!sqliteAvailable)('announces the letter again when Brevo refused the mail that carried it', async () => {
+    const env = await makeEnv()
+    letters = [LETTER]
+    brevoStatus = 401
+    expect((await post(env)).status).toBe(424)
+    brevoStatus = 201
+    expect(await (await post(env)).json()).toMatchObject({ ok: true, sent: true, letters: 1 })
+  })
+
+  it('reads from the ledger only letters that lie prepared and can be sent as written', () => {
+    const send = { kind: 'email', to: 'desk@example.org', subject: 'A study', body: 'x'.repeat(30) }
+    expect(
+      readyLetters([
+        { id: 'a', piece: 'ready', receiver: 'r', status: 'prepared', send },
+        { id: 'b', piece: 'no letter text', receiver: 'r', status: 'prepared' },
+        { id: 'c', piece: 'already sent', receiver: 'r', status: 'sent', send },
+        { id: 'd', piece: 'held back', receiver: 'r', status: 'withheld', send },
+      ]),
+    ).toEqual([{ id: 'a', piece: 'ready', receiver: 'r' }])
+    expect(readyLetters('not a ledger')).toEqual([])
   })
 })

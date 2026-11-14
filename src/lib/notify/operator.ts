@@ -114,20 +114,41 @@ export const germanDate = (day: string): string => {
 export const previousDay = (now: Date): string =>
   new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 1)).toISOString().slice(0, 10)
 
-/** One day's participation as one mail, or null when nobody took part. */
-export function dailyMail(day: string, c: DayCounts): OperatorMail | null {
+/** A packet of the post office that lies ready and can be sent as written (src/lib/post/ledger.ts). */
+export interface PostLine {
+  id: string
+  piece: string
+  receiver: string
+}
+
+/**
+ * One day's participation as one mail, or null when nobody took part and no letter is new.
+ *
+ * Since 2026-11-14 the mail also names each letter of the post office that became ready to send, once:
+ * the piece, the receiver and the place on /post where the finished mail waits. The operator sends it
+ * from his own address or not at all; the mail only says that it is there.
+ */
+export function dailyMail(day: string, c: DayCounts, post: PostLine[] = []): OperatorMail | null {
   const ratings = total(c.ratings)
   const readings = total(c.readings)
   const answers = total(c.studies)
-  if (ratings + readings + answers === 0) return null
+  if (ratings + readings + answers + post.length === 0) return null
   const summary = [
     ratings > 0 ? counted(ratings, 'Bewertung', 'Bewertungen') : null,
     readings > 0 ? counted(readings, 'Lesung', 'Lesungen') : null,
     answers > 0 ? counted(answers, 'Studienantwort', 'Studienantworten') : null,
+    post.length > 0 ? counted(post.length, 'Brief bereit', 'Briefe bereit') : null,
   ]
     .filter((part): part is string => part !== null)
     .join(', ')
   const lines = [`Am ${germanDate(day)} (UTC) auf frankbueltge.de: ${summary}.`]
+  if (post.length > 0) {
+    lines.push('', 'Post Office: bereit zum Versenden')
+    for (const p of post) {
+      lines.push(`  ${p.piece}`, `    an ${p.receiver}`, `    ${SITE}/post/#${p.id}`)
+    }
+    lines.push('  Dort liegt der fertige Brief. Gesendet wird nur von dir, von deiner Adresse.')
+  }
   if (ratings > 0) {
     lines.push('', 'Bewertungen')
     for (const r of c.ratings) {
@@ -145,10 +166,12 @@ export function dailyMail(day: string, c: DayCounts): OperatorMail | null {
     for (const s of c.studies) lines.push(`  ${s.study}: ${s.n}`)
     lines.push(`  ${SITE}/studies/`)
   }
-  lines.push(
-    '',
-    'Lesungen und Antworten kommen nur gezählt und erst am Folgetag: Ihre Seiten versprechen, dass die Website den Tag speichert, nicht die Uhrzeit.',
-  )
+  if (readings + answers > 0) {
+    lines.push(
+      '',
+      'Lesungen und Antworten kommen nur gezählt und erst am Folgetag: Ihre Seiten versprechen, dass die Website den Tag speichert, nicht die Uhrzeit.',
+    )
+  }
   return { subject: `frankbueltge.de am ${germanDate(day)}: ${summary}`, text: lines.join('\n') }
 }
 

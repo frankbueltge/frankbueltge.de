@@ -23,6 +23,23 @@ export const DELIVERY_STATUS = [
   'silence',
 ] as const
 
+/**
+ * How a packet goes out, when its practice says so (2026-11-14): by mail to an address the receiver
+ * published, or through a form or call page. `body` is the text that leaves, already read from the
+ * letter's file by the sync (scripts/post/send-block.mjs). Sending stays a human act: these fields only
+ * let the page hand the operator a finished mail.
+ */
+export const sendSchema = z
+  .object({
+    kind: z.enum(['email', 'form']),
+    to: z.string().email().optional(),
+    url: z.string().url().optional(),
+    subject: z.string().min(3).max(160),
+    body: z.string().min(20).max(6000),
+  })
+  .refine((s) => (s.kind === 'email' ? !!s.to : !!s.url), { message: 'email needs "to", form needs "url"' })
+export type Send = z.infer<typeof sendSchema>
+
 export const deliverySchema = z.object({
   /** stable id, `<yyyy-mm>-<slug>` */
   id: z.string().regex(/^\d{4}-\d{2}-[a-z0-9-]+$/),
@@ -41,6 +58,9 @@ export const deliverySchema = z.object({
   note: z.string().min(3),
   /** set by the sync for a packet read out of a practice's repo, e.g. `deliveries/<slug>/packet.json` */
   derived_from: z.string().min(3).optional(),
+  send: sendSchema.optional(),
+  /** why a packet's send block could not be used, in the sync's words; shown beside the packet */
+  send_problem: z.string().min(3).optional(),
 })
 export type Delivery = z.infer<typeof deliverySchema>
 
@@ -48,4 +68,43 @@ export type Delivery = z.infer<typeof deliverySchema>
 export function loadLedger(): Delivery[] {
   const entries = z.array(deliverySchema).parse(raw)
   return [...entries].sort((a, b) => b.as_of.localeCompare(a.as_of) || a.id.localeCompare(b.id))
+}
+
+// ── The operator's two links (2026-11-14) ────────────────────────────────────────────────────
+
+/** A mail link carries its text only up to this length; past it, mail programmes cut the body. */
+export const MAILTO_BODY_MAX = 1800
+
+/**
+ * The finished mail as a `mailto:` link, for a packet that goes out by mail. The body rides along
+ * while it fits; a longer letter gives a link with receiver and subject only, and the page shows the
+ * text to copy.
+ */
+export function mailtoOf(send: Send): { href: string; carriesBody: boolean } | null {
+  if (send.kind !== 'email' || !send.to) return null
+  const carriesBody = send.body.length <= MAILTO_BODY_MAX
+  const query = `subject=${encodeURIComponent(send.subject)}` + (carriesBody ? `&body=${encodeURIComponent(send.body)}` : '')
+  return { href: `mailto:${send.to}?${query}`, carriesBody }
+}
+
+/** What the operator may record about a packet he handled. */
+export const RECORDABLE = ['sent', 'answered', 'silence'] as const
+export type Recordable = (typeof RECORDABLE)[number]
+
+/** The title the recording workflow reads (.github/workflows/post-record.yml, scripts/post/record.mjs). */
+export const recordTitle = (status: Recordable, id: string): string => `Post ${status}: ${id}`
+
+/**
+ * A prefilled issue in this repository. Opened by the operator, it is the record that a packet left:
+ * the workflow reads the title, checks who opened it, writes the status into the ledger and closes
+ * the issue. Anybody may open such an issue; only the operator's is acted on.
+ */
+export function recordIssueUrl(status: Recordable, id: string): string {
+  const body = 'Opened from /post. Add a line that begins with "Note:" if the ledger should say more.'
+  return `https://github.com/frankbueltge/frankbueltge.de/issues/new?title=${encodeURIComponent(recordTitle(status, id))}&body=${encodeURIComponent(body)}`
+}
+
+/** Packets that lie ready and can be sent as written: what the operator's daily mail announces. */
+export function readyToSend(entries: Delivery[] = loadLedger()): Delivery[] {
+  return entries.filter((d) => d.status === 'prepared' && d.send)
 }
