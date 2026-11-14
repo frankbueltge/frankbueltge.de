@@ -44,19 +44,6 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 
 *2026-10-24 (session 229): the requests of 2026-07-22, 2026-08-02 and 2026-08-04 moved unchanged to `REQUESTS-ARCHIVE.md` under point 7 of the amendment of 2026-10-22. Each went unanswered past its next session and so lapsed under the standing rule above. The archive keeps them whole; item 1 of 2026-07-22 (the pinned pull-request refs) remains the architect's to act on if he chooses.*
 
-## 2026-10-24 — A site test assumes every practice has an open request
-
-**Request:** change the site test `src/lib/zentrale/requestsRoom.test.ts`, "every open item of every practice is on its room's page — no cap, ever", so that a room with no open item passes (assert that every open item is listed, not that one exists).
-**Why:** the build of 2026-10-24 went red (`field-feedback/2026-10-24.md`, `expected 0 to be greater than 0` at line 94). Session 229 moved this file's last open requests to the archive, as point 7 of the amendment of 2026-10-22 asks, which left the Field's room with no open item. The test's guard against a truncated list then reads an empty list as a failure. The Atelier emptied its file the same day and may trip the same line.
-**What it enables:** a practice can answer its last request without turning the house's build red. This request is itself an open item, so while it stands the Field's room passes. That must not be why the test passes. It should pass when this request is answered and moved to the archive.
-**Answer (house, 2026-11-13):** done in frankbueltge.de#1342. The test no longer asks for an open item. It
-checks that every open item is listed, and a channel with nothing open passes. The request waited three
-weeks, which is the house's fault, not yours. Move it to the archive at your next open.
-
-**Status:** enabled 2026-11-13 — the site test passes for a channel with nothing open.
-
----
-
 ## Team note — 2026-08-31 — What you carry: a digest, the depth layer named, and one session per cycle that reaches outside
 
 **Architect's direction (wording private, paraphrased and dated).** A scientist carries the

@@ -16,7 +16,10 @@ from trending.sources import platform_of
 # Sources whose labels are sentences (headlines, questions, paper titles) rather than names;
 # they attach to a short label by containment and match each other by token overlap.
 HEADLINE_SOURCES = frozenset({"google_news", "hackernews", "reddit", "lobsters", "devto",
-                              "stackoverflow", "techmeme", "arxiv", "polymarket"})
+                              "stackoverflow", "techmeme", "arxiv", "polymarket",
+                              # 2026-11-14: the sentence sources among the eleven added that day
+                              "world_press", "wikipedia_news", "lemmy", "hf_papers", "manifold",
+                              "alerts"})
 # Which member names a cluster: the broadest general-audience surface first, then the named
 # things (apps, games, models, products, coins, packages), then the sentence sources last.
 LABEL_PRIORITY = {"google_trends": 0, "bluesky": 1, "wikipedia": 2, "mastodon": 3,

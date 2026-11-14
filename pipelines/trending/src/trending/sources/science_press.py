@@ -20,7 +20,7 @@ import xml.etree.ElementTree as ET
 
 from trending.fetch import SourceUnavailable, fetch
 from trending.model import Signal
-from trending.sources.base import Context, SourceResult, SourceSpec
+from trending.sources.base import Context, SourceResult, SourceSpec, interleave
 
 RSS1 = "{http://purl.org/rss/1.0/}"
 ATOM = "{http://www.w3.org/2005/Atom}"
@@ -75,7 +75,7 @@ def fetch_source(ctx: Context) -> SourceResult:
                 break
     if not signals and notes:
         raise SourceUnavailable("; ".join(notes)[:200])
-    return SourceResult(signals, as_of=ctx.today.isoformat(), notes=notes)
+    return SourceResult(interleave(signals), as_of=ctx.today.isoformat(), notes=notes)
 
 
 SPEC = SourceSpec(

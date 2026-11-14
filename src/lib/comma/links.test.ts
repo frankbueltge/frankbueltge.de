@@ -31,8 +31,8 @@ describe('links from third-party data', () => {
     const tests = testsOf(
       {
         results: [
-          { measurement_start_time: '2026-11-12T19:40:29.000000Z', probe_cc: 'IR', measurement_uid: UID, confirmed: true },
-          { measurement_start_time: '2026-11-12T19:40:30.000000Z', probe_cc: 'IR', measurement_uid: '<script>', confirmed: true },
+          { measurement_start_time: '2026-11-12T19:40:29.000000Z', probe_cc: 'IR', test_name: 'web_connectivity', measurement_uid: UID, confirmed: true },
+          { measurement_start_time: '2026-11-12T19:40:30.000000Z', probe_cc: 'IR', test_name: 'web_connectivity', measurement_uid: '<script>', confirmed: true },
         ],
       },
       0,

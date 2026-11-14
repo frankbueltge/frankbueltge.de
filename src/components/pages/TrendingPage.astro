@@ -126,7 +126,9 @@ const machineEditions: { href: string; what: string }[] = [
               <p class="mt-1.5">
                 <Badge variant="outline">{col.status}</Badge>
                 {col.status === 'partial' && col.signals.length > 0 && <span class="ml-2 font-mono text-mono-sm text-fg-faint"><span class="tabular-nums">{col.count}</span> signals</span>}
-                {col.note && <span class="ml-2 font-mono text-mono-sm text-fg-muted">{col.note}</span>}
+                {/* A note quotes the address that failed, and an address has no place to break:
+                    on 2026-11-14 one of them widened the page to 524 px on a 390 px phone. */}
+                {col.note && <span class="ml-2 font-mono text-mono-sm text-fg-muted [overflow-wrap:anywhere]">{col.note}</span>}
               </p>
             )}
             {col.signals.length === 0 ? (
@@ -142,6 +144,7 @@ const machineEditions: { href: string; what: string }[] = [
                         <span>{s.label}</span>
                       )}
                       {s.geo && <span class="ml-1 font-mono text-mono-xs text-fg-faint">{s.geo}</span>}
+                      {s.desk && <span class="ml-1 whitespace-nowrap font-mono text-mono-xs text-fg-faint">{s.desk}</span>}
                     </span>
                     <span class="tr-signal-n font-mono text-mono-xs tabular-nums text-fg-faint">{s.magnitudeText}</span>
                   </li>

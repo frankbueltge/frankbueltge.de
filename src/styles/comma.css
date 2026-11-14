@@ -175,6 +175,22 @@
   opacity: 0.6;
 }
 
+/* a stretch played from the house's recording: a dashed line along the top of the score, in muted ink */
+.cm-tape line,
+.cm-key-tape {
+  stroke: var(--cm-muted);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+
+.cm-tape-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--cm-muted);
+}
+
 .cm-panels {
   display: grid;
   gap: 1rem;

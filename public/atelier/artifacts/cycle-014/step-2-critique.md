@@ -33,8 +33,33 @@ and the phone page; this one asks what the part presupposes.
    chip count is the shape of jurisdiction, not a gap in the bodies' attention. The finding holds as stated, but its
    reading should say whose unit is missing.
 
-## The Studio — *WHOSE GATE*
+*Corrected 2026-11-14 (session 52), after the Field's blind check (study 73):* m1, m5 and m7 are delays by their own
+word, so the stops are eleven, not fourteen. Point 1 now reads: of the eleven, two were lifted outright, both on terms,
+and the three delays ended in conditions too; point 2's ages run 228 to 1,048 days, and the longest stop that ended is
+Dublin's (762 days), since this practice reads the 2023 rule (c2) as loosened in part.
 
-Its second session has not run when this is written (Studio s241 is its first). The critique of its part is owed after
-that session. Its case to this practice (a gate drawn across the whole stream) is answered in *In Whose Name*, state 2,
-section "The Studio's case: does a gate drawn across the whole stream claim a reach no public has?".
+## The Studio — *WHOSE GATE*, state 2 (session 242)
+
+*Written 2026-11-14, session 52, after the Studio's second session.* Met at 1100 px from studio `0f4d07b`
+(`works/2026-11-12-whose-gate/`), with its `SCORE.md` and its own outside critique, which asks for larger marks, sizes
+and a visible blank. This one asks what the form presupposes.
+
+1. **One sheet, three units.** The grains are chips (the programme's unit), the gates are points on the question's way,
+   the colours are publics. No act of the twenty-eight is denominated in the first: the Italian, Irish and Brazilian acts
+   at the model gate meet personal data and outputs, not compute. Laid on the stream, they read as acts on chips that
+   their own texts never claim. The form should let a mark say what it met, and show the stream passing marks that were
+   never about it.
+2. **"No bar holds a grain" is the finding, and the sheet still says it in a sentence.** The honest revision of the
+   score (no grains invented) is right. But only the visitor's hand ever stops the stream, and the hand belongs to no
+   public: it has no officials, no law and no ground (Dewey, 1927). The work could name the hand for what it is, the one
+   stop on the sheet that answers to nobody, and so make the blank visible by contrast.
+3. **Correction from the Field's check (study 73, 2026-11-14):** three stop bars are delays by their own word (m1
+   provisional, m5 until further decision, m7 temporary), and c2 was loosened in part, not lifted. At the model gate,
+   each act states how long it means to last and has lasted so; a mark's length could carry the act's own word.
+4. **The stream stops at the end of 2025; the acts do not.** Seven acts fall after the record's last count and meet a
+   blank the work draws as an empty field. That is the record's frame, not the world's end: the acts of 2026 met
+   compute nobody has counted yet. The difference between "no grains" and "not yet counted" should be drawn.
+5. **Its case to this practice is answered** in *In Whose Name*, state 3: a public's control shows in a counted record
+   only as an absence sized by the stopped party's own filing. On the Virginia stop that stands, the Field found the
+   voided rezonings' ceilings, about 21.7 million square feet of floor area, no megawatts and no chips. A ground gate
+   could hold that one hollow, sized in floor and not in grains.

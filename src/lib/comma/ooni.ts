@@ -1,14 +1,17 @@
-// src/lib/comma/ooni.ts — one minute of OONI's web tests, read into what Comma needs (2026-11-13).
+// src/lib/comma/ooni.ts — rows of OONI's measurement list, read into what Comma needs (2026-11-13).
 //
 // OONI Probe runs on volunteers' phones and computers. Its web test asks the volunteer's own network for a page and
-// compares the answer with the one a control on an open network gets. Every test arrives as one row of OONI's
-// measurement list; Comma keeps four facts of it and drops the rest: when it started, in which country, the URL it
-// asked for (only to find the page's category), and what came back. What came back is one of four states, and a test
-// is given exactly one of them, the strongest that applies:
+// compares the answer with the one a control on an open network gets; its other tests try a messenger, Tor or
+// another way around a block. Every test arrives as one row of OONI's measurement list; Comma keeps a few facts of
+// it and drops the rest: when it started, in which country, which test it was, the URL it asked for (only to find
+// the page's category), and what came back. What came back is one of four states, and a test is given exactly one
+// of them, the strongest that applies:
 //   confirmed  the network showed a known blockpage, the state's own notice (proof)
 //   anomaly    the local answer differed from the control's, by DNS, connection or content (suspicion)
 //   failure    the test itself failed
 //   open       the page arrived as it does elsewhere
+// Since 2026-11-14 the site asks OONI only for the rows that deviated (src/lib/comma/relay.ts says why), so the
+// last two states no longer arrive; they stay here because a row is still read for what it says.
 
 export type State = 'confirmed' | 'anomaly' | 'failure' | 'open'
 
@@ -18,7 +21,9 @@ export interface Test {
   /** two-letter country code */
   cc: string
   state: State
-  /** the page that was asked for */
+  /** OONI's name of the test: web_connectivity, signal, tor, ... */
+  test: string
+  /** the page that was asked for; empty for a test that asks for none */
   url: string
   /** OONI's id of the test, for a link to its entry in OONI Explorer; empty when OONI's row had none that looks right */
   uid: string
@@ -28,6 +33,7 @@ interface Row {
   measurement_uid?: unknown
   measurement_start_time?: unknown
   probe_cc?: unknown
+  test_name?: unknown
   input?: unknown
   anomaly?: unknown
   confirmed?: unknown
@@ -53,6 +59,9 @@ export function timeOf(stamp: unknown): number | null {
   return Number.isFinite(ms) ? ms : null
 }
 
+/** A test's name as OONI writes it; anything else is not passed on. */
+export const TEST_NAME = /^[a-z][a-z0-9_]{1,39}$/
+
 /** The tests of one window [from, to) in OONI's measurement list. Anything malformed is skipped, never guessed. */
 export function testsOf(json: unknown, from: number, to: number): Test[] {
   const results = (json as { results?: unknown } | null)?.results
@@ -62,10 +71,12 @@ export function testsOf(json: unknown, from: number, to: number): Test[] {
     const at = timeOf(r?.measurement_start_time)
     if (at === null || at < from || at >= to) continue
     if (typeof r.probe_cc !== 'string' || !/^[A-Z]{2}$/.test(r.probe_cc)) continue
+    if (typeof r.test_name !== 'string' || !TEST_NAME.test(r.test_name)) continue
     out.push({
       at,
       cc: r.probe_cc,
       state: stateOf(r),
+      test: r.test_name,
       url: typeof r.input === 'string' ? r.input : '',
       uid: typeof r.measurement_uid === 'string' && UID.test(r.measurement_uid) ? r.measurement_uid : '',
     })

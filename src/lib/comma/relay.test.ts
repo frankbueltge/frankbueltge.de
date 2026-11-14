@@ -2,43 +2,26 @@ import { readFileSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
+import { BLOCK_MS } from './clock'
+import { blockUrl, cacheOptions, clockHeaders, KEEP_SECONDS, ROW_LIMIT, standby, standbyReason, upstreamHeaders } from './relay'
 import { categoryOf, listUrl, parseList, urlKey } from './testlists'
-import {
-  aggregationUrl,
-  cacheOptions,
-  LAG_MINUTES,
-  measurementsUrl,
-  minuteToRead,
-  previousDay,
-  RETRY_SECONDS,
-  retrySeconds,
-  ROW_LIMIT,
-  standby,
-  standbyReason,
-  upstreamHeaders,
-} from './relay'
 
-describe('the minute the site reads', () => {
-  it('is the whole minute that began four minutes ago', () => {
-    const now = Date.parse('2026-11-13T00:10:42Z')
-    expect(new Date(minuteToRead(now)).toISOString()).toBe('2026-11-13T00:06:00.000Z')
-    expect(LAG_MINUTES).toBe(4)
-  })
+describe('what the site asks OONI for', () => {
+  const block = Date.parse('2026-11-13T23:35:00Z')
 
-  it('asks OONI for that minute only, and for web tests only', () => {
-    const url = new URL(measurementsUrl(Date.parse('2026-11-13T00:06:00Z')))
+  it('is one block of five minutes, deviations only, of every kind of test', () => {
+    const url = new URL(blockUrl(block))
     expect(url.origin).toBe('https://api.ooni.io')
-    expect(url.searchParams.get('since')).toBe('2026-11-13T00:06:00')
-    expect(url.searchParams.get('until')).toBe('2026-11-13T00:07:00')
-    expect(url.searchParams.get('test_name')).toBe('web_connectivity')
+    expect(url.searchParams.get('since')).toBe('2026-11-13T23:35:00')
+    expect(url.searchParams.get('until')).toBe('2026-11-13T23:40:00')
+    expect(url.searchParams.get('anomaly')).toBe('true')
+    expect(url.searchParams.has('test_name')).toBe(false)
     expect(Number(url.searchParams.get('limit'))).toBe(ROW_LIMIT)
+    expect(BLOCK_MS).toBe(300_000)
   })
 
-  it('reads the rule from the previous UTC day', () => {
-    expect(previousDay(Date.parse('2026-11-13T00:10:00Z'))).toEqual({ since: '2026-11-12', until: '2026-11-13' })
-    const url = new URL(aggregationUrl(Date.parse('2026-11-13T23:59:59Z')))
-    expect(url.searchParams.get('since')).toBe('2026-11-12')
-    expect(url.searchParams.get('axis_x')).toBe('probe_cc')
+  it('says which block an answer is about and what time the site’s clock shows', () => {
+    expect(clockHeaders(block, 1_794_613_500_123.7)).toEqual({ 'x-comma-block': '2026-11-13T23:35:00.000Z', 'x-comma-now': '1794613500123' })
   })
 })
 
@@ -79,27 +62,28 @@ describe('standby', () => {
 
 describe('what Cloudflare keeps', () => {
   it('keeps an answer for the given time and a refusal or an error never', () => {
-    const options = cacheOptions(600)
+    const options = cacheOptions(KEEP_SECONDS)
     expect(options.cacheEverything).toBe(true)
-    expect(options.cacheTtlByStatus['200-299']).toBe(600)
+    expect(options.cacheTtlByStatus['200-299']).toBe(1800)
     expect(options.cacheTtlByStatus['300-599']).toBeLessThan(0)
     expect(options).not.toHaveProperty('cacheTtl')
   })
 
-  it('is how both relays ask OONI: no plain cacheTtl, which would keep a refusal too', () => {
-    for (const file of ['functions/api/comma/now.js', 'functions/api/comma/rule.js']) {
-      const source = readFileSync(file, 'utf8')
-      expect(source, file).toContain('cf: cacheOptions(')
-      expect(source, file).not.toMatch(/cacheTtl\s*:/)
-    }
+  it('is how the relay asks OONI: no plain cacheTtl, which would keep a refusal too', () => {
+    const source = readFileSync('functions/api/comma/_block.js', 'utf8')
+    expect(source).toContain('cf: cacheOptions(')
+    expect(source).not.toMatch(/cacheTtl\s*:/)
+    // the request to OONI is built from scratch: nothing of the visitor's own request goes into it
+    expect(source).not.toMatch(/request\.headers/)
+    expect(source).not.toMatch(/fetch\(\s*request/)
   })
-})
 
-describe('asking again', () => {
-  it('asks soon after a first standby, then every half minute', () => {
-    expect([1, 2, 3, 4, 5, 50].map(retrySeconds)).toEqual([5, 10, 20, 30, 30, 30])
-    expect(retrySeconds(0)).toBe(5)
-    expect(RETRY_SECONDS.at(-1)).toBe(30)
+  it('lets no caller name a time: the endpoints read the clock, never the address', () => {
+    for (const file of ['functions/api/comma/now.js', 'functions/api/comma/next.js']) {
+      const source = readFileSync(file, 'utf8')
+      expect(source, file).not.toMatch(/searchParams|request\.url|new URL\(/)
+      expect(source, file).toContain('blockPlaying(now)')
+    }
   })
 })
 

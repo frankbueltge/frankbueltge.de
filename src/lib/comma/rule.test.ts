@@ -2,17 +2,18 @@ import { describe, expect, it } from 'vitest'
 
 import windowFixture from './fixtures/window-2026-11-12T193805Z.json'
 import aggregationFixture from './fixtures/aggregation-2026-11-11.json'
-import type { State, Test } from './ooni'
-import { askingLevel, balance, commaSeconds, GAP_SECONDS, prune, ruleOf, weightOf } from './rule'
+import dayJson from '@/data/comma/day.json'
+
+import { GROUPS } from './groups'
+import type { State } from './ooni'
+import { ASK_FULL, balance, commaSeconds, dayOf, GAP_SECONDS, prune, ruleOf, ruleOfDay, tideLevel, tideOf, weightOf, type Heard } from './rule'
 
 const STATE: Record<string, State> = { c: 'confirmed', a: 'anomaly', f: 'failure', o: 'open' }
 const start = Date.parse(windowFixture.start)
-const tests: Test[] = (windowFixture.rows as [number, string, string][]).map(([s, cc, st]) => ({
+const tests: Heard[] = (windowFixture.rows as [number, string, string][]).map(([s, cc, st]) => ({
   at: start + s * 1000,
   cc,
   state: STATE[st]!,
-  url: '',
-  uid: '',
 }))
 const aggregation = {
   result: (aggregationFixture.rows as [string, number, number, number][]).map(([cc, n, a, c]) => ({
@@ -80,8 +81,8 @@ describe('one country, the same chances', () => {
     const t0 = 1_000_000
     const sounded = balance(
       [
-        { at: t0, cc: 'RU', state: 'anomaly', url: '', uid: '' },
-        { at: t0 + 3000, cc: 'RU', state: 'confirmed', url: '', uid: '' },
+        { at: t0, cc: 'RU', state: 'anomaly' },
+        { at: t0 + 3000, cc: 'RU', state: 'confirmed' },
       ],
       rule,
     )
@@ -89,7 +90,7 @@ describe('one country, the same chances', () => {
   })
 
   it('keeps silent the anomalies of a country without weight', () => {
-    expect(balance([{ at: 0, cc: 'US', state: 'anomaly', url: '', uid: '' }], rule)).toEqual([])
+    expect(balance([{ at: 0, cc: 'US', state: 'anomaly' }], rule)).toEqual([])
   })
 
   it('forgets what the gap can no longer reach', () => {
@@ -108,11 +109,66 @@ describe('the tones', () => {
     expect(commaSeconds(7)).toBeCloseTo(3.2)
   })
 
-  it('counts the asking of the last five seconds on a log scale', () => {
-    expect(askingLevel([], 10_000)).toBe(0)
-    const sixty = Array.from({ length: 60 }, (_, i) => 6000 + i * 50)
-    expect(askingLevel(sixty, 10_000)).toBeCloseTo(1)
-    expect(askingLevel([1000, 9000], 10_000)).toBeCloseTo(Math.log2(2) / Math.log2(61))
-    expect(askingLevel([9000, 11_000], 10_000)).toBeCloseTo(Math.log2(2) / Math.log2(61))
+  it('passes on whatever came with a test, and adds its country’s weight', () => {
+    const rule = ruleOf(aggregation)!
+    const [one] = balance([{ at: 0, cc: 'RU', state: 'confirmed', uid: 'x', group: 2 }], rule)
+    expect(one).toEqual({ at: 0, cc: 'RU', state: 'confirmed', uid: 'x', group: 2, weight: 1 })
+  })
+})
+
+describe('the committed day', () => {
+  const day = dayOf(dayJson)
+
+  it('is a whole day of counts: countries, and 24 hours of the six kinds of page', () => {
+    expect(day).not.toBeNull()
+    expect(day!.day).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(day!.countries.length).toBeGreaterThan(100)
+    expect(day!.tide).toHaveLength(24)
+    expect(day!.tide.every((hour) => hour.length === GROUPS.length && hour.reduce((a, b) => a + b, 0) > 10_000)).toBe(true)
+  })
+
+  it('makes a rule in which the heavily deviating countries carry weight and the open ones none', () => {
+    const rule = ruleOfDay(day)
+    expect(rule).not.toBeNull()
+    expect(rule!.median).toBeGreaterThan(0.01)
+    expect(rule!.median).toBeLessThan(0.15)
+    expect(weightOf(rule, 'RU')).toBeGreaterThan(0.5)
+    expect(weightOf(rule, 'IR')).toBeGreaterThan(0.5)
+    expect(weightOf(rule, 'US')).toBeLessThan(0.25)
+  })
+
+  it('refuses a file that is not a day of counts', () => {
+    expect(dayOf(null)).toBeNull()
+    expect(dayOf({ v: 2, day: '2026-11-12', countries: [['RU', 1, 0, 0]], tide: [] })).toBeNull()
+    expect(dayOf({ v: 1, day: 'yesterday', countries: [['RU', 1, 0, 0]], tide: Array.from({ length: 24 }, () => [1, 1, 1, 1, 1, 1]) })).toBeNull()
+    expect(dayOf({ v: 1, day: '2026-11-12', countries: [['RU', 1, 0, 0]], tide: Array.from({ length: 23 }, () => [1, 1, 1, 1, 1, 1]) })).toBeNull()
+    expect(dayOf({ v: 1, day: '2026-11-12', countries: [['russia', 1, 0, 0]], tide: Array.from({ length: 24 }, () => [1, 1, 1, 1, 1, 1]) })).toBeNull()
+    expect(ruleOfDay(null)).toBeNull()
+  })
+
+  it('folds OONI’s count by hour and category into the six kinds, and refuses a day with a missing hour', () => {
+    const rows = Array.from({ length: 24 }, (_, hour) => [
+      { measurement_start_day: `2026-11-12T${String(hour).padStart(2, '0')}:00:00Z`, category_code: 'NEWS', measurement_count: 100 },
+      { measurement_start_day: `2026-11-12T${String(hour).padStart(2, '0')}:00:00Z`, category_code: 'POLR', measurement_count: 20 },
+      { measurement_start_day: `2026-11-12T${String(hour).padStart(2, '0')}:00:00Z`, category_code: 'PORN', measurement_count: 7 },
+      { measurement_start_day: `2026-11-12T${String(hour).padStart(2, '0')}:00:00Z`, category_code: 'NEVER-SEEN', measurement_count: 3 },
+    ]).flat()
+    const tide = tideOf({ result: rows }, '2026-11-12')!
+    expect(tide).toHaveLength(24)
+    expect(tide[0]).toEqual([120, 0, 0, 0, 7, 3])
+    expect(tideOf({ result: rows.slice(4) }, '2026-11-12')).toBeNull()
+    expect(tideOf({ result: rows }, '2026-11-13')).toBeNull()
+    expect(tideOf(null, '2026-11-12')).toBeNull()
+  })
+
+  it('sets a tone’s loudness from its kind’s tests in this hour, on the scale the live count had', () => {
+    const tide = Array.from({ length: 24 }, (_, hour) => [hour === 7 ? ASK_FULL * 720 : 720, 0, 0, 0, 0, 0])
+    const made = dayOf({ v: 1, day: '2026-11-12', countries: [['RU', 1000, 100, 10]], tide })!
+    const at = (hour: number) => Date.parse(`2026-11-14T${String(hour).padStart(2, '0')}:30:00Z`)
+    // 720 tests an hour are one every five seconds
+    expect(tideLevel(made, 0, at(3))).toBeCloseTo(Math.log2(2) / Math.log2(1 + ASK_FULL))
+    expect(tideLevel(made, 0, at(7))).toBeCloseTo(1)
+    expect(tideLevel(made, 1, at(7))).toBe(0)
+    expect(tideLevel(null, 0, at(7))).toBe(0)
   })
 })

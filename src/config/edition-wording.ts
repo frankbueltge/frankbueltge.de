@@ -69,7 +69,7 @@ export const EDITION = {
     lead: [],
     /** The carousel under the lead: exactly these, in this order (same README §3). /experiments
      *  keeps listing every other experiment. */
-    picks: ['ducking', 'trending', 'ill-tempered-week', 'comma', 'third-reading', 'consensus'],
+    picks: ['comma', 'ducking', 'trending', 'ill-tempered-week', 'third-reading', 'consensus'],
     title: 'Selected experiments',
     /** no line beside the title (2026-11-13): the selection claims nothing about its pieces */
     sub: '',

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { GROUPS } from './groups'
-import { bandWidth, bellLabelY, labelEnd, layoutFor, NARROW_SECONDS, stagger, visible, WIDE_SECONDS, weightTier, xOf, yOf } from './score'
+import { bandWidth, bellLabelY, labelEnd, layoutFor, NARROW_SECONDS, stagger, TAPE_LABEL_Y, TAPE_LINE_Y, visible, weightTier, WIDE_SECONDS, xOf, yOf } from './score'
 
 describe('the score on a wide box', () => {
   const l = layoutFor(1000)
@@ -82,5 +82,18 @@ describe('labels that would collide', () => {
   it('stand above the row on a wide box and below it on a phone', () => {
     expect(bellLabelY(layoutFor(1000), 100, 0)).toBe(91)
     expect(bellLabelY(layoutFor(358), 100, 1)).toBe(136)
+  })
+})
+
+describe('the line that marks a recording', () => {
+  it('stands clear of the highest label of the first row, on a wide box and on a phone', () => {
+    const wide = layoutFor(1000)
+    // three steps of labels above the first row; the top of the highest one's letters
+    const highest = bellLabelY(wide, yOf(wide, 0), 2) - 9
+    expect(TAPE_LINE_Y).toBeLessThan(highest - 2)
+    const phone = layoutFor(390)
+    // on a phone the row's name stands above the row; the top of its letters
+    expect(TAPE_LINE_Y).toBeLessThan(yOf(phone, 0) - 14 - 11)
+    expect(TAPE_LABEL_Y).toBeLessThan(TAPE_LINE_Y)
   })
 })

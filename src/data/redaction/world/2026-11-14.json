@@ -1,0 +1,154 @@
+{
+  "date": "2026-11-14",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-14T12:29:05Z",
+    "counts": {
+      "botwall": 23,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 272,
+      "other": 0,
+      "server_error": 1,
+      "unreachable": 3
+    },
+    "decided": 273,
+    "excluded_unverifiable": 27,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0205
+    ],
+    "gone_rate": 0.0037,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0139
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-12",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "finanznachrichten.de",
+        "first_seen": "20261112090000",
+        "http_code": 404,
+        "title": "Janus Henderson Global HYFA Paris-aligned Climate Core UCITS ETF",
+        "url": "https://www.finanznachrichten.de/nachrichten-2026-11/70108513-janus-henderson-global-hyfa-paris-aligned-climate-core-ucits-etf-net-asset-value-s-008.htm"
+      }
+    ],
+    "sample_drawn_at": "2026-11-13T13:20:03Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5414,
+      "replaced": 6260,
+      "trivial": 826,
+      "update": 490
+    },
+    "day": "2026-11-13",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "hits",
+          "lowest",
+          "level",
+          "since",
+          "August",
+          "price"
+        ],
+        "after": "Bitcoin price hits lowest level since August: Bitcoin price today: BTC USD falls near $71,000 after Jensen Huang resigns as Nvidia CEO and ETF outflows hit $1.44 billion in five days",
+        "before": "Bitcoin BTC USD crash after Nvidia CEO resigns: Bitcoin price today: BTC USD falls near $71,000 after Jensen Huang resigns as Nvidia CEO and ETF outflows hit $1.44 billion in five days",
+        "detected": "2026-11-13T20:31:30Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "crash",
+          "BTC",
+          "USD",
+          "after",
+          "resigns",
+          "Nvidia",
+          "CEO"
+        ],
+        "similarity": 0.812,
+        "url": "https://economictimes.indiatimes.com/news/international/us/bitcoin-price-today-btc-usd-falls-near-71000-after-jensen-huang-resigns-as-nvidia-ceo-and-etf-outflows-hit-1-44-billion-in-five-days/articleshow/135779473.cms",
+        "weight": 17,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "First",
+          "Doom",
+          "Guard"
+        ],
+        "after": "Avengers: Doomsday Promo Art Reveals Epic MCU Team-ups And A First Look At Doctor Doom's \"Doom Guard\"",
+        "before": "Avengers: Doomsday Promo Art Reveals Epic MCU Team-ups And A New Look At Doctor Doom's Allies",
+        "detected": "2026-11-13T16:05:09Z",
+        "domain": "comicbookmovie.com",
+        "removed": [
+          "New",
+          "Allies"
+        ],
+        "similarity": 0.8,
+        "url": "https://comicbookmovie.com/avengers/avengers-doomsday/avengers-doomsday-promo-art-reveals-epic-mcu-team-ups-and-a-new-look-at-doctor-dooms-allies-a230842",
+        "weight": 10,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Mesa"
+        ],
+        "after": "Mesa vet tech hurt in hit-and-run after couple allegedly failed to pay vet bill",
+        "before": "East Valley vet tech hurt in hit-and-run after couple allegedly failed to pay vet bill",
+        "detected": "2026-11-13T06:48:15Z",
+        "domain": "azfamily.com",
+        "removed": [
+          "East",
+          "Valley"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.azfamily.com/2026/11/06/east-valley-vet-tech-hurt-hit-and-run-after-couple-allegedly-failed-pay-vet-bill/",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14275,
+      "PAGE_TEXTCHANGE": 135101,
+      "PAGE_TITLECHANGE": 50500,
+      "UNCHANGED_CONTENT": 711850
+    },
+    "title_changes_en": 12990,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1794659108236",
+        "job_id": "world_gdg_counts_20261113",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 229638144,
+        "created": "1794659113823",
+        "job_id": "world_gdg_titles_20261113",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-14T12:29:05Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-13.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

@@ -39,3 +39,12 @@ class SourceSpec:
     # repositories and its trending page). None means the id is the platform. The convergence
     # rule and the discovery corpus count platforms, not sources — see `platform_of`.
     platform: str | None = None
+
+
+def interleave(signals: list[Signal]) -> list[Signal]:
+    """Signals of a source that reads several feeds (or storefronts), reordered so that every
+    feed's first item comes before any feed's second. The ranks are each feed's own and are not
+    changed; only the order of the list is, so that a reader who is shown the first few lines of
+    a source sees all of its desks and not the first desk alone. Stable: within one rank the
+    feeds keep the order the source lists them in."""
+    return sorted(signals, key=lambda s: s.rank)

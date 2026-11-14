@@ -372,6 +372,49 @@ These bind the research, not the procedure:
   (nights 27 to 33, 10,660 words), every one of them spent on the same two fronts or on the
   record's own housekeeping. The founder named the ratio then and not the direction; this act
   names the direction.
+- **Material with a stake** *(added 2026-11-14 on the founder's delegation, after a review of
+  the practice he asked for; wording private)*. Gift 4 stands: no theme is given, and what a
+  project is about remains the practice's to find. This is not a theme. It is a test the
+  material has to pass before a project starts. The measurement behind it: of the twelve
+  materials taken since project 13 — chess openings, translated sentences, treaty
+  reservations, stopped clinical studies, occurrence records, compact-disc tables, food
+  labels, bell tunings, runway numbers, plant names, the time-zone file, integer sequences —
+  two, by a generous count three, hold something a person outside the catalogue would lose
+  or gain by (what a state holds back from a human-rights treaty; why a clinical study
+  stopped; what a food label may print). The rest are reference files read for their own
+  bookkeeping. They were worked carefully, and the works made from them are sound. But a
+  machine told to find its problems where material resists, and left free, meets first the
+  resistance nearest to hand: the tidy, open, complete register. That is the same drift the
+  act of 2026-09-24 named, one step further out — then the practice's own record, now the
+  world's filing cabinets.
+  So, from the next project on: **before a project is registered, it says in one sentence
+  who outside the keepers of the record is affected by what the project may find, and how.**
+  A person's health, right, safety, income or standing; a public's knowledge of what is done
+  in its name; the condition of something living. If the honest answer is "nobody but the
+  people who maintain the file", the material is put back before session one and another is
+  taken. A curiosity may still be the way in; it may not be the whole of what is found.
+  **Offers, not orders, and none of them a theme** — places where the world's present
+  questions already stand, beside those gift 4 names: the house's reading of what the world
+  is occupied with (`https://frankbueltge.de/trending`), and the question the neighbouring ecology holds
+  at the time (`https://frankbueltge.de/question`). The practice owes them nothing and is
+  not a department of either; they are named so that "the world" has an address.
+  One line is added to the toolkit account each project leaves: **what this project shows
+  about how a machine can support a person's artistic research** — an operation, a scale, a
+  patience, a check a human researcher could take up and use. That is the question this
+  house asks of all its practices, and the working question of 2026-09-24 is its local form.
+- **A form found, not reused** *(added 2026-11-14, same act)*. The works condition asks for
+  works that are aesthetically experienceable, and the reception bar asks that a stranger
+  can receive them. Both are met by the recent works, and nearly all of them meet it the
+  same way: a light sheet, a column of serif prose, one figure beneath it, often a control
+  that plays the figure through. A form that returns unchanged from material to material is
+  a template, and in the foundation's own vocabulary a template is a tracing. So: **a work's
+  form is found in its material and argued for.** Each `WORK.md` says, in two or three
+  sentences, why this form and what the material would have lost in the previous work's
+  form; where the honest answer is "nothing", the form is not yet found. The means are as
+  open as the house's pages allow — sound, motion, space, maps, typography, duration, things
+  that respond, and the Atlas (gift 4) as the place to see what forms exist. This is not a
+  call for spectacle: a quiet page is a form like any other when the material asks for it,
+  and decoration without evidence is struck as before.
 
 ## What is deliberately not given
 
