@@ -3,6 +3,7 @@
 // produces, and the one place the ratio is formatted.
 import { describe, expect, it } from 'vitest'
 import { fixtureLetGo, fixturePromoted, fixtureTerm, fixtureTerms, fixtureWatchlist } from './terms-fixtures'
+import { TERM_STATUSES } from './terms-types'
 import {
   atWindowFloor,
   firstSeenCell,
@@ -36,7 +37,10 @@ import {
   seriesRows,
   seriesStrip,
   sortTerms,
+  statusGroups,
+  statusHref,
   statusLabel,
+  statusMeaning,
   statusSentence,
   statusTally,
   termDescription,
@@ -66,6 +70,46 @@ describe('status order and labels', () => {
     expect(statusLabel('quiet')).toBe('Quiet')
     expect(statusTally(fixtureTerms()).map((i) => i.status)).toEqual(['emerging', 'rising', 'established', 'fading', 'quiet'])
     expect(statusTally(fixtureTerms()).every((i) => i.n > 0)).toBe(true)
+  })
+})
+
+// A stage pill once lit up under the pointer and led nowhere. Every stage named on a page is an
+// address on the hub now, and the hub lists its terms under that address.
+describe('a stage is an address', () => {
+  it('gives every stage one place on the hub and one line of meaning', () => {
+    for (const s of TERM_STATUSES) {
+      expect(statusHref(s)).toBe(`/trending/topics/#${s}`)
+      expect(statusMeaning(s).length).toBeGreaterThan(10)
+      // A threshold repeated here would age: the figures stay in the rules file.
+      expect(statusMeaning(s)).not.toMatch(/\d/)
+    }
+  })
+
+  it('links every pill of the tally to the stage it counts', () => {
+    for (const i of statusTally(fixtureTerms())) {
+      expect(i.href).toBe(statusHref(i.status))
+      expect(i.meaning).toBe(statusMeaning(i.status))
+    }
+  })
+
+  it('groups the watchlist by stage, in reading order, with every term in exactly one group', () => {
+    const file = fixtureTerms()
+    const groups = statusGroups(file)
+    expect(groups.map((g) => g.status)).toEqual(['emerging', 'rising', 'established', 'fading', 'quiet'])
+    expect(groups.flatMap((g) => g.links.map((l) => l.slug))).toEqual(termLinks(file.terms).map((l) => l.slug))
+    for (const g of groups) {
+      expect(g.n).toBe(g.links.length)
+      expect(g.links.every((l) => l.status === g.status)).toBe(true)
+    }
+  })
+
+  it('leaves a stage without a term out, so no pill points at a missing head', () => {
+    const file = fixtureTerms({
+      terms: [fixtureTerm({ slug: 'a', term: 'a', status: 'rising' }), fixtureTerm({ slug: 'b', term: 'b', status: 'quiet' })],
+      summary: { terms_total: 2, by_status: { rising: 1, quiet: 1 }, candidates_total: 0 },
+    })
+    expect(statusGroups(file).map((g) => g.status)).toEqual(['rising', 'quiet'])
+    expect(statusTally(file).map((i) => i.href)).toEqual(statusGroups(file).map((g) => g.href))
   })
 })
 

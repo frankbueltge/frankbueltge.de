@@ -28,6 +28,7 @@ const SURFACES: Record<string, string> = {
   TrendingTopicsHub: component('TrendingTopicsHub.astro'),
   TrendingTopicPage: component('TrendingTopicPage.astro'),
   TrendingRising: component('TrendingRising.astro'),
+  TrendingStages: component('TrendingStages.astro'),
   TrendingAudience: component('TrendingAudience.astro'),
   TrendingConvergenceFigure: component('TrendingConvergenceFigure.astro'),
   MethodenblattTrending: component('MethodenblattTrending.astro'),
@@ -125,12 +126,33 @@ describe('the ledger on the frame recipe', () => {
     )
   })
 
-  it('draws a status chip as a Badge, never a box drawn once more by hand', () => {
-    for (const name of ['TrendingPage', 'TrendingTopicsHub', 'TrendingTopicPage', 'TrendingRising']) {
-      expect(SURFACES[name], `${name} draws a chip without the Badge primitive`).toContain(
-        "import { Badge } from '@/components/ui/badge'",
+  it('draws a status chip with the Badge primitive, never a box drawn once more by hand', () => {
+    expect(SURFACES.TrendingPage, 'TrendingPage draws a chip without the Badge primitive').toContain(
+      "import { Badge } from '@/components/ui/badge'",
+    )
+    // A stage of the watchlist is a link since 2026-11-14, so it wears the primitive's dress on
+    // an anchor: the hub and the day ledger through one shared component, the term page directly.
+    const dress = "badgeVariants({ variant: 'outline' })"
+    expect(SURFACES.TrendingStages, 'the stage pill left the Badge dress').toContain(dress)
+    expect(SURFACES.TrendingTopicPage, 'the term page draws its stage without the Badge dress').toContain(dress)
+    for (const name of ['TrendingTopicsHub', 'TrendingRising']) {
+      expect(SURFACES[name], `${name} draws its stages by hand`).toContain(
+        "import TrendingStages from '@/components/pages/TrendingStages.astro'",
       )
     }
+  })
+
+  it('never shows a stage of the watchlist as a pill that leads nowhere', () => {
+    // Until 2026-11-14 the stages stood in outline badges, which light up under the pointer, and
+    // a press did nothing. A stage is an address on the hub, and every pill that names one is an
+    // anchor to it.
+    for (const name of ['TrendingTopicsHub', 'TrendingTopicPage', 'TrendingRising', 'TrendingStages']) {
+      expect(templateOf(SURFACES[name]!), `${name} draws a stage as a plain badge again`).not.toMatch(/<Badge\b/)
+    }
+    expect(templateOf(SURFACES.TrendingStages!)).toMatch(/<a\s+href=\{i\.href\}/)
+    expect(templateOf(SURFACES.TrendingTopicPage!)).toContain('href={statusHref(term.status)}')
+    // The hub gives every stage the id its address names.
+    expect(templateOf(SURFACES.TrendingTopicsHub!)).toContain('id={g.status}')
   })
 })
 
