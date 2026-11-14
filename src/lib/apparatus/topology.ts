@@ -265,6 +265,7 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'Beifang weekly', what: 'what a consent wall takes before you consent', ref: '.github/workflows/beifang.yml', workflowName: 'Beifang weekly', cron: ['17 2 * * 1'] },
       { label: 'Spielraum watch', what: 'monthly watch on hyperscaler efficiency claims; writes a watch file, never the register', ref: '.github/workflows/spielraum-watch.yml', workflowName: 'Spielraum watch', cron: ['17 6 3 * *'] },
       { label: 'Sawtooth weekly', what: 'the earth-rotation record behind Sawtooth: held to the page’s sentences before it commits, and committed only when the record moved', ref: '.github/workflows/sawtooth.yml', workflowName: 'Sawtooth weekly', cron: ['20 7 * * 3'] },
+      { label: 'Comma record', what: 'what Comma plays from when it cannot ask: the counts of the last whole day of OONI’s web tests every night, and on Mondays a recording of one block per hour; a night on which OONI refuses writes nothing', ref: '.github/workflows/comma-record.yml', workflowName: 'Comma record', cron: ['40 2 * * *'] },
     ],
   },
   {
