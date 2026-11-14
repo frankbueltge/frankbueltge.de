@@ -26,7 +26,7 @@ export const DELIVERY_STATUS = [
 export const deliverySchema = z.object({
   /** stable id, `<yyyy-mm>-<slug>` */
   id: z.string().regex(/^\d{4}-\d{2}-[a-z0-9-]+$/),
-  practice: z.enum(['atelier', 'field', 'studio', 'plenum', 'ecology']),
+  practice: z.enum(['atelier', 'field', 'studio', 'plenum', 'ecology', 'lab']),
   /** the piece being delivered, plain words */
   piece: z.string().min(3),
   /** the named receiver — an organisation and its public channel, never a private person */
