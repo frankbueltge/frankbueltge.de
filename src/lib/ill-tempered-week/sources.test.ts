@@ -1,6 +1,7 @@
 // Where a headline of the ill-tempered week came from: the record's text finds its signal in the committed day file
-// again. The resolution is checked on the two albums pressed before this file was written (named, so a future
-// pressing never waits on it); later albums are drawn with whatever links resolve, and none is guessed.
+// again. The resolution is checked on the days pressed before this file was written (2 to 13 November 2026, named, so
+// no later pressing ever waits on it: this file runs in the nightly press before an album is committed); later days
+// are drawn with whatever links resolve, and none is guessed.
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
@@ -37,9 +38,9 @@ describe('the links', () => {
   })
 
   for (const week of ['2026-W45', '2026-W46']) {
-    it(`finds every overlooked headline of ${week} and every murmured one in its day file`, () => {
+    it(`finds every overlooked headline of ${week} to 13 November, and every murmured one, in its day file`, () => {
       const a = album(week)
-      for (const d of a.pieces.overlooked.days) {
+      for (const d of a.pieces.overlooked.days.filter((x) => x.day <= '2026-11-13')) {
         const links = dayLinks(d.day)
         expect(linkFor(links, d.text, d.source), d.text).not.toBeNull()
         for (const x of d.attended) expect(linkFor(links, x.text), x.text).not.toBeNull()

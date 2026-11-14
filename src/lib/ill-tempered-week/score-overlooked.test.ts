@@ -124,11 +124,14 @@ describe('every edition on file, as its score', () => {
         for (const e of s.events) expect(describeOverlooked(s, e.id), e.id).not.toBeNull()
       })
 
-      it('lays out on one line wide and in several on a phone, every mark inside its frame', () => {
+      it('lays out in lines that cover the piece, one line exactly when it fits, every mark inside its frame', () => {
         for (const width of [960, 358]) {
           const l = layoutOverlooked(s, width)
-          if (width === 960) expect(l.lines).toHaveLength(1)
-          else expect(l.lines.length).toBeGreaterThan(1)
+          const room = l.frame.right - l.frame.left
+          expect(l.lines.length === 1).toBe(room / o.seconds >= 2.0)
+          expect(l.lines[0]!.span.t0).toBe(0)
+          expect(l.lines.at(-1)!.span.t1).toBe(o.seconds)
+          l.lines.slice(1).forEach((line, k) => expect(line.span.t0).toBe(l.lines[k]!.span.t1))
           for (const line of l.lines) {
             for (const m of line.marks) {
               expect(m.x, m.id).toBeGreaterThanOrEqual(l.frame.left - 0.1)
@@ -203,6 +206,12 @@ describe('the parts of the form', () => {
     expect(answer.t1).toBeCloseTo(answer.t0 + 1.46 + 0.6, 6)
     expect(s.days[0]!.entries.violins).toBeCloseTo(d0.motif_from_s + 6.4, 6)
     expect(s.coda).toBeCloseTo(o.cut_s + 2.4, 6)
+  })
+
+  it('wraps the first album at a phone’s width and keeps it on one line at a desk’s', () => {
+    const s = overlookedScore(readAlbums()[0]!.pieces.overlooked)
+    expect(layoutOverlooked(s, 960).lines).toHaveLength(1)
+    expect(layoutOverlooked(s, 358).lines.length).toBeGreaterThan(1)
   })
 
   it('survives an edition of a single day', () => {

@@ -65,12 +65,15 @@ describe('every complete album on file, as its score', () => {
         for (let t = 0; t < r.seconds; t += 0.5) expect(nowTurn(s, t).length).toBeGreaterThan(10)
       })
 
-      it('lays out on one line wide and in several on a phone', () => {
-        expect(layoutTurn(s, 960).lines).toHaveLength(1)
-        const phone = layoutTurn(s, 358)
-        expect(phone.lines.length).toBeGreaterThan(1)
-        const bars = new Set(phone.lines.flatMap((l) => l.cells.map((c) => c.bar)))
-        for (const b of s.bars.filter((x) => x.kind !== 'said' && x.beats.length > 0)) expect(bars.has(b.index), String(b.index)).toBe(true)
+      it('lays out in lines that cover the piece, one line exactly when it fits, every sounding bar drawn', () => {
+        for (const width of [960, 358]) {
+          const l = layoutTurn(s, width)
+          expect(l.lines.length === 1).toBe((l.frame.right - l.frame.left) / r.seconds >= 3.0)
+          expect(l.lines[0]!.span.t0).toBe(0)
+          expect(l.lines.at(-1)!.span.t1).toBe(r.seconds)
+          const bars = new Set(l.lines.flatMap((line) => line.cells.map((c) => c.bar)))
+          for (const b of s.bars.filter((x) => x.kind !== 'said' && x.beats.length > 0)) expect(bars.has(b.index), String(b.index)).toBe(true)
+        }
       })
     })
   }

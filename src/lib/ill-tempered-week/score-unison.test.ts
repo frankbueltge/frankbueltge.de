@@ -60,9 +60,11 @@ describe('every complete album on file, as its score', () => {
           expect(g.chord, g.id).not.toBeNull()
           expect(harmonicOf(g.chord!.hz, CHORD_HARMONICS)).not.toBeNull()
           const d = s.days[g.day]!
-          // the arrival is the start moved towards the chord tone by the agreement, in pitch (log) space
+          // the arrival is the start moved towards the chord tone by the agreement, in pitch (log) space; the record
+          // rounds both pitches to a tenth of a hertz and the agreement to a thousandth, which is the tolerance
           const expected = g.fromHz * (g.chord!.hz / g.fromHz) ** d.agreement
-          expect(Math.abs(Math.log2(g.toHz / expected)), g.id).toBeLessThan(0.002)
+          const rounding = Math.log2(1 + 0.05 / g.toHz) + Math.log2(1 + 0.05 / g.fromHz) + 0.001
+          expect(Math.abs(Math.log2(g.toHz / expected)), g.id).toBeLessThan(rounding)
         }
       })
 
@@ -78,11 +80,12 @@ describe('every complete album on file, as its score', () => {
         for (const g of s.glides) expect(describeGlide(s, g.id)!.body).toContain(g.text)
       })
 
-      it('lays out on one line wide and in several on a phone, every glissando inside the plot', () => {
+      it('lays out in lines that cover the piece, one line exactly when it fits, every glissando inside the plot', () => {
         for (const width of [960, 358]) {
           const l = layoutUnison(s, width)
-          if (width === 960) expect(l.lines).toHaveLength(1)
-          else expect(l.lines.length).toBeGreaterThan(1)
+          expect(l.lines.length === 1).toBe((l.frame.right - l.frame.left) / u.seconds >= 2.0)
+          expect(l.lines[0]!.span.t0).toBe(0)
+          expect(l.lines.at(-1)!.span.t1).toBe(u.seconds)
           const drawn = new Set<string>()
           for (const line of l.lines) {
             for (const g of line.glides) {
