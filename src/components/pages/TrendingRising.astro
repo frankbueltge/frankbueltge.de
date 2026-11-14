@@ -9,7 +9,7 @@
  *  Renders nothing at all before the first terms file is committed: an empty promise on the
  *  ledger would be worse than no block.
  */
-import { Badge } from '@/components/ui/badge'
+import TrendingStages from '@/components/pages/TrendingStages.astro'
 import { getLatestTerms } from '@/lib/trending/terms-data'
 import { risingLinks, statusTally } from '@/lib/trending/terms-view'
 
@@ -54,14 +54,15 @@ const tally = file ? statusTally(file) : []
           </ul>
         </>
       )}
-      <p class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-xs text-fg-faint">
-        <a href="/trending/topics/" class="transition-colors hover:text-fg">All watched terms &rarr;</a>
-        {tally.map((i) => (
-          <Badge variant="outline">
-            {i.label} <span class="ml-1 tabular-nums">{i.n}</span>
-          </Badge>
-        ))}
-      </p>
+      {/* The stages are links: each opens the hub at the terms of that stage. */}
+      <nav
+        aria-label="The watchlist, by stage"
+        class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs text-fg-faint"
+      >
+        <a href="/trending/topics/" class="mr-2 transition-colors hover:text-fg">All watched terms &rarr;</a>
+        <span>By stage</span>
+        <TrendingStages items={tally} />
+      </nav>
     </section>
   )
 }

@@ -30,6 +30,19 @@
   color: var(--color-fg);
 }
 
+/* ── the stages of the watchlist ─────────────────────────────────────────────
+   A stage is an address on the hub (/trending/topics/#rising), and the pills that name a stage
+   anywhere on these surfaces point at it. The head a reader arrived at is marked, so a press on
+   a pill visibly lands somewhere; the margin keeps that head clear of the bar that sticks to the
+   top of a phone. */
+.trending .tr-stage {
+  scroll-margin-top: 5rem;
+}
+.trending .tr-stage:target > .tr-stage-head {
+  padding-left: 0.6rem;
+  border-left: 3px solid var(--color-fg);
+}
+
 /* ── the tables ──────────────────────────────────────────────────────────────
    The shared primitive ships structure only (ADR 0010) — these surfaces say how their own tables
    read. Scoped to `.trending`, so no other surface of the house inherits it. */
