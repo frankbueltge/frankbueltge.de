@@ -6,7 +6,7 @@ import OverlookedScore from '@/components/ill-tempered-week/OverlookedScore'
 import TurnScore from '@/components/ill-tempered-week/TurnScore'
 import UnisonScore from '@/components/ill-tempered-week/UnisonScore'
 import { clock, weekday, type Album } from '@/lib/ill-tempered-week/albums'
-import { HINT, overlookedLinks, performBytes, turnSaidLink as saidLink, unisonLinks, warSignals } from '@/lib/ill-tempered-week/pages'
+import { HINT, overlookedLinks, turnSaidLink as saidLink, unisonLinks, warSignals } from '@/lib/ill-tempered-week/pages'
 import { dayShort, mmss } from '@/lib/ill-tempered-week/score'
 import { FORM as OV } from '@/lib/ill-tempered-week/score-overlooked'
 import { FORM as UN } from '@/lib/ill-tempered-week/score-unison'
@@ -52,7 +52,6 @@ const hint = HINT
     links={overlookedLinks(o)}
     audioId="itw-audio-overlooked"
     id="itw-score-overlooked"
-    performBytes={performBytes(o)}
     label={`The score of Overlooked, ${album.title}: one lane per voice, time from left to right.`}
     hint={hint}
   />

@@ -8,14 +8,12 @@
 //   1. Every position, time and sentence comes from src/lib/ill-tempered-week/score-overlooked.ts (tested there);
 //      this file mounts it, follows the audio and answers the pointer.
 //   2. The server render is the floor: lanes, marks, staves and every link are markup before a script runs; the
-//      <audio> is the page's own. Only the play-from buttons, the playhead, the readout and the browser's own
-//      performance (usePerformance.ts, orchestra.ts, fetched when asked for) need JavaScript.
+//      <audio> is the page's own. Only the play-from buttons, the playhead and the readout need JavaScript.
 //   3. No style attribute, no hex: src/styles/ill-tempered-week.css inks the `itw-*` classes.
 //   4. Reduced motion: the playhead moves with the audio's own clock (four times a second) instead of every frame.
 //   5. The readout is clamped to the drawing's box and is never a hit target.
 //   6. Weight: React and this file; no chart library. Budget line `OverlookedScore.` in scripts/budgets.json.
-//   7. Mono ink only: every voice has a lane of its own, and age is told by height and by tone of the one ink. A
-//      voice left out of the browser's performance turns pale.
+//   7. Mono ink only: every voice has a lane of its own, and age is told by height and by tone of the one ink.
 import * as React from 'react'
 
 import type { Overlooked } from '@/lib/ill-tempered-week/albums'
@@ -40,7 +38,6 @@ import {
 } from '@/lib/ill-tempered-week/score-overlooked'
 
 import { byTouch, PlayFrom, PlayheadRule, SourceLink, svgPoint, useBoxReadout, useMounted, usePlayhead, useWidth } from './score-kit'
-import { usePerformance, type PerformStatus } from './usePerformance'
 
 export type { OverlookedLinks } from '@/lib/ill-tempered-week/pages'
 
@@ -54,18 +51,6 @@ export interface OverlookedScoreProps {
   label: string
   /** the line shown before anything plays */
   hint: string
-  /** how much a performance by the browser loads (instruments and sentences), in bytes; none where it cannot say */
-  performBytes?: number
-}
-
-/** The words on the performance's button and beside it. */
-const PERFORM: Record<PerformStatus, string> = {
-  idle: 'Perform it here',
-  loading: 'Loading the instruments',
-  playing: 'Pause the performance',
-  paused: 'Go on performing',
-  ended: 'Perform it again',
-  failed: 'Try again',
 }
 
 const pct = (x: number): string => `${Math.round(100 * x)} %`
@@ -108,7 +93,7 @@ function MarkShape({ m }: { m: Mark }) {
 }
 
 /** The drawing without the playhead: it changes only with the width, never with the time. */
-const Drawing = React.memo(function Drawing({ layout, off }: { layout: OverlookedLayout; off: ReadonlySet<string> }) {
+const Drawing = React.memo(function Drawing({ layout }: { layout: OverlookedLayout }) {
   const { frame } = layout
   return (
     <>
@@ -119,7 +104,7 @@ const Drawing = React.memo(function Drawing({ layout, off }: { layout: Overlooke
             {line.tutti && <rect className="itw-tutti" x={line.tutti.x} y={line.top - 5} width={line.tutti.w} height={line.bottom - line.top + 10} />}
             {line.lanes.map((lane) => (
               <g key={lane.id}>
-                <text className={off.has(lane.id) ? 'itw-lab itw-off' : 'itw-lab'} x={frame.left - 8} y={lane.y + LANE_H - 2.5} textAnchor="end">
+                <text className="itw-lab" x={frame.left - 8} y={lane.y + LANE_H - 2.5} textAnchor="end">
                   {lane.label}
                 </text>
                 <line className="itw-lane" x1={frame.left} x2={xEnd} y1={lane.y + LANE_H / 2} y2={lane.y + LANE_H / 2} />
@@ -133,15 +118,9 @@ const Drawing = React.memo(function Drawing({ layout, off }: { layout: Overlooke
                 </text>
               </g>
             ))}
-            {line.marks.map((m) =>
-              off.has(m.lane) ? (
-                <g key={m.id} className="itw-off">
-                  <MarkShape m={m} />
-                </g>
-              ) : (
-                <MarkShape key={m.id} m={m} />
-              ),
-            )}
+            {line.marks.map((m) => (
+              <MarkShape key={m.id} m={m} />
+            ))}
             {line.tutti && (
               <text className="itw-note" x={line.tutti.x + line.tutti.w - 3} y={line.y + 12} textAnchor="end">
                 tutti
@@ -291,9 +270,7 @@ function Legend() {
   )
 }
 
-const NONE: ReadonlySet<string> = new Set()
-
-export default function OverlookedScore({ record, links, audioId, id, label, hint, performBytes }: OverlookedScoreProps) {
+export default function OverlookedScore({ record, links, audioId, id, label, hint }: OverlookedScoreProps) {
   const score: Score = React.useMemo(() => overlookedScore(record), [record])
   const rootRef = React.useRef<HTMLDivElement>(null)
   const boxRef = React.useRef<HTMLDivElement>(null)
@@ -301,22 +278,7 @@ export default function OverlookedScore({ record, links, audioId, id, label, hin
   const width = useWidth(rootRef)
   const mounted = useMounted()
   const layout = React.useMemo(() => layoutOverlooked(score, width), [score, width])
-  const recording = usePlayhead(audioId)
-  const perf = usePerformance(record, id)
-  // two things can move the playhead, the recording and the browser's own performance: the one started last has it
-  const [performing, setPerforming] = React.useState(false)
-  React.useEffect(() => {
-    if (recording.playing) setPerforming(false)
-  }, [recording.playing])
-  const t = performing ? perf.t : recording.t
-  const seek = (to: number) => (performing ? perf.seek(to) : recording.seek(to))
-  // a chip for every voice the performance plays
-  const voices = React.useMemo(() => score.lanes.filter((l) => l.id !== 'murmur' && !perf.unplayed.has(l.id)), [score, perf.unplayed])
-  // pale in the drawing while the browser performs: the voices left out, and what it never plays (the murmur)
-  const off = React.useMemo(
-    () => (performing && (perf.muted.size > 0 || perf.unplayed.size > 0) ? new Set([...perf.muted, ...perf.unplayed]) : NONE),
-    [performing, perf.muted, perf.unplayed],
-  )
+  const { t, seek } = usePlayhead(audioId)
   const readout = useBoxReadout(boxRef, readoutRef)
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -354,62 +316,14 @@ export default function OverlookedScore({ record, links, audioId, id, label, hin
           onPointerLeave={() => readout.hide()}
           onClick={onClick}
         >
-          <Drawing layout={layout} off={off} />
-          {t !== null && <Sounding layout={layout} ids={off.size > 0 ? sounding.filter((e) => !off.has(score.events.find((x) => x.id === e)?.lane ?? '')) : sounding} />}
+          <Drawing layout={layout} />
+          {t !== null && <Sounding layout={layout} ids={sounding} />}
           {t !== null && (
             <PlayheadRule frame={layout.frame} lines={layout.lines} t={t} top={(k) => lineIndex(k).y + 2} bottom={(k) => lineIndex(k).bottom + 7} />
           )}
         </svg>
         <div ref={readoutRef} className="dv-readout itw-readout" hidden aria-hidden="true" />
       </div>
-      {mounted && (
-        <div className="itw-perform">
-          <button
-            type="button"
-            className="itw-perform-go"
-            disabled={perf.status === 'loading'}
-            aria-pressed={perf.status === 'playing'}
-            onClick={() => {
-              setPerforming(true)
-              perf.toggle(t ?? 0)
-            }}
-          >
-            <svg viewBox="0 0 8 8" aria-hidden="true" className="itw-play-icon">
-              {perf.status === 'playing' ? <path d="M1 0.5h2v7h-2zM5 0.5h2v7h-2z" /> : <path d="M1 0.5 L7.5 4 L1 7.5 Z" />}
-            </svg>
-            {PERFORM[perf.status]}
-          </button>
-          <p className="itw-perform-say" role="status">
-            {perf.status === 'idle' && (
-              <>
-                Your browser plays the piece itself from this score, with the album’s recorded instruments in just intonation
-                {performBytes ? ` (about ${(performBytes / 1e6).toFixed(1)} MB to load)` : ''}. Each voice can then be heard alone.
-              </>
-            )}
-            {perf.status === 'loading' && (perf.progress ? `${perf.progress.done} of ${perf.progress.total} loaded.` : 'Starting.')}
-            {perf.status === 'failed' && 'The instruments could not be loaded.'}
-            {(perf.status === 'playing' || perf.status === 'paused' || perf.status === 'ended') && (
-              <>
-                {performing ? 'Your browser is performing the score; this is not the recording. The instruments are mono.' : 'The performance is held while the recording plays.'}
-                {performing && perf.missing.length > 0 ? ` Not performed: ${perf.missing.join('; ')}.` : ''}
-              </>
-            )}
-          </p>
-        </div>
-      )}
-      {mounted && (perf.status === 'playing' || perf.status === 'paused' || perf.status === 'ended') && (
-        <div className="itw-voices" role="group" aria-label="The voices of the performance">
-          <p className="itw-voices-say">Tap a voice to hear it alone; tap more to add them.</p>
-          {voices.map((v) => (
-            <button key={v.id} type="button" className="itw-voice" aria-pressed={!perf.muted.has(v.id)} onClick={() => perf.voice(v.id, voices.map((x) => x.id))}>
-              {v.label}
-            </button>
-          ))}
-          <button type="button" className="itw-voice itw-voice-all" disabled={perf.muted.size === 0} onClick={perf.everyone}>
-            everyone
-          </button>
-        </div>
-      )}
       <Legend />
 
       <ol className="itw-parts" aria-label="The days of this edition">

@@ -4,12 +4,7 @@
 // The front page (/ill-tempered-week/) plays the newest complete album and, while a week runs, that week's Overlooked
 // so far. Every album also has a page of its own (/ill-tempered-week/<week>/), from its first day on: when a week
 // completes, the album before it leaves the front page, and its scores stay reachable at its own address.
-import { existsSync, readFileSync, statSync } from 'node:fs'
-import { join } from 'node:path'
-
 import type { Album, Overlooked, Turn, Unison, UnisonEvent } from './albums'
-import type { InstrumentIndex } from './perform'
-import { performOverlooked, saidUrl } from './perform-overlooked'
 import { dayLinks, linkFor } from './sources'
 
 /** The line a score shows before anything plays. */
@@ -57,21 +52,6 @@ export function warSignals(piece: Unison): (UnisonEvent & { day: string; href: s
 export function turnSaidLink(piece: Turn): string | null {
   const day = piece.days.find((d) => d.turn)
   return day?.said ? linkFor(dayLinks(day.day), day.said) : null
-}
-
-/** How much a browser loads to perform an edition of Overlooked itself: the instruments its notes name and each
- *  day's sentence as spoken, in bytes as they lie in `public`. Zero where the instruments are not there. */
-export function performBytes(piece: Overlooked, publicDir = 'public'): number {
-  const file = join(publicDir, 'ill-tempered-week', 'instruments', 'index.json')
-  if (!existsSync(file)) return 0
-  const index = JSON.parse(readFileSync(file, 'utf8')) as InstrumentIndex
-  const performance = performOverlooked(piece)
-  const instruments = performance.instruments.reduce((sum, name) => sum + (index.instruments[name]?.bytes ?? 0), 0)
-  const said = piece.days.reduce((sum, _, day) => {
-    const clip = join(publicDir, saidUrl(piece.week, day))
-    return sum + (existsSync(clip) ? statSync(clip).size : 0)
-  }, 0)
-  return instruments + said
 }
 
 export interface FrontPage {

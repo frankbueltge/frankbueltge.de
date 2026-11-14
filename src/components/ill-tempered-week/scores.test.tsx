@@ -43,14 +43,6 @@ describe('Overlooked, on the server', () => {
     clean(render())
   })
 
-  it('offers its own performance only once the island runs: the server render has no control for it', () => {
-    const html = renderToStaticMarkup(<OverlookedScore record={o} links={links} audioId="a" id="s" label="The score" hint="Press play" performBytes={7_200_000} />)
-    expect(html).toBe(render())
-    expect(html).not.toContain('itw-perform')
-    expect(html).not.toContain('itw-voice')
-    expect(html).not.toContain('itw-off')
-  })
-
   it('labels a lane for every voice and draws every event', () => {
     const html = drawing(render())
     const s = overlookedScore(o)
