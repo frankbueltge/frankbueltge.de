@@ -11,7 +11,9 @@ from trending.sources import (SOURCES, appstore, arxiv, coingecko, devto, huggin
 EXPECTED_ORDER = ["google_trends", "wikipedia", "hackernews", "bluesky", "mastodon",
                   "google_news", "reddit", "github", "github_trending", "huggingface", "lobsters", "devto",
                   "stackoverflow", "pypi", "producthunt", "techmeme", "arxiv", "appstore",
-                  "steam", "coingecko", "polymarket", "science_press", "humanitarian"]
+                  "steam", "coingecko", "polymarket", "science_press", "humanitarian",
+                  "world_press", "wikipedia_news", "lemmy", "hf_papers", "manifold", "stocktwits",
+                  "apple_music", "apple_podcasts", "openlibrary", "alerts", "baidu"]
 
 
 @pytest.fixture(autouse=True)

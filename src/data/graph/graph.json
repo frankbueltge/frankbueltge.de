@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "57101f15df58613a"
+        "sha256": "1919fb611f7e692b"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "9097babf344ddba7"
+        "sha256": "55c110db8907acfa"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 637,
-      "edges": 560,
+      "nodes": 638,
+      "edges": 561,
       "nodesByKind": {
-        "decision": 189,
+        "decision": 190,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
@@ -75,7 +75,7 @@
         "made-by": 231,
         "neighbor-of": 163,
         "participates": 17,
-        "touches": 133
+        "touches": 134
       }
     }
   },
@@ -1962,6 +1962,16 @@
     },
     {
       "id": "decision:2026-11-14-1",
+      "kind": "decision",
+      "label": "Common Ground reads every public it can reach without a key",
+      "date": "2026-11-14",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Common Ground reads every public it can reach without a key"
+      }
+    },
+    {
+      "id": "decision:2026-11-14-2",
       "kind": "decision",
       "label": "Comma becomes a broadcast that cannot fall silent",
       "date": "2026-11-14",
@@ -13386,6 +13396,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-11-14-1",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/trending/src/trending/sources/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-14-2",
       "to": "work:comma",
       "source": {
         "file": "docs/decision-log.md",
@@ -13394,7 +13413,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-1",
+      "from": "decision:2026-11-14-2",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",

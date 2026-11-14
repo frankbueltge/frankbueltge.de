@@ -49,7 +49,9 @@ const umamiLine = hasUmami
 const sampled = live && yesterday!.edge.sample_interval_avg && yesterday!.edge.sample_interval_avg > 1
 const provenance = live
   ? `${yesterday!.edge.source}; window ${yesterday!.edge.window?.[0] ?? '—'} to ${yesterday!.edge.window?.[1] ?? '—'}${sampled ? `; sampled, average sample interval ${yesterday!.edge.sample_interval_avg}` : '; unsampled'}. Classes by self-declared user agent; only the class and the bot name from a fixed table are kept, never the string.${missingLine}${umamiLine}`
-  : `No edge count is connected yet. The table shows every committed audience file; a day reads standby until a Cloudflare Analytics token exists — nothing is estimated.${umamiLine}`
+  : counted > 0
+    ? `The day before this ledger has no committed edge count. The table shows every committed audience file; a day without a count reads standby — nothing is estimated.${umamiLine}`
+    : `No edge count is connected yet. The table shows every committed audience file; a day reads standby until a Cloudflare Analytics token exists — nothing is estimated.${umamiLine}`
 const columns = [
   { key: 'day', label: 'Day', nowrap: true },
   { key: 'total', label: 'Edge requests', align: 'right' as const },
@@ -87,7 +89,11 @@ const stripWording: AudienceStripWording = {
       )}
     </p>
   ) : (
-    <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">Audience counter in standby — no analytics token is connected yet; nothing here is estimated.</p>
+    <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+      {counted > 0
+        ? 'The count for the day before this ledger is not in the archive. The days that were counted stand below; nothing here is estimated.'
+        : 'Audience counter in standby — no analytics token is connected yet; nothing here is estimated.'}
+    </p>
   )}
 
   {counted > 0 && (

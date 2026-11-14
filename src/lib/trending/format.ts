@@ -63,6 +63,17 @@ const PLATFORM_LABEL: Record<string, string> = {
   polymarket: 'Polymarket',
   science_press: 'Science press',
   humanitarian: 'Humanitarian desk',
+  world_press: 'World press',
+  wikipedia_news: 'Wikipedia: In the news',
+  lemmy: 'Lemmy',
+  hf_papers: 'Hugging Face Papers',
+  manifold: 'Manifold',
+  stocktwits: 'Stocktwits',
+  apple_music: 'Apple Music',
+  apple_podcasts: 'Apple Podcasts',
+  openlibrary: 'Open Library',
+  alerts: 'Alert desk',
+  baidu: 'Baidu',
   crossref: 'Crossref',
   europepmc: 'Europe PMC',
   openalex: 'OpenAlex',
@@ -70,6 +81,38 @@ const PLATFORM_LABEL: Record<string, string> = {
 
 export function platformLabel(id: string): string {
   return PLATFORM_LABEL[id] ?? id
+}
+
+// A source that reads several desks says which desk each line came from (`meta.feed` in the day
+// file). Without it a card of seven newsrooms reads "#1" seven times and names none of them. An
+// id with no entry falls through to the id itself, as above.
+const DESK_LABEL: Record<string, string> = {
+  bbc: 'BBC',
+  guardian: 'The Guardian',
+  aljazeera: 'Al Jazeera',
+  dw: 'DW',
+  npr: 'NPR',
+  france24: 'France 24',
+  abc_au: 'ABC',
+  nature: 'Nature',
+  science: 'Science',
+  theconversation: 'The Conversation',
+  ocha: 'OCHA',
+  reliefweb: 'ReliefWeb',
+  un_news: 'UN News',
+  thenewhumanitarian: 'The New Humanitarian',
+  msf: 'MSF',
+  icrc: 'ICRC',
+  gdacs: 'GDACS',
+  usgs: 'USGS',
+  who: 'WHO',
+}
+
+/** The desk a signal came from, spelled as that desk spells itself; null for a source with one list. */
+export function deskLabel(meta: Record<string, unknown> | undefined): string | null {
+  const feed = meta?.feed
+  if (typeof feed !== 'string' || !feed) return null
+  return DESK_LABEL[feed] ?? feed
 }
 
 // What each source counts, in words. A source that answers with a bare rank has no unit at all,
@@ -88,6 +131,9 @@ const UNIT_LABEL: Record<string, string> = {
   reactions: 'reactions',
   score: 'score',
   usd_24h: 'USD in 24 h',
+  upvotes: 'upvotes',
+  mana_24h: 'mana in 24 h',
+  watchers: 'watchers',
   rank: '',
 }
 

@@ -1,7 +1,7 @@
 # trending — the morning reader behind Common Ground (`/trending`)
 
 Every morning this package reads what the web is searching, reading and posting about from
-twenty-one public sources that need no key, keeps what converges across independent platforms by a
+thirty-four public sources that need no key, keeps what converges across independent platforms by a
 disclosed token rule, and writes one day file into the site. A day later the same run asks
 Cloudflare's edge analytics who fetched `/trending` the day before and writes that as a second
 file — classes and bot names only, never a raw user agent. Git is the archive: a committed day
@@ -66,14 +66,41 @@ products, optional), `techmeme` (the editorially curated technology front page, 
 sellers, optional), `coingecko` (trending searches, optional), `polymarket` (open markets by
 24-hour volume, optional).
 
-Every one of them is keyless, reads one endpoint per run (`appstore` two, one per storefront)
-and keeps at most one request per half second. Each respects the host's `robots.txt`:
-GitHub allows `/trending` and disallows the per-repository `/stargazers` and `/forks` pages, so
-the totals are read from the trending page where GitHub prints them. Trendshift, a third-party
-archive of that page, was considered on 2026-09-04 and not taken — its `robots.txt` disallows
-`/api/`, and what it adds is derived from the page read here directly. `optional` marks a feed that blocks or changes
-shape without notice: it becomes an `unavailable` line in the day's `sources[]`, never a
-crash.
+Then the two desks added on 2026-11-08, each one platform however many feeds it reads:
+`science_press` (Nature news, Science news, The Conversation) and `humanitarian` (OCHA, The New
+Humanitarian, MSF, ICRC; ReliefWeb's and UN News' feeds stood on this list until 2026-11-13,
+never answered a run, close their feeds in robots.txt, and were taken off).
+
+And the eleven added on 2026-11-14, publics the ledger had not read at all, every one
+optional: `world_press` (the front pages of BBC, The Guardian, Al Jazeera, DW, NPR, France 24
+and ABC; **one platform with `google_news`**, because a story on an aggregator and in a newsroom
+is one press carrying it), `wikipedia_news` (the "In the news" box; one platform with
+`wikipedia`), `lemmy` (top link posts of the day on lemmy.world; image posts are left out),
+`hf_papers` (Hugging Face Daily Papers by upvotes; one platform with `huggingface`), `manifold`
+(markets by 24-hour volume, in play money), `stocktwits` (trending symbols), `apple_music` and
+`apple_podcasts` (US, GB, DE; the maker is part of the label), `openlibrary` (trending books
+today), `alerts` (GDACS at Orange or Red, USGS significant earthquakes, WHO outbreak news) and
+`baidu` (real-time hot searches; labels stay in Chinese). A source that reads several feeds or
+storefronts lists them feed by feed within a rank (`interleave` in `sources/base.py`).
+
+Every one of them is keyless, reads one endpoint per run (`appstore` and the Apple charts one
+per storefront, `lemmy` two pages) and keeps at most one request per half second. `optional`
+marks a feed that blocks or changes shape without notice: it becomes an `unavailable` line in
+the day's `sources[]`, never a crash.
+
+**robots.txt.** GitHub allows `/trending` and disallows the per-repository `/stargazers` and
+`/forks` pages, so the totals are read from the trending page where GitHub prints them.
+Trendshift, a third-party archive of that page, was considered on 2026-09-04 and not taken — its
+`robots.txt` disallows `/api/`, and what it adds is derived from the page read here directly.
+On 2026-11-14 every endpoint of the ledger was read against its host's `robots.txt` (longest
+match, generic agent). The eleven sources of that day pass. Two that were built did not and
+were left out: Netflix's weekly Top 10 (`Disallow: /` for agents not on its list) and
+Bilibili's popular list (`Disallow: /` on the API host). Five earlier sources do **not** pass
+that reading and are named here rather than passed over: `google_news` and the arcs' Google
+News search (`/rss` is not on the host's allow list), `reddit`, `lobsters`, `arxiv` (the export
+API host) and `coingecko` (`/api/v3`). Each is a published feed or a documented public API;
+whether they stay is an open decision. Until that day this paragraph said that each source
+respects its host's `robots.txt`, which was more than had been checked.
 
 Titles, URLs and counts only — never article bodies.
 
