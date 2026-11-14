@@ -11,6 +11,9 @@ can ask for, and nothing else:
                   subset equals the press's pick on the whole instrument
   how much        each region from its start, as long as the longest note that can use it (its release included),
                   mono (the mean of the two channels), at the library's 44.1 kHz
+  what mono loses the press plays both channels; their mean is quieter by what the channels do not share. Each region
+                  records the factor that gives the mean the level its two channels had (`mono`: 1 where the
+                  channels are alike, 1.41 where they share nothing, more where they partly cancel)
   one file each   an instrument is one AAC file: a click to find the start by, then its regions one after another
                   with silence between; public/ill-tempered-week/instruments/<Name>.m4a
   the index       public/ill-tempered-week/instruments/index.json: for each region where it lies in the file and
@@ -103,13 +106,16 @@ def build(name: str, check: bool) -> dict:
         x, rate = sf.read(str(r['sample']), dtype='float64', always_2d=True)
         if rate != RATE:
             raise ValueError(f'{r["sample"]}: {rate} Hz, expected {RATE}')
-        mono = x[r['offset']:].mean(axis=1)[:int(seconds * RATE)]
+        both = x[r['offset']:][:int(seconds * RATE)]
+        mono = both.mean(axis=1)
+        # the two channels' mean power over the mean's own: what a mono cut must be raised by to sound as loud
+        lost = math.sqrt(float((both ** 2).mean()) / max(1e-18, float((mono ** 2).mean())))
         fade = min(len(mono), int(0.03 * RATE))
         mono[-fade:] *= np.linspace(1.0, 0.0, fade)
         centre_hz = 440.0 * 2 ** ((r['center'] - 69 + r['tune'] / 100) / 12)
         index.append({'at': round(at, 4), 'seconds': round(len(mono) / RATE, 4), 'hz': round(centre_hz, 4),
                       'center': r['center'], 'lokey': r['lokey'], 'hikey': r['hikey'], 'lovel': r['lovel'],
-                      'hivel': r['hivel'], 'volume': r['volume'], 'release': r['release'], 'seq': r['seq'],
+                      'hivel': r['hivel'], 'volume': r['volume'], 'release': r['release'], 'seq': r['seq'], 'mono': round(lost, 4),
                       'sample': str(Path(r['sample']).relative_to(sampler.ROOT))})
         parts += [mono, np.zeros(int(GAP * RATE))]
         at += len(mono) / RATE + GAP

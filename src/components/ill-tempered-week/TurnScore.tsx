@@ -7,8 +7,7 @@
 // The seven duties (.claude/rules/dataviz-figures.md) as in OverlookedScore.tsx: every bar, beat and sentence from
 // src/lib/ill-tempered-week/score-turn.ts; the server render is the floor; no style attribute, no hex; the playhead
 // follows the audio's own clock under reduced motion; the readout is clamped and never a hit target; no chart library;
-// each platform family wears one hue of the palette record itw-voices, the same in the rows and in the bars drawn
-// large, and everything else stays in the frame's inks.
+// mono ink (each family has a row of its own, so a hue would say nothing the row does not).
 import * as React from 'react'
 
 import type { Turn } from '@/lib/ill-tempered-week/albums'
@@ -58,7 +57,7 @@ const Drawing = React.memo(function Drawing({ layout }: { layout: TurnLayout }) 
             ))}
             <path className="itw-barline" d={line.barLines.filter((b) => !b.day).map((b) => `M${b.x} ${line.rowsTop}V${rowsBottom}`).join('')} />
             {line.cells.map((c) => (
-              <rect key={`${c.bar}-${c.row}`} className={`itw-cell f-${c.family}${c.full ? ' itw-cell-full' : ''}`} x={c.x} y={c.y} width={c.w} height={c.h} />
+              <rect key={`${c.bar}-${c.row}`} className={c.full ? 'itw-cell itw-cell-full' : 'itw-cell'} x={c.x} y={c.y} width={c.w} height={c.h} />
             ))}
             {line.said.map((b) => (
               <g key={`s${b.bar}`}>
@@ -105,7 +104,7 @@ function Measure({ beats, cursor, label }: { beats: Beat[]; cursor: number | nul
             {`${r.family} ${r.h}`}
           </text>
           {r.cells.map((c, k) => (
-            <rect key={k} className={c.on ? `itw-beat f-${r.family} is-on` : 'itw-beat'} x={c.x} y={r.y} width={Math.max(1, c.w)} height={12} rx={1.5} />
+            <rect key={k} className={c.on ? 'itw-beat is-on' : 'itw-beat'} x={c.x} y={r.y} width={Math.max(1, c.w)} height={12} rx={1.5} />
           ))}
         </g>
       ))}
@@ -127,9 +126,9 @@ function Legend() {
         {sw(
           <>
             <rect className="itw-row" x={0} y={0} width={36} height={14} />
-            <rect className="itw-cell f-news" x={1} y={8} width={10} height={6} />
-            <rect className="itw-cell f-news" x={13} y={10} width={10} height={4} />
-            <rect className="itw-cell f-news itw-cell-full" x={25} y={0} width={10} height={14} />
+            <rect className="itw-cell" x={1} y={8} width={10} height={6} />
+            <rect className="itw-cell" x={13} y={10} width={10} height={4} />
+            <rect className="itw-cell-full" x={25} y={0} width={10} height={14} />
           </>,
         )}
         <span>One bar of one family, filled as far as its beats sound: one beat for each AI signal it had that day, up to its harmonic number. Full: every beat.</span>

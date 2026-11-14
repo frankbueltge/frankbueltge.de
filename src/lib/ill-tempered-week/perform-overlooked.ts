@@ -31,6 +31,14 @@ export const PLAY = {
   violin: { instrument: 'SViolinVib', velocity: 60, release: 3.0, pan: 0 },
   /** older motifs step back to this while a new day's sentence is said and answered, and return over three bars */
   duck: { to: 0.22, before: 0.3, bars: 3, smooth: 0.2 },
+  /** The ensemble's hall and the voice's room: the press runs each group through a highpass and a reverb before it
+   *  levels them, and the levels it records (`mix`) are for the groups after that. These are the two reverbs'
+   *  settings as itw/overlooked.py names them (the voice's damping and width are the reverb's own defaults);
+   *  reverb.ts builds the same reverb for the browser. `seconds` is how much of its answer the browser keeps. */
+  hall: { highpass: 35, room: 0.82, damping: 0.45, wet: 0.26, dry: 0.85, width: 1, seconds: 3 },
+  room: { highpass: 90, room: 0.3, damping: 0.5, wet: 0.08, dry: 1, width: 1, seconds: 1 },
+  /** the press keeps true peaks under -1 dB with a look-ahead gain; the browser's compressor stands in for it */
+  limiter: { threshold: -4.5, ratio: 20, attack: 0.003, release: 0.12 },
 } as const
 
 /** Where a note goes on its way out: the ensemble, the ensemble's older motifs (which step back for a new sentence),
@@ -102,7 +110,8 @@ export function performOverlooked(o: Overlooked): Performance {
   const missing: Performance['missing'] = [{ lane: 'murmur', day: null, why: 'the murmur of the most attended is granulated speech and sounds in the recording only' }]
   const dayEnd = (i: number): number => (i + 1 < n ? o.days[i + 1]!.from_s : cut)
   const ens = (note: Omit<PlayNote, 'until' | 'gain' | 'bus' | 'release'> & Partial<Pick<PlayNote, 'gain' | 'bus' | 'release'>>): void => {
-    notes.push({ gain: 1, bus: 'ensemble', release: null, ...note, until: cut })
+    // a part that names no level, bus or release may still pass the key along empty: the plain values stand then
+    notes.push({ ...note, gain: note.gain ?? 1, bus: note.bus ?? 'ensemble', release: note.release ?? null, until: cut })
   }
 
   /** The motif of day i, looped from `origin`, sounding only from `start` up to `stop` (itw/overlooked.py, motif_loop). */

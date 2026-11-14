@@ -43,6 +43,14 @@ describe('Overlooked, on the server', () => {
     clean(render())
   })
 
+  it('offers its own performance only once the island runs: the server render has no control for it', () => {
+    const html = renderToStaticMarkup(<OverlookedScore record={o} links={links} audioId="a" id="s" label="The score" hint="Press play" performBytes={7_200_000} />)
+    expect(html).toBe(render())
+    expect(html).not.toContain('itw-perform')
+    expect(html).not.toContain('itw-voice')
+    expect(html).not.toContain('itw-off')
+  })
+
   it('labels a lane for every voice and draws every event', () => {
     const html = drawing(render())
     const s = overlookedScore(o)
@@ -98,7 +106,7 @@ describe.runIf(complete?.pieces.turn)('Turn, on the server', () => {
     const html = render()
     const s = turnScore(r, a.week)
     const cells = s.bars.reduce((n, b) => n + (b.kind === 'said' ? 0 : b.beats.length), 0)
-    expect(drawing(html).match(/class="itw-cell f-(search|news|social|tech)( itw-cell-full)?"/g) ?? []).toHaveLength(cells)
+    expect(drawing(html).match(/class="itw-cell( itw-cell-full)?"/g) ?? []).toHaveLength(cells)
     expect(html.match(/class="itw-measure"/g)?.length ?? 0).toBe(s.days.length + s.bars.filter((b) => b.kind === 'all').length)
     if (s.days.some((d) => d.turn)) expect(html).toContain('https://example.org/turn')
   })

@@ -26,6 +26,8 @@ export interface Region {
   release: number
   /** its place among round robins */
   seq: number
+  /** what the mono cut lost: the factor that gives the mean of the two channels the level the two had */
+  mono: number
   sample: string
 }
 
@@ -83,6 +85,13 @@ export const rateFor = (region: Region, hz: number): number => hz / region.hz
 /** The factor a note is scaled by: the region's volume and the square of the velocity (sampler.py, note). */
 export const gainFor = (region: Region, velocity: number): number => 10 ** (region.volume / 20) * (velocity / 127) ** 2
 
+/** A mono recording at the centre of an equal-power pan has 0.707 a side; the renderer keeps 1.0 a side. */
+export const CENTRE = Math.SQRT2
+
+/** The level a note is started at in the browser: the press's factor, the note's own (an older motif is softer), and
+ *  what the browser's mono cut and its pan would otherwise lose against the press's two channels. */
+export const peakFor = (region: Region, velocity: number, gain: number): number => gainFor(region, velocity) * gain * region.mono * CENTRE
+
 /** How long a note really sounds: it is held, then released, and ends early where its recording does (read at
  *  `rate`, a region of `seconds` lasts seconds / rate). */
 export function soundingFor(region: Region, hz: number, held: number, release: number | null): { held: number; release: number } {
@@ -103,4 +112,57 @@ export function firstFrom<T extends { t: number }>(items: readonly T[], t: numbe
     else hi = mid
   }
   return lo
+}
+
+/** A note as the functions above need it. */
+export interface NoteAsk {
+  instrument: string
+  hz: number
+  seconds: number
+  release: number | null
+  velocity: number
+  key: string
+}
+
+/** What a performance really needs of the instruments: for every instrument the regions its notes pick, and of each
+ *  only as many seconds of recording as its longest note reads. The engine keeps just these in memory (a whole
+ *  instrument file decoded is about a hundred megabytes for one album; what the notes read is a fraction of it). */
+export function neededRegions(notes: readonly NoteAsk[], index: InstrumentIndex): Map<string, Map<number, number>> {
+  const out = new Map<string, Map<number, number>>()
+  for (const note of notes) {
+    const inst = index.instruments[note.instrument]
+    if (!inst) continue
+    const region = pickRegion(inst.regions, note.hz, note.velocity, note.key)
+    const { held, release } = soundingFor(region, note.hz, note.seconds, note.release)
+    const reads = Math.min(region.seconds, (held + release) * rateFor(region, note.hz) + 0.05)
+    const regions = out.get(note.instrument) ?? out.set(note.instrument, new Map()).get(note.instrument)!
+    const i = inst.regions.indexOf(region)
+    regions.set(i, Math.max(regions.get(i) ?? 0, reads))
+  }
+  return out
+}
+
+/** The next set of silent voices after a tap on one of them: the first tap on a full ensemble leaves the tapped voice
+ *  alone; later taps add a voice or take it away; a tap that would silence the last voice brings everyone back. */
+export function afterTap(muted: ReadonlySet<string>, lane: string, all: readonly string[]): Set<string> {
+  if (muted.size === 0) return new Set(all.filter((l) => l !== lane))
+  const next = new Set(muted)
+  if (next.has(lane)) next.delete(lane)
+  else next.add(lane)
+  return next.size >= all.length ? new Set() : next
+}
+
+/** A first-order highpass (6 dB an octave, as the press's) for a rate, as the two lists a browser's filter takes. */
+export function firstOrderHighpass(hz: number, rate: number): { feedforward: [number, number]; feedback: [number, number] } {
+  const k = Math.tan((Math.PI * hz) / rate)
+  const b = 1 / (1 + k)
+  return { feedforward: [b, -b], feedback: [1, (k - 1) / (k + 1)] }
+}
+
+/** What a browser's compressor adds to everything it passes, as the Web Audio API defines it for a hard knee: the
+ *  level a full-scale signal comes out at, inverted, to the power of 0.6. The engine takes it away again before the
+ *  compressor, so that a quiet passage leaves at the level it came in. */
+export function makeupFor(thresholdDb: number, ratio: number): number {
+  const fullRangeDb = thresholdDb * (1 - 1 / ratio)
+  return (1 / 10 ** (fullRangeDb / 20)) ** 0.6
 }

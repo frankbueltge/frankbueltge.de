@@ -819,32 +819,26 @@ export const PALETTES: readonly PaletteSet[] = [
   {
     id: 'itw-voices',
     description:
-      'the ill-tempered week (/ill-tempered-week, 2026-11-14), the scores of its three pieces. Four hues, ordered from ' +
-      'the lowest voice to the highest, and each figure uses them for the one distinction its drawing cannot carry ' +
-      'alone. In Unison the four string sections overlap in pitch, so a glissando wears its section. In Turn each ' +
-      'platform family keeps its hue from the rows of the score to the bar drawn large beneath it. In Overlooked two ' +
-      'of the four tell the overlooked headline itself (said, answered, kept as a motif) from the ensemble that takes ' +
-      'it up; how old a motif is stays a matter of height and strength, never of a fifth hue. The hue sits on marks ' +
-      'only: every label, count and headline stays in ink, a legend names each hue beside its mark, the readout and ' +
-      'the days under each score say the same in words, and Unison lists every signal with its section in a table. ' +
-      'What the pieces do not single out stays in the frame’s inks: the murmur of the most attended, the bell, the ' +
-      'chord’s lines, timpani and brass, the solo double bass, the tempo.',
+      'the ill-tempered week (/ill-tempered-week, 2026-11-14), the score of Unison. Four hues, ordered from the lowest ' +
+      'string section to the highest: the sections overlap in pitch, so a glissando wears its section, which place ' +
+      'alone could not tell. For a day the set also coloured Overlooked (the headline against the ensemble) and Turn ' +
+      '(the platform families); both are in ink again since the same day, because each of their voices has a lane or ' +
+      'a row of its own and a hue said nothing the place did not. The hue sits on marks only: every label, count and ' +
+      'headline stays in ink, the legend names each hue beside its mark, the readout says the same in words, and a ' +
+      'table lists every signal with its section. What the piece does not single out stays in the frame’s inks: the ' +
+      'chord’s lines, timpani and brass, the solo double bass, the sentence said over the chord.',
     slots: [
-      { name: 'the lowest voice — double basses in Unison, search in Turn', light: '#7d2b78', dark: '#b04aa8' },
-      { name: 'cellos in Unison, news in Turn, the ensemble that takes a motif up in Overlooked', light: '#2a6fd0', dark: '#4f8cdd' },
-      { name: 'violas in Unison, social in Turn', light: '#00846d', dark: '#199e70' },
-      {
-        name: 'the highest voice — violins in Unison, tech in Turn, the overlooked headline and its motif in Overlooked',
-        light: '#b8410e',
-        dark: '#e2691f',
-      },
+      { name: 'the lowest section — double basses', light: '#7d2b78', dark: '#b04aa8' },
+      { name: 'cellos', light: '#2a6fd0', dark: '#4f8cdd' },
+      { name: 'violas', light: '#00846d', dark: '#199e70' },
+      { name: 'the highest section — violins', light: '#b8410e', dark: '#e2691f' },
     ],
     neutrals: [
       {
-        name: 'what a piece does not single out — murmur, bell, chord lines, timpani, brass in Unison, solo double bass, tempo',
+        name: 'what the piece does not single out — chord lines, timpani, brass, solo double bass',
         light: '#54555c',
         dark: '#a3a3a8',
-        note: 'the frame’s own inks (--color-fg, --color-fg-muted, --color-fg-faint), referenced not restated; in Overlooked the grey of the murmur IS the meaning: the most attended headlines, far away, against the overlooked in colour.',
+        note: 'the frame’s own inks (--color-fg, --color-fg-muted, --color-fg-faint), referenced not restated.',
       },
     ],
     surfaces: { light: ['#edeef0'], dark: ['#0a0a0a'] },
@@ -857,7 +851,7 @@ export const PALETTES: readonly PaletteSet[] = [
       'contrast of every hue at least 3:1). The set was found by a search over the house’s recorded hues, one per ' +
       'family, for quartets that pass in both modes; the dark magenta is a step of its own (#b04aa8), because the ' +
       'recorded #c159b9 falls to 6.7 against the blue under deutan. Tritan is reported, not gated (3.8 light, 3.7 ' +
-      'dark): every figure also separates its voices by place (a lane, a register, a row).',
+      'dark): the figure also separates its sections by register, and the table names each.',
     worst: [
       {
         mode: 'light',

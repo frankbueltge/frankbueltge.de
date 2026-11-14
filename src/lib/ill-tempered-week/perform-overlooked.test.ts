@@ -59,6 +59,18 @@ describe('the renderer’s notes, as the performance mirrors them', () => {
     expect(SOURCE).toContain(`inst['violin_solo'].note(${FORM.violinHz.toFixed(1)}, ${FORM.violinNote.toFixed(1)}, ${PLAY.violin.velocity}, release=${PLAY.violin.release.toFixed(1)}), ${PLAY.violin.pan.toFixed(1)})`)
   })
 
+  it('sends each group out through the highpass and the reverb the renderer names', () => {
+    const { hall, room } = PLAY
+    expect(SOURCE).toContain(`pb.HighpassFilter(${hall.highpass}), pb.Reverb(room_size=${hall.room}, damping=${hall.damping}, wet_level=${hall.wet}, dry_level=${hall.dry}, width=${hall.width.toFixed(1)})`)
+    // the voice's reverb names neither damping nor width: the reverb's own defaults, which reverb.test.ts holds to
+    // the press's reverb itself
+    expect(SOURCE).toContain(`pb.HighpassFilter(${room.highpass}), pb.Reverb(room_size=${room.room}, wet_level=${room.wet}, dry_level=${room.dry.toFixed(1)})`)
+    // the levels the record keeps are taken after the reverbs, group by group, and the limiter comes last
+    expect(SOURCE).toContain("mix = lev(ens, -17.0, 'ens') + lev(voice, -19.0, 'voice') + lev(murmur, -31.0, 'murmur')")
+    expect(SOURCE).toContain('return base.level(mix, -16.0)')
+    expect(SOURCE.indexOf('pb.Reverb(room_size=0.82')).toBeLessThan(SOURCE.indexOf("lev(ens, -17.0, 'ens')"))
+  })
+
   it('lets the older motifs step back for a new sentence as the renderer does', () => {
     expect(SOURCE).toContain(`int((day0(i) - ${PLAY.duck.before}) * SR), int(origins[i] * SR)`)
     expect(SOURCE).toContain(`duck[a:b] = ${PLAY.duck.to}`)
@@ -85,6 +97,24 @@ describe('every edition on file, as a performance', () => {
         expect(p.notes.filter((n) => n.instrument === PLAY.bell.instrument)).toHaveLength(o.days.length)
         expect(p.clips).toHaveLength(o.days.length + 1)
         expect(p.clips.at(-1)!.day).toBe(0)
+      })
+
+      // found in the browser on 2026-11-14: a part that passed an empty level along left its notes without one, the
+      // audio clock refused them one by one and the performance fell silent after ten seconds
+      it('gives the engine nothing it must guess: every note and sentence is whole', () => {
+        for (const n of p.notes) {
+          expect(['ensemble', 'aged', 'voice'], `${n.lane} at ${n.t}`).toContain(n.bus)
+          for (const value of [n.t, n.hz, n.seconds, n.velocity, n.pan, n.gain]) expect(Number.isFinite(value), `${n.lane} at ${n.t}`).toBe(true)
+          expect(n.release === null || Number.isFinite(n.release)).toBe(true)
+          expect(n.until === null || Number.isFinite(n.until)).toBe(true)
+          expect(n.gain).toBeGreaterThan(0)
+          expect(Math.abs(n.pan)).toBeLessThanOrEqual(1)
+          expect(n.velocity).toBeGreaterThanOrEqual(1)
+          expect(n.velocity).toBeLessThanOrEqual(127)
+          expect(n.key.length).toBeGreaterThan(0)
+        }
+        for (const c of p.clips) for (const value of [c.t, c.day, c.gain]) expect(Number.isFinite(value)).toBe(true)
+        for (const d of p.duck) for (const value of [d.t, d.v]) expect(Number.isFinite(value)).toBe(true)
       })
 
       it('plays every note inside the mark the score draws for its voice', () => {
