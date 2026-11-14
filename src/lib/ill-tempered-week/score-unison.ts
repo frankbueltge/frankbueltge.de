@@ -192,6 +192,8 @@ export function describeUnisonDay(s: UnisonScore, i: number, part: 'peak' | 'bas
 export interface GlideMark {
   id: string
   day: number
+  /** the section that plays it: its hue in the drawing */
+  section: UnisonEvent['section']
   x1: number
   y1: number
   x2: number
@@ -247,7 +249,7 @@ export function layoutUnison(s: UnisonScore, width: number): UnisonLayout {
     const glides = s.glides
       .filter((g) => clip(span, g.t0, g.t2))
       .map((g) => ({
-        id: g.id, day: g.day, x1: x(g.t0), y1: yHz(g.fromHz), x2: x(Math.min(g.t1, span.t1)), y2: yHz(g.toHz), x3: x(Math.min(g.t2, span.t1)),
+        id: g.id, day: g.day, section: g.section, x1: x(g.t0), y1: yHz(g.fromHz), x2: x(Math.min(g.t1, span.t1)), y2: yHz(g.toHz), x3: x(Math.min(g.t2, span.t1)),
         weight: g.attention >= 0.75 ? 3 : g.attention >= 0.5 ? 2 : g.attention >= 0.25 ? 1 : 0, tremolo: g.tremolo,
       }))
     const dayW = s.dayS * frame.pxPerSecond

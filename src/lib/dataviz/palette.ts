@@ -817,6 +817,71 @@ export const PALETTES: readonly PaletteSet[] = [
     usedBy: ['src/styles/comma.css'],
   },
   {
+    id: 'itw-voices',
+    description:
+      'the ill-tempered week (/ill-tempered-week, 2026-11-14), the scores of its three pieces. Four hues, ordered from ' +
+      'the lowest voice to the highest, and each figure uses them for the one distinction its drawing cannot carry ' +
+      'alone. In Unison the four string sections overlap in pitch, so a glissando wears its section. In Turn each ' +
+      'platform family keeps its hue from the rows of the score to the bar drawn large beneath it. In Overlooked two ' +
+      'of the four tell the overlooked headline itself (said, answered, kept as a motif) from the ensemble that takes ' +
+      'it up; how old a motif is stays a matter of height and strength, never of a fifth hue. The hue sits on marks ' +
+      'only: every label, count and headline stays in ink, a legend names each hue beside its mark, the readout and ' +
+      'the days under each score say the same in words, and Unison lists every signal with its section in a table. ' +
+      'What the pieces do not single out stays in the frame’s inks: the murmur of the most attended, the bell, the ' +
+      'chord’s lines, timpani and brass, the solo double bass, the tempo.',
+    slots: [
+      { name: 'the lowest voice — double basses in Unison, search in Turn', light: '#7d2b78', dark: '#b04aa8' },
+      { name: 'cellos in Unison, news in Turn, the ensemble that takes a motif up in Overlooked', light: '#2a6fd0', dark: '#4f8cdd' },
+      { name: 'violas in Unison, social in Turn', light: '#00846d', dark: '#199e70' },
+      {
+        name: 'the highest voice — violins in Unison, tech in Turn, the overlooked headline and its motif in Overlooked',
+        light: '#b8410e',
+        dark: '#e2691f',
+      },
+    ],
+    neutrals: [
+      {
+        name: 'what a piece does not single out — murmur, bell, chord lines, timpani, brass in Unison, solo double bass, tempo',
+        light: '#54555c',
+        dark: '#a3a3a8',
+        note: 'the frame’s own inks (--color-fg, --color-fg-muted, --color-fg-faint), referenced not restated; in Overlooked the grey of the murmur IS the meaning: the most attended headlines, far away, against the overlooked in colour.',
+      },
+    ],
+    surfaces: { light: ['#edeef0'], dark: ['#0a0a0a'] },
+    pairs: 'all',
+    validatedOn: '2026-11-14',
+    validator:
+      'validate_palette.js --pairs all, run on 2026-11-14 against the page’s own ground (--color-bg): light ' +
+      '"#7d2b78,#2a6fd0,#00846d,#b8410e" on #edeef0 and dark "#b04aa8,#4f8cdd,#199e70,#e2691f" on #0a0a0a. All five ' +
+      'computable checks pass in both modes (lightness band, chroma floor, CVD separation, normal-vision floor, ' +
+      'contrast of every hue at least 3:1). The set was found by a search over the house’s recorded hues, one per ' +
+      'family, for quartets that pass in both modes; the dark magenta is a step of its own (#b04aa8), because the ' +
+      'recorded #c159b9 falls to 6.7 against the blue under deutan. Tritan is reported, not gated (3.8 light, 3.7 ' +
+      'dark): every figure also separates its voices by place (a lane, a register, a row).',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 11.2,
+        cvdPair: '#b8410e↔#00846d',
+        cvdType: 'deutan',
+        tritan: 3.8,
+        normal: 18.4,
+        normalPair: '#00846d↔#2a6fd0',
+      },
+      {
+        mode: 'dark',
+        cvd: 8.3,
+        cvdPair: '#4f8cdd↔#b04aa8',
+        cvdType: 'deutan',
+        tritan: 3.7,
+        normal: 19.4,
+        normalPair: '#199e70↔#4f8cdd',
+      },
+    ],
+    warns: [],
+    usedBy: ['src/styles/ill-tempered-week.css'],
+  },
+  {
     id: 'paper-voices',
     description:
       'The three voices on the paper ground (2026-10-11) — the Field, the Atelier and the Studio on ' +
