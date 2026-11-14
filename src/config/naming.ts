@@ -1200,7 +1200,10 @@ export const NAMING = {
 
   footer: {
     tagline: 'a federated research ecology · frankbueltge.de',
-    licenseLine: 'code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive',
+    /** `unless stated` since 2026-11-14: Common Ground asks to be named from the ledger of 2026-11-15, Comma's
+     *  counts and recording keep OONI's licence, and a third party's material was never the house's to dedicate
+     *  (LICENSE.md). The short line may not say more than the long one. */
+    licenseLine: 'code Apache 2.0 · works CC BY 4.0 · data CC0 unless stated · Git is the archive',
   },
 } as const
 

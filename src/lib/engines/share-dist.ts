@@ -29,6 +29,7 @@ import { SITE } from '@/lib/site'
 import { loadPresentations } from '@/lib/ecology/v3'
 import { dayMonthYear } from '@/lib/ops/since'
 import { injectBack, injectShare, openingSentences, ownMeta, pageTitle, stripBack, type ShareImage } from './share'
+import { injectLegal, withoutFontHosts } from './legal-line'
 import { CARD, renderCard, renderStill } from './share-card'
 import { sharePages, type SharePage } from './share-pages'
 import { teaserFor } from './teaser'
@@ -104,6 +105,8 @@ export interface ShareDistReport {
   ownImages: number
   /** back strips standing after the run */
   strips: number
+  /** `<link>` tags to a font host taken off the served copies (./legal-line.ts) */
+  fontLinks: number
   /** pages that could not be finished, or whose image could not be made, each with why */
   failed: string[]
 }
@@ -124,7 +127,7 @@ export interface ShareDistOptions {
 
 /** Finishes every published page of the practices on dist/ for sharing. Never throws for a page. */
 export async function shareDist({ dist, publicDir, root = process.cwd(), render, wallText = teaserFor, readWorks }: ShareDistOptions): Promise<ShareDistReport> {
-  const report: ShareDistReport = { pages: 0, written: 0, stills: 0, cards: 0, ownImages: 0, strips: 0, failed: [] }
+  const report: ShareDistReport = { pages: 0, written: 0, stills: 0, cards: 0, ownImages: 0, strips: 0, fontLinks: 0, failed: [] }
   const renderers = render ?? { card: (input: Parameters<typeof renderCard>[0]) => renderCard(input, root), still: renderStill }
   const pages = sharePages({ dist, publicDir, ...(readWorks ? { readWorks } : {}) })
   report.pages = pages.length
@@ -187,6 +190,11 @@ export async function shareDist({ dist, publicDir, root = process.cwd(), render,
       const back = injectBack(html, { label: practice.label, href: practice.href })
       html = back.html
       if (back.placed) report.strips++
+      // Since 2026-11-14 (./legal-line.ts): no tag that asks a font host for anything, and a last
+      // line that says an AI system made the page and names the imprint and the privacy notice.
+      const fonts = withoutFontHosts(html)
+      report.fontLinks += fonts.removed
+      html = injectLegal(fonts.html)
       if (html !== before) {
         writeFileSync(file, html)
         report.written++

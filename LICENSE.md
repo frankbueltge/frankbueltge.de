@@ -35,6 +35,14 @@ Observatory of Network Interference) and stay under **CC BY-NC-SA 4.0**, OONI's 
 page each recorded test is filed under comes from Citizen Lab's URL testing lists (also CC BY-NC-SA 4.0). Comma
 (`/comma`) reads both live as well and keeps no copy of what it plays live.
 
+**Third-party material in general:** the licences and dedications above cover what is the author's to give. Where a
+snapshot, a register or a work reproduces material of others (a source's titles and links, an abstract, a photograph,
+a dataset's own records), that material stays under its source's terms, which the method sheet, the file or the page
+names. In particular the abstracts in `src/data/register/papers.json` are their authors' and publishers' texts, read
+from the source catalogues; the CC0 dedication of the papers register covers the register's own fields (selection,
+relevance, verdicts, access checks) and not the abstracts. (Stated on 2026-11-14; it changes no licence, it says what
+the dedication could cover from the start.)
+
 Attribution: Frank Bültge (https://frankbueltge.de)
 
 *Changed on 2026-07-26 from PolyForm Noncommercial 1.0.0 / CC BY-NC-SA 4.0. The

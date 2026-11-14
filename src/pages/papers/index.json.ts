@@ -23,7 +23,9 @@ export const GET: APIRoute = () =>
         source: 'https://github.com/frankbueltge/frankbueltge.de — src/data/register/papers.json',
         page: 'https://frankbueltge.de/papers',
         full: 'https://frankbueltge.de/papers/register.json',
-        licence: 'CC0-1.0 (data), per the licence line of 2026-07-26',
+        licence:
+          'CC0-1.0 for the register’s own fields (selection, relevance, verdicts), per the licence line of 2026-07-26. ' +
+          'Titles and names are quoted from the source catalogues',
         note:
           'The papers register with abstracts omitted, so that a fetch returns the whole list ' +
           'rather than a truncated one. Every other field is kept, including the register\'s ' +

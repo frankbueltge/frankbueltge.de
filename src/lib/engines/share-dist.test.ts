@@ -6,6 +6,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
+import { LEGAL_MARKER } from './legal-line'
 import { BACK_MARKER, SHARE_MARKER } from './share'
 import { imageHref, shareDist, stillFor } from './share-dist'
 import { sharePages } from './share-pages'
@@ -136,6 +137,14 @@ describe('a finished page', () => {
     expect(existsSync(join(dirs.dist, imageHref({ href: '/field/presentations/cycle-007/' } as never, 'png')))).toBe(true)
     expect(existsSync(join(dirs.dist, 'og/practice/studio/werke-html/2026-10-14-under-warning.jpg'))).toBe(true)
     expect(report).toMatchObject({ pages: 7, stills: 1, cards: 5, ownImages: 1, strips: 0 })
+
+    // since 2026-11-14 every one of them ends on the line that says who made it and names the
+    // imprint and the privacy notice (./legal-line.ts)
+    for (const html of [presentation, artifact, work, read(dirs.dist, 'n-1/index.html')]) {
+      expect(count(html, `<div class="${LEGAL_MARKER}"`)).toBe(1)
+      expect(html).toContain('href="/imprint"')
+      expect(html).toContain('href="/privacy"')
+    }
   })
 
   it('keeps an image the page names itself, and makes none for it', async () => {
@@ -165,6 +174,7 @@ describe('the step can run again', () => {
     for (const html of snapshot) {
       expect(count(html, `<!--${SHARE_MARKER}-->`)).toBeLessThanOrEqual(1)
       expect(count(html, `<nav class="${BACK_MARKER}"`)).toBeLessThanOrEqual(1)
+      expect(count(html, `<div class="${LEGAL_MARKER}"`)).toBeLessThanOrEqual(1)
     }
   })
 
