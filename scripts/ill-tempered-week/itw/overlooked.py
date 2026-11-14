@@ -201,10 +201,12 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
         stop = end_music
         last = i == len(week) - 1
         origins.append(mt)
-        motif_loop(i, mt + 4 * BAR, t_end, inst['violins'], 74, shift8=3, lo=300, hi=1400, p=PAN['violins'], key=f'v{i}')
-        motif_loop(i, mt + 8 * BAR, t_end, inst['violas'], 70, shift8=5, transpose=0.5, lo=150, hi=700, p=PAN['violas'], key=f'a{i}')
+        # when each part of the ensemble takes the motif up (named, and recorded below, for the page's score)
+        entries = {'violins': mt + 4 * BAR, 'violas': mt + 8 * BAR, 'piano': mt + 12 * BAR, 'low': mt + 14 * BAR}
+        motif_loop(i, entries['violins'], t_end, inst['violins'], 74, shift8=3, lo=300, hi=1400, p=PAN['violins'], key=f'v{i}')
+        motif_loop(i, entries['violas'], t_end, inst['violas'], 70, shift8=5, transpose=0.5, lo=150, hi=700, p=PAN['violas'], key=f'a{i}')
         lows = sorted({nt['hz'] for nt in m['motif']})[:2]
-        piano_from = mt + 12 * BAR
+        piano_from = entries['piano']
         t = piano_from
         k = 0
         while t < t_end - 0.05:                                  # the piano pulse
@@ -220,7 +222,7 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
         floor = min(nt['hz'] for nt in m['motif'])
         while floor > 130:
             floor /= 2
-        t = mt + 14 * BAR
+        t = entries['low']
         while t < t_end - 0.05:                                  # cellos and basses: A and the motif's floor
             put(ens, t, pan(inst['cellos'].note(110.0, 2 * BAR * 0.98, 64, release=0.6), PAN['cellos']))
             put(ens, t, pan(inst['basses'].note(max(41.2, floor / 2 if floor > 82 else floor), 2 * BAR * 0.98, 60, release=0.6), PAN['basses']))
@@ -237,7 +239,13 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
             put(murmur, t0 + k * dur, np.stack([g * env, 0.9 * g * env]) * 0.25)
         log.append({**{k: v for k, v in d.items()}, 'instrument': m['instrument'], 'motif_eighths': m['length'],
                     'motif': [{'step': nt['step'], 'hz': round(nt['hz'], 2)} for nt in m['motif']],
-                    'from_s': round(t0, 2), 'motif_from_s': round(mt, 2)})
+                    'from_s': round(t0, 2), 'motif_from_s': round(mt, 2),
+                    # for the score on the page (src/lib/ill-tempered-week/score-overlooked.ts), recorded since
+                    # 2026-11-14: how long the sentence is said, the answer's notes (seconds into the sentence, Hz)
+                    # and when each part of the ensemble takes the motif up
+                    'speech_s': round(m['speech_seconds'], 3),
+                    'echo': [{'t': round(nt['t'], 3), 'hz': round(nt['hz'], 2)} for nt in m['echo']],
+                    'entries_s': {part: round(at, 2) for part, at in entries.items()}})
     # every day's motif keeps sounding in its instrument to the end, softer by each day of age (12 velocity steps,
     # down to 40), and all of them at full strength in Sunday's tutti from bar 20
     tutti = day0(len(week) - 1) + 20 * BAR
@@ -299,5 +307,5 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
     return base.level(mix, -16.0), {'week': ledger.WEEK, 'tuning': 'just, harmonics 8-15 of A1 = 55 Hz', 'pulse_s': PULSE,
                                  'day_bars': DAY_BARS, 'days_so_far': len(week), 'newest_day': week[-1]['day'],
                                  'round': ledger.ROUND, 'hindsight': hindsight, 'silenced_after_their_day': silenced,
-                                 'tutti_from_s': round(tutti, 2), 'cut_s': round(end_music, 2),
+                                 'tutti_from_s': round(tutti, 2), 'cut_s': round(end_music, 2), 'coda_s': round(coda_at, 2),
                                  'days': log, 'library': 'VSCO 2 CE 1.1.0 (CC0)'}

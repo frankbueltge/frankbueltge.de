@@ -1,7 +1,9 @@
-/* src/styles/ill-tempered-week.css — the ill-tempered week (/ill-tempered-week, 2026-11-09).
+/* src/styles/ill-tempered-week.css — the ill-tempered week (/ill-tempered-week, 2026-11-09; the scores 2026-11-14).
  *
- * The frame's mono ink only. The agreement bars carry their fact by length and say it again in words beside
- * them, so no identity colour enters the page and no palette record is needed.
+ * The frame's mono ink only, in every skin and both themes: the scores tell their voices apart by place (a lane, a
+ * register, a row), by weight and by the tone of the one ink, never by a hue, so no identity colour enters the page
+ * and no palette record is needed. Every mark is an SVG element with a class from the islands in
+ * src/components/ill-tempered-week/; nothing here is positioned by a style attribute (the CSP drops them).
  */
 
 .itw-player {
@@ -23,50 +25,657 @@
   padding-left: 1rem;
 }
 
-.itw-days {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  gap: 0.75rem;
-  max-width: 48rem;
-}
-
-.itw-agree {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  gap: 0.35rem;
-  max-width: 40rem;
-}
-
-.itw-agree li {
-  display: grid;
-  grid-template-columns: 2.5rem minmax(6rem, 12rem) 1fr;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.itw-bar {
-  display: block;
-  width: 100%;
-  height: 0.5rem;
-}
-
-.itw-bar .itw-track {
-  fill: var(--color-line-lift);
-}
-
-.itw-bar .itw-fill {
-  fill: var(--color-fg);
-}
-
-.itw-bar .itw-none {
-  fill: var(--color-fg-muted);
-}
-
 .itw-albums {
   list-style: none;
   padding: 0;
   display: grid;
   gap: 1.5rem;
+}
+
+/* ——— how the data becomes sound ——————————————————————————————————————————————————————— */
+
+.itw-steps {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  counter-reset: itw-step;
+}
+
+.itw-steps li {
+  border-top: 1px solid var(--color-line-lift);
+  padding-top: 0.6rem;
+  counter-increment: itw-step;
+}
+
+.itw-steps li::before {
+  content: counter(itw-step);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-fg-faint);
+  margin-bottom: 0.2rem;
+}
+
+.itw-steps b {
+  display: block;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.itw-glance {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.itw-glance a {
+  display: block;
+  height: 100%;
+  border: 1px solid var(--color-line);
+  padding: 0.7rem 0.8rem;
+  text-decoration: none;
+}
+
+.itw-glance a:hover,
+.itw-glance a:focus-visible {
+  border-color: var(--color-fg-muted);
+}
+
+.itw-glance i {
+  font-weight: 600;
+}
+
+/* ——— a score ———————————————————————————————————————————————————————————————————— */
+
+.itw-score {
+  margin-top: 1.25rem;
+}
+
+/* The caption under the player keeps three lines' height, so the score never jumps while it plays. */
+.itw-now {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  line-height: 1.5;
+  color: var(--color-fg-muted);
+  min-height: 4.5em;
+  max-width: 48rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.itw-now-t {
+  color: var(--color-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Before a script runs, the server's drawing (laid out for a wide screen) keeps a readable size and scrolls
+   sideways on a narrow one; once the island runs it lays the score out for the width it has (data-live). */
+.itw-svgbox {
+  position: relative;
+  margin-top: 0.4rem;
+  overflow-x: auto;
+}
+
+.itw-svg {
+  display: block;
+  width: 100%;
+  min-width: 44rem;
+  height: auto;
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.itw-score[data-live] .itw-svgbox {
+  overflow: visible;
+}
+
+.itw-score[data-live] .itw-svg {
+  min-width: 0;
+}
+
+.itw-svg text,
+.itw-staff text,
+.itw-measure text {
+  font-family: var(--font-mono);
+}
+
+.itw-lab {
+  font-size: 10px;
+  fill: var(--color-fg-muted);
+}
+
+.itw-daylab {
+  font-size: 10.5px;
+  font-weight: 600;
+  fill: var(--color-fg);
+}
+
+.itw-note {
+  font-size: 10px;
+  fill: var(--color-fg-muted);
+}
+
+.itw-ticklab {
+  font-size: 9.5px;
+  fill: var(--color-fg-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.itw-lane {
+  stroke: var(--color-line);
+  stroke-width: 1;
+}
+
+.itw-daysep {
+  stroke: var(--color-line-lift);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+
+.itw-axis,
+.itw-tick {
+  stroke: var(--color-line-lift);
+  stroke-width: 1;
+}
+
+.itw-cut {
+  stroke: var(--color-fg);
+  stroke-width: 1.5;
+}
+
+.itw-tutti,
+.itw-peak {
+  fill: var(--color-fg);
+  fill-opacity: 0.07;
+}
+
+/* Overlooked: the voice, the answer, the motifs (paler and lower with each day of age), the ensemble, the murmur */
+.itw-bell,
+.itw-said,
+.itw-said-mark,
+.itw-violin {
+  fill: var(--color-fg);
+}
+
+.itw-answer {
+  stroke: var(--color-fg);
+  stroke-width: 5;
+  stroke-dasharray: 1.4 1.4;
+}
+
+.itw-motif rect {
+  fill: var(--color-fg);
+}
+
+.itw-motif.a0 rect { fill-opacity: 0.9; }
+.itw-motif.a1 rect { fill-opacity: 0.72; }
+.itw-motif.a2 rect { fill-opacity: 0.58; }
+.itw-motif.a3 rect { fill-opacity: 0.47; }
+.itw-motif.a4 rect { fill-opacity: 0.38; }
+.itw-motif.a5 rect { fill-opacity: 0.31; }
+.itw-motif.a6 rect { fill-opacity: 0.25; }
+.itw-motif.itw-tut rect { fill-opacity: 1; }
+
+/* each restart of a loop, cut into the band in the page's own ground */
+.itw-loop {
+  stroke: var(--color-bg);
+  stroke-width: 1;
+}
+
+.itw-ens rect {
+  fill: var(--color-fg-muted);
+  fill-opacity: 0.8;
+}
+
+.itw-piano {
+  fill: var(--color-fg-muted);
+  fill-opacity: 0.5;
+}
+
+.itw-brass {
+  fill: var(--color-fg-muted);
+}
+
+.itw-murmur {
+  fill: var(--color-fg-faint);
+  fill-opacity: 0.55;
+}
+
+/* what sounds at the playhead: an outline around it, a little apart */
+.itw-on rect {
+  fill: none;
+  stroke: var(--color-fg);
+  stroke-width: 1.2;
+}
+
+.itw-playhead line {
+  stroke: var(--color-fg);
+  stroke-width: 1.5;
+}
+
+.itw-playhead text {
+  font-size: 10px;
+  fill: var(--color-fg);
+  font-variant-numeric: tabular-nums;
+  paint-order: stroke;
+  stroke: var(--color-bg);
+  stroke-width: 3px;
+}
+
+/* Unison: the chord's lines, the glissandi by attention, the peaks, the bass and the timpani */
+.itw-chord {
+  stroke: var(--color-line-lift);
+  stroke-width: 1;
+  stroke-dasharray: 1 3;
+}
+
+.itw-chord-a {
+  stroke: var(--color-fg-faint);
+  stroke-dasharray: none;
+}
+
+.itw-hz {
+  font-size: 9px;
+  fill: var(--color-fg-faint);
+}
+
+.itw-hz-a {
+  fill: var(--color-fg-muted);
+}
+
+.itw-gl {
+  stroke: var(--color-fg);
+  stroke-linecap: round;
+}
+
+.itw-gl.w0 { stroke-width: 0.9; stroke-opacity: 0.5; }
+.itw-gl.w1 { stroke-width: 1.3; stroke-opacity: 0.62; }
+.itw-gl.w2 { stroke-width: 1.8; stroke-opacity: 0.76; }
+.itw-gl.w3 { stroke-width: 2.6; stroke-opacity: 0.9; }
+.itw-gl.itw-trem { stroke-dasharray: 2.2 1.6; stroke-linecap: butt; }
+
+.itw-tail {
+  fill: none;
+  stroke: var(--color-fg-faint);
+  stroke-width: 0.8;
+  stroke-opacity: 0.6;
+}
+
+.itw-gl-on line {
+  stroke: var(--color-fg);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+
+.itw-bass {
+  fill: none;
+  stroke: var(--color-fg);
+  stroke-width: 1.4;
+}
+
+.itw-bassn {
+  fill: var(--color-fg);
+}
+
+.itw-timp {
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.5;
+}
+
+.itw-roll {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-width: 1;
+}
+
+.itw-agree-track {
+  fill: var(--color-line-lift);
+}
+
+.itw-agree-fill {
+  fill: var(--color-fg);
+}
+
+.itw-agree-none {
+  fill: var(--color-fg-faint);
+}
+
+.itw-agree-mark {
+  stroke: var(--color-bg);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Turn: the rows, the cells as full as the beats that sound, the turn, the silent bar, the tempo */
+.itw-row {
+  fill: var(--color-fg);
+  fill-opacity: 0.04;
+}
+
+.itw-barline {
+  fill: none;
+  stroke: var(--color-line);
+  stroke-width: 0.6;
+}
+
+.itw-cell {
+  fill: var(--color-fg-muted);
+}
+
+.itw-cell-full {
+  fill: var(--color-fg);
+}
+
+.itw-saidbar {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-dasharray: 2 2;
+}
+
+.itw-tempo {
+  fill: none;
+  stroke: var(--color-fg);
+  stroke-width: 1.2;
+}
+
+.itw-lowa {
+  fill: var(--color-fg-faint);
+}
+
+.itw-baron {
+  fill: none;
+  stroke: var(--color-fg);
+  stroke-width: 1.5;
+}
+
+/* the readout: the shell's own structure (src/components/dataviz/Readout.astro), drawn inside the score's box */
+.itw-score .dv-readout {
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 10;
+  pointer-events: none;
+  max-width: 34ch;
+  transform: translate(var(--dv-x, 0px), var(--dv-y, 0px));
+  background: var(--color-panel);
+  border: 1px solid var(--color-line-lift);
+  padding: 0.45rem 0.6rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.itw-score .dv-readout .r-head {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.itw-score .dv-readout .r-body {
+  display: block;
+  color: var(--color-fg-muted);
+}
+
+/* ——— the parts under a score ————————————————————————————————————————————————————————— */
+
+.itw-parts,
+.itw-measures,
+.itw-udays {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 1.25rem 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+}
+
+.itw-part,
+.itw-mday,
+.itw-uday {
+  border-top: 1px solid var(--color-line);
+  padding-top: 0.6rem;
+}
+
+.itw-part.is-on,
+.itw-mday.is-on,
+.itw-uday.is-on {
+  border-top-color: var(--color-fg);
+}
+
+.itw-part-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+}
+
+.itw-part-day {
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.itw-part-meta {
+  color: var(--color-fg-muted);
+}
+
+.itw-play-from,
+.itw-at {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-fg-muted);
+}
+
+.itw-play-from {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid var(--color-line-lift);
+  border-radius: 2px;
+  padding: 0 0.4rem;
+  background: none;
+  cursor: pointer;
+}
+
+.itw-play-from:hover,
+.itw-play-from:focus-visible {
+  border-color: var(--color-fg);
+  color: var(--color-fg);
+}
+
+.itw-play-icon {
+  width: 0.55rem;
+  height: 0.55rem;
+  fill: currentColor;
+}
+
+.itw-part-text {
+  margin-top: 0.35rem;
+  line-height: 1.45;
+}
+
+.itw-part-src,
+.itw-part-note {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-fg-muted);
+}
+
+.itw-muted {
+  color: var(--color-fg-muted);
+}
+
+.itw-link {
+  text-decoration: underline;
+  text-decoration-color: var(--color-line-lift);
+  text-underline-offset: 3px;
+}
+
+.itw-link:hover {
+  text-decoration-color: var(--color-fg);
+}
+
+.itw-src {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+}
+
+.itw-staff,
+.itw-measure {
+  display: block;
+  width: 100%;
+  max-width: 26rem;
+  height: auto;
+  margin-top: 0.5rem;
+  overflow: visible;
+}
+
+.itw-stl {
+  stroke: var(--color-line);
+  stroke-width: 1;
+}
+
+.itw-stl-a {
+  stroke: var(--color-fg-faint);
+}
+
+.itw-stlab {
+  font-size: 8.5px;
+  fill: var(--color-fg-faint);
+}
+
+.itw-stbar {
+  stroke: var(--color-line-lift);
+  stroke-dasharray: 2 2;
+}
+
+.itw-stn {
+  fill: var(--color-fg-muted);
+}
+
+.itw-stn.is-on,
+.itw-beat.is-on {
+  fill: var(--color-fg);
+}
+
+.itw-stcur {
+  stroke: var(--color-fg);
+  stroke-width: 1.2;
+}
+
+.itw-beat {
+  fill: none;
+  stroke: var(--color-line-lift);
+  stroke-width: 1;
+}
+
+.itw-beat.is-on {
+  stroke: var(--color-fg);
+}
+
+.itw-murmured {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.itw-murmured summary {
+  cursor: pointer;
+  color: var(--color-fg-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+}
+
+.itw-murmured ul {
+  margin-top: 0.4rem;
+  display: grid;
+  gap: 0.35rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.itw-agree {
+  display: block;
+  width: 100%;
+  max-width: 18rem;
+  height: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+/* ——— the legend ———————————————————————————————————————————————————————————————————— */
+
+.itw-legend {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: grid;
+  gap: 0.35rem 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--color-fg-muted);
+}
+
+.itw-legend li {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 0.5rem;
+  align-items: start;
+}
+
+.itw-key-swatch {
+  width: 2.25rem;
+  height: 0.9rem;
+  margin-top: 0.15rem;
+  overflow: visible;
+}
+
+/* the table of every signal, with its link */
+.itw-table-wrap {
+  overflow-x: auto;
+  max-height: 28rem;
+  overflow-y: auto;
+}
+
+.itw-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.itw-table th,
+.itw-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.3rem 0.5rem 0.3rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.itw-table th {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-fg-faint);
+}
+
+.itw-table td.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
