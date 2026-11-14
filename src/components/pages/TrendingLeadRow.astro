@@ -1,0 +1,37 @@
+---
+/** One crossing of the morning as a ranked row: see TrendingLead.astro, which owns the list. */
+import { ageText, type LeadRow } from '@/lib/trending/overview'
+
+interface Props {
+  row: LeadRow
+}
+const { row: r } = Astro.props
+---
+
+<li class="tr-lead-row">
+  <span class="tr-lead-rank" aria-hidden="true">{r.rank}</span>
+  <div class="tr-lead-main">
+    {
+      r.url ? (
+        <a href={r.url} target="_blank" rel="noopener nofollow" class="tr-lead-label">{r.label}</a>
+      ) : (
+        <span class="tr-lead-label">{r.label}</span>
+      )
+    }
+    <p class="tr-lead-sources">
+      {
+        r.sources.map((s, i) => (
+          <Fragment>
+            {i > 0 && ' · '}
+            <a href={`#src-${s.id}`}>{s.label}</a>
+          </Fragment>
+        ))
+      }
+    </p>
+  </div>
+  <div class="tr-lead-measure">
+    <span class="tr-pips" aria-hidden="true">{r.sources.map(() => <i class="tr-pip" />)}</span>
+    <span class="tr-lead-n"><span class="tabular-nums">{r.platformCount}</span> sources</span>
+    <span class="tr-lead-age">{ageText(r)}</span>
+  </div>
+</li>

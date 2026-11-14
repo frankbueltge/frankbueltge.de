@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { archiveTitle, compact, deskLabel, feedTitle, fmtDateLong, fmtDateWeekday, fmtTimeUtc, magnitudeOf, metaDescription, pageTitle, platformLabel, signalText, topLabels } from './format'
+import { archiveTitle, compact, deskLabel, feedTitle, fmtDateLong, fmtDateShort, fmtDateWeekday, fmtTimeUtc, magnitudeOf, metaDescription, pageTitle, platformLabel, signalText, topLabels } from './format'
 import { fixtureDay } from './fixtures'
 
 describe('trending formatting', () => {
@@ -23,6 +23,12 @@ describe('trending formatting', () => {
     expect(deskLabel({})).toBeNull()
     expect(deskLabel({ feed: 7 })).toBeNull()
     expect(deskLabel(undefined)).toBeNull()
+  })
+
+  it('spells a short date itself, the same on every machine', () => {
+    expect(fmtDateShort('2026-09-02')).toBe('2 Sep')
+    expect(fmtDateShort('2026-11-10')).toBe('10 Nov')
+    expect(fmtDateShort('2026-12-31')).toBe('31 Dec')
   })
 
   it('formats dates in UTC, long form', () => {

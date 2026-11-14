@@ -1,0 +1,104 @@
+---
+/** The archive of the day ledger as a calendar (reading aids, 2026-11-14).
+ *
+ *  Until this day the archive was a paragraph of dates: seventy-four links in a row, each as
+ *  quiet as the next, with nothing to say which mornings had been loud. A calendar holds the same
+ *  links at a third of the height and adds the one fact the list could not: how many topics
+ *  crossed that morning, as one of four shades.
+ *
+ *  Every committed day is a link; a day with no file is a plain number, never a link to nothing.
+ *  The shades are quarters of the archive's own counts (src/lib/trending/overview.ts says why),
+ *  and the legend prints the cut points, so a shade reads back into a number. Ink only: the
+ *  ledger does not judge what it counts, and four steps of one ink stay legible in greyscale.
+ */
+import { fmtDateLong } from '@/lib/trending/format'
+import { archiveCalendar } from '@/lib/trending/overview'
+import type { TrendingDay } from '@/lib/trending/types'
+
+interface Props {
+  /** the day this page shows */
+  day: TrendingDay
+  /** every committed day, newest first */
+  days: TrendingDay[]
+  isLatest: boolean
+}
+const { day, days, isLatest } = Astro.props
+
+const model = archiveCalendar(days)
+const [q1, q2, q3] = model.cuts
+
+// Prev/next within the committed archive. `days` is newest first, so the NEWER neighbour sits
+// at the lower index.
+const idx = days.findIndex((d) => d.date === day.date)
+const newer = idx > 0 ? days[idx - 1] : undefined
+const older = idx >= 0 && idx < days.length - 1 ? days[idx + 1] : undefined
+
+const span = (from: number, to: number) => (from >= to ? String(to) : `${from} to ${to}`)
+// Four shades, lightest first. A quarter can be empty when many mornings share one count; its
+// swatch is then left out rather than labelled with a range nothing falls in.
+const legend = [
+  { level: 1, text: `up to ${q1}` },
+  { level: 2, text: q2 > q1 ? span(q1 + 1, q2) : '' },
+  { level: 3, text: q3 > q2 ? span(q2 + 1, q3) : '' },
+  { level: 4, text: `${q3 + 1} or more` },
+].filter((l) => l.text)
+
+const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+---
+
+<section class="mt-10 border-t border-line pt-6" id="archive" aria-labelledby="tr-archive-h">
+  <h2 class="kicker" id="tr-archive-h">The archive</h2>
+  <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+    Every committed morning, <span class="tabular-nums">{model.days}</span> so far, each on its own page. A darker day
+    is a morning on which more topics crossed.
+  </p>
+
+  <nav class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs text-fg-muted" aria-label="Neighbouring days">
+    {older && <a href={`/trending/${older.date}/`} class="transition-colors hover:text-fg">&larr; {fmtDateLong(older.date)}</a>}
+    {newer && <a href={`/trending/${newer.date}/`} class="transition-colors hover:text-fg">{fmtDateLong(newer.date)} &rarr;</a>}
+    {!isLatest && days[0] && <a href="/trending/" class="transition-colors hover:text-fg">Today</a>}
+  </nav>
+
+  <div class="tr-cal mt-5">
+    {model.months.map((m) => (
+      <section class="tr-cal-month" aria-label={m.label}>
+        <h3 class="tr-cal-title">{m.label}</h3>
+        <div class="tr-cal-grid" role="presentation">
+          {WEEKDAYS.map((w) => <span class="tr-cal-wd" aria-hidden="true">{w.slice(0, 1)}</span>)}
+          {m.weeks.flat().map((c) =>
+            c === null ? (
+              <span class="tr-cal-cell" data-l="pad" aria-hidden="true" />
+            ) : c.converging === null ? (
+              <span class="tr-cal-cell" data-l="0" title={`${fmtDateLong(c.date)}: no ledger committed`}>{c.dayOfMonth}</span>
+            ) : (
+              <a
+                class="tr-cal-cell"
+                data-l={c.level}
+                href={`/trending/${c.date}/`}
+                aria-current={c.date === day.date ? 'page' : undefined}
+                title={`${fmtDateLong(c.date)}: ${c.converging} topics on two or more sources`}
+              >
+                {c.dayOfMonth}
+                <span class="sr-only">{`, ${fmtDateLong(c.date)}, ${c.converging} topics on two or more sources`}</span>
+              </a>
+            ),
+          )}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <p class="tr-cal-legend mt-5 font-mono text-mono-sm text-fg-faint">
+    <span>Topics on two or more sources that morning:</span>
+    {legend.map((l) => (
+      <span class="tr-cal-key">
+        <span class="tr-cal-cell tr-cal-swatch" data-l={l.level} aria-hidden="true" />
+        {l.text}
+      </span>
+    ))}
+  </p>
+  <p class="mt-2 max-w-3xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+    The four shades are the quarters of the archive&rsquo;s own counts, so they shift as the archive grows; the number
+    behind a day stands on that day&rsquo;s page and in its JSON. The outlined day is the one this page shows.
+  </p>
+</section>

@@ -1,0 +1,59 @@
+---
+/** The crossings of the morning, ranked (reading aids, 2026-11-14).
+ *
+ *  The page's first claim is that a topic is here because several independent sources carried
+ *  it. Until this block that claim was readable only in the grid below, whose row labels are cut
+ *  at thirty-four characters and whose frame scrolls sideways on a phone. This is the same list
+ *  in words: every crossing in the file's own order, its full label, one pip per source that
+ *  carried it, and how long the ledger has known it.
+ *
+ *  One pip is one source, so a row's length IS its platform count: the drawing cannot say more
+ *  than the number beside it. The source names link to that source's card in the register.
+ */
+import TrendingLeadRow from '@/components/pages/TrendingLeadRow.astro'
+import { leadRows } from '@/lib/trending/overview'
+import type { TrendingDay } from '@/lib/trending/types'
+
+interface Props {
+  day: TrendingDay
+  /** rows printed before the fold */
+  top?: number
+}
+const { day, top = 10 } = Astro.props
+
+const rows = leadRows(day)
+const first = rows.slice(0, top)
+const rest = rows.slice(top)
+---
+
+<section class="mb-10" id="converging" aria-labelledby="tr-lead-h">
+  <h2 class="kicker" id="tr-lead-h">Converging now</h2>
+  {
+    rows.length === 0 ? (
+      <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+        No topic surfaced on two or more independent platforms this morning. The per-source lists below stand on their
+        own — an empty crossing is a reading, not a failure.
+      </p>
+    ) : (
+      <>
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+          What more than one source was looking at, widest first. Each pip is one independent source that carried the
+          topic; the names under it say which.
+        </p>
+        <ol class="tr-lead">
+          {first.map((r) => <TrendingLeadRow row={r} />)}
+        </ol>
+        {rest.length > 0 && (
+          <details class="tr-lead-rest">
+            <summary>
+              The other <span class="tabular-nums">{rest.length}</span> crossings of this morning
+            </summary>
+            <ol class="tr-lead tr-lead-compact" start={top + 1}>
+              {rest.map((r) => <TrendingLeadRow row={r} />)}
+            </ol>
+          </details>
+        )}
+      </>
+    )
+  }
+</section>

@@ -16,6 +16,16 @@ export function fmtDateWeekday(iso: string): string {
   return DATE_WEEKDAY.format(new Date(`${iso}T00:00:00Z`))
 }
 
+const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const
+
+/** "2 Sep". Spelled here rather than by Intl, for the reason given at compact() below: ICU builds
+ *  disagree on "Sep" versus "Sept", and a date that renders differently per machine would make
+ *  the built page differ between a laptop and the runner. */
+export function fmtDateShort(iso: string): string {
+  const [, m, d] = iso.split('-').map(Number) as [number, number, number]
+  return `${d} ${MONTH_SHORT[m - 1] ?? ''}`.trim()
+}
+
 /** "06:41" from an ISO timestamp, always UTC. */
 export function fmtTimeUtc(isoDateTime: string): string {
   const d = new Date(isoDateTime)
