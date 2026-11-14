@@ -227,7 +227,6 @@ export default function UnisonScore({ record, week, links, audioId, id, label, h
           onPointerLeave={() => readout.hide()}
           onClick={onClick}
         >
-          <title>{label}</title>
           <Drawing layout={layout} />
           {t !== null && (
             <g className="itw-gl-on" aria-hidden="true">

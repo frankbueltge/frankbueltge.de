@@ -194,7 +194,6 @@ export default function TurnScore({ record, week, saidLink, audioId, id, label, 
           onPointerLeave={() => readout.hide()}
           onClick={onClick}
         >
-          <title>{label}</title>
           <Drawing layout={layout} />
           {bar &&
             layout.lines

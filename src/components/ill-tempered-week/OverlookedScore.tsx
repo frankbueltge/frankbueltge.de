@@ -318,7 +318,6 @@ export default function OverlookedScore({ record, links, audioId, id, label, hin
           onPointerLeave={() => readout.hide()}
           onClick={onClick}
         >
-          <title>{label}</title>
           <Drawing layout={layout} />
           {t !== null && <Sounding layout={layout} ids={sounding} />}
           {t !== null && (
