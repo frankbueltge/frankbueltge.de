@@ -23,6 +23,20 @@ export const PROGRAMME = {
     dossier: 'The candidates · listed by field, not ranked · Sum is the writer’s score, Final sum the second reader’s',
   } as Record<string, string>,
   none: 'The Middle has not written the dossier yet. It runs several times a day; the candidates appear here once it has.',
+  /** Where to watch the question being worked (link audit, 2026-11-14): the page named the three
+   *  practices and their parts in the lead but linked none of them, nor the works of the step. */
+  follow: {
+    title: 'Follow the work',
+    links: [
+      { href: '/ecology', label: 'This step’s works, in progress', note: 'what the three practices are making now' },
+      { href: '/field', label: 'The Field', note: 'the evidence' },
+      { href: '/atelier', label: 'The Atelier', note: 'the concepts and the critique' },
+      { href: '/studio', label: 'The Studio', note: 'a form for what the Field found' },
+      { href: '/lines', label: 'Research lines', note: 'the earlier questions, resting while the programme runs' },
+      { href: '/trending', label: 'Common Ground', note: 'the morning ledger the Middle reads the world from' },
+      { href: '/papers', label: 'Paper Catalogue', note: 'what the practices read for it' },
+    ],
+  },
   source: 'The files in research-ecology ↗',
   foot: 'The Middle’s files, mirrored from research-ecology and rendered as written. Every figure in them links its source.',
 }

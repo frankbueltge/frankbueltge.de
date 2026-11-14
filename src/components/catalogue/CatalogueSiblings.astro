@@ -1,0 +1,31 @@
+---
+// The kicker of each catalogue page, made into a way across (2026-11-14). It used to read
+// "Catalogues · Papers" as plain text: the word naming the shelf led nowhere, and a reader on one
+// catalogue could not reach the other three without going back to the entrance (link audit of
+// 2026-11-14: /catalogues had a single inbound link outside the menu). The list is
+// NAMING.catalogues.items, so a fifth catalogue appears here without anyone touching this file.
+import { NAMING } from '@/config/naming'
+import { cn } from '@/lib/ui/cn'
+
+interface Props {
+  /** The href of the catalogue this page is, as it stands in NAMING.catalogues.items. */
+  current: string
+  /** The shelf's own word, for the German edition of the atlas. */
+  shelf?: string
+  class?: string
+}
+const { current, shelf = 'Catalogues', class: className } = Astro.props
+const items = NAMING.catalogues.items
+---
+
+<nav aria-label={shelf} class={cn('kicker', className)}>
+  <a href={NAMING.catalogues.href} class="underline">{shelf}</a>
+  {items.map((it) => (
+    <>
+      <span aria-hidden="true"> · </span>
+      {it.href === current
+        ? <span aria-current="page" class="text-fg">{it.name}</span>
+        : <a href={it.href} class="underline">{it.name}</a>}
+    </>
+  ))}
+</nav>

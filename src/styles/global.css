@@ -24,6 +24,24 @@ a,
 a * {
   text-decoration-thickness: var(--link-line) !important;
   text-underline-offset: var(--link-offset) !important;
+  text-decoration-color: var(--link-ink) !important;
+}
+/* Links (2026-11-14): the line was thick enough but drawn in the hairline colour of the frame
+   (`decoration-line`, --color-line-lift, the surfaces' own *-line/-underline tokens), which
+   measured 1.2–1.8 : 1 against the page, a line nobody sees. Wherever a link is underlined its
+   line is now drawn from the link's own colour, so a coloured link keeps its hue and a muted one
+   stays muted, and under the pointer or the keyboard focus it takes the full colour and a
+   little more weight. Still one decision only: what the line looks like, never whether there is
+   one. */
+:root {
+  --link-ink: color-mix(in srgb, currentColor 72%, transparent);
+}
+a:hover,
+a:hover *,
+a:focus-visible,
+a:focus-visible * {
+  --link-ink: currentColor;
+  --link-line: max(2.5px, 0.14em);
 }
 
 /* ── Design tokens (Tailwind v4 @theme → utilities like bg-bg, text-fg, text-accent) ── */

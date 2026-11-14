@@ -25,6 +25,7 @@ import { dataLicence, licenceSentence } from '@/lib/trending/licence'
 import { trendingUrls } from '@/lib/trending/markdown'
 import { getLatestTerms } from '@/lib/trending/terms-data'
 import type { TrendingAudience, TrendingDay } from '@/lib/trending/types'
+import { WERKE, werkTitle } from '@/data/werke'
 
 interface Props {
   day: TrendingDay
@@ -45,6 +46,9 @@ const u = trendingUrls(day.date)
 // The committed archive, newest first: the calendar at the foot of the page, the lines in the
 // tiles and the grid of what stayed are all counted out of it.
 const days = getTrendingDays()
+// The works built on this ledger (link audit, 2026-11-14): each linked here, none was linked back.
+const builtOn = WERKE.filter((w) => w.readsCommonGround && !w.retired)
+
 const crossings = day.topics.filter((t) => t.platform_count >= 2).length
 
 // The page is long because the ledger is: this is its table of contents. A block that renders
@@ -59,6 +63,7 @@ const sections: { href: string; label: string }[] = [
   { href: '#sources', label: 'By source' },
   { href: '#audience', label: 'Who reads this' },
   { href: '#machines', label: 'For machines' },
+  ...(builtOn.length > 0 ? [{ href: '#built-on', label: 'Built on this' }] : []),
   { href: '#archive', label: 'Archive' },
 ]
 
@@ -156,6 +161,20 @@ const machineEditions: { href: string; what: string }[] = [
         <li>Cite: Frank Bültge, Common Ground — trending ledger, frankbueltge.de/trending/{day.date}</li>
       </ul>
     </section>
+
+    {builtOn.length > 0 && (
+      <section class="mb-12 border-t border-line pt-6" id="built-on">
+        <h2 class="kicker">Built on this ledger</h2>
+        <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+          Works of the lab that take this ledger as their material:
+        </p>
+        <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+          {builtOn.map((w) => (
+            <li><a href={w.href} class="text-fg underline">{werkTitle(w, 'en')}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <section class="mb-12 border-t border-line pt-6" id="method">
       <h2 class="kicker">Method</h2>

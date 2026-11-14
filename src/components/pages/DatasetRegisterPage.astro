@@ -16,6 +16,7 @@ import { SOURCES, usedBy, userKind, werkLabel, zugangLabel } from '@/lib/registe
 import { titleSortKey } from '@/lib/catalogue/query'
 import CatalogueStats from '@/components/catalogue/CatalogueStats.astro'
 import CatalogueToolbar from '@/components/catalogue/CatalogueToolbar.astro'
+import CatalogueSiblings from '@/components/catalogue/CatalogueSiblings.astro'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/ui/cn'
 
@@ -88,7 +89,7 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
 
 <main id="main" class="mx-auto w-full max-w-4xl px-4 py-10 sm:py-14">
   <header class="mb-8 max-w-3xl">
-    <p class={cn(kicker, 'mb-2')}>Catalogues · Datasets</p>
+    <CatalogueSiblings current="/datasets" class="mb-2" />
     <h1 class="text-h1 font-semibold">Dataset Register</h1>
     <p class="mt-4 text-body text-fg-muted">
       The public data this lab's own pipelines and the practices' works actually retrieve,

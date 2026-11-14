@@ -43,6 +43,15 @@ const step = programme?.status === 'running' ? stepOf(cycle.cycle, programme.fir
       </section>
     ))}
 
+    <nav class="border-t border-line py-8" aria-label={PROGRAMME.follow.title}>
+      <p class="mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">{PROGRAMME.follow.title}</p>
+      <ul class="space-y-2 text-[15.5px] leading-relaxed">
+        {PROGRAMME.follow.links.map((l) => (
+          <li><a href={l.href} class="text-fg underline">{l.label}</a> <span class="text-fg-muted">· {l.note}</span></li>
+        ))}
+      </ul>
+    </nav>
+
     <p class="mt-10 border-t border-line pt-4 font-mono text-[11px] leading-relaxed text-fg-faint">
       {PROGRAMME.foot} <a href={PROGRAMME_REPO} class="underline underline-offset-2">{PROGRAMME.source}</a>
     </p>
