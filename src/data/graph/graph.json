@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "c69815b967b41063"
+        "sha256": "5268782fc89a2149"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 646,
-      "edges": 569,
+      "nodes": 647,
+      "edges": 570,
       "nodesByKind": {
-        "decision": 198,
+        "decision": 199,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
@@ -75,7 +75,7 @@
         "made-by": 231,
         "neighbor-of": 163,
         "participates": 17,
-        "touches": 142
+        "touches": 143
       }
     }
   },
@@ -1963,15 +1963,25 @@
     {
       "id": "decision:2026-11-14-1",
       "kind": "decision",
-      "label": "The day ledger gets reading aids, and its register may fold on a phone",
+      "label": "The browser can perform Overlooked from its score, and a derived file may stand beside a record",
       "date": "2026-11-14",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "The day ledger gets reading aids, and its register may fold on a phone"
+        "quote": "The browser can perform Overlooked from its score, and a derived file may stand beside a record"
       }
     },
     {
       "id": "decision:2026-11-14-10",
+      "kind": "decision",
+      "label": "Common Ground reads every public it can reach without a key",
+      "date": "2026-11-14",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Common Ground reads every public it can reach without a key"
+      }
+    },
+    {
+      "id": "decision:2026-11-14-11",
       "kind": "decision",
       "label": "Comma becomes a broadcast that cannot fall silent",
       "date": "2026-11-14",
@@ -1983,6 +1993,16 @@
     {
       "id": "decision:2026-11-14-2",
       "kind": "decision",
+      "label": "The day ledger gets reading aids, and its register may fold on a phone",
+      "date": "2026-11-14",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The day ledger gets reading aids, and its register may fold on a phone"
+      }
+    },
+    {
+      "id": "decision:2026-11-14-3",
+      "kind": "decision",
       "label": "The papers register carries no abstract of a paywalled work",
       "date": "2026-11-14",
       "source": {
@@ -1991,7 +2011,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-3",
+      "id": "decision:2026-11-14-4",
       "kind": "decision",
       "label": "The post office sends",
       "date": "2026-11-14",
@@ -2001,7 +2021,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-4",
+      "id": "decision:2026-11-14-5",
       "kind": "decision",
       "label": "Comma gains two deeper voices",
       "date": "2026-11-14",
@@ -2011,7 +2031,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-5",
+      "id": "decision:2026-11-14-6",
       "kind": "decision",
       "label": "Every published practice page says who made it, and names the imprint and the privacy notice",
       "date": "2026-11-14",
@@ -2021,7 +2041,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-6",
+      "id": "decision:2026-11-14-7",
       "kind": "decision",
       "label": "Training crawlers are no longer invited to /trending",
       "date": "2026-11-14",
@@ -2031,7 +2051,7 @@
       }
     },
     {
-      "id": "decision:2026-11-14-7",
+      "id": "decision:2026-11-14-8",
       "kind": "decision",
       "label": "Common Ground asks to be named",
       "date": "2026-11-14",
@@ -2041,23 +2061,13 @@
       }
     },
     {
-      "id": "decision:2026-11-14-8",
+      "id": "decision:2026-11-14-9",
       "kind": "decision",
       "label": "The five older Common Ground sources stay",
       "date": "2026-11-14",
       "source": {
         "file": "docs/decision-log.md",
         "quote": "The five older Common Ground sources stay"
-      }
-    },
-    {
-      "id": "decision:2026-11-14-9",
-      "kind": "decision",
-      "label": "Common Ground reads every public it can reach without a key",
-      "date": "2026-11-14",
-      "source": {
-        "file": "docs/decision-log.md",
-        "quote": "Common Ground reads every public it can reach without a key"
       }
     },
     {
@@ -13476,15 +13486,24 @@
     {
       "kind": "touches",
       "from": "decision:2026-11-14-1",
-      "to": "work:trending",
+      "to": "work:ill-tempered-week",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "src/components/pages/Trending{Page,Glance,Lead,Stayed,Sources,Archive}.astro"
+        "quote": "src/components/ill-tempered-week/orchestra.ts"
       }
     },
     {
       "kind": "touches",
       "from": "decision:2026-11-14-10",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "pipelines/trending/src/trending/sources/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-14-11",
       "to": "work:comma",
       "source": {
         "file": "docs/decision-log.md",
@@ -13493,7 +13512,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-10",
+      "from": "decision:2026-11-14-11",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",
@@ -13502,7 +13521,16 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-3",
+      "from": "decision:2026-11-14-2",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/components/pages/Trending{Page,Glance,Lead,Stayed,Sources,Archive}.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-14-4",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",
@@ -13511,7 +13539,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-4",
+      "from": "decision:2026-11-14-5",
       "to": "work:comma",
       "source": {
         "file": "docs/decision-log.md",
@@ -13520,7 +13548,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-4",
+      "from": "decision:2026-11-14-5",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",
@@ -13529,7 +13557,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-5",
+      "from": "decision:2026-11-14-6",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -13538,7 +13566,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-6",
+      "from": "decision:2026-11-14-7",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -13547,7 +13575,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-7",
+      "from": "decision:2026-11-14-8",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
@@ -13556,20 +13584,11 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-11-14-8",
-      "to": "work:trending",
-      "source": {
-        "file": "docs/decision-log.md",
-        "quote": "pipelines/trending/README.md"
-      }
-    },
-    {
-      "kind": "touches",
       "from": "decision:2026-11-14-9",
       "to": "work:trending",
       "source": {
         "file": "docs/decision-log.md",
-        "quote": "pipelines/trending/src/trending/sources/"
+        "quote": "pipelines/trending/README.md"
       }
     }
   ]

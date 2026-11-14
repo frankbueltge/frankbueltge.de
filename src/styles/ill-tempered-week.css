@@ -1,15 +1,14 @@
 /* src/styles/ill-tempered-week.css — the ill-tempered week (/ill-tempered-week, 2026-11-09; the scores 2026-11-14).
  *
- * The page is the frame's mono ink, and the scores wear four hues where a hue carries a distinction the drawing
- * cannot carry alone (Frank's word of 2026-11-14, wording private: colour where it makes sense). In Unison the four
- * string sections overlap in pitch, so a glissando wears its section. In Turn each platform family keeps its hue from
- * the rows of the score to the bar drawn large beneath it. In Overlooked two of the four tell the overlooked headline
- * itself (said, answered, kept as a motif) from the ensemble that takes it up. Everything a piece does not single out
- * stays in ink: the murmur of the most attended, bells, chord lines, timpani, the solo double bass, the tempo. A hue
- * sits on marks only; labels, counts and headlines stay in ink, and each legend names a hue beside its mark.
+ * The page is the frame's mono ink. One score wears hues: in Unison the four string sections overlap in pitch, so a
+ * glissando wears its section, which place alone could not tell. Overlooked and Turn are in ink again (2026-11-14,
+ * after a day in hues; Frank's word of that day, wording private): each of their voices has a lane or a row of its
+ * own, so a hue said nothing the place did not. There the voices are told apart by place, by weight and by the tone
+ * of the one ink. A hue sits on marks only; labels, counts and headlines stay in ink, and the legend names each hue
+ * beside its mark.
  *
- * PALETTE: itw-voices — four hues from the lowest voice to the highest, validated light and dark against the page's
- * own ground (--color-bg) and recorded in src/lib/dataviz/palette.ts.
+ * PALETTE: itw-voices — four hues from the lowest string section to the highest, validated light and dark against the
+ * page's own ground (--color-bg) and recorded in src/lib/dataviz/palette.ts.
  *
  * Every mark is an SVG element with a class from the islands in src/components/ill-tempered-week/; nothing here is
  * positioned by a style attribute (the CSP drops them).
@@ -17,13 +16,13 @@
 
 .itw-score,
 .itw-table {
-  /* PALETTE: itw-voices — the lowest voice: double basses in Unison, search in Turn */
+  /* PALETTE: itw-voices — the lowest section: double basses */
   --itw-c-1: #7d2b78;
-  /* PALETTE: itw-voices — cellos in Unison, news in Turn, the ensemble that takes a motif up in Overlooked */
+  /* PALETTE: itw-voices — cellos */
   --itw-c-2: #2a6fd0;
-  /* PALETTE: itw-voices — violas in Unison, social in Turn */
+  /* PALETTE: itw-voices — violas */
   --itw-c-3: #00846d;
-  /* PALETTE: itw-voices — the highest voice: violins in Unison, tech in Turn, the overlooked itself in Overlooked */
+  /* PALETTE: itw-voices — the highest section: violins */
   --itw-c-4: #b8410e;
 }
 
@@ -238,9 +237,7 @@
   fill-opacity: 0.07;
 }
 
-/* Overlooked: the overlooked headline itself (said, answered, kept as a motif that grows paler and lower with each
-   day of age) in the highest hue; the ensemble that takes it up in the second; bell, coda violin and murmur in ink.
-   The same classes stay in ink in Unison, where the sentence said over the chord is no voice of the strings. */
+/* Overlooked: the voice, the answer, the motifs (paler and lower with each day of age), the ensemble, the murmur */
 .itw-bell,
 .itw-said,
 .itw-said-mark,
@@ -248,18 +245,14 @@
   fill: var(--color-fg);
 }
 
-[data-island='itw-overlooked'] .itw-said {
-  fill: var(--itw-c-4);
-}
-
 .itw-answer {
-  stroke: var(--itw-c-4);
+  stroke: var(--color-fg);
   stroke-width: 5;
   stroke-dasharray: 1.4 1.4;
 }
 
 .itw-motif rect {
-  fill: var(--itw-c-4);
+  fill: var(--color-fg);
 }
 
 .itw-motif.a0 rect { fill-opacity: 0.9; }
@@ -278,17 +271,17 @@
 }
 
 .itw-ens rect {
-  fill: var(--itw-c-2);
-  fill-opacity: 0.9;
+  fill: var(--color-fg-muted);
+  fill-opacity: 0.8;
 }
 
 .itw-piano {
-  fill: var(--itw-c-2);
-  fill-opacity: 0.6;
+  fill: var(--color-fg-muted);
+  fill-opacity: 0.5;
 }
 
 .itw-brass {
-  fill: var(--itw-c-2);
+  fill: var(--color-fg-muted);
 }
 
 .itw-murmur {
@@ -422,23 +415,11 @@
 
 .itw-cell {
   fill: var(--color-fg-muted);
-  fill-opacity: 0.82;
 }
 
 .itw-cell-full {
-  fill-opacity: 1;
+  fill: var(--color-fg);
 }
-
-/* a platform family keeps its hue from the rows of the score to the bar drawn large beneath it */
-.itw-cell.f-search { fill: var(--itw-c-1); }
-.itw-cell.f-news { fill: var(--itw-c-2); }
-.itw-cell.f-social { fill: var(--itw-c-3); }
-.itw-cell.f-tech { fill: var(--itw-c-4); }
-
-.itw-beat.is-on.f-search { fill: var(--itw-c-1); stroke: var(--itw-c-1); }
-.itw-beat.is-on.f-news { fill: var(--itw-c-2); stroke: var(--itw-c-2); }
-.itw-beat.is-on.f-social { fill: var(--itw-c-3); stroke: var(--itw-c-3); }
-.itw-beat.is-on.f-tech { fill: var(--itw-c-4); stroke: var(--itw-c-4); }
 
 .itw-saidbar {
   fill: none;
@@ -628,17 +609,11 @@
   stroke-dasharray: 2 2;
 }
 
-/* a day's motif on its staff: the notes in the overlooked's hue, the one sounding now in ink */
 .itw-stn {
-  fill: var(--itw-c-4);
-  fill-opacity: 0.85;
+  fill: var(--color-fg-muted);
 }
 
-.itw-stn.is-on {
-  fill: var(--color-fg);
-  fill-opacity: 1;
-}
-
+.itw-stn.is-on,
 .itw-beat.is-on {
   fill: var(--color-fg);
 }
@@ -777,4 +752,110 @@
   font-family: var(--font-mono);
   font-size: var(--text-mono-sm);
   color: var(--color-fg-muted);
+}
+
+/* ——— the browser's own performance of a score ————————————————————————————————————————— */
+
+.itw-perform {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.9rem;
+  margin-top: 0.9rem;
+}
+
+.itw-perform-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--color-fg);
+  border-radius: 2px;
+  padding: 0.3rem 0.7rem;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  color: var(--color-fg);
+  cursor: pointer;
+}
+
+.itw-perform-go:hover,
+.itw-perform-go:focus-visible {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+
+.itw-perform-go:disabled {
+  border-color: var(--color-line-lift);
+  color: var(--color-fg-muted);
+  background: none;
+  cursor: progress;
+}
+
+.itw-perform-say {
+  flex: 1 1 18rem;
+  max-width: 44rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-fg-muted);
+}
+
+.itw-voices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.7rem;
+}
+
+.itw-voices-say {
+  flex: 1 0 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-fg-faint);
+}
+
+/* a voice that sounds is ink on the ground; one that is left out is an outline */
+.itw-voice {
+  border: 1px solid var(--color-fg-muted);
+  border-radius: 2px;
+  padding: 0.15rem 0.5rem;
+  background: var(--color-fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-bg);
+  cursor: pointer;
+}
+
+.itw-voice[aria-pressed='false'] {
+  border-color: var(--color-line-lift);
+  background: none;
+  color: var(--color-fg-muted);
+}
+
+.itw-voice-all {
+  border-style: dashed;
+  background: none;
+  color: var(--color-fg);
+}
+
+.itw-voice-all:disabled {
+  border-color: var(--color-line);
+  color: var(--color-fg-faint);
+  cursor: default;
+}
+
+/* in the drawing a voice left out of the performance is pale */
+.itw-off {
+  opacity: 0.22;
+}
+
+/* under a finger the controls are taller */
+@media (pointer: coarse) {
+  .itw-perform-go {
+    padding: 0.55rem 0.85rem;
+  }
+
+  .itw-voice {
+    padding: 0.5rem 0.7rem;
+  }
 }
