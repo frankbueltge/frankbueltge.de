@@ -43,6 +43,10 @@ concurrency:
 jobs:
   katalog:
     runs-on: ubuntu-latest
+    # A healthy night takes 25-35 minutes. The nights of 2026-11-08, -10 and -13 hung in
+    # the Dataset Register step for 1.8-3.6 hours and then died red; no step log survived.
+    # Fail early and visibly instead of holding a runner for hours.
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
         with:
