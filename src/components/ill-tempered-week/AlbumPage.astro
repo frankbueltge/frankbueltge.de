@@ -1,0 +1,67 @@
+---
+// One album of the ill-tempered week on a page of its own (/ill-tempered-week/<week>/, 2026-11-14). The front page
+// plays the newest complete album and the running week; when a week completes, the album before it leaves that page.
+// Here every album keeps its three pieces, their players and their scores, from its first day on: the same
+// AlbumPieces the front page shows, read from the same record.
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import AlbumPieces from '@/components/ill-tempered-week/AlbumPieces.astro'
+import { span, weekday } from '@/lib/ill-tempered-week/albums'
+import { albumPath, type AlbumPageProps } from '@/lib/ill-tempered-week/pages'
+import '@/styles/experiment-sheet.css'
+import '@/styles/ill-tempered-week.css'
+
+type Props = AlbumPageProps
+
+const { album, older, newer } = Astro.props
+const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+const o = album.pieces.overlooked
+const number = (week: string): number => Number(week.split('-W')[1])
+---
+
+<main id="main" class="sheet mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">
+  <SheetHead
+    title={album.title}
+    sub={`A week of the web’s attention, composed: the album of ${span(album.days)}.`}
+    badges={[album.complete ? 'complete' : `edition ${o.edition} of 7`]}
+    stamp={span(album.days)}
+  >
+    <Fragment slot="kicker"><a class={link} href="/ill-tempered-week/">the ill-tempered week</a> · an album</Fragment>
+  </SheetHead>
+
+  <section class="mb-12 max-w-3xl" aria-label="About this album">
+    <p class="leading-relaxed">
+      {album.complete
+        ? <>Three pieces from one week of Common Ground’s ledger: <em>Overlooked</em>, <em>Unison</em> and <em>Turn</em>. The album is complete and is never pressed again.</>
+        : <>This week is still running. <em>Overlooked</em> is pressed again from its days so far whenever a day of the ledger lands, so this edition breaks off at {weekday(o.newest_day)}; <em>Unison</em> and <em>Turn</em> join it when the week is complete.</>}
+      {' '}Each piece has its score: time runs from left to right, a line follows the music, a click jumps to that moment, and a
+      mark names the day and the headline it comes from. How the data becomes sound is told on
+      <a class={link} href="/ill-tempered-week/#itw-how">the work’s page</a>.
+    </p>
+  </section>
+
+  <AlbumPieces album={album} />
+
+  <section class="mb-12 max-w-3xl" aria-label="This album’s record">
+    <p class="kicker mb-3">The record</p>
+    <p class="leading-relaxed text-fg-muted">
+      Pressed on {album.pressed} from {album.days.length === 1 ? 'one day file' : `${album.days.length} day files`} of Common Ground. Instruments: {album.library}. Voices: {album.voices}.
+      The <a class={link} href={`${REPO}/blob/main/src/data/ill-tempered-week/${album.week}.json`}>record</a> hashes every file the
+      album read and holds every note the scores draw.
+    </p>
+  </section>
+
+  <nav class="itw-albumnav mb-12" aria-label="Other albums">
+    {older ? <a class={link} href={albumPath(older)}>← Contrapunctus {number(older)}</a> : <span></span>}
+    <a class={link} href="/ill-tempered-week/">the ill-tempered week</a>
+    {newer ? <a class={link} href={albumPath(newer)}>Contrapunctus {number(newer)} →</a> : <span></span>}
+  </nav>
+
+  <SheetFoot links={[
+    { href: '/ill-tempered-week/', label: 'the ill-tempered week' },
+    { href: '/werke/ill-tempered-week', label: 'method sheet' },
+    { href: `${REPO}/tree/main/src/data/ill-tempered-week`, label: 'the records', external: true },
+    { href: '/trending', label: 'Common Ground' },
+  ]} />
+</main>
