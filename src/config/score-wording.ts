@@ -448,7 +448,9 @@ export const SCORE_WORDING = {
     },
 
     shelf: {
-      meta: (entries: number) => `${plural(entries, 'entry', 'entries')}, presentations outlined in ink`,
+      meta: (entries: number) => `${plural(entries, 'entry', 'entries')}, presentations outlined in ink, études dashed`,
+      /** the mark on a convening piece, so it is not taken for the cycle's main work (2026-11-14) */
+      etude: 'étude',
       before: { label: 'Before v3', sub: 'under the earlier orders' },
       ownTheme: 'own default theme',
     },

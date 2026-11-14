@@ -27,6 +27,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { localeHref } from '@/lib/locale-href'
 import { pieceHref } from '@/lib/engines/publication-links'
+import { isEtudeHref } from '@/lib/engines/etude-links'
 import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { SCORE_WORDING as W, SHORT, shortDateYear } from '@/config/score-wording'
@@ -115,7 +116,7 @@ const daylightWord = (verdict: string): string => VERDICT_LEGEND.find((l) => l.k
             <span>{t.date ? shortDateYear(t.date) : R.undated(t.cycle)}</span>
             <span>{houseName(t)}</span>
             <span>{R.cycleCell(t.cycle)}</span>
-            <span>{R.kind({ kind: t.kind, before: t.cycle === 0, paper: t.paperHref !== null })}{t.withdrawn && ` · ${R.withdrawn}${t.withdrawnOn ? ` ${t.withdrawnOn}` : ''}`}</span>
+            <span>{isEtudeHref(t.href) ? W.practice.shelf.etude : R.kind({ kind: t.kind, before: t.cycle === 0, paper: t.paperHref !== null })}{t.withdrawn && ` · ${R.withdrawn}${t.withdrawnOn ? ` ${t.withdrawnOn}` : ''}`}</span>
             <a class="sc-register-title" href={url(t.href)}>{t.title}</a>
             <span aria-hidden="true">↗</span>
           </div>
