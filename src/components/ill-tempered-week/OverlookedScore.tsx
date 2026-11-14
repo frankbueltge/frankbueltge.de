@@ -13,7 +13,9 @@
 //   4. Reduced motion: the playhead moves with the audio's own clock (four times a second) instead of every frame.
 //   5. The readout is clamped to the drawing's box and is never a hit target.
 //   6. Weight: React and this file; no chart library. Budget line `OverlookedScore.` in scripts/budgets.json.
-//   7. Mono ink only: age is told by height and by tone of the one ink, never by a hue.
+//   7. Two hues of the palette record itw-voices: the overlooked headline itself (said, answered, kept as a motif)
+//      and the ensemble that takes it up. Age is told by height and strength, never by a further hue; the murmur of
+//      the most attended, the bell and the coda's violin stay in the frame's inks.
 import * as React from 'react'
 
 import type { Overlooked } from '@/lib/ill-tempered-week/albums'
