@@ -57,6 +57,11 @@ const chip = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'text-fg-mut
         <div class="mt-3 space-y-3">
           {s.paragraphs.map((p) => <p class="text-body leading-relaxed text-fg-muted">{p}</p>)}
         </div>
+        {s.links && (
+          <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-body">
+            {s.links.map((l) => <li><a href={l.href} class="text-fg underline">{l.label} →</a></li>)}
+          </ul>
+        )}
       </section>
     ))}
   </div>

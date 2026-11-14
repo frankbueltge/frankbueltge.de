@@ -4,7 +4,9 @@ export type About = {
   metaTitle: string
   metaDesc: string
   lede: string
-  sections: { heading: string; paragraphs: string[] }[]
+  /** `links` (2026-11-14): the places a section names, one door each. The page named every project
+   *  and the machinery in prose and linked none of them (link audit of 2026-11-14). */
+  sections: { heading: string; paragraphs: string[]; links?: { href: string; label: string }[] }[]
   /** How the name is spelled elsewhere, and that a namesake exists (2026-10-23): one line that
    *  lets a reader, a search engine and an answer engine tell the two people apart. */
   nameNote: string
@@ -70,17 +72,33 @@ const en: About = {
       paragraphs: [
         'One question runs through the current projects: how can AI support and extend artistic research? Not whether a machine can make art or do artistic research on its own, and not generative art. Machines can hold attention for months, repeat a measurement every night, read sources at a scale no person could and build a prototype in an afternoon. So I let them work with exactly those means — under written rules, in public — and judge them by whether what comes out carries the research further: material, studies and instruments with a value you can check, not a demo.',
       ],
+      links: [
+        { href: '/question', label: 'The question the ecology works on now' },
+        { href: '/ecology', label: 'The research ecology' },
+      ],
     },
     {
       heading: 'The projects',
       paragraphs: [
         'Several main projects, each with its own home and its own rules — each one door away: two machine-run research projects (a federated ecology of three practices, and Machine Attention, a single machine under a single constitution); datavism.org, a data-activism lab for the AI era; data-snack.com, a character-driven data magazine; the Atlas, a source-cited map of contemporary data art; and the Lab, this site’s earlier experiments, each standing on its own. New ones may join; works travel between them, in both directions.',
       ],
+      links: [
+        { href: '/ecology', label: 'Research ecology' },
+        { href: '/machine-attention', label: 'Machine Attention' },
+        { href: '/work/datavism', label: 'datavism.org' },
+        { href: '/work/data-snack', label: 'data-snack.com' },
+        { href: '/atlas', label: 'Atlas of Data Art' },
+        { href: '/experiments', label: 'The Lab' },
+      ],
     },
     {
       heading: 'The role I hold',
       paragraphs: [
         'In the machine-run projects my role is the same everywhere: architect and conductor. I conceive and engineer the machinery, write the rules it runs under, seed directions it may decline, intervene, and end what fails my critique — and I carry the legal and editorial responsibility for everything published here. The machines write; the record shows who wrote what. Nothing here claims an autonomy it does not have.',
+      ],
+      links: [
+        { href: '/apparatus', label: 'How the machinery runs' },
+        { href: '/dossier', label: 'The short way in' },
       ],
     },
     {
@@ -93,6 +111,9 @@ const en: About = {
       heading: 'Stance',
       paragraphs: [
         'Substance before claim, source before interpretation. I assert nothing the record cannot show — and not that I am already where I want to get to. Nothing here calls itself art; whether any of it becomes art is not for this site to claim. Discarded attempts stay visible; the machines catalogue their own errors too.',
+      ],
+      links: [
+        { href: '/experiments', label: 'Experiments, retired ones included' },
       ],
     },
   ],
