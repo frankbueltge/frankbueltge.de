@@ -1,3 +1,6 @@
+// Superseded for the page from state 3 (2026-11-15, session 275): the page now shows the checked figures, asserted by
+// verify77.mjs. This file asserted state 2 as committed in session 274 and is kept as it ran; do not run it against a later page
+// (it would also overwrite process/2.png).
 // Study 76 (second state): open the page at 1100 px light and 390 px dark; read the new figures from the page a
 // visitor sees and compare them with results76.json and coding76.json; check errors and sideways scroll; write
 // process/2.png from the light pass. Study 75's own checks stay in verify75.mjs (run with NOSHOT=1 so it keeps 1.png).

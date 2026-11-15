@@ -1,0 +1,40 @@
+{
+ "what": "Third reading (the conductor, session 275): every disagreement on the Part A code and on whether a public body acted (Part B) read again in the report's text, against the rule of PREDICTIONS76.md. Disagreements on 'maker responded' and 'other responded' are reported, not adjudicated.",
+ "A": [
+  {"id": 187, "first": "harmed", "second": "witness", "final": "harmed", "borderline": true, "why": "The record's harmed column names the driver, who is the channel's author; the rule counts a writer the column names."},
+  {"id": 383, "first": "unreadable", "second": "harmed", "final": "unreadable", "borderline": false, "why": "The snapshot holds only hashtags; nothing in them says the writer was affected."},
+  {"id": 1615, "first": "harmed", "second": "witness", "final": "harmed", "borderline": true, "why": "The column names the sheriff's office, so the rule holds; it writes as the responding authority, which is the Atelier's point 3: the code follows the editors' column."}
+ ],
+ "B_public_act": [
+  {"id": 321, "admit": true, "target": "maker", "borderline": true, "why": "A response report cites the National Transportation Safety Board's investigation and what it found against the maker; named in passing."},
+  {"id": 638, "admit": false, "why": "A police crash investigation is mentioned without a proceeding, charge or order against anyone."},
+  {"id": 726, "admit": true, "target": "maker", "borderline": false, "why": "The state motor-vehicle department suspended the operator's driverless permits; two federal bodies are investigating."},
+  {"id": 844, "admit": true, "target": "maker", "borderline": false, "why": "The court approved the class settlement at a final hearing: a court's ruling in a private suit."},
+  {"id": 926, "admit": true, "target": "user", "borderline": false, "why": "Police traced two men and an indictment accuses them."},
+  {"id": 955, "admit": true, "target": "user", "borderline": true, "why": "A court order in the platform operator's suit allowed the seizure of the abusers' website."},
+  {"id": 1048, "admit": true, "target": "user", "borderline": true, "why": "A state legislature passed a deepfake-images act and sent it to the governor; not yet signed in the text."},
+  {"id": 1497, "admit": true, "target": "user", "borderline": true, "why": "The judge examined the flagged petition and decided on its consequences; the consequences are not stated."},
+  {"id": 1499, "admit": true, "target": "user", "borderline": true, "why": "The declaration answers the court's instruction to explain under oath."},
+  {"id": 1707, "admit": true, "target": "maker", "borderline": true, "why": "A government opened a forensic investigation, a taskforce review and a referral to a parliamentary committee; it inquires into the incident and its own processes, not against the maker."},
+  {"id": 1728, "admit": true, "target": "user", "borderline": false, "why": "The declaration answers a dated court order directing counsel to state whether AI was used."}
+ ],
+ "frontier": {
+  "claim_checked": "Study 76: on a maker of a frontier model, three proceedings opened (1146, 1329, 1487), none concluded in the record, and one filing for the maker (1677).",
+  "result": "corrected",
+  "why": "Incident 1146's response report says a Turkish court blocked access to Grok and a prosecutor opened an investigation: one act concluded, by a court outside the maker's home state. The first coding read the opening and noted the ban as named in passing.",
+  "general_model_makers": {"concluded": [1146], "opened": [1329, 1487], "inquiry_into_the_incident": [1707], "for_the_maker": [1677]},
+  "other_system_of_a_frontier_firm": [93]
+ },
+ "press_sample_harmed": [
+  {"id": 215, "holds": true, "borderline": false, "why": "An open letter signed by the content moderators the column names."},
+  {"id": 1190, "holds": true, "borderline": false, "why": "The mother of the person who died, writing under her own name; the column names her."},
+  {"id": 1715, "holds": true, "borderline": true, "why": "The outlet whose brand and editor were faked writes about it; the column names the outlet, the writer is its staff."},
+  {"id": 1725, "holds": true, "borderline": false, "why": "The editor of the publication that was deceived explains the retraction; the column names the publication."}
+ ],
+ "atelier_correction": {
+  "handoff": "ho-2026-11-15-atelier-5",
+  "claim": "Of the 20 acts coded as on a developer or deployer, six name a public body as deployer (807, 1400, 1694, 1770, 1771, 1801).",
+  "result": "holds",
+  "why": "All six carry a public body in the deployer column. The second coding, blind to this, marks the party acted on as a public body in five; in 1694 the court ruled on a suit brought against the township's police and the reader's maker, and the second coder read the ruling as on the maker."
+ }
+}
