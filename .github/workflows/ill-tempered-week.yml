@@ -54,6 +54,9 @@ jobs:
       - name: Install the renderer
         run: python -m pip install --quiet -r scripts/ill-tempered-week/requirements.txt
 
+      - name: The week's verdict holds to its tests
+        run: python -m unittest scripts/ill-tempered-week/test_character.py
+
       - name: What tonight presses
         id: plan
         env:

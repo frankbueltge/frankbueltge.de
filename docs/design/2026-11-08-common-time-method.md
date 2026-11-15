@@ -38,6 +38,45 @@ Written down at Frank's request before the next build (wording private). It repl
 pressings on this branch were made with. The probes behind this method (04 to 06) live in `_drafts/` and
 are not part of the repository.
 
+## The week chooses its form (Frank's decision of 2026-11-16, wording private)
+
+Listening to the first albums, Frank found that every week sounded alike: the same forms, the same instrument per
+field, always on A (2026-11-14, wording private). Probe 32 varied root, instruments and Unison's chord inside the
+fixed forms; he heard it as still too similar and the wrong direction. Probe 33 let the week choose the procedure
+itself; he heard two weeks, then six more sketches, and chose to build all of them (2026-11-15/16, wording private).
+
+**The character** (`scripts/ill-tempered-week/itw/character.py`, recorded in each album as `character`) is read from
+every field of the round the album reads: the leading term of each day across all fields (a story's variants folded:
+Kyiv and Ukrainian into Ukraine, Hormuz and Iranian into Iran, and so on), the longest run of one lead (*hold*), how
+often the lead changed (*changes*), and the sharpest overnight change in the field shares (*break*, Jensen-Shannon,
+base 2). One verdict, in this order: **handover** (a lead held two days, then another holds to the end, three days or
+more), **break** (break at least 0.30), **held** (hold at least 5), **mosaic** (at least four changes), else
+**standing**, the forms the pieces had before. Measured over weeks 37 to 46 through one round's fields:
+
+| verdict | weeks |
+|---|---|
+| held | 38, 39, 42, 45 |
+| mosaic | 37, 40, 43 |
+| break | 41, 44 |
+| standing | 46 |
+| handover | none in ten weeks |
+
+The handover sketch of probe 33 (W46) rested on an unfolded count: Iran, Iranian and Hormuz counted apart, so climate
+seemed to lead from Wednesday. Folded, Iran leads four days and the week is standing. The rule stays; it is rare.
+`scripts/ill-tempered-week/test_character.py` holds the ten verdicts and the edges of each rule.
+
+**The forms.** Two are procedures, two are made of them. *Held*: one unbroken sound, no day audible as a day.
+*Mosaic*: a block per day, as long as the day's material, silence and a hard cut between. *Break*: the days before the
+break held, a single stroke and silence, the days from it on as a mosaic. *Handover*: held, and on the day the lead
+passes the ground itself moves a step. Each piece keeps its question in every form: Overlooked says the least attended
+headline of each day and plays its motif; Unison glides towards agreement and peaks with brass from 30 % on; Turn keeps
+its turn, the bar that falls silent and the headline said.
+
+**When.** The character is only known when the week is, so editions 1 to 6 of Overlooked stay in the standing form;
+the seventh pressing, with Unison and Turn, is in the week's form. A form is pressed only when every piece can render
+it and its score can draw it (`READY` in `press.py`); until then the album records the verdict and why it was pressed
+standing. Albums pressed before this rule carry no character and are never pressed again.
+
 ## What holds
 
 Data are the basis of every track: what sounds, when, how often, in which chord and for how long comes

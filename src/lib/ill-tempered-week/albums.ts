@@ -113,6 +113,25 @@ export interface Turn extends Rendered {
   days: TurnDay[]
 }
 
+export type Form = 'handover' | 'break' | 'held' | 'mosaic' | 'standing'
+
+export interface Character {
+  round: string
+  /** the leading term of each day read, across all fields, a story's variants folded */
+  leads: string[]
+  hold: number
+  changes: number
+  /** the largest Jensen-Shannon distance between the field shares of two consecutive days, and that day */
+  break: number
+  break_day: string | null
+  verdict: Form
+  thresholds: { break: number; held: number; mosaic: number }
+  days_read: number
+  /** the form pressed: the verdict once the week is complete and every piece and score can take it, else standing */
+  form: Form
+  why: string
+}
+
 export interface Album {
   /** The work's name as written when the album was pressed: lowercase from 2026-11-10 on (Frank's choice of
    *  2026-11-09, wording private); a record pressed before keeps the capitals it was pressed under. */
@@ -122,6 +141,10 @@ export interface Album {
   days: string[]
   complete: boolean
   pressed: string
+  /** recorded from 2026-11-16 on (scripts/ill-tempered-week/itw/character.py): the week's character as far as its
+   *  days were read, the verdict, and the form the album was pressed in. An album without it was pressed in the
+   *  standing form, before the week chose. */
+  character?: Character
   pieces: { overlooked: Overlooked; unison?: Unison; turn?: Turn }
   library: string
   voices: string
