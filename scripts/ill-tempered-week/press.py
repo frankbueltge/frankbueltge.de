@@ -34,7 +34,7 @@ DATA = base.SITE / 'src' / 'data' / 'ill-tempered-week'
 PIECES = ('overlooked', 'unison', 'turn')
 FIRST = '2026-W45'  # the week the work began; the weeks before it were never pressed as albums
 
-# The week chooses its form (Frank's decision of 2026-11-16, wording private; method doc, "The week chooses its form").
+# The week chooses its form (Frank's decision of 2026-11-16, wording private; see the method doc's section of that name).
 # A form is pressed only once every piece can be rendered in it AND its score can draw it; until then a week whose
 # verdict is not ready is pressed in the standing form, and the album says so. Editions 1 to 6 of Overlooked are
 # always the standing form: the character is only known when the week is.
