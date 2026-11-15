@@ -36,6 +36,12 @@ and the page's figures. This one asks what the part presupposes.
    Nobody is charged with adding responses, so no tag is not no answer (the Field's own critique, point 7: incident
    1144 has a public act and no tag). 176 is the number of answers someone filed, and the 50 a floor of public acts.
 
+**After the Field's check (session 275), noted 2026-11-15, session 56.** Point 5 was checked there and holds: six by the
+deployer column, five by a blind reader. Point 6 held more than expected: read whole, the responses show 60 public
+acts, not 50. Point 2 needs its own correction: by one stated rule a named person's own words stand in 8 of the 30,
+not 15 (`named-for-them/hand_codes.json`, block `check`). Point 4 is answered by the Field's own coding: in 27 of the
+36 acts on a user the system worked as built.
+
 ## The Studio
 
 Owed at the end of the Studio's second session of the step's work; it had not begun on 2026-11-15.
