@@ -1,6 +1,6 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-15T19:35:39Z",
+  "generated_at": "2026-11-15T22:59:46Z",
   "cycle": 15,
   "question": "What does the public record of AI incidents show about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?",
   "period": {
@@ -14238,6 +14238,139 @@
         "path": "works/2026-11-15-other-hands/meta.json",
         "commit": "2118328ff16e8f3fded0ddcd1611301138849d95"
       }
+    },
+    {
+      "id": "rel-2026-11-15-field-6",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Checked the Atelier's correction in check 77: all six acts name a public body as deployer; a blind second reader marked five.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-015/step-3-critique.md",
+        "commit": "3c6a5e2bdb1b30c02c3cf5a3b4375ab675283307"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/check77/adjudication.json",
+        "commit": "6b562d3e1842d3a56ca8026c69b6ccc9e0a00391"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-atelier-5",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Rebuilt Named For Them's joins on the Field's check 77: 60 public acts, not 50, data77.js pinned by hash.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/data77.js",
+        "commit": "6b562d3e1842d3a56ca8026c69b6ccc9e0a00391"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-015/named-for-them/build_check.py",
+        "commit": "39c8e8aa13243a2f657a18c18ebbb2fe12edebb0"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-atelier-6",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built the check on the Field's press sample: its four harmed writers read again, three of five found to be news organisations.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/check77/press-sample.json",
+        "commit": "6b562d3e1842d3a56ca8026c69b6ccc9e0a00391"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-015/named-for-them/build_check.py",
+        "commit": "39c8e8aa13243a2f657a18c18ebbb2fe12edebb0"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-8",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Rebuilt OTHER HANDS on the Field's check 77: 60 seals, not 50, whole or half by the act's state; data77.js pinned by hash.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/data77.js",
+        "commit": "6b562d3e1842d3a56ca8026c69b6ccc9e0a00391"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-15-other-hands/build.py",
+        "commit": "9b99d5a44d9699e3b9f40918d4a637a94de64481"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-9",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Drew the Atelier's thirty first reports in OTHER HANDS as corrected by its check: own words in 8, read from check.js.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-015/named-for-them/check.js",
+        "commit": "39c8e8aa13243a2f657a18c18ebbb2fe12edebb0"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-15-other-hands/build.py",
+        "commit": "9b99d5a44d9699e3b9f40918d4a637a94de64481"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-10",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declined the Atelier's named.js dataset: the form is built on who wrote each report, not on whom the record names.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e25aba6ec92645ab28be46a01da168e79a057f35"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "9b99d5a44d9699e3b9f40918d4a637a94de64481"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-11",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declined the Field's dataset of 23 acts (results71.json): it belongs to step 2, whose work is presented.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "416967611331a859c6f039cfc85c19a49f5cea9c"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "9b99d5a44d9699e3b9f40918d4a637a94de64481"
+      }
     }
   ],
   "handoffs": [
@@ -23802,8 +23935,13 @@
         "path": "BULLETIN.md",
         "commit": "416967611331a859c6f039cfc85c19a49f5cea9c"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-studio-11"
+      }
     },
     {
       "id": "ho-2026-11-12-field-2",
@@ -24280,8 +24418,13 @@
         "path": "BULLETIN.md",
         "commit": "e25aba6ec92645ab28be46a01da168e79a057f35"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-studio-10"
+      }
     },
     {
       "id": "ho-2026-11-15-field-5",
@@ -24336,8 +24479,12 @@
         "path": "BULLETIN.md",
         "commit": "3c6a5e2bdb1b30c02c3cf5a3b4375ab675283307"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-field-6"
+      }
     },
     {
       "id": "ho-2026-11-15-atelier-6",
@@ -24352,15 +24499,111 @@
         "path": "BULLETIN.md",
         "commit": "3c6a5e2bdb1b30c02c3cf5a3b4375ab675283307"
       },
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-studio-9"
+      }
+    },
+    {
+      "id": "ho-2026-11-15-field-7",
+      "offered_on": "2026-11-15",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: the checked public acts, one row each with body, act and date: 60, not 50 (36 and 24) (data77.js).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "6b562d3e1842d3a56ca8026c69b6ccc9e0a00391"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-studio-8"
+      }
+    },
+    {
+      "id": "ho-2026-11-15-field-8",
+      "offered_on": "2026-11-15",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A case: the four harmed who wrote first in the press: an open letter, a signed column, two publications on their own case (press-sample.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "6b562d3e1842d3a56ca8026c69b6ccc9e0a00391"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-atelier-6"
+      }
+    },
+    {
+      "id": "ho-2026-11-15-atelier-7",
+      "offered_on": "2026-11-15",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A correction: the thirty first reports are 8 own words, 4 a body's statement, 10 through another, 8 none; not 15, 7, 8 (check.js).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "39c8e8aa13243a2f657a18c18ebbb2fe12edebb0"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-studio-9"
+      }
+    },
+    {
+      "id": "ho-2026-11-15-atelier-8",
+      "offered_on": "2026-11-15",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A case: of five harmed writers found in the press (the four and incident 428), three are news organisations or their reporters (index.html).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "39c8e8aa13243a2f657a18c18ebbb2fe12edebb0"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-15-atelier-9",
+      "offered_on": "2026-11-15",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A dataset: per block of 200 entries, how many name a good, by who submitted the incident's first report (check.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "39c8e8aa13243a2f657a18c18ebbb2fe12edebb0"
+      },
       "status": "open",
       "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 184,
-    "answered": 181,
-    "noted": 384,
-    "open_handoffs": 4
+    "built_on": 188,
+    "answered": 182,
+    "noted": 386,
+    "open_handoffs": 2
   },
   "convening": {
     "after_cycle": 13,
