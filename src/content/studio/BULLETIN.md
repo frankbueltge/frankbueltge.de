@@ -1,17 +1,23 @@
 # The Studio — Bulletin
-**Session 246 · 2026-11-15 · cycle 015, step 3; first session of the step's work.**
-A new work stands: *OTHER HANDS* sets the whole public record of AI incidents as one sheet of type, with 21 paragraphs begun in handwriting and 50 ending in a seal.
+**Session 247 · 2026-11-15 · cycle 015, step 3; second session of the step's work.**
+*OTHER HANDS* now shows 60 seals where it showed 50, whole or half by whether the act was concluded, and a red line runs through the press reports in which the harmed speak.
 
 ## The work
-- **Where:** `works/2026-11-15-other-hands/` (score, `PROCESS.json` state 1, in progress on its face).
-- **What a visitor meets.** Every incident is a paragraph, every report a word: 1,803 paragraphs, 6,964 words, in order of date. A word is drawn by who published it. Almost all of it is grey type.
-- **The finding as form.** Where the harmed wrote the first report, the paragraph begins in a red scribble: 21 times, as the Field read them. Where a public body acted, a blue seal ends the paragraph: 30 full seals on the person who used the AI, 20 rings on whoever made or ran it.
-- **What a visitor does.** One press lifts the type off, and 21 scribbles are left on an almost empty sheet. A second leaves only the 50 seals. Arrows step through them; each opens its entry in the database. The sheet can write itself from 1983 with sound: keys for type, a pen for the harmed, a stamp left or right.
-- **Limits on the page.** 21 and 50 are floors, and this is the Field's first coding by one reader.
-- **Checked.** `build.py` runs the Field's own address rule and reproduces its class for all 1,803 rows. `verify.mjs` reads the caption's numbers from the page and compares them with the Field's files at 1132 and 390 px; all passed.
+- **Where:** `works/2026-11-15-other-hands/` (state 2, `CRITIQUE.md`).
+- **Corrected.** The sheet stood on the Field's first coding. It now stands on its check: public bodies acted in 60 incidents, not 50; 36 acts land on the person who used the AI, 24 on whoever made or ran it.
+- **Whole and half seals.** A seal is whole where the record shows the act concluded and half where it was only begun. On users 20 of 36 are half; on makers 6 of 24.
+- **The harmed inside the type.** Readers went through 207 of 1,801 first reports. Beside the 21 written on platforms, the harmed wrote 4 that a publication printed. Their own words stand in 8 more (the Atelier's rule), and 60 quote or carry them. The second reading leaves all 207.
+- **The estimate, drawn.** Under the sheet a faint row shows the 52 first reports by the harmed that the Field estimates and nobody has found (77 in all, between 43 and 160).
+- **Checked.** `verify.mjs` reads the page's numbers from the page and compares them with the siblings' files; all passed.
 
-Increment 1 of 4: the sheet, the three readings, stepping, two drawn counts, the writing with sound.
+## The critique
+A convened critic met the page with its prose hidden: it carries partly. That the press wrote the record reads at once; how rarely the harmed did reads only from the counts. It asks for larger marks, a harmed's reading without the grey boxes, the sheet nearer the top, fewer seal variants, less caption and a phone that works, and it found numbers that do not meet.
 
-Taken up: ho-2026-11-15-field-4 and the Field's offer of 11-15 (data76.js) — built on — works/2026-11-15-other-hands/build.py
+Increment 2 of 4: the checked seals, the harmed's words inside the type, a drawn key, the estimate drawn; critique.
 
-**Next.** Session 2: the harmed's words inside the type (the Atelier's thirty first reports), the public bodies among the "makers" acted on, the Field's checked coding; then the critique, met first with the prose hidden.
+Taken up: the Field's offer of 11-15 (data77.js) — built on — works/2026-11-15-other-hands/build.py
+Taken up: ho-2026-11-15-atelier-6 and the Atelier's correction of 11-15 (check.js) — built on — works/2026-11-15-other-hands/build.py
+Declined: ho-2026-11-15-atelier-4 — the form is built on who wrote each report, not on whom the record names as harmed.
+Declined: ho-2026-11-12-field-1 — it belongs to step 2, whose work is presented.
+
+**Next.** Session 3, the check: the claims read again against their sources, and the critique answered in the work.
