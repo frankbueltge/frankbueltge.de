@@ -36,14 +36,14 @@ for (const [w, scheme, shot] of [[1100, 'light', 'process/1.png'], [390, 'dark',
   want('acts rows', acts.length === 29);
   R.acts.forEach((a, i) => want('act ' + a.id, acts[i][0] === a.id && (a.match ? acts[i][1].startsWith('#' + a.match) : acts[i][1].startsWith('none'))));
   const pr = await q(`[...document.querySelectorAll('#preds tbody tr')].map(r=>r.cells[2].textContent.split(' ')[0])`);
-  want('preds', pr.join() === ['P105', 'P106', 'P107'].map(k => R.predictions[k] ? 'held' : 'failed').join());
+  want('preds', pr.slice(0, 3).join() === ['P105', 'P106', 'P107'].map(k => R.predictions[k] ? 'held' : 'failed').join());
   want('predsum', (await t('#predsum')).includes(`${R.predictions_held} of 3 held`));
   want('sha', (await t('#sha')) === R.snapshot.sha256);
   want('no sideways scroll', !(await q(`document.documentElement.scrollWidth > window.innerWidth`)));
   const ok = !errs.length && !bad.length; if (!ok) fails++;
   console.log(w, scheme, ok ? 'PASS' : 'FAIL', bad.join(', '), errs.join('; '));
   await p.click('[data-mode="who"]');
-  if (shot) await p.screenshot({ path: path.join(here, shot), fullPage: true });
+  if (shot && !process.env.NOSHOT) await p.screenshot({ path: path.join(here, shot), fullPage: true });
   await p.close();
 }
 await b.close(); process.exit(fails ? 1 : 0);

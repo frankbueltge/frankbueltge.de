@@ -1,0 +1,1836 @@
+{
+ "study": 76,
+ "session": 274,
+ "date": "2026-11-15",
+ "coder": "Meridian, one reader, first coding",
+ "snapshot_sha256": "c10825888fb716bb91a67319f3292324a7f962f68e6e82326aedd4d694a7aad0",
+ "rules": "PREDICTIONS76.md, fixed before reading. Two codes were added during Part A because the fixed four did not fit what was read: \"record note\" (the database's own note, six incidents) and the Part B field act_target (descriptive, not tested).",
+ "A": [
+  {
+   "id": 21,
+   "code": "record note",
+   "writer": "The database's own note listing incidents converted to issues; not a report of the event.",
+   "borderline": false
+  },
+  {
+   "id": 53,
+   "code": "witness",
+   "writer": "A scholar writing about search results for Black girls; a member of the group the column names, writing as a researcher.",
+   "borderline": true
+  },
+  {
+   "id": 61,
+   "code": "harmed",
+   "writer": "A competitor in the contest, on his own results.",
+   "borderline": false
+  },
+  {
+   "id": 62,
+   "code": "record note",
+   "writer": "As 21.",
+   "borderline": false
+  },
+  {
+   "id": 85,
+   "code": "record note",
+   "writer": "As 21.",
+   "borderline": false
+  },
+  {
+   "id": 117,
+   "code": "witness",
+   "writer": "A researcher running an experiment from a fresh account.",
+   "borderline": false
+  },
+  {
+   "id": 134,
+   "code": "witness",
+   "writer": "A news agency's account on a social platform: press, not self-published.",
+   "borderline": false
+  },
+  {
+   "id": 145,
+   "code": "harmed",
+   "writer": "A driver whose own car slowed for the moon.",
+   "borderline": false
+  },
+  {
+   "id": 159,
+   "code": "record note",
+   "writer": "As 21.",
+   "borderline": false
+  },
+  {
+   "id": 160,
+   "code": "harmed",
+   "writer": "The mother of the girl the column names.",
+   "borderline": false
+  },
+  {
+   "id": 179,
+   "code": "maker",
+   "writer": "The developer's own risk document, hosted on a code platform: the maker.",
+   "borderline": false
+  },
+  {
+   "id": 187,
+   "code": "harmed",
+   "writer": "The driver the column names, on his own test drive.",
+   "borderline": false
+  },
+  {
+   "id": 194,
+   "code": "witness",
+   "writer": "A consultant writing about an unnamed company.",
+   "borderline": false
+  },
+  {
+   "id": 205,
+   "code": "witness",
+   "writer": "The platform that removed the network; not the incident's developer or deployer.",
+   "borderline": false
+  },
+  {
+   "id": 222,
+   "code": "witness",
+   "writer": "A user testing an app's outputs about groups.",
+   "borderline": false
+  },
+  {
+   "id": 253,
+   "code": "witness",
+   "writer": "A passer-by describing blocked lanes.",
+   "borderline": false
+  },
+  {
+   "id": 273,
+   "code": "harmed",
+   "writer": "The writer, gendered by the app, on her own distress.",
+   "borderline": false
+  },
+  {
+   "id": 278,
+   "code": "witness",
+   "writer": "A journalist testing the chatbot.",
+   "borderline": false
+  },
+  {
+   "id": 287,
+   "code": "record note",
+   "writer": "As 21.",
+   "borderline": false
+  },
+  {
+   "id": 298,
+   "code": "record note",
+   "writer": "As 21.",
+   "borderline": false
+  },
+  {
+   "id": 308,
+   "code": "witness",
+   "writer": "A video channel reposting a fall at a conference.",
+   "borderline": false
+  },
+  {
+   "id": 313,
+   "code": "harmed",
+   "writer": "The politician the chatbot named.",
+   "borderline": false
+  },
+  {
+   "id": 316,
+   "code": "witness",
+   "writer": "An investigator who clicked an advertisement while working.",
+   "borderline": false
+  },
+  {
+   "id": 347,
+   "code": "harmed",
+   "writer": "The passenger inside the car.",
+   "borderline": false
+  },
+  {
+   "id": 356,
+   "code": "witness",
+   "writer": "A researcher testing outputs about her country of origin; a member of the group the column names.",
+   "borderline": true
+  },
+  {
+   "id": 372,
+   "code": "witness",
+   "writer": "A device reviewer.",
+   "borderline": false
+  },
+  {
+   "id": 383,
+   "code": "unreadable",
+   "writer": "A short video whose text in the snapshot is hashtags only.",
+   "borderline": false
+  },
+  {
+   "id": 413,
+   "code": "harmed",
+   "writer": "A moderator of the site the column names, announcing its ban.",
+   "borderline": false
+  },
+  {
+   "id": 420,
+   "code": "witness",
+   "writer": "A researcher testing the chatbot.",
+   "borderline": false
+  },
+  {
+   "id": 456,
+   "code": "harmed",
+   "writer": "A user on what the companion app said to her.",
+   "borderline": false
+  },
+  {
+   "id": 466,
+   "code": "witness",
+   "writer": "A tester of detection tools.",
+   "borderline": false
+  },
+  {
+   "id": 487,
+   "code": "witness",
+   "writer": "A fact-checking account.",
+   "borderline": false
+  },
+  {
+   "id": 492,
+   "code": "harmed",
+   "writer": "The son of the parents the column names, for the family.",
+   "borderline": false
+  },
+  {
+   "id": 503,
+   "code": "harmed",
+   "writer": "The user the column names, on the chatbot's threats to him.",
+   "borderline": false
+  },
+  {
+   "id": 511,
+   "code": "witness",
+   "writer": "An account reposting another user's exchange.",
+   "borderline": false
+  },
+  {
+   "id": 533,
+   "code": "witness",
+   "writer": "An account reposting another driver's video.",
+   "borderline": false
+  },
+  {
+   "id": 538,
+   "code": "witness",
+   "writer": "An account reposting an accusation against a professor.",
+   "borderline": false
+  },
+  {
+   "id": 539,
+   "code": "witness",
+   "writer": "An advocate relaying a colleague's test.",
+   "borderline": false
+  },
+  {
+   "id": 548,
+   "code": "witness",
+   "writer": "A photographer on false accusations against other photographers.",
+   "borderline": false
+  },
+  {
+   "id": 552,
+   "code": "witness",
+   "writer": "A researcher testing a safeguard.",
+   "borderline": false
+  },
+  {
+   "id": 553,
+   "code": "witness",
+   "writer": "A user on a search panel.",
+   "borderline": false
+  },
+  {
+   "id": 572,
+   "code": "witness",
+   "writer": "A researcher relaying, unnamed, a student's own email: the harmed voice carried by a witness.",
+   "borderline": true
+  },
+  {
+   "id": 576,
+   "code": "witness",
+   "writer": "A user who saw an advertisement.",
+   "borderline": false
+  },
+  {
+   "id": 787,
+   "code": "witness",
+   "writer": "An article on a writers' platform: press-like.",
+   "borderline": false
+  },
+  {
+   "id": 820,
+   "code": "harmed",
+   "writer": "The speaker whose photograph was altered.",
+   "borderline": false
+  },
+  {
+   "id": 960,
+   "code": "witness",
+   "writer": "A legal journalist's newsletter: press.",
+   "borderline": false
+  },
+  {
+   "id": 1026,
+   "code": "harmed",
+   "writer": "The user the column names, on her own conversation.",
+   "borderline": false
+  },
+  {
+   "id": 1043,
+   "code": "harmed",
+   "writer": "The moderators of the community the column names, for its members.",
+   "borderline": false
+  },
+  {
+   "id": 1126,
+   "code": "harmed",
+   "writer": "The user the column names, on her mother.",
+   "borderline": false
+  },
+  {
+   "id": 1243,
+   "code": "maker",
+   "writer": "The deployer's chief executive, apologising: the maker.",
+   "borderline": false
+  },
+  {
+   "id": 1273,
+   "code": "witness",
+   "writer": "A broadcaster's channel: press.",
+   "borderline": false
+  },
+  {
+   "id": 1424,
+   "code": "harmed",
+   "writer": "The engineer whose production platform was deleted.",
+   "borderline": false
+  },
+  {
+   "id": 1426,
+   "code": "harmed",
+   "writer": "The son the column names, on his father's death.",
+   "borderline": false
+  },
+  {
+   "id": 1470,
+   "code": "harmed",
+   "writer": "The contributor the column names, on her own issue.",
+   "borderline": false
+  },
+  {
+   "id": 1502,
+   "code": "harmed",
+   "writer": "The chief executive the column names, on the attempt against his colleague.",
+   "borderline": false
+  },
+  {
+   "id": 1615,
+   "code": "harmed",
+   "writer": "A sheriff's office the column names among the harmed; it writes as the responding authority.",
+   "borderline": true
+  },
+  {
+   "id": 1637,
+   "code": "witness",
+   "writer": "A viewer of an educational video.",
+   "borderline": false
+  },
+  {
+   "id": 1676,
+   "code": "harmed",
+   "writer": "The developer whose own database was wiped.",
+   "borderline": false
+  }
+ ],
+ "B": [
+  {
+   "id": 1,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 6,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 51,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 74,
+   "codes": [
+    "M",
+    "O"
+   ],
+   "note": "deployer police changed policy under a private suit's settlement; no ruling",
+   "borderline": false
+  },
+  {
+   "id": 93,
+   "codes": [
+    "P"
+   ],
+   "note": "DOJ settlement resolving allegations",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 123,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 199,
+   "codes": [
+    "P"
+   ],
+   "note": "FTC settlement",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 205,
+   "codes": [
+    "O"
+   ],
+   "note": "platform not maker",
+   "borderline": false
+  },
+  {
+   "id": 209,
+   "codes": [
+    "M"
+   ],
+   "note": "maker's recall filing, on a .gov host",
+   "borderline": false
+  },
+  {
+   "id": 293,
+   "codes": [
+    "M"
+   ],
+   "note": "maker's recall filing",
+   "borderline": false
+  },
+  {
+   "id": 321,
+   "codes": [
+    "O"
+   ],
+   "note": "private suit settled",
+   "borderline": false
+  },
+  {
+   "id": 324,
+   "codes": [
+    "O"
+   ],
+   "note": "platform not maker",
+   "borderline": false
+  },
+  {
+   "id": 380,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 435,
+   "codes": [
+    "P"
+   ],
+   "note": "antitrust regulator fine",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 475,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer ended the system",
+   "borderline": false
+  },
+  {
+   "id": 477,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 508,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 510,
+   "codes": [
+    "O"
+   ],
+   "note": "the harmed speaks",
+   "borderline": false
+  },
+  {
+   "id": 513,
+   "codes": [
+    "M"
+   ],
+   "note": "maker's privacy policy",
+   "borderline": false
+  },
+  {
+   "id": 541,
+   "codes": [
+    "P",
+    "O"
+   ],
+   "note": "judge's sanction and a standing order",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 543,
+   "codes": [
+    "O"
+   ],
+   "note": "platform not maker",
+   "borderline": false
+  },
+  {
+   "id": 563,
+   "codes": [
+    "O"
+   ],
+   "note": "later reporting clears the deployer",
+   "borderline": false
+  },
+  {
+   "id": 592,
+   "codes": [
+    "M",
+    "O"
+   ],
+   "note": "as 74",
+   "borderline": false
+  },
+  {
+   "id": 597,
+   "codes": [
+    "P",
+    "O"
+   ],
+   "note": "police investigation",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 601,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 606,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 608,
+   "codes": [
+    "P",
+    "O"
+   ],
+   "note": "class action; federal health agency rule on the matter",
+   "borderline": true,
+   "act_target": "maker"
+  },
+  {
+   "id": 612,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 616,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer",
+   "borderline": false
+  },
+  {
+   "id": 617,
+   "codes": [
+    "P"
+   ],
+   "note": "state laws",
+   "borderline": true,
+   "act_target": "user"
+  },
+  {
+   "id": 618,
+   "codes": [
+    "O"
+   ],
+   "note": "lawmakers' letters only",
+   "borderline": false
+  },
+  {
+   "id": 619,
+   "codes": [
+    "P"
+   ],
+   "note": "FTC ban",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 622,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 623,
+   "codes": [
+    "P"
+   ],
+   "note": "court ruling declining sanctions",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 624,
+   "codes": [
+    "M",
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 627,
+   "codes": [
+    "O"
+   ],
+   "note": "private suit settled",
+   "borderline": false
+  },
+  {
+   "id": 628,
+   "codes": [
+    "P"
+   ],
+   "note": "indictment; FCC",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 632,
+   "codes": [
+    "O"
+   ],
+   "note": "platform; bills introduced only",
+   "borderline": false
+  },
+  {
+   "id": 633,
+   "codes": [
+    "M",
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 638,
+   "codes": [
+    "M"
+   ],
+   "note": "maker denies",
+   "borderline": false
+  },
+  {
+   "id": 639,
+   "codes": [
+    "P"
+   ],
+   "note": "tribunal ruling",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 640,
+   "codes": [
+    "M"
+   ],
+   "note": "recall",
+   "borderline": false
+  },
+  {
+   "id": 641,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 642,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 645,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 653,
+   "codes": [
+    "P"
+   ],
+   "note": "SEC charges",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 657,
+   "codes": [
+    "M"
+   ],
+   "note": "maker explains",
+   "borderline": false
+  },
+  {
+   "id": 658,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer explains its own deepfake",
+   "borderline": false
+  },
+  {
+   "id": 666,
+   "codes": [
+    "O"
+   ],
+   "note": "a presidency's statement only",
+   "borderline": false
+  },
+  {
+   "id": 672,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer's statement",
+   "borderline": false
+  },
+  {
+   "id": 675,
+   "codes": [
+    "P"
+   ],
+   "note": "sentence",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 686,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 693,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 726,
+   "codes": [
+    "O"
+   ],
+   "note": "private settlement",
+   "borderline": false
+  },
+  {
+   "id": 764,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer resigned",
+   "borderline": false
+  },
+  {
+   "id": 774,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 807,
+   "codes": [
+    "P"
+   ],
+   "note": "information commissioner's investigation and finding",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 826,
+   "codes": [
+    "O"
+   ],
+   "note": "the harmed's family",
+   "borderline": false
+  },
+  {
+   "id": 844,
+   "codes": [
+    "O"
+   ],
+   "note": "DOJ statement of interest; private class settlement",
+   "borderline": true
+  },
+  {
+   "id": 861,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 926,
+   "codes": [
+    "O"
+   ],
+   "note": "private suit",
+   "borderline": false
+  },
+  {
+   "id": 955,
+   "codes": [
+    "O"
+   ],
+   "note": "platform operator's suit; not in the developer or deployer column",
+   "borderline": false
+  },
+  {
+   "id": 1041,
+   "codes": [
+    "M"
+   ],
+   "note": "maker declines to change",
+   "borderline": false
+  },
+  {
+   "id": 1048,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1054,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1070,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1097,
+   "codes": [
+    "O"
+   ],
+   "note": "no responder legible in title or opening",
+   "borderline": false
+  },
+  {
+   "id": 1104,
+   "codes": [
+    "P"
+   ],
+   "note": "charge",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1118,
+   "codes": [
+    "P",
+    "M",
+    "O"
+   ],
+   "note": "DOJ charges; maker's report; a targeted firm",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1130,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1132,
+   "codes": [
+    "P"
+   ],
+   "note": "arrest",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1146,
+   "codes": [
+    "M",
+    "P"
+   ],
+   "note": "maker deletes; a court ban named in passing",
+   "borderline": true,
+   "act_target": "maker"
+  },
+  {
+   "id": 1152,
+   "codes": [
+    "O"
+   ],
+   "note": "no responder legible in title or opening",
+   "borderline": false
+  },
+  {
+   "id": 1156,
+   "codes": [
+    "O"
+   ],
+   "note": "a school's statement",
+   "borderline": false
+  },
+  {
+   "id": 1158,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1173,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1192,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1193,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer refunds",
+   "borderline": false
+  },
+  {
+   "id": 1201,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1228,
+   "codes": [
+    "O"
+   ],
+   "note": "a government's apology as data holder, not an act",
+   "borderline": false
+  },
+  {
+   "id": 1233,
+   "codes": [
+    "O"
+   ],
+   "note": "the harmed reports to police",
+   "borderline": false
+  },
+  {
+   "id": 1242,
+   "codes": [
+    "O"
+   ],
+   "note": "police warning only",
+   "borderline": false
+  },
+  {
+   "id": 1243,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1251,
+   "codes": [
+    "O"
+   ],
+   "note": "agencies' warnings only",
+   "borderline": false
+  },
+  {
+   "id": 1253,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1263,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1295,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1324,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1326,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1329,
+   "codes": [
+    "P"
+   ],
+   "note": "attorney general's investigation",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1373,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1375,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1379,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1391,
+   "codes": [
+    "O"
+   ],
+   "note": "a state agency's warning",
+   "borderline": false
+  },
+  {
+   "id": 1392,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer retracts",
+   "borderline": false
+  },
+  {
+   "id": 1395,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1400,
+   "codes": [
+    "P"
+   ],
+   "note": "inspectorate's inspection",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1429,
+   "codes": [
+    "O"
+   ],
+   "note": "central bank's warning",
+   "borderline": false
+  },
+  {
+   "id": 1431,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1439,
+   "codes": [
+    "P"
+   ],
+   "note": "arrest",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1442,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1448,
+   "codes": [
+    "P"
+   ],
+   "note": "plea and sentence",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1450,
+   "codes": [
+    "P"
+   ],
+   "note": "arrest",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1487,
+   "codes": [
+    "P"
+   ],
+   "note": "attorney general's criminal investigation",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1497,
+   "codes": [
+    "M"
+   ],
+   "note": "the court system that built the tool reports it caught the injection",
+   "borderline": false
+  },
+  {
+   "id": 1499,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer's apology filing",
+   "borderline": false
+  },
+  {
+   "id": 1500,
+   "codes": [
+    "P"
+   ],
+   "note": "charges",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1501,
+   "codes": [
+    "P"
+   ],
+   "note": "charges",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1502,
+   "codes": [
+    "O"
+   ],
+   "note": "the harmed speaks",
+   "borderline": false
+  },
+  {
+   "id": 1506,
+   "codes": [
+    "P"
+   ],
+   "note": "plea",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1548,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer, itself a public body, suspends officials",
+   "borderline": false
+  },
+  {
+   "id": 1557,
+   "codes": [
+    "P"
+   ],
+   "note": "charges",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1562,
+   "codes": [
+    "P"
+   ],
+   "note": "arrest and charges",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1575,
+   "codes": [
+    "O"
+   ],
+   "note": "class action",
+   "borderline": false
+  },
+  {
+   "id": 1580,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1585,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1604,
+   "codes": [
+    "M",
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1606,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer, itself a public body, restores the system",
+   "borderline": false
+  },
+  {
+   "id": 1613,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1615,
+   "codes": [
+    "O"
+   ],
+   "note": "a sheriff's rescue and warning; no proceeding",
+   "borderline": true
+  },
+  {
+   "id": 1627,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1628,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1629,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1655,
+   "codes": [
+    "P",
+    "O"
+   ],
+   "note": "regional court ruling; a licence deal",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1656,
+   "codes": [
+    "O"
+   ],
+   "note": "settlement",
+   "borderline": false
+  },
+  {
+   "id": 1665,
+   "codes": [
+    "O"
+   ],
+   "note": "regulator's warning only",
+   "borderline": false
+  },
+  {
+   "id": 1666,
+   "codes": [
+    "M"
+   ],
+   "note": "maker defends",
+   "borderline": false
+  },
+  {
+   "id": 1668,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1677,
+   "codes": [
+    "P",
+    "O"
+   ],
+   "note": "notice to sue and complaint by others; the Justice Department moved to dismiss the suit, acting for the maker",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1678,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1680,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1684,
+   "codes": [
+    "O"
+   ],
+   "note": "a parliamentary motion; adoption not shown",
+   "borderline": true
+  },
+  {
+   "id": 1685,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1686,
+   "codes": [
+    "P"
+   ],
+   "note": "court orders in a jury case",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1690,
+   "codes": [
+    "P"
+   ],
+   "note": "sentence",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1691,
+   "codes": [
+    "P"
+   ],
+   "note": "police report on the attacker",
+   "borderline": true,
+   "act_target": "user"
+  },
+  {
+   "id": 1694,
+   "codes": [
+    "P"
+   ],
+   "note": "court ruling",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1697,
+   "codes": [
+    "P"
+   ],
+   "note": "plea",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1706,
+   "codes": [
+    "P"
+   ],
+   "note": "criminal complaint",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1707,
+   "codes": [
+    "M",
+    "O"
+   ],
+   "note": "a prime minister's statement only; maker's report",
+   "borderline": false
+  },
+  {
+   "id": 1725,
+   "codes": [
+    "O"
+   ],
+   "note": "publishers take articles down",
+   "borderline": false
+  },
+  {
+   "id": 1728,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer's declaration",
+   "borderline": false
+  },
+  {
+   "id": 1729,
+   "codes": [
+    "M",
+    "O"
+   ],
+   "note": "class action; deployer denies",
+   "borderline": false
+  },
+  {
+   "id": 1731,
+   "codes": [
+    "O"
+   ],
+   "note": "a cyber agency's statement only",
+   "borderline": false
+  },
+  {
+   "id": 1733,
+   "codes": [
+    "P"
+   ],
+   "note": "court fines",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1736,
+   "codes": [
+    "P"
+   ],
+   "note": "internal security orders",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1737,
+   "codes": [
+    "P"
+   ],
+   "note": "police operation",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1738,
+   "codes": [
+    "O"
+   ],
+   "note": "threat assessment report",
+   "borderline": true
+  },
+  {
+   "id": 1748,
+   "codes": [
+    "P"
+   ],
+   "note": "police dismantle ring",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1750,
+   "codes": [
+    "M"
+   ],
+   "note": "deployer (the author) defends",
+   "borderline": false
+  },
+  {
+   "id": 1751,
+   "codes": [
+    "M",
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1759,
+   "codes": [
+    "O"
+   ],
+   "note": "the linked report concerns another matter (a Georgia arrest)",
+   "borderline": false
+  },
+  {
+   "id": 1761,
+   "codes": [
+    "P",
+    "M"
+   ],
+   "note": "arrest; the police department changes its safeguards",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1770,
+   "codes": [
+    "P"
+   ],
+   "note": "high court ruling",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1771,
+   "codes": [
+    "P"
+   ],
+   "note": "parliamentary committee assessment",
+   "borderline": true,
+   "act_target": "maker"
+  },
+  {
+   "id": 1773,
+   "codes": [
+    "P"
+   ],
+   "note": "court finding",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1774,
+   "codes": [
+    "O"
+   ],
+   "note": "a cyber agency's advisory only",
+   "borderline": false
+  },
+  {
+   "id": 1779,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1780,
+   "codes": [
+    "P"
+   ],
+   "note": "data protection authority decision",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1783,
+   "codes": [
+    "O"
+   ],
+   "note": "complaint",
+   "borderline": false
+  },
+  {
+   "id": 1784,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1788,
+   "codes": [
+    "P"
+   ],
+   "note": "arrests",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1795,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1797,
+   "codes": [
+    "M",
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1798,
+   "codes": [
+    "P"
+   ],
+   "note": "indictment",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1799,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1801,
+   "codes": [
+    "P"
+   ],
+   "note": "supreme court ruling",
+   "borderline": false,
+   "act_target": "maker"
+  },
+  {
+   "id": 1802,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1803,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1804,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1806,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1807,
+   "codes": [
+    "M"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1810,
+   "codes": [
+    "O"
+   ],
+   "note": "",
+   "borderline": false
+  },
+  {
+   "id": 1812,
+   "codes": [
+    "O"
+   ],
+   "note": "complaint",
+   "borderline": false
+  },
+  {
+   "id": 1813,
+   "codes": [
+    "P"
+   ],
+   "note": "court ruling",
+   "borderline": false,
+   "act_target": "user"
+  },
+  {
+   "id": 1814,
+   "codes": [
+    "O"
+   ],
+   "note": "complaint",
+   "borderline": false
+  }
+ ]
+}
