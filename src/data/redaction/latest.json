@@ -1,45 +1,10 @@
 {
-  "changed_count": 2,
-  "date": "2026-11-14",
-  "generated_at": "2026-11-14T12:24:47Z",
-  "pick": "20261108144428_www.bls.gov_cps_",
+  "changed_count": 1,
+  "date": "2026-11-15",
+  "generated_at": "2026-11-15T12:54:48Z",
+  "pick": "20261019204234_www.gov.uk_guidance_climate-change-explained",
   "pipeline_version": "0.2.0",
   "redactions": [
-    {
-      "after": {
-        "status": "200",
-        "url": "https://web.archive.org/web/20261108144428/https://www.bls.gov/cps/",
-        "wayback_ts": "20261108144428"
-      },
-      "before": {
-        "url": "https://web.archive.org/web/20261102020203/https://www.bls.gov/cps/",
-        "wayback_ts": "20261102020203"
-      },
-      "id": "20261108144428_www.bls.gov_cps_",
-      "institution": "BLS",
-      "kind": "removal",
-      "label": "Current Population Survey",
-      "removed_passages": [
-        "An official website of the United States government The Current Population Survey (CPS) provides a wealth of information on the nation’s labor force including data on the employed, unemployed, and those not in the labor force.",
-        "- CPS modernization webinar on Tuesday, November 10 at 3:00 p.m.",
-        "ET Read More » Seasonally Adjusted Unemployment Rate: 4.2% in Sep 2026 Change in Unemployment Level: +78,000 in Sep 2026 Change in Employment Level: +406,000 in Sep 2026 Change in Civilian Labor Force Level: +485,000 in Sep 2026 read more » Learn how the U.S.",
-        "Both payroll employment (+29,000) and unemployment rate (4.2%) change little in September 10/02/2026 Both nonfarm payroll employment (+29,000) and the unemployment rate (4.2 percent) changed little in September.",
-        "Employment in all major industries changed little over the month.",
-        "HTML | PDF | RSS | Charts read more » The Employment Situation for October 2026 is scheduled to be published on November 6, 2026, at 8:30 a.m.",
-        "See the CPS release calendar for a schedule of news releases on other topics."
-      ],
-      "removed_tokens": 172,
-      "salience": {
-        "score": 27,
-        "signals": [
-          "date",
-          "named_entity",
-          "negation",
-          "number"
-        ]
-      },
-      "url": "https://www.bls.gov/cps/"
-    },
     {
       "after": {
         "status": "200",
@@ -71,7 +36,7 @@
       "url": "https://www.gov.uk/guidance/climate-change-explained"
     }
   ],
-  "removed_tokens_total": 230,
+  "removed_tokens_total": 58,
   "salience_version": "1",
   "schema_version": "2",
   "source": {
@@ -80,8 +45,17 @@
     "url": "https://web.archive.org/"
   },
   "unverifiable": {
-    "count": 5,
+    "count": 6,
     "items": [
+      {
+        "detail": "live page answers 200",
+        "institution": "BLS",
+        "label": "Employment Situation (Pressemitteilung)",
+        "reason": "archive_error",
+        "side": "live",
+        "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+        "wayback_ts": "20261113215613"
+      },
       {
         "detail": "live page answers 200",
         "institution": "NOAA",
@@ -89,7 +63,7 @@
         "reason": "archive_error",
         "side": "live",
         "url": "https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide",
-        "wayback_ts": "20261110060609"
+        "wayback_ts": "20261112154333"
       },
       {
         "detail": "captcha",
@@ -107,7 +81,7 @@
         "reason": "botwall",
         "side": "live",
         "url": "https://www.ipcc.ch/report/ar6/wg1/",
-        "wayback_ts": "20261110130120"
+        "wayback_ts": "20261113080247"
       },
       {
         "detail": "botwall",
@@ -116,7 +90,7 @@
         "reason": "botwall",
         "side": "live",
         "url": "https://www.ipcc.ch/sr15/",
-        "wayback_ts": "20261110122504"
+        "wayback_ts": "20261112184241"
       },
       {
         "detail": "no prose sentence",
@@ -129,7 +103,7 @@
       }
     ],
     "reasons": {
-      "archive_error": 1,
+      "archive_error": 2,
       "boilerplate": 1,
       "botwall": 2,
       "challenge": 1
