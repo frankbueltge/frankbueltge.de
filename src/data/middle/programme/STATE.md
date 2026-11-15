@@ -83,8 +83,6 @@ against the source's own caveat and against the critique on record; since this d
 
 ## Step 2
 
-**Draft: step after cycle 014 — unchecked.**
-
 *At which points between the chip and the running model has a public body so far actually stopped, delayed or put
 conditions on AI compute, and whose public was it each time?* Cycle 014, 2026-11-12 to 2026-11-15. The works: the
 Field's *Where a Public Acted* ([summary](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/SUMMARY.md), [paper](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), data and records in [`where-a-public-acted/`](https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/where-a-public-acted)),
@@ -113,7 +111,7 @@ census: counts are lower bounds, and "stands" means no later record was found.
    term predicts an end (6 of 6 came due and ended); its absence does not predict a lasting stop (5 of 9 ended),
    and two temporary acts hardened into standing rules ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), sections 3.5 and 3.9; [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-014/SUMMARY.md)). The
    ages of the stops that stand differ by counting: 229 to 1,733 days by matter in the Field's paper, 228 to 1,048
-   by act in the Atelier's critique, which dates the Dutch stop from its decree of December 2023 rather than from the pause of 2022.
+   by act in the Atelier's critique, which dates the Dutch stop from the rule's entry into force on 1 January 2024 (Field act s4) rather than from the pause of February 2022.
 5. *Holds — no act counts the compute it met.* Six records state a size, in money, acres, megawatts or floor area;
    none in chips ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), section 3.6). The Atelier adds that this is the shape of jurisdiction: each body
    counts in its own units ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-014/step-2-critique.md), point 5); so the compute record and the record of public acts
@@ -131,6 +129,15 @@ cut to the span that compares ([Studio](https://github.com/frankbueltge/studio/b
 no count; any court docket; export licences, which are not published; and whether a public can reach compute at the
 deal at all. All three works point the next step at harm: which recorded failures of AI the acts were answering, who
 wrote the record of each, and which no public body has answered.
+
+*Checked on 2026-11-15 by a second session against the three presentations, the Field's paper and act data, the
+Atelier's step critique, the sources of "What moved in the world", the revision of PLAN.md and the address book: 60
+claims, 57 held, 3 corrected, 0 dropped (why the two counts of the stops' ages differ, in point 4: the Atelier dates
+the Dutch stop from 1 January 2024, not from the decree; the House's passage of the remote-access bill, which the
+draft linked to the Senate's bill and to a report that could not be opened; Creative Applications Network, which the
+address book kept unread although its form can be read). Read against each other, the Field's and the Atelier's
+counts differ in unit (matter or act) and in reading day, and point 4 says so; the Atelier's critique that the
+empty ground is a finding about laws stands beside point 2.*
 
 ## Step 3
 
@@ -159,7 +166,7 @@ wrote the record of each, and which no public body has answered.
 - *Reading against step 1:* both act on developers and their models, where the step found the developers hold no
   chips; neither names the holders of compute or the terms of its renting.
 
-- *Draft, after cycle 014 — unchecked.* **2026-11-11 to 2026-11-13, Washington.** On 2026-11-11 two senators asked
+- **2026-11-11 to 2026-11-13, Washington.** On 2026-11-11 two senators asked
   the Commerce and State departments and the White House to preserve all records on exports of Nvidia's advanced AI
   chips to China, after reports that a Commerce inquiry into a suspected diverter had been halted
   ([Senate Banking Committee, letter](https://www.banking.senate.gov/imo/media/doc/20261111_warren_coons_letter_to_wh_commerce_state_re_nvidia_record_retentionpdf.pdf)).
@@ -169,10 +176,11 @@ wrote the record of each, and which no public body has answered.
   customers and computing scale; no text had been published by 2026-11-13 ([Asia Times, relaying The Information](https://asiatimes.com/2026/11/huangs-fall-us-curbs-put-chinas-ai-computing-in-peril)).
   On 2026-11-13 two other senators asked Commerce to condition chip licences on recipients barring Chinese firms'
   remote access ([Senator Blunt Rochester](https://www.bluntrochester.senate.gov/news/press-releases/news-senators-blunt-rochester-curtis-demand-trump-administration-strengthen-ai-chip-export-controls/)).
-  The bill that would give Commerce that authority, the Remote Access Security Act, passed the House in January 2026
-  and awaits the Senate ([Congress.gov, S.3519](https://www.congress.gov/bill/119th-congress/senate-bill/3519/text/is?format=txt);
-  [Reuters](https://www.reuters.com/world/china/chinese-ai-firms-rush-secure-nvidia-chip-capacity-spy-scandal-stirs-fear-us-2026-11-12/)).
-- *Draft, after cycle 014 — unchecked.* **Reported 2026-11-04.** Oracle cancelled a five-year lease of about 100,000
+  The bill that would give Commerce that authority over remote access, the Remote Access Security Act, passed the
+  House on 2026-01-12, 369 to 22, and has lain with the Senate's banking committee since the next day, beside the
+  Senate's own bill of the same name ([Congress.gov, H.R.2683](https://www.congress.gov/bill/119th-congress/house-bill/2683/all-actions);
+  [S.3519](https://www.congress.gov/bill/119th-congress/senate-bill/3519/text/is?format=txt)).
+- **Reported 2026-11-04.** Oracle cancelled a five-year lease of about 100,000
   Nvidia chips in South-east Asian data centres to Tencent, worth about $7 billion, after US officials raised
   concerns ([Reuters, relaying the Financial Times](https://www.reuters.com/world/china/oracle-abandons-7-billion-tencent-ai-deal-under-trump-pressure-ft-reports-2026-11-04);
   [Network World](https://www.networkworld.com/article/4246940/oracle-cancels-7-billion-tencent-ai-chip-deal.html)).

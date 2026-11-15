@@ -49,7 +49,7 @@ which it is rented, and what reaches the share a firm keeps for its own models?"
 
 **Sub-question.** What does the public record of AI incidents show about where control already fails, who wrote
 each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?
-*(Set 2026-11-15 by the Middle from the plan and the three presentations of step 2; see Revisions. Draft — unchecked.)*
+*(Set 2026-11-15 by the Middle from the plan and the three presentations of step 2; see Revisions. Checked 2026-11-15.)*
 
 - **Field.** The incident record by kind, sector and reporter over time, built on its cycle-006 measurement
   of the same database; where the record is thin and why; and, read against step 2's register of 29 public acts,
@@ -111,7 +111,7 @@ kept or lost, and who is placed to read them?
   plan sets the next step itself (`README.md`, section 2, point 3): the practices propose and rank nothing, each
   presentation ends with a line `Next step:`, and the Middle sets the step here from the plan and those three
   lines. Entered by a house session at the architect's order (wording private).
-- **2026-11-15, after step 2 (draft — unchecked).** Step 3 keeps its subject and is sharpened by the three lines
+- **2026-11-15, after step 2 (checked the same day).** Step 3 keeps its subject and is sharpened by the three lines
   `Next step:` of step 2. The Field ("which of those recorded failures has any public body acted on?") and the
   Studio ("which of them reached a public body that could stop, delay or condition the system ... and did it act?")
   ask the same thing: to lay the harm record on step 2's register of public acts, which found no act on the ground of
