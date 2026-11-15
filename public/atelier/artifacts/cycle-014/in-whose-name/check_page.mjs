@@ -1,4 +1,4 @@
-// State 3: open the page as a visitor does, read the numbers it shows, compare them with stops.json.
+// States 3 and 4: open the page as a visitor does, read the numbers it shows, compare them with stops.json.
 // Run from this folder: node check_page.mjs [shot-path]
 import { createRequire } from 'module';
 import http from 'http'; import fs from 'fs'; import path from 'path';
@@ -6,6 +6,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 const here = path.dirname(new URL(import.meta.url).pathname);
 const counts = JSON.parse(fs.readFileSync(path.join(here, 'stops.json'), 'utf8'));
+const lens = JSON.parse(fs.readFileSync(path.join(here, 'lengths.json'), 'utf8'));
 const srv = http.createServer((q, r) => { const f = path.join(here, decodeURIComponent(q.url.split('?')[0]).replace(/^\/$/, '/index.html'));
   fs.readFile(f, (e, b) => { if (e) { r.writeHead(404); r.end(); return } r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html' : f.endsWith('.js') ? 'text/javascript' : 'application/octet-stream' }); r.end(b) }) });
 await new Promise(ok => srv.listen(0, ok));
@@ -30,6 +31,19 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
   ok(say.includes(n[counts.standing_older_than_longest_ended.length + 1].replace(/^./, c => c.toUpperCase()) + ' still stood whole'), `${w}px sentence at ${counts.longest_ended.days + 1}: ${say}`);
   ok(say.includes('all three had ended'), `${w}px the three delays ended`);
   ok(await p.evaluate(() => !!document.querySelector('#dw0').textContent.trim() && !!document.querySelector('#v-sastry').textContent.trim()), `${w}px quotations present`);
+  // State 4: what an act says of its own length, read off the page in both modes.
+  const W = ['none','one','two','three','four','five','six','seven','eight','nine','ten'];
+  ok((await p.$$('#glanes .chip')).length === lens.holds, `${w}px ${lens.holds} holds drawn`);
+  let g = await p.textContent('#gsay');
+  ok(g.includes(`Of the ${W[lens.stated_due]} holds whose stated term came due, all ${W[lens.stated_due_ended]} ended`) && g.includes(`Of the ${W[lens.none]} that state nothing, ${W[lens.none_ended]} ended`), `${w}px record's word: ${g}`);
+  await p.click('#g1');
+  g = await p.textContent('#gsay');
+  ok(g.includes(`${W[lens.split_stated_due['let go']]} were let go`) && g.includes(`${W[lens.split_none['let go']]} were; ${W[lens.split_none['gone around']]} were gone around, ${W[lens.split_none.outgrown]} outgrown, and ${W[lens.split_none.stands]} stand whole`), `${w}px split: ${g}`);
+  const whole = await p.$$eval('#glanes .chip[data-fate="stands"]', bs => bs.map(b => b.dataset.id).sort());
+  ok(JSON.stringify(whole) === JSON.stringify(lens.standing_whole), `${w}px standing whole ${whole}`);
+  await p.click('#glanes .chip[data-id="m4"]');
+  ok((await p.textContent('#gdet')).includes('27 days after the act'), `${w}px Ireland corrected`);
+  await p.click('#glanes .chip[data-id="m4"]');
   await p.$eval('#dslider', e => { e.value = 0; e.dispatchEvent(new Event('input')) });
   if (shot) { await p.screenshot({ path: shot, fullPage: true }); }
   else if (process.env.SHOT390) { await p.locator('#life').screenshot({ path: process.env.SHOT390 }); }

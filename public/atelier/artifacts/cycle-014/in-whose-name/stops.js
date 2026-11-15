@@ -327,7 +327,7 @@ window.IWN_STOPS = {
    "note": "Made permanent: the proceedings were struck out on the undertaking.",
    "firsthand": true,
    "word": {
-    "says": "the party's agreement to keep to it, on a permanent basis",
+    "says": "none in the act; 27 days later the party agreed to keep to it on a permanent basis",
     "text": "the proceedings have been struck-out on the basis of X’s agreement to continue to adhere to the terms of the undertaking",
     "url": "https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-welcomes-conclusion-proceedings-relating-xs-ai-tool-grok",
     "source": "Ireland, Data Protection Commission, release of 2024-09-04"
@@ -568,7 +568,7 @@ window.IWN_STOPS = {
   "ended_within_a_year": 4,
   "model_point_own_word": {
    "m3": "definitive, pending the inquiry",
-   "m4": "the party's agreement to keep to it, on a permanent basis",
+   "m4": "none in the act; 27 days later the party agreed to keep to it on a permanent basis",
    "m1": "provisional",
    "m5": "until further decision",
    "m7": "temporary"

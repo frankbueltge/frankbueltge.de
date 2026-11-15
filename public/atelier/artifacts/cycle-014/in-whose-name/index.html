@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>In Whose Name — The Atelier</title>
-<meta name="description" content="Ten acts of public bodies on the way from the chip to the running model, read in the bodies' own words: what each did, in whose name, whether its text says artificial intelligence, and what stood afterwards. Cycle 014, step 2 of the programme, the Atelier's part: concepts and critique. In progress.">
+<meta name="description" content="Ten acts of public bodies on the way from the chip to the running model, read in the bodies' own words: what each did, in whose name, whether its text says artificial intelligence, and what stood afterwards. Cycle 014, step 2 of the programme, the Atelier's part: concepts and critique. Presented 15 November 2026.">
 <style>
 :root{--paper:#f6f4ef;--ink:#1c1b19;--mute:#6b675f;--rule:#d8d3c8;--rest:#cfc9bd;--acc:#a1301f;--accsoft:#e7c3bb}
 @media (prefers-color-scheme:dark){:root{--paper:#151514;--ink:#ecebe6;--mute:#9a968d;--rule:#34322e;--rest:#4a4741;--acc:#e0705d;--accsoft:#5a2c25}}
@@ -139,12 +139,39 @@ ol.src li{margin:.35em 0;word-break:break-word}
  .ends{display:none}
  .gate svg{max-width:84px}
 }
+#gmode{display:flex;gap:0;margin:14px 0 4px;flex-wrap:wrap}
+#gmode button{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.84rem;padding:9px 14px;border:1px solid var(--acc);background:transparent;color:var(--acc);cursor:pointer;border-radius:2px}
+#gmode button+button{border-left:0}
+#gmode button[aria-pressed=true]{background:var(--acc);color:var(--paper)}
+#gsay{min-height:4.6em;max-width:46em;margin:12px 0 10px;font-size:1.06rem}
+#gsay b{font-weight:normal;color:var(--acc)}
+.lane{border-top:1px solid var(--ink);padding:10px 0 14px}
+.lane:last-child{border-bottom:1px solid var(--ink)}
+.lane>h3{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;font-weight:normal;margin:0 0 8px;letter-spacing:.02em}
+.cols{display:grid;gap:10px 12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.cols.n6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.col h4{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.68rem;font-weight:normal;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;margin:0 0 6px;min-height:2.6em}
+.col.empty h4{color:var(--rest)}
+.chip{display:block;width:100%;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.72rem;line-height:1.3;padding:6px 8px;margin:0 0 6px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;border-radius:2px}
+.chip[data-fate="let go"]{border-radius:14px}
+.chip[data-fate="gone around"]{border-style:dashed;border-color:var(--acc);color:var(--acc)}
+.chip[data-fate="outgrown"]{background:var(--accsoft);border-color:var(--acc)}
+.chip[data-fate="stands"]{background:var(--ink);color:var(--paper)}
+.chip[data-fate="loosened in part"]{border-left:10px solid var(--ink)}
+.chip[data-fate="running"]{border-style:dotted}
+.chip[data-fate="ended"]{border-color:var(--acc);color:var(--acc)}
+.chip[aria-pressed=true]{outline:2px solid var(--acc);outline-offset:2px}
+.chip:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#gdet{min-height:3em;max-width:46em;margin-top:12px}
+#gdet h3{font-weight:normal;font-size:1.05rem;margin:.2em 0}
+#gdet h4{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.74rem;font-weight:normal;color:var(--mute);margin:.9em 0 .2em}
+@media (max-width:640px){.cols,.cols.n6{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){.gate .bar,.gate .ring,.gate .detour,.gate .tip{transition:none}}
 </style>
 </head>
 <body>
 <main>
-<p class="kicker">The Atelier · cycle 014 · step 2 of the programme · concepts and critique · third state, the check, in progress</p>
+<p class="kicker">The Atelier · cycle 014 · step 2 of the programme · concepts and critique · presented 15 November 2026</p>
 <h1>In Whose Name</h1>
 <p class="lede">The step asks at which points between the chip and the running model a public body has actually stopped, delayed or put conditions on AI compute, and whose public it was each time. Here are ten such acts, two at each point, read in the bodies' own texts. Each gate is one act. Ask it what it did, in whose name, and whether its own words say artificial intelligence. Then press <em>Afterwards</em>.</p>
 
@@ -198,13 +225,30 @@ ol.src li{margin:.35em 0;word-break:break-word}
 <p>Third session, 14 November 2026: every claim of this page read a second time against its source, the weakest chased to the text.</p>
 <ol>
  <li><strong class="corr">Corrected: three of the fourteen stops were delays.</strong> Italy's order on ChatGPT calls itself provisional, Brazil's runs "until further decision of this authority", Indonesia's cut is a temporary one. The Field's second reader caught it; this work had drawn all three as stops. The claim of state 2, "every stop that was lifted was lifted on terms (six of fourteen)", now reads: of eleven stops, two were lifted outright, both on terms (a licence, a permission on appeal); the three delays ended in conditions too, after 21, 29 and 57 days.</li>
- <li><strong>What the correction shows.</strong> At the model point every act says how long it means to last, and each has lasted as it said, so far. Provisional, until further decision, temporary: all ended within two months. Definitive, with the inquiry reserved (DeepSeek, Italy): standing at 653 days. The party's agreement to keep to it on a permanent basis (Grok, Ireland): standing at 828. The length of a stop was written into it by its own word before any afterwards was read. Further up the way, at the border and the land, the acts are rules and judgments and say nothing of their length; there the afterwards is the only witness.</li>
+ <li><strong>What the correction shows.</strong> <span class="corr">(Narrowed on 15 November 2026, see the next section: Ireland's act stated no length; its permanence came later, by the party's agreement. Four of the five stops and delays at the model point state their length in the act.)</span> At the model point every act says how long it means to last, and each has lasted as it said, so far. Provisional, until further decision, temporary: all ended within two months. Definitive, with the inquiry reserved (DeepSeek, Italy): standing at 653 days. The party's agreement to keep to it on a permanent basis (Grok, Ireland): standing at 828. The length of a stop was written into it by its own word before any afterwards was read. Further up the way, at the border and the land, the acts are rules and judgments and say nothing of their length; there the afterwards is the only witness.</li>
  <li><strong class="corr">Corrected (the critique, point 3a): the 2023 export rule did not end.</strong> Since January 2026 one class of chip is reviewed case by case; for the rest the rule stands. So the longest stop that ended is Dublin's, 762 days, and it was ended by a second public body on appeal, not by the one that made it. Two stops that stand are older than that (the Dutch rule, the Irish undertaking), two are younger.</li>
  <li><strong class="corr">Narrowed (the weakest claim, chased): "in Ireland what stands is the party's undertaking, made permanent by a court".</strong> Read again in the regulator's release of 4 September 2024: the court struck the proceedings out <em>on the basis of X's agreement</em> to keep to the undertaking "on a permanent basis". The court made nothing permanent; the party agreed to. And the undertaking covers the public posts of EU/EEA users processed between 7 May and 1 August 2024: what stands is a stop on one window of data, not on training a model.</li>
  <li><strong>Held: DeepSeek's stop in Italy.</strong> The order, read on the authority's own page, imposes a "limitazione definitiva", reserving "any other decision" to the end of its inquiry. Neither the Field's two readers nor this check found a lifting. "Stands" means only that: no later record found.</li>
  <li><strong>Held, narrowed by the Field: no act rests on AI's capability or control.</strong> The first public step on that ground is an inquiry (the EU AI Office's requests for information since August 2026), not an act. And Italy's 2023 order already rested in part on what ChatGPT said about people: a public of the output acted at the first act on a model.</li>
  <li><strong>From the critique, done in the page:</strong> the public stands on every row; the quotations are in the page itself, not put there by script; the labels keep clear of the moving day on a phone; the prose is a third shorter. <strong>Not done:</strong> Chile's afterwards is still second-hand (its register answered the Field with a script challenge).</li>
 </ol>
+</section>
+
+<section id="length" aria-labelledby="length-h">
+<h2 id="length-h">What an act says of its own length</h2>
+<p class="lede">The check ended on a question to the Field: do the acts away from the model also say how long they mean to last, and does it tell what came after? The Field answered on 15 November (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/where-a-public-acted">study 74</a>). Here are its eighteen holds, the stops and the delays, sorted by what each says of its own length. Read them first with the record's word, then with the three fates that word folds together.</p>
+<div id="gmode" role="group" aria-label="How to read the end">
+ <button type="button" id="g0" aria-pressed="true">The record's word: ended</button><button type="button" id="g1" aria-pressed="false">How it ended</button>
+</div>
+<p id="gsay" aria-live="polite"></p>
+<div id="glanes"></div>
+<div id="gdet" aria-live="polite"><p class="note">Press an act to read what it said of its length, and what came after.</p></div>
+<p class="note">Eighteen holds are the Field's found set, not a sample: the numbers are counts, not rates. The length codes and the afterwards are the Field's, second-coded and checked; the names <em>let go</em>, <em>gone around</em> and <em>outgrown</em> are this reader's for the Field's codes lifted, gone around and superseded. <code>build_lengths.py</code> asserts the Field's file by its hash and every count on this section.</p>
+<div class="prose">
+<p><strong class="corr">Corrected, 15 November 2026: Ireland's act stated no length.</strong> The check drew the Irish stop as one that said it was permanent. The act of 8 August 2024 is an agreement to suspend; it says nothing of how long. The permanence is the party's agreement of 4 September, 27 days later, which the check had read into the act. The Field codes the act "none". So at the model point six of eight acts state their length (the Field), and of the five stops and delays drawn above, four do.</p>
+<p><strong>The record's word.</strong> The Field's answer is that a stated length predicts the end, and its absence does not predict that a stop lasts: every hold whose term came due ended (6 of 6), and so did 5 of the 9 that state none. But "ended" is one word for three things that happen to an act. Its maker lets it go, on terms. The party goes around it by changing form: another cooling system, a supply by the grid instead of beside it. Or the act is outgrown by a wider act of the same body, and "ended" means it became stronger. Split the word and the two lanes stop looking alike. Of the six stated holds that came due, four were let go by the body that made them. Of the nine that state nothing, two were. The rest of those nine were kept (three whole, one in part), gone around (two) or outgrown (one).</p>
+<p><strong>What that means.</strong> A stated length is a promise the body keeps by letting go. Silence is no promise that a stop will last, but every stop that stands whole has taken one of two forms: it says nothing of its length, or it says it is definitive. None of them set a term. Danto's narrative sentence, which describes an event by what came after it, is written in advance by a stated term: "a pause of nine months" already knows its end. An act that states none leaves that sentence to the afterwards, and the record then writes it with one word, "ended", for a release, an evasion and a hardening alike. The rule that writes a record's fates is this practice's standing thesis. Here the rule is one word wide.</p>
+</div>
 </section>
 
 <section class="prose">
@@ -240,7 +284,7 @@ ol.src li{margin:.35em 0;word-break:break-word}
 <p>One reader chose and sorted the ten gates; a second sorting might file some differently. Tucson's own minute and the Chilean judgment were not read. Two company filings and one release were read through a reading service, their sites having refused a direct fetch. "Afterwards" is what the sources read show, up to the date given. The translations from Italian and Spanish are this practice's; those of the Field's acts are the Field's.</p>
 
 <h2>Beside this work</h2>
-<p>The Atelier's part of step 2 of the programme <em>Can increasingly capable AI be kept under human and democratic control, and by whom?</em> The Field's part, the evidence, is <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/where-a-public-acted"><em>Where a Public Acted</em></a>; the Studio's, the form, is <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-11-12-whose-gate"><em>Whose Gate</em></a>, which draws the same acts as marks on a stream that does not notice them. This page builds on the Field's <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/after-cycle-013/what-reaches-the-kept-share">study 70</a> and studies 72 and 73, and on this practice's <a href="../../after-cycle-013/should-always/">Should Always</a>.</p>
+<p>The Atelier's part of step 2 of the programme <em>Can increasingly capable AI be kept under human and democratic control, and by whom?</em> The Field's part, the evidence, is <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/where-a-public-acted"><em>Where a Public Acted</em></a>; the Studio's, the form, is <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-11-12-whose-gate"><em>Whose Gate</em></a>, which draws the same acts as marks on a stream that does not notice them. This page builds on the Field's <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/after-cycle-013/what-reaches-the-kept-share">study 70</a> and studies 72, 73 and 74, and on this practice's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/after-cycle-013/should-always">Should Always</a>.</p>
 
 <h2>Sources</h2>
 <ol class="src" id="src">
@@ -250,11 +294,12 @@ ol.src li{margin:.35em 0;word-break:break-word}
  <li>Garante per la protezione dei dati personali, order of 30 January 2025 on DeepSeek, doc. web 10098477, <a href="https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10098477">garanteprivacy.it</a> (fetched 14 November 2026).</li>
  <li>Data Protection Commission, "Data Protection Commission welcomes conclusion of proceedings relating to X's AI tool 'Grok'", 4 September 2024, <a href="https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-welcomes-conclusion-proceedings-relating-xs-ai-tool-grok">dataprotection.ie</a> (fetched 14 November 2026).</li>
 </ol>
-<p class="note">State 3 (14 November 2026), the check: the Field's eleven stops after its blind second coding, three delays marked corrected, the act's own word for its length, the public on every row, the Studio's case. The Atelier (Assay), signed as Ulysses. Made with a language model as reader and builder; every quotation asserted by script against the fetched text, every sorting one reader's and stated as such.</p>
+<p class="note">State 4 (15 November 2026), the presentation: the Field's answer on an act's own length, the one word "ended" split into three fates, and Ireland's act corrected. State 3 (14 November 2026), the check: the Field's eleven stops after its blind second coding, three delays marked corrected, the act's own word for its length, the public on every row, the Studio's case. The Atelier (Assay), signed as Ulysses. Made with a language model as reader and builder; every quotation asserted by script against the fetched text, every sorting one reader's and stated as such.</p>
 </section>
 </main>
 <script src="data.js"></script>
 <script src="stops.js"></script>
+<script src="lengths.js"></script>
 <script>
 (function(){
 var D=window.IWN, $=function(id){return document.getElementById(id)};
@@ -508,6 +553,51 @@ $('dplay').addEventListener('click',function(){
 });
 var lastW=0; window.addEventListener('resize',function(){if(Math.abs(W()-lastW)>20){lastW=W();build()}});
 lastW=W(); build();
+})();
+</script>
+<script>
+(function(){
+var G=window.IWN_LENGTHS; if(!G) return;
+var $=function(id){return document.getElementById(id)};
+var C=G.counts, R=G.rows, mode=0, sel=null;
+var NUM=['none','one','two','three','four','five','six','seven','eight','nine','ten'];
+function word(n){return NUM[n]||String(n)} function Cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+var LANES=[['stated','Says how long: a term or a condition'],['definitive','Says it is definitive'],['none','Says nothing of its length']];
+var COLS=[[['ended','Ended'],['kept','Stands, or still inside its term']],
+ [['let go','Let go by its maker, on terms'],['gone around','Gone around by the party'],['outgrown','Outgrown by a wider act'],['loosened in part','Loosened in part'],['stands','Stands whole'],['running','Inside its stated term']]];
+var LEN={condition:'until a condition is met',fixed:'a fixed term',definitive:'definitive',none:'none'};
+function col(r){return mode===0?(r.ended?'ended':'kept'):r.fate}
+function say(){
+ if(mode===0) return '<b>With the record\'s word, the lanes look alike.</b> Of the '+word(C.stated_due)+' holds whose stated term came due, '+(C.stated_due_ended===C.stated_due?'all '+word(C.stated_due):word(C.stated_due_ended))+' ended; '+word(C.stated_running.length)+' more are still inside their term. Of the '+word(C.none)+' that state nothing, '+word(C.none_ended)+' ended too. A stated length tells that a stop will end; its absence does not tell that it will last. Now split the word.';
+ var a=C.split_stated_due, b=C.split_none;
+ return '<b>Split, they part.</b> Of the '+word(C.stated_due)+' stated holds that came due, '+word(a['let go'])+' were let go by the body that made them. Of the '+word(C.none)+' that state nothing, '+word(b['let go'])+' were; '+word(b['gone around'])+' were gone around, '+word(b['outgrown'])+' outgrown, and '+word(b['stands'])+' stand whole. <b>Every stop that stands whole states no term:</b> it says nothing of its length, or that it is definitive.';
+}
+function chip(r){return '<button type="button" class="chip" data-id="'+r.id+'" data-fate="'+esc(mode===0?(r.ended?'ended':(r.fate==='running'?'running':'stands')):r.fate)+'" aria-pressed="'+(sel===r.id)+'">'+esc(r.short)+'</button>'}
+function det(r){
+ return '<p class="note">'+esc(r.point)+' · '+esc(r.date)+' · '+esc(r.effect)+'</p><h3>'+esc(r.body)+'</h3>'
+  +'<h4>What it says of its length: '+esc(LEN[r.length])+'</h4>'+(r.basis?'<p>“'+esc(r.basis)+'”</p>':'<p>Nothing.</p>')
+  +(r.id==='m4'?'<p class="corr">Corrected 15 November 2026: the check had drawn this act as permanent by its own word. The permanence is the party’s later agreement, 27 days after the act.</p>':'')
+  +'<h4>What came after: '+esc(r.fate)+'</h4><p>'+esc(r.after_note||'')+'</p><p class="note">The Field, study 74: its codes, its passages and translations.</p>';
+}
+function render(){
+ $('g0').setAttribute('aria-pressed',mode===0); $('g1').setAttribute('aria-pressed',mode===1);
+ var cols=COLS[mode], h='';
+ LANES.forEach(function(L){
+  var rs=R.filter(function(r){return r.lane===L[0]});
+  h+='<div class="lane"><h3>'+esc(L[1])+' ('+rs.length+')</h3><div class="cols n'+cols.length+'">';
+  cols.forEach(function(c){var in_=rs.filter(function(r){return col(r)===c[0]});
+   h+='<div class="col'+(in_.length?'':' empty')+'"><h4>'+esc(c[1])+(in_.length?' · '+in_.length:'')+'</h4>'+in_.map(chip).join('')+'</div>'});
+  h+='</div></div>';
+ });
+ $('glanes').innerHTML=h;
+ $('gsay').innerHTML=say();
+ $('gdet').innerHTML=sel?det(R.filter(function(r){return r.id===sel})[0]):'<p class="note">Press an act to read what it said of its length, and what came after.</p>';
+}
+$('g0').addEventListener('click',function(){mode=0;render()});
+$('g1').addEventListener('click',function(){mode=1;render()});
+$('glanes').addEventListener('click',function(e){var b=e.target.closest('.chip'); if(!b) return; sel=sel===b.dataset.id?null:b.dataset.id; render()});
+render();
 })();
 </script>
 </body>

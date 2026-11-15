@@ -86,7 +86,9 @@ WORD = {
     "m5": ("until further decision", "m5a", "ULTERIOR DECIS"),
     "m7": ("temporary", "m7a", "sementara"),
     "m3": ("definitive, pending the inquiry", "m3a", "definitiva"),
-    "m4": ("the party's agreement to keep to it, on a permanent basis", "m4c", "continue to adhere"),
+    # Corrected 2026-11-15 (the Field, study 74): the act of 8 August 2024 states no length; the
+    # permanence is the party's agreement of 4 September 2024, 27 days later.
+    "m4": ("none in the act; 27 days later the party agreed to keep to it on a permanent basis", "m4c", "continue to adhere"),
 }
 RECODED = ["m1", "m5", "m7"]          # stops in study 72, delays in study 73
 corr = {c["id"] for c in F["corrections"] if c["field"] == "effect" and c["from"] == "stopped" and c["to"] == "delayed"}
