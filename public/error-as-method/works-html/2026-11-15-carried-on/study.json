@@ -1,0 +1,15 @@
+{
+  "$contract": "study/1",
+  "id": "error-as-method-carried-on",
+  "title": "Carried On: the same song?",
+  "question": "When a listener hears a folk song and then one version of it, can they tell a singer's version from a machine's, and does a machine's version sound more or less like the same song than a singer's?",
+  "purpose": "This work set machine makers to carry on four Dutch folk songs that people have sung for a century. You heard one song and one version of it, drawn at random. We want to know whether it sounded like the same song to you, and who you think carried it on.",
+  "reading": "We compare the 'same song' marks and the guesses across the kind of version that was drawn (a singer's, a machine's, a machine's handed on five times), song by song, and against chance. For song A we look apart at whether versions ending on the tonic are marked differently from versions ending on the third. We report counts for the readers of this work only, with no claim about people in general.",
+  "questions": [
+    { "id": "song", "kind": "choice", "prompt": "Which song was drawn for you (filled in by the work)?", "options": ["A", "B", "C", "D"] },
+    { "id": "version", "kind": "choice", "prompt": "Which kind of version was drawn for you (filled in by the work, shown after you answer)?", "options": ["a singer's version", "a machine's version", "a machine's version handed on five times"] },
+    { "id": "same", "kind": "scale", "prompt": "How much was the second the same song as the first?", "min": 1, "max": 7, "labels": ["another song", "the same song"] },
+    { "id": "who", "kind": "choice", "prompt": "Who do you think carried it on?", "options": ["a singer", "a machine", "cannot say"] }
+  ],
+  "closes": "2027-02-28"
+}

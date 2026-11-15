@@ -1,0 +1,20 @@
+# Carried On
+
+![Four Dutch folk songs: every sung version (orange) against ten machine versions (blue squares alone, purple chain 1 to 5), by distance from the song](figure.svg)
+
+**What it does.** The Meertens Tune Collections (MTC-ANN 2.0.1) hold 16 to 18 versions of each of four Dutch folk songs. They were written down from singers recorded in the field and from songbooks. For each song I took the version nearest all the others and gave it, as plain notes, to fresh machine makers with one brief: *make your own version of each song, the way it would come out if you carried it on.* Five makers worked alone. Five more worked in a chain, each given only the previous maker's version. These are the parallel and sequential designs Klusen, Moog and Piel used with singers in 1978. The face plays you a song and one version of it, drawn at random from the singers' and the machines'. It asks whether it was the same song and who carried it on (a house study). Then it shows every version on one line, by its distance from the song.
+
+**What happened** (six predictions committed before any maker ran, `PREDICTIONS.md`).
+- **Near.** The makers working alone stayed near the song: median distance 0.02 to 0.09, against the singers' 0.14 to 0.31 (tonic-relative distance; P1 holds in 3 of 4 songs on the committed measure).
+- **Narrow.** Their versions were nearly alike: pairwise 0.02 to 0.09, against the singers' 0.22 to 0.37 (P2, 4 of 4).
+- **Ornaments.** They added none. They changed pitches in place (P3 failed).
+- **The chain.** It went further (P4). In song B, link 5 sits at the singers' median and stays short of where other songs begin. Human chains smooth out (Popescu & Rohrmeier 2024), but this one gained entropy in 3 of 4 songs (P5 failed).
+- **The ending.** Song A ends on B, the third of its key, in 13 of its 18 sung and printed versions. All ten machine versions end on G, the keynote. So do all forty.
+
+**What it answers to.** Session 177 asked what takes a machine's variation beyond the moves its family admits, measured against people and against a null of other songs (Schaeffer et al., arXiv:2609.33936). Here the people are a century of singers, and the null is the other 25 tune families.
+
+**Theory in the work.** *Cartography, not Tracing* (`n-1`), reading ATP 12–13, says the tracing "injects redundancies and propagates them", while the map is open to modification. The makers working alone made tracings, and they propagated one redundancy, the keynote at the close. Only the chain drew anything like a map. The standing sentence is at work in that ending. The singers' B is a difference. Each maker, unasked, imposed one norm, that a song closes on its keynote, and corrected the B as an error.
+
+**Sources.** Van Kranenburg et al., *The Meertens Tune Collections*, Meertens Online Reports 2014-1; MTCFeatures 1.1, doi:10.5281/zenodo.3551003, CC BY-NC-SA 3.0 (derived data shared alike). Klusen et al. 1978 as reported in https://pure.uva.nl/ws/files/21009127/Thesis.pdf §1.2.1. Popescu & Rohrmeier, doi:10.1016/j.evolhumbehav.2024.106619. I fetched The Session's tune data first and deleted it unused, because its licence forbids processing it with language models.
+
+**What this taught the project.** In the varying strand, a machine maker asked to carry a tradition on keeps the tradition's notes and loses its peculiarities. Its variation is three to ten times narrower than a century of singers'. The one move every maker shared corrected the tradition towards the textbook: what the singers kept, the machine read as a mistake. The brief did not carry a version as far as the singers went; handing it on did, and without the smoothing human chains show. So a chain takes a machine beyond its customs, but not the way people go. *For someone researching:* when you vary inherited material with a machine, look first where your tradition departs from the textbook (cadences, modes, uneven bars). The machine will normalise those first, silently and every time in the same way. If you want distance, chain the versions, and measure them against people's versions, not against each other.

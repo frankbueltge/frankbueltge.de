@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carried On</title>
+<style>
+:root{--bg:#f6f3ec;--ink:#1d1b17;--mute:#6d675c;--line:#d8d1c2;--sing:#b4532a;--mach:#2c5d8f;--chain:#6a3f8f;--null:#e6dfd0;--card:#fffdf8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15140f;--ink:#ece6d8;--mute:#a49d8e;--line:#3a362d;--sing:#e0814f;--mach:#6fa5dc;--chain:#b48ae0;--null:#2a271f;--card:#1d1b15}}
+:root[data-theme="dark"]{--bg:#15140f;--ink:#ece6d8;--mute:#a49d8e;--line:#3a362d;--sing:#e0814f;--mach:#6fa5dc;--chain:#b48ae0;--null:#2a271f;--card:#1d1b15}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,'Times New Roman',serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:2.1rem;margin:0 0 4px;font-weight:normal;letter-spacing:.01em}
+h2{font-size:1.2rem;font-weight:normal;margin:36px 0 8px;border-top:1px solid var(--line);padding-top:18px}
+.lede{color:var(--mute);margin:0 0 18px}
+button{font:inherit;font-size:.95rem;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:8px 14px;cursor:pointer}
+button.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:disabled{opacity:.45;cursor:default}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.scale button{min-width:38px;padding:6px 0}
+.scale button.on,.who button.on{background:var(--ink);color:var(--bg)}
+.small{font-size:.85rem;color:var(--mute)}
+.reveal{margin-top:12px;display:none}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend span{display:inline-flex;align-items:center;gap:6px;margin-right:14px;font-size:.85rem;color:var(--mute)}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.sq{width:10px;height:10px;display:inline-block}
+.mark{cursor:pointer}
+.mark:hover{stroke:var(--ink);stroke-width:2}
+#roll-title{font-size:.95rem;margin:6px 0}
+.callout{border-left:3px solid var(--sing);padding:4px 0 4px 12px;margin:14px 0}
+footer{margin-top:40px;font-size:.8rem;color:var(--mute);border-top:1px solid var(--line);padding-top:14px}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Carried On</h1>
+<p class="lede">Four Dutch folk songs, each sung by many people across a century and written down from their singing. Ten machine makers were asked to carry the same songs on. Listen first, then look.</p>
+
+<section class="card" id="trial">
+  <div class="row"><button class="primary" id="play-src">&#9654; Play a song</button><button id="play-ver" disabled>&#9654; Play a version of it</button><button id="stop">&#9632;</button></div>
+  <p class="small" id="trial-note">A song and one version of it are drawn at random for you. The version is a singer's or a machine's.</p>
+  <div id="qs" style="display:none">
+    <p style="margin:12px 0 4px">How much was the second the same song as the first?</p>
+    <div class="row scale" id="scale"></div>
+    <div class="row small" style="justify-content:space-between;max-width:330px"><span>another song</span><span>the same song</span></div>
+    <p style="margin:12px 0 4px">Who do you think carried it on?</p>
+    <div class="row who" id="who"></div>
+    <div class="row"><button class="primary" id="done" disabled>Show me who it was</button></div>
+  </div>
+  <div class="reveal" id="reveal"></div>
+  <div id="ask"></div>
+</section>
+
+<h2>How far each version moved</h2>
+<p class="small">Each line is one song. The black dot at the left is the song as one singer sang it (the version nearest all the others); every mark to the right of it is further from it. Click any mark to hear it and see it against the song below.</p>
+<div class="legend"><span><i class="dot" style="background:var(--sing)"></i>a singer or songbook (MTC)</span><span><i class="sq" style="background:var(--mach)"></i>a machine maker, alone</span><span><i class="dot" style="background:var(--chain)"></i>machine makers in a chain, 1&rarr;5</span><span><i class="sq" style="background:var(--null)"></i>where other songs begin</span></div>
+<div id="map"></div>
+
+<div class="card" style="margin-top:14px">
+  <div id="roll-title">Click a mark above.</div>
+  <div id="roll"></div>
+  <div class="legend small"><span><i class="sq" style="background:var(--mute);opacity:.35"></i>the song</span><span><i class="sq" style="background:var(--sing)" id="roll-key"></i>the version</span></div>
+</div>
+
+<div class="callout" id="ending"></div>
+
+<p class="small">What this measures: an alignment of the notes, pitch against the song's own key and duration against its own pulse; 0 is the same notes, about 0.4 is another song of the collection. The full account, its predictions and the two that failed: <a href="https://github.com/frankbueltge/error-as-method/tree/main/works/2026-11-15-carried-on">the experiment's directory</a>.</p>
+
+<footer>
+Melodies: Meertens Tune Collections, MTC-ANN 2.0.1, via MTCFeatures 1.1 (P. van Kranenburg, Zenodo 10.5281/zenodo.3551003), &copy; Meertens Instituut, licensed CC BY-NC-SA 3.0; the derived data on this page (face-data.js) is shared under the same licence. Machine versions: fresh instances of the model family that runs this practice, Session 178, 2026-11-15. Sound: a plain synthesised voice in your browser, no recording.
+</footer>
+</main>
+<script src="face-data.js"></script>
+<script src="/study/client.js"></script>
+<script>
+(function(){
+var D=window.CARRIED, SONGS=D.songs, NAMES=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'], PC={};NAMES.forEach(function(n,i){PC[n]=i});
+var css=function(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()};
+// ---------- sound ----------
+var ctx=null, playing=[];
+function stop(){playing.forEach(function(o){try{o.stop()}catch(e){}});playing=[]}
+function play(notes,shift){
+  if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)()}
+  stop(); var t=ctx.currentTime+0.08, q=0.42;
+  notes.forEach(function(n){
+    var f=440*Math.pow(2,(n[0]+(shift||0)-69)/12), dur=n[1]*q;
+    var o=ctx.createOscillator(), g=ctx.createGain(); o.type='triangle'; o.frequency.value=f;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.22,t+0.02); g.gain.exponentialRampToValueAtTime(0.05,t+Math.max(dur*0.9,0.06)); g.gain.linearRampToValueAtTime(0,t+dur);
+    o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+dur+0.02); playing.push(o); t+=dur;
+  });
+}
+// transpose a version to the song's key and nearest octave
+function shiftFor(song,v){
+  if(!v.tonic) return 0;
+  var s=(7-PC[v.tonic]+12)%12, best=0, bd=1e9;
+  var ms=song.source.notes.reduce(function(a,n){return a+n[0]},0)/song.source.notes.length;
+  var mv=v.notes.reduce(function(a,n){return a+n[0]},0)/v.notes.length;
+  [-24,-12,0,12,24].forEach(function(o){var d=Math.abs(mv+s+o-ms); if(d<bd){bd=d;best=s+o}});
+  return best;
+}
+// ---------- the trial ----------
+var si=Math.floor(Math.random()*4), song=SONGS[si], r=Math.random(), kind, ver;
+if(r<0.5){kind="a singer's version"; ver=song.people[Math.floor(Math.random()*song.people.length)]}
+else if(r<0.75){kind="a machine's version"; ver=song.parallel[Math.floor(Math.random()*5)]}
+else {kind="a machine's version handed on five times"; ver=song.chain[4]}
+var ans={song:song.key,version:kind,same:null,who:null}, study=null, revealed=false;
+document.getElementById('play-src').onclick=function(){play(song.source.notes,0);document.getElementById('play-ver').disabled=false};
+document.getElementById('play-ver').onclick=function(){play(ver.notes,shiftFor(song,ver));document.getElementById('qs').style.display='block'};
+document.getElementById('stop').onclick=stop;
+var sc=document.getElementById('scale');
+for(var i=1;i<=7;i++){(function(i){var b=document.createElement('button');b.textContent=i;b.onclick=function(){ans.same=i;[].forEach.call(sc.children,function(c){c.classList.remove('on')});b.classList.add('on');check()};sc.appendChild(b)})(i)}
+var wh=document.getElementById('who');
+['a singer','a machine','cannot say'].forEach(function(w){var b=document.createElement('button');b.textContent=w;b.onclick=function(){ans.who=w;[].forEach.call(wh.children,function(c){c.classList.remove('on')});b.classList.add('on');check()};wh.appendChild(b)});
+function check(){document.getElementById('done').disabled=!(ans.same&&ans.who); if(revealed&&study) study.submit(ans)}
+document.getElementById('done').onclick=function(){
+  revealed=true; var el=document.getElementById('reveal'); el.style.display='block';
+  var who= kind==="a singer's version" ? "a singer's version ("+ver.id+(ver.year?', '+ver.year:'')+")" : kind+" ("+ver.id+")";
+  el.innerHTML='<p>It was song <b>'+song.key+'</b> and <b>'+who+'</b>. Distance from the song: '+ver.d.toFixed(2)+'. It is marked with a ring on the map below.</p><p class="small">If you want, you can add your two answers to this work\'s record below. Nothing is sent unless you do.</p>';
+  ring(song.key,ver.id);
+  if(window.HouseStudy){
+    study=HouseStudy.mount(document.getElementById('ask'),{study:'error-as-method-carried-on',
+      onClosed:function(r){document.getElementById('ask').innerHTML='<p class="small">The record is not open at the moment ('+(r&&r.reason||'closed')+'). Your answers stay in this page.</p>'},
+      onResult:function(r){}});
+    study.submit(ans);
+  }
+};
+// ---------- the map ----------
+var MAX=0.5, W=Math.max(340,Math.min(820,document.getElementById('map').clientWidth||820)), L=W<600?62:90, ROWH=74, svgNS='http://www.w3.org/2000/svg';
+function el(n,a,p){var e=document.createElementNS(svgNS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+var map=document.getElementById('map'), svg=el('svg',{viewBox:'0 0 '+W+' '+(SONGS.length*ROWH+30),role:'img','aria-label':'Distance of every version from its song'},map);
+var X=function(d){return L+Math.min(d,MAX)/MAX*(W-L-20)};
+var rings={};
+SONGS.forEach(function(s,i){
+  var y=20+i*ROWH+ROWH/2;
+  el('rect',{x:X(s.null_p10),y:y-26,width:X(MAX)-X(s.null_p10),height:52,fill:'var(--null)'},svg);
+  el('line',{x1:X(0),x2:X(MAX),y1:y,y2:y,stroke:'var(--line)'},svg);
+  var t=el('text',{x:0,y:y-6,'font-size':15,fill:'var(--ink)'},svg); t.textContent='Song '+s.key;
+  var t2=el('text',{x:0,y:y+12,'font-size':10.5,fill:'var(--mute)'},svg); t2.textContent=s.meter+' · '+s.people.length+' sung';
+  // people jitter above
+  s.people.forEach(function(p,j){var c=el('circle',{cx:X(p.d),cy:y-10-(j%3)*6,r:4.5,fill:'var(--sing)',opacity:.85,class:'mark'},svg);c.onclick=function(){show(s,p,'sing')};rings[s.key+p.id]=[X(p.d),y-10-(j%3)*6]});
+  s.parallel.forEach(function(p,j){var c=el('rect',{x:X(p.d)-4.5,y:y+6+(j%2)*7,width:9,height:9,fill:'var(--mach)',class:'mark'},svg);c.onclick=function(){show(s,p,'mach')};rings[s.key+p.id]=[X(p.d),y+10+(j%2)*7]});
+  var pts=[[X(0),y+24]].concat(s.chain.map(function(p){return [X(p.d),y+24]}));
+  s.chain.forEach(function(p,j){
+    var c=el('circle',{cx:X(p.d),cy:y+24,r:7,fill:'var(--chain)',class:'mark'},svg);c.onclick=function(){show(s,p,'chain')};
+    var n=el('text',{x:X(p.d),y:y+27.5,'font-size':9,'text-anchor':'middle',fill:'#fff','pointer-events':'none'},svg);n.textContent=j+1; rings[s.key+p.id]=[X(p.d),y+24];
+  });
+  var src=el('circle',{cx:X(0),cy:y,r:6,fill:'var(--ink)',class:'mark'},svg); src.onclick=function(){show(s,{id:s.source.id,notes:s.source.notes,d:0},'src')};
+});
+[0,0.1,0.2,0.3,0.4,0.5].forEach(function(v){var tx=el('text',{x:X(v),y:SONGS.length*ROWH+28,'font-size':10,'text-anchor':'middle',fill:'var(--mute)'},svg);tx.textContent=v===0?'the song':v.toFixed(1)});
+function ring(k,id){var p=rings[k+id]; if(p) el('circle',{cx:p[0],cy:p[1],r:11,fill:'none',stroke:'var(--ink)','stroke-width':2},svg)}
+// ---------- piano roll ----------
+function rollPts(notes,shift){var t=0;return notes.map(function(n){var o={t:t,d:n[1],p:n[0]+shift};t+=n[1];return o})}
+function show(s,v,cls){
+  var shift=cls==='sing'?shiftFor(s,v):0; play(v.notes,shift);
+  var col={sing:'var(--sing)',mach:'var(--mach)',chain:'var(--chain)',src:'var(--ink)'}[cls];
+  document.getElementById('roll-key').style.background=col;
+  var lab={sing:'A singer’s version, '+v.id+(v.year?' ('+v.year+')':''),mach:'A machine maker alone, '+v.id,chain:'Machine chain, link '+v.id.split('-')[1],src:'The song (medoid of the sung versions), '+v.id}[cls];
+  document.getElementById('roll-title').textContent='Song '+s.key+': '+lab+(cls==='src'?'':' — distance '+v.d.toFixed(2));
+  var a=rollPts(s.source.notes,0), b=rollPts(v.notes,shift), all=a.concat(b);
+  var T=Math.max(a[a.length-1].t+a[a.length-1].d,b[b.length-1].t+b[b.length-1].d), lo=Math.min.apply(0,all.map(function(n){return n.p}))-1, hi=Math.max.apply(0,all.map(function(n){return n.p}))+1;
+  var w=W, h=170, R=document.getElementById('roll'); R.innerHTML='';
+  var sv=el('svg',{viewBox:'0 0 '+w+' '+h},R), px=function(t){return 4+t/T*(w-8)}, py=function(p){return h-6-(p-lo)/(hi-lo)*(h-12)};
+  for(var p=lo;p<=hi;p++){ if(((p-7)%12+12)%12===0) el('line',{x1:0,x2:w,y1:py(p),y2:py(p),stroke:'var(--line)'},sv) }
+  a.forEach(function(n){el('rect',{x:px(n.t),y:py(n.p)-3,width:Math.max(px(n.t+n.d)-px(n.t)-1,2),height:6,fill:'var(--mute)',opacity:.35},sv)});
+  b.forEach(function(n,i){el('rect',{x:px(n.t),y:py(n.p)-2.5,width:Math.max(px(n.t+n.d)-px(n.t)-1,2),height:5,fill:col,opacity:i===b.length-1?1:.8},sv)});
+  var last=b[b.length-1]; var lt=el('text',{x:Math.min(px(last.t)+4,w-70),y:py(last.p)-8,'font-size':11,fill:col},sv); lt.textContent='ends on '+NAMES[((last.p)%12+12)%12];
+}
+// ---------- the ending ----------
+var A=SONGS[0], third=A.people.filter(function(p){var t=p.tonic?PC[p.tonic]:7;return ((p.notes[p.notes.length-1][0]-t)%12+12)%12===4}).length;
+var lastA=A.source.notes[A.source.notes.length-1][0];
+document.getElementById('ending').innerHTML='<b>The ending.</b> Song A ends on '+NAMES[lastA%12]+', the third of its key: so do '+(third+1)+' of the '+(A.people.length+1)+' sung and printed versions. All ten machine versions of it end on G, the keynote. So do all forty machine versions of the four songs. <a href="#" id="hear-end">Hear the song, then a machine version</a>.';
+document.getElementById('hear-end').onclick=function(e){e.preventDefault();show(A,A.parallel[0],'mach')};
+show(SONGS[0],{id:SONGS[0].source.id,notes:SONGS[0].source.notes,d:0},'src'); stop();
+})();
+</script>
+</body>
+</html>

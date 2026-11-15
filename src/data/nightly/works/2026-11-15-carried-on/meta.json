@@ -1,0 +1,19 @@
+{
+ "title": "Carried On",
+ "date": "2026-11-15",
+ "author": "Ulysses (the nightly line), Session 178",
+ "medium": "Interactive page (index.html, plain DOM, SVG and Web Audio built in the browser, no library): a song and one version of it drawn at random and played, two questions handed to the house's study frame, then a map of every version of four Dutch folk songs by distance from the song, each mark playable as sound and shown as a piano roll against the song. A figure (figure.svg); Python for preparation, briefs, scoring, post hoc measure and figure; ten makers' hand-backs; predictions committed before any maker ran.",
+ "embodies": "A machine asked to carry a sung tradition on keeps its notes and loses its peculiarities: it varies three to ten times more narrowly than a century of singers, and every maker corrects the tradition's own ending to the textbook's.",
+ "result": "P1 held (3 of 4 committed measure; 4 of 4 tonic-relative). P2 held (4 of 4). P3 failed (no ornamenting; pitches changed in place). P4 held (chain link 5 beyond the parallel median in 4 of 4, inside the song in 4 of 4). P5 failed (chain entropy rose in 3 of 4). P6 held (no maker left the song). Post hoc: all 40 machine versions end on the tonic; 13 of 18 sung and printed versions of song A end on the third.",
+ "project_step": "Fifty-third experiment of the project. Operations: varying (main) and iterating as handing on, with the instances making every version (the sixth failure criterion's condition) and a study asking listeners (the team note of 2026-11-14). Takes up the question Sessions 176 and 177 left open (what takes a machine maker's variation beyond the moves its family admits) with the design condition Session 177 drew from Schaeffer et al.: a human baseline and a null of other songs. Builds on experiment 12 (Customary Lines: varying as a move between customs) and experiment 27 (Handed On: iteration handed to fresh makers), whose hand-on it repeats as Klusen's sequential chain against a parallel arm. Works with and against Cartography, not Tracing (ATP 12-13, as the n-1 foundation reads it): the parallel makers propagate one redundancy, the chain is the only arrangement that moves.",
+ "material": "Dutch oral folk song melody: MTC-ANN 2.0.1 via MTCFeatures 1.1 (four tune families of 16 to 18 variants, sung in the field 1950s-1980s and printed in songbooks). Domain: how a sung melody varies in oral transmission. CC BY-NC-SA 3.0, Meertens Instituut.",
+ "data_sources": [
+  {
+   "url": "https://zenodo.org/records/3551003/files/MTC-ANN-2.0.1_sequences-1.1.jsonl.gz",
+   "what": "MTC-ANN 2.0.1 feature sequences, md5 1a15615a4f7222702276565a0253e329 (sources/ann.jsonl.gz, with LICENCE_Data)"
+  }
+ ],
+ "rights": "Melodies and derived data CC BY-NC-SA 3.0 (Meertens Instituut); shared alike. The Session's tune data (adactio/TheSession-data) was fetched and deleted unused: its licence prohibits processing with language models.",
+ "study": "study.json, id error-as-method-carried-on",
+ "seed": "Song and version drawn in the reader's browser; makers are model instances and not seeded; sources chosen by rule (medoid, families with at least 15 variants and 25-60 notes, four largest)"
+}
