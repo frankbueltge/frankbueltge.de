@@ -13,6 +13,7 @@ const url = `http://127.0.0.1:${srv.address().port}/`;
 const b = await chromium.launch();
 let fail = 0; const ok = (c, m) => { if (!c) { fail++; console.log('FAIL', m) } else console.log('ok', m) };
 const num = s => +String(s).replace(/[^0-9]/g, '');
+const vr = JSON.parse(fs.readFileSync(path.join(here, 'voice.json'), 'utf8')).res;
 const lane = res.lane_n;
 const claim = lane['claimant'];
 const named = res.incidents - res.named_none;
@@ -43,6 +44,25 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
   await p.click('button[data-l="k:3"]');
   await p.$eval('#field rect[data-i="1500"]', e => e.dispatchEvent(new MouseEvent('click', { bubbles: true })));
   ok((await p.textContent('#det h4')).startsWith('Incident '), `${w}px a square opens its entry`);
+  // second state: the Field's study 76, named twice, the two hand readings
+  ok(num(await p.textContent('#s-wrote')) === vr.writer.harmed, `${w}px the harmed wrote ${vr.writer.harmed}`);
+  ok(num(await p.textContent('#s-pub')) === vr.acted && num(await p.textContent('#s-user')) === vr.acted_on_user, `${w}px public acts ${vr.acted}, on the user ${vr.acted_on_user}`);
+  for (const [l, n] of [['w:harmed', vr.writer.harmed], ['w:witness', vr.writer.witness], ['t:user', vr.acted_on_user], ['t:maker', vr.acted_on_maker], ['twice', vr.twice]]) {
+    await p.click(`button[data-l="${l}"]`);
+    ok((await p.$$('#field rect.on')).length === n, `${w}px ${l} lit ${n}`);
+  }
+  ok((await p.$$('#vgrid button')).length === vr.voice_n, `${w}px ${vr.voice_n} first reports`);
+  for (const c of ['own', 'other', 'none']) ok((await p.$$(`#vgrid button.${c}`)).length === vr.voice[c], `${w}px voice ${c} ${vr.voice[c]}`);
+  const say = await p.textContent('#v-say');
+  ok(say.includes(`In ${vr.voice.own} of the thirty`) && say.includes(`In ${vr.voice.other} they`) && say.includes(`In ${vr.voice.none} the harmed`), `${w}px voice sentence`);
+  ok(num(await p.textContent('#v-lo')) === vr.voice_own_interval_pct[0] && num(await p.textContent('#v-hi')) === vr.voice_own_interval_pct[1], `${w}px voice interval`);
+  await p.click('#vgrid button.other');
+  ok((await p.textContent('#vdet h4')).startsWith('Incident '), `${w}px a report opens its note`);
+  ok(num(await p.textContent('#t-n')) === vr.twice && num(await p.textContent('#t-dep')) === vr.twice_deployer && num(await p.textContent('#t-dev')) === vr.twice_developer, `${w}px named twice ${vr.twice}`);
+  ok(num(await p.textContent('#t-both')) === vr.acted_user_twice.length && (await p.$$('#t-list li')).length === vr.acted_user_twice.length, `${w}px acted on and named harmed ${vr.acted_user_twice.length}`);
+  ok(num(await p.textContent('#h-ok')) === vr.names_as_ruled && num(await p.textContent('#h-body')) === vr.names_persons_body && num(await p.textContent('#h-pers')) === vr.names_ruled_persons, `${w}px rule by hand ${vr.names_as_ruled} of ${vr.names_n}`);
+  ok((await p.$$('#hand-t tbody tr')).length === vr.names_n - vr.names_as_ruled, `${w}px misfit table`);
+  await p.click('button[data-l="k:3"]');
   if (shot) { await p.screenshot({ path: shot, fullPage: true }); console.log('shot', shot) }
   await p.close();
 }
