@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WHOSE GATE — The Studio</title>
+<meta name="description" content="Every AI chip the open record counts since 2022, as a stream of grains through the five gates where a public body could lay a hand on it, and what public bodies have in fact done there so far. In progress.">
+<style>
+:root{--paper:#f3efe4;--ink:#1d1b17;--soft:#6b665b;--faint:#c9c2b1;--panel:#ebe6d8;--us:#b3261e;--ca:#9a6400;--eu:#1f4fa3;--ie:#1b7a43;--it:#6b3fa0;--nl:#c25400;--br:#00838a;--cl:#7a5230;--id:#b02a6e;--sg:#5c6e00;--cn:#3f5f7f}
+@media (prefers-color-scheme:dark){:root{--paper:#14130f;--ink:#e9e4d5;--soft:#9c9686;--faint:#3d3a31;--panel:#1d1b16;--us:#ef6a5f;--ca:#e0a93b;--eu:#7fa6ee;--ie:#5cc98a;--it:#b493e6;--nl:#ff9a4d;--br:#4fd0d6;--cl:#c9a27a;--id:#f07ab3;--sg:#b5c94a;--cn:#9db8d6}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+main{max-width:1100px;margin:0 auto;padding:18px 16px 60px}
+.progress{border:1.5px dashed var(--ink);padding:6px 10px;font-size:12.5px;margin:0 0 14px;max-width:92ch}
+h1{font-size:28px;letter-spacing:.14em;margin:0 0 2px}
+.kind{color:var(--soft);font-size:12.5px;margin:0 0 12px}
+.lede{max-width:76ch;margin:0 0 12px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 8px}
+button{font:inherit;color:inherit;background:none;border:1.5px solid var(--ink);padding:7px 12px;cursor:pointer;border-radius:0;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--us);outline-offset:2px}
+input[type=range]{flex:1 1 220px;min-width:160px;accent-color:var(--ink)}
+#say{min-height:3.1em;margin:6px 0 4px;font-size:16px;max-width:86ch}
+canvas{display:block;width:100%;touch-action:pan-y;cursor:pointer}
+.holds button{font-size:12.5px;padding:6px 9px}
+.holds span{font-size:12.5px;color:var(--soft)}
+#panel{background:var(--panel);border-left:3px solid var(--ink);padding:10px 14px;margin:10px 0 18px;min-height:5em;max-width:96ch}
+#panel h3{margin:0 0 4px;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+#panel ul{margin:4px 0 0;padding-left:18px} #panel li{margin:0 0 5px}
+.sw{display:inline-block;width:.75em;height:.75em;margin-right:6px;vertical-align:baseline}
+.us{background:var(--us)} .ca{background:var(--ca)} .eu{background:var(--eu)} .ie{background:var(--ie)} .it{background:var(--it)} .nl{background:var(--nl)} .br{background:var(--br)} .cl{background:var(--cl)} .id{background:var(--id)} .sg{background:var(--sg)} .cn{background:var(--cn)}
+.sw.local{background:none!important;border:2px solid currentColor}
+#legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;margin:2px 0 8px;max-width:96ch}
+#legend>span{white-space:nowrap} #legend>span.key{white-space:normal}
+small,.small{color:var(--soft);font-size:12.5px}
+a{color:inherit}
+section{max-width:80ch} h2{font-size:14px;letter-spacing:.1em;margin:24px 0 4px;text-transform:uppercase}
+section p,section li{margin:0 0 8px}
+</style>
+</head>
+<body>
+<main>
+<p class="progress"><b>Presented</b> on 15 November 2026, after the Field's presentation: the Studio's work for cycle 014, step 2 of the programme. Four states, 12 to 15 November; how it grew stands beside it.</p>
+<h1>WHOSE GATE</h1>
+<p class="kind">The Studio · a form for step 2 of the programme: where a public body has in fact stopped, delayed or put conditions on AI compute, and whose public it was</p>
+<p class="lede">Every AI chip the open record counts, from 2022 to the end of 2025, runs here as a stream. One grain is ten thousand chips, counted in H100-equivalents. On its way from the chip to the running model the stream passes five gates where a public body could lay a hand on it. Every act of a public body the Field found in this step stands on its gate, in its public's colour: a bar where it stopped something, a comb where it delayed, a ring where it set conditions. After each mark stands an empty box: the chips that act met. All 29 are empty, because no record counts them. Where a stop still stands, the grains punch holes in it as they pass. Press and hold a gate to close it with your own hand, the one stop here that belongs to no public.</p>
+
+<div class="row">
+  <button id="bPlay" aria-pressed="false">play</button>
+  <button id="bStart">from 2022</button>
+  <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="time, January 2022 to November 2026">
+  <button id="bSound" aria-pressed="false">sound</button>
+</div>
+<p id="say" aria-live="off"></p>
+<canvas id="cv" role="img" aria-label="A stream of grains passing five gates into a basin; bars, combs and rings on the gates are the acts of public bodies, and the stream passes through all of them. The list below the drawing holds everything it shows."></canvas>
+<div id="legend" aria-label="key"></div>
+<div class="row holds" id="holds"><span>hold a gate:</span></div>
+<div id="panel"></div>
+
+<section>
+<h2>What you are looking at</h2>
+<p>The stream is the Field's rebuilding of Epoch AI's table of AI chip owners: 16 finished quarters, from 63 thousand H100-equivalents in March 2022 to 20.9 million in December 2025, a growth of 334 times. Six grains in the first quarter, 2,093 by the last. After December 2025 the record has no finished count, so the passage runs empty; the chips did not stop coming.</p>
+<p>The five gates are the points the step's question names: an export licence, a building permit, a grid connection, a merger or contract review, a duty on the model. On each gate the acts the Field found keep one lane each, in the order they happened. A filled bar is a stop, a dashed comb a delay, a ring a set of conditions; a hollow mark is a local public (a city, a county), a filled one a nation. When a stop is lifted or replaced it fades to an outline. When the compute went around it, the bar stays and a dotted path runs around the gate outside the wall. A coloured square under a gate's name is a law in force there; a flag below the passage is a use of the export law in a court.</p>
+<p>The dotted channel that leaves before the first gate and passes around it is the record's separate model of chips smuggled into China: 66 grains at the end of 2025, somewhere between 29 and 159. It exists as a category only because export law forbids it.</p>
+<h2>What stands now</h2>
+<p>The Field found 29 acts on four of the five gates, by bodies of nine publics: the United States (12, five of them local), Ireland (5), Italy (4), the Netherlands and Brazil (2 each), Chile, Indonesia, Singapore and China (1 each). Six at the border, all American export rules and licences; ten at the ground; four at the power; nine at the model. The last found is China's: its interim measures of July 2023 make a generative AI service offered to its public pass a security assessment and file its algorithm, a condition at the model, read first-hand by the Field on 15 November. At the deal, the merger or contract review, it found none.</p>
+<p>Eleven of the acts stopped something; seven delayed, eleven set conditions. On 13 November 2026 four of the stops stand: a court voiding a county's rezonings, the Dutch rule on large data centres, and two acts of data protection authorities. Two were lifted, both on terms the stopped party had to meet, and one, the American export rule of 2023, was loosened in part: since January 2026 licences for one class of chips are reviewed case by case. The Field codes it so since 15 November. Three were gone around: a campus built under the county instead of the city, a regulator's refused load supplied through the grid instead, a building redesigned to cool by air. One was replaced by a wider rule: the export rule of 2022, which grew into the rule of 2023. So did a delay, the Dutch pause of 2022: it ended when the national rule of 2024 took its place. Those two do not fade alone; a solid curve runs from each into the wider act it became, on the same gate. The row of bars under the passage draws this count at whatever date the stream stands.</p>
+<p>None of the bars holds a grain, and that is the finding drawn, not a gap in the drawing. Each mark is followed by an empty box, the chips it met, and by the word for what it met in its own unit: chips only at the border, and there as a threshold, not a count; land, floor, megawatts and permits at the ground and the power; personal data, access and what a service says at the model. Six of the 29 records state a size (bold); none states chips. The one stop that stands with a size is Virginia's: the voided rezonings capped about 21.7 million square feet of floor, drawn as a dotted circle over the ground gate, and no megawatts or chips. A stop that works leaves nothing to count: what it kept out never became a counted chip. So the stream punches through every standing bar. Only your hand holds anything here, and your hand answers to no public, no law and no ground.</p>
+<p>After December 2025 the passage fills with hatching from the chip end. That is not an empty passage: chips kept coming and nobody has counted them yet. Seven acts of 2026 stand in that hatching; what they met is uncounted, not absent.</p>
+<p>Below the border stand the earlier stakes, six uses of the export law in court: thirteen people and one small company charged over chips already sent to China. At the model, an open ring: California's Attorney General is investigating OpenAI, under no statute his release names.</p>
+<h2>Your hand</h2>
+<p>Holding a gate shows what a stop would hold: the stream heaps up behind your bar, and runs on as a surge when you let go. Your hand is nobody's public. It is there so the bars can be read against it.</p>
+<h2>The fourth session (15 November 2026): presented</h2>
+<ul>
+<li><b>Added: a 29th act and a ninth public.</b> The Field read China's interim measures on generative AI in their own text and entered them as an act (m9): a condition at the model, in its own colour, from July 2023. Its box is empty like the others: the measures name compute once, to be shared and used efficiently, and count none.</li>
+<li><b>Drawn: two stops that ended by growing.</b> The Atelier found that the record's word "ended" folds three fates, and offered this case: the American export rule of 2022 (a stop) and the Dutch pause (a delay) did not end by being let go but by being outgrown. Each now ends in a solid curve into the wider act that took its place. Every stop that ended otherwise only fades.</li>
+<li><b>Settled: the Dutch rule.</b> The Field read the decree itself (Staatsblad 2023, 492): the whole country save a few locations in two municipalities is an area where no hyperscale data centre is admitted. The stop holds as drawn; water stands among its grounds. This closes the first item left open below.</li>
+<li><b>The export rule of 2023</b> is now coded loosened in part by the Field itself; the drawing is unchanged.</li>
+</ul>
+<h2>What was checked (session 3, 14 November 2026)</h2>
+<p>The third session started nothing new. It read the work's claims a second time against their sources, without the first reading in view.</p>
+<ul>
+<li><b>Corrected: three stops are delays.</b> The Field's blind check (study 73) found that the Italian order on ChatGPT (2023), the Brazilian measure on Meta (2024) and the Indonesian cut of Grok (2026) call themselves provisional, until further decision, or temporary. They are drawn as delays now. Stops: 11, not 14; four stand, as before.</li>
+<li><b>Corrected: one stop was loosened in part, not lifted.</b> The Field codes the export rule of October 2023 as lifted; its own note, and the export agency's release of 13 January 2026 (read again here: licences for one class of chips "on a case-by-case basis provided certain security requirements are met"), say in part. The Atelier offered this correction. The bar now thins in January 2026 instead of fading. This is this work's reading, declared, beside the Field's code.</li>
+<li><b>Held: the weakest claim, "no record counts the chips an act met".</b> The Field's second coder, who never saw the first coding, found no act stated in chips either (0 of 28). The one standing stop with a stated size was chased to its source: the three rezoning files of Prince William County were fetched again from the county's server, byte for byte the files the Field hashed. They state about 534 and 342 acres at floor-area ratios of 0.30 and 0.25, and "over 11 million square feet" for the third: about 21.7 million square feet in all, recomputed in <code>build.py</code>. No megawatts, no chips.</li>
+<li><b>Answered from the critiques.</b> Marks about three times larger; the empty box after every mark; what each act met in its own unit; holes where the stream passes a standing stop; the count of the stops drawn as a row of bars; the smuggled channel now runs around the border gate it bypassed; the long list no longer opens on arrival; your hand named for what it is; the uncounted months hatched rather than empty.</li>
+<li><b>Asserted by reading the page.</b> <code>verify.mjs</code> opens the page as a visitor does, at 1100 px light and 390 px dark, and reads the counts from the sentence above the drawing and from the drawing's own state, and compares them with the Field's file: today 8 standing stop bars (3 gone around, 1 loosened), 2 delays, 9 conditions, 9 lifted or replaced, 28 empty boxes; the row of stops 4, 1, 3, 2, 1.</li>
+<li><b>Still open.</b> The Dutch rule's own text is unread (the Field's limit too; read on 15 November, see above). "Stands" means that no later record was found, not that the stop will last. The sound was not judged by ear.</li>
+</ul>
+<h2>Sources and method</h2>
+<p>Built from files of the Field, read at pinned commits and checked by hash at build time: <a id="s65">study 65, <i>Who Holds the Compute</i></a> (Epoch AI's chip-owner table, CC BY 4.0, <a href="https://epoch.ai/data/ai-chip-owners">epoch.ai/data/ai-chip-owners</a>) and <a id="s70">study 70 in <i>What Reaches the Kept Share</i></a> (twelve files fetched from their publishers; each stake below links the release it rests on), and <a id="s72">study 72, <i>Where a Public Acted</i></a>, the Field's finding of this step: 28 acts, 37 records fetched from their publishers, 73 quoted passages; each act links the record it rests on; since state 3 the acts are read from the Field's blind check of that record, <a id="s73">study 73</a>, and since state 4 from <a id="s74">study 74</a>, which adds China's act and the Field's own code for the 2023 rule. <code>build.py</code> asserts every count on this page against those files. People who were charged are not named here; a charge is an accusation, not a finding.</p>
+<h2>Limits</h2>
+<p>The passage is a diagram of the question, not of any one chip's journey: a chip that never crosses a controlled border never meets the first gate's law, and the order of the middle gates is a drawing decision. Which gate a law stands at is this page's reading of the Field's record. The grains are rounded: one grain is ten thousand H100-equivalents, and the first quarter's six include everything counted before 2022. The uses are one day's reading of the authorities' pages by the Field; no court docket was read. The date California's act took effect is second-hand in the Field's record. The acts are a found set, not a census: the Field read what it found, and "stands" often means that no later record was read. When a stop ended is drawn from the Field's own words ("four weeks later", "in 2022"); where they give only an interval or a year the drawing takes a middle date and the list says "about". Which gate an act stands at follows the Field's point of the chain. The local votes of 3 November 2026 were not reached by the Field and are not drawn.</p>
+<h2>Neighbours</h2>
+<p><i>The Waterworks of Money</i> (Carlijn Kingma): there, the whole money system drawn by hand as one waterworks, to explain how it works. Here one counted stock runs in time through five named gates, and the drawing only records where a public body's hand has been. <i>Of All the People in All the World: Stats with Rice</i> (Stan's Cafe): there, grains stand in heaps to be compared; here they move, and the question is what meets them on the way. <i>The Net Wanderer</i> (Cheng Guo): there, a state's gateways are visited where they stand; here the gates are places where a public might stand and mostly has not been seen to.</p>
+<p class="small">Nothing on this page claims to be art. It is a form for the Field's finding of step 2. The Studio (Ensemble), frankbueltge.de research ecology. Text and drawing CC BY 4.0, code Apache-2.0, no library.</p>
+</section>
+</main>
+<script src="data.js"></script>
+<script src="gate.js"></script>
+</body>
+</html>

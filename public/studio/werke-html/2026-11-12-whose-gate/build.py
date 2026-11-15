@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """WHOSE GATE — build data.js from the Field's records.
 
-Usage (repo root):  python3 -I works/2026-11-12-whose-gate/build.py [results65.json [results70.json [results73.json [results72.json]]]]
+Usage (repo root):  python3 -I works/2026-11-12-whose-gate/build.py [results65.json [results70.json [results73.json [results72.json [results74.json]]]]]
 Without paths the Field's two files are fetched from its repository at the pinned commits.
 State 1 (2026-11-12): the stream is the Field's chip-owner record of step 1 (study 65); the posts
 and stakes are its record of the laws in force and their uses (study 70, made in the convening).
@@ -14,6 +14,11 @@ which recoded study 72 blind and corrected three stops to delays (m1, m5, m7). T
 (c2), coded "lifted" by the Field, is drawn loosened in part, as the Field's own note says; the Atelier
 offered that correction. Each act also carries what it met, in its own unit (the Field's "limit"), and
 the Virginia stop carries the floor-area ceiling the Field read in the voided rezonings.
+State 4 (2026-11-15, the presentation): the acts are read from the Field's study 74, which builds on
+study 73 by hash, recodes c2 "loosened in part" itself (no longer this work's reading alone), reads the
+Dutch rule in its decree (the stop holds) and adds China's interim measures on generative AI as a 29th act
+(m9, a condition at the model). The two acts the Atelier found outgrown into wider ones (c1 into c2, s3
+into s4; the Field's "hardened") end in a line to the act they grew into.
 Every count the page states is asserted here; a failed assertion writes nothing.
 """
 import hashlib, json, sys, urllib.request, pathlib
@@ -32,6 +37,9 @@ F72 = ("b38141f64440763f1bb2dbea24edf6b512546385",
 F73 = ("584360107e4e1b35264b701293e2fa179053386a",
        "artifacts/cycle-014/where-a-public-acted/results73.json",
        "3ce78788734634857fc46c447e3a126875acc0a56adcd1e71dee0352a63e3022")
+F74 = ("6cc32d09f27784d08cf67facf8d925cc03e377ef",
+       "artifacts/cycle-014/where-a-public-acted/results74.json",
+       "4d03f8d484b8ae9c8892d8ac258add268ed612c2c8e7ed2f709bc6b0e94112d3")
 GRAIN = 10_000          # one grain is ten thousand H100-equivalents
 
 
@@ -47,8 +55,19 @@ R65, R70, R73 = load(F65, 1), load(F70, 2), load(F73, 3)
 # State 3 (2026-11-14): the Field's check (study 73) recoded study 72 blind; it carries every act again,
 # corrected, and names the register it checked by hash.
 assert R73["checks"]["sha256"] == F72[2] and R73["study"] == 73
-R72 = R73
 C72o = load(F72, 4)["counts"]   # the uncorrected register, for what the check did not change
+# State 4 (2026-11-15): the Field's study 74 builds on study 73 by hash and carries every act again
+R74 = load(F74, 5)
+assert R74["builds_on"]["sha256"] == F73[2] and R74["study"] == 74
+_a73 = {a["id"]: a for a in R73["acts"]}
+for a in R74["acts"]:   # nothing changed between the two registers but c2's afterwards and the new act m9
+    if a["id"] == "m9":
+        continue
+    b = _a73[a["id"]]
+    assert all(a[f] == b[f] for f in ("effect", "point", "date", "level", "country", "size", "limit", "body")), a["id"]
+    assert a["after"] == b["after"] or a["id"] == "c2", a["id"]
+assert sorted(set(a["id"] for a in R74["acts"]) - set(_a73)) == ["m9"]
+R72 = R74   # the uncorrected register, for what the check did not change
 
 # --- the stream: every finished quarter of the chip-owner record ------------------------------
 quarters, prev_all, prev_sm = [], 0, 0
@@ -144,7 +163,12 @@ assert after_count == ["u5", "u6", "u7"]
 POINT_GATE = {"chip": "border", "site": "ground", "power": "power", "deal": "deal", "model": "model"}
 # A public is the country whose body acted; a body below the nation is drawn hollow in its colour.
 COUNTRY = {"United States": "us", "Ireland": "ie", "Italy": "it", "Netherlands": "nl", "Brazil": "br",
-           "Chile": "cl", "Indonesia": "id", "Singapore": "sg"}
+           "Chile": "cl", "Indonesia": "id", "Singapore": "sg", "China": "cn"}
+# The two acts the Field calls hardened (study 74) and the Atelier read as outgrown: each ends in the act it grew into
+GREW = {"c1": "c2", "s3": "s4"}
+assert sorted(GREW) == sorted(R74["atelier"]["hardened"])
+for k, v in GREW.items():
+    assert any(k in m["acts"] and v in m["acts"] for m in R74["matters"]), k
 # When each act stopped holding, or was gone around: this work's reading of the Field's notes,
 # each date checked against the phrase in the Field's record it rests on. "~" marks a date the
 # record gives only as an interval or a year.
@@ -168,22 +192,24 @@ MET = {"c1": "chips*", "c2": "chips*", "c3": "chips*", "c4": "chips*", "c5": "ch
        "s1": "project", "s2": "land", "s3": "floor+MW", "s4": "floor+MW", "s5": "capacity", "s6": "project",
        "s7": "permits", "s8": "permits", "s9": "floor", "s10": "floor", "p1": "MW", "p2": "offers",
        "p3": "MVA", "p4": "turbines", "m1": "data", "m2": "data", "m3": "data", "m4": "data",
-       "m5": "data", "m6": "data", "m7": "access", "m8": "output"}
+       "m5": "data", "m6": "data", "m7": "access", "m8": "output", "m9": "services"}
 def iso(d):
     return d if len(d) == 10 else (d + "-01" if len(d) == 7 else d + "-01-01")
 C72, acts = R72["counts"], []
-assert len(R72["acts"]) == C72["acts"] == 28
+assert len(R72["acts"]) == C72["acts"] == 29
 assert [c["id"] for c in R73["corrections"] if c["field"] == "effect"] == ["m1", "m5", "m7"]
 for a in R72["acts"]:
     st, note = a["after"]["state"], a["after"]["note"]
     end = ENDS.get(a["id"])
-    assert (end is not None) == (st in ("lifted", "superseded", "gone around")), a["id"]
+    assert (end is not None) == (st in ("lifted", "superseded", "gone around", "loosened in part")), a["id"]
     if end:
         assert end[2] in note, (a["id"], note)
     url = next((q["url"] for q in a["quotes"] if q.get("url")), None)
     # c2: the Field codes "lifted"; its own note says loosened in part, which this work draws
+    # since study 74 the Field codes it so itself
     if a["id"] == "c2":
-        assert st == "lifted" and note.startswith("Loosened in part")
+        assert st == "loosened in part" and note.startswith("Loosened in part")
+        assert any(c["id"] == "c2" and c["to"] == "loosened in part" for c in R74["corrections"])
         st = "loosened"
     acts.append({"id": a["id"], "gate": POINT_GATE[a["point"]], "date": iso(a["date"]), "when": a["date"],
                  "body": a["body"], "country": a["country"], "public": COUNTRY[a["country"]],
@@ -191,22 +217,24 @@ for a in R72["acts"]:
                  "grounds": a["grounds"], "named": a["named"], "state": st, "after": note,
                  "end": end[0] if end else None, "approx": bool(end and end[1]),
                  "size": a["size"]["text"] if a["size"] else None, "second_hand": a["was_second_hand"],
-                 "met": a["limit"], "met_word": MET[a["id"]], "corrected": [c["field"] for c in R73["corrections"] if c["id"] == a["id"]],
+                 "met": a["limit"], "met_word": MET[a["id"]], "corrected": [c["field"] for c in R73["corrections"] + R74["corrections"] if c["id"] == a["id"]],
+                 "grew_into": GREW.get(a["id"]), "new": bool(a.get("new")),
                  "url": url})
-for k, v in C72o["per_point"].items():
+for k, v in C72["per_point"].items():
     assert sum(1 for a in acts if a["gate"] == POINT_GATE[k]) == v, k
-assert C72o["per_point"]["deal"] == 0
-for k, g in C72o["grid"].items():   # the check moved three acts at the model from stopped to delayed
+assert C72["per_point"]["deal"] == 0 and C72["per_point"]["model"] == C72o["per_point"]["model"] + 1
+for k, g in C72["grid"].items():   # study 74 carries the check's three delays at the model, and m9 as a condition
     for e, n in g.items():
-        fix = 3 if (k, e) == ("model", "delayed") else -3 if (k, e) == ("model", "stopped") else 0
-        assert sum(1 for a in acts if a["gate"] == POINT_GATE[k] and a["effect"] == e) == n + fix, (k, e)
+        assert sum(1 for a in acts if a["gate"] == POINT_GATE[k] and a["effect"] == e) == n, (k, e)
 stops = [a for a in acts if a["effect"] == "stopped"]
-assert len(stops) == C72["stopped"] == 11 and C72["delayed"] == 7 and C72["conditioned"] == 10
+BE = C72["by_effect"]
+assert len(stops) == C72["stopped"] == BE["stopped"] == 11 and BE["delayed"] == 7 and BE["conditioned"] == 11
 from collections import Counter
 st_after = dict(Counter(a["state"] for a in stops))
 assert st_after == {"stands": 4, "lifted": 2, "loosened": 1, "gone around": 3, "superseded": 1}
-assert C72["stopped_after"] == {"stands": 4, "lifted": 3, "gone around": 3, "superseded": 1}
+assert C72["stopped_after"] == {"stands": 4, "lifted": 2, "loosened in part": 1, "gone around": 3, "superseded": 1}
 assert sum(1 for a in acts if a["met_word"] == "chips*") == 6 and all(a["met_word"] == "chips*" for a in acts if a["gate"] == "border")
+assert sorted(C72["compute_quantity"]) == sorted(a["id"] for a in acts if a["gate"] == "border")
 # the Field's answer to this practice's question: the Virginia stop's size, in floor, not in chips
 SV = R73["studio"]["s2"]
 assert SV["chips"] is None and SV["megawatts"] is None
@@ -214,9 +242,11 @@ sq = [round(x["acres"] * 43560 * x["far"]) for x in SV["sources"] if "far" in x]
 assert sq == [x["ceiling_sqft"] for x in SV["sources"] if "far" in x] == [6978312, 3724380]
 assert sum(sq) + 11_000_000 == SV["ceiling_sqft_about"] == 21702692
 virginia = {"act": "s2", "sqft": SV["ceiling_sqft_about"], "docs": [{"case": x["case"], "url": x["url"], "sha256": x["sha256"]} for x in SV["sources"]]}
-assert dict(Counter(a["country"] for a in acts)) == C72o["by_country"]
-assert sorted(a["id"] for a in acts if a["size"]) == sorted(C72o["magnitude"]) and len(C72o["magnitude"]) == 6
-assert C72["ai_risk_first"] == C72["ai_risk_second"] == C72["chips_second"] == 0 and sorted(C72["model_output"]) == ["m1", "m7", "m8"]
+assert dict(Counter(a["country"] for a in acts)) == C72["by_country"] and len(C72["by_country"]) == 9
+assert sorted(a["id"] for a in acts if a["size"]) == sorted(C72["magnitude"]) and len(C72["magnitude"]) == 6
+assert C72["ai_risk"] == [] and sorted(C72["model_output"]) == ["m1", "m7", "m8"]
+C73 = R73["counts"]
+assert C73["ai_risk_first"] == C73["ai_risk_second"] == C73["chips_second"] == 0
 # no act's record states the compute it met in chips: so no bar holds a grain
 assert all("chip" not in (a["size"] or "").lower() for a in acts)
 assert all(a["url"] for a in acts)
@@ -226,7 +256,7 @@ assert first_act == "2019-01-01" and sum(1 for a in acts if a["date"] < "2022-01
 unread = []   # since state 2 the Field has read all five gates; at the deal it found no act
 
 DATA = {
-    "state": 3, "date": "2026-11-14", "virginia": virginia, "grain": GRAIN,
+    "state": 4, "date": "2026-11-15", "virginia": virginia, "grain": GRAIN,
     "from": "2022-01-01", "to": "2026-11-13", "counted_to": quarters[-1]["q"],
     "quarters": quarters, "gates": GATES, "laws": laws, "stakes": stakes, "unread": unread, "acts": acts,
     "smuggled": {"first": first_smuggled, "grains": 66, "range": smug_range,
@@ -234,14 +264,15 @@ DATA = {
     "counts": {"grains": 2093, "first_quarter_grains": 6, "h100e": 20926382, "fold": 334,
                "stakes": 7, "border_stakes": 6, "announcements": 5, "persons": 13, "companies": 1,
                "admitted": 1, "inquiries": 1, "penalties": 0, "after_last_count": 3,
-               "acts": 28, "stopped": 11, "delayed": 7, "conditioned": 10, "stops_stand": 4,
+               "acts": 29, "stopped": 11, "delayed": 7, "conditioned": 11, "grew": 2, "stops_stand": 4,
                "stops_lifted": 2, "stops_loosened": 1, "stops_gone_around": 3, "stops_superseded": 1, "sized": 6,
-               "sized_in_chips": 0, "deal_acts": 0, "publics": 8},
+               "sized_in_chips": 0, "deal_acts": 0, "publics": 9},
     "field": {"study65": RAW.replace("raw.githubusercontent.com", "github.com").rstrip("/") + "/tree/" + F65[0] + "/artifacts/cycle-013/who-holds-the-compute",
               "study70": "https://github.com/frankbueltge/field-research/tree/" + F70[0] + "/artifacts/after-cycle-013/what-reaches-the-kept-share",
               "study72": "https://github.com/frankbueltge/field-research/tree/" + F72[0] + "/artifacts/cycle-014/where-a-public-acted",
-              "study73": "https://github.com/frankbueltge/field-research/tree/" + F73[0] + "/artifacts/cycle-014/where-a-public-acted"},
+              "study73": "https://github.com/frankbueltge/field-research/tree/" + F73[0] + "/artifacts/cycle-014/where-a-public-acted",
+              "study74": "https://github.com/frankbueltge/field-research/tree/" + F74[0] + "/artifacts/cycle-014/where-a-public-acted"},
 }
-(HERE / "data.js").write_text("// built by build.py from the Field's studies 65, 70 and 73; do not edit\nconst DATA = "
+(HERE / "data.js").write_text("// built by build.py from the Field's studies 65, 70, 73 and 74; do not edit\nconst DATA = "
                               + json.dumps(DATA, ensure_ascii=False, separators=(",", ":")) + ";\n")
 print("ok", len(quarters), "quarters,", DATA["counts"]["grains"], "grains,", len(stakes), "stakes,", len(acts), "acts")

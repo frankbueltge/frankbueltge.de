@@ -53,7 +53,7 @@ function layout() {
   basin.sp = Math.sqrt(basin.w * basin.h / 2140); basin.cols = Math.floor(basin.w / basin.sp);
   const pc = P(0.15, 0.80); pool = { x: pc[0], y: pc[1], sp: wide ? 4.3 : 3.5 };
   const cs = getComputedStyle(document.documentElement);
-  for (const k of ['paper', 'ink', 'soft', 'faint', 'us', 'ca', 'eu', 'ie', 'it', 'nl', 'br', 'cl', 'id', 'sg']) col[k] = cs.getPropertyValue('--' + k).trim();
+  for (const k of ['paper', 'ink', 'soft', 'faint', 'us', 'ca', 'eu', 'ie', 'it', 'nl', 'br', 'cl', 'id', 'sg', 'cn']) col[k] = cs.getPropertyValue('--' + k).trim();
 }
 const P = (u, v) => wide ? [geo.o + u * geo.len, geo.mid + v * geo.half] : [geo.mid - v * geo.half, geo.o + u * geo.len];
 function inv(x, y) { return wide ? [(x - geo.o) / geo.len, (y - geo.mid) / geo.half] : [(y - geo.o) / geo.len, (geo.mid - x) / geo.half]; }
@@ -138,6 +138,13 @@ function actMark(a, p) {
     cx.strokeStyle = colr; }
   if (selected === a.gi && !ended) { cx.globalAlpha = p; const [px, py] = P(u, c); cx.beginPath(); cx.arc(px, py, 1.4, 0, 7); cx.fillStyle = col.paper; cx.fill(); }
   let st = ended ? 'ended' : 'stands';
+  if (ended && a.grew_into) {  // outgrown, not let go: a line from the faded mark into the wider act it became
+    const b = acts.find(x => x.id === a.grew_into);
+    if (b && T >= b.t) { const cb = lane(b)[0], e = clamp((T - a.te) / 0.04, 0, 1), s0 = P(u - du, c), m = P(u - du * 3.2, (c + cb) / 2), s1 = P(u - du, c + (cb - c) * e);
+      cx.globalAlpha = p; cx.strokeStyle = colr; cx.lineWidth = 2; cx.beginPath(); cx.moveTo(...s0); cx.quadraticCurveTo(...m, ...s1); cx.stroke();
+      if (e >= 1) { const ang = Math.atan2(s1[1] - m[1], s1[0] - m[0]); cx.beginPath(); for (const k of [-0.5, 0.5]) { cx.moveTo(...s1); cx.lineTo(s1[0] - 7 * Math.cos(ang + k), s1[1] - 7 * Math.sin(ang + k)); } cx.stroke(); }
+      grew++; st = 'grew'; }
+  }
   if (AROUND(a)) {             // the way around: from before the gate, outside the wall, to after it
     st = 'around'; const side = c < 0 ? -1 : 1, e = clamp((T - a.te) / 0.05, 0, 1);
     const s0 = P(u - 0.035, c), m = P(u, side * (HW + 0.1 + 0.03 * a.k / Math.max(1, a.n))), s1 = P(u + 0.035 * e, c);
@@ -145,7 +152,7 @@ function actMark(a, p) {
   }
   cx.globalAlpha = 1; cx.lineWidth = 1; return st;
 }
-let boxes = 0;
+let boxes = 0, grew = 0;
 // after the last finished count the passage fills with hatching, from the chip end, as fast as grains would have come
 function uncounted() {
   if (T <= TCOUNT) return; const front = Math.min(MOUTH, (T - TCOUNT) / TRAVEL * MOUTH);
@@ -225,9 +232,9 @@ function draw() {
     cx.strokeStyle = col.ink;
   });
   // the acts: a bar for a stop, a comb for a delay, a ring for a condition; none of them holds a grain
-  let standing = { stopped: 0, delayed: 0, conditioned: 0 }, around = 0, ended = 0, seen = 0, loose = 0; holes = []; boxes = 0;
+  let standing = { stopped: 0, delayed: 0, conditioned: 0 }, around = 0, ended = 0, seen = 0, loose = 0; holes = []; boxes = 0; grew = 0;
   uncounted();
-  for (const a of acts) if (T >= a.t) { seen++; const st = actMark(a, clamp((T - a.t) / 0.03, 0, 1)); if (st === 'ended') ended++; else { standing[a.effect]++; if (st === 'around') around++; if (LOOSE(a)) loose++; } }
+  for (const a of acts) if (T >= a.t) { seen++; const st = actMark(a, clamp((T - a.t) / 0.03, 0, 1)); if (st === 'ended' || st === 'grew') ended++; else { standing[a.effect]++; if (st === 'around') around++; if (LOOSE(a)) loose++; } }
   const tl = tally();
   // the grains
   let moving = 0, heldN = 0, inBasin = 0, inPool = 0, born = 0, through = 0;
@@ -273,7 +280,7 @@ function draw() {
     cx.globalAlpha = 1;
   }
   Object.assign(cv.dataset, { born, moving, held: heldN, basin: inBasin, pool: inPool, stakes: planted, wide: wide ? 1 : 0,
-    acts: seen, stops: standing.stopped, delays: standing.delayed, conditions: standing.conditioned, around, ended, loose, boxes, through,
+    acts: seen, stops: standing.stopped, delays: standing.delayed, conditions: standing.conditioned, around, ended, loose, boxes, through, grew,
     tally: tl.join(',') });
   if (audio) audio.gain.gain.setTargetAtTime(playing ? Math.min(0.22, Math.sqrt(moving) * 0.011) : 0, audio.ac.currentTime, 0.15);
   return { born, planted, moving, heldN, standing, around, ended, seen, loose };
@@ -307,7 +314,7 @@ function panel(i) {
     li.append(sw, a.when + ' · ' + a.body + (a.local ? ' (a local public, ' : ' (') + a.country + ') ' + EFF[a.effect] + (a.named ? ' · named: ' + a.named : '') + ' · ' + a.what
       + ' · what it met: ' + a.met + (a.size ? ' · size its record states: ' + a.size : ' · its record states no size') + ' · chips it met: no record says'
       + (a.corrected.includes('effect') ? ' · corrected by the Field\'s check of 14 November: a delay by its own word, first coded a stop' : '')
-      + ' · on 13 November 2026: ' + (a.state === 'loosened' ? 'loosened in part (the Field codes it lifted; its own note and the release say in part)' : a.state) + '. ' + a.after + (a.end ? ' (drawn ' + (a.approx ? 'about ' : '') + a.end.slice(0, 7) + ')' : '') + (a.second_hand ? ' Read second-hand by the Field.' : '') + ' · ', r);
+      + ' · on 13 November 2026: ' + (a.state === 'loosened' ? 'loosened in part (so the Field codes it since 15 November; first coded lifted)' : a.state) + '. ' + a.after + (a.end ? ' (drawn ' + (a.approx ? 'about ' : '') + a.end.slice(0, 7) + ')' : '') + (a.grew_into ? ' Outgrown, not let go: it grew into ' + a.grew_into + ', the wider act drawn in the next lane, and the line between them is drawn.' : '') + (a.new ? ' New on 15 November: read first-hand by the Field in study 74.' : '') + (a.second_hand ? ' Read second-hand by the Field.' : '') + ' · ', r);
     ul.append(li);
   }
   for (const l of laws.filter(l => l.gi === i)) {
@@ -378,8 +385,8 @@ window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change', layo
   for (const a of D.acts) seen.set(a.public, [a.country, (seen.get(a.public) || [0, 0])[1] + 1]);
   for (const [k, [name, n]] of [...seen].sort((a, b) => b[1][1] - a[1][1])) { const e = document.createElement('span'), sw = document.createElement('span'); sw.className = 'sw ' + k; e.append(sw, name + ' ' + n); lg.append(e); }
   for (const l of D.laws.filter(l => !seen.has(l.public))) { const e = document.createElement('span'), sw = document.createElement('span'); sw.className = 'sw ' + l.public; e.append(sw, l.public_name.replace(/^the /, '') + ' (law)'); lg.append(e); seen.set(l.public, 1); }
-  const k = document.createElement('span'); k.className = 'key'; k.textContent = '▮ stop · ┆ delay · ● condition · hollow = a local public · faded = lifted or replaced · thinned = loosened in part · dotted path = gone around · ⬚ after each mark = the chips it met, empty in all 28 records · the word after it = what it met, in its own unit (bold where the record states a size; chips* = a threshold on chips, not a count) · a hole punched in a bar = a grain passing a stop that stands · hatched = not yet counted'; lg.append(k); }
-$('s65').href = D.field.study65; $('s70').href = D.field.study70; $('s72').href = D.field.study72; $('s73').href = D.field.study73;
+  const k = document.createElement('span'); k.className = 'key'; k.textContent = '▮ stop · ┆ delay · ● condition · hollow = a local public · faded = lifted or replaced · a solid curve from a faded mark = outgrown into a wider act · thinned = loosened in part · dotted path = gone around · ⬚ after each mark = the chips it met, empty in all 29 records · the word after it = what it met, in its own unit (bold where the record states a size; chips* = a threshold on chips, not a count) · a hole punched in a bar = a grain passing a stop that stands · hatched = not yet counted'; lg.append(k); }
+$('s65').href = D.field.study65; $('s70').href = D.field.study70; $('s72').href = D.field.study72; $('s73').href = D.field.study73; $('s74').href = D.field.study74;
 
 // --- open ----------------------------------------------------------------------------------------
 layout(); $('panel').textContent = 'Press a gate\'s name in the drawing, or hold a gate below, to read every act on it with its record.';

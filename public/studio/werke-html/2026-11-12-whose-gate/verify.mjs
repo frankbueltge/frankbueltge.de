@@ -4,7 +4,7 @@ import { createRequire } from 'module'; import path from 'path'; import { fileUR
 const require = createRequire('/opt/node-tools/node_modules/'); const { chromium } = require('playwright');
 const here = path.dirname(fileURLToPath(import.meta.url)); const out = process.argv[2];
 const browser = await chromium.launch(); let bad = 0;
-const read = page => page.evaluate(() => { const d = document.getElementById('cv').dataset; return { born: +d.born, moving: +d.moving, held: +d.held, basin: +d.basin, pool: +d.pool, stakes: +d.stakes, acts: +d.acts, stops: +d.stops, delays: +d.delays, conditions: +d.conditions, around: +d.around, ended: +d.ended, loose: +d.loose, boxes: +d.boxes, through: +d.through, tally: d.tally, say: document.getElementById('say').textContent, side: document.documentElement.scrollWidth - window.innerWidth }; });
+const read = page => page.evaluate(() => { const d = document.getElementById('cv').dataset; return { born: +d.born, moving: +d.moving, held: +d.held, basin: +d.basin, pool: +d.pool, stakes: +d.stakes, acts: +d.acts, stops: +d.stops, delays: +d.delays, conditions: +d.conditions, around: +d.around, ended: +d.ended, loose: +d.loose, boxes: +d.boxes, through: +d.through, grew: +d.grew, tally: d.tally, say: document.getElementById('say').textContent, side: document.documentElement.scrollWidth - window.innerWidth }; });
 for (const [w, scheme] of [[1100, 'light'], [390, 'dark']]) {
   const page = await browser.newPage({ viewport: { width: w, height: 900 }, colorScheme: scheme });
   const errors = []; page.on('pageerror', e => errors.push(String(e))); page.on('console', m => m.type() === 'error' && errors.push(m.text()));
@@ -33,7 +33,9 @@ for (const [w, scheme] of [[1100, 'light'], [390, 'dark']]) {
   const ok = sayOK && tallyOK && today.boxes === C.acts && mid > 0 && end25.born === 2093 && end25.stakes === 4 && end25.pool + end25.basin + end25.moving === 2093 && end25.side <= 0
     && first.born === 6 && first.stakes === 0 && first.acts === 3 && first.delays === 2 && first.conditions === 1 && first.stops === 0
     && today.stakes === 7 && today.basin === 2027 && today.pool === 66 && today.moving === 0 && today.side <= 0
-    && today.acts === 28 && today.stops === 8 && today.around === 3 && today.loose === 1 && today.ended === 9 && today.delays === 2 && today.conditions === 9
+    // state 4 (presented): 29 acts with China's m9; two ended acts end in the wider act they grew into, counted from the data
+    && today.acts === C.acts && C.acts === 29 && today.stops === 8 && today.around === 3 && today.loose === 1 && today.ended === 9 && today.delays === 2 && today.conditions === 10
+    && today.grew === D.acts.filter(a => a.grew_into).length && today.grew === C.grew && first.grew === 0
     && hand.held > 20 && hand.after === 0 && hand.say.includes('United States') && deal.includes('no act found') && ground === 10 && !errors.length;
   delete today.say; delete end25.say; delete first.say;
   console.log(w, scheme, JSON.stringify({ said, fromData, sayOK, tallyOK, through_mid_2025: mid, end25, first, today, hand: { held: hand.held, after: hand.after }, errors }), ok ? 'OK' : 'FAILED'); if (!ok) bad++;
