@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Harm Is on Record</title>
+<meta name="description" content="Study 75 of the Field, step 3 of the programme on who controls advanced AI: every incident of the AI Incident Database by year, coloured by who wrote the first report, where the failure sits, and whether a public body is on record acting on it.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;--accent:#30508f;--held:#2f7d5b;--failed:#b23a3a;
+--k1:#b5651d;--k2:#7a4fa3;--k3:#30508f;--k4:#1f7f78;--k5:#a8324a;--k6:#8a8778;--k7:#c9a227;--k0:#d9d5ca}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--k1:#e39a55;--k2:#b79ae0;--k3:#8fb0ee;--k4:#5cc2ba;--k5:#e57f93;--k6:#9d9a8c;--k7:#e3c25a;--k0:#3a3b35}}
+:root[data-theme="dark"]{--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
+--k1:#e39a55;--k2:#b79ae0;--k3:#8fb0ee;--k4:#5cc2ba;--k5:#e57f93;--k6:#9d9a8c;--k7:#e3c25a;--k0:#3a3b35}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em}
+.kicker{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem;max-width:44em}
+.answer{border-left:3px solid var(--accent);padding:.5em 1em;margin:1.4em 0;background:var(--card)}
+.answer p{margin:.35em 0}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:.6em 0 .8em;font:.85rem system-ui,sans-serif}
+.controls button{font:inherit;padding:6px 11px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--fg);cursor:pointer}
+.controls button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+#fig{width:100%;height:auto;display:block;touch-action:manipulation}
+#fig text{font:11px system-ui,sans-serif;fill:var(--mute)}
+#fig .seg{cursor:pointer}
+#fig .seg:hover,#fig .seg.on{stroke:var(--fg);stroke-width:1.5}
+#legend{display:flex;flex-wrap:wrap;gap:6px 16px;font:.8rem system-ui,sans-serif;margin:.6em 0}
+#legend span{display:inline-flex;align-items:center;gap:6px}
+#legend i{display:inline-block;width:13px;height:13px;border-radius:3px}
+.tally{font:.95rem/1.45 system-ui,sans-serif;margin:.6em 0;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px}
+.readout{margin-top:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px;font:.9rem/1.5 system-ui,sans-serif;min-height:6em}
+table{border-collapse:collapse;font:.85rem/1.4 system-ui,sans-serif;width:100%}
+td,th{border-top:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--mute)}
+.wrap{overflow-x:auto}
+.held{color:var(--held);font-weight:600}.failed{color:var(--failed);font-weight:600}
+.m{font:.82rem/1.5 system-ui,sans-serif;color:var(--mute)}
+.yes{font-weight:600}
+code{font-size:.85em;overflow-wrap:anywhere}
+a{color:var(--accent)}
+.note{font:.88rem/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 75 · cycle 015 · step 3 of the programme · first state, 15 November 2026 · in progress</p>
+<h1>What Harm Is on Record</h1>
+<p class="lede">The programme asks whether increasingly capable AI can be kept under human and democratic control, and by whom. This step asks what the public record of AI incidents shows about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures a public body has acted on. The record read here is the largest open one, the AI Incident Database, whole.</p>
+
+<div class="answer" id="answer">
+<p><strong>The answer so far.</strong> <span id="a1"></span></p>
+<p><span id="a2"></span></p>
+<p><span id="a3"></span></p>
+<p class="m">A first state. Who wrote a report is read from its web address only, by fixed rules; whether a writer was among the harmed is not yet read (the next state samples it by hand). Every number is computed by <code>analyse75.py</code> from the snapshot named below.</p>
+</div>
+
+<h2>Every incident on record, by the year it happened</h2>
+<div class="controls" role="group" aria-label="Colour the incidents by">
+<button data-mode="who" aria-pressed="true">Who wrote the first report</button>
+<button data-mode="where" aria-pressed="false">Where it fails (MIT risk domain)</button>
+<button data-mode="acted" aria-pressed="false">Is a public act on record</button>
+</div>
+<svg id="fig" viewBox="0 0 960 380" role="img" aria-label="Stacked bars: incidents per year"></svg>
+<div id="legend"></div>
+<div class="tally" id="tally"></div>
+<div class="readout" id="readout" aria-live="polite">Choose a bar to read its year.</div>
+<p class="note">Years before 2012 are drawn as one bar. 2026 runs to the snapshot of 9 November and is incomplete; the database also enters incidents months after they happen, so recent years grow. The height of a bar is what was written down, not what happened.</p>
+
+<h2>Step 2's public acts, looked for in the record</h2>
+<p class="note">The 29 acts by which a public body stopped, delayed or conditioned AI compute (<a href="../../cycle-014/where-a-public-acted/">Where a Public Acted</a>, study 74), each searched for in the incidents' titles and descriptions by the terms of its point in the chain, every hit read. A match names the same system, model or facility, the same developer or deployer, and the matter the act addressed.</p>
+<div class="wrap"><table id="acts"><thead><tr><th>Act</th><th>Point</th><th>Body and party</th><th>Hits read</th><th>Incident</th></tr></thead><tbody></tbody></table></div>
+
+<h2>Predictions, fixed before any count</h2>
+<p class="note">Written after reading only the snapshot's column headers (<a href="PREDICTIONS75.md">PREDICTIONS75.md</a>, committed before the analysis ran).</p>
+<div class="wrap"><table id="preds"><thead><tr><th></th><th>Prediction</th><th>Result</th></tr></thead><tbody></tbody></table></div>
+<p class="m" id="predsum"></p>
+
+<h2>Method</h2>
+<p class="note"><strong>Record.</strong> AI Incident Database, snapshot <code>backup-20261109100729.tar.bz2</code>, fetched from the database's own snapshot page on 15 November 2026 (sha256 <code id="sha"></code>), CSV export. The database is shared under CC BY-SA 4.0; report texts stay with their owners and none is copied here. <strong>Who wrote it.</strong> For each incident, the linked report published first; its web domain is classed in this order: the maker (a name of the incident's alleged developer or deployer is a label of the domain), a public body (government, court and regulator domains), research (universities, papers, preprints), self-published (platforms without an editor: social networks, video, blogs, code hosts), the press and other (everything else). <strong>Where it fails.</strong> The database's own MIT risk classification, not re-coded. <strong>Response.</strong> The database tags some reports as a <em>response</em>; an incident with one is counted, whoever responded.</p>
+<h2>Limits</h2>
+<p class="note">A web address says who published a report, not who was harmed: the class <em>self-published</em> is the closest a domain comes to the harmed, and it holds bystanders and researchers too. Its names were matched by rule and not read; a maker's newsroom on another domain (<code>about.fb.com</code>) falls outside <em>maker</em>. The first run of the rules matched suffixes without a label boundary and was fixed in the same session; its result on the predictions was the same. The record holds what its editors and submitters found and chose; it is not a census of harm. The match to step 2's acts is a search plus a reading by one reader; a second reading comes with the check.</p>
+<p class="m">Builds on the Field's cycle-006 reading of the same database (<a href="../../2026-10-07-what-the-incident-record-holds/">What the incident record holds</a>, snapshot of 5 October 2026) and on step 2's register of 29 public acts. Data: <a href="results75.json">results75.json</a>, <a href="data75.js">data75.js</a>.</p>
+</main>
+<script src="data75.js"></script>
+<script>
+(function(){
+const D=window.D75, R=D.res, rows=D.rows;
+const pct=(a,b)=>(100*a/b).toFixed(1).replace(/\.0$/,'');
+const fmt=n=>n.toLocaleString('en-GB');
+const FR=R.first_reporter, nf=R.incidents_with_first_report;
+document.getElementById('sha').textContent=R.snapshot.sha256;
+const matched=R.acts.filter(a=>a.match);
+const incM=R.incidents_matched.length;
+document.getElementById('a1').textContent=`Of ${fmt(nf)} incidents with a report, the press wrote the first in ${pct(FR['press and other'],nf)} %. The maker's own domain wrote it in ${FR.maker} (${pct(FR.maker,nf)} %), a public body in ${FR['public body']} (${pct(FR['public body'],nf)} %), research in ${FR.research}, and a self-published platform, where a harmed person could write without an editor, in ${FR['self-published']} (${pct(FR['self-published'],nf)} %).`;
+document.getElementById('a2').textContent=`Where the record files failures of the AI system itself (MIT domain 7, ${R.domain7_n} incidents), the maker wrote first in ${R.maker_pct_domain7} %, no more often than over all classified incidents (${R.maker_pct_classified} %). The record of where control fails is written by the press.`;
+document.getElementById('a3').textContent=`Of step 2's 29 public acts, ${matched.length} meet an incident in the record (${incM} incidents: ${R.incidents_matched.join(', ')}); ${29-matched.length} acts, every one at the chip and the site among them, meet none. ${R.incidents_with_response_report} incidents carry a report the database tags as a response, by anyone.`;
+
+const MODES={
+ who:{key:r=>r[2],cats:[['maker','The maker','--k5'],['public body','A public body','--k3'],['research','Research','--k4'],['self-published','Self-published','--k1'],['press and other','The press and other','--k6'],['no report','No report','--k0']]},
+ where:{key:r=>String(r[3]),cats:[['1','1 Discrimination and toxicity','--k1'],['2','2 Privacy and security','--k2'],['3','3 Misinformation','--k3'],['4','4 Malicious actors and misuse','--k5'],['5','5 Human-computer interaction','--k4'],['6','6 Socioeconomic and environmental','--k7'],['7','7 AI system safety, failures and limitations','--fg'],['0','Not classified','--k0']]},
+ acted:{key:r=>r[4]?'act':(r[5]?'resp':'none'),cats:[['act','Matched to a public act of step 2','--k5'],['resp','A report tagged as a response','--k3'],['none','Neither','--k0']]}
+};
+const yr=y=>y===null?null:(y<2012?'<2012':String(y));
+const YEARS=['<2012'];for(let y=2012;y<=2026;y++)YEARS.push(String(y));
+let mode='who', sel=null;
+const svg=document.getElementById('fig'), NS='http://www.w3.org/2000/svg';
+const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const col=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function counts(){const M=MODES[mode];const c={};YEARS.forEach(y=>c[y]={});rows.forEach(r=>{const y=yr(r[1]);if(!y||!c[y])return;const k=M.key(r);c[y][k]=(c[y][k]||0)+1;});return c;}
+function draw(){
+ const M=MODES[mode], c=counts();
+ svg.innerHTML='';
+ const W=960,H=380,L=44,B=30,T=12, bw=(W-L-8)/YEARS.length;
+ const max=Math.max(...YEARS.map(y=>Object.values(c[y]).reduce((a,b)=>a+b,0)));
+ const top=Math.ceil(max/100)*100, sy=v=>(H-B-T)*v/top;
+ for(let g=0;g<=top;g+=100){const y=H-B-sy(g);svg.appendChild(el('line',{x1:L,x2:W-8,y1:y,y2:y,stroke:col('--line')}));const t=el('text',{x:L-6,y:y+4,'text-anchor':'end'});t.textContent=g;svg.appendChild(t);}
+ YEARS.forEach((y,i)=>{
+  let acc=0;const x=L+i*bw+2;
+  M.cats.forEach(([k,,v])=>{const n=c[y][k]||0;if(!n)return;const h=sy(n);
+   const r=el('rect',{x:x,y:H-B-sy(acc)-h,width:bw-4,height:Math.max(h,0.8),fill:col(v),class:'seg'+(sel===y?' on':''),'data-year':y,'data-cat':k,tabindex:0,role:'button','aria-label':`${y}: ${n}`});
+   r.addEventListener('click',()=>{sel=y;draw();read(y);});r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();sel=y;draw();read(y);}});
+   svg.appendChild(r);acc+=n;});
+  const t=el('text',{x:x+(bw-4)/2,y:H-B+16,'text-anchor':'middle'});t.textContent=(y==='<2012'?'<12':(window.innerWidth<600?"'"+y.slice(2):y));svg.appendChild(t);
+ });
+ const lg=document.getElementById('legend');lg.innerHTML='';
+ const tot={};rows.forEach(r=>{const k=M.key(r);tot[k]=(tot[k]||0)+1;});
+ M.cats.forEach(([k,lab,v])=>{if(!tot[k])return;const s=document.createElement('span');const i=document.createElement('i');i.setAttribute('aria-hidden','true');i.dataset.c=v;s.appendChild(i);s.appendChild(document.createTextNode(`${lab} (${fmt(tot[k])})`));s.dataset.cat=k;s.dataset.n=tot[k];lg.appendChild(s);});
+ lg.querySelectorAll('i').forEach(i=>{const sw=el('svg',{width:13,height:13});sw.appendChild(el('rect',{width:13,height:13,rx:3,fill:col(i.dataset.c)}));i.replaceWith(sw);});
+ tally();
+ if(sel)read(sel);
+}
+function tally(){
+ const t=document.getElementById('tally');
+ if(mode==='who')t.textContent=`First reports: the press and other ${fmt(FR['press and other'])}, self-published ${FR['self-published']}, a public body ${FR['public body']}, research ${FR.research}, the maker ${FR.maker}, of ${fmt(nf)}. ${R.single_report} incidents rest on a single report.`;
+ if(mode==='where'){const b=R.by_domain;t.textContent=`${fmt(R.classified_mit)} incidents with a first report carry the MIT classification. In domain 7 (the system's own safety and failures, ${b['7'].n}) the maker wrote first in ${b['7'].maker}, a self-published platform in ${b['7']['self-published']}, a public body in ${b['7']['public body']}.`;}
+ if(mode==='acted')t.textContent=`${incM} incidents are matched to ${matched.length} of step 2's 29 acts; ${R.incidents_with_response_report} incidents carry a report tagged as a response (a maker's statement, a regulator's, a court's: the tag does not say whose).`;
+}
+function read(y){
+ const M=MODES[mode],c=counts()[y],n=Object.values(c).reduce((a,b)=>a+b,0);
+ const parts=M.cats.filter(([k])=>c[k]).map(([k,lab])=>`${lab}: ${c[k]}`);
+ const ids=mode==='acted'?rows.filter(r=>yr(r[1])===y&&r[4]).map(r=>`incident ${r[0]} (acts ${r[4]})`):[];
+ document.getElementById('readout').innerHTML='';
+ const h=document.createElement('strong');h.textContent=`${y==='<2012'?'Before 2012':y}: ${n} incidents. `;
+ const p=document.createElement('span');p.textContent=parts.join(' · ')+(ids.length?'. Matched: '+ids.join('; ')+'.':'');
+ document.getElementById('readout').append(h,p);
+}
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));draw();}));
+window.addEventListener('resize',()=>draw());
+draw();
+
+const tb=document.querySelector('#acts tbody');
+R.acts.forEach(a=>{const tr=document.createElement('tr');tr.dataset.id=a.id;
+ [a.id,a.point,`${a.body} — ${a.party} (${a.date}, ${a.effect})`,String(a.search_hits),a.match?`#${a.match}. ${a.note}`:`none. ${a.note}`].forEach((v,i)=>{const td=document.createElement('td');td.textContent=v;if(i===4&&a.match)td.className='yes';tr.appendChild(td);});tb.appendChild(tr);});
+
+const P=[['P105','Of incidents with a first report, the maker\'s own domain wrote it in at most 5 %, a self-published platform in at most 15 %, the press and other in at least 70 %.',`maker ${R.first_reporter_pct.maker} %, self-published ${R.first_reporter_pct['self-published']} %, press and other ${R.first_reporter_pct['press and other']} %`],
+['P106','The maker\'s share of first reports in MIT domain 7 is at least twice its share over all classified incidents.',`${R.maker_pct_domain7} % against ${R.maker_pct_classified} %`],
+['P107','Of the 29 public acts of step 2, at most 8 find a matching incident, and every match is at the model point.',`${matched.length} match: ${matched.map(a=>a.id+' ('+a.point+')').join(', ')}`]];
+const pb=document.querySelector('#preds tbody');
+P.forEach(([id,txt,res])=>{const ok=R.predictions[id];const tr=document.createElement('tr');[id,txt].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});const td=document.createElement('td');const s=document.createElement('span');s.className=ok?'held':'failed';s.textContent=ok?'held':'failed';td.append(s,document.createTextNode(' — '+res));tr.appendChild(td);pb.appendChild(tr);});
+document.getElementById('predsum').textContent=`Study 75: ${R.predictions_held} of 3 held.`;
+})();
+</script>
+</body>
+</html>
