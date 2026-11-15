@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "bc8fb9929db73658",
-        "files": 64
+        "sha256": "b0675f516645713a",
+        "files": 65
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 648,
-      "edges": 571,
+      "nodes": 649,
+      "edges": 572,
       "nodesByKind": {
         "decision": 198,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
-        "practice-work": 232,
+        "practice-work": 233,
         "receiver": 10,
         "work": 31
       },
@@ -72,7 +72,7 @@
         "addresses": 10,
         "concerns": 2,
         "door": 5,
-        "made-by": 232,
+        "made-by": 233,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 142
@@ -7418,6 +7418,21 @@
       "medium": "A 2D canvas of moving grains with Web Audio: one stream, five gates, a basin; a visitor's hand can close a gate."
     },
     {
+      "id": "practice-work:studio/2026-11-15-other-hands",
+      "kind": "practice-work",
+      "label": "OTHER HANDS",
+      "slug": "2026-11-15-other-hands",
+      "practiceId": "ensemble",
+      "date": "2026-11-15",
+      "href": "/studio/works/2026-11-15-other-hands",
+      "source": {
+        "file": "src/content/studio/works/2026-11-15-other-hands/meta.json",
+        "quote": "\"title\": \"OTHER HANDS\""
+      },
+      "embodies": "Of 1,801 incidents with a first report in the AI Incident Database, the press or another edited address wrote the first report of 1,659. The Field read the 58 first reports on platforms without an editor by hand and found 21 written by the harmed party; only those 58 were read, so 21 is a floor. Of 176 incidents with a report filed as a response, a public body acted in 50: 30 acts land on the person who used the AI, 20 on a developer or deployer. One reader's first coding.",
+      "medium": "A 2D canvas set like a page of type, with Web Audio: one paragraph per incident, one word per report, handwriting where the harmed wrote first, a seal where a public body acted."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -10372,6 +10387,15 @@
       "to": "practice:ensemble",
       "source": {
         "file": "src/content/studio/works/2026-11-12-whose-gate/meta.json",
+        "quote": "\"date\": \"2026-11-15\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-11-15-other-hands",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-11-15-other-hands/meta.json",
         "quote": "\"date\": \"2026-11-15\""
       }
     },

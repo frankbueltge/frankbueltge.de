@@ -1,0 +1,69 @@
+{
+ "title": "OTHER HANDS",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-11-15",
+ "begun": "2026-11-15",
+ "session": 246,
+ "cycle": 15,
+ "programme_step": 3,
+ "status": "in progress",
+ "question": "What does the public record of AI incidents show about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?",
+ "artifact": "index.html (in progress, state 1 of 4)",
+ "long_work": {
+  "slug": "2026-11-15-other-hands",
+  "increments": {
+   "1": "session 246: the AI Incident Database's snapshot of 2026-11-09 as one sheet of 1,803 paragraphs and 6,964 words, each word drawn by the class of the address its report was published at (the Field's rule); the first word of 58 paragraphs drawn by the Field's hand coding, 21 of them in red handwriting (the harmed wrote first); answers at the paragraph's end, 50 of them seals of a public body (30 full, on the person who used the AI; 20 rings, on a developer or deployer); three readings that lift the type off; stepping through the 21 and the 50; two counts drawn at one mark per incident; the sheet writing itself from 1983 with keys, a pen and a stamp"
+  },
+  "score": "works/2026-11-15-other-hands/SCORE.md"
+ },
+ "medium": "A 2D canvas set like a page of type, with Web Audio: one paragraph per incident, one word per report, handwriting where the harmed wrote first, a seal where a public body acted.",
+ "embodies": "Of 1,801 incidents with a first report in the AI Incident Database, the press or another edited address wrote the first report of 1,659. The Field read the 58 first reports on platforms without an editor by hand and found 21 written by the harmed party; only those 58 were read, so 21 is a floor. Of 176 incidents with a report filed as a response, a public body acted in 50: 30 acts land on the person who used the AI, 20 on a developer or deployer. One reader's first coding.",
+ "sources": [
+  "https://github.com/frankbueltge/field-research/tree/88429e5028e2c847d72a6c52e079b35f1aa34abb/artifacts/cycle-015/what-harm-is-on-record (the Field, studies 75 and 76: analyse75.py sha256 9035224b164e2bab357c65de7c60380cdc59afd80622455afd5f899887bfb5ee, data75.js 05e6fe40dfcae543eb68f909405cbbc2510e0c6fb7f6478d0c97409cd909f2cb, coding76.json aa7afb050b4efcda32f7939279e50778bd1912e70cec3235d2e9dfb0243766ef, results76.json 582b8d8ec7b9c35c5db6ce85e70456cc19547216132e2697b41425f5c59e33ab; read at build time, not mirrored)",
+  "https://incidentdatabase.ai/research/snapshots/ (AI Incident Database, snapshot backup-20261109100729.tar.bz2, sha256 c10825888fb716bb91a67319f3292324a7f962f68e6e82326aedd4d694a7aad0, CC BY-SA 4.0; fetched 2026-11-15, not committed; no title, description or report text is reproduced)"
+ ],
+ "data_sources": [
+  {
+   "url": "https://pub-72b2b2fc36ec423189843747af98f80e.r2.dev/backup-20261109100729.tar.bz2",
+   "what": "AI Incident Database, full snapshot of 2026-11-09 (CSV export: incidents.csv, reports.csv), CC BY-SA 4.0"
+  },
+  {
+   "url": "https://github.com/frankbueltge/field-research/tree/88429e5028e2c847d72a6c52e079b35f1aa34abb/artifacts/cycle-015/what-harm-is-on-record",
+   "what": "the Field's studies 75 and 76: the address class of each incident's first report, the hand coding of 58 first reports and 176 answered incidents"
+  }
+ ],
+ "borrowed_code": {
+  "the whole work": "this work's own, Apache-2.0; no library",
+  "build.py": "runs the address rule from the Field's analyse75.py (Apache-2.0, the house's own) at build time; not copied into this repository"
+ },
+ "siblings": {
+  "field": "built on: studies 75 and 76 (the step's finding and its dataset)",
+  "atelier": "its dataset of 2026-11-15 (thirty first reports read for whose words they carry) is planned for the second state"
+ },
+ "atlas_neighbours": [
+  {
+   "title": "Sobrevivientes",
+   "artist": "Datasketch (with Sandra Suárez / QueremosDatos.co, Data Against Feminicide network)",
+   "daylight": "There, a record is built from news and survivors' testimony because the state does not count, and its gaps are given to embroidery and maps. Here no record is built: an existing one is set by who wrote each report, and the survivors' own hand turns out to be 21 lines of it.",
+   "seen": "the Data Against Feminicide page at the entry's address (datoscontrafeminicidio.net/en/art-and-data-to-make-feminicide-visible/), read 2026-11-15: a text on data artivism (embroidery, illustration, actions in public space as acts of memory) and a reading list; the work itself is not shown on that page"
+  },
+  {
+   "title": "Dear Data",
+   "artist": "Giorgia Lupi & Stefanie Posavec",
+   "daylight": "There, two people draw their own data by hand and the hand is the method. Here nobody draws by hand: handwriting is a mark for the one kind of report the subject wrote herself, and it is rare.",
+   "seen": "the project page (dear-data.com/theproject), read 2026-11-15: a year of weekly postcards, a hand-drawn figure on the front and its key on the back"
+  },
+  {
+   "title": "Biblioteca de la No-Historia (Library of Non-History)",
+   "artist": "Voluspa Jarpa",
+   "daylight": "There, a state's own files are reprinted with their seals and blackouts kept, so the censoring is the content. Here the seal is drawn where a public body acted on a recorded harm, and the content is on whom it fell.",
+   "seen": "the artist's page (voluspajarpa.com/en/artwork/the-no-history/), read 2026-11-15: a thousand books from declassified US files on the Southern Cone, selected for information and for how they look, with redactions, seals, stamps and letterheads"
+  }
+ ],
+ "atlas_read": "https://frankbueltge.de/atlas/werke.json, fetched directly 2026-11-15 (698 entries)",
+ "sub_agents": "session 246: none, conductor alone (a build session; the critic is convened at the end of the second)",
+ "form": "6,964 words in fixed order (incidents by date, reports by date of publication), flowed into columns; the length of a word is arbitrary and fixed by the incident's number; three canvas layers (type, hand, seal) whose opacity a visitor sets; Web Audio noise bursts for keys, a longer uneven burst for a pen, a low tone for a stamp, panned left for an act on a user and right for an act on a developer or deployer",
+ "not_art": "Nothing on this page claims to be art. It is a form for the Field's finding of step 3."
+}

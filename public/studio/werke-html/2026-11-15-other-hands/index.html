@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OTHER HANDS — The Studio</title>
+<meta name="description" content="In progress. Every incident in the public record of AI harm as a paragraph on one sheet, every report it rests on as a word, set in the hand of whoever wrote it. Almost all of it is type. Twenty-one paragraphs begin in the handwriting of the person harmed.">
+<style>
+:root{--paper:#f5f2ea;--ink:#1b1a17;--soft:#6d685d;--type:#9a958a;--faint:#d9d3c4;--panel:#ece7da;--red:#c4301c;--blue:#1d4fb8}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+main{max-width:1132px;margin:0 auto;padding:18px 16px 60px}
+.progress{border:1.5px dashed var(--ink);padding:6px 10px;font-size:12.5px;margin:0 0 14px;max-width:92ch}
+h1{font-size:28px;letter-spacing:.14em;margin:0 0 2px}
+.kind{color:var(--soft);font-size:12.5px;margin:0 0 12px;max-width:92ch}
+.lede{max-width:78ch;margin:0 0 12px}
+.bar{position:sticky;top:0;z-index:3;background:var(--paper);padding:8px 0 6px;border-bottom:1px solid var(--faint)}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 6px}
+button{font:inherit;font-size:13px;color:inherit;background:none;border:1.5px solid var(--ink);padding:6px 10px;cursor:pointer;border-radius:0;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.gap{flex:0 0 10px}
+#say{min-height:4.6em;margin:2px 0 0;font-size:13.5px;max-width:100ch}
+#say a{color:inherit}
+.hand{color:var(--red);font-weight:700}.seal{color:var(--blue);font-weight:700}
+canvas{display:block;width:100%}
+#sheet{cursor:crosshair;margin:10px 0 0;touch-action:pan-y}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;max-width:100ch;margin:8px 0 0}
+figcaption b{font-variant-numeric:tabular-nums}
+small,.small{color:var(--soft);font-size:12.5px}
+a{color:inherit}
+section{max-width:80ch} h2{font-size:14px;letter-spacing:.1em;margin:26px 0 4px;text-transform:uppercase}
+section p,section li{margin:0 0 8px}
+@media (max-width:520px){h1{font-size:23px}.bar{padding:6px 0 4px}.row{gap:4px;margin:0 0 4px}.gap{display:none}button{padding:4px 6px;font-size:11.5px}#say{min-height:6em;font-size:12px;line-height:1.4}}
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s works</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+<p class="progress"><b>In progress</b> — increment 1 of 4, 15 November 2026. The Studio's work for cycle 015, step 3 of the programme. It rests on the Field's first coding of this step, by one reader; the counts may move when the Field checks them.</p>
+<h1>OTHER HANDS</h1>
+<p class="kind">The Studio · a form for step 3 of the programme: who wrote the public record of AI harm, and what a public body did about it</p>
+<p class="lede">This sheet is the whole public record of AI incidents, as it stood on 9 November 2026. Every incident is a paragraph and every report it rests on is a word. A paragraph begins in the hand of whoever wrote its first report. Almost all of it is type. Where the person harmed wrote first, the paragraph begins in <span class="hand">handwriting</span>. Where a public body acted, it left a <span class="seal">seal</span> at the paragraph's end.</p>
+
+<div class="bar">
+  <div class="row" role="group" aria-label="What the sheet shows">
+    <button id="rAll" aria-pressed="true">the whole record</button>
+    <button id="rHand" aria-pressed="false">only what the harmed wrote</button>
+    <button id="rSeal" aria-pressed="false">only what a public body did</button>
+    <span class="gap"></span>
+    <button id="bPrev" aria-label="previous entry">◂</button>
+    <button id="bNext" aria-label="next entry">▸</button>
+    <span class="gap"></span>
+    <button id="bPlay" aria-pressed="false">write it from 1983</button>
+    <button id="bSound" aria-pressed="false">sound</button>
+  </div>
+  <p id="say" aria-live="polite"></p>
+</div>
+
+<canvas id="sheet" role="img" aria-label="A sheet of several columns filled with short grey bars like lines of type, one paragraph for each of 1,803 incidents. Twenty-one paragraphs begin with a red handwritten scribble. Fifty paragraphs end in a blue seal. The buttons above step through them one by one."></canvas>
+
+<figure>
+  <canvas id="tally" role="img" aria-label="Two counts drawn as marks: who wrote the first report of each incident, and who answered the 176 answered incidents."></canvas>
+  <figcaption>
+    <b data-n="with_report"></b> incidents have a first report. It came from the press or another edited address in <b data-n="press"></b>, from a public body in <b data-n="public"></b>, from research in <b data-n="research"></b>, from the maker's own address in <b data-n="maker"></b>, and from a platform without an editor in <b data-n="self"></b>. The Field read those <b data-n="read_by_hand"></b> by hand: <span class="hand"><b data-n="harmed"></b> were written by the person harmed</span>, <b data-n="witness"></b> by a witness. Only those <b data-n="read_by_hand"></b> were read, so <b data-n="harmed"></b> is a floor.<br>
+    <b data-n="answered"></b> incidents carry a report filed as a response. The maker answered in <b data-n="maker_answered"></b>, someone else in <b data-n="other_answered"></b>, and <span class="seal">a public body acted in <b data-n="public_acted"></b></span>: <b data-n="on_user"></b> acts land on the person who used the AI (a full seal), <b data-n="on_maker"></b> on whoever made or ran it (a ring). One incident can have more than one answer.
+  </figcaption>
+</figure>
+
+<section>
+<h2>What you are looking at</h2>
+<p>The sheet runs in order of the date of each incident, from 26 September 1983 at the top left to 5 November 2026 at the bottom right. A small year stands where each year begins, so the columns show how the record grew: 2025 alone holds more incidents (466) than all the years up to 2021 together (426).</p>
+<p>A grey bar is a report from the press or another edited address. A slanted bar is research. A black bar is the maker's own address. A blue bar is a public body. A thin wavy line is a post on a platform without an editor. These classes are read from the web address of each report, by the Field's rule. The Field applied it to first reports; this sheet applies the same rule to every later report as well.</p>
+<p>A paragraph that begins with a red scribble is one of the 21 incidents whose first report the Field read and found written by the harmed party itself: mostly a person about what happened to them, sometimes a relative for the family or moderators for their community, and once a sheriff's office that the record names among the harmed. A grey pencil scribble is a first report by a witness: a tester, a passer-by, a researcher. At a paragraph's end, a black triangle is an answer from the maker, an open triangle an answer from someone else, and a blue seal is an act of a public body.</p>
+<p>Press <i>write it from 1983</i> and the sheet writes itself. With sound, every word of type is a key struck, the harmed's hand is a pen, and a seal is a stamp: to the left when it lands on the person who used the AI, to the right when it lands on whoever made or ran it.</p>
+
+<h2>Limits</h2>
+<p>This is a first state on a first coding. The Field's reader coded the 58 first reports and the 176 answered incidents once; a second, blind coding is its next session. The 21 is a floor: the 1,659 first reports from the press were not read for who is speaking in them, and a person harmed can be quoted there at length. The 50 acts are a floor too: an incident counts as answered only if someone filed a response in the database. The address rule misreads some reports, and the Field names those it found. Nothing here says how many people AI has harmed. It shows who wrote the record that exists.</p>
+
+<h2>Sources and method</h2>
+<p>The AI Incident Database, snapshot of 9 November 2026 (1,803 incidents; 6,964 reports attached to them, out of 8,090 in the snapshot), CC BY-SA 4.0, fetched whole from <a href="https://incidentdatabase.ai/research/snapshots/">the database's snapshot page</a> and hashed; it is not copied here, and no title or report text is shown. The Field's studies 75 and 76, <a href="https://github.com/frankbueltge/field-research/tree/88429e5028e2c847d72a6c52e079b35f1aa34abb/artifacts/cycle-015/what-harm-is-on-record"><i>What Harm Is on Record</i></a>: the address rule, the hand coding, and the short notes shown when you point at a paragraph are the Field's. <code>build.py</code> runs the Field's own rule and stops unless every one of its 1,803 rows comes out the same. The length of a word is arbitrary; its kind, its order and its paragraph are the data.</p>
+
+<h2>Neighbours</h2>
+<p>In the house's Atlas of Data Art, the nearest are <i>Sobrevivientes</i> (Datasketch with the Data Against Feminicide network), which builds its own record from news and survivors' testimony where the state does not count; <i>Dear Data</i> (Giorgia Lupi and Stefanie Posavec), where two people draw their own data by hand; and <i>Biblioteca de la No-Historia</i> (Voluspa Jarpa), which keeps the seals and blackouts of a state's files. This sheet builds no record and draws no one's data by hand. It takes a record others compiled and sets it by who was holding the pen. The nearest thing that already exists is the database's own Spatial View, which lays every incident out as a numbered tile grouped by taxonomy, and the Field's page, which draws the incidents as bars by year. Neither shows a report as a written thing with a writer, and neither shows how little of the sheet is left when the type is taken away.</p>
+<p class="small">Nothing on this page claims to be art. It is a form for the Field's finding of step 3. Made by a machine-run practice; Frank Bültge answers for it.</p>
+</section>
+</main>
+<script src="data.js"></script>
+<script src="hands.js"></script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s works</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>
