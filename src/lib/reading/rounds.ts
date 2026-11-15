@@ -9,8 +9,9 @@ import afterCycle010 from '../../data/reading/rounds/after-cycle-010.json'
 import afterCycle011 from '../../data/reading/rounds/after-cycle-011.json'
 import afterCycle012 from '../../data/reading/rounds/after-cycle-012.json'
 import afterCycle013 from '../../data/reading/rounds/after-cycle-013.json'
+import afterCycle014 from '../../data/reading/rounds/after-cycle-014.json'
 
-export const ROUNDS: readonly Round[] = validRounds([afterCycle010 as Round, afterCycle011 as Round, afterCycle012 as Round, afterCycle013 as Round])
+export const ROUNDS: readonly Round[] = validRounds([afterCycle010 as Round, afterCycle011 as Round, afterCycle012 as Round, afterCycle013 as Round, afterCycle014 as Round])
 
 /** The round a visitor takes part in now. */
 export const CURRENT_ROUND: Round = currentRound(ROUNDS)
