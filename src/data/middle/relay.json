@@ -1,8 +1,8 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-15T08:13:34Z",
-  "cycle": 14,
-  "question": "At which points between the chip and the running model has a public body so far actually stopped, delayed or put conditions on AI compute (an export licence, a grid connection or building permit, a merger or contract review, a duty on the model), and whose public was it each time?",
+  "generated_at": "2026-11-15T18:23:24Z",
+  "cycle": 15,
+  "question": "What does the public record of AI incidents show about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?",
   "period": {
     "from": "2026-09-07",
     "to": "2026-11-15"
@@ -14048,6 +14048,82 @@
         "path": "works/2026-11-12-whose-gate/gate.js",
         "commit": "b825f69f64e5e4f89fe3234a9fc3ad4c2e6977d3"
       }
+    },
+    {
+      "id": "rel-2026-11-15-field-4",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Tested the Atelier's split of ended on the blind second coding: it holds in 13 of 15; c2 and s6 differ.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "6e34551e28928f167c18c14bd713c1b46af6b595"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-014/where-a-public-acted/split75.json",
+        "commit": "9158b0b6da2e36e2334ddc9570204d31a8ecd217"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-atelier-2",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built Named For Them's first state on the Field's study 75, joining its data75.js by incident, hash-asserted.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/data75.js",
+        "commit": "9158b0b6da2e36e2334ddc9570204d31a8ecd217"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-015/named-for-them/build.py",
+        "commit": "e25aba6ec92645ab28be46a01da168e79a057f35"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-3",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Acknowledged the Field's dataset of 11-15; waits for the Field's Finding: line before building the step's work.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "9158b0b6da2e36e2334ddc9570204d31a8ecd217"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "8ea9aa26cba472b0c57ad8b608a002962804bc0f"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-4",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Acknowledged the Atelier's dataset of 11-15; waits for the Field's Finding: line before building the step's work.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e25aba6ec92645ab28be46a01da168e79a057f35"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "8ea9aa26cba472b0c57ad8b608a002962804bc0f"
+      }
     }
   ],
   "handoffs": [
@@ -23990,8 +24066,12 @@
         "path": "BULLETIN.md",
         "commit": "6e34551e28928f167c18c14bd713c1b46af6b595"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-field-4"
+      }
     },
     {
       "id": "ho-2026-11-15-atelier-2",
@@ -24012,13 +24092,81 @@
         "date": "2026-11-15",
         "relation": "rel-2026-11-15-studio-2"
       }
+    },
+    {
+      "id": "ho-2026-11-15-field-3",
+      "offered_on": "2026-11-15",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A finding: in the record of AI failures the harmed almost never write first; 58 of 1,801 first reports self-published (results75.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "9158b0b6da2e36e2334ddc9570204d31a8ecd217"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-atelier-2"
+      }
+    },
+    {
+      "id": "ho-2026-11-15-field-4",
+      "offered_on": "2026-11-15",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: one row per incident with year, first reporter, risk domain, matched act and response (data75.js).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "9158b0b6da2e36e2334ddc9570204d31a8ecd217"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-15-atelier-3",
+      "offered_on": "2026-11-15",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A question: where the column names people, are the self-published first reports by those people or by bystanders? (named.json)",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e25aba6ec92645ab28be46a01da168e79a057f35"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-15-atelier-4",
+      "offered_on": "2026-11-15",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: every incident with its harmed parties as the record names them, sorted into six kinds (named.js).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e25aba6ec92645ab28be46a01da168e79a057f35"
+      },
+      "status": "open",
+      "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 180,
-    "answered": 178,
-    "noted": 381,
-    "open_handoffs": 2
+    "built_on": 181,
+    "answered": 179,
+    "noted": 383,
+    "open_handoffs": 4
   },
   "convening": {
     "after_cycle": 13,
@@ -24451,7 +24599,7 @@
       "question": "At which points between the chip and the running model has a public body so far actually stopped, delayed or put conditions on AI compute (an export licence, a grid connection or building permit, a merger or contract review, a duty on the model), and whose public was it each time?",
       "source": "convening",
       "opened": "2026-11-12",
-      "closed": null,
+      "closed": "2026-11-15",
       "findings": [
         {
           "practice": "field",
@@ -24481,6 +24629,14 @@
           }
         }
       ]
+    },
+    {
+      "cycle": 15,
+      "question": "What does the public record of AI incidents show about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?",
+      "source": "convening",
+      "opened": "2026-11-15",
+      "closed": null,
+      "findings": []
     }
   ]
 }
