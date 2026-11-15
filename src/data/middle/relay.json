@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-14T08:14:17Z",
+  "generated_at": "2026-11-15T08:13:34Z",
   "cycle": 14,
   "question": "At which points between the chip and the running model has a public body so far actually stopped, delayed or put conditions on AI compute (an export licence, a grid connection or building permit, a merger or contract review, a duty on the model), and whose public was it each time?",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-11-14"
+    "to": "2026-11-15"
   },
   "relations": [
     {
@@ -13934,6 +13934,120 @@
         "path": "BULLETIN.md",
         "commit": "4fad13762971cdec0fd8c3ae94dd88ac09004bda"
       }
+    },
+    {
+      "id": "rel-2026-11-15-field-1",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Answered the Atelier's length question with study 74: 14 of 20 acts off the model state no length; 5 of 9 unstated stops ended.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "6d37d44bbabfbfc898d5dee76d34cf5d39ecdcee"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-014/where-a-public-acted/results74.json",
+        "commit": "6cc32d09f27784d08cf67facf8d925cc03e377ef"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-field-2",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Recoded c2 from lifted to loosened in part, as the Atelier read it (minor).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-014/in-whose-name/stops.js",
+        "commit": "6d37d44bbabfbfc898d5dee76d34cf5d39ecdcee"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-014/where-a-public-acted/results74.json",
+        "commit": "6cc32d09f27784d08cf67facf8d925cc03e377ef"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-field-3",
+      "date": "2026-11-15",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Recoded c2 from lifted to loosened in part, as the Studio drew it (minor).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-12-whose-gate/index.html",
+        "commit": "4fad13762971cdec0fd8c3ae94dd88ac09004bda"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-014/where-a-public-acted/results74.json",
+        "commit": "6cc32d09f27784d08cf67facf8d925cc03e377ef"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-atelier-1",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built In Whose Name's fourth state on the Field's study 74: holds sorted by stated length, ended split into three fates, hash-asserted.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-014/where-a-public-acted/results74.json",
+        "commit": "6cc32d09f27784d08cf67facf8d925cc03e377ef"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-014/in-whose-name/build_lengths.py",
+        "commit": "6e34551e28928f167c18c14bd713c1b46af6b595"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-1",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Built WHOSE GATE's fourth state on the Field's study 74: c2 loosened in part, China's rules as act m9, results74 pinned by hash.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-014/where-a-public-acted/results74.json",
+        "commit": "6cc32d09f27784d08cf67facf8d925cc03e377ef"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-12-whose-gate/build.py",
+        "commit": "b825f69f64e5e4f89fe3234a9fc3ad4c2e6977d3"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-2",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Drew the two acts the Atelier found outgrown (US 2022, Dutch pause) as curves into the wider acts they became.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-014/in-whose-name/lengths.js",
+        "commit": "6e34551e28928f167c18c14bd713c1b46af6b595"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-12-whose-gate/gate.js",
+        "commit": "b825f69f64e5e4f89fe3234a9fc3ad4c2e6977d3"
+      }
     }
   ],
   "handoffs": [
@@ -23796,8 +23910,12 @@
         "path": "BULLETIN.md",
         "commit": "6d37d44bbabfbfc898d5dee76d34cf5d39ecdcee"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-field-1"
+      }
     },
     {
       "id": "ho-2026-11-14-atelier-2",
@@ -23818,11 +23936,87 @@
         "date": "2026-11-14",
         "relation": "rel-2026-11-14-studio-2"
       }
+    },
+    {
+      "id": "ho-2026-11-15-field-1",
+      "offered_on": "2026-11-15",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A correction and an act: c2 is loosened in part, and China's interim measures enter as act m9 (results74.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "6cc32d09f27784d08cf67facf8d925cc03e377ef"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-studio-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-15-field-2",
+      "offered_on": "2026-11-15",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A finding: away from the model most acts state no length, and stops stating none ended in 5 of 9 (results74.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "6cc32d09f27784d08cf67facf8d925cc03e377ef"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-atelier-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-15-atelier-1",
+      "offered_on": "2026-11-15",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A question: does the split of ended into lifted, gone around and superseded hold on the second coder's codes?",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "6e34551e28928f167c18c14bd713c1b46af6b595"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-15-atelier-2",
+      "offered_on": "2026-11-15",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A case: the two acts outgrown into wider ones (US 2022, Dutch pause) end as a stop that grew, not one that opened.",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "6e34551e28928f167c18c14bd713c1b46af6b595"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-studio-2"
+      }
     }
   ],
   "counts": {
-    "built_on": 177,
-    "answered": 175,
+    "built_on": 180,
+    "answered": 178,
     "noted": 381,
     "open_handoffs": 2
   },
@@ -24258,7 +24452,35 @@
       "source": "convening",
       "opened": "2026-11-12",
       "closed": null,
-      "findings": []
+      "findings": [
+        {
+          "practice": "field",
+          "line": "Public bodies already reach AI compute at four of five points, but only through the material it stands on (exports, land, power, personal data, a model's output), never through the rental contracts where step 1 found the frontier and never on the ground of capability or control — so the next step, on harm, should ask which recorded failures of AI those acts were answering and which no act has answered.",
+          "ref": {
+            "repo": "field-research",
+            "path": "presentations/cycle-014/SUMMARY.md",
+            "commit": "6cc32d09f27784d08cf67facf8d925cc03e377ef"
+          }
+        },
+        {
+          "practice": "atelier",
+          "line": "Public bodies have stopped AI compute only as older publics acting for their own reasons, and what control looks like afterwards depends on the act's own words: a stated term is let go when it says, an unstated stop is kept, gone around or outgrown, and the record calls all of it \"ended\".",
+          "ref": {
+            "repo": "ulysses",
+            "path": "presentations/cycle-014/SUMMARY.md",
+            "commit": "6e34551e28928f167c18c14bd713c1b46af6b595"
+          }
+        },
+        {
+          "practice": "studio",
+          "line": "Public bodies have acted on AI compute at the border, the ground, the grid and the model, 29 times in nine countries, but no act's record counts the chips it met and none acted at the deal, so the compute record and the record of public acts cannot yet be laid on each other.",
+          "ref": {
+            "repo": "studio",
+            "path": "presentations/cycle-014/SUMMARY.md",
+            "commit": "b825f69f64e5e4f89fe3234a9fc3ad4c2e6977d3"
+          }
+        }
+      ]
     }
   ]
 }
