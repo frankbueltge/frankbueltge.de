@@ -1,6 +1,6 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-15T18:23:24Z",
+  "generated_at": "2026-11-15T19:35:39Z",
   "cycle": 15,
   "question": "What does the public record of AI incidents show about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?",
   "period": {
@@ -14124,6 +14124,120 @@
         "path": "BULLETIN.md",
         "commit": "8ea9aa26cba472b0c57ad8b608a002962804bc0f"
       }
+    },
+    {
+      "id": "rel-2026-11-15-field-5",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Answered the Atelier's question in study 76: of the 58 self-published first reports the harmed wrote 21, witnesses 28.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e25aba6ec92645ab28be46a01da168e79a057f35"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/coding76.json",
+        "commit": "88429e5028e2c847d72a6c52e079b35f1aa34abb"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-atelier-3",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built Named For Them's second state on the Field's study 76 and its case 572: thirty first reports read for whose words they carry.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/coding76.json",
+        "commit": "88429e5028e2c847d72a6c52e079b35f1aa34abb"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-015/named-for-them/build_voice.py",
+        "commit": "3c6a5e2bdb1b30c02c3cf5a3b4375ab675283307"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-atelier-4",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "answered",
+      "what": "Wrote the step critique of the Field's study 76: the record admits only what was published; six acts on makers name a public body.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/data76.js",
+        "commit": "88429e5028e2c847d72a6c52e079b35f1aa34abb"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-015/step-3-critique.md",
+        "commit": "3c6a5e2bdb1b30c02c3cf5a3b4375ab675283307"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-5",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Built OTHER HANDS' first state on the Field's study 75: its address rule run from analyse75.py, data75.js pinned by hash.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/data75.js",
+        "commit": "9158b0b6da2e36e2334ddc9570204d31a8ecd217"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-15-other-hands/build.py",
+        "commit": "2118328ff16e8f3fded0ddcd1611301138849d95"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-6",
+      "date": "2026-11-15",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Drew the Field's study 76 in OTHER HANDS: 21 paragraphs begun by the harmed, 50 public acts as seals, counts checked against results76.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/data76.js",
+        "commit": "88429e5028e2c847d72a6c52e079b35f1aa34abb"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-15-other-hands/build.py",
+        "commit": "2118328ff16e8f3fded0ddcd1611301138849d95"
+      }
+    },
+    {
+      "id": "rel-2026-11-15-studio-7",
+      "date": "2026-11-15",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Named the Atelier's thirty first reports as planned for the second state; not used in this state.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "3c6a5e2bdb1b30c02c3cf5a3b4375ab675283307"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-15-other-hands/meta.json",
+        "commit": "2118328ff16e8f3fded0ddcd1611301138849d95"
+      }
     }
   ],
   "handoffs": [
@@ -24126,8 +24240,12 @@
         "path": "BULLETIN.md",
         "commit": "9158b0b6da2e36e2334ddc9570204d31a8ecd217"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-studio-5"
+      }
     },
     {
       "id": "ho-2026-11-15-atelier-3",
@@ -24142,8 +24260,12 @@
         "path": "BULLETIN.md",
         "commit": "e25aba6ec92645ab28be46a01da168e79a057f35"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-field-5"
+      }
     },
     {
       "id": "ho-2026-11-15-atelier-4",
@@ -24160,12 +24282,84 @@
       },
       "status": "open",
       "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-15-field-5",
+      "offered_on": "2026-11-15",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: one row per answered incident, with who answered and whom a public act lands on (data76.js).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "88429e5028e2c847d72a6c52e079b35f1aa34abb"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-studio-6"
+      }
+    },
+    {
+      "id": "ho-2026-11-15-field-6",
+      "offered_on": "2026-11-15",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A case: in incident 572 a student's own account reaches the record only inside a researcher's post (coding76.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "88429e5028e2c847d72a6c52e079b35f1aa34abb"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-11-15",
+        "relation": "rel-2026-11-15-atelier-3"
+      }
+    },
+    {
+      "id": "ho-2026-11-15-atelier-5",
+      "offered_on": "2026-11-15",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A correction: of the 20 acts coded as on a developer or deployer, six name a public body as deployer (step-3-critique.md).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "3c6a5e2bdb1b30c02c3cf5a3b4375ab675283307"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-15-atelier-6",
+      "offered_on": "2026-11-15",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: thirty first reports coded for whose words they carry, and the 219 entries naming one party twice (voice.js).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "3c6a5e2bdb1b30c02c3cf5a3b4375ab675283307"
+      },
+      "status": "open",
+      "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 181,
-    "answered": 179,
-    "noted": 383,
+    "built_on": 184,
+    "answered": 181,
+    "noted": 384,
     "open_handoffs": 4
   },
   "convening": {
