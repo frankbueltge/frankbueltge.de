@@ -4,7 +4,7 @@
 // The front page (/ill-tempered-week/) plays the newest complete album and, while a week runs, that week's Overlooked
 // so far. Every album also has a page of its own (/ill-tempered-week/<week>/), from its first day on: when a week
 // completes, the album before it leaves the front page, and its scores stay reachable at its own address.
-import type { Album, Overlooked, Turn, Unison, UnisonEvent } from './albums'
+import type { Album, FormDay, HeldEvent, MosaicEvent, Overlooked, Turn, TurnForm, Unison, UnisonEvent, UnisonForm } from './albums'
 import { dayLinks, linkFor } from './sources'
 
 /** The line a score shows before anything plays. */
@@ -49,7 +49,7 @@ export function warSignals(piece: Unison): (UnisonEvent & { day: string; href: s
 }
 
 /** The link of the headline said in the turn's silent bar, where the week turned and the day file holds it. */
-export function turnSaidLink(piece: Turn): string | null {
+export function turnSaidLink(piece: Turn | TurnForm): string | null {
   const day = piece.days.find((d) => d.turn)
   return day?.said ? linkFor(dayLinks(day.day), day.said) : null
 }
@@ -84,4 +84,19 @@ export function albumPages(albums: readonly Album[]): { params: { week: string }
     params: { week: album.week },
     props: { album, older: albums[i - 1]?.week ?? null, newer: albums[i + 1]?.week ?? null },
   }))
+}
+
+/** Each day's sentence link in a piece pressed in the week's form, by day, from the committed day files. */
+export function formSaidLinks(piece: UnisonForm | TurnForm): Record<string, string | null> {
+  const out: Record<string, string | null> = {}
+  const days: { day: string; said: string | null }[] = 'parts' in piece ? piece.parts.flatMap((p): { day: string; said: string | null }[] => (p.form === 'stroke' ? [] : p.days)) : piece.days
+  for (const d of days) out[d.day] = d.said ? linkFor(dayLinks(d.day), d.said) : null
+  return out
+}
+
+/** Every war signal of a Unison pressed in the week's form, in the order it enters, with its link. */
+export function formWarSignals(piece: UnisonForm): { day: string; at_s: number; story: string | null; lead: boolean; attention: number; text: string; href: string | null }[] {
+  return piece.parts
+    .flatMap((p) => (p.form === 'stroke' ? [] : (p.days as (FormDay & { events: (HeldEvent | MosaicEvent)[] })[]).flatMap((d) => d.events.map((e) => ({ day: d.day, at_s: e.at_s, story: e.story, lead: e.lead, attention: e.attention, text: e.text, href: linkFor(dayLinks(d.day), e.text) })))))
+    .sort((a, b) => a.at_s - b.at_s)
 }

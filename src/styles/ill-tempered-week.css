@@ -491,6 +491,63 @@
   stroke-width: 1.5;
 }
 
+/* The forms the week chose (2026-11-16, FormScore.tsx): mono ink like the standing scores; a note's ink is its
+   attention in four steps, a block is outlined, the leading story's row shaded, the stroke and the step solid. */
+.itw-fm-note {
+  fill: var(--color-fg);
+}
+
+.itw-fm-other {
+  fill: var(--color-fg-muted);
+}
+
+.itw-fm-note.ink-1 { fill-opacity: 0.35; }
+.itw-fm-note.ink-2 { fill-opacity: 0.55; }
+.itw-fm-note.ink-3 { fill-opacity: 0.78; }
+.itw-fm-note.ink-4 { fill-opacity: 1; }
+
+.itw-fm-pedal {
+  fill: var(--color-fg);
+}
+
+.itw-fm-brass {
+  fill: var(--color-fg);
+  fill-opacity: 0.22;
+}
+
+.itw-fm-said {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-dasharray: 2 2;
+}
+
+.itw-fm-block {
+  fill: none;
+  stroke: var(--color-line-lift);
+  stroke-width: 1;
+}
+
+.itw-fm-leadband {
+  fill: var(--color-fg);
+  fill-opacity: 0.09;
+}
+
+.itw-fm-stroke {
+  fill: var(--color-fg);
+  fill-opacity: 0.85;
+}
+
+.itw-fm-step {
+  fill: var(--color-fg);
+  fill-opacity: 0.18;
+}
+
+.itw-fm-cut {
+  fill: var(--color-bg);
+  stroke: var(--color-line);
+  stroke-dasharray: 1 3;
+}
+
 /* the readout: the shell's own structure (src/components/dataviz/Readout.astro), drawn inside the score's box */
 .itw-score .dv-readout {
   position: absolute;

@@ -5,7 +5,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
-import type { Album } from './albums'
+import type { Album, Unison } from './albums'
 import { asRecorded, dayLinks, hostOf, indexDay, linkFor, OUTLET } from './sources'
 
 const album = (week: string): Album => JSON.parse(readFileSync(`src/data/ill-tempered-week/${week}.json`, 'utf8')) as Album
@@ -49,7 +49,7 @@ describe('the links', () => {
   }
 
   it('finds every war signal of Contrapunctus 45 in its day file', () => {
-    const u = album('2026-W45').pieces.unison!
+    const u = album('2026-W45').pieces.unison as Unison
     for (const d of u.days) {
       const links = dayLinks(d.day)
       for (const e of d.events) expect(linkFor(links, e.text), e.text).not.toBeNull()

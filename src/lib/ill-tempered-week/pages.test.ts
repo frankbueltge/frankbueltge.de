@@ -2,7 +2,7 @@
 // the nightly press too, so every statement holds for any set of albums.
 import { describe, expect, it } from 'vitest'
 
-import { readAlbums, type Album } from './albums'
+import { readAlbums, standingUnison, type Album } from './albums'
 import { isAlbumAudio } from './audio-path'
 import { albumPages, albumPath, frontPage, overlookedLinks, turnSaidLink, unisonLinks, warSignals } from './pages'
 
@@ -72,8 +72,8 @@ describe('the links of the scores', () => {
       const links = overlookedLinks(o)
       expect(links.days).toHaveLength(o.days.length)
       links.days.forEach((d, i) => expect(d.attended).toHaveLength(o.days[i]!.attended.length))
-      if (a.pieces.unison) {
-        const u = a.pieces.unison
+      const u = a.pieces.unison
+      if (standingUnison(u)) {
         expect(unisonLinks(u).days).toHaveLength(u.days.length)
         const signals = warSignals(u)
         expect(signals).toHaveLength(u.days.reduce((n, d) => n + d.events.length, 0))

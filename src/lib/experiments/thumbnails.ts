@@ -44,7 +44,7 @@ import { readAudience, type AudienceReading } from '@/lib/reading/aggregate'
 import { gapFigure } from '@/lib/reading/figure'
 import { readDesk } from '@/lib/ducking/desk-data'
 import { fmtShare, toPosition } from '@/lib/ducking/mix'
-import { readAlbums, weekday } from '@/lib/ill-tempered-week/albums'
+import { readAlbums, standingUnison, weekday } from '@/lib/ill-tempered-week/albums'
 import type { InvokedData } from '@/lib/invoked/types'
 import type { BalanceCountry } from '@/lib/balance/types'
 
@@ -804,9 +804,11 @@ function buildThumbnails(): Thumbnail[] {
     source: `src/data/trending/${desk.latest}.json`,
   })
 
-  const album = readAlbums().filter((a) => a.pieces.unison).at(-1)
-  if (album?.pieces.unison) {
-    const days = album.pieces.unison.days
+  // a Unison in a form the week chose has no single glissando field to draw from; the thumbnail reads the newest standing one
+  const album = readAlbums().filter((a) => standingUnison(a.pieces.unison)).at(-1)
+  const unison = album?.pieces.unison
+  if (album && standingUnison(unison)) {
+    const days = unison.days
     const most = days.reduce((a, b) => (b.agreement > a.agreement ? b : a))
     out.push({
       id: 'ill-tempered-week',

@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { FIELD, INSTRUMENT, clock, readAlbums, span, weekNumber } from './albums'
+import { FIELD, INSTRUMENT, clock, readAlbums, span, standingUnison, weekNumber } from './albums'
 
 const albums = readAlbums()
 
@@ -84,9 +84,10 @@ describe('the ill-tempered week', () => {
         }
       })
 
-      if (a.pieces.unison) {
+      const su = a.pieces.unison
+      if (standingUnison(su)) {
         it('Unison: the peak comes exactly where the press agreed at least 30 %, never on the last day', () => {
-          const u = a.pieces.unison!
+          const u = su
           u.days.forEach((d, i) => {
             expect(d.agreement).toBeGreaterThan(0)
             expect(d.agreement).toBeLessThanOrEqual(1)

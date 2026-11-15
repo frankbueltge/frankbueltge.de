@@ -114,6 +114,90 @@ export interface Turn extends Rendered {
 }
 
 export type Form = 'handover' | 'break' | 'held' | 'mosaic' | 'standing'
+/** A form the week chose, other than the standing one (scripts/ill-tempered-week/itw/forms_*.py). */
+export type ChosenForm = Exclude<Form, 'standing'>
+
+export interface FormDay {
+  day: string
+  from_s: number
+  signals: number
+  lead: string | null
+  /** the share of the day's signals naming its leading story */
+  agreement: number
+  peak: boolean
+  said: string | null
+  /** how long the sentence is said */
+  said_s: number | null
+}
+
+export interface HeldEvent {
+  at_s: number
+  story: string | null
+  lead: boolean
+  attention: number
+  from_hz: number
+  to_hz: number
+  text: string
+}
+
+export interface MosaicEvent {
+  at_s: number
+  story: string | null
+  lead: boolean
+  sound: string
+  hz: number
+  attention: number
+  text: string
+}
+
+export type UnisonPart =
+  | { form: 'held'; from_s: number; to_s: number; day_s: number; lead: string | null; degrees: Record<string, number>;
+      ground: { from_s: number; hz: number }[]; days: (FormDay & { events: HeldEvent[] })[] }
+  | { form: 'mosaic'; from_s: number; to_s: number; sounds: Record<string, string>;
+      days: (FormDay & { to_s: number; step_s: number; events: MosaicEvent[] })[] }
+  | { form: 'stroke'; at_s: number; day: string }
+
+/** Unison pressed in the week's form (itw/forms_unison.py): the parts it is made of, in time order. */
+export interface UnisonForm extends Rendered {
+  form: ChosenForm
+  field: string
+  week: string
+  round: string
+  tuning: string
+  peak_agreement: number
+  parts: UnisonPart[]
+}
+
+export interface TurnFormBar {
+  from_s: number
+  s: number
+  /** the index of the day in the week */
+  day: number
+  kind: 'bar' | 'all' | 'said' | 'cut'
+  /** how many beats each family sounds in the bar */
+  pulses: Record<string, number>
+  /** held and handover: the pitch ratio (9/8 from the handover on); mosaic: the octave */
+  ratio?: number
+  octave?: number
+}
+
+/** Turn pressed in the week's form (itw/forms_turn.py): every bar, and each day's counts and turn. */
+export interface TurnForm extends Rendered {
+  form: ChosenForm
+  field: string
+  week: string
+  round: string
+  harmonics: Record<string, number>
+  turn_day: string | null
+  bars: TurnFormBar[]
+  days: { day: string; signals: number; families: Record<string, number>; turn: boolean; said: string | null }[]
+}
+
+/** A piece record without `form` was pressed in the standing form (every album before 2026-11-16 is). */
+export const standingUnison = (p: Unison | UnisonForm | undefined): p is Unison => !!p && !('form' in p)
+export const standingTurn = (p: Turn | TurnForm | undefined): p is Turn => !!p && !('form' in p)
+export const formedUnison = (p: Unison | UnisonForm | undefined): p is UnisonForm => !!p && 'form' in p
+export const formedTurn = (p: Turn | TurnForm | undefined): p is TurnForm => !!p && 'form' in p
 
 export interface Character {
   round: string
@@ -145,7 +229,7 @@ export interface Album {
    *  days were read, the verdict, and the form the album was pressed in. An album without it was pressed in the
    *  standing form, before the week chose. */
   character?: Character
-  pieces: { overlooked: Overlooked; unison?: Unison; turn?: Turn }
+  pieces: { overlooked: Overlooked; unison?: Unison | UnisonForm; turn?: Turn | TurnForm }
   library: string
   voices: string
   receipts: Record<string, string>

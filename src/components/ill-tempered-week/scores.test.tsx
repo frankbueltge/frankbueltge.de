@@ -1,14 +1,19 @@
 // The three scores of the ill-tempered week, rendered on the server: the floor every visitor gets before a script
 // runs (duty 2 of .claude/rules/dataviz-figures.md). Deterministic markup, no style attribute and no hex (duty 3), every
 // lane, glissando and bar drawn, every link in the markup, and no control that needs JavaScript.
+import { readFileSync } from 'node:fs'
+
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import { readAlbums } from '@/lib/ill-tempered-week/albums'
+import { readAlbums, standingTurn, standingUnison, type Turn, type Unison } from '@/lib/ill-tempered-week/albums'
+import { dayShort } from '@/lib/ill-tempered-week/score'
+import { turnFormScore, unisonFormScore } from '@/lib/ill-tempered-week/score-forms'
 import { overlookedScore } from '@/lib/ill-tempered-week/score-overlooked'
 import { turnScore } from '@/lib/ill-tempered-week/score-turn'
 import { unisonScore } from '@/lib/ill-tempered-week/score-unison'
 
+import FormScore from './FormScore'
 import OverlookedScore from './OverlookedScore'
 import TurnScore from './TurnScore'
 import UnisonScore from './UnisonScore'
@@ -64,9 +69,9 @@ describe('Overlooked, on the server', () => {
   })
 })
 
-describe.runIf(complete?.pieces.unison)('Unison, on the server', () => {
+describe.runIf(standingUnison(complete?.pieces.unison))('Unison, on the server', () => {
   const a = complete!
-  const u = a.pieces.unison!
+  const u = a.pieces.unison as Unison
   const links = { days: u.days.map((d, i) => ({ said: d.said ? `https://example.org/said/${i}` : null, overlooked: `https://example.org/bass/${i}` })) }
   const render = () => renderToStaticMarkup(<UnisonScore record={u} week={a.week} links={links} audioId="a" id="s" label="The score" hint="Press play" />)
 
@@ -84,9 +89,9 @@ describe.runIf(complete?.pieces.unison)('Unison, on the server', () => {
   })
 })
 
-describe.runIf(complete?.pieces.turn)('Turn, on the server', () => {
+describe.runIf(standingTurn(complete?.pieces.turn))('Turn, on the server', () => {
   const a = complete!
-  const r = a.pieces.turn!
+  const r = a.pieces.turn as Turn
   const render = () => renderToStaticMarkup(<TurnScore record={r} week={a.week} saidLink="https://example.org/turn" audioId="a" id="s" label="The score" hint="Press play" />)
 
   it('is deterministic and clean', () => {
@@ -101,5 +106,26 @@ describe.runIf(complete?.pieces.turn)('Turn, on the server', () => {
     expect(drawing(html).match(/class="itw-cell( itw-cell-full)?"/g) ?? []).toHaveLength(cells)
     expect(html.match(/class="itw-measure"/g)?.length ?? 0).toBe(s.days.length + s.bars.filter((b) => b.kind === 'all').length)
     if (s.days.some((d) => d.turn)) expect(html).toContain('https://example.org/turn')
+  })
+})
+
+describe('the forms the week chose, on the server', () => {
+  const read = (name: string) => JSON.parse(readFileSync(`src/lib/ill-tempered-week/fixtures/form-${name}.json`, 'utf8'))
+  const cases: [string, 'unison' | 'turn'][] = [
+    ['2026-W42-unison-held', 'unison'], ['2026-W43-unison-mosaic', 'unison'], ['2026-W44-unison-break', 'unison'], ['2026-W46-unison-handover', 'unison'],
+    ['2026-W42-turn-held', 'turn'], ['2026-W43-turn-mosaic', 'turn'], ['2026-W44-turn-break', 'turn'], ['2026-W46-turn-handover', 'turn'],
+  ]
+  it.each(cases)('%s is deterministic, clean, and names every day and every sentence', (name, piece) => {
+    const record = read(name)
+    const render = () => renderToStaticMarkup(<FormScore record={record} piece={piece} saidLinks={{}} audioId="a" id="s" label="The score" hint="Press play" />)
+    const html = render()
+    expect(html).toBe(render())
+    clean(html)
+    const s = piece === 'unison' ? unisonFormScore(record) : turnFormScore(record)
+    for (const d of s.days) {
+      expect(html).toContain(dayShort(d.day))
+      if (d.said) expect(html).toContain(escaped(d.said))
+    }
+    expect(html).toContain(`data-form="${record.form}"`)
   })
 })

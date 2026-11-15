@@ -2,12 +2,14 @@
 // The pieces of one album of the ill-tempered week, each with its player and its score (2026-11-14). The front page
 // shows the newest complete album with it and every album's own page shows its album with it, so the two cannot
 // drift. Everything is read from the album's record; the links come from the committed day files it names.
+import FormScore from '@/components/ill-tempered-week/FormScore'
 import OverlookedScore from '@/components/ill-tempered-week/OverlookedScore'
 import TurnScore from '@/components/ill-tempered-week/TurnScore'
 import UnisonScore from '@/components/ill-tempered-week/UnisonScore'
-import { clock, weekday, type Album } from '@/lib/ill-tempered-week/albums'
-import { HINT, overlookedLinks, turnSaidLink as saidLink, unisonLinks, warSignals } from '@/lib/ill-tempered-week/pages'
+import { clock, formedTurn, formedUnison, standingTurn, standingUnison, weekday, type Album } from '@/lib/ill-tempered-week/albums'
+import { formSaidLinks, formWarSignals, HINT, overlookedLinks, turnSaidLink as saidLink, unisonLinks, warSignals } from '@/lib/ill-tempered-week/pages'
 import { dayShort, mmss } from '@/lib/ill-tempered-week/score'
+import { formText, whyForm } from '@/lib/ill-tempered-week/score-forms'
 import { FORM as OV } from '@/lib/ill-tempered-week/score-overlooked'
 import { FORM as UN } from '@/lib/ill-tempered-week/score-unison'
 
@@ -23,16 +25,28 @@ const sectionClass = folded ? 'itw-piece itw-fold mb-16' : 'itw-piece mb-16'
 const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 const pct = (x: number): string => `${Math.round(100 * x)} %`
 const o = album.pieces.overlooked
-const u = album.pieces.unison
-const t = album.pieces.turn
-const turnDay = t?.days.find((d) => d.turn)
+// A piece pressed in the form the week chose (from 2026-11-16 on) has its own text and score; one without a form is
+// the standing form, drawn as before.
+const u = standingUnison(album.pieces.unison) ? album.pieces.unison : null
+const fu = formedUnison(album.pieces.unison) ? album.pieces.unison : null
+const t = standingTurn(album.pieces.turn) ? album.pieces.turn : null
+const ft = formedTurn(album.pieces.turn) ? album.pieces.turn : null
+const turnDay = (t ?? ft)?.days.find((d) => d.turn)
 // The days before the last that stayed a cluster (the last day never takes the chord, by the piece's rule).
 const clusters = u ? u.days.slice(0, -1).filter((d) => !d.peak).length : 0
 const most = u ? u.days.reduce((a, b) => (b.agreement > a.agreement ? b : a)) : null
 const signals = u ? warSignals(u) : []
-const turnSaidLink = t ? saidLink(t) : null
+const formSignals = fu ? formWarSignals(fu) : []
+const turnSaidLink = t ? saidLink(t) : ft ? saidLink(ft) : null
+const character = album.character && album.character.form !== 'standing' ? album.character : null
 const hint = HINT
 ---
+
+{character && (
+  <p class="itw-formline mb-8 max-w-3xl font-mono text-mono-sm text-fg-muted">
+    <span class="text-fg">This album is {character.form}.</span> {whyForm(character, album.days)}
+  </p>
+)}
 
 <section id="overlooked" class={sectionClass} aria-label="Overlooked">
   <p class="kicker mb-1">I · chamber ensemble</p>
@@ -119,6 +133,53 @@ const hint = HINT
   </section>
 )}
 
+
+{fu && (
+  <section id="unison" class={sectionClass} aria-label="Unison">
+    <p class="kicker mb-1">II · strings, brass, timpani · {fu.form}</p>
+    <h2 class="itw-title">Unison</h2>
+    {!folded && (<>
+    <audio id="itw-audio-unison" class="itw-player mt-3" controls preload="metadata" src={fu.audio}></audio>
+    <p class="mt-2 font-mono text-mono-sm text-fg-muted">
+      {clock(fu.seconds)} · war and violence · <a class={link} href={fu.audio} download>download</a> · CC BY 4.0
+    </p>
+    </>)}
+    <p class="mt-5 max-w-3xl leading-relaxed">{formText('unison', fu.form)}</p>
+    <FormScore
+      client:idle
+      record={fu}
+      piece="unison"
+      saidLinks={formSaidLinks(fu)}
+      audioId="itw-audio-unison"
+      id="itw-score-unison"
+      label={`The score of Unison, ${album.title}, ${fu.form}: one row per story, time from left to right.`}
+      hint={hint}
+    />
+    <details class="dv-table-fallback mt-6">
+      <summary class="cursor-pointer font-mono text-mono-sm text-fg-muted">Every war signal of the week, with its link ({formSignals.length})</summary>
+      <div class="itw-table-wrap mt-3">
+        <table class="itw-table">
+          <caption class="sr-only">Every war signal of {album.title}: when it enters, its day, its story, its attention and its headline</caption>
+          <thead>
+            <tr><th scope="col">enters</th><th scope="col">day</th><th scope="col">story</th><th scope="col">attention</th><th scope="col">headline</th></tr>
+          </thead>
+          <tbody>
+            {formSignals.map((x) => (
+              <tr>
+                <td class="num">{mmss(x.at_s)}</td>
+                <td class="num">{dayShort(x.day)}</td>
+                <td>{x.story ?? '—'}{x.lead ? ' (lead)' : ''}</td>
+                <td class="num">{pct(x.attention)}</td>
+                <td>{x.href ? <a class="itw-link" href={x.href} target="_blank" rel="noopener noreferrer">{x.text}</a> : x.text}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+)}
+
 {t && (
   <section id="turn" class={sectionClass} aria-label="Turn">
     <p class="kicker mb-1">III · electronics</p>
@@ -144,6 +205,34 @@ const hint = HINT
       audioId="itw-audio-turn"
       id="itw-score-turn"
       label={`The score of Turn, ${album.title}: one row per platform family, one cell per bar, time from left to right.`}
+      hint={hint}
+    />
+  </section>
+)}
+
+{ft && (
+  <section id="turn" class={sectionClass} aria-label="Turn">
+    <p class="kicker mb-1">III · electronics · {ft.form}</p>
+    <h2 class="itw-title">Turn</h2>
+    {!folded && (<>
+    <audio id="itw-audio-turn" class="itw-player mt-3" controls preload="metadata" src={ft.audio}></audio>
+    <p class="mt-2 font-mono text-mono-sm text-fg-muted">
+      {clock(ft.seconds)} · AI and its harms · <a class={link} href={ft.audio} download>download</a> · CC BY 4.0
+    </p>
+    </>)}
+    <p class="mt-5 max-w-3xl leading-relaxed">
+      {formText('turn', ft.form)} {turnDay
+        ? <>The week turned on {weekday(turnDay.day)}, with {turnDay.signals} signals: one bar sounds every beat of every family, and a silent bar carries the day’s most attended AI headline, “{turnDay.said}”.</>
+        : <>This week did not turn.</>}
+    </p>
+    <FormScore
+      client:idle
+      record={ft}
+      piece="turn"
+      saidLinks={formSaidLinks(ft)}
+      audioId="itw-audio-turn"
+      id="itw-score-turn"
+      label={`The score of Turn, ${album.title}, ${ft.form}: one row per platform family, one cell per bar, time from left to right.`}
       hint={hint}
     />
   </section>

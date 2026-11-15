@@ -24,6 +24,10 @@ from . import base, ledger, sampler
 from .forms import F0, SR, fade, field_days, handover_day, lev, mono_said, put, room
 
 HELD_DAY_S = 14.0
+HELD_GLIDE_S = 4.5
+HELD_RELEASE_S = 2.0
+SAID_AFTER_S = 3.0
+BRASS_AFTER_S = 1.0
 MOSAIC_S = 90.0
 GAP_S = 1.1
 PEAK = 0.3
@@ -82,7 +86,7 @@ def held(days: list[dict], voice: str, t0: float = 0.0, step_at: int | None = No
             start = base_hz * octave * (1.0 if on_lead else degree.get(s['story'], 15) / 8)
             end = start * ((base_hz * octave) / start) ** d['agreement']   # towards A as far as the day agreed
             reg = 'lo' if start < 200 else 'mid' if start < 420 else 'hi'
-            x = sampler.glide(sections[reg], start, end, 4.5, vel=int(45 + 50 * s['attention']), release=2.0,
+            x = sampler.glide(sections[reg], start, end, HELD_GLIDE_S, vel=int(45 + 50 * s['attention']), release=HELD_RELEASE_S,
                               key=f'{d["day"]}{j}')
             put(strings, at, fade(x, 1.2, 2.0), gain * (0.8 if on_lead else 1.0), (j % 7) / 3.5 - 0.85)
             events.append({'at_s': round(at, 2), 'story': s['story'], 'lead': on_lead, 'attention': s['attention'],
@@ -92,11 +96,15 @@ def held(days: list[dict], voice: str, t0: float = 0.0, step_at: int | None = No
         if peak:
             for hz, name, p in ((base_hz * 4, 'FHornSus', 0.25), (base_hz * 2, 'TromboneSus', -0.2), (base_hz, 'TubaSus', 0.05)):
                 x = inst(name).note(hz, HELD_DAY_S * 0.8, int(30 + 70 * d['agreement']), release=2.5, key=f'b{d["day"]}{name}')
-                put(brass, t0 + di * HELD_DAY_S + 1.0, fade(x, 3.0, 3.0), 1.0, p)
-            if top:
-                put(said, t0 + di * HELD_DAY_S + 3.0, mono_said(top['text'], voice), 0.35)
+                put(brass, t0 + di * HELD_DAY_S + BRASS_AFTER_S, fade(x, 3.0, 3.0), 1.0, p)
+        said_s = None
+        if top:
+            x = mono_said(top['text'], voice)
+            put(said, t0 + di * HELD_DAY_S + SAID_AFTER_S, x, 0.35)
+            said_s = round(x.shape[1] / SR, 3)
         log.append({'day': d['day'], 'from_s': round(t0 + di * HELD_DAY_S, 2), 'signals': len(d['signals']), 'lead': d['lead'],
-                    'agreement': d['agreement'], 'peak': peak, 'said': top['text'] if top else None, 'events': events})
+                    'agreement': d['agreement'], 'peak': peak, 'said': top['text'] if top else None, 'said_s': said_s,
+                    'events': events})
     stems = {'pedal': room(pedal, 0.9, 0.35, 0.7), 'strings': room(strings, 0.9, 0.35, 0.7),
              'brass': room(brass, 0.88, 0.35, 0.75), 'said': room(said, 0.3, 0.06, 1.0, 90.0)}
     return stems, {'form': 'held', 'from_s': t0, 'to_s': round(t0 + span, 2), 'day_s': HELD_DAY_S, 'lead': lead,
@@ -124,6 +132,7 @@ def mosaic(days: list[dict], voice: str, t0: float = 0.0, music: float = MOSAIC_
         peak = d['agreement'] >= PEAK
         top = said_of(d) if peak else None
         offset = 0.0
+        said_s = None
         if peak:                                                   # the block opens with brass on the lead's tone
             for hz, name, p in ((lead_c[1], 'TrumpetStac', 0.2), (lead_c[1] * 3 / 4, 'TromboneStac', -0.2), (lead_c[1] / 2, 'TubaStac', 0.0)):
                 put(buf, 0.0, inst(name).note(hz, 0.6, int(50 + 70 * d['agreement']), release=0.4, key=f'p{d["day"]}{name}'), 0.9, p)
@@ -131,6 +140,7 @@ def mosaic(days: list[dict], voice: str, t0: float = 0.0, music: float = MOSAIC_
                 x = mono_said(top['text'], voice)
                 put(said, t + 0.4, x, 0.6)
                 offset = min(L * 0.4, x.shape[1] / SR * 0.5)
+                said_s = round(x.shape[1] / SR, 3)
         for j, s in enumerate(d['signals']):
             at = offset + round(s['hour'] / 24.0 * (L - offset - 0.3) / step) * step
             c = colour.get(s['story'], lead_c)
@@ -148,7 +158,7 @@ def mosaic(days: list[dict], voice: str, t0: float = 0.0, music: float = MOSAIC_
         base.place(blocks, int(t * SR), fade(buf, 0.005, 0.03))    # the block ends; the room does not ring on
         log.append({'day': d['day'], 'from_s': round(t, 2), 'to_s': round(t + L, 2), 'signals': len(d['signals']),
                     'lead': d['lead'], 'agreement': d['agreement'], 'peak': peak, 'said': top['text'] if top else None,
-                    'step_s': round(step, 4), 'events': events})
+                    'said_s': said_s, 'step_s': round(step, 4), 'events': events})
         t += L + GAP_S
     return ({'blocks': blocks, 'said': room(said, 0.3, 0.06, 1.0, 90.0)},
             {'form': 'mosaic', 'from_s': t0, 'to_s': round(t - GAP_S, 2), 'sounds': {k: v[0] for k, v in colour.items()},
