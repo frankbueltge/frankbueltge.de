@@ -34,6 +34,12 @@ DATA = base.SITE / 'src' / 'data' / 'ill-tempered-week'
 PIECES = ('overlooked', 'unison', 'turn')
 FIRST = '2026-W45'  # the week the work began; the weeks before it were never pressed as albums
 
+# The week chooses its form (Frank's decision of 2026-11-16, wording private; see the method doc's section of that name).
+# A form is pressed only once every piece can be rendered in it AND its score can draw it; until then a week whose
+# verdict is not ready is pressed in the standing form, and the album says so. Editions 1 to 6 of Overlooked are
+# always the standing form: the character is only known when the week is.
+READY = {'overlooked': {'standing'}, 'unison': {'standing'}, 'turn': {'standing'}}
+
 
 def ledger_days() -> list[str]:
     return sorted(p.stem for p in (base.SITE / 'src' / 'data' / 'trending').glob('20*.json'))
@@ -80,7 +86,15 @@ def press(week: str) -> None:
     path = DATA / f'{week}.json'
     album = json.loads(path.read_text()) if path.exists() else {}
     k = len(days)
-    from itw import overlooked
+    from itw import character, overlooked
+    ch = character.measure(days)
+    ready = k == 7 and all(ch['verdict'] in READY[p] for p in PIECES)
+    form = ch['verdict'] if ready else 'standing'
+    ch = {**ch, 'days_read': k, 'form': form,
+          'why': ('the verdict' if ready else 'editions 1 to 6 are the standing form' if k < 7
+                  else f"no score draws the {ch['verdict']} form yet")}
+    print(f"{week}: character {ch['verdict']} (hold {ch['hold']}, changes {ch['changes']}, break {ch['break']}), "
+          f"pressed {form}: {ch['why']}")
     base.RECEIPTS.clear()
     x, rec = overlooked.render(days, hindsight=True)
     pieces = dict(album.get('pieces', {}))
@@ -95,7 +109,7 @@ def press(week: str) -> None:
             print(f'{week}: {name.capitalize()}, {pieces[name]["seconds"]} s')
     number = int(week.split('-W')[1])
     album = {'work': 'the ill-tempered week', 'title': f'Contrapunctus {number}', 'week': week, 'days': days,
-             'complete': k == 7, 'pressed': date.today().isoformat(), 'pieces': {p: pieces[p] for p in PIECES if p in pieces},
+             'complete': k == 7, 'pressed': date.today().isoformat(), 'character': ch, 'pieces': {p: pieces[p] for p in PIECES if p in pieces},
              'library': 'VSCO 2 Community Edition 1.1.0 (Versilian Studios, CC0)', 'voices': 'Kokoro-82M (Apache 2.0), local',
              'receipts': dict(sorted(base.RECEIPTS.items()))}
     DATA.mkdir(parents=True, exist_ok=True)

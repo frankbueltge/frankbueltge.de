@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "c69815b967b41063"
+        "sha256": "5e66135eee466fad"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 649,
-      "edges": 572,
+      "nodes": 650,
+      "edges": 573,
       "nodesByKind": {
-        "decision": 198,
+        "decision": 199,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
@@ -75,7 +75,7 @@
         "made-by": 233,
         "neighbor-of": 163,
         "participates": 17,
-        "touches": 142
+        "touches": 143
       }
     }
   },
@@ -2058,6 +2058,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "Common Ground reads every public it can reach without a key"
+      }
+    },
+    {
+      "id": "decision:2026-11-16-1",
+      "kind": "decision",
+      "label": "The week chooses its form",
+      "date": "2026-11-16",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The week chooses its form"
       }
     },
     {
@@ -13638,6 +13648,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "pipelines/trending/src/trending/sources/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-16-1",
+      "to": "work:ill-tempered-week",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "scripts/ill-tempered-week/itw/character.py"
       }
     }
   ]
