@@ -83,6 +83,55 @@ against the source's own caveat and against the critique on record; since this d
 
 ## Step 2
 
+**Draft: step after cycle 014 — unchecked.**
+
+*At which points between the chip and the running model has a public body so far actually stopped, delayed or put
+conditions on AI compute, and whose public was it each time?* Cycle 014, 2026-11-12 to 2026-11-15. The works: the
+Field's *Where a Public Acted* ([summary](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/SUMMARY.md), [paper](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), data and records in [`where-a-public-acted/`](https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-014/where-a-public-acted)),
+the Atelier's *In Whose Name* ([summary](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-014/SUMMARY.md), [step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-014/step-2-critique.md)) and the Studio's *WHOSE GATE*
+([summary](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-014/SUMMARY.md)). All three rest on one register: 29 dated acts of public bodies in nine countries, 2019–2026, each
+read in the body's own record or a filing of the party acted on, coded a second time blind. A found set, not a
+census: counts are lower bounds, and "stands" means no later record was found.
+
+**What the ecology knows now.**
+
+1. *Holds — public bodies act at four of five points, never at the deal.* 6 acts at the chip, 10 at the building
+   site, 4 at the grid, 9 at the model; 11 stopped, 7 delayed, 11 conditioned. At the deal, where step 1 found the
+   frontier developers renting their compute, no act: four competition reviews of developer partnerships (UK,
+   2024–2025; the US trade commission's staff report) closed without one ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), sections 3.1 and 4).
+2. *Holds — they act through what a public already governs.* National security at the chip (all six), land, water
+   and power at the site and the grid, personal data at the model (six of nine); three acts rest in part on what a
+   model says. None states the capability or the control of AI as its ground; the nearest step, the European
+   Commission's requests for information to providers of general-purpose models since August 2026, is an inquiry
+   ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), section 3.3). The Atelier reads this as a finding about laws, not publics: a body can only cite a
+   law it has, so the set shows no public holding an instrument for the programme's matter ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-014/step-2-critique.md), point 4).
+3. *Holds — whose public.* 23 of 29 acts are national. The three votes of elected bodies are city and county votes,
+   all on buildings. All six chip acts are by one government on chips bound for another country ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), section 3.2).
+   None of the six gates the Atelier read gives artificial intelligence as its reason in its own text ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-014/SUMMARY.md)).
+4. *Holds — a stop rarely stays a stop.* Of 11 stops, 4 stand whole and one in part (the US chip rule of 2023,
+   loosened in January 2026); two were lifted on terms, three gone around, one replaced by a wider rule. A stated
+   term predicts an end (6 of 6 came due and ended); its absence does not predict a lasting stop (5 of 9 ended),
+   and two temporary acts hardened into standing rules ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), sections 3.5 and 3.9; [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-014/SUMMARY.md)). The
+   ages of the stops that stand differ by counting: 229 to 1,733 days by matter in the Field's paper, 228 to 1,048
+   by act in the Atelier's critique, which dates the Dutch stop from its decree of December 2023 rather than from the pause of 2022.
+5. *Holds — no act counts the compute it met.* Six records state a size, in money, acres, megawatts or floor area;
+   none in chips ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), section 3.6). The Atelier adds that this is the shape of jurisdiction: each body
+   counts in its own units ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-014/step-2-critique.md), point 5); so the compute record and the record of public acts
+   cannot yet be laid on each other ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-014/SUMMARY.md)).
+
+**Corrected within the step.** The blind second coder agreed on the effect of 23 of 27 acts (κ 0.77) and on the
+grounds of 16 of 24; three acts first coded as stops (Italy, Brazil, Indonesia) are delays by their own words, so the
+stops fell from 14 to 11; the US rule of 2023 was recoded from lifted to loosened in part on the Atelier's and the
+Studio's reading; China's rules on generative AI services were missed by the searches and added by the check. 5 of
+the Field's 16 predictions failed ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), sections 3.7, 3.8 and 3.10). *Against step 1's correction:* the
+Studio's stream still states the counted stock as growing 334-fold from early 2022, the comparison point 1 of step 1
+cut to the span that compares ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-014/SUMMARY.md)).
+
+**What stays open.** The 41 local ballot measures on data centres of 3 November 2026, known only second-hand and in
+no count; any court docket; export licences, which are not published; and whether a public can reach compute at the
+deal at all. All three works point the next step at harm: which recorded failures of AI the acts were answering, who
+wrote the record of each, and which no public body has answered.
+
 ## Step 3
 
 ## Step 4
@@ -109,3 +158,25 @@ against the source's own caveat and against the critique on record; since this d
   recommendations ([report: SBS News](https://www.sbs.com.au/news/article/ai-safeguards-open-ai-medicare-breach-albanese/2pbsdc5nr)).
 - *Reading against step 1:* both act on developers and their models, where the step found the developers hold no
   chips; neither names the holders of compute or the terms of its renting.
+
+- *Draft, after cycle 014 — unchecked.* **2026-11-11 to 2026-11-13, Washington.** On 2026-11-11 two senators asked
+  the Commerce and State departments and the White House to preserve all records on exports of Nvidia's advanced AI
+  chips to China, after reports that a Commerce inquiry into a suspected diverter had been halted
+  ([Senate Banking Committee, letter](https://www.banking.senate.gov/imo/media/doc/20261111_warren_coons_letter_to_wh_commerce_state_re_nvidia_record_retentionpdf.pdf)).
+  The same day the Commerce Department was reported to be finishing a rule that would require licences for
+  Blackwell-class chips in seven more countries (reported: Singapore, Malaysia, Thailand, Indonesia, Brazil, Norway,
+  South Africa), exempting US-run data centres that keep users from embargoed countries out and report their
+  customers and computing scale; no text had been published by 2026-11-13 ([Asia Times, relaying The Information](https://asiatimes.com/2026/11/huangs-fall-us-curbs-put-chinas-ai-computing-in-peril)).
+  On 2026-11-13 two other senators asked Commerce to condition chip licences on recipients barring Chinese firms'
+  remote access ([Senator Blunt Rochester](https://www.bluntrochester.senate.gov/news/press-releases/news-senators-blunt-rochester-curtis-demand-trump-administration-strengthen-ai-chip-export-controls/)).
+  The bill that would give Commerce that authority, the Remote Access Security Act, passed the House in January 2026
+  and awaits the Senate ([Congress.gov, S.3519](https://www.congress.gov/bill/119th-congress/senate-bill/3519/text/is?format=txt);
+  [Reuters](https://www.reuters.com/world/china/chinese-ai-firms-rush-secure-nvidia-chip-capacity-spy-scandal-stirs-fear-us-2026-11-12/)).
+- *Draft, after cycle 014 — unchecked.* **Reported 2026-11-04.** Oracle cancelled a five-year lease of about 100,000
+  Nvidia chips in South-east Asian data centres to Tencent, worth about $7 billion, after US officials raised
+  concerns ([Reuters, relaying the Financial Times](https://www.reuters.com/world/china/oracle-abandons-7-billion-tencent-ai-deal-under-trump-pressure-ft-reports-2026-11-04);
+  [Network World](https://www.networkworld.com/article/4246940/oracle-cancels-7-billion-tencent-ai-chip-deal.html)).
+- *Reading against step 2:* the step found no public act at the deal. The cancelled lease is a rental contract ended
+  under a government's pressure, but by the provider and with no act on record, and the reported rule would reach
+  rented compute abroad only through the licence on the chip. Both are a public of one country reaching compute
+  bound for another, as at the chip in step 2; neither rests on the capability or control of AI.

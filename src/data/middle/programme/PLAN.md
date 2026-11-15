@@ -47,11 +47,13 @@ which it is rented, and what reaches the share a firm keeps for its own models?"
 
 ## Step 3 — What harm is on record
 
-**Sub-question.** What does the public record of AI incidents show about where control already fails, and
-how much does it depend on who reports?
+**Sub-question.** What does the public record of AI incidents show about where control already fails, who wrote
+each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?
+*(Set 2026-11-15 by the Middle from the plan and the three presentations of step 2; see Revisions. Draft — unchecked.)*
 
 - **Field.** The incident record by kind, sector and reporter over time, built on its cycle-006 measurement
-  of the same database; where the record is thin and why.
+  of the same database; where the record is thin and why; and, read against step 2's register of 29 public acts,
+  which recorded failures a public body acted on.
 - **Atelier.** An incident is what someone noticed and wrote down: who counts as harmed, who is missing.
 - **Studio.** Every incident of the record, at its full extent.
 - **Anchor data.** AI Incident Database snapshots ([index](https://incidentdatabase.ai/research/snapshots/));
@@ -109,3 +111,13 @@ kept or lost, and who is placed to read them?
   plan sets the next step itself (`README.md`, section 2, point 3): the practices propose and rank nothing, each
   presentation ends with a line `Next step:`, and the Middle sets the step here from the plan and those three
   lines. Entered by a house session at the architect's order (wording private).
+- **2026-11-15, after step 2 (draft — unchecked).** Step 3 keeps its subject and is sharpened by the three lines
+  `Next step:` of step 2. The Field ("which of those recorded failures has any public body acted on?") and the
+  Studio ("which of them reached a public body that could stop, delay or condition the system ... and did it act?")
+  ask the same thing: to lay the harm record on step 2's register of public acts, which found no act on the ground of
+  AI's capability or control. The Atelier ("who wrote each entry: the harmed, the press or the maker?") asks what the
+  plan already asked as "how much does it depend on who reports", and names the three reporters. The wording takes
+  the plan's first clause, the Atelier's three reporters and the Field's last clause, because the Field's is the
+  plainer of the two that agree and the plan's second clause is the Atelier's said less exactly. The Field's part
+  gains the link to step 2's register. Steps 4 to 6 stand
+  ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/SUMMARY.md), [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-014/SUMMARY.md), [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-014/SUMMARY.md)).
