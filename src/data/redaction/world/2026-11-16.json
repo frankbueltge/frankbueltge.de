@@ -1,0 +1,156 @@
+{
+  "date": "2026-11-16",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-16T13:59:39Z",
+    "counts": {
+      "botwall": 14,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 281,
+      "other": 1,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 284,
+    "excluded_unverifiable": 16,
+    "gone": 2,
+    "gone_ci95": [
+      0.0019,
+      0.0253
+    ],
+    "gone_rate": 0.007,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0133
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-14",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "92profm.com",
+        "first_seen": "20261114120000",
+        "http_code": 404,
+        "title": "Sienna Spiro Cancels 2026 ARIA Awards Performance to Focus on Vocal Recovery",
+        "url": "https://www.92profm.com/2026/11/14/sienna-spiro-cancels-2026-aria-awards-performance-to-focus-on-vocal-recovery/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wbrc.com",
+        "first_seen": "20261114020000",
+        "http_code": 404,
+        "title": "Pell City police ask for help in locating 3 juveniles",
+        "url": "https://www.wbrc.com/2026/11/14/pell-city-police-ask-help-locating-3-juveniles/"
+      }
+    ],
+    "sample_drawn_at": "2026-11-15T12:55:15Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3114,
+      "replaced": 4543,
+      "trivial": 563,
+      "update": 360
+    },
+    "day": "2026-11-15",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "4811",
+          "Viral",
+          "News",
+          "Gurgaon",
+          "News"
+        ],
+        "after": "Gurgaon woman pays Rs 4811 for dinner restaurant refuses to remove Rs 401 service charge despite objection; consumer commission says mandatory service charge violates CCPA rules, orders refund and Rs 31,000 compensation Viral News | Gurgaon News",
+        "before": "Gurgaon woman pays Rs 4,811 for dinner, restaurant refuses to remove Rs 401 service charge despite objection; consumer commission says mandatory service charge violates CCPA rules, orders refund and Rs 31,000 compensation",
+        "detected": "2026-11-15T05:16:17Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "4",
+          "811"
+        ],
+        "similarity": 0.848,
+        "url": "https://timesofindia.indiatimes.com/city/gurgaon/gurgaon-woman-pays-rs-4811-for-dinner-restaurant-refuses-to-remove-rs-401-service-charge-despite-objection-consumer-commission-says-mandatory-service-charge-violates-ccpa-rules-orders-refund-and-rs-31000-compensation/articleshow/135821949.cms",
+        "weight": 11,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Aljaz",
+          "Skorjanec"
+        ],
+        "after": "Strictly's Aljaz Skorjanec appears nervous as he gears himself up to dance with Delta Goodrem after Kai Widdrington was forced to pull out last minute due to illness",
+        "before": "Strictly's Aljaž Škorjanec appears nervous as he gears himself up to dance with Delta Goodrem after Kai Widdrington was forced to pull out last minute due to illness",
+        "detected": "2026-11-15T15:17:34Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Aljaž",
+          "Škorjanec"
+        ],
+        "similarity": 0.862,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16292431/Strictly-Aljaz-skorjanec-nervous-replace-Kai-Widdrington-dance-Delta-Goodrem-illness.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Kansas",
+          "City"
+        ],
+        "after": "Chiefs ready to reclaim runway as Jets land in Kansas City | Jefferson City News Tribune",
+        "before": "Chiefs ready to reclaim runway as Jets land in K.C. | Jefferson City News Tribune",
+        "detected": "2026-11-15T10:18:17Z",
+        "domain": "newstribune.com",
+        "removed": [
+          "K",
+          "C"
+        ],
+        "similarity": 0.812,
+        "url": "https://www.newstribune.com/news/2026/nov/08/chiefs-ready-to-reclaim-runway-as-jets-land-in-kc/",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 9292,
+      "PAGE_TEXTCHANGE": 81408,
+      "PAGE_TITLECHANGE": 32166,
+      "UNCHANGED_CONTENT": 477599
+    },
+    "title_changes_en": 8580,
+    "trace": [
+      {
+        "bytes_billed": 16777216,
+        "created": "1794837306611",
+        "job_id": "world_gdg_counts_20261115",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 150994944,
+        "created": "1794837312093",
+        "job_id": "world_gdg_titles_20261115",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-16T13:59:39Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-15.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
