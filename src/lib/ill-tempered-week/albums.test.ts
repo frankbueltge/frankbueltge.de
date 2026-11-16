@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { FIELD, INSTRUMENT, clock, readAlbums, span, weekNumber } from './albums'
+import { FIELD, INSTRUMENT, clock, formedOverlooked, readAlbums, span, standingOverlooked, standingUnison, weekNumber, type Overlooked } from './albums'
 
 const albums = readAlbums()
 
@@ -71,8 +71,31 @@ describe('the ill-tempered week', () => {
         }
       })
 
+      it('a form the week chose: every piece in the album’s form, its days the album’s, one field a day, known instruments', () => {
+        const op = a.pieces.overlooked
+        const formed = [op, a.pieces.unison, a.pieces.turn].filter((p) => p && 'form' in p) as { form: string }[]
+        if (formed.length === 0) return
+        // a formed piece only in a complete album that carries its character, and every piece in that one form
+        expect(a.complete).toBe(true)
+        expect(a.character?.form).toBeDefined()
+        expect(a.character!.form).not.toBe('standing')
+        expect(formed).toHaveLength(3)
+        for (const p of formed) expect(p.form).toBe(a.character!.form)
+        if (formedOverlooked(op)) {
+          const days = op.parts.flatMap((x) => (x.form === 'stroke' ? [] : x.days))
+          expect(days.map((d) => d.day)).toEqual(a.days)
+          expect(new Set(days.map((d) => d.field)).size).toBe(days.length)
+          for (const d of days) {
+            expect(FIELD[d.field], d.field).toBeDefined()
+            expect(INSTRUMENT[d.instrument], d.instrument).toBeDefined()
+            expect(ledgerTexts(d.day).some((label) => label.includes(d.text) || d.text.includes(label.slice(0, 40))), d.text).toBe(true)
+          }
+        }
+      })
+
       it('Overlooked: one day per day so far, each a field not heard before that week, each headline from that day’s ledger', () => {
-        const o = a.pieces.overlooked
+        if (!standingOverlooked(a.pieces.overlooked)) return
+        const o: Overlooked = a.pieces.overlooked
         expect(o.days.map((d) => d.day)).toEqual(a.days)
         expect(new Set(o.days.map((d) => d.field)).size).toBe(o.days.length)
         for (const d of o.days) {
@@ -84,9 +107,10 @@ describe('the ill-tempered week', () => {
         }
       })
 
-      if (a.pieces.unison) {
+      const su = a.pieces.unison
+      if (standingUnison(su)) {
         it('Unison: the peak comes exactly where the press agreed at least 30 %, never on the last day', () => {
-          const u = a.pieces.unison!
+          const u = su
           u.days.forEach((d, i) => {
             expect(d.agreement).toBeGreaterThan(0)
             expect(d.agreement).toBeLessThanOrEqual(1)

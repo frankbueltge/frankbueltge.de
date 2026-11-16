@@ -3,12 +3,13 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
-import { readAlbums } from './albums'
+import { readAlbums, standingUnison, type Unison } from './albums'
 import { CHORD_HARMONICS, harmonicOf } from './score'
 import { describeGlide, describeUnisonDay, FORM, glideTimes, layoutUnison, nowUnison, unisonScore } from './score-unison'
 
 const SOURCE = readFileSync('scripts/ill-tempered-week/itw/unison.py', 'utf8')
-const albums = readAlbums().filter((a) => a.pieces.unison)
+// a Unison pressed in the week's form has a score of its own (score-forms.test.ts)
+const albums = readAlbums().filter((a) => standingUnison(a.pieces.unison))
 
 describe('the renderer’s form, as the score mirrors it', () => {
   it('has the day, the intro and the peak the score assumes', () => {
@@ -35,7 +36,7 @@ describe('the renderer’s form, as the score mirrors it', () => {
 describe('every complete album on file, as its score', () => {
   for (const a of albums) {
     describe(a.title, () => {
-      const u = a.pieces.unison!
+      const u = a.pieces.unison as Unison
       const s = unisonScore(u, a.week)
 
       it('enters every glissando inside its own day, at its hour, between a second and a day’s peak', () => {
@@ -109,7 +110,7 @@ describe('a record that holds the bass and the sentence (pressed from 2026-11-14
   it('draws the bass’s own notes and the sentence’s own length', () => {
     const a = albums[0]
     if (!a) return
-    const u = a.pieces.unison!
+    const u = a.pieces.unison as Unison
     const d0 = u.days[0]!
     // the values the renderer recorded for Monday of 2026-W45 when it was pressed again locally with this change
     const recorded = { ...u, days: [{ ...d0, from_s: 2.0, said_s: 8.155, bass_from_s: 31.5, bass: [{ t: 0, hz: 82.8, s: 0.2 }, { t: 0.138, hz: 108, s: 0.2 }] }, ...u.days.slice(1)] }

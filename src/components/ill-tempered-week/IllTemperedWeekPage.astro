@@ -14,7 +14,8 @@
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import AlbumPieces from '@/components/ill-tempered-week/AlbumPieces.astro'
-import { clock, readAlbums, span, weekday } from '@/lib/ill-tempered-week/albums'
+import { clock, formedOverlooked, formedTurn, formedUnison, readAlbums, span, weekday } from '@/lib/ill-tempered-week/albums'
+import { formSays } from '@/lib/ill-tempered-week/score-forms'
 import { albumPath, frontPage } from '@/lib/ill-tempered-week/pages'
 import '@/styles/experiment-sheet.css'
 import '@/styles/ill-tempered-week.css'
@@ -33,9 +34,9 @@ const badges = growing && g
   : [album.title, album.complete ? 'complete' : `edition ${o.edition} of 7`]
 const all = [...(growing ? [growing] : []), album, ...earlier]
 const tracks = [
-  { id: 'overlooked', no: 'I · chamber ensemble', title: 'Overlooked', p: o, says: 'Each day the headline that drew the least attention is said once, answered and kept as a motif; by the end of the week they all sound together.' },
-  ...(u ? [{ id: 'unison', no: 'II · strings, brass, timpani', title: 'Unison', p: u, says: 'Every war signal a string glissando; each day they glide towards one chord as far as the press agreed on one story.' }] : []),
-  ...(t ? [{ id: 'turn', no: 'III · electronics', title: 'Turn', p: t, says: 'The signals about AI as a rhythmicon of the platforms: the more signals, the fuller the bar; one bar marks where the week turned.' }] : []),
+  { id: 'overlooked', no: 'I · chamber ensemble', title: 'Overlooked', p: o, says: formedOverlooked(o) ? formSays('overlooked', o.form) : 'Each day the headline that drew the least attention is said once, answered and kept as a motif; by the end of the week they all sound together.' },
+  ...(u ? [{ id: 'unison', no: 'II · strings, brass, timpani', title: 'Unison', p: u, says: formedUnison(u) ? formSays('unison', u.form) : 'Every war signal a string glissando; each day they glide towards one chord as far as the press agreed on one story.' }] : []),
+  ...(t ? [{ id: 'turn', no: 'III · electronics', title: 'Turn', p: t, says: formedTurn(t) ? formSays('turn', t.form) : 'The signals about AI as a rhythmicon of the platforms: the more signals, the fuller the bar; one bar marks where the week turned.' }] : []),
 ]
 ---
 
@@ -49,7 +50,7 @@ const tracks = [
   />
 
   <section id="itw-album" class="mb-16" aria-label="The newest album">
-    <p class="kicker mb-1">The newest album · {span(album.days)} · {album.complete ? 'complete' : `edition ${o.edition} of 7`}</p>
+    <p class="kicker mb-1">The newest album · {span(album.days)} · {album.complete ? 'complete' : `edition ${o.edition} of 7`}{album.character && album.character.form !== 'standing' ? ` · ${album.character.form}` : ''}</p>
     <h2 class="itw-albumtitle"><a class={link} href={albumPath(album.week)}>{album.title}</a></h2>
     <ol class="itw-tracks">
       {tracks.map((k) => (

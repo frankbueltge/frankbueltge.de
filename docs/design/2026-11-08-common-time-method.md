@@ -77,6 +77,14 @@ the seventh pressing, with Unison and Turn, is in the week's form. A form is pre
 it and its score can draw it (`READY` in `press.py`); until then the album records the verdict and why it was pressed
 standing. Albums pressed before this rule carry no character and are never pressed again.
 
+**As built (16 November).** Every form exists for every piece (`itw/forms_overlooked.py`, `forms_unison.py`,
+`forms_turn.py`, sharing `forms.py`), each with its score (`src/lib/ill-tempered-week/score-forms.ts`, drawn by
+`FormScore.tsx`), so `READY` admits all five forms and the first complete week pressed after the merge takes its
+verdict. Week 44 was pressed end to end through `press.py` into a draft folder (a break: Overlooked 2:17, Unison 1:50,
+Turn 1:39, 43 s on a Mac with a warm voice cache) and looked at on a local build of its album page. The score tests
+hold the drawings to records the renderers wrote for weeks 42 to 46 (`fixtures/`); week 46's handover there has its
+leads set by hand, since no measured week was one.
+
 ## What holds
 
 Data are the basis of every track: what sounds, when, how often, in which chord and for how long comes

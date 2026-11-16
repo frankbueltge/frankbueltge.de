@@ -44,7 +44,7 @@ import { readAudience, type AudienceReading } from '@/lib/reading/aggregate'
 import { gapFigure } from '@/lib/reading/figure'
 import { readDesk } from '@/lib/ducking/desk-data'
 import { fmtShare, toPosition } from '@/lib/ducking/mix'
-import { readAlbums, weekday } from '@/lib/ill-tempered-week/albums'
+import { readAlbums, standingUnison, weekday } from '@/lib/ill-tempered-week/albums'
 import type { InvokedData } from '@/lib/invoked/types'
 import type { BalanceCountry } from '@/lib/balance/types'
 
@@ -804,9 +804,13 @@ function buildThumbnails(): Thumbnail[] {
     source: `src/data/trending/${desk.latest}.json`,
   })
 
+  // the newest complete Unison: its days as recorded in the standing form, or across the parts of a form the week chose
   const album = readAlbums().filter((a) => a.pieces.unison).at(-1)
-  if (album?.pieces.unison) {
-    const days = album.pieces.unison.days
+  const unison = album?.pieces.unison
+  if (album && unison) {
+    const days = standingUnison(unison)
+      ? unison.days
+      : unison.parts.flatMap((p) => (p.form === 'stroke' ? [] : p.days.map((d) => ({ day: d.day, agreement: d.agreement, peak: d.peak, story: d.lead ?? 'no story' }))))
     const most = days.reduce((a, b) => (b.agreement > a.agreement ? b : a))
     out.push({
       id: 'ill-tempered-week',

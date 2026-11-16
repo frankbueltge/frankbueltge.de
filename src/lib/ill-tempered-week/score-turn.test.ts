@@ -3,11 +3,12 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
-import { readAlbums, type Turn } from './albums'
+import { readAlbums, standingTurn, type Turn } from './albums'
 import { barAt, beatsOf, euclid, FORM, layoutTurn, measure, nowTurn, phaseInBar, turnScore } from './score-turn'
 
 const SOURCE = readFileSync('scripts/ill-tempered-week/itw/turn.py', 'utf8')
-const albums = readAlbums().filter((a) => a.pieces.turn)
+// a Turn pressed in the week's form has a score of its own (score-forms.test.ts)
+const albums = readAlbums().filter((a) => standingTurn(a.pieces.turn))
 
 describe('the renderer’s form, as the score mirrors it', () => {
   it('starts, glides and turns where the score does', () => {
@@ -33,7 +34,7 @@ describe('the renderer’s form, as the score mirrors it', () => {
 describe('every complete album on file, as its score', () => {
   for (const a of albums) {
     describe(a.title, () => {
-      const r = a.pieces.turn!
+      const r = a.pieces.turn as Turn
       const s = turnScore(r, a.week)
 
       it('rebuilds every bar so that each day ends where the next begins, and the piece where its record ends', () => {

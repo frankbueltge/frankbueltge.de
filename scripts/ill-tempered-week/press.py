@@ -38,7 +38,8 @@ FIRST = '2026-W45'  # the week the work began; the weeks before it were never pr
 # A form is pressed only once every piece can be rendered in it AND its score can draw it; until then a week whose
 # verdict is not ready is pressed in the standing form, and the album says so. Editions 1 to 6 of Overlooked are
 # always the standing form: the character is only known when the week is.
-READY = {'overlooked': {'standing'}, 'unison': {'standing'}, 'turn': {'standing'}}
+ALL_FORMS = {'standing', 'held', 'mosaic', 'break', 'handover'}
+READY = {'overlooked': ALL_FORMS, 'unison': ALL_FORMS, 'turn': ALL_FORMS}
 
 
 def ledger_days() -> list[str]:
@@ -96,15 +97,19 @@ def press(week: str) -> None:
     print(f"{week}: character {ch['verdict']} (hold {ch['hold']}, changes {ch['changes']}, break {ch['break']}), "
           f"pressed {form}: {ch['why']}")
     base.RECEIPTS.clear()
-    x, rec = overlooked.render(days, hindsight=True)
+    if form == 'standing':
+        x, rec = overlooked.render(days, hindsight=True)
+    else:
+        from itw import forms_overlooked
+        x, rec = forms_overlooked.render(form, ch, days)
     pieces = dict(album.get('pieces', {}))
     pieces['overlooked'] = {**write_piece(week, 'overlooked', x, rec), 'edition': k}
     print(f'{week}: Overlooked, edition {k}, {pieces["overlooked"]["seconds"]} s')
     if k == 7:
-        from itw import turn, unison
-        for name, mod in (('unison', unison), ('turn', turn)):
+        from itw import forms_turn, forms_unison, turn, unison
+        for name, mod, formed in (('unison', unison, forms_unison), ('turn', turn, forms_turn)):
             ledger.use_days(days)
-            x, rec = mod.render()
+            x, rec = mod.render() if form == 'standing' else formed.render(form, ch)
             pieces[name] = write_piece(week, name, x, rec)
             print(f'{week}: {name.capitalize()}, {pieces[name]["seconds"]} s')
     number = int(week.split('-W')[1])
