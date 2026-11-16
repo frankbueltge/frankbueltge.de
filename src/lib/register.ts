@@ -60,18 +60,24 @@ export interface RegisterEntry {
   probed_on?: string | null
   /** the run that first wrote the source; null for one already there when the stamp began */
   first_seen_on?: string | null
-  /** the run whose probe moved the source between access confirmed, gated, template and no
+  /** the run whose probe moved the source between answering, refused, template and no
    *  answer (zugangLabel's four states); null while that has not happened since the stamp began */
   reachability_changed_on?: string | null
 }
 
 export const ENTRIES = eintraegeRaw as unknown as RegisterEntry[]
 
-/** Klartext des Zugangsbefunds. Die vier Zustände sind bewusst getrennt: „nicht
- *  bestätigt" und „braucht Anmeldung" sind verschiedene Aussagen über eine Quelle. */
+/** What the probe found, in plain words. The four states stay apart.
+ *
+ *  Since 2026-11-16 the labels say only what was asked (atlas_scout/holdings.py + verify.py):
+ *  the first fetchable address written in the code was requested once. A 200 there often comes
+ *  from a home page or an API root, so it says the source answers, not that its data is open
+ *  or was fetched; a 401/403 can be a key requirement or a server turning away automated
+ *  requests, so it is not called "gated". */
 export const zugangLabel = (e: RegisterEntry): string => {
-  if (e.geprueft) return `access confirmed (HTTP ${e.pruef_status})`
-  if (e.zugang_gesperrt) return `exists, but gated (HTTP ${e.pruef_status})`
+  if (e.geprueft) return `address answers (HTTP ${e.pruef_status})`
+  if (e.zugang_gesperrt)
+    return `refused the check (HTTP ${e.pruef_status}): needs a key, or turns away automated requests`
   if (e.nur_vorlage) return 'address is a template in code, not a fetchable URL'
   return e.pruef_status ? `no answer (HTTP ${e.pruef_status})` : 'no answer'
 }

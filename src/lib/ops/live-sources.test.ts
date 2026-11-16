@@ -331,7 +331,7 @@ describe('the catalogues: one counted row per day', () => {
         ['2026-10-06', S.facts.datasets({ checked: null, added: { count: '1', one: true }, changed: '1' })],
       ])
       expect(rows[0]).toMatchObject({ house: 'catalogues', title: 'Dataset Register', kind: K.datasets, href: '/datasets', time: null, source: 'datasets' })
-      expect(rows[0]!.fact).toBe('4 sources checked, 2 with access confirmed · 1 source added · 1 changed reachability')
+      expect(rows[0]!.fact).toBe('4 sources checked, 2 answering · 1 source added · 1 changed reachability')
     })
 
     it('is silent while the register dates nothing — no day is given to it', () => {

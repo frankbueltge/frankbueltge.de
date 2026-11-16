@@ -53,8 +53,8 @@ const userOptions = KIND_ORDER.flatMap((k) =>
 const state = (e: (typeof SOURCES)[number]) =>
   e.geprueft ? 'confirmed' : e.zugang_gesperrt ? 'gated' : e.nur_vorlage ? 'template' : 'silent'
 const accessFacet = [
-  { value: 'confirmed', label: 'access confirmed', n: confirmed },
-  { value: 'gated', label: 'gated', n: gated },
+  { value: 'confirmed', label: 'address answers', n: confirmed },
+  { value: 'gated', label: 'refused the check', n: gated },
   { value: 'template', label: 'template only', n: SOURCES.filter((e) => e.nur_vorlage).length },
   { value: 'silent', label: 'no answer', n: SOURCES.filter((e) => state(e) === 'silent').length },
 ].filter((z) => z.n > 0)
@@ -68,7 +68,7 @@ const groups = [
   { key: 'access', title: 'access', options: accessFacet },
 ]
 const sorts = [
-  { value: 'access', label: 'access confirmed first' },
+  { value: 'access', label: 'answering first' },
   { value: 'used', label: 'most used' },
   { value: 'title', label: 'name A–Z' },
 ]
@@ -94,21 +94,27 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
     <p class="mt-4 text-body text-fg-muted">
       The public data this lab's own pipelines and the practices' works actually retrieve,
       and the datasets the practices cite by DOI. Every entry names who uses it and the
-      file the call or citation is written in — and states how far the access route was
-      confirmed when it was last asked.
+      file the call or citation is written in — and says what its address answered when it
+      was last asked.
     </p>
     <p class="mt-3 text-body text-fg-muted">
-      The register does not collect what exists. It reads what runs. A call in the source
-      of a nightly pipeline is a stronger warrant than a citation: a citation says someone
-      read this once, a scheduled fetch says it is load-bearing tonight.
+      That check is narrow: it requests the first address written in the code, once. An answer
+      often comes from a home page or an API root, so it says the source is there, not that
+      its data is open or was fetched; a refusal can mean a key is needed or that the server
+      turns away automated requests.
+    </p>
+    <p class="mt-3 text-body text-fg-muted">
+      The register does not collect what exists. It reads what is used. A call in the source
+      of a pipeline or a work is a stronger warrant than a citation: a citation says someone
+      read this once, a call says the work depends on it.
     </p>
   </header>
 
 
   <CatalogueStats items={[
     { value: total, label: 'sources in use' },
-    { value: confirmed, label: 'access confirmed' },
-    { value: gated, label: 'exist but gated' },
+    { value: confirmed, label: 'address answers' },
+    { value: gated, label: 'refused the check' },
     { value: byMore, label: 'used by more than one' },
   ]} />
 

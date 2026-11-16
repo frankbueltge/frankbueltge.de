@@ -940,7 +940,7 @@ export const NAMING = {
         }) =>
           [
             p.checked &&
-              `${p.checked.count} source${p.checked.one ? '' : 's'} checked, ${p.checked.confirmed} with access confirmed`,
+              `${p.checked.count} source${p.checked.one ? '' : 's'} checked, ${p.checked.confirmed} answering`,
             p.added && `${p.added.count} source${p.added.one ? '' : 's'} added`,
             p.changed && `${p.changed} changed reachability`,
           ]
