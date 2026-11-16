@@ -1,4 +1,4 @@
-// Open the page as a visitor does, read the numbers it shows, compare them with named.json, voice.json, check.json, drift.json.
+// Open the page as a visitor does, read the numbers it shows, compare them with named.json, voice.json, check.json, drift.json, after.json.
 // Run from this folder: node check_page.mjs [shot-path]
 import { createRequire } from 'module';
 import http from 'http'; import fs from 'fs'; import path from 'path';
@@ -7,6 +7,7 @@ const { chromium } = require('playwright');
 const here = path.dirname(new URL(import.meta.url).pathname);
 const J = f => JSON.parse(fs.readFileSync(path.join(here, f), 'utf8')).res;
 const res = J('named.json'), vr = J('voice.json'), cr = J('check.json');
+const AF = JSON.parse(fs.readFileSync(path.join(here, 'after.json'), 'utf8')), af = AF.res, AA = Object.values(AF.acts);
 const DR = JSON.parse(fs.readFileSync(path.join(here, 'drift.json'), 'utf8')), dr = DR.res;
 const srv = http.createServer((q, r) => { const f = path.join(here, decodeURIComponent(q.url.split('?')[0]).replace(/^\/$/, '/index.html'));
   fs.readFile(f, (e, b) => { if (e) { r.writeHead(404); r.end(); return } r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html' : f.endsWith('.js') ? 'text/javascript' : 'application/octet-stream' }); r.end(b) }) });
@@ -54,15 +55,15 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
   ok(await litN() === 0, `${w}px nothing chosen, nothing lit`);
   // row two, alone
   const stepN = cr.step2_matched.length;
-  for (const [l, k] of [['w:harmed', cr.writer_harmed], ['w:witness', vr.writer.witness], ['ph', cr.press_harmed], ['t:user', cr.acted_on_user],
-    ['t:maker', cr.acted_on_maker], ['pubdep', cr.public_deployer.length], ['twice', vr.twice], ['resp', resp], ['act', stepN]]) {
+  for (const [l, k] of [['w:harmed', cr.writer_harmed], ['w:witness', vr.writer.witness], ['ph', cr.press_harmed], ['t:user', af.on_user],
+    ['t:maker', af.on_maker], ['pubdep', af.public_n], ['favour', af.for], ['asked', af.claims], ['twice', vr.twice], ['resp', resp], ['act', stepN]]) {
     await press(l);
     ok(await litN() === k, `${w}px ${l} lit ${k}`);
   }
   // two questions crossed
   await press('t:user'); await press('k:3');
   const cross = await litN();
-  ok(cross > 0 && cross < cr.acted_on_user && (await p.textContent('#count')).endsWith('meet both'), `${w}px a good and an act on a user cross: ${cross}`);
+  ok(cross > 0 && cross < af.on_user && (await p.textContent('#count')).endsWith('meet both'), `${w}px a good and an act on a user cross: ${cross}`);
   await press('k:3'); await press('twice'); await press('k:0');
   await press('k:0');
   ok(await litN() === vr.twice, `${w}px row one released, named twice alone ${vr.twice}`);
@@ -133,6 +134,38 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
   ok(kside >= 16, `${w}px a part is ${kside.toFixed(1)} px high`);
   const kfs = await p.$eval('#kinds text', e => e.getBoundingClientRect().height);
   ok(kfs >= 9, `${w}px row labels ${kfs.toFixed(1)} px high`);
+  // fifth state: after the presentation
+  const asp = await p.$$eval('[data-a]', es => es.map(e => [e.getAttribute('data-a'), e.textContent]));
+  const abad = asp.filter(([k, t]) => num(t) !== at(af, k));
+  ok(asp.length >= 40 && abad.length === 0, `${w}px ${asp.length} figures of the fifth state read from the page ${JSON.stringify(abad)}`);
+  ok(af.claimant.person === 5 && af.claimant['for the harmed'] === 3 && af.claimant.firm === 1 && af.claimant['public body'] === 1 && af.for === 3 && af.public_n === 5,
+    `${w}px the counts the prose spells out in words (five persons, three bodies for the harmed, a firm, a borough; three in favour; five public bodies)`);
+  await p.fill('#goto', '1694'); await p.click('#go');
+  const d1694 = await p.textContent('#det');
+  ok(d1694.includes('in its favour') && d1694.includes('Asked for by') && !d1694.includes('itself a public body'), `${w}px incident 1694 opens corrected: on the vendor, in its favour, asked for`);
+  const groups = async () => p.$$eval('#agrid > div', ds => ds.map(d => [+d.getAttribute('data-n'), d.querySelectorAll('button').length, d.querySelector('h4').textContent]));
+  let g = await groups();
+  ok(g.length === 4 && g.every(x => x[0] === x[1]) && g.map(x => x[0]).join() === [af.claim_on_maker, af.claim_on_user, af.own_on_maker, af.own_on_user].join() && g.reduce((a, x) => a + x[0], 0) === af.acts,
+    `${w}px who asked: ${g.map(x => x[0]).join(', ')} of ${af.acts}`);
+  ok((await p.$$('#agrid button.for')).length === af.for && (await p.$$('#agrid button.done')).length === AA.filter(a => a.direction !== 'for' && a.state === 'concluded').length
+    && (await p.$$('#agrid button.open')).length === AA.filter(a => a.direction !== 'for' && a.state !== 'concluded').length, `${w}px squares by direction and state`);
+  const firstFor = await p.$$eval('#agrid > div:first-child button.for', es => es.length);
+  ok(firstFor === af.claim_maker_for, `${w}px ${firstFor} acts in a maker's favour stand among the claims`);
+  await p.click('#agrid button[data-id="1694"]');
+  const ad = await p.textContent('#adet');
+  ok(ad.includes('Incident 1694') && ad.includes('in its favour') && ad.includes('the driver'), `${w}px a pressed act says which way it went and who asked`);
+  await p.click('#agrid button[data-id="926"]');
+  ok((await p.textContent('#adet')).includes('Borderline'), `${w}px the borderline act says so`);
+  await p.click('#amode button[data-g="kind"]');
+  g = await groups();
+  const ok5 = ['prosecutor or police', 'regulator, inspectorate or ministry', 'legislature', 'a court, on a filing before it'].map(k => af.own_kind[k]);
+  ok(g.length === 5 && g.map(x => x[0]).join() === [af.claims, ...ok5].join(), `${w}px who moved: ${g.map(x => x[0]).join(', ')}`);
+  ok((await p.$$('#amode button[aria-pressed="true"]')).length === 1 && (await p.$$('#kmode button[aria-pressed="true"]')).length === 1, `${w}px one sorting and one reading stay pressed`);
+  await press('k:3'); await press('k:3');
+  ok((await p.$$('#amode button[aria-pressed="true"]')).length === 1 && (await p.$$('#kmode button[aria-pressed="true"]')).length === 1, `${w}px pressing a question above leaves the other switches as they were`);
+  await p.click('#amode button[data-g="asked"]');
+  const aside = await p.$eval('#agrid button', e => e.getBoundingClientRect().width);
+  ok(aside >= 36, `${w}px an act's square is ${aside.toFixed(0)} px wide`);
   if (shot) { await p.screenshot({ path: shot, fullPage: true }); console.log('shot', shot) }
   await p.close();
 }

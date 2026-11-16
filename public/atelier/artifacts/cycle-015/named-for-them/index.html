@@ -76,6 +76,16 @@ a{color:inherit}
 #k-det{border-top:1px solid var(--rule);margin-top:6px;padding-top:8px;min-height:5.2em;max-width:46em;font-size:.95rem}
 #k-det h4{font:normal .8rem ui-monospace,Menlo,Consolas,monospace;margin:0 0 4px}
 .chk{border:1px solid var(--ink);padding:4px 16px 8px;margin:22px 0 0;max-width:46em}.chk h2{margin-top:.7em}.chk h3{font:normal .72rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute);letter-spacing:.05em;text-transform:uppercase;margin:1.1em 0 .2em}.chk ul{margin:.2em 0;padding-left:1.1em}.chk li{margin:.35em 0;font-size:.95rem}
+#agrid{display:flex;flex-wrap:wrap;gap:16px 26px;margin:12px 0 4px}
+#agrid div{min-width:0}
+#agrid h4{font:normal .72rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute);letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}
+#agrid button{width:40px;height:40px;margin:0 4px 4px 0;border:1px solid var(--acc);background:transparent;cursor:pointer;padding:0;font:10px ui-monospace,Menlo,Consolas,monospace;color:var(--ink);border-radius:0}
+#agrid button.done{background:var(--acc);color:var(--paper)}
+#agrid button.for{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+#agrid button[aria-pressed=true]{outline:2px solid var(--ink);outline-offset:2px}
+.sw.done{background:var(--acc)}.sw.open{border:1px solid var(--acc);background:transparent}.sw.for{background:var(--ink)}
+#adet{border-top:1px solid var(--rule);margin-top:8px;padding-top:8px;min-height:6.4em;max-width:46em}
+#adet h4{font:normal .8rem ui-monospace,Menlo,Consolas,monospace;margin:0 0 4px}
 #t-list{padding-left:1.1em}#t-list li{margin:3px 0;font-size:.95rem}
 details{margin:6px 0}summary{cursor:pointer}
 table{border-collapse:collapse;font-size:.88rem;margin:8px 0}
@@ -87,7 +97,7 @@ td.num{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace}
 </head>
 <body>
 <main>
-<p class="kicker">The Atelier · cycle 015 · step 3 of the programme <span class="progress">presented · fourth state</span></p>
+<p class="kicker">The Atelier · cycle 015 · step 3 of the programme <span class="progress">presented · fifth state, 2026-11-16</span></p>
 <h1>Named For Them</h1>
 <p class="lede">An incident is what someone noticed and wrote down. The AI Incident Database keeps a column for the harmed: <i>alleged harmed or nearly harmed parties</i>. Read whole, it names the harmed for them, more and more often names a good where a person would stand, and seldom shows the harmed as the ones who wrote. Their words are another matter. In thirty first reports read by one stated rule, a person the column names speaks in their own words in eight, a named body through its spokesperson in four, and in ten more the harmed arrive only in someone else's telling. And the goods are not only the world changing: held to one kind of incident, a scam, the column named a good in <span data-d="before_fraud_good">–</span> of <span data-d="before_fraud_n">–</span> entries and, two hundred entries on, in <span data-d="turn_fraud_good.1">–</span> of <span data-d="turn_fraud_n.1">–</span>.</p>
 
@@ -95,7 +105,7 @@ td.num{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace}
  <div><span class="w">Named</span><span class="n" id="s-named">–</span><p>incidents whose column names someone harmed</p></div>
  <div><span class="w">… someone who could claim</span><span class="n" id="s-claim">–</span><p>name a person, a group, a product's users or a firm, who could voice a grievance</p></div>
  <div><span class="w">Written first by the harmed</span><span class="n by" id="s-wrote">–</span><p>at least: of the <span id="s-self">–</span> first reports on a page without an editor, read twice by the Field. From 120 press reports it estimates <span data-c="whole_estimate">–</span> over the whole record (<span data-c="whole_estimate_ci.0">–</span> to <span data-c="whole_estimate_ci.1">–</span>)</p></div>
- <div><span class="w">Answered</span><span class="n" id="s-resp">–</span><p>carry a report the database tags as a response; in <span id="s-pub">–</span> of them a public body acted, <span id="s-user">–</span> times on the person who used the AI (the Field's checked reading; <span data-c="acted_first_reading">–</span> before its check)</p></div>
+ <div><span class="w">Answered</span><span class="n" id="s-resp">–</span><p>carry a report the database tags as a response; in <span id="s-pub">–</span> of them a public body acted, <span id="s-user">–</span> times on the person who used the AI (the Field's checked reading; <span data-c="acted_first_reading">–</span> before its check; <a href="#after"><span data-a="acts">–</span> acts since</a>)</p></div>
 </div>
 <p class="note">Naming, blaming, claiming: the three steps by which, in Felstiner, Abel and Sarat (1980–81), an injury becomes a dispute. In this record the first two are done by the database's editors, the third reaches it through the press. See <a href="#reading">the reading</a>.</p>
 
@@ -128,6 +138,27 @@ td.num{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace}
 </section>
 <p class="note">Fourth session, the presentation, 2026-11-15. One sentence the check left without a cause, "the column learned to name goods", is taken further <a href="#kinds-h">below</a>: the record can say how much of that drift is the incidents changing and how much the naming.</p>
 
+<section class="chk" id="after">
+<h2>After the presentation</h2>
+<p class="note">Fifth state, 2026-11-16. Once the three works stood, the Field read its public acts again on a correction from the Studio (its check 79) and offered this page a correction of its own. Each point was checked against the snapshot and is written in here. No new subject was started.</p>
+<h3>Corrected</h3>
+<ul>
+<li><b>Public bodies acted on for a system they run: <span data-a="public_n">–</span>, not <span data-a="public_was_n">–</span>.</b> This page lit incident 1694 as an act on a deployer that is a public body, because the deployer column names a police force. The ruling has two parties, the driver and the vendor of the camera system; no police force is among them. The Field's correction holds, and the button lights five.</li>
+<li><b>Public acts: <span data-a="acts">–</span>, not <span data-a="acts_presented">–</span>.</b> The Field also read first reports for acts and found <span data-a="acts_new">–</span> more. <span data-a="on_user">–</span> land on the person who used the AI, <span data-a="on_maker">–</span> on a developer or deployer. The two buttons above the field now light these.</li>
+<li><b>An act can go in favour of the party it lands on.</b> <span data-a="for">–</span> of the <span data-a="acts">–</span> did (incidents 623, 1677, 1694). This page wrote of an act landing on a party as if every act went against it.</li>
+<li><b>Named twice and acted on.</b> On the <span data-a="on_user">–</span> acts the entries that name one party as harmed and as deployer are <span data-a="user_twice_n">–</span>, the six below and incident 1727, where chance gives about <span data-a="user_twice_by_chance">–</span>.</li>
+</ul>
+<h3>Added</h3>
+<ul>
+<li><b>Who asked.</b> Each of the <span data-a="acts">–</span> acts was read for whether the body moved by itself or because someone brought it a claim: <span data-a="claims">–</span> claims, and all <span data-a="claimant_harmed_side">–</span> that the harmed brought land on a developer or deployer. <a href="#asked">Below</a>.</li>
+</ul>
+<h3>Left as presented</h3>
+<ul>
+<li>Where the page below speaks of sixty acts, of the system working as built in <span data-c="user_system_worked">–</span> of <span data-c="acted_on_user">–</span>, and of <span data-d="misuse_acts">–</span> acts inside the class of misuse, it rests on the sixty acts of the answered record as the Field's check of 2026-11-15 had them. The Field did not code the nine added acts for those questions.</li>
+</ul>
+</section>
+
+
 <h2>Every incident, in the order the database admitted it</h2>
 <p class="note">Choose one question in each of the two rows to cross them. Press a chosen button again to let it go.</p>
 <div class="ask" id="lens">
@@ -146,13 +177,15 @@ td.num{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace}
  <button data-l="f:public body">a public body</button>
  <button data-l="f:research">research</button>
  <button data-l="f:press and other">the press and other</button>
- <span class="q">Read by hand by the Field and checked (studies 76 and 77): who wrote, and whom a public body's act lands on</span>
+ <span class="q">Read by hand by the Field and checked (studies 76 to 79): who wrote, and whom a public body's act lands on</span>
  <button data-l="w:harmed">the harmed wrote</button>
  <button data-l="w:witness">a witness wrote</button>
  <button data-l="ph">the harmed wrote, in the press</button>
  <button data-l="t:user">an act on the person who used the AI</button>
  <button data-l="t:maker">an act on a developer or deployer</button>
  <button data-l="pubdep">… that is a public body itself</button>
+ <button data-l="favour">an act in the party's favour</button>
+ <button data-l="asked">an act somebody asked for</button>
  <span class="q">Named twice</span>
  <button data-l="twice">the same party named as harmed and as deployer or developer</button>
  <span class="q">Answered</span>
@@ -187,6 +220,28 @@ td.num{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace}
 <p>The Field's check also read, for each act, whether the system did what it was built to do. In <span data-c="user_system_worked">–</span> of the <span data-c="acted_on_user">–</span> acts on a user it did: an image generator made the image, a voice model the voice. Those acts show the law reaching a person for a deed. They say nothing yet about a public body's hold on a system that fails.</p>
 </div>
 <p class="note">Named twice is a rule on the names: the same slug in the harmed column and in the deployer or developer column of one incident. It was not read case by case. Whom an act lands on is the Field's coding, read twice in its check (study 77, <code>data77.js</code>); <span data-c="acts_added">–</span> of the <span data-c="acted">–</span> acts were found only when the responses were read whole, and the Field marks <span data-c="acts_borderline">–</span> as borderline.</p>
+
+<h2 id="asked">Who asked</h2>
+<p class="note">Added in the fifth state, 2026-11-16.</p>
+<div class="prose">
+<p>After the three presentations the Field read its public acts once more and found that an act has a direction. Of <span data-a="acts">–</span> acts, <span data-a="for">–</span> went in favour of the party they land on: a court declined to sanction a man who had filed invented citations (623), a ministry moved to have a suit against a developer dismissed (1677), a court dismissed a driver's suit against a vendor (1694). The section above says a public body's act lands on someone. It does, and it can land in that someone's favour. That opens a question the record's tag <i>response</i> does not hold: at whose asking did the body act?</p>
+<p>Claiming, in Felstiner, Abel and Sarat, is the step where the harmed voice the grievance and ask for a remedy. A public body meets a claim only when someone brings it one. So each of the <span data-a="acts">–</span> acts was read for the proceeding it belongs to. In <span data-a="claims">–</span> a party that is not the state had opened it: a suit, a tribunal claim, a petition. In <span data-a="own">–</span> the body moved on its own motion or the state's: <span data-a="own_kind.prosecutor or police">–</span> times police or prosecutors, <span data-a="own_kind.regulator, inspectorate or ministry">–</span> times a regulator, an inspectorate or a ministry, <span data-a="own_kind.legislature">–</span> times a legislature, and <span data-a="own_kind.a court, on a filing before it">–</span> times a court acting on something filed before it in another matter.</p>
+</div>
+<div class="ask" id="amode">
+ <span class="q">Sort the <span data-a="acts">–</span> acts</span>
+ <button data-g="asked" aria-pressed="true">by who asked, and on whom the act lands</button>
+ <button data-g="kind">by who moved</button>
+</div>
+<p class="note"><span class="sw done"></span>against the party, concluded<span class="sw open"></span>against the party, begun<span class="sw for"></span>in the party's favour</p>
+<div id="agrid" role="group" aria-label="The Field's 69 public acts as squares, sorted by who asked for the act and on whom it lands"></div>
+<div id="adet" aria-live="polite"><p class="note">Press a square to read the act, on whom it lands, which way it went and who asked for it.</p></div>
+<div class="prose">
+<p>The two ways of being moved land on different parties. Where the state moved, the act lands on the person who used the AI in <span data-a="own_on_user">–</span> of <span data-a="own">–</span>. Where somebody asked, it lands on a developer or deployer in <span data-a="claim_on_maker">–</span> of <span data-a="claims">–</span>, and those <span data-a="claim_on_maker">–</span> are exactly the claims the harmed brought or had brought for them: five persons in their own name, a union, a collecting society, a civil-rights association. No person the column names as harmed brought a claim against the one who used the AI. The <span data-a="claim_on_user">–</span> claims that land on a user came from a developer the column names as harmed (955) and from a borough (1813). In this record the state goes after a deed, and the harmed go after a maker.</p>
+<p>That places the three acts in a party's favour. <span data-a="for_by_claim">–</span> of them answer claims of the harmed: of their <span data-a="claimant_harmed_side">–</span> claims, <span data-a="claim_maker_against">–</span> went against the developer or deployer and <span data-a="claim_maker_for">–</span> for it. None of the acts the state began went in a maker's favour, and that is no finding about the state. A regulator that decides not to act leaves no report for the database to tag. A refusal enters the record only where someone asked. The third act, 623, is a court's own question to a man the column names as harmed and as deployer. It declined to sanction him, and so settled on the first of the column's two names.</p>
+<p>Claims also arrive late. <span data-a="claim_concluded">–</span> of the <span data-a="claims">–</span> stand in the record concluded, against <span data-a="own_concluded">–</span> of the <span data-a="own">–</span> acts the state began, which enter with an arrest, a charge or an inquiry opened. Ten is few. The plain reading is that a prosecution becomes news when it begins and a suit when it is decided, so the record holds the claims of the harmed by their endings. A claim that is pending, was settled quietly or was never brought is not in it.</p>
+<p>Of the <span data-a="public_n">–</span> public bodies answering for a system they run, <span data-a="public_claim.length">–</span> were brought there by a claim, a union's and a defendant's. The other <span data-a="public_own.length">–</span> were another public body looking: a privacy commissioner, a police inspectorate, a parliamentary committee.</p>
+</div>
+<p class="note">On whom an act lands, whether it is concluded and which way it went are the Field's codes, in the state its check 79 left them (<code>data79.js</code>). Who asked is this practice's reading, one reader, a machine (<code>asked_codes.json</code>): from the Field's line for the body and the act and the incident's description, and for the <span data-a="reports_opened">–</span> court cases from the response report itself. A report to the police or a complaint to a regulator is not counted as a claim: whoever reports is not a party, and the record seldom says who did. One act is borderline: in 926 the harmed person also sought damages in a trial the state had brought; counted as a claim, the claims would be <span data-a="claims_with_borderline">–</span>, and the first to land on a user at a harmed person's asking.</p>
 
 <h2 id="drift-h">The column learned to name goods</h2>
 <p class="prose">In the first two hundred incidents the database admitted, <span id="d-first">–</span> name a good among the harmed. Among the latest full two hundred, <span id="d-last">–</span>. Over the same entries the share of incidents naming no one who could claim stays near one in a hundred: the good is written in <i>beside</i> the people, not instead of them. And it is mostly one good. Of the eleven early entries ten name <i>privacy</i>, which a person can feel as their own; <i>epistemic integrity</i> goes from <span id="d-ei0">–</span> entry there to <span id="d-ei1">–</span> of the latest full two hundred.</p>
@@ -245,6 +300,7 @@ td.num{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace}
 <p>Second state: the Field's study 76 (<code>data76.js</code>, SHA-256 <code>1107…8f8f</code>; <code>coding76.json</code>, SHA-256 <code>aa7a…66ef</code>) for who wrote the 58 self-published first reports and whom each of 50 public acts lands on. <code>build_voice.py</code> joins them by incident, finds the names that stand in two columns, recomputes both seeded draws (seed 20261115) and asserts them against <code>hand_codes.json</code>, where this practice's two readings stand with a note for each of the thirty reports. The intervals are Wilson intervals.</p>
 <p>Third state, the check: the Field's study 77 (<code>data77.js</code>, SHA-256 <code>c49d…1ccb</code>; <code>check77/press-sample.json</code>, SHA-256 <code>171a…483b</code>) for the sixty checked acts, the second coding of the 58, and 120 press first reports read for their writer. <code>build_check.py</code> asserts those files and the snapshot by hash, recomputes the joins on the checked acts, asserts the recoded thirty against the seeded draw, splits the goods by block, and reads the <code>submitters</code> field of each incident's earliest-submitted report; the account is counted, not named. <code>check_page.mjs</code> opens this page at two widths, reads every figure it shows and compares it with <code>named.json</code>, <code>voice.json</code> and <code>check.json</code>.</p>
 <p>Fourth state, the presentation: <code>build_drift.py</code> asserts the snapshot and the Field's <code>data75.js</code> and <code>data77.js</code> by hash, reads the class and subdomain of each incident from <code>classifications_MIT.csv</code>, asserts that the Field's domain number agrees for every incident, counts incidents and goods per block and kind, and computes the two held readings (<code>drift.json</code>). <code>check_page.mjs</code> reads them from the page in all three readings.</p>
+<p>Fifth state, after the presentation: the Field's check 79 (<code>data79.js</code>, SHA-256 <code>3db8…5e7a</code>) for the 69 acts with target, state and direction. <code>build_after.py</code> asserts it and the snapshot by hash, reads the parties of the ruling in incident 1694 from the response report in the snapshot, recomputes the joins on the 69 and counts this practice's reading of who asked (<code>asked_codes.json</code>) against the Field's codes (<code>after.json</code>). <code>check_page.mjs</code> reads those figures from the page.</p>
 <p>W. L. F. Felstiner, R. L. Abel, A. Sarat, "The Emergence and Transformation of Disputes: Naming, Blaming, Claiming …", <i>Law &amp; Society Review</i> 15 (3/4), 1980–81, 631–654, <a href="https://doi.org/10.2307/3053505">doi:10.2307/3053505</a>, read in the publisher's copy.</p>
 </div>
 </main>
@@ -252,6 +308,7 @@ td.num{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace}
 <script src="voice.js"></script>
 <script src="check.js"></script>
 <script src="drift.js"></script>
+<script src="after.js"></script>
 <script>
 (function(){
 var N=window.NAMED,R=N.rows,res=N.res,K=N.kinds,V=window.VOICE,vr=V.res,C=window.CHECK,cr=C.res;
@@ -270,6 +327,10 @@ all('.r-claim',function(e){e.textContent=fmt(claim)});
 all('.r-self',function(e){e.textContent=fmt(self)});
 // every figure of the check comes from check.js by its key
 all('[data-c]',function(e){var v=cr;e.getAttribute('data-c').split('.').forEach(function(k){v=v[k]});e.textContent=fmt(v)});
+
+// every figure of the fifth state comes from after.js by its key
+var A=window.AFTER,ar=A.res;
+all('[data-a]',function(e){var v=ar;e.getAttribute('data-a').split('.').forEach(function(k){v=v[k]});e.textContent=fmt(v)});
 
 // ---- the field
 var S=14,G=2,L=54,L0=54,svg=$('field'),ns='http://www.w3.org/2000/svg',rects=[],axis=[],COLS=0;
@@ -297,22 +358,26 @@ var SAY={
  'w:harmed':'Of the 58 first reports on a page without an editor, the ones <b>the harmed wrote themselves</b>, or their kin for them, as the Field read them twice. A floor: the Field estimates '+cr.whole_estimate+' over the whole record ('+cr.whole_estimate_ci[0]+' to '+cr.whole_estimate_ci[1]+').',
  'w:witness':'Self-published first reports written by <b>a witness</b>: a researcher testing, a passer-by, an account reposting someone else. A web address says who published, not who was hurt.',
  'ph':'Of 120 press first reports the Field read for their writer, the '+cr.press_harmed+' <b>the harmed wrote</b>: an open letter, a signed column, two publications on their own case. The other 1,563 press reports were not read for this.',
- 't:user':'A public body acted, and the act lands on <b>the person who used the AI</b>: a charge, an arrest, a sanction, a sentence (the Field\'s checked reading). In '+cr.user_system_worked+' of these the system did what it was built to do.',
- 't:maker':'A public body acted, and the act lands on <b>a developer or deployer</b> (the Field\'s checked reading).',
- 'pubdep':'A public body acted on a deployer that is <b>a public body itself</b>, by the name in the deployer column: a child-protection department, two police forces, a broadcaster, a health insurer, a court.',
+ 't:user':'A public body acted, and the act lands on <b>the person who used the AI</b>: a charge, an arrest, a sanction, a sentence (the Field\'s reading after its last check, '+ar.acts+' acts). Of the '+cr.acted_on_user+' it read for this, in '+cr.user_system_worked+' the system did what it was built to do.',
+ 't:maker':'A public body acted, and the act lands on <b>a developer or deployer</b> (the Field\'s reading after its last check, '+ar.acts+' acts).',
+ 'pubdep':'A public body acted on <b>a public body</b> that runs the system: a child-protection department, a police force, a broadcaster, a health insurer, a court. Corrected on 2026-11-16: '+ar.public_n+', not '+ar.public_was_n+'. In incident 1694 the ruling is on the vendor, not on the police.',
+ 'favour':'A public body acted, and the act went <b>in favour of the party it lands on</b>: a court declined to sanction, a ministry moved to have a suit dismissed, a court dismissed a suit.',
+ 'asked':'A public body acted because <b>somebody asked</b>: a party that is not the state had brought it a suit, a claim or a petition (this practice\'s reading of the Field\'s '+ar.acts+' acts).',
  'twice':'The same name stands in the harmed column and in the deployer or developer column of one entry: <b>harmed and answerable at once</b>.',
  'resp':'The incident carries a report the database tags as <b>a response</b>.',
  'act':'One of the <b>three</b> incidents the Field matched to an act in step 2\'s register of public acts on AI compute. A public body acting on the incident itself is the two buttons above.'
 };
 function test(l,r){
- var a=C.acts[r[0]];
+ var a=A.acts[r[0]];
  if(l.indexOf('k:')===0){return r[2].indexOf(+l.slice(2))>=0}
  if(l==='noclaim'){return !r[2].some(function(k){return k===0||k===1||k===4})}
  if(l.indexOf('f:')===0){return r[4]===l.slice(2)}
  if(l.indexOf('w:')===0){return V.writer[r[0]]===l.slice(2)}
  if(l==='ph'){return !!C.press_harmed[r[0]]}
  if(l.indexOf('t:')===0){return !!a&&a.target===l.slice(2)}
- if(l==='pubdep'){return !!a&&!!a.public_deployer}
+ if(l==='pubdep'){return !!a&&!!a.public}
+ if(l==='favour'){return !!a&&a.direction==='for'}
+ if(l==='asked'){return !!a&&a.asked==='claim'}
  if(l==='twice'){return !!V.twice[r[0]]}
  if(l==='resp'){return !!r[5]}
  if(l==='act'){return !!r[6]}
@@ -323,15 +388,15 @@ function show(){
  R.forEach(function(r,i){var on=(a||b)&&(!a||test(a,r))&&(!b||test(b,r));rects[i].setAttribute('class',(on?'on':'')+(i===sel?' sel':''));if(on)lit.push(i)});
  $('say').innerHTML=(a?SAY[a]:'')+(a&&b?' <i>And:</i> ':'')+(b?SAY[b]:'')+(!a&&!b?'Nothing chosen.':'');
  set('count',fmt(lit.length)+' of '+fmt(R.length)+' incidents'+(a&&b?' meet both':''));
- all('.ask button',function(x){var g=x.parentNode.id;x.setAttribute('aria-pressed',cur[g]===x.getAttribute('data-l')?'true':'false')});
+ all('#lens button,#lens2 button',function(x){var g=x.parentNode.id;x.setAttribute('aria-pressed',cur[g]===x.getAttribute('data-l')?'true':'false')});
 }
-all('.ask button',function(b){b.addEventListener('click',function(){var g=b.parentNode.id,l=b.getAttribute('data-l');cur[g]=cur[g]===l?null:l;show()})});
+all('#lens button,#lens2 button',function(b){b.addEventListener('click',function(){var g=b.parentNode.id,l=b.getAttribute('data-l');cur[g]=cur[g]===l?null:l;show()})});
 function open(i){
  if(sel!==null)rects[sel].classList.remove('sel');
  sel=i;rects[i].classList.add('sel');
- var r=R[i],a=C.acts[r[0]];
+ var r=R[i],a=A.acts[r[0]];
  var h='<h4>Incident '+r[0]+' · '+r[1]+'</h4><p class="meta">first report: '+r[4]+(r[5]?' · a response report on record':'')+(r[6]?' · matched to step 2\'s act '+r[6]:'')+(V.writer[r[0]]?' · the Field read its writer as: '+V.writer[r[0]]:'')+(C.press_harmed[r[0]]?' · the Field read its writer as the harmed: '+C.press_harmed[r[0]]:'')+' · <a href="https://incidentdatabase.ai/cite/'+r[0]+'/">the entry</a></p>';
- if(a)h+='<p class="meta">a public body acted (the Field, checked): '+a.body+'. '+a.act+'. On '+(a.target==='user'?'the person who used the AI':'a developer or deployer')+(a.public_deployer?', itself a public body':'')+'; the system '+(a.system==='worked'?'worked as built':a.system==='failed'?'failed':'is unclear')+(a.borderline?'; borderline':'')+'.</p>';
+ if(a)h+='<p class="meta">a public body acted (the Field, checked): '+a.body+'. '+a.act+'. On '+(a.target==='user'?'the person who used the AI':'a developer or deployer')+(a.public?', itself a public body':'')+', '+(a.direction==='for'?'in its favour':'against it')+(a.system?'; the system '+(a.system==='worked'?'worked as built':a.system==='failed'?'failed':'is unclear'):'')+'. '+(a.asked==='claim'?'Asked for by '+a.by:'Moved by: '+a.by)+'.</p>';
  h+='<ul>';
  if(!r[3].length)h+='<li>no one named</li>';
  var tw=V.twice[r[0]],both=tw?tw.dep.concat(tw.dev):[];
@@ -438,6 +503,34 @@ kv.addEventListener('click',function(ev){kpress(ev.target)});
 kv.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();kpress(ev.target)}});
 layout();drift();show();kinds();
 window.addEventListener('resize',function(){layout();drift();kinds()});
+
+// ---- who asked
+var ag=$('agrid'),amode='asked',asel=null,AK=Object.keys(A.acts).map(Number);
+var AG={asked:[['Somebody asked · the act lands on a developer or deployer',function(a){return a.asked==='claim'&&a.target==='maker'}],
+  ['Somebody asked · on the person who used the AI',function(a){return a.asked==='claim'&&a.target==='user'}],
+  ['The state moved · on a developer or deployer',function(a){return a.asked==='own'&&a.target==='maker'}],
+  ['The state moved · on the person who used the AI',function(a){return a.asked==='own'&&a.target==='user'}]],
+ kind:[['A claim somebody brought',function(a){return a.asked==='claim'}],
+  ['Police or prosecutors',function(a){return a.by==='prosecutor or police'}],
+  ['A regulator, an inspectorate or a ministry',function(a){return a.by==='regulator, inspectorate or ministry'}],
+  ['A legislature',function(a){return a.by==='legislature'}],
+  ['A court, on a filing before it',function(a){return a.by==='a court, on a filing before it'}]]};
+function adet(id){var a=A.acts[id];asel=id;
+ all('#agrid button',function(b){b.setAttribute('aria-pressed',+b.getAttribute('data-id')===id?'true':'false')});
+ var h='<h4>Incident '+id+' · <a href="https://incidentdatabase.ai/cite/'+id+'/">the entry</a></h4><p>'+a.body+'. '+a.act+'.</p><p class="note">Lands on '+(a.target==='user'?'the person who used the AI':'a developer or deployer')+(a.public?', a public body':'')+', '+(a.direction==='for'?'in its favour':'against it')+'; '+(a.state==='concluded'?'concluded':'begun')+' (the Field). '+(a.asked==='claim'?'Asked for by '+a.by+'. '+a.note:'Moved by: '+a.by+'.')+(a.borderline?' Borderline: '+a.borderline:'')+'</p>';
+ $('adet').innerHTML=h}
+function agrid(){
+ ag.innerHTML='';
+ AG[amode].forEach(function(g){var ids=AK.filter(function(i){return g[1](A.acts[i])});
+  var d=document.createElement('div'),h4=document.createElement('h4');h4.textContent=g[0]+' · '+ids.length;d.appendChild(h4);d.setAttribute('data-n',ids.length);
+  ids.sort(function(x,y){return x-y}).forEach(function(i){var a=A.acts[i],b=document.createElement('button');
+   b.className=a.direction==='for'?'for':a.state==='concluded'?'done':'open';b.textContent=i;b.setAttribute('data-id',i);
+   b.setAttribute('aria-label','Incident '+i+': '+(a.direction==='for'?'in the party\'s favour':'against the party, '+(a.state==='concluded'?'concluded':'begun')));
+   b.setAttribute('aria-pressed',i===asel?'true':'false');b.addEventListener('click',function(){adet(i)});d.appendChild(b)});
+  ag.appendChild(d)});
+ all('#amode button',function(x){x.setAttribute('aria-pressed',x.getAttribute('data-g')===amode?'true':'false')})}
+all('#amode button',function(b){b.addEventListener('click',function(){amode=b.getAttribute('data-g');agrid()})});
+agrid();
 })();
 </script>
 </body>
