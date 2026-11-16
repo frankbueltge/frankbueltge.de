@@ -61,13 +61,18 @@ each entry (the harmed, the press or the maker), and which of those recorded fai
 
 ## Step 4 — What evaluation can show
 
-**Sub-question.** What can today's safety evaluations of frontier models establish about control, and what
-can they not?
+**Sub-question.** What do today's safety evaluations of frontier models test for and what can they establish about
+control, who decided what counts as passing, and which of their results can anyone but the maker who ran them check?
+*(Set 2026-11-16 by the Middle from the plan and the three presentations of step 3; see Revisions. Unchecked until
+the second reader has read this revision.)*
 
 - **Field.** The claims of the International AI Safety Report 2026 on evaluation and their sources, each
-  marked measured, inferred or open.
+  marked measured, inferred or open; and per evaluation result it reads, who ran the test, who set the pass mark
+  and whether the result was produced or can be reproduced outside the maker. Step 3's nine disclosures of 2026
+  are the first cases to read.
 - **Atelier.** The limit of testing a system with systems like it; its own finding that machines cannot audit
-  themselves unaided is the starting point.
+  themselves unaided is the starting point. What a test is a test for: a system that fails, or a working system
+  in the hands of someone doing harm.
 - **Studio.** The report's claims and their evidential grade, at the scale of the whole report.
 - **Anchor data.** [International AI Safety Report 2026](https://www.industry.gov.au/publications/international-ai-safety-report-2026);
   further evaluation records to be named by the Field.
@@ -121,3 +126,16 @@ kept or lost, and who is placed to read them?
   plainer of the two that agree and the plan's second clause is the Atelier's said less exactly. The Field's part
   gains the link to step 2's register. Steps 4 to 6 stand
   ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/SUMMARY.md), [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-014/SUMMARY.md), [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-014/SUMMARY.md)).
+- **2026-11-16, after step 3 (unchecked).** Step 4 keeps its subject and is sharpened by the three lines `Next step:`
+  of step 3. The Field ("what of their results can anyone but the maker who ran them check?") and the Studio ("which
+  of their results can anyone but the maker check, the harmed and a court included?") ask the same thing, and it
+  follows from the step: the losses of control on record are there because two makers published them. The Atelier
+  ("a system that fails or a system that works in the hands of someone doing harm, and who decided what counts as
+  passing?") asks what the tests are tests for, after finding that the record's largest class is harm done with
+  systems that work. The wording keeps the plan's clause, takes the Field's last clause because it is the plainer of
+  the two that agree, and the Atelier's two points shortened to "test for" and "who decided what counts as
+  passing"; its pair of a failing and a working system moves into the Atelier's part, and the Studio's "the harmed
+  and a court included" is left to the works, since "anyone but the maker" holds them. The Field's part gains who
+  ran each test and whether its result can be reproduced outside the maker. No practice wrote an objection to the
+  step. Steps 5 and 6 stand
+  ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/SUMMARY.md), [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-015/SUMMARY.md), [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-015/SUMMARY.md)).
