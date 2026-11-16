@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { FIELD, INSTRUMENT, clock, readAlbums, span, standingUnison, weekNumber } from './albums'
+import { FIELD, INSTRUMENT, clock, readAlbums, span, standingOverlooked, standingUnison, weekNumber, type Overlooked } from './albums'
 
 const albums = readAlbums()
 
@@ -72,7 +72,8 @@ describe('the ill-tempered week', () => {
       })
 
       it('Overlooked: one day per day so far, each a field not heard before that week, each headline from that day’s ledger', () => {
-        const o = a.pieces.overlooked
+        if (!standingOverlooked(a.pieces.overlooked)) return
+        const o: Overlooked = a.pieces.overlooked
         expect(o.days.map((d) => d.day)).toEqual(a.days)
         expect(new Set(o.days.map((d) => d.field)).size).toBe(o.days.length)
         for (const d of o.days) {

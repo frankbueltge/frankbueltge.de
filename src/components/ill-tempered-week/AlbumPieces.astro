@@ -6,7 +6,7 @@ import FormScore from '@/components/ill-tempered-week/FormScore'
 import OverlookedScore from '@/components/ill-tempered-week/OverlookedScore'
 import TurnScore from '@/components/ill-tempered-week/TurnScore'
 import UnisonScore from '@/components/ill-tempered-week/UnisonScore'
-import { clock, formedTurn, formedUnison, standingTurn, standingUnison, weekday, type Album } from '@/lib/ill-tempered-week/albums'
+import { clock, formedOverlooked, formedTurn, formedUnison, standingOverlooked, standingTurn, standingUnison, weekday, type Album } from '@/lib/ill-tempered-week/albums'
 import { formSaidLinks, formWarSignals, HINT, overlookedLinks, turnSaidLink as saidLink, unisonLinks, warSignals } from '@/lib/ill-tempered-week/pages'
 import { dayShort, mmss } from '@/lib/ill-tempered-week/score'
 import { formText, whyForm } from '@/lib/ill-tempered-week/score-forms'
@@ -24,7 +24,9 @@ const { album, folded = false } = Astro.props
 const sectionClass = folded ? 'itw-piece itw-fold mb-16' : 'itw-piece mb-16'
 const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 const pct = (x: number): string => `${Math.round(100 * x)} %`
-const o = album.pieces.overlooked
+const op = album.pieces.overlooked
+const o = standingOverlooked(op) ? op : null
+const fo = formedOverlooked(op) ? op : null
 // A piece pressed in the form the week chose (from 2026-11-16 on) has its own text and score; one without a form is
 // the standing form, drawn as before.
 const u = standingUnison(album.pieces.unison) ? album.pieces.unison : null
@@ -49,15 +51,16 @@ const hint = HINT
 )}
 
 <section id="overlooked" class={sectionClass} aria-label="Overlooked">
-  <p class="kicker mb-1">I · chamber ensemble</p>
+  <p class="kicker mb-1">I · chamber ensemble{fo ? ` · ${fo.form}` : ""}</p>
   <h2 class="itw-title">Overlooked</h2>
   {!folded && (<>
-  <audio id="itw-audio-overlooked" class="itw-player mt-3" controls preload="metadata" src={o.audio}></audio>
+  <audio id="itw-audio-overlooked" class="itw-player mt-3" controls preload="metadata" src={op.audio}></audio>
   <p class="mt-2 font-mono text-mono-sm text-fg-muted">
-    {clock(o.seconds)} · {album.complete ? 'seven days' : `edition ${o.edition} of 7, to ${weekday(o.newest_day)}`} ·
-    <a class={link} href={o.audio} download>download</a> · CC BY 4.0
+    {clock(op.seconds)} · {album.complete ? 'seven days' : `edition ${op.edition} of 7, to ${weekday(op.newest_day)}`} ·
+    <a class={link} href={op.audio} download>download</a> · CC BY 4.0
   </p>
   </>)}
+  {o && (<>
   <p class="mt-5 max-w-3xl leading-relaxed">
     Each day, the headline that drew the least attention on its own platform, among all thirteen fields and from a field not heard
     before that week, is said once. The instrument of its field answers with the headline’s own speech melody, in the rhythm it was
@@ -75,6 +78,20 @@ const hint = HINT
     label={`The score of Overlooked, ${album.title}: one lane per voice, time from left to right.`}
     hint={hint}
   />
+  </>)}
+  {fo && (<>
+  <p class="mt-5 max-w-3xl leading-relaxed">{formText('overlooked', fo.form)}</p>
+  <FormScore
+    client:idle
+    record={fo}
+    piece="overlooked"
+    saidLinks={formSaidLinks(fo)}
+    audioId="itw-audio-overlooked"
+    id="itw-score-overlooked"
+    label={`The score of Overlooked, ${album.title}, ${fo.form}: the sentence, one row per field's instrument, time from left to right.`}
+    hint={hint}
+  />
+  </>)}
 </section>
 
 {u && most && (

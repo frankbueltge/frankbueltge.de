@@ -5,15 +5,17 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
-import type { TurnForm, UnisonForm } from './albums'
-import { describeForm, FORM, hitForm, layoutForm, nowForm, turnFormScore, unisonFormScore } from './score-forms'
+import type { OverlookedForm, TurnForm, UnisonForm } from './albums'
+import { describeForm, FORM, hitForm, layoutForm, nowForm, overlookedFormScore, turnFormScore, unisonFormScore } from './score-forms'
 
 const here = 'src/lib/ill-tempered-week'
 const fixture = <T,>(name: string): T => JSON.parse(readFileSync(join(here, 'fixtures', `form-${name}.json`), 'utf8')) as T
 const UNISON = readFileSync('scripts/ill-tempered-week/itw/forms_unison.py', 'utf8')
 const TURN = readFileSync('scripts/ill-tempered-week/itw/forms_turn.py', 'utf8')
+const OVERLOOKED = readFileSync('scripts/ill-tempered-week/itw/forms_overlooked.py', 'utf8')
 
 const unisons: [string, UnisonForm][] = ['2026-W42-unison-held', '2026-W43-unison-mosaic', '2026-W44-unison-break', '2026-W46-unison-handover'].map((n) => [n, fixture<UnisonForm>(n)])
+const overlookeds: [string, OverlookedForm][] = ['2026-W42-overlooked-held', '2026-W43-overlooked-mosaic', '2026-W44-overlooked-break', '2026-W46-overlooked-handover'].map((n) => [n, fixture<OverlookedForm>(n)])
 const turns: [string, TurnForm][] = ['2026-W42-turn-held', '2026-W43-turn-mosaic', '2026-W44-turn-break', '2026-W46-turn-handover'].map((n) => [n, fixture<TurnForm>(n)])
 
 describe('the renderers’ fixed times', () => {
@@ -110,5 +112,42 @@ describe.each(turns)('Turn, %s', (_, r) => {
       const l = layoutForm(s, w)
       for (const line of l.lines) for (const m of line.marks) expect(m.x + m.w).toBeLessThanOrEqual(l.frame.width + 0.1)
     }
+  })
+})
+
+describe('Overlooked’s fixed times', () => {
+  it('match itw/forms_overlooked.py', () => {
+    expect(OVERLOOKED).toContain(`WALL_NOTE_S = ${FORM.wallNote.toFixed(1)}`)
+    expect(OVERLOOKED).toContain(`WALL_RELEASE_S = ${FORM.wallRelease}`)
+    expect(OVERLOOKED).toContain(`WALL_STEP_S = ${FORM.wallStep.toFixed(1)}`)
+    expect(OVERLOOKED).toContain(`span = (m['length'] + ${FORM.motifRest}) * PULSE`)
+    expect(OVERLOOKED).toContain('PULSE = overlooked.PULSE')
+  })
+})
+
+describe.each(overlookeds)('Overlooked, %s', (_, o) => {
+  const s = overlookedFormScore(o)
+  const days = o.parts.flatMap((p) => (p.form === 'stroke' ? [] : p.days))
+
+  it('says every day once and plays every motif note as often as the record says', () => {
+    expect(s.days).toHaveLength(7)
+    expect(s.marks.filter((m) => m.kind === 'said')).toHaveLength(7)
+    const notes = days.reduce((n, d) => n + d.motif.length * d.repeats, 0)
+    expect(s.marks.filter((m) => m.kind === 'lead')).toHaveLength(notes)
+    for (const m of s.marks) expect(m.t1).toBeLessThanOrEqual(s.seconds + 0.01)
+  })
+
+  it('a field is heard once a week, and its row is named for its instrument', () => {
+    expect(new Set(days.map((d) => d.field)).size).toBe(7)
+    for (const d of days) expect(s.rows.find((r) => r.id === `field:${d.field}`)?.label).toContain(d.instrument)
+  })
+
+  it('draws its form', () => {
+    const kinds = new Set([...s.marks.map((m) => m.kind), ...s.regions.map((g) => g.kind)])
+    if (o.form === 'held') expect([kinds.has('pedal'), kinds.has('block')]).toEqual([true, false])
+    if (o.form === 'mosaic') expect([kinds.has('pedal'), kinds.has('block')]).toEqual([false, true])
+    if (o.form === 'break') expect([kinds.has('pedal'), kinds.has('block'), kinds.has('stroke')]).toEqual([true, true, true])
+    if (o.form === 'handover') expect(s.regions.filter((g) => g.kind === 'step')).toHaveLength(1)
+    for (const w of [360, 960]) for (const line of layoutForm(s, w).lines) for (const m of line.marks) expect(m.x + m.w).toBeLessThanOrEqual(w + 0.1)
   })
 })

@@ -2,7 +2,7 @@
 // the nightly press too, so every statement holds for any set of albums.
 import { describe, expect, it } from 'vitest'
 
-import { readAlbums, standingUnison, type Album } from './albums'
+import { readAlbums, standingOverlooked, standingUnison, type Album } from './albums'
 import { isAlbumAudio } from './audio-path'
 import { albumPages, albumPath, frontPage, overlookedLinks, turnSaidLink, unisonLinks, warSignals } from './pages'
 
@@ -69,9 +69,11 @@ describe('the links of the scores', () => {
   it('gives a slot to every day and every murmured headline, found or not', () => {
     for (const a of albums) {
       const o = a.pieces.overlooked
-      const links = overlookedLinks(o)
-      expect(links.days).toHaveLength(o.days.length)
-      links.days.forEach((d, i) => expect(d.attended).toHaveLength(o.days[i]!.attended.length))
+      if (standingOverlooked(o)) {
+        const links = overlookedLinks(o)
+        expect(links.days).toHaveLength(o.days.length)
+        links.days.forEach((d, i) => expect(d.attended).toHaveLength(o.days[i]!.attended.length))
+      }
       const u = a.pieces.unison
       if (standingUnison(u)) {
         expect(unisonLinks(u).days).toHaveLength(u.days.length)

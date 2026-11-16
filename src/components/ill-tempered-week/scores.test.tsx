@@ -6,9 +6,9 @@ import { readFileSync } from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import { readAlbums, standingTurn, standingUnison, type Turn, type Unison } from '@/lib/ill-tempered-week/albums'
+import { readAlbums, standingOverlooked, standingTurn, standingUnison, type Overlooked, type Turn, type Unison } from '@/lib/ill-tempered-week/albums'
 import { dayShort } from '@/lib/ill-tempered-week/score'
-import { turnFormScore, unisonFormScore } from '@/lib/ill-tempered-week/score-forms'
+import { overlookedFormScore, turnFormScore, unisonFormScore } from '@/lib/ill-tempered-week/score-forms'
 import { overlookedScore } from '@/lib/ill-tempered-week/score-overlooked'
 import { turnScore } from '@/lib/ill-tempered-week/score-turn'
 import { unisonScore } from '@/lib/ill-tempered-week/score-unison'
@@ -20,7 +20,7 @@ import UnisonScore from './UnisonScore'
 
 const albums = readAlbums()
 const complete = albums.filter((a) => a.complete).at(-1)
-const newest = albums.at(-1)!
+const newest = albums.filter((a) => standingOverlooked(a.pieces.overlooked)).at(-1)!
 
 /** The drawing alone, without the legend's swatches and the staves under it. */
 const drawing = (html: string): string => {
@@ -39,7 +39,7 @@ const clean = (html: string) => {
 }
 
 describe('Overlooked, on the server', () => {
-  const o = newest.pieces.overlooked
+  const o = newest.pieces.overlooked as Overlooked
   const links = { days: o.days.map((_, i) => ({ text: `https://example.org/day/${i}`, attended: o.days[i]!.attended.map((__, k) => `https://example.org/day/${i}/${k}`) })) }
   const render = () => renderToStaticMarkup(<OverlookedScore record={o} links={links} audioId="a" id="s" label="The score" hint="Press play" />)
 
@@ -111,7 +111,8 @@ describe.runIf(standingTurn(complete?.pieces.turn))('Turn, on the server', () =>
 
 describe('the forms the week chose, on the server', () => {
   const read = (name: string) => JSON.parse(readFileSync(`src/lib/ill-tempered-week/fixtures/form-${name}.json`, 'utf8'))
-  const cases: [string, 'unison' | 'turn'][] = [
+  const cases: [string, 'overlooked' | 'unison' | 'turn'][] = [
+    ['2026-W42-overlooked-held', 'overlooked'], ['2026-W43-overlooked-mosaic', 'overlooked'], ['2026-W44-overlooked-break', 'overlooked'], ['2026-W46-overlooked-handover', 'overlooked'],
     ['2026-W42-unison-held', 'unison'], ['2026-W43-unison-mosaic', 'unison'], ['2026-W44-unison-break', 'unison'], ['2026-W46-unison-handover', 'unison'],
     ['2026-W42-turn-held', 'turn'], ['2026-W43-turn-mosaic', 'turn'], ['2026-W44-turn-break', 'turn'], ['2026-W46-turn-handover', 'turn'],
   ]
@@ -121,7 +122,7 @@ describe('the forms the week chose, on the server', () => {
     const html = render()
     expect(html).toBe(render())
     clean(html)
-    const s = piece === 'unison' ? unisonFormScore(record) : turnFormScore(record)
+    const s = piece === 'overlooked' ? overlookedFormScore(record) : piece === 'unison' ? unisonFormScore(record) : turnFormScore(record)
     for (const d of s.days) {
       expect(html).toContain(dayShort(d.day))
       if (d.said) expect(html).toContain(escaped(d.said))

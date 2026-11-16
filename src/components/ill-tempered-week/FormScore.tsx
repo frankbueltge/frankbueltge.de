@@ -7,13 +7,14 @@
 // readout is clamped and never a hit target; no chart library; mono ink (every voice has a row of its own).
 import * as React from 'react'
 
-import type { TurnForm, UnisonForm } from '@/lib/ill-tempered-week/albums'
+import type { OverlookedForm, TurnForm, UnisonForm } from '@/lib/ill-tempered-week/albums'
 import { dayName, dayShort, mmss } from '@/lib/ill-tempered-week/score'
 import {
   describeForm,
   hitForm,
   layoutForm,
   nowForm,
+  overlookedFormScore,
   turnFormScore,
   unisonFormScore,
   type FormLayout,
@@ -25,8 +26,8 @@ import {
 import { byTouch, PlayFrom, PlayheadRule, SourceLink, svgPoint, useBoxReadout, useMounted, usePlayhead, useWidth } from './score-kit'
 
 export interface FormScoreProps {
-  record: UnisonForm | TurnForm
-  piece: 'unison' | 'turn'
+  record: OverlookedForm | UnisonForm | TurnForm
+  piece: 'overlooked' | 'unison' | 'turn'
   /** each day's sentence link, by day, where the day file holds it */
   saidLinks: Record<string, string | null>
   audioId: string
@@ -124,7 +125,7 @@ function Swatch({ kind }: { kind: MarkKind | RegionKind }) {
 
 export default function FormScore({ record, piece, saidLinks, audioId, id, label, hint }: FormScoreProps) {
   const score: Score = React.useMemo(
-    () => (piece === 'unison' ? unisonFormScore(record as UnisonForm) : turnFormScore(record as TurnForm)),
+    () => (piece === 'overlooked' ? overlookedFormScore(record as OverlookedForm) : piece === 'unison' ? unisonFormScore(record as UnisonForm) : turnFormScore(record as TurnForm)),
     [record, piece],
   )
   const rootRef = React.useRef<HTMLDivElement>(null)

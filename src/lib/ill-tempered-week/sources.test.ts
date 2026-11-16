@@ -5,7 +5,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
-import type { Album, Unison } from './albums'
+import type { Album, Overlooked, Unison } from './albums'
 import { asRecorded, dayLinks, hostOf, indexDay, linkFor, OUTLET } from './sources'
 
 const album = (week: string): Album => JSON.parse(readFileSync(`src/data/ill-tempered-week/${week}.json`, 'utf8')) as Album
@@ -40,7 +40,7 @@ describe('the links', () => {
   for (const week of ['2026-W45', '2026-W46']) {
     it(`finds every overlooked headline of ${week} to 13 November, and every murmured one, in its day file`, () => {
       const a = album(week)
-      for (const d of a.pieces.overlooked.days.filter((x) => x.day <= '2026-11-13')) {
+      for (const d of (a.pieces.overlooked as Overlooked).days.filter((x) => x.day <= '2026-11-13')) {
         const links = dayLinks(d.day)
         expect(linkFor(links, d.text, d.source), d.text).not.toBeNull()
         for (const x of d.attended) expect(linkFor(links, x.text), x.text).not.toBeNull()

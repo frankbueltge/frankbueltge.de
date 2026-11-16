@@ -7,7 +7,7 @@
 // standing scores. A held form draws long notes and no day as a day; a mosaic draws its blocks and the silence
 // between them; a break draws both with the stroke between; a handover draws the pedal's step. Pure and browser-free:
 // the island (src/components/ill-tempered-week/FormScore.tsx) mounts what this returns and computes nothing it claims.
-import type { Character, ChosenForm, TurnForm, UnisonForm } from './albums'
+import type { Character, ChosenForm, OverlookedForm, TurnForm, UnisonForm } from './albums'
 import { dayName, dayShort, frameFor, hzLabel, mmss, r1, spanAt, tickStep, ticksBetween, timeAtX, xAt, type Frame, type Span } from './score'
 
 /** The renderers' fixed times, as itw/forms_unison.py and itw/forms_turn.py write them (score-forms.test.ts reads
@@ -30,6 +30,13 @@ export const FORM = {
   mosaicBrass: 1.0,
   /** the break: the timpani stroke rings this long */
   stroke: 4.0,
+  /** Overlooked held: the wall's notes last this long plus their release, a new chord every wallStep seconds */
+  wallNote: 6.0,
+  wallRelease: 2.5,
+  wallStep: 4.0,
+  /** Overlooked: a motif's eighth, and the rest of four eighths between its repetitions */
+  pulse: 0.2,
+  motifRest: 4,
 } as const
 
 export type MarkKind = 'lead' | 'other' | 'pedal' | 'brass' | 'said' | 'beat' | 'beat-full'
@@ -74,7 +81,7 @@ export interface FDay {
 }
 
 export interface FormScore {
-  piece: 'unison' | 'turn'
+  piece: 'overlooked' | 'unison' | 'turn'
   form: ChosenForm
   week: string
   seconds: number
@@ -89,6 +96,8 @@ export interface FormScore {
 const pct = (x: number): string => `${Math.round(100 * x)} %`
 const r3 = (x: number): number => Math.round(x * 1000) / 1000
 const storyRow = (s: string | null): string => `story:${s ?? '—'}`
+/** A note that rings past the piece's end (the press trims the audio there) is drawn to the end. */
+const clamp = <T extends { t1: number }>(xs: T[], end: number): T[] => xs.map((x) => (x.t1 > end ? { ...x, t1: end } : x))
 
 // ---------------------------------------------------------------------------------------------------------------
 // Unison
@@ -202,9 +211,75 @@ export function unisonFormScore(u: UnisonForm): FormScore {
   if (hasPedal) addRow('pedal', 'pedal A', 'pedal')
   const order: (MarkKind | RegionKind)[] = ['lead', 'other', 'block', 'leadband', 'brass', 'said', 'pedal', 'step', 'stroke']
   return {
-    piece: 'unison', form: u.form, week: u.week, seconds: u.seconds, rows, marks, regions, days,
+    piece: 'unison', form: u.form, week: u.week, seconds: u.seconds, rows, marks: clamp(marks, u.seconds), regions: clamp(regions, u.seconds), days,
     legend: order.filter((k) => legend.has(k)).map((k) => ({ kind: k, text: legend.get(k)! })),
   }
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Overlooked
+// ---------------------------------------------------------------------------------------------------------------
+
+export function overlookedFormScore(o: OverlookedForm): FormScore {
+  const rows: FRow[] = [{ id: 'voice', label: 'said', short: 'said' }]
+  const marks: FMark[] = []
+  const regions: FRegion[] = []
+  const days: FDay[] = []
+  const legend = new Map<MarkKind | RegionKind, string>()
+  const fieldRow = (field: string, instrument: string) => {
+    const id = `field:${field}`
+    if (!rows.some((r) => r.id === id)) rows.push({ id, label: `${field} · ${instrument}`, short: field })
+    return id
+  }
+  for (const p of o.parts) {
+    if (p.form === 'stroke') {
+      regions.push({ id: 'stroke', t0: p.at_s, t1: r3(p.at_s + FORM.stroke), kind: 'stroke', head: `The break · ${dayShort(p.day)}`, body: 'One timpani stroke on A and silence: the sharpest overnight change of the week. What was held breaks into blocks.' })
+      legend.set('stroke', 'The break: one timpani stroke and silence, the day the web’s attention changed most overnight.')
+      continue
+    }
+    for (const d of p.days) {
+      const row = fieldRow(d.field, d.instrument)
+      const named = 'named' in d ? ` · its field named ${d.named} time${d.named === 1 ? '' : 's'} that day` : ''
+      days.push({ index: days.length, day: d.day, from: d.from_s, said: d.text,
+        note: `${p.form === 'held' ? 'inside the wall' : `a block, the motif ${d.repeats}×`} · ${d.field}, ${d.instrument}${named}` })
+      marks.push({ id: `said-${d.day}`, row: 'voice', t0: d.said_s, t1: r3(d.said_s + d.speech_s), kind: 'said', weight: 1, head: `Said · ${dayShort(d.day)}`, body: d.text })
+      const span = (d.motif_eighths + FORM.motifRest) * FORM.pulse
+      for (let r = 0; r < d.repeats; r++) {
+        d.motif.forEach((n, k) => {
+          const t0 = r3(d.motif_from_s + r * span + n.step * FORM.pulse)
+          marks.push({ id: `m-${d.day}-${r}-${k}`, row, t0, t1: r3(t0 + Math.max(0.12, 0.95 * n.eighths * FORM.pulse)), kind: 'lead', weight: Math.min(1, 0.4 + d.attention),
+            head: `${d.field} · ${dayShort(d.day)}`, body: `The motif of “${d.text}”, ${d.instrument}, ${hzLabel(n.hz)}` })
+        })
+      }
+      if (p.form === 'mosaic' && 'to_s' in d) {
+        regions.push({ id: `blk-${d.day}`, t0: d.from_s, t1: d.to_s, kind: 'block', head: `${dayName(d.day)} · a block`, body: `The headline alone, then its motif ${d.repeats}×, then silence.` })
+      }
+    }
+    if (p.form === 'held') {
+      let seg: { t0: number; t1: number; ratio: number } | null = null
+      const segs: { t0: number; t1: number; ratio: number }[] = []
+      for (const g of p.ground) {
+        const end = r3(g.from_s + FORM.wallNote + FORM.wallRelease)
+        if (seg && Math.abs(seg.ratio - g.ratio) < 1e-6) seg.t1 = Math.max(seg.t1, end)
+        else segs.push((seg = { t0: g.from_s, t1: end, ratio: g.ratio }))
+      }
+      segs.forEach((g, k) => {
+        marks.push({ id: `wall-${p.from_s}-${k}`, row: 'wall', t0: g.t0, t1: g.t1, kind: 'pedal', weight: 1, head: 'The wall',
+          body: g.ratio === 1 ? 'Strings on A’s harmonic chord, never stopping, louder than what is said inside it.' : 'The wall a whole tone higher (9/8): the ground moved on the day the lead passed.' })
+        if (k > 0) regions.push({ id: `step-${k}`, t0: g.t0, t1: r3(g.t0 + 4), kind: 'step', head: 'The handover', body: 'The wall’s chord moves up a whole tone and stays: the day the week’s lead passed to another story.' })
+      })
+      legend.set('pedal', 'The wall: strings on A’s harmonic chord that never stop, louder than what is said inside them.')
+      if (segs.length > 1) legend.set('step', 'The handover: the wall moves up a whole tone on the day the lead passed, and stays.')
+    } else {
+      legend.set('block', 'A day as a block: the headline alone, its motif as often as its field was named that day (at most four), then silence.')
+    }
+  }
+  if (marks.some((m) => m.kind === 'pedal')) rows.push({ id: 'wall', label: 'the wall', short: 'wall' })
+  legend.set('said', 'The day’s least attended headline, said once in its field’s voice.')
+  legend.set('lead', 'Its motif: the headline’s speech melody on the pulse, played by its field’s instrument.')
+  const order: (MarkKind | RegionKind)[] = ['said', 'lead', 'block', 'pedal', 'step', 'stroke']
+  return { piece: 'overlooked', form: o.form, week: o.week, seconds: o.seconds, rows, marks: clamp(marks, o.seconds), regions: clamp(regions, o.seconds), days,
+    legend: order.filter((k) => legend.has(k)).map((k) => ({ kind: k, text: legend.get(k)! })) }
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -255,7 +330,7 @@ export function turnFormScore(r: TurnForm): FormScore {
   if (regions.some((g) => g.kind === 'turn')) legend.push({ kind: 'turn', text: 'The turn: one bar of every beat, then a silent bar with the day’s most attended AI headline said.' })
   if (regions.some((g) => g.kind === 'cut')) legend.push({ kind: 'cut', text: 'Silence between the days’ blocks: a cut, nothing rings on.' })
   if (regions.some((g) => g.kind === 'step')) legend.push({ kind: 'step', text: 'The handover: from here the rhythmicon sounds a whole tone higher.' })
-  return { piece: 'turn', form: r.form, week: r.week, seconds: r.seconds, rows, marks, regions, days: days.filter(Boolean), legend }
+  return { piece: 'turn', form: r.form, week: r.week, seconds: r.seconds, rows, marks: clamp(marks, r.seconds), regions: clamp(regions, r.seconds), days: days.filter(Boolean), legend }
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -404,7 +479,14 @@ export function whyForm(c: Character, days: readonly string[]): string {
 }
 
 /** What the piece does in its form, for the paragraph above its score. */
-export function formText(piece: 'unison' | 'turn', form: ChosenForm): string {
+export function formText(piece: 'overlooked' | 'unison' | 'turn', form: ChosenForm): string {
+  const overlooked: Record<ChosenForm, string> = {
+    held: 'Each day, the headline that drew the least attention on its own platform, among all thirteen fields and from a field not heard before that week, is said once, and its field’s instrument plays its speech melody as a motif. Here they are said inside a wall of strings on A’s harmonic chord that never stops and is louder than they are: the week held its attention elsewhere, and nothing that was overlooked gathers.',
+    mosaic: 'Each day, the headline that drew the least attention on its own platform, among all thirteen fields and from a field not heard before that week, is said once, alone. Then its field’s instrument plays its speech melody as a motif, as many times as its field was named that day (at most four), and the day ends in silence. Each day stands alone.',
+    break: 'The least attended headline of each day, said and played as its field’s motif: inside a wall of strings until the break, then one timpani stroke and silence, then each day as a block of its own.',
+    handover: 'The least attended headline of each day, said and played as its field’s motif inside a wall of strings that never stops; on the day the lead passed, the wall moves up a whole tone and stays.',
+  }
+  if (piece === 'overlooked') return overlooked[form]
   const unison: Record<ChosenForm, string> = {
     held: 'Every signal that named war and violence is one held string note at its hour. A signal naming the week’s leading story sounds on an octave of A; any other story has a degree of its own and glides towards A as far as its day agreed. Double basses hold A from the first second to the last. Where at least 30 % of a day’s war signals named the week’s lead, horn, trombone and tuba hold bare octaves of A and the day’s most attended war headline is said.',
     mosaic: 'Every signal that named war and violence is one short note at its hour, in a block per day as long as the day’s share of the week’s war signals, with silence between. Each story has a sound of its own, the first to appear the first of eight; the day’s leading story beats the ground of its block, and the others cut in. Where at least 30 % of a day’s war signals named its leading story, the block opens with brass and the day’s most attended war headline.',
@@ -421,8 +503,14 @@ export function formText(piece: 'unison' | 'turn', form: ChosenForm): string {
 }
 
 /** One sentence per piece and form for the album's track list. */
-export function formSays(piece: 'unison' | 'turn', form: ChosenForm): string {
-  const says: Record<'unison' | 'turn', Record<ChosenForm, string>> = {
+export function formSays(piece: 'overlooked' | 'unison' | 'turn', form: ChosenForm): string {
+  const says: Record<'overlooked' | 'unison' | 'turn', Record<ChosenForm, string>> = {
+    overlooked: {
+      held: 'Each day’s least attended headline said and played inside a wall of strings that never stops.',
+      mosaic: 'Each day’s least attended headline alone, then its motif, then silence: a block per day.',
+      break: 'Inside a wall of strings until the day attention changed most, then a stroke, and a block per day.',
+      handover: 'Inside a wall of strings that moves up a whole tone on the day the lead passed.',
+    },
     unison: {
       held: 'Every war signal a held string note over a pedal on A; the week’s leading story on A, the others gliding towards it as far as each day agreed.',
       mosaic: 'Every war signal a short note, a block per day with silence between, each story in a sound of its own.',

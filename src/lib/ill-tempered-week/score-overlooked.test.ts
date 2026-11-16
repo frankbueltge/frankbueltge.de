@@ -4,7 +4,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
-import { readAlbums, type Overlooked } from './albums'
+import { readAlbums, standingOverlooked, type Overlooked } from './albums'
 import { harmonicOf, SCALE_HARMONICS } from './score'
 import {
   describeOverlooked,
@@ -20,7 +20,8 @@ import {
 } from './score-overlooked'
 
 const SOURCE = readFileSync('scripts/ill-tempered-week/itw/overlooked.py', 'utf8')
-const editions = readAlbums().map((a) => a.pieces.overlooked)
+// an Overlooked pressed in the week's form has a score of its own (score-forms.test.ts)
+const editions = readAlbums().map((a) => a.pieces.overlooked).filter(standingOverlooked)
 
 describe('the renderer’s form, as the score mirrors it', () => {
   it('has the pulse, the bars and the intro the score assumes', () => {
@@ -210,7 +211,7 @@ describe('the parts of the form', () => {
   })
 
   it('wraps the first album at a phone’s width and keeps it on one line at a desk’s', () => {
-    const s = overlookedScore(readAlbums()[0]!.pieces.overlooked)
+    const s = overlookedScore(readAlbums()[0]!.pieces.overlooked as Overlooked)
     expect(layoutOverlooked(s, 960).lines).toHaveLength(1)
     expect(layoutOverlooked(s, 358).lines.length).toBeGreaterThan(1)
   })

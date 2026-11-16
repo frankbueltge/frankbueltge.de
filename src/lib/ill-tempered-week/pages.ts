@@ -4,7 +4,7 @@
 // The front page (/ill-tempered-week/) plays the newest complete album and, while a week runs, that week's Overlooked
 // so far. Every album also has a page of its own (/ill-tempered-week/<week>/), from its first day on: when a week
 // completes, the album before it leaves the front page, and its scores stay reachable at its own address.
-import type { Album, FormDay, HeldEvent, MosaicEvent, Overlooked, Turn, TurnForm, Unison, UnisonEvent, UnisonForm } from './albums'
+import type { Album, FormDay, HeldEvent, MosaicEvent, Overlooked, OverlookedForm, Turn, TurnForm, Unison, UnisonEvent, UnisonForm } from './albums'
 import { dayLinks, linkFor } from './sources'
 
 /** The line a score shows before anything plays. */
@@ -87,8 +87,12 @@ export function albumPages(albums: readonly Album[]): { params: { week: string }
 }
 
 /** Each day's sentence link in a piece pressed in the week's form, by day, from the committed day files. */
-export function formSaidLinks(piece: UnisonForm | TurnForm): Record<string, string | null> {
+export function formSaidLinks(piece: OverlookedForm | UnisonForm | TurnForm): Record<string, string | null> {
   const out: Record<string, string | null> = {}
+  if ('pulse_s' in piece) {
+    for (const p of piece.parts) if (p.form !== 'stroke') for (const d of p.days) out[d.day] = linkFor(dayLinks(d.day), d.text, d.source)
+    return out
+  }
   const days: { day: string; said: string | null }[] = 'parts' in piece ? piece.parts.flatMap((p): { day: string; said: string | null }[] => (p.form === 'stroke' ? [] : p.days)) : piece.days
   for (const d of days) out[d.day] = d.said ? linkFor(dayLinks(d.day), d.said) : null
   return out

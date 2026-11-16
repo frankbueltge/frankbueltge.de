@@ -193,7 +193,45 @@ export interface TurnForm extends Rendered {
   days: { day: string; signals: number; families: Record<string, number>; turn: boolean; said: string | null }[]
 }
 
+export interface OverlookedFormDay {
+  day: string
+  field: string
+  voice: string
+  text: string
+  attention: number
+  source: string
+  instrument: string
+  /** when the headline is said, how long, when its motif begins, and how many times it is played */
+  said_s: number
+  speech_s: number
+  motif_from_s: number
+  repeats: number
+  motif_eighths: number
+  motif: { step: number; hz: number; eighths: number }[]
+  from_s: number
+}
+
+export type OverlookedPart =
+  | { form: 'held'; from_s: number; to_s: number; day_s: number; chord: number[]; ground: { from_s: number; ratio: number }[]; days: OverlookedFormDay[] }
+  | { form: 'mosaic'; from_s: number; to_s: number; days: (OverlookedFormDay & { to_s: number; named: number })[] }
+  | { form: 'stroke'; at_s: number; day: string }
+
+/** Overlooked pressed in the week's form (itw/forms_overlooked.py): only the seventh pressing of a week takes it. */
+export interface OverlookedForm extends Rendered {
+  form: ChosenForm
+  edition: number
+  week: string
+  tuning: string
+  pulse_s: number
+  days_so_far: number
+  newest_day: string
+  round: string
+  parts: OverlookedPart[]
+}
+
 /** A piece record without `form` was pressed in the standing form (every album before 2026-11-16 is). */
+export const standingOverlooked = (p: Overlooked | OverlookedForm | undefined): p is Overlooked => !!p && !('form' in p)
+export const formedOverlooked = (p: Overlooked | OverlookedForm | undefined): p is OverlookedForm => !!p && 'form' in p
 export const standingUnison = (p: Unison | UnisonForm | undefined): p is Unison => !!p && !('form' in p)
 export const standingTurn = (p: Turn | TurnForm | undefined): p is Turn => !!p && !('form' in p)
 export const formedUnison = (p: Unison | UnisonForm | undefined): p is UnisonForm => !!p && 'form' in p
@@ -229,7 +267,7 @@ export interface Album {
    *  days were read, the verdict, and the form the album was pressed in. An album without it was pressed in the
    *  standing form, before the week chose. */
   character?: Character
-  pieces: { overlooked: Overlooked; unison?: Unison | UnisonForm; turn?: Turn | TurnForm }
+  pieces: { overlooked: Overlooked | OverlookedForm; unison?: Unison | UnisonForm; turn?: Turn | TurnForm }
   library: string
   voices: string
   receipts: Record<string, string>
