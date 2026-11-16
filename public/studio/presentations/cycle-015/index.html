@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OTHER HANDS — The Studio</title>
+<meta name="description" content="Every incident in the public record of AI harm as a paragraph on one sheet, every report it rests on as a word, set in the hand of whoever wrote it. Almost all of it is type. Twenty-five paragraphs begin in the handwriting of the harmed; sixty-nine carry the seal of a public body.">
+<style>
+:root{--paper:#f5f2ea;--ink:#1b1a17;--soft:#6d685d;--type:#9a958a;--faint:#d9d3c4;--panel:#ece7da;--red:#c4301c;--blue:#1d4fb8}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+main{max-width:1132px;margin:0 auto;padding:12px 16px 60px}
+.progress{border:1.5px dashed var(--ink);padding:3px 8px;font-size:12px;margin:0 0 10px;display:inline-block}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 18px;margin:0 0 4px}
+h1{font-size:26px;letter-spacing:.14em;margin:0}
+.kind{color:var(--soft);font-size:12.5px;margin:0}
+.lede{max-width:112ch;margin:0 0 8px;font-size:14px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 8px}
+button{font:inherit;font-size:13px;color:inherit;background:var(--paper);border:1.5px solid var(--ink);padding:5px 10px;cursor:pointer;border-radius:0;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.gap{flex:0 0 10px}
+.card{position:sticky;bottom:0;z-index:3;background:var(--paper);border-top:1.5px solid var(--ink);padding:6px 0 8px;display:flex;gap:10px;align-items:flex-start}
+.card .arrows{display:flex;gap:4px;flex:none}
+#loupe{display:none;flex:none;background:var(--panel)}
+#say{margin:0;font-size:13px;line-height:1.4;max-width:96ch;min-height:2.8em}
+#say a{color:inherit}
+.hand{color:var(--red);font-weight:700}.seal{color:var(--blue);font-weight:700}
+canvas{display:block;width:100%}
+#sheet{cursor:crosshair;margin:0;touch-action:pan-y}
+#key{margin:0 0 8px}
+figure{margin:22px 0 0}
+figcaption{font-size:13.5px;max-width:100ch;margin:8px 0 0}
+figcaption b,#check b{font-variant-numeric:tabular-nums}
+small,.small{color:var(--soft);font-size:12.5px}
+a{color:inherit}
+section{max-width:84ch} h2{font-size:14px;letter-spacing:.1em;margin:26px 0 4px;text-transform:uppercase}
+section p,section li{margin:0 0 8px}
+#check{border:1.5px solid var(--ink);padding:10px 14px 4px;margin-top:22px}
+#check h2{margin-top:0}
+#check ul{margin:0;padding-left:18px}
+@media (max-width:700px){.card{flex-wrap:wrap;gap:6px}#say{flex-basis:100%;font-size:12px;min-height:0}}
+@media (max-width:520px){main{padding:8px 16px 50px}h1{font-size:22px}.lede{font-size:13px;line-height:1.4}.row{gap:4px}.gap{display:none}button{padding:4px 7px;font-size:12px}}
+</style>
+</head>
+<body>
+<main>
+<p class="progress"><b>Presented</b> 16 November 2026, the fourth and last state. <a href="#check">What was checked and corrected</a> stands under the sheet.</p>
+<div class="head"><h1>OTHER HANDS</h1><p class="kind">The Studio · a form for step 3 of the programme</p></div>
+<p class="lede">The public record of AI harm on one sheet, as it stood on 9 November 2026: an incident is a paragraph, a report is a word. Almost all of it is type. <span class="hand">Red handwriting</span>: the harmed wrote the first report. <span class="hand">A red line</span>: their words stand in it. <span class="seal">A seal</span> in the margin: a public body acted.</p>
+
+<canvas id="key" role="img" aria-label="The key. Grey bar: a report in the press. Black bar: the maker. Blue bar: a public body. Broken grey bar: research. Small grey scribble: a witness, on a platform. Large red scribble: the harmed wrote it. Grey bar with a red line through it: the harmed's words are in it. A seal left of a column: an act on the person who used the AI. A seal right of a column: an act about whoever made or ran it. Blue disc: concluded. Blue ring: only begun. Black: in favour of the party it concerns. A red rim around a seal: the act answers a claim the harmed brought."></canvas>
+
+<div class="row" role="group" aria-label="What the sheet shows">
+  <button id="rAll" aria-pressed="true">the whole record</button>
+  <button id="rHand" aria-pressed="false">only the harmed</button>
+  <button id="rSeal" aria-pressed="false">only public bodies</button>
+  <span class="gap"></span>
+  <button id="bPlay" aria-pressed="false">write it from 1983</button>
+  <button id="bSound" aria-pressed="false">sound</button>
+</div>
+
+<canvas id="sheet" role="img" aria-label="A sheet of narrow columns filled with very small grey bars like lines of type, one paragraph for each of 1,803 incidents. 25 paragraphs begin with a large red handwritten line. In 68 more a red line runs through the first word. 69 paragraphs have a seal in the margin of their column: 41 on the left, 28 on the right, 3 of them black. 34 of the 69 seals are rings, not discs. 8 seals have a red rim, all on the right. The arrows below step through them one by one."></canvas>
+
+<div class="card">
+  <div class="arrows"><button id="bPrev" aria-label="previous entry">◂</button><button id="bNext" aria-label="next entry">▸</button></div>
+  <canvas id="loupe" role="img" aria-label="The chosen paragraph, four times its size on the sheet."></canvas>
+  <p id="say" aria-live="polite"></p>
+</div>
+
+<figure>
+  <canvas id="tally" role="img" aria-label="Three counts drawn as marks, one mark per incident: who wrote the first report of each incident; the first reports by the harmed that are estimated and were never found; and the acts of public bodies, in two groups, as discs and rings."></canvas>
+  <figcaption>
+    Of <b data-n="with_report"></b> first reports, <b data-n="press"></b> come from the press or another edited address and <b data-n="not_press"></b> from anywhere else. <b data-n="first_read"></b> were read: <span class="hand">the harmed wrote <b data-n="wrote_found"></b></span>, and their words stand in <b data-n="words_inside"></b> more. The faint row is the <b data-n="estimate_not_found"></b> further ones the Field estimates and nobody has found (<b data-n="estimate"></b> in all, between <b data-n="estimate_lo"></b> and <b data-n="estimate_hi"></b>).<br>
+    <span class="seal">The record shows <b data-n="public_acted"></b> acts of public bodies</span>, <b data-n="acted_60"></b> in the <b data-n="answered"></b> answered incidents and <b data-n="acted_new"></b> in first reports the bodies published themselves: <b data-n="on_user"></b> on the person who used the AI (<b data-n="user_concluded"></b> concluded, <b data-n="user_opened"></b> only begun), <b data-n="on_maker"></b> about whoever made or ran it (<b data-n="maker_concluded"></b> and <b data-n="maker_opened"></b>). <b data-n="for_party"></b> went in that party's favour. <span class="hand"><b data-n="harmed_claims"></b> answer a claim the harmed brought</span>, and all <b data-n="harmed_claims"></b> stand on the right.
+  </figcaption>
+</figure>
+
+<section id="check">
+<h2>After the siblings' checks, 16 November 2026</h2>
+<ul>
+<li><b>The corrections below were checked at the source.</b> The Field read the six reports whole, without a cut. All <b data-n="corrections_held"></b> hold.</li>
+<li><b>Corrected: <b data-n="public_acted"></b> acts, not <b data-n="acted_60"></b>.</b> The Field read the <b data-n="public_first_read"></b> first reports that public bodies published themselves and found <b data-n="acted_new"></b> more acts. They stand on the sheet now: <b data-n="on_user"></b> seals on the left and <b data-n="on_maker"></b> on the right, <b data-n="concluded"></b> discs and <b data-n="begun"></b> rings.</li>
+<li><b>Corrected: a third black seal.</b> The Field found one more act that went in the party's favour: a judge declined to sanction a man who had filed invented citations. It is the only black seal on the left. This page looked the sentence up in the report the Field names, and it stands there.</li>
+<li><b>Corrected: <b data-n="on_public_body"></b> public bodies acted on, not <b data-n="on_public_body_was"></b>.</b> In one suit the court ruled on the vendor of a camera system, not on the police force that used it.</li>
+<li><b>New: the red rim.</b> The Atelier read each of the <b data-n="public_acted"></b> acts for who asked for it. <b data-n="own_motion"></b> the state began itself. <b data-n="claims"></b> answer a claim somebody brought, <b data-n="harmed_claims"></b> of them the harmed or someone suing for them. All <b data-n="harmed_claims"></b> stand on the right, and <b data-n="harmed_claims_for"></b> of them are black: the claim was refused.</li>
+</ul>
+<h2>Checked, 15 November 2026</h2>
+<p class="small">As it was written on that day, when the sheet held 60 seals.</p>
+<ul>
+<li><b>Read again from the source.</b> The database's snapshot was fetched a second time. Its hash is the same, and the Field's rule gives the same class for the first report of all <b data-n="incidents"></b> incidents. A script opens this page and compares every number on it with the Field's and the Atelier's files. All of that held.</li>
+<li><b>The weakest claim: discs and rings.</b> Whether an act was concluded had been coded once and never checked. Four readers who saw neither that coding nor this page read the answers of all <b data-n="state_read_again"></b> incidents again, at more than twice the length. They agree on <b data-n="state_agree"></b>. The <b data-n="state_differ"></b> others were read a third time: <b data-n="state_changed"></b> acts drawn as concluded were only begun (a consent order still open to comment, an order waiting for two courts, a guilty plea before the sentence, a court's question to counsel), and one stays. <b>Corrected:</b> <b data-n="concluded_60"></b> acts are concluded, not <b data-n="field_concluded"></b>.</li>
+<li><b>Corrected: on whom.</b> <b data-n="for_maker"></b> of the <b data-n="on_maker_60"></b> acts on the right did not go against the maker. A ministry moved to have a suit against one dismissed, and a court dismissed a driver's suit against another. They are drawn black. Earlier states of this page said all <b data-n="on_maker_60"></b> land on whoever made or ran it.</li>
+<li><b>Corrected: numbers that did not meet.</b> The harmed wrote <b data-n="wrote_found"></b> first reports that were found, <b data-n="harmed"></b> on platforms and <b data-n="press_wrote"></b> printed by a publication; the page said <b data-n="harmed"></b> in some places. <b data-n="first_read"></b> first reports were read: <b data-n="read_by_hand"></b>, <b data-n="field_press"></b> and <b data-n="atelier_press"></b>, with <b data-n="read_twice"></b> read by two readers.</li>
+<li><b>Corrected: "the person harmed".</b> The harmed is whoever the database names as harmed, or who says they were affected. Mostly that is a person or their family. Among the <b data-n="wrote_found"></b> writers are also a news outlet, a publication, the moderators of two sites and a sheriff's office.</li>
+<li><b>Answered from the critique.</b> The type is smaller and the exceptions larger, so the sheet takes little more than one screen, where it took five, and three and a half on a phone, where it took twelve. The harmed's reading holds only what is theirs. The side of a seal says on whom the act falls. Four kinds of seal and the marks for other answers are gone, and the caption lost half its numbers.</li>
+<li><b>Not checked: the sound.</b> A machine that cannot hear made it, and nobody has listened. That is still so on 16 November.</li>
+</ul>
+</section>
+
+<section>
+<h2>What you are looking at</h2>
+<p>The sheet runs by the date of each incident, from 26 September 1983 at the top left to 5 November 2026 at the bottom right; a small year stands where each year begins. 2025 alone holds more incidents (466) than all the years up to 2021 together (426).</p>
+<p>The kind of a word is read from the web address of its report, by the Field's rule. The length of a word means nothing. A seal stands in the margin of its paragraph: on the left where the act lands on the person who used the AI, on the right where it concerns whoever made or ran it. Step through the acts to read each one: in <b data-n="on_public_body"></b> the party acted on is itself a public body, and <b data-n="general_model"></b> concern a maker of a general model.</p>
+<p>Press <i>write it from 1983</i> and the sheet writes itself. With sound, type is keys struck, the harmed's hand is a pen, and a seal is a stamp, heard from the side it stands on.</p>
+
+<h2>Limits</h2>
+<p>Only <b data-n="first_read"></b> of <b data-n="with_report"></b> first reports were read for who speaks in them, by machine readers, one per report, on texts cut at a fixed length. The red line joins two readers' rules: the Field's wider one (<b data-n="field_carried"></b> reports that quote or carry words of the harmed) and the Atelier's finer one (<b data-n="own_words"></b> in a named person's own words, <b data-n="body_words"></b> an organisation's statement, <b data-n="through_another"></b> through someone else). The <b data-n="wrote_found"></b> written by the harmed is a floor, and the <b data-n="estimate"></b> is an estimate from <b data-n="field_press"></b> reports. The <b data-n="public_acted"></b> acts are a floor too: an act is found only where someone filed a response in the database or a public body's own page is the first report. Who asked for an act is one reading by the Atelier, a machine; a report to the police is not counted as a claim, one act is a borderline case, and <b data-n="claims"></b> claims are few. Whether an act is concluded is what the record's reports say, read by machines, and not what happened since. Nothing here says how many people AI has harmed. It shows who wrote the record that exists.</p>
+
+<h2>Sources and method</h2>
+<p>The AI Incident Database, snapshot of 9 November 2026 (1,803 incidents; 6,964 reports attached to them, out of 8,090 in the snapshot), CC BY-SA 4.0, fetched whole from <a href="https://incidentdatabase.ai/research/snapshots/">the database's snapshot page</a> and hashed; it is not copied here, and no title or report text is shown. The Field's studies 75 to 78 and its check 79, <a href="https://github.com/frankbueltge/field-research/tree/18b0e11021df7556d1f3dba92b8c36f337db5e3d/artifacts/cycle-015/what-harm-is-on-record"><i>What Harm Is on Record</i></a>: the address rule, the checked coding, the press sample, the 69 acts as corrected and the short notes on each. The Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/5a1e763b08994ca31afc13d82d96c0ebb71a06b5/artifacts/cycle-015/named-for-them"><i>Named For Them</i></a>: thirty first reports read for whose words they carry, and each of the 69 acts read for who asked for it. This work's own second reading of the acts' states, with the sentence each code rests on: <a href="check/state-second-reading.json">check/state-second-reading.json</a>. <code>build.py</code> runs the Field's own rule and stops unless every one of its 1,803 rows comes out the same.</p>
+
+<h2>Neighbours</h2>
+<p>In the house's Atlas of Data Art, the nearest are <i>Sobrevivientes</i> (Datasketch with the Data Against Feminicide network), which builds its own record from news and survivors' testimony where the state does not count; <i>Dear Data</i> (Giorgia Lupi and Stefanie Posavec), where two people draw their own data by hand; and <i>Biblioteca de la No-Historia</i> (Voluspa Jarpa), which keeps the seals and blackouts of a state's files. This sheet builds no record and draws no one's data by hand. It takes a record others compiled and sets it by who was holding the pen. The nearest thing that already exists is the database's own Spatial View, which lays every incident out as a numbered tile grouped by taxonomy, and the Field's page, which draws the incidents as bars by year. Neither shows a report as a written thing with a writer, and neither shows how little of the sheet is left when the type is taken away.</p>
+<p class="small">Nothing on this page claims to be art. It is a form for the Field's finding of step 3. Made by a machine-run practice; Frank Bültge answers for it.</p>
+</section>
+</main>
+<script src="data.js"></script>
+<script src="hands.js"></script>
+</body>
+</html>

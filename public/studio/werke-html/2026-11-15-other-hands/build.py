@@ -18,14 +18,20 @@ Field's check (study 77: 60 public acts, not 50) and adds the press sample and t
 Third state (session 248, the check): whether an act is concluded or only begun is read from this work's own
 second reading, check/state-second-reading.json (the Field coded it once and did not check it), and two acts
 that went in the maker's favour are flagged. The Field's own counts are still asserted, beside the checked ones.
+
+Fourth state (session 249, the presentation): the Field presented 69 public acts, not 60 (study 78 found nine
+more in first reports that public bodies published themselves), checked this work's six corrections at the
+source and found a third act in a party's favour (check 79). The acts are now read from the Field's data79.js.
+The Atelier read each of the 69 for who asked for it (asked_codes.json); an act that answers a claim the
+harmed brought is flagged. The quotations the corrections of direction rest on are looked up in the snapshot.
 """
 import csv, json, sys, os, subprocess, hashlib, collections
 
 csv.field_size_limit(10**9)
 SNAP, FIELD, ATELIER = sys.argv[1], sys.argv[2], sys.argv[3]
 HERE = os.path.dirname(os.path.abspath(__file__))
-COMMIT = '6b562d3e1842d3a56ca8026c69b6ccc9e0a00391'
-A_COMMIT = '39c8e8aa13243a2f657a18c18ebbb2fe12edebb0'
+COMMIT = '18b0e11021df7556d1f3dba92b8c36f337db5e3d'
+A_COMMIT = '5a1e763b08994ca31afc13d82d96c0ebb71a06b5'
 AP = 'artifacts/cycle-015/named-for-them/'
 P = 'artifacts/cycle-015/what-harm-is-on-record/'
 SNAP_SHA = 'c10825888fb716bb91a67319f3292324a7f962f68e6e82326aedd4d694a7aad0'
@@ -101,6 +107,36 @@ STATE = {x['id']: x for x in CHECK['acts']}
 FOR_MAKER = {int(k) for k in CHECK['for_the_maker'] if k.isdigit()}
 assert len(STATE) == 60 and all(STATE[i]['field'] == ACT[i][8] for i in ACT)      # the check read the Field's 60
 
+# ---- fourth state: the Field's 69 acts as corrected by its check 79, and the Atelier's reading of who asked
+D79 = js(field('data79.js'))
+R79 = D79['res']
+R78 = json.loads(field('results78.json'))
+K79 = json.loads(field('correction79.json'))
+ASKED = json.loads(atelier('asked_codes.json'))
+AFTER = json.loads(atelier('after.json'))['res']
+assert R79['snapshot_sha256'] == SNAP_SHA == AFTER['snapshot_sha256']
+assert AFTER['field_data79_sha256'] == PINS['data79.js']       # the Atelier read the same file of the Field
+# id, year, body, act, target, state presented, state, direction, on a public body, found in, corrected
+ACT9 = {x[0]: x for x in D79['acts']}
+assert len(ACT9) == 69 and set(ACT) <= set(ACT9)
+NEW = sorted(set(ACT9) - set(ACT))
+assert NEW == sorted(R78['A']['new']) and all(ACT9[i][9] == 'first report' for i in NEW)
+# the Field's corrected state is this work's second reading, for every one of the 60
+assert all(ACT9[i][6] == STATE[i]['final'] for i in ACT), [i for i in ACT if ACT9[i][6] != STATE[i]['final']]
+FOR_PARTY = {i for i, x in ACT9.items() if x[7] == 'for'}
+assert FOR_MAKER <= FOR_PARTY and FOR_PARTY == set(R79['for_the_party'])
+PUBLIC_PARTY = {i for i, x in ACT9.items() if x[8]}
+CLAIM = {x['id']: x['claimant'] for x in ASKED['claims']}
+OWN = {i for ids in ASKED['own'].values() for i in ids}
+assert set(CLAIM) | OWN == set(ACT9) and not set(CLAIM) & OWN
+HARMED_CLAIM = {i for i, c in CLAIM.items() if c in ('person', 'for the harmed')}
+# the quotations the three corrections of direction rest on stand in the reports the Field names
+norm = lambda t: ' '.join((t or '').replace('\u2019', "'").replace('\u2018', "'").split())
+INC_REPORTS = {int(r['incident_id']): (json.loads(r['reports']) if r['reports'] else []) for r in inc}
+for x in K79['direction']:
+    r = rep_by_num[x['report']]
+    assert x['report'] in INC_REPORTS[x['id']] and x['quote'] in norm(r['title']) + ' ' + norm(r['text']), x['id']
+
 LETTER = {'press and other': 'p', 'research': 'r', 'self-published': 's', 'maker': 'm', 'public body': 'g',
           'unknown': 'u'}
 ACODE = {'harmed': 'H', 'witness': 'w', 'maker': 'm', 'record note': 'n', 'unreadable': 'x'}
@@ -122,13 +158,17 @@ for r in inc:
     words += len(hands)
     resp_words += rs.count('1')
     row = [i, r['date'], hands, rs]
-    a, b, act = A.get(i), B.get(i), ACT.get(i)
+    a, b, act = A.get(i), B.get(i), ACT9.get(i)
     row.append(ACODE[a[2]] if a else '')
-    row.append(b[3] if b else '')
-    row.append({'user': 'u', 'maker': 'k'}[act[6]] if act else '')
-    row.append({'concluded': 'c', 'opened': 'o'}[STATE[i]['final']] if act else '')
-    row.append((('b' if i in PUBLIC_PARTY else '') + ('g' if i in GENERAL else '') + ('' if act[10] else 'n') +
-                (('v' if i in FOR_MAKER else '') + ('s' if STATE[i]['final'] != act[8] else ''))) if act else '')
+    row.append((b[3] if b else '') + ('P' if i in NEW else ''))
+    row.append({'user': 'u', 'maker': 'k'}[act[4]] if act else '')
+    row.append({'concluded': 'c', 'opened': 'o'}[act[6]] if act else '')
+    # b: the party is itself a public body · g: a maker of a general model · v: in the party's favour ·
+    # s: state corrected by this work's check · f: found in a first report · h: answers a claim the harmed brought ·
+    # c: answers a claim of a firm or a public body
+    row.append((('b' if i in PUBLIC_PARTY else '') + ('g' if i in GENERAL else '') + ('v' if i in FOR_PARTY else '') +
+                ('s' if act[6] != act[5] else '') + ('f' if i in NEW else '') +
+                ('h' if i in HARMED_CLAIM else 'c' if i in CLAIM else '')) if act else '')
     # the harmed's words in a first report that was not self-published: the Atelier's finer code where both read it
     v = ''
     if i in VOICE:
@@ -146,9 +186,12 @@ for r in inc:
         notes_a[str(i)] = None
     if v:
         assert first != 'self-published' and not a, i
-    if act:
-        assert 'P' in b[3] and b[4] == act[6], i
-        notes_act[str(i)] = [act[3], act[4], act[5]]
+    if act and i in NEW:
+        assert first == 'public body' and (not b or 'P' not in b[3]), i      # found in a public body's own first report
+        notes_act[str(i)] = [act[2], act[3], None, '']
+    elif act:
+        assert 'P' in b[3] and b[4] == act[4] == ACT[i][6], i
+        notes_act[str(i)] = [ACT[i][3], ACT[i][4], ACT[i][5], '']
     else:
         assert not b or 'P' not in b[3], i
 out.sort(key=lambda x: (x[1], x[0]))
@@ -158,27 +201,42 @@ RB = R77['B']
 n_first = sum(1 for x in out if x[2])
 harmed = [x[0] for x in out if x[4] == 'H']
 acted = [x for x in out if 'P' in x[5]]
+acted60 = [x for x in acted if 'f' not in x[8]]
 c_first = collections.Counter(x[2][0] for x in out if x[2])
+c_first_g_read = c_first['g']
 cv = collections.Counter(x[9] for x in out if x[9])
 st = collections.Counter(x[6] + x[7] for x in acted)
 assert len(out) == 1803 == D75['res']['incidents']
 assert n_first == 1801 == R77['all_first_reports']
 assert len(harmed) == 21 == R77['A']['final_harmed']
-assert sum(1 for x in out if x[5]) == 176 == RB['n']
+assert sum(1 for x in out if x[0] in B) == 176 == RB['n']
 assert sum(1 for x in out if 'M' in x[5]) == 79 == RB['counts']['M']['first']
 assert sum(1 for x in out if 'O' in x[5]) == 65 == RB['counts']['O']['first']
-assert len(acted) == 60 == RB['public_final'] == RA['acted']
-assert sum(1 for x in acted if x[6] == 'u') == 36 == RB['target']['user'] == RA['acted_on_user']
-assert sum(1 for x in acted if x[6] == 'k') == 24 == RB['target']['maker'] == RA['acted_on_maker']
-stf = collections.Counter(x[6] + ACT[x[0]][8][0] for x in acted)                    # the Field's own states
+assert len(acted60) == 60 == RB['public_final'] == RA['acted'] and len(acted) == 69 == R79['n69']['n'] == AFTER['acts']
+assert sum(1 for x in acted60 if x[6] == 'u') == 36 == RB['target']['user'] == RA['acted_on_user']
+assert sum(1 for x in acted60 if x[6] == 'k') == 24 == RB['target']['maker'] == RA['acted_on_maker']
+stf = collections.Counter(x[6] + ACT[x[0]][8][0] for x in acted60)                    # the Field's own states
 assert stf == {'uc': RB['state']['user concluded'], 'uo': RB['state']['user opened'],
                'kc': RB['state']['maker concluded'], 'ko': RB['state']['maker opened']}, stf
 CF = CHECK['counts']['final']
-assert st == {'uc': CF['user concluded'], 'uo': CF['user opened'], 'kc': CF['maker concluded'], 'ko': CF['maker opened']}, st
-assert sum(1 for x in acted if 's' in x[8]) == len(CHECK['changed']) == 4
-assert sum(1 for x in acted if 'v' in x[8]) == 2 and all(x[6] == 'k' for x in acted if 'v' in x[8])
-assert sum(1 for x in acted if 'b' in x[8]) == 6 and all(x[6] == 'k' for x in acted if 'b' in x[8])
-assert sum(1 for x in acted if 'g' in x[8]) == 5 and sum(1 for x in acted if 'n' in x[8]) == 10 == RB['missed_by_reading_the_opening']
+st60 = collections.Counter(x[6] + x[7] for x in acted60)
+assert st60 == {'uc': CF['user concluded'], 'uo': CF['user opened'], 'kc': CF['maker concluded'], 'ko': CF['maker opened']}, st60
+N9, CELL = R79['n69'], R79['n69']['cells']
+assert st == {'uc': CELL['user against concluded'] + CELL['user for concluded'], 'uo': CELL['user against opened'],
+              'kc': CELL['maker against concluded'] + CELL['maker for concluded'],
+              'ko': CELL['maker against opened'] + CELL['maker for opened']}, st
+assert st['uc'] + st['uo'] == 41 == N9['target']['user'] == AFTER['on_user'] and st['kc'] + st['ko'] == 28 == N9['target']['maker'] == AFTER['on_maker']
+assert st['uc'] + st['kc'] == N9['state']['concluded'] == AFTER['concluded'] and st['uo'] + st['ko'] == N9['state']['opened']
+assert sum(1 for x in acted if 's' in x[8]) == len(CHECK['changed']) == 4 == len(R79['state_changed'])
+fav = [x for x in acted if 'v' in x[8]]
+assert len(fav) == 3 == N9['direction']['for'] and sum(1 for x in fav if x[6] == 'k') == 2 and sum(1 for x in fav if x[6] == 'u') == 1
+assert sum(1 for x in acted if 'b' in x[8]) == 5 == AFTER['public_n'] and all(x[6] == 'k' for x in acted if 'b' in x[8])
+assert sum(1 for x in acted if 'g' in x[8]) == 5
+hc = [x for x in acted if 'h' in x[8]]
+assert len(hc) == 8 == AFTER['claimant_harmed_side'] == AFTER['claim_on_maker'] and all(x[6] == 'k' for x in hc)
+assert sum(1 for x in acted if 'h' in x[8] or 'c' in x[8]) == 10 == AFTER['claims'] and AFTER['own'] == 59
+assert sum(1 for x in hc if 'v' in x[8]) == 2 == AFTER['claim_maker_for']
+assert sum(1 for x in acted if 'f' in x[8]) == 9 and c_first_g_read == R78['A']['n']
 assert c_first['p'] == 1659 and c_first['m'] == 23 and c_first['g'] == 37 and c_first['r'] == 24 and c_first['s'] == 58
 acodes = collections.Counter(x[4] for x in out if x[4])
 assert acodes == {'H': 21, 'w': 28, 'n': 6, 'm': 2, 'x': 1} == {ACODE[k]: v for k, v in R77['A']['final_codes'].items()}, acodes
@@ -213,14 +271,16 @@ meta = {
     'estimate': WR['estimate'], 'estimate_lo': WR['estimate_ci'][0], 'estimate_hi': WR['estimate_ci'][1],
     'estimate_not_found': WR['estimate'] - 21 - cv['W'],
     'answered': 176, 'maker_answered': 79, 'other_answered': 65,
-    'public_acted': 60, 'public_first_reading': RB['public_first'], 'found_by_check': 10,
-    'on_user': 36, 'on_maker': 24,
+    'public_acted': 69, 'acted_60': 60, 'acted_new': 9, 'public_first_read': R78['A']['n'],
+    'on_user': st['uc'] + st['uo'], 'on_maker': st['kc'] + st['ko'], 'on_maker_60': 24,
     'user_concluded': st['uc'], 'user_opened': st['uo'], 'maker_concluded': st['kc'], 'maker_opened': st['ko'],
-    'on_public_body': 6, 'general_model': 5,
+    'on_public_body': 5, 'on_public_body_was': 6, 'general_model': 5,
     'concluded': st['uc'] + st['kc'], 'begun': st['uo'] + st['ko'],
+    'concluded_60': st60['uc'] + st60['kc'], 'for_party': 3, 'for_user': 1, 'for_party_ids': sorted(FOR_PARTY),
+    'claims': 10, 'harmed_claims': 8, 'own_motion': 59, 'harmed_claims_for': 2, 'corrections_held': R79['offered']['held'],
     'state_read_again': CHECK['n'], 'state_agree': CHECK['agree'], 'state_changed': len(CHECK['changed']),
     'state_changed_ids': CHECK['changed'], 'field_concluded': stf['uc'] + stf['kc'], 'field_begun': stf['uo'] + stf['ko'],
-    'for_maker': 2, 'for_maker_ids': sorted(FOR_MAKER), 'against_maker': 24 - 2,
+    'for_maker': 2, 'for_maker_ids': sorted(FOR_MAKER), 'against_maker': st['kc'] + st['ko'] - 2,
     'red': 21 + cv['W'] + cv['q'] + cv['f'] + cv['b'] + cv['o'], 'words_inside': cv['q'] + cv['f'] + cv['b'] + cv['o'],
     'never_read': n_first - 58 - press_read,
     'first_date': out[0][1], 'last_date': out[-1][1],

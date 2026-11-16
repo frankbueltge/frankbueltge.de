@@ -2,7 +2,9 @@
    One paragraph per incident, one word per report, set in the hand of whoever wrote it.
    Third state (the check): the type is small and the exceptions are large. A hand is red and three rows high;
    a seal stands in the margin, left when the act lands on the person who used the AI, right when it concerns
-   whoever made or ran it; a disc is an act concluded, a ring one only begun; black is an act in the maker's favour.
+   whoever made or ran it; a disc is an act concluded, a ring one only begun; black is an act in that party's favour.
+   Fourth state (the presentation): 69 seals, the Field's presented and corrected acts; a red rim on a seal where
+   the act answers a claim the harmed brought (the Atelier's reading).
    Everything drawn follows from data.js; the only arbitrary thing is the length of a word. */
 (function () {
   'use strict';
@@ -67,7 +69,7 @@
       y += ROW + (first ? drop : 0);
       if (r[5].indexOf('P') >= 0) {
         var top = p.year ? YEARH : 0, cy = Math.max(top + R + 0.5, top + lead + BAR / 2);
-        p.seal = { side: r[6], state: r[7], fav: r[8].indexOf('v') >= 0, cy: cy };
+        p.seal = { side: r[6], state: r[7], fav: r[8].indexOf('v') >= 0, rim: r[8].indexOf('h') >= 0, cy: cy };
         y = Math.max(y, cy + R + 0.5);
       }
       p.h = y + PARA; total += p.h; paras.push(p);
@@ -117,8 +119,11 @@
       gh.stroke();
     }
   }
-  function seal(g, cx, cy, R, state, fav, tally) {      // a disc is an act concluded, a ring one only begun
-    if (tally) { var key = (fav ? 'V' : 'S') + state; tally[key] = (tally[key] || 0) + 1; }
+  function seal(g, cx, cy, R, state, fav, tally, rim) { // a disc is an act concluded, a ring one only begun
+    if (tally) { var key = (fav ? 'V' : 'S') + state; tally[key] = (tally[key] || 0) + 1; if (rim) tally.rim = (tally.rim || 0) + 1; }
+    if (rim) {                         // the harmed brought the claim: a red rim, and the seal a little smaller inside it
+      g.beginPath(); g.arc(cx, cy, R - 0.65, 0, 6.2832); g.strokeStyle = C.red; g.lineWidth = 1.3; g.stroke(); R -= 2.3;
+    }
     g.beginPath();
     if (state === 'c') { g.arc(cx, cy, R, 0, 6.2832); g.fillStyle = fav ? C.ink : C.blue; g.fill(); }
     else { g.arc(cx, cy, R - 0.9, 0, 6.2832); g.strokeStyle = fav ? C.ink : C.blue; g.lineWidth = 1.8; g.stroke(); }
@@ -133,7 +138,7 @@
     }
     for (var k = 0; k < p.words.length; k++) { var w = p.words[k]; word(layers.type.g, layers.hand.g, w.t, w.b, gx + w.x, p.y0 + w.y, w.l, id, w.k, counts); }
     if (p.seal) {
-      seal(layers.seal.g, sealX(p), p.y0 + p.seal.cy, L.R, p.seal.state, p.seal.fav, counts);
+      seal(layers.seal.g, sealX(p), p.y0 + p.seal.cy, L.R, p.seal.state, p.seal.fav, counts, p.seal.rim);
       counts[p.seal.side === 'u' ? 'left' : 'right'] = (counts[p.seal.side === 'u' ? 'left' : 'right'] || 0) + 1;
     }
   }
@@ -219,13 +224,13 @@
     x = 0; y += 40;
     var R = 6.5, seals = [], groups = [['u', 'on the person who used the AI · ' + M.on_user], ['k', 'about whoever made or ran it · ' + M.on_maker]];
     groups.forEach(function (grp, n) {
-      if (n && (W < 700 || x + 24 * (2 * R + 3) > W)) { x = 0; y += 40; } else if (n) x += 40;
+      if (n && (W < 700 || x + 28 * (2 * R + 3) > W)) { x = 0; y += 40; } else if (n) x += 40;
       labels.push([grp[1], x, y - 13]);
       [['c', false], ['o', false], ['c', true], ['o', true]].forEach(function (v) {
         INC.forEach(function (r) {
           if (r[5].indexOf('P') < 0 || r[6] !== grp[0] || r[7] !== v[0] || (r[8].indexOf('v') >= 0) !== v[1]) return;
           if (x + 2 * R > W) { x = 0; y += 2 * R + 4; }
-          seals.push({ x: x + R, y: y, s: r[7], fav: v[1] }); x += 2 * R + 3;
+          seals.push({ x: x + R, y: y, s: r[7], fav: v[1], rim: r[8].indexOf('h') >= 0 }); x += 2 * R + 3;
         });
       });
     });
@@ -234,7 +239,7 @@
     c.width = Math.round(W * DPR); c.height = Math.round(H * DPR);
     var g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0);
     ops.forEach(function (o) { word(g, g, o.t, o.b, o.x, o.y, o.l, o.id, 0, drawn); });
-    seals.forEach(function (s) { seal(g, s.x, s.y, R, s.s, s.fav, drawn); });
+    seals.forEach(function (s) { seal(g, s.x, s.y, R, s.s, s.fav, drawn, s.rim); });
     labels.forEach(function (l) { label(g, l[0], l[1], l[2]); });
     window.__oh.tally = drawn;
   }
@@ -244,14 +249,14 @@
     ['p', 'the press'], ['m', 'the maker'], ['g', 'a public body'], ['r', 'research'], ['w', 'a witness, on a platform'],
     ['H', 'the harmed wrote it'], ['T', 'the harmed\'s words are in it'],
     ['L', 'left: on the person who used the AI'], ['Rt', 'right: on whoever made or ran it'],
-    ['c', 'concluded'], ['o', 'only begun'], ['v', 'in the maker\'s favour']
+    ['c', 'concluded'], ['o', 'only begun'], ['v', 'in that party\'s favour'], ['h', 'red rim: the harmed brought the claim']
   ];
   function key() {
     var c = document.getElementById('key'), W = L.W, g = c.getContext('2d'), S = 2;
     g.font = '11px ui-monospace,Menlo,Consolas,monospace';
     var x = 0, y = 12, pos = [];
     KEY.forEach(function (k) {
-      var t = k[0], ml = t === 'H' ? 60 : t === 'T' ? 40 : t === 'w' ? 28 : t === 'L' || t === 'Rt' ? 34 : t.length === 1 && 'cov'.indexOf(t) >= 0 ? 14 : 16;
+      var t = k[0], ml = t === 'H' ? 60 : t === 'T' ? 40 : t === 'w' ? 28 : t === 'L' || t === 'Rt' ? 34 : t.length === 1 && 'covh'.indexOf(t) >= 0 ? 14 : 16;
       var w = ml + 6 + g.measureText(k[1]).width + 18;
       if (x + w - 18 > W && x > 0) { x = 0; y += 24; }
       pos.push({ t: t, x: x, y: y, ml: ml, text: k[1] }); x += w;
@@ -266,6 +271,7 @@
       if (t === 'c') seal(g, m / 2, 0, 3.2, 'c', false);
       else if (t === 'o') seal(g, m / 2, 0, 3.2, 'o', false);
       else if (t === 'v') seal(g, m / 2, 0, 3.2, 'c', true);
+      else if (t === 'h') seal(g, m / 2, 0, 3.4, 'c', false, null, true);
       else if (t === 'L' || t === 'Rt') {
         g.fillStyle = C.type; for (var q = 0; q < 3; q++) g.fillRect(t === 'L' ? 7 : 0, -3 + q * 2.6, 9.5 - q * 2, 1.2);
         seal(g, t === 'L' ? 3 : 14, 0, 2.6, 'c', false);
@@ -299,14 +305,16 @@
       var a = D.act[r[0]], f = r[8];
       s += '<span class="seal">' + esc(a[0]) + '</span>: ' + esc(a[1]) + (a[2] ? ' (' + esc(a[2]) + ')' : '') + '. ' + (r[7] === 'c' ? 'Concluded' : 'Only begun') +
         (f.indexOf('s') >= 0 ? ' (corrected by this work\'s check)' : '') + ', ' +
-        (r[6] === 'u' ? 'on the person who used the AI' : f.indexOf('v') >= 0 ? '<b>in the maker\'s favour</b>' : f.indexOf('b') >= 0 ? 'on whoever ran it, itself a public body' : f.indexOf('g') >= 0 ? 'about a maker of a general model' : 'on whoever made or ran it') + '. ';
+        (f.indexOf('v') >= 0 ? (r[6] === 'u' ? '<b>in favour of the person who used the AI</b>' : '<b>in the maker\'s favour</b>') : r[6] === 'u' ? 'on the person who used the AI' : f.indexOf('b') >= 0 ? 'on whoever ran it, itself a public body' : f.indexOf('g') >= 0 ? 'about a maker of a general model' : 'on whoever made or ran it') + '. ' +
+        (f.indexOf('h') >= 0 ? '<span class="hand">It answers a claim the harmed brought, or one brought for them.</span> ' : f.indexOf('c') >= 0 ? 'It answers a claim brought by a firm or a public body the database names as harmed. ' : '') +
+        (f.indexOf('f') >= 0 ? 'Found in the public body\'s own first report. ' : '');
     }
     return s + '<a href="https://incidentdatabase.ai/cite/' + r[0] + '/" target="_blank" rel="noopener">Open it in the database</a>';
   }
   var REST = {
     all: function () { return fmt(M.incidents) + ' incidents, ' + fmt(M.words) + ' reports. Grey is the press. ' + (('ontouchstart' in window) ? 'Tap' : 'Point at') + ' a paragraph, or step through them with the arrows.'; },
     hand: function () { return 'The type is lifted off. Of ' + M.first_read + ' first reports that were read, <span class="hand">the harmed wrote ' + M.wrote_found + '</span>, and their words stand in ' + M.words_inside + ' more. The other ' + fmt(M.never_read) + ' were never read for this.'; },
-    seal: function () { return '<span class="seal">' + M.public_acted + ' acts of public bodies.</span> Left of a column: ' + M.on_user + ' on the person who used the AI. Right: ' + M.on_maker + ' about whoever made or ran it, ' + M.for_maker + ' of them in the maker\'s favour (black). A ring is an act only begun: ' + M.begun + ' of the ' + M.public_acted + '.'; }
+    seal: function () { return '<span class="seal">' + M.public_acted + ' acts of public bodies.</span> Left of a column: ' + M.on_user + ' on the person who used the AI. Right: ' + M.on_maker + ' about whoever made or ran it. Black: ' + M.for_party + ' in that party\'s favour. A ring is an act only begun: ' + M.begun + ' of the ' + M.public_acted + '. <span class="hand">A red rim</span>: the ' + M.harmed_claims + ' that answer a claim the harmed brought, all on the right.'; }
   };
   function rest() { say.innerHTML = REST[reading](); drawLoupe(-1); }
   function setReading(r) {
@@ -325,7 +333,7 @@
     g.translate(0, 2 - top);
     var id = INC[p.i][0];
     p.words.forEach(function (wd) { word(g, g, wd.t, wd.b, L.MG + wd.x, wd.y, wd.l, id, wd.k, null); });
-    if (p.seal) seal(g, p.seal.side === 'u' ? L.MG / 2 : w - L.MG / 2, p.seal.cy, L.R, p.seal.state, p.seal.fav, null);
+    if (p.seal) seal(g, p.seal.side === 'u' ? L.MG / 2 : w - L.MG / 2, p.seal.cy, L.R, p.seal.state, p.seal.fav, null, p.seal.rim);
   }
   function pick(i, scroll) {
     picked = i;
