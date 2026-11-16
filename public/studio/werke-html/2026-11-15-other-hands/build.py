@@ -14,6 +14,10 @@ the first report of every one of its 1,803 rows.
 
 Second state (session 247): the first state read study 76, one reader's first coding. This reads the
 Field's check (study 77: 60 public acts, not 50) and adds the press sample and the Atelier's thirty.
+
+Third state (session 248, the check): whether an act is concluded or only begun is read from this work's own
+second reading, check/state-second-reading.json (the Field coded it once and did not check it), and two acts
+that went in the maker's favour are flagged. The Field's own counts are still asserted, beside the checked ones.
 """
 import csv, json, sys, os, subprocess, hashlib, collections
 
@@ -92,6 +96,10 @@ VOICE = {x['id']: x for x in CHK['voice']}
 GM = ADJ['frontier']['general_model_makers']
 GENERAL = set(GM['concluded'] + GM['opened'] + GM['inquiry_into_the_incident'] + GM['for_the_maker'])
 PUBLIC_PARTY = set(R77['B']['target_is_public_body']['by_deployer_column'])
+CHECK = json.load(open(os.path.join(HERE, 'check', 'state-second-reading.json'), encoding='utf-8'))
+STATE = {x['id']: x for x in CHECK['acts']}
+FOR_MAKER = {int(k) for k in CHECK['for_the_maker'] if k.isdigit()}
+assert len(STATE) == 60 and all(STATE[i]['field'] == ACT[i][8] for i in ACT)      # the check read the Field's 60
 
 LETTER = {'press and other': 'p', 'research': 'r', 'self-published': 's', 'maker': 'm', 'public body': 'g',
           'unknown': 'u'}
@@ -118,8 +126,9 @@ for r in inc:
     row.append(ACODE[a[2]] if a else '')
     row.append(b[3] if b else '')
     row.append({'user': 'u', 'maker': 'k'}[act[6]] if act else '')
-    row.append({'concluded': 'c', 'opened': 'o'}[act[8]] if act else '')
-    row.append((('b' if i in PUBLIC_PARTY else '') + ('g' if i in GENERAL else '') + ('' if act[10] else 'n')) if act else '')
+    row.append({'concluded': 'c', 'opened': 'o'}[STATE[i]['final']] if act else '')
+    row.append((('b' if i in PUBLIC_PARTY else '') + ('g' if i in GENERAL else '') + ('' if act[10] else 'n') +
+                (('v' if i in FOR_MAKER else '') + ('s' if STATE[i]['final'] != act[8] else ''))) if act else '')
     # the harmed's words in a first report that was not self-published: the Atelier's finer code where both read it
     v = ''
     if i in VOICE:
@@ -161,8 +170,13 @@ assert sum(1 for x in out if 'O' in x[5]) == 65 == RB['counts']['O']['first']
 assert len(acted) == 60 == RB['public_final'] == RA['acted']
 assert sum(1 for x in acted if x[6] == 'u') == 36 == RB['target']['user'] == RA['acted_on_user']
 assert sum(1 for x in acted if x[6] == 'k') == 24 == RB['target']['maker'] == RA['acted_on_maker']
-assert st == {'uc': RB['state']['user concluded'], 'uo': RB['state']['user opened'],
-              'kc': RB['state']['maker concluded'], 'ko': RB['state']['maker opened']}, st
+stf = collections.Counter(x[6] + ACT[x[0]][8][0] for x in acted)                    # the Field's own states
+assert stf == {'uc': RB['state']['user concluded'], 'uo': RB['state']['user opened'],
+               'kc': RB['state']['maker concluded'], 'ko': RB['state']['maker opened']}, stf
+CF = CHECK['counts']['final']
+assert st == {'uc': CF['user concluded'], 'uo': CF['user opened'], 'kc': CF['maker concluded'], 'ko': CF['maker opened']}, st
+assert sum(1 for x in acted if 's' in x[8]) == len(CHECK['changed']) == 4
+assert sum(1 for x in acted if 'v' in x[8]) == 2 and all(x[6] == 'k' for x in acted if 'v' in x[8])
 assert sum(1 for x in acted if 'b' in x[8]) == 6 and all(x[6] == 'k' for x in acted if 'b' in x[8])
 assert sum(1 for x in acted if 'g' in x[8]) == 5 and sum(1 for x in acted if 'n' in x[8]) == 10 == RB['missed_by_reading_the_opening']
 assert c_first['p'] == 1659 and c_first['m'] == 23 and c_first['g'] == 37 and c_first['r'] == 24 and c_first['s'] == 58
@@ -203,6 +217,12 @@ meta = {
     'on_user': 36, 'on_maker': 24,
     'user_concluded': st['uc'], 'user_opened': st['uo'], 'maker_concluded': st['kc'], 'maker_opened': st['ko'],
     'on_public_body': 6, 'general_model': 5,
+    'concluded': st['uc'] + st['kc'], 'begun': st['uo'] + st['ko'],
+    'state_read_again': CHECK['n'], 'state_agree': CHECK['agree'], 'state_changed': len(CHECK['changed']),
+    'state_changed_ids': CHECK['changed'], 'field_concluded': stf['uc'] + stf['kc'], 'field_begun': stf['uo'] + stf['ko'],
+    'for_maker': 2, 'for_maker_ids': sorted(FOR_MAKER), 'against_maker': 24 - 2,
+    'red': 21 + cv['W'] + cv['q'] + cv['f'] + cv['b'] + cv['o'], 'words_inside': cv['q'] + cv['f'] + cv['b'] + cv['o'],
+    'never_read': n_first - 58 - press_read,
     'first_date': out[0][1], 'last_date': out[-1][1],
     'snapshot': 'backup-20261109100729.tar.bz2', 'snapshot_sha256': SNAP_SHA,
     'field_commit': COMMIT, 'field_pins': PINS, 'atelier_commit': A_COMMIT, 'atelier_pins': A_PINS,

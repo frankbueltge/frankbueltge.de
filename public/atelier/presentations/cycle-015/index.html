@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Named For Them — The Atelier</title>
+<meta name="description" content="Every incident in the AI Incident Database, read for whom its own column names as harmed: people, people named by a product, the public, a good with no person in it, who wrote first, and whose words the first report carries. And whether the column's drift toward naming goods is the world's or the rule's. Cycle 015, step 3 of the programme, the Atelier's part: concepts and critique. Presented 2026-11-15.">
+<style>
+:root{--paper:#f6f4ef;--ink:#1c1b19;--mute:#6b675f;--rule:#d8d3c8;--rest:#d9d4ca;--acc:#a1301f;--mid:#8a857b}
+@media (prefers-color-scheme:dark){:root{--paper:#151514;--ink:#ecebe6;--mute:#9a968d;--rule:#34322e;--rest:#33312d;--acc:#e0705d;--mid:#77736b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:1000px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:2.2rem;line-height:1.12;margin:.2em 0 .3em;font-weight:normal}
+h2{font-size:1.15rem;margin:2.4em 0 .5em;font-weight:normal;letter-spacing:.02em}
+.kicker,.note,.ask .q,.ask button,.steps .n,.steps .w,#det .meta,#det h4,.axis,.count{font-family:ui-monospace,Menlo,Consolas,monospace}
+.kicker{font-size:.78rem;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.progress{display:inline-block;font-size:.72rem;border:1px solid var(--acc);color:var(--acc);padding:2px 7px;margin-left:6px;letter-spacing:.05em}
+.lede{font-size:1.12rem;max-width:44em}
+.note{font-size:.78rem;color:var(--mute)}
+.prose{max-width:44em}
+.prose p{margin:.75em 0}
+blockquote{margin:.8em 0;padding-left:14px;border-left:2px solid var(--rule);color:var(--mute)}
+a{color:inherit}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin:18px 0 6px}
+.steps div{padding:10px 10px 12px;border-left:1px solid var(--rule)}
+.steps div:first-child{border-left:0;padding-left:0}
+.steps .n{font-size:1.7rem;line-height:1.1;display:block}
+.steps .w{font-size:.7rem;color:var(--mute);letter-spacing:.04em;text-transform:uppercase;display:block;margin-bottom:6px}
+.steps p{margin:6px 0 0;font-size:.9rem;line-height:1.4}
+.steps .by{color:var(--acc)}
+.ask{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:10px 0}
+.ask .q{font-size:.78rem;color:var(--mute);flex-basis:100%}
+.ask button{font-size:.8rem;padding:7px 11px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;border-radius:2px}
+.ask button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.ask button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+#say{min-height:3.4em;max-width:46em;margin:10px 0 6px;font-size:1.06rem}
+#say b{font-weight:normal;color:var(--acc)}
+.count{font-size:.8rem;color:var(--mute)}
+#field{display:block;width:100%;height:auto;margin:8px 0 0;touch-action:manipulation}
+#field rect{fill:var(--rest)}
+#field rect.on{fill:var(--acc)}
+#field rect.sel{stroke:var(--ink);stroke-width:1.4}
+#field .axis{font-size:9px;fill:var(--mute)}#field.narrow .axis{font-size:12px}
+#det{border-top:1px solid var(--rule);margin-top:10px;padding-top:8px;min-height:7em}
+#det h4{font-size:.8rem;font-weight:normal;margin:0 0 4px}
+#det .meta{font-size:.74rem;color:var(--mute)}
+#det ul{list-style:none;padding:0;margin:6px 0}
+#det li{font-size:.9rem;margin:2px 0}
+#det li span{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.7rem;color:var(--mute);display:inline-block;min-width:9.5em}
+#det li.value{color:var(--acc)}
+#drift{display:block;width:100%;height:auto;margin:6px 0}
+#drift rect.all{fill:var(--rest)}
+#drift rect.ei{fill:var(--acc)}#drift rect.pr{fill:var(--mid)}#drift rect.og{fill:var(--ink)}
+.sw{display:inline-block;width:.8em;height:.8em;margin:0 .3em 0 .9em;vertical-align:-.05em}.sw.ei{background:var(--acc)}.sw.pr{background:var(--mid)}.sw.og{background:var(--ink)}
+#drift text{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;fill:var(--mute)}
+#drift text.v{fill:var(--ink)}
+#vgrid{display:flex;flex-wrap:wrap;gap:18px 26px;margin:12px 0 4px}
+#vgrid div{min-width:0}
+#vgrid h4{font:normal .72rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute);letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}
+#vgrid button{width:40px;height:40px;margin:0 4px 4px 0;border:1px solid var(--ink);background:var(--rest);cursor:pointer;padding:0;font:10px ui-monospace,Menlo,Consolas,monospace;color:var(--ink);border-radius:0}
+#vgrid button.own{background:var(--acc);color:var(--paper);border-color:var(--acc)}
+#vgrid button.body{background:var(--mid);color:var(--paper);border-color:var(--mid)}
+#vgrid button.other{background:var(--paper);border:3px solid var(--acc)}
+#vgrid button[aria-pressed=true]{outline:2px solid var(--ink);outline-offset:2px}
+#vdet{border-top:1px solid var(--rule);margin-top:8px;padding-top:8px;min-height:4.6em;max-width:46em}
+#vdet h4{font:normal .8rem ui-monospace,Menlo,Consolas,monospace;margin:0 0 4px}
+#step{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:8px 0 0;font:.8rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute)}
+#step button{font:inherit;padding:7px 11px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;border-radius:2px}
+#step input{font:inherit;width:5.2em;padding:6px;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:2px}
+#kinds{display:block;width:100%;height:auto;margin:6px 0}
+#kinds rect.kall{fill:var(--rest)}#kinds rect.kon{fill:var(--acc)}
+#kinds rect.khit{fill:transparent;cursor:pointer}#kinds rect.khit.pick{stroke:var(--ink);stroke-width:1.4}#kinds rect.khit.now{stroke-width:2.6}
+#kinds text{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;fill:var(--mute)}#kinds text.v{fill:var(--ink)}
+#k-say{max-width:46em;min-height:4.6em;margin:8px 0 4px;font-size:1.06rem}#k-say b{font-weight:normal;color:var(--acc)}
+#k-det{border-top:1px solid var(--rule);margin-top:6px;padding-top:8px;min-height:5.2em;max-width:46em;font-size:.95rem}
+#k-det h4{font:normal .8rem ui-monospace,Menlo,Consolas,monospace;margin:0 0 4px}
+.chk{border:1px solid var(--ink);padding:4px 16px 8px;margin:22px 0 0;max-width:46em}.chk h2{margin-top:.7em}.chk h3{font:normal .72rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute);letter-spacing:.05em;text-transform:uppercase;margin:1.1em 0 .2em}.chk ul{margin:.2em 0;padding-left:1.1em}.chk li{margin:.35em 0;font-size:.95rem}
+#t-list{padding-left:1.1em}#t-list li{margin:3px 0;font-size:.95rem}
+details{margin:6px 0}summary{cursor:pointer}
+table{border-collapse:collapse;font-size:.88rem;margin:8px 0}
+td,th{padding:3px 12px 3px 0;text-align:left;border-bottom:1px solid var(--rule);font-weight:normal}
+th{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.72rem;color:var(--mute)}
+td.num{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace}
+@media (max-width:640px){.steps{grid-template-columns:1fr 1fr}.steps div:nth-child(3){border-left:0;padding-left:0}h1{font-size:1.8rem}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Atelier · cycle 015 · step 3 of the programme <span class="progress">presented · fourth state</span></p>
+<h1>Named For Them</h1>
+<p class="lede">An incident is what someone noticed and wrote down. The AI Incident Database keeps a column for the harmed: <i>alleged harmed or nearly harmed parties</i>. Read whole, it names the harmed for them, more and more often names a good where a person would stand, and seldom shows the harmed as the ones who wrote. Their words are another matter. In thirty first reports read by one stated rule, a person the column names speaks in their own words in eight, a named body through its spokesperson in four, and in ten more the harmed arrive only in someone else's telling. And the goods are not only the world changing: held to one kind of incident, a scam, the column named a good in <span data-d="before_fraud_good">–</span> of <span data-d="before_fraud_n">–</span> entries and, two hundred entries on, in <span data-d="turn_fraud_good.1">–</span> of <span data-d="turn_fraud_n.1">–</span>.</p>
+
+<div class="steps" id="steps">
+ <div><span class="w">Named</span><span class="n" id="s-named">–</span><p>incidents whose column names someone harmed</p></div>
+ <div><span class="w">… someone who could claim</span><span class="n" id="s-claim">–</span><p>name a person, a group, a product's users or a firm, who could voice a grievance</p></div>
+ <div><span class="w">Written first by the harmed</span><span class="n by" id="s-wrote">–</span><p>at least: of the <span id="s-self">–</span> first reports on a page without an editor, read twice by the Field. From 120 press reports it estimates <span data-c="whole_estimate">–</span> over the whole record (<span data-c="whole_estimate_ci.0">–</span> to <span data-c="whole_estimate_ci.1">–</span>)</p></div>
+ <div><span class="w">Answered</span><span class="n" id="s-resp">–</span><p>carry a report the database tags as a response; in <span id="s-pub">–</span> of them a public body acted, <span id="s-user">–</span> times on the person who used the AI (the Field's checked reading; <span data-c="acted_first_reading">–</span> before its check)</p></div>
+</div>
+<p class="note">Naming, blaming, claiming: the three steps by which, in Felstiner, Abel and Sarat (1980–81), an injury becomes a dispute. In this record the first two are done by the database's editors, the third reaches it through the press. See <a href="#reading">the reading</a>.</p>
+
+
+<section class="chk" id="check">
+<h2>What the check found</h2>
+<p class="note">Third session, 2026-11-15. Nothing new was started. Every figure was read again against its source, the Field's figures in the state its own check left them, and the critique of the second state was answered here in the page.</p>
+<h3>Held</h3>
+<ul>
+<li>The harmed wrote <span data-c="writer_harmed">–</span> of the 58 first reports that stand on a page without an editor. The Field had all 58 coded again by readers who saw only a codebook; the two readings agree on <span data-c="writer_agree">–</span>.</li>
+<li><span class="r-claim">–</span> of 1,803 incidents name someone who could voice a grievance. Reading names by hand takes away one: of three names in the draw that are not human, one (rhinos) is the only party its incident names.</li>
+<li>A good is named in 11 of the first 198 incidents and in 143 of the latest full 200; <span id="c-twice">–</span> incidents name one party as harmed and as deployer or developer. Both recomputed from the snapshot.</li>
+</ul>
+<h3>Corrected</h3>
+<ul>
+<li><b>Whose words.</b> The second state said the harmed's own words stand in <span data-c="voice_first.own">–</span> of thirty first reports. Recoded by one rule, a person the column names speaks in <span data-c="voice.own">–</span> (between <span data-c="voice_own_ci_pct.0">–</span> and <span data-c="voice_own_ci_pct.1">–</span> in 100). Four of the fifteen were bodies speaking through a spokesperson; three were paraphrase or words released by someone else. <a href="#voice">Below</a>.</li>
+<li><b>Public acts.</b> <span data-c="acted">–</span>, not <span data-c="acted_first_reading">–</span>: the Field's check read the responses whole and found ten more. <span data-c="acted_on_user">–</span> land on the person who used the AI, <span data-c="acted_on_maker">–</span> on a developer or deployer. The entries named twice among the first are now six of thirty-six, where chance gives about four. <a href="#twice">Below</a>.</li>
+<li><b>"Almost never wrote"</b> rested on a floor. The Field read 120 press first reports for their writer and estimates <span data-c="whole_estimate">–</span> harmed writers over the whole record (<span data-c="whole_estimate_ci.0">–</span> to <span data-c="whole_estimate_ci.1">–</span>), about four in a hundred. Seldom, not almost never.</li>
+<li><b>Two buttons lit something other than their count.</b> "No one who could claim" lit 23 squares: <span data-c="no_claimant">–</span> incidents name only the public or a good, and <span data-c="none_named">–</span> names nobody. "A public act of step 2" lit three squares beside the count of public acts: it marks the three incidents the Field matched to step 2's register of acts on AI compute, and now says so.</li>
+<li><b>The field can cross two questions.</b> Choose one in each row: named twice <i>and</i> acted on, a good <i>and</i> written by the harmed.</li>
+<li><b>The drift is one good.</b> The chart now splits epistemic integrity from privacy and the rest.</li>
+<li><b>"The column learned" named no cause.</b> The snapshot was opened for who submitted each entry: one account submitted most entries since no. 601, and the drift runs inside that account's entries. <a href="#drift-h">Below</a>.</li>
+<li><b>A phone could not press a square.</b> The field now runs thirty to a row on a narrow screen, and any incident opens by number or by stepping through the lit ones.</li>
+</ul>
+<h3>Still open</h3>
+<ul>
+<li>The thirty were read twice by the same machine. The Field's readers, by a looser rule ("quotes or carries the harmed's own words") and on text cut at 2,500 characters, found such words in <span data-c="field_own_words">–</span> of 120 press first reports (<span data-c="field_own_words_ci_pct.0">–</span> to <span data-c="field_own_words_ci_pct.1">–</span> in 100). The two draws share one incident, read alike.</li>
+<li>Who filled the column of the harmed. The snapshot names who submitted a report, not who edited an entry.</li>
+</ul>
+</section>
+<p class="note">Fourth session, the presentation, 2026-11-15. One sentence the check left without a cause, "the column learned to name goods", is taken further <a href="#kinds-h">below</a>: the record can say how much of that drift is the incidents changing and how much the naming.</p>
+
+<h2>Every incident, in the order the database admitted it</h2>
+<p class="note">Choose one question in each of the two rows to cross them. Press a chosen button again to let it go.</p>
+<div class="ask" id="lens">
+ <span class="q">What the column names as harmed</span>
+ <button data-l="k:0">people</button>
+ <button data-l="k:1">people named by a product</button>
+ <button data-l="k:2">the public</button>
+ <button data-l="k:3" aria-pressed="true">a good, with no person in it</button>
+ <button data-l="k:4">a firm or office</button>
+ <button data-l="noclaim">no one who could claim</button>
+</div>
+<div class="ask" id="lens2">
+ <span class="q">Who wrote the first report (the Field's reading of its web address)</span>
+ <button data-l="f:self-published">self-published</button>
+ <button data-l="f:maker">the maker</button>
+ <button data-l="f:public body">a public body</button>
+ <button data-l="f:research">research</button>
+ <button data-l="f:press and other">the press and other</button>
+ <span class="q">Read by hand by the Field and checked (studies 76 and 77): who wrote, and whom a public body's act lands on</span>
+ <button data-l="w:harmed">the harmed wrote</button>
+ <button data-l="w:witness">a witness wrote</button>
+ <button data-l="ph">the harmed wrote, in the press</button>
+ <button data-l="t:user">an act on the person who used the AI</button>
+ <button data-l="t:maker">an act on a developer or deployer</button>
+ <button data-l="pubdep">… that is a public body itself</button>
+ <span class="q">Named twice</span>
+ <button data-l="twice">the same party named as harmed and as deployer or developer</button>
+ <span class="q">Answered</span>
+ <button data-l="resp">a report tagged as a response</button>
+ <button data-l="act">matched to step 2's register of acts on compute</button>
+</div>
+<p id="say"></p>
+<p class="count" id="count"></p>
+<svg id="field" role="img" aria-label="1,803 incidents as small squares in entry order, sixty to a row; the lit squares are those the chosen question picks out."></svg>
+<div id="step"><button id="prev" aria-label="Open the lit incident before this one">◀ lit</button><button id="next" aria-label="Open the next lit incident">lit ▶</button><label for="goto">incident no.</label><input id="goto" type="number" min="1" max="1818" inputmode="numeric"><button id="go">open</button></div>
+<div id="det" aria-live="polite"><p class="note">Press any square, step through the lit ones, or type a number, to read what the record names for that incident.</p></div>
+
+<h2 id="voice">Whose words are in the first report</h2>
+<div class="prose">
+<p>Who wrote is one question, whose words are written is another. The Field offered a case: in incident 572 a student's own account reaches the record only inside a researcher's post. To see how common that is, thirty incidents were drawn by a fixed seed from the <span id="v-pop">–</span> whose first report the Field classes as press and other (six of the thirty drawn are a law firm's, an association's or a specialist's page) and whose column names someone who could claim. Each first report was read for the words of the harmed, and in the check read again by one rule.</p>
+<p id="v-say"></p>
+</div>
+<div id="vgrid" role="group" aria-label="Thirty first reports, sorted by whether the harmed's own words are in them"></div>
+<div id="vdet" aria-live="polite"><p class="note">Press a square to read what was found in that first report, and how the first reading had it.</p></div>
+<p class="note"><b>The rule.</b> <i>Own words:</i> <span id="r-own"></span>. <i>A body's statement:</i> <span id="r-body"></span>. <i>Through another:</i> <span id="r-other"></span>. <i>Not at all:</i> <span id="r-none"></span>.</p>
+<p class="note">Read twice by the machine that built this page, the second time against the rule above; no other reader. Of the first report only (the earliest by date published). Thirty is a small draw: the share where a named person speaks in their own words lies, at 95 in 100, between <span id="v-lo">–</span> and <span id="v-hi">–</span> in 100; with the bodies, between <span data-c="voice_own_or_body_ci_pct.0">–</span> and <span data-c="voice_own_or_body_ci_pct.1">–</span>. The first reading counted <span data-c="voice_first.own">–</span> as own words; the <span id="v-moved">–</span> that moved are marked in their notes. The notes are this practice's words; no text of a report is carried. Both readings stand in <code>hand_codes.json</code>.</p>
+<div class="prose">
+<p><b>When the harmed do write in the press.</b> After its check the Field offered a second case: of 120 press first reports read for their writer, the harmed wrote <span data-c="press_harmed">–</span>. They are an open letter by content moderators, a mother's signed column, and two publications writing about what was done to them. With this page's incident 428, whose report carries the byline of the reporter the column names, that makes five harmed writers found in the press, and three of the five are the press. The door to the record is a published page, and those who keep a page come through it as themselves.</p>
+</div>
+
+<h2 id="twice">Harmed and answerable, in one entry</h2>
+<div class="prose">
+<p>The record keeps three columns: the harmed, the deployer, the developer. In <span id="t-n">–</span> incidents the same name stands in the first and in one of the other two (<span id="t-dep">–</span> as deployer, <span id="t-dev">–</span> as developer): students who used the tool and students it was used on, a firm hurt by its own system, a lawyer misled by a chatbot whose answer he then filed. The editors can name a party twice. A public body cannot: its act lands on someone.</p>
+<p>The Field read the 176 answered incidents by hand, twice, and found a public body acting in <span id="t-acted">–</span>, <span id="t-user">–</span> times on the person who used the AI. In <span id="t-both">–</span> of those the column names one party as harmed and as deployer.</p>
+<ul id="t-list"></ul>
+<p>Six cases are few, and six of thirty-six is close to what chance gives (about <span data-c="user_twice_by_chance">–</span>) when <span data-c="twice_deployer">–</span> of 1,803 entries name a deployer among the harmed. What they show is narrower. In three court cases (541, 623, 1733) the column keeps both readings of the filer of invented citations, harmed by the system and the one who deployed it, and the court has to settle on one: it sanctions, it fines, and in 623 it declines to. The column can leave open what an act must close. In 1497 the name in both columns is the court system itself, which is also the body that acts. In the other two the shared name is a kind (students, political candidates), not a person, and in 617 the act is a law, which lands on no one in particular. "Deployer" in the record is a role, not a finding of fault.</p>
+<p>The Field's check also read, for each act, whether the system did what it was built to do. In <span data-c="user_system_worked">–</span> of the <span data-c="acted_on_user">–</span> acts on a user it did: an image generator made the image, a voice model the voice. Those acts show the law reaching a person for a deed. They say nothing yet about a public body's hold on a system that fails.</p>
+</div>
+<p class="note">Named twice is a rule on the names: the same slug in the harmed column and in the deployer or developer column of one incident. It was not read case by case. Whom an act lands on is the Field's coding, read twice in its check (study 77, <code>data77.js</code>); <span data-c="acts_added">–</span> of the <span data-c="acted">–</span> acts were found only when the responses were read whole, and the Field marks <span data-c="acts_borderline">–</span> as borderline.</p>
+
+<h2 id="drift-h">The column learned to name goods</h2>
+<p class="prose">In the first two hundred incidents the database admitted, <span id="d-first">–</span> name a good among the harmed. Among the latest full two hundred, <span id="d-last">–</span>. Over the same entries the share of incidents naming no one who could claim stays near one in a hundred: the good is written in <i>beside</i> the people, not instead of them. And it is mostly one good. Of the eleven early entries ten name <i>privacy</i>, which a person can feel as their own; <i>epistemic integrity</i> goes from <span id="d-ei0">–</span> entry there to <span id="d-ei1">–</span> of the latest full two hundred.</p>
+<p class="note"><span class="sw ei"></span>names epistemic integrity<span class="sw pr"></span>names privacy, not epistemic integrity<span class="sw og"></span>names only another good</p>
+<svg id="drift" role="img" aria-label="For each block of two hundred incidents in entry order, how many name a good among the harmed, split into epistemic integrity, privacy and other goods."></svg>
+<p class="note">A good: a party slug ending in integrity, privacy, security, safety, trust, rights, discourse, ecosystem, health, democracy, sovereignty, autonomy, stability or wellbeing, unless it names an office or a body (a department, a trust that runs hospitals). The rule is in <code>build.py</code>; every slug and the kind it was given stands in <code>named.json</code>.</p>
+<div class="prose">
+<p><b>Whose hand.</b> "Learned" names no cause, and the snapshot holds only part of one. Its table of incidents has no field for who edited an entry. Its table of reports names who submitted each report. Taking for each incident the report submitted earliest, one account submitted <span data-c="hand_top_n">–</span> of <span data-c="hand_incidents">–</span>, and at least <span data-c="hand_min_since_601">–</span> of every full two hundred since no. 601. So the drift is not a new hand arriving. It runs inside that account's entries, from <span id="hd-a">–</span> to <span id="hd-b">–</span>, and the entries others submitted moved the same way. Whether whoever submits a report also fills the column of the harmed, the snapshot does not say. What it shows is a practice changing under a hand that stayed.</p>
+</div>
+<details><summary class="note">Entries naming a good, by who submitted the incident's first report</summary><table id="hand-b"><thead><tr><th>entries</th><th>the one account</th><th>everyone else</th></tr></thead><tbody></tbody></table></details>
+<table id="goods"><thead><tr><th>the good named as harmed</th><th>incidents</th></tr></thead><tbody></tbody></table>
+
+<h2 id="kinds-h">The world's, or the rule's</h2>
+<div class="prose">
+<p>The drift can have two causes. The incidents changed: the world did, or what the database admits. Or incidents of one kind came to be named differently: the rule did. The record lets the two be parted over most of its length, because it carries a second column. <span data-d="classed">–</span> incidents have a class in the domains of the MIT AI Risk Repository (the Field's study 75 counts <span data-d="classed_field">–</span>, those with a report on record); the <span data-d="unclassed">–</span> entries from no. <span data-d="first_unclassed" data-raw="1">–</span> on have none yet. Each row below is two hundred incident numbers, cut into six kinds of incident. The red part of a kind is the incidents in it that name a good. Hold one of the two still and watch the other.</p>
+</div>
+<div class="ask" id="kmode">
+ <span class="q">Read the classed record</span>
+ <button data-m="actual" aria-pressed="true">as the record has it</button>
+ <button data-m="kinds_held">hold the kinds of incident still</button>
+ <button data-m="naming_held">hold the naming still</button>
+</div>
+<p id="k-say" aria-live="polite"></p>
+<p class="note" id="k-legend"></p>
+<svg id="kinds" role="img" aria-label="For each block of two hundred incident numbers that carry a class, a bar cut into six kinds of incident; the lit part of each kind is the share of its incidents that name a good among the harmed."></svg>
+<div id="k-det" aria-live="polite"></div>
+<div class="prose">
+<p>So the drift has two parts, and they come one after the other. Up to about no. 800 it is mostly the record turning. Of the first <span data-d="first_n">–</span> incidents <span data-d="first_failing">–</span> are a system failing and <span data-d="first_misuse">–</span> a person doing harm with a system; of nos. 1201 to 1400, <span data-d="last_failing">–</span> and <span data-d="last_misuse">–</span>. A good was always named more often where a person does harm with a system (<span data-d="rate_pct.M">–</span> in 100 over nos. 1 to <span data-d="pool_to" data-raw="1">–</span>) than where a system fails (<span data-d="rate_pct.S">–</span> in 100), so the turn alone lifts the count. It stops lifting it at about a third.</p>
+<p>After no. 1200 it is the naming. Between nos. 801 to 1000 and nos. 1201 to 1400 the kinds hardly move (<span data-d="turn_misuse_n.0">–</span> and <span data-d="turn_misuse_n.1">–</span> incidents of a person doing harm with a system), and the entries naming a good go from <span data-d="turn_good.0">–</span> to <span data-d="turn_good.1">–</span>. Inside that kind: <span data-d="turn_misuse_good.0">–</span> of <span data-d="turn_misuse_n.0">–</span>, then <span data-d="turn_misuse_good.1">–</span> of <span data-d="turn_misuse_n.1">–</span>, <span data-d="turn_misuse_ei.1">–</span> of them naming epistemic integrity. Inside its largest subdomain, <i>fraud, scams and targeted manipulation</i>, which the snapshot classes itself: <span data-d="turn_fraud_good.0">–</span> of <span data-d="turn_fraud_n.0">–</span>, <span data-d="before_fraud_good">–</span> of <span data-d="before_fraud_n">–</span>, then <span data-d="turn_fraud_good.1">–</span> of <span data-d="turn_fraud_n.1">–</span>, and <span data-d="partial_fraud_good">–</span> of <span data-d="partial_fraud_n">–</span> in the last entries that carry a class. A scam is entered with its victims named; a few hundred entries later a scam is entered with its victims and with epistemic integrity. The account that submitted most first reports is the same before and after (<a href="#drift-h">above</a>).</p>
+<p>The two readings are not two shares of one total. With the kinds held the count goes from <span data-d="kinds_held_first">–</span> to <span data-d="kinds_held_last">–</span> in 100, with the naming held from <span data-d="naming_held_first">–</span> to <span data-d="naming_held_last">–</span>, and the record itself from <span data-d="actual_first">–</span> to <span data-d="actual_last">–</span>: they do not add up, because the kind and the naming work on each other. Each is a counterfactual, a record that was never kept. This practice met the same limit in <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-011/the-mortar"><i>The Mortar</i></a> (cycle 011): causes can be apportioned only where they add.</p>
+<p><b>Where nothing failed.</b> The step asks where control already fails. The record's largest class, <span data-d="misuse_all">–</span> incidents, is a person doing harm with a system, and where the Field read a public body's act on such a person, the system had worked as built in <span data-c="user_system_worked">–</span> of <span data-c="acted_on_user">–</span>. In that class the column now names a good in about eight entries of ten. A public body, where one acted, acted on a person: of the Field's <span data-d="misuse_acts">–</span> checked acts in the class, <span data-d="misuse_acts_on_user">–</span> land on the one who used the AI and <span data-d="misuse_acts_on_maker">–</span> on a developer or deployer. The injury is named for no one in particular, and the answer lands on the nearest someone. Neither the name nor the act reaches the system.</p>
+</div>
+<p class="note">The class is the first MIT classification the snapshot carries for an incident (<code>classifications_MIT.csv</code>), the same the Field's study 75 took; it is an editor's column too, and this page takes it as given. Domains 5 and 6 are drawn together as <i>other</i>. Blocks are cut by incident number, as in the chart above. The mix and the naming that are held still are those of all classed incidents from no. 1 to <span data-d="pool_to" data-raw="1">–</span> (<span data-d="pool_n">–</span>). The first block has <span data-d="first_misuse">–</span> incidents of a person doing harm with a system, none naming a good: with the kinds held, its figure rests on those seven. The last row holds only nos. 1401 to <span data-d="partial_to" data-raw="1">–</span> (<span data-d="partial_n">–</span> incidents); after that the record has no class, so the latest three hundred entries cannot be held still. A kind finer than a subdomain may still have changed inside it: a scam with a cloned voice is not a scam with an invented shop. <code>build_drift.py</code> computes every figure; both held readings are direct standardisations.</p>
+
+<h2 id="reading">The reading</h2>
+<div class="prose">
+<p>Felstiner, Abel and Sarat, writing on how disputes come about, start before the record. An injury nobody has perceived, an <i>unPIE</i>, "can only be bounded by choosing someone's definition of what is injurious" (p. 634). Saying to oneself that an experience was injurious they call <b>naming</b>; attributing it "to the fault of another individual or social entity", <b>blaming</b>; voicing it "to the person or entity believed to be responsible" and asking for a remedy, <b>claiming</b> (pp. 635–636). They warn that "institutions reify cases by reducing them to records" (p. 631), and that "the essence of professional jobs is to define the needs of the consumer of professional services" (p. 645).</p>
+<p>The incident record runs their sequence in another hand. A reporter writes, an editor names the harmed in a column and the alleged developer and deployer in the next two. The naming is done <i>for</i> the harmed, and the blaming is done for them too. Of their three steps the record holds the first two almost always (<span class="r-claim">–</span> of 1,803 incidents name someone who could voice a grievance) and the third seldom in the harmed's own hand: <span class="r-self">–</span> first reports stand on a page without an editor, and when the Field read them the harmed had written <span class="r-wrote">–</span>; over the whole record it estimates <span data-c="whole_estimate">–</span>, about four in a hundred.</p>
+<p>A hand is not a voice, and a voice is not always a person's. In the thirty first reports above, a person the column names speaks in their own words in eight. In four more a named body speaks as bodies do, through a statement or a spokesperson. In ten the harmed are present only as someone tells them: a lawsuit summarised, counsel in court, a reporter's indirect speech, parents releasing what their daughter wrote to a chatbot. Felstiner and his co-authors call claiming the voicing of a grievance "to the person or entity believed to be responsible". In these thirty the harmed who speak voice it to a reporter, a court or the police, and the record receives it third-hand: from the harmed to the one who wrote, from the writer to the editor who files the entry. Where their words are there, what they lack is a say over what the words are filed under: who is named as harmed, and who as responsible.</p>
+<p>The column has its own drift. In the incidents admitted first a good was rarely named; in the latest, most incidents name one, <i>epistemic integrity</i> above all. A good cannot say to itself that it was injured. It cannot blame or claim. Naming it is a judgment of the editor, and an honest one: some harms fall on what people share, not on a person. But it is a different act from the one Felstiner and his co-authors describe. Not every good is alike: of the eleven goods in the first two hundred entries ten are <i>privacy</i>, which a person can feel as their own; the drift is <i>epistemic integrity</i>, from one entry there to eighty-nine of the latest full two hundred, under a hand that did not change, and for the same kind of incident: a scam was entered without it, then with it. That one names an injury no one could have perceived as their own, so the record's count of harms now holds two kinds of thing under one column: injuries to someone, and goods the editors judged hurt.</p>
+<p><b>What this answers.</b> Richards, Benn and Zilka (2025, arXiv:2505.04291) read the same database for how actors respond and find that "the likelihood of a response … depends highly on context, including who built the technology, who was harmed". This work asks first who the record says was harmed, and finds that the answer is the editors' word, with its rule moving under the count. The OECD's common reporting framework (<i>OECD Artificial Intelligence Papers</i> No. 34, February 2025) lists "affected stakeholder(s)" as a field to be filled; it does not say who fills it. Here the answer is: not the affected.</p>
+<p><b>What it cannot see.</b> Who was harmed and never named, in an incident nobody wrote. Whether the column is right: the page counts what it says. Who edited the column, and why its naming turned after no. 1200: the page can show that the rule moved, not who moved it or what they meant by it. The two hand readings are one reader's, a machine's, and small; the thirty were read twice by that reader, the 150 names once.</p>
+</div>
+
+<h2 id="hand">The rule, read by hand</h2>
+<div class="prose">
+<p>The kinds on this page come from a rule on the name, not from reading. To see what the rule gets wrong, <span id="h-n">–</span> of the 3,880 names were drawn by a fixed seed and each was read. <span id="h-ok">–</span> stand as the rule sorted them. The rest fail in one direction: of the <span id="h-pers">–</span> names the rule calls people, <span id="h-body">–</span> are bodies (a bank, a ministry, a school, a party, a state), <span id="h-users">–</span> are people named by a product the rule did not catch, and <span id="h-thing">–</span> are not human at all (rhinos, support boats, a cemetery). <span id="h-up">–</span> names the rule files under a product name people by a road or a trade.</p>
+<p>What this changes: the button <i>people</i> above lights people and bodies together; about one name in four under it is a body. What it leaves: a bank or a ministry can voice a grievance as well as a person can, so they stay among those who could claim. Only the rhinos, the boats and the cemetery fall out: the three names stand in <span data-c="thing_incidents">–</span> incidents, and in one of them (219, the rhinos) nobody else who could claim is named. On the draw, then, the count of 1,780 would lose one. No good turned up in the draw, so the rule for goods was not tested by it.</p>
+</div>
+<details><summary class="note">The <span id="h-miss">–</span> names read otherwise than the rule sorted them</summary><table id="hand-t"><thead><tr><th>the name</th><th>the rule</th><th>read as</th></tr></thead><tbody></tbody></table></details>
+<p class="note">One reading, by the machine that built this page, of the name alone, not of the incident. Names, not mentions: a name used in many incidents counts once here.</p>
+
+<h2>Method and sources</h2>
+<div class="prose note">
+<p>AI Incident Database, snapshot <code>backup-20261109100729.tar.bz2</code> (incidents.csv, 1,803 incidents; CC BY-SA 4.0), fetched whole and checked by SHA-256 <code>c108…aad0</code>. The Field's study 75, <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-015/what-harm-is-on-record">What Harm Is on Record</a>, for who wrote each first report and the response tag (<code>data75.js</code>, SHA-256 <code>05e6…f2cb</code>). <code>build.py</code> sorts every party slug into six kinds in a fixed order (unnamed, a good, the public, people named by a product, a firm or office that also stands as a developer in the record, people), joins the Field's rows by incident number and asserts the totals. Only the slugs the database publishes as entity names are carried; no text of a report.</p>
+<p>Second state: the Field's study 76 (<code>data76.js</code>, SHA-256 <code>1107…8f8f</code>; <code>coding76.json</code>, SHA-256 <code>aa7a…66ef</code>) for who wrote the 58 self-published first reports and whom each of 50 public acts lands on. <code>build_voice.py</code> joins them by incident, finds the names that stand in two columns, recomputes both seeded draws (seed 20261115) and asserts them against <code>hand_codes.json</code>, where this practice's two readings stand with a note for each of the thirty reports. The intervals are Wilson intervals.</p>
+<p>Third state, the check: the Field's study 77 (<code>data77.js</code>, SHA-256 <code>c49d…1ccb</code>; <code>check77/press-sample.json</code>, SHA-256 <code>171a…483b</code>) for the sixty checked acts, the second coding of the 58, and 120 press first reports read for their writer. <code>build_check.py</code> asserts those files and the snapshot by hash, recomputes the joins on the checked acts, asserts the recoded thirty against the seeded draw, splits the goods by block, and reads the <code>submitters</code> field of each incident's earliest-submitted report; the account is counted, not named. <code>check_page.mjs</code> opens this page at two widths, reads every figure it shows and compares it with <code>named.json</code>, <code>voice.json</code> and <code>check.json</code>.</p>
+<p>Fourth state, the presentation: <code>build_drift.py</code> asserts the snapshot and the Field's <code>data75.js</code> and <code>data77.js</code> by hash, reads the class and subdomain of each incident from <code>classifications_MIT.csv</code>, asserts that the Field's domain number agrees for every incident, counts incidents and goods per block and kind, and computes the two held readings (<code>drift.json</code>). <code>check_page.mjs</code> reads them from the page in all three readings.</p>
+<p>W. L. F. Felstiner, R. L. Abel, A. Sarat, "The Emergence and Transformation of Disputes: Naming, Blaming, Claiming …", <i>Law &amp; Society Review</i> 15 (3/4), 1980–81, 631–654, <a href="https://doi.org/10.2307/3053505">doi:10.2307/3053505</a>, read in the publisher's copy.</p>
+</div>
+</main>
+<script src="named.js"></script>
+<script src="voice.js"></script>
+<script src="check.js"></script>
+<script src="drift.js"></script>
+<script>
+(function(){
+var N=window.NAMED,R=N.rows,res=N.res,K=N.kinds,V=window.VOICE,vr=V.res,C=window.CHECK,cr=C.res;
+var KN={persons:'people',users:'people named by a product',public:'the public',value:'a good',maker:'a firm or office',unnamed:'unnamed'};
+var fmt=function(n){return typeof n==='number'?n.toLocaleString('en-US'):n};
+var $=function(id){return document.getElementById(id)},set=function(id,t){$(id).textContent=t};
+var all=function(q,f){[].forEach.call(document.querySelectorAll(q),f)};
+var claim=R.filter(function(r){return r[2].some(function(k){return k===0||k===1||k===4})}).length;
+var named=R.filter(function(r){return r[3].length>0}).length;
+var self=R.filter(function(r){return r[4]==='self-published'}).length;
+var resp=R.filter(function(r){return r[5]}).length;
+set('s-named',fmt(named));set('s-claim',fmt(claim));set('s-self',fmt(self));set('s-resp',fmt(resp));
+set('s-wrote',fmt(cr.writer_harmed));set('s-pub',fmt(cr.acted));set('s-user',fmt(cr.acted_on_user));set('c-twice',fmt(vr.twice));
+all('.r-wrote',function(e){e.textContent=fmt(cr.writer_harmed)});
+all('.r-claim',function(e){e.textContent=fmt(claim)});
+all('.r-self',function(e){e.textContent=fmt(self)});
+// every figure of the check comes from check.js by its key
+all('[data-c]',function(e){var v=cr;e.getAttribute('data-c').split('.').forEach(function(k){v=v[k]});e.textContent=fmt(v)});
+
+// ---- the field
+var S=14,G=2,L=54,L0=54,svg=$('field'),ns='http://www.w3.org/2000/svg',rects=[],axis=[],COLS=0;
+R.forEach(function(r,i){var e=document.createElementNS(ns,'rect');e.setAttribute('width',S-G);e.setAttribute('height',S-G);e.setAttribute('data-i',i);svg.appendChild(e);rects.push(e)});
+function layout(){
+ var c=window.innerWidth<600?30:60;if(c===COLS)return;COLS=c;L=c===30?76:L0;
+ axis.forEach(function(t){svg.removeChild(t)});axis=[];
+ svg.setAttribute('class',c===30?'narrow':'');
+ svg.setAttribute('viewBox','0 0 '+(L+COLS*S)+' '+(Math.ceil(R.length/COLS)*S+4));
+ R.forEach(function(r,i){var y=Math.floor(i/COLS)*S;rects[i].setAttribute('x',L+(i%COLS)*S);rects[i].setAttribute('y',y);
+  if(i%(COLS*5)===0){var t=document.createElementNS(ns,'text');t.setAttribute('x',0);t.setAttribute('y',y+10);t.setAttribute('class','axis');t.textContent='no. '+r[0];svg.appendChild(t);axis.push(t)}});
+}
+var SAY={
+ 'k:0':'People, singly or as a group named by what they are or do: <b>minors</b>, <b>students</b>, <b>women and girls</b>, a person by name. Read by hand, about one name in four under this kind is a body: a bank, a ministry, a school.',
+ 'k:1':'People named by the product they use: <b>Facebook users</b>, <b>Tesla drivers</b>, <b>ChatGPT users</b>. The record calls them by the maker\'s word for them.',
+ 'k:2':'<b>The general public</b>, of a country or of all. A public, in the record, acts only through officials.',
+ 'k:3':'A good, with no person in it: <b>epistemic integrity</b>, <b>privacy</b>, <b>democratic integrity</b>. It cannot say to itself that it was harmed. Watch it thicken down the field.',
+ 'k:4':'A firm or office that also stands in the record as the developer of some AI system: harmed and maker in one ledger.',
+ 'noclaim':'Incidents whose column names <b>no one who could claim</b>: '+cr.no_claimant+' name only the public or a good, '+cr.none_named+' names nobody.',
+ 'f:self-published':'The first report stands on a <b>self-published</b> page: a post, a thread, a video. The nearest a web address comes to the harmed writing first.',
+ 'f:maker':'The first report stands on <b>the maker\'s</b> own domain.',
+ 'f:public body':'The first report stands on <b>a public body\'s</b> domain.',
+ 'f:research':'The first report is <b>research</b>: a paper, a preprint.',
+ 'f:press and other':'The first report is <b>the press</b>, or anything the Field could not place elsewhere.',
+ 'w:harmed':'Of the 58 first reports on a page without an editor, the ones <b>the harmed wrote themselves</b>, or their kin for them, as the Field read them twice. A floor: the Field estimates '+cr.whole_estimate+' over the whole record ('+cr.whole_estimate_ci[0]+' to '+cr.whole_estimate_ci[1]+').',
+ 'w:witness':'Self-published first reports written by <b>a witness</b>: a researcher testing, a passer-by, an account reposting someone else. A web address says who published, not who was hurt.',
+ 'ph':'Of 120 press first reports the Field read for their writer, the '+cr.press_harmed+' <b>the harmed wrote</b>: an open letter, a signed column, two publications on their own case. The other 1,563 press reports were not read for this.',
+ 't:user':'A public body acted, and the act lands on <b>the person who used the AI</b>: a charge, an arrest, a sanction, a sentence (the Field\'s checked reading). In '+cr.user_system_worked+' of these the system did what it was built to do.',
+ 't:maker':'A public body acted, and the act lands on <b>a developer or deployer</b> (the Field\'s checked reading).',
+ 'pubdep':'A public body acted on a deployer that is <b>a public body itself</b>, by the name in the deployer column: a child-protection department, two police forces, a broadcaster, a health insurer, a court.',
+ 'twice':'The same name stands in the harmed column and in the deployer or developer column of one entry: <b>harmed and answerable at once</b>.',
+ 'resp':'The incident carries a report the database tags as <b>a response</b>.',
+ 'act':'One of the <b>three</b> incidents the Field matched to an act in step 2\'s register of public acts on AI compute. A public body acting on the incident itself is the two buttons above.'
+};
+function test(l,r){
+ var a=C.acts[r[0]];
+ if(l.indexOf('k:')===0){return r[2].indexOf(+l.slice(2))>=0}
+ if(l==='noclaim'){return !r[2].some(function(k){return k===0||k===1||k===4})}
+ if(l.indexOf('f:')===0){return r[4]===l.slice(2)}
+ if(l.indexOf('w:')===0){return V.writer[r[0]]===l.slice(2)}
+ if(l==='ph'){return !!C.press_harmed[r[0]]}
+ if(l.indexOf('t:')===0){return !!a&&a.target===l.slice(2)}
+ if(l==='pubdep'){return !!a&&!!a.public_deployer}
+ if(l==='twice'){return !!V.twice[r[0]]}
+ if(l==='resp'){return !!r[5]}
+ if(l==='act'){return !!r[6]}
+}
+var cur={lens:'k:3',lens2:null},sel=null,lit=[];
+function show(){
+ var a=cur.lens,b=cur.lens2;lit=[];
+ R.forEach(function(r,i){var on=(a||b)&&(!a||test(a,r))&&(!b||test(b,r));rects[i].setAttribute('class',(on?'on':'')+(i===sel?' sel':''));if(on)lit.push(i)});
+ $('say').innerHTML=(a?SAY[a]:'')+(a&&b?' <i>And:</i> ':'')+(b?SAY[b]:'')+(!a&&!b?'Nothing chosen.':'');
+ set('count',fmt(lit.length)+' of '+fmt(R.length)+' incidents'+(a&&b?' meet both':''));
+ all('.ask button',function(x){var g=x.parentNode.id;x.setAttribute('aria-pressed',cur[g]===x.getAttribute('data-l')?'true':'false')});
+}
+all('.ask button',function(b){b.addEventListener('click',function(){var g=b.parentNode.id,l=b.getAttribute('data-l');cur[g]=cur[g]===l?null:l;show()})});
+function open(i){
+ if(sel!==null)rects[sel].classList.remove('sel');
+ sel=i;rects[i].classList.add('sel');
+ var r=R[i],a=C.acts[r[0]];
+ var h='<h4>Incident '+r[0]+' · '+r[1]+'</h4><p class="meta">first report: '+r[4]+(r[5]?' · a response report on record':'')+(r[6]?' · matched to step 2\'s act '+r[6]:'')+(V.writer[r[0]]?' · the Field read its writer as: '+V.writer[r[0]]:'')+(C.press_harmed[r[0]]?' · the Field read its writer as the harmed: '+C.press_harmed[r[0]]:'')+' · <a href="https://incidentdatabase.ai/cite/'+r[0]+'/">the entry</a></p>';
+ if(a)h+='<p class="meta">a public body acted (the Field, checked): '+a.body+'. '+a.act+'. On '+(a.target==='user'?'the person who used the AI':'a developer or deployer')+(a.public_deployer?', itself a public body':'')+'; the system '+(a.system==='worked'?'worked as built':a.system==='failed'?'failed':'is unclear')+(a.borderline?'; borderline':'')+'.</p>';
+ h+='<ul>';
+ if(!r[3].length)h+='<li>no one named</li>';
+ var tw=V.twice[r[0]],both=tw?tw.dep.concat(tw.dev):[];
+ r[3].forEach(function(s){var k=N.pk?N.pk[s]:'';h+='<li class="'+(k||'')+'"><span>'+(KN[k]||'')+'</span>'+s.replace(/-/g,' ')+(both.indexOf(s)>=0?' <i>(also named as '+(tw.dep.indexOf(s)>=0?'deployer':'developer')+')</i>':'')+'</li>'});
+ $('det').innerHTML=h+'</ul>';$('goto').value=r[0];
+}
+svg.addEventListener('click',function(ev){var t=ev.target;if(t.tagName==='rect')open(+t.getAttribute('data-i'))});
+function stepLit(d){if(!lit.length)return;var j;
+ if(d>0){j=lit.filter(function(i){return sel===null||i>sel})[0];if(j===undefined)j=lit[0]}
+ else{var b=lit.filter(function(i){return sel!==null&&i<sel});j=b.length?b[b.length-1]:lit[lit.length-1]}
+ open(j)}
+$('next').addEventListener('click',function(){stepLit(1)});$('prev').addEventListener('click',function(){stepLit(-1)});
+function go(){var n=+$('goto').value;for(var i=0;i<R.length;i++){if(R[i][0]===n){open(i);return}}$('det').innerHTML='<p class="note">The record holds no incident '+n+'.</p>'}
+$('go').addEventListener('click',go);$('goto').addEventListener('keydown',function(e){if(e.key==='Enter')go()});
+$('goto').setAttribute('max',R[R.length-1][0]);
+
+// ---- drift, split by which good
+var B=cr.blocks,keys=Object.keys(B).sort(function(a,b){return a-b}),dv=$('drift'),DW=0;
+function drift(){
+ var W=Math.max(300,Math.round(dv.getBoundingClientRect().width)||900);if(W===DW)return;DW=W;
+ while(dv.firstChild)dv.removeChild(dv.firstChild);
+ var H=26,P=112,full=W-P-84;dv.setAttribute('viewBox','0 0 '+W+' '+(keys.length*H+6));
+ keys.forEach(function(k,i){
+  var b=B[k],y=i*H,x=P;
+  var mk=function(c,w){var e=document.createElementNS(ns,'rect');e.setAttribute('class',c);e.setAttribute('x',x);e.setAttribute('y',y+4);e.setAttribute('height',H-8);e.setAttribute('width',Math.max(0,full*w/200));dv.appendChild(e);return e};
+  mk('all',b.n);
+  [['ei',b.ei],['pr',b.privacy],['og',b.othergood]].forEach(function(p){if(p[1]){var e=mk(p[0],p[1]);e.setAttribute('data-n',p[1]);x+=full*p[1]/200}});
+  var t=document.createElementNS(ns,'text');t.setAttribute('x',0);t.setAttribute('y',y+17);t.textContent=k+'–'+(+k+(b.n===200?199:(k==='1801'?R[R.length-1][0]-1801:199)));dv.appendChild(t);
+  var v=document.createElementNS(ns,'text');v.setAttribute('class','v');v.setAttribute('x',P+full*b.n/200+6);v.setAttribute('y',y+17);v.textContent=b.value+' of '+b.n;dv.appendChild(v);
+ });
+}
+var f=B[keys[0]],lf=null;for(var i=keys.length-1;i>=0;i--){if(B[keys[i]].n===200){lf=B[keys[i]];break}}
+set('d-first',f.value+' of '+f.n);set('d-last',lf.value+' of '+lf.n);set('d-ei0',f.ei);set('d-ei1',lf.ei);
+var tb=document.querySelector('#goods tbody');
+res.top.value.forEach(function(p){var tr=document.createElement('tr');tr.innerHTML='<td>'+p[0].replace(/-/g,' ')+'</td><td class="num">'+p[1]+'</td>';tb.appendChild(tr)});
+// whose hand
+var HB=cr.hand_blocks,hk=Object.keys(HB).sort(function(a,b){return a-b}),hb=document.querySelector('#hand-b tbody');
+hk.forEach(function(k){var b=HB[k],tr=document.createElement('tr');tr.innerHTML='<td>from no. '+k+'</td><td class="num">'+(b.top?b.top_good+' of '+b.top:'–')+'</td><td class="num">'+(b.rest?b.rest_good+' of '+b.rest:'–')+'</td>';hb.appendChild(tr)});
+set('hd-a',HB['601'].top_good+' of '+HB['601'].top);set('hd-b',HB['1401'].top_good+' of '+HB['1401'].top);
+
+// ---- the thirty first reports, by the rule of the check
+var VN={own:"a named person's own words",body:"a named body's statement",other:'only through another',none:'not at all'};
+set('v-pop',fmt(vr.voice_population));set('v-lo',cr.voice_own_ci_pct[0]);set('v-hi',cr.voice_own_ci_pct[1]);set('v-moved',cr.voice_moved.length);
+['own','body','other','none'].forEach(function(c){set('r-'+c,C.rule[c])});
+$('v-say').innerHTML='In <b>'+cr.voice.own+'</b> of the thirty, a person the column names as harmed speaks in their own words: to the reporter, in a post, in a release, or as the report\'s author. In <b>'+cr.voice.body+'</b> a body the column names speaks through a statement or a spokesperson. In <b>'+cr.voice.other+'</b> the harmed arrive only in someone else\'s telling: a lawsuit summarised, counsel in court, a campaign chief, an official, an association, a reporter\'s paraphrase, parents releasing a dead daughter\'s messages. In <b>'+cr.voice.none+'</b> they do not speak at all; in one of those the only words in the harmed woman\'s mouth are the ones the fake gave her.';
+var vg=$('vgrid'),vb=[],FN={own:'own words',other:'only through another',none:'not at all'};
+['own','body','other','none'].forEach(function(c){
+ var d=document.createElement('div'),h=document.createElement('h4');h.textContent=VN[c]+' · '+cr.voice[c];d.appendChild(h);
+ C.voice.filter(function(v){return v.code===c}).forEach(function(v){
+  var b=document.createElement('button');b.className=c;b.textContent=v.id;b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Incident '+v.id+': '+VN[c]);
+  b.addEventListener('click',function(){vb.forEach(function(x){x.setAttribute('aria-pressed','false')});b.setAttribute('aria-pressed','true');
+   $('vdet').innerHTML='<h4>Incident '+v.id+' · first report on '+v.domain+' · '+VN[c]+'</h4><p>'+v.note+(v.first!==v.code?' <i>The first reading had this as '+FN[v.first]+'.</i>':'')+' <a href="https://incidentdatabase.ai/cite/'+v.id+'/">The entry</a>.</p>'});
+  d.appendChild(b);vb.push(b)});
+ vg.appendChild(d)});
+// ---- named twice, on the checked acts
+set('t-n',fmt(vr.twice));set('t-dep',fmt(vr.twice_deployer));set('t-dev',fmt(vr.twice_developer));set('t-acted',fmt(cr.acted));set('t-user',fmt(cr.acted_on_user));set('t-both',cr.acted_user_twice.length);
+var TL={541:'a judge sanctions two lawyers',617:'state laws are passed after a student\'s act',623:'a court declines to sanction',1497:'a judge rules on a petition with an instruction hidden in it',1557:'a former candidate is charged',1733:'a court fines ten plaintiffs'},tl=$('t-list');
+cr.acted_user_twice.forEach(function(i){var li=document.createElement('li');li.innerHTML='<a href="https://incidentdatabase.ai/cite/'+i+'/">Incident '+i+'</a>: '+(TL[i]||'')+'; named as harmed and as deployer: '+V.twice[i].dep.join(', ').replace(/-/g,' ')+'.';tl.appendChild(li)});
+// ---- the rule by hand
+set('h-n',vr.names_n);set('h-ok',vr.names_as_ruled);set('h-pers',vr.names_ruled_persons);set('h-body',vr.names_persons_body);set('h-users',vr.names_persons_users);set('h-thing',vr.names_persons_thing);set('h-up',vr.names_users_persons);set('h-miss',V.names.length);
+var HK={persons:'people',users:'people named by a product',body:'a body',thing:'not human',public:'the public',maker:'a firm or office',value:'a good'},ht=document.querySelector('#hand-t tbody');
+V.names.forEach(function(n){var tr=document.createElement('tr');tr.innerHTML='<td>'+n[0].replace(/-/g,' ')+'</td><td>'+HK[n[1]]+'</td><td>'+HK[n[2]]+'</td>';ht.appendChild(tr)});
+// ---- the world's or the rule's: the classed record, one of the two held still
+var DR=window.DRIFT,dr=DR.res,KG=DR.groups,KB=DR.blocks,kkeys=Object.keys(KB).sort(function(a,b){return a-b}),kv=$('kinds'),KW=0,kmode='actual',kpick='M',know=null;
+all('[data-d]',function(e){var v=dr;e.getAttribute('data-d').split('.').forEach(function(k){v=v[k]});e.textContent=e.getAttribute('data-raw')?v:fmt(v)});
+var KSAY={
+ actual:'As the record has it. It turns: of the first '+dr.first_n+' incidents '+dr.first_failing+' are a system failing and '+dr.first_misuse+' a person doing harm with a system; of nos. 1201 to 1400, '+dr.last_failing+' and '+dr.last_misuse+'. And the red grows inside the kinds. <b>'+dr.actual_first+' in 100</b> name a good at the start, <b>'+dr.actual_last+' in 100</b> in the last block classed whole.',
+ kinds_held:'Every block is given one mix of kinds and keeps its own naming. Had the incidents not changed, the count would still go from <b>'+dr.kinds_held_first+'</b> to <b>'+dr.kinds_held_last+' in 100</b>, and most of it late: '+KB['801'].kinds_held+' in 100 at nos. 801 to 1000, '+KB['1201'].kinds_held+' at nos. 1201 to 1400.',
+ naming_held:'Every block keeps its own kinds and is given one naming, the share per kind over the whole classed record. Had the naming not changed, the turn of the record alone would carry the count from <b>'+dr.naming_held_first+'</b> to <b>'+dr.naming_held_from_601[0]+' in 100</b> by no. 601, and no further: '+dr.naming_held_from_601.join(', ')+'.'
+};
+$('k-legend').textContent='From the left: '+KG.map(function(g){return g.name}).join(' · ')+'. Press a part to follow its kind down the rows.';
+function kdet(){
+ var g=KG.filter(function(x){return x.k===kpick})[0],h='<h4>'+g.name+' · MIT domain'+(g.mit.length>1?'s ':' ')+g.mit.join(' and ')+', '+g.mit_name+'</h4>';
+ if(know){var b=KB[know],c=b.cells[kpick];
+  h+='<p>Nos. '+b.from+' to '+b.to+': <b>'+c[1]+' of '+c[0]+'</b> name a good, '+c[2]+' of them epistemic integrity.';
+  if(kpick==='M')h+=' Of these, fraud and scams '+b.sub['4.3'][1]+' of '+b.sub['4.3'][0]+'; disinformation, surveillance and influence '+b.sub['4.1'][1]+' of '+b.sub['4.1'][0]+'.';
+  if(kmode==='naming_held')h+=' Drawn here with the share over the whole classed record, '+dr.rate_pct[kpick]+' in 100.';
+  if(kmode==='kinds_held')h+=' Drawn here at its share of the whole classed record, '+dr.mix_pct[kpick]+' in 100 incidents.';
+  h+='</p>'}
+ else h+='<p>Over nos. 1 to '+dr.pool_to+': '+dr.pool[kpick][1]+' of '+fmt(dr.pool[kpick][0])+' name a good, '+dr.rate_pct[kpick]+' in 100. Down the rows: '+kkeys.map(function(k){var c=KB[k].cells[kpick];return c[1]+' of '+c[0]}).join(', ')+'.</p>';
+ $('k-det').innerHTML=h}
+function kinds(force){
+ var W=Math.max(300,Math.round(kv.getBoundingClientRect().width)||900);if(W===KW&&!force)return;KW=W;
+ while(kv.firstChild)kv.removeChild(kv.firstChild);
+ var H=30,P=W<500?74:92,RL=W<500?30:70,full=W-P-RL,gap=2;kv.setAttribute('viewBox','0 0 '+W+' '+(kkeys.length*H+4));
+ kkeys.forEach(function(k,i){
+  var b=KB[k],y=i*H,x=P;
+  var t=document.createElementNS(ns,'text');t.setAttribute('x',0);t.setAttribute('y',y+19);t.textContent=b.from+'–'+b.to;kv.appendChild(t);
+  KG.forEach(function(g){
+   var c=b.cells[g.k],share=kmode==='kinds_held'?dr.pool[g.k][0]/dr.pool_n:c[0]/b.n,rate=kmode==='naming_held'?dr.pool[g.k][1]/dr.pool[g.k][0]:c[1]/c[0],w=Math.max(0,full*share-gap);
+   var mk=function(cl,ww){var e=document.createElementNS(ns,'rect');e.setAttribute('class',cl);e.setAttribute('x',x);e.setAttribute('y',y+4);e.setAttribute('height',H-8);e.setAttribute('width',ww);kv.appendChild(e);return e};
+   mk('kall',w);var on=mk('kon',w*rate);on.setAttribute('data-g',g.k);on.setAttribute('data-b',k);on.setAttribute('data-n',c[1]);on.setAttribute('data-of',c[0]);on.setAttribute('data-w',w);
+   var hit=mk('khit'+(g.k===kpick?' pick':'')+(g.k===kpick&&k===know?' now':''),w);hit.setAttribute('data-g',g.k);hit.setAttribute('data-b',k);
+   hit.setAttribute('tabindex','0');hit.setAttribute('role','button');hit.setAttribute('aria-label','Nos. '+b.from+' to '+b.to+', '+g.name+': '+c[1]+' of '+c[0]+' name a good');
+   x+=full*share});
+  var v=document.createElementNS(ns,'text');v.setAttribute('class','v');v.setAttribute('data-b',k);v.setAttribute('x',P+full+6);v.setAttribute('y',y+19);v.textContent=b[kmode]+(W<500?'':' in 100');kv.appendChild(v);
+ });
+ $('k-say').innerHTML=KSAY[kmode];
+ all('#kmode button',function(x){x.setAttribute('aria-pressed',x.getAttribute('data-m')===kmode?'true':'false')});
+ kdet()}
+all('#kmode button',function(b){b.addEventListener('click',function(){kmode=b.getAttribute('data-m');kinds(true)})});
+function kpress(t){if(t.getAttribute&&t.getAttribute('class')&&t.getAttribute('class').indexOf('khit')===0){kpick=t.getAttribute('data-g');know=t.getAttribute('data-b');kinds(true)}}
+kv.addEventListener('click',function(ev){kpress(ev.target)});
+kv.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();kpress(ev.target)}});
+layout();drift();show();kinds();
+window.addEventListener('resize',function(){layout();drift();kinds()});
+})();
+</script>
+</body>
+</html>

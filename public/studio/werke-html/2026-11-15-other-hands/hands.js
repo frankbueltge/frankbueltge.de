@@ -1,20 +1,20 @@
 /* OTHER HANDS — the Studio, cycle 015. Own code, Apache-2.0, no library.
    One paragraph per incident, one word per report, set in the hand of whoever wrote it.
-   Second state: the Field's checked coding (60 acts, begun or concluded), and the harmed's words inside the type.
+   Third state (the check): the type is small and the exceptions are large. A hand is red and three rows high;
+   a seal stands in the margin, left when the act lands on the person who used the AI, right when it concerns
+   whoever made or ran it; a disc is an act concluded, a ring one only begun; black is an act in the maker's favour.
    Everything drawn follows from data.js; the only arbitrary thing is the length of a word. */
 (function () {
   'use strict';
   var D = window.OH, M = D.meta, INC = D.inc;
   var C = { paper: '#f5f2ea', ink: '#1b1a17', soft: '#6d685d', type: '#9a958a', faint: '#d9d3c4', red: '#c4301c', blue: '#1d4fb8' };
   var sheet = document.getElementById('sheet'), sx = sheet.getContext('2d');
-  var say = document.getElementById('say');
-  var ROW = 5, BAR = 2.4, GAP = 2.2, PARA = 2.6, YEARH = 11;
-  var L = null;                       // the layout
-  var layers = {};                    // offscreen canvases: type, read, hand, seal
-  var LAYERS = ['type', 'read', 'hand', 'seal'];
-  var alpha = { type: 1, read: 1, hand: 1, seal: 1 }, want = { type: 1, read: 1, hand: 1, seal: 1 };
-  var reading = 'all', picked = -1, playing = false, shown = 0, raf = 0;
-  var counts = {};                    // what was actually drawn, for the check
+  var say = document.getElementById('say'), loupe = document.getElementById('loupe');
+  var ROW = 3.2, BAR = 1.6, GAP = 1.4, PARA = 1.6, YEARH = 9;
+  var L = null, layers = {}, LAYERS = ['years', 'type', 'hand', 'seal'];
+  var alpha = { years: 1, type: 1, hand: 1, seal: 1 }, want = { years: 1, type: 1, hand: 1, seal: 1 };
+  var reading = 'all', picked = -1, playing = false, shown = 0, raf = 0, DPR = 1;
+  var counts = {};                    // what was actually drawn on the sheet, for the check
 
   function rnd(a, b) {                // a fixed number in [0,1) from two integers
     var x = (Math.imul(a + 1, 73856093) ^ Math.imul(b + 7, 19349663)) >>> 0;
@@ -22,156 +22,135 @@
     return (x >>> 0) / 4294967296;
   }
   function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function kind(r) {                  // what the first word of a paragraph is drawn as
+    var f = r[4], v = r[9];
+    if (f === 'H' || v === 'W') return 'hand';             // the harmed wrote it (on a platform, or printed by a publication)
+    if (v === 'q' || v === 'b' || v === 'o' || v === 'f') return 'thread';   // their words stand inside it
+    if (f === 'w') return 'witness';
+    if (f === 'n' || f === 'x') return 'blank';
+    return '';
+  }
 
-  /* ---------- layout: one virtual column, cut into the columns that fit ---------- */
+  /* ---------- layout: paragraphs are never broken across columns ---------- */
   function layout(W) {
-    var phone = W < 520;
-    var gut = phone ? 10 : 18, target = phone ? 108 : 148;
+    var phone = W < 520, MG = phone ? 12 : 13, R = phone ? 5 : 5.5, gut = phone ? 7 : 11, target = phone ? 82 : 100;
     var cols = Math.max(2, Math.floor((W + gut) / (target + gut)));
-    var cw = (W - gut * (cols - 1)) / cols;
-    var words = [], paras = [], years = [];
-    var y = 0, year = '';
+    var colW = (W - gut * (cols - 1)) / cols, cw = colW - 2 * MG;
+    var paras = [], year = '', total = 0;
     for (var i = 0; i < INC.length; i++) {
-      var r = INC[i], id = r[0], hands = r[2], first = r[4], ans = r[5], tgt = r[6], v = r[9];
-      var yr = r[1].slice(0, 4);
-      if (yr !== year) { year = yr; years.push({ y: y, t: yr }); y += YEARH; }
-      var x = 0, y0 = y, items = [];
-      if (!hands) items.push({ t: '0', l: 16 });
+      var r = INC[i], id = r[0], hands = r[2], k0 = kind(r), yr = r[1].slice(0, 4);
+      var p = { i: i, words: [], year: null, seal: null }, y = 0;
+      if (yr !== year) { year = yr; p.year = yr; y += YEARH; }
+      var lead = k0 === 'hand' ? 8 : k0 === 'thread' ? 2.5 : k0 === 'witness' ? 1.5 : 0;
+      var drop = k0 === 'hand' ? 5 : k0 === 'thread' ? 2 : k0 === 'witness' ? 1 : 0;
+      y += lead;
+      var x = 0, first = true, items = [];
+      if (!hands) items.push({ t: '0', l: 8 });
       for (var j = 0; j < hands.length; j++) {
-        var t = hands[j], l = 6 + rnd(id, j) * 9;
+        var t = hands[j], l = 3 + rnd(id, j) * 5;
         if (j === 0) {
-          l += 5;
-          if (first === 'H') { t = 'H'; l = 44 + rnd(id, 99) * 14; }
-          else if (first === 'w') { t = 'w'; l = 26 + rnd(id, 99) * 8; }
-          else if (first === 'n') { t = 'n'; l = 16; }
-          else if (first === 'x') { t = 'x'; l = 16; }
-          else if (first === 'm') { t = 'y'; }
-          else if (v === 'W') { t = 'W'; l = 40 + rnd(id, 99) * 10; }
-          else if (v === 'q') { t = 'q'; l = 30 + rnd(id, 99) * 8; }
-          else if (v === 'e') { t = 'e'; }
-          else if (v) { t = 'c'; l = 24 + rnd(id, 99) * 8; }
+          l += 2;
+          if (k0 === 'hand') { t = 'H'; l = Math.min(cw, 36 + rnd(id, 99) * 12); }
+          else if (k0 === 'thread') { t = 'T'; l = 18 + rnd(id, 99) * 6; }
+          else if (k0 === 'witness') { t = 'w'; l = 13 + rnd(id, 99) * 4; }
+          else if (k0 === 'blank') { t = 'n'; l = 8; }
+          else if (r[4] === 'm') t = 'm';
         }
         items.push({ t: t, l: l, b: hands[j] });
       }
-      if (ans.indexOf('M') >= 0) items.push({ t: 'A', l: 6 });
-      if (ans.indexOf('O') >= 0) items.push({ t: 'O', l: 6 });
-      if (ans.indexOf('P') >= 0) items.push({ t: tgt === 'u' ? 'U' : 'K', l: r[8].indexOf('g') >= 0 ? 15 : 10, s: r[7], f: r[8] });
       for (var k = 0; k < items.length; k++) {
         var it = items[k];
-        if (x > 0 && x + it.l > cw) { x = 0; y += ROW; }
-        words.push({ x: x, y: y, l: it.l, t: it.t, b: it.b, s: it.s, f: it.f, i: i, k: k });
+        if (x > 0 && x + it.l > cw) { x = 0; y += ROW + (first ? drop : 0); first = false; }
+        p.words.push({ x: x, y: y, l: it.l, t: it.t, b: it.b, k: k });
         x += it.l + GAP;
       }
-      y += ROW + PARA;
-      paras.push({ y0: y0, y1: y });
+      y += ROW + (first ? drop : 0);
+      if (r[5].indexOf('P') >= 0) {
+        var top = p.year ? YEARH : 0, cy = Math.max(top + R + 0.5, top + lead + BAR / 2);
+        p.seal = { side: r[6], state: r[7], fav: r[8].indexOf('v') >= 0, cy: cy };
+        y = Math.max(y, cy + R + 0.5);
+      }
+      p.h = y + PARA; total += p.h; paras.push(p);
     }
-    var hc = Math.ceil(y / cols / ROW) * ROW + ROW;
-    return { W: W, cols: cols, cw: cw, gut: gut, hc: hc, H: hc + 8, words: words, paras: paras, years: years };
-  }
-  function place(v) {                 // virtual y -> column and y on the sheet
-    var c = Math.min(L.cols - 1, Math.floor(v / L.hc));
-    return { x: c * (L.cw + L.gut), y: v - c * L.hc + 4 };
+    // columns: a paragraph starts a new column once the column has reached its share
+    var share = total / cols, c = 0, at = 0, H = 0, byCol = [];
+    for (var q = 0; q < paras.length; q++) {
+      var pa = paras[q];
+      if (at > 0 && at + pa.h / 2 > share && c < cols - 1) { c++; at = 0; }
+      pa.c = c; pa.y0 = at + 4; pa.x0 = c * (colW + gut); at += pa.h; H = Math.max(H, at);
+      (byCol[c] = byCol[c] || []).push(q);
+    }
+    var nwords = 0; paras.forEach(function (pp) { nwords += pp.words.length; });
+    return { W: W, cols: cols, colW: colW, cw: cw, MG: MG, R: R, gut: gut, H: Math.ceil(H) + 10, paras: paras, byCol: byCol, nwords: nwords };
   }
 
   /* ---------- the marks ---------- */
   function scribble(g, x, y, l, id, amp, col, lw) {
-    var f = 0.62 + rnd(id, 3) * 0.5, ph = rnd(id, 4) * 6.28, n = Math.ceil(l * 2);
+    var f = 0.5 + rnd(id, 3) * 0.35, ph = rnd(id, 4) * 6.28, n = Math.ceil(l * 2);
     g.strokeStyle = col; g.lineWidth = lw; g.lineJoin = 'round'; g.lineCap = 'round';
     g.beginPath();
     for (var s = 0; s <= n; s++) {
       var t = s / 2, env = 0.55 + 0.45 * Math.sin(t * 0.21 + rnd(id, 5) * 6.28);
-      var px = x + t + Math.sin(t * f + ph) * 1.7;
-      var py = y + BAR / 2 - Math.cos(t * f + ph) * amp * env - Math.sin(t * 0.09 + ph) * 0.8;
+      var px = x + t + Math.sin(t * f + ph) * 1.6;
+      var py = y + BAR / 2 - Math.cos(t * f + ph) * amp * env - Math.sin(t * 0.09 + ph) * 0.7;
       if (s) g.lineTo(px, py); else g.moveTo(px, py);
     }
     g.stroke();
   }
-  function thread(g, x, y, l, id, amp, col, lw, dash) {   // a hand running through a word of type
-    g.save(); if (dash) g.setLineDash(dash);
-    var f = 0.7 + rnd(id, 3) * 0.4, ph = rnd(id, 4) * 6.28, n = Math.ceil(l * 2);
-    g.strokeStyle = col; g.lineWidth = lw; g.lineJoin = 'round'; g.lineCap = dash ? 'butt' : 'round';
-    g.beginPath();
-    for (var s = 0; s <= n; s++) {
-      var t = s / 2, px = x + t, py = y + BAR / 2 - Math.sin(t * f + ph) * amp;
-      if (s) g.lineTo(px, py); else g.moveTo(px, py);
-    }
-    g.stroke(); g.restore();
-  }
-  function bar(g, t, x, y, l, id, k) {  // one word of type, by the class of its address
+  function word(g, gh, t, b, x, y, l, id, k, tally) {    // one word; g is the type, gh the hand
+    if (tally) tally[t] = (tally[t] || 0) + 1;
     if (t === 'p') { g.fillStyle = C.type; g.fillRect(x, y, l, BAR); }
-    else if (t === 'r') {
-      g.fillStyle = C.type; g.beginPath(); g.moveTo(x + 2, y - 0.6); g.lineTo(x + l + 2, y - 0.6);
-      g.lineTo(x + l - 1, y + BAR + 0.6); g.lineTo(x - 1, y + BAR + 0.6); g.closePath(); g.fill();
-      g.fillStyle = C.paper; for (var q = 3; q < l; q += 3) g.fillRect(x + q, y - 1, 0.8, BAR + 2);
-    }
-    else if (t === 'm') { g.fillStyle = C.ink; g.fillRect(x, y - 0.5, l, BAR + 1); }
+    else if (t === 'r') { g.fillStyle = C.type; for (var q = 0; q < l; q += 2.4) g.fillRect(x + q, y - 0.5, 1.2, BAR + 1); }
+    else if (t === 'm') { g.fillStyle = C.ink; g.fillRect(x, y - 0.4, l, BAR + 0.8); }
     else if (t === 'g') { g.fillStyle = C.blue; g.fillRect(x, y - 0.2, l, BAR + 0.4); }
-    else if (t === 's') { scribble(g, x, y, l - 1, id * 31 + k, 0.9, C.type, 0.8); }
-    else if (t === 'u' || t === 'x') { g.fillStyle = C.type; for (var d = 0; d < l; d += 3) g.fillRect(x + d, y + 0.4, 1.4, 1.4); }
-  }
-  var LAYER = { H: 'hand', U: 'seal', K: 'seal', w: 'read', n: 'read', x: 'read', y: 'read', W: 'read', q: 'read', c: 'read', e: 'read', G: 'hand' };
-  function mark(w) {                  // draws one word into its layer
-    var p = place(w.y), x = p.x + w.x, y = p.y, id = INC[w.i][0], t = w.t;
-    var g = layers[LAYER[t] || 'type'].g, h = layers.hand.g;
-    counts[t] = (counts[t] || 0) + 1;
-    if ('prmgsu'.indexOf(t) >= 0) bar(g, t, x, y, w.l, id, w.k);
-    else if (t === 'x') bar(g, 'x', x, y, w.l, id, w.k);
-    else if (t === 'y') bar(g, 'm', x, y, w.l, id, w.k);
-    else if (t === 'n' || t === '0') { g.strokeStyle = C.type; g.lineWidth = 0.7; g.strokeRect(x + 0.5, y - 0.6, w.l - 1, BAR + 1.2); }
-    else if (t === 'w') { scribble(g, x, y, w.l, id, 2.2, C.soft, 0.85); }
-    else if (t === 'H') { scribble(g, x, y, w.l, id, 4.3, C.red, 1.25); }
-    else if (t === 'G') { g.save(); g.globalAlpha = 0.3; g.setLineDash([1.5, 2]); scribble(g, x, y, w.l, id, 4.3, C.red, 1.1); g.restore(); }
-    else if (t === 'W' || t === 'q' || t === 'c' || t === 'e') {
-      // a first report from an edited address that someone read for the harmed's words
-      if (t === 'W') {                 // the harmed wrote it, and a publication printed it: handwriting in a frame of type
-        g.strokeStyle = C.type; g.lineWidth = 1; g.strokeRect(x + 0.5, y - 2.6, w.l - 1, BAR + 5.2);
-        scribble(h, x + 3, y, w.l - 7, id, 2.3, C.red, 1.15);
-      } else {
-        bar(g, w.b || 'p', x, y, w.l, id, w.k);
-        g.strokeStyle = C.soft; g.lineWidth = 0.5; g.strokeRect(x - 1, y - 1.4, w.l + 2, BAR + 2.8);   // read
-        if (t === 'q') thread(h, x + 1, y, w.l - 2, id, 1.9, C.red, 1.1, null);
-        if (t === 'c') thread(h, x + 1, y, w.l - 2, id, 1.2, C.red, 0.9, [2.2, 2.2]);
-      }
-    }
-    else if (t === 'A' || t === 'O') {
-      g.beginPath(); g.moveTo(x + 0.5, y - 1.2); g.lineTo(x + 5.5, y + BAR / 2); g.lineTo(x + 0.5, y + BAR + 1.2); g.closePath();
-      if (t === 'A') { g.fillStyle = C.ink; g.fill(); } else { g.strokeStyle = C.soft; g.lineWidth = 0.8; g.stroke(); }
-    }
-    else if (t === 'U' || t === 'K') {
-      var f = w.f || '', big = f.indexOf('g') >= 0, cx = x + (big ? 7.5 : 5), cy = y + BAR / 2;
-      var open = w.s === 'o';          // a proceeding opened and not concluded in the record: half a seal
-      counts[t + (open ? 'o' : 'c')] = (counts[t + (open ? 'o' : 'c')] || 0) + 1;
-      if (f.indexOf('b') >= 0) counts.fb = (counts.fb || 0) + 1;
-      if (big) counts.fg = (counts.fg || 0) + 1;
-      g.beginPath();
-      if (open) g.arc(cx, cy, 4.4, Math.PI / 2, Math.PI * 1.5); else g.arc(cx, cy, 4.4, 0, 6.2832);
-      if (t === 'U') { g.fillStyle = C.blue; g.fill(); g.fillStyle = C.paper; g.fillRect(cx - 2.4, cy - 0.5, open ? 2.4 : 4.8, 1); }
-      else {
-        g.strokeStyle = C.blue; g.lineWidth = 1.6; g.stroke(); g.fillStyle = C.blue;
-        if (f.indexOf('b') >= 0) g.fillRect(cx - 1.7, cy - 1.7, 3.4, 3.4);       // the party acted on is itself a public body
-        else g.fillRect(cx - 1.6, cy - 0.5, open ? 1.6 : 3.2, 1);
-      }
-      if (big) { g.beginPath(); g.arc(cx, cy, 7, 0, 6.2832); g.strokeStyle = C.blue; g.lineWidth = 0.8; g.stroke(); }   // a maker of a general model
+    else if (t === 's') { scribble(g, x, y, l - 1, id * 31 + k, 0.8, C.type, 0.7); }
+    else if (t === 'u') { g.fillStyle = C.type; for (var d = 0; d < l; d += 2.4) g.fillRect(x + d, y + 0.2, 1.1, 1.1); }
+    else if (t === 'n' || t === '0') { g.strokeStyle = C.type; g.lineWidth = 0.6; g.strokeRect(x + 0.3, y - 0.4, l - 0.6, BAR + 0.8); }
+    else if (t === 'w') { scribble(g, x, y, l, id, 1.7, C.soft, 0.8); }
+    else if (t === 'H') { scribble(gh, x, y, l, id, 4.6, C.red, 1.5); }
+    else if (t === 'G') { gh.save(); gh.globalAlpha = 0.32; gh.setLineDash([1.5, 2]); scribble(gh, x, y, l, id, 4.6, C.red, 1.2); gh.restore(); }
+    else if (t === 'T') {             // type with the harmed's words inside: a red line through it
+      word(g, gh, b || 'p', b, x, y, l, id, k, null);
+      gh.strokeStyle = C.red; gh.lineWidth = 1.3; gh.lineJoin = 'round'; gh.lineCap = 'round';
+      var f = 0.28 + rnd(id, 3) * 0.12, ph = rnd(id, 4) * 6.28; gh.beginPath();
+      for (var s = 0; s <= l * 2; s++) { var tt = s / 2, py = y + BAR / 2 - Math.sin(tt * f + ph) * 1.3; if (s) gh.lineTo(x + tt, py); else gh.moveTo(x + tt, py); }
+      gh.stroke();
     }
   }
-  function yearsOn(g) {
-    g.font = '8px ui-monospace,Menlo,Consolas,monospace'; g.textBaseline = 'alphabetic';
-    for (var i = 0; i < L.years.length; i++) {
-      var p = place(L.years[i].y);
-      g.fillStyle = C.ink; g.fillText(L.years[i].t, p.x, p.y + 6.5);
-      g.fillStyle = C.faint; g.fillRect(p.x + 24, p.y + 3.5, L.cw - 24, 0.7);
+  function seal(g, cx, cy, R, state, fav, tally) {      // a disc is an act concluded, a ring one only begun
+    if (tally) { var key = (fav ? 'V' : 'S') + state; tally[key] = (tally[key] || 0) + 1; }
+    g.beginPath();
+    if (state === 'c') { g.arc(cx, cy, R, 0, 6.2832); g.fillStyle = fav ? C.ink : C.blue; g.fill(); }
+    else { g.arc(cx, cy, R - 0.9, 0, 6.2832); g.strokeStyle = fav ? C.ink : C.blue; g.lineWidth = 1.8; g.stroke(); }
+  }
+  function sealX(p) { return p.seal.side === 'u' ? p.x0 + L.MG / 2 : p.x0 + L.colW - L.MG / 2; }
+  function para(p) {                  // draws one paragraph into the layers
+    var id = INC[p.i][0], gx = p.x0 + L.MG;
+    if (p.year) {
+      var gy = layers.years.g; gy.font = '7.5px ui-monospace,Menlo,Consolas,monospace'; gy.textBaseline = 'alphabetic';
+      gy.fillStyle = C.ink; gy.fillText(p.year, gx, p.y0 + 6.5);
+      gy.fillStyle = C.faint; gy.fillRect(gx + 21, p.y0 + 3.6, L.cw - 21, 0.6);
+    }
+    for (var k = 0; k < p.words.length; k++) { var w = p.words[k]; word(layers.type.g, layers.hand.g, w.t, w.b, gx + w.x, p.y0 + w.y, w.l, id, w.k, counts); }
+    if (p.seal) {
+      seal(layers.seal.g, sealX(p), p.y0 + p.seal.cy, L.R, p.seal.state, p.seal.fav, counts);
+      counts[p.seal.side === 'u' ? 'left' : 'right'] = (counts[p.seal.side === 'u' ? 'left' : 'right'] || 0) + 1;
     }
   }
 
+  function rules() {                  // a faint rule between columns, so a seal's side can be told
+    var g = layers.years.g; g.fillStyle = C.faint;
+    for (var c = 1; c < L.cols; c++) g.fillRect(c * (L.colW + L.gut) - L.gut / 2 - 0.3, 0, 0.6, L.H);
+  }
+
   /* ---------- canvases ---------- */
-  var DPR = 1;
   function make(name) {
     var c = document.createElement('canvas'); c.width = Math.round(L.W * DPR); c.height = Math.round(L.H * DPR);
     var g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0);
     layers[name] = { c: c, g: g };
   }
   function build() {
-    var W = Math.floor(sheet.parentNode.clientWidth - 32);
+    var W = Math.floor(sheet.parentNode.clientWidth - 32);   // main's padding
     W = Math.max(280, Math.min(1100, W));
     DPR = Math.min(2, window.devicePixelRatio || 1);
     L = layout(W);
@@ -179,37 +158,30 @@
     sheet.width = Math.round(W * DPR); sheet.height = Math.round(L.H * DPR);
     LAYERS.forEach(make);
     counts = {};
-    yearsOn(layers.type.g);
-    for (var i = 0; i < L.words.length; i++) mark(L.words[i]);
-    shown = L.words.length;
-    window.__oh = { drawn: counts, words: L.words.length, cols: L.cols, height: L.H };
+    rules();
+    for (var i = 0; i < L.paras.length; i++) para(L.paras[i]);
+    shown = L.paras.length;
+    window.__oh = { drawn: counts, words: L.nwords, cols: L.cols, height: L.H, sealR: L.R };
     tally(); key();
     paint();
   }
   function paint() {
     sx.setTransform(1, 0, 0, 1, 0, 0);
     sx.fillStyle = C.paper; sx.fillRect(0, 0, sheet.width, sheet.height);
-    sx.globalAlpha = alpha.type; sx.drawImage(layers.type.c, 0, 0);
-    sx.globalAlpha = alpha.read; sx.drawImage(layers.read.c, 0, 0);
-    sx.globalAlpha = alpha.seal; sx.drawImage(layers.seal.c, 0, 0);
-    sx.globalAlpha = alpha.hand; sx.drawImage(layers.hand.c, 0, 0);
+    LAYERS.forEach(function (k) { if (alpha[k] > 0.003) { sx.globalAlpha = alpha[k]; sx.drawImage(layers[k].c, 0, 0); } });
     sx.globalAlpha = 1;
     if (picked >= 0) {
-      var pa = L.paras[picked], a = place(pa.y0), b = place(pa.y1 - PARA - 0.01);
+      var p = L.paras[picked];
       sx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      sx.strokeStyle = C.ink; sx.lineWidth = 1;
-      if (a.x === b.x) sx.strokeRect(a.x - 3.5, a.y - 5.5, L.cw + 7, b.y - a.y + 10);
-      else {
-        sx.strokeRect(a.x - 3.5, a.y - 5.5, L.cw + 7, L.hc - (a.y - 4) + 5);
-        sx.strokeRect(b.x - 3.5, 0.5, L.cw + 7, b.y + 4);
-      }
+      sx.strokeStyle = C.ink; sx.lineWidth = 1.2;
+      sx.strokeRect(p.x0 + 0.6, p.y0 - 2.4 + (p.year ? YEARH : 0), L.colW - 1.2, p.h - (p.year ? YEARH : 0) + 2.2);
     }
   }
   function tick() {
     var moving = false;
     LAYERS.forEach(function (k) {
       var d = want[k] - alpha[k];
-      if (Math.abs(d) > 0.004) { alpha[k] += d * 0.14; moving = true; } else alpha[k] = want[k];
+      if (Math.abs(d) > 0.004) { alpha[k] += d * 0.16; moving = true; } else alpha[k] = want[k];
     });
     if (playing) { step(); moving = true; }
     paint();
@@ -217,143 +189,151 @@
   }
   function kick() { if (!raf) raf = requestAnimationFrame(tick); }
 
-  /* ---------- the counts under the sheet, one mark per incident, counted from the rows ---------- */
-  function onto(g, W, fn) {            // lend mark() a single canvas for a while
-    var keep = layers, keepL = L, keepCounts = counts;
-    layers = {}; LAYERS.forEach(function (k) { layers[k] = { g: g }; }); counts = {};
-    L = { cols: 1, hc: 1e9, cw: W, gut: 0 };
-    fn();
-    var c = counts; layers = keep; L = keepL; counts = keepCounts; return c;
-  }
-  function put(p) { INC.push([900000 + p.n, '', '', '', '', '', '', '', '', '']); mark({ x: p.x, y: p.y - 4, l: p.l, t: p.t, b: p.b, s: p.s, f: p.f, i: INC.length - 1, k: 0 }); INC.pop(); }
-  function label(g, t, x, y) { g.font = '9px ui-monospace,Menlo,Consolas,monospace'; g.textBaseline = 'alphabetic'; g.fillStyle = C.soft; g.fillText(t, x, y); }
-  var ORDER = 'prmgu' + 'ecqW' + 'nxywH';
-  var LEN = { H: 30, W: 30, q: 22, c: 18, e: 8, w: 14, n: 8, x: 8, G: 30 };
+  /* ---------- the counts under the sheet: one mark per incident, counted from the rows ---------- */
+  function label(g, t, x, y) { g.font = '10px ui-monospace,Menlo,Consolas,monospace'; g.textBaseline = 'alphabetic'; g.fillStyle = C.ink; g.fillText(t, x, y); }
   function tally() {
-    var c = document.getElementById('tally'), W = L.W, g = c.getContext('2d'), n = 0;
-    var firsts = [];
+    var c = document.getElementById('tally'), W = L.W, drawn = {}, ops = [], labels = [];
+    var firsts = [], ORDER = 'prgmsun0wTH';
     INC.forEach(function (r) {
       if (!r[2]) return;
-      var b = r[2][0], t = r[4] ? (r[4] === 'm' ? 'y' : r[4]) : r[9] ? (r[9] === 'W' || r[9] === 'q' || r[9] === 'e' ? r[9] : 'c') : b;
-      firsts.push({ t: t, b: b });
+      var k0 = kind(r), b = r[2][0];
+      firsts.push({ t: k0 === 'hand' ? 'H' : k0 === 'thread' ? 'T' : k0 === 'witness' ? 'w' : k0 === 'blank' ? 'n' : r[4] === 'm' ? 'm' : b, b: b, id: r[0] });
     });
     firsts.sort(function (a, b) { return ORDER.indexOf(a.t) - ORDER.indexOf(b.t); });
-    var pos = [], x = 0, y = 18, labels = [['who wrote the first report of each incident · ' + fmt(firsts.length), 0, 9]];
-    function flow(list, lead, lh) {
+    var x = 0, y = 20;
+    labels.push(['who wrote the first report of each incident · ' + fmt(firsts.length), 0, 10]);
+    function flow(list, len, lead, lh) {
       list.forEach(function (it) {
-        var l = LEN[it.t] || (it.t === 'U' || it.t === 'K' ? 12 : it.t === 'A' || it.t === 'O' ? 8 : 3);
+        var l = len(it.t);
         if (x + l > W) { x = 0; y += lh; }
-        pos.push({ t: it.t, b: it.b, s: it.s, f: it.f, x: x, y: y, l: l, n: n++ }); x += l + lead(it.t);
+        ops.push({ t: it.t, b: it.b, id: it.id || 0, x: x, y: y, l: l }); x += l + lead;
       });
     }
-    flow(firsts, function (t) { return 'prmgu'.indexOf(t) >= 0 ? 1 : 3; }, 12);
-    y += 30; x = 0; labels.push(['written by the harmed, estimated and not found · ' + M.estimate_not_found, 0, y - 10]);
-    var ghosts = []; for (var i = 0; i < M.estimate_not_found; i++) ghosts.push({ t: 'G' });
-    flow(ghosts, function () { return 3; }, 13);
-    y += 32; x = 0; labels.push(['answers filed · the maker ' + M.maker_answered + ' · someone else ' + M.other_answered, 0, y - 11]);
-    var ans = [];
-    INC.forEach(function (r) { if (r[5].indexOf('M') >= 0) ans.push({ t: 'A' }); });
-    INC.forEach(function (r) { if (r[5].indexOf('O') >= 0) ans.push({ t: 'O' }); });
-    flow(ans, function () { return 0; }, 14);
-    y += 30; x = 0; labels.push(['what public bodies did · ' + M.public_acted + ' acts', 0, y - 12]);
-    [['u', 'c'], ['u', 'o'], ['k', 'c'], ['k', 'o']].forEach(function (grp) {
-      var list = [];
-      INC.forEach(function (r) { if (r[5].indexOf('P') >= 0 && r[6] === grp[0] && r[7] === grp[1]) list.push({ t: grp[0] === 'u' ? 'U' : 'K', s: r[7], f: r[8].replace('g', '') }); });
-      flow(list, function () { return 2; }, 15); x += 22;
+    var small = firsts.filter(function (f) { return 'HTw'.indexOf(f.t) < 0; }), big = firsts.filter(function (f) { return 'HTw'.indexOf(f.t) >= 0; });
+    flow(small, function () { return 3; }, 1, 4.2);
+    x = 0; y += 16;
+    flow(big, function (t) { return t === 'H' ? 38 : t === 'T' ? 20 : 14; }, 4, 14);
+    x = 0; y += 34; labels.push(['written by the harmed, estimated and never found · ' + M.estimate_not_found, 0, y - 13]);
+    var ghosts = []; for (var i = 0; i < M.estimate_not_found; i++) ghosts.push({ t: 'G', id: 7000 + i });
+    flow(ghosts, function () { return 38; }, 4, 14);
+    x = 0; y += 40;
+    var R = 6.5, seals = [], groups = [['u', 'on the person who used the AI · ' + M.on_user], ['k', 'about whoever made or ran it · ' + M.on_maker]];
+    groups.forEach(function (grp, n) {
+      if (n && (W < 700 || x + 24 * (2 * R + 3) > W)) { x = 0; y += 40; } else if (n) x += 40;
+      labels.push([grp[1], x, y - 13]);
+      [['c', false], ['o', false], ['c', true], ['o', true]].forEach(function (v) {
+        INC.forEach(function (r) {
+          if (r[5].indexOf('P') < 0 || r[6] !== grp[0] || r[7] !== v[0] || (r[8].indexOf('v') >= 0) !== v[1]) return;
+          if (x + 2 * R > W) { x = 0; y += 2 * R + 4; }
+          seals.push({ x: x + R, y: y, s: r[7], fav: v[1] }); x += 2 * R + 3;
+        });
+      });
+    });
+    var H = y + R + 6;
+    c.style.height = H + 'px'; c.style.maxWidth = W + 'px';
+    c.width = Math.round(W * DPR); c.height = Math.round(H * DPR);
+    var g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ops.forEach(function (o) { word(g, g, o.t, o.b, o.x, o.y, o.l, o.id, 0, drawn); });
+    seals.forEach(function (s) { seal(g, s.x, s.y, R, s.s, s.fav, drawn); });
+    labels.forEach(function (l) { label(g, l[0], l[1], l[2]); });
+    window.__oh.tally = drawn;
+  }
+
+  /* ---------- the key: every mark once, at twice its size on the sheet ---------- */
+  var KEY = [
+    ['p', 'the press'], ['m', 'the maker'], ['g', 'a public body'], ['r', 'research'], ['w', 'a witness, on a platform'],
+    ['H', 'the harmed wrote it'], ['T', 'the harmed\'s words are in it'],
+    ['L', 'left: on the person who used the AI'], ['Rt', 'right: on whoever made or ran it'],
+    ['c', 'concluded'], ['o', 'only begun'], ['v', 'in the maker\'s favour']
+  ];
+  function key() {
+    var c = document.getElementById('key'), W = L.W, g = c.getContext('2d'), S = 2;
+    g.font = '11px ui-monospace,Menlo,Consolas,monospace';
+    var x = 0, y = 12, pos = [];
+    KEY.forEach(function (k) {
+      var t = k[0], ml = t === 'H' ? 60 : t === 'T' ? 40 : t === 'w' ? 28 : t === 'L' || t === 'Rt' ? 34 : t.length === 1 && 'cov'.indexOf(t) >= 0 ? 14 : 16;
+      var w = ml + 6 + g.measureText(k[1]).width + 18;
+      if (x + w - 18 > W && x > 0) { x = 0; y += 24; }
+      pos.push({ t: t, x: x, y: y, ml: ml, text: k[1] }); x += w;
     });
     var H = y + 14;
     c.style.height = H + 'px'; c.style.maxWidth = W + 'px';
     c.width = Math.round(W * DPR); c.height = Math.round(H * DPR);
     g.setTransform(DPR, 0, 0, DPR, 0, 0);
-    window.__oh.tally = onto(g, W, function () { pos.forEach(put); });
-    labels.forEach(function (l) { label(g, l[0], l[1], l[2]); });
-  }
-
-  /* ---------- the key above the sheet: every mark once, with two or three words ---------- */
-  var KEY = [
-    ['p', 'a report in the press', {}], ['m', 'the maker', {}], ['g', 'a public body', {}], ['r', 'research', {}],
-    ['H', 'the harmed wrote it', { l: 34 }], ['W', 'the harmed wrote it, in a publication', { l: 34 }],
-    ['q', 'the harmed in their own words', { l: 28 }], ['c', 'their words carried', { l: 24 }], ['e', 'read: no word of theirs', { l: 16 }],
-    ['w', 'a witness wrote it', { l: 24 }],
-    ['A', 'the maker answered', { l: 6 }], ['O', 'someone else answered', { l: 6 }],
-    ['U', 'act on the person who used the AI', { s: 'c', l: 10 }], ['U', 'begun, not concluded', { s: 'o', l: 10 }],
-    ['K', 'act on who made or ran it', { s: 'c', l: 10 }], ['K', 'begun', { s: 'o', l: 10 }],
-    ['K', 'on a public body', { s: 'c', f: 'b', l: 10 }], ['K', 'on a maker of a general model', { s: 'c', f: 'g', l: 15 }]
-  ];
-  function key() {
-    var c = document.getElementById('key'), W = L.W, g = c.getContext('2d');
-    g.font = '10px ui-monospace,Menlo,Consolas,monospace';
-    var x = 0, y = 12, pos = [], n = 0;
-    KEY.forEach(function (k) {
-      var l = k[2].l || 14, tw = g.measureText(k[1]).width, w = l + 6 + tw + 16;
-      if (x + w - 16 > W && x > 0) { x = 0; y += 18; }
-      pos.push({ t: k[0], b: 'p', s: k[2].s, f: k[2].f, x: x, y: y, l: l, n: n++, text: k[1] }); x += w;
+    pos.forEach(function (p, n) {
+      g.save(); g.translate(p.x, p.y); g.scale(S, S);
+      var t = p.t, m = p.ml / S;
+      if (t === 'c') seal(g, m / 2, 0, 3.2, 'c', false);
+      else if (t === 'o') seal(g, m / 2, 0, 3.2, 'o', false);
+      else if (t === 'v') seal(g, m / 2, 0, 3.2, 'c', true);
+      else if (t === 'L' || t === 'Rt') {
+        g.fillStyle = C.type; for (var q = 0; q < 3; q++) g.fillRect(t === 'L' ? 7 : 0, -3 + q * 2.6, 9.5 - q * 2, 1.2);
+        seal(g, t === 'L' ? 3 : 14, 0, 2.6, 'c', false);
+      }
+      else word(g, g, t, 'p', 0, -BAR / 2, t === 'H' ? 28 : t === 'T' ? 19 : t === 'w' ? 13 : 8, 4000 + n, 0, null);
+      g.restore();
+      g.font = '11px ui-monospace,Menlo,Consolas,monospace'; g.textBaseline = 'middle'; g.fillStyle = C.ink;
+      g.fillText(p.text, p.x + p.ml + 6, p.y + 0.5);
     });
-    var H = y + 10;
-    c.style.height = H + 'px'; c.style.maxWidth = W + 'px';
-    c.width = Math.round(W * DPR); c.height = Math.round(H * DPR);
-    g.setTransform(DPR, 0, 0, DPR, 0, 0);
-    onto(g, W, function () { pos.forEach(put); });
-    g.font = '10px ui-monospace,Menlo,Consolas,monospace'; g.textBaseline = 'alphabetic'; g.fillStyle = C.ink;
-    pos.forEach(function (p) { g.fillText(p.text, p.x + p.l + (p.f === 'g' ? 4 : 6), p.y + 0.5); });
   }
 
   /* ---------- readings, stepping, pointing ---------- */
   var sets = { all: [], hand: [], seal: [] };
-  INC.forEach(function (r, i) { sets.all.push(i); if (r[4] === 'H' || (r[9] && r[9] !== 'e')) sets.hand.push(i); if (r[5].indexOf('P') >= 0) sets.seal.push(i); });
+  INC.forEach(function (r, i) { sets.all.push(i); var k0 = kind(r); if (k0 === 'hand' || k0 === 'thread') sets.hand.push(i); if (r[5].indexOf('P') >= 0) sets.seal.push(i); });
   var FIRST = { p: 'the press or another edited address', r: 'a research address', m: 'the maker\'s own address', g: 'a public body\'s address', s: 'a platform without an editor', u: 'an unknown address' };
   var VOICE = {
-    W: 'Read by the Field: <span class="hand">written by the harmed</span>, printed by a publication',
-    q: 'Read by the Atelier: <span class="hand">the harmed speak in their own words</span>',
-    b: 'Read by the Atelier: <span class="hand">the harmed is an organisation, and its statement is quoted</span>',
-    o: 'Read by the Atelier: <span class="hand">the harmed\'s words reach it through someone else</span>',
-    f: 'Read by the Field: <span class="hand">it quotes or carries words of the harmed</span>',
+    W: '<span class="hand">Written by the harmed</span>, printed by a publication',
+    q: '<span class="hand">The harmed speak in it in their own words</span>',
+    b: '<span class="hand">The harmed is an organisation, and its statement is quoted</span>',
+    o: '<span class="hand">The harmed\'s words reach it through someone else</span>',
+    f: '<span class="hand">It quotes or carries words of the harmed</span>',
     e: 'Read for the harmed\'s words: none'
   };
-  var HAND = { H: 'the person harmed', w: 'a witness', n: 'the database\'s own note', x: 'unreadable in the snapshot', m: 'the maker, on a platform' };
+  var HAND = { H: '<span class="hand">Written by the harmed</span>', w: 'Written by a witness', n: 'The database\'s own note', x: 'Unreadable in the snapshot', m: 'Written by the maker, on a platform' };
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function describe(i) {
-    var r = INC[i], n = r[2].length, s = '<b>Incident ' + r[0] + '</b> · ' + r[1] + ' · ' + n + (n === 1 ? ' report' : ' reports') + '. ';
-    if (!n) s += 'No report is attached. ';
-    else {
-      s += 'First written from ' + FIRST[r[2][0]];
-      if (r[4]) s += ', read by the Field: ' + (r[4] === 'H' ? '<span class="hand">' + HAND.H + '</span>' : HAND[r[4]]) + (D.na[r[0]] ? ' (' + esc(D.na[r[0]]) + ')' : '');
-      s += '. ';
-      if (r[9]) s += VOICE[r[9]] + (D.nv[r[0]] ? ' (' + esc(D.nv[r[0]]) + ')' : '') + '. ';
-    }
-    if (r[5]) {
-      var a = [];
-      if (r[5].indexOf('M') >= 0) a.push('the maker');
-      if (r[5].indexOf('O') >= 0) a.push('someone else');
-      if (a.length) s += 'Answered by ' + a.join(' and ') + '. ';
-      if (r[5].indexOf('P') >= 0) {
-        var a2 = D.act[r[0]];
-        s += '<span class="seal">' + esc(a2[0]) + '</span>: ' + esc(a2[1]) + (a2[2] ? ' (' + esc(a2[2]) + ')' : '') + '. ' + (r[7] === 'c' ? 'Concluded' : 'Begun, not concluded in the record') + ', on ' +
-          (r[6] === 'u' ? 'the person who used the AI' : r[8].indexOf('b') >= 0 ? 'whoever ran it, itself a public body' : r[8].indexOf('g') >= 0 ? 'a maker of a general model' : 'whoever made or ran it') +
-          (r[8].indexOf('n') >= 0 ? '; found by the Field\'s check' : '') + '. ';
-      }
+    var r = INC[i], n = r[2].length, s = '<b>Incident ' + r[0] + '</b> · ' + r[1] + ' · ' + n + (n === 1 ? ' report' : ' reports') + ', the first from ' + (n ? FIRST[r[2][0]] : 'nowhere: none is attached') + '. ';
+    if (r[4]) s += HAND[r[4]] + (D.na[r[0]] ? ' (' + esc(D.na[r[0]]) + ')' : '') + '. ';
+    if (r[9]) s += VOICE[r[9]] + (D.nv[r[0]] ? ' (' + esc(D.nv[r[0]]) + ')' : '') + '. ';
+    if (r[5].indexOf('P') >= 0) {
+      var a = D.act[r[0]], f = r[8];
+      s += '<span class="seal">' + esc(a[0]) + '</span>: ' + esc(a[1]) + (a[2] ? ' (' + esc(a[2]) + ')' : '') + '. ' + (r[7] === 'c' ? 'Concluded' : 'Only begun') +
+        (f.indexOf('s') >= 0 ? ' (corrected by this work\'s check)' : '') + ', ' +
+        (r[6] === 'u' ? 'on the person who used the AI' : f.indexOf('v') >= 0 ? '<b>in the maker\'s favour</b>' : f.indexOf('b') >= 0 ? 'on whoever ran it, itself a public body' : f.indexOf('g') >= 0 ? 'about a maker of a general model' : 'on whoever made or ran it') + '. ';
     }
     return s + '<a href="https://incidentdatabase.ai/cite/' + r[0] + '/" target="_blank" rel="noopener">Open it in the database</a>';
   }
   var REST = {
-    all: function () { return fmt(M.incidents) + ' paragraphs, ' + fmt(M.words) + ' words. ' + (('ontouchstart' in window) ? 'Tap' : 'Point at') + ' a paragraph, or step through them with the arrows.'; },
-    hand: function () { return 'The type is lifted off. ' + M.first_read + ' first reports were read for who speaks in them; the pale ones carry no word of the harmed. <span class="hand">The harmed wrote ' + M.wrote_found + '</span>, speak in their own words in ' + M.own_words + ' more, and are quoted or carried in ' + M.carried + '. The other ' + fmt(M.with_report - M.first_read) + ' were never read for this. Step through the red ones with the arrows.'; },
-    seal: function () { return 'What stays is <span class="seal">' + M.public_acted + ' acts of public bodies</span>. ' + M.on_user + ' discs land on the person who used the AI, ' + M.on_maker + ' rings on whoever made or ran it. Half a seal is a proceeding begun and not concluded: ' + M.user_opened + ' of the discs, ' + M.maker_opened + ' of the rings. Step through them with the arrows.'; }
+    all: function () { return fmt(M.incidents) + ' incidents, ' + fmt(M.words) + ' reports. Grey is the press. ' + (('ontouchstart' in window) ? 'Tap' : 'Point at') + ' a paragraph, or step through them with the arrows.'; },
+    hand: function () { return 'The type is lifted off. Of ' + M.first_read + ' first reports that were read, <span class="hand">the harmed wrote ' + M.wrote_found + '</span>, and their words stand in ' + M.words_inside + ' more. The other ' + fmt(M.never_read) + ' were never read for this.'; },
+    seal: function () { return '<span class="seal">' + M.public_acted + ' acts of public bodies.</span> Left of a column: ' + M.on_user + ' on the person who used the AI. Right: ' + M.on_maker + ' about whoever made or ran it, ' + M.for_maker + ' of them in the maker\'s favour (black). A ring is an act only begun: ' + M.begun + ' of the ' + M.public_acted + '.'; }
   };
-  function rest() { say.innerHTML = REST[reading](); }
+  function rest() { say.innerHTML = REST[reading](); drawLoupe(-1); }
   function setReading(r) {
     reading = r; picked = -1;
-    want = r === 'all' ? { type: 1, read: 1, hand: 1, seal: 1 } : r === 'hand' ? { type: 0.06, read: 0.55, hand: 1, seal: 0.05 } : { type: 0.07, read: 0.07, hand: 0.12, seal: 1 };
+    want = r === 'all' ? { years: 1, type: 1, hand: 1, seal: 1 } : r === 'hand' ? { years: 1, type: 0, hand: 1, seal: 0 } : { years: 1, type: 0, hand: 0, seal: 1 };
     [['rAll', 'all'], ['rHand', 'hand'], ['rSeal', 'seal']].forEach(function (b) { document.getElementById(b[0]).setAttribute('aria-pressed', String(b[1] === r)); });
     rest(); kick();
+  }
+  function drawLoupe(i) {             // the picked paragraph, four times its size
+    var S = 4, g = loupe.getContext('2d');
+    if (i < 0) { loupe.style.display = 'none'; return; }
+    var p = L.paras[i], top = p.year ? YEARH : 0, h = Math.min(p.h - top + 3, 22), w = L.colW;
+    loupe.style.display = 'block'; loupe.style.width = w * S + 'px'; loupe.style.height = h * S + 'px';
+    loupe.width = Math.round(w * S * DPR); loupe.height = Math.round(h * S * DPR);
+    g.setTransform(DPR * S, 0, 0, DPR * S, 0, 0); g.clearRect(0, 0, w, h);
+    g.translate(0, 2 - top);
+    var id = INC[p.i][0];
+    p.words.forEach(function (wd) { word(g, g, wd.t, wd.b, L.MG + wd.x, wd.y, wd.l, id, wd.k, null); });
+    if (p.seal) seal(g, p.seal.side === 'u' ? L.MG / 2 : w - L.MG / 2, p.seal.cy, L.R, p.seal.state, p.seal.fav, null);
   }
   function pick(i, scroll) {
     picked = i;
     if (i < 0) { rest(); } else {
-      say.innerHTML = describe(i);
+      say.innerHTML = describe(i); drawLoupe(i);
       if (scroll) {
-        var p = place(L.paras[i].y0), rct = sheet.getBoundingClientRect();
-        var top = rct.top + window.scrollY + p.y - window.innerHeight * 0.6;
+        var p = L.paras[i], rct = sheet.getBoundingClientRect();
+        var top = rct.top + window.scrollY + p.y0 - window.innerHeight * 0.4;
         if (Math.abs(top - window.scrollY) > window.innerHeight * 0.3) { quiet = performance.now() + 1200; window.scrollTo({ top: top, behavior: 'smooth' }); }
       }
       if (snd.on) voice(INC[i]);
@@ -370,11 +350,12 @@
   }
   function hit(e) {
     var rc = sheet.getBoundingClientRect(), px = e.clientX - rc.left, py = e.clientY - rc.top;
-    var c = Math.floor(px / (L.cw + L.gut));
-    if (c < 0 || c >= L.cols || px - c * (L.cw + L.gut) > L.cw + 4) return -1;
-    var v = c * L.hc + py - 4, lo = 0, hi = L.paras.length - 1;
-    while (lo < hi) { var m = (lo + hi) >> 1; if (L.paras[m].y1 <= v) lo = m + 1; else hi = m; }
-    return (v >= L.paras[lo].y0 - 3 && v < L.paras[lo].y1) ? lo : -1;
+    var c = Math.floor(px / (L.colW + L.gut));
+    if (c < 0 || c >= L.cols || !L.byCol[c]) return -1;
+    var list = L.byCol[c], lo = 0, hi = list.length - 1;
+    while (lo < hi) { var m = (lo + hi) >> 1, p = L.paras[list[m]]; if (p.y0 + p.h <= py) lo = m + 1; else hi = m; }
+    var q = L.paras[list[lo]];
+    return (py >= q.y0 - 3 && py < q.y0 + q.h + 2) ? list[lo] : -1;
   }
   var quiet = 0;                      // while a step scrolls the page, the sheet passing under a resting pointer picks nothing
   sheet.addEventListener('mousemove', function (e) { if (playing || performance.now() < quiet) return; var i = hit(e); if (i !== picked && (i >= 0 || !('ontouchstart' in window))) pick(i, false); });
@@ -417,24 +398,25 @@
     burst(900, 0.7, 0.03, 0.25, pan, 0);
   }
   function voice(r) {                 // one paragraph, said once
-    if (r[4] === 'H' || r[9] === 'W') burst(2300, 1.6, 0.55, 0.5, 0, 0, 'pen'); else if (r[9] === 'q') burst(2600, 1.6, 0.22, 0.3, 0, 0, 'pen'); else burst(3600, 2.5, 0.014, 0.12, 0, 0);
+    var k0 = kind(r);
+    if (k0 === 'hand') burst(2300, 1.6, 0.55, 0.5, 0, 0, 'pen'); else if (k0 === 'thread') burst(2600, 1.6, 0.22, 0.3, 0, 0, 'pen'); else burst(3600, 2.5, 0.014, 0.12, 0, 0);
     if (r[5].indexOf('P') >= 0) setTimeout(function () { thud(r[6] === 'u' ? -0.75 : 0.75); }, 180);
   }
 
   /* ---------- the sheet writes itself ---------- */
-  var t0 = 0, DUR = 46000;
+  var t0 = 0, DUR = 30000;
   function play() {
-    playing = true; picked = -1; shown = 0; t0 = performance.now();
+    playing = true; picked = -1; shown = 0; t0 = performance.now(); drawLoupe(-1);
     LAYERS.forEach(function (k) { layers[k].g.clearRect(0, 0, L.W, L.H); });
-    counts = {}; yearsOn(layers.type.g);
+    counts = {}; rules();
     document.getElementById('bPlay').setAttribute('aria-pressed', 'true');
     document.getElementById('bPlay').textContent = 'stop';
     say.setAttribute('aria-live', 'off');
     kick();
   }
   function stop() {
-    for (var i = shown; i < L.words.length; i++) mark(L.words[i]);
-    shown = L.words.length; playing = false;
+    for (var i = shown; i < L.paras.length; i++) para(L.paras[i]);
+    shown = L.paras.length; playing = false;
     document.getElementById('bPlay').setAttribute('aria-pressed', 'false');
     document.getElementById('bPlay').textContent = 'write it from 1983';
     say.setAttribute('aria-live', 'polite');
@@ -442,16 +424,17 @@
   }
   function step() {
     var p = Math.min(1, (performance.now() - t0) / DUR);
-    // the first decades are slowed so that their few paragraphs can be seen being written
-    var e = p < 0.12 ? (p / 0.12) * 0.035 : 0.035 + (p - 0.12) / 0.88 * 0.965;
-    var to = Math.floor(e * L.words.length), keys = 0, hands = 0, quotes = 0, seals = 0, pan = 0;
+    // the first decades are slowed a little so that their few paragraphs can be seen being written
+    var e = p < 0.06 ? (p / 0.06) * 0.03 : 0.03 + (p - 0.06) / 0.94 * 0.97;
+    var to = Math.floor(e * L.paras.length), keys = 0, hands = 0, quotes = 0, seals = 0, pan = 0;
     for (var i = shown; i < to; i++) {
-      var w = L.words[i]; mark(w);
-      if (w.t === 'H' || w.t === 'W') hands++; else if (w.t === 'q') quotes++; else if (w.t === 'U') { seals++; pan = -0.75; } else if (w.t === 'K') { seals++; pan = 0.75; } else keys++;
+      var pa = L.paras[i], k0 = kind(INC[pa.i]); para(pa); keys += pa.words.length;
+      if (k0 === 'hand') hands++; else if (k0 === 'thread') quotes++;
+      if (pa.seal) { seals++; pan = pa.seal.side === 'u' ? -0.75 : 0.75; }
     }
     if (to > shown) {
-      var r = INC[L.words[to - 1].i], h = (counts.H || 0) + (counts.W || 0), s = (counts.U || 0) + (counts.K || 0);
-      say.innerHTML = '<b>' + r[1].slice(0, 4) + '</b> · ' + fmt(L.words[to - 1].i + 1) + ' incidents · <span class="hand">' + h + ' written by the harmed</span> · <span class="seal">' + s + ' acts of a public body</span>';
+      var r = INC[to - 1], s = (counts.Sc || 0) + (counts.So || 0) + (counts.Vc || 0) + (counts.Vo || 0);
+      say.innerHTML = '<b>' + r[1].slice(0, 4) + '</b> · ' + fmt(to) + ' incidents · <span class="hand">' + (counts.H || 0) + ' written by the harmed</span> · <span class="seal">' + s + ' acts of a public body</span>';
       if (snd.on) {
         for (var k = 0; k < Math.min(keys, 5); k++) burst(3000 + Math.random() * 1800, 2.5, 0.012, 0.07, Math.random() * 0.6 - 0.3, k * 0.012);
         if (hands) burst(2300, 1.6, 0.6, 0.55, 0, 0, 'pen'); else if (quotes) burst(2600, 1.6, 0.22, 0.3, 0, 0, 'pen');
@@ -478,7 +461,7 @@
     if (e.key === 'ArrowRight') { if (playing) stop(); stepSet(1); e.preventDefault(); }
     if (e.key === 'ArrowLeft') { if (playing) stop(); stepSet(-1); e.preventDefault(); }
   });
-  var flat = { press: M.first.press, public: M.first.public, research: M.first.research, maker: M.first.maker, self: M.first.self };
+  var flat = { press: M.first.press, not_press: M.with_report - M.first.press, self: M.first.self, state_differ: M.state_read_again - M.state_agree };
   Array.prototype.forEach.call(document.querySelectorAll('[data-n]'), function (el) {
     var k = el.getAttribute('data-n'); el.textContent = fmt(k in flat ? flat[k] : M[k]);
   });

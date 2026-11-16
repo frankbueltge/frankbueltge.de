@@ -1,4 +1,4 @@
-// Open the page as a visitor does, read the numbers it shows, compare them with named.json, voice.json, check.json.
+// Open the page as a visitor does, read the numbers it shows, compare them with named.json, voice.json, check.json, drift.json.
 // Run from this folder: node check_page.mjs [shot-path]
 import { createRequire } from 'module';
 import http from 'http'; import fs from 'fs'; import path from 'path';
@@ -7,6 +7,7 @@ const { chromium } = require('playwright');
 const here = path.dirname(new URL(import.meta.url).pathname);
 const J = f => JSON.parse(fs.readFileSync(path.join(here, f), 'utf8')).res;
 const res = J('named.json'), vr = J('voice.json'), cr = J('check.json');
+const DR = JSON.parse(fs.readFileSync(path.join(here, 'drift.json'), 'utf8')), dr = DR.res;
 const srv = http.createServer((q, r) => { const f = path.join(here, decodeURIComponent(q.url.split('?')[0]).replace(/^\/$/, '/index.html'));
   fs.readFile(f, (e, b) => { if (e) { r.writeHead(404); r.end(); return } r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html' : f.endsWith('.js') ? 'text/javascript' : 'application/octet-stream' }); r.end(b) }) });
 await new Promise(ok => srv.listen(0, ok));
@@ -105,6 +106,33 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
   // the rule by hand
   ok(num(await p.textContent('#h-ok')) === vr.names_as_ruled && num(await p.textContent('#h-body')) === vr.names_persons_body && num(await p.textContent('#h-pers')) === vr.names_ruled_persons, `${w}px rule by hand ${vr.names_as_ruled} of ${vr.names_n}`);
   ok((await p.$$('#hand-t tbody tr')).length === vr.names_n - vr.names_as_ruled, `${w}px misfit table`);
+  // fourth state: the world's or the rule's
+  const dsp = await p.$$eval('[data-d]', es => es.map(e => [e.getAttribute('data-d'), e.textContent]));
+  const dbad = dsp.filter(([k, t]) => num(t) !== at(dr, k));
+  ok(dsp.length >= 40 && dbad.length === 0, `${w}px ${dsp.length} figures of the drift read from the page ${JSON.stringify(dbad)}`);
+  const kb = Object.keys(DR.blocks);
+  for (const m of ['actual', 'kinds_held', 'naming_held']) {
+    await p.click(`#kmode button[data-m="${m}"]`);
+    const labels = await p.$$eval('#kinds text.v', es => es.map(e => [e.getAttribute('data-b'), parseFloat(e.textContent)]));
+    ok(labels.length === kb.length && labels.every(([k, v]) => v === DR.blocks[k][m]), `${w}px ${m}: ${labels.length} row figures as drift.json`);
+    const lit = await p.$$eval('#kinds rect.kon', es => es.map(e => ({ g: e.getAttribute('data-g'), b: e.getAttribute('data-b'), n: +e.getAttribute('data-n'), of: +e.getAttribute('data-of'), w: +e.getAttribute('width'), seg: +e.getAttribute('data-w') })));
+    ok(lit.length === kb.length * 6 && lit.every(x => DR.blocks[x.b].cells[x.g][1] === x.n && DR.blocks[x.b].cells[x.g][0] === x.of), `${w}px ${m}: ${lit.length} parts carry their counts`);
+    const drawn = x => x.seg > 0 ? x.w / x.seg : 0;
+    if (m === 'naming_held') ok(lit.every(x => Math.abs(drawn(x) - dr.pool[x.g][1] / dr.pool[x.g][0]) < 1e-6), `${w}px naming held: every part is lit by the pooled share`);
+    else ok(lit.every(x => Math.abs(drawn(x) - x.n / x.of) < 1e-6), `${w}px ${m}: every part is lit by its own share`);
+    const mw = lit.filter(x => x.g === 'M').map(x => x.seg);
+    ok(m === 'kinds_held' ? Math.max(...mw) - Math.min(...mw) < 1e-6 : Math.max(...mw) - Math.min(...mw) > 20, `${w}px ${m}: the kinds ${m === 'kinds_held' ? 'stand still' : 'move'} down the rows`);
+    ok((await p.textContent('#k-say')).includes(`${dr[m + '_first']}`) , `${w}px ${m}: the sentence names its figures`);
+  }
+  await p.click('#kmode button[data-m="actual"]');
+  await p.$eval('#kinds rect.khit[data-g="M"][data-b="1201"]', e => e.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+  const kd = await p.textContent('#k-det');
+  ok(kd.includes(`${dr.turn_misuse_good[1]} of ${dr.turn_misuse_n[1]}`) && kd.includes(`fraud and scams ${dr.turn_fraud_good[1]} of ${dr.turn_fraud_n[1]}`), `${w}px a pressed part reads its counts and the scams inside it`);
+  ok(kb.reduce((a, k) => a + DR.blocks[k].good, 0) === (await p.$$eval('#kinds rect.kon', es => es.reduce((a, e) => a + +e.getAttribute('data-n'), 0))), `${w}px goods in the classed rows sum`);
+  const kside = await p.$eval('#kinds rect.khit[data-g="M"][data-b="1201"]', e => e.getBoundingClientRect().height);
+  ok(kside >= 16, `${w}px a part is ${kside.toFixed(1)} px high`);
+  const kfs = await p.$eval('#kinds text', e => e.getBoundingClientRect().height);
+  ok(kfs >= 9, `${w}px row labels ${kfs.toFixed(1)} px high`);
   if (shot) { await p.screenshot({ path: shot, fullPage: true }); console.log('shot', shot) }
   await p.close();
 }

@@ -20,5 +20,6 @@ act on the ground of AI's capability or control. It takes up the Atelier's three
 the maker) as the step's wording names them.
 Line: the programme (lines rest while it runs).
 
-**Next states.** 2: the harmed read by hand in a sample of first reports, the public acts the record itself
-carries (the response reports), the finding and its dataset under `Finding:`; the critique. 3: the check. 4: the paper.
+**States.** 1: the count. 2: the harmed and the public acts read by hand; the critique. 3: the check. 4: the paper
+(`presentations/cycle-015/paper.md`), with study 78: the first reports on public bodies' and makers' own addresses
+read twice, and who submitted the reports. Presented 2026-11-15.

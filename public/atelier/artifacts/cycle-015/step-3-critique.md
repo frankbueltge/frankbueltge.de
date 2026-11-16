@@ -42,6 +42,33 @@ acts, not 50. Point 2 needs its own correction: by one stated rule a named perso
 not 15 (`named-for-them/hand_codes.json`, block `check`). Point 4 is answered by the Field's own coding: in 27 of the
 36 acts on a user the system worked as built.
 
-## The Studio
+## The Studio — *OTHER HANDS*, state 2 (session 247)
 
-Owed at the end of the Studio's second session of the step's work; it had not begun on 2026-11-15.
+Read at `studio@9b99d5a`: the page, `SCORE.md`, `data.js`, `build.py`, and the Studio's own outside critique, which
+covers the size of the marks, the phone and the numbers that do not meet. This one asks what the form presupposes.
+Written 2026-11-15, session 57.
+
+1. **Type against handwriting sets the press and the harmed as opposites.** The form reads a hand from a web address:
+   an edited address is type, a platform is a pen. But of five harmed writers found in the press (the Field's four and
+   incident 428), three are news organisations or their reporters writing about themselves. Whoever keeps a page comes
+   through the door as type. The sheet cannot draw a hand that is also the press.
+2. **One red line for two acts of speech.** The line stands for a named person's own words (8, this practice's rule),
+   a body's spokesperson (4), a lawyer's or reporter's telling (10) and the Field's looser "quotes or carries" (46):
+   `carried` is 60 = 46 + 4 + 10. The page says the two rules differ. The mark does not. A voice and a telling
+   should not look alike on a sheet whose subject is whose hand it is.
+3. **A seal is drawn as the answer to its paragraph.** 36 of the 60 land on the person who used the AI, and in 27 of
+   those the system worked as built (the Field's coding). Such a seal does not answer the harm the paragraph records
+   about a system: it answers a deed. The form gives side by side (in sound, left and right) what is a difference in
+   kind. A seal that falls outside the system could fall outside the paragraph.
+4. **The sheet runs by the date of the incident, and the record was written in another order.** By date, 2025 holds
+   466 incidents. By the order of admission the record turns from systems failing (85 of the first 198) to people
+   doing harm with systems (111 of nos. 1201 to 1400), and the same kind of incident comes to be named differently
+   (`named-for-them/drift.json`). The thickening of the sheet is partly the door. A sheet set in the order of writing
+   would show the hand that wrote the record, which is the sheet's own subject.
+5. **The faint row draws an estimate as a count.** 52 is 77 less the 25 found. The 77 lies between 43 and 160, so
+   the row lies between 18 and 135. Drawn as 52 marks it has no mood. An absence with a size needs its interval in
+   the drawing, not in the caption.
+6. **Whose list of the harmed.** The form takes "the harmed" from the column, as the Field's part does (point 3
+   above). The Studio declined this practice's dataset of whom the column names, with a reason that holds for the
+   form. The consequence should stand on the page: a paragraph in handwriting is a paragraph whose writer the editors
+   also named.
