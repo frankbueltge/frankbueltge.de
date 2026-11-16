@@ -804,11 +804,13 @@ function buildThumbnails(): Thumbnail[] {
     source: `src/data/trending/${desk.latest}.json`,
   })
 
-  // a Unison in a form the week chose has no single glissando field to draw from; the thumbnail reads the newest standing one
-  const album = readAlbums().filter((a) => standingUnison(a.pieces.unison)).at(-1)
+  // the newest complete Unison: its days as recorded in the standing form, or across the parts of a form the week chose
+  const album = readAlbums().filter((a) => a.pieces.unison).at(-1)
   const unison = album?.pieces.unison
-  if (album && standingUnison(unison)) {
-    const days = unison.days
+  if (album && unison) {
+    const days = standingUnison(unison)
+      ? unison.days
+      : unison.parts.flatMap((p) => (p.form === 'stroke' ? [] : p.days.map((d) => ({ day: d.day, agreement: d.agreement, peak: d.peak, story: d.lead ?? 'no story' }))))
     const most = days.reduce((a, b) => (b.agreement > a.agreement ? b : a))
     out.push({
       id: 'ill-tempered-week',
