@@ -17,7 +17,8 @@ import { cn } from '@/lib/ui/cn'
 const counts: Record<string, number> = {
   '/atlas': (worksData as unknown[]).length,
   '/datasets': datasetEntries.length,
-  // What /papers lists since 2026-11-09: papers read, not identifiers tested inside works.
+  // What /papers lists since 2026-11-09: papers cited or on a reading list, not identifiers
+  // a work used as data.
   '/papers': READING.length,
   // The works register counts itself the same way the other three do — from its own source,
   // not from a number typed here (added 2026-08-01 with the fourth card). Since 2026-10-04 that

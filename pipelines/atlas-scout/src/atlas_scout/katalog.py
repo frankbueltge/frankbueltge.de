@@ -122,6 +122,21 @@ class Katalogeintrag:
     # The run that first wrote this paper into the catalogue (since 2026-10-05; see
     # stamp_first_seen). Null for a paper that was already there when the stamp began.
     first_seen_on: str | None = None
+    # How far a practice says it read the text, copied from its own reading list (since
+    # 2026-11-16): "seed" = admitted, not yet read; "read" = full text read; "worked" = it
+    # entered a work. None = the practice keeps no such mark for this entry. The catalogue
+    # must not call a text read that the practice itself marks as unread.
+    lesestand: str | None = None
+
+
+# Strength of a reading mark, for merging entries of the same text.
+LESESTAND_RANG = {"seed": 0, "read": 1, "worked": 2}
+
+
+def staerkster_lesestand(marken) -> str | None:
+    """The strongest reading mark among merged entries, or None if none carries one."""
+    bekannt = [m for m in marken if m in LESESTAND_RANG]
+    return max(bekannt, key=LESESTAND_RANG.__getitem__) if bekannt else None
 
 
 @dataclass(frozen=True)
@@ -704,6 +719,7 @@ def fuehre_zusammen(eintraege: list[Katalogeintrag]) -> list[Katalogeintrag]:
             zuletzt_gebraucht=max(daten) if daten else None,
             verify_status=anfuehrer.verify_status,
             weitere_kennungen=tuple(weitere),
+            lesestand=staerkster_lesestand(e.lesestand for e in mitglieder),
         ))
 
     return zusammengefuehrt
@@ -774,6 +790,7 @@ def als_json(eintraege: list[Katalogeintrag]) -> str:
                 "verify_status": e.verify_status,
                 "weitere_kennungen": list(e.weitere_kennungen),
                 "first_seen_on": e.first_seen_on,
+                "lesestand": e.lesestand,
             }
             for e in geordnet
         ],

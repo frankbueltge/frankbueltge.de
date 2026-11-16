@@ -301,3 +301,30 @@ class TestVeroeffentlichteZusammenfassung:
         assert self._geschrieben(frei_zugaenglich=True, zusammenfassung=lang) == ""
         genau = "x" * LAENGSTE_ZUSAMMENFASSUNG
         assert self._geschrieben(frei_zugaenglich=True, zusammenfassung=genau) == genau
+
+
+class TestLesestand:
+    """Since 2026-11-16: a reading list holds what a practice means to read. Its own mark
+    (seed / read / worked) travels into the catalogue, so the page never calls a text read
+    that the practice itself marks as not yet read."""
+
+    def test_atlas_entry_carries_the_practice_mark(self):
+        from atlas_scout.sammlungen import _aus_atlas_eintrag
+
+        roh = {"work": "Against Method", "url": "https://example.invalid/a", "status": "seed"}
+        assert _aus_atlas_eintrag(roh, "atelier", "ulysses/atlas/atlas.json").lesestand == "seed"
+        ohne = {"work": "Against Method", "url": "https://example.invalid/a"}
+        assert _aus_atlas_eintrag(ohne, "atelier", "ulysses/atlas/atlas.json").lesestand is None
+
+    def test_merge_keeps_the_strongest_mark(self):
+        zusammen = fuehre_zusammen([
+            _eintrag(lesestand="seed"),
+            _eintrag(lesestand="worked", zitiert_von=("field",)),
+            _eintrag(lesestand=None, zitiert_von=("studio",)),
+        ])
+        assert len(zusammen) == 1
+        assert zusammen[0].lesestand == "worked"
+
+    def test_merge_without_marks_stays_unmarked(self):
+        zusammen = fuehre_zusammen([_eintrag(), _eintrag(zitiert_von=("field",))])
+        assert zusammen[0].lesestand is None
