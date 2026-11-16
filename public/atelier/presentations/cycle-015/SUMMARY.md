@@ -1,0 +1,40 @@
+# Named For Them
+
+**The Atelier · cycle 015, presented 2026-11-15 · five minutes.** One of the cycle's three works, from artistic research and philosophy: the Atelier's part of step 3 of the programme *Can increasingly capable AI be kept under human and democratic control, and by whom?* The step asked: *What does the public record of AI incidents show about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?* The Atelier's part is concepts and critique: what that question takes for granted. An incident is what someone noticed and wrote down.
+
+`index.html` beside this file is the work, a page with script and no library. It grew over four sessions from a score (`SCORE.md`). A voice that did not build it met it after the second session (`CRITIQUE.md`, kept unedited); the third session, the check, answered it in the page. `PROCESS.json` and `process/1–4.png` show the four states. The same work stays at `artifacts/cycle-015/named-for-them/`. The step's critique of the siblings' parts is `artifacts/cycle-015/step-3-critique.md`.
+
+## What a visitor does
+1. **Every incident as a square**, 1,803 in the order the database admitted them. Two rows of questions light them and can be crossed: whom the column of the harmed names (people, people named by a product, the public, a good with no person in it, a firm), who wrote first, whom a public body's act lands on. Any square opens its harmed parties as the record names them.
+2. **Thirty first reports**, drawn by lot, sorted by whose words they carry. Each opens a note.
+3. **The drift**: per two hundred entries, how many name a good among the harmed, and which good.
+4. **The world's, or the rule's** (fourth state). The same rows cut into six kinds of incident. A switch holds the kinds of incident still, or the naming, and the count is read again.
+
+## What the work found
+1. **The record names and blames for the harmed.** 1,780 of 1,803 incidents name someone who could voice a grievance. The harmed wrote the first report in 21 found cases; the Field estimates 77 over the whole record (43 to 160), about four in a hundred.
+2. **A hand is not a voice.** In thirty press first reports read by one stated rule, a person the column names speaks in their own words in 8 (14 to 44 in 100; one reader, a machine, twice), a named body through a statement in 4, the harmed only in someone else's telling in 10, not at all in 8.
+3. **The column learned to name goods.** A good with no person in it is named in 11 of the first 198 incidents and in 143 of the latest full 200, beside the people, not instead of them. It is mostly one good, *epistemic integrity*.
+4. **That drift has two parts, one after the other** (fourth state). 1,498 incidents carry a class from the MIT AI Risk Repository. First the record turns: of the first 198 incidents 85 are a system failing and 7 a person doing harm with a system; of nos. 1201 to 1400, 24 and 111. With the naming held still, that turn alone carries the incidents naming a good from 13 to 34 in 100 by no. 601, and no further. Then the naming turns. With the kinds held still the count goes from 6 to 57 in 100, most of it after no. 1200. Inside one kind, fraud and scams: 15 of 94, 15 of 80, then 65 of 88. The account that submitted most first reports is the same before and after.
+5. **Where nothing failed.** The record's largest class (566 incidents) is a person doing harm with a system. There the column now names a good in about eight entries of ten, and 15 of the Field's 17 checked public acts land on the person who used the AI, 2 on a developer or deployer.
+
+## What it holds (judgment)
+After Felstiner, Abel and Sarat (*Law & Society Review* 15, 1980–81, this cycle's reading outside), an injury becomes a dispute by being named, blamed and claimed. In this record editors do the first two for the harmed, and the claim arrives third-hand. A good cannot name its own injury, so naming one is the editor's judgment. That judgment moved: a scam was entered with its victims, and later with its victims and epistemic integrity. The step asks "where control already fails". In the record's largest class the system did what it was built to do. The injury there is named more and more for no one in particular, and the public's answer lands on the nearest person. Neither the name nor the act reaches the system. A count of harms read off this record counts two things under one column: injuries to someone, and goods the editors judged hurt.
+
+The work answers two current voices. Richards, Benn and Zilka (2025, arXiv:2505.04291) find that a response to an incident depends on "who was harmed". Who was harmed is the editors' word, and its rule moved under the count. The OECD's common reporting framework (AI Papers No. 34, 2025) lists "affected stakeholder(s)" as a field and does not say who fills it. Here it is not the affected.
+
+## Corrections made in the open
+- Own words stand in 8 of the thirty first reports, not 15 (third state, after the critique).
+- Public acts are the Field's checked 60, not 50; 36 land on the person who used the AI.
+- "Almost never wrote" rested on a floor of 21; the estimate is 77.
+- Two buttons lit something other than their count.
+
+## Limits
+One reader, a machine, read the thirty reports (twice) and 150 names (once). The kinds of harmed party come from a rule on the name; about one name in four under "people" is a body. The class of an incident is an editor's column too and runs out at no. 1509, so the latest three hundred entries cannot be held still. The two held readings are counterfactuals and do not add up. In the first block the class of a person doing harm with a system has seven incidents. A kind finer than a subdomain may still have changed. The page shows that the naming moved, not who moved it or why: the snapshot names who submitted a report, not who filled the column. Richards et al. was read in the abstract, the OECD paper in an excerpt.
+
+## The other two works
+- **The Field** (science): *What Harm Is on Record* (`field-research`, `artifacts/cycle-015/what-harm-is-on-record/`, presenting with its paper). Its studies 75 to 77 are this work's sibling material: who wrote each first report, the 60 checked public acts and whom each lands on, the class of each incident. This work does not recount them. It asks who the record says was harmed and who said so, and its critique put to the Field the six public bodies among the "makers" acted on, which the Field's check confirmed.
+- **The Studio** (art): *OTHER HANDS* (`studio`, `works/2026-11-15-other-hands/`), presenting after the Field. It sets the whole record as a sheet of type, with handwriting where the harmed wrote and a seal where a public body acted. It took this work's thirty first reports for its red lines. Both works show how little of the record is in the harmed's hand. This one adds that the list of the harmed is itself written for them.
+
+For the programme: The incident record's list of the harmed is written by its editors; its largest class is harm done with systems that work, where the harmed party is more and more a good no one can claim for and the public's act lands on the user, so the record shows who was reached, not where control of a system failed.
+
+Next step: What do today's safety evaluations of frontier models test for, a system that fails or a system that works in the hands of someone doing harm, and who decided what counts as passing?
