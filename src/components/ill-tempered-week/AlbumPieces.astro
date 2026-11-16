@@ -9,7 +9,7 @@ import UnisonScore from '@/components/ill-tempered-week/UnisonScore'
 import { clock, formedOverlooked, formedTurn, formedUnison, standingOverlooked, standingTurn, standingUnison, weekday, type Album } from '@/lib/ill-tempered-week/albums'
 import { formSaidLinks, formWarSignals, HINT, overlookedLinks, turnSaidLink as saidLink, unisonLinks, warSignals } from '@/lib/ill-tempered-week/pages'
 import { dayShort, mmss } from '@/lib/ill-tempered-week/score'
-import { formText, whyForm } from '@/lib/ill-tempered-week/score-forms'
+import { FORM_PHRASE, formText, whyForm } from '@/lib/ill-tempered-week/score-forms'
 import { FORM as OV } from '@/lib/ill-tempered-week/score-overlooked'
 import { FORM as UN } from '@/lib/ill-tempered-week/score-unison'
 
@@ -46,7 +46,7 @@ const hint = HINT
 
 {character && (
   <p class="itw-formline mb-8 max-w-3xl font-mono text-mono-sm text-fg-muted">
-    <span class="text-fg">This album is {character.form}.</span> {whyForm(character, album.days)}
+    <span class="text-fg">{FORM_PHRASE[character.form]}</span>{' '}{whyForm(character, album.days)}
   </p>
 )}
 

@@ -7,7 +7,7 @@
 // standing scores. A held form draws long notes and no day as a day; a mosaic draws its blocks and the silence
 // between them; a break draws both with the stroke between; a handover draws the pedal's step. Pure and browser-free:
 // the island (src/components/ill-tempered-week/FormScore.tsx) mounts what this returns and computes nothing it claims.
-import type { Character, ChosenForm, OverlookedForm, TurnForm, UnisonForm } from './albums'
+import type { Character, ChosenForm, Form, OverlookedForm, TurnForm, UnisonForm } from './albums'
 import { dayName, dayShort, frameFor, hzLabel, mmss, r1, spanAt, tickStep, ticksBetween, timeAtX, xAt, type Frame, type Span } from './score'
 
 /** The renderers' fixed times, as itw/forms_unison.py and itw/forms_turn.py write them (score-forms.test.ts reads
@@ -97,7 +97,17 @@ const pct = (x: number): string => `${Math.round(100 * x)} %`
 const r3 = (x: number): number => Math.round(x * 1000) / 1000
 const storyRow = (s: string | null): string => `story:${s ?? '—'}`
 /** A note that rings past the piece's end (the press trims the audio there) is drawn to the end. */
-const clamp = <T extends { t1: number }>(xs: T[], end: number): T[] => xs.map((x) => (x.t1 > end ? { ...x, t1: end } : x))
+const clamp = <T extends { t0: number; t1: number }>(xs: T[], end: number, cut: number | null = null): T[] =>
+  xs.map((x) => {
+    // what was held before a break ends at the stroke: the press cuts it there
+    const stop = cut !== null && x.t0 < cut ? Math.min(end, cut) : end
+    return x.t1 > stop ? { ...x, t1: stop } : x
+  })
+/** The stroke of a break, where the held part is cut. */
+const strokeAt = (parts: readonly { form: string; at_s?: number }[]): number | null => parts.find((p) => p.form === 'stroke')?.at_s ?? null
+
+/** How the page names an album's form in a sentence. */
+export const FORM_PHRASE: Record<Form, string> = { standing: 'This album is in the standing form.', held: 'This album is held.', mosaic: 'This album is a mosaic.', break: 'This album breaks.', handover: 'This album hands over.' }
 
 // ---------------------------------------------------------------------------------------------------------------
 // Unison
@@ -211,7 +221,7 @@ export function unisonFormScore(u: UnisonForm): FormScore {
   if (hasPedal) addRow('pedal', 'pedal A', 'pedal')
   const order: (MarkKind | RegionKind)[] = ['lead', 'other', 'block', 'leadband', 'brass', 'said', 'pedal', 'step', 'stroke']
   return {
-    piece: 'unison', form: u.form, week: u.week, seconds: u.seconds, rows, marks: clamp(marks, u.seconds), regions: clamp(regions, u.seconds), days,
+    piece: 'unison', form: u.form, week: u.week, seconds: u.seconds, rows, marks: clamp(marks, u.seconds, strokeAt(u.parts)), regions: clamp(regions, u.seconds), days,
     legend: order.filter((k) => legend.has(k)).map((k) => ({ kind: k, text: legend.get(k)! })),
   }
 }
@@ -278,7 +288,7 @@ export function overlookedFormScore(o: OverlookedForm): FormScore {
   legend.set('said', 'The day’s least attended headline, said once in its field’s voice.')
   legend.set('lead', 'Its motif: the headline’s speech melody on the pulse, played by its field’s instrument.')
   const order: (MarkKind | RegionKind)[] = ['said', 'lead', 'block', 'pedal', 'step', 'stroke']
-  return { piece: 'overlooked', form: o.form, week: o.week, seconds: o.seconds, rows, marks: clamp(marks, o.seconds), regions: clamp(regions, o.seconds), days,
+  return { piece: 'overlooked', form: o.form, week: o.week, seconds: o.seconds, rows, marks: clamp(marks, o.seconds, strokeAt(o.parts)), regions: clamp(regions, o.seconds), days,
     legend: order.filter((k) => legend.has(k)).map((k) => ({ kind: k, text: legend.get(k)! })) }
 }
 
