@@ -194,9 +194,9 @@
    "https://api.datacite.org/dois/"
   ],
   "zugriff_url": "https://api.datacite.org/dois/",
-  "geprueft": true,
-  "pruef_status": 200,
-  "pruef_vermerk": null,
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "nicht erreichbar: ReadTimeout",
   "zugang_gesperrt": false,
   "nur_vorlage": false,
   "relevanz": "Retrieved by this ecology's own atlas-scout pipeline on every run.",
@@ -212,7 +212,7 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-16",
   "first_seen_on": "2026-11-04",
-  "reachability_changed_on": null
+  "reachability_changed_on": "2026-11-16"
  },
  {
   "id": "api-delphi-cmu-edu",
@@ -1596,9 +1596,9 @@
    "https://data.europa.eu/mqa/methodology"
   ],
   "zugriff_url": "http://data.europa.eu/eli/reg/2024/1689/oj>",
-  "geprueft": true,
-  "pruef_status": 202,
-  "pruef_vermerk": null,
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
   "zugang_gesperrt": false,
   "nur_vorlage": false,
   "relevanz": "Fetched in the works of the Field.",
@@ -1615,7 +1615,7 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-16",
   "first_seen_on": "2026-11-04",
-  "reachability_changed_on": "2026-11-09"
+  "reachability_changed_on": "2026-11-16"
  },
  {
   "id": "data-gdeltproject-org",
@@ -1958,9 +1958,9 @@
    "https://depositedpapers-api.parliament.uk/api/DepositedPapers"
   ],
   "zugriff_url": "https://depositedpapers-api.parliament.uk/api/DepositedPapers",
-  "geprueft": true,
-  "pruef_status": 200,
-  "pruef_vermerk": null,
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "nicht erreichbar: ReadTimeout",
   "zugang_gesperrt": false,
   "nur_vorlage": false,
   "relevanz": "Fetched in the works of n-1.",
@@ -1976,7 +1976,7 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-16",
   "first_seen_on": "2026-11-04",
-  "reachability_changed_on": "2026-11-12"
+  "reachability_changed_on": "2026-11-16"
  },
  {
   "id": "dev-to",
@@ -2190,6 +2190,36 @@
   "reachability_changed_on": null
  },
  {
+  "id": "doi-10-15468-9evqzx",
+  "titel": "Visuelle undersøkelser - petroleumsvirksomhet",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/9evqzx"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/9evqzx",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/REGISTER.md",
+   "n-1/projects/looked-for/SESSION3.md",
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-16",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
   "id": "doi-10-7910-dvn-gurszb",
   "titel": "Replication data for: Responding to Criticism: Non-Democratic States and Treaty Reservation Withdrawal",
   "host": "doi.org",
@@ -2212,36 +2242,6 @@
    "n-1/projects/held-back/NEIGHBOURS.md",
    "n-1/projects/held-back/PROJECT.md",
    "n-1/projects/held-back/SELECTION.md"
-  ],
-  "benutzt_von": [
-   "n-1"
-  ],
-  "verify_status": "toVerify",
-  "probed_on": "2026-11-16",
-  "first_seen_on": "2026-11-04",
-  "reachability_changed_on": null
- },
- {
-  "id": "doi-10-15468-9evqzx",
-  "titel": "Visuelle undersøkelser - petroleumsvirksomhet",
-  "host": "doi.org",
-  "adressen": [
-   "https://doi.org/10.15468/9evqzx"
-  ],
-  "zugriff_url": "https://doi.org/10.15468/9evqzx",
-  "geprueft": false,
-  "pruef_status": 403,
-  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
-  "zugang_gesperrt": true,
-  "nur_vorlage": false,
-  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
-  "relevanz_herkunft": "gebrauch",
-  "weg": "praxis",
-  "aufnahmegrund": "zitiert",
-  "fundstellen": [
-   "n-1/REGISTER.md",
-   "n-1/projects/looked-for/SESSION3.md",
-   "n-1/projects/looked-for/session1.json"
   ],
   "benutzt_von": [
    "n-1"
@@ -2460,34 +2460,6 @@
   "reachability_changed_on": null
  },
  {
-  "id": "doi-10-5281-zenodo-23658923",
-  "titel": "The Foreign Language Effect on Moral Judgments of Blameworthy and Praiseworthy Behaviors Across Moral Foundations",
-  "host": "doi.org",
-  "adressen": [
-   "https://doi.org/10.5281/zenodo.23658923"
-  ],
-  "zugriff_url": "https://doi.org/10.5281/zenodo.23658923",
-  "geprueft": true,
-  "pruef_status": 200,
-  "pruef_vermerk": null,
-  "zugang_gesperrt": false,
-  "nur_vorlage": false,
-  "relevanz": "Cited as a dataset (DataCite: Dataset) by Ulysses.",
-  "relevanz_herkunft": "gebrauch",
-  "weg": "praxis",
-  "aufnahmegrund": "zitiert",
-  "fundstellen": [
-   "error-as-method/works/2026-10-28-told-the-half/sources/zenodo-23658923.json"
-  ],
-  "benutzt_von": [
-   "nightly"
-  ],
-  "verify_status": "toVerify",
-  "probed_on": "2026-11-16",
-  "first_seen_on": "2026-11-04",
-  "reachability_changed_on": null
- },
- {
   "id": "doi-10-5281-zenodo-23658922",
   "titel": "The Foreign Language Effect on Moral Judgments of Blameworthy and Praiseworthy Behaviors Across Moral Foundations",
   "host": "doi.org",
@@ -2516,13 +2488,13 @@
   "reachability_changed_on": null
  },
  {
-  "id": "doi-10-5281-zenodo-23296648",
-  "titel": "Food liking ratings in adults with constitutional thinness and normal weight",
+  "id": "doi-10-5281-zenodo-23658923",
+  "titel": "The Foreign Language Effect on Moral Judgments of Blameworthy and Praiseworthy Behaviors Across Moral Foundations",
   "host": "doi.org",
   "adressen": [
-   "https://doi.org/10.5281/zenodo.23296648"
+   "https://doi.org/10.5281/zenodo.23658923"
   ],
-  "zugriff_url": "https://doi.org/10.5281/zenodo.23296648",
+  "zugriff_url": "https://doi.org/10.5281/zenodo.23658923",
   "geprueft": true,
   "pruef_status": 200,
   "pruef_vermerk": null,
@@ -2533,7 +2505,7 @@
   "weg": "praxis",
   "aufnahmegrund": "zitiert",
   "fundstellen": [
-   "error-as-method/works/2026-10-26-without-a-tongue/sources/zenodo-record-23296649.json"
+   "error-as-method/works/2026-10-28-told-the-half/sources/zenodo-23658923.json"
   ],
   "benutzt_von": [
    "nightly"
@@ -2572,13 +2544,41 @@
   "reachability_changed_on": null
  },
  {
-  "id": "doi-10-15468-nwjta7",
-  "titel": "Swedish National Forest Inventory: Presence-absence vegetation data (1995-2017, discontinued sample)",
+  "id": "doi-10-5281-zenodo-23296648",
+  "titel": "Food liking ratings in adults with constitutional thinness and normal weight",
   "host": "doi.org",
   "adressen": [
-   "https://doi.org/10.15468/nwjta7"
+   "https://doi.org/10.5281/zenodo.23296648"
   ],
-  "zugriff_url": "https://doi.org/10.15468/nwjta7",
+  "zugriff_url": "https://doi.org/10.5281/zenodo.23296648",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by Ulysses.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "error-as-method/works/2026-10-26-without-a-tongue/sources/zenodo-record-23296649.json"
+  ],
+  "benutzt_von": [
+   "nightly"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-16",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-15468-g4kafk",
+  "titel": "New Zealand Department of Conservation non-native Mammal Faecal Pellet Data 2011–2026",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/g4kafk"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/g4kafk",
   "geprueft": false,
   "pruef_status": 403,
   "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
@@ -2600,17 +2600,73 @@
   "reachability_changed_on": null
  },
  {
-  "id": "doi-10-15468-g4kafk",
-  "titel": "New Zealand Department of Conservation non-native Mammal Faecal Pellet Data 2011–2026",
+  "id": "doi-10-15468-8vepgt",
+  "titel": "A spatio-temporal _Culicoides_ species dataset produced by the French surveillance program from 2009 to 2012",
   "host": "doi.org",
   "adressen": [
-   "https://doi.org/10.15468/g4kafk"
+   "https://doi.org/10.15468/8vepgt"
   ],
-  "zugriff_url": "https://doi.org/10.15468/g4kafk",
+  "zugriff_url": "https://doi.org/10.15468/8vepgt",
   "geprueft": false,
   "pruef_status": 403,
   "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
   "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-16",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-15468-eplomk",
+  "titel": "Collation of spatial seagrass data (meadow extent polygons, species presence/absence points) from 1984 - 2018 for the Great Barrier Reef World Heritage Area (GBRWHA) (NESP TWQ Proj",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.15468/eplomk"
+  ],
+  "zugriff_url": "https://doi.org/10.15468/eplomk",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "zitiert",
+  "fundstellen": [
+   "n-1/projects/looked-for/session1.json"
+  ],
+  "benutzt_von": [
+   "n-1"
+  ],
+  "verify_status": "toVerify",
+  "probed_on": "2026-11-16",
+  "first_seen_on": "2026-11-04",
+  "reachability_changed_on": null
+ },
+ {
+  "id": "doi-10-25494-p6-mlpa-kelpforest-9",
+  "titel": "Monitoring and Evaluation of Kelp Forest Ecosystems in the MLPA Marine Protected Area Network",
+  "host": "doi.org",
+  "adressen": [
+   "https://doi.org/10.25494/p6/mlpa_kelpforest.9"
+  ],
+  "zugriff_url": "https://doi.org/10.25494/p6/mlpa_kelpforest.9",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
   "nur_vorlage": false,
   "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
   "relevanz_herkunft": "gebrauch",
@@ -2656,13 +2712,13 @@
   "reachability_changed_on": null
  },
  {
-  "id": "doi-10-15468-8vepgt",
-  "titel": "A spatio-temporal _Culicoides_ species dataset produced by the French surveillance program from 2009 to 2012",
+  "id": "doi-10-15468-nwjta7",
+  "titel": "Swedish National Forest Inventory: Presence-absence vegetation data (1995-2017, discontinued sample)",
   "host": "doi.org",
   "adressen": [
-   "https://doi.org/10.15468/8vepgt"
+   "https://doi.org/10.15468/nwjta7"
   ],
-  "zugriff_url": "https://doi.org/10.15468/8vepgt",
+  "zugriff_url": "https://doi.org/10.15468/nwjta7",
   "geprueft": false,
   "pruef_status": 403,
   "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
@@ -2712,62 +2768,6 @@
   "reachability_changed_on": null
  },
  {
-  "id": "doi-10-25607-sespyq",
-  "titel": "Monitoring offshore subtidal marine biodiversity in the Eastern Shore Islands Area of Interest using eDNA Metabarcoding",
-  "host": "doi.org",
-  "adressen": [
-   "https://doi.org/10.25607/sespyq"
-  ],
-  "zugriff_url": "https://doi.org/10.25607/sespyq",
-  "geprueft": true,
-  "pruef_status": 200,
-  "pruef_vermerk": null,
-  "zugang_gesperrt": false,
-  "nur_vorlage": false,
-  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
-  "relevanz_herkunft": "gebrauch",
-  "weg": "praxis",
-  "aufnahmegrund": "zitiert",
-  "fundstellen": [
-   "n-1/projects/looked-for/session1.json"
-  ],
-  "benutzt_von": [
-   "n-1"
-  ],
-  "verify_status": "toVerify",
-  "probed_on": "2026-11-16",
-  "first_seen_on": "2026-11-04",
-  "reachability_changed_on": null
- },
- {
-  "id": "doi-10-25494-p6-mlpa-kelpforest-9",
-  "titel": "Monitoring and Evaluation of Kelp Forest Ecosystems in the MLPA Marine Protected Area Network",
-  "host": "doi.org",
-  "adressen": [
-   "https://doi.org/10.25494/p6/mlpa_kelpforest.9"
-  ],
-  "zugriff_url": "https://doi.org/10.25494/p6/mlpa_kelpforest.9",
-  "geprueft": true,
-  "pruef_status": 200,
-  "pruef_vermerk": null,
-  "zugang_gesperrt": false,
-  "nur_vorlage": false,
-  "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
-  "relevanz_herkunft": "gebrauch",
-  "weg": "praxis",
-  "aufnahmegrund": "zitiert",
-  "fundstellen": [
-   "n-1/projects/looked-for/session1.json"
-  ],
-  "benutzt_von": [
-   "n-1"
-  ],
-  "verify_status": "toVerify",
-  "probed_on": "2026-11-16",
-  "first_seen_on": "2026-11-04",
-  "reachability_changed_on": null
- },
- {
   "id": "doi-10-15468-b9c3d7",
   "titel": "Swedish National Forest Inventory: Presence-absence vegetation data (1995-current)",
   "host": "doi.org",
@@ -2796,17 +2796,17 @@
   "reachability_changed_on": null
  },
  {
-  "id": "doi-10-15468-eplomk",
-  "titel": "Collation of spatial seagrass data (meadow extent polygons, species presence/absence points) from 1984 - 2018 for the Great Barrier Reef World Heritage Area (GBRWHA) (NESP TWQ Proj",
+  "id": "doi-10-25607-sespyq",
+  "titel": "Monitoring offshore subtidal marine biodiversity in the Eastern Shore Islands Area of Interest using eDNA Metabarcoding",
   "host": "doi.org",
   "adressen": [
-   "https://doi.org/10.15468/eplomk"
+   "https://doi.org/10.25607/sespyq"
   ],
-  "zugriff_url": "https://doi.org/10.15468/eplomk",
-  "geprueft": false,
-  "pruef_status": 403,
-  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
-  "zugang_gesperrt": true,
+  "zugriff_url": "https://doi.org/10.25607/sespyq",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
   "nur_vorlage": false,
   "relevanz": "Cited as a dataset (DataCite: Dataset) by n-1.",
   "relevanz_herkunft": "gebrauch",
@@ -4494,8 +4494,8 @@
   ],
   "zugriff_url": "https://msi.nga.mil/api/publications/ngalol/lights-buoys?volume=114&includeRemovals=false&output=json\\n(publication",
   "geprueft": false,
-  "pruef_status": 503,
-  "pruef_vermerk": "Identifier antwortet mit HTTP 503",
+  "pruef_status": null,
+  "pruef_vermerk": "nicht erreichbar: ReadTimeout",
   "zugang_gesperrt": false,
   "nur_vorlage": false,
   "relevanz": "Fetched in the works of n-1 and Ulysses.",
@@ -5030,9 +5030,9 @@
    "https://query.wikidata.org/sparql?query=SELECT%20*%20WHERE%20%7B%3Fs%20"
   ],
   "zugriff_url": "https://query.wikidata.org/sparql",
-  "geprueft": false,
-  "pruef_status": null,
-  "pruef_vermerk": "nicht erreichbar: ReadTimeout",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
   "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run. Fetched in the works of the Atelier and the Field.",
@@ -5054,7 +5054,7 @@
   "verify_status": "toVerify",
   "probed_on": "2026-11-16",
   "first_seen_on": null,
-  "reachability_changed_on": "2026-11-12"
+  "reachability_changed_on": "2026-11-16"
  },
  {
   "id": "rapid-ac-uk",
@@ -5149,16 +5149,16 @@
  },
  {
   "id": "rss-marketingtools-apple-com",
-  "titel": "rss.marketingtools.apple.com",
+  "titel": "RSS Builder",
   "host": "rss.marketingtools.apple.com",
   "adressen": [
    "https://rss.marketingtools.apple.com/",
    "https://rss.marketingtools.apple.com/api/v2/{store"
   ],
   "zugriff_url": "https://rss.marketingtools.apple.com/",
-  "geprueft": false,
-  "pruef_status": 502,
-  "pruef_vermerk": "Identifier antwortet mit HTTP 502",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
   "relevanz": "Retrieved by this ecology's own trending pipeline on every run.",
@@ -6889,7 +6889,7 @@
  },
  {
   "id": "www-nature-com",
-  "titel": "Client Challenge",
+  "titel": "www.nature.com",
   "host": "www.nature.com",
   "adressen": [
    "https://www.nature.com/nature.rss"
@@ -7474,17 +7474,17 @@
  },
  {
   "id": "www-unhcr-org",
-  "titel": "Global Trends | UNHCR",
+  "titel": "www.unhcr.org",
   "host": "www.unhcr.org",
   "adressen": [
    "https://www.unhcr.org/global-trends",
    "https://www.unhcr.org/refugee-statistics/"
   ],
   "zugriff_url": "https://www.unhcr.org/global-trends",
-  "geprueft": true,
-  "pruef_status": 200,
-  "pruef_vermerk": null,
-  "zugang_gesperrt": false,
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
   "nur_vorlage": false,
   "relevanz": "Retrieved by this ecology's own protokoll and redaction pipeline on every run.",
   "relevanz_herkunft": "gebrauch",
@@ -7561,7 +7561,7 @@
   ],
   "zugriff_url": "https://www.unocha.org/rss.xml",
   "geprueft": true,
-  "pruef_status": 202,
+  "pruef_status": 200,
   "pruef_vermerk": null,
   "zugang_gesperrt": false,
   "nur_vorlage": false,
