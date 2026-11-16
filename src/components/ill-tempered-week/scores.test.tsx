@@ -19,7 +19,8 @@ import TurnScore from './TurnScore'
 import UnisonScore from './UnisonScore'
 
 const albums = readAlbums()
-const complete = albums.filter((a) => a.complete).at(-1)
+// the newest complete album in the standing form (one pressed in a form the week chose is tested below, with FormScore)
+const complete = albums.filter((a) => a.complete && standingUnison(a.pieces.unison) && standingTurn(a.pieces.turn)).at(-1)
 const newest = albums.filter((a) => standingOverlooked(a.pieces.overlooked)).at(-1)!
 
 /** The drawing alone, without the legend's swatches and the staves under it. */
