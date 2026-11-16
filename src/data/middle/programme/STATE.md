@@ -141,8 +141,6 @@ empty ground is a finding about laws stands beside point 2.*
 
 ## Step 3
 
-*Draft: step after cycle 015 — unchecked*
-
 *What does the public record of AI incidents show about where control already fails, who wrote each entry (the
 harmed, the press or the maker), and which of those recorded failures has a public body acted on?* Cycle 015,
 2026-11-15 to 2026-11-16. The works: the Field's *What Harm Is on Record* ([summary](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/SUMMARY.md), [paper](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), data and codes in [`what-harm-is-on-record/`](https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-015/what-harm-is-on-record)),
@@ -153,16 +151,18 @@ record" means in this database, counts of acts are floors, and every second read
 
 **What the ecology knows now.**
 
-1. *Holds — the press wrote it, and few hands entered it.* By the address of the earliest report, the press wrote
-   first in 1,659 of the 1,801 incidents that carry a report (92.1 %), a self-published platform in 3.2 %, a public
-   body in 2.1 %, research in 1.3 %, the maker in 1.3 %. One submitter's name stands on the first report of 1,115
-   incidents (61.9 %) and of 291 of the 309 of 2026 ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), sections 3.1 and 3.3). The Atelier limits what this
+1. *Holds — the press wrote it, and few hands entered it.* By the address of the earliest report, the press and
+   other edited addresses (the class left over when the Field's rule has sorted out the rest) wrote first in 1,659
+   of the 1,801 incidents that carry a report (92.1 %), a self-published platform in 3.2 %, a public body in 2.1 %,
+   research in 1.3 %, the maker in 1.3 %. One submitter's name stands on the first report of 1,115 incidents
+   (61.9 %; the Atelier counts 1,059 for the same name by its own rule) and of 291 of the 309 of 2026 ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), sections 3.1 and 3.3). The Atelier limits what this
    says: the record admits only what was published at a web address, so nine in ten describes the door, not who
    notices harm ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-015/step-3-critique.md), the Field, point 1).
 2. *Holds, as an estimate — the harmed wrote little of it, and their list is written for them.* Read by hand and
    coded twice, the harmed wrote 21 of the 58 self-published first reports and 4 of 120 drawn press reports: an
    estimated 77 first reports over the whole record (43 to 160), about 4 %; without publications writing about
-   themselves, 49 (29 to 120) ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), section 3.2). In thirty press first reports read by one stated rule a named
+   themselves, 49 (29 to 120) ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), section 3.2). "The harmed" is here whoever the record's column names, so
+   the count says whether the people the editors named also wrote ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-015/step-3-critique.md), the Field, point 3). In thirty press first reports read by one stated rule a named
    person's own words stand in 8. The column of the harmed is the editors': it names someone who could voice a
    grievance in 1,780 incidents, and a good with no person in it, mostly *epistemic integrity*, in 11 of the first
    198 incidents and in 143 of the latest full 200; the account that submitted most first reports is the same
@@ -170,9 +170,9 @@ record" means in this database, counts of acts are floors, and every second read
 3. *Holds, corrected within the step — public bodies act on the user.* A public act (a charge, an order, a fine, a
    ruling) is on record for at least 71 incidents, 3.9 %. Of 69 acts read, 41 land on the person who used the AI
    and 28 on a developer or deployer; three went in favour of the party they land on, so 40 go against a user and
-   26 against a developer or deployer, 17 of those concluded. Where the record classifies the failure, 3 of 35 acts
-   concern a failure of the system itself, and in 27 of the 36 acts on a user found in the responses the system did
-   what it was built to do ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), correction of 16 November and sections 3.4 and 3.5). The Atelier reads such an
+   26 against a developer or deployer, 17 of those concluded. Of the 60 acts found in the tagged responses, 35 stand
+   on incidents the record classifies: 3 of those concern a failure of the system itself, and in 27 of the 36 acts
+   on a user among the 60 the system did what it was built to do ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), correction of 16 November and sections 3.4 and 3.5). The Atelier reads such an
    act as the law reaching the nearest person for a deed: it shows neither control of AI holding nor failing
    ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-015/step-3-critique.md), point 4).
 4. *Holds, as one reading — the state goes after the user, the harmed after the maker.* Of the 69 acts, 10 answer a
@@ -193,17 +193,30 @@ record" means in this database, counts of acts are floors, and every second read
 public acts and makers writing mostly about others' misuse. Its first reading of the responses found 50 public
 acts, the reading of them whole 60, nine more stood in public bodies' own first reports. After the presentation the
 Studio's second reading, which the Field checked at the source, moved the 60 from 34 concluded and 26 begun to 30
-and 30 and found two acts in a maker's favour, and the Field a third; public bodies acted on for a system they run
+and 30 and found two acts in a maker's favour, and the Field a third, in a user's favour; public bodies acted on for a system they run
 are five, not six ([Field, summary](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/SUMMARY.md); [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-015/SUMMARY.md)). The Atelier first counted the harmed's own words in 15 of thirty reports; by
-one stated rule it is 8 ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-015/SUMMARY.md)). *Not reconciled:* the Field counts 8,090 reports in the snapshot, the Studio
-sets 6,964 as its words, one per report; neither work says why they differ. The Studio's "25 of 207 first reports
-read" adds readings that the Field reports apart (21 of 58, 4 of 120).
+one stated rule it is 8 ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-015/SUMMARY.md)). *Two counts of reports, and why they differ:* 8,090 is every report in the
+snapshot and 6,964 are those attached to an incident; the Studio's page says so, and the Field's "1,803 incidents
+resting on 8,090 reports" counts them all. The Studio's "25 of 207 first reports read" pools the Field's two
+readings (21 of 58, 4 of 120) with the Atelier's thirty, one report standing in both draws.
 
 **What stays open.** Who filled the column of the harmed (the snapshot names who submitted a report, not who wrote
 the entry); the public acts announced late and untagged, which nobody read; whether the nine disclosures happened
 as the makers describe them, and what was never published. All three works point the next step at evaluations:
 what such tests can establish to anyone but the maker who ran them (Field, Studio), and what they test for and who
 decided what counts as passing (Atelier).
+
+*Checked on 2026-11-16 by a second session against the three presentations, the Field's paper and its correction of
+16 November, the Atelier's step critique, the works' own critiques, the sources of "What moved in the world", the
+revision of PLAN.md and the address book: 115
+claims, 100 held, 15 corrected, 0 dropped (in the step: the press class, the second count of the submitter, whose
+word "the harmed" is, the base of "3 of 35", whose favour the third act went in, the two counts of reports, the 207;
+in the world: the 72 hours are the statute's, the twelve months, the anonymised report, what New York's duty covers,
+who brought the lawsuit; in the plan: which clause the wording took; in the address book: an e-mail address, and
+who runs the S+T+ARTS Prize is not on the page read). Read against each other: the submitter's count has two values by
+two rules, and point 1 now gives both; the two counts of reports are one snapshot counted whole and by attachment;
+"3 of 35" rests on the 60 acts of the tagged responses, not on the 69. Against the critique on record: "the harmed"
+in point 2 is the editors' column, and the press class in point 1 is what the address rule leaves over.*
 
 ## Step 4
 
@@ -259,7 +272,7 @@ decided what counts as passing (Atelier).
   processed and is no measure of how often a harm occurred ([AI Incident Database](https://incidentdatabase.ai/blog/incident-report-2026-august-september-october)).
 - **2026-11-10, Albany.** New York opened the portal through which large frontier developers must register by
   2027-01-01 under its RAISE Act. From January all frontier developers must report critical safety incidents, within
-  72 hours by the governor's account, to a new state office (DIGIT, in the Department of Financial Services); the
+  72 hours of determining that one has occurred ([§ 1422](https://www.nysenate.gov/legislation/laws/GBS/1422)), to a new state office (DIGIT, in the Department of Financial Services); the
   public may file suspected incidents too, and the office's first yearly public report is due on 2028-01-02
   ([Governor of New York](https://www.governor.ny.gov/news/governor-hochul-declares-ny-will-lead-nation-ai-science-and-safety-launches-new-research);
   [DFS](https://www.dfs.ny.gov/digit)).
@@ -270,11 +283,15 @@ decided what counts as passing (Atelier).
   decided ([Public Citizen](https://www.citizen.org/news/coalition-of-nonprofits-files-landmark-lawsuit-to-stop-development-of-advanced-ai-systems-at-anthropic-google-meta-openai-and-spacexsi-that-proliferate-bioweapons-and-cyberattacks/);
   [report: AP](https://apnews.com/article/artificial-intelligence-ai-lawsuit-cyberattacks-anthropic-openai-03ece37b96979fe834f60976648504ba)).
 - **2026-11-12, Washington.** The White House's AI task force urged federal agencies to limit regulatory liability
-  for good-faith voluntary reporting of cybersecurity vulnerabilities and incidents; officials were reported to be
+  for good-faith voluntary reporting of cybersecurity vulnerabilities and incidents, for at least twelve months; officials were reported to be
   discussing with industry a voluntary process for reporting AI-related incidents, which the government would
   analyse and share. A statement, not a rule ([report: Cybersecurity Dive](https://www.cybersecuritydive.com/news/ai-white-house-task-force-cybersecurity-regulation/874679/)).
 - *Reading against step 3:* the step found the losses of control on record only because two makers published them.
   New York's duty and Australia's announced one move the first report from the maker's page to a state office;
-  what reaches the public in New York is that office's yearly report, and the Washington proposal is voluntary. The
-  lawsuit is a claim brought to a court against makers, the direction the step found for the harmed's claims, here
-  brought by organisations before a harm; no public body has acted on it.
+  what reaches the public in New York is that office's yearly report, anonymised and aggregated, and the Washington
+  proposal is voluntary. New York's duty covers only what its law calls a critical safety incident: a loss of
+  control where it causes death or bodily injury, a model deceiving its developer only outside an evaluation built
+  to elicit that ([DFS](https://www.dfs.ny.gov/digit/public-reporting)), so a failure inside a test, the kind the
+  step found, is reportable only where it meets that definition. The lawsuit is a claim brought to a court against
+  makers, the direction the step found for the harmed's claims, here brought by organisations that are not the
+  harmed, to forestall a greater harm; no public body has acted on it.
