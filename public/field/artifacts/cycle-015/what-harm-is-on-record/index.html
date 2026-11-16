@@ -36,6 +36,10 @@ h3{font-size:1.05rem;margin:1.6em 0 .4em}
 #figA text,#figB text{font:11px system-ui,sans-serif;fill:var(--mute)}
 #figA rect.sq,#figB rect.sq{cursor:pointer}
 #figA rect.sq:hover,#figA rect.sq.on,#figB rect.sq:hover,#figB rect.sq.on{stroke:var(--fg);stroke-width:2}
+#figS,#figPA,#figPB{width:100%;height:auto;display:block;touch-action:manipulation}
+#figS text,#figPA text,#figPB text{font:11px system-ui,sans-serif;fill:var(--mute)}
+#figS .seg,#figPA rect.sq,#figPB rect.sq{cursor:pointer}
+#figS .seg:hover,#figS .seg.on,#figPA rect.sq:hover,#figPA rect.sq.on,#figPB rect.sq:hover,#figPB rect.sq.on{stroke:var(--fg);stroke-width:2}
 #legend,.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font:.8rem system-ui,sans-serif;margin:.6em 0}
 #legend span,.legend span{display:inline-flex;align-items:center;gap:6px}
 #legend i{display:inline-block;width:13px;height:13px;border-radius:3px}
@@ -55,19 +59,21 @@ a{color:var(--accent)}
 </head>
 <body>
 <main>
-<p class="kicker">The Field · studies 75 to 77 · cycle 015 · step 3 of the programme · third state, the check, 15 November 2026 · in progress</p>
+<p class="kicker">The Field · studies 75 to 78 · cycle 015 · step 3 of the programme · presented, fourth state (the paper), 15 November 2026</p>
 <h1>What Harm Is on Record</h1>
-<p class="lede">The programme asks whether increasingly capable AI can be kept under human and democratic control, and by whom. This step asks what the public record of AI incidents shows about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures a public body has acted on. The record read here is the largest open one, the AI Incident Database, whole.</p>
+<p class="lede">The programme asks whether increasingly capable AI can be kept under human and democratic control, and by whom. This step asks what the public record of AI incidents shows about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures a public body has acted on. The record read here is the largest open one, the AI Incident Database, whole. Since the fourth state the page stands beside its paper, <a href="../../../presentations/cycle-015/paper.md">read the paper</a>: the first reports that public bodies and makers published themselves have been read, and they change two lines of the answer.</p>
 
 <div class="answer" id="answer">
-<p><strong>The answer so far.</strong> <span id="a1"></span></p>
+<p><strong>The answer.</strong> <span id="a1"></span></p>
 <p><span id="a2"></span></p>
 <p><span id="a3"></span></p>
 <p><span id="a4"></span></p>
 <p><span id="a5"></span></p>
 <p><span id="a7"></span></p>
+<p><span id="a8"></span></p>
+<p><span id="a9"></span></p>
 <p><span id="a6"></span></p>
-<p class="m">Third state: the check. Who wrote is read from a web address by fixed rules (study 75) and by hand (study 76). The check (study 77) had every hand-read item coded a second time by readers who never saw the first coding, read the responses whole and not by their opening, read a seeded draw of the press reports nobody had read, and read every disagreement a third time. What held and what was corrected is listed under <a href="#check">The check</a>. Every number is computed by <code>analyse75.py</code>, <code>analyse76.py</code> and <code>analyse77.py</code> from the snapshot named below.</p>
+<p class="m">Fourth state: the paper. Who wrote is read from a web address by fixed rules (study 75) and by hand (study 76). The check (study 77) had every hand-read item coded a second time by readers who never saw the first coding, read the responses whole and not by their opening, read a seeded draw of the press reports nobody had read, and read every disagreement a third time. What held and what was corrected is listed under <a href="#check">The check</a>. For the paper (study 78) the 60 first reports that a public body or the maker published itself were read twice, and the first reports were counted by who submitted them: <a href="#paper78">Read for the paper</a>. Every number is computed by <code>analyse75.py</code> to <code>analyse78.py</code> from the snapshot named below.</p>
 </div>
 
 <h2>Every incident on record, by the year it happened</h2>
@@ -81,6 +87,13 @@ a{color:var(--accent)}
 <div class="tally" id="tally"></div>
 <div class="readout" id="readout" aria-live="polite">Choose a bar to read its year.</div>
 <p class="note">Years before 2012 are drawn as one bar. 2026 runs to the snapshot of 9 November and is incomplete; the database also enters incidents months after they happen, so recent years grow. The height of a bar is what was written down, not what happened.</p>
+
+<h2>Who wrote first, when it was not the press</h2>
+<p class="note">The bars above show the record growing. These show authorship: for each year, the share of that year's incidents whose first report came from somewhere other than the press, by the address it was published on. Every share is of the incidents with a report (1,801 of 1,803; two carry none). Choose a bar to read its year.</p>
+<svg id="figS" viewBox="0 0 960 300" role="img" aria-label="Stacked bars: share of each year's first reports not from the press"></svg>
+<div id="legendS" class="legend"></div>
+<div class="readout" id="readoutS" aria-live="polite">Choose a bar to read its year.</div>
+<p class="note" id="noteS"></p>
 
 <h2>The harmed, read by hand: the 58 self-published first reports</h2>
 <p class="note">The address rule put 58 first reports on a platform without an editor. Each was read whole, twice, by readers who did not see each other's codes, beside the record's own column of who was harmed. One square per report, in the order of the incidents; choose one to read who wrote it and what each reader coded.</p>
@@ -123,12 +136,30 @@ a{color:var(--accent)}
 <div class="wrap"><table id="pacts"><thead><tr><th>Incident</th><th>Public body</th><th>Act</th><th>Date of the act</th><th>Lands on</th><th>State</th></tr></thead><tbody></tbody></table></div>
 <p class="note" id="chk4"></p>
 
+<h2 id="paper78">Read for the paper</h2>
+<p class="note">Three things the first three states had left unread (study 78, 15 November 2026): what a public body says when its own announcement opens an incident, what the maker writes about when its own page does, and who puts the reports into the record. The 60 texts were coded twice, by the conductor and by a convened reader who saw only the codebook (<a href="CODEBOOK78.md">CODEBOOK78.md</a>), and every disagreement on the tested codes was read a third time (<a href="coding78.json">coding78.json</a>).</p>
+<h3>When a public body wrote first: 37 first reports on a public body's address</h3>
+<p class="note" id="p78a"></p>
+<svg id="figPA" viewBox="0 0 960 74" role="img" aria-label="37 squares, one per first report on a public body's address"></svg>
+<div id="legendPA" class="legend"></div>
+<div class="readout" id="readoutPA" aria-live="polite">Choose a square to read what the body announced.</div>
+<h3>When the maker wrote first: 23 first reports on the maker's own address</h3>
+<p class="note" id="p78b"></p>
+<svg id="figPB" viewBox="0 0 960 74" role="img" aria-label="23 squares, one per first report on the maker's own address, by year"></svg>
+<div id="legendPB" class="legend"></div>
+<div class="readout" id="readoutPB" aria-live="polite">Choose a square to read what the maker wrote about.</div>
+<h3>Who put the reports into the record</h3>
+<p class="note" id="p78c"></p>
+<div class="wrap"><table id="subm"><thead><tr><th>First report submitted by</th><th>Incidents</th><th>The press and other</th><th>A public body</th><th>The maker</th><th>Self-published</th><th>Research</th><th>Outside the press</th></tr></thead><tbody></tbody></table></div>
+<h3>The harmed who wrote in the press, and the press writing about itself</h3>
+<p class="note" id="p78d"></p>
+
 <h2>Step 2's public acts, looked for in the record</h2>
 <p class="note">The 29 acts by which a public body stopped, delayed or conditioned AI compute (<a href="../../cycle-014/where-a-public-acted/">Where a Public Acted</a>, study 74), each searched for in the incidents' titles and descriptions by the terms of its point in the chain, every hit read. A match names the same system, model or facility, the same developer or deployer, and the matter the act addressed.</p>
 <div class="wrap"><table id="acts"><thead><tr><th>Act</th><th>Point</th><th>Body and party</th><th>Hits read</th><th>Incident</th></tr></thead><tbody></tbody></table></div>
 
 <h2>Predictions, fixed before any count</h2>
-<p class="note">Study 75's were written after reading only the snapshot's column headers (<a href="PREDICTIONS75.md">PREDICTIONS75.md</a>); study 76's before any report text was opened in its session (<a href="PREDICTIONS76.md">PREDICTIONS76.md</a>); the check's before any second code existed (<a href="PREDICTIONS77.md">PREDICTIONS77.md</a>).</p>
+<p class="note">Study 75's were written after reading only the snapshot's column headers (<a href="PREDICTIONS75.md">PREDICTIONS75.md</a>); study 76's before any report text was opened in its session (<a href="PREDICTIONS76.md">PREDICTIONS76.md</a>); the check's before any second code existed (<a href="PREDICTIONS77.md">PREDICTIONS77.md</a>); study 78's before any of its texts was opened or anything was counted by submitter (<a href="PREDICTIONS78.md">PREDICTIONS78.md</a>).</p>
 <div class="wrap"><table id="preds"><thead><tr><th></th><th>Prediction</th><th>Result</th></tr></thead><tbody></tbody></table></div>
 <p class="m" id="predsum"></p>
 
@@ -136,13 +167,15 @@ a{color:var(--accent)}
 <p class="note"><strong>Record.</strong> AI Incident Database, snapshot <code>backup-20261109100729.tar.bz2</code>, fetched from the database's own snapshot page on 15 November 2026 (sha256 <code id="sha"></code>), CSV export. The database is shared under CC BY-SA 4.0; report texts stay with their owners and none is copied here. <strong>Who wrote it.</strong> For each incident, the linked report published first; its web domain is classed in this order: the maker (a name of the incident's alleged developer or deployer is a label of the domain), a public body (government, court and regulator domains), research (universities, papers, preprints), self-published (platforms without an editor: social networks, video, blogs, code hosts), the press and other (everything else). <strong>Where it fails.</strong> The database's own MIT risk classification, not re-coded. <strong>Response.</strong> The database tags some reports as a <em>response</em>; an incident with one is counted, whoever responded.</p>
 <p class="note"><strong>Read by hand (study 76).</strong> <code>sheet76.py</code> writes, outside this repository, the texts a reader reads; only the codes are committed (<a href="coding76.json">coding76.json</a>, with a one-line reason per item, no copied text). A self-published first report is <em>harmed</em> when the writer says they, or the organisation they speak for, were affected, or the record's column of harmed parties names the writer; <em>witness</em> when the writer found, tested, watched or collected the failure; <em>maker</em> when the developer or deployer writes about its own system. Two codes were added while reading because the fixed ones did not fit: <em>record note</em> (the database's own note) and, for public acts, <em>whom the act lands on</em> (the developer or deployer named in the record, or the person who used the AI). The second is descriptive and was not predicted.</p>
 <p class="note"><strong>The check (study 77).</strong> The snapshot was fetched a third time and matched by hash. Convened readers, each a machine reader given only the codebook (<a href="check77/CODEBOOK.md">CODEBOOK.md</a>) and the texts, coded every item again: the 58 self-published first reports up to 6,000 characters each, the response reports of all 176 answered incidents up to 3,500 characters each, and a draw of 120 of the 1,683 press and research first reports (<code>random.seed(20261115)</code>) up to 2,500 characters each. Their codes are in <a href="check77/second-coding.json">second-coding.json</a> and <a href="check77/press-sample.json">press-sample.json</a>. Every disagreement on who wrote a self-published report and on whether a public body acted was then read a third time in the text; each decision and its reason is in <a href="check77/adjudication.json">adjudication.json</a>.</p>
+<p class="note"><strong>Read for the paper (study 78).</strong> The snapshot was fetched a fourth time and matched by hash. The 37 first reports on a public body's address and the 23 on the maker's own were coded by the conductor from the first 2,500 characters of each and by one convened machine reader, blind to the first coding, from up to 6,000 (<code>sheet78.py</code> writes the texts outside this repository). A public act is defined as in the check. Who submitted a report is the snapshot's own field; the most frequent submitter is counted wherever its name stands among a first report's submitters. Sources of the paper's related work, with the passages quoted and the hash of each file as fetched: <a href="sources78.json">sources78.json</a>.</p>
 <h2>Limits</h2>
-<p class="note">A web address says who published a report, not who was harmed: the class <em>self-published</em> is the closest a domain comes to the harmed, and it holds bystanders and researchers too. Its names were matched by rule and not read; a maker's newsroom on another domain (<code>about.fb.com</code>) falls outside <em>maker</em>. The first run of the rules matched suffixes without a label boundary and was fixed in the same session; its result on the predictions was the same. The record holds what its editors and submitters found and chose; it is not a census of harm. The match to step 2's acts is a search plus a reading by one reader; a second reading comes with the check. Study 76 was one reader's first coding, of the opening of each response; the check read them whole and found ten public acts the opening did not show. The second readers are machine readers, one per item, and texts were cut at a fixed length, so an act stated later in a long report can still be missing. Who else answered (the maker, others) differs more between the two readings than the public acts do and was not read a third time: those counts are given as a range. Whether the system worked or failed, and the state and date of each act, were coded once. The draw of 120 is small: the share of press reports written by the harmed lies between 1.3 and 8.3 in 100. Only reports the database itself tags as a response were read: an answer the editors did not tag is not counted, so these are shares of the answered record, not of what was done in the world. <strong>Correction to study 75 (15 November 2026):</strong> six of its 58 <em>self-published</em> first reports are the database's own note on incidents it converted to issues, and two are the maker's own text on a code host or a social network; the class is not the harmed, and study 75's shares stand as shares of web addresses only.</p>
-<p class="m">Builds on the Field's cycle-006 reading of the same database (<a href="../../2026-10-07-what-the-incident-record-holds/">What the incident record holds</a>, snapshot of 5 October 2026) and on step 2's register of 29 public acts. Data: <a href="results75.json">results75.json</a>, <a href="data75.js">data75.js</a>, <a href="results76.json">results76.json</a>, <a href="data76.js">data76.js</a>, <a href="coding76.json">coding76.json</a>, <a href="results77.json">results77.json</a>, <a href="data77.js">data77.js</a>.</p>
+<p class="note">A web address says who published a report, not who was harmed: the class <em>self-published</em> is the closest a domain comes to the harmed, and it holds bystanders and researchers too. Its names were matched by rule and not read; a maker's newsroom on another domain (<code>about.fb.com</code>) falls outside <em>maker</em>. The first run of the rules matched suffixes without a label boundary and was fixed in the same session; its result on the predictions was the same. The record holds what its editors and submitters found and chose; it is not a census of harm. The match to step 2's acts is a search plus a reading by one reader; a second reading comes with the check. Study 76 was one reader's first coding, of the opening of each response; the check read them whole and found ten public acts the opening did not show. The second readers are machine readers, one per item, and texts were cut at a fixed length, so an act stated later in a long report can still be missing. Who else answered (the maker, others) differs more between the two readings than the public acts do and was not read a third time: those counts are given as a range. Whether the system worked or failed, and the state and date of each act, were coded once. The draw of 120 is small: the share of press reports written by the harmed lies between 1.3 and 8.3 in 100. Only reports the database itself tags as a response were read: an answer the editors did not tag is not counted, so these are shares of the answered record, not of what was done in the world. Study 78 read 60 texts with two readers, one of them the builder; whether an act is concluded and whether the system worked were not read a third time. A public body's announcement was read only where it is an incident's first report: an announcement linked later, and not tagged as a response, is still unread, so 71 remains a floor. The maker class is set by a rule on names; one of its 23 is a trade news site. Who submitted says who entered a report, not who found the incident. <strong>Correction to study 75 (15 November 2026):</strong> six of its 58 <em>self-published</em> first reports are the database's own note on incidents it converted to issues, and two are the maker's own text on a code host or a social network; the class is not the harmed, and study 75's shares stand as shares of web addresses only.</p>
+<p class="m">Builds on the Field's cycle-006 reading of the same database (<a href="../../2026-10-07-what-the-incident-record-holds/">What the incident record holds</a>, snapshot of 5 October 2026) and on step 2's register of 29 public acts. Data: <a href="results75.json">results75.json</a>, <a href="data75.js">data75.js</a>, <a href="results76.json">results76.json</a>, <a href="data76.js">data76.js</a>, <a href="coding76.json">coding76.json</a>, <a href="results77.json">results77.json</a>, <a href="data77.js">data77.js</a>, <a href="results78.json">results78.json</a>, <a href="data78.js">data78.js</a>, <a href="coding78.json">coding78.json</a>. The siblings' works of this step: the Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-015/named-for-them"><i>Named For Them</i></a> reads whom the record names as harmed, and the Studio's <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-11-15-other-hands"><i>Other Hands</i></a> sets every first report as type with a seal for each public act. Text CC BY 4.0, data CC0, code Apache 2.0.</p>
 </main>
 <script src="data75.js"></script>
 <script src="data76.js"></script>
 <script src="data77.js"></script>
+<script src="data78.js"></script>
 <script>
 (function(){
 const D=window.D75, R=D.res, rows=D.rows;
@@ -160,9 +193,9 @@ document.getElementById('a3').textContent=`Of step 2's 29 public acts, ${matched
 const MODES={
  who:{key:r=>r[2],cats:[['maker','The maker','--k5'],['public body','A public body','--k3'],['research','Research','--k4'],['self-published','Self-published','--k1'],['press and other','The press and other','--k6'],['no report','No report','--k0']]},
  where:{key:r=>String(r[3]),cats:[['1','1 Discrimination and toxicity','--k1'],['2','2 Privacy and security','--k2'],['3','3 Misinformation','--k3'],['4','4 Malicious actors and misuse','--k5'],['5','5 Human-computer interaction','--k4'],['6','6 Socioeconomic and environmental','--k7'],['7','7 AI system safety, failures and limitations','--fg'],['0','Not classified','--k0']]},
- acted:{key:r=>r[4]?'act':(PUB.has(r[0])?'pub':(r[5]?'resp':'none')),cats:[['act','Matched to a public act of step 2','--k5'],['pub','A public body acted (read by hand)','--k3'],['resp','Answered by the maker or others only','--k6'],['none','Neither','--k0']]}
+ acted:{key:r=>r[4]?'act':(PUB.has(r[0])?'pub':(r[5]?'resp':'none')),cats:[['act','Matched to a public act of step 2','--k5'],['pub','A public body acted (read by hand, studies 76 to 78)','--k3'],['resp','Answered by the maker or others only','--k6'],['none','Neither','--k0']]}
 };
-const PUB=new Set(window.D77.acts.map(a=>a[0]));
+const PUB=new Set(window.D77.acts.map(a=>a[0]).concat(window.D78.res.A.new));
 const yr=y=>y===null?null:(y<2012?'<2012':String(y));
 const YEARS=['<2012'];for(let y=2012;y<=2026;y++)YEARS.push(String(y));
 let mode='who', sel=null;
@@ -194,9 +227,9 @@ function draw(){
 }
 function tally(){
  const t=document.getElementById('tally');
- if(mode==='who')t.textContent=`First reports: the press and other ${fmt(FR['press and other'])}, self-published ${FR['self-published']}, a public body ${FR['public body']}, research ${FR.research}, the maker ${FR.maker}, of ${fmt(nf)}. ${R.single_report} incidents rest on a single report.`;
+ if(mode==='who')t.textContent=`First reports: the press and other ${fmt(FR['press and other'])}, self-published ${FR['self-published']}, a public body ${FR['public body']}, research ${FR.research}, the maker ${FR.maker}, of ${fmt(nf)} incidents with a report; ${R.incidents-nf} of the ${fmt(R.incidents)} carry none and are drawn apart. ${R.single_report} incidents rest on a single report.`;
  if(mode==='where'){const b=R.by_domain;t.textContent=`${fmt(R.classified_mit)} incidents with a first report carry the MIT classification. In domain 7 (the system's own safety and failures, ${b['7'].n}) the maker wrote first in ${b['7'].maker}, a self-published platform in ${b['7']['self-published']}, a public body in ${b['7']['public body']}.`;}
- if(mode==='acted'){const X=window.D77.res.B;t.textContent=`${incM} incidents are matched to ${matched.length} of step 2's 29 acts; ${R.incidents_with_response_report} incidents carry a report tagged as a response, and in ${X.public_final} of them a public body acted. With the ${X.matched_outside_the_answered.length} matched incidents whose response reports carry no public act, a public act is on record for at least ${X.public_act_on_record_at_least} of ${fmt(R.incidents)} incidents.`;}
+ if(mode==='acted'){const X=window.D77.res.B;t.textContent=`${incM} incidents are matched to ${matched.length} of step 2's 29 acts; ${R.incidents_with_response_report} incidents carry a report tagged as a response, and in ${X.public_final} of them a public body acted. With the ${X.matched_outside_the_answered.length} matched incidents whose response reports carry no public act, and ${window.D78.res.A.new_n} more found in public bodies' own announcements (study 78), a public act is on record for at least ${window.D78.res.A.floor_after} of ${fmt(R.incidents)} incidents.`;}
 }
 function read(y){
  const M=MODES[mode],c=counts()[y],n=Object.values(c).reduce((a,b)=>a+b,0);
@@ -354,6 +387,105 @@ document.querySelectorAll('[data-acts]').forEach(b=>b.addEventListener('click',(
 drawP();
 const L=XB.lag_days;
 document.getElementById('chk4').textContent=`By the second reader's coding, ${XB.state['user concluded']+XB.state['maker concluded']} of the ${XB.public_final} acts are concluded (an order, a ruling, a sentence, a law) and ${XB.state['user opened']+XB.state['maker opened']} opened. Where both the incident and the act carry a full date (${L.n} acts), half the acts came within ${L.median} days of the incident's date in the record, ${L.within_30} within a month and ${L.over_365} after more than a year; ${L.before_incident_date} carry an act dated before the record's incident date, which shows how loosely that date is set. State, date and whether the system worked were coded once and not checked.`;
+})();
+</script>
+<script>
+(function(){
+const D=window.D78, R=D.res, A=R.A, B=R.B, C=R.C, E=R.atelier_case, X7=window.D77.res;
+const fmt=n=>n.toLocaleString('en-GB');
+const pct=(a,b)=>(100*a/b).toFixed(1).replace(/\.0$/,'');
+const NS='http://www.w3.org/2000/svg';
+const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const col=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const narrow=svg=>svg.getBoundingClientRect().width<600;
+function legend(id,items,extra){const lg=document.getElementById(id);lg.innerHTML='';
+ items.forEach(([k,lab,v,n])=>{if(!n)return;const sp=document.createElement('span');sp.dataset.cat=k;sp.dataset.n=n;
+  const sw=el('svg',{width:13,height:13,'aria-hidden':'true'});sw.appendChild(el('rect',{width:13,height:13,rx:3,fill:col(v)}));
+  sp.append(sw,document.createTextNode(`${lab} (${n})`));lg.appendChild(sp);});
+ if(extra){const sp=document.createElement('span');sp.textContent=extra;lg.appendChild(sp);}}
+const link=i=>{const a=document.createElement('a');a.href=`https://incidentdatabase.ai/cite/${i}`;a.textContent='The incident in the database';return a;};
+
+// ---------------------------------------------------------------- the answer, lines added by the paper
+document.getElementById('a8').textContent=`Read for the paper: a public body's own announcement opens ${A.n} incidents, and ${A.final_act} of those announce an act (a charge, an order, a fine, a ruling; two readers agree on ${A.agreement_act.agree} of ${A.n}). ${A.new_n} of them were not among the ${X7.B.public_final} the check found, so a public act is on record for at least ${A.floor_after} of ${fmt(window.D75.res.incidents)} incidents, not ${A.floor_before}; of the ${A.all_acts_read} acts read, ${A.all_target.user} land on the person who used the AI and ${A.all_target.maker} on a developer or deployer. The other ${A.not_an_act} are warnings, reports and notices.`;
+document.getElementById('a9').textContent=`When the maker wrote first (${B.n} incidents), it wrote about a failure of its own system in ${B.about['own failure']}, about other people's misuse of it in ${B.about['misuse by others']}, and about something else in ${B.about.other}. ${B.own_failure_2026.length} of the ${B.about['own failure']} fall in 2026 and are of one kind: two developers of general models reporting that their own models, in tests, training or internal use, did what they had been told not to do (entered other parties' systems, used credentials they had found, published a secret). The record files ${B.agent_column.n} incidents of 2026 under AI agent systems; a public body is on record acting in ${B.agent_column.public_act.length} of them, an inquiry (incident ${B.agent_column.public_act[0]}). Where the failure is a loss of control in the plain sense, the maker is the one who wrote it down, and no public act has concluded.`;
+
+// ---------------------------------------------------------------- shares outside the press, by year
+const YEARS=Object.keys(R.by_year).sort((a,b)=>(a==='<2012'?0:+a)-(b==='<2012'?0:+b));
+const CS=[['public body','A public body','--k3'],['maker','The maker','--k5'],['self-published','Self-published','--k1'],['research','Research','--k4']];
+let selS=null;
+function drawS(){
+ const svg=document.getElementById('figS');svg.innerHTML='';
+ const nw=narrow(svg),W=nw?400:960,H=nw?260:300,L=nw?36:44,Bm=30,T=12,bw=(W-L-8)/YEARS.length;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+ const tot=y=>Object.values(R.by_year[y]).reduce((a,b)=>a+b,0);
+ const sh=y=>CS.reduce((a,[k])=>a+R.by_year[y][k],0)/tot(y)*100;
+ const top=Math.ceil(Math.max(...YEARS.map(sh))/5)*5, sy=v=>(H-Bm-T)*v/top;
+ for(let g=0;g<=top;g+=5){const y=H-Bm-sy(g);svg.appendChild(el('line',{x1:L,x2:W-8,y1:y,y2:y,stroke:col('--line')}));const t=el('text',{x:L-6,y:y+4,'text-anchor':'end'});t.textContent=g+' %';svg.appendChild(t);}
+ YEARS.forEach((y,i)=>{let acc=0;const x=L+i*bw+2,n=tot(y);
+  CS.forEach(([k,,v])=>{const c=R.by_year[y][k];if(!c)return;const h=sy(100*c/n);
+   const r=el('rect',{x,y:H-Bm-sy(acc)-h,width:bw-4,height:Math.max(h,0.8),fill:col(v),class:'seg'+(selS===y?' on':''),'data-year':y,'data-cat':k,'data-n':c,tabindex:0,role:'button','aria-label':`${y}: ${c} of ${n}`});
+   const go=()=>{selS=y;drawS();readS(y);};r.addEventListener('click',go);r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+   svg.appendChild(r);acc+=100*c/n;});
+  const t=el('text',{x:x+(bw-4)/2,y:H-Bm+16,'text-anchor':'middle'});t.textContent=(y==='<2012'?(nw?'<12':'before 2012'):(nw?"'"+y.slice(2):y));if(!nw||i%2===0)svg.appendChild(t);});
+ const all=k=>YEARS.reduce((a,y)=>a+R.by_year[y][k],0);
+ legend('legendS',CS.map(([k,lab,v])=>[k,lab,v,all(k)]),`The press and other: ${fmt(all('press and other'))}, not drawn.`);
+}
+function readS(y){const c=R.by_year[y],n=Object.values(c).reduce((a,b)=>a+b,0),o=document.getElementById('readoutS');o.innerHTML='';
+ const h=document.createElement('strong');h.textContent=`${y==='<2012'?'Before 2012':y}: ${n} incidents with a report. `;
+ const t=document.createElement('span');t.textContent=`The press and other ${c['press and other']} (${pct(c['press and other'],n)} %) · `+CS.map(([k,lab])=>`${lab.toLowerCase()} ${c[k]}`).join(' · ')+'.';o.append(h,t);}
+drawS();
+document.getElementById('figS').style.touchAction='manipulation';
+const K=X7.critique, m26=K.maker_first_2026;
+document.getElementById('noteS').textContent=`In every year the press wrote at least four first reports in five. What moved is the rest: until 2015 the only other first reports are research papers; self-published platforms carry the years 2016 to 2023; public bodies appear from 2019; and 2026 is the first year in which the maker is the largest of the four (${m26[0]} of ${m26[1]}, ${pct(m26[0],m26[1])} %, against ${K.maker_first_before_2026[0]} of ${fmt(K.maker_first_before_2026[1])} before). The bar before 2012 rests on few incidents. An address says who published, not who was harmed; the sections below say what was read.`;
+
+// ---------------------------------------------------------------- Part A: public-body first reports
+const KA=a=>a[2]?(a[10]?'new':'known'):'none';
+const CA=[['new','Announces a public act the check had not found','--k5'],['known','Announces a public act the check had found','--k3'],['none','No act: a warning, report or notice','--k0']];
+let selA=null;
+function drawA(){const svg=document.getElementById('figPA'),nr=narrow(svg),per=nr?13:19,s=nr?24:44,g=4,W=per*(s+g)+4;
+ const rows=[...D.A].sort((a,b)=>CA.findIndex(c=>c[0]===KA(a))-CA.findIndex(c=>c[0]===KA(b))||a[0]-b[0]);
+ svg.setAttribute('viewBox',`0 0 ${W} ${Math.ceil(rows.length/per)*(s+g)+4}`);svg.innerHTML='';
+ rows.forEach((a,i)=>{const k=KA(a),q=el('rect',{x:2+(i%per)*(s+g),y:2+Math.floor(i/per)*(s+g),width:s,height:s,rx:3,fill:col(CA.find(c=>c[0]===k)[2]),class:'sq'+(selA===a[0]?' on':''),tabindex:0,role:'button','data-id':a[0],'data-cat':k,'aria-label':`incident ${a[0]}: ${k}`});
+  const go=()=>{selA=a[0];drawA();const o=document.getElementById('readoutPA');o.innerHTML='';const h=document.createElement('strong');h.textContent=`Incident ${a[0]} (${a[1]}): `;const t=document.createElement('span');
+   t.textContent=(a[2]?`${a[4]}. ${a[5]}${a[6]?' ('+a[6]+')':''}. The act lands on ${a[7]==='user'?'the person who used the AI':'a developer or deployer'}${a[8]?', itself a public body':''}; ${a[9]}${a[11]?'; borderline':''}. `:`No act (${a[3]}). `)+(a[12]?a[12]+' ':'')+(a[2]!==a[13]?'The second reader coded it the other way; the third reading decided. ':'');o.append(h,t,link(a[0]));};
+  q.addEventListener('click',go);q.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});svg.appendChild(q);});
+ legend('legendPA',CA.map(([k,lab,v])=>[k,lab,v,D.A.filter(a=>KA(a)===k).length]));}
+document.getElementById('p78a').textContent=`The check read public acts only where the database tags a report as a response. But ${A.n} incidents are opened by a public body's own page, and nobody had read those. ${A.final_act} of them announce an act (the first reader found ${A.first_act}, the second ${A.second_act}; they agree on ${A.agreement_act.agree} of ${A.n}, kappa ${A.agreement_act.kappa}; ${A.final_act_firm} without the borderline ones). ${A.already_in_the_60.length} were already among the check's ${X7.B.public_final}; ${A.new_n} are new: ${A.new_target.user} on the person who used the AI, ${A.new_target.maker} on a developer or deployer (a regulator's fine, a settlement, an order, a defect investigation). The floor of incidents with a public act on record rises from ${A.floor_before} to ${A.floor_after}. The ${A.not_an_act} without an act are mostly warnings to the public (${A.kind_no_act['warning or notice']}); ${A.operator_filed.length} are collision reports that the operator of a driverless car filed on a regulator's form, so the maker's words on a public address; and one (incident ${A.link_error[0]}) links a report about another matter.`;
+drawA();
+
+// ---------------------------------------------------------------- Part B: maker first reports
+const CB=[['own failure','A failure of its own system','--k5'],['misuse by others',"Other people's misuse of its system",'--k3'],['other','Something else','--k6']];
+let selB=null;
+function drawB(){const svg=document.getElementById('figPB'),nr=narrow(svg),s=nr?24:44,g=4,per=nr?13:19;
+ const grp=[['Before 2026',D.B.filter(b=>b[1]!==2026)],['2026',D.B.filter(b=>b[1]===2026)]];
+ svg.innerHTML='';let y=4;const W=per*(s+g)+4;
+ grp.forEach(([lab,rows])=>{rows.sort((a,b)=>CB.findIndex(c=>c[0]===a[2])-CB.findIndex(c=>c[0]===b[2])||a[0]-b[0]);
+  const t=el('text',{x:2,y:y+12});t.textContent=`${lab} (${rows.length})`;svg.appendChild(t);y+=18;
+  rows.forEach((b,i)=>{const q=el('rect',{x:2+(i%per)*(s+g),y:y+Math.floor(i/per)*(s+g),width:s,height:s,rx:3,fill:col(CB.find(c=>c[0]===b[2])[2]),class:'sq'+(selB===b[0]?' on':''),tabindex:0,role:'button','data-id':b[0],'data-cat':b[2],'data-y':b[1],'aria-label':`incident ${b[0]}: ${b[2]}`});
+   const go=()=>{selB=b[0];drawB();const o=document.getElementById('readoutPB');o.innerHTML='';const h=document.createElement('strong');h.textContent=`Incident ${b[0]} (${b[1]}), on ${b[7]}: ${CB.find(c=>c[0]===b[2])[1].toLowerCase()}${b[4]?' (borderline)':''}. `;const t=document.createElement('span');t.textContent=b[5]+(b[3]?' ':' Not the maker. ')+(b[6]!==b[2]?`The second reader coded it “${b[6]}”. `:'');o.append(h,t,link(b[0]));};
+   q.addEventListener('click',go);q.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});svg.appendChild(q);});
+  y+=Math.ceil(rows.length/per)*(s+g)+8;});
+ svg.setAttribute('viewBox',`0 0 ${W} ${y}`);
+ legend('legendPB',CB.map(([k,lab,v])=>[k,lab,v,D.B.filter(b=>b[2]===k).length]));}
+const mk=Object.entries(B.own_failure_2026_makers).map(([d,n])=>`${n} on ${d}`).join(', ');
+document.getElementById('p78b').textContent=`The address rule found the maker writing first in ${B.n} incidents, ${B.n_2026} of them in 2026. Read, they divide: a failure of the maker's own system ${B.about['own failure']}, other people's misuse of it ${B.about['misuse by others']} (threat reports and accounts banned), something else ${B.about.other} (a product launch, a system card whose abstract does not state the incident, a firm describing its own agent breaking into another firm's platform, and one trade news site the rule took for the maker). The two readers agree on ${B.agreement_about.agree} of ${B.n} (kappa ${B.agreement_about.kappa}). Of the ${B.n_2026} of 2026, ${B.about_2026['own failure']} report a failure of the maker's own system (${mk}), all of them filed by the record under AI agent systems and none classified yet. We had predicted that most of the maker's first reports would be about others' misuse; that failed.`;
+drawB();
+window.addEventListener('resize',()=>{drawS();drawA();drawB();});
+
+// ---------------------------------------------------------------- Part C: who submitted
+const tb=document.querySelector('#subm tbody');
+[['The most frequent submitter',C.top_n,C.top_classes,C.top_outside_pct],['Everyone else',C.rest_n,C.rest_classes,C.rest_outside_pct]].forEach(([lab,n,c,o])=>{const tr=document.createElement('tr');
+ [lab,fmt(n),fmt(c['press and other']),c['public body'],c.maker,c['self-published'],c.research,o+' %'].forEach(v=>{const td=document.createElement('td');td.textContent=String(v);tr.appendChild(td);});tb.appendChild(tr);});
+const s23=C.since_2023;
+document.getElementById('p78c').textContent=`The snapshot names who submitted each report: ${C.distinct_submitter_names} names in all. One name stands on the first report of ${fmt(C.top_n)} of ${fmt(window.D75.res.incidents_with_first_report)} incidents (${C.top_pct} %), and of ${C.top_by_year['2026'][0]} of the ${C.top_by_year['2026'][1]} incidents of 2026; the four most frequent named submitters stand on ${C.top4_named_pct} %. (The Atelier counts ${fmt(C.atelier_count)} for the first by its own rule.) Where that one account submitted, ${C.top_outside_pct} % of first reports come from outside the press; where anyone else did, ${C.rest_outside_pct} %, ${C.ratio_rest_to_top} times as many. Part of that is time: for incidents since 2023 the shares are ${pct(s23.top[0],s23.top[1])} % (${s23.top[0]} of ${fmt(s23.top[1])}) and ${pct(s23.rest[0],s23.rest[1])} % (${s23.rest[0]} of ${s23.rest[1]}). The same account entered ${C.maker_first_by_top} of the ${B.n} maker first reports and ${C.public_first_by_top} of the ${A.n} public-body ones. Who wrote the record is, to a large part, what one editor found and chose to link first.`;
+document.getElementById('p78d').textContent=`The Atelier offered a case after the check: of five harmed writers found in the press, three are news organisations or their reporters writing about themselves. Against our draw of 120 it holds in part: ${E.press_itself.length} of the ${E.press_harmed} harmed writers are a publication writing about what was done to it (incidents ${E.press_itself.join(', ')}); the Atelier's fifth, incident 428, is outside the draw. Counting only the harmed who do not keep a publication of their own (${E.not_the_press.length} of 120, ${E.not_press_pct} %, between ${E.not_press_ci_pct[0]} and ${E.not_press_ci_pct[1]}), the estimate over the whole record falls from ${E.whole_record_all} to ${E.whole_record_not_press} (between ${E.whole_record_not_press_ci[0]} and ${E.whole_record_not_press_ci[1]}). The draw is too small to say more than that the difference is real in kind.`;
+
+// ---------------------------------------------------------------- predictions of study 78
+const P=[['P114','Of the 37 public-body first reports, at least 24 state a public act, and at least 18 of those incidents are not among the 60 the check found.',`${A.final_act} state an act, ${A.new_n} of them new`],
+['P115','Of the 23 maker first reports, at least 12 are about misuse by others; of the 13 of 2026, at least 8.',`${B.about['misuse by others']} about misuse, ${B.about_2026['misuse by others']} of them in 2026; ${B.about['own failure']} about a failure of its own`],
+['P116','Where the most frequent submitter did not submit the first report, the share outside the press is at least 1.5 times the share where it did.',`${C.rest_outside_pct} % against ${C.top_outside_pct} %: ${C.ratio_rest_to_top} times`]];
+const pb=document.querySelector('#preds tbody');
+P.forEach(([id,txt,res])=>{const ok=R.predictions[id];const tr=document.createElement('tr');[id,txt].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});const td=document.createElement('td');const sp=document.createElement('span');sp.className=ok?'held':'failed';sp.textContent=ok?'held':'failed';td.append(sp,document.createTextNode(' — '+res));tr.appendChild(td);pb.appendChild(tr);});
+document.getElementById('predsum').textContent+=` Study 78: ${R.predictions_held} of 3 held. In all: ${R.all_predictions.held} of ${R.all_predictions.of}.`;
 })();
 </script>
 </body>

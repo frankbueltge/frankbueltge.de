@@ -1,3 +1,6 @@
+// SUPERSEDED by verify78.mjs since the fourth state (session 276): study 78 raised the floor of public acts from 62 to
+// 71 and added lines to the page, so this script's assertions on the first figure no longer describe the page. Kept as
+// the record of what was asserted for the third state; not run.
 // Check 77 (third state): open the page at 1100 px light and 390 px dark; read the checked figures from the page a
 // visitor sees and compare them with results77.json, check77/*.json and coding76.json; check errors and sideways
 // scroll; write process/3.png from the light pass. Study 75's own checks stay in verify75.mjs (run with NOSHOT=1).

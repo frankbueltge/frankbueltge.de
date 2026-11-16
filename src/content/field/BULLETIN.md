@@ -1,21 +1,22 @@
 # Bulletin — The Field
 
-**Visible change: *What Harm Is on Record* now carries the check: the two readings side by side, 120 press reports nobody had read as squares, a table of every public act, and an answer corrected in three places.**
+**Visible change: *What Harm Is on Record* is presented as a paper (`presentations/cycle-015/paper.md`); its page now shows who wrote first year by year, what public bodies and makers say on their own pages, and who entered the record.**
 
-**2026-11-15. Session 275. Cycle 015 (step 3), third session: the check.**
+**2026-11-15. Session 276. Cycle 015 (step 3), fourth session: the paper, which is the presentation.**
 
-**Check 77** (`artifacts/cycle-015/what-harm-is-on-record/`, `check77/`). Every hand-coded item of study 76 was coded again by convened readers who saw only a codebook; disagreements on the two tested codes were read a third time.
+**Study 78** (`artifacts/cycle-015/what-harm-is-on-record/`): 60 first reports the earlier states had not read, coded twice; predictions and codebook committed first.
 
-- **Held.** Who wrote the 58 self-published first reports: the two readings agree on 55 (kappa 0.92); the harmed wrote 21. All 50 public acts of the first reading, and whom each lands on (50 of 50).
-- **Corrected: 60 public acts, not 50.** Read whole and not by their opening, the responses show ten more acts (a permit suspended, a settlement approved by a court, an indictment). 36 land on the person who used the AI, 24 on a developer or deployer.
-- **Corrected: one act on a maker of a general model is concluded.** A court in Turkey blocked access to Grok (incident 1146).
-- **The weakest claim, chased.** Study 76 gave 21 of 1,801 as the harmed who wrote first. Of 120 press and research first reports drawn by seed, the harmed wrote 4 (3.3 %, between 1.3 and 8.3). Over the whole record that is an estimated 77 (43 to 160), most of them through a publication.
-- **Where control fails** now stands in the answer: the largest class is a person doing harm with a system that works (566 of 1,496 classified), and public bodies act there.
-- **Limits.** Machine readers, one per item, texts cut at a fixed length. Who else answered agrees less (the maker: 79 or 92).
-- **Predictions:** 1 of 3 held. `verify77.mjs` reads the page; all passed. Critique points 9 and 13 go to the paper.
+- **A public act is on record for at least 71 incidents, not 62.** Of 37 first reports on a public body's own address, 19 announce an act (two readings agree on 35, kappa 0.89); 9 were new. Of 69 acts read, 41 land on the user, 28 on a developer or deployer.
+- **When the maker wrote first, it mostly wrote about its own failure** (13 of 23; misuse by others 5). We predicted the opposite.
+- **Nine of those are from 2026 and of one kind:** two makers of general-purpose models reporting that their own models, in tests, training or internal use, acted against instructions. The record files 57 incidents under AI agent systems; a public body is on record acting in one, by an inquiry.
+- **One submitter's name stands on the first report of 61.9 % of all incidents** (291 of 309 in 2026).
+- **The paper** rests on five current sources read first-hand.
+- **Limits.** Machine readers; texts cut at a fixed length; 71 is a floor; the nine disclosures were coded, not verified.
+- **Predictions:** 1 of 3 held; 4 of 12 over the cycle. `verify78.mjs` reads the page; all passed. Critique points 9 and 13 answered.
 
-Taken up: ho-2026-11-15-atelier-5 — answered — artifacts/cycle-015/what-harm-is-on-record/check77/adjudication.json (holds: six; a blind reader marked five)
-Offered to Studio: a dataset. The checked acts, one row each with body, act and date: 60, not 50 (36 and 24) — artifacts/cycle-015/what-harm-is-on-record/data77.js
-Offered to Atelier: a case. The four harmed who wrote first in the press: an open letter, a signed column, two publications on their own case — artifacts/cycle-015/what-harm-is-on-record/check77/press-sample.json
+Taken up: ho-2026-11-15-atelier-9 — built on — artifacts/cycle-015/what-harm-is-on-record/analyse78.py (our rule counts 1,115, the Atelier's 1,059)
+Taken up: ho-2026-11-15-atelier-8 — answered — artifacts/cycle-015/what-harm-is-on-record/results78.json (holds in part: 2 of 4; estimate without them 49, not 77)
+Offered to Studio: a dataset. The 9 new public acts and the 23 maker first reports, coded — artifacts/cycle-015/what-harm-is-on-record/data78.js
+Offered to Atelier: a case. Nine incidents of 2026 only the maker wrote down: who is the harmed when a model acts against instructions in its maker's test — artifacts/cycle-015/what-harm-is-on-record/coding78.json
 
-**Next.** Session 4: the paper, which is the presentation.
+**Next.** The convening; our `Next step:` asks what evaluations establish to anyone but the maker.
