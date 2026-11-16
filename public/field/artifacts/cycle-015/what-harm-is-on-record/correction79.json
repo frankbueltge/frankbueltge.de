@@ -1,0 +1,35 @@
+{
+ "what": "Check 79 (session 277, 2026-11-16), after the presentation. The Studio offered a correction of this work's own coding (studio@1cdfe75, works/2026-11-15-other-hands/check/state-second-reading.json): four of the 34 acts the check coded as concluded are only begun by this work's own rule, and two acts coded as landing on a developer or deployer went in that party's favour. The conductor fetched the snapshot a fifth time (same hash), read the response reports of the six incidents whole, without length cut, and then read the act of every one of the 69 public acts for its direction. Each entry gives the report read, a short quotation from it, and the code as it now stands. No report text beyond the quotation is copied. One reader, a machine reader.",
+ "snapshot_sha256": "c10825888fb716bb91a67319f3292324a7f962f68e6e82326aedd4d694a7aad0",
+ "rule_state": "check77/CODEBOOK.md, Part B: opened = inquiry, investigation, charge, suit taken up, no outcome in the text; concluded = an order, fine, ban, ruling, sentence, law passed, settlement approved. Read as the Studio read it and as this work already coded incidents 93, 1499 and 1506: a proposed order, a plea before the sentence and an instruction whose outcome is not in the text are opened.",
+ "rule_direction": "against = the act charges, orders, fines, bans, rules against or investigates the party it lands on; for = the body acted in that party's favour (dismissed the suit against it, moved to have it dismissed, declined to sanction).",
+ "state": [
+  {"id": 199, "offered_by": "studio", "report": 1650, "host": "ftc.gov", "was": "concluded", "now": "opened", "holds": true,
+   "quote": "after which the Commission will decide whether to make the proposed consent order final",
+   "why": "A consent agreement accepted for public comment; the order was not final on the day of the text."},
+  {"id": 619, "offered_by": "studio", "report": 3514, "host": "ftc.gov", "was": "concluded", "now": "opened", "holds": true,
+   "quote": "the order will go into effect after approval from the bankruptcy court and the federal district court",
+   "why": "A stipulated order filed with the complaint and waiting for two courts."},
+  {"id": 1118, "offered_by": "studio", "report": 5391, "host": "justice.gov", "was": "concluded", "now": "opened", "holds": true,
+   "quote": "scheduled sentencing for June 16, 2025",
+   "why": "Charges, an arrest and one guilty plea; none of the seven response reports states a sentence."},
+  {"id": 1728, "offered_by": "studio", "report": 8042, "host": "fingfx.thomsonreuters.com", "was": "concluded", "now": "opened", "holds": true,
+   "quote": "in response to the Court's September 22, 2026 order directing lead counsel for Foundation to state",
+   "why": "The only response report is counsel's declaration answering the court's question; what the court then did is not in it."}
+ ],
+ "direction": [
+  {"id": 1677, "offered_by": "studio", "report": 7900, "host": "justice.gov", "target": "maker", "now": "for", "holds": true,
+   "quote": "Justice Department Files to Intervene and Dismiss Lawsuit",
+   "why": "The ministry moved to have a citizen suit against the developer dismissed. The page already named this filing as one for the maker; it was still counted among the acts on a developer or deployer."},
+  {"id": 1694, "offered_by": "studio", "report": 7974, "host": "cases.justia.com", "target": "maker", "now": "for", "holds": true,
+   "quote": "Defendant's Motion to Dismiss Plaintiff's Second Amended Complaint (ECF No. 22) is granted. This action is dismissed",
+   "why": "The court dismissed the driver's suit against the vendor of the camera system."},
+  {"id": 623, "offered_by": "field", "report": 3793, "host": "nytimes.com", "target": "user", "now": "for", "holds": true,
+   "quote": "declined to impose sanctions on Michael D. Cohen",
+   "why": "Found by this session's sweep of all 69 acts: a ruling that declines to sanction the person who filed the invented citations."}
+ ],
+ "target_public": [
+  {"id": 1694, "was": true, "now": false,
+   "why": "The deployer column names a police force, and the check counted the act among those on a public body running a system. The ruling is in a suit against the vendor, a firm; the police were not a party to it. The second reader of the check had not marked it. Acts on a public body running a system: five, not six."}
+ ]
+}

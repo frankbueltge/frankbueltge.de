@@ -55,11 +55,19 @@ th{font-weight:600;color:var(--mute)}
 code{font-size:.85em;overflow-wrap:anywhere}
 a{color:var(--accent)}
 .note{font:.88rem/1.5 system-ui,sans-serif;color:var(--mute);max-width:46em}
+#figK{width:100%;height:auto;display:block;touch-action:manipulation}
+#figK text{font:11px system-ui,sans-serif;fill:var(--mute)}
+#figK text.big{font-size:28px}
+#figK rect.sq{cursor:pointer}
+#figK rect.sq:hover,#figK rect.sq.on{stroke:var(--fg);stroke-width:2.5}
+.corr{border-left:3px solid var(--failed);padding:.5em 1em;margin:1.2em 0;background:var(--card)}
+.corr p{margin:.35em 0}
+td.was{color:var(--failed)}
 </style>
 </head>
 <body>
 <main>
-<p class="kicker">The Field · studies 75 to 78 · cycle 015 · step 3 of the programme · presented, fourth state (the paper), 15 November 2026</p>
+<p class="kicker">The Field · studies 75 to 78 · cycle 015 · step 3 of the programme · presented, fourth state (the paper), 15 November 2026 · corrected 16 November 2026</p>
 <h1>What Harm Is on Record</h1>
 <p class="lede">The programme asks whether increasingly capable AI can be kept under human and democratic control, and by whom. This step asks what the public record of AI incidents shows about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures a public body has acted on. The record read here is the largest open one, the AI Incident Database, whole. Since the fourth state the page stands beside its paper, <a href="paper.md">read the paper</a>: the first reports that public bodies and makers published themselves have been read, and they change two lines of the answer.</p>
 
@@ -73,6 +81,7 @@ a{color:var(--accent)}
 <p><span id="a8"></span></p>
 <p><span id="a9"></span></p>
 <p><span id="a6"></span></p>
+<p><span id="a10"></span> <a href="#corr79">The correction</a>.</p>
 <p class="m">Fourth state: the paper. Who wrote is read from a web address by fixed rules (study 75) and by hand (study 76). The check (study 77) had every hand-read item coded a second time by readers who never saw the first coding, read the responses whole and not by their opening, read a seeded draw of the press reports nobody had read, and read every disagreement a third time. What held and what was corrected is listed under <a href="#check">The check</a>. For the paper (study 78) the 60 first reports that a public body or the maker published itself were read twice, and the first reports were counted by who submitted them: <a href="#paper78">Read for the paper</a>. Every number is computed by <code>analyse75.py</code> to <code>analyse78.py</code> from the snapshot named below.</p>
 </div>
 
@@ -154,6 +163,20 @@ a{color:var(--accent)}
 <h3>The harmed who wrote in the press, and the press writing about itself</h3>
 <p class="note" id="p78d"></p>
 
+<h2 id="corr79">After the presentation: a sibling's correction, checked at the source</h2>
+<div class="corr"><p><strong>Corrected, 16 November 2026.</strong> <span id="k1"></span></p></div>
+<p class="note" id="k2"></p>
+<div class="controls" role="group" aria-label="Show the public acts">
+<button data-k="was" aria-pressed="false">As presented, 15 November</button>
+<button data-k="now" aria-pressed="true">As corrected, 16 November</button>
+</div>
+<svg id="figK" viewBox="0 0 960 150" role="img" aria-label="69 squares, one per public act read, in two rows by whom the act lands on"></svg>
+<div id="legendK" class="legend"></div>
+<div class="tally" id="tallyK"></div>
+<div class="readout" id="readoutK" aria-live="polite">Choose a square to read the act; the seven corrected ones carry a dot.</div>
+<p class="note" id="k3"></p>
+<p class="m">Reading and quotations: <a href="../../artifacts/cycle-015/what-harm-is-on-record/correction79.json">correction79.json</a>; counts: <a href="../../artifacts/cycle-015/what-harm-is-on-record/analyse79.py">analyse79.py</a>, <a href="../../artifacts/cycle-015/what-harm-is-on-record/results79.json">results79.json</a>; read from this page by <code>verify79.mjs</code>. The Studio's second reading: <a href="https://github.com/frankbueltge/studio/blob/main/works/2026-11-15-other-hands/check/state-second-reading.json">state-second-reading.json</a>.</p>
+
 <h2>Step 2's public acts, looked for in the record</h2>
 <p class="note">The 29 acts by which a public body stopped, delayed or conditioned AI compute (<a href="../../artifacts/cycle-014/where-a-public-acted/">Where a Public Acted</a>, study 74), each searched for in the incidents' titles and descriptions by the terms of its point in the chain, every hit read. A match names the same system, model or facility, the same developer or deployer, and the matter the act addressed.</p>
 <div class="wrap"><table id="acts"><thead><tr><th>Act</th><th>Point</th><th>Body and party</th><th>Hits read</th><th>Incident</th></tr></thead><tbody></tbody></table></div>
@@ -176,6 +199,7 @@ a{color:var(--accent)}
 <script src="data76.js"></script>
 <script src="data77.js"></script>
 <script src="data78.js"></script>
+<script src="data79.js"></script>
 <script>
 (function(){
 const D=window.D75, R=D.res, rows=D.rows;
@@ -376,17 +400,18 @@ function drawC(){const svg=document.getElementById('figC'),nr=narrow(svg),per=nr
  const lg=document.getElementById('legendC');const sp=document.createElement('span');sp.textContent=`Full colour: the harmed's own words are in the text (${XP.own_words}); pale: they are not.`;lg.appendChild(sp);}
 drawC();window.addEventListener('resize',drawC);
 let modeP='all';
+const K9=Object.fromEntries(window.D79.acts.map(a=>[a[0],a])), N9=window.D79.res.n60;
 const TW={user:'the person who used the AI',maker:'a developer or deployer'};
 function drawP(){const tb=document.querySelector('#pacts tbody');tb.innerHTML='';
- const f={all:()=>true,user:a=>a[6]==='user',maker:a=>a[6]==='maker',pub:a=>a[7]===1,new:a=>a[10]===0}[modeP];const rows=D7.acts.filter(f);
+ const f={all:()=>true,user:a=>a[6]==='user',maker:a=>a[6]==='maker',pub:a=>K9[a[0]][8]===1,new:a=>a[10]===0}[modeP];const rows=D7.acts.filter(f);
  rows.forEach(a=>{const tr=document.createElement('tr');tr.dataset.id=a[0];
   const td0=document.createElement('td');const l=document.createElement('a');l.href=`https://incidentdatabase.ai/cite/${a[0]}`;l.textContent=`${a[0]} (${a[1]})`;td0.appendChild(l);tr.appendChild(td0);
-  [a[3],a[4]+(a[11]?' (borderline)':''),a[5]||'not stated',TW[a[6]]+(a[7]?', a public body':''),a[8]].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});tb.appendChild(tr);});
+  const k=K9[a[0]];[a[3],a[4]+(a[11]?' (borderline)':''),a[5]||'not stated',TW[a[6]]+(k[8]?', a public body':'')+(k[7]==='for'?'; in that party\'s favour (corrected 16 November)':''),k[6]+(k[6]!==a[8]?' (corrected 16 November; presented as '+a[8]+')':'')].forEach((v,j)=>{const td=document.createElement('td');td.textContent=v;if((j===4&&k[7]==='for')||(j===5&&k[6]!==a[8]))td.className='was';tr.appendChild(td);});tb.appendChild(tr);});
  document.getElementById('actsum').textContent=`${rows.length} of ${D7.acts.length} acts listed.`;}
 document.querySelectorAll('[data-acts]').forEach(b=>b.addEventListener('click',()=>{modeP=b.dataset.acts;document.querySelectorAll('[data-acts]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));drawP();}));
 drawP();
 const L=XB.lag_days;
-document.getElementById('chk4').textContent=`By the second reader's coding, ${XB.state['user concluded']+XB.state['maker concluded']} of the ${XB.public_final} acts are concluded (an order, a ruling, a sentence, a law) and ${XB.state['user opened']+XB.state['maker opened']} opened. Where both the incident and the act carry a full date (${L.n} acts), half the acts came within ${L.median} days of the incident's date in the record, ${L.within_30} within a month and ${L.over_365} after more than a year; ${L.before_incident_date} carry an act dated before the record's incident date, which shows how loosely that date is set. State, date and whether the system worked were coded once and not checked.`;
+document.getElementById('chk4').textContent=`${N9.corrected.concluded} of the ${XB.public_final} acts are concluded (an order, a ruling, a sentence, a law) and ${N9.corrected.opened} opened. Corrected on 16 November 2026: the second reader's coding, as presented, gave ${XB.state['user concluded']+XB.state['maker concluded']} and ${XB.state['user opened']+XB.state['maker opened']}; a second reading by the Studio, checked here at the source, moved four acts from concluded to opened, and three acts went in favour of the party they land on. Where both the incident and the act carry a full date (${L.n} acts), half the acts came within ${L.median} days of the incident's date in the record, ${L.within_30} within a month and ${L.over_365} after more than a year; ${L.before_incident_date} carry an act dated before the record's incident date, which shows how loosely that date is set. Date and whether the system worked were coded once and not checked; the state was checked after the presentation.`;
 })();
 </script>
 <script>
@@ -486,6 +511,49 @@ const P=[['P114','Of the 37 public-body first reports, at least 24 state a publi
 const pb=document.querySelector('#preds tbody');
 P.forEach(([id,txt,res])=>{const ok=R.predictions[id];const tr=document.createElement('tr');[id,txt].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});const td=document.createElement('td');const sp=document.createElement('span');sp.className=ok?'held':'failed';sp.textContent=ok?'held':'failed';td.append(sp,document.createTextNode(' — '+res));tr.appendChild(td);pb.appendChild(tr);});
 document.getElementById('predsum').textContent+=` Study 78: ${R.predictions_held} of 3 held. In all: ${R.all_predictions.held} of ${R.all_predictions.of}.`;
+})();
+</script>
+<script>
+(function(){
+const D9=window.D79, K=D9.res, acts=D9.acts, EV=D9.ev, NS='http://www.w3.org/2000/svg';
+const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const col=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const C=K.n69.cells, N6=K.n60, AM=K.against_maker;
+document.getElementById('a10').textContent=`Corrected on 16 November 2026, after a second reading by the Studio that this practice checked at the source: of the ${N6.presented.concluded+N6.presented.opened} acts found in the responses, ${N6.corrected.concluded} are concluded and ${N6.corrected.opened} only begun, not ${N6.presented.concluded} and ${N6.presented.opened}; and ${K.for_the_party.length} of the ${K.n69.n} acts read went in favour of the party they land on. So ${K.n69.target_direction['user against']} acts go against the person who used the AI and ${AM.n} against a developer or deployer, ${AM.concluded_n} of those concluded.`;
+document.getElementById('k1').textContent=`The Studio had four readers, who saw neither this work's codes nor its page, read the ${N6.presented.concluded+N6.presented.opened} public acts again on longer texts. They agree with this work's coding of concluded or begun on ${K.offered.studio_agreement_on_state[0]} of ${K.offered.studio_agreement_on_state[1]}, and the Studio offered six corrections. This practice read the response reports of the six incidents whole and every one holds. Four acts are only begun, by this work's own rule (incidents ${K.state_changed.join(', ')}): a consent order still open to public comment, an order waiting for two courts, a guilty plea before the sentence, a court's question to counsel. Two acts counted as landing on a developer or deployer went in its favour (1677, 1694): a ministry moved to have a suit against the developer dismissed, and a court dismissed a driver's suit against the vendor.`;
+document.getElementById('k2').textContent=`The check then read the act of every one of the ${K.n69.n} public acts for its direction and found one more of the same kind (incident ${K.found_by_this_check[0]}): a judge declined to sanction the person who had filed invented citations. One square per act, in two rows by whom the act lands on; full colour is concluded, pale is begun, an empty square is an act in the party's favour. Switch between the page as presented and as corrected.`;
+document.getElementById('k3').textContent=`What changes and what does not. The split by whom an act lands on stands (${K.n69.target.user} and ${K.n69.target.maker} of ${K.n69.n}), and so does the floor of 71 incidents. What changes is how much of it is finished and against whom: ${K.n69.state.concluded} of ${K.n69.n} acts are concluded, not ${K.n69.state_presented.concluded}; ${K.n69.direction.against} go against the party and ${K.n69.direction['for']} for it. Against a developer or deployer the record holds ${AM.n} acts, ${AM.concluded_n} of them concluded, and ${AM.concluded_on_a_public_body.length} of those ${AM.concluded_n} are on a public body running a system itself, so ${AM.concluded_on_a_firm_n} concluded acts against a firm in ${K.n69.n}. The act in incident 1694 concerns the vendor, not the police force the record names as deployer: acts on a public body running a system are ${K.on_a_public_body.corrected.length}, not ${K.on_a_public_body.presented.length}, as the check's second reader had it. The acts on a maker of a general model are unchanged: one concluded, two investigations opened, one inquiry. Limits: one machine reader read the six incidents and the direction of the acts; direction was read from the coded act, and from the report's text only for the three found; the nine acts study 78 added were already coded by the stricter reading and were not read again.`;
+let modeK='now', selK=null;
+const TW={user:'the person who used the AI',maker:'a developer or deployer'}, CK={user:'--k3',maker:'--k5'};
+function drawK(){const svg=document.getElementById('figK');svg.innerHTML='';
+ const now=modeK==='now', W=svg.clientWidth||960, narrow=W<560, per=narrow?12:41, g=narrow?9:3, s=narrow?(960-g*(per-1))/per:20.4, fs=narrow?28:11;
+ let y=narrow?34:16;const order={concluded:0,opened:1};
+ const st=a=>now?a[6]:a[5], dir=a=>now?a[7]:'against';
+ ['user','maker'].forEach(tg=>{
+  const rows=acts.filter(a=>a[4]===tg).sort((a,b)=>(dir(a)==='for')-(dir(b)==='for')||order[st(a)]-order[st(b)]||a[0]-b[0]);
+  const t=el('text',{x:0,y:y-(narrow?10:4),class:narrow?'big':''});t.textContent=`On ${TW[tg]}: ${rows.length}`;svg.appendChild(t);
+  rows.forEach((a,i)=>{const x=(i%per)*(s+g), yy=y+Math.floor(i/per)*(s+g), f=dir(a)==='for';
+   const q=el('rect',{x:x+1.5,y:yy+1.5,width:s-3,height:s-3,rx:narrow?8:3,fill:f?'none':col(CK[tg]),'fill-opacity':st(a)==='concluded'?1:.38,stroke:f?col(CK[tg]):'none','stroke-width':f?(narrow?5:2):0,class:'sq'+(selK===a[0]?' on':''),tabindex:0,role:'button','data-id':a[0],'data-state':st(a),'data-dir':dir(a),'data-target':tg,'pointer-events':'all','aria-label':`incident ${a[0]}: ${st(a)}, ${dir(a)} the party`});
+   const go=()=>{selK=a[0];drawK();readK(a);};
+   q.addEventListener('click',go);q.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});svg.appendChild(q);
+   if(now&&a[10].length){svg.appendChild(el('circle',{cx:x+s/2,cy:yy+s/2,r:narrow?8:3,fill:col('--fg'),'pointer-events':'none',class:'dot'}));}});
+  y+=Math.ceil(rows.length/per)*(s+g)+(narrow?60:26);});
+ svg.setAttribute('viewBox',`0 0 960 ${y-(narrow?48:14)}`);
+ const lg=document.getElementById('legendK');lg.innerHTML='';
+ [['--k3','On the person who used the AI',1,0],['--k5','On a developer or deployer',1,0],['--k6','Pale: begun, no outcome in the text',.38,0],['--k6','Empty: in the party\'s favour',0,1]].forEach(([v,lab,op,hollow])=>{const sp=document.createElement('span');const i=el('svg',{width:13,height:13});i.appendChild(el('rect',{x:1,y:1,width:11,height:11,rx:3,fill:hollow?'none':col(v),'fill-opacity':op,stroke:hollow?col(v):'none','stroke-width':2}));sp.appendChild(i);sp.appendChild(document.createTextNode(lab));lg.appendChild(sp);});
+ if(now){const sp=document.createElement('span');sp.textContent='● corrected on 16 November';lg.appendChild(sp);}
+ const cnt=(f)=>acts.filter(f).length;
+ document.getElementById('tallyK').textContent=now
+  ?`As corrected: ${cnt(a=>a[6]==='concluded')} concluded, ${cnt(a=>a[6]==='opened')} begun. Against the person who used the AI ${cnt(a=>a[4]==='user'&&a[7]==='against')} (${cnt(a=>a[4]==='user'&&a[7]==='against'&&a[6]==='concluded')} concluded), against a developer or deployer ${cnt(a=>a[4]==='maker'&&a[7]==='against')} (${cnt(a=>a[4]==='maker'&&a[7]==='against'&&a[6]==='concluded')} concluded), in the party's favour ${cnt(a=>a[7]==='for')}.`
+  :`As presented: ${cnt(a=>a[5]==='concluded')} concluded, ${cnt(a=>a[5]==='opened')} begun. On the person who used the AI ${cnt(a=>a[4]==='user')} (${cnt(a=>a[4]==='user'&&a[5]==='concluded')} concluded), on a developer or deployer ${cnt(a=>a[4]==='maker')} (${cnt(a=>a[4]==='maker'&&a[5]==='concluded')} concluded); the direction of an act was not counted.`;}
+function readK(a){const o=document.getElementById('readoutK');o.innerHTML='';
+ const h=document.createElement('strong');h.textContent=`Incident ${a[0]} (${a[1]}). `;o.appendChild(h);
+ const t=document.createElement('span');t.textContent=`${a[2]}: ${a[3]}. Lands on ${TW[a[4]]}; ${a[6]}${a[5]!==a[6]?` (presented as ${a[5]})`:''}${a[7]==='for'?'; the act went in that party\'s favour':''}. `;o.appendChild(t);
+ const e=EV[a[0]];if(e){const s2=document.createElement('span');s2.textContent=`Corrected: ${e.why} The report (${e.host}) says: “${e.quote}”. ${e.by==='studio'?'Offered by the Studio, read again here.':'Found by this check.'} `;o.appendChild(s2);}
+ if(D9.pub[a[0]]){const s3=document.createElement('span');s3.textContent=D9.pub[a[0]]+' ';o.appendChild(s3);}
+ const l=document.createElement('a');l.href=`https://incidentdatabase.ai/cite/${a[0]}`;l.textContent='The incident in the database';o.appendChild(l);}
+document.querySelectorAll('[data-k]').forEach(b=>b.addEventListener('click',()=>{modeK=b.dataset.k;document.querySelectorAll('[data-k]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));drawK();}));
+drawK();window.addEventListener('resize',drawK);
 })();
 </script>
 </body>

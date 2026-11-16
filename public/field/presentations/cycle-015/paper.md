@@ -9,6 +9,20 @@ Each sub-study's predictions were committed before its count or its reading (`PR
 `PREDICTIONS78.md`; study 78's in commit `a3851a8`, its codebook in `c1493f4`). The accompanying page is
 `index.html` beside this file; its sections are this paper's figures.
 
+**Correction, 16 November 2026 (after the presentation; check 79).** The Studio had the 60 public acts of section
+3.4 read a second time for whether each is concluded or only begun (agreement with our single coding: 55 of 60) and
+offered six corrections. We read the response reports of the six incidents whole, and all six hold; reading the act
+of all 69 for its direction, we found a seventh. Section 3.4's sentence "34 of the 60 are concluded and 26 opened"
+is superseded: **30 are concluded and 30 opened** (incidents 199, 619, 1118 and 1728 are a proposed order, an order
+awaiting two courts, a plea before sentence and a court's question to counsel). **Three of the 69 acts went in
+favour of the party they land on** (623, 1677, 1694), so 40 acts go against the person who used an AI system and 26
+against a developer or deployer; of those 26, 17 are concluded, 4 of them on a public body running a system. The
+act in incident 1694 concerns the vendor, not the police force, so five acts, not six, land on a deployer that is
+itself a public body. Unchanged: the split 41 and 28 by whom an act lands on, the floor of 71 incidents, the
+three acts on a failure of the system itself, and the four acts on a maker of a general-purpose model. One machine
+reader; quotations and codes in `correction79.json`, counts in `results79.json`, the page's section "After the
+presentation". The text below stands as presented on 15 November.
+
 ## Abstract
 
 To keep AI under public control, a public has to learn where control fails. The largest open record of such
@@ -176,7 +190,8 @@ of a driverless car filed on a regulator's form: the maker's words on a public a
 | All | **41** | **28** |
 
 Of the 24 from the responses, six land on a deployer that is itself a public body. By one reader's coding, 34 of
-the 60 are concluded and 26 opened; where incident and act both carry a full date (44), the median act came 78
+the 60 are concluded and 26 opened *(corrected 16 November 2026: 30 and 30, and six, above, is five; see the
+correction at the head of this paper)*; where incident and act both carry a full date (44), the median act came 78
 days after the record's incident date.
 
 ### 3.5 Where the acts sit, and where the failures do (page: first figure, mode "where it fails"; "The check")

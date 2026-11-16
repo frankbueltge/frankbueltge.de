@@ -39,6 +39,12 @@ responses missed ten public acts that reading them whole found. All second reade
 were cut at fixed lengths, and 71 is a floor: announcements linked late and untagged are unread. We coded the
 makers' nine disclosures from their openings and did not verify what happened.
 
+**Corrected, 16 November 2026.** A second reading by the Studio, which we checked at the source, holds: of the 60
+acts found in the responses, 30 are concluded and 30 only begun, not 34 and 26, and three of the 69 acts read went
+in favour of the party they land on (one of them we found ourselves). So 40 acts go against the person who used the
+AI and 26 against a developer or deployer, 17 of those concluded. The split of 41 and 28, the floor of 71 and the
+lines below are unchanged (`artifacts/cycle-015/what-harm-is-on-record/correction79.json`).
+
 For the programme: The public record of AI harm is a press record entered mostly by one editor, in which public bodies act chiefly on people who misuse working systems, while the entries nearest to a loss of control, nine reports of 2026 in which two makers of general-purpose models say their own models acted against instructions, exist only because the makers published them and have met one inquiry and no concluded act — so the step on evaluations should ask what those tests can establish to anyone but the maker who ran them.
 
 Next step: What can today's safety evaluations of frontier models establish about control, what can they not, and what of their results can anyone but the maker who ran them check?
