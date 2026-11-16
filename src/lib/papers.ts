@@ -96,7 +96,13 @@ export interface PaperEntry {
    *  katalog.py, stamp_first_seen, against the catalogue committed before the run). Null for a
    *  paper already there when the stamp began; absent in a catalogue written earlier. */
   first_seen_on?: string | null
+  /** How far a practice says it read the text, copied from its own reading list by katalog.py
+   *  (since 2026-11-16): `seed` = on the list, not yet read · `read` = full text read ·
+   *  `worked` = it entered a work. Null or absent = no such mark is kept for this entry. */
+  lesestand?: ReadingMark | null
 }
+
+export type ReadingMark = 'seed' | 'read' | 'worked'
 
 export const PAPERS = eintraegeRaw as unknown as PaperEntry[]
 
@@ -156,7 +162,9 @@ export const praxisLabel = (p: string): string => praxisNamen[p] ?? p
  *  Halbsatz — die Fundstelle daneben belegt es. */
 const gruendeText: Record<Aufnahmegrund, string> = {
   zitiert: 'cited in the practice’s own writing',
-  kuratiert: 'held in the practice’s own reading list',
+  // Since 2026-11-16: "on", not "held in": a reading list holds what a practice means to read.
+  // Whether it did is the practice's own mark, shown by readingLabel.
+  kuratiert: 'it is on the practice’s own reading list',
   nachbarschaft: 'found in the citation neighbourhood of an entry',
 }
 export const grundLabel = (g: Aufnahmegrund): string => gruendeText[g] ?? g
@@ -176,9 +184,45 @@ export const urteilLabel = (u: Urteil | null | undefined): string => {
   return `written by ${wer} on ${u.am}, from the ${u.grundlage}`
 }
 
-/** Klartext für den Prüfbefund. Ungeprüft heißt ungeprüft — nicht „nicht erreichbar". */
-export const pruefLabel = (e: Pick<PaperEntry, 'geprueft' | 'pruef_status'>): string =>
-  e.geprueft ? `access confirmed (HTTP ${e.pruef_status})` : 'access not yet confirmed'
+/** What the link check found, in plain words. Unchecked means unchecked, not unreachable.
+ *
+ *  Since 2026-11-16 the label no longer says "access confirmed": the check (atlas_scout/verify.py)
+ *  asks only whether the address answers, and for a paywalled text that address is the
+ *  publisher's landing page. An answer there says nothing about whether anyone can read the
+ *  full text, so the label says what was checked and nothing more. */
+export const pruefLabel = (
+  e: Pick<PaperEntry, 'geprueft' | 'pruef_status' | 'frei_zugaenglich'>,
+): string => {
+  if (!e.geprueft) return 'link not yet checked'
+  const answered = `link answers (HTTP ${e.pruef_status})`
+  return e.frei_zugaenglich
+    ? `${answered}, open access`
+    : `${answered} — the page answered; the full text was not checked and may be paywalled`
+}
+
+const READING_MARK_RANK: Record<ReadingMark, number> = { seed: 0, read: 1, worked: 2 }
+
+/** The practice's own mark of how far it read an entry, or null where it keeps none. Only a
+ *  reading-list entry without a mark says so: a citation in prose carries no such claim. */
+export const readingLabel = (
+  e: Pick<PaperEntry, 'lesestand' | 'aufnahmegrund' | 'zitiert_von'>,
+): string | null => {
+  const who = e.zitiert_von.length === 1 ? 'the practice' : 'a practice'
+  switch (e.lesestand) {
+    case 'worked':
+      return `${who} marks it as read and worked into a work`
+    case 'read':
+      return `${who} marks it as read`
+    case 'seed':
+      return `${who} marks it as not yet read`
+    default:
+      return e.aufnahmegrund === 'kuratiert' ? 'no mark of whether it was read' : null
+  }
+}
+
+/** Entries a practice marks as read (or worked with). */
+export const isMarkedRead = (e: Pick<PaperEntry, 'lesestand'>): boolean =>
+  e.lesestand === 'read' || e.lesestand === 'worked'
 
 /** Autorenzeile: bis zu drei Namen, danach „et al." — gekürzt, nicht erfunden. */
 export const authorLine = (urheber: string[]): string => {
@@ -278,12 +322,18 @@ export const mergeSameText = (entries: PaperEntry[]): PaperEntry[] => {
       fundstellen: [...new Set(group.flatMap((e) => e.fundstellen))],
       felder: [...new Set(group.flatMap((e) => e.felder))].sort((a, b) => a - b),
       frei_zugaenglich: group.some((e) => e.frei_zugaenglich),
+      lesestand:
+        group
+          .map((e) => e.lesestand)
+          .filter((m): m is ReadingMark => !!m && m in READING_MARK_RANK)
+          .sort((a, b) => READING_MARK_RANK[b] - READING_MARK_RANK[a])[0] ?? null,
       zuletzt_gebraucht: dates[dates.length - 1] ?? null,
     }
   })
 }
 
-/** What the practices read: the catalogue /papers shows. */
+/** What the practices cite or keep on their reading lists: the catalogue /papers shows. Not
+ *  everything here was read — `lesestand` carries the practice's own mark where it keeps one. */
 export const READING: PaperEntry[] = mergeSameText(PAPERS.filter((p) => !isTestedInWork(p)))
 
 /** Identifiers a work tested as its material, kept in the feeds and summarised on the page. */

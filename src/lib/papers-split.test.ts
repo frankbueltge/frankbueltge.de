@@ -6,6 +6,9 @@ import {
   READING,
   TESTED_IN_WORK,
   citedBy,
+  isMarkedRead,
+  pruefLabel,
+  readingLabel,
   isTestedInWork,
   mergeSameText,
   praxisLabel,
@@ -72,5 +75,32 @@ describe('one card per text', () => {
   it('never folds short titles or different years', () => {
     expect(mergeSameText([entry({ titel: 'Making' }), entry({ titel: 'Making' })])).toHaveLength(2)
     expect(mergeSameText([entry({ jahr: 2001 }), entry({ jahr: 2002 })])).toHaveLength(2)
+  })
+})
+
+describe('what the labels may claim (2026-11-16)', () => {
+  it('never calls a link check "access confirmed"', () => {
+    expect(pruefLabel(entry({ geprueft: true, pruef_status: 200, frei_zugaenglich: false })))
+      .toBe('link answers (HTTP 200) — the page answered; the full text was not checked and may be paywalled')
+    expect(pruefLabel(entry({ geprueft: true, pruef_status: 200, frei_zugaenglich: true })))
+      .toBe('link answers (HTTP 200), open access')
+    expect(pruefLabel(entry({}))).toBe('link not yet checked')
+  })
+
+  it('carries the practice’s own reading mark, and claims none for prose citations', () => {
+    expect(readingLabel(entry({ aufnahmegrund: 'kuratiert', lesestand: 'seed' })))
+      .toBe('the practice marks it as not yet read')
+    expect(readingLabel(entry({ aufnahmegrund: 'kuratiert', lesestand: 'worked' })))
+      .toBe('the practice marks it as read and worked into a work')
+    expect(readingLabel(entry({ aufnahmegrund: 'kuratiert' }))).toBe('no mark of whether it was read')
+    expect(readingLabel(entry({}))).toBeNull()
+    expect(isMarkedRead(entry({ lesestand: 'seed' }))).toBe(false)
+    expect(isMarkedRead(entry({ lesestand: 'read' }))).toBe(true)
+  })
+
+  it('keeps the strongest mark when two entries of one text merge', () => {
+    const a = entry({ id: 'a', lesestand: 'seed' })
+    const b = entry({ id: 'b', kennung: 'http://hdl.handle.net/1', lesestand: 'read' })
+    expect(mergeSameText([a, b])[0]!.lesestand).toBe('read')
   })
 })

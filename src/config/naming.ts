@@ -495,8 +495,8 @@ export const NAMING = {
          * Forschung zur Hälfte bedient. */
         name: 'Paper Catalogue',
         href: '/papers',
-        description: 'What the three research practices actually read. Each entry is here because a practice reached for it in its own work, and carries the record of that use: who cites it, when it was last picked up, and — where someone wrote one down — why it matters.',
-        short: 'what the practices actually read',
+        description: 'What the research practices cite in their own work or keep on their reading lists — listed is not the same as read. Each entry is here because a practice reached for it, and carries the record of that use: who cites it, when it was last picked up, and — where someone wrote one down — why it matters.',
+        short: 'what the practices cite or mean to read',
       },
       {
         /* Neu am 2026-08-01 auf Franks Anweisung, eine Seite mit allen je hervorgebrachten

@@ -21,8 +21,10 @@ import {
   authorLine,
   citedBy,
   grundLabel,
+  isMarkedRead,
   praxisLabel,
   pruefLabel,
+  readingLabel,
   testedInWorkSummary,
   urteilLabel,
 } from '@/lib/papers'
@@ -39,6 +41,7 @@ const total = READING.length
 const withReason = READING.filter((p) => p.relevanz_herkunft === 'praxis').length
 const byMore = READING.filter((p) => citedBy(p).length > 1).length
 const byModel = READING.filter((p) => p.relevanz_herkunft === 'urteil').length
+const markedRead = READING.filter(isMarkedRead).length
 
 // Most recently used first: what is in use now stands on top. Entries without a date go last
 // instead of being given an invented one.
@@ -84,7 +87,13 @@ const periodFacet = [...periodCounts.entries()]
 
 const accessFacet = [
   { value: 'open', label: 'openly accessible', n: READING.filter((p) => p.frei_zugaenglich).length },
-  { value: 'checked', label: 'access confirmed', n: READING.filter((p) => p.geprueft).length },
+  { value: 'checked', label: 'link answers', n: READING.filter((p) => p.geprueft).length },
+].filter((z) => z.n > 0)
+
+// The practice's own reading mark (since 2026-11-16). Only marks that are held appear.
+const readFacet = [
+  { value: 'read', label: 'marked as read', n: markedRead },
+  { value: 'seed', label: 'marked as not yet read', n: READING.filter((p) => p.lesestand === 'seed').length },
 ].filter((z) => z.n > 0)
 
 const groups = [
@@ -101,6 +110,7 @@ const groups = [
     ] },
   { key: 'period', title: 'published', options: periodFacet },
   { key: 'access', title: 'access', options: accessFacet },
+  ...(readFacet.length > 0 ? [{ key: 'read', title: 'reading', options: readFacet }] : []),
 ]
 const sorts = [
   { value: 'recent', label: 'recently used' },
@@ -133,9 +143,15 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
     <CatalogueSiblings current="/papers" class="mb-2" />
     <h1 class="text-h1 font-semibold">Paper Catalogue</h1>
     <p class="mt-4 text-body text-fg-muted">
-      What this ecology's research practices and the lab's other houses actually read.
-      Every entry is here because one of them reached for it in its own writing — the
-      catalogue starts from use, not from a search of everything that exists.
+      What this ecology's research practices and the lab's other houses cite in their own
+      writing or keep on their reading lists — the catalogue starts from use, not from a
+      search of everything that exists.
+    </p>
+    <p class="mt-3 text-body text-fg-muted">
+      Listed is not the same as read. A reading list holds what a practice means to read, and a
+      text behind a paywall is often known only from its abstract or from quotations elsewhere.
+      Where a practice marks a text as read, the entry says so; the link check below says only
+      whether the address answered, not whether the full text is open.
     </p>
     <p class="mt-3 text-body text-fg-muted">
       Each entry says who cites it, when it was last picked up, and where its reason came
@@ -146,15 +162,17 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
   </header>
 
   <CatalogueStats items={[
-    { value: total, label: 'papers read' },
+    { value: total, label: 'papers listed' },
+    // Shown once the catalogue carries the practices' reading marks (katalog.py, 2026-11-16);
+    // before that a zero would read as "nothing was read", which nobody measured.
+    ...(READING.some((p) => p.lesestand) ? [{ value: markedRead, label: 'marked as read by a practice' }] : []),
     { value: withReason, label: 'with a written reason' },
     { value: byMore, label: 'cited by more than one' },
-    { value: TESTED_IN_WORK.length, label: 'tested inside works' },
   ]} />
 
   <section
     data-catalogue
-    data-groups="cited reason field period access"
+    data-groups={['cited', 'reason', 'field', 'period', 'access', ...(readFacet.length > 0 ? ['read'] : [])].join(' ')}
     data-multi="cited field access"
     data-sorts="recent year title"
     data-sort-desc="recent year"
@@ -179,6 +197,7 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
         data-f-field={p.felder.length ? p.felder.join(' ') : 'none'}
         data-f-period={period(p.jahr)}
         data-f-access={[p.frei_zugaenglich ? 'open' : '', p.geprueft ? 'checked' : ''].filter(Boolean).join(' ')}
+        data-f-read={isMarkedRead(p) ? 'read' : p.lesestand === 'seed' ? 'seed' : 'none'}
         data-s-recent={p.zuletzt_gebraucht ?? ''}
         data-s-year={p.jahr ? String(p.jahr) : ''}
         data-s-title={titleSortKey(p.titel)}
@@ -217,7 +236,7 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
             annotated — where it comes from and why it was admitted. */}
         <details class="mt-3 border-t border-line pt-2">
           <summary class="cursor-pointer font-mono text-mono-sm text-fg-faint hover:text-fg">
-            <span class={fold}>▾</span> admitted because {grundLabel(p.aufnahmegrund)} · {pruefLabel(p)}
+            <span class={fold}>▾</span> admitted because {grundLabel(p.aufnahmegrund)}{readingLabel(p) ? ` · ${readingLabel(p)}` : ''} · {pruefLabel(p)}
           </summary>
           <ul class="mt-2 space-y-1 font-mono text-mono-sm text-fg-faint">
             {p.fundstellen?.map((f) => <li>found in {f}</li>)}
@@ -259,12 +278,13 @@ const more = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'font-mono t
     <section class={cn(panel, 'mt-12 p-5')}>
       <details>
         <summary class={cn(kicker, 'cursor-pointer hover:text-fg')}>
-          <span class={fold}>▾</span> tested inside works, not read: {TESTED_IN_WORK.length.toLocaleString('en-GB')} identifiers
+          <span class={fold}>▾</span> used as data inside works, not read: {TESTED_IN_WORK.length.toLocaleString('en-GB')} identifiers
         </summary>
         <p class="mt-3 text-small leading-relaxed text-fg-muted">
           Some works use identifiers as their material — they resolve, retrieve or count
           thousands of them to measure something about the record itself. Those identifiers are
-          the work's sample, not the practice's reading, so they are not listed above. They
+          the work's sample, not the practice's reading: nobody read these texts, so they are
+          neither listed above nor counted in the numbers at the top. They
           are kept, entry by entry, in the
           <a href="/papers/register.json" class="underline decoration-line underline-offset-4 hover:text-fg">machine-readable register</a>,
           and each work's data folder holds them in full:

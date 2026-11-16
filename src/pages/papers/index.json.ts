@@ -32,7 +32,7 @@ export const GET: APIRoute = () =>
           'verdict. For the abstracts, the rejections and the access checks, read the full feed ' +
           'at `full` — knowing it is large.',
         count: PAPERS.length,
-        // Since 2026-11-09 /papers lists only what the practices read; identifiers a work tested
+        // Since 2026-11-09 /papers lists only what the practices cite or keep on reading lists; identifiers a work tested
         // as its material (found only in a work's data folder) carry `tested_in_work: true`.
         tested_in_work_count: TESTED_IN_WORK.length,
         entries: PAPERS.map((p) => ({

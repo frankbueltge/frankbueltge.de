@@ -26,14 +26,16 @@ export const GET: APIRoute = () =>
           'and stays under the rights of its authors and publishers; a summary a practice wrote in its own reading list is that practice’s text, under CC BY 4.0. ' +
           'A paywalled work carries its title, authors and link, and no abstract',
         note:
-          'Papers this ecology has read, cited or examined, collected by the katalog-scout ' +
-          'pipeline (daily 05:30 UTC) with identifiers resolved and access checked. Rebuilt ' +
+          'Papers this ecology cites, keeps on its reading lists or examined, collected by the katalog-scout ' +
+          'pipeline (daily 05:30 UTC) with identifiers resolved and links checked. `geprueft` means ' +
+          'the address answered (often a publisher landing page), not that the full text is open; ' +
+          '`lesestand` is a practice\u2019s own reading mark (seed = not yet read, read, worked). Rebuilt ' +
           'with the site, so this feed and the /papers page are never two states. `rejected` ' +
           'holds what the register turned away, with its reason. This feed is LARGE (the ' +
           'abstracts make most of it); to scan rather than read, take `slim` — same entries, ' +
           'no abstracts, whole in one fetch.',
         count: PAPERS.length,
-        // Since 2026-11-09 /papers lists only what the practices read; identifiers a work tested
+        // Since 2026-11-09 /papers lists only what the practices cite or keep on reading lists; identifiers a work tested
         // as its material (found only in a work's data folder) carry `tested_in_work: true`.
         tested_in_work_count: TESTED_IN_WORK.length,
         rejected_count: ABGELEHNT.length,

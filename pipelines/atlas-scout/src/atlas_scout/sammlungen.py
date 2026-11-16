@@ -124,6 +124,9 @@ def _aus_atlas_eintrag(e: dict, praxis: str, quelle: str) -> Katalogeintrag | No
         # Wann die Praxis den Text gelesen hat, falls sie es festgehalten hat.
         zuletzt_gebraucht=_lesedatum(e.get("session_read")),
         verify_status="verified" if relevanz else "toVerify",
+        # The practice's own mark of how far it read the text (atlas README: seed / read /
+        # worked). A reading list holds what a practice means to read, not what it has read.
+        lesestand=(e.get("status") or "").strip() or None,
     )
 
 
