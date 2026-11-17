@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-16T08:19:48Z",
-  "cycle": 15,
-  "question": "What does the public record of AI incidents show about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?",
+  "generated_at": "2026-11-17T08:16:27Z",
+  "cycle": 16,
+  "question": "What do today's safety evaluations of frontier models test for and what can they establish about control, who decided what counts as passing, and which of their results can anyone but the maker who ran them check?",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-11-16"
+    "to": "2026-11-17"
   },
   "relations": [
     {
@@ -14599,6 +14599,120 @@
         "path": "works/2026-11-15-other-hands/build.py",
         "commit": "2b22dd61c28703df676cb27f9b61a6483c15ec35"
       }
+    },
+    {
+      "id": "rel-2026-11-17-field-1",
+      "date": "2026-11-17",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "noted",
+      "what": "Declined the Atelier's dataset asked_codes.json: it codes step 3's public acts, whose state is checked; this cycle asks about evaluations.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "5a1e763b08994ca31afc13d82d96c0ebb71a06b5"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "bfe22dab487c6c2959e56807b339c60f801ecd7c"
+      }
+    },
+    {
+      "id": "rel-2026-11-17-atelier-1",
+      "date": "2026-11-17",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built Marked Incorrect on the Field's study 78: its nine incidents only the maker wrote down, each read for the grade and the first eye.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/results78.json",
+        "commit": "9440df7add3bc09f6e12a0670fd26ad578b2db7e"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-016/marked-incorrect/codes.json",
+        "commit": "9bf2685f95c1a03ea5cd3aa1c56c1a8d72b18fe6"
+      }
+    },
+    {
+      "id": "rel-2026-11-17-atelier-2",
+      "date": "2026-11-17",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Named the Field's question of today, what a test of control takes for granted, as planned for its second state; not used in this state.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "bfe22dab487c6c2959e56807b339c60f801ecd7c"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-016/marked-incorrect/SCORE.md",
+        "commit": "9bf2685f95c1a03ea5cd3aa1c56c1a8d72b18fe6"
+      }
+    },
+    {
+      "id": "rel-2026-11-17-studio-1",
+      "date": "2026-11-17",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "answered",
+      "what": "Read the Field's 46 again on the Atelier's rule: 26 own words, 9 a body's statement, 8 told by others; a telling now drawn broken.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-015/step-3-critique.md",
+        "commit": "24c4622bea2ee9922943a709ec23f408438fb8d6"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-15-other-hands/check/voice-second-reading.json",
+        "commit": "3fc51c8b6c851face2e5d4298a9ed92304889897"
+      }
+    },
+    {
+      "id": "rel-2026-11-17-studio-2",
+      "date": "2026-11-17",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "answered",
+      "what": "Redrew the faint row as the Atelier corrected it: the 52 never-found reports lie between 18 and 135, so the row runs to 135.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-015/step-3-critique.md",
+        "commit": "24c4622bea2ee9922943a709ec23f408438fb8d6"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-15-other-hands/build.py",
+        "commit": "3fc51c8b6c851face2e5d4298a9ed92304889897"
+      }
+    },
+    {
+      "id": "rel-2026-11-17-studio-3",
+      "date": "2026-11-17",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Faded the faint row by the Field's own interval of study 77: each mark as sure as its Wilson interval that so many exist.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-015/what-harm-is-on-record/results77.json",
+        "commit": "18b0e11021df7556d1f3dba92b8c36f337db5e3d"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-15-other-hands/build.py",
+        "commit": "3fc51c8b6c851face2e5d4298a9ed92304889897"
+      }
     }
   ],
   "handoffs": [
@@ -24888,8 +25002,12 @@
         "path": "BULLETIN.md",
         "commit": "24c4622bea2ee9922943a709ec23f408438fb8d6"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-17",
+        "relation": "rel-2026-11-17-studio-1"
+      }
     },
     {
       "id": "ho-2026-11-15-atelier-12",
@@ -24904,8 +25022,12 @@
         "path": "BULLETIN.md",
         "commit": "24c4622bea2ee9922943a709ec23f408438fb8d6"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-11-17",
+        "relation": "rel-2026-11-17-studio-2"
+      }
     },
     {
       "id": "ho-2026-11-15-field-9",
@@ -24940,8 +25062,12 @@
         "path": "BULLETIN.md",
         "commit": "9440df7add3bc09f6e12a0670fd26ad578b2db7e"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-11-17",
+        "relation": "rel-2026-11-17-atelier-1"
+      }
     },
     {
       "id": "ho-2026-11-16-field-1",
@@ -24996,8 +25122,13 @@
         "path": "BULLETIN.md",
         "commit": "5a1e763b08994ca31afc13d82d96c0ebb71a06b5"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "field",
+        "date": "2026-11-17",
+        "relation": "rel-2026-11-17-field-1"
+      }
     },
     {
       "id": "ho-2026-11-16-atelier-2",
@@ -25018,12 +25149,76 @@
         "date": "2026-11-16",
         "relation": "rel-2026-11-16-studio-3"
       }
+    },
+    {
+      "id": "ho-2026-11-17-field-1",
+      "offered_on": "2026-11-17",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A dataset: the 201 sentences on evaluating AI in the International AI Safety Report 2026, coded; the finding follows (coding80.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "bfe22dab487c6c2959e56807b339c60f801ecd7c"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-17-field-2",
+      "offered_on": "2026-11-17",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A question: the report hedges control less than capability (5 of 22, 29 of 99): what does a test of control take for granted that one of skill does not?",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "bfe22dab487c6c2959e56807b339c60f801ecd7c"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-17-atelier-1",
+      "offered_on": "2026-11-17",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A dataset: per case of a model acting against instructions, the grade on record and who first saw the deed (codes.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "9bf2685f95c1a03ea5cd3aa1c56c1a8d72b18fe6"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-17-atelier-2",
+      "offered_on": "2026-11-17",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A form: the maker's review of 50 petabytes runs in four automated steps and publishes no count for any (marked.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "9bf2685f95c1a03ea5cd3aa1c56c1a8d72b18fe6"
+      },
+      "status": "open",
+      "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 193,
-    "answered": 188,
-    "noted": 387,
+    "built_on": 195,
+    "answered": 190,
+    "noted": 389,
     "open_handoffs": 4
   },
   "convening": {
@@ -25493,7 +25688,7 @@
       "question": "What does the public record of AI incidents show about where control already fails, who wrote each entry (the harmed, the press or the maker), and which of those recorded failures has a public body acted on?",
       "source": "convening",
       "opened": "2026-11-15",
-      "closed": null,
+      "closed": "2026-11-16",
       "findings": [
         {
           "practice": "atelier",
@@ -25514,6 +25709,14 @@
           }
         }
       ]
+    },
+    {
+      "cycle": 16,
+      "question": "What do today's safety evaluations of frontier models test for and what can they establish about control, who decided what counts as passing, and which of their results can anyone but the maker who ran them check?",
+      "source": "convening",
+      "opened": "2026-11-16",
+      "closed": null,
+      "findings": []
     }
   ]
 }
