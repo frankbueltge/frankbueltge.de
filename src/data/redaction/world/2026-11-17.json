@@ -1,0 +1,148 @@
+{
+  "date": "2026-11-17",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-17T14:53:23Z",
+    "counts": {
+      "botwall": 10,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 279,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 10
+    },
+    "decided": 280,
+    "excluded_unverifiable": 20,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0199
+    ],
+    "gone_rate": 0.0036,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0135
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-15",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "kurv.com",
+        "first_seen": "20261115210000",
+        "http_code": 404,
+        "title": "Zelenskyy Says Starshield Restrictions Threaten Ukraine's Energy Defenses Ahead Of Winter – 710am KURV",
+        "url": "https://www.kurv.com/zelenskyy-says-starshield-restrictions-threaten-ukraines-energy-defenses-ahead-of-winter/"
+      }
+    ],
+    "sample_drawn_at": "2026-11-16T13:55:25Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3895,
+      "replaced": 4778,
+      "trivial": 622,
+      "update": 312
+    },
+    "day": "2026-11-16",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Raftaar",
+          "Raftaar",
+          "Raftaar"
+        ],
+        "after": "India's Got Latent 2 Raftaar Episode Dailymotion: Who Are The Panelists In Season 2 Finale Episode Sahil Kale | Where To Watch India's Got Latent 2 Raftaar, Sahil Kale Last Episode Online? | When Will India's Got Latent 2 Raftaar Episode November 15 Episode Drop On Dailymotion",
+        "before": "India's Got Latent 2 Badshah Episode Dailymotion: Who Are The Panelists In Season 2 Finale Episode Sahil Kale | Where To Watch India's Got Latent 2 Badshah, Sahil Kale Last Episode Online? | When Will India's Got Latent 2 Badshah Episode November 15 Episode Drop On Dailymotion",
+        "detected": "2026-11-16T18:16:17Z",
+        "domain": "filmibeat.com",
+        "removed": [
+          "Badshah",
+          "Badshah",
+          "Badshah"
+        ],
+        "similarity": 0.931,
+        "url": "https://www.filmibeat.com/bollywood/viral/2026/indias-got-latent-2-badshah-episode-dailymotion-who-are-the-panelists-in-season-2-finale-episode-s-538115.html",
+        "weight": 12,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "successor"
+        ],
+        "after": "Jensen Huang successor: Who could replace Jensen Huang at Nvidia? Affair with Alice Huang and her alleged China spy links raise questions over CEO's future",
+        "before": "Nvidia CEO Jensen Huang affair risks succession: Who could replace Jensen Huang at Nvidia? Affair with Alice Huang and her alleged China spy links raise questions over CEO's future",
+        "detected": "2026-11-16T21:47:52Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "risks",
+          "succession",
+          "Nvidia",
+          "Affair",
+          "CEO"
+        ],
+        "similarity": 0.88,
+        "url": "https://economictimes.indiatimes.com/news/international/us/who-could-replace-jensen-huang-at-nvidia-affair-with-alice-huang-and-her-alleged-china-spy-links-raise-questions-over-ceos-future/articleshow/135693055.cms",
+        "weight": 9,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Abbey",
+          "National"
+        ],
+        "after": "Charles Villiers, banker exonerated in the Blue Arrow affair who became a senior figure at Abbey National",
+        "before": "Charles Villiers, banker exonerated in the Blue Arrow affair who became a senior figure at NatWest",
+        "detected": "2026-11-16T15:05:16Z",
+        "domain": "aol.com",
+        "removed": [
+          "NatWest"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.aol.com/articles/charles-villiers-banker-exonerated-blue-135359000.html",
+        "weight": 6,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 11729,
+      "PAGE_TEXTCHANGE": 102328,
+      "PAGE_TITLECHANGE": 38376,
+      "UNCHANGED_CONTENT": 557089
+    },
+    "title_changes_en": 9607,
+    "trace": [
+      {
+        "bytes_billed": 18874368,
+        "created": "1794926891728",
+        "job_id": "world_gdg_counts_20261116",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 178257920,
+        "created": "1794926897223",
+        "job_id": "world_gdg_titles_20261116",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-17T14:53:23Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-16.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
