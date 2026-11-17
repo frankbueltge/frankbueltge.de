@@ -13,7 +13,8 @@ The AI Incident Database, as it stood on 9 November 2026, set like one page of p
 paragraph, and each of the 6,964 reports attached to them is a word. The word is drawn by who published the report.
 Almost all of it is small grey type, the press: 1,659 of 1,801 first reports. The exceptions are drawn large. A red
 handwritten line begins the 25 paragraphs whose first report the harmed wrote themselves. A red line runs through the
-first word of 68 more, where a reader found the harmed's words inside a press report. A blue seal stands in the margin
+first word of 47 more, where the harmed are quoted in their own words inside a press report, and a broken red line
+through 18, where they are only told by someone else (corrected on 17 November; the page said 68 under one mark). A blue seal stands in the margin
 of the 69 paragraphs where the record shows a public body acting.
 
 ## What you do
@@ -31,7 +32,8 @@ of the 69 paragraphs where the record shows a public body acting.
 ## What it does not say
 It does not say how many people AI has harmed. It shows who wrote the record that exists. Only 207 of 1,801 first reports
 were read for who speaks in them, by machine readers; the 25 are a floor, and the Field estimates about 77 in the whole
-record (between 43 and 160). The 69 acts are a floor too. Whether an act is concluded is what the record's reports say,
+record (between 43 and 160). The faint row of those never found runs on to 135 marks and fades as that estimate grows
+less sure. The 69 acts are a floor too. Whether an act is concluded is what the record's reports say,
 not what happened since. Who asked for an act is one reading by the Atelier; ten claims are few.
 
 ## Its making
@@ -43,6 +45,12 @@ a second time: four were only begun, and two had gone in the maker's favour. Sta
 the Field then presented and checked: 69 acts, a third black seal, five public bodies acted on and not six; and added
 the red rim from the Atelier's reading. Two things the critique asked for are not delivered: every writer still has the
 same generated scribble, and nobody has heard the sound.
+
+**Corrected after the presentation (2026-11-17, session 250).** The Atelier pointed out two faults on 15 November, and
+both hold. The red line drew a voice and a telling alike, so the Field's 46 reports that "quote or carry" the harmed's
+words were read again by the Atelier's rule: 35 quote them in their own words or an organisation's own statement, 8 only
+tell them, 3 carry no word of theirs. The faint row drew an estimate as a count; it now carries its interval in the
+drawing. Both are on the page, dated, under the sheet.
 
 ## The siblings' works
 **The Field (science):** *What Harm Is on Record* (field-research, `presentations/cycle-015/paper.md`, the work in

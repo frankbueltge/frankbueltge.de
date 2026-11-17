@@ -5,6 +5,8 @@
    whoever made or ran it; a disc is an act concluded, a ring one only begun; black is an act in that party's favour.
    Fourth state (the presentation): 69 seals, the Field's presented and corrected acts; a red rim on a seal where
    the act answers a claim the harmed brought (the Atelier's reading).
+   After the presentation (17 Nov, the Atelier's corrections): a broken red line where the harmed are only told, by
+   someone else or in paraphrase; the faint row runs to the top of the Field's interval and fades as it grows less sure.
    Everything drawn follows from data.js; the only arbitrary thing is the length of a word. */
 (function () {
   'use strict';
@@ -17,6 +19,7 @@
   var alpha = { years: 1, type: 1, hand: 1, seal: 1 }, want = { years: 1, type: 1, hand: 1, seal: 1 };
   var reading = 'all', picked = -1, playing = false, shown = 0, raf = 0, DPR = 1;
   var counts = {};                    // what was actually drawn on the sheet, for the check
+  var ghostAlpha = 0.32;              // how sure the interval is that a mark of the faint row exists
 
   function rnd(a, b) {                // a fixed number in [0,1) from two integers
     var x = (Math.imul(a + 1, 73856093) ^ Math.imul(b + 7, 19349663)) >>> 0;
@@ -27,7 +30,8 @@
   function kind(r) {                  // what the first word of a paragraph is drawn as
     var f = r[4], v = r[9];
     if (f === 'H' || v === 'W') return 'hand';             // the harmed wrote it (on a platform, or printed by a publication)
-    if (v === 'q' || v === 'b' || v === 'o' || v === 'f') return 'thread';   // their words stand inside it
+    if (v === 'q' || v === 'b') return 'thread';          // their own words are quoted in it: a voice
+    if (v === 'o') return 'told';                         // they reach it only through someone else: a telling
     if (f === 'w') return 'witness';
     if (f === 'n' || f === 'x') return 'blank';
     return '';
@@ -43,8 +47,8 @@
       var r = INC[i], id = r[0], hands = r[2], k0 = kind(r), yr = r[1].slice(0, 4);
       var p = { i: i, words: [], year: null, seal: null }, y = 0;
       if (yr !== year) { year = yr; p.year = yr; y += YEARH; }
-      var lead = k0 === 'hand' ? 8 : k0 === 'thread' ? 2.5 : k0 === 'witness' ? 1.5 : 0;
-      var drop = k0 === 'hand' ? 5 : k0 === 'thread' ? 2 : k0 === 'witness' ? 1 : 0;
+      var lead = k0 === 'hand' ? 8 : k0 === 'thread' || k0 === 'told' ? 2.5 : k0 === 'witness' ? 1.5 : 0;
+      var drop = k0 === 'hand' ? 5 : k0 === 'thread' || k0 === 'told' ? 2 : k0 === 'witness' ? 1 : 0;
       y += lead;
       var x = 0, first = true, items = [];
       if (!hands) items.push({ t: '0', l: 8 });
@@ -54,6 +58,7 @@
           l += 2;
           if (k0 === 'hand') { t = 'H'; l = Math.min(cw, 36 + rnd(id, 99) * 12); }
           else if (k0 === 'thread') { t = 'T'; l = 18 + rnd(id, 99) * 6; }
+          else if (k0 === 'told') { t = 't'; l = 18 + rnd(id, 99) * 6; }
           else if (k0 === 'witness') { t = 'w'; l = 13 + rnd(id, 99) * 4; }
           else if (k0 === 'blank') { t = 'n'; l = 8; }
           else if (r[4] === 'm') t = 'm';
@@ -110,13 +115,14 @@
     else if (t === 'n' || t === '0') { g.strokeStyle = C.type; g.lineWidth = 0.6; g.strokeRect(x + 0.3, y - 0.4, l - 0.6, BAR + 0.8); }
     else if (t === 'w') { scribble(g, x, y, l, id, 1.7, C.soft, 0.8); }
     else if (t === 'H') { scribble(gh, x, y, l, id, 4.6, C.red, 1.5); }
-    else if (t === 'G') { gh.save(); gh.globalAlpha = 0.32; gh.setLineDash([1.5, 2]); scribble(gh, x, y, l, id, 4.6, C.red, 1.2); gh.restore(); }
-    else if (t === 'T') {             // type with the harmed's words inside: a red line through it
+    else if (t === 'G') { gh.save(); gh.globalAlpha = 0.03 + 0.42 * ghostAlpha; gh.setLineDash([1.5, 2]); scribble(gh, x, y, l, id, 4.6, C.red, 1.2); gh.restore(); }
+    else if (t === 'T' || t === 't') { // type with the harmed inside: a red line through it, broken where they are only told
       word(g, gh, b || 'p', b, x, y, l, id, k, null);
-      gh.strokeStyle = C.red; gh.lineWidth = 1.3; gh.lineJoin = 'round'; gh.lineCap = 'round';
+      gh.save(); gh.strokeStyle = C.red; gh.lineWidth = t === 'T' ? 1.3 : 1.1; gh.lineJoin = 'round'; gh.lineCap = 'butt';
+      if (t === 't') gh.setLineDash([1.6, 1.9]);
       var f = 0.28 + rnd(id, 3) * 0.12, ph = rnd(id, 4) * 6.28; gh.beginPath();
       for (var s = 0; s <= l * 2; s++) { var tt = s / 2, py = y + BAR / 2 - Math.sin(tt * f + ph) * 1.3; if (s) gh.lineTo(x + tt, py); else gh.moveTo(x + tt, py); }
-      gh.stroke();
+      gh.stroke(); gh.restore();
     }
   }
   function seal(g, cx, cy, R, state, fav, tally, rim) { // a disc is an act concluded, a ring one only begun
@@ -197,12 +203,12 @@
   /* ---------- the counts under the sheet: one mark per incident, counted from the rows ---------- */
   function label(g, t, x, y) { g.font = '10px ui-monospace,Menlo,Consolas,monospace'; g.textBaseline = 'alphabetic'; g.fillStyle = C.ink; g.fillText(t, x, y); }
   function tally() {
-    var c = document.getElementById('tally'), W = L.W, drawn = {}, ops = [], labels = [];
-    var firsts = [], ORDER = 'prgmsun0wTH';
+    var c = document.getElementById('tally'), W = L.W, drawn = {}, ops = [], labels = [], marks = [];
+    var firsts = [], ORDER = 'prgmsun0wtTH';
     INC.forEach(function (r) {
       if (!r[2]) return;
       var k0 = kind(r), b = r[2][0];
-      firsts.push({ t: k0 === 'hand' ? 'H' : k0 === 'thread' ? 'T' : k0 === 'witness' ? 'w' : k0 === 'blank' ? 'n' : r[4] === 'm' ? 'm' : b, b: b, id: r[0] });
+      firsts.push({ t: k0 === 'hand' ? 'H' : k0 === 'thread' ? 'T' : k0 === 'told' ? 't' : k0 === 'witness' ? 'w' : k0 === 'blank' ? 'n' : r[4] === 'm' ? 'm' : b, b: b, id: r[0] });
     });
     firsts.sort(function (a, b) { return ORDER.indexOf(a.t) - ORDER.indexOf(b.t); });
     var x = 0, y = 20;
@@ -211,17 +217,19 @@
       list.forEach(function (it) {
         var l = len(it.t);
         if (x + l > W) { x = 0; y += lh; }
-        ops.push({ t: it.t, b: it.b, id: it.id || 0, x: x, y: y, l: l }); x += l + lead;
+        ops.push({ t: it.t, b: it.b, id: it.id || 0, x: x, y: y, l: l, a: it.a, n: it.n }); x += l + lead;
       });
     }
-    var small = firsts.filter(function (f) { return 'HTw'.indexOf(f.t) < 0; }), big = firsts.filter(function (f) { return 'HTw'.indexOf(f.t) >= 0; });
+    var small = firsts.filter(function (f) { return 'HTtw'.indexOf(f.t) < 0; }), big = firsts.filter(function (f) { return 'HTtw'.indexOf(f.t) >= 0; });
     flow(small, function () { return 3; }, 1, 4.2);
     x = 0; y += 16;
-    flow(big, function (t) { return t === 'H' ? 38 : t === 'T' ? 20 : 14; }, 4, 14);
-    x = 0; y += 34; labels.push(['written by the harmed, estimated and never found · ' + M.estimate_not_found, 0, y - 13]);
-    var ghosts = []; for (var i = 0; i < M.estimate_not_found; i++) ghosts.push({ t: 'G', id: 7000 + i });
+    flow(big, function (t) { return t === 'H' ? 38 : t === 'T' || t === 't' ? 20 : 14; }, 4, 14);
+    x = 0; y += 34; labels.push(['by the harmed, estimated, never found · ' + M.estimate_not_found + ' (' + M.not_found_lo + ' to ' + M.not_found_hi + ')', 0, y - 13]);
+    // the row fades as the Field's interval grows less sure that this many exist (after the presentation, 17 Nov)
+    var ghosts = []; for (var i = 0; i < M.ghost_sure.length; i++) ghosts.push({ t: 'G', id: 7000 + i, a: M.ghost_sure[i], n: i + 1 });
     flow(ghosts, function () { return 38; }, 4, 14);
-    x = 0; y += 40;
+    ops.forEach(function (o) { if (o.n === M.not_found_lo || o.n === M.estimate_not_found || o.n === M.not_found_hi) marks.push(o); });
+    x = 0; y += 44;
     var R = 6.5, seals = [], groups = [['u', 'on the person who used the AI · ' + M.on_user], ['k', 'about whoever made or ran it · ' + M.on_maker]];
     groups.forEach(function (grp, n) {
       if (n && (W < 700 || x + 28 * (2 * R + 3) > W)) { x = 0; y += 40; } else if (n) x += 40;
@@ -238,16 +246,24 @@
     c.style.height = H + 'px'; c.style.maxWidth = W + 'px';
     c.width = Math.round(W * DPR); c.height = Math.round(H * DPR);
     var g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0);
-    ops.forEach(function (o) { word(g, g, o.t, o.b, o.x, o.y, o.l, o.id, 0, drawn); });
+    ops.forEach(function (o) { ghostAlpha = o.a; word(g, g, o.t, o.b, o.x, o.y, o.l, o.id, 0, drawn); });
+    ghostAlpha = 0.32;
     seals.forEach(function (s) { seal(g, s.x, s.y, R, s.s, s.fav, drawn, s.rim); });
+    marks.forEach(function (o) {      // a tick after the row's 18th, 52nd and last mark, with its number
+      g.fillStyle = C.ink; g.fillRect(o.x + o.l + 1.2, o.y - 6, 1, 9);
+      g.font = '9px ui-monospace,Menlo,Consolas,monospace'; g.textBaseline = 'alphabetic';
+      var t = String(o.n), tw = g.measureText(t).width;
+      g.fillText(t, Math.min(W - tw, o.x + o.l + 1.7 - tw / 2), o.y + 12);
+    });
     labels.forEach(function (l) { label(g, l[0], l[1], l[2]); });
     window.__oh.tally = drawn;
+    window.__oh.ghostTicks = marks.map(function (o) { return o.n; });
   }
 
   /* ---------- the key: every mark once, at twice its size on the sheet ---------- */
   var KEY = [
     ['p', 'the press'], ['m', 'the maker'], ['g', 'a public body'], ['r', 'research'], ['w', 'a witness, on a platform'],
-    ['H', 'the harmed wrote it'], ['T', 'the harmed\'s words are in it'],
+    ['H', 'the harmed wrote it'], ['T', 'quoted in it'], ['t', 'only told in it'],
     ['L', 'left: on the person who used the AI'], ['Rt', 'right: on whoever made or ran it'],
     ['c', 'concluded'], ['o', 'only begun'], ['v', 'in that party\'s favour'], ['h', 'red rim: the harmed brought the claim']
   ];
@@ -256,7 +272,7 @@
     g.font = '11px ui-monospace,Menlo,Consolas,monospace';
     var x = 0, y = 12, pos = [];
     KEY.forEach(function (k) {
-      var t = k[0], ml = t === 'H' ? 60 : t === 'T' ? 40 : t === 'w' ? 28 : t === 'L' || t === 'Rt' ? 34 : t.length === 1 && 'covh'.indexOf(t) >= 0 ? 14 : 16;
+      var t = k[0], ml = t === 'H' ? 60 : t === 'T' || t === 't' ? 40 : t === 'w' ? 28 : t === 'L' || t === 'Rt' ? 34 : t.length === 1 && 'covh'.indexOf(t) >= 0 ? 14 : 16;
       var w = ml + 6 + g.measureText(k[1]).width + 18;
       if (x + w - 18 > W && x > 0) { x = 0; y += 24; }
       pos.push({ t: t, x: x, y: y, ml: ml, text: k[1] }); x += w;
@@ -276,7 +292,7 @@
         g.fillStyle = C.type; for (var q = 0; q < 3; q++) g.fillRect(t === 'L' ? 7 : 0, -3 + q * 2.6, 9.5 - q * 2, 1.2);
         seal(g, t === 'L' ? 3 : 14, 0, 2.6, 'c', false);
       }
-      else word(g, g, t, 'p', 0, -BAR / 2, t === 'H' ? 28 : t === 'T' ? 19 : t === 'w' ? 13 : 8, 4000 + n, 0, null);
+      else word(g, g, t, 'p', 0, -BAR / 2, t === 'H' ? 28 : t === 'T' || t === 't' ? 19 : t === 'w' ? 13 : 8, 4000 + n, 0, null);
       g.restore();
       g.font = '11px ui-monospace,Menlo,Consolas,monospace'; g.textBaseline = 'middle'; g.fillStyle = C.ink;
       g.fillText(p.text, p.x + p.ml + 6, p.y + 0.5);
@@ -285,14 +301,13 @@
 
   /* ---------- readings, stepping, pointing ---------- */
   var sets = { all: [], hand: [], seal: [] };
-  INC.forEach(function (r, i) { sets.all.push(i); var k0 = kind(r); if (k0 === 'hand' || k0 === 'thread') sets.hand.push(i); if (r[5].indexOf('P') >= 0) sets.seal.push(i); });
+  INC.forEach(function (r, i) { sets.all.push(i); var k0 = kind(r); if (k0 === 'hand' || k0 === 'thread' || k0 === 'told') sets.hand.push(i); if (r[5].indexOf('P') >= 0) sets.seal.push(i); });
   var FIRST = { p: 'the press or another edited address', r: 'a research address', m: 'the maker\'s own address', g: 'a public body\'s address', s: 'a platform without an editor', u: 'an unknown address' };
   var VOICE = {
     W: '<span class="hand">Written by the harmed</span>, printed by a publication',
     q: '<span class="hand">The harmed speak in it in their own words</span>',
-    b: '<span class="hand">The harmed is an organisation, and its statement is quoted</span>',
-    o: '<span class="hand">The harmed\'s words reach it through someone else</span>',
-    f: '<span class="hand">It quotes or carries words of the harmed</span>',
+    b: '<span class="hand">The harmed is an organisation, and its own statement is quoted</span>',
+    o: '<span class="hand">The harmed are only told in it, by someone else or in paraphrase</span>',
     e: 'Read for the harmed\'s words: none'
   };
   var HAND = { H: '<span class="hand">Written by the harmed</span>', w: 'Written by a witness', n: 'The database\'s own note', x: 'Unreadable in the snapshot', m: 'Written by the maker, on a platform' };
@@ -301,6 +316,7 @@
     var r = INC[i], n = r[2].length, s = '<b>Incident ' + r[0] + '</b> · ' + r[1] + ' · ' + n + (n === 1 ? ' report' : ' reports') + ', the first from ' + (n ? FIRST[r[2][0]] : 'nowhere: none is attached') + '. ';
     if (r[4]) s += HAND[r[4]] + (D.na[r[0]] ? ' (' + esc(D.na[r[0]]) + ')' : '') + '. ';
     if (r[9]) s += VOICE[r[9]] + (D.nv[r[0]] ? ' (' + esc(D.nv[r[0]]) + ')' : '') + '. ';
+    if (D.rv && D.rv[r[0]]) s += 'Read again on 17 November: the Field had it as quoting or carrying words of the harmed. ';
     if (r[5].indexOf('P') >= 0) {
       var a = D.act[r[0]], f = r[8];
       s += '<span class="seal">' + esc(a[0]) + '</span>: ' + esc(a[1]) + (a[2] ? ' (' + esc(a[2]) + ')' : '') + '. ' + (r[7] === 'c' ? 'Concluded' : 'Only begun') +
@@ -313,7 +329,7 @@
   }
   var REST = {
     all: function () { return fmt(M.incidents) + ' incidents, ' + fmt(M.words) + ' reports. Grey is the press. ' + (('ontouchstart' in window) ? 'Tap' : 'Point at') + ' a paragraph, or step through them with the arrows.'; },
-    hand: function () { return 'The type is lifted off. Of ' + M.first_read + ' first reports that were read, <span class="hand">the harmed wrote ' + M.wrote_found + '</span>, and their words stand in ' + M.words_inside + ' more. The other ' + fmt(M.never_read) + ' were never read for this.'; },
+    hand: function () { return 'The type is lifted off. Of ' + M.first_read + ' first reports that were read, <span class="hand">the harmed wrote ' + M.wrote_found + '</span>, their own words are quoted in ' + M.voice_inside + ' more, and they are only told in ' + M.told_inside + '. The other ' + fmt(M.never_read) + ' were never read for this.'; },
     seal: function () { return '<span class="seal">' + M.public_acted + ' acts of public bodies.</span> Left of a column: ' + M.on_user + ' on the person who used the AI. Right: ' + M.on_maker + ' about whoever made or ran it. Black: ' + M.for_party + ' in that party\'s favour. A ring is an act only begun: ' + M.begun + ' of the ' + M.public_acted + '. <span class="hand">A red rim</span>: the ' + M.harmed_claims + ' that answer a claim the harmed brought, all on the right.'; }
   };
   function rest() { say.innerHTML = REST[reading](); drawLoupe(-1); }

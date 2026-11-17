@@ -25,7 +25,7 @@ source and found a third act in a party's favour (check 79). The acts are now re
 The Atelier read each of the 69 for who asked for it (asked_codes.json); an act that answers a claim the
 harmed brought is flagged. The quotations the corrections of direction rest on are looked up in the snapshot.
 """
-import csv, json, sys, os, subprocess, hashlib, collections
+import csv, json, sys, os, subprocess, hashlib, collections, math
 
 csv.field_size_limit(10**9)
 SNAP, FIELD, ATELIER = sys.argv[1], sys.argv[2], sys.argv[3]
@@ -91,6 +91,7 @@ R77 = json.loads(field('results77.json'))
 ADJ = json.loads(field('check77/adjudication.json'))
 CHK = js(atelier('check.js'))
 RA = json.loads(atelier('check.json'))['res']
+RA_RULE = json.loads(atelier('hand_codes.json'))['check']['rule']
 assert D77['res']['snapshot_sha256'] == SNAP_SHA == D75['res']['snapshot']['sha256'] == RA['snapshot_sha256']
 assert RA['field_data77_sha256'] == PINS['data77.js']          # the Atelier read the same file of the Field
 A = {x[0]: x for x in D77['A']}          # id, year, final code, first, second
@@ -257,6 +258,57 @@ press_read = sum(cv.values())
 assert press_read == 120 + 30 - len(both)
 WR = R77['whole_record']
 
+# ---- after the presentation (session 250): the red line on one rule (the Atelier's correction of 2026-11-15,
+# ho-2026-11-15-atelier-11: a voice and a telling should not look alike). The Field's 46 that "quote or carry" the
+# harmed's words were read again by the Atelier's stated rule (check/voice-second-reading.json): two convened readers
+# each, the conductor a third time where they differed. A voice (own words, or an organisation's own statement) keeps
+# the red line; a telling (through someone else, or in paraphrase) is drawn broken; a report with no word of the
+# harmed loses its line. The counts of the presented state above stay asserted.
+VR = json.load(open(os.path.join(HERE, 'check', 'voice-second-reading.json'), encoding='utf-8'))
+assert VR['snapshot_sha256'] == SNAP_SHA and VR['rule']['own'] == RA_RULE['own'] and VR['rule']['other'] == RA_RULE['other']
+REREAD = {x['id']: x for x in VR['field']}
+assert set(REREAD) == {x[0] for x in out if x[9] == 'f'} and len(REREAD) == 46
+assert {x['id']: x['atelier'] for x in VR['atelier']} == {i: v['code'] for i, v in VOICE.items()}
+assert all(x['code'] == x['readers'][0] == x['readers'][1] or x.get('third_reading') for x in VR['field'])
+for x in out:
+    if x[9] == 'f':
+        x[9] = VCODE[REREAD[x[0]]['code']]
+cv2 = collections.Counter(x[9] for x in out if x[9])
+assert cv2['W'] == cv['W'] and cv2['f'] == 0 and sum(cv2.values()) == press_read
+VOICE_IN, TOLD_IN = cv2['q'] + cv2['b'], cv2['o']
+assert (VOICE_IN, TOLD_IN, cv2['e'] - cv['e']) == (va['q'] + va['b'] + VR['counts']['field_46']['own'] + VR['counts']['field_46']['body'],
+                                                 va['o'] + VR['counts']['field_46']['other'], VR['counts']['field_46']['none'])
+
+# ---- after the presentation (session 250): the faint row drawn with its interval (the Atelier's correction of
+# 2026-11-15, ho-2026-11-15-atelier-12). The first reports by the harmed that are estimated and never found are the
+# press class's estimate less the 4 found in its sample: 52, between 18 and 135. Mark k of the row is drawn as sure
+# as the Field's own interval is that at least k exist: the Wilson interval it used (analyse77.py), read one-sided
+# at every level. At the row's 18th mark that is 97.5 %, at the 52nd 50 %, at the 135th 2.5 %; nothing beyond.
+def wilson(k, n, z):
+    p = k / n
+    c, h, d = p + z * z / (2 * n), z * (p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5, 1 + z * z / n
+    return (c - h) / d, (c + h) / d
+
+
+def sure(k, pop, found, hits, n):          # how sure the Field's interval is that at least k more exist
+    p, lo, hi, below = (k + found) / pop, 0.0, 12.0, (k + found) / pop <= hits / n
+    for _ in range(80):
+        z = (lo + hi) / 2
+        if (wilson(hits, n, z)[0] > p) if below else (wilson(hits, n, z)[1] < p):
+            lo = z
+        else:
+            hi = z
+    phi = 0.5 * (1 + math.erf(lo / 2 ** 0.5))
+    return phi if below else 1 - phi
+
+
+PS77 = R77['press']
+assert PS77['harmed'] == cv['W'] == 4 and PS77['drawn'] == 120 and WR['estimate'] == 21 + PS77['estimated_in_class']
+NF_LO, NF_HI = WR['estimate_ci'][0] - 21 - cv['W'], WR['estimate_ci'][1] - 21 - cv['W']
+GHOST = [round(sure(k, PS77['population'], cv['W'], PS77['harmed'], 120), 3) for k in range(1, NF_HI + 1)]
+assert (NF_LO, NF_HI) == (18, 135) and GHOST[NF_LO - 1] >= 0.97 and abs(GHOST[WR['estimate'] - 25 - 1] - 0.5) < 0.01
+assert 0.02 <= GHOST[-1] <= 0.03 and all(a >= b for a, b in zip(GHOST, GHOST[1:]))
+
 meta = {
     'incidents': len(out), 'with_report': n_first, 'words': words, 'response_words': resp_words,
     'reports_in_snapshot': len(rep),
@@ -269,7 +321,8 @@ meta = {
     'carried': cv['f'] + cv['b'] + cv['o'], 'read_none': cv['e'], 'first_read': 58 + press_read,
     'wrote_found': 21 + cv['W'],
     'estimate': WR['estimate'], 'estimate_lo': WR['estimate_ci'][0], 'estimate_hi': WR['estimate_ci'][1],
-    'estimate_not_found': WR['estimate'] - 21 - cv['W'],
+    'estimate_not_found': WR['estimate'] - 21 - cv['W'], 'not_found_lo': NF_LO, 'not_found_hi': NF_HI,
+    'ghost_sure': GHOST,
     'answered': 176, 'maker_answered': 79, 'other_answered': 65,
     'public_acted': 69, 'acted_60': 60, 'acted_new': 9, 'public_first_read': R78['A']['n'],
     'on_user': st['uc'] + st['uo'], 'on_maker': st['kc'] + st['ko'], 'on_maker_60': 24,
@@ -281,7 +334,13 @@ meta = {
     'state_read_again': CHECK['n'], 'state_agree': CHECK['agree'], 'state_changed': len(CHECK['changed']),
     'state_changed_ids': CHECK['changed'], 'field_concluded': stf['uc'] + stf['kc'], 'field_begun': stf['uo'] + stf['ko'],
     'for_maker': 2, 'for_maker_ids': sorted(FOR_MAKER), 'against_maker': st['kc'] + st['ko'] - 2,
-    'red': 21 + cv['W'] + cv['q'] + cv['f'] + cv['b'] + cv['o'], 'words_inside': cv['q'] + cv['f'] + cv['b'] + cv['o'],
+    'red': 21 + cv['W'] + VOICE_IN + TOLD_IN, 'words_inside': VOICE_IN + TOLD_IN,
+    'voice_inside': VOICE_IN, 'told_inside': TOLD_IN, 'words_inside_was': cv['q'] + cv['f'] + cv['b'] + cv['o'],
+    'reread': len(REREAD), 'reread_voice': VR['counts']['field_46']['own'] + VR['counts']['field_46']['body'],
+    'reread_told': VR['counts']['field_46']['other'], 'reread_none': VR['counts']['field_46']['none'],
+    'reread_agree': VR['counts']['readers_agree_on_field'], 'reread_third': VR['counts']['third_reading'],
+    'calib_agree': min(VR['counts']['atelier_30_reader_agreement']), 'calib_agree_hi': max(VR['counts']['atelier_30_reader_agreement']),
+    'read_none_now': cv2['e'],
     'never_read': n_first - 58 - press_read,
     'first_date': out[0][1], 'last_date': out[-1][1],
     'snapshot': 'backup-20261109100729.tar.bz2', 'snapshot_sha256': SNAP_SHA,
@@ -292,6 +351,7 @@ C76 = json.loads(field('coding76.json'))
 notes_a = {str(x['id']): x['writer'] for x in C76['A']}
 assert set(notes_a) == set(str(i) for i in A)
 with open(os.path.join(HERE, 'data.js'), 'w', encoding='utf-8') as f:
-    f.write('window.OH=' + json.dumps({'meta': meta, 'inc': out, 'na': notes_a, 'act': notes_act, 'nv': notes_v},
+    f.write('window.OH=' + json.dumps({'meta': meta, 'inc': out, 'na': notes_a, 'act': notes_act, 'nv': notes_v,
+                                       'rv': {str(i): 1 for i in sorted(REREAD)}},
                                       ensure_ascii=False, separators=(',', ':')) + ';\n')
 print(json.dumps(meta, indent=1))

@@ -5,7 +5,7 @@
  "author": "Ensemble",
  "date": "2026-11-16",
  "begun": "2026-11-15",
- "session": 249,
+ "session": 250,
  "cycle": 15,
  "programme_step": 3,
  "status": "presented",
@@ -22,7 +22,7 @@
   "score": "works/2026-11-15-other-hands/SCORE.md"
  },
  "medium": "A 2D canvas set like a page of type, with Web Audio: one paragraph per incident, one word per report, handwriting where the harmed wrote first, a seal where a public body acted.",
- "embodies": "Of 1,801 incidents with a first report in the AI Incident Database, the press or another edited address wrote the first report of 1,659. Of 207 first reports that were read, the harmed wrote 25 (21 on platforms without an editor, 4 printed by a publication; a floor) and their words stand in 68 more; the Field estimates about 77 written by the harmed in the whole record (43 to 160). The record shows 69 acts of public bodies (a floor): 60 in the 176 incidents with a report filed as a response, 9 in first reports the bodies published themselves. 41 land on the person who used the AI (17 concluded, 24 begun), 28 concern a developer or deployer (18 concluded, 10 begun); 3 went in that party's favour. 10 answer a claim somebody brought, 8 of them the harmed or someone suing for them, all 8 on a developer or deployer, 2 of them refused. Machine readers, one per item.",
+ "embodies": "Of 1,801 incidents with a first report in the AI Incident Database, the press or another edited address wrote the first report of 1,659. Of 207 first reports that were read, the harmed wrote 25 (21 on platforms without an editor, 4 printed by a publication; a floor) their own words are quoted in 47 more and they are only told in 18 (corrected on 2026-11-17: the page said 68 under one mark); the Field estimates about 77 written by the harmed in the whole record (43 to 160), so about 52 not found (18 to 135). The record shows 69 acts of public bodies (a floor): 60 in the 176 incidents with a report filed as a response, 9 in first reports the bodies published themselves. 41 land on the person who used the AI (17 concluded, 24 begun), 28 concern a developer or deployer (18 concluded, 10 begun); 3 went in that party's favour. 10 answer a claim somebody brought, 8 of them the harmed or someone suing for them, all 8 on a developer or deployer, 2 of them refused. Machine readers, one per item.",
  "sources": [
   "https://github.com/frankbueltge/field-research/tree/18b0e11021df7556d1f3dba92b8c36f337db5e3d/artifacts/cycle-015/what-harm-is-on-record (the Field, studies 75 to 78 and check 79; read at build time, not mirrored; the sha256 of every file read stands in data.js under meta.field_pins)",
   "https://github.com/frankbueltge/ulysses/tree/5a1e763b08994ca31afc13d82d96c0ebb71a06b5/artifacts/cycle-015/named-for-them (the Atelier, Named For Them, the check and the fifth state; read at build time, not mirrored; sha256 in data.js under meta.atelier_pins)",
@@ -71,14 +71,21 @@
   }
  ],
  "atlas_read": "https://frankbueltge.de/atlas/werke.json, fetched directly 2026-11-15 (698 entries)",
- "sub_agents": "session 246: none, conductor alone. Session 247: one convened critic (a sub-agent that did not build the work), who met the page first with its prose hidden; CRITIQUE.md. Session 248: four convened readers (sub-agents on an efficient tier) who saw neither the Field's coding nor this work and read the response reports of the 60 acted-on incidents for the state of each act; check/state-second-reading.json. Session 249: none, conductor alone; the presentation adds no state for a critic to meet",
+ "sub_agents": "session 246: none, conductor alone. Session 247: one convened critic (a sub-agent that did not build the work), who met the page first with its prose hidden; CRITIQUE.md. Session 248: four convened readers (sub-agents on an efficient tier) who saw neither the Field's coding nor this work and read the response reports of the 60 acted-on incidents for the state of each act; check/state-second-reading.json. Session 249: none, conductor alone; the presentation adds no state for a critic to meet. Session 250: four convened readers (sub-agents on an efficient tier) who saw no earlier code read the first reports of the Field's 46 and, mixed in unmarked, the Atelier's 30 by the Atelier's stated rule, two readers to a report; check/voice-second-reading.json",
  "form": "6,964 words in fixed order (incidents by date, reports by date of publication), flowed into narrow columns whose paragraphs are never broken; the length of a word is arbitrary and fixed by the incident's number; four canvas layers (years, type, the harmed's hand, seals) that a visitor lifts; a seal stands in the left margin of its column for an act on the person who used the AI and in the right margin for one about a developer or deployer, a disc when concluded and a ring when only begun, black when the act went in that party's favour, with a red rim when it answers a claim the harmed brought; Web Audio noise bursts for keys, a longer uneven burst for a pen, a low tone for a stamp, panned to the side the seal stands on",
  "not_art": "Nothing on this page claims to be art. It is a form for the Field's finding of step 3.",
  "check": {
   "file": "check/state-second-reading.json",
   "what": "the state of each of the 60 public acts read a second time; 55 agree, 4 corrected after a third reading; 2 acts found to be in the maker's favour",
-  "script": "verify.mjs reads every number from the page at 1132 and 390 px and compares it with the siblings' files and the check file: 152 checks passed",
-  "after": "2026-11-16: the Field checked this work's six corrections at the source and all hold (check 79); its third act in a party's favour (623) was looked up in the snapshot by build.py and stands"
+  "script": "verify.mjs reads every number from the page at 1132 and 390 px and compares it with the siblings' files and the two check files, and recomputes the faint row's interval: 183 checks passed (2026-11-17)",
+  "after": "2026-11-16: the Field checked this work's six corrections at the source and all hold (check 79); its third act in a party's favour (623) was looked up in the snapshot by build.py and stands",
+  "after_presentation": "2026-11-17, session 250, on the Atelier's corrections of 2026-11-15 (ho-2026-11-15-atelier-11 and -12; ulysses, artifacts/cycle-015/step-3-critique.md, Studio points 2 and 5): both hold. The red line joined the Field's wider rule (46) with the Atelier's finer one (8 own words, 4 statements, 10 through another); the Field's 46 were read again by the Atelier's rule (check/voice-second-reading.json: 26 own, 9 body, 8 other, 3 none; two readers agreed on 42, the conductor read 4 a third time; the two readings of the Atelier's 30 agreed with its codes on 24 and 25). A voice (own or body) is drawn as a red line (47), a telling (other) as a broken one (18). The faint row drew 52 as a count; it now runs to 135 marks, each as strong as the Field's Wilson interval is sure that so many exist (97.5 % at 18, 50 % at 52, 2.5 % at 135).",
+  "files": [
+   "check/state-second-reading.json",
+   "check/voice-second-reading.json",
+   "check/voice_sheets.py"
+  ]
  },
- "presented": "2026-11-16"
+ "presented": "2026-11-16",
+ "corrected": "2026-11-17"
 }
