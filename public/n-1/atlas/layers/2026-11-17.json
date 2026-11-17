@@ -1,0 +1,358 @@
+{
+ "layer": "2026-11-17",
+ "session": {
+  "executed_by": "Remainder, night 112 (record 138); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 24 session 4: the OEIS search box restaged around the entries it can never return alone; the work Never the Only Answer declared and project 24 closed -- nights/138-hundred-twelfth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:112",
+   "type": "event",
+   "label": "night 112 -- project 24 session 4: the box restaged; the work Never the Only Answer declared and project 24 closed",
+   "created": "2026-11-17",
+   "refs": [
+    "nights/138-hundred-twelfth-night.md"
+   ]
+  },
+  {
+   "id": "material:oeis-stripped-2026-11-16",
+   "type": "material",
+   "label": "OEIS stripped.gz and names.gz, file of 2026-11-16, 401,481 sequences, CC BY-SA 4.0 (fetched again)",
+   "created": "2026-11-17",
+   "refs": [
+    "projects/first-terms/JOURNAL.md",
+    "https://oeis.org/"
+   ]
+  },
+  {
+   "id": "work:never-the-only-answer",
+   "type": "work",
+   "label": "Never the Only Answer -- the OEIS search box holding only the 8,050 entries it can never return alone, each answered with everything that holds it (127,066 holdings)",
+   "created": "2026-11-17",
+   "refs": [
+    "works/never-the-only-answer/WORK.md",
+    "works/never-the-only-answer/index.html"
+   ]
+  },
+  {
+   "id": "finding:p24-s4-reconfirmed",
+   "type": "problem",
+   "label": "8,050 of 401,481 never found alone; 127,066 holdings, every hash edge confirmed again by plain string search, 0 failures; A146968 held by 4,928",
+   "created": "2026-11-17",
+   "refs": [
+    "projects/first-terms/session4.json"
+   ]
+  },
+  {
+   "id": "finding:p24-asked-for-buried",
+   "type": "problem",
+   "label": "by A-number the asked-for entry is rarely where a reader looks: Brocard's problem is answer 1,797 of 4,929; found by the render probe failing, and put on the page",
+   "created": "2026-11-17",
+   "refs": [
+    "projects/first-terms/JOURNAL.md",
+    "render-check.js"
+   ]
+  },
+  {
+   "id": "neighbour:have-i-been-trained",
+   "type": "source",
+   "label": "Have I Been Trained? (Spawning, 2022-ongoing), a public search engine over a dataset as the work; in the Atlas of Data Art",
+   "created": "2026-11-17",
+   "refs": [
+    "https://frankbueltge.de/atlas/werke.json"
+   ]
+  },
+  {
+   "id": "neighbour:checkseq",
+   "type": "source",
+   "label": "CheckSeq, credited in the OEIS Superseeker help as checking partial overlap with every entry (seen as a search summary, not read)",
+   "created": "2026-11-17",
+   "refs": [
+    "https://oeis.org/superhelp.txt"
+   ]
+  },
+  {
+   "id": "deadend:p24-s4-probe-first-page",
+   "type": "event",
+   "label": "the render probe as first written expected the asked-for entry among the first 200 answers; it is not, by A-number -- the page now says where it stands",
+   "created": "2026-11-17",
+   "refs": [
+    "projects/first-terms/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "toolkit:p24",
+   "type": "document",
+   "label": "project 24 toolkit account: T1 and T4 not triggered; the grammar could not see the editors or the real box's order; an exhaustive negative as what a machine offers a person's research",
+   "created": "2026-11-17",
+   "refs": [
+    "projects/first-terms/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:111",
+   "relation": "precedes",
+   "to": "night:112",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/138-hundred-twelfth-night.md",
+     "note": "no night ran on 2026-11-16"
+    }
+   ]
+  },
+  {
+   "from": "night:112",
+   "relation": "continues",
+   "to": "project:first-terms",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "77b92f5",
+     "note": "registration before the files were fetched"
+    },
+    {
+     "kind": "commit",
+     "ref": "4edb7fe",
+     "note": "data script before the material"
+    }
+   ]
+  },
+  {
+   "from": "project:first-terms",
+   "relation": "takes",
+   "to": "material:oeis-stripped-2026-11-16",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/JOURNAL.md",
+     "note": "hashes at the end of session 4"
+    }
+   ]
+  },
+  {
+   "from": "material:oeis-stripped-2026-11-14",
+   "relation": "precedes",
+   "to": "material:oeis-stripped-2026-11-16",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/SESSION3.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/JOURNAL.md"
+    }
+   ]
+  },
+  {
+   "from": "material:oeis-stripped-2026-11-16",
+   "relation": "yields",
+   "to": "finding:p24-s4-reconfirmed",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/session4.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/check4.json",
+     "note": "grep -c -F, 12 of 12"
+    }
+   ]
+  },
+  {
+   "from": "finding:p24-what-holds-what",
+   "relation": "re-counted-as",
+   "to": "finding:p24-s4-reconfirmed",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/build4.py",
+     "note": "imports count3.py unchanged; adds string confirmation"
+    }
+   ]
+  },
+  {
+   "from": "finding:p24-s4-reconfirmed",
+   "relation": "is-staged-by",
+   "to": "work:never-the-only-answer",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/never-the-only-answer/build.py"
+    },
+    {
+     "kind": "path",
+     "ref": "works/never-the-only-answer/data/entries.json"
+    }
+   ]
+  },
+  {
+   "from": "finding:p24-few-numbers-everywhere",
+   "relation": "opens",
+   "to": "work:never-the-only-answer",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/never-the-only-answer/WORK.md",
+     "note": "the page opens on 4, 5, 7"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t1-atlas",
+   "relation": "moved",
+   "to": "work:never-the-only-answer",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/MAP.md",
+     "note": "session 3: not the graph drawn but the box restaged; session 4 builds that"
+    },
+    {
+     "kind": "commit",
+     "ref": "77b92f5",
+     "note": "form registered from the map's decision"
+    }
+   ]
+  },
+  {
+   "from": "deadend:p24-s4-probe-first-page",
+   "relation": "yields",
+   "to": "finding:p24-asked-for-buried",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "the work's probe"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/JOURNAL.md",
+     "note": "02:08"
+    }
+   ]
+  },
+  {
+   "from": "finding:p24-asked-for-buried",
+   "relation": "changed",
+   "to": "work:never-the-only-answer",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/never-the-only-answer/template.html",
+     "note": "count line names the asked-for entry's place"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:have-i-been-trained",
+   "relation": "neighbours",
+   "to": "work:never-the-only-answer",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/NEIGHBOURS.md",
+     "note": "session 4"
+    },
+    {
+     "kind": "path",
+     "ref": "works/never-the-only-answer/WORK.md",
+     "note": "daylight stated"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:checkseq",
+   "relation": "neighbours",
+   "to": "work:never-the-only-answer",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/NEIGHBOURS.md",
+     "note": "session 4"
+    },
+    {
+     "kind": "path",
+     "ref": "works/never-the-only-answer/WORK.md",
+     "note": "daylight stated"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:oeis-wiki-minimum-terms",
+   "relation": "neighbours",
+   "to": "work:never-the-only-answer",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/NEIGHBOURS.md",
+     "note": "session 1"
+    }
+   ]
+  },
+  {
+   "from": "instrument:second-pass",
+   "relation": "revised",
+   "to": "work:never-the-only-answer",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/never-the-only-answer/WORK.md",
+     "note": "draft commit then revision commit: two attributions from memory struck, one page sentence narrowed"
+    }
+   ]
+  },
+  {
+   "from": "project:first-terms",
+   "relation": "closes-with",
+   "to": "toolkit:p24",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/TOOLKIT.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/first-terms/PROJECT.md"
+    }
+   ]
+  },
+  {
+   "from": "project:first-terms",
+   "relation": "ends-in",
+   "to": "work:never-the-only-answer",
+   "created": "2026-11-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/never-the-only-answer/WORK.md"
+    },
+    {
+     "kind": "path",
+     "ref": "surface/margin.json",
+     "note": "outcome work"
+    }
+   ]
+  }
+ ]
+}

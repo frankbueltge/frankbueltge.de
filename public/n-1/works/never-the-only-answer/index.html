@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Never the Only Answer</title>
+<style>
+  :root { --bg: #fbfbf8; --ink: #1b1b1a; --muted: #6b6a66; --line: #d9d8d2; --field: #ffffff; --mark: #1b1b1a; --markink: #fbfbf8; --self: #b8432b; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #111211; --ink: #e6e6e1; --muted: #93928c; --line: #33332f; --field: #1a1b1a; --mark: #e6e6e1; --markink: #111211; --self: #ee8166; }
+  }
+  :root[data-theme="dark"] { --bg: #111211; --ink: #e6e6e1; --muted: #93928c; --line: #33332f; --field: #1a1b1a; --mark: #e6e6e1; --markink: #111211; --self: #ee8166; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; }
+  main { max-width: 56rem; margin: 0 auto; padding: 2.4rem 1rem 4rem; }
+  h1 { font-size: 1rem; font-weight: normal; margin: 0 0 1.6rem; color: var(--muted); }
+  h1 b { color: var(--ink); font-weight: normal; }
+  form { display: flex; gap: .5rem; margin: 0; }
+  input { flex: 1 1 auto; min-width: 0; font: inherit; font-size: 1.25rem; padding: .6rem .7rem; background: var(--field); color: var(--ink);
+    border: 1px solid var(--ink); border-radius: 0; }
+  button { font: inherit; background: none; color: var(--ink); border: 1px solid var(--line); padding: .3rem .7rem; cursor: pointer; border-radius: 0; }
+  form button { border-color: var(--ink); background: var(--ink); color: var(--bg); padding: .6rem 1rem; }
+  button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--self); outline-offset: 2px; }
+  a { color: inherit; text-decoration-color: var(--line); }
+  #count { margin: 1.1rem 0 .2rem; font-size: 1.05rem; min-height: 1.6em; font-variant-numeric: tabular-nums; }
+  #note { color: var(--muted); min-height: 1.5em; margin: 0 0 1rem; }
+  #note button { margin: .2rem .3rem 0 0; }
+  ol { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+  ol li { padding: .55rem 0; border-bottom: 1px solid var(--line); }
+  .an { display: flex; flex-wrap: wrap; gap: 0 .8rem; }
+  .an a { flex: 0 0 auto; }
+  .an span { flex: 1 1 20rem; min-width: 0; }
+  .tm { color: var(--muted); overflow-wrap: anywhere; font-size: .92rem; }
+  .tm mark { background: var(--mark); color: var(--markink); padding: 0 .15em; }
+  li.self { border-left: 3px solid var(--self); padding-left: .6rem; }
+  li.self .an a { color: var(--self); }
+  #more { margin: 1rem 0; }
+  .ask { margin: .8rem 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; color: var(--muted); }
+  .ask span { font-size: .85rem; }
+  .txt { max-width: 42rem; margin: 3.4rem 0 0; border-top: 1px solid var(--ink); padding-top: 1.2rem; }
+  .txt p { margin: 0 0 1rem; }
+  .small { color: var(--muted); font-size: .85rem; }
+  @media (max-width: 640px) { body { font-size: 14px; } input { font-size: 1.05rem; } main { padding-top: 1.6rem; } }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1><b>Never the Only Answer</b> · a search box for the 8,050 entries of an encyclopedia of numbers that it can never return alone · <a href="#about">what this is</a></h1>
+
+  <form id="f" role="search" autocomplete="off">
+    <label for="q" class="small" style="position:absolute;left:-9999px">Numbers, separated by commas</label>
+    <input id="q" name="q" inputmode="text" spellcheck="false" placeholder="type numbers, e.g. 1, 2, 4, 8">
+    <button type="submit">Search</button>
+  </form>
+  <ul class="ask" aria-label="ask for">
+    <li><button type="button" data-a="A000045">Fibonacci numbers</button> <span>2 answers</span></li>
+    <li><button type="button" data-a="A000040">primes</button> <span>12 answers</span></li>
+    <li><button type="button" data-a="A000290">squares</button> <span>2 answers</span></li>
+    <li><button type="button" data-a="A000142">factorials</button> <span>3 answers</span></li>
+    <li><button type="button" data-a="A000027">counting numbers</button> <span>13 answers</span></li>
+    <li><button type="button" data-a="A146968">Brocard's problem</button> <span>4,929 answers</span></li>
+    <li><button type="button" data-a="A222011">division algebras</button> <span>2,711 answers</span></li>
+    <li><button type="button" id="rnd">another</button></li>
+  </ul>
+  <p id="count" aria-live="polite"></p>
+  <div id="note"></div>
+  <ol id="res"></ol>
+  <button id="more" type="button" hidden>show more</button>
+
+
+  <div class="txt" id="about">
+    <p>The On-Line Encyclopedia of Integer Sequences holds 401,481 lists of numbers, each with a name. You find one by typing numbers into its
+    search box, which returns every list in which those numbers stand, in that order, anywhere.</p>
+    <p>8,050 of these lists can never be found that way alone. Every number they show stands, in the same order, inside some other entry.
+    Type all of them and the box still answers with others. The entry for Brocard’s problem shows three numbers, 4, 5, 7, and they
+    stand inside thousands of other lists: 4,929 answers, the one you asked for among them. The Fibonacci numbers come back with a second
+    entry that is the same numbers with a 1 in front.</p>
+    <p>This box holds only those 8,050 entries and everything that holds them, 127,066 holdings in all, each checked number by number. Type
+    anything else and it will say so. The real box is at <a href="https://oeis.org/">oeis.org</a>.</p>
+    <p class="small">Answers are listed by A-number; the entry you asked for is marked. Each answer shows where your numbers stand in it, with
+    up to three numbers on either side. Data: The On-Line Encyclopedia of Integer Sequences, <a href="https://oeis.org/">oeis.org</a>, files of
+    16 November 2026, CC BY-SA 4.0; this page and its data are offered under the same licence. How it was made: <a href="../../projects/first-terms/">the study</a>
+    and <a href="WORK.md">WORK.md</a>. Remainder, 2026.</p>
+  </div>
+  <noscript><p>This box needs JavaScript. Without it: 4, 5, 7 (Brocard’s problem) gives 4,929 answers; the full list of entries is in
+  <a href="data/entries.json">data/entries.json</a>.</p></noscript>
+</main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const q = $('q'), res = $('res'), count = $('count'), note = $('note'), more = $('more');
+  const fmt = (n) => n.toLocaleString('en-US');
+  let entries = null, byRun = new Map(), byA = new Map(), shards = new Map(), shown = [], pos = 0, typing = 0;
+  const STEP = 200;
+
+  const norm = (s) => {
+    const m = s.match(/-?\d+/g);
+    return m ? m.map((x) => x.replace(/^(-?)0+(?=\d)/, '$1')).join(',') : '';
+  };
+  const pretty = (run) => run.split(',').join(', ');
+
+  async function shard(n) {
+    if (!shards.has(n)) shards.set(n, fetch(`data/h-${String(n).padStart(2, '0')}.json`).then((r) => r.json()));
+    return shards.get(n);
+  }
+
+  function row(a, name, before, run, after, k, L, self) {
+    const li = document.createElement('li');
+    if (self) li.className = 'self';
+    const an = document.createElement('div'); an.className = 'an';
+    const link = document.createElement('a'); link.href = `https://oeis.org/${a}`; link.textContent = a;
+    const nm = document.createElement('span'); nm.textContent = name + (self ? '  (the one you asked for)' : '');
+    an.append(link, nm);
+    const tm = document.createElement('div'); tm.className = 'tm';
+    const head = (k > (before ? before.split(',').length : 0)) ? '…, ' : '';
+    const tail = (k + run.split(',').length + (after ? after.split(',').length : 0) < L) ? ', …' : '';
+    tm.append(head + (before ? pretty(before) + ', ' : ''));
+    const mk = document.createElement('mark'); mk.textContent = pretty(run); tm.append(mk);
+    tm.append((after ? ', ' + pretty(after) : '') + tail);
+    li.append(an, tm);
+    return li;
+  }
+
+  function page() {
+    const frag = document.createDocumentFragment();
+    for (const r of shown.slice(pos, pos + STEP)) frag.append(row(...r));
+    res.append(frag);
+    pos += STEP;
+    more.hidden = pos >= shown.length;
+    if (!more.hidden) more.textContent = `show ${fmt(Math.min(STEP, shown.length - pos))} more of ${fmt(shown.length - pos)}`;
+  }
+
+  async function search(raw) {
+    const run = norm(raw);
+    res.textContent = ''; note.textContent = ''; shown = []; pos = 0; more.hidden = true;
+    if (!run) { count.textContent = ''; return; }
+    const hits = byRun.get(run);
+    if (!hits) {
+      count.textContent = 'Not in this box.';
+      const pre = [];
+      for (const e of entries) { if (e[2].startsWith(run + ',')) { pre.push(e); if (pre.length >= 4) break; } }
+      if (pre.length) {
+        note.append('These entries begin that way; type the rest of what they show: ');
+        for (const e of pre) {
+          const b = document.createElement('button'); b.type = 'button';
+          b.textContent = `${e[0]} (${e[2].split(',').length} numbers)`;
+          b.onclick = () => ask(e[0], false); note.append(b);
+        }
+      } else {
+        note.textContent = 'It holds only the entries the encyclopedia can never return alone. For anything else, ask oeis.org.';
+      }
+      return;
+    }
+    const e = hits[0];
+    const hs = (await shard(e[4]))[String(entries.indexOf(e))];
+    const all = hs.map((h) => [h[0], h[1], h[3], run, h[4], h[2], h[5], false]);
+    all.push([e[0], e[1], '', run, '', 0, run.split(',').length, true]);
+    all.sort((x, y) => (x[0] < y[0] ? -1 : 1));
+    shown = all;
+    const at = all.findIndex((x) => x[7]) + 1;
+    count.textContent = `${fmt(all.length)} answers. The one you asked for is among them: number ${fmt(at)}.`;
+    if (hits.length > 1) note.textContent = `${hits.length} entries show exactly these numbers and nothing more: ${hits.map((h) => h[0]).join(', ')}.`;
+    else note.textContent = `${e[0]} shows these ${run.split(',').length} numbers and no others.`;
+    page();
+  }
+
+  function ask(a, slow) {
+    const e = byA.get(a); if (!e) return;
+    const text = pretty(e[2]);
+    const my = ++typing;
+    if (!slow || matchMedia('(prefers-reduced-motion: reduce)').matches) { q.value = text; search(text); return; }
+    q.value = ''; res.textContent = ''; count.textContent = ''; note.textContent = '';
+    let i = 0;
+    const tick = () => {
+      if (my !== typing) return;
+      q.value = text.slice(0, ++i);
+      if (i < text.length) setTimeout(tick, text[i - 1] === ' ' ? 160 : 110);
+      else setTimeout(() => { if (my === typing) search(text); }, 450);
+    };
+    setTimeout(tick, 600);
+  }
+
+  $('f').addEventListener('submit', (ev) => { ev.preventDefault(); typing++; search(q.value); });
+  q.addEventListener('input', () => { typing++; });
+  more.addEventListener('click', page);
+  document.querySelectorAll('.ask button[data-a]').forEach((b) => b.addEventListener('click', () => ask(b.dataset.a, false)));
+  $('rnd').addEventListener('click', () => ask(entries[Math.floor(Math.random() * entries.length)][0], false));
+
+  fetch('data/entries.json').then((r) => r.json()).then((E) => {
+    entries = E;
+    for (const e of E) {
+      byA.set(e[0], e);
+      if (!byRun.has(e[2])) byRun.set(e[2], []);
+      byRun.get(e[2]).push(e);
+    }
+    const h = location.hash.slice(1);
+    if (byA.has(h)) ask(h, false); else ask('A146968', true);
+  }).catch(() => { count.textContent = 'The box could not load its entries.'; });
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>

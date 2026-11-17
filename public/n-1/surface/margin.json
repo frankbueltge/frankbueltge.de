@@ -1669,7 +1669,7 @@
    "title": "First Terms",
    "node": "project:first-terms",
    "dir": "projects/first-terms",
-   "material": "The On-Line Encyclopedia of Integer Sequences (OEIS), its file of every sequence's shown terms and its file of names, 401,214 sequences as of 10 November 2026, 401,318 as of 12 November and 401,397 as of 14 November (CC BY-SA 4.0), every sequence read against every other",
+   "material": "The On-Line Encyclopedia of Integer Sequences (OEIS), its file of every sequence's shown terms and its file of names, 401,214 sequences as of 10 November 2026, 401,318 as of 12 November and 401,397 as of 14 November and 401,481 as of 16 November (CC BY-SA 4.0), every sequence read against every other",
    "instruments": [
     "T1",
     "T4"
@@ -1678,6 +1678,10 @@
     [
      "The study: how many terms each integer sequence needs before the search box finds it alone, and what holds the ones it never can",
      "projects/first-terms/"
+    ],
+    [
+     "The work: Never the Only Answer",
+     "works/never-the-only-answer/"
     ]
    ],
    "sources": [
@@ -1697,7 +1701,11 @@
     "projects/first-terms/SESSION3.md",
     "projects/first-terms/session3.json",
     "projects/first-terms/check3.json",
-    "projects/first-terms/explore3.json"
+    "projects/first-terms/explore3.json",
+    "projects/first-terms/SESSION4.md",
+    "projects/first-terms/session4.json",
+    "projects/first-terms/check4.json",
+    "projects/first-terms/TOOLKIT.md"
    ],
    "sessions": [
     {
@@ -1714,12 +1722,18 @@
      "night": 111,
      "date": "2026-11-15",
      "predictions": "8 of 11 predictions held (3 failed)"
+    },
+    {
+     "night": 112,
+     "date": "2026-11-17",
+     "predictions": "8 of 8 predictions held"
     }
    ],
-   "outcomeLabel": "Open: session 3 of 3-5; a work planned for session 4",
-   "note": "Mathematicians look sequences up by typing the numbers they have. Session 1 set every one of the 401,214 sequences in the On-Line Encyclopedia of Integer Sequences against every other by its beginning: three in five are told apart by six first terms. Session 2 took the search box's own rule, which matches the numbers typed in order anywhere: about 8,000 sequences can never be its only answer, because everything they show stands inside another entry, and the Fibonacci numbers, the primes and the squares are among them. Session 3 asked what holds what: 127,052 holdings, each confirmed term by term. The entries held by the most others are short ones nobody names: Brocard's problem shows three numbers, 4, 5, 7, and they stand in order inside 4,928 other sequences. The famous ones are held by few, but the more often other entries name a sequence, the likelier the box cannot return it alone: 2 % of the sequences no other entry names, 30 % of those named by 200 or more. Checks with a second tool held 18 of 18 every night. 7, 7 and 8 of 11 predictions held.",
-   "outcome": "open",
-   "fired": {}
+   "outcomeLabel": "Work: Never the Only Answer",
+   "note": "Mathematicians look sequences up by typing the numbers they have. Session 1 set every one of the 401,214 sequences in the On-Line Encyclopedia of Integer Sequences against every other by its beginning: three in five are told apart by six first terms. Session 2 took the search box's own rule, which matches the numbers typed in order anywhere: about 8,000 sequences can never be its only answer, because everything they show stands inside another entry, and the Fibonacci numbers, the primes and the squares are among them. Session 3 asked what holds what: 127,052 holdings, each confirmed term by term. The entries held by the most others are short ones nobody names: Brocard's problem shows three numbers, 4, 5, 7, and they stand in order inside 4,928 other sequences. The famous ones are held by few, but the more often other entries name a sequence, the likelier the box cannot return it alone: 2 % of the sequences no other entry names, 30 % of those named by 200 or more. Checks with a second tool held 18 of 18 every night. 7, 7 and 8 of 11 predictions held. Session 4 made the work: the search box restaged, holding only the 8,050 entries (of 401,481 on 16 November) it can never return alone, each answered with everything that holds it, 127,066 holdings confirmed again by string search. Typed 4, 5, 7, it gives 4,929 answers, Brocard's problem among them at number 1,797. 8 of 8 predictions held; check 12 of 12.",
+   "outcome": "work",
+   "fired": {},
+   "couldNot": "It could not see the editors: why an entry is entered again with a 1 in front, or kept after it is found a duplicate, is not in the files; it could not read the real box's order of answers; nobody has looked at the work."
   }
  ],
  "acts": [
@@ -1939,6 +1953,14 @@
    "line": "918,348 hours in which the newest release of the tz database showed a region the wrong local time, each stretch a line placed by when it was lived and when a release set it right; and on any day, the hours the file was wrong about without yet knowing.",
    "source": "works/the-hours-shown-wrong/WORK.md",
    "still": "surface/stills/the-hours-shown-wrong.png"
+  },
+  {
+   "title": "Never the Only Answer",
+   "href": "works/never-the-only-answer/",
+   "node": "work:never-the-only-answer",
+   "project": 24,
+   "line": "The search box of the encyclopedia of integer sequences, holding only the 8,050 entries it can never return alone: type everything one shows, and it answers with everything that holds it — 4, 5, 7 gives 4,929 answers.",
+   "source": "works/never-the-only-answer/WORK.md"
   }
  ]
 }
