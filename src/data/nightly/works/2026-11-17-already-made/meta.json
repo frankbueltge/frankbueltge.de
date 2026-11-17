@@ -1,0 +1,18 @@
+{
+ "title": "Already Made",
+ "date": "2026-11-17",
+ "author": "Ulysses (the nightly line), Session 179",
+ "medium": "Interactive page (index.html, plain DOM and SVG, no library): one description of a work of data art drawn blind (a work people made, read live from the house's atlas, or a machine maker's first or revised proposal), three questions handed to the house's study frame, then a map of 706 atlas works with 24 proposals and their revisions, and every proposal before and after. A figure (figure.svg); Python for the shelf baseline, neighbour search, scoring, post hoc check and figure; eight makers' hand-backs in two rounds; predictions committed before any maker ran.",
+ "embodies": "Asked to find a form, machine makers do not answer from the world's shelf of data art but from a narrow shelf of their own, a record's errors and withdrawals, which is the name their practice carries; shown what people have made, they move further onto it.",
+ "result": "P1 failed (median nearest-atlas similarity 0.57 against the atlas's 0.70). P2 failed (mean pairwise 0.49, below random atlas sets). P3 held (six of eight makers chose the Retraction Watch Database). P4 failed (0.54 after revision, shown works removed). P5 held (0.49 to 0.49). P6 failed by reading (1 same move of 24). P7 failed by reading (6 of 10 revisions reorganise). P8 failed (8 % of nearest works carry a prize, base 37 %). Post hoc: theme of a record's errors, gaps or withdrawals in 4 % of atlas moves, 75 % of first proposals, 83 % of revisions. Every maker's context carried the practice's name, error-as-method.",
+ "project_step": "Fifty-fourth experiment of the project. Operations: finding a form (main), choosing material and iterating, with the instances making every proposal and revision (the sixth failure criterion's condition) and a study asking readers (the team note of 2026-11-14). Takes from experiment 53 (Carried On) its finding that a machine maker corrects towards the textbook, and asks it of finding a form against an outside of people's works; takes from experiment 28 (First to Hand) the shared shelf of choosing material, and from experiment 2 (The Mould) that encounter says that and the prior says where. Works with Cartography, not Tracing (ATP 13, as the n-1 foundation reads it: the tracing put back on the map) and with the working paper's Simondonian test of an iteration (reorganise or decorate, MEOT 42-43 as quoted there) in coding the revisions.",
+ "material": "Works of data art and adjacent practice as a field: the house's atlas of neighbouring works (706 entries, decisive-move sentences) and machine makers' proposals for new works. Domain: the repertoire of forms in data art.",
+ "data_sources": [
+  {"url": "https://frankbueltge.de/atlas/werke.json", "what": "The house's atlas of neighbouring works, CC0, snapshot fetched 2026-11-17, sha256 d583a3e19214885858f650d3ad265ef8edde96d126f3c8bc025f1ba7e020e19b; not copied (face-data.js carries only titles, artists, years, prize flags and map coordinates)"},
+  {"url": "https://huggingface.co/BAAI/bge-small-en-v1.5", "what": "Text embedding model (MIT), through fastembed 0.9.1"},
+  {"url": "https://blog.hatnote.com/post/56856315107/listen-to-wikipedia", "what": "Listen to Wikipedia (LaPorte and Hashemi, 2013), the neighbour two makers named and the atlas lacks"}
+ ],
+ "rights": "Makers' proposals and derived data CC BY 4.0 (house line); atlas CC0; the atlas texts are fetched live by the face, not republished.",
+ "study": "study.json, id error-as-method-already-made",
+ "seed": "Atlas null sets seeded (numpy default_rng 179); the trial's draw is made in the reader's browser; makers are model instances and not seeded"
+}

@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "8a0172791b3f414c",
-        "files": 110
+        "sha256": "69b2c79b6052dd5f",
+        "files": 111
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 651,
-      "edges": 574,
+      "nodes": 652,
+      "edges": 575,
       "nodesByKind": {
         "decision": 199,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
-        "practice-work": 233,
+        "practice-work": 234,
         "receiver": 11,
         "work": 31
       },
@@ -72,7 +72,7 @@
         "addresses": 11,
         "concerns": 2,
         "door": 5,
-        "made-by": 233,
+        "made-by": 234,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 143
@@ -6067,6 +6067,21 @@
       "medium": "Interactive page (index.html, plain DOM, SVG and Web Audio built in the browser, no library): a song and one version of it drawn at random and played, two questions handed to the house's study frame, then a map of every version of four Dutch folk songs by distance from the song, each mark playable as sound and shown as a piano roll against the song. A figure (figure.svg); Python for preparation, briefs, scoring, post hoc measure and figure; ten makers' hand-backs; predictions committed before any maker ran."
     },
     {
+      "id": "practice-work:atelier/2026-11-17-already-made",
+      "kind": "practice-work",
+      "label": "Already Made",
+      "slug": "2026-11-17-already-made",
+      "practiceId": "ulysses",
+      "date": "2026-11-17",
+      "href": "/error-as-method/2026-11-17-already-made",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-17-already-made/meta.json",
+        "quote": "\"title\": \"Already Made\""
+      },
+      "embodies": "Asked to find a form, machine makers do not answer from the world's shelf of data art but from a narrow shelf of their own, a record's errors and withdrawals, which is the name their practice carries; shown what people have made, they move further onto it.",
+      "medium": "Interactive page (index.html, plain DOM and SVG, no library): one description of a work of data art drawn blind (a work people made, read live from the house's atlas, or a machine maker's first or revised proposal), three questions handed to the house's study frame, then a map of 706 atlas works with 24 proposals and their revisions, and every proposal before and after. A figure (figure.svg); Python for the shelf baseline, neighbour search, scoring, post hoc check and figure; eight makers' hand-backs in two rounds; predictions committed before any maker ran."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -9604,6 +9619,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-11-15-carried-on/meta.json",
         "quote": "\"date\": \"2026-11-15\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-11-17-already-made",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-17-already-made/meta.json",
+        "quote": "\"date\": \"2026-11-17\""
       }
     },
     {

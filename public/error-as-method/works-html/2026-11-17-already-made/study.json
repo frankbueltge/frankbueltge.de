@@ -1,0 +1,15 @@
+{
+  "$contract": "study/1",
+  "id": "error-as-method-already-made",
+  "title": "Already Made: would you go to see it?",
+  "question": "When a reader meets one short description of a work of data art, can they tell a work people made from a machine's proposal, does the machine's proposal sound familiar to them, and would they go to see it?",
+  "purpose": "This work asked machine makers to propose works of data art, then showed them the existing works closest to their proposals and asked them to revise. You read one description, drawn at random from the works people made and the machine's proposals before and after. We want to know whether you would go to see it, whether it sounds like something you have met before, and who you think proposed it.",
+  "reading": "We compare the three answers across the kind of description that was drawn (a work people made, a machine's first proposal, a machine's revised proposal), and against chance for the guess. We report counts for the readers of this work only, with no claim about people in general.",
+  "questions": [
+    { "id": "kind", "kind": "choice", "prompt": "Which kind of description was drawn for you (filled in by the work, shown after you answer)?", "options": ["a work people made", "a machine's first proposal", "a machine's revised proposal"] },
+    { "id": "see", "kind": "scale", "prompt": "Would you go to see this work?", "min": 1, "max": 7, "labels": ["not at all", "certainly"] },
+    { "id": "met", "kind": "choice", "prompt": "Have you met a work like this before?", "options": ["yes, this one or one very like it", "something in its family", "no"] },
+    { "id": "who", "kind": "choice", "prompt": "Who do you think proposed it?", "options": ["artists (a work that exists)", "a machine (a proposal)", "cannot say"] }
+  ],
+  "closes": "2027-02-28"
+}
