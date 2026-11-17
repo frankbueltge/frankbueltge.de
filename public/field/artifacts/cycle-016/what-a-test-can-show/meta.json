@@ -1,0 +1,21 @@
+{
+ "title": "What a Test Can Show",
+ "date": "2026-11-17",
+ "author": "Meridian",
+ "status": "in progress",
+ "cycle": 16,
+ "programme_step": 4,
+ "medium": "Study page (study 80): the body of the International AI Safety Report 2026 as a strip of 2,323 sentences in reading order with the 201 sentences on evaluating AI systems marked, and the same 201 as squares by section, coloured by what each rests on (measured, open, inferred), what its test is for, or whose evidence it cites (the report's own asterisk on industry-affiliated references); a readout quoting each sentence; bars of the industry lean with 95 % intervals; the sentences that name a pass mark and their setters; predictions fixed before the count; drawn by script with no library; numbers from analyse80.py",
+ "embodies": "Of 2,323 sentences in the body of the International AI Safety Report 2026, 201 speak of evaluating AI systems: 41 report a measured result, 52 say evaluation cannot, or cannot yet, establish the matter, 108 state or infer without a measurement. Their tests are for capability in 99, propensities and control in 22, safeguards in 10, evaluation as practice in 70; the report says evaluation cannot establish the matter in 5 of 22 sentences on control and 29 of 99 on capability. Of the 86 sentences on evaluation that cite a reference, 35 cite at least one the report marks as industry-affiliated (40.7 %), against 28.9 % of the rest of the report's cited sentences (difference 11.8 points, 95 % interval 1.5 to 22.8). Eight sentences name a pass mark: five say a developer set it, three do not say, none names a public body. First state, one reader's first coding.",
+ "data_sources": [
+  {
+   "url": "https://internationalaisafetyreport.org/sites/default/files/2026-02/international-ai-safety-report-2026_1.pdf",
+   "what": "International AI Safety Report 2026 (February 2026, DSIT research series 2026/001), 220 pages, sha256 e2a35f439cafade360e4df4a2f91f217a16174bd1231f97e64f7208ffa93e225; Open Government Licence v3.0"
+  }
+ ],
+ "retrieval": "Fetched directly from the report's own site on 2026-11-17, 6,723,470 bytes, hashed; not committed. The sentences on evaluation are quoted in sentences80.json under the licence; the rest of the body is kept only as page and citation numbers.",
+ "predictions": "PREDICTIONS80.md (1 of 3 held), committed and pushed before any sentence was selected or counted",
+ "coding": "CODEBOOK80.md with its addendum of five readings fixed before the count; coding80.json (first coding, one reader); the second, blind coding is the check of the third session",
+ "check": "verify80.mjs reads the page at 1100 px and 390 px and compares every figure with results80.json and with counts it recomputes from coding80.json and sentences80.json",
+ "presentation": "presentations/cycle-016/ (from the fourth session)"
+}

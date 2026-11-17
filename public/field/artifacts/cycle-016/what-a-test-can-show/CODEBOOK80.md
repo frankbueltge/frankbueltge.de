@@ -57,3 +57,22 @@ Every candidate is read and coded.
 
 The first coding writes each code with the sentence's id into `coding80.json`. No code is changed after the
 count; a correction is a new, dated reading.
+
+## Addendum — five readings fixed during the first coding, before any count (2026-11-17, session 278)
+
+The first coding met five kinds of sentence the rules above did not settle. They were settled as follows, for
+every sentence alike, before anything was counted:
+
+1. **`measured` needs a footing a reader can find**: besides reporting an outcome, the sentence gives a number,
+   names a test, benchmark or study, cites a reference, or points to a figure or table. A general summary of
+   results with none of these ("leading systems match experts on standardised evaluations") is `inferred`.
+2. **A sentence saying that evaluation cannot establish something is `open`**: that a test, benchmark or method
+   is difficult, unreliable, limited, nascent, fails to predict or fails to capture, or that results are not
+   disclosed. A sentence that gives the direction of an error ("benchmarks can overstate performance") is
+   `inferred`: it claims to know which way the error runs.
+3. **`tests` follows what the sentence names**, not the section it stands in. Red-teaming for vulnerabilities or
+   jailbreaks is `safeguards`; a definition of evaluation in general is `general`.
+4. **A cell of the report's table of developers' Frontier AI Safety Frameworks** (pages 116 and 117) takes its
+   setter from the table's column "AI developer". Most of that table's cells are too short to be sentences under
+   the text rules and are not in the selection; the three that are stand in it.
+5. **No claim, `about = no`**: a pointer to a table or supplement, and a model's own words quoted in a figure.
