@@ -3,26 +3,28 @@
  "title": "Contrapunctus 47",
  "week": "2026-W47",
  "days": [
-  "2026-11-16"
+  "2026-11-16",
+  "2026-11-17"
  ],
  "complete": false,
- "pressed": "2026-11-16",
+ "pressed": "2026-11-17",
  "character": {
-  "round": "after-cycle-014",
+  "round": "after-cycle-015",
   "leads": [
-   "Ebola"
+   "Ebola",
+   "climate"
   ],
   "hold": 1,
-  "changes": 0,
-  "break": 0.0,
-  "break_day": null,
+  "changes": 1,
+  "break": 0.064,
+  "break_day": "2026-11-17",
   "verdict": "standing",
   "thresholds": {
    "break": 0.3,
    "held": 5,
    "mosaic": 4
   },
-  "days_read": 1,
+  "days_read": 2,
   "form": "standing",
   "why": "editions 1 to 6 are the standing form"
  },
@@ -32,14 +34,14 @@
    "tuning": "just, harmonics 8-15 of A1 = 55 Hz",
    "pulse_s": 0.2,
    "day_bars": 28,
-   "days_so_far": 1,
-   "newest_day": "2026-11-16",
-   "round": "after-cycle-014",
+   "days_so_far": 2,
+   "newest_day": "2026-11-17",
+   "round": "after-cycle-015",
    "hindsight": true,
    "silenced_after_their_day": [],
-   "tutti_from_s": 35.2,
-   "cut_s": 48.0,
-   "coda_s": 50.4,
+   "tutti_from_s": 80.0,
+   "cut_s": 92.8,
+   "coda_s": 95.2,
    "days": [
     {
      "day": "2026-11-16",
@@ -234,21 +236,148 @@
       "piano": 33.6,
       "low": 36.8
      }
+    },
+    {
+     "day": "2026-11-17",
+     "field": "economy",
+     "voice": "bf_lily",
+     "text": "US recession in 2026?",
+     "attention": 0.0,
+     "named_on_newest_day": true,
+     "source": "manifold",
+     "attended": [
+      {
+       "field": "economy",
+       "text": "Corporations are using Trump’s tariff refunds on bonuses rather than reimbursing consumers",
+       "attention": 1.0
+      },
+      {
+       "field": "climate",
+       "text": "<b>The climate is in </b><b>crisis</b><b> — here’s four things we can do</b>",
+       "attention": 0.9592
+      },
+      {
+       "field": "ai",
+       "text": "Data center ballot measures",
+       "attention": 0.9583
+      },
+      {
+       "field": "war",
+       "text": "Exclusive: US intel indicates Iran developing plans to potentially detonate a dirty bomb in Washington, sources say",
+       "attention": 0.9538
+      }
+     ],
+     "instrument": "BassoonSus",
+     "motif_eighths": 16,
+     "motif": [
+      {
+       "step": 0,
+       "hz": 206.25
+      },
+      {
+       "step": 1,
+       "hz": 220.0
+      },
+      {
+       "step": 2,
+       "hz": 220.0
+      },
+      {
+       "step": 3,
+       "hz": 192.5
+      },
+      {
+       "step": 4,
+       "hz": 123.75
+      },
+      {
+       "step": 6,
+       "hz": 123.75
+      },
+      {
+       "step": 7,
+       "hz": 220.0
+      },
+      {
+       "step": 8,
+       "hz": 96.25
+      },
+      {
+       "step": 11,
+       "hz": 123.75
+      },
+      {
+       "step": 12,
+       "hz": 110.0
+      }
+     ],
+     "from_s": 48.0,
+     "motif_from_s": 56.0,
+     "speech_s": 3.148,
+     "echo": [
+      {
+       "t": 0.0,
+       "hz": 206.25
+      },
+      {
+       "t": 0.23,
+       "hz": 220.0
+      },
+      {
+       "t": 0.28,
+       "hz": 220.0
+      },
+      {
+       "t": 0.59,
+       "hz": 192.5
+      },
+      {
+       "t": 0.77,
+       "hz": 123.75
+      },
+      {
+       "t": 1.18,
+       "hz": 123.75
+      },
+      {
+       "t": 1.34,
+       "hz": 220.0
+      },
+      {
+       "t": 1.62,
+       "hz": 96.25
+      },
+      {
+       "t": 2.15,
+       "hz": 123.75
+      },
+      {
+       "t": 2.37,
+       "hz": 110.0
+      }
+     ],
+     "entries_s": {
+      "violins": 62.4,
+      "violas": 68.8,
+      "piano": 75.2,
+      "low": 78.4
+     }
     }
    ],
    "library": "VSCO 2 CE 1.1.0 (CC0)",
    "audio": "/ill-tempered-week/2026-W47/overlooked.m4a",
-   "seconds": 68.4,
+   "seconds": 113.2,
    "lufs": -16.0,
-   "true_peak_dbtp": -2.55,
-   "float32_sha256": "e13968b4a7aeeb6eed39eb80894bb242af0ffcd151f3eebbb9cca217f97f0f2f",
-   "edition": 1
+   "true_peak_dbtp": -1.22,
+   "float32_sha256": "4f8e05ec70d7e9f70fbaa5f5c353e4f028d15f1081bc8df5b02e526cc8bd0797",
+   "edition": 2
   }
  },
  "library": "VSCO 2 Community Edition 1.1.0 (Versilian Studios, CC0)",
  "voices": "Kokoro-82M (Apache 2.0), local",
  "receipts": {
-  "src/data/ducking/rounds/after-cycle-014.json": "8120a226def2ba428be183667c55cdf5caffed97524674fcbc2b3aa0f04274da",
-  "src/data/trending/2026-11-16.json": "6eeb31d73c9251b45cd7ff5e75782ea56aa7b9f110ebde912d02adc305424a1d"
+  "src/data/ducking/rounds/after-cycle-015.json": "ba232af4854682fdb636ab5305cd4a30d11ae5d209a1987f33c4cc4a7e0920fe",
+  "src/data/trending/2026-11-16.json": "6eeb31d73c9251b45cd7ff5e75782ea56aa7b9f110ebde912d02adc305424a1d",
+  "src/data/trending/2026-11-17.json": "b229c775f216b645106133e18cf5ad3a7a4f485b5b97de45c0f23c10d902d2a8"
  }
 }
