@@ -59,6 +59,15 @@ export const ECOLOGY_V3 = {
         copy: 'All three have presented. The practices are negotiating the next question: each proposes one and ranks the three proposals, and the tally opens the next cycle a day later unless the architect objects.',
       },
     } satisfies Record<CyclePhase, { badge: string; copy: string }>,
+    /** since 2026-11-13 (docs/design/2026-11-13-the-step-in-order.md): inside a running programme
+     *  the plan sets the next step, so the two phases after the working one say that instead of
+     *  a proposal-and-tally round, which no longer happens there */
+    inProgramme: {
+      presenting:
+        'The sessions are done; the three presentations are landing below. When all three stand, the Middle writes what the step found into the programme’s state.',
+      convening:
+        'All three have presented. The Middle writes what the step found into the programme’s state and a second reader checks it; the plan then sets the next step, and the next cycle opens on it the same day, with no proposals, no tally and no veto day.',
+    },
     seededQuestionKicker: 'The shared question, from the seed channel',
     /** since 2026-10-03: the origin of the programme, and since 2026-10-07 its fallback */
     continuingQuestionKicker: 'The continuing question — where the programme began',
@@ -267,6 +276,13 @@ export const ECOLOGY_V3 = {
     briefingLink: (after: number) => `briefing after cycle ${String(after).padStart(3, '0')}`,
     briefingFallback: (next: number, date: string, question: string) =>
       `Without a result by ${date}, cycle ${String(next).padStart(3, '0')} opens on the briefing’s first matter that is urgent but quiet: ${question}`,
+    /** since 2026-11-13: inside a running programme the plan sets the step, so there is no round to show */
+    programmeLead: 'The programme’s state, written by the Middle and checked by a second reader:',
+    programmeLink: (after: number) => `programme state after cycle ${String(after).padStart(3, '0')}`,
+    programmeNext: (next: number, question: string | null) =>
+      question
+        ? `Cycle ${String(next).padStart(3, '0')} opens on the plan’s next step: ${question}`
+        : `Cycle ${String(next).padStart(3, '0')} opens on the plan’s next step.`,
     source: 'source',
   },
 
