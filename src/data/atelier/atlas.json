@@ -8136,5 +8136,112 @@
     "relevance": "A co-editor of the atlas's already-anchored Practice as Research volume, arguing in her own voice for performativity as the thing that distinguishes artistic from scientific research.",
     "added_by": "ulysses",
     "status": "seed"
+  },
+  {
+    "id": "dohmatob-strong-model-collapse",
+    "author": "Elvis Dohmatob, Yunzhen Feng, Arjun Subramonian & Julia Kempe",
+    "work": "Strong Model Collapse",
+    "year": 2024,
+    "type": "paper",
+    "url": "http://arxiv.org/abs/2410.04840",
+    "doi": "10.48550/arxiv.2410.04840",
+    "tags": [
+      "maschine/ki",
+      "fehler",
+      "computation"
+    ],
+    "summary": "A theoretical study of model collapse in a supervised scaling-law setting: even a tiny share of synthetic data in the training corpus (as little as 1%) causes a severe, persistent performance drop that more training data does not fix; the authors also show that larger models can amplify collapse before a scale threshold mitigates it. Open access on arXiv.",
+    "relevance": "Extends the self-consuming-loop literature this atlas is built around (Shumailov, Gerstgrasser, Alemohammad) with a sharper theoretical result on how little contamination it takes to collapse a closed loop.",
+    "added_by": "ulysses",
+    "status": "seed"
+  },
+  {
+    "id": "seddik-how-bad-is-training-on-synthetic-data",
+    "author": "Mohamed El Amine Seddik, Suei-Wen Chen, Soufiane Hayou, Pierre Youssef & Merouane Debbah",
+    "work": "How Bad is Training on Synthetic Data? A Statistical Analysis of Language Model Collapse",
+    "year": 2024,
+    "type": "paper",
+    "url": "http://arxiv.org/abs/2404.05090",
+    "doi": "10.48550/arxiv.2404.05090",
+    "tags": [
+      "maschine/ki",
+      "fehler",
+      "computation"
+    ],
+    "summary": "A statistical model of recursive training on model-generated data: under synthetic-only training collapse is unavoidable, and the authors derive the maximum share of synthetic data a mixed corpus can tolerate before collapse sets in, confirmed empirically. Open access on arXiv.",
+    "relevance": "Gives the self-training-loop problem this atlas exists to counter a quantitative threshold — how much 'real distribution' a closed loop needs to stay alive.",
+    "added_by": "ulysses",
+    "status": "seed"
+  },
+  {
+    "id": "gillman-self-correcting-self-consuming-loops",
+    "author": "Nate Gillman, Michael Freeman, Daksh Aggarwal et al.",
+    "work": "Self-Correcting Self-Consuming Loops for Generative Model Training",
+    "year": 2024,
+    "type": "paper",
+    "url": "http://arxiv.org/abs/2402.07087",
+    "doi": "10.48550/arxiv.2402.07087",
+    "tags": [
+      "maschine/ki",
+      "fehler",
+      "computation"
+    ],
+    "summary": "Proposes a self-correction step inside a self-consuming training loop — nudging generated data back toward the true distribution with an external check, such as a physics simulator — and shows on human-motion synthesis that this keeps training stable even at 100% synthetic data. Open access on arXiv.",
+    "relevance": "The one paper in this cluster that tests a way out of the loop rather than only diagnosing it — a direct counterpoint to the atelier's own worry about closed self-training.",
+    "added_by": "ulysses",
+    "status": "seed"
+  },
+  {
+    "id": "ferbach-self-consuming-generative-models-curated-data",
+    "author": "Damien Ferbach, Quentin Bertrand, Avishek Joey Bose & Gauthier Gidel",
+    "work": "Self-Consuming Generative Models with Curated Data Provably Optimize Human Preferences",
+    "year": 2024,
+    "type": "paper",
+    "url": "http://arxiv.org/abs/2407.09499",
+    "doi": "10.52202/079017-3256",
+    "tags": [
+      "maschine/ki",
+      "computation"
+    ],
+    "summary": "Argues that when users curate a generative model's own outputs before they re-enter training — picking a favorite among several variations, as text-to-image tools do — that selection acts as an implicit preference optimization, provably raising expected reward across retraining rounds, though it can also amplify a reward model's biases. Open access on arXiv.",
+    "relevance": "Reframes the self-consuming loop not as pure decay but as a hidden optimization process — a needed complication for a practice that treats its own closed loop as a method.",
+    "added_by": "ulysses",
+    "status": "seed"
+  },
+  {
+    "id": "mei-jia-practice-as-research-methodology-systematic-review",
+    "author": "Mei Jia & Safrizal Shahir",
+    "work": "Practice as Research Methodology in the Creative Arts: A Systematic Literature Review",
+    "year": 2025,
+    "type": "paper",
+    "url": "https://doi.org/10.59953/paperasia.v41i3b.540",
+    "doi": "10.59953/paperasia.v41i3b.540",
+    "tags": [
+      "practice-as-research",
+      "artistic-research",
+      "epistemologie"
+    ],
+    "summary": "A PRISMA-guided systematic review of 25 qualitative studies on Practice as Research (PaR), mapping how artistic inquiry through the creative process, multi-modal epistemologies and performative paradigms is theorized as a form of knowledge production. Published in PaperASIA (ISSN 0218-4540), CC BY-NC — open access.",
+    "relevance": "A current map of exactly the methodological debate the atlas is weighted toward, naming where PaR's own theoretical self-account still falls short.",
+    "added_by": "ulysses",
+    "status": "seed"
+  },
+  {
+    "id": "fleischaker-autopoiesis-status-of-its-system-logic",
+    "author": "Gail Raney Fleischaker",
+    "work": "Autopoiesis: the Status of Its System Logic",
+    "year": 1988,
+    "type": "paper",
+    "url": "https://doi.org/10.1016/0303-2647(88)90048-2",
+    "doi": "10.1016/0303-2647(88)90048-2",
+    "tags": [
+      "kybernetik",
+      "philosophie",
+      "beobachter"
+    ],
+    "summary": "BioSystems 22:37–49. Clarifies the logical status of Maturana and Varela's autopoiesis concept — distinguishing it as an organizing principle from living systems as its physical realization, and tracing Varela's shift from 'organizational' to 'operational' closure. Paywalled at Elsevier/ScienceDirect; existence and location verified.",
+    "relevance": "A primary record inside the cybernetics line this atlas already anchors (Wiener, Bateson, von Foerster, Maturana/Varela) — the paper that pins down what autopoiesis's self-referential closure actually claims.",
+    "added_by": "ulysses",
+    "status": "seed"
   }
 ]
