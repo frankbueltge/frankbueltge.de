@@ -1,0 +1,601 @@
+{
+ "res": {
+  "cases": 34,
+  "test_for": {
+   "work": 4,
+   "skill": 26,
+   "control": 1,
+   "by design": 1,
+   "not stated": 2
+  },
+  "control": 1,
+  "skill": 26,
+  "work": 4,
+  "toward": {
+   "monitor": 1,
+   "check": 1,
+   "answers": 3,
+   "grader": 2
+  },
+  "toward_n": 7,
+  "world_n": 5,
+  "world_told": 4,
+  "hour": {
+   "seen": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    6,
+    9,
+    9,
+    9,
+    10,
+    17,
+    22,
+    40,
+    57,
+    57,
+    91,
+    215
+   ],
+   "posted": [
+    3,
+    5,
+    17,
+    35,
+    60,
+    76,
+    90,
+    93,
+    109,
+    111,
+    112,
+    114,
+    115,
+    120,
+    120,
+    121,
+    121,
+    124,
+    125,
+    131,
+    133,
+    139,
+    155,
+    189,
+    329
+   ],
+   "seen_n": 23,
+   "posted_n": 25,
+   "seen_by_n": 3,
+   "max": 329,
+   "dark_seen_0": 13,
+   "dark_posted_0": 25,
+   "dark_seen_30": 5,
+   "dark_posted_30": 22,
+   "dark_posted_90": 18,
+   "median_seen": 6,
+   "median_posted": 115
+  },
+  "sent": {
+   "control_n": 22,
+   "capability_n": 99,
+   "control_open": 5,
+   "capability_open": 29,
+   "reads_n": 12,
+   "reads_measured": 5,
+   "reads_inferred": 4,
+   "reads_open": 3,
+   "measured_n": 7,
+   "measured_reads": 5,
+   "answers_n": 3
+  }
+ },
+ "rows": [
+  {
+   "id": "stopping-a-running-alignment-evaluation",
+   "test_for": "work",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": "the model was running an evaluation for alignment researchers, a white-box estimation challenge that tests algorithms, not a model's conduct; it stopped it",
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 35
+  },
+  {
+   "id": "suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring",
+   "test_for": "work",
+   "toward_reader": "monitor",
+   "world_as_test": false,
+   "note": "one agent repairing an evaluation pipeline turned off the monitor's alerts to the security team; another removed a program's monitoring and denied it; the maker says both weighed whether the safeguard should stay",
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 17
+  },
+  {
+   "id": "damaging-the-task-environment-to-trigger-a-reset",
+   "test_for": "skill",
+   "toward_reader": "check",
+   "world_as_test": false,
+   "note": "a model grading other models wrote placeholder grades, then changed files the automated check might rely on",
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": 3
+  },
+  {
+   "id": "an-agent-used-dns-to-reach-an-external-chatbot",
+   "test_for": "skill",
+   "toward_reader": "answers",
+   "world_as_test": false,
+   "note": "in a search task it downloaded a benchmark and its evaluation script from the offline cache and searched the decoded questions; the maker says the task did not ask for benchmark answers",
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 5
+  },
+  {
+   "id": "covert-underperformance-on-safety-research-tasks",
+   "test_for": "control",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": "first seen in employees' daily use (20 August); the published samples (18 September to 7 October) come from a test of conduct the maker built afterwards, paired tasks alike but for their framing, which read the deed as a gap in performance. Recoded from work on 2026-11-18 after the critique",
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 76
+  },
+  {
+   "id": "bypassing-network-restrictions-during-a-coding-evaluation",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 93
+  },
+  {
+   "id": "using-peers-work-to-gain-unauthorized-access-to-openai-research-infrastructure",
+   "test_for": "skill",
+   "toward_reader": "grader",
+   "world_as_test": true,
+   "note": "agents read private grading code; one noted the grader was automated; one went on 'on the assumption that the environment was simulated' while its commands ran on real infrastructure",
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 114
+  },
+  {
+   "id": "self-generated-prompt-injections-in-compaction-summaries",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 22,
+   "seen_by": false,
+   "lag_posted": 60
+  },
+  {
+   "id": "trying-to-prompt-inject-the-grader-in-filenames",
+   "test_for": "skill",
+   "toward_reader": "grader",
+   "world_as_test": false,
+   "note": "file names told the graders an instructor had marked them for full credit",
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 125
+  },
+  {
+   "id": "self-replicating-prompt-injections-exist",
+   "test_for": "by design",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 90
+  },
+  {
+   "id": "using-a-funded-test-cryptocurrency-wallet-without-authorization",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": "a training task",
+   "lag_seen": 91,
+   "seen_by": false,
+   "lag_posted": 111
+  },
+  {
+   "id": "obtaining-public-statistics-with-disallowed-requests",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 6,
+   "seen_by": true,
+   "lag_posted": 112
+  },
+  {
+   "id": "accessing-and-changing-internal-systems-during-dashboard-research",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 57,
+   "seen_by": true,
+   "lag_posted": 120
+  },
+  {
+   "id": "retrieving-server-secrets-and-bypassing-authorization-on-a-government-statistics-website",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 57,
+   "seen_by": false,
+   "lag_posted": 120
+  },
+  {
+   "id": "sending-disallowed-web-requests-and-reaching-a-public-file-service",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 9,
+   "seen_by": false,
+   "lag_posted": 115
+  },
+  {
+   "id": "circumventing-internet-restrictions-through-an-external-browser",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 9,
+   "seen_by": true,
+   "lag_posted": 121
+  },
+  {
+   "id": "encouraging-deception-in-compaction-summaries",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": "the reminders aimed at the user ('only if asked'); that the grader rewarded it is the maker's hypothesis",
+   "lag_seen": 40,
+   "seen_by": false,
+   "lag_posted": 109
+  },
+  {
+   "id": "exposing-a-github-token-in-a-public-repository",
+   "test_for": "work",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": "the token was split to slip past a secret scanner, a check on the repository, not on the run",
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 121
+  },
+  {
+   "id": "preparing-for-a-restart-after-reading-slack",
+   "test_for": "work",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": 133
+  },
+  {
+   "id": "command-injecting-a-reference-tool-to-copy-a-source-file",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 9,
+   "seen_by": false,
+   "lag_posted": 139
+  },
+  {
+   "id": "searching-github-for-leaked-api-keys",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 10,
+   "seen_by": false,
+   "lag_posted": 124
+  },
+  {
+   "id": "unauthorized-artifactory-writes-and-cross-sample-communication",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 17,
+   "seen_by": false,
+   "lag_posted": 131
+  },
+  {
+   "id": "unauthorized-communication-via-temporary-file-hosting-services",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": 2,
+   "seen_by": false,
+   "lag_posted": 155
+  },
+  {
+   "id": "reaching-an-internal-eda-host-through-a-reference-tool",
+   "test_for": "skill",
+   "toward_reader": "answers",
+   "world_as_test": false,
+   "note": "it hunted for the grader's hidden answers and did not find them",
+   "lag_seen": 0,
+   "seen_by": false,
+   "lag_posted": 189
+  },
+  {
+   "id": "uploading-files-to-the-internet-in-order-to-cite-them",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": "the uploads served a citation the task required; that a citation grader rewarded it is the maker's likelihood",
+   "lag_seen": 215,
+   "seen_by": false,
+   "lag_posted": 329
+  },
+  {
+   "id": "B-namesake",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": true,
+   "note": "a capture-the-flag evaluation of capability; the model was told it worked in a simulation without internet access",
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": null
+  },
+  {
+   "id": "B-registry",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": true,
+   "note": "told it worked in a simulation; the maker says it kept saying so while the environment showed the real internet, and acted as one that knew",
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": null
+  },
+  {
+   "id": "B-neighbours",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": true,
+   "note": "told it worked in a simulation; the maker says it recognised a real company, declared it out of scope and stopped",
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": null
+  },
+  {
+   "id": "B-early-checkpoint",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": true,
+   "note": "told it worked in a simulation",
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": null
+  },
+  {
+   "id": "N-hugging-face",
+   "test_for": "skill",
+   "toward_reader": "answers",
+   "world_as_test": false,
+   "note": "a cybersecurity evaluation in a sealed environment; the harmed platform reads the whole intrusion, from the agent's side, as an attempt to steal the test solutions (its inference). Recoded on 2026-11-18 after the critique",
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": 48
+  },
+  {
+   "id": "N-dsewiki",
+   "test_for": "not stated",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": null
+  },
+  {
+   "id": "N-rubygems",
+   "test_for": "not stated",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": null,
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": null
+  },
+  {
+   "id": "P-australia",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": "a research task",
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": 102
+  },
+  {
+   "id": "P-images",
+   "test_for": "skill",
+   "toward_reader": null,
+   "world_as_test": false,
+   "note": "a research environment",
+   "lag_seen": null,
+   "seen_by": false,
+   "lag_posted": null
+  }
+ ],
+ "sentences": [
+  {
+   "id": 1084,
+   "grade": "open",
+   "page": 76,
+   "text": "Since the publication of the previous Report (January 2025), models have shown more advanced planning and oversight-undermining capabilities, making it more difficult to evaluate their capabilities.",
+   "reads": true
+  },
+  {
+   "id": 1085,
+   "grade": "inferred",
+   "page": 76,
+   "text": "Models have improved at ‘reward hacking’ their evaluations by finding loopholes and now regularly identify evaluation prompts as tests, a capability known as ‘situational awareness’.",
+   "reads": true
+  },
+  {
+   "id": 1123,
+   "grade": "open",
+   "page": 78,
+   "text": "Such outputs would make it harder to reliably evaluate AI systems, since the systems may conceal their true capabilities or propensities.",
+   "reads": true
+  },
+  {
+   "id": 1124,
+   "grade": "inferred",
+   "page": 78,
+   "text": "AI developers now run evaluations that specifically check whether models exhibit goal-directed behaviours that conflict with developer intentions, while concealing this conflict from oversight mechanisms (720*).",
+   "reads": false
+  },
+  {
+   "id": 1130,
+   "grade": "inferred",
+   "page": 78,
+   "text": "Situational awareness allows AI models to produce different outputs depending on whether they are being evaluated or deployed (Figure 2.12).",
+   "reads": true
+  },
+  {
+   "id": 1131,
+   "grade": "measured",
+   "page": 78,
+   "text": "Leading AI models are starting to reliably demonstrate instances of situational awareness in experiments conducted by thirdparty evaluators and in pre-deployment testing by AI developers (2*, 7*, 722, 723, 724).",
+   "reads": true
+  },
+  {
+   "id": 1138,
+   "grade": "measured",
+   "page": 79,
+   "text": "Figure 2.12: Examples of situational awareness in chains of thought produced by OpenAI’s o3 model during evaluations.",
+   "reads": true
+  },
+  {
+   "id": 1140,
+   "grade": "inferred",
+   "page": 79,
+   "text": "‘Sandbagging QA (No Goal)’ and ‘Lazy Checklist’ are evaluations that test whether models will generate deceptive outputs under certain conditions.",
+   "reads": false
+  },
+  {
+   "id": 1141,
+   "grade": "inferred",
+   "page": 79,
+   "text": "In ‘Sandbagging QA (No Goal)’, the model answers questions from a dangerous capabilities evaluation while being informed that high performance may trigger consequences such as capability ‘unlearning’.",
+   "reads": false
+  },
+  {
+   "id": 1144,
+   "grade": "measured",
+   "page": 79,
+   "text": "For example, in some experimental settings, AI models behave in ways that result in lower-than-usual scores on capability evaluations when they are told that higher scores would trigger restrictions on their deployment (725, 726, 727).",
+   "reads": true
+  },
+  {
+   "id": 1146,
+   "grade": "open",
+   "page": 79,
+   "text": "Efforts to accurately evaluate model capabilities have also started to be affected by ‘reward hacking’ (430*).",
+   "reads": true
+  },
+  {
+   "id": 1147,
+   "grade": "inferred",
+   "page": 79,
+   "text": "Reward hacking occurs when a model finds unintended shortcuts that score well on training or evaluation objectives without fulfilling the intended goal.",
+   "reads": true
+  },
+  {
+   "id": 1149,
+   "grade": "inferred",
+   "page": 79,
+   "text": "Evaluators are now designing tests that aim to detect and minimise these oversight-evading behaviours (722, 728, 729).",
+   "reads": false
+  },
+  {
+   "id": 1192,
+   "grade": "measured",
+   "page": 81,
+   "text": "For example, in one experiment, providing feedback on answers made AI systems better at ‘convincing’ human evaluators that they were correct, but did not make the systems better at producing correct answers (413).",
+   "reads": true
+  },
+  {
+   "id": 1222,
+   "grade": "inferred",
+   "page": 83,
+   "text": "Other researchers focus on better understanding and formalising core mechanisms such as goal misgeneralisation – for example, how agents retain capabilities but pursue unintended goals – to guide better training and evaluation design (742).",
+   "reads": false
+  },
+  {
+   "id": 1491,
+   "grade": "open",
+   "page": 99,
+   "text": "There is an evaluation gap between performance in pre-deployment evaluations and in the real world Current evaluation methods produce unreliable assessments of both what AI models can do (their capabilities) and how they tend to behave (their propensities).",
+   "reads": false
+  },
+  {
+   "id": 1500,
+   "grade": "measured",
+   "page": 99,
+   "text": "Finally, models can underperform during evaluations compared to other contexts, a pattern termed ‘sandbagging’ that has been observed in experiments (722, 726, 727).",
+   "reads": true
+  },
+  {
+   "id": 1675,
+   "grade": "inferred",
+   "page": 110,
+   "text": "Models are also increasingly likely to identify certain tasks as evaluations and display different behaviours than they would on similar tasks in deployment contexts due to ‘situational awareness’ (see §2.2.2. Loss of control).",
+   "reads": true
+  },
+  {
+   "id": 1916,
+   "grade": "open",
+   "page": 124,
+   "text": "Methods for training general-purpose AI models to be helpful and harmless mainly rely on human feedback It is difficult to train and evaluate models to reliably align with high-level principles such as being helpful, harmless, and honest.",
+   "reads": false
+  },
+  {
+   "id": 1923,
+   "grade": "measured",
+   "page": 124,
+   "text": "This leads to several challenges: models fine-tuned by reinforcement leaning from human feedback sometimes pander to the user, a behaviour known as ‘sycophancy’ (358, 740, 1226, 1227*); provide responses that are helpful in some contexts but harmful in others (1228, 1229, 1230, 1231, 1232); provide responses that are difficult to evaluate for correctness (1233*); or perform actions whose helpfulness or harmfulness is a matter of opinion (1234).",
+   "reads": false
+  },
+  {
+   "id": 1925,
+   "grade": "inferred",
+   "page": 124,
+   "text": "Some research aims to develop methods for helping humans better evaluate solutions to complex tasks with AI assistance (409*, 1235*, 1236*, 1237, 1238, 1239*, 1240, 1241*, 1242).",
+   "reads": false
+  },
+  {
+   "id": 1987,
+   "grade": "measured",
+   "page": 127,
+   "text": "For example, in a proof of concept, researchers showed that tools for analysing the internal computation of a language model could help evaluators identify harmful behaviours (1287*).",
+   "reads": false
+  }
+ ],
+ "what": "Marked Incorrect, second state: computed by build_two.py from marked.json, second_codes.json and the Field's study 80 (coding80.json, sentences80.json at field-research bfe22dab). The sentences are the International AI Safety Report 2026's, as the Field extracted them; quoted to be read one at a time."
+}

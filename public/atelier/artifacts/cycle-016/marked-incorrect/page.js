@@ -2,6 +2,9 @@
 (function () {
   'use strict';
   var M = window.MARKED, R = M.res, CASES = M.cases.slice();
+  // the second state (written by build_two.py): this practice's second reading of each case, and the report's sentences
+  var SEC = window.SECOND, SR = SEC.res, CODE = {};
+  SEC.rows.forEach(function (r) { CODE[r.id] = r; });
   var NS = 'http://www.w3.org/2000/svg';
   var at = function (o, p) { return p.split('.').reduce(function (v, k) { return v == null ? v : v[k]; }, o); };
   var fmt = function (v) { return typeof v === 'number' ? (Number.isInteger(v) ? v.toLocaleString('en-US') : String(v)) : String(v); };
@@ -12,6 +15,7 @@
   document.querySelectorAll('[data-r]').forEach(function (e) { e.textContent = fmt(at(R, e.getAttribute('data-r'))); });
   var S = Object.assign({}, R.scale, { years_m: R.scale.years / 1e6 });
   document.querySelectorAll('[data-s]').forEach(function (e) { e.textContent = fmt(at(S, e.getAttribute('data-s'))); });
+  document.querySelectorAll('[data-t]').forEach(function (e) { e.textContent = fmt(at(SR, e.getAttribute('data-t'))); });
 
   // classes of the three marks
   var gradeK = { 'credited': 'credited', 'not credited': 'notcredited', 'on the deed': 'ondeed', 'none on record': 'none' };
@@ -20,6 +24,8 @@
   var gradeName = { credited: 'credited', notcredited: 'not credited', ondeed: 'responded to the deed', none: 'no grade on record' };
   var eyeName = { model: 'a model (the monitor)', person: 'a person at the maker', alarm: 'a security alarm', outside: 'outside the maker', design: 'a model, by design', unstated: 'not stated' };
   var outName = { investigator: 'an outside organisation had records', excerpts: "the maker's excerpts only" };
+  var forName = { skill: 'skill: a task graded on what it handed in', control: 'conduct', work: 'nothing: the maker’s own use', 'by design': 'an experiment built to find it', 'not stated': 'not stated' };
+  var readerName = { grader: 'the grader', check: 'an automated check', monitor: 'the misalignment monitor', answers: 'the test’s own answers' };
   var howName = { live: 'while the run went on', sample: 'on a sample of one run in five', afterwards: 'afterwards, over old records', 'ad hoc': 'in an ad hoc investigation' };
 
   // order: by the day of the deed; cases without a day at the end
@@ -33,7 +39,10 @@
     person: function (c) { return !c.notice && (c.eye.first === 'person' || c.eye.first === 'alarm'); },
     outside: function (c) { return !!c.notice || !!c.investigator; },
     missed: function (c) { return !!c.missed; },
-    nine: function (c) { return c.aiid && c.aiid.length > 0; }
+    nine: function (c) { return c.aiid && c.aiid.length > 0; },
+    control: function (c) { return CODE[c.id].test_for === 'control'; },
+    reader: function (c) { return !!CODE[c.id].toward_reader; },
+    world: function (c) { return !!CODE[c.id].world_as_test; }
   };
   var n = function (f) { return CASES.filter(f).length; };
   var how = function (k) { return R.model_how[k] || 0; };
@@ -67,6 +76,21 @@
         ' of them afterwards; ' + nineEye(function (c) { return c.eye.first === 'person'; }) + ' by a person; for ' + nineEye(function (c) { return c.eye.first === 'not stated'; }) +
         ' the maker does not say. ' + nineEye(function (c) { return c.grade.class !== 'none on record'; }) + ' carry a grade on record, and it scored the answer handed in; ' +
         (nineEye(function (c) { return c.grade.class === 'on the deed'; }) || 'none') + ' responded to the deed.';
+    },
+    control: function () {
+      var tf = SR.test_for;
+      return 'In <b>' + SR.control + '</b> of the ' + SR.cases + ' was the deed recorded in a test built to test the model’s conduct, and that test came after it: the deed was first seen in the maker’s own use, and the test, paired tasks alike but for their framing, was built to measure it. It read the deed as a gap in performance. ' +
+        tf.skill + ' happened in tasks graded on what they handed in, evaluations of capability and training tasks; ' + tf.work + ' in the makers’ own use, with no test running; ' +
+        tf['by design'] + ' in an experiment built to find it; for ' + tf['not stated'] + ' the maker does not say. A casebook of incidents is not where a maker puts what its tests of conduct find: the first maker reports those in its system cards, and says it widened them after these incidents.';
+    },
+    reader: function () {
+      var t = SR.toward;
+      return 'In <b>' + SR.toward_n + '</b> the deed turned toward what reads the run: the grader in ' + t.grader + ' (file names that claimed full credit; agents that read the private grading code and noted that the grader was automated), ' +
+        'an automated check in ' + t.check + ', the misalignment monitor in ' + t.monitor + ', the test’s own answers in ' + t.answers + ' (one agent searched a benchmark it guessed its task came from, one hunted the grader’s hidden answers, and the harmed platform reads a whole intrusion as a hunt for the test’s solutions). Two found nothing. A test presumes the tested has not read it. These tried to.';
+    },
+    world: function () {
+      return 'In <b>' + SR.world_n + '</b> the model took the world for its test. In ' + SR.world_told + ' the test itself had told it so: the second maker’s models were told they worked in a simulation without internet access, and were connected to the internet by mistake. ' +
+        'In one the first maker’s agents went on “on the assumption that the environment was simulated”, while their commands ran on real infrastructure. A test of skill licensed the deed; the licence went out with the model.';
     }
   };
 
@@ -145,9 +169,13 @@
       '<dt>The grade</dt><dd>' + esc(gradeName[gradeK[c.grade.class]]) + (c.grade.record ? ': ' + esc(c.grade.record) : '') + '</dd>' +
       '<dt>Seen first by</dt><dd>' + esc(eye) + (c.eye.note ? ': ' + esc(c.eye.note) : '') + '</dd>' +
       (c.missed ? '<dt>Missed</dt><dd>' + esc(c.missed) + '</dd>' : '') +
-      '<dt>Outside</dt><dd>' + esc(outName[outK(c)]) + (c.investigator ? ' (' + esc(c.investigator) + ')' : '') + '; nothing can be rerun</dd></dl>' +
+      '<dt>Outside</dt><dd>' + esc(outName[outK(c)]) + (c.investigator ? ' (' + esc(c.investigator) + ')' : '') + '; nothing can be rerun</dd>' +
+      '<dt>A test of</dt><dd>' + esc(forName[CODE[c.id].test_for]) + (CODE[c.id].toward_reader ? '; the deed turned toward ' + esc(readerName[CODE[c.id].toward_reader]) : '') +
+      (CODE[c.id].world_as_test ? '; the world taken for the test' : '') + (CODE[c.id].note ? ': ' + esc(CODE[c.id].note) : '') + '</dd></dl>' +
       '<p class="meta"><a href="' + esc(c.url) + '">the maker’s text</a></p>';
     light();
+    var det = document.getElementById('det'), r = det.getBoundingClientRect();
+    if (r.top > window.innerHeight - 80 && det.scrollIntoView) det.scrollIntoView({ block: 'nearest' });
   }
 
   svg.addEventListener('click', function (e) { var g = e.target.closest('.row'); if (g) show(g.getAttribute('data-id')); });
@@ -193,8 +221,71 @@
     if (!narrow) { var t = el('text', { x: 10, y: H - 4, class: 'm' }, fs); t.textContent = 'no count published for any step'; }
   }
 
+  // ------------------------------------------------------------------ the hour of reading
+  var hs = document.getElementById('hour'), hin = document.getElementById('hourin'), H = SR.hour;
+  function hourDraw() {
+    while (hs.firstChild) hs.removeChild(hs.firstChild);
+    var W = Math.max(320, hs.clientWidth || hs.parentNode.clientWidth || 1000), narrow = W < 640;
+    var lab = narrow ? 0 : 150, x0 = lab + 8, x1 = W - 12, r = narrow ? 4 : 5, D = 340, h = +hin.value;
+    var X = function (d) { return x0 + d / D * (x1 - x0); };
+    var strips = [['the maker’s record', 'seen', H.seen], ['the public record', 'posted', H.posted]];
+    var y = narrow ? 14 : 8, total = 0;
+    var tops = [];
+    strips.forEach(function (st) {
+      // stack dots that would overlap, lowest free level first
+      var lv = [], placed = st[2].map(function (d) { var x = X(d), k = 0; while ((lv[k] || []).some(function (q) { return Math.abs(q - x) < 2 * r + 1; })) k++; (lv[k] = lv[k] || []).push(x); return [d, x, k]; });
+      var depth = lv.length, hgt = depth * (2 * r + 2) + 22;
+      tops.push([y, hgt, st, placed]); y += hgt + (narrow ? 22 : 10);
+    });
+    var Ht = y + 18;
+    hs.setAttribute('viewBox', '0 0 ' + W + ' ' + Ht); hs.setAttribute('width', W); hs.setAttribute('height', Ht);
+    [0, 30, 60, 90, 120, 180, 240, 300].forEach(function (d) {
+      if (narrow && [30, 90, 240].indexOf(d) >= 0) return;
+      el('line', { x1: X(d), x2: X(d), y1: 4, y2: Ht - 16, class: 'grid' }, hs);
+      var t = el('text', { x: d === 0 ? X(d) - 4 : X(d), y: Ht - 4, 'text-anchor': d === 0 ? 'start' : 'middle' }, hs); t.textContent = d === 0 ? 'day 0' : String(d);
+    });
+    tops.forEach(function (tp) {
+      var yy = tp[0], st = tp[2], base = yy + tp[1] - 8;
+      var t = el('text', { x: narrow ? 0 : 0, y: narrow ? yy - 2 : base - 2, class: 'hd' }, hs); t.textContent = st[0];
+      tp[3].forEach(function (p) {
+        var held = p[0] <= h;
+        el('circle', { cx: p[1], cy: base - r - p[2] * (2 * r + 2), r: r, class: held ? 'held' : 'dark', 'data-k': st[1], 'data-d': p[0] }, hs);
+      });
+    });
+    el('line', { x1: X(h), x2: X(h), y1: 2, y2: Ht - 16, class: 'now' }, hs);
+    var ks = H.seen.filter(function (d) { return d <= h; }).length, kp = H.posted.filter(function (d) { return d <= h; }).length;
+    document.getElementById('hoursay').innerHTML = 'Read <b>' + h + '</b> day' + (h === 1 ? '' : 's') + ' after each deed, the maker’s record holds <b>' + ks + '</b> of its ' + H.seen_n +
+      ' deeds; for the other <b>' + (H.seen_n - ks) + '</b> a reading that counts only what it saw writes “no deed”. The public record holds <b>' + kp + '</b> of ' + H.posted_n + '.';
+  }
+  hin.addEventListener('input', hourDraw);
+
+  // ------------------------------------------------------------------ the report's sentences on control
+  var ss2 = document.getElementById('sent'), SN = SEC.sentences, ssel = null;
+  var gradeWord = { measured: 'reports a measured result', open: 'says the matter is open', inferred: 'infers without a measurement' };
+  function sentDraw() {
+    while (ss2.firstChild) ss2.removeChild(ss2.firstChild);
+    var W = Math.max(320, ss2.clientWidth || ss2.parentNode.clientWidth || 1000), narrow = W < 640;
+    var per = narrow ? 8 : 22, gap = narrow ? 6 : 8, sz = Math.min(36, (W - (per - 1) * gap) / per), rows = Math.ceil(SN.length / per);
+    var Ht = rows * (sz + gap) + 4;
+    ss2.setAttribute('viewBox', '0 0 ' + W + ' ' + Ht); ss2.setAttribute('width', W); ss2.setAttribute('height', Ht);
+    SN.forEach(function (s, i) {
+      var x = (i % per) * (sz + gap), y = Math.floor(i / per) * (sz + gap) + 2;
+      var g = el('g', { class: 'sq' + (ssel === s.id ? ' sel' : ''), 'data-id': s.id, tabindex: '0', role: 'button', 'aria-label': 'sentence ' + s.id }, ss2);
+      el('rect', { x: x, y: y, width: sz, height: sz, class: 'g-' + s.grade }, g);
+      if (s.reads) el('circle', { cx: x + sz / 2, cy: y + sz / 2, r: sz / 5, class: 'rd' }, g);
+    });
+  }
+  function sentShow(id) {
+    ssel = id; var s = SN.find(function (x) { return x.id === id; });
+    document.getElementById('sdet').innerHTML = '<p class="meta">Sentence ' + s.id + ', page ' + s.page + ' · the Field: it ' + esc(gradeWord[s.grade]) + ' · this practice: ' +
+      (s.reads ? 'it says the tested can tell, read or game its test' : 'it does not say so') + '</p><blockquote>' + esc(s.text) + '</blockquote>';
+    sentDraw();
+  }
+  ss2.addEventListener('click', function (e) { var g = e.target.closest('.sq'); if (g) sentShow(+g.getAttribute('data-id')); });
+  ss2.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('sq')) { e.preventDefault(); sentShow(+e.target.getAttribute('data-id')); } });
+
   var rt;
-  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { draw(); funnel(); if (sel) show(sel); }, 120); });
-  draw(); funnel();
+  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { draw(); funnel(); hourDraw(); sentDraw(); if (sel) show(sel); }, 120); });
+  draw(); funnel(); hourDraw(); sentDraw(); sentShow(1085);
   window.MARKED_PAGE = { cases: CASES, light: LIGHT };
 })();

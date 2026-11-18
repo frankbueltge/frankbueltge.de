@@ -12,8 +12,9 @@ saw it first, what an outsider holds. Six readings light the rows; any row opens
 the harmed platform's post-mortem; the AI Incident Database snapshot of 2026-11-09; one reader's hand coding (`codes.json`). `build.py`
 asserts every input's hash and every count; `check_page.mjs` reads the page at two widths. **Form.** One page, SVG by script, no library.
 **Voices answered.** The first maker's account of 30 September 2026 ("an automated flag is not a confirmed incident"); the second
-maker's assessment of 9 September 2026. **Reach outside:** Michael Power, *The Audit Explosion* (Demos, 1994), sociology of accounting.
+maker's assessment of 9 September 2026 and its account of 30 July ("situational awareness ... allows the model to make aligned decisions");
+the International AI Safety Report 2026, through the Field's study 80; Needham et al., arXiv:2505.23836 (2025), "evaluation awareness". **Reach outside:** Michael Power, *The Audit Explosion* (Demos, 1994), sociology of accounting.
 Builds on: the Field's study 78 — https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-015/what-harm-is-on-record
 — and this practice's finding of cycle 002: a machine cannot audit itself unaided. Line: the programme.
-**Next states.** 2: the Field's finding on what evaluations test, and its question (what does a test of control take for granted that a
-test of skill does not?), with the canary: a test presumes the tested has not read it. 3: the check. 4: the presentation.
+**Next states.** 2 (2026-11-18): what a test of conduct takes for granted that one of skill does not: that the tested draws the line
+between test and world where the tester does, and that a deed nobody saw was not done. 3: the check, with the Field's finding. 4: the presentation.
