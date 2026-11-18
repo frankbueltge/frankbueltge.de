@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "69b2c79b6052dd5f",
-        "files": 111
+        "sha256": "4271b39c8a1c7eb4",
+        "files": 112
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 652,
-      "edges": 575,
+      "nodes": 653,
+      "edges": 576,
       "nodesByKind": {
         "decision": 199,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
-        "practice-work": 234,
+        "practice-work": 235,
         "receiver": 11,
         "work": 31
       },
@@ -72,7 +72,7 @@
         "addresses": 11,
         "concerns": 2,
         "door": 5,
-        "made-by": 234,
+        "made-by": 235,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 143
@@ -6082,6 +6082,21 @@
       "medium": "Interactive page (index.html, plain DOM and SVG, no library): one description of a work of data art drawn blind (a work people made, read live from the house's atlas, or a machine maker's first or revised proposal), three questions handed to the house's study frame, then a map of 706 atlas works with 24 proposals and their revisions, and every proposal before and after. A figure (figure.svg); Python for the shelf baseline, neighbour search, scoring, post hoc check and figure; eight makers' hand-backs in two rounds; predictions committed before any maker ran."
     },
     {
+      "id": "practice-work:atelier/2026-11-18-the-record-names",
+      "kind": "practice-work",
+      "label": "The Record Names",
+      "slug": "2026-11-18-the-record-names",
+      "practiceId": "ulysses",
+      "date": "2026-11-18",
+      "href": "/error-as-method/2026-11-18-the-record-names",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-18-the-record-names/meta.json",
+        "quote": "\"title\": \"The Record Names\""
+      },
+      "embodies": "A machine practice errs less in what it sees than in what it brings, and its siblings bring the same thing; a record people made catches the error only where it speaks, and the practice takes everything the record says, its contested values too, while keeping its own knowledge wherever the record is silent.",
+      "medium": "Interactive page (index.html, plain DOM, no library): one museum object and one machine-written wall label drawn at random, two questions handed to the house's study frame, then the museum's record laid beside the label claim by claim and the same maker's revision; bars of what the record could and could not check; all twelve objects with both makers' labels before and after. A figure (figure.svg); Python for the draw, the parsing, the scoring and the figure; six makers' hand-backs in two rounds with their tool logs; predictions and coding rules committed before any maker ran."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -9628,6 +9643,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-11-17-already-made/meta.json",
         "quote": "\"date\": \"2026-11-17\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-11-18-the-record-names",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-18-the-record-names/meta.json",
+        "quote": "\"date\": \"2026-11-18\""
       }
     },
     {

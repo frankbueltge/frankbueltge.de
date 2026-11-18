@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Record Names</title>
+<style>
+:root{--bg:#f4f1ea;--fg:#1d1b18;--mute:#6b665c;--card:#fffdf8;--line:#d9d3c5;--plus:#2f7d4f;--minus:#b3261e;--zero:#8a8478;--hi:#1f4e8c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#171614;--fg:#ece8df;--mute:#a39d90;--card:#22201d;--line:#3a3731;--plus:#5fb37f;--minus:#ef6b61;--zero:#8f897d;--hi:#7fa7e0}}
+:root[data-theme="dark"]{--bg:#171614;--fg:#ece8df;--mute:#a39d90;--card:#22201d;--line:#3a3731;--plus:#5fb37f;--minus:#ef6b61;--zero:#8f897d;--hi:#7fa7e0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1060px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:28px;margin:6px 0 2px;font-weight:normal;letter-spacing:.02em}
+h2{font-size:20px;font-weight:normal;margin:44px 0 10px;border-top:1px solid var(--line);padding-top:16px}
+.sub{color:var(--mute);margin:0 0 18px;font-size:15px}
+.small{font-size:13px;color:var(--mute);font-family:system-ui,sans-serif}
+.room{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:760px){.room{grid-template-columns:1fr}}
+.photo{background:var(--card);border:1px solid var(--line);padding:14px;text-align:center}
+.photo img{max-width:100%;max-height:520px}
+.label{background:var(--card);border:1px solid var(--line);padding:16px 18px;box-shadow:0 1px 0 var(--line)}
+.label .head{font-weight:bold;font-size:15px;margin-bottom:8px}
+.label p{margin:0;font-size:15px}
+.tag{font:12px system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin-bottom:6px}
+button{font:14px system-ui,sans-serif;background:var(--card);color:var(--fg);border:1px solid var(--line);padding:6px 10px;margin:3px 4px 3px 0;cursor:pointer;border-radius:3px}
+button.on{background:var(--fg);color:var(--bg)}
+button.go{background:var(--hi);color:#fff;border-color:var(--hi)}
+button:disabled{opacity:.45;cursor:default}
+.q{margin:14px 0 4px;font-family:system-ui,sans-serif;font-size:14px}
+.claim{font-family:system-ui,sans-serif;font-size:13.5px;padding:4px 0 4px 10px;border-left:4px solid var(--zero);margin:3px 0}
+.claim.p{border-color:var(--plus)} .claim.m{border-color:var(--minus);background:color-mix(in srgb,var(--minus) 9%,transparent)}
+.claim .s{color:var(--mute);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em}
+.claim .fate{display:block;color:var(--mute);font-size:12px}
+.record{font-family:system-ui,sans-serif;font-size:13px;background:var(--card);border:1px dashed var(--mute);padding:12px 14px}
+.record div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;border-bottom:1px solid var(--line);padding:2px 0}
+.record b{font-weight:600;color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.grid button{padding:4px;margin:0;height:96px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.grid img{max-width:100%;max-height:86px}
+.bars{font-family:system-ui,sans-serif;font-size:13px}
+.bar{display:flex;height:26px;margin:4px 0 2px;border:1px solid var(--line)}
+.bar span{display:block;height:100%}
+.key{display:inline-block;width:11px;height:11px;margin:0 4px 0 10px;vertical-align:-1px}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:12px}
+@media (max-width:760px){.pair{grid-template-columns:1fr}}
+#reveal{display:none}
+a{color:var(--hi)}
+</style>
+</head>
+<body>
+<main>
+<h1>The Record Names</h1>
+<p class="sub">A machine wrote this wall label from the photograph alone. Would you hang it?</p>
+
+<div class="room">
+  <div class="photo"><img id="img" alt="The object, photographed by the museum"></div>
+  <div>
+    <div class="label" id="lab"><div class="tag">Label, written from the photograph</div><div class="head" id="head"></div><p id="para"></p></div>
+    <div class="q">Would you hang this label beside the object, before seeing the museum's record?</div>
+    <div id="trust"></div>
+    <div class="q">The machine says it <b>saw</b> this in the photograph: <i id="seenclaim"></i>. Can you see it?</div>
+    <div id="see"></div>
+    <p><button class="go" id="done" disabled>Show the museum's record</button> <button id="another">Another object</button></p>
+  </div>
+</div>
+
+<div id="reveal">
+  <div class="pair">
+    <div><div class="tag">The museum's record (The Met, Open Access)</div><div class="record" id="rec"></div></div>
+    <div><div class="tag">Every claim in the label, checked against the record</div><div id="claims"></div>
+      <p class="small"><span class="key" style="background:var(--plus)"></span>the record says so <span class="key" style="background:var(--minus)"></span>the record says otherwise <span class="key" style="background:var(--zero)"></span>the record is silent</p></div>
+  </div>
+  <div class="label" style="margin-top:14px"><div class="tag">The same maker's label after it was sent the record</div><div class="head" id="head2"></div><p id="para2"></p><p class="small" id="changed" style="margin-top:8px"></p></div>
+  <div id="ask" style="margin-top:14px"></div>
+</div>
+
+<h2>What the record could check, and what it could not</h2>
+<div class="bars" id="bars"></div>
+<p class="small" id="finding"></p>
+
+<h2>All twelve objects, two makers each</h2>
+<div class="grid" id="grid"></div>
+<div id="detail"></div>
+
+<p class="small" style="margin-top:40px">Ulysses (the nightly line), Session 180, 2026-11-18. Objects, records and photographs: The Metropolitan Museum of Art, Open Access (CC0), drawn one per department by a fixed seed. Labels: six fresh machine makers, two rounds each. Coding: the conductor, by rules committed before the makers ran. Sources and method: <a href="../../error-as-method/2026-11-18-the-record-names">the work's page</a>.</p>
+</main>
+<script src="face-data.js"></script>
+<script src="/study/client.js"></script>
+<script>
+(function(){
+var D=window.RECORD_NAMES;
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function lab(r,m,o){return D.labels.filter(function(x){return x.round===r&&x.maker===m&&x.object===o})[0]}
+var R1=D.labels.filter(function(x){return x.round===1});
+var ans,drawn,study=null,revealed=false;
+
+function cls(c){return c.r==='R+'?'p':c.r==='R-'?'m':''}
+function claimHTML(c){
+  var verdict=c.r==='R+'?'the record says so':c.r==='R-'?'the record says otherwise':'the record is silent';
+  var f=c.fate?(c.fate==='K'?'kept after the record':c.fate==='D'?'dropped after the record':c.fate):'';
+  return '<div class="claim '+cls(c)+'"><span class="s">'+esc(c.s==='SEEN'?'seen':'known')+' · '+esc(c.k)+' · '+verdict+(c.v==='V?'?' · photograph cannot tell':'')+'</span><br>'+esc(c.t)+
+    (c.note?'<span class="fate">'+esc(c.note)+'</span>':'')+(f?'<span class="fate">→ '+esc(f)+'</span>':'')+'</div>';
+}
+function recHTML(o){return D.objects[o].record.map(function(kv){return '<div><b>'+esc(kv[0])+'</b><span>'+esc(kv[1])+'</span></div>'}).join('')}
+
+function draw(){
+  revealed=false;document.getElementById('reveal').style.display='none';document.getElementById('ask').innerHTML='';
+  drawn=R1[Math.floor(Math.random()*R1.length)];
+  var seen=drawn.claims.filter(function(c){return c.s==='SEEN'&&c.r==='R0'&&c.v});
+  if(!seen.length) seen=drawn.claims.filter(function(c){return c.s==='SEEN'});
+  var sc=seen[Math.floor(Math.random()*seen.length)];
+  ans={label:drawn.maker+drawn.object,claim:drawn.maker+drawn.object+(sc.n<10?'0':'')+sc.n,trust:null,see:null};
+  document.getElementById('img').src=D.objects[drawn.object].img;
+  document.getElementById('head').textContent=drawn.heading;
+  document.getElementById('para').textContent=drawn.paragraph;
+  document.getElementById('seenclaim').textContent='“'+sc.t+'”';
+  [].forEach.call(document.querySelectorAll('#trust button,#see button'),function(b){b.classList.remove('on')});
+  check();
+}
+function buttons(id,opts,field){var box=document.getElementById(id);opts.forEach(function(o){var b=document.createElement('button');b.textContent=o[0];b.onclick=function(){ans[field]=o[1];[].forEach.call(box.children,function(c){c.classList.remove('on')});b.classList.add('on');check()};box.appendChild(b)})}
+buttons('trust',[1,2,3,4,5,6,7].map(function(i){return[String(i)+(i==1?' not at all':i==7?' as it stands':''),i]}),'trust');
+buttons('see',[['yes, I can see it','yes, I can see it'],['no, it shows otherwise','no, the photograph shows otherwise'],['the photograph cannot tell','the photograph cannot tell']],'see');
+function check(){document.getElementById('done').disabled=!(ans.trust&&ans.see); if(revealed&&study) study.submit(ans)}
+document.getElementById('another').onclick=draw;
+document.getElementById('done').onclick=function(){
+  revealed=true;document.getElementById('reveal').style.display='block';
+  document.getElementById('rec').innerHTML=recHTML(drawn.object);
+  document.getElementById('claims').innerHTML=drawn.claims.map(claimHTML).join('');
+  var b=lab(2,drawn.maker,drawn.object);
+  document.getElementById('head2').textContent=b.heading;document.getElementById('para2').textContent=b.paragraph;
+  document.getElementById('changed').textContent=b.changed?'The maker, on what it changed: '+b.changed:'';
+  if(window.HouseStudy){
+    document.getElementById('ask').innerHTML='';
+    study=HouseStudy.mount(document.getElementById('ask'),{study:'error-as-method-the-record-names',
+      onClosed:function(x){document.getElementById('ask').innerHTML='<p class="small">The record of answers is not open at the moment ('+esc(x&&x.reason||'closed')+'). Your answers stay in this page.</p>'},onResult:function(){}});
+    study.submit(ans);
+  } else {document.getElementById('ask').innerHTML='<p class="small">Your answers stay in this page. (On the site, you could add them to this work\'s record here.)</p>'}
+};
+draw();
+
+// ---------- bars ----------
+var all=[];R1.forEach(function(x){x.claims.forEach(function(c){all.push(c)})});
+var n=all.length,p=all.filter(function(c){return c.r==='R+'}).length,m=all.filter(function(c){return c.r==='R-'}).length,z=n-p-m;
+var zk=all.filter(function(c){return c.r==='R0'&&c.s==='KNOWN'}),kept=zk.filter(function(c){return c.fate==='K'}).length;
+function bar(parts){return '<div class="bar">'+parts.map(function(q){return '<span title="'+esc(q[2])+'" style="width:'+(100*q[0]/q[3])+'%;background:'+q[1]+'"></span>'}).join('')+'</div>'}
+var RS=D.results;
+document.getElementById('bars').innerHTML=
+ '<div>Round 1: '+n+' claims in 24 labels, made from photographs alone</div>'+
+ bar([[p,'var(--plus)','record says so',n],[m,'var(--minus)','record says otherwise',n],[z,'var(--zero)','record silent',n]])+
+ '<div class="small">'+p+' the record confirms · '+m+' it contradicts · <b>'+z+' it cannot check</b></div>'+
+ '<div style="margin-top:14px">Sent the record, the makers corrected '+RS.P3.corrected+' of '+RS.P3.of+' contradicted claims. Of the '+zk.length+' claims they had brought from their own knowledge and the record never mentions:</div>'+
+ bar([[kept,'var(--fg)','kept',zk.length],[zk.length-kept,'var(--line)','dropped',zk.length]])+
+ '<div class="small">'+kept+' kept · '+(zk.length-kept)+' dropped · and round 2 carries '+RS.P5.round2_KNOWN_tagged+' claims of the makers\' own knowledge, against '+zk.length+' before</div>';
+document.getElementById('finding').innerHTML='Where both makers of one object were wrong, they were wrong the same way: both placed the Cypriot seal in Syria or Mesopotamia, both called the French couteau de brèche a spearhead, both gave the printmaker Sadahide a death year (1878/79) that the record says is 1873. That last one is not settled: other references give 1878 or 1879 and the museum\'s date rests on one authority. Sent the record, one maker adopted 1873 (“I defer to the museum”), the other dropped the dates.';
+
+// ---------- the twelve ----------
+var g=document.getElementById('grid');
+Object.keys(D.objects).forEach(function(o){var b=document.createElement('button');b.innerHTML='<img alt="object '+o+'" src="'+D.objects[o].img+'">';b.onclick=function(){show(o)};g.appendChild(b)});
+function show(o){
+  var ls=R1.filter(function(x){return x.object===o});
+  var h='<div class="pair"><div class="photo"><img src="'+D.objects[o].img+'" alt="object '+o+'"></div><div><div class="tag">The record</div><div class="record">'+recHTML(o)+'</div></div></div>';
+  ls.forEach(function(a){var b=lab(2,a.maker,o);
+    h+='<div class="pair"><div class="label"><div class="tag">Maker '+a.maker+', from the photograph</div><div class="head">'+esc(a.heading)+'</div><p>'+esc(a.paragraph)+'</p><div style="margin-top:8px">'+a.claims.map(claimHTML).join('')+'</div></div>'+
+       '<div class="label"><div class="tag">Maker '+a.maker+', after the record</div><div class="head">'+esc(b.heading)+'</div><p>'+esc(b.paragraph)+'</p><p class="small" style="margin-top:8px">'+esc(b.changed||'')+'</p></div></div>'});
+  document.getElementById('detail').innerHTML=h;
+}
+})();
+</script>
+</body>
+</html>

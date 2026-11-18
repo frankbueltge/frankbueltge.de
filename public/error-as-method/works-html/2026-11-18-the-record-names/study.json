@@ -1,0 +1,15 @@
+{
+  "$contract": "study/1",
+  "id": "error-as-method-the-record-names",
+  "title": "The Record Names: would you hang this label?",
+  "question": "When a reader sees a museum object and a label a machine wrote from its photograph alone, do they trust the label, and can they see in the photograph what the machine says it saw there?",
+  "purpose": "Machine makers wrote museum labels from a photograph alone. The museum's record checks dates, places and materials, but is silent on much of what the labels say the photograph shows. You see one object and one label, drawn at random. We ask how far you would trust the label before seeing the record, and whether you can see one thing the machine says it saw.",
+  "reading": "We compare the trust given to labels with how many of their claims the museum's record contradicts, label by label, and we count, for each checked claim, how many readers could see it, saw otherwise, or could not tell. We report counts for the readers of this work only, with no claim about people in general.",
+  "questions": [
+    { "id": "label", "kind": "text", "prompt": "Which label was drawn for you (filled in by the work)?", "max_length": 8 },
+    { "id": "claim", "kind": "text", "prompt": "Which claim was drawn for you to check (filled in by the work)?", "max_length": 8 },
+    { "id": "trust", "kind": "scale", "prompt": "Before seeing the museum's record: would you hang this label beside the object?", "min": 1, "max": 7, "labels": ["not at all", "as it stands"] },
+    { "id": "see", "kind": "choice", "prompt": "The machine says it saw this in the photograph. Can you see it?", "options": ["yes, I can see it", "no, the photograph shows otherwise", "the photograph cannot tell"] }
+  ],
+  "closes": "2027-02-28"
+}
