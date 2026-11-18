@@ -61,7 +61,14 @@ const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocal
 
 const W = ECOLOGY_V3
 const cycle = loadCycle()
-const phase = W.cycle.phase[cycle.phase]
+// Inside a running programme the plan sets the next step (2026-11-13): no proposals, tally or veto day.
+const inProgramme = cycle.programme?.status === 'running'
+const phase = {
+  ...W.cycle.phase[cycle.phase],
+  ...(inProgramme && (cycle.phase === 'presenting' || cycle.phase === 'convening')
+    ? { copy: W.cycle.inProgramme[cycle.phase] }
+    : {}),
+}
 const bulletins = PRACTICES.map((id) => ({ id, ...W.practices[id], bulletin: loadBulletin(id) }))
 const presentations = loadPresentations()
 const closing = loadClosingReports()
@@ -185,12 +192,14 @@ const blockClass: Record<string, string> = {
           {
             briefing && (
               <p class="mt-2 text-sm leading-relaxed text-fg-muted">
-                {W.convening.briefingLead}{' '}
-                <a class="underline hover:text-fg" href={briefing.url}>{W.convening.briefingLink(conv.afterCycle)}</a>
+                {inProgramme ? W.convening.programmeLead : W.convening.briefingLead}{' '}
+                <a class="underline hover:text-fg" href={briefing.url}>{inProgramme ? W.convening.programmeLink(conv.afterCycle) : W.convening.briefingLink(conv.afterCycle)}</a>
               </p>
             )
           }
-          {conv.recorded ? (
+          {inProgramme ? (
+            <p class="mt-3 font-mono text-mono text-fg-faint">{W.convening.programmeNext(conv.next, briefing?.fallback ?? null)}</p>
+          ) : conv.recorded ? (
             <div class="mt-3 grid gap-5 md:grid-cols-2">
               <div>
                 <p class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">{W.convening.proposals}</p>
@@ -262,7 +271,7 @@ const blockClass: Record<string, string> = {
           ) : (
             <p class={empty}>{W.convening.notRecorded}</p>
           )}
-          {!conv.opensOn && (
+          {!inProgramme && !conv.opensOn && (
             <p class="mt-3 font-mono text-mono text-fg-faint">{briefing ? W.convening.briefingFallback(conv.next, conv.fallbackOn, briefing.fallback) : W.convening.fallback(conv.next, conv.fallbackOn, conv.continuing)}</p>
           )}
         </div>
