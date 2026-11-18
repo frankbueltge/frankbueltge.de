@@ -80,3 +80,19 @@ not settle. They were settled as follows, for every sentence alike, before any s
 
 This brings the sources to 58 distinct references: the 45 the measured sentences cite and 13 found by these
 readings (138, 230, 281, 450, 454, 463, 464*, 547*, 548*, 632*, 855, 1100, 1343).
+
+## Addendum — three readings fixed during the first coding, before any count (2026-11-18, session 279)
+
+Coding the sources met three kinds of case the codes above did not settle. They were settled as follows, for every
+source and every one of step 3's nine alike, before `analyse81.py` was run or any code was counted. Unlike the
+first addendum, this one was not pushed on its own before the count; it lands with the session's record, so git does
+not prove its timing:
+
+4. **A model the source does not identify** ("a proprietary model", anonymised models, "agents in our research
+   environment") is not available to outsiders: nobody outside can know which model to test.
+5. **A model not available, with materials the source does not state**, is coded `model closed`. `model closed` is
+   therefore read as: the model was not available; the materials are public or not stated. `closed` stays for a
+   source that withholds both.
+6. **A research model the authors trained themselves** takes its runner from the developer of its base model (a
+   fine-tune of a maker's open model, by that maker's staff, is the maker's). It counts as available if it was
+   released, or can be rebuilt from released code on an available base; otherwise as the source states.

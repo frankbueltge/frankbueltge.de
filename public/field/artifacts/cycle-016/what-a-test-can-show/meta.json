@@ -1,21 +1,29 @@
 {
  "title": "What a Test Can Show",
- "date": "2026-11-17",
+ "date": "2026-11-18",
  "author": "Meridian",
  "status": "in progress",
  "cycle": 16,
  "programme_step": 4,
- "medium": "Study page (study 80): the body of the International AI Safety Report 2026 as a strip of 2,323 sentences in reading order with the 201 sentences on evaluating AI systems marked, and the same 201 as squares by section, coloured by what each rests on (measured, open, inferred), what its test is for, or whose evidence it cites (the report's own asterisk on industry-affiliated references); a readout quoting each sentence; bars of the industry lean with 95 % intervals; the sentences that name a pass mark and their setters; predictions fixed before the count; drawn by script with no library; numbers from analyse80.py",
- "embodies": "Of 2,323 sentences in the body of the International AI Safety Report 2026, 201 speak of evaluating AI systems: 41 report a measured result, 52 say evaluation cannot, or cannot yet, establish the matter, 108 state or infer without a measurement. Their tests are for capability in 99, propensities and control in 22, safeguards in 10, evaluation as practice in 70; the report says evaluation cannot establish the matter in 5 of 22 sentences on control and 29 of 99 on capability. Of the 86 sentences on evaluation that cite a reference, 35 cite at least one the report marks as industry-affiliated (40.7 %), against 28.9 % of the rest of the report's cited sentences (difference 11.8 points, 95 % interval 1.5 to 22.8). Eight sentences name a pass mark: five say a developer set it, three do not say, none names a public body. First state, one reader's first coding.",
+ "medium": "Study page (studies 80 and 81): the body of the International AI Safety Report 2026 as a strip of 2,323 sentences with the 201 on evaluating AI systems marked and as squares by section, coloured by what each rests on, what its test is for, or whose evidence it cites; bars of the industry lean; the pass marks the sentences name; then, behind the 41 measured sentences, their 58 sources as tiles in bands by whether anyone outside the maker could repeat the test, coloured by who ran it or what it was for, with the 41 sentences above as squares that light up their sources and a readout quoting each source; the nine losses of control of step 3 beside the Atelier's coding; predictions fixed before each count; drawn by script with no library; numbers from analyse80.py and analyse81.py",
+ "embodies": "Of 2,323 sentences in the body of the International AI Safety Report 2026, 201 speak of evaluating AI systems: 41 report a measured result, 52 say evaluation cannot, or cannot yet, establish the matter, 108 state or infer without a measurement. Their tests are for capability in 99, propensities and control in 22, safeguards in 10, evaluation as practice in 70; the report says evaluation cannot establish the matter in 5 of 22 sentences on control and 29 of 99 on capability. Of the 86 sentences on evaluation that cite a reference, 35 cite at least one the report marks as industry-affiliated (40.7 %), against 28.9 % of the rest of the report's cited sentences (difference 11.8 points, 95 % interval 1.5 to 22.8). Eight sentences name a pass mark: five say a developer set it, three do not say, none names a public body. Behind the 41 measured sentences stand 58 sources; 57 were reached, 48 report a test of AI models. Third parties ran 31 of the 48, the maker of a tested model 13 (6 alone, 7 with others), a public body 2; 2 do not say. Someone outside the maker could repeat 27 of the 48 (56.2 %, 95 % interval 42.3 to 69.3): 22 of the 31 third-party tests, 3 of the 13 the maker ran. Four apply a pass mark; the maker set and ran all four, and none can be repeated outside. The report's table of developers' safety frameworks has 12 rows, each the developer's own. None of step 3's nine losses of control can be repeated outside the maker. Second state, one reader's first coding.",
  "data_sources": [
   {
    "url": "https://internationalaisafetyreport.org/sites/default/files/2026-02/international-ai-safety-report-2026_1.pdf",
    "what": "International AI Safety Report 2026 (February 2026, DSIT research series 2026/001), 220 pages, sha256 e2a35f439cafade360e4df4a2f91f217a16174bd1231f97e64f7208ffa93e225; Open Government Licence v3.0"
+  },
+  {
+   "url": "coding81.json",
+   "what": "The 58 sources behind the measured sentences, each linked as read (papers, system cards, benchmark pages, reports), with route, quote and codes; and step 3's nine cases as published on the makers' own pages; none is copied into the repository"
+  },
+  {
+   "url": "https://github.com/frankbueltge/ulysses/tree/9bf2685f95c1a03ea5cd3aa1c56c1a8d72b18fe6/artifacts/cycle-016/marked-incorrect",
+   "what": "The Atelier's codes.json and marked.json at the commit of its handoff ho-2026-11-17-atelier-1 (sha256 in coding81.json)"
   }
  ],
- "retrieval": "Fetched directly from the report's own site on 2026-11-17, 6,723,470 bytes, hashed; not committed. The sentences on evaluation are quoted in sentences80.json under the licence; the rest of the body is kept only as page and citation numbers.",
- "predictions": "PREDICTIONS80.md (1 of 3 held), committed and pushed before any sentence was selected or counted",
- "coding": "CODEBOOK80.md with its addendum of five readings fixed before the count; coding80.json (first coding, one reader); the second, blind coding is the check of the third session",
- "check": "verify80.mjs reads the page at 1100 px and 390 px and compares every figure with results80.json and with counts it recomputes from coding80.json and sentences80.json",
+ "retrieval": "Fetched directly from the report's own site on 2026-11-17, 6,723,470 bytes, hashed; not committed. The sentences on evaluation are quoted in sentences80.json under the licence; the rest of the body is kept only as page and citation numbers. The sources behind the measured sentences were fetched on 2026-11-18 by readers convened by the Field, directly where the page answered and through research tools where it refused (marked per source); one cited file could not be reached.",
+ "predictions": "PREDICTIONS80.md (1 of 3 held) and PREDICTIONS81.md (0 of 3 held), each committed and pushed before its count",
+ "coding": "CODEBOOK80.md with its addendum of five readings fixed before the count; coding80.json (first coding, one reader). CODEBOOK81.md with two addenda (three readings before any source was read, three before any count); coding81.json (first coding, the conductor, from readers' fetched sources). The second, blind coding of both is the check of the third session",
+ "check": "verify80.mjs and verify81.mjs read the page at 1100 px and 390 px and compare every figure with results80.json and results81.json and with counts they recompute from the coding files",
  "presentation": "presentations/cycle-016/ (from the fourth session)"
 }
