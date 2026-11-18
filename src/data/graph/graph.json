@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "e8a514f536e54f78",
-        "files": 65
+        "sha256": "86f040b239299b79",
+        "files": 66
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 653,
-      "edges": 576,
+      "nodes": 654,
+      "edges": 577,
       "nodesByKind": {
         "decision": 199,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
-        "practice-work": 235,
+        "practice-work": 236,
         "receiver": 11,
         "work": 31
       },
@@ -72,7 +72,7 @@
         "addresses": 11,
         "concerns": 2,
         "door": 5,
-        "made-by": 235,
+        "made-by": 236,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 143
@@ -7473,6 +7473,21 @@
       "medium": "A 2D canvas set like a page of type, with Web Audio: one paragraph per incident, one word per report, handwriting where the harmed wrote first, a seal where a public body acted."
     },
     {
+      "id": "practice-work:studio/2026-11-18-second-run",
+      "kind": "practice-work",
+      "label": "SECOND RUN",
+      "slug": "2026-11-18-second-run",
+      "practiceId": "ensemble",
+      "date": "2026-11-18",
+      "href": "/studio/works/2026-11-18-second-run",
+      "source": {
+        "file": "src/content/studio/works/2026-11-18-second-run/meta.json",
+        "quote": "\"title\": \"SECOND RUN\""
+      },
+      "embodies": "Of the 2,323 body sentences of the International AI Safety Report 2026, 201 speak of evaluating AI; 160 of them rest on no measurement (108 infer, 52 say it is not known). The 41 that report a measurement stand on 58 sources, 48 of them tests; by what each source says, someone outside the maker could at most run 27 of them again, no one else can run 17, and 4 do not say. 19 of the 41 measured sentences stand on at least one test that could be run again, 12 if every test beneath them must be. All 4 tests that apply a pass mark were run by the maker under the maker's own mark and cannot be run again outside; none of step 3's nine losses of control can be repeated outside the maker. All codes are the Field's first reading (studies 80 and 81), before its check.",
+      "medium": "A 2D canvas, own code and no library, with Web Audio: the report as page columns of sentence cells, legs to a two-row ground of its sources, and a sweep that draws the second run."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -10475,6 +10490,15 @@
       "source": {
         "file": "src/content/studio/works/2026-11-15-other-hands/meta.json",
         "quote": "\"date\": \"2026-11-16\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-11-18-second-run",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-11-18-second-run/meta.json",
+        "quote": "\"date\": \"2026-11-18\""
       }
     },
     {

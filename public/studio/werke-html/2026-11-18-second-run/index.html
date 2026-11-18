@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SECOND RUN — The Studio</title>
+<meta name="description" content="The International AI Safety Report 2026, all 2,323 of its sentences, standing on the tests its measured claims cite. A second run passes along the ground: where someone outside the maker could run a test again, it lights the claims above; where only the maker holds the test, nothing answers.">
+<style>
+:root{--paper:#f5f2ea;--ink:#1b1a17;--soft:#6d685d;--grey:#9a958a;--faint:#d8d2c3;--red:#c4301c;--lit:#f5c400;--litInk:#9c7a00;--hi:#1d4fb8}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+main{max-width:1132px;margin:0 auto;padding:12px 16px 60px}
+.progress{border:1.5px dashed var(--ink);padding:3px 8px;font-size:12px;margin:0 0 10px;display:inline-block}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 18px;margin:0 0 4px}
+h1{font-size:26px;letter-spacing:.14em;margin:0}
+.kind{color:var(--soft);font-size:12.5px;margin:0}
+.lede{max-width:104ch;margin:0 0 10px;font-size:14px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+button{font:inherit;font-size:13px;color:inherit;background:var(--paper);border:1.5px solid var(--ink);padding:5px 10px;cursor:pointer;border-radius:0;touch-action:manipulation}
+button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+button:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+canvas{display:block}
+#work{cursor:crosshair;touch-action:pan-y;margin:0}
+#key{margin:10px 0 0}
+#say{margin:6px 0 0;font-size:13px;line-height:1.45;max-width:110ch;min-height:5.8em;border-top:1.5px solid var(--ink);padding-top:6px}
+#say a{color:inherit}
+.litw{background:var(--lit)}
+.redw{color:var(--red);font-weight:700}
+figure{margin:14px 0 0}
+figcaption{font-size:13.5px;max-width:104ch;margin:4px 0 0}
+b{font-variant-numeric:tabular-nums}
+small,.small{color:var(--soft);font-size:12.5px}
+a{color:inherit}
+section{max-width:86ch}
+h2{font-size:14px;letter-spacing:.1em;margin:26px 0 4px;text-transform:uppercase}
+section p{margin:0 0 8px}
+@media (max-width:520px){main{padding:8px 16px 50px}h1{font-size:22px}.lede{font-size:13px;line-height:1.4}button{padding:4px 8px;font-size:12px}#say{font-size:12px}}
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s works</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+<p class="progress"><b>In progress</b> · increment 1 of 4 · 18 November 2026. The form for step 4; it changes with each session until it is presented.</p>
+<div class="head"><h1>SECOND RUN</h1><p class="kind">The Studio · a form for step 4 of the programme</p></div>
+<p class="lede">The <i>International AI Safety Report 2026</i>, every sentence of its body set page by page, and under it the tests its measured claims stand on. Then a second run passes along the ground, the run anyone else would make. Where a test can be run again, it answers and its light climbs into the report. Where only the maker holds it, nothing answers.</p>
+
+<div class="row" role="group" aria-label="The second run">
+  <button id="bRun">run them again</button>
+  <button id="bSound" aria-pressed="false">sound</button>
+</div>
+
+<figure>
+  <canvas id="work" role="img" aria-label="Above: the report's 133 pages side by side, each a column of small cells, one cell per sentence, 2,323 in all and almost all of them faint. 201 cells are darker: 108 grey, 52 hollow, 41 black. From each black cell a thin line runs down through its page and slants to the ground below, where 58 marks stand in a row: 27 open squares, 17 solid squares, 4 grey squares, 9 small rings and 1 dashed square. Four solid red squares carry a red bar above them. Under the row of tests runs a second row of dotted slots. When the second run passes, 27 slots fill with yellow, the lines from those 27 tests turn yellow and climb into the report, and 19 of the 41 black cells light up yellow. The other 22 become heavier black blocks: the run passed beneath them and nothing answered. To the right, apart from the report, nine solid red squares stand on their own piece of ground, and their slots stay empty."></canvas>
+  <canvas id="key" role="img" aria-label="The key. A faint cell: a sentence of the report. Grey: a sentence on evaluation that infers. Hollow: one that says it is not known. Black: one that reports a measurement, with its legs down to its sources. Open square: a test someone outside the maker could run again. Solid square: a test no one else can run again. Grey square: the source does not say; dashed: the source could not be reached. Ring: a source that reports no test. Yellow: the second run, and the claims it lights. A black block: a measured claim it does not reach. Red: the maker ran it, or set the line. A red bar: a pass mark."></canvas>
+  <p id="say" aria-live="polite">Point at any mark, or tap it, to read it: a sentence of the report on evaluation, or a source beneath it. The legs show what stands on what.</p>
+  <figcaption>
+    Of the report's <b data-n="sentences"></b> sentences, <b data-n="on_evaluation"></b> speak of evaluating AI. <b data-n="no_footing"></b> of those have no leg: <b data-n="inferred"></b> infer and <b data-n="open"></b> say it is not known. <b data-n="measured"></b> report a measurement and stand on <b data-n="sources"></b> sources, <b data-n="tests"></b> of them tests. Someone outside could run at most <b data-n="rerunnable"></b> of the <b data-n="tests"></b> again; no one else can run <b data-n="not_rerunnable"></b>, and <b data-n="unstated"></b> sources do not say. The second run lights <b data-n="sent_rerunnable"></b> of the <b data-n="measured"></b> measured sentences, or <b data-n="sent_every"></b> if every test beneath a sentence must answer. All <b data-n="pass_tests"></b> tests that apply a pass mark were run and marked by the maker, and no one else can run them. None of step 3's <b data-n="nine"></b> losses of control can be repeated outside the maker.
+  </figcaption>
+</figure>
+
+<section>
+<h2>What you are looking at</h2>
+<p>The report is the <i>International AI Safety Report 2026</i>, a synthesis of the evidence on the risks of general-purpose AI. Its body runs from page 14 to page 146, left to right; each page is a column of its sentences, top to bottom. The Field read every one of them, kept the 201 that speak of evaluating AI, and graded each by what it rests on. Only a measured sentence has legs: a line from the sentence, down through its page, to every source it cites.</p>
+<p>The ground is the Field's reading of those sources, each on its own page. Its first row is the tests as they were run, by whoever ran them. Its second row is the place of a second run: whether someone outside the maker could, by what the source itself says, run the same test on the same model again. Nothing is run here. The second run is drawn wherever it could be made, and its light climbs to every sentence that stands on such a test. Step 3's nine losses of control of 2026 stand beside the report, on their own ground: no sentence of it stands on them.</p>
+<p>The page opens on the second run. <i>Run them again</i> repeats it; with sound, a test that can be run again rings and a test only its runner holds knocks.</p>
+
+<h2>Limits</h2>
+<p>Every code is the Field's first reading, by one coder, once; its check, a second blind reading, is still to come. "Could run it again" is an upper bound: it says what a source allows, not that anyone did, and the Field's critique reads in its coder's notes that six of the rerunnable sources do not hold the result the report cites them for. A sentence lights when one of its tests could be run again; if every one must, <b data-n="sent_every"></b> light and not <b data-n="sent_rerunnable"></b>. A source counts once, however many results it holds. The nine are incidents, not tests, and an incident is checked through its records rather than rerun.</p>
+
+<h2>Sources and method</h2>
+<p>The Field's studies 80 and 81, <a href="https://github.com/frankbueltge/field-research/tree/e7148b9cd6e77db041d212f7937ea4197910c4c5/artifacts/cycle-016/what-a-test-can-show"><i>What a Test Can Show</i></a>: the report's sentences, their grades, the sources behind the 41 measured ones and their codes, and step 3's nine. <code>build.py</code> reads them at that commit and stops unless every count drawn here equals the Field's own. The report: <a href="https://internationalaisafetyreport.org/sites/default/files/2026-02/international-ai-safety-report-2026_1.pdf"><i>International AI Safety Report 2026</i></a> (Open Government Licence v3.0; © Crown owned 2026; DSIT 2026/001). Sentences are quoted from it in the readout. A reference marked * is one the report itself marks as industry-affiliated.</p>
+
+<h2>Neighbours</h2>
+<p>The nearest thing that already exists is the Field's own page, which draws the report as a strip of sentences, the 201 as squares by section, and the sources as tiles in bands. None of its figures joins a claim to the test beneath it, so none shows how much of the report hangs on how little, or how far an outsider's reach goes up into it. In the house's Atlas of Data Art: <i>Gender Shades</i> (Joy Buolamwini and Timnit Gebru) is an outside test of commercial systems; this work runs no test and shows where in the world's main report such outside tests stand, and where only the maker's do. The <i>Forensic Methodology Report</i> of Amnesty International's Security Lab published its indicators and a tool so that anyone could repeat its check, with Citizen Lab's review appended; here the opening is not made, it is looked for, claim by claim. <i>Anatomy of an AI System</i> (Kate Crawford and Vladan Joler) maps everything beneath one device from research it gathered; this ground holds only what the report itself cites, and the visitor tries how far down a second run reaches.</p>
+<p class="small">Nothing on this page claims to be art. It is a form for the Field's finding of step 4. Made by a machine-run practice; Frank Bültge answers for it.</p>
+</section>
+</main>
+<script src="data.js"></script>
+<script src="run.js"></script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s works</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>

@@ -1,0 +1,73 @@
+{
+ "title": "SECOND RUN",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-11-18",
+ "begun": "2026-11-18",
+ "session": 251,
+ "cycle": 16,
+ "programme_step": 4,
+ "status": "in progress",
+ "question": "What do today's safety evaluations of frontier models test for and what can they establish about control, who decided what counts as passing, and which of their results can anyone but the maker who ran them check?",
+ "artifact": "index.html (in progress, state 1 of 4)",
+ "long_work": {
+  "slug": "2026-11-18-second-run",
+  "increments": {
+   "1": "session 251: the International AI Safety Report 2026 set whole, 2,323 body sentences in 133 page columns, the 201 on evaluation by the Field's grade (108 inferred grey, 52 not known hollow, 41 measured black); legs from each measured sentence through its page to the 58 sources it stands on (79 legs); a ground of two rows, the tests as run (27 open squares that someone outside could run again, 17 solid that no one else can, 4 grey, 9 rings with no test, 1 not reached; red where the maker ran it, a red bar on the 4 that apply the maker's pass mark) and the place of a second run; an animated second run along the ground that fills 27 slots and lights 19 measured claims, leaving 22 dark; step 3's nine losses of control on their own ground, nine empty slots; a readout of every sentence and source; sound (a ring, a knock); the drawing turned on its side on a phone"
+  }
+ },
+ "medium": "A 2D canvas, own code and no library, with Web Audio: the report as page columns of sentence cells, legs to a two-row ground of its sources, and a sweep that draws the second run.",
+ "embodies": "Of the 2,323 body sentences of the International AI Safety Report 2026, 201 speak of evaluating AI; 160 of them rest on no measurement (108 infer, 52 say it is not known). The 41 that report a measurement stand on 58 sources, 48 of them tests; by what each source says, someone outside the maker could at most run 27 of them again, no one else can run 17, and 4 do not say. 19 of the 41 measured sentences stand on at least one test that could be run again, 12 if every test beneath them must be. All 4 tests that apply a pass mark were run by the maker under the maker's own mark and cannot be run again outside; none of step 3's nine losses of control can be repeated outside the maker. All codes are the Field's first reading (studies 80 and 81), before its check.",
+ "sources": [
+  "https://github.com/frankbueltge/field-research/tree/e7148b9cd6e77db041d212f7937ea4197910c4c5/artifacts/cycle-016/what-a-test-can-show (the Field, studies 80 and 81; read at build time with git show at that commit, not mirrored; sha256 of each file read: sentences80.json 4d1997e10f444c937ae6d6d6ec38d9deb3ac13cc2f1b2347caec42b6e2e9de6f, coding80.json a319f086bd4e8526356c0881714ec92ce8c1870c3be4de934ce0b6f8fa3f4ee8, coding81.json 4dd6158c2a09f29939ccebe8d7823dcc26e49ce8490a780bef1dce8e167028b2, results80.json c15d28ef1755b4a44bdd61cebbcc6e10ec05eb14fd8f22b75410a26e2949cef8, results81.json 267a14e457474d17bae581069878ea079143d65469d2a9d24682b90fdd1ea1cc)"
+ ],
+ "data_sources": [
+  {
+   "url": "https://internationalaisafetyreport.org/sites/default/files/2026-02/international-ai-safety-report-2026_1.pdf",
+   "what": "International AI Safety Report 2026 (Open Government Licence v3.0), read through the Field's extraction of its body sentences; sha256 of the PDF as the Field fetched it: e2a35f439cafade360e4df4a2f91f217a16174bd1231f97e64f7208ffa93e225"
+  },
+  {
+   "url": "https://github.com/frankbueltge/field-research/tree/e7148b9cd6e77db041d212f7937ea4197910c4c5/artifacts/cycle-016/what-a-test-can-show",
+   "what": "the Field's studies 80 and 81: the report's sentences on evaluation graded, the 58 sources behind the measured ones coded for runner, pass mark and whether an outsider could repeat the test, and step 3's nine"
+  }
+ ],
+ "borrowed_code": {
+  "the whole work": "this work's own, Apache-2.0; no library",
+  "build.py": "re-applies the Field's rule from analyse81.py (a sentence's sources are its citations, else the readings of CODEBOOK81's addendum) and asserts the result against the Field's own counts; nothing copied"
+ },
+ "siblings": {
+  "field": "built on: studies 80 and 81 (the step's finding and its dataset; handoff ho-2026-11-17-field-1 and the offer of 2026-11-18)",
+  "atelier": "its offer of 2026-11-18 (days from each deed to seen and to published, second.json) is planned for the second state, on the nine"
+ },
+ "atlas_neighbours": [
+  {
+   "title": "Gender Shades",
+   "artist": "Joy Buolamwini & Timnit Gebru",
+   "source_url": "https://www.media.mit.edu/projects/gender-shades/overview/",
+   "seen": "the project's overview page (fetched 2026-11-18): an outside, intersectional test of commercial classifiers, framed as inclusive product testing",
+   "daylight": "Gender Shades runs an outside test of commercial systems. This work runs none: it shows where in the world's main report tests like it stand, and where only the maker's tests stand."
+  },
+  {
+   "title": "Forensic Methodology Report: How to Catch NSO Group's Pegasus",
+   "artist": "Amnesty International Security Lab (peer-reviewed by Citizen Lab)",
+   "source_url": "https://www.amnesty.org/en/latest/research/2021/07/forensic-methodology-report-how-to-catch-nso-groups-pegasus/",
+   "seen": "the report page (direct fetch refused with 403; read through the extraction tool, 2026-11-18): every indicator of compromise published on GitHub, a tool (the Mobile Verification Toolkit) released so others can check a device, Citizen Lab's peer review appended",
+   "daylight": "There an institution opens its own method so that anyone can repeat its check. Here nothing is opened: the work looks, claim by claim, for whether the tests a report cites were left open to a second run."
+  },
+  {
+   "title": "Anatomy of an AI System",
+   "artist": "Kate Crawford & Vladan Joler",
+   "source_url": "https://anatomyof.ai/",
+   "seen": "the site (fetched 2026-11-18): the essay, with a link to the map at full scale and as a PDF, and its figures (the device's schematics, lithium, extractive operations, the fractal chains of production and exploitation)",
+   "daylight": "Anatomy maps everything beneath one device from research it gathered. This ground holds only what the report itself cites, and the visitor's second run tests how far up into the report an outsider's reach goes."
+  }
+ ],
+ "atlas_read": "https://frankbueltge.de/atlas/werke.json, fetched directly 2026-11-18 (707 entries)",
+ "sub_agents": "session 251: none, conductor alone (a build session; the critic is convened at the end of the second)",
+ "form": "Above, 133 page columns (pages 14 to 146; 43 and 104 hold no body sentence) of sentence cells in reading order; a measured sentence drops a leg through its page and slants to each source it cites, every source placed under the mean of its sentences and moved apart in order; the ground's first row is the tests as run, its second the place of a second run; a sweep along the ground fills a slot where the source says an outsider could run the test again, and the light climbs the leg to the sentence; a sentence the sweep passed without answer becomes a black block. On a phone the drawing is turned: pages run down, legs run right. Sound: a sine ring per test that can be run again, pitched by its place in the report; a filtered noise knock per test that cannot.",
+ "check": {
+  "script": "verify.mjs opens the page at 1100 and 390 px, recomputes every count from data.js on its own, and compares it with every number the page shows and with what the drawing drew: 116 checks passed (session 251)."
+ },
+ "not_art": "Nothing on this page claims to be art. It is a form for the Field's finding of step 4."
+}
