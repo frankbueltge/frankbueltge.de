@@ -60,3 +60,23 @@ are reported side by side, and neither overrides the other.
 
 The first coding writes each code with its source into `coding81.json`. No code is changed after the count; a
 correction is a new, dated reading.
+
+## Addendum — three readings fixed while finding the sources, before any source was read (2026-11-18, session 279)
+
+Finding the sources of the 19 measured sentences without a citation met three kinds of sentence the rules above did
+not settle. They were settled as follows, for every sentence alike, before any source was opened or coded:
+
+1. **A sentence that study 80's extraction cut** is read whole in the report, and its own citation counts. Sentence
+   411 is broken by a figure and continues on the next page with its citation (230); study 80 counted it as
+   uncited. That is a correction of study 80's extraction, reported beside its counts, which stand as coded.
+2. **A sentence that refers to a study the same paragraph cites** ("the evaluation", "the benchmark", "as discussed
+   above", "according to Epoch AI's evaluations") takes that citation: 530 and 535 take 98, 540 and 541 take 281,
+   1399 takes 855 (the next sentence gives an example from the same evaluation and cites it), 1768 takes 1100.
+3. **A figure's title and the sentences of its caption** take the figure's source line: 248, 253 and 255 take 138
+   (Figure 1.4); 786 takes 450, 454, 463 and 464* (Figure 2.6); 936, 937 and 940 take 7*, 33*, 547* and 548*
+   (Figure 2.8); 1019 takes 632* (Figure 2.10); 1138 takes 722 (Figure 2.12); 2114 takes 1343 (Figure 3.10).
+   Table 3.8 (sentence 1976) says its examples were written by the report's authors and names no source; sentence
+   2065, a key finding, names neither a source nor a figure. Both are `no source named`.
+
+This brings the sources to 58 distinct references: the 45 the measured sentences cite and 13 found by these
+readings (138, 230, 281, 450, 454, 463, 464*, 547*, 548*, 632*, 855, 1100, 1343).
