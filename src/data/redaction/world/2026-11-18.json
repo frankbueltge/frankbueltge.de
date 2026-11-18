@@ -1,0 +1,144 @@
+{
+  "date": "2026-11-18",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-18T14:34:10Z",
+    "counts": {
+      "botwall": 9,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 287,
+      "other": 2,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 290,
+    "excluded_unverifiable": 10,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0193
+    ],
+    "gone_rate": 0.0034,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0131
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-16",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "kesq.com",
+        "first_seen": "20261116010000",
+        "http_code": 404,
+        "title": "Estonia to shut its border with Russia, blaming Moscow for foiled arson plot",
+        "url": "https://kesq.com/news/national-world/cnn-world/2026/11/15/estonia-to-shut-its-border-with-russia-blaming-the-kremlin-for-failed-arson-attack/"
+      }
+    ],
+    "sample_drawn_at": "2026-11-17T14:48:30Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5427,
+      "replaced": 5212,
+      "trivial": 934,
+      "update": 461
+    },
+    "day": "2026-11-17",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Lori",
+          "Huang"
+        ],
+        "after": "Lori Huang: In the early 1980s, the teenagers met as lab partners; in 1985, they tied the knot: All we know about Lori Huang, Nvidia CEO Jensen Huang's wife of over 40 years",
+        "before": "Nvidia: In the early 1980s, the teenagers met as lab partners; in 1985, they tied the knot: All we know about Lori Huang, Nvidia CEO Jensen Huang's wife of over 40 years",
+        "detected": "2026-11-17T05:32:10Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Nvidia"
+        ],
+        "similarity": 1.0,
+        "url": "https://timesofindia.indiatimes.com/relationships/in-the-early-1980s-the-teenagers-met-as-lab-partners-in-1985-they-tied-the-knot-all-we-know-about-lori-huang-nvidia-ceo-jensen-huangs-wife-of-over-40-years/articleshow/135700132.cms",
+        "weight": 6,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "GH",
+          "GH"
+        ],
+        "after": "Government Approves GH¢25.04 and GH¢28.79 Daily Minimum Wage Increases for 2027 and 2028 – Ghanamma.com",
+        "before": "Government Approves GHÂ¢25.04 and GHÂ¢28.79 Daily Minimum Wage Increases for 2027 and 2028 – Ghanamma.com",
+        "detected": "2026-11-17T19:48:15Z",
+        "domain": "ghanamma.com",
+        "removed": [
+          "GHÂ",
+          "GHÂ"
+        ],
+        "similarity": 0.889,
+        "url": "https://www.ghanamma.com/2026/11/10/government-approves-gh%C2%A225-04-and-gh%C2%A228-79-daily-minimum-wage-increases-for-2027-and-2028/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Emer",
+          "Currie"
+        ],
+        "after": "Emer Currie: 'There was sadness that people would feel that way about your mom and dad' – The Irish Times",
+        "before": "Uniting Ireland: 'There was sadness that people would feel that way about your mom and dad' – The Irish Times",
+        "detected": "2026-11-17T09:04:02Z",
+        "domain": "irishtimes.com",
+        "removed": [
+          "Uniting",
+          "Ireland"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.irishtimes.com/politics/2026/11/16/conversations-on-a-united-ireland-there-was-sadness-people-would-feel-that-way-about-your-mom-and-dad/",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 13819,
+      "PAGE_TEXTCHANGE": 126098,
+      "PAGE_TITLECHANGE": 47271,
+      "UNCHANGED_CONTENT": 697782
+    },
+    "title_changes_en": 12034,
+    "trace": [
+      {
+        "bytes_billed": 24117248,
+        "created": "1795012170219",
+        "job_id": "world_gdg_counts_20261117",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 223346688,
+        "created": "1795012175768",
+        "job_id": "world_gdg_titles_20261117",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-18T14:34:10Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-17.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
