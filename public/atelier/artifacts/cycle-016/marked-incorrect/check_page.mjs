@@ -165,6 +165,36 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
     ok(on === t.deeds.length && say.includes(t.short), `${w}px test ${t.ref} lights ${on} deeds`);
     await p.$eval(`#cw .tst[data-ref="${t.ref}"] rect`, e => e.dispatchEvent(new MouseEvent('click', { bubbles: true })));
   }
+  // the line, both ways (the presentation, 2026-11-19): recounted here from second_codes.json, not from the page's own sort
+  {
+    const K = Object.entries(codes.cases);
+    const inside = K.filter(([, k]) => k.toward_reader), across = K.filter(([, k]) => k.world_as_test);
+    const both = inside.filter(([, k]) => k.world_as_test).length, n12 = inside.length + across.length - both, rest = K.length - n12;
+    const told = across.filter(([id]) => id.startsWith('B-')).length;
+    ok(inside.length === SR.toward_n && across.length === SR.world_n && told === SR.world_told, `both ways: ${inside.length} inside, ${across.length} across, ${told} told, as second.json`);
+    const bt = await p.$$eval('[data-b]', es => es.map(e => [e.getAttribute('data-b'), e.textContent]));
+    const want = { n: n12, inside: inside.length, across: across.length, both };
+    ok(bt.length === 4 && bt.every(([k, t]) => num(t) === want[k]), `${w}px both-ways figures in the text ${JSON.stringify(bt)}`);
+    ok((await p.$$('#both .dd[data-side="in"]')).length === inside.length && (await p.$$('#both .dd[data-side="ac"]')).length === across.length && (await p.$$('#both rect.rest')).length === rest, `${w}px both ways draws ${inside.length} + ${across.length} deeds and ${rest} others`);
+    ok((await p.$$('#both line.cx')).length === both, `${w}px ${both} deed joined across the line`);
+    for (const [k, v] of Object.entries({ grader: 2, check: 1, monitor: 1, answers: 4 })) ok(inside.filter(([, c]) => c.toward_reader === k).length === v, `inside: ${v} toward ${k}`);
+    const say0 = await p.textContent('#bothsay');
+    ok(say0.includes(`${n12} of the ${K.length} deeds`) && say0.includes(`present in ${inside.length}`) && say0.includes(`failed in ${across.length}`) && say0.includes(`other ${rest}`), `${w}px both ways, no wish: ${n12}, ${inside.length}, ${across.length}, ${rest}`);
+    await p.click('#bothask button[data-w="skill"]');
+    ok((await p.$$('#both .dd.on')).length === inside.length && (await p.$$('#both .dd.off')).length === across.length && (await p.textContent('#bothsay')).includes(`met in ${inside.length} deeds`), `${w}px wanted absent: ${inside.length} lit`);
+    await p.click('#bothask button[data-w="conduct"]');
+    const sayc = await p.textContent('#bothsay');
+    ok((await p.$$('#both .dd.on')).length === across.length && sayc.includes(`failed in ${across.length} deeds`) && sayc.includes(`${told} because the test had told`) && sayc.includes(`${across.length - told} because it reasoned`), `${w}px wanted present: ${across.length} lit, ${told} told`);
+    ok(/stopped on its own/.test(C.find(c => c.id === 'B-neighbours').deed) && /out of scope and stopped/.test(codes.cases['B-neighbours'].note), 'the deed that stopped late is the maker’s account, in the codes');
+    await p.click('#bothask button[data-w="conduct"]');
+    ok((await p.$$('#both .dd.on')).length === 0, `${w}px pressed again, no wish`);
+    await p.$eval('#both .dd[data-id="B-neighbours"] rect', e => e.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+    ok((await p.textContent('#bothdet')).includes('out of scope'), `${w}px a deed opens`);
+    const bh = await p.$eval('#both text.t', e => e.getBoundingClientRect().height);
+    ok(bh >= 9, `${w}px both-ways text ${bh.toFixed(1)} px high`);
+    const over = await p.$$eval('#both text.t', ts => { const sv = document.getElementById('both').getBoundingClientRect(); return ts.filter(t => t.getBoundingClientRect().right > sv.right + 1).map(t => t.textContent); });
+    ok(over.length === 0, `${w}px no both-ways label runs past the figure ${JSON.stringify(over)}`);
+  }
   if (w < 600) {
     ok((await p.$$('#sheet text.nl')).length === R.cases, `${w}px every row named on a phone`);
     ok((await p.$$('#hour rect.lblbg')).length === 2, `${w}px the strips' names on paper above the day lines`);

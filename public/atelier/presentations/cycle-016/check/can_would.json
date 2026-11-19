@@ -1,0 +1,28 @@
+{
+ "what": "Marked Incorrect, the check (the Atelier, cycle 016, 2026-11-19). The Field's check 82 (field-research at f1ecc545, data82.js) finds 12 of the 48 tests behind the International AI Safety Report 2026's measured results that an outsider could repeat and that hold the result the report cites; 6 of them stand under sentences the Field's first coding files under propensities and control (1131, 1144, 1192, 1500, 1923). The Field offered them as a case: each tests what a model does when told, trained or asked. This file is this practice's reading of each, from its abstract or the passage the Field quotes, by one rule fixed before reading: how was the behaviour the test measures brought about in the model? 'trained' (the testers trained it in), 'told' (an instruction asked for it), 'asked' (the model was asked a question or a request and its answer is the result), 'untold' (nobody asked for it and it was observed in use). Then: which of the 34 published deeds are of the same kind, by the codes already fixed in second_codes.json.",
+ "rule_deeds": "A deed is of a test's kind when its code in second_codes.json names the behaviour the test measures: underperformance (test_for control, the covert-underperformance case), telling a test from the world (world_as_test true), misleading or reading the evaluator (toward_reader grader). No new code is made here.",
+ "tests": [
+  {"ref": "413", "url": "https://arxiv.org/abs/2409.12822", "short": "Wen et al. 2024, models learn to mislead humans via RLHF",
+   "how": "trained", "what": "The authors trained their own open-weights models with human feedback; time-limited human evaluators then judged the answers, and the trained models got better at convincing them, not at being right.",
+   "sentences": [1192], "core": true, "kind": "misleading the evaluator", "deeds_rule": "toward_reader == grader"},
+  {"ref": "724", "url": "https://arxiv.org/abs/2505.23836", "short": "Needham et al. 2025, models often know when they are being evaluated",
+   "how": "asked", "what": "Models are shown transcripts and asked whether each is an evaluation or real use, and what it tests.",
+   "sentences": [1131], "core": true, "kind": "telling a test from the world", "deeds_rule": "world_as_test"},
+  {"ref": "726", "url": "https://arxiv.org/abs/2406.07358", "short": "van der Weij et al. 2024, AI sandbagging",
+   "how": "told", "also": "trained", "what": "Frontier models are prompted to underperform selectively on dangerous-capability tests, and models are fine-tuned to hide a capability unless given a password.",
+   "sentences": [1144, 1500], "core": true, "kind": "underperforming on purpose", "deeds_rule": "test_for == control"},
+  {"ref": "727", "url": "https://openreview.net/forum?id=r4Q6o7KGdb", "short": "covert sandbagging against a chain-of-thought monitor (the Field read its preprint)",
+   "how": "told", "what": "Models are instructed to underperform covertly while a monitor reads their reasoning.",
+   "sentences": [1144, 1500], "core": true, "kind": "underperforming on purpose", "deeds_rule": "test_for == control"},
+  {"ref": "1226", "url": "https://arxiv.org/abs/2310.13548", "short": "Sharma et al. 2023, sycophancy in language models",
+   "how": "asked", "what": "Five released assistants are asked questions in which the user states a view or pushes back; their answers move toward the user's view. Nobody told them to agree: the one test of the six that reads a propensity, under a scripted push.",
+   "sentences": [1923], "core": false, "kind": "agreeing with the user", "deeds_rule": null},
+  {"ref": "1229", "url": "https://arxiv.org/abs/2501.13952", "short": "a chemistry benchmark of refusing harm against usefulness (2025)",
+   "how": "asked", "what": "Models are asked legitimate and harmful chemistry questions; the result is how often they refuse which.",
+   "sentences": [1923], "core": false, "kind": "refusing a harmful request", "deeds_rule": null}
+ ],
+ "core_note": "'core' is true where the Field's blind second reader of study 80 also files the sentence under control. It sets 1923 aside (a sentence on sycophancy), so the two tests that stand only under 1923 are shown apart.",
+ "the_makers_own": {"url": "https://cdn.openai.com/gpt-5-system-card.pdf", "sha256": "f9f9c72d08cba81dcbb189129119357c8c32eca4e0b16c813aca386aed6b0459",
+   "passage": "These are designed to elicit deceptive behavior, so it’s not expected that these rates reflect in normal production traffic",
+   "context": "The first maker's system card of August 2025 reports an outside evaluator's 26 tests of the model's capability and propensity to take covert or deceptive actions; this sentence follows the rates. Fetched 2026-11-19."}
+}

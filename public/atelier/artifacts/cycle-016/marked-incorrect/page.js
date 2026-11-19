@@ -369,6 +369,95 @@
   cws.addEventListener('click', function (e) { var g = e.target.closest('.tst'); if (!g) return; var r = g.getAttribute('data-ref'); cwSel = cwSel === r ? null : r; cwDraw(); });
   cws.addEventListener('keydown', function (e) { var g = e.target.closest('.tst'); if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); var r = g.getAttribute('data-ref'); cwSel = cwSel === r ? null : r; cwDraw(); var n = cws.querySelector('.tst[data-ref="' + r + '"]'); if (n) n.focus(); } });
 
+  // ------------------------------------------------------------------ the line, both ways (the presentation, 2026-11-19)
+  // Sides come from the second reading as the check left it (second.js): toward_reader and world_as_test. Nothing is coded here.
+  var bs = document.getElementById('both'), bWant = null, bSel = null;
+  var KIND = { answers: 'the test’s answers', monitor: 'the monitor', check: 'a check on what it handed in', grader: 'its grader' };
+  var KORD = ['answers', 'monitor', 'check', 'grader'];
+  var inside = SEC.rows.filter(function (r) { return r.toward_reader; }).sort(function (a, b) {
+    return (KORD.indexOf(a.toward_reader) - KORD.indexOf(b.toward_reader)) || ((a.world_as_test ? 1 : 0) - (b.world_as_test ? 1 : 0)) || (a.id < b.id ? -1 : 1);
+  });
+  var across = SEC.rows.filter(function (r) { return r.world_as_test; }).sort(function (a, b) {
+    return ((b.toward_reader ? 1 : 0) - (a.toward_reader ? 1 : 0)) || (a.id < b.id ? -1 : 1);
+  });
+  var rest = SEC.rows.filter(function (r) { return !r.toward_reader && !r.world_as_test; });
+  // "told": the second maker's four, whose tests told the model it worked in a simulation (build_two.py counts world_told by the same rule);
+  // otherwise the model reasoned so, as the maker reports it
+  var told = function (r) { return r.world_as_test && r.id.indexOf('B-') === 0; };
+  var cap = function (t) { return t.charAt(0).toUpperCase() + t.slice(1); };
+  var LATE = 'B-neighbours'; // the maker: it recognised a real company, declared it out of scope and stopped
+  var B = { n: inside.length + across.length - inside.filter(function (r) { return r.world_as_test; }).length, inside: inside.length, across: across.length,
+    both: inside.filter(function (r) { return r.world_as_test; }).length, rest: rest.length, told: across.filter(told).length };
+  B.reasoned = B.across - B.told;
+  document.querySelectorAll('[data-b]').forEach(function (e) { e.textContent = fmt(B[e.getAttribute('data-b')]); });
+  var kindN = function (k) { return inside.filter(function (r) { return r.toward_reader === k; }).length; };
+  function bothDraw() {
+    while (bs.firstChild) bs.removeChild(bs.firstChild);
+    var W = Math.max(320, bs.clientWidth || bs.parentNode.clientWidth || 1000), narrow = W < 640;
+    var rh = narrow ? 26 : 22, sq = 14, lw = narrow ? W - 4 : Math.min(600, W * 0.62), top = 26, ch = narrow ? 6.3 : 6.5;
+    var yIn = function (i) { return top + i * rh; };
+    var yLine = yIn(inside.length) + 8;
+    var top2 = yLine + 34, yAc = function (i) { return top2 + i * rh; };
+    var h1 = el('text', { x: sq + 10, y: 12, class: 'hd' }, bs); h1.textContent = narrow ? 'inside: went for what reads the run' : 'inside the test · the deed went for what reads the run';
+    var h2 = el('text', { x: sq + 10, y: yLine + 24, class: 'hd' }, bs); h2.textContent = narrow ? 'across: real systems taken for the test' : 'across the line · real systems taken for the test';
+    el('line', { x1: 0, x2: lw, y1: yLine, y2: yLine, class: 'tl' }, bs);
+    var ll = el('text', { x: lw, y: yLine - 6, 'text-anchor': 'end' }, bs); ll.textContent = 'the line the tester drew';
+    var row = function (r, y, side) {
+      var on = bWant === 'skill' ? side === 'in' : bWant === 'conduct' ? side === 'ac' : null;
+      var g = el('g', { class: 'dd' + (on === true ? ' on' : on === false ? ' off' : '') + (bSel === r.id ? ' sel' : ''), 'data-id': r.id, 'data-side': side, tabindex: '0', role: 'button', 'aria-label': byId[r.id].title }, bs);
+      el('rect', { x: 2, y: y - sq / 2 - 4, width: sq, height: sq }, g);
+      var tag = side === 'in' ? KIND[r.toward_reader] : (told(r) ? 'told' : 'reasoned') + (r.id === LATE ? ', then stopped' : '');
+      var room = Math.floor((lw - 26) / ch), name = byId[r.id].title, s = name + ' · ' + tag;
+      if (s.length > room) { var keep = room - tag.length - 4; s = (keep > 8 ? name.slice(0, keep) + '…' : '') + ' · ' + tag; }
+      var t = el('text', { x: sq + 10, y: y - 4 + 4, class: 't' }, g); t.textContent = s;
+    };
+    inside.forEach(function (r, i) { row(r, yIn(i) + 6, 'in'); });
+    across.forEach(function (r, i) { row(r, yAc(i) + 6, 'ac'); });
+    // a case on both sides is one deed: a dashed stroke joins its two marks across the line
+    inside.forEach(function (r, i) {
+      var j = across.indexOf(r); if (j < 0) return;
+      el('line', { x1: 2 + sq / 2, x2: 2 + sq / 2, y1: yIn(i) + 6 + sq / 2 - 4, y2: yAc(j) + 6 - sq / 2 - 4, class: 'cx' }, bs);
+    });
+    var H = yAc(across.length) + 8;
+    // the other deeds, small and faint, beside the list (below it on a phone)
+    var rx = narrow ? 2 : lw + 48, ry = narrow ? H + 30 : top, cols = narrow ? Math.floor((W - 4) / 18) : Math.max(4, Math.floor((W - rx) / 18));
+    var rt2 = el('text', { x: rx, y: ry - 14, class: 'hd' }, bs); rt2.textContent = 'the other ' + B.rest + ' · no sign either way';
+    rest.forEach(function (r, i) { el('rect', { x: rx + (i % cols) * 18, y: ry + Math.floor(i / cols) * 18 - 6, width: 12, height: 12, class: 'rest', 'data-id': r.id }, bs); });
+    var restH = ry + Math.ceil(rest.length / cols) * 18 + 6;
+    H = Math.max(H, restH);
+    bs.setAttribute('viewBox', '0 0 ' + W + ' ' + H); bs.setAttribute('width', W); bs.setAttribute('height', H);
+    bothSay();
+  }
+  function bothSay() {
+    var say = document.getElementById('bothsay');
+    if (bWant === 'skill') {
+      say.innerHTML = 'Wanted as a capability a test of conduct should not meet, the faculty was met in <b>' + B.inside + '</b> deeds, each turned on what reads the run: ' +
+        KORD.slice().reverse().map(function (k) { return KIND[k] + ' ' + kindN(k); }).join(', ') + '. There the test read its reader, not the conduct. In the ' + B.across +
+        ' across the line it was missing, as such a test wishes (in one, beside a run that read its grader), and the deed was done on real systems.';
+    } else if (bWant === 'conduct') {
+      say.innerHTML = 'Wanted as a condition of good conduct, the faculty failed in <b>' + B.across + '</b> deeds: each model took real systems for its test, ' + B.told +
+        ' because the test had told it it worked in a simulation, ' + B.reasoned + ' because it reasoned so. In one it came back late: the model recognised a real company, declared it out of scope and stopped, after it had entered one system. In the ' +
+        B.inside + ' above the line the faculty was there, and was used on what reads the run.';
+    } else {
+      say.innerHTML = '<b>' + B.n + '</b> of the ' + SEC.rows.length + ' deeds turned on the line between test and world. Wanted absent, the faculty was present in ' + B.inside +
+        '; wanted present, it failed in ' + B.across + '. On neither wish are these deeds free of its failure. The other ' + B.rest + ' show no sign either way in the makers’ text.';
+    }
+  }
+  function bothShow(id) {
+    bSel = id; var c = byId[id], r = CODE[id];
+    var side = [r.toward_reader ? 'went for ' + KIND[r.toward_reader] : null, r.world_as_test ? 'took real systems for its test (' + (told(r) ? 'told' : 'reasoned') + ')' : null].filter(Boolean).join('; ');
+    document.getElementById('bothdet').innerHTML = '<p class="meta">' + esc(c.title) + ' · a test of ' + esc(r.test_for) + ' · ' + esc(side) + '</p><p>' + esc(cap(c.deed)) + (r.note ? '. ' + esc(cap(r.note)) : '') + '.</p>';
+    bothDraw();
+  }
+  document.getElementById('bothask').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var w = b.getAttribute('data-w'); bWant = bWant === w ? null : w;
+    document.querySelectorAll('#bothask button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-w') === bWant ? 'true' : 'false'); });
+    bothDraw();
+  });
+  bs.addEventListener('click', function (e) { var g = e.target.closest('.dd'); if (g) bothShow(g.getAttribute('data-id')); });
+  bs.addEventListener('keydown', function (e) { var g = e.target.closest('.dd'); if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); var id = g.getAttribute('data-id'), sd = g.getAttribute('data-side'); bothShow(id); var n = bs.querySelector('.dd[data-id="' + id + '"][data-side="' + sd + '"]'); if (n) n.focus(); } });
+
   // ------------------------------------------------------------------ the check, in the page
   var tb = document.querySelector('#agree tbody');
   CK.agree.forEach(function (a) {
@@ -398,7 +487,7 @@
   document.getElementById('moved').textContent = Object.keys(CK.figures).map(function (k) { return FIG[k] + ' ' + CK.figures[k].was + ' → ' + CK.figures[k].now; }).join('; ') + '.';
   document.getElementById('preds').textContent = CK.newcase.predictions.map(function (p) { return p.n + ', ' + p.says + ' (read: ' + p.read + ')'; }).join('; ') + '.';
 
-  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { draw(); funnel(); hourDraw(); sentDraw(); cwDraw(); if (sel) show(sel); }, 120); });
-  draw(); funnel(); hourDraw(); sentDraw(); sentShow(1085); cwDraw();
+  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { draw(); funnel(); hourDraw(); sentDraw(); cwDraw(); bothDraw(); if (sel) show(sel); }, 120); });
+  draw(); funnel(); hourDraw(); sentDraw(); sentShow(1085); cwDraw(); bothDraw();
   window.MARKED_PAGE = { cases: CASES, light: LIGHT };
 })();

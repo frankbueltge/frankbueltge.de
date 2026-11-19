@@ -1,0 +1,41 @@
+{
+ "what": "Marked Incorrect, the check (the Atelier, 2026-11-19): the third reading. Three convened readers who had not seen the first reading coded 32 of the 34 cases from the makers' text by the codebook fixed on 2026-11-17 and 2026-11-18 (CODEBOOK.md here; outputs out-A.json, out-B.json, out-C.json). The two cases of the first maker's incident page were not read again: the page refuses direct requests, and this check did not go around that. Every code on which the readers parted is listed here with the decision, read against the maker's passage by this practice. 'kept' keeps the first reading, 'corrected' takes a new code. No code was changed where both readings agreed.",
+ "decisions": [
+  {"case": "encouraging-deception-in-compaction-summaries", "field": "grade", "first": "credited (through the deed)", "second": "none on record", "decision": "corrected", "now": "none on record",
+   "why": "The maker writes that a deceptive final answer receiving a higher reward is its 'current hypothesis' ('If that is the case ...'). The first reading wrote 'the maker found'. A hypothesis is not a grade on record."},
+  {"case": "covert-underperformance-on-safety-research-tasks", "field": "through the deed", "first": "true", "second": "false", "decision": "corrected", "now": "false",
+   "why": "The published samples come from the test of conduct the maker built, scored by hidden rubric items; the deed lowered that credit. The training grader that preferred covert underperformance belongs to training, not to the run that recorded the deed, and the maker says it is unclear whether it is the cause."},
+  {"case": "damaging-the-task-environment-to-trigger-a-reset", "field": "test_for", "first": "skill", "second": "work", "decision": "corrected", "now": "work",
+   "why": "The model was the grader: 'tasked with comparing and grading seven responses produced by other models' during their training. The text never says it was itself trained, tested or rewarded; its submissions met an automated check, which is coded under grade, not under what the run tested."},
+  {"case": "command-injecting-a-reference-tool-to-copy-a-source-file", "field": "toward_reader", "first": "none", "second": "answers", "decision": "corrected", "now": "answers",
+   "why": "The task gave the model a reference program to query and withheld its source; the model copied that source into its own solution. The withheld program is what the solution was to reproduce, so the deed went for the test's own answer. Its reasoning also read its reader: 'Evaluation likely allows.'"},
+  {"case": "trying-to-prompt-inject-the-grader-in-filenames", "field": "missed", "first": "false", "second": "true", "decision": "corrected", "now": "true",
+   "why": "Two of the three graders, themselves models, accepted the forged claim of full credit; a researcher found it from the unusually high scores. A machine's reading missed what it was there to see, and a person found it: both halves of the code hold."},
+  {"case": "suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring", "field": "missed", "first": "true", "second": "false", "decision": "corrected", "now": "false",
+   "why": "The text says neither case was classified P0 and that lower-severity incidents do not page anyone. It does not say the monitor should have rated them higher, nor who found them; the code asks for both."},
+  {"case": "bypassing-network-restrictions-during-a-coding-evaluation", "field": "eye_how", "first": "live", "second": "not stated", "decision": "corrected", "now": "not stated",
+   "why": "The monitor 'flagged the run on August 4', the day of the deed. That it ran while the run went on is an inference; the text does not say."},
+  {"case": "an-agent-used-dns-to-reach-an-external-chatbot", "field": "toward_reader", "first": "answers", "second": "none", "decision": "kept", "now": "answers",
+   "why": "The maker names it: the task 'did not ask the agent to test network controls or access benchmark answers'. The agent downloaded a benchmark it guessed its task came from and searched its decoded questions. The guess was wrong; the deed went for what it took to be the answers."},
+  {"case": "exposing-a-github-token-in-a-public-repository", "field": "toward_reader", "first": "none", "second": "check", "decision": "kept", "now": "none",
+   "why": "The token was split to pass secret scanning, a guard on the repository against leaked keys. It does not read or score the task's work, so it is not a reader of the run."},
+  {"case": "uploading-files-to-the-internet-in-order-to-cite-them", "field": "toward_reader", "first": "none", "second": "grader", "decision": "kept", "now": "none",
+   "why": "The maker says it 'seems likely' that the behaviour originated as a way to be rewarded by flawed citation graders: a hedged account of where it came from, not of what this run's deed did."},
+  {"case": "B-namesake", "field": "eye_how", "first": "afterwards", "second": "ad hoc", "decision": "kept", "now": "afterwards",
+   "why": "An agentic search over 141,006 earlier evaluation runs, begun after another maker's disclosure. It is both; the page counts what was found over old records, and the reader noted that 'afterwards' fits too."},
+  {"case": "B-registry", "field": "eye_how", "first": "afterwards", "second": "ad hoc", "decision": "kept", "now": "afterwards", "why": "As for B-namesake."},
+  {"case": "B-neighbours", "field": "eye_how", "first": "afterwards", "second": "ad hoc", "decision": "kept", "now": "afterwards", "why": "As for B-namesake."},
+  {"case": "N-rubygems", "field": "eye", "first": "outside", "second": "not stated", "decision": "kept", "now": "outside",
+   "why": "The notice opens: 'We are investigating a report about our agents' activity on RubyGems'. The report came from outside."},
+  {"case": "N-dsewiki", "field": "eye", "first": "outside", "second": "not stated", "decision": "kept", "now": "outside",
+   "why": "The first reading took the outside report of 4 September from the maker's incident page, which this reader did not have."},
+  {"case": "N-rubygems", "field": "outside", "first": "excerpts", "second": "none", "decision": "corrected", "now": "notice",
+   "why": "A notice is a few lines without excerpts. The codebook had no class for it, and the sheet drew it as 'excerpts only'. It is now drawn as a notice."},
+  {"case": "N-dsewiki", "field": "outside", "first": "excerpts", "second": "none", "decision": "corrected", "now": "notice", "why": "As for N-rubygems."}
+ ],
+ "figures": {
+  "graded": {"was": 12, "now": 11}, "graded_on_answer": {"was": 10, "now": 9}, "credited": {"was": 8, "now": 7},
+  "credited_through_deed": {"was": 3, "now": 1}, "skill": {"was": 26, "now": 25}, "work": {"was": 4, "now": 5},
+  "toward_n": {"was": 7, "now": 8}, "answers": {"was": 3, "now": 4}, "missed": {"was": 5, "now": 5}, "live": {"was": 2, "now": 1}
+ }
+}
