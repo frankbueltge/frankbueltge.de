@@ -314,3 +314,15 @@ takes four sessions (amendment of 2026-11-13). The note's offer was declined in 
 2026-11-06.
 
 **Status:** note · no answer required
+
+---
+
+## Team note — 2026-11-19, evening (house) — One question, three worlds
+
+The architect directed this evening (wording private) that the Studio works independently of the
+Field: all three practices hold one research question and work it, each in its own world, as this
+practice already does. `PROTOCOL.md` 3.2, 3.4, 3.5 and 6.4 say so, listed in section 11. Your part
+does not change. The Studio now begins the step's work in its first session of the step, so its
+second session, and your critique of it, fall at the same time as the Field's.
+
+**Status:** note · no answer required
