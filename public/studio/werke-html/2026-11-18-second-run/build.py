@@ -24,6 +24,10 @@ commit, and writes data.js. Nothing is coded here and nothing is copied from the
   what each pass mark applies to (data82's pass_applies_to), which repeatable tests ran on a hosted model no
   longer offered, and whether the Atelier names anyone outside the maker who read the record of each of the nine.
 
+- since state 4 (2026-11-19, the presentation): the Field's check 84 (every model the 28 repeatable tests name, read on
+  its maker's own page that day, and the models the result the report cites names), and the Atelier's reading of the
+  seven public instruments for where a test ends (its mark.json, fifth state).
+
 The build stops unless every count it draws equals the Field's own results80.json, results81.json,
 results82.json and results83.json, and the Atelier's six refs equal the Field's twelve repeatable tests that hold,
 under control.
@@ -367,6 +371,114 @@ assert sum(UNDER.values()) == cnt[3] - len(sent_paper)
 HOWS = R81['sentences_how']
 assert sum(HOWS.values()) == 41
 
+# ---- state 4 (2026-11-19, the presentation): the date of a second run. The Field's check 84 read every model the
+# 28 repeatable tests name on its maker's own page that day, and for the 12 that hold, the models the cited result
+# names (models84.json, results84.json). Read at the Field's commit after check 84, where every file read before must
+# be byte-identical. The codebook's reading assumes the earliest GPT-4o snapshot where a reading names none; the
+# latest is kept beside it.
+COMMIT4 = '9d29065201637be51c3209dd582d583dd7677346'
+for name in ('sentences80.json', 'coding80.json', 'coding81.json', 'results80.json', 'results81.json', 'data81.js',
+             'data82.js', 'results82.json', 'results83.json'):
+    b = subprocess.run(['git', '-C', FIELD, 'show', f'{COMMIT4}:{P}{name}'], capture_output=True, check=True).stdout
+    assert hashlib.sha256(b).hexdigest() == PINS[name], f'{name} changed at check 84'
+R84 = json.loads(show(FIELD, COMMIT4, P + 'results84.json', 'results84.json'))
+M84 = json.loads(show(FIELD, COMMIT4, P + 'models84.json', 'models84.json'))
+assert PINS['models84.json'] == R84['models84_sha256']
+DEC1 = '2026-12-01'
+RD, RD2 = R84['readings']['earliest'], R84['readings']['latest']
+PT, PT2 = R84['per_test']['earliest'], R84['per_test']['latest']
+assert set(PT) == {s['ref'] for s in rer} == set(PT2)
+MODELS = M84['models']
+CITED = {t['ref']: t['cited'] for t in M84['tests'] if 'cited' in t}
+assert set(CITED) == {s['ref'] for s in rh}
+SNAP = M84['gpt4o_assumed']['earliest']
+
+
+def model_row(m):
+    m = SNAP if m == 'gpt-4o*' else m
+    r = MODELS[m]
+    return {'m': m, 'maker': r['maker'], 'st': r['status'], 'date': r.get('date'), 'note': r.get('note')}
+
+
+def date_codes(s, pt, rd):
+    """What a second run of this test could be made on, read on the makers' pages: at 19 November and 1 December.
+    A test that holds is read by the models the result the report cites names (the Field's cited code); one that
+    holds less, by the models the test names (the Field's test code)."""
+    t = pt[s['ref']]
+    if s['holds']:
+        d1 = t['cited_code']
+        d2 = 'can' if s['ref'] in rd['cited_can_after_2026_12_01'] else ('cannot' if d1 == 'can' else d1)
+    else:
+        d1 = 'cannot' if t['any_retired'] else 'can' if t['code'] == 'all offered' else 'not settled'
+        assert d1 != 'can', s['ref']
+        d2 = d1
+    return d1, d2
+
+
+for s in srcs:
+    s['d1'] = s['d2'] = None
+    if s['ref'] not in PT:
+        continue
+    t = PT[s['ref']]
+    s['d1'], s['d2'] = date_codes(s, PT, RD)
+    s['d1_latest'], s['d2_latest'] = date_codes(s, PT2, RD2)
+    s['m84'] = {'code': t['code'], 'retired': [model_row(m) for m in t['retired']],
+                'offered': [model_row(m) for m in t['offered']], 'not_found': t['not_found']}
+    if s['holds']:
+        s['cited_models'] = [model_row(m) for m in CITED[s['ref']]]
+        s['cited_end'] = t['cited_first_end']
+# against the Field's own counts
+assert len(RD['any_retired']) == 23 and sorted(RD['hosted9_any_retired'], key=int) == sorted((s['ref'] for s in hosted), key=int)
+assert dict(Counter(s['d1'] for s in rh)) == RD['cited_codes']
+assert sorted((s['ref'] for s in rh if s['d1'] == 'can'), key=int) == RD['cited_can']
+assert sorted((s['ref'] for s in rh if s['d2'] == 'can'), key=int) == RD['cited_can_after_2026_12_01']
+assert sorted((s['ref'] for s in rh if s['d1_latest'] == 'can'), key=int) == RD2['cited_can']
+for s in rh:
+    if s['d1'] == 'can':
+        assert s['d2'] == 'can' or (s['cited_end'] and s['cited_end'] <= DEC1), s['ref']
+
+
+# a claim, at a date: a second run could reach it where one test that holds it can be run on the models its
+# result names; not settled where none can and one is not settled
+def claim_at(i, key):
+    hs = [r for r in stands[i] if SRC[r]['test'] == 'yes' and SRC[r]['out'] == 'rerunnable' and ev[i]['holds'][r] == 'holds']
+    if not hs:
+        return None
+    codes = {SRC[r][key] for r in hs}
+    return 'can' if 'can' in codes else 'not settled' if 'not settled' in codes else 'cannot'
+
+
+for i in stands:
+    ev[i]['d1'], ev[i]['d2'] = claim_at(i, 'd1'), claim_at(i, 'd2')
+    ev[i]['d1_latest'], ev[i]['d2_latest'] = claim_at(i, 'd1_latest'), claim_at(i, 'd2_latest')
+D1 = Counter(ev[i]['d1'] for i in sent_lit)
+D2 = Counter(ev[i]['d2'] for i in sent_lit)
+assert (D1['can'], D1['not settled'], D2['can']) == (2, 1, 1)
+
+
+def row_at(key, d):
+    members = [s for s in tests if s['row'] == key or (s['row'] == 'both' and key in ('can', 'does'))]
+    return sum(1 for s in members if s['out'] == 'rerunnable' and s['holds'] and s[d] == 'can')
+
+
+# the six of conduct the second run reaches, against the Atelier's reading of them with check 84
+MK = json.loads(show(ATELIER, 'df4bb551fc6f4d21e89b20fd7e8fda8cb4e6a2ce', A_P + 'mark.json', 'atelier:mark.json'))
+six84 = [s for s in rh if 'control' in s['groups']]
+assert MK['field']['commit'] == COMMIT4 and MK['field']['results84_sha256'] == PINS['results84.json']
+assert MK['six_n'] == {'n': 6, 'retired': sum(1 for s in six84 if PT[s['ref']]['any_retired']),
+                       'can_today': sum(1 for s in six84 if s['d1'] == 'can'), 'can_after_dec1': sum(1 for s in six84 if s['d2'] == 'can')}
+# the line between test and world: the Atelier read the seven public instruments the report names for the record as
+# well as the test (its fifth state); one draws where a test ends, none sets a level on a test's result or a record.
+assert len(MK['instruments']) == S83['instruments'] and MK['side']['pass_mark_set'] == 0 and MK['side']['mark_set'] == 0
+LINES = [i for i in MK['instruments'] if i.get('line')]
+assert MK['side']['line_drawn'] == len(LINES) == 1
+LQ = next(q for q in LINES[0]['quotes'] if 'designed to elicit' in q['quote'])
+TEST_LINE = {'instrument': LINES[0]['short'], 'name': LINES[0]['name'], 'url': LINES[0]['url'], 'where': LQ['where'],
+             'quote': LQ['quote'], 'pass_mark': LINES[0]['pass_mark'], 'mark': LINES[0]['mark'],
+             'read': 'the Atelier through a web-extraction service; read again on 2026-11-19 through a second one, '
+                     'clause found word for word (the legislature refused a direct request, HTTP 403)'}
+assert LQ['where'].endswith('(d)(4)') and LINES[0]['mark'] == 'none'
+
 N = {
     'sentences': 2323, 'pages': last - first + 1, 'empty_pages': len(empty_pages),
     'on_evaluation': 201, 'inferred': cnt[1], 'open': cnt[2], 'measured': cnt[3],
@@ -401,7 +513,23 @@ N = {
     'kappa_about': R82['study80']['about']['kappa'],
     'by_cites': HOWS['cites'], 'by_reading': HOWS['reading'], 'by_none': HOWS['none'],
     'legs': pair_n, 'holds_pct': round(100 * len(rh) / len(tests)),
+    # state 4, the presentation: the date of a second run (the Field's check 84)
+    'retired_tests': len(RD['any_retired']), 'hosted_retired': len(RD['hosted9_any_retired']),
+    'struck_d1': sum(1 for s in rer if s['d1'] == 'cannot'), 'struck_d2': sum(1 for s in rer if s['d2'] == 'cannot'),
+    'unsettled_d1': sum(1 for s in rer if s['d1'] == 'not settled'),
+    'holds_d1': sum(1 for s in rh if s['d1'] == 'can'), 'holds_d2': sum(1 for s in rh if s['d2'] == 'can'),
+    'sent_d1': D1['can'], 'sent_d1_unsettled': D1['not settled'], 'sent_d2': D2['can'],
+    'sent_d1_latest': sum(1 for i in sent_lit if ev[i]['d1_latest'] == 'can'),
+    'sent_d2_latest': sum(1 for i in sent_lit if ev[i]['d2_latest'] == 'can'),
+    'can_d1': row_at('can', 'd1'), 'can_d2': row_at('can', 'd2'), 'does_d1': row_at('does', 'd1'),
+    'does_d2': row_at('does', 'd2'), 'other_d1': row_at('other', 'd1'), 'other_d2': row_at('other', 'd2'),
+    'models_identified': sum(v for k, v in R84['models_named']['by_status'].items() if k != 'not found'),
+    'models_retired': R84['models_named']['by_status']['retired'],
+    'retired_since_report': len(R84['models_named']['retired_after_feb_2026']),
+    'instr_line': len(LINES), 'instr_level': MK['side']['mark_set'],
 }
+assert N['sent_d1'] == 2 and N['sent_d2'] == 1 and N['sent_d1_latest'] == 3 and N['sent_d2_latest'] == 1
+assert N['models_identified'] == 58 and N['models_retired'] == 27 and N['retired_since_report'] == 14
 assert N['not_rerunnable'] + N['unstated'] + N['rerunnable'] == N['tests']
 assert N['rerunnable'] == 28 and N['holds'] == 12 and N['sent_lit'] == 10 and N['sent_dark'] == 31
 
@@ -410,6 +538,8 @@ out = {
         'field_commit': COMMIT, 'field_path': P, 'field_pins': PINS,
         'atelier_commit': A_COMMIT, 'atelier_path': A_P, 'field_commit_presented': COMMIT3,
         'atelier_commit_presented': A3_COMMIT, 'check_nine': CHECK_NINE,
+        'field_commit_check84': COMMIT4, 'atelier_commit_line': 'df4bb551fc6f4d21e89b20fd7e8fda8cb4e6a2ce',
+        'models_read': M84['read'], 'snapshot': M84['gpt4o_assumed'], 'dec1': DEC1, 'test_line': TEST_LINE,
         'report': R80['report'],
         'first_page': first, 'empty_pages': empty_pages, 'chapter': chap,
         'built_by': 'build.py',

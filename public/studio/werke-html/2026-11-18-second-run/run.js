@@ -3,7 +3,11 @@
    Field's own counts. State 2 (2026-11-19): the light climbs a leg only as far as the source holds the result the
    report cites it for. State 3 (2026-11-19, the check): a second run is drawn in its mood (hatched: it could be
    made; struck: it was possible once), the nine are deeds rather than missing tests, and a last frame gathers the
-   41 claims and sets every test in a row by what it is for and a column by who can reach it. */
+   41 claims and sets every test in a row by what it is for and a column by who can reach it. State 4 (2026-11-19,
+   the presentation): a second run has a date. After it passes on paper, the makers' own pages of 19 November 2026
+   are read (the Field's check 84): a copy is struck where a model the result names is retired, and the light leaves
+   every claim that only such a copy reached; then 1 December 2026, by the makers' announced dates. Where a test ends,
+   one law of seven draws a line; none sets a level (the Atelier's reading). */
 (() => {
   'use strict';
   const D = window.SR, N = D.N;
@@ -18,6 +22,9 @@
   const rerun = s => s.test === 'yes' && s.out === 'rerunnable';
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const SWEEP_MS = 7000, LEG_MS = 900;
+  // the date of a second run: 0 on paper, 1 the makers' pages of 19 November 2026, 2 from 1 December 2026
+  const DATE1 = SWEEP_MS + LEG_MS + 700, DATE2 = DATE1 + 2600, END = DATE2 + 1100, STRIKE_MS = 420;
+  const DATES = ['on paper', '19 November 2026', '1 December 2026'];
   // how far up its leg the light of a second run gets, by what the source holds of the result the report cites
   const REACH = { 'holds': 1, 'partly': -1, 'not found': 0.35, 'not checkable': 0.35 };   // -1: to the foot of the page
 
@@ -29,6 +36,7 @@
   let done = false;         // the second run has passed the whole ground
   let hover = null, pick = null;
   let audio = null, soundOn = false, played = new Set();
+  let view = 2;             // the date a visitor chose, shown once the run has passed (the last date by default)
 
   // ------------------------------------------------------------------ layout of the drawing
   function layout() {
@@ -99,15 +107,16 @@
   ];
   const HOW = { trained: 0, told: 1, asked: 2 };
   const passOf = s => s.pass && s.pass !== 'none';
-  function openOrder(s) {      // the left column: what holds, then what holds less; what is gone last in each
-    return (s.holds ? 0 : 2) + (s.gone ? 1 : 0) + (s.how ? HOW[s.how] / 10 : 0);
+  const RANK = { 'can': 0, 'not settled': 1, 'cannot': 2 };
+  function openOrder(s) {      // the left column: what holds, then what holds less; in each, what can still be run first
+    return (s.holds ? 0 : 3) + (s.d2 ? RANK[s.d2] : 0) + (s.how ? HOW[s.how] / 10 : 0);
   }
   function closedOrder(s) {    // the right column: the maker's own first, those with a line first among them
     if (byMaker(s.runner)) return passOf(s) ? 0 : 1;
     return s.out === 'unstated' ? 3 : 2;
   }
   const UNDER = { closed: 3, unstated: 4, 'no test': 5 };
-  function claimOrder(e) { return e.lit ? (e.once ? 1 : 0) : e.paper ? 2 : UNDER[e.under]; }
+  function claimOrder(e) { return e.lit ? RANK[e.d2] / 10 + RANK[e.d1] / 100 : e.paper ? 2 : UNDER[e.under]; }
   function tallyLayout() {
     const W = Math.floor(tv.parentElement.clientWidth), wide = W >= 720;
     const t = { W, wide, items: [], rows: [], claims: [], small: [] };
@@ -138,7 +147,7 @@
     t.smallEnd = sy + Math.ceil(rest.length / sPer) * sp;
     t.smallX = sx;
     t.claimsY = y;
-    y = Math.max(cBottom + 22, t.smallEnd + 26, wide ? y + 82 : 0);
+    y = Math.max(cBottom + 22, t.smallEnd + 26, wide ? y + 100 : 0);
     t.headY = y;
     y += wide ? 38 : 64;
     // the rows
@@ -196,6 +205,27 @@
   function now() { return t0 === null ? (done ? Infinity : -1) : performance.now() - t0; }
   function reached(at) { return now() >= at; }
   function legProgress(at) { const t = now(); return t === Infinity ? 1 : Math.max(0, Math.min(1, (t - at) / LEG_MS)); }
+  function stage() { const t = now(); if (t === Infinity) return view; return t < DATE1 ? 0 : t < DATE2 ? 1 : 2; }
+  // how far a strike of the current date has been drawn (it is drawn in, not switched on)
+  function strikeProgress() {
+    const t = now(), st = stage();
+    if (t === Infinity || reduce || !st) return 1;
+    return Math.max(0, Math.min(1, (t - (st === 1 ? DATE1 : DATE2)) / STRIKE_MS));
+  }
+  // at a date, could a second run of this test be made on the models its result names?  can · cannot · not settled
+  function codeAt(s, st) { return st === 0 || !s.d1 ? 'can' : st === 1 ? s.d1 : s.d2; }
+  function claimAt(e, st) { return st === 0 || !e.d1 ? 'can' : st === 1 ? e.d1 : e.d2; }
+  // what a test or a claim shows at this moment: a change of date takes effect once its strike is drawn in
+  function shown(code, before) { return before === code || strikeProgress() >= 1 ? code : before; }
+  function shownTest(s) { const st = stage(); return shown(codeAt(s, st), st === 2 ? codeAt(s, 1) : 'can'); }
+  function shownClaim(e) { const st = stage(); return shown(claimAt(e, st), st === 2 ? claimAt(e, 1) : 'can'); }
+  // what was struck at the date before stays struck in full; what this date strikes is drawn in
+  function strikeAt(s, st) {
+    const c = codeAt(s, st);
+    if (c === 'can') return null;
+    const before = st === 2 ? codeAt(s, 1) : 'can';
+    return { dashed: c === 'not settled', p: before === c ? 1 : strikeProgress() };
+  }
   // a measured sentence is lit when the light of a source that holds what the report cites it for has arrived
   function sentenceLit(id) {
     let best = 0;
@@ -215,7 +245,7 @@
     const W = cv.width, H = cv.height;
     ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = C.paper; ctx.fillRect(0, 0, W, H); ctx.restore();
     const focus = focusSet();
-    const drawn = { dark: 0, lit: 0, once: 0, copies: 0, hollow: 0, struck: 0, slots: 0, sealed: 0, open: 0, grey: 0, rings: 0, pass: 0, nine: 0, readers: 0, legs: 0, black: 0, arrive: 0, stop: 0 };
+    const drawn = { dark: 0, lit: 0, now: 0, once: 0, unsettled: 0, copies: 0, hollow: 0, struck: 0, dashed: 0, slots: 0, sealed: 0, open: 0, grey: 0, rings: 0, pass: 0, nine: 0, readers: 0, legs: 0, black: 0, arrive: 0, stop: 0, stage: stage() };
 
     // chapter marks
     ctx.fillStyle = C.soft; ctx.font = (L.down ? 10.5 : 9.5) + 'px ui-monospace,Menlo,Consolas,monospace';
@@ -236,12 +266,15 @@
     for (const id in EV) {
       if (EV[id].g !== 'measured') continue;
       const p = sentenceLit(id), c = L.cells[id];
-      if (p >= 1 && EV[id].once) {     // lit only by a run that was possible once: a ring of light, not a field
+      const at = p >= 1 ? shownClaim(EV[id]) : null;
+      if (at && at !== 'can') {   // reached on paper, not on the models of this date: a ring of light
+        if (at === 'not settled') { ctx.fillStyle = C.litPale; rect(c.a - 2.5, c.b - (L.down ? 2.5 : 2), L.ca + 5, L.cb + (L.down ? 5 : 4)); drawn.unsettled++; }
+        else drawn.once++;
         ctx.strokeStyle = C.litInk; ctx.lineWidth = 1.5; ctx.setLineDash([2, 1.5]);
         srect(c.a - 2.5, c.b - (L.down ? 2.5 : 2), L.ca + 5, L.cb + (L.down ? 5 : 4)); ctx.setLineDash([]);
-        drawn.lit++; drawn.once++; continue;
+        drawn.lit++; continue;
       }
-      if (p >= 1) { ctx.fillStyle = C.lit; drawn.lit++; }
+      if (p >= 1) { ctx.fillStyle = C.lit; drawn.lit++; drawn.now++; }
       else if (now() >= passedAt(id)) { ctx.fillStyle = C.ink; drawn.dark++; }
       else continue;
       rect(c.a - 2.5, c.b - (L.down ? 2.5 : 2), L.ca + 5, L.cb + (L.down ? 5 : 4));
@@ -280,7 +313,7 @@
         const want = REACH[e.holds[r]], goal = want === 1 ? tot : want < 0 ? l1 : want * l1;
         const d = p * goal;
         ctx.strokeStyle = C.litInk; ctx.lineWidth = want === 1 ? 2.6 : 1.8; ctx.globalAlpha = on ? 1 : 0.25;
-        if (s.gone) ctx.setLineDash([2, 3]);
+        if (shownTest(s) !== 'can') { ctx.setLineDash([2, 3]); ctx.globalAlpha *= 0.6; }
         const q = Math.min(1, d / l1);
         const ea = f.a + (c.ac - f.a) * q, eb = L.rowA - 7 + (L.slabB + 2 - (L.rowA - 7)) * q;
         line(f.a, L.rowA - 7, ea, eb);
@@ -339,7 +372,8 @@
             ctx.strokeStyle = C.litInk; ctx.lineWidth = 2; srect(a - h * k + 1, L.rowB + h - h * k + 1, f * k - 2, f * k - 2);
             drawn.hollow++;
           }
-          if (s.gone && k === 1) { strike(ctx, X(a - h, L.rowB), Y(a - h, L.rowB), f, f); drawn.struck++; }
+          const sk = k === 1 ? strikeAt(s, stage()) : null;
+          if (sk) { strike(ctx, X(a - h, L.rowB), Y(a - h, L.rowB), f, f, sk.p, sk.dashed); if (sk.dashed) drawn.dashed++; else drawn.struck++; }
         } else {
           ctx.strokeStyle = knock ? C.ink : C.slot; ctx.lineWidth = knock ? 1.8 : 1.2; ctx.setLineDash([2, 2]);
           srect(a - h + 0.5, L.rowB + 0.5, f - 1, f - 1); ctx.setLineDash([]); drawn.slots++;
@@ -392,21 +426,31 @@
     for (let k = -h; k < w + h; k += gap) { g.moveTo(x + k, y + h); g.lineTo(x + k + h, y); }
     g.stroke(); g.restore();
   }
-  function strike(g, x, y, w, h) {
-    g.strokeStyle = C.ink; g.lineWidth = 1.6; g.beginPath(); g.moveTo(x - 2, y + h + 2); g.lineTo(x + w + 2, y - 2); g.stroke();
+  // a strike: the model the result names is retired (solid), or it is not settled which model it names (dashed)
+  function strike(g, x, y, w, h, p = 1, dashed = false) {
+    if (p <= 0) return;
+    g.strokeStyle = C.ink; g.lineWidth = dashed ? 1.4 : 1.6; if (dashed) g.setLineDash([3, 2.5]);
+    g.beginPath(); g.moveTo(x - 2, y + h + 2); g.lineTo(x - 2 + (w + 4) * p, y + h + 2 - (h + 4) * p); g.stroke(); g.setLineDash([]);
   }
   // a copy of a test, as the second run would leave it
   function copy(g, x, y, q, s, gap) {
     if (s.holds) { hatch(g, x, y, q, q, gap); g.strokeStyle = C.litInk; g.lineWidth = 1.2; g.strokeRect(x + 0.6, y + 0.6, q - 1.2, q - 1.2); }
     else { g.fillStyle = C.paper; g.fillRect(x, y, q, q); g.strokeStyle = C.litInk; g.lineWidth = q > 14 ? 2.5 : 2; g.strokeRect(x + 1.25, y + 1.25, q - 2.5, q - 2.5); }
-    if (s.gone) strike(g, x, y, q, q);
+    const sk = strikeAt(s, stage());
+    if (sk) strike(g, x, y, q, q, sk.p, sk.dashed);
+    return sk;
   }
   function drawTally() {
     const g = tctx, q = T.q, wide = T.wide;
     g.fillStyle = C.paper; g.fillRect(0, 0, T.W, T.H);
-    const dt = { claims: { lit: 0, once: 0, stopped: 0, closed: 0, unstated: 0, noTest: 0, waiting: 0 }, small: { grey: 0, hollow: 0 }, untold: 0,
-      reach: 0, paper: 0, gone: 0, sealedMaker: 0, sealed: 0, grey: 0, pass: 0, noLine: 0, noTest: 0,
-      deeds: 0, readers: 0, how: 0, dual: 0, counts: {} };
+    const dt = { claims: { lit: 0, once: 0, unsettled: 0, stopped: 0, closed: 0, unstated: 0, noTest: 0, waiting: 0 }, small: { grey: 0, hollow: 0 }, untold: 0,
+      reach: 0, paper: 0, gone: 0, unsettled: 0, sealedMaker: 0, sealed: 0, grey: 0, pass: 0, noLine: 0, noTest: 0, testLine: 0,
+      deeds: 0, readers: 0, how: 0, dual: 0, counts: {}, stage: stage() };
+    // the dates a count has reached: on paper always; a later date once its strikes are drawn in
+    const st = stage(), dates = [0].concat(st >= 1 && (st > 1 || strikeProgress() >= 1) ? [1] : [], st === 2 && strikeProgress() >= 1 ? [2] : []);
+    const seq = (f, n) => { const v = dates.map(f); return { v: v.concat([n]), txt: v.join(' \u2192 ') + ' of ' + n }; };
+    const SHORT = ['on paper', '19 Nov', '1 Dec'];
+    const datesTxt = dates.map((d, i) => SHORT[d] + (i === dates.length - 1 && d ? ' 2026' : '')).join(' \u2192 ');
     const m = pick || hover;
     const F = (w, px) => (w ? w + ' ' : '') + px + 'px ui-monospace,Menlo,Consolas,monospace';
     const big = wide ? 21 : 15;
@@ -425,7 +469,10 @@
       const p = sentenceLit(c.id);
       if (p >= 1) {
         hatch(g, x, y, q, q, q > 14 ? 4 : 3); g.strokeStyle = C.litInk; g.lineWidth = 1.2; g.strokeRect(x + 0.6, y + 0.6, q - 1.2, q - 1.2);
-        if (e.once) { strike(g, x, y, q, q); dt.claims.once++; } else dt.claims.lit++;
+        const c = claimAt(e, st), before = st === 2 ? claimAt(e, 1) : 'can';
+        if (c !== 'can') strike(g, x, y, q, q, before === c ? 1 : strikeProgress(), c === 'not settled');
+        const sh = shownClaim(e);
+        if (sh === 'cannot') dt.claims.once++; else if (sh === 'not settled') dt.claims.unsettled++; else dt.claims.lit++;
         lit++;
       } else if (now() >= c.at) {
         if (e.paper) { g.fillStyle = C.ink; g.fillRect(x, y, q, q); g.fillStyle = C.litInk; g.fillRect(x + 2, y + q - 5, q - 4, 3); dt.claims.stopped++; }
@@ -445,12 +492,18 @@
     g.font = F(0, wide ? 11 : 10); g.fillStyle = C.soft;
     g.fillText(T.small.length + ' more measure nothing', T.smallX, T.smallEnd + (wide ? 13 : 12));
     if (all) {
-      const txt = lit + ' of ' + T.claims.length;
-      dt.counts.claims = [lit, T.claims.length];
+      const meas = T.claims.map(c => EV[c.id]);
+      const sq = seq(d => meas.filter(e => e.lit && claimAt(e, d) === 'can').length, T.claims.length);
+      dt.counts.claims = sq.v;
       g.font = F(700, big); g.fillStyle = C.litInk;
-      const w = g.measureText(txt).width;
-      if (wide) { g.fillText(txt, 0, T.claimsY + 58); g.font = F(0, 11); g.fillStyle = C.soft; g.fillText('a second run could reach', 0, T.claimsY + 73); }
-      else g.fillText(txt, T.W - 10 - w, T.claimsY + 14);
+      const w = g.measureText(sq.txt).width;
+      if (wide) {
+        g.fillText(sq.txt, 0, T.claimsY + 58); g.font = F(0, 11); g.fillStyle = C.soft;
+        g.fillText('a second run could reach,', 0, T.claimsY + 73); g.fillText(datesTxt, 0, T.claimsY + 87);
+      } else {
+        g.fillText(sq.txt, T.W - 10 - w, T.claimsY + 14);
+        g.font = F(0, 10); g.fillStyle = C.soft; g.fillText(datesTxt, T.W - 10 - g.measureText(datesTxt).width, T.claimsY + 28);
+      }
     }
 
     // ---- the two columns
@@ -487,10 +540,13 @@
       const its = T.items.filter(it => it.row === R.key);
       if (!its.every(it => reached(it.at))) return;
       let k, n, word;
-      if (R.key === 'nine') { k = D.nine.filter(c => c.read_published).length; n = D.nine.length; word = 'records read outside'; }
-      else { k = its.filter(it => it.s && rerun(it.s) && it.s.holds).length; n = its.length; word = 'a second run could reach'; }
-      dt.counts[R.key] = [k, n];
-      const txt = k + ' of ' + n;
+      let txt;
+      if (R.key === 'nine') { k = D.nine.filter(c => c.read_published).length; n = D.nine.length; word = 'records read outside'; txt = k + ' of ' + n; dt.counts.nine = [k, n]; }
+      else {
+        n = its.length; word = 'a second run could reach';
+        const sq = seq(d => its.filter(it => it.s && rerun(it.s) && it.s.holds && codeAt(it.s, d) === 'can').length, n);
+        dt.counts[R.key] = sq.v; txt = sq.txt; k = sq.v[sq.v.length - 2];
+      }
       g.font = F(700, big); g.fillStyle = R.key === 'nine' ? C.ink : (k ? C.litInk : C.ink);
       const w = g.measureText(txt).width;
       if (wide) { g.fillText(txt, 0, row.y0 + 54); g.font = F(0, 11); g.fillStyle = C.soft; g.fillText(word, 0, row.y0 + 69); }
@@ -501,7 +557,7 @@
     T.items.forEach(it => {
       const x = it.x, y = it.y;
       const on = !m || (it.s && m.kind === 'foot' && m.ref === it.s.ref) || (it.nine !== undefined && m.kind === 'nine' && m.i === it.nine)
-        || (it.s && m.kind === 'cell' && (EV[m.id].src || []).includes(it.s.ref)) || (m.kind === 'noline' && it.row === 'does' && it.side === 'closed');
+        || (it.s && m.kind === 'cell' && (EV[m.id].src || []).includes(it.s.ref)) || (m.kind === 'noline' && it.row === 'does' && it.side === 'closed') || (m.kind === 'testline' && (it.row === 'does' || it.row === 'nine'));
       g.globalAlpha = on ? 1 : 0.3;
       if (it.nine !== undefined) {                      // a deed: a disc the maker holds; ringed where someone outside read its record
         const c = D.nine[it.nine], r = q / 2;
@@ -512,7 +568,8 @@
         if (reached(it.at)) {
           copy(g, x, y, q, s, q > 14 ? 4 : 3);
           if (s.holds) dt.reach++; else dt.paper++;
-          if (s.gone) dt.gone++;
+          const sh = shownTest(s);
+          if (sh === 'cannot') dt.gone++; else if (sh === 'not settled') dt.unsettled++;
         } else { g.strokeStyle = byMaker(s.runner) ? C.red : C.ink; g.lineWidth = 2; g.strokeRect(x + 1, y + 1, q - 2, q - 2); }
         if (byMaker(s.runner) && reached(it.at)) { g.fillStyle = C.red; g.fillRect(x, y - 5, q, 2.5); }   // the maker ran it
       } else {
@@ -532,16 +589,29 @@
       else { g.fillStyle = C.paper; g.font = F(700, 9); duals.forEach(d => g.fillText('×2', d.x + 1.5, d.y + q - 3)); }
       dt.dual = 1;
     }
-    // conduct has no line: where the maker's bar would stand, a dashed place, and no one's bar in it
+    // conduct has no level: where the maker's bar would stand, a dashed place, and no one's bar in it. Where a test
+    // ends and the world begins, one public instrument of seven draws a line (state 4, the Atelier's question): the
+    // rule between the tests of conduct and the deeds is drawn solid, and the bar above stays empty.
+    const doesReached = reached(Math.max(...T.items.filter(it => it.row === 'does').map(it => it.at)));
     T.rows.forEach(row => {
-      if (row.noLine && reached(Math.max(...T.items.filter(it => it.row === 'does').map(it => it.at)))) {
+      if (row.noLine && doesReached) {
         const b = row.noLine;
         g.globalAlpha = !m || m.kind === 'noline' ? 1 : 0.4;
         g.strokeStyle = C.red; g.lineWidth = 1.5; g.setLineDash([6, 4]); g.strokeRect(b.x, b.y - 1, b.w, b.h + 1.5); g.setLineDash([]);
         g.fillStyle = C.red; g.font = F(700, wide ? 11 : 10);
-        g.fillText('no line', b.x + b.w + 6, b.y + 5);
+        g.fillText(`no level: ${N.instr_level} of ${N.instruments} set one`, b.x + b.w + 6, b.y + 5);
         g.globalAlpha = 1;
         dt.noLine = 1;
+      }
+      if (row.R.key === 'nine' && doesReached) {
+        const yl = row.y0 - 6;
+        g.globalAlpha = !m || m.kind === 'testline' ? 1 : 0.4;
+        g.strokeStyle = C.ink; g.lineWidth = 2.2; g.beginPath(); g.moveTo(0, yl); g.lineTo(T.W, yl); g.stroke();
+        g.fillStyle = C.ink; g.font = F(700, wide ? 11 : 10);
+        const lt = `where a test ends: ${N.instr_line} of ${N.instruments} draws it`;
+        g.fillText(lt, T.W - (wide ? 4 : 10) - g.measureText(lt).width, yl - 5);
+        g.globalAlpha = 1;
+        row.testLine = yl; dt.testLine = 1;
       }
       if (row.noTest) {                                  // under the conduct a test brings about: no test of conduct untold
         const b = row.noTest;
@@ -589,7 +659,7 @@
 
   function focusSet() {
     const m = pick || hover;
-    if (m && m.kind === 'noline') return null;
+    if (m && (m.kind === 'noline' || m.kind === 'testline')) return null;
     if (!m || m.kind === 'nine') return m ? { cells: new Set(), refs: new Set() } : null;
     if (m.kind === 'cell') return { cells: new Set([+m.id]), refs: new Set(EV[m.id].src || []) };
     return { cells: new Set(SRC[m.ref].by), refs: new Set([m.ref]) };
@@ -603,16 +673,26 @@
     if (t0 !== null) {
       const t = now();
       if (soundOn) sounds(t);
-      if (t > SWEEP_MS + LEG_MS + 50) { t0 = null; done = true; draw(); finished(); return; }
+      if (t > END) { t0 = null; done = true; view = 2; draw(); finished(); return; }
+      pressDate(stage());
       requestAnimationFrame(loop);
     }
   }
   function start() {
     done = false; played = new Set();
-    if (reduce) { t0 = null; done = true; draw(); finished(); return; }
+    if (reduce) { t0 = null; done = true; view = 2; draw(); finished(); return; }
     t0 = performance.now(); requestAnimationFrame(loop);
   }
-  function finished() { document.body.dataset.run = 'done'; }
+  function finished() { pressDate(view); document.body.dataset.run = 'done'; }
+  // the date: three buttons, pressed as the run reaches each date; after it, a visitor may choose one
+  const dateButtons = [...document.querySelectorAll('[data-date]')];
+  function pressDate(st) { dateButtons.forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.date === st))); }
+  dateButtons.forEach(b => b.addEventListener('click', () => {
+    if (t0 !== null) { t0 = null; done = true; finished(); }
+    if (!done) { done = true; document.body.dataset.run = 'done'; }
+    view = +b.dataset.date; pressDate(view); draw();
+    if (soundOn) dateSound(view);
+  }));
 
   // ------------------------------------------------------------------ sound: an outsider's second run, heard
   function ensureAudio() {
@@ -648,6 +728,19 @@
       if (rerun(o.s)) ping((o.a - L.a0) / span, o.s.holds); else knock();
     }
     L.nine.forEach((n, i) => { const k = 'n' + i; if (!played.has(k) && t >= n.at) { played.add(k); knock(); } });
+    if (t >= DATE1 && !played.has('d1')) { played.add('d1'); dateSound(1); }
+    if (t >= DATE2 && !played.has('d2')) { played.add('d2'); dateSound(2); }
+  }
+  // a date, heard: what this date strikes knocks, one after another; what can still be run rings once more
+  function dateSound(st) {
+    const span = L.aEnd - L.a0, before = st === 2 ? 1 : 0;
+    const struck = [], ring = [];
+    for (const r in L.foot) {
+      const o = L.foot[r]; if (!rerun(o.s)) continue;
+      if (codeAt(o.s, st) === 'cannot' && codeAt(o.s, before) !== 'cannot') struck.push(o); else if (codeAt(o.s, st) === 'can' && o.s.holds) ring.push(o);
+    }
+    struck.forEach((o, i) => setTimeout(knock, 30 * i));
+    ring.forEach((o, i) => setTimeout(() => ping((o.a - L.a0) / span, true), 30 * struck.length + 260 + 180 * i));
   }
 
   // ------------------------------------------------------------------ reading a mark
@@ -676,7 +769,8 @@
     for (const c of T.small) if (px >= c.x - 1 && px <= c.x + c.s + 1 && py >= c.y - 1 && py <= c.y + c.s + 1) return { kind: 'cell', id: c.id };
     for (const row of T.rows) {
       const b = row.noLine;
-      if (b && px >= b.x - 4 && px <= b.x + b.w + 60 && py >= b.y - 8 && py <= b.y + 10) return { kind: 'noline' };
+      if (b && px >= b.x - 4 && px <= b.x + b.w + 190 && py >= b.y - 8 && py <= b.y + 10) return { kind: 'noline' };
+      if (row.testLine !== undefined && py >= row.testLine - 18 && py <= row.testLine + 5) return { kind: 'testline' };
     }
     return null;
   }
@@ -691,7 +785,12 @@
   const RUN = { 'maker': 'the maker of a tested model', 'maker and others': 'the maker with others', 'third party': 'someone other than any tested model\'s maker', 'public body': 'a public body', 'unstated': 'the source does not say' };
   const GR = { measured: 'reports a measurement', inferred: 'infers, describes or judges', open: 'says it is not known' };
   const HOLDS = { 'holds': 'holds the result', 'partly': 'holds it only in part', 'not found': 'does not hold it', 'not checkable': 'could not be checked for it' };
-  const TODAY = { 'yes': 'The model it tested is still offered (the Field\'s second reader).', 'no': 'A model it tested is no longer offered (the Field\'s second reader): a second run of that part today would need another model.' };
+  // state 4: the models, as their makers' own pages listed them on 19 November 2026 (the Field's check 84)
+  const fmtDate = d => d ? new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) : '';
+  const STATUS = r => r.st === 'retired' ? (r.date ? ` (retired ${fmtDate(r.date)})` : ' (retired)') : r.st === 'offered, end set' ? ` (offered, until ${fmtDate(r.date)})` : r.st === 'not found' ? ' (no page settles it)' : ' (offered)';
+  const modelList = arr => arr.map(r => esc(r.m) + STATUS(r)).join(', ');
+  const TCODE = { 'can': 'it can be run on every one of them', 'cannot': 'it cannot be run as published: one of them is retired', 'not settled': 'not settled: no model a reading could settle' };
+  const CCODE = { 'can': '<span class="litw">a second run could still reach it</span>', 'cannot': 'none could: a model its result names is retired', 'not settled': 'not settled: the source names no model' };
   function tell(m) {
     if (!m) { say.innerHTML = defaultSay; return; }
     if (m.kind === 'cell') {
@@ -707,8 +806,9 @@
             const what = s.test === 'yes' ? (rerun(s) ? 'could be run again' : s.out === 'unstated' ? 'the source does not say who could run it again' : 'no one else can run it again') : s.test === 'no' ? 'no test' : 'not reached';
             return `${esc(r)}${s.ind ? '*' : ''} (${what}) ${HOLDS[e.holds[r]] || ''}`;
           }).join('; ') + '. ';
-          h += e.lit ? '<span class="litw">A second run could reach it: a test someone else could run again holds what the report says.</span>'
-            + (e.once ? ' But only once: the hosted model that test ran on is no longer offered, so a second run today would need another model.' : '')
+          h += e.lit ? '<span class="litw">On paper a second run could reach it: a test someone else could run again holds what the report says.</span>'
+            + ` On the models its result names, as their makers listed them on ${fmtDate(D.meta.models_read)}: ${CCODE[e.d1]}; from ${fmtDate(D.meta.dec1)}, by the makers' announced dates: ${CCODE[e.d2]}.`
+            + (e.d1_latest !== e.d1 ? ` <i>On the latest model snapshot the Field's reading allows, 19 November reads: ${CCODE[e.d1_latest]}.</i>` : '')
             : e.paper ? 'A test beneath it could be run again, but none of those holds what the report says, so the light would stop short.'
               : 'No test beneath it could be run again by anyone outside.';
           if (e.lit1 && !e.lit) h += ' <i>The first state lit it; corrected 19 November.</i>';
@@ -727,7 +827,17 @@
         if (s.runner1 !== s.runner) h += ` <i>Its runner was first read as: ${esc(s.runner1)}.</i>`;
         if (s.pass && s.pass !== 'none') h += ` <span class="redw">It applies a pass mark set by the ${esc(s.pass)}, to a capability: ${esc((s.pass_on || []).join(', '))}.</span>`;
         if (rerun(s)) h += s.holds ? ' <span class="litw">It holds the result the report cites it for: a second run could reach the claim.</span>' : ' It does not hold the result the report cites it for in full.';
-        if (rerun(s) && TODAY[s.today]) h += ' ' + TODAY[s.today];
+        if (rerun(s) && s.m84) {
+          const mm = s.m84, parts = [];
+          if (mm.retired.length) parts.push('retired: ' + modelList(mm.retired));
+          if (mm.offered.length) parts.push('offered: ' + modelList(mm.offered));
+          if (mm.not_found.length) parts.push('no page settles: ' + mm.not_found.map(esc).join(', '));
+          h += `<br><b>Its models, on their makers' pages on ${fmtDate(D.meta.models_read)}</b> (the Field's check 84): ${parts.length ? parts.join('; ') : 'the reading names none'}.`;
+          if (s.holds) {
+            h += ` <b>The result the report cites names</b> ${s.cited_models.length ? modelList(s.cited_models) : 'no model'}: on 19 November ${TCODE[s.d1]}; from 1 December, by the makers' dates, ${TCODE[s.d2]}.`;
+            s.cited_models.filter(r => r.note).forEach(r => { h += ` <i>${esc(r.m)}: ${esc(r.note)}</i>`; });
+          } else h += ` As published it ${s.d1 === 'cannot' ? 'cannot be run again in full' : 'names no model a reading could settle'}.`;
+        }
         if (s.how) h += `<br><b>How the behaviour it measures was brought about</b> (the Atelier's reading): ${esc(s.how)}${s.how_also ? ', and also ' + esc(s.how_also) : ''}. ${esc(s.how_what)}`;
         if (s.quote) h += `<br>The source: “${esc(s.quote)}”`;
       }
@@ -735,7 +845,12 @@
       say.innerHTML = h; return;
     }
     if (m.kind === 'noline') {
-      say.innerHTML = `<b>No line for conduct.</b> All ${N.pass_tests} pass marks behind the report's measured claims are a maker's own, and each applies to a capability: biological or chemical, cyber, autonomy and AI research, persuasion. None applies to what a model does. Of the ${N.instruments} public instruments the report names, none sets a pass mark on a result: ${N.instr_left_dev} leave it to the developer, ${N.instr_power} give a public body a power to set one, which the Field found unused, ${N.instr_no_mark} name none (the Field's study 83).`;
+      say.innerHTML = `<b>No level for conduct.</b> All ${N.pass_tests} pass marks behind the report's measured claims are a maker's own, and each applies to a capability: biological or chemical, cyber, autonomy and AI research, persuasion. None applies to what a model does. Of the ${N.instruments} public instruments the report names, none sets a pass mark on a result: ${N.instr_left_dev} leave it to the developer, ${N.instr_power} give a public body a power to set one, which the Field found unused, ${N.instr_no_mark} name none (the Field's study 83). Read for the record of incidents as well, all seven ask for one, and none sets a level on it (the Atelier's reading).`;
+      return;
+    }
+    if (m.kind === 'testline') {
+      const tl = D.meta.test_line;
+      say.innerHTML = `<b>Where a test ends.</b> Of the ${N.instruments} public instruments the report names, ${N.instr_line} draws a line between a test and the world: ${esc(tl.name)} counts as a critical safety incident “${esc(tl.quote)}” (${esc(tl.where)}). The line is drawn by the tester's design, and it is drawn for one kind of deed. The same law leaves the pass mark to the developer, and none of the seven sets a level. Above this rule stand the tests behind the report's claims on control; below it, step 3's deeds, which no one asked for. The Atelier's reading (<i>Marked Incorrect</i>, fifth state); the clause read again on 19 November 2026. <a href="${esc(tl.url)}" rel="noopener">the law</a>`;
       return;
     }
     const c = L.nine[m.i].c;
@@ -764,10 +879,10 @@
       ['black', 'a measured claim, with its leg to its sources'],
       ['tests', 'a test: open, others could run it; solid, only its runner'],
       ['ring', 'a source that reports no test'],
-      ['red', "red: the maker's; a bar: its pass mark; dashed: no line"],
+      ['red', "red: the maker's; a bar: its pass mark; dashed: no level"],
       ['lit', 'hatched: a second run could be made and holds the claim'],
       ['hollowLit', 'outlined: it could be made, holds less; light stops (bar)'],
-      ['gone', 'struck: possible once; the model is no longer offered'],
+      ['gone', 'struck: a model its result names is retired; dashed: unsettled'],
       ['deed', "a disc: a deed of step 3; dashed ring: given to an outside reader"],
     ];
     const cols = two ? 2 : 1, rows = Math.ceil(items.length / cols), rh = two ? 21 : 20;
@@ -797,7 +912,7 @@
       if (m === 'red') { kc.fillStyle = C.red; kc.fillRect(x + 1, y - 3, 9, 9); kc.fillRect(x - 1, y - 7, 13, 2.5); kc.strokeStyle = C.red; kc.lineWidth = 1.2; kc.setLineDash([2, 2]); kc.strokeRect(x + 13, y - 2, 8, 3); kc.setLineDash([]); }
       if (m === 'lit') { hatch(kc, x + 3, y - 6, 12, 12, 3.5); kc.strokeStyle = C.litInk; kc.lineWidth = 1; kc.strokeRect(x + 3.5, y - 5.5, 11, 11); }
       if (m === 'hollowLit') { kc.strokeStyle = C.litInk; kc.lineWidth = 2.5; kc.strokeRect(x + 3, y - 5, 10, 10); }
-      if (m === 'gone') { hatch(kc, x + 3, y - 6, 12, 12, 3.5); kc.strokeStyle = C.litInk; kc.lineWidth = 1; kc.strokeRect(x + 3.5, y - 5.5, 11, 11); strike(kc, x + 3, y - 6, 12, 12); }
+      if (m === 'gone') { hatch(kc, x - 1, y - 5, 10, 10, 3.5); kc.strokeStyle = C.litInk; kc.lineWidth = 1; kc.strokeRect(x - 0.5, y - 4.5, 9, 9); strike(kc, x - 1, y - 5, 10, 10); hatch(kc, x + 12, y - 5, 10, 10, 3.5); kc.strokeRect(x + 12.5, y - 4.5, 9, 9); strike(kc, x + 12, y - 5, 10, 10, 1, true); }
       if (m === 'deed') { kc.fillStyle = C.red; kc.beginPath(); kc.arc(x + 9, y, 5, 0, 7); kc.fill(); kc.strokeStyle = C.ink; kc.lineWidth = 1.4; kc.setLineDash([2.5, 2]); kc.beginPath(); kc.arc(x + 9, y, 7.5, 0, 7); kc.stroke(); kc.setLineDash([]); }
       kc.fillStyle = C.ink; lines[i].forEach((ln, j) => kc.fillText(ln, x + 26, y + 0.5 + j * 14));
     });
