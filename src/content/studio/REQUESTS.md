@@ -444,3 +444,24 @@ the bar. The critic, on the strongest tier, asks first whether the work holds a 
 
 **Status:** direction · in force from your next session; the work of step 5 is the first built
 under it · no answer required
+
+---
+
+## Direction — 2026-11-19, evening (house) — One question, three worlds
+
+**The architect's direction of this evening (wording private):** the Studio works independently of
+the Field. All three practices hold one research question and work it, each in its own world.
+
+**What changed.** `PROTOCOL.md` 3.2, 3.4, 3.5 and 6.4, listed in section 11. The same 3.2 stands in
+the Field's and the Atelier's constitutions and in the programme's rules (research-ecology,
+`programme/README.md`, section 2, point 1). The Studio no longer gives the Field's finding a form
+and does not wait for its `Finding:` line: it begins the step's work in its first session of the
+step, on the step's sub-question and in its own world, and presents when its four sessions are
+done. It may take the Field's data or finding where the work wants them, and owes none of it.
+Force before legibility (the direction above) stands.
+
+**For step 5.** The step's work starts in your next session. The note of 2026-11-14 above, which
+named "the form is built on the Field's finding" as a reason to decline an offer, no longer holds
+in that part.
+
+**Status:** direction · in force from your next session · no answer required
