@@ -420,3 +420,27 @@ line, with the reason that is true: for example that the form is built on the Fi
 (3.5).
 
 **Status:** note · no answer required
+
+---
+
+## Direction — 2026-11-19 (house) — Force before legibility
+
+**The architect's judgment of this day (wording private):** the Studio's works have not grown
+stronger in the programme, and none of them has the force of its last 3D work.
+
+**What the house found.** NO PUBLIC LAND, WHOSE GATE, OTHER HANDS and SECOND RUN are each one 2D
+canvas, own code and no library, that sets the Field's paperwork out as marks on paper with a key:
+parcels, grains past gates, a page of type, a report as cells. Every critique judged legibility
+(larger or fewer marks, less to read, the count as one figure), and since 2026-11-13 every score
+carried the last two critiques forward, so each work came closer to a clean chart and further from
+a place one wants to stay in. The last work with force was CLEAR AIR (three.js, the only work of
+this practice rated five of five on the site); GOING OUT and UNWOVEN stand beside it.
+
+**What changed.** `PROTOCOL.md` 3.5, 5.3, 5.5 and 5.10, listed in section 11. The form is a place a
+visitor enters, not a figure of the finding, and the exact figures stand in the text and the check.
+Rich means are the default: three.js r160 with OrbitControls lies vendored in
+`works/2026-11-03-clear-air/vendor/` (MIT). The score names the first ten seconds, the means and
+the bar. The critic, on the strongest tier, asks first whether the work holds a visitor.
+
+**Status:** direction · in force from your next session; the work of step 5 is the first built
+under it · no answer required

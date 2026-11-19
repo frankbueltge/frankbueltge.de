@@ -187,15 +187,29 @@ form one can see or hear, at the scale of the whole dataset, not text cards, cou
 It reads the Field's bulletin and builds on the data the Field published for the step. A Studio
 work without the step's finding has not done its part. Nothing the Studio shows claims to be art.
 
+**Force before legibility.** The form is a place a visitor enters and stays in, not a figure of the
+finding: a world, a scene, an instrument or a stretch of time, with depth, light, motion and sound,
+in which the finding is felt before a word is read. The step's material is often paperwork (acts,
+reports, sentences); the work makes felt what the paperwork is about and does not set the
+paperwork itself out as marks on a sheet. The exact figures stand in the work's text and in its
+check, so the picture need not be read like a chart. Force is not decoration: every depth, light
+and sound carries something of the finding. The bar is the strongest work this practice has made,
+named in the score; on 2026-11-19 the house named CLEAR AIR (cycle 012), GOING OUT (cycle 010) and
+UNWOVEN (cycle 011).
+
 The Studio begins the step's work after the Field's `Finding:` line (3.2) and takes the four
 sessions of 3.1 from there: build; second state and its critique; check; presentation, after the
 Field's.
 
-- Before the first state, `SCORE.md` says in one line each what the critiques of the Studio's last
-  two works asked for and what this work does differently, and what the nearest thing is that
-  already exists, the source's own chart included, and what this form shows that it does not.
-- The critic of the second session meets the work first with its prose hidden: what the work says
-  must be seen or heard in the form before any text is read.
+- Before the first state, `SCORE.md` says in one line each: what a visitor meets in the first ten
+  seconds, before any text; the means (engine, libraries, sound) and why they serve; what the work
+  must do to stand beside the bar; and what the nearest thing is that already exists, the source's
+  own chart included, and what this form shows that it does not.
+- The critic of the second session meets the work first with its prose hidden and answers two
+  questions in this order: does it hold a visitor (the first ten seconds; would one stay, come back,
+  show it to someone; does it stand beside the bar and its Atlas neighbours), and what does the
+  form make felt of the finding before any text is read. A critique asks for force before
+  legibility: it never asks for a chart, a key or a count in place of the form.
 - In the check, the script reads the page's numbers from the page (5.2).
 
 ## 4. The session and its record
@@ -284,9 +298,13 @@ Verification lives inside the work, not in gates in front of it.
 - **The licence rule.** Code libraries may be committed: permissive licences are embedded with
   attribution, copyleft is used as a tool and never embedded, and code with no stated licence is
   never embedded.
-- **Rich means are expected, not merely allowed.** A session that ships a page without script, or
-  a single static figure, says in its bulletin why that form served the work better than a richer
-  one.
+- **Rich means are the default.** The default work is a real-time piece: a 3D or WebGL scene,
+  shaders, particles, generative motion, sound built as material. three.js runs on these pages
+  (CLEAR AIR vendored it under its MIT licence); Tone.js, PixiJS or regl may be vendored the same
+  way. A work drawn as a flat figure of marks (a chart, a sheet of type, a grid of squares, a
+  diagram that needs a key) says in its score why that form serves it better, and legibility is not
+  a reason. A session that ships a page without script, or a single static figure, says in its
+  bulletin why that form served the work better than a richer one.
 - **No work owes** a no-JavaScript version, a reduced-motion substitute or a size budget.
 
 ### 5.4 The score
@@ -306,8 +324,9 @@ The Studio's `Builds on:` names what it takes. The Studio's score holds more tha
 ### 5.5 The critique
 
 At the end of the second session a voice that did not build the work meets it as a visitor does:
-a convened sub-agent, or the conductor alone only when dispatch is unavailable, and then recorded
-as such. In at most 20 lines the critique says whether the work carries and what it lacks. It is
+a convened sub-agent on the strongest tier the session can reach, because it judges force, or the
+conductor alone only when dispatch is unavailable, and then recorded as such. In at most 20 lines
+the critique says whether the work holds a visitor, whether it carries, and what it lacks. It is
 committed as `CRITIQUE.md` beside the work. The sessions after it answer it in the work, not in
 prose.
 
@@ -418,8 +437,8 @@ The Studio's one work is the long work: one work per cycle, grown across its ses
 - **The score.** Within its 20 lines the Studio's `SCORE.md` also says: what the work is for and
   what a visitor will do in it; its material and why; the nearest Atlas entries and the daylight
   from them; the increments planned, one line each; and one sentence on how the practice will
-  know, at the critique, whether the work carries. The first session also lays the work's ground,
-  its data and a first face that opens.
+  know, at the critique, whether the work holds a visitor and carries. The first session also lays
+  the work's ground, its data and a first face that opens.
 - **Increments.** Every later session advances the same work by one increment and names it in the
   bulletin: `Increment <n> of <N>: <what moved>`. The work opens after every session, and its
   evidence is committed beside it. A session may revise the score: the change and its reason are
@@ -428,8 +447,8 @@ The Studio's one work is the long work: one work per cycle, grown across its ses
 - **Whenever a session runs.** A session started outside the nightly schedule is still one
   increment, not a second work and not a skipped step. A session takes the time its increment
   needs.
-- **The critique.** The critic reads the work against its score and against the Atlas entries it
-  names, and asks whether it carries (5.5).
+- **The critique.** The critic reads the work against its score, the bar (3.5) and the Atlas
+  entries it names, and asks first whether it holds a visitor, then whether it carries (5.5).
 - **In progress, in the open.** Until the last session the work's face says at its top that it is
   in progress, with the increment and the date. The site mirrors it as it stands. Nothing
   unfinished is passed off as finished.
@@ -704,3 +723,14 @@ This section holds until cycle 014 ends.
   the work, to a channel the receiver opened itself, and the architect sends it. Section 8 said
   before that sending measures nothing and that an unsent packet is a complete outcome; those
   sentences stand in the archived text.
+- 2026-11-19: force before legibility (3.5, 5.3, 5.5, 5.10), set by a house session on the
+  architect's judgment of that day that the Studio's works have not grown stronger in the programme
+  (his wording private), under his standing delegation and his to reverse. From cycle 013 to 016
+  each work was one 2D canvas, own code and no library, that set the Field's paperwork out as marks
+  with a key; every critique judged legibility (larger or fewer marks, less to read, the count as
+  one figure), and since 2026-11-13 every score carried the last two critiques forward. The last
+  work with force was CLEAR AIR, a 3D world (cycle 012). Now the form is a place, not a figure; rich
+  means are the default and a flat figure of marks needs a reason that is not legibility; the score
+  names the first ten seconds, the means and the bar instead of what the last two critiques asked;
+  the critic, on the strongest tier, asks first whether the work holds a visitor and never for a
+  chart, a key or a count in place of the form.
