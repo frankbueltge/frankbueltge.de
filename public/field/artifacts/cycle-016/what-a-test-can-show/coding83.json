@@ -1,0 +1,727 @@
+{
+ "what": "Study 83: the seven public instruments the International AI Safety Report 2026 names in section 3.2 (printed pages 117-118), each coded by CODEBOOK83.md. 'first' is the conductor's coding, made by searching each text for the codebook's terms and reading every passage found; 'second' is a convened machine reader's, made from the same files with only the codebook in view, blind to the first coding and to the predictions; 'final' takes the first code where both agree and the third reading's decision where they part (adjudication). Quotations are short passages of the texts as fetched on 2026-11-19, each found again, whitespace aside, in the text; no instrument is copied into this repository.",
+ "date": "2026-11-19",
+ "session": 281,
+ "codebook_sha256": "470e76d57818927ca05cd122d989d8b2ba69bb2d745f11268836566a29fc2c6b",
+ "instruments": [
+  {
+   "n": 1,
+   "name": "EU AI Act, Regulation (EU) 2024/1689",
+   "short": "EU AI Act",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401689",
+   "read": "direct, HTTP 200, Official Journal text as published 12.7.2024 (HTML)",
+   "sha256": "e9fd3ba31a8b62018715dfe9d11b2e18cd9fb89e9aca459ade7be9bc9e459bc5",
+   "sha256_of": "the file as fetched",
+   "first": {
+    "binding": "law",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "power to set",
+    "outside_evaluation": "provided for",
+    "results": "to a public body"
+   },
+   "second": {
+    "binding": "law",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "power to set",
+    "outside_evaluation": "provided for",
+    "results": "to a public body"
+   },
+   "final": {
+    "binding": "law",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "power to set",
+    "outside_evaluation": "provided for",
+    "results": "to a public body"
+   },
+   "quotes": {
+    "binding": {
+     "quote": "laying down harmonised rules on artificial intelligence",
+     "where": "obligations for providers of general-purpose AI models apply from 2 August 2025 (Art. 113)",
+     "quote_found": true
+    },
+    "requires_evaluation": {
+     "quote": "perform model evaluation in accordance with standardised protocols and tools reflecting the state of the art, including conducting and documenting adversarial testing of the model",
+     "where": "Art. 55(1)(a)",
+     "quote_found": true
+    },
+    "control": {
+     "quote": "unintended issues of control relating to alignment with human intent",
+     "where": "recital 110",
+     "quote_found": true
+    },
+    "pass_mark": {
+     "quote": "The Commission shall adopt delegated acts in accordance with Article 97 to amend the thresholds listed in paragraphs 1 and 2 of this Article, as well as to supplement benchmarks and indicators",
+     "where": "Art. 51(1)(a) and 51(3); no delegated act supplementing benchmarks found",
+     "quote_found": true,
+     "note": "The level decides classification (whether the systemic-risk duties apply), not whether a model may be released; the only level in force is the training-compute presumption of Art. 51(2), which by the codebook is not a pass mark."
+    },
+    "outside_evaluation": {
+     "quote": "The Commission may decide to appoint independent experts to carry out evaluations on its behalf",
+     "where": "Art. 92(1) and (2)",
+     "quote_found": true
+    },
+    "results": {
+     "quote": "the results of its evaluation, which shall contain, at a minimum, the information set out in Annex XI for the purpose of providing it, upon request, to the AI Office",
+     "where": "Art. 53(1)(a), Annex XI",
+     "quote_found": true
+    }
+   },
+   "second_reasons": {
+    "binding": {
+     "quote": "Chapter III Section 4, Chapter V, Chapter VII and Chapter XII and Article 78 shall apply from 2 August 2025, with the exception of Article 101;",
+     "where": "Art. 113(b)",
+     "why": "A regulation 'binding in its entirety and directly applicable'; Chapter V (general-purpose AI models) has applied since 2 August 2025, so it is in force on 2026-11-19 (fines under Art. 101 from 2 August 2026)."
+    },
+    "requires_evaluation": {
+     "quote": "perform model evaluation in accordance with standardised protocols and tools reflecting the state of the art, including conducting and documenting adversarial testing of the model with a view to identifying and mitigating systemic risks;",
+     "where": "Art. 55(1)(a); recital 114",
+     "why": "Providers of general-purpose AI models with systemic risk are obliged to evaluate the model, including adversarial testing."
+    },
+    "control": {
+     "quote": "international approaches have so far identified the need to pay attention to risks from potential intentional misuse or unintended issues of control relating to alignment with human intent;",
+     "where": "Recital 110",
+     "why": "Among the systemic risks to be assessed and mitigated (Art. 55(1)(b)), recital 110 names 'unintended issues of control relating to alignment with human intent' and 'risks from models of making copies of themselves or ‘self-replicating’'."
+    },
+    "pass_mark": {
+     "quote": "The Commission shall adopt delegated acts in accordance with Article 97 to amend the thresholds listed in paragraphs 1 and 2 of this Article, as well as to supplement benchmarks and indicators",
+     "where": "Art. 51(1)(a) and 51(3); also Art. 56(9), Art. 92(6), Art. 93(1)(b)",
+     "why": "The Act fixes only a compute presumption (10^25 FLOP, not a pass mark); the capability threshold of Art. 51(1)(a) ('high impact capabilities evaluated on the basis of ... indicators and benchmarks') is left for the Commission to fix by delegated act, and I found no such benchmark level fixed; the Act does not ask providers to set their own thresholds."
+    },
+    "outside_evaluation": {
+     "quote": "The AI Office, after consulting the Board, may conduct evaluations of the general-purpose AI model concerned:",
+     "where": "Art. 92(1)-(2); recital 114",
+     "why": "The AI Office may evaluate the model itself or through appointed independent experts (Art. 92(2)), and recital 114 allows testing 'as appropriate, through internal or independent external testing'; no outside evaluation is required."
+    },
+    "results": {
+     "quote": "the results of its evaluation, which shall contain, at a minimum, the information set out in Annex XI for the purpose of providing it, upon request, to the AI Office and the national competent authorities;",
+     "where": "Art. 53(1)(a); Annex XI Section 2 point 1",
+     "why": "Evaluation results go into technical documentation kept for the AI Office and national authorities on request; no provision publishes them (the public summary of Art. 53(1)(d) concerns training content)."
+    }
+   },
+   "second_pass_mark_secondary": null,
+   "second_doubt": "Control rests on recital 110 only; no operative article names loss of control. Pass mark: Art. 51 is a classification threshold that also selects whom the Chapter V duties fall on, so a strict reader could code 'none'; Art. 93(1)(b) lets the Commission request mitigation after its own Art. 92 evaluation on 'serious and substantiated concern of a systemic risk', which is a discretionary judgment, not a fixed level. I could not check (no web search) whether any delegated or implementing act fixed a capability level by 2026-11-19."
+  },
+  {
+   "n": 2,
+   "name": "EU General-Purpose AI Code of Practice, Safety and Security chapter",
+   "short": "EU Code of Practice, safety chapter",
+   "url": "https://ec.europa.eu/newsroom/dae/redirection/document/118119",
+   "read": "direct, HTTP 200, PDF of 43 pages linked from the Commission's page of the Code",
+   "sha256": "d879f9b54c6068aae57ebaead9d90ddaa46f2503312b9185367a724fa8da2f4a",
+   "sha256_of": "the file as fetched",
+   "first": {
+    "binding": "voluntary",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "left to the developer",
+    "outside_evaluation": "required",
+    "results": "published in summary"
+   },
+   "second": {
+    "binding": "voluntary",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "left to the developer",
+    "outside_evaluation": "required",
+    "results": "published in summary"
+   },
+   "final": {
+    "binding": "voluntary",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "left to the developer",
+    "outside_evaluation": "required",
+    "results": "published in summary"
+   },
+   "quotes": {
+    "binding": {
+     "quote": "Signatories commit to specifying systemic risk acceptance criteria",
+     "where": "a code providers may sign to demonstrate compliance (Art. 56 AI Act)",
+     "quote_found": true
+    },
+    "requires_evaluation": {
+     "quote": "Signatories commit to analysing each identified systemic risk",
+     "where": "Commitment 3 (a measure for signatories)",
+     "quote_found": true
+    },
+    "control": {
+     "quote": "Loss of control: Risks from humans losing the ability to reliably direct, modify, or shut down a model.",
+     "where": "Appendix 1.4 (2)",
+     "quote_found": true
+    },
+    "pass_mark": {
+     "quote": "define appropriate systemic risk tiers that: (i) are defined in terms of model capabilities, and may additionally incorporate model propensities",
+     "where": "Measure 4.1",
+     "quote_found": true,
+     "note": "The Code fixes the form (measurable tiers, at least one not yet reached, a safety margin) and the risks the tiers must cover, but no level."
+    },
+    "outside_evaluation": {
+     "quote": "Signatories will ensure that adequately qualified independent external evaluators conduct model evaluations",
+     "where": "Appendix 3.5, with two exceptions (a similarly safe model; no qualified evaluator found after a public call)",
+     "quote_found": true
+    },
+    "results": {
+     "quote": "publication will include high-level descriptions of the systemic risk assessment results",
+     "where": "Measure 10.2, 'if and insofar as necessary'",
+     "quote_found": true
+    }
+   },
+   "second_reasons": {
+    "binding": {
+     "quote": "Act and to enable the AI Office to assess compliance of providers of general-purpose AI models who choose to rely on the Code to demonstrate compliance with their obligations",
+     "where": "Objectives, point B (p. 2)",
+     "why": "A code that providers 'who choose to rely on the Code' sign to demonstrate compliance with Arts. 53 and 55; adherence is by signature, and it is not itself conclusive of compliance."
+    },
+    "requires_evaluation": {
+     "quote": "Signatories will conduct at least state-of-the-art model evaluations in the modalities relevant to the systemic risk to assess the model’s capabilities, propensities, affordances, and/or effects, as specified in Appendix 3.",
+     "where": "Commitment 3, Measure 3.2 (p. 12); Appendix 3",
+     "why": "A measure binding on signatories: state-of-the-art model evaluations of models with systemic risk, including open-ended testing."
+    },
+    "control": {
+     "quote": "Loss of control: Risks from humans losing the ability to reliably direct, modify, or shut down a model.",
+     "where": "Appendix 1.4(2), specified systemic risks (p. 37); Appendix 1.3.1(9)-(10)",
+     "why": "Loss of control is one of four specified systemic risks every signatory must assess, arising from 'self-replication, self-improvement, deception, resistance to goal modification, power-seeking'; capabilities 'to evade human oversight' are listed as a risk source."
+    },
+    "pass_mark": {
+     "quote": "Signatories commit to specifying systemic risk acceptance criteria and determining whether the systemic risks stemming from the model are acceptable (as specified in Measure 4.1).",
+     "where": "Commitment 4, Measures 4.1-4.2 (pp. 15-16); Measure 1.1(2)(a)",
+     "why": "Signatories define their own systemic risk tiers or acceptance criteria and proceed only if risks are acceptable by them; the Code prescribes their form (measurable, capability-based, at least one unreached tier, a safety margin) but fixes no level."
+    },
+    "outside_evaluation": {
+     "quote": "In addition to internal model evaluations, Signatories will ensure that adequately qualified independent external evaluators conduct model evaluations pursuant to this Appendix 3, with regards to the systemic risk, unless:",
+     "where": "Appendix 3.5 (p. 40); Measure 3.5 (pp. 13-14)",
+     "why": "Independent external evaluation is a commitment, with two exceptions: a 'similarly safe or safer model' (Appendix 2.2) or failure to appoint qualified evaluators despite a public call; Measure 3.5 also commits signatories to give independent external evaluators post-market access."
+    },
+    "results": {
+     "quote": "For Model Reports, such publication will include high-level descriptions of the systemic risk assessment results and the safety and security mitigations implemented.",
+     "where": "Measure 10.2 (p. 28); Measures 7.3(1)(e)-(f), 7.7",
+     "why": "Full results with tests, scoring and at least five samples per evaluation go to the AI Office in the Model Report; publicly only a summarised Model Report with 'high-level descriptions' of results is published."
+    }
+   },
+   "second_pass_mark_secondary": null,
+   "second_doubt": "Public summary is conditional ('If and insofar as necessary to assess and/or mitigate systemic risks') and is not needed for similarly safe or safer models, so 'to a public body' is the floor. Appendix 2.2 does fix a relative test-score rule (benchmark scores 'all lower than or equal to ... the scores of the safe reference model') that releases a model from some measures, including external evaluation; I read this as scoping duties, not as a pass mark deciding acceptability, but a reader could take it as 'set by the instrument'. Measure 7.4 lets external evaluators control publication of their own reports, which goes further than a summary but is not required."
+  },
+  {
+   "n": 3,
+   "name": "South Korea, Framework Act on the Development of AI and Establishment of Trust",
+   "short": "South Korea, Framework Act",
+   "url": "https://cset.georgetown.edu/wp-content/uploads/t0625_south_korea_ai_law_EN.pdf",
+   "read": "direct, HTTP 200, the translation the report cites (CSET); the official Korean text not read",
+   "sha256": "9a09e89ff0d62f14c542811178325273f70507f7043764483895b8d87204c0d0",
+   "sha256_of": "the file as fetched",
+   "first": {
+    "binding": "law",
+    "requires_evaluation": "required",
+    "control": "not named",
+    "pass_mark": "none",
+    "outside_evaluation": "provided for",
+    "results": "to a public body"
+   },
+   "second": {
+    "binding": "law",
+    "requires_evaluation": "required",
+    "control": "not named",
+    "pass_mark": "none",
+    "outside_evaluation": "provided for",
+    "results": "to a public body"
+   },
+   "final": {
+    "binding": "law",
+    "requires_evaluation": "required",
+    "control": "not named",
+    "pass_mark": "none",
+    "outside_evaluation": "provided for",
+    "results": "to a public body"
+   },
+   "quotes": {
+    "binding": {
+     "quote": "This Act shall enter into force one year after the date of its promulgation.",
+     "where": "Supplementary Provisions, Art. 1: in force one year after promulgation (January 2026)",
+     "quote_found": true
+    },
+    "requires_evaluation": {
+     "quote": "Identification, assessment, and mitigation of risks throughout the entire AI lifecycle",
+     "where": "Art. 32(1), for systems above a training-compute standard set by Presidential Decree",
+     "quote_found": true
+    },
+    "control": {
+     "quote": "Human management and supervision of high-impact AI",
+     "where": "searched: control, oversight, replicat, decepti; Art. 34(1)4 asks for human supervision of high-impact AI by its operator, not a model's conduct",
+     "quote_found": true
+    },
+    "pass_mark": {
+     "quote": "meets or exceeds the standards prescribed by Presidential Decree",
+     "where": "Art. 32(1) and (3): a compute standard selects the systems; the Minister issues guidelines for the measures; no level of a result",
+     "quote_found": true,
+     "note": "The only threshold is on training compute, which by the codebook selects whom the duty falls on."
+    },
+    "outside_evaluation": {
+     "quote": "AI business operators shall strive to obtain verification and certification prior to providing high-impact AI.",
+     "where": "Art. 30(3), for high-impact AI, not for the compute-selected systems of Art. 32",
+     "quote_found": true
+    },
+    "results": {
+     "quote": "shall submit the results of implementing the measures pursuant to each Subparagraphs of Paragraph 1 to the Minister of Science and ICT",
+     "where": "Art. 32(2)",
+     "quote_found": true
+    }
+   },
+   "second_reasons": {
+    "binding": {
+     "quote": "[Enforced January 22, 2026] [Law No. 20676, Enacted January 21, 2025]",
+     "where": "Title header (p. 1); Supplementary Provisions Art. 1",
+     "why": "A statute enacted 21 January 2025 and in force since 22 January 2026."
+    },
+    "requires_evaluation": {
+     "quote": "measures to ensure the safety of AI systems in which the cumulative computing amount used for learning meets or exceeds the standards prescribed by Presidential Decree. 1. Identification, assessment, and mitigation of risks throughout the entire AI lifecycle",
+     "where": "Art. 32(1) (p. 20)",
+     "why": "Operators of AI systems above a training-compute standard (i.e. frontier/general-purpose models, not only sector applications) must identify, assess and mitigate risks."
+    },
+    "control": {
+     "quote": "4. Human management and supervision of high-impact AI",
+     "where": "Art. 34(1)4 (p. 21); whole text searched",
+     "why": "No passage names loss of control, evading oversight, self-replication or deception as a risk; human supervision appears only as a duty for high-impact (sectoral) AI."
+    },
+    "pass_mark": {
+     "quote": "The Minister of Science and ICT shall determine and announce the detailed guidelines for implementing measures pursuant to the Subparagraphs of Paragraph 1",
+     "where": "Art. 32(3) (p. 20); Art. 12(2)3 (p. 9)",
+     "why": "The only threshold is the compute standard by Presidential Decree, which selects whom the duty falls on; the Minister's guidelines concern how to implement and report the measures, and the Safety Research Institute only researches 'AI safety evaluation criteria and methods'."
+    },
+    "outside_evaluation": {
+     "quote": "AI business operators shall strive to obtain verification and certification prior to providing high-impact AI.",
+     "where": "Art. 30(1) and (3) (pp. 19-20)",
+     "why": "The Minister supports verification and certification by outside organisations, and operators 'shall strive' to obtain it before providing high-impact AI; nothing requires outside evaluation of Art. 32 models."
+    },
+    "results": {
+     "quote": "AI business operators shall submit the results of implementing the measures pursuant to each Subparagraphs of Paragraph 1 to the Minister of Science and ICT.",
+     "where": "Art. 32(2) (p. 20)",
+     "why": "Results of the risk identification, assessment and mitigation go to the Minister; no publication is required."
+    }
+   },
+   "second_pass_mark_secondary": null,
+   "second_doubt": "Art. 32(1) asks for risk 'assessment', not model evaluation or testing by name; I read it as an evaluation duty. Outside evaluation rests on Art. 30, which applies to AI generally and to high-impact (sectoral) AI, not specifically to the compute-threshold systems of Art. 32; a strict reader could code 'none'. Pass mark: Art. 32(3) guidelines could in principle carry levels, but the text gives no power to fix a level of a result; 'power to set' is possible on a loose reading. Translation, not the Korean original."
+  },
+  {
+   "n": 4,
+   "name": "California SB 53, Transparency in Frontier Artificial Intelligence Act",
+   "short": "California SB 53",
+   "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53",
+   "read": "the legislature's site refused a direct request (HTTP 403, a challenge page); the chaptered text (version of 09/29/2025) was read through a web-extraction service, so it is not checked byte for byte",
+   "sha256": "92a428f494ad113aa78c5a4419efe8f89c7c511a58251fc5032d12a324ded7c4",
+   "sha256_of": "the text returned by the extraction service, not the legislature's file",
+   "first": {
+    "binding": "law",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "left to the developer",
+    "outside_evaluation": "provided for",
+    "results": "published in summary"
+   },
+   "second": {
+    "binding": "law",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "left to the developer",
+    "outside_evaluation": "provided for",
+    "results": "published in summary"
+   },
+   "final": {
+    "binding": "law",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "left to the developer",
+    "outside_evaluation": "provided for",
+    "results": "published in summary"
+   },
+   "quotes": {
+    "binding": {
+     "quote": "A large frontier developer shall write, implement, comply with, and clearly and conspicuously publish on its internet website a frontier AI framework",
+     "where": "chaptered 29 September 2025; Business and Professions Code ch. 25.1, in force from 1 January 2026",
+     "quote_found": true
+    },
+    "requires_evaluation": {
+     "quote": "Assessments of catastrophic risks from the frontier model conducted pursuant to the large frontier developer's frontier AI framework.",
+     "where": "§ 22757.12(a)(2)-(4) and (c)(2)",
+     "quote_found": true
+    },
+    "control": {
+     "quote": "Evading the control of its frontier developer or user.",
+     "where": "§ 22757.11(c)(1)(C), in the definition of catastrophic risk",
+     "quote_found": true
+    },
+    "pass_mark": {
+     "quote": "Defining and assessing thresholds used by the large frontier developer to identify and assess whether a frontier model has capabilities that could pose a catastrophic risk",
+     "where": "§ 22757.12(a)(2)",
+     "quote_found": true,
+     "note": "The developer must comply with its own framework (penalty, § 22757.15), so its own threshold binds it; the state sets none."
+    },
+    "outside_evaluation": {
+     "quote": "Using third parties to assess the potential for catastrophic risks and the effectiveness of mitigations of catastrophic risks.",
+     "where": "§ 22757.12(a)(5) and (c)(2)(C): the framework describes the developer's approach; nothing requires a third party",
+     "quote_found": true
+    },
+    "results": {
+     "quote": "include in the transparency report required by paragraph (1) summaries of all of the following",
+     "where": "§ 22757.12(c)(2); internal-use assessments go confidentially to the Office of Emergency Services (§ 22757.12(d))",
+     "quote_found": true
+    }
+   },
+   "second_reasons": {
+    "binding": {
+     "quote": "Approved by Governor September 29, 2025. Filed with Secretary of State September 29, 2025.",
+     "where": "Chapter 138, Statutes of 2025; Bus. & Prof. Code §22757.10 ff.; penalties §22757.15",
+     "why": "A chaptered statute with civil penalties enforced by the Attorney General, in force on 2026-11-19."
+    },
+    "requires_evaluation": {
+     "quote": "summaries of all of the following: (A) Assessments of catastrophic risks from the frontier model conducted pursuant to the large frontier developer’s frontier AI framework. (B) The results of those assessments.",
+     "where": "§22757.12(a)(2)-(5) and (c)(2)",
+     "why": "Large frontier developers must write, implement and comply with a framework covering 'assessing thresholds' of catastrophic capability, and must summarise the catastrophic-risk assessments conducted under it before deployment."
+    },
+    "control": {
+     "quote": "(C) Evading the control of its frontier developer or user.",
+     "where": "§22757.11(c)(1)(C); §22757.12(a)(10); §22757.11(d)(3)-(4)",
+     "why": "Catastrophic risk, which the framework must assess and manage, includes a model 'Evading the control of its frontier developer or user'; the framework must cover 'a frontier model circumventing oversight mechanisms', and deceptive subversion of developer controls is a critical safety incident."
+    },
+    "pass_mark": {
+     "quote": "Defining and assessing thresholds used by the large frontier developer to identify and assess whether a frontier model has capabilities that could pose a catastrophic risk, which may include multiple-tiered thresholds.",
+     "where": "§22757.12(a)(2)-(4)",
+     "why": "The developer defines its own capability thresholds (possibly tiered) and mitigations; the Act fixes none, and its only numeric thresholds are compute (10^26 FLOP) and revenue ($500m), which select whom the duty falls on."
+    },
+    "outside_evaluation": {
+     "quote": "(5) Using third parties to assess the potential for catastrophic risks and the effectiveness of mitigations of catastrophic risks.",
+     "where": "§22757.12(a)(5) and (c)(2)(C)",
+     "why": "The framework must describe how the developer approaches third-party assessment, and the transparency report states 'The extent to which third-party evaluators were involved', which may be none; third-party evaluation is anticipated, not required."
+    },
+    "results": {
+     "quote": "summaries of all of the following: (A) Assessments of catastrophic risks from the frontier model conducted pursuant to the large frontier developer’s frontier AI framework. (B) The results of those assessments.",
+     "where": "§22757.12(c)(2)-(3), (d), (f)",
+     "why": "Summaries of assessment results are published in a transparency report (a system or model card suffices), with redactions allowed; summaries of internal-use assessments go to the Office of Emergency Services."
+    }
+   },
+   "second_pass_mark_secondary": null,
+   "second_doubt": "The text does not state its operative date (California's default 1 January 2026 is assumed). Requires evaluation is indirect: the Act obliges a framework describing how assessments are done and compliance with it, rather than prescribing tests. The definition of catastrophic risk (more than 50 deaths or $1bn in damage) is a harm level, not a level of an evaluation result, so I did not count it as a pass mark."
+  },
+  {
+   "n": 5,
+   "name": "China, AI Safety Governance Framework 2.0 (TC260)",
+   "short": "China, Safety Governance Framework 2.0",
+   "url": "http://www.cac.gov.cn/rootimages/uploadimg/1759653474200838/1759653474200838.pdf",
+   "read": "direct, HTTP 200, the bilingual PDF attached to the regulator's statement of 15 September 2025 (the HTTPS address reset the connection; the same file over HTTP, identical by hash to a copy on a European standards liaison's site); the English part read. The report cites a news article about it",
+   "sha256": "50735b9ca01bff746169fa58e554abb97b4e62c27d4c97afd64f18ff83bba705",
+   "sha256_of": "the file as fetched",
+   "first": {
+    "binding": "voluntary",
+    "requires_evaluation": "recommended",
+    "control": "named",
+    "pass_mark": "power to set",
+    "outside_evaluation": "provided for",
+    "results": "published in summary"
+   },
+   "second": {
+    "binding": "voluntary",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "power to set",
+    "outside_evaluation": "provided for",
+    "results": "published in summary"
+   },
+   "final": {
+    "binding": "voluntary",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "power to set",
+    "outside_evaluation": "provided for",
+    "results": "published in summary"
+   },
+   "quotes": {
+    "binding": {
+     "quote": "We should build an integrated AI safety assessment system",
+     "where": "a technical document of a standards committee; non-binding guidance by its own description and the report's",
+     "quote_found": true
+    },
+    "requires_evaluation": {
+     "quote": "Developers will be required to conduct regular testing to determine whether a model would pose a potential risk of loss of control.",
+     "where": "Section 5.11; also 6.1.9, 6.1.11, 5.3, 5.8",
+     "quote_found": true,
+     "note": "Decided on a third reading for the second coder's code; the first coding had quoted 5.8."
+    },
+    "control": {
+     "quote": "Emergence of AI self-awareness and loss of human control",
+     "where": "risk (f) of the frontier risks",
+     "quote_found": true
+    },
+    "pass_mark": {
+     "quote": "Competent (regulatory) authorities of the respective industry or sector should, in accordance with their respective classification and grading standards for AI safety risks, organize relevant AI entities to perform this classification and grading work.",
+     "where": "5.5 and Appendix 1, III: five risk grades described by their impact; national standards and sector regulators are to fix the grading rules; none found",
+     "quote_found": true,
+     "note": "Borderline. The five grades (low to extremely serious) are fixed in the text, but as harms to society of an application, assessed by scenario, level of intelligence and scale, not as levels of a test result; the rules that would map an assessment to a grade are left to standards still to come."
+    },
+    "outside_evaluation": {
+     "quote": "We should organize crowdsourced safety testing activities to mobilize collective expertise in identifying potential AI safety risks.",
+     "where": "5.8 and the principles for trustworthy AI",
+     "quote_found": true
+    },
+    "results": {
+     "quote": "Regularly disclose information on the auditing and anomaly handling of AI models and algorithms.",
+     "where": "6.1.13 and the principles for trustworthy AI",
+     "quote_found": true
+    }
+   },
+   "second_reasons": {
+    "binding": {
+     "quote": "We propose measures for technology research and development institutions, service providers, users, government agencies, social organizations, and other parties to identify, prevent, and respond to AI safety risks",
+     "where": "Section 2.3; Preface",
+     "why": "A framework drafted by TC260 under CAC guidance that 'proposes' measures and guidelines in 'should' language; it imposes no legal duty and itself calls for future legislation (5.1)."
+    },
+    "requires_evaluation": {
+     "quote": "Developers will be required to conduct regular testing to determine whether a model would pose a potential risk of loss of control.",
+     "where": "Section 5.11; also 6.1.9, 6.1.11, 5.3, 5.8",
+     "why": "As a measure of the framework, model developers are to test regularly for loss-of-control risk and to 'Regularly conduct safety assessment tests' with test rules, sandbox simulation and test reports."
+    },
+    "control": {
+     "quote": "enabling it to autonomously acquire external resources, replicate itself, and develop self-awareness.",
+     "where": "Section 3.3.2(f); sections 1.5, 5.11, Appendix 2(1) and (7)",
+     "why": "Loss of human control is a named risk: AI that may 'replicate itself', 'seek external power and pose risks of competing with humanity for control'."
+    },
+    "pass_mark": {
+     "quote": "(2) Formulating detailed grading rules for security risks for the industry or sector (including grading principles and weighting of elements), to determine the AI safety risk levels.",
+     "where": "Appendix 1, II-III; section 5.5; secondary: 6.1.9",
+     "why": "The framework names five risk levels (low to 'extremely serious') but leaves the rules that map an assessment to a level, and the measures that follow, to national standards and sector regulators, none of which I could find fixed; separately it asks developers to 'establish a risk classification, grading, and optimization mechanism' (6.1.9)."
+    },
+    "outside_evaluation": {
+     "quote": "We should organize crowdsourced safety testing activities to mobilize collective expertise in identifying potential AI safety risks.",
+     "where": "Section 5.8; Appendix 2(5)",
+     "why": "Crowdsourced safety testing and an 'objective, fair, and transparent testing and verification mechanism' are encouraged; no evaluation by someone other than the developer is required."
+    },
+    "results": {
+     "quote": "6.1.13 Regularly disclose information on the auditing and anomaly handling of AI models and algorithms.",
+     "where": "Section 6.1.13; also 4.2.1(a), 6.1.11, 6.1.12",
+     "why": "Developers are to disclose information on auditing and anomaly handling, and safety risks 'when necessary'; detailed test reports (6.1.11) have no stated recipient."
+    }
+   },
+   "second_pass_mark_secondary": "left to the developer",
+   "second_doubt": "Requires evaluation could be 'recommended': the whole text is guidance and 5.11 says developers 'will be required', announcing a requirement rather than imposing one. Pass mark is the least certain code: the five levels are severity bands for AI applications graded by scenario, intelligence level and scale, not levels of a model's test result, so 'none' is defensible; a reader who takes the named levels plus 'promptly prevent and resolve major and considerable security risks' as fixed tiers could code 'set by the instrument'. 'Power to set' in a voluntary text means the framework assigns, not legally empowers. Results could be 'none', since 'disclose information on the auditing' is vague about content and audience. No web search was done for standards issued under Appendix 1."
+  },
+  {
+   "n": 6,
+   "name": "Expanded ASEAN Guide on AI Governance and Ethics, Generative AI",
+   "short": "ASEAN guide, generative AI",
+   "url": "https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf",
+   "read": "direct, HTTP 200, PDF linked from the page the report cites",
+   "sha256": "d2f9f1293e9af2f3ca4cc3954e39f94ed6fcd6b52f5e72b28d0d51fc9954ddbd",
+   "sha256_of": "the file as fetched",
+   "first": {
+    "binding": "voluntary",
+    "requires_evaluation": "recommended",
+    "control": "named",
+    "pass_mark": "left to the developer",
+    "outside_evaluation": "provided for",
+    "results": "published in summary"
+   },
+   "second": {
+    "binding": "voluntary",
+    "requires_evaluation": "recommended",
+    "control": "named",
+    "pass_mark": "left to the developer",
+    "outside_evaluation": "provided for",
+    "results": "published in summary"
+   },
+   "final": {
+    "binding": "voluntary",
+    "requires_evaluation": "recommended",
+    "control": "named",
+    "pass_mark": "left to the developer",
+    "outside_evaluation": "provided for",
+    "results": "published in summary"
+   },
+   "quotes": {
+    "binding": {
+     "quote": "developers and deployers should aim to create measurable quantitative benchmarks and/or standards for acceptable outcomes",
+     "where": "a guide",
+     "quote_found": true
+    },
+    "requires_evaluation": {
+     "quote": "Deployment best practices focus on model evaluation.",
+     "where": "Trusted development and deployment",
+     "quote_found": true
+    },
+    "control": {
+     "quote": "There is also concern around the controllability of AI systems with the advent of Gen AI",
+     "where": "frontier risks",
+     "quote_found": true
+    },
+    "pass_mark": {
+     "quote": "developers and deployers should aim to create measurable quantitative benchmarks and/or standards for acceptable outcomes",
+     "where": "risks of Gen AI, consistency",
+     "quote_found": true,
+     "note": "Regional benchmarks are named as an area 'for ASEAN to explore', not set."
+    },
+    "outside_evaluation": {
+     "quote": "Third-party testing and assurance complements and extends the benefits of the internal model evaluation",
+     "where": "Third-party testing and assurance, an area to explore",
+     "quote_found": true
+    },
+    "results": {
+     "quote": "The level of disclosure should take into account the need to protect proprietary information.",
+     "where": "transparency, 'food or ingredient labels' for deployers and users",
+     "quote_found": true
+    }
+   },
+   "second_reasons": {
+    "binding": {
+     "quote": "ASEAN Member States are recommended to apply, on a voluntary basis, the recommendations in this Guide.",
+     "where": "Section 4, Conclusion (p. 39)",
+     "why": "The guide says outright that its recommendations apply on a voluntary basis and change no legal obligations."
+    },
+    "requires_evaluation": {
+     "quote": "Deployment best practices focus on model evaluation. Evaluating Gen AI systems can involve comparing their performance to standard industry benchmarks or engaging in adversarial testing, commonly known as red teaming.",
+     "where": "Section 3.3 (p. 24); 3.5 (pp. 28-29)",
+     "why": "Model evaluation and red teaming are presented as best practice, and ASEAN is advised to agree on evaluation tools to encourage 'companies to test Gen AI'; nothing is asked of developers as an obligation or commitment."
+    },
+    "control": {
+     "quote": "There is also concern around the controllability of AI systems with the advent of Gen AI, with the expert community divided over when and whether AI could become fully autonomous and independent of human constraint.",
+     "where": "Section 2.2, Frontier and Systemic Risks for Future Consideration (p. 17)",
+     "why": "Among frontier risks it names controllability, AI becoming 'independent of human constraint', and 'agentic, self-improving AI systems able to work autonomously without human oversight' pursuing goals that harm human interests."
+    },
+    "pass_mark": {
+     "quote": "These practices all aim to identify whether the system meets their desired level of safety before being put into production.",
+     "where": "Section 3.3 (p. 24)",
+     "why": "The only level of an evaluation result that decides deployment is the organisation's own 'desired level of safety'; regional benchmarks (3.5) are measuring tools with no level attached."
+    },
+    "outside_evaluation": {
+     "quote": "Using third-party organisations to assess models, in addition to internal assessment, can build user trust by ensuring impartiality and credibility through an independent robust process.",
+     "where": "Section 3.5 (p. 28)",
+     "why": "Third-party testing and eventual auditing are commended as building trust, but not required."
+    },
+    "results": {
+     "quote": "Notably, it is also important to have transparency around safety best practices. This is akin to “food or ingredient labels” by providing relevant information to downstream deployers and end users",
+     "where": "Section 3.3 (p. 24) and 3.3(b) (p. 25)",
+     "why": "Label-like disclosure ('food or ingredient labels') about safety practices, of which model evaluation is the named one, to deployers and end users; at most a summary."
+    }
+   },
+   "second_pass_mark_secondary": null,
+   "second_doubt": "Control: the frontier risks are explicitly 'for future consideration' and outside the six risks the guide addresses, with the guide saying current technology lacks the capability; a reader could code 'not named' because they are not among the risks to be assessed or managed now. Pass mark: 'their desired level of safety' is descriptive, not a request that developers define thresholds, so 'none' is defensible. Results: the text asks for transparency about safety practices, not evaluation results by name, so 'none' is defensible."
+  },
+  {
+   "n": 7,
+   "name": "G7 Hiroshima AI Process, International Code of Conduct (the document the report's reference links)",
+   "short": "G7 Hiroshima Code of Conduct",
+   "url": "https://www.soumu.go.jp/hiroshimaaiprocess/pdf/document05_en.pdf",
+   "read": "direct, HTTP 200, at the address the report gives; the file is the Code of Conduct the reporting framework reports against, not the reporting questionnaire itself, which was not read",
+   "sha256": "14cfe36633502daa48231b49ca7f186c53a72add181b328047665763ecb13ac4",
+   "sha256_of": "the file as fetched",
+   "first": {
+    "binding": "voluntary",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "none",
+    "outside_evaluation": "required",
+    "results": "published in summary"
+   },
+   "second": {
+    "binding": "voluntary",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "none",
+    "outside_evaluation": "required",
+    "results": "published in summary"
+   },
+   "final": {
+    "binding": "voluntary",
+    "requires_evaluation": "required",
+    "control": "named",
+    "pass_mark": "none",
+    "outside_evaluation": "required",
+    "results": "published in summary"
+   },
+   "quotes": {
+    "binding": {
+     "quote": "will provide voluntary guidance for actions by organizations developing the most advanced AI systems",
+     "where": "voluntary guidance",
+     "quote_found": true
+    },
+    "requires_evaluation": {
+     "quote": "identify, evaluate, and mitigate risks across the AI lifecycle",
+     "where": "action 1 (a commitment in a voluntary text)",
+     "quote_found": true
+    },
+    "control": {
+     "quote": "Risks from models of making copies of themselves or \"self-replicating\" or training other models.",
+     "where": "action 1, risks to which testing should attend",
+     "quote_found": true
+    },
+    "pass_mark": {
+     "quote": "pose substantial risks to safety, security and human rights, and are thus not acceptable",
+     "where": "no level of a result; risks that are 'not acceptable' are named by kind",
+     "quote_found": true
+    },
+    "outside_evaluation": {
+     "quote": "This includes employing diverse internal and independent external testing measures",
+     "where": "action 1 (a commitment in a voluntary text)",
+     "quote_found": true
+    },
+    "results": {
+     "quote": "The results of red-teaming conducted to evaluate the model's/system's fitness for moving beyond the development stage.",
+     "where": "action 3",
+     "quote_found": true
+    }
+   },
+   "second_reasons": {
+    "binding": {
+     "quote": "will provide voluntary guidance for actions by organizations developing the most advanced AI systems,",
+     "where": "Introduction (p. 1)",
+     "why": "Voluntary guidance that organisations may endorse, pending 'more enduring and/or detailed governance and regulatory approaches'."
+    },
+    "requires_evaluation": {
+     "quote": "Take appropriate measures throughout the development of advanced AI systems, including prior to and throughout their deployment and placement on the market, to identify, evaluate, and mitigate risks across the AI lifecycle.",
+     "where": "Action 1 (p. 2)",
+     "why": "A commitment for organisations developing advanced AI systems, including the most advanced foundation models, to identify and evaluate risks, with testing before deployment."
+    },
+    "control": {
+     "quote": "Risks from models of making copies of themselves or “self-replicating” or training other models.",
+     "where": "Action 1, list of risks for testing (p. 3)",
+     "why": "Self-replication is among the risks organisations 'commit to devote attention to' when testing."
+    },
+    "pass_mark": {
+     "quote": "The results of red-teaming conducted to evaluate the model’s/system’s fitness for moving beyond the development stage.",
+     "where": "Action 3 (p. 4); Action 5 (p. 5)",
+     "why": "Red-teaming informs 'fitness for moving beyond the development stage' and systems should not pose 'unreasonable risks', but no level is fixed and organisations are not asked to define thresholds or criteria."
+    },
+    "outside_evaluation": {
+     "quote": "This includes employing diverse internal and independent external testing measures, through a combination of methods for evaluations, such as red-teaming, and implementing appropriate mitigation to address identified risks and vulnerabilities.",
+     "where": "Action 1 (p. 2)",
+     "why": "Independent external testing is part of the Action 1 commitment, qualified only by proportionality ('commensurate to the risks'); Action 2 also encourages third-party discovery of issues after deployment."
+    },
+    "results": {
+     "quote": "This should include publishing transparency reports containing meaningful information for all new significant releases of advanced AI systems.",
+     "where": "Action 3 (p. 4)",
+     "why": "Transparency reports should include 'Details of the evaluations conducted' and 'The results of red-teaming', which is a summary, not a repeatable protocol."
+    }
+   },
+   "second_pass_mark_secondary": null,
+   "second_doubt": "The file given as the 'Reporting Framework' is the Code of Conduct itself (8 pages, Actions 1-11), not the OECD reporting questionnaire; I coded the text in the file. Outside evaluation: 'required' rests on reading Action 1's 'This includes employing ... independent external testing measures' as part of the commitment; its hedges ('commensurate to the risks', 'as appropriate') would let a reader code 'provided for'. Pass mark could be 'left to the developer' if Action 5's risk management policies are read as asking for acceptance criteria, which the text does not say."
+  }
+ ],
+ "adjudication": [
+  {
+   "n": 5,
+   "code": "requires_evaluation",
+   "first": "recommended",
+   "second": "required",
+   "final": "required",
+   "passage": "Developers will be required to conduct regular testing to determine whether a model would pose a potential risk of loss of control. (5.11); 6.1.9 Regularly conduct safety assessment tests (safety guidelines for model developers)",
+   "why": "The codebook counts a measure in a voluntary text as required. Section 6 sets measures for model developers, among them regular safety assessment tests, and 5.11 says developers will be required to test for a risk of loss of control. The first coding read only the framework's own 'we should' of 5.8 and missed both. The second reading holds."
+  }
+ ],
+ "limits": [
+  "The EU AI Act was read in its Official Journal text of 2024; the amending Regulation (EU) 2026/1744 of July 2026 was not read. Secondary reports read today say it leaves the obligations for general-purpose AI models (Articles 51 to 55) unchanged; that is not checked here.",
+  "No delegated act under Article 51(3) of the AI Act supplementing benchmarks was found by a web search on 2026-11-19; a power not used is coded from that search.",
+  "California SB 53 was read through an extraction service because the legislature's site refused direct requests.",
+  "The report's reference for the G7 reporting framework links the Hiroshima Code of Conduct; the OECD reporting questionnaire itself was not read.",
+  "Korea's act was read in the English translation the report cites; its Presidential Decree and the Minister's guidelines were not read.",
+  "Instruments adopted after the report (February 2026) are outside the corpus by its rule."
+ ]
+}

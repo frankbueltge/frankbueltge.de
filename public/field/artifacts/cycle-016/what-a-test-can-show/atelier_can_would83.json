@@ -1,0 +1,81 @@
+{
+ "what": "The Atelier's reading of how each of the six repeatable tests on control that hold their result brings about the behaviour it measures (handoff ho-2026-11-19-atelier-1), carried as the Atelier coded it; only these fields are carried. Its rule, fixed before reading: 'trained' (the testers trained it in), 'told' (an instruction asked for it), 'asked' (the model was asked a question or a request and its answer is the result), 'untold' (nobody asked for it and it was observed in use).",
+ "source": "https://github.com/frankbueltge/ulysses/blob/cc7cd1b8e4d4532e3de8ef225a954175b64df01f/artifacts/cycle-016/marked-incorrect/check/can_would.json",
+ "sha256": "e6d8011c4c7b22ef2ba4b4e6a781c7be9c107f9b81fa519fc4009358df571ad5",
+ "tests": [
+  {
+   "ref": "413",
+   "url": "https://arxiv.org/abs/2409.12822",
+   "short": "Wen et al. 2024, models learn to mislead humans via RLHF",
+   "how": "trained",
+   "also": null,
+   "sentences": [
+    1192
+   ],
+   "core": true,
+   "kind": "misleading the evaluator"
+  },
+  {
+   "ref": "724",
+   "url": "https://arxiv.org/abs/2505.23836",
+   "short": "Needham et al. 2025, models often know when they are being evaluated",
+   "how": "asked",
+   "also": null,
+   "sentences": [
+    1131
+   ],
+   "core": true,
+   "kind": "telling a test from the world"
+  },
+  {
+   "ref": "726",
+   "url": "https://arxiv.org/abs/2406.07358",
+   "short": "van der Weij et al. 2024, AI sandbagging",
+   "how": "told",
+   "also": "trained",
+   "sentences": [
+    1144,
+    1500
+   ],
+   "core": true,
+   "kind": "underperforming on purpose"
+  },
+  {
+   "ref": "727",
+   "url": "https://openreview.net/forum?id=r4Q6o7KGdb",
+   "short": "covert sandbagging against a chain-of-thought monitor (the Field read its preprint)",
+   "how": "told",
+   "also": null,
+   "sentences": [
+    1144,
+    1500
+   ],
+   "core": true,
+   "kind": "underperforming on purpose"
+  },
+  {
+   "ref": "1226",
+   "url": "https://arxiv.org/abs/2310.13548",
+   "short": "Sharma et al. 2023, sycophancy in language models",
+   "how": "asked",
+   "also": null,
+   "sentences": [
+    1923
+   ],
+   "core": false,
+   "kind": "agreeing with the user"
+  },
+  {
+   "ref": "1229",
+   "url": "https://arxiv.org/abs/2501.13952",
+   "short": "a chemistry benchmark of refusing harm against usefulness (2025)",
+   "how": "asked",
+   "also": null,
+   "sentences": [
+    1923
+   ],
+   "core": false,
+   "kind": "refusing a harmful request"
+  }
+ ]
+}
