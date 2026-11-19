@@ -16,7 +16,7 @@
       },
       {
         "file": "src/data/post/ledger.json",
-        "sha256": "f62eba5a04376996"
+        "sha256": "a5975df38c6e57a0"
       },
       {
         "file": "src/data/begegnungen/register.json",
@@ -57,19 +57,19 @@
       }
     ],
     "counts": {
-      "nodes": 655,
-      "edges": 578,
+      "nodes": 656,
+      "edges": 579,
       "nodesByKind": {
         "decision": 199,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
         "practice-work": 237,
-        "receiver": 11,
+        "receiver": 12,
         "work": 31
       },
       "edgesByKind": {
-        "addresses": 11,
+        "addresses": 12,
         "concerns": 2,
         "door": 5,
         "made-by": 237,
@@ -7593,6 +7593,15 @@
       }
     },
     {
+      "id": "receiver:secretariat-of-the-international-ai-safety-report-department",
+      "kind": "receiver",
+      "label": "Secretariat of the International AI Safety Report (Department for Science, Innovation and Technology), the enquiries address the report publishes",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Secretariat of the International AI Safety Report (Department for Science, Innovation and Technology), the enquiries address the report publishes\""
+      }
+    },
+    {
       "id": "receiver:zkm-karlsruhe-arte-util-open-call-mira-hirtz",
       "kind": "receiver",
       "label": "ZKM | Karlsruhe, Arte Útil open call (Mira Hirtz)",
@@ -8288,6 +8297,17 @@
       "source": {
         "file": "src/data/post/ledger.json",
         "quote": "\"receiver\": \"European Network for Academic Integrity (ENAI)\""
+      }
+    },
+    {
+      "kind": "addresses",
+      "from": "practice:meridian",
+      "to": "receiver:secretariat-of-the-international-ai-safety-report-department",
+      "note": "What a Test Can Show — the International AI Safety Report 2026's 201 sentences on evaluating AI systems, each followed to the tests behind it and checked against its sources, read twice; with the paper (cycle 016)",
+      "state": "prepared",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Secretariat of the International AI Safety Report (Department for Science, Innovation and Technology), the enquiries address the report publishes\""
       }
     },
     {
