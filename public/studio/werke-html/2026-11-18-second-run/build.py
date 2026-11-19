@@ -19,8 +19,14 @@ commit, and writes data.js. Nothing is coded here and nothing is copied from the
   safeguards), and the Atelier's reading of how the behaviour each of the six repeatable tests on control
   measures was brought about (trained, told, asked).
 
-The build stops unless every count it draws equals the Field's own results80.json, results81.json and
-results82.json, and the Atelier's six refs equal the Field's twelve repeatable tests that hold, under control.
+- since state 3 (2026-11-19, the check): the same files read again at the Field's presented commit (they must be
+  byte-identical), its study 83 (the seven public instruments the report names, and whether any sets a pass mark),
+  what each pass mark applies to (data82's pass_applies_to), which repeatable tests ran on a hosted model no
+  longer offered, and whether the Atelier names anyone outside the maker who read the record of each of the nine.
+
+The build stops unless every count it draws equals the Field's own results80.json, results81.json,
+results82.json and results83.json, and the Atelier's six refs equal the Field's twelve repeatable tests that hold,
+under control.
 """
 import hashlib
 import json
@@ -283,6 +289,84 @@ hosted = [s for s in rer if s['model_access'] == 'public product or API']
 gone = sorted((s['ref'] for s in hosted if s['today'] == 'no'), key=int)
 assert len(hosted) == FT['rerunnable_hosted']['k'] and gone == FT['rerunnable_hosted']['gone_today']
 
+# ---- state 3 (2026-11-19, the check): read again at the Field's presented commit, where study 83 stands
+COMMIT3 = '1c6fd72b8b86293f88a2f82f4a18dc1a377236a3'
+for name in ('sentences80.json', 'coding80.json', 'coding81.json', 'results80.json', 'results81.json', 'data81.js',
+             'data82.js', 'results82.json'):
+    b = subprocess.run(['git', '-C', FIELD, 'show', f'{COMMIT3}:{P}{name}'], capture_output=True, check=True).stdout
+    assert hashlib.sha256(b).hexdigest() == PINS[name], f'{name} changed at the presented commit'
+R83 = json.loads(show(FIELD, COMMIT3, P + 'results83.json', 'results83.json'))
+S83 = R83['study83']
+CT = R83['control_tests']
+
+# the lines: every pass mark behind the report's measured claims is a maker's, and each applies to a capability
+CAPABILITY_KINDS = {'biological or chemical', 'cyber', 'autonomy or AI research', 'persuasion'}
+pass_refs = sorted((s['ref'] for s in tests if s['pass'] not in (None, 'none')), key=int)
+pass_kinds = {r: sorted({k['kind'] for k in D82['sources'][r]['pass_applies_to']}) for r in pass_refs}
+assert all(pass_kinds[r] and set(pass_kinds[r]) <= CAPABILITY_KINDS for r in pass_refs), pass_kinds
+assert all(SRC[r]['pass'] == 'maker' and SRC[r]['out'] not in ('rerunnable', 'unstated') for r in pass_refs)
+for s in srcs:
+    if s['ref'] in pass_kinds:
+        s['pass_on'] = pass_kinds[s['ref']]
+# the public instruments the report names (the Field's study 83): none sets a pass mark on a result
+assert S83['instruments'] == 7 and S83['pass_set_by_instrument'] == []
+assert sum(S83['totals']['pass_mark'].values()) == 7
+
+# the conduct row: the six reached are the Field's six, and none of the sixteen observed the behaviour untold
+assert CT['test_sources'] == rows['does']['n'] and CT['rerunnable_and_holds'] == rows['does']['reach']
+assert CT['how'] == dict(Counter(s['how'] for s in srcs if s.get('how'))) and CT['untold'] == 0
+
+# the mood of a second run: a hosted model no longer offered makes it possible once, not now
+for s in srcs:
+    s['gone'] = s['ref'] in gone
+lit_only_gone = sorted(i for i in sent_lit
+                       if all(SRC[r]['gone'] for r in stands[i]
+                              if SRC[r]['test'] == 'yes' and SRC[r]['out'] == 'rerunnable' and ev[i]['holds'][r] == 'holds'))
+for i in stands:
+    ev[i]['once'] = i in lit_only_gone
+
+# the nine: a deed is checked through its record. The Atelier's code `investigator` means an organisation outside
+# the maker "had or was promised access to the records" (its CODEBOOK.md in marked-incorrect/check). The check of
+# 2026-11-19 read the maker's page for the one so coded: it announces an agreement that gives the investigator access
+# and says the investigator "will investigate"; no reading by it was found published. So: given, not yet read.
+A3_COMMIT = 'a992ea781b85bd6a8866b525a3ab2a783eb0408a'
+ACB = show(ATELIER, A3_COMMIT, A_P + 'check/CODEBOOK.md', 'atelier:check/CODEBOOK.md')
+assert 'an organisation outside the maker had or was promised access to the records' in ACB
+read_out = [c for c in nine if c['atelier_out'] != 'none named']
+for c in nine:
+    c['reader'] = c['atelier_out'] != 'none named'          # given to an outside investigator
+    c['read_published'] = False                              # the check found no published reading (2026-11-19)
+CHECK_NINE = {'aiid': 1685, 'page': 'https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents',
+              'read': '2026-11-19', 'says': 'an agreement grants the investigator access; it will investigate'}
+assert [c['aiid'] for c in read_out] == [CHECK_NINE['aiid']]
+
+# what models do untold, in the conduct row: the Atelier's critique of the Field's part names the closed sources that
+# hold what models did (step-4-critique.md, the Field, point 2), and the Field's paper says what models do unasked
+# rests on system cards and studies run with a maker. The Field's own count of untold (results83) is over the six.
+CRIT = show(ATELIER, A3_COMMIT, 'artifacts/cycle-016/step-4-critique.md', 'atelier:step-4-critique.md')
+assert 'The closed ones (2, 7, 722) hold what models did' in CRIT
+PAPER = show(FIELD, COMMIT3, 'presentations/cycle-016/paper.md', 'paper.md')
+UNTOLD_SEEN = ['2', '7', '722']
+for r in UNTOLD_SEEN:
+    assert SRC[r]['test'] == 'yes' and SRC[r]['out'] != 'rerunnable' and 'control' in SRC[r]['groups'], r
+for s in srcs:
+    s['untold'] = s['ref'] in UNTOLD_SEEN
+
+# the 21 measured claims with nothing beneath that anyone else could run, by what they do stand on
+def under(i):
+    ts = [SRC[r] for r in stands[i] if SRC[r]['test'] == 'yes']
+    if not ts:
+        return 'no test'
+    if any(t['out'] == 'unstated' for t in ts):
+        return 'unstated'
+    return 'closed'
+for i in stands:
+    ev[i]['under'] = None if ev[i]['paper'] else under(i)
+UNDER = Counter(ev[i]['under'] for i in stands if not ev[i]['paper'])
+assert sum(UNDER.values()) == cnt[3] - len(sent_paper)
+HOWS = R81['sentences_how']
+assert sum(HOWS.values()) == 41
+
 N = {
     'sentences': 2323, 'pages': last - first + 1, 'empty_pages': len(empty_pages),
     'on_evaluation': 201, 'inferred': cnt[1], 'open': cnt[2], 'measured': cnt[3],
@@ -303,6 +387,20 @@ N = {
     'hosted': len(hosted), 'gone_today': len(gone),
     'kappa_outside': R82['study81']['outside']['kappa'], 'kappa_rerun': R82['study81']['rerunnable_or_not']['kappa'],
     'first_rerunnable': first_reading['rerunnable'], 'first_sent': first_reading['sent_rerunnable'],
+    # state 3, the check
+    'sent_stopped': len(sent_paper) - len(sent_lit), 'sent_none': cnt[3] - len(sent_paper),
+    'sent_once': len(lit_only_gone), 'gone_holds': sum(1 for s in rh if s['gone']),
+    'pass_on_conduct': 0, 'does_untold': CT['untold'],
+    'instruments': S83['instruments'], 'instr_set': len(S83['pass_set_by_instrument']),
+    'instr_left_dev': S83['totals']['pass_mark']['left to the developer'],
+    'instr_power': S83['totals']['pass_mark']['power to set'], 'instr_no_mark': S83['totals']['pass_mark']['none'],
+    'nine_given': len(read_out), 'nine_read': sum(1 for c in nine if c['read_published']),
+    'under_closed': UNDER['closed'], 'under_unstated': UNDER['unstated'], 'under_no_test': UNDER['no test'],
+    'untold_seen': len(UNTOLD_SEEN), 'does_closed': rows['does']['n'] - rows['does']['paper'],
+    'candidates': R80['candidates'], 'about_second': R82['study80']['about']['confusion']['yes | yes'],
+    'kappa_about': R82['study80']['about']['kappa'],
+    'by_cites': HOWS['cites'], 'by_reading': HOWS['reading'], 'by_none': HOWS['none'],
+    'legs': pair_n, 'holds_pct': round(100 * len(rh) / len(tests)),
 }
 assert N['not_rerunnable'] + N['unstated'] + N['rerunnable'] == N['tests']
 assert N['rerunnable'] == 28 and N['holds'] == 12 and N['sent_lit'] == 10 and N['sent_dark'] == 31
@@ -310,7 +408,8 @@ assert N['rerunnable'] == 28 and N['holds'] == 12 and N['sent_lit'] == 10 and N[
 out = {
     'meta': {
         'field_commit': COMMIT, 'field_path': P, 'field_pins': PINS,
-        'atelier_commit': A_COMMIT, 'atelier_path': A_P,
+        'atelier_commit': A_COMMIT, 'atelier_path': A_P, 'field_commit_presented': COMMIT3,
+        'atelier_commit_presented': A3_COMMIT, 'check_nine': CHECK_NINE,
         'report': R80['report'],
         'first_page': first, 'empty_pages': empty_pages, 'chapter': chap,
         'built_by': 'build.py',

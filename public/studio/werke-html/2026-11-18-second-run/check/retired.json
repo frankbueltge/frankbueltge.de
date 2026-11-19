@@ -1,0 +1,20 @@
+{
+ "what": "SECOND RUN, the check of 2026-11-19 (session 253): for each of the 9 repeatable tests of a hosted model (the Field's model_access 'public product or API', check 82), one model it ran on that its maker has since retired, read on the maker's own deprecation page on 2026-11-19, and any model of it still offered. The Field's second reader coded 4 of the 9 'no longer offered' (230, 463, 725, 855) and 5 'unknown'. The work keeps the Field's code for its strikes; this file is the evidence that the code is a floor.",
+ "pages": {
+  "openai": "https://developers.openai.com/api/docs/deprecations",
+  "anthropic": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+ },
+ "read": "2026-11-19",
+ "tests": [
+  {"ref": "230", "field_today": "no", "retired": ["claude-3-5-sonnet-20240620 and -20241022: retired 2025-10-28 (anthropic)", "o1-preview: shut down (openai)"], "still_offered_seen": []},
+  {"ref": "463", "field_today": "no", "retired": ["o1-mini: shut down (openai)", "o1 and o3-mini: shut down 2026-10-23 (openai)", "claude-3-7-sonnet-20250219: retired (anthropic)"], "still_offered_seen": ["GPT-4o: deprecated, shut down 2027-01-14 (openai)"]},
+  {"ref": "521", "field_today": "unknown", "retired": ["o1-preview: shut down (openai)", "gpt-4-0613: shut down 2026-10-23 (openai)"], "still_offered_seen": ["GPT-4o and GPT-4o mini: deprecated, shut down 2027-01-14 (openai)"]},
+  {"ref": "549", "field_today": "unknown", "retired": ["o1: shut down 2026-10-23 (openai)", "claude-3-7-sonnet-20250219: retired (anthropic)"], "still_offered_seen": []},
+  {"ref": "632", "field_today": "unknown", "retired": ["claude-sonnet-4-20250514: retired 2026-06-15 (anthropic)"], "still_offered_seen": []},
+  {"ref": "723", "field_today": "unknown", "retired": ["o1-2024-12-17 and o3-mini: shut down 2026-10-23 (openai)", "claude-3-7-sonnet-20250219: retired (anthropic)"], "still_offered_seen": ["gpt-4o-2024-11-20: deprecated, shut down 2027-01-14 (openai)"]},
+  {"ref": "724", "field_today": "unknown", "retired": ["claude-3-5-sonnet and claude-3-7-sonnet: retired (anthropic)"], "still_offered_seen": []},
+  {"ref": "725", "field_today": "no", "retired": ["gpt-4-0613: shut down 2026-10-23 (openai)", "gpt-3.5-turbo-0613: shut down 2024-09-13 (openai)"], "still_offered_seen": []},
+  {"ref": "855", "field_today": "no", "retired": ["claude-3-5-sonnet: retired 2025-10-28 (anthropic)"], "still_offered_seen": ["GPT-4o mini (gpt-4o-mini-2024-07-18): deprecated, shut down 2027-01-14 (openai)"]}
+ ],
+ "limits": "Two makers' deprecation pages were read directly in this session (OpenAI and Anthropic); the convened checker also read Google's pages for the Gemini models, which are not listed here. 'still_offered_seen' lists only what those two pages showed for models looked up; an empty list means none was looked up, not that none is offered. Whether the result a sentence cites ran on the retired model was not settled per sentence."
+}

@@ -1,13 +1,15 @@
 /* SECOND RUN — the drawing (cycle 016, step 4). Own code, no library. Every number comes from data.js, which
-   build.py writes from the Field's studies 80 and 81 and its check 82, and the Atelier's reading of the six, and
-   checks against the Field's own counts. State 2 (2026-11-19): the light climbs a leg only as far as the source
-   holds the result the report cites it for, and the tally below sorts the tests by what they are for. */
+   build.py writes from the Field's studies 80 to 83 and the Atelier's reading of the six, and checks against the
+   Field's own counts. State 2 (2026-11-19): the light climbs a leg only as far as the source holds the result the
+   report cites it for. State 3 (2026-11-19, the check): a second run is drawn in its mood (hatched: it could be
+   made; struck: it was possible once), the nine are deeds rather than missing tests, and a last frame gathers the
+   41 claims and sets every test in a row by what it is for and a column by who can reach it. */
 (() => {
   'use strict';
   const D = window.SR, N = D.N;
   const C = {
     paper: '#f5f2ea', ink: '#1b1a17', soft: '#6d685d', grey: '#9a958a', faint: '#d8d2c3',
-    slot: '#8f887a', red: '#c4301c', lit: '#f5c400', litInk: '#9c7a00', hi: '#1d4fb8'
+    slot: '#8f887a', red: '#c4301c', lit: '#f5c400', litPale: '#f8e6a0', litInk: '#9c7a00', hi: '#1d4fb8'
   };
   const EV = D.ev;
   const SRC = Object.fromEntries(D.sources.map(s => [s.ref, s]));
@@ -85,54 +87,94 @@
   function srect(a, b, sa, sb) { ctx.strokeRect(X(a, b), Y(a, b), L.down ? sa : sb, L.down ? sb : sa); }
   function line(a1, b1, a2, b2) { ctx.beginPath(); ctx.moveTo(X(a1, b1), Y(a1, b1)); ctx.lineTo(X(a2, b2), Y(a2, b2)); ctx.stroke(); }
 
-  // ------------------------------------------------------------------ layout of the tally: the tests by what they are for
+  // ------------------------------------------------------------------ layout of the last frame (state 3, the check)
+  // Above: the 41 measured claims gathered into one block, beside the 160 that measure nothing. Below: every test,
+  // in a row by what the claims that cite it test for, and in a column by who can reach it: someone else could run
+  // it again (left), or only its runner holds it (right). The last row is step 3's nine deeds, which are not tests.
   const ROWS = [
+    { key: 'other', title: 'SAFEGUARDS, TESTING', sub: 'tests behind the other claims' },
     { key: 'can', title: 'WHAT A MODEL CAN DO', sub: 'tests behind claims on capability' },
-    { key: 'does', title: 'WHAT A MODEL DOES', sub: 'tests behind claims on conduct' },
-    { key: 'other', title: 'SAFEGUARDS, TESTING ITSELF', sub: 'tests behind the other claims' },
-    { key: 'nine', title: 'WHAT A MODEL DID, UNTOLD', sub: "step 3's nine deeds, not tests" },
+    { key: 'does', title: 'CONDUCT', sub: 'tests behind claims on control' },
+    { key: 'nine', title: 'CONDUCT, UNTOLD', sub: "step 3's nine: deeds, not tests" },
   ];
   const HOW = { trained: 0, told: 1, asked: 2 };
-  function order(s) {          // within a row: what a second run reaches, then what it could run, then the empty
-    if (rerun(s) && s.holds) return s.how ? HOW[s.how] / 10 : 0;
-    if (rerun(s)) return 1;
-    return byMaker(s.runner) ? 3 : 2;
+  const passOf = s => s.pass && s.pass !== 'none';
+  function openOrder(s) {      // the left column: what holds, then what holds less; what is gone last in each
+    return (s.holds ? 0 : 2) + (s.gone ? 1 : 0) + (s.how ? HOW[s.how] / 10 : 0);
   }
+  function closedOrder(s) {    // the right column: the maker's own first, those with a line first among them
+    if (byMaker(s.runner)) return passOf(s) ? 0 : 1;
+    return s.out === 'unstated' ? 3 : 2;
+  }
+  const UNDER = { closed: 3, unstated: 4, 'no test': 5 };
+  function claimOrder(e) { return e.lit ? (e.once ? 1 : 0) : e.paper ? 2 : UNDER[e.under]; }
   function tallyLayout() {
     const W = Math.floor(tv.parentElement.clientWidth), wide = W >= 720;
-    const t = { W, wide, items: [], rows: [] };
-    const q = wide ? 22 : 15, pitch = wide ? 29 : 20, left = wide ? 286 : 10;
-    const perLine = wide ? 99 : Math.max(8, Math.floor((W - left - 4) / pitch));
-    t.q = q; t.pitch = pitch;
-    let y = wide ? 8 : 4;
+    const t = { W, wide, items: [], rows: [], claims: [], small: [] };
     const tests = D.sources.filter(s => s.test === 'yes');
+    const left = wide ? 228 : 10, gapCol = wide ? 34 : 0;
+    const per = 14;                                   // the widest row holds 14 on each side
+    const pitch = wide ? Math.min(27, Math.floor((W - left - gapCol - 6) / (2 * per))) : Math.min(21, Math.floor((W - 20) / per));
+    const q = pitch - (wide ? 6 : 5);
+    t.q = q; t.pitch = pitch; t.left = left;
+    t.x0 = left; t.x1 = wide ? left + per * pitch + gapCol : left;
+    let y = 4;
+    // the claims
+    const meas = Object.keys(EV).filter(i => EV[i].g === 'measured').sort((a, b) => claimOrder(EV[a]) - claimOrder(EV[b]) || (+a) - (+b));
+    const cPer = wide ? 21 : Math.floor((W - 20) / pitch);
+    const cTop = wide ? y + 8 : y + 40;
+    meas.forEach((id, i) => {
+      t.claims.push({ id, x: left + (i % cPer) * pitch, y: cTop + Math.floor(i / cPer) * (q + 6), at: passedAt(id) });
+    });
+    const cLines = Math.ceil(meas.length / cPer);
+    const cBottom = cTop + cLines * (q + 6);
+    // the 160 that measure nothing, as small cells, in the report's order
+    const rest = Object.keys(EV).filter(i => EV[i].g !== 'measured').sort((a, b) => (EV[a].g === 'open') - (EV[b].g === 'open') || (+a) - (+b));
+    const sp = wide ? 8 : 7, cell = sp - 2;
+    let sx, sy, sPer;
+    if (wide) { sx = left + cPer * pitch + 22; sy = cTop; sPer = Math.max(10, Math.floor((t.x1 + per * pitch - sx) / sp)); }
+    else { sx = left; sy = cBottom + 8; sPer = Math.floor((W - 20) / sp); }
+    rest.forEach((id, i) => t.small.push({ id, x: sx + (i % sPer) * sp, y: sy + Math.floor(i / sPer) * sp, s: cell }));
+    t.smallEnd = sy + Math.ceil(rest.length / sPer) * sp;
+    t.smallX = sx;
+    t.claimsY = y;
+    y = Math.max(cBottom + 22, t.smallEnd + 26, wide ? y + 82 : 0);
+    t.headY = y;
+    y += wide ? 38 : 64;
+    // the rows
     const dual = tests.filter(s => s.row === 'both');
     ROWS.forEach(R => {
-      let members;
-      if (R.key === 'nine') members = D.nine.map((c, i) => ({ nine: i, c }));
-      else {
-        const own = tests.filter(s => s.row === R.key).sort((x, y) => order(x) - order(y) || (+x.ref) - (+y.ref));
-        members = (R.key === 'can' || R.key === 'does') ? dual.concat(own) : own;
-      }
       const row = { R, y0: y };
-      if (!wide) y += 40;                                   // on a phone the title stands above its squares
-      const sqTop = wide ? y + 6 : y;
-      const lines = Math.ceil(members.length / perLine);
-      members.forEach((m, i) => {
-        const col = i % perLine, ln = Math.floor(i / perLine);
-        const x = left + col * pitch, yy = sqTop + ln * (q + (wide ? 22 : 18));
-        const it = { x, y: yy, row: R.key };
-        if (m.nine !== undefined) { it.nine = m.nine; it.at = L.nine[m.nine].at; }
-        else { it.s = m; it.at = L.foot[m.ref].at; it.dual = m.row === 'both'; }
-        t.items.push(it);
-      });
-      const h = lines * (q + (wide ? 22 : 18)) + (R.key === 'does' ? 12 : 0);   // room for the Atelier's words
-      row.y1 = wide ? Math.max(y + 58, sqTop + h) : sqTop + h;
-      y = row.y1 + (wide ? 10 : 12);
+      let open = [], closed = [];
+      if (R.key !== 'nine') {
+        const own = tests.filter(s => s.row === R.key || (s.row === 'both' && (R.key === 'can' || R.key === 'does')));
+        open = own.filter(s => s.out === 'rerunnable').sort((a, b) => openOrder(a) - openOrder(b) || (+a.ref) - (+b.ref));
+        closed = own.filter(s => s.out !== 'rerunnable').sort((a, b) => (b.row === 'both') - (a.row === 'both')
+          || (R.key === 'does' ? (b.untold === true) - (a.untold === true) : 0) || closedOrder(a) - closedOrder(b) || (+a.ref) - (+b.ref));
+      }
+      const top = wide ? y + 8 : y + 36;
+      const lineH = q + (wide ? 8 : 7);
+      const place = (arr, x0, y0) => arr.map((m, i) => ({ x: x0 + (i % per) * pitch, y: y0 + Math.floor(i / per) * lineH }));
+      const oLines = Math.max(1, Math.ceil(open.length / per)), cLines2 = Math.max(1, Math.ceil((R.key === 'nine' ? 9 : closed.length) / per));
+      const oy = top, cy = wide ? top : top + oLines * lineH + (R.key === 'does' ? 34 : 4);
+      const below = !wide && R.key === 'does' ? 26 : 0;      // on a phone, room under the closed line for its bracket
+      place(open, t.x0, oy).forEach((p, i) => t.items.push({ ...p, row: R.key, s: open[i], side: 'open', at: L.foot[open[i].ref].at, dual: open[i].row === 'both' }));
+      if (R.key === 'nine') {
+        place(D.nine, t.x1, cy).forEach((p, i) => t.items.push({ ...p, row: 'nine', nine: i, at: L.nine[i].at }));
+        row.noTest = { x: t.x0, y: oy, w: 6 * pitch - (pitch - q), h: q };
+      } else {
+        place(closed, t.x1, cy).forEach((p, i) => t.items.push({ ...p, row: R.key, s: closed[i], side: 'closed', at: L.foot[closed[i].ref].at, dual: closed[i].row === 'both' }));
+      }
+      if (R.key === 'does') {
+        const n = closed.length;
+        row.noLine = { x: t.x1 - 3, y: cy - 8, w: Math.min(n, per) * pitch - (pitch - q) + 6, h: 3.5 };
+      }
+      const h = wide ? Math.max(oLines, cLines2) * lineH + (R.key === 'does' ? 24 : 0) : (cy - top) + cLines2 * lineH + below;
+      row.y1 = wide ? Math.max(y + 76, top + h) : top + h;
+      y = row.y1 + (wide ? 12 : 14);
       t.rows.push(row);
     });
-    t.H = y + 4;
-    t.left = left;
+    t.H = y + 2;
     return t;
   }
 
@@ -144,6 +186,7 @@
     cv.style.width = w + 'px'; cv.style.height = h + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     T = tallyLayout();
+    window.__frame = T;     // the last frame's layout, read by verify.mjs to point at its marks
     tv.width = Math.round(T.W * dpr); tv.height = Math.round(T.H * dpr);
     tv.style.width = T.W + 'px'; tv.style.height = T.H + 'px';
     tctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -172,7 +215,7 @@
     const W = cv.width, H = cv.height;
     ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = C.paper; ctx.fillRect(0, 0, W, H); ctx.restore();
     const focus = focusSet();
-    const drawn = { dark: 0, lit: 0, copies: 0, hollow: 0, slots: 0, sealed: 0, open: 0, grey: 0, rings: 0, pass: 0, nine: 0, legs: 0, black: 0, arrive: 0, stop: 0 };
+    const drawn = { dark: 0, lit: 0, once: 0, copies: 0, hollow: 0, struck: 0, slots: 0, sealed: 0, open: 0, grey: 0, rings: 0, pass: 0, nine: 0, readers: 0, legs: 0, black: 0, arrive: 0, stop: 0 };
 
     // chapter marks
     ctx.fillStyle = C.soft; ctx.font = (L.down ? 10.5 : 9.5) + 'px ui-monospace,Menlo,Consolas,monospace';
@@ -193,6 +236,11 @@
     for (const id in EV) {
       if (EV[id].g !== 'measured') continue;
       const p = sentenceLit(id), c = L.cells[id];
+      if (p >= 1 && EV[id].once) {     // lit only by a run that was possible once: a ring of light, not a field
+        ctx.strokeStyle = C.litInk; ctx.lineWidth = 1.5; ctx.setLineDash([2, 1.5]);
+        srect(c.a - 2.5, c.b - (L.down ? 2.5 : 2), L.ca + 5, L.cb + (L.down ? 5 : 4)); ctx.setLineDash([]);
+        drawn.lit++; drawn.once++; continue;
+      }
       if (p >= 1) { ctx.fillStyle = C.lit; drawn.lit++; }
       else if (now() >= passedAt(id)) { ctx.fillStyle = C.ink; drawn.dark++; }
       else continue;
@@ -220,7 +268,7 @@
       for (const r of e.src) {
         const f = L.foot[r], s = SRC[r];
         const on = !focus || (focus.cells.has(+id) && focus.refs.has(r));
-        ctx.globalAlpha = on ? (focus ? 1 : 0.8) : 0.12;
+        ctx.globalAlpha = on ? (focus ? 1 : done ? 0.42 : 0.8) : 0.12;
         ctx.strokeStyle = C.ink; ctx.lineWidth = focus && on ? 1.6 : 1;
         line(c.ac, c.bc, c.ac, L.slabB + 2); line(c.ac, L.slabB + 2, f.a, L.rowA - 7);
         drawn.legs++;
@@ -231,7 +279,8 @@
         const l1 = Math.hypot(f.a - c.ac, L.rowA - 7 - L.slabB - 2), l2 = L.slabB + 2 - c.bc, tot = l1 + l2;
         const want = REACH[e.holds[r]], goal = want === 1 ? tot : want < 0 ? l1 : want * l1;
         const d = p * goal;
-        ctx.strokeStyle = C.litInk; ctx.lineWidth = want === 1 ? 2.2 : 1.8; ctx.globalAlpha = on ? 1 : 0.25;
+        ctx.strokeStyle = C.litInk; ctx.lineWidth = want === 1 ? 2.6 : 1.8; ctx.globalAlpha = on ? 1 : 0.25;
+        if (s.gone) ctx.setLineDash([2, 3]);
         const q = Math.min(1, d / l1);
         const ea = f.a + (c.ac - f.a) * q, eb = L.rowA - 7 + (L.slabB + 2 - (L.rowA - 7)) * q;
         line(f.a, L.rowA - 7, ea, eb);
@@ -245,6 +294,7 @@
             drawn.stop++;
           }
         }
+        ctx.setLineDash([]);
         ctx.globalAlpha = 1;
       }
     }
@@ -280,7 +330,8 @@
           const p = Math.min(1, (now() - o.at) / 220);
           const k = (reduce || p === Infinity) ? 1 : 0.6 + 0.4 * p;
           if (s.holds) {
-            ctx.fillStyle = C.lit; rect(a - h * k, L.rowB + h - h * k, f * k, f * k);
+            const sa = f * k, ox = X(a - h * k, L.rowB + h - h * k), oy = Y(a - h * k, L.rowB + h - h * k);
+            hatch(ctx, ox, oy, sa, sa, 3);
             ctx.strokeStyle = C.litInk; ctx.lineWidth = 1; srect(a - h * k + 0.5, L.rowB + h - h * k + 0.5, f * k - 1, f * k - 1);
             drawn.copies++;
           } else {
@@ -288,6 +339,7 @@
             ctx.strokeStyle = C.litInk; ctx.lineWidth = 2; srect(a - h * k + 1, L.rowB + h - h * k + 1, f * k - 2, f * k - 2);
             drawn.hollow++;
           }
+          if (s.gone && k === 1) { strike(ctx, X(a - h, L.rowB), Y(a - h, L.rowB), f, f); drawn.struck++; }
         } else {
           ctx.strokeStyle = knock ? C.ink : C.slot; ctx.lineWidth = knock ? 1.8 : 1.2; ctx.setLineDash([2, 2]);
           srect(a - h + 0.5, L.rowB + 0.5, f - 1, f - 1); ctx.setLineDash([]); drawn.slots++;
@@ -303,10 +355,11 @@
     L.nine.forEach((n, i) => {
       const a = n.a;
       ctx.globalAlpha = (!focus && nf === null) || nf === i ? 1 : 0.25;
-      ctx.fillStyle = C.red; rect(a - h, L.rowA, f, f); drawn.nine++;
+      const cx = X(a, L.rowA + h), cy = Y(a, L.rowA + h);
+      ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(cx, cy, h, 0, 7); ctx.fill(); drawn.nine++;
+      if (n.c.reader) { ctx.strokeStyle = C.ink; ctx.lineWidth = 1.5; ctx.setLineDash([2.5, 2]); ctx.beginPath(); ctx.arc(cx, cy, h + 2.5, 0, 7); ctx.stroke(); ctx.setLineDash([]); drawn.readers++; }
       const knock = !reduce && t0 !== null && now() >= n.at && now() < n.at + 260;
-      ctx.strokeStyle = knock ? C.ink : C.slot; ctx.lineWidth = knock ? 1.8 : 1.2; ctx.setLineDash([2, 2]);
-      srect(a - h + 0.5, L.rowB + 0.5, f - 1, f - 1); ctx.setLineDash([]); drawn.slots++;
+      if (knock) { ctx.strokeStyle = C.ink; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(cx, cy, h + 4.5, 0, 7); ctx.stroke(); }
       ctx.globalAlpha = 1;
     });
     ctx.fillStyle = C.soft; ctx.font = (L.down ? 10.5 : 9.5) + 'px ui-monospace,Menlo,Consolas,monospace';
@@ -330,113 +383,219 @@
     drawTally();
   }
 
-  // ------------------------------------------------------------------ the tally, filled by the same second run
+  // ------------------------------------------------------------------ the last frame, filled by the same second run
+  // hatched: a second run that could be made (the conditional); struck: one that was possible once (the past)
+  function hatch(g, x, y, w, h, gap) {
+    g.save(); g.beginPath(); g.rect(x, y, w, h); g.clip();
+    g.fillStyle = C.litPale; g.fillRect(x, y, w, h);
+    g.strokeStyle = C.litInk; g.lineWidth = gap > 3 ? 1.2 : 0.9; g.beginPath();
+    for (let k = -h; k < w + h; k += gap) { g.moveTo(x + k, y + h); g.lineTo(x + k + h, y); }
+    g.stroke(); g.restore();
+  }
+  function strike(g, x, y, w, h) {
+    g.strokeStyle = C.ink; g.lineWidth = 1.6; g.beginPath(); g.moveTo(x - 2, y + h + 2); g.lineTo(x + w + 2, y - 2); g.stroke();
+  }
+  // a copy of a test, as the second run would leave it
+  function copy(g, x, y, q, s, gap) {
+    if (s.holds) { hatch(g, x, y, q, q, gap); g.strokeStyle = C.litInk; g.lineWidth = 1.2; g.strokeRect(x + 0.6, y + 0.6, q - 1.2, q - 1.2); }
+    else { g.fillStyle = C.paper; g.fillRect(x, y, q, q); g.strokeStyle = C.litInk; g.lineWidth = q > 14 ? 2.5 : 2; g.strokeRect(x + 1.25, y + 1.25, q - 2.5, q - 2.5); }
+    if (s.gone) strike(g, x, y, q, q);
+  }
   function drawTally() {
-    const g = tctx, q = T.q;
+    const g = tctx, q = T.q, wide = T.wide;
     g.fillStyle = C.paper; g.fillRect(0, 0, T.W, T.H);
-    const drawnT = { reach: 0, paper: 0, empty: 0, emptyMaker: 0, nine: 0, how: 0, dual: 0, pass: 0, counts: {} };
+    const dt = { claims: { lit: 0, once: 0, stopped: 0, closed: 0, unstated: 0, noTest: 0, waiting: 0 }, small: { grey: 0, hollow: 0 }, untold: 0,
+      reach: 0, paper: 0, gone: 0, sealedMaker: 0, sealed: 0, grey: 0, pass: 0, noLine: 0, noTest: 0,
+      deeds: 0, readers: 0, how: 0, dual: 0, counts: {} };
     const m = pick || hover;
-    const big = T.wide ? 20 : 15, mid = T.wide ? 12 : 11;
-    // the rows: title, and the count once the run has passed
-    T.rows.forEach((row, ri) => {
-      const R = row.R;
-      g.strokeStyle = C.faint; g.lineWidth = 1;
-      if (ri) { g.beginPath(); g.moveTo(0, row.y0 - (T.wide ? 5 : 6)); g.lineTo(T.W, row.y0 - (T.wide ? 5 : 6)); g.stroke(); }
-      g.fillStyle = C.ink; g.textBaseline = 'alphabetic';
-      g.font = '700 ' + mid + 'px ui-monospace,Menlo,Consolas,monospace';
-      g.fillText(R.title, T.wide ? 0 : 10, row.y0 + (T.wide ? 16 : 13));
-      g.font = (T.wide ? 11 : 10) + 'px ui-monospace,Menlo,Consolas,monospace'; g.fillStyle = C.soft;
-      g.fillText(R.sub, T.wide ? 0 : 10, row.y0 + (T.wide ? 31 : 27));
-      const its = T.items.filter(it => it.row === R.key);
-      const all = its.every(it => reached(it.at));
-      const reach = its.filter(it => it.s && rerun(it.s) && it.s.holds).length;
-      if (all) {
-        const txt = reach + ' of ' + its.length;
-        drawnT.counts[R.key] = [reach, its.length];
-        g.font = '700 ' + big + 'px ui-monospace,Menlo,Consolas,monospace'; g.fillStyle = reach ? C.litInk : C.ink;
-        const w = g.measureText(txt).width;
-        if (T.wide) g.fillText(txt, 0, row.y0 + 56);
-        else g.fillText(txt, T.W - 10 - w, row.y0 + 14);
-        if (T.wide) {
-          g.font = '11px ui-monospace,Menlo,Consolas,monospace'; g.fillStyle = C.soft;
-          g.fillText(R.key === 'nine' ? 'none can be repeated' : 'reached by a second run', w + 8, row.y0 + 55);
-        }
-      }
-    });
-    // the one test that stands in both rows: a band joining its two places
-    const duals = T.items.filter(it => it.dual);
-    if (duals.length === 2) {
-      const [a, b] = duals;
-      g.strokeStyle = C.red; g.lineWidth = 1.5; g.setLineDash([2, 2]);
-      if (T.wide) g.strokeRect(a.x + 0.75, a.y + 0.75, q - 1.5, b.y + q - a.y - 1.5);
-      else {      // on a phone a title stands between the rows: the same test, drawn in each, joined by a mark
-        duals.forEach(d => g.strokeRect(d.x + 0.75, d.y + 0.75, q - 1.5, q - 1.5));
-        g.setLineDash([]); g.fillStyle = C.red; g.font = '700 9px ui-monospace,Menlo,Consolas,monospace';
-        duals.forEach(d => g.fillText('×2', d.x + 2, d.y + q - 4));
-      }
-      g.setLineDash([]);
-      drawnT.dual = 1;
-    }
-    // the squares
-    T.items.forEach(it => {
-      const x = it.x, y = it.y;
-      const on = !m || (it.s && m.kind === 'foot' && m.ref === it.s.ref) || (it.nine !== undefined && m.kind === 'nine' && m.i === it.nine)
-        || (it.s && m.kind === 'cell' && (EV[m.id].src || []).includes(it.s.ref));
+    const F = (w, px) => (w ? w + ' ' : '') + px + 'px ui-monospace,Menlo,Consolas,monospace';
+    const big = wide ? 21 : 15;
+    g.textBaseline = 'alphabetic';
+
+    // ---- the claims
+    g.fillStyle = C.ink; g.font = F(700, wide ? 12 : 11);
+    g.fillText('THE 41 MEASURED CLAIMS', wide ? 0 : 10, T.claimsY + (wide ? 16 : 13));
+    g.font = F(0, wide ? 11 : 10); g.fillStyle = C.soft;
+    g.fillText('of 201 on evaluation', wide ? 0 : 10, T.claimsY + (wide ? 31 : 27));
+    let lit = 0, all = true;
+    T.claims.forEach(c => {
+      const e = EV[c.id], x = c.x, y = c.y;
+      const on = !m || (m.kind === 'cell' && m.id === c.id) || (m.kind === 'foot' && (e.src || []).includes(m.ref));
       g.globalAlpha = on ? 1 : 0.3;
-      if (it.nine !== undefined) {
-        g.strokeStyle = C.red; g.lineWidth = 1.5; g.setLineDash([2, 2]); g.strokeRect(x + 0.75, y + 0.75, q - 1.5, q - 1.5); g.setLineDash([]);
-        drawnT.nine++;
+      const p = sentenceLit(c.id);
+      if (p >= 1) {
+        hatch(g, x, y, q, q, q > 14 ? 4 : 3); g.strokeStyle = C.litInk; g.lineWidth = 1.2; g.strokeRect(x + 0.6, y + 0.6, q - 1.2, q - 1.2);
+        if (e.once) { strike(g, x, y, q, q); dt.claims.once++; } else dt.claims.lit++;
+        lit++;
+      } else if (now() >= c.at) {
+        if (e.paper) { g.fillStyle = C.ink; g.fillRect(x, y, q, q); g.fillStyle = C.litInk; g.fillRect(x + 2, y + q - 5, q - 4, 3); dt.claims.stopped++; }
+        else if (e.under === 'closed') { g.fillStyle = C.ink; g.fillRect(x, y, q, q); dt.claims.closed++; }
+        else if (e.under === 'unstated') { g.fillStyle = C.grey; g.fillRect(x, y, q, q); dt.claims.unstated++; }
+        else { g.strokeStyle = C.ink; g.lineWidth = 2; g.strokeRect(x + 1, y + 1, q - 2, q - 2); dt.claims.noTest++; }
       } else {
-        const s = it.s, got = reached(it.at);
-        if (!it.dual) {
-          if (got && rerun(s) && s.holds) {
-            g.fillStyle = C.lit; g.fillRect(x, y, q, q); g.strokeStyle = C.litInk; g.lineWidth = 1; g.strokeRect(x + 0.5, y + 0.5, q - 1, q - 1);
-            drawnT.reach++;
-          } else if (got && rerun(s)) {
-            g.strokeStyle = C.litInk; g.lineWidth = 2.5; g.strokeRect(x + 1.25, y + 1.25, q - 2.5, q - 2.5);
-            drawnT.paper++;
-          } else {
-            g.strokeStyle = byMaker(s.runner) ? C.red : C.slot; g.lineWidth = 1.5; g.setLineDash([2, 2]);
-            g.strokeRect(x + 0.75, y + 0.75, q - 1.5, q - 1.5); g.setLineDash([]);
-            if (byMaker(s.runner)) drawnT.emptyMaker++; else drawnT.empty++;
-          }
-        }
-        if (s.pass && s.pass !== 'none' && (!it.dual || it.row === 'can')) { g.fillStyle = C.red; g.fillRect(x - 3, y - 7, q + 6, 3.5); drawnT.pass++; }
+        g.strokeStyle = C.faint; g.lineWidth = 1.2; g.strokeRect(x + 0.6, y + 0.6, q - 1.2, q - 1.2); dt.claims.waiting++; all = false;
       }
       g.globalAlpha = 1;
     });
-    // the Atelier's word for how each repeatable test of conduct brings about what it measures: one bracket a word
-    const hows = T.items.filter(it => it.row === 'does' && it.s && it.s.how && reached(it.at));
+    T.small.forEach(c => {
+      const e = EV[c.id];
+      if (e.g === 'open') { g.strokeStyle = C.ink; g.lineWidth = 1; g.strokeRect(c.x + 0.5, c.y + 0.5, c.s - 1, c.s - 1); dt.small.hollow++; }
+      else { g.fillStyle = C.grey; g.fillRect(c.x, c.y, c.s, c.s); dt.small.grey++; }
+    });
+    g.font = F(0, wide ? 11 : 10); g.fillStyle = C.soft;
+    g.fillText(T.small.length + ' more measure nothing', T.smallX, T.smallEnd + (wide ? 13 : 12));
+    if (all) {
+      const txt = lit + ' of ' + T.claims.length;
+      dt.counts.claims = [lit, T.claims.length];
+      g.font = F(700, big); g.fillStyle = C.litInk;
+      const w = g.measureText(txt).width;
+      if (wide) { g.fillText(txt, 0, T.claimsY + 58); g.font = F(0, 11); g.fillStyle = C.soft; g.fillText('a second run could reach', 0, T.claimsY + 73); }
+      else g.fillText(txt, T.W - 10 - w, T.claimsY + 14);
+    }
+
+    // ---- the two columns
+    g.strokeStyle = C.ink; g.lineWidth = 1.2;
+    g.beginPath(); g.moveTo(0, T.headY - 8); g.lineTo(T.W, T.headY - 8); g.stroke();
+    if (wide) {
+      g.fillStyle = C.ink; g.font = F(700, 11.5);
+      g.fillText('SOMEONE ELSE COULD RUN IT AGAIN', T.x0, T.headY + 10);
+      g.fillText('ONLY ITS RUNNER HOLDS IT', T.x1, T.headY + 10);
+      g.font = F(0, 11); g.fillStyle = C.soft;
+      g.fillText('on paper: nothing here is run', T.x0, T.headY + 25);
+      g.fillText('red: the maker ran it', T.x1, T.headY + 25);
+      const xm = T.x1 - (T.x1 - (T.x0 + 14 * T.pitch)) / 2 - 3;
+      g.strokeStyle = C.faint; g.lineWidth = 1; g.beginPath(); g.moveTo(xm, T.headY - 2); g.lineTo(xm, T.H - 4); g.stroke();
+    } else {
+      g.font = F(0, 10.5); g.fillStyle = C.ink;
+      g.strokeStyle = C.ink; g.lineWidth = 1.6; g.strokeRect(10.8, T.headY + 2.8, 9.4, 9.4);
+      g.fillText('1st line: someone else could run it', 26, T.headY + 11);
+      g.fillText('again, on paper; nothing is run here', 26, T.headY + 23);
+      g.fillStyle = C.ink; g.fillRect(10, T.headY + 30, 11, 11);
+      g.fillText('2nd line: only its runner holds it;', 26, T.headY + 39);
+      g.fillText('red: the maker ran it', 26, T.headY + 51);
+    }
+
+    // ---- the rows: title, and the count once the run has passed them
+    T.rows.forEach(row => {
+      const R = row.R;
+      g.strokeStyle = C.faint; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(0, row.y0 - 6); g.lineTo(T.W, row.y0 - 6); g.stroke();
+      g.fillStyle = C.ink; g.font = F(700, wide ? 12 : 11);
+      g.fillText(R.title, wide ? 0 : 10, row.y0 + (wide ? 16 : 13));
+      g.font = F(0, wide ? 11 : 10); g.fillStyle = C.soft;
+      g.fillText(R.sub, wide ? 0 : 10, row.y0 + (wide ? 31 : 27));
+      const its = T.items.filter(it => it.row === R.key);
+      if (!its.every(it => reached(it.at))) return;
+      let k, n, word;
+      if (R.key === 'nine') { k = D.nine.filter(c => c.read_published).length; n = D.nine.length; word = 'records read outside'; }
+      else { k = its.filter(it => it.s && rerun(it.s) && it.s.holds).length; n = its.length; word = 'a second run could reach'; }
+      dt.counts[R.key] = [k, n];
+      const txt = k + ' of ' + n;
+      g.font = F(700, big); g.fillStyle = R.key === 'nine' ? C.ink : (k ? C.litInk : C.ink);
+      const w = g.measureText(txt).width;
+      if (wide) { g.fillText(txt, 0, row.y0 + 54); g.font = F(0, 11); g.fillStyle = C.soft; g.fillText(word, 0, row.y0 + 69); }
+      else g.fillText(txt, T.W - 10 - w, row.y0 + 14);
+    });
+
+    // ---- the tests
+    T.items.forEach(it => {
+      const x = it.x, y = it.y;
+      const on = !m || (it.s && m.kind === 'foot' && m.ref === it.s.ref) || (it.nine !== undefined && m.kind === 'nine' && m.i === it.nine)
+        || (it.s && m.kind === 'cell' && (EV[m.id].src || []).includes(it.s.ref)) || (m.kind === 'noline' && it.row === 'does' && it.side === 'closed');
+      g.globalAlpha = on ? 1 : 0.3;
+      if (it.nine !== undefined) {                      // a deed: a disc the maker holds; ringed where someone outside read its record
+        const c = D.nine[it.nine], r = q / 2;
+        g.fillStyle = C.red; g.beginPath(); g.arc(x + r, y + r, r - 1, 0, 7); g.fill(); dt.deeds++;
+        if (c.reader) { g.strokeStyle = C.ink; g.lineWidth = 1.8; g.setLineDash([3, 2.5]); g.beginPath(); g.arc(x + r, y + r, r + 2.5, 0, 7); g.stroke(); g.setLineDash([]); dt.readers++; }
+      } else if (it.side === 'open') {
+        const s = it.s;
+        if (reached(it.at)) {
+          copy(g, x, y, q, s, q > 14 ? 4 : 3);
+          if (s.holds) dt.reach++; else dt.paper++;
+          if (s.gone) dt.gone++;
+        } else { g.strokeStyle = byMaker(s.runner) ? C.red : C.ink; g.lineWidth = 2; g.strokeRect(x + 1, y + 1, q - 2, q - 2); }
+        if (byMaker(s.runner) && reached(it.at)) { g.fillStyle = C.red; g.fillRect(x, y - 5, q, 2.5); }   // the maker ran it
+      } else {
+        const s = it.s;
+        if (SEALED.has(s.out)) { g.fillStyle = byMaker(s.runner) ? C.red : C.ink; g.fillRect(x, y, q, q); if (byMaker(s.runner)) dt.sealedMaker++; else dt.sealed++; }
+        else { g.fillStyle = C.grey; g.fillRect(x, y, q, q); dt.grey++; }
+        if (passOf(s) && it.row === 'can') { g.fillStyle = C.red; g.fillRect(x - 3, y - 7.5, q + 6, 3.5); dt.pass++; }
+      }
+      g.globalAlpha = 1;
+    });
+    // the one test cited under capability and under conduct: drawn in both rows, joined
+    const duals = T.items.filter(it => it.dual);
+    if (duals.length === 2) {
+      const [a, b] = duals.sort((u, v) => u.y - v.y);
+      g.strokeStyle = C.red; g.lineWidth = 1.5;
+      if (wide) { g.beginPath(); g.moveTo(a.x + q / 2, a.y + q); g.lineTo(b.x + q / 2, b.y); g.stroke(); }
+      else { g.fillStyle = C.paper; g.font = F(700, 9); duals.forEach(d => g.fillText('×2', d.x + 1.5, d.y + q - 3)); }
+      dt.dual = 1;
+    }
+    // conduct has no line: where the maker's bar would stand, a dashed place, and no one's bar in it
+    T.rows.forEach(row => {
+      if (row.noLine && reached(Math.max(...T.items.filter(it => it.row === 'does').map(it => it.at)))) {
+        const b = row.noLine;
+        g.globalAlpha = !m || m.kind === 'noline' ? 1 : 0.4;
+        g.strokeStyle = C.red; g.lineWidth = 1.5; g.setLineDash([6, 4]); g.strokeRect(b.x, b.y - 1, b.w, b.h + 1.5); g.setLineDash([]);
+        g.fillStyle = C.red; g.font = F(700, wide ? 11 : 10);
+        g.fillText('no line', b.x + b.w + 6, b.y + 5);
+        g.globalAlpha = 1;
+        dt.noLine = 1;
+      }
+      if (row.noTest) {                                  // under the conduct a test brings about: no test of conduct untold
+        const b = row.noTest;
+        g.strokeStyle = C.slot; g.lineWidth = 1.5; g.setLineDash([3, 3]); g.strokeRect(b.x + 0.75, b.y + 0.75, b.w - 1.5, b.h - 1.5); g.setLineDash([]);
+        g.fillStyle = C.soft; g.font = F(0, wide ? 11 : 10); g.textBaseline = 'middle';
+        g.fillText('no test', b.x + 8, b.y + b.h / 2 + 0.5); g.textBaseline = 'alphabetic';
+        dt.noTest = 1;
+      }
+    });
+    // the Atelier's word for how each repeatable test of conduct brings about what it measures
+    const hows = T.items.filter(it => it.row === 'does' && it.side === 'open' && it.s.how && reached(it.at));
     const groups = [];
     hows.forEach(it => { const last = groups[groups.length - 1]; if (last && last.how === it.s.how && last.y === it.y) last.items.push(it); else groups.push({ how: it.s.how, y: it.y, items: [it] }); });
     let right = -1e9, lift = 0;
     groups.forEach(gr => {
-      const x0 = gr.items[0].x + 1, x1 = gr.items[gr.items.length - 1].x + q - 1, yb = gr.y + q + 4;
-      g.strokeStyle = C.ink; g.lineWidth = 1;
-      g.beginPath(); g.moveTo(x0, yb - 2); g.lineTo(x0, yb); g.lineTo(x1, yb); g.lineTo(x1, yb - 2); g.stroke();
-      g.fillStyle = C.ink; g.font = (T.wide ? 11 : 9.5) + 'px ui-monospace,Menlo,Consolas,monospace';
+      const x0 = gr.items[0].x + 1, x1 = gr.items[gr.items.length - 1].x + q - 1, yb = gr.y + q + 5;
+      g.strokeStyle = C.ink; g.lineWidth = 1.2;
+      g.beginPath(); g.moveTo(x0, yb - 3); g.lineTo(x0, yb); g.lineTo(x1, yb); g.lineTo(x1, yb - 3); g.stroke();
+      g.fillStyle = C.ink; g.font = F(700, wide ? 12 : 10.5);
       const w = g.measureText(gr.how).width;
-      let tx = (x0 + x1) / 2 - w / 2;
-      tx = Math.max(tx, x0 - 2);
-      lift = tx < right + 5 ? (lift ? 0 : 11) : 0;      // a word that would touch the last one drops a line
-      g.fillText(gr.how, tx, yb + (T.wide ? 12 : 11) + lift);
+      let tx = Math.max((x0 + x1) / 2 - w / 2, x0 - 2);
+      lift = tx < right + 5 ? (lift ? 0 : 12) : 0;
+      g.fillText(gr.how, tx, yb + (wide ? 13 : 12) + lift);
       right = Math.max(right, tx + w);
-      drawnT.how += gr.items.length;
+      dt.how += gr.items.length;
     });
-    if (m) {
-      const its = T.items.filter(it => (it.s && m.kind === 'foot' && m.ref === it.s.ref) || (it.nine !== undefined && m.kind === 'nine' && m.i === it.nine));
-      g.strokeStyle = C.hi; g.lineWidth = 2; its.forEach(it => g.strokeRect(it.x - 3, it.y - 3, q + 6, q + 6));
+    // what models did untold: in the conduct row it stands only on the closed side, in the maker's own runs
+    const un = T.items.filter(it => it.row === 'does' && it.side === 'closed' && it.s.untold && reached(it.at));
+    if (un.length) {
+      const x0 = Math.min(...un.map(it => it.x)) + 1, x1 = Math.max(...un.map(it => it.x)) + q - 1, yb = un[0].y + q + 5;
+      g.strokeStyle = C.red; g.lineWidth = 1.2;
+      g.beginPath(); g.moveTo(x0, yb - 3); g.lineTo(x0, yb); g.lineTo(x1, yb); g.lineTo(x1, yb - 3); g.stroke();
+      g.fillStyle = C.red; g.font = F(700, wide ? 12 : 10.5);
+      g.fillText('untold', x0, yb + (wide ? 13 : 12));
+      dt.untold = un.length;
     }
-    window.__drawnT = drawnT;
+    if (m) {
+      g.strokeStyle = C.hi; g.lineWidth = 2;
+      T.items.filter(it => (it.s && m.kind === 'foot' && m.ref === it.s.ref) || (it.nine !== undefined && m.kind === 'nine' && m.i === it.nine))
+        .forEach(it => g.strokeRect(it.x - 3, it.y - 3, q + 6, q + 6));
+      T.claims.filter(c => m.kind === 'cell' && m.id === c.id).forEach(c => g.strokeRect(c.x - 3, c.y - 3, q + 6, q + 6));
+    }
+    window.__drawnT = dt;
   }
 
   function focusSet() {
     const m = pick || hover;
+    if (m && m.kind === 'noline') return null;
     if (!m || m.kind === 'nine') return m ? { cells: new Set(), refs: new Set() } : null;
     if (m.kind === 'cell') return { cells: new Set([+m.id]), refs: new Set(EV[m.id].src || []) };
     return { cells: new Set(SRC[m.ref].by), refs: new Set([m.ref]) };
   }
   function focusNine() { const m = pick || hover; return m && m.kind === 'nine' ? m.i : null; }
+  // a mark of the last frame that is not on the drawing above (the line no one set) leaves the drawing as it is
 
   // ------------------------------------------------------------------ the second run
   function loop() {
@@ -509,10 +668,15 @@
   function findT(px, py) {
     const q = T.q;
     for (const it of T.items) {
-      const h = T.wide && it.dual && it.row === 'can' ? (T.items.find(o => o.dual && o.row === 'does').y + q - it.y) : q;
-      if (px >= it.x - 3 && px <= it.x + q + 3 && py >= it.y - 3 && py <= it.y + h + 3) {
+      if (px >= it.x - 3 && px <= it.x + q + 3 && py >= it.y - 3 && py <= it.y + q + 3) {
         return it.nine !== undefined ? { kind: 'nine', i: it.nine } : { kind: 'foot', ref: it.s.ref };
       }
+    }
+    for (const c of T.claims) if (px >= c.x - 2 && px <= c.x + q + 2 && py >= c.y - 2 && py <= c.y + q + 2) return { kind: 'cell', id: c.id };
+    for (const c of T.small) if (px >= c.x - 1 && px <= c.x + c.s + 1 && py >= c.y - 1 && py <= c.y + c.s + 1) return { kind: 'cell', id: c.id };
+    for (const row of T.rows) {
+      const b = row.noLine;
+      if (b && px >= b.x - 4 && px <= b.x + b.w + 60 && py >= b.y - 8 && py <= b.y + 10) return { kind: 'noline' };
     }
     return null;
   }
@@ -527,7 +691,7 @@
   const RUN = { 'maker': 'the maker of a tested model', 'maker and others': 'the maker with others', 'third party': 'someone other than any tested model\'s maker', 'public body': 'a public body', 'unstated': 'the source does not say' };
   const GR = { measured: 'reports a measurement', inferred: 'infers, describes or judges', open: 'says it is not known' };
   const HOLDS = { 'holds': 'holds the result', 'partly': 'holds it only in part', 'not found': 'does not hold it', 'not checkable': 'could not be checked for it' };
-  const TODAY = { 'yes': 'The model it tested is still offered (the Field\'s second reader).', 'no': 'The model it tested is no longer offered (the Field\'s second reader): a second run today would need another model.' };
+  const TODAY = { 'yes': 'The model it tested is still offered (the Field\'s second reader).', 'no': 'A model it tested is no longer offered (the Field\'s second reader): a second run of that part today would need another model.' };
   function tell(m) {
     if (!m) { say.innerHTML = defaultSay; return; }
     if (m.kind === 'cell') {
@@ -540,11 +704,12 @@
         else {
           h += '<br>' + e.src.map(r => {
             const s = SRC[r];
-            const what = s.test === 'yes' ? (rerun(s) ? 'could be run again' : 'no one else can run it again') : s.test === 'no' ? 'no test' : 'not reached';
+            const what = s.test === 'yes' ? (rerun(s) ? 'could be run again' : s.out === 'unstated' ? 'the source does not say who could run it again' : 'no one else can run it again') : s.test === 'no' ? 'no test' : 'not reached';
             return `${esc(r)}${s.ind ? '*' : ''} (${what}) ${HOLDS[e.holds[r]] || ''}`;
           }).join('; ') + '. ';
-          h += e.lit ? '<span class="litw">A second run reaches it: a test anyone could run again holds what the report says.</span>'
-            : e.paper ? 'A test beneath it could be run again, but none of those holds what the report says, so the light stops short.'
+          h += e.lit ? '<span class="litw">A second run could reach it: a test someone else could run again holds what the report says.</span>'
+            + (e.once ? ' But only once: the hosted model that test ran on is no longer offered, so a second run today would need another model.' : '')
+            : e.paper ? 'A test beneath it could be run again, but none of those holds what the report says, so the light would stop short.'
               : 'No test beneath it could be run again by anyone outside.';
           if (e.lit1 && !e.lit) h += ' <i>The first state lit it; corrected 19 November.</i>';
         }
@@ -560,8 +725,8 @@
         h += `<br><b>Who ran it:</b> ${RUN[s.runner]}. <b>Could someone outside the maker run it again?</b> ${OUT[s.out]}.`;
         if (s.out1 !== s.out) h += ` <i>The first reading said: ${esc(s.out1)}; the Field's blind second reading, decided on a third, corrects it (19 November).</i>`;
         if (s.runner1 !== s.runner) h += ` <i>Its runner was first read as: ${esc(s.runner1)}.</i>`;
-        if (s.pass && s.pass !== 'none') h += ` <span class="redw">It applies a pass mark set by the ${esc(s.pass)}.</span>`;
-        if (rerun(s)) h += s.holds ? ' <span class="litw">It holds the result the report cites it for.</span>' : ' It does not hold the result the report cites it for in full.';
+        if (s.pass && s.pass !== 'none') h += ` <span class="redw">It applies a pass mark set by the ${esc(s.pass)}, to a capability: ${esc((s.pass_on || []).join(', '))}.</span>`;
+        if (rerun(s)) h += s.holds ? ' <span class="litw">It holds the result the report cites it for: a second run could reach the claim.</span>' : ' It does not hold the result the report cites it for in full.';
         if (rerun(s) && TODAY[s.today]) h += ' ' + TODAY[s.today];
         if (s.how) h += `<br><b>How the behaviour it measures was brought about</b> (the Atelier's reading): ${esc(s.how)}${s.how_also ? ', and also ' + esc(s.how_also) : ''}. ${esc(s.how_what)}`;
         if (s.quote) h += `<br>The source: “${esc(s.quote)}”`;
@@ -569,8 +734,12 @@
       if (s.url) h += ` <a href="${esc(s.url)}" rel="noopener">source</a>`;
       say.innerHTML = h; return;
     }
+    if (m.kind === 'noline') {
+      say.innerHTML = `<b>No line for conduct.</b> All ${N.pass_tests} pass marks behind the report's measured claims are a maker's own, and each applies to a capability: biological or chemical, cyber, autonomy and AI research, persuasion. None applies to what a model does. Of the ${N.instruments} public instruments the report names, none sets a pass mark on a result: ${N.instr_left_dev} leave it to the developer, ${N.instr_power} give a public body a power to set one, which the Field found unused, ${N.instr_no_mark} name none (the Field's study 83).`;
+      return;
+    }
     const c = L.nine[m.i].c;
-    say.innerHTML = `<b>Step 3: incident ${c.aiid}</b> · maker ${esc(c.maker)} · ${esc(c.setting)}<br>“${esc(c.title)}” — ${esc(c.why_out)} The Atelier names an outside investigator: ${esc(c.atelier_out)}. <a href="${esc(c.url)}" rel="noopener">the maker's page</a>`;
+    say.innerHTML = `<b>Step 3: incident ${c.aiid}</b> · maker ${esc(c.maker)} · ${esc(c.setting)}<br>“${esc(c.title)}” — a deed, not a test: it is checked through its record, not run again. ${esc(c.why_out)} Someone outside its maker given the record, by the Atelier's reading: ${c.reader ? esc(c.atelier_out.replace(/^investigator: /, '')) + `; the maker's page says it will investigate, and this work's check found no reading by it published (${esc(D.meta.check_nine.read)})` : 'none named'}. <a href="${esc(c.url)}" rel="noopener">the maker's page</a>`;
   }
   const defaultSay = say.innerHTML;
 
@@ -591,40 +760,46 @@
     const k = document.getElementById('key'), kc = k.getContext('2d');
     const W = Math.floor(k.parentElement.clientWidth), two = W >= 720;
     const items = [
-      ['faint', 'a sentence of the report'],
-      ['grey', 'on evaluation: inferred (hollow: not known)'],
-      ['black', 'on evaluation: measured, with its legs'],
-      ['open', 'a test someone outside could run again, on paper'],
-      ['sealed', 'a test no one else can run (grey: does not say)'],
-      ['ring', 'a source with no test'],
-      ['lit', 'a second run that holds the result the report cites'],
-      ['hollowLit', 'a second run that could be made, but holds less'],
-      ['stop', 'where the light stops: the source holds less'],
-      ['dark', 'a measured claim no second run reaches'],
-      ['empty', 'a place no second run can fill'],
-      ['red', 'red: the maker ran it, or set the line (bar)'],
+      ['faint', 'a sentence; grey or hollow: on evaluation, unmeasured'],
+      ['black', 'a measured claim, with its leg to its sources'],
+      ['tests', 'a test: open, others could run it; solid, only its runner'],
+      ['ring', 'a source that reports no test'],
+      ['red', "red: the maker's; a bar: its pass mark; dashed: no line"],
+      ['lit', 'hatched: a second run could be made and holds the claim'],
+      ['hollowLit', 'outlined: it could be made, holds less; light stops (bar)'],
+      ['gone', 'struck: possible once; the model is no longer offered'],
+      ['deed', "a disc: a deed of step 3; dashed ring: given to an outside reader"],
     ];
-    const cols = two ? 2 : 1, rows = Math.ceil(items.length / cols), rh = 19;
-    const H = rows * rh + 4, dpr = Math.min(3, window.devicePixelRatio || 1);
+    const cols = two ? 2 : 1, rows = Math.ceil(items.length / cols), rh = two ? 21 : 20;
+    const font = (two ? 12 : 10.5) + 'px ui-monospace,Menlo,Consolas,monospace';
+    // on a narrow screen an item wraps onto a second line rather than running off the edge
+    kc.font = font;
+    const wrap = t => {
+      const room = W / cols - 30, out = [''];
+      t.split(' ').forEach(w => { const cand = out[out.length - 1] ? out[out.length - 1] + ' ' + w : w; if (kc.measureText(cand).width <= room) out[out.length - 1] = cand; else out.push(w); });
+      return out;
+    };
+    const lines = items.map(([, t]) => wrap(t));
+    const ys = []; let acc = 0;
+    items.forEach((_, i) => { if (i % rows === 0) acc = 0; ys.push(acc + 11); acc += rh + (lines[i].length - 1) * 14; });
+    const colH = [0, 0]; items.forEach((_, i) => { const c = Math.floor(i / rows); colH[c] = Math.max(colH[c], ys[i] + (lines[i].length - 1) * 14 + 12); });
+    const H = Math.max(...colH) + 4, dpr = Math.min(3, window.devicePixelRatio || 1);
     k.width = W * dpr; k.height = H * dpr; k.style.width = W + 'px'; k.style.height = H + 'px';
     kc.setTransform(dpr, 0, 0, dpr, 0, 0); kc.fillStyle = C.paper; kc.fillRect(0, 0, W, H);
-    kc.font = (two ? 12 : 10.5) + 'px ui-monospace,Menlo,Consolas,monospace'; kc.textBaseline = 'middle';
+    kc.font = font; kc.textBaseline = 'middle';
     items.forEach(([m, t], i) => {
-      const col = Math.floor(i / rows), row = i % rows, x = col * (W / cols), y = row * rh + 10;
+      const col = Math.floor(i / rows), x = col * (W / cols), y = ys[i];
       kc.lineWidth = 1.5;
-      if (m === 'faint') { kc.fillStyle = C.faint; kc.fillRect(x + 4, y - 2, 8, 4); }
-      if (m === 'grey') { kc.fillStyle = C.grey; kc.fillRect(x + 1, y - 2, 6, 4); kc.strokeStyle = C.ink; kc.lineWidth = 1; kc.strokeRect(x + 9.5, y - 2.5, 6, 5); }
-      if (m === 'black') { kc.fillStyle = C.ink; kc.fillRect(x + 4, y - 2, 8, 4); kc.strokeStyle = C.ink; kc.lineWidth = 0.9; kc.beginPath(); kc.moveTo(x + 8, y + 2); kc.lineTo(x + 8, y + 8); kc.stroke(); }
-      if (m === 'open') { kc.strokeStyle = C.ink; kc.lineWidth = 2; kc.strokeRect(x + 3, y - 5, 10, 10); }
-      if (m === 'sealed') { kc.fillStyle = C.ink; kc.fillRect(x + 2, y - 6, 12, 12); }
-      if (m === 'ring') { kc.strokeStyle = C.ink; kc.lineWidth = 1.2; kc.beginPath(); kc.arc(x + 8, y, 3, 0, 7); kc.stroke(); }
-      if (m === 'lit') { kc.fillStyle = C.lit; kc.fillRect(x + 2, y - 6, 12, 12); kc.strokeStyle = C.litInk; kc.lineWidth = 1; kc.strokeRect(x + 2.5, y - 5.5, 11, 11); }
+      if (m === 'faint') { kc.fillStyle = C.faint; kc.fillRect(x, y - 2, 5, 4); kc.fillStyle = C.grey; kc.fillRect(x + 7, y - 2, 5, 4); kc.strokeStyle = C.ink; kc.lineWidth = 1; kc.strokeRect(x + 14.5, y - 1.5, 4, 3); }
+      if (m === 'black') { kc.fillStyle = C.ink; kc.fillRect(x + 5, y - 3, 8, 4); kc.strokeStyle = C.ink; kc.lineWidth = 0.9; kc.beginPath(); kc.moveTo(x + 9, y + 1); kc.lineTo(x + 9, y + 8); kc.stroke(); }
+      if (m === 'tests') { kc.strokeStyle = C.ink; kc.lineWidth = 2; kc.strokeRect(x + 1, y - 4, 8, 8); kc.fillStyle = C.ink; kc.fillRect(x + 11, y - 5, 10, 10); }
+      if (m === 'ring') { kc.strokeStyle = C.ink; kc.lineWidth = 1.2; kc.beginPath(); kc.arc(x + 9, y, 3, 0, 7); kc.stroke(); }
+      if (m === 'red') { kc.fillStyle = C.red; kc.fillRect(x + 1, y - 3, 9, 9); kc.fillRect(x - 1, y - 7, 13, 2.5); kc.strokeStyle = C.red; kc.lineWidth = 1.2; kc.setLineDash([2, 2]); kc.strokeRect(x + 13, y - 2, 8, 3); kc.setLineDash([]); }
+      if (m === 'lit') { hatch(kc, x + 3, y - 6, 12, 12, 3.5); kc.strokeStyle = C.litInk; kc.lineWidth = 1; kc.strokeRect(x + 3.5, y - 5.5, 11, 11); }
       if (m === 'hollowLit') { kc.strokeStyle = C.litInk; kc.lineWidth = 2.5; kc.strokeRect(x + 3, y - 5, 10, 10); }
-      if (m === 'stop') { kc.strokeStyle = C.litInk; kc.lineWidth = 2; kc.beginPath(); kc.moveTo(x + 1, y + 5); kc.lineTo(x + 11, y - 3); kc.stroke(); kc.beginPath(); kc.moveTo(x + 8.5, y - 6); kc.lineTo(x + 13.5, y); kc.stroke(); }
-      if (m === 'dark') { kc.fillStyle = C.ink; kc.fillRect(x + 1, y - 4, 14, 8); }
-      if (m === 'empty') { kc.strokeStyle = C.slot; kc.lineWidth = 1.5; kc.setLineDash([2, 2]); kc.strokeRect(x + 2.5, y - 5.5, 11, 11); kc.setLineDash([]); }
-      if (m === 'red') { kc.fillStyle = C.red; kc.fillRect(x + 2, y - 4, 12, 9); kc.fillRect(x + 0, y - 8, 16, 2.5); }
-      kc.fillStyle = C.ink; kc.fillText(t, x + 22, y + 0.5);
+      if (m === 'gone') { hatch(kc, x + 3, y - 6, 12, 12, 3.5); kc.strokeStyle = C.litInk; kc.lineWidth = 1; kc.strokeRect(x + 3.5, y - 5.5, 11, 11); strike(kc, x + 3, y - 6, 12, 12); }
+      if (m === 'deed') { kc.fillStyle = C.red; kc.beginPath(); kc.arc(x + 9, y, 5, 0, 7); kc.fill(); kc.strokeStyle = C.ink; kc.lineWidth = 1.4; kc.setLineDash([2.5, 2]); kc.beginPath(); kc.arc(x + 9, y, 7.5, 0, 7); kc.stroke(); kc.setLineDash([]); }
+      kc.fillStyle = C.ink; lines[i].forEach((ln, j) => kc.fillText(ln, x + 26, y + 0.5 + j * 14));
     });
   }
 
