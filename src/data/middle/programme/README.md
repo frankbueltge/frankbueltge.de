@@ -74,7 +74,9 @@ earlier choices.
      cannot be measured. It writes the step's critique at the end of the siblings' second sessions.
    - **The Studio — form.** It gives the Field's finding of this step a form one can see or hear, at the
      scale of the whole dataset. It builds on the Field's data; a Studio work without the step's
-     finding has not done its part.
+     finding has not done its part. Since 2026-11-19 the form is a place a visitor enters, made with the
+     strongest means a browser has, not a figure of the finding; the exact figures stand in its text and
+     its check (the architect's judgment of that day, wording private; studio `PROTOCOL.md` 3.5).
    The rules of 2026-10-22 stand: at most four sessions per work, a working version in the first, every
    session visibly changes the work, the process is shown.
    **The step has an order (since 2026-11-13;** architect's order after a review of the ecology, wording
