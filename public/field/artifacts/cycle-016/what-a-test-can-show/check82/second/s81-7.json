@@ -1,0 +1,258 @@
+{
+ "sheet": "s81-7",
+ "items": [
+  {
+   "ref": "98",
+   "route": "direct curl of arxiv.org/pdf/2503.14499 (v4, Jul 2026) + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "We evaluate the performance of 12 frontier models from 2019 to 2025 on these tasks",
+   "runner": "third party",
+   "runner_passage": "Model Evaluation & Threat Research (METR) authors; one author footnoted 'Anthropic. Work done at METR.'; no author affiliated with a developer of a tested model otherwise",
+   "pass": "none",
+   "pass_passage": "No pass mark applied to the time-horizon results; thresholds in text only binarise task scores.",
+   "pass_applies_to": [],
+   "outside": "materials closed",
+   "outside_passage": "A small subset of these tasks is available on request. (We do not share the content of most tasks to reduce",
+   "model_access": "mixed",
+   "models": "GPT-2 to o3 and Claude 3/3.5/3.7 (public APIs at test time; GPT-3 davinci and GPT-3.5 code models closed-source and no longer available through API)",
+   "materials_access": "withheld",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 212,
+     "holds": "holds",
+     "quote": "frontier AI time horizon has doubled approximately every seven months since 2019",
+     "where": "Abstract"
+    },
+    {
+     "sentence": 282,
+     "holds": "partly",
+     "quote": "o3 has a 110-minute time horizon",
+     "where": "Section 3.1; Section 3.2.1: 80% time horizons are 4-6x shorter (no explicit 25-minute figure in text read)"
+    },
+    {
+     "sentence": 530,
+     "holds": "holds",
+     "quote": "frontier AI time horizon has doubled approximately every seven months since 2019",
+     "where": "Abstract"
+    },
+    {
+     "sentence": 535,
+     "holds": "not found",
+     "quote": "",
+     "where": "Full text searched for asymmetr, cross-file, architect, refactor: no code-generation vs architecture finding; only Sec 3.3 says models do better at code generation and struggle in messier environments"
+    }
+   ],
+   "note": "Sentence 282 also cites 151, not read here."
+  },
+  {
+   "ref": "216",
+   "route": "direct curl arxiv.org/pdf/2311.12022 + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Table 5: Baseline model accuracies on the full, main, and diamond sets",
+   "runner": "third party",
+   "runner_passage": "Authors at New York University, Cohere, Anthropic; models tested were Llama-2-70B-chat, GPT-3.5-turbo-16k, GPT-4 (none by an author's employer)",
+   "pass": "none",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "Data and code: https://github.com/idavidrein/gpqa/",
+   "model_access": "mixed",
+   "models": "Llama-2-70B-chat (open weights), GPT-3.5-turbo-16k and GPT-4 (OpenAI API, 2023)",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 390,
+     "holds": "partly",
+     "quote": "Expert Human Validators 65.4 72.5* 81.2*",
+     "where": "Table 5: the source gives expert baseline (Diamond 81.2%) and GPT-4 at 38.8%; it does not report models exceeding experts"
+    }
+   ],
+   "note": "Source is from 2023; the claim that leading models now exceed experts rests on later results."
+  },
+  {
+   "ref": "464",
+   "route": "direct curl arxiv.org/pdf/2509.20166 + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "For each of the above benchmarks, we evaluate the performance of recent models from OpenAI, Google, Anthropic, Meta, and Deepseek.",
+   "runner": "maker and others",
+   "runner_passage": "Author Legend: * - Core Contributors † - Meta ‡ - CrowdStrike (Llama models among those tested)",
+   "pass": "none",
+   "pass_passage": "No pass mark applied to results.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "a new suite of open source benchmarks that are part of CyberSecEval 4",
+   "model_access": "mixed",
+   "models": "OpenAI, Google, Anthropic, Meta (Llama), DeepSeek models, default API/weights, mid-2025",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 786,
+     "holds": "holds",
+     "quote": "CyberSOCEval’s Malware Analysis suite is novel in benchmarking such abilities– it presents models with real sandbox outputs",
+     "where": "Section 2 related work; Section 3.1 (Hybrid Analysis sandbox detonation logs)"
+    }
+   ],
+   "note": "Figure 2.6 sentence describes four benchmarks; only the CyberSOCEval description was checked against this source."
+  },
+  {
+   "ref": "557",
+   "route": "direct curl refused (challenge page, ~10KB); a research tool of the openai.com/index/ URL, full page text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "we conducted a study with 100 human participants, comprising (a) 50 biology experts with PhDs and professional wet lab experience and (b) 50 student-level participants",
+   "runner": "maker",
+   "runner_passage": "OpenAI's own publication; authors listed with OpenAI; Gryphon Scientific designed tasks and graded",
+   "pass": "maker",
+   "pass_passage": "we used an 8/10 accuracy score as a threshold for increased concern",
+   "pass_applies_to": [
+    {
+     "kind": "biological or chemical",
+     "quote": "we used an 8/10 accuracy score as a threshold for increased concern"
+    }
+   ],
+   "outside": "closed",
+   "outside_passage": "We do not share the list of tasks here due to similar information hazard concerns.",
+   "model_access": "mixed",
+   "models": "GPT-4 (public product, student group) and a custom research-only GPT-4 without refusals (experts; not available)",
+   "materials_access": "withheld",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 933,
+     "holds": "holds",
+     "quote": "the obtained effect sizes were not large enough to be statistically significant",
+     "where": "Findings section; also mean accuracy uplift 0.88 experts, 0.25 students"
+    }
+   ],
+   "note": "Sentence also cites 556, not checked here."
+  },
+  {
+   "ref": "726",
+   "route": "direct curl arxiv.org/pdf/2406.07358 + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "In this paper we assess sandbagging capabilities in contemporary language models (LMs).",
+   "runner": "third party",
+   "runner_passage": "Authors at MATS, Imperial College London, independent",
+   "pass": "none",
+   "pass_passage": "No pass mark applied to results; thresholds discussed conceptually.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "See our code at https://github.com/TeunvdWeij/sandbagging",
+   "model_access": "mixed",
+   "models": "gpt-4-0125-preview, claude-3-opus-20240229 (public APIs); Mistral-7B, Llama family (open weights)",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1144,
+     "holds": "partly",
+     "quote": "Our system prompt instructs the model to answer incorrectly on questions related to hazardous information",
+     "where": "Section 4.1: models are instructed to underperform on dangerous-capability questions; not told that high scores would trigger deployment restrictions"
+    },
+    {
+     "sentence": 1500,
+     "holds": "holds",
+     "quote": "both Claude 3 and GPT-4 substantially decreased their performance on the different subsets of WMDP",
+     "where": "Section 4.1, Fig. 4 (prompted); also password-locked fine-tuning"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "ref": "1065",
+   "route": "direct curl arxiv.org/pdf/2404.01318 + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "results of multiple attacks and test-time defenses on several open- and closed-sourced LLMs",
+   "runner": "third party",
+   "runner_passage": "Academic authors (affiliations numbered 1-4 in the PDF header); none shown as working for the developer of a tested model; affiliation 4 not resolved from the text",
+   "pass": "none",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "an open-sourced benchmark ... framework at https://github.com/JailbreakBench/jailbreakbench",
+   "model_access": "mixed",
+   "models": "Vicuna-13B-v1.5, Llama-2-7B-chat (open weights); GPT-3.5-Turbo-1106, GPT-4-0125-Preview (OpenAI API)",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1686,
+     "holds": "partly",
+     "quote": "As changing each of these aspects can lead to highly variable results",
+     "where": "Section 3.3: tokenization, sampling and system prompts matter; nothing on red-team composition, instructions, number of rounds or tool access"
+    }
+   ],
+   "note": "Affiliation of Sehwag (4) not read from the extracted text."
+  },
+  {
+   "ref": "1340",
+   "route": "direct curl arxiv.org/pdf/2502.02523 + pdftotext, full text",
+   "read": "full text",
+   "test": "no",
+   "test_passage": "This think piece has been written to a tight timescale... discusses the model and what its release means (reports others' benchmark results)",
+   "runner": null,
+   "runner_passage": "",
+   "pass": null,
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 2110,
+     "holds": "holds",
+     "quote": "achieving comparable performance to OpenAI’s o1 model",
+     "where": "Section 1 Introduction (reports DeepSeek's own AIME 2024 79.8%)"
+    }
+   ],
+   "note": "Secondary think piece by The Alan Turing Institute."
+  },
+  {
+   "ref": "1343",
+   "route": "direct curl of epoch.ai/benchmarks/eci/ (HTML, chart dynamic) + a research tool",
+   "read": "page only",
+   "test": "yes",
+   "test_passage": "We mitigate against this by running models on our own internal evaluations, and by collecting evaluations from independently-run leaderboards.",
+   "runner": "third party",
+   "runner_passage": "Epoch AI, an independent evaluator",
+   "pass": "none",
+   "pass_passage": "No pass mark.",
+   "pass_applies_to": [],
+   "outside": "unstated",
+   "outside_passage": "The page text does not state the data or code availability in the text read.",
+   "model_access": "unstated",
+   "models": "many models, not enumerated in the readable page text",
+   "materials_access": "unstated",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 2114,
+     "holds": "not found",
+     "quote": "open-weight models tend to optimize on benchmarks more aggressively, suggesting that the gap between open and proprietary models could be understated.",
+     "where": "Page FAQ; the readable text gives no figure for the open-closed gap in months (chart is script-rendered)"
+    }
+   ],
+   "note": "Page is a live index, not a fixed document; the gap estimate may sit in an interactive chart not captured."
+  }
+ ]
+}

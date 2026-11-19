@@ -1,0 +1,226 @@
+{
+ "sheet": "s81-6",
+ "items": [
+  {
+   "ref": "463",
+   "route": "direct curl of arxiv.org/pdf + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "We assess several leading language models, including OpenAI’s GPT-4.5, o3-mini, o1 and o1-mini, Anthropic’s claude-3-7-sonnet-20250219 ... with o1-preview achieving the highest success rate (92.85%)",
+   "runner": "third party",
+   "runner_passage": "Dan Ristea, Vasilios Mavroudis, Alan Turing Institute (no author at a developer of a tested model)",
+   "pass_passage": "The paper reports success rates per model; no threshold or pass level is applied.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "code is open-sourced [23]",
+   "model_access": "public product or API",
+   "models": "GPT-4.5, o3-mini, o1, o1-mini, o1-preview, GPT-4o, Claude 3.7/3.5 Sonnet, Gemini-1.5-pro (hosted APIs)",
+   "materials_access": "public",
+   "available_today": "no",
+   "available_today_source": "https://platform.openai.com/docs/deprecations",
+   "pairs": [
+    {
+     "sentence": 786,
+     "holds": "partly",
+     "quote": "a new benchmark for assessing AI models’ capabilities and risks in automated software exploitation",
+     "where": "Abstract; Fig. 5 (success per model ordered by release date)"
+    }
+   ],
+   "note": "Source supports only the HonestCyberEval part of the four-benchmark figure caption. o1-preview retired 2025-07-28 per deprecation page; some other tested models may still be offered.",
+   "pass": "none"
+  },
+  {
+   "ref": "548",
+   "route": "direct curl of OpenAI PDF + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "We evaluated OpenAI o3 and o4-mini according to our Preparedness Framework.",
+   "runner": "maker",
+   "runner_passage": "The source is OpenAI's own system card; evaluations run by OpenAI, with third-party partners named separately.",
+   "pass_passage": "OpenAI’s Safety Advisory Group (SAG) reviewed the results of these evaluations and determined that OpenAI o3 and o4-mini do not reach the High threshold in any of our three Tracked Categories.",
+   "pass_applies_to": [
+    {
+     "kind": "biological or chemical",
+     "quote": "models are on the cusp of being able to meaningfully help novices create known biological threats, which would cross our high risk threshold"
+    },
+    {
+     "kind": "cyber",
+     "quote": "Neither OpenAI o3 nor o4-mini met the High threshold for cybersecurity."
+    },
+    {
+     "kind": "autonomy or AI research",
+     "quote": "suggesting they lack the capabilities required for a High classification."
+    }
+   ],
+   "outside": "closed",
+   "outside_passage": "This set is uncontaminated; it was created fully in-house with our partners at Gryphon Scientific and has not been published.",
+   "model_access": "mixed",
+   "models": "o3 and o4-mini (public API) plus internal helpful-only variants and early checkpoints (not available)",
+   "materials_access": "withheld",
+   "available_today": "no",
+   "available_today_source": "https://platform.openai.com/docs/deprecations",
+   "pairs": [
+    {
+     "sentence": 936,
+     "holds": "partly",
+     "quote": "all models (including o3 and o4-mini models, and also also prior models like GPT-4o) score above the average human baseline (40%)",
+     "where": "s4.2.2 Multimodal Troubleshooting Virology; also 4.2.3, 4.2.4"
+    },
+    {
+     "sentence": 937,
+     "holds": "partly",
+     "quote": "All OpenAI o3 and o4-mini models tested underperform the consensus (54%) expert baseline",
+     "where": "s4.2.3 ProtocolQA (Fig. 5); the card gives a single model generation, not a time series"
+    },
+    {
+     "sentence": 940,
+     "holds": "partly",
+     "quote": "None of the tested OpenAI o3 and o4-mini models outperform the consensus expert baseline of 80%.",
+     "where": "s4.2.4 Tacit knowledge (Fig. 6)"
+    }
+   ],
+   "note": "Mixed picture: above human baseline on virology (40%) and above 80th-percentile PhD (63%) on tacit knowledge, below expert consensus on ProtocolQA and tacit knowledge. o4-mini-2025-04-16 shut down 2026-10-23; o3-2025-04-16 listed for shutdown 2026-12-11 (still offered today).",
+   "pass": "maker"
+  },
+  {
+   "ref": "556",
+   "route": "direct curl refused by rand.org (HTTP 403 CDN, page and PDF); a research tool of page and PDF returned query-ranked excerpts, not the whole text",
+   "read": "abstract and method only",
+   "test": "yes",
+   "test_passage": "teams of researchers role-playing as malign nonstate actors ... some teams had access to an LLM along with the internet, and others were provided only access to the internet.",
+   "runner": "third party",
+   "runner_passage": "Research conducted by RAND; red teamers from RAND and Gryphon Scientific (no AI developer).",
+   "pass_passage": "Results are scored on a 9-point plan-viability scale; no pass level is applied in the excerpts read.",
+   "pass_applies_to": [],
+   "outside": "model closed",
+   "outside_passage": "Red cells equipped with LLM A ... LLM B (models referred to only as LLM A and LLM B)",
+   "model_access": "not available",
+   "models": "two anonymised LLMs (LLM A, LLM B)",
+   "materials_access": "unstated",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 933,
+     "holds": "holds",
+     "quote": "there was no significant difference in the viability of OPLANs created with or without the aid of LLMs.",
+     "where": "Results section (Tables 4-5; p-values 0.87 and 0.25)"
+    }
+   ],
+   "note": "Full PDF not obtained whole; read results/acknowledgement excerpts only.",
+   "pass": "none"
+  },
+  {
+   "ref": "725",
+   "route": "direct curl of arxiv.org/pdf + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "we develop and evaluate pipelines of safety techniques (“protocols”) ... access to a powerful but untrusted model (in our case, GPT-4), access to a less powerful trusted model (in our case, GPT-3.5)",
+   "runner": "third party",
+   "runner_passage": "Redwood Research authors; no OpenAI author.",
+   "pass_passage": "Suspiciousness thresholds are protocol parameters, not a pass mark on a capability result.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "Code available at https://github.com/rgreenblatt/control-evaluations",
+   "model_access": "public product or API",
+   "models": "GPT-4 (0613) untrusted, GPT-3.5 (0613) trusted",
+   "materials_access": "public",
+   "available_today": "no",
+   "available_today_source": "https://platform.openai.com/docs/deprecations",
+   "pairs": [
+    {
+     "sentence": 1144,
+     "holds": "not found",
+     "quote": "the untrusted model will know that it’s in a safety evaluation so it might intentionally play dumb while being used as an attack policy.",
+     "where": "Discussion, Problem 3 - Untrusted model sandbagging (a hypothetical concern, not an observed result)"
+    }
+   ],
+   "note": "Paper does not report models scoring lower when told high scores would trigger restrictions; sandbagging appears as a discussed risk. gpt-4-0613 shut down 2026-10-23, gpt-3.5-turbo-0613 on 2024-09-13.",
+   "pass": "none"
+  },
+  {
+   "ref": "1064",
+   "route": "direct curl of arxiv.org/pdf + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Using HarmBench, we conduct a large-scale comparison of 18 red teaming methods and 33 target LLMs and defenses",
+   "runner": "third party",
+   "runner_passage": "Authors at UIUC, Center for AI Safety, CMU, UC Berkeley, Microsoft; none at a developer of a tested model.",
+   "pass_passage": "Attack success rate is reported; no pass level is applied.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "open source HarmBench at https://github.",
+   "model_access": "mixed",
+   "models": "24 open-source LLMs and 9 closed-source LLMs (e.g. GPT-4, Claude, Gemini) as of early 2024",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1686,
+     "holds": "not found",
+     "quote": "red teaming methods can be restricted to have varying levels of access to target LLMs, including no access (transfer attacks), query access (black-box attacks), and parameter access (white-box attacks)",
+     "where": "Appendix (taxonomy of access); no experiment on model tool access"
+    }
+   ],
+   "note": "Searched for tool use / function calling: no such experiment. Access levels discussed concern attacker access to the model, not the model's tools. Copyright test cases are partly withheld by design.",
+   "pass": "none"
+  },
+  {
+   "ref": "1287",
+   "route": "direct curl of arxiv.org/pdf + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "we conduct a blind auditing game where four teams, unaware of the model’s hidden objective or training, investigate it for concerning behaviors and their causes.",
+   "runner": "maker and others",
+   "runner_passage": "Anthropic authors together with ML Alignment and Theory Scholars (MATS); the audited model is a Claude 3.5 Haiku fine-tune.",
+   "pass_passage": "Teams are graded on whether they identified the hidden objective; no capability threshold is applied.",
+   "pass_applies_to": [],
+   "outside": "model closed",
+   "outside_passage": "The model is an internally trained Claude 3.5 Haiku fine-tune; no release or code release is stated.",
+   "model_access": "not available",
+   "models": "Claude 3.5 Haiku fine-tuned with a hidden RM-sycophancy objective",
+   "materials_access": "unstated",
+   "available_today": "no",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1987,
+     "holds": "holds",
+     "quote": "These teams used techniques such as identifying sparse autoencoder (SAE; Huben et al., 2024; Bricken et al., 2023) features that were highly active on these incriminating data",
+     "where": "s1 Introduction, blind auditing game; s4"
+    }
+   ],
+   "note": "The research model was never released. The paper also notes the SAE solution could be replicated by a simpler embedding-based search.",
+   "pass": "none"
+  },
+  {
+   "ref": "1342",
+   "route": "direct curl failed (connection reset); a research tool of page, full text",
+   "read": "full text",
+   "test": "no",
+   "test_passage": "Press release announcing Qwen 2.5 models and cloud infrastructure; no test is reported.",
+   "runner": null,
+   "runner_passage": "",
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 2111,
+     "holds": "not found",
+     "quote": "has achieved remarkable traction since its debut in April 2023",
+     "where": "Page body (dated 19 Sep 2024; no Chatbot Arena ranking)"
+    }
+   ],
+   "note": "Page is dated September 2024; the August 2025 Chatbot Arena claim is not in it.",
+   "pass": null
+  }
+ ]
+}

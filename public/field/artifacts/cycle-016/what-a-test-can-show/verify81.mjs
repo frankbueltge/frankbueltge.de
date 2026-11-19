@@ -2,6 +2,9 @@
 // visitor sees and compare it with results81.json and with counts recomputed here from coding81.json, coding80.json and
 // sentences80.json; check errors and sideways scroll; write process/2.png from the light pass and shot-390.png from the
 // dark one (NOSHOT=1 skips both).
+// Superseded on 19 November by verify82.mjs: the check changed codes this file reads from the first coding, so it would now
+// fail and overwrite process/2.png. It stays as the record of how the second state was verified (NOSHOT=1 and FORCE81=1 run it).
+if (!process.env.FORCE81) { console.log('verify81.mjs is superseded by verify82.mjs (check 82); set FORCE81=1 to run the record of the second state.'); process.exit(0); }
 import { createRequire } from 'module'; import path from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
 const require = createRequire('/opt/node-tools/node_modules/'); const { chromium } = require('playwright');
 const here = path.dirname(fileURLToPath(import.meta.url)); const url = 'file://' + path.join(here, 'index.html');

@@ -1,0 +1,256 @@
+{
+ "sheet": "s81-3",
+ "items": [
+  {
+   "ref": "33",
+   "route": "direct curl + pdftotext, full text (system card PDF)",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "We conducted a controlled trial measuring AI assistance in bioweapons acquisition and planning by a hypothetical adversary.",
+   "runner": "maker",
+   "runner_passage": "Anthropic's own system card; trial graded by Deloitte, participants contracted from SepalAI and Mercor, but the publication is the developer's.",
+   "pass": "maker",
+   "pass_passage": "Our threat analysis indicated that total uplift ≥ 5× (or raw uplift ≥ 0.8) would create significant additional risk, while uplift ≤ 2.8× would keep risk at acceptable levels.",
+   "pass_applies_to": [
+    {
+     "kind": "biological or chemical",
+     "quote": "We considered the threshold reached if a well-elicited model meets, or exceeds, this performance."
+    },
+    {
+     "kind": "autonomy or AI research",
+     "quote": "We set a conservative threshold where we can be confident that scores below this threshold rule out “AI R&D-4.”"
+    },
+    {
+     "kind": "cyber",
+     "quote": "The RSP does not stipulate a formal threshold for cyber capabilities at any ASL level."
+    }
+   ],
+   "outside": "model closed",
+   "outside_passage": "The uplift trial used Claude 'with safeguards removed' (helpful-only) and, for Sonnet 4, 'an earlier snapshot'; 'Some CBRN evaluation thresholds and results are sensitive; we do not disclose these publicly.'",
+   "model_access": "not available",
+   "models": "Claude Opus 4 and Claude Sonnet 4, safeguards-removed (helpful-only) variants / earlier snapshot, in the uplift trial; other evaluations on Opus 4, Sonnet 4, Sonnet 3.7",
+   "materials_access": "withheld",
+   "available_today": "no",
+   "available_today_source": "https://docs.claude.com/en/docs/about-claude/model-deprecations",
+   "pairs": [
+    {
+     "sentence": 932,
+     "holds": "holds",
+     "quote": "Participants scored an average of 25% ± 13% in the control group. Participants who had access to Claude Opus 4 scored 63% ± 13%, and participants who had access to Claude Sonnet 4 scored 42% ± 11%.",
+     "where": "7.2.4.1 Bioweapons acquisition uplift trial, Score"
+    },
+    {
+     "sentence": 936,
+     "holds": "partly",
+     "quote": "all models have surpassed the human baseline.",
+     "where": "7.2.4.4 (VCT), Figure 7.2.4.4.A; the card's 33-question knowledge set is below expert level (17/33), so only some benchmarks support the heading"
+    },
+    {
+     "sentence": 937,
+     "holds": "partly",
+     "quote": "Claude Opus 4 and Claude Sonnet 4 answered 17/33 of the questions better than experts, well below the threshold of concern.",
+     "where": "7.2.4.5 Bioweapons knowledge questions; card gives single-model results, not a time series across systems"
+    },
+    {
+     "sentence": 940,
+     "holds": "partly",
+     "quote": "reaches or exceeds the human baseline in these evaluations. It performs substantially below the human baseline in FigQA.",
+     "where": "7.2.4.7 LAB-Bench, Claude Opus 4 score"
+    },
+    {
+     "sentence": 968,
+     "holds": "partly",
+     "quote": "Text-based uplift trials are substantially weaker proxies for real-world scenarios",
+     "where": "7.2.4.1 Threshold; trial shows 2.53x and 1.70x uplift over internet-only control, but the card does not say larger studies are needed"
+    }
+   ],
+   "note": "Anthropic pages retired Opus 4 and Sonnet 4 on 2026-06-15 per the deprecation page. Cyber (7.4) has no formal threshold."
+  },
+  {
+   "ref": "281",
+   "route": "direct curl of epoch.ai/frontiermath and its tiers-1-4 and benchmarks/frontiermath sub-pages; text extracted from HTML",
+   "read": "page only",
+   "test": "no",
+   "test_passage": "FrontierMath is our program for testing AI on advanced mathematics.",
+   "runner": null,
+   "runner_passage": "",
+   "pass": null,
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 540,
+     "holds": "not found",
+     "quote": "",
+     "where": "Landing page and sub-pages as served on 2026-11-19 carry no score text; the benchmark was revised on 2026-06-12 (v2)"
+    },
+    {
+     "sentence": 541,
+     "holds": "not found",
+     "quote": "",
+     "where": "No GPT-5 or o4-mini figures in the page text; results sit in charts not present in the fetched HTML"
+    }
+   ],
+   "note": "Coded test=no because the cited landing page gives no outcome in text. The benchmarks hub says FrontierMath was funded by OpenAI, who has exclusive access to a subset; only twelve problems are public."
+  },
+  {
+   "ref": "450",
+   "route": "direct curl of arxiv.org/pdf/2408.08926 + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Without subtask guidance, agents leveraging Claude 3.5 Sonnet, GPT-4o, OpenAI o1-preview, and Claude 3 Opus successfully solve complete tasks that took human teams up to 11 minutes to solve.",
+   "runner": "third party",
+   "runner_passage": "All authors listed at Stanford University.",
+   "pass": "none",
+   "pass_passage": "No pass mark or threshold applied to results.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "All code and data are publicly available at https://cybench.github.io.",
+   "model_access": "mixed",
+   "models": "GPT-4o, o1-preview, Claude 3 Opus, Claude 3.5 Sonnet, Gemini 1.5 Pro (public APIs); Mixtral 8x22b, Llama 3 70B, Llama 3.1 405B (open weights)",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "https://docs.claude.com/en/docs/about-claude/model-deprecations",
+   "pairs": [
+    {
+     "sentence": 786,
+     "holds": "partly",
+     "quote": "We include 40 professional-level Capture the Flag (CTF) tasks from 4 distinct CTF competitions",
+     "where": "Abstract; source covers Cybench only, not the other three benchmarks or performance over time"
+    }
+   ],
+   "note": "Claude 3 Opus and 3.5 Sonnet are retired per Anthropic deprecation page; Llama weights remain open; mixed so left unknown."
+  },
+  {
+   "ref": "722",
+   "route": "direct curl of arxiv.org/pdf/2509.15541 + pdftotext, full text; antischeming.ai page also read",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Across 26 OOD evaluations (180+ environments), deliberative alignment reduces covert action rates (OpenAI o3: 13%→0.4%; OpenAI o4-mini: 8.7%→0.3%)",
+   "runner": "maker and others",
+   "runner_passage": "Apollo Research & OpenAI",
+   "pass": "none",
+   "pass_passage": "No pass mark applied; the 50% figure in the sandbagging task is part of the task set-up.",
+   "pass_applies_to": [],
+   "outside": "model closed",
+   "outside_passage": "Apollo Research was granted rate-limited access to the internal chain-of-thought reasoning of o3 and o4-mini during the project; trained and experimental checkpoints are not public.",
+   "model_access": "mixed",
+   "models": "OpenAI o3 and o4-mini (public APIs, but CoT hidden), anti-scheming-trained variants and an experimental OpenAI RL model (internal)",
+   "materials_access": "unstated",
+   "available_today": "no",
+   "available_today_source": "https://platform.openai.com/docs/deprecations",
+   "pairs": [
+    {
+     "sentence": 1131,
+     "holds": "partly",
+     "quote": "Anti-scheming training increases the rate of verbalized evaluation awareness for both o4-mini (0.9% → 5.5%) and o3 (2.3% → 4.5%).",
+     "where": "Figure 15, Section 6.1; rates are low single digits, not 'reliably'"
+    },
+    {
+     "sentence": 1138,
+     "holds": "holds",
+     "quote": "Examples of deceptive reasoning and actions (left) and situational awareness (right).",
+     "where": "Figure 2 and Figure 14 (examples from o3)"
+    },
+    {
+     "sentence": 1500,
+     "holds": "holds",
+     "quote": "adding explicit user instructions (e.g., “Please try your best”) or documentation warnings fails to eliminate sandbagging.",
+     "where": "Section 3 and Appendix M.1, Sandbagging QA (No Goal)"
+    }
+   ],
+   "note": "o3 is deprecated with shutdown 2026-12-11 and o4-mini listed for shutdown 2026-10-23; the trained variants were never public."
+  },
+  {
+   "ref": "911",
+   "route": "direct curl of medrxiv.org page and PDF refused (403, bot check); full text read from the medRxiv JATS XML at medrxiv.org/content/early/2025/03/18/...source.xml via direct curl",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Over 307,000 unique calls were evaluated using the RWE-LLM framework.",
+   "runner": "maker and others",
+   "runner_passage": "MB, AM, MSA, MRD, HM, MV, MT, SBL, VP, JG, RL, SG, and SM are employees of Hippocratic AI, which provided funding for this study. JDA is an Adjunct Professor at the University of British Columbia",
+   "pass": "none",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "unstated",
+   "outside_passage": "Data supporting the results can be accessed by contacting the corresponding author.",
+   "model_access": "unstated",
+   "models": "Hippocratic AI's Polaris AI Care Agent (pre-Polaris, Polaris 1.0, 2.0, 3.0)",
+   "materials_access": "on request",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1505,
+     "holds": "partly",
+     "quote": "even AI systems trained on carefully curated inputs can produce unsafe responses when interacting with patients in real-world scenarios.",
+     "where": "Discussion; study covers 307,000 clinician-simulated scenarios of the maker's own system, and tests no benchmark performance"
+    }
+   ],
+   "note": "Unsafe-or-ambiguous split not found in text searched."
+  },
+  {
+   "ref": "1230",
+   "route": "direct curl refused (403, journals.sagepub.com, page and PDF); a research tool failed; a second research tool, in full returned the article text",
+   "read": "full text",
+   "test": "no",
+   "test_passage": "The final section argues that research ethics committees play a crucial role in evaluating the dual use implications of AI technologies within the research pipeline.",
+   "runner": null,
+   "runner_passage": "",
+   "pass": null,
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1923,
+     "holds": "partly",
+     "quote": "AI has multifaceted applications that can yield both beneficial and harmful outcomes, making dual use considerations critical.",
+     "where": "Introduction; essay on dual use, no test of model responses"
+    }
+   ],
+   "note": "Essay."
+  },
+  {
+   "ref": "1231",
+   "route": "direct curl of arxiv.org/pdf/2406.14595 + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "combining Claude 3 Opus and Llama 2 70B achieves a success rate of 43% when generating vulnerable code, while neither individual model exceeds 3%.",
+   "runner": "third party",
+   "runner_passage": "UC Berkeley (Jones, Dragan, Steinhardt)",
+   "pass": "none",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "Code and data for this paper is available at https://github.com/ejones313/multi-model-misuse",
+   "model_access": "mixed",
+   "models": "Claude 3 Haiku/Sonnet/Opus and DALL-E 3 (public APIs at the time), GPT-4 as grader; Llama 2, Mistral 7B, Mixtral (open weights)",
+   "materials_access": "public",
+   "available_today": "no",
+   "available_today_source": "https://docs.claude.com/en/docs/about-claude/model-deprecations",
+   "pairs": [
+    {
+     "sentence": 1923,
+     "holds": "partly",
+     "quote": "adversaries can misuse combinations of models even when each individual model is safe.",
+     "where": "Abstract; shows benign subtasks combined into harmful output, not context-dependent helpfulness as such"
+    }
+   ],
+   "note": "Claude 3 models retired; open-weight Llama and Mistral remain."
+  }
+ ]
+}

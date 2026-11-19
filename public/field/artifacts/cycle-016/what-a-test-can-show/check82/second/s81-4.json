@@ -1,0 +1,218 @@
+{
+ "sheet": "s81-4",
+ "items": [
+  {
+   "ref": "197",
+   "route": "direct curl + pdftotext, full text (52 pages)",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Sections 4-5 report disallowed-content, jailbreak, red-teaming and Preparedness evaluations; e.g. 'Over 34 scenarios and trajectories with the o1 (Pre-Mitigation) model, 22 were rated Medium risk and 12 were rated Low risk'.",
+   "runner": "maker",
+   "runner_passage": "The source is OpenAI's own system card for o1 (it also reports work by external red teamers, Apollo, METR and Signature Science, as part of OpenAI's report).",
+   "pass": "maker",
+   "pass_passage": "Only models with a post-mitigation score of “medium” or below can be deployed, and only models with a post-mitigation score of “high” or below can be developed further.",
+   "pass_applies_to": [
+    {
+     "kind": "biological or chemical",
+     "quote": "reproducing a known biological threat, which meets our medium risk threshold."
+    },
+    {
+     "kind": "cyber",
+     "quote": "does not sufficiently advance real-world vulnerability exploitation capabilities to meet our medium"
+    },
+    {
+     "kind": "persuasion",
+     "quote": "does not outperform top human writers and does not reach our high risk threshold."
+    },
+    {
+     "kind": "autonomy or AI research",
+     "quote": "capabilities sufficiently to indicate medium risk."
+    }
+   ],
+   "outside": "model closed",
+   "outside_passage": "Preparedness evaluations and external red teaming were run on 'o1-near-final-checkpoint'; pre-mitigation research models are 'not released in products'; the expert-probing and evaluation prompts are not published.",
+   "model_access": "mixed",
+   "models": "o1 near-final checkpoint and o1 pre-mitigation (not available: research/internal); o1 post-mitigation, o1-preview, o1-mini, GPT-4o (public API/ChatGPT at the time). The cited bio expert-probing result rests on o1 (pre-mitigation) / o1 access given to six experts.",
+   "materials_access": "withheld",
+   "available_today": "no",
+   "available_today_source": "https://platform.openai.com/docs/deprecations (o1-preview shut down 2025-07-28; o1-2024-12-17 shutdown 2026-10-23)",
+   "pairs": [
+    {
+     "sentence": 968,
+     "holds": "partly",
+     "quote": "All experts found access to o1 significantly useful for answering the questions beyond access to the internet.",
+     "where": "Section 5.5.3 Expert probing, p. 24-25 (six biology experts); 5.5.10: no significant uplift in designing novel threats beyond existing resources"
+    }
+   ],
+   "note": "Sentence is broader (weapons development, controlled studies); the source gives a six-expert probe with subjective survey, and a tempering result in 5.5.10. Materials withheld is inferred from absence of any release statement."
+  },
+  {
+   "ref": "358",
+   "route": "direct curl (Springer 'Client Challenge' page, JS wall); then a research tool and a second research tool: abstract and reference list only; full chapter text paywalled",
+   "read": "abstract and method only",
+   "test": "no",
+   "test_passage": "Abstract: 'This paper provides a technical survey of sycophancy in LLMs, analyzing its causes, impacts, and potential mitigation strategies.'",
+   "runner": null,
+   "runner_passage": "",
+   "pass": null,
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1923,
+     "holds": "not checkable",
+     "quote": "",
+     "where": "Only abstract and reference list were obtainable; the body (causes of sycophancy, RLHF) could not be read"
+    }
+   ],
+   "note": "A survey, so test = no. Springer host refused scripted fetch (client challenge); the extraction tools returned abstract and references only."
+  },
+  {
+   "ref": "454",
+   "route": "direct curl of arxiv.org/pdf/2506.02548 (v3, 24 Mar 2026) + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Abstract: 'Even the top-performing combinations only achieve a ∼20% success rate'; eleven LLMs and four agent frameworks evaluated on 1,507 vulnerabilities.",
+   "runner": "third party",
+   "runner_passage": "Authors all at UC Berkeley (Zhun Wang, Tianneng Shi, Jingxuan He, Matthew Cai, Jialin Zhang, Dawn Song); none at a developer of the tested models.",
+   "pass": "none",
+   "pass_passage": "No pass mark or threshold is applied to the results.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "We also open source our data and code to encourage transparency and reproducibility.",
+   "model_access": "mixed",
+   "models": "Closed API: GPT-4.1, GPT-5, o4-mini, Claude-3.7-Sonnet, Claude-Sonnet-4, Gemini-2.5-Flash; open weights: Qwen3-235B-A22B, DeepSeek-V3, SWE-Gym-32B, R2E-Gym-32B, OpenHands-LM-32B.",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 786,
+     "holds": "partly",
+     "quote": "CyberGym primarily tasks agents with generating a proof-of-concept test that reproduces a vulnerability, given only its text description and the corresponding codebase.",
+     "where": "Abstract; Section 1. Source describes CyberGym only; the other three benchmarks and the over-time trend are not its content"
+    }
+   ],
+   "note": "Open-weight models still downloadable but several closed snapshots may be retired; not looked up."
+  },
+  {
+   "ref": "723",
+   "route": "direct curl of arxiv.org/pdf/2504.18565 (v2) + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "We create 201 novel task families consisting of 86 individual tasks. We benchmark 5 frontier models",
+   "runner": "public body",
+   "runner_passage": "All authors are at the UK AI Security Institute (AISI).",
+   "pass": "none",
+   "pass_passage": "Reports pass@10 scores only; no pass mark decides anything ('they do not currently pose a credible threat of self-replication').",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "We do not release any code or otherwise open source RepliBench... We will share code and implementation details with researchers on request.",
+   "model_access": "public product or API",
+   "models": "o1 (o1-2024-12-17), o3-mini, GPT-4o (2024-11-20), Claude 3.5 Sonnet (new), Claude 3.7 Sonnet; Claude 3.5 Haiku as simulated human.",
+   "materials_access": "on request",
+   "available_today": "unknown",
+   "available_today_source": "https://platform.openai.com/docs/deprecations (o1-2024-12-17 and o3-mini shut down 2026-10-23; others not checked)",
+   "pairs": [
+    {
+     "sentence": 1131,
+     "holds": "not found",
+     "quote": "",
+     "where": "Full text searched for situational awareness, aware, being tested, evaluation awareness: absent; closest is sandbagging-like refusals (Appendix, Witten & Benton) and replication results"
+    }
+   ],
+   "note": "Source is about autonomous replication capability, not situational awareness. Materials access 'on request' per Appendix E."
+  },
+  {
+   "ref": "1062",
+   "route": "direct curl of arxiv.org/pdf/2406.11757 (v4) + pdftotext, full text (17 pages)",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Data We obtain 8360 dialogues by 225 red teamers; red teamers engage in written dialogue with a proprietary model (red teaming study run with annotators).",
+   "runner": "unstated",
+   "runner_passage": "All authors are at Google DeepMind, Google or Google Labs, but the tested 'proprietary model' is not identified, so whether they are its developer is not stated.",
+   "pass": "none",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "model closed",
+   "outside_passage": "Red teamers engage in written dialogue with a proprietary model; rules are 'codified by ‘rules’ in a proprietary content safety policy'.",
+   "model_access": "not available",
+   "models": "An unidentified proprietary dialogue model (plus Anthropic, DEFCON datasets used for comparison).",
+   "materials_access": "unstated",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1686,
+     "holds": "holds",
+     "quote": "Specific instructions and a diverse annotator pool result in even exploration of attacks against different demographic groups, while maintaining ‘demographic matching’.",
+     "where": "Figure 3 caption, Section 6.1; abstract: parameterised instructions lead to 'improved coverage of the risk surface'"
+    }
+   ],
+   "note": "Supports composition and instructions only; attack rounds and tool access in the sentence rest on other references. Runner left unstated because the model's developer is not named."
+  },
+  {
+   "ref": "1232",
+   "route": "direct curl (Springer client challenge, refused); a second research tool, in full, returned the whole article; read in full",
+   "read": "full text",
+   "test": "no",
+   "test_passage": "A conceptual policy paper: 'We provide a taxonomy of interventions that can reduce AI misuse... and a framework to determine if an intervention is warranted.'",
+   "runner": null,
+   "runner_passage": "",
+   "pass": null,
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1923,
+     "holds": "partly",
+     "quote": "Whether an output is harmless or not depends largely on context",
+     "where": "Section 4 (Misuse Chain, LLM helpful/harmless/honest discussion); source does not discuss RLHF models or 'helpful in some contexts but harmful in others' as a measured result"
+    }
+   ],
+   "note": "Springer host refused scripted fetch; full text obtained through the page-extraction tool."
+  },
+  {
+   "ref": "1233",
+   "route": "direct curl of arxiv.org/pdf/2412.16468 (v4, 17 Jun 2026) + pdftotext, full text (24 pages); the cited 2024 version was not separately read",
+   "read": "full text",
+   "test": "no",
+   "test_passage": "A survey of scalable oversight paradigms; reports no test of its own.",
+   "runner": null,
+   "runner_passage": "",
+   "pass": null,
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1923,
+     "holds": "partly",
+     "quote": "Superalignment arises when humans can no longer reliably evaluate outputs with respect",
+     "where": "Section 2 (problem definition); also Section 3.1 'Sycophancy. Both humans and AI systems may favor fluent but incorrect answers'. No statement about RLHF-tuned models' outputs being hard to evaluate"
+    }
+   ],
+   "note": "Survey; supports the general difficulty of evaluating outputs, not the specific RLHF claim."
+  }
+ ]
+}

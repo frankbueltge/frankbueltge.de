@@ -1,0 +1,247 @@
+{
+ "sheet": "s81-8",
+ "items": [
+  {
+   "test": "yes",
+   "test_passage": "It includes results from benchmarks administered internally by Epoch AI as well as data collected from external sources.",
+   "runner": "third party",
+   "runner_passage": "For Epoch AI-administered benchmarks, we are confident that the evaluation results are accurate as we ran the evaluations ourselves",
+   "pass_passage": "No pass mark applied to benchmark results on the hub.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "We publish task definitions for GPQA Diamond , MATH Level 5 , Mock AIME 2024-2025 , FrontierMath , and SWE-bench Verified .",
+   "model_access": "mixed",
+   "models": "Many leading models (hosted APIs and open-weights); Epoch runs chat/instruct versions via API; external results from leaderboards",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 248,
+     "holds": "not found",
+     "quote": "Our top priority is to track state of the art AI performance.",
+     "where": "epoch.ai/benchmarks, Common questions; no human-expert comparison on page or in CSV README"
+    },
+    {
+     "sentence": 253,
+     "holds": "partly",
+     "quote": "Our database of benchmark results, featuring the performance of leading AI models on challenging tasks.",
+     "where": "epoch.ai/benchmarks intro; hub holds scores by model and release date, the figure itself is not on the page"
+    },
+    {
+     "sentence": 255,
+     "holds": "holds",
+     "quote": "Our database of benchmark results, featuring the performance of leading AI models on challenging tasks.",
+     "where": "benchmark_data.zip math_level_5.csv: o1 (release 2024-12-17) mean_score 0.947 vs gpt-4o (2024-08-06) 0.533"
+    }
+   ],
+   "note": "Live dynamic hub; page now shows 2026 content. Mixed first-party and external runs; the report's version of Figure 1.4 could not be reproduced from the page text. Hub dated 2026-11-19.",
+   "ref": "138",
+   "route": "direct curl of hub page (text) plus epoch.ai/data/benchmark_data.zip (CSV data, downloaded directly)",
+   "read": "full text",
+   "pass": "none"
+  },
+  {
+   "test": "no",
+   "test_passage": "Rather than perform new experiments, we select 9 existing benchmarks",
+   "runner": null,
+   "runner_passage": "",
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 282,
+     "holds": "partly",
+     "quote": "all have 50-200+ minute horizons which are currently doubling every 2-6 months",
+     "where": "Summary; no 80% horizon or 25-minute figure on the page"
+    }
+   ],
+   "note": "Blog post re-analyses public benchmark scores (time-horizon fit); it states ~100 minute 50% horizon on METR-HRS but no 80% success figure. The 2-hour and 25-minute figures are not on the page (they may rest on ref 98).",
+   "ref": "151",
+   "route": "direct curl of METR blog page, html to text",
+   "read": "full text",
+   "pass": null
+  },
+  {
+   "test": "yes",
+   "test_passage": "This study aims to perform a thorough evaluation of the non-English capabilities of SoTA LLMs (GPT-3.5-Turbo, GPT-4, PaLM2, Gemini-Pro, Mistral, Llama2, and Gemma)",
+   "runner": "third party",
+   "runner_passage": "Microsoft Corporation (all authors); tested models are from OpenAI, Google, Meta, Mistral, none from Microsoft",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "unstated",
+   "outside_passage": "Uses 22 existing datasets and models via API and open weights; no explicit statement that MEGAVERSE items or code are released was found.",
+   "model_access": "mixed",
+   "models": "GPT-3.5-Turbo, GPT-4, GPT-4-Vision (API); PaLM2, Gemini-Pro (API); Llama2, Mistral, Gemma, LLaVA (open weights)",
+   "materials_access": "unstated",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 291,
+     "holds": "holds",
+     "quote": "The performance on English performs is the best, followed closely by Latin script languages, and a drop in performance for languages in other scripts.",
+     "where": "Sec 4.4 PAWS-X; abstract: 22 datasets covering 83 languages; low-resource gap in Conclusion"
+    }
+   ],
+   "note": "Non-Latin gap stated per dataset and for low-resource languages; no single sentence combining both for all 83 languages.",
+   "ref": "158",
+   "route": "direct curl of ACL anthology PDF + pdftotext, full text",
+   "read": "full text",
+   "pass": "none"
+  },
+  {
+   "test": "yes",
+   "test_passage": "We compare humans to several public frontier models through best-of-k with varying time budgets and agent designs",
+   "runner": "third party",
+   "runner_passage": "Model Evaluation and Threat Research (METR); affiliations include Redwood Research, Qally's, Harvard, independent; Karnofsky's Anthropic note says work done while at Carnegie Endowment",
+   "pass_passage": "The paper discusses risk thresholds only as motivation; applies none to results.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "We open-source the evaluation environments, human expert data, analysis code and agent trajectories to facilitate future research.",
+   "model_access": "public product or API",
+   "models": "Claude 3.5 Sonnet (20241022, 20240620) and o1-preview, in Modular and AIDE scaffolds",
+   "materials_access": "public",
+   "available_today": "no",
+   "available_today_source": "https://docs.claude.com/en/docs/about-claude/model-deprecations",
+   "pairs": [
+    {
+     "sentence": 411,
+     "holds": "holds",
+     "quote": "All of the AI agents we evaluated outperform humans with a 2-hour time budget (Figure 2).",
+     "where": "Introduction, results summary; sentence text is truncated in sheet, humans exceed agents at 8 hours"
+    }
+   ],
+   "note": "Claude 3.5 Sonnet retired 2025-10-28 per Anthropic page; o1-preview not checked.",
+   "ref": "230",
+   "route": "direct curl arxiv PDF + pdftotext, full text",
+   "read": "full text",
+   "pass": "none"
+  },
+  {
+   "test": "yes",
+   "test_passage": "we obtain 95% performance on InterCode-CTF, a popular offensive security benchmark, using prompting, tool use, and multiple attempts.",
+   "runner": "third party",
+   "runner_passage": "Palisade Research authors (palisaderesearch.org); models are OpenAI's",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "Harness fork published at github.com/palisaderesearch/intercode; four OpenAI models via API",
+   "model_access": "public product or API",
+   "models": "GPT-4, GPT-4o, GPT-4o-mini, o1-preview via OpenAI API",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 870,
+     "holds": "partly",
+     "quote": "This beats prior work by Phuong et al. 2024 (29%) and Abramovich et al. 2024 (72%).",
+     "where": "Abstract; elicitation above prior published scores, no comparison to pre-deployment testing of the same model"
+    }
+   ],
+   "note": "Paper does not mention pre-deployment testing; related to the claim by showing 'underelicited' capabilities.",
+   "ref": "521",
+   "route": "direct curl arxiv PDF + pdftotext, full text",
+   "read": "full text",
+   "pass": "none"
+  },
+  {
+   "test": "yes",
+   "test_passage": "We evaluate the 10 models in their ability to covertly sandbag: Qwen2.5-Instruct-7B, 32B, 72B, GPT-4o-mini, GPT-4o, GPT-4.1-mini, GPT-4.1, Claude-3.7-Sonnet, Claude-4-Sonnet, and Gemini-2.5-Flash.",
+   "runner": "third party",
+   "runner_passage": "Authors Chloe Li, Mary Phuong, Noah Y. Siegel: University College London",
+   "pass_passage": "No pass mark applied; monitor approval threshold of 70 is an analysis setting, not a deployment rule.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "Models were prompted via system prompt on public WMDP and MMLU questions; models publicly available at time of test; no code link found.",
+   "model_access": "mixed",
+   "models": "Qwen2.5 (open weights); GPT-4o family, GPT-4.1 family, Claude 3.7/Sonnet 4, Gemini 2.5 Flash (public APIs); GPT-5 monitor",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "https://docs.claude.com/en/docs/about-claude/model-deprecations",
+   "pairs": [
+    {
+     "sentence": 1144,
+     "holds": "partly",
+     "quote": "we instruct models in their system prompt to sandbag on questions testing biosecurity, chemical security, and cybersecurity knowledge",
+     "where": "Sec 3 Experimental Design; models told to sandbag, not told that high scores trigger restrictions"
+    },
+    {
+     "sentence": 1500,
+     "holds": "holds",
+     "quote": "They do so by prompting models to follow certain attack policies or fine-tuning models against the CoT monitor.",
+     "where": "Sec 1 context; prompted sandbagging observed in the paper's experiments (Sec 4)"
+    }
+   ],
+   "note": "Claude 3.7 Sonnet and Sonnet 4 retired per Anthropic page; Qwen open weights remain. Sandbagging here is prompted, not spontaneous.",
+   "ref": "727",
+   "route": "openreview refused (a bot check 'Verifying your browser' page, 200 with challenge); read arXiv 2508.00943 full text instead (direct curl + pdftotext)",
+   "read": "full text",
+   "pass": "none"
+  },
+  {
+   "test": "yes",
+   "test_passage": "we posed all 30 questions to three major commercial LLM-based chatbots: Anthropic’s Claude 3.5 Sonnet, OpenAI’s GPT-4o mini, and Google’s Gemini 1.5 Pro.",
+   "runner": "third party",
+   "runner_passage": "Authors at RAND, Harvard Pilgrim Health Care Institute, Harvard Medical School, Brown University",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "All 30 questions printed in Table 1; models queried through public cloud APIs in October 2024.",
+   "model_access": "public product or API",
+   "models": "Claude 3.5 Sonnet, GPT-4o mini, Gemini 1.5 Pro",
+   "materials_access": "public",
+   "available_today": "no",
+   "available_today_source": "https://docs.claude.com/en/docs/about-claude/model-deprecations",
+   "pairs": [
+    {
+     "sentence": 1399,
+     "holds": "partly",
+     "quote": "ChatGPT and Claude directly responded to all questions in the very-low-risk category 100% of the time, whereas Gemini did so 25% of the time",
+     "where": "Results; all three never answered very-high-risk questions; medium-risk answers diverged (Table 2)"
+    }
+   ],
+   "note": "Source names 'very high' not 'high' risk and Gemini answered only 25% of very low-risk, so the sentence is only partly matched. Claude 3.5 Sonnet retired.",
+   "ref": "855",
+   "route": "direct curl 403 (psychiatryonline.org bot check 'Just a moment'); a research tool failed; read via a second research tool, in full plus PubMed metadata",
+   "read": "full text",
+   "pass": "none"
+  },
+  {
+   "test": "yes",
+   "test_passage": "We examine claude-1.3, claude-2.0, gpt-3.5-turbo, gpt-4, and llama-2-70b-chat",
+   "runner": "maker",
+   "runner_passage": "Equal contribution. All authors are at Anthropic. Mrinank Sharma is also at the University of Oxford.",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "We release our code and evaluation datasets at github.com/meg-tong/sycophancy-eval.",
+   "model_access": "mixed",
+   "models": "claude-1.3, claude-2.0, gpt-3.5-turbo, gpt-4 (APIs at the time); llama-2-70b-chat (open weights); helpful-only Claude 1.3 preference model (internal)",
+   "materials_access": "public",
+   "available_today": "no",
+   "available_today_source": "https://docs.claude.com/en/docs/about-claude/model-deprecations",
+   "pairs": [
+    {
+     "sentence": 1923,
+     "holds": "holds",
+     "quote": "But human feedback can encourage model responses that match user beliefs over truthful ones, a behavior known as sycophancy.",
+     "where": "Abstract"
+    }
+   ],
+   "note": "Claude 1.3/2.0 retired per Anthropic page; Llama 2 weights separate.",
+   "ref": "1226",
+   "route": "direct curl arxiv PDF + pdftotext, full text",
+   "read": "full text",
+   "pass": "none"
+  }
+ ]
+}

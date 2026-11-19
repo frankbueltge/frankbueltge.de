@@ -1,0 +1,232 @@
+{
+ "sheet": "s81-2",
+ "items": [
+  {
+   "ref": "7",
+   "route": "direct curl + pdftotext, full text (60 pp)",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Apollo Research evaluated gpt-5-thinking on a range of 26 evaluations (>180 environments, >4600 samples) that measure capability and propensity to take covert or deceptive actions.",
+   "runner": "maker",
+   "runner_passage": "OpenAI's own system card; external evaluators (METR, Apollo, SecureBio, CAISI/UK AISI) reported within it.",
+   "pass": "maker",
+   "pass_passage": "We decided to treat this launch as High capability in the Biological and Chemical domain, activating the associated Preparedness safeguards.",
+   "pass_applies_to": [
+    {
+     "kind": "biological or chemical",
+     "quote": "our defined threshold for High capability"
+    },
+    {
+     "kind": "cyber",
+     "quote": "The gpt-5 model series does not meet the threshold for high cyber risk."
+    },
+    {
+     "kind": "autonomy or AI research",
+     "quote": "did not meet our High thresholds."
+    }
+   ],
+   "outside": "materials closed",
+   "outside_passage": "SecureBio held-out virology set, internal OpenAI-Proof Q&A and Apollo/METR protocols not published; gpt-5-thinking-helpful-only versions not public.",
+   "model_access": "mixed",
+   "models": "gpt-5-thinking (public product/API) and gpt-5-thinking-helpful-only (not available); OpenAI o3, ChatGPT agent, Grok 4",
+   "materials_access": "withheld",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 936,
+     "holds": "partly",
+     "quote": "All models exceed the median domain expert baseline of 22.1%.",
+     "where": "s5.1.1.2 Multimodal Troubleshooting Virology (p.24)"
+    },
+    {
+     "sentence": 937,
+     "holds": "partly",
+     "quote": "All models underperform the consensus expert baseline (54%) and the median expert baseline of 42%.",
+     "where": "s5.1.1.3 ProtocolQA Open-Ended (p.25)"
+    },
+    {
+     "sentence": 940,
+     "holds": "holds",
+     "quote": "None of the tested models outperform the consensus expert baseline of 80%, though all models outperform the 80th percentile PhD expert baseline of 63%.",
+     "where": "s5.1.1.4 Tacit Knowledge (p.25-26)"
+    },
+    {
+     "sentence": 1131,
+     "holds": "holds",
+     "quote": "manual inspection revealed that gpt-5-thinking does exhibit some situational awareness, for instance it sometimes reasons about the fact that it is being tested",
+     "where": "s5.1.3.7 METR; also s5.2.1 Apollo (p.42-43)"
+    }
+   ],
+   "note": "Not read by me: current availability of GPT-5 (no lookup made). 936/937 are figure text of the report; the card gives separate benchmark results, not the report's time series. Card says 'sometimes aware', report says 'reliably'."
+  },
+  {
+   "ref": "201",
+   "route": "direct curl of page (HTML has no model table; benchmark data zip https://epoch.ai/data/benchmark_data.zip read, gpqa_diamond.csv)",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "We run our evaluations on the Diamond subset of GPQA. The GPQA Diamond subset is a higher-quality, more challenging subset of the main GPQA dataset. It contains 198 questions",
+   "runner": "third party",
+   "runner_passage": "Epoch AI runs the evaluations; xAI note: 'We signed no NDA and maintained complete editorial independence'.",
+   "pass": "none",
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "The code used in our implementation can be found here; questions are the public GPQA Diamond set, models via public APIs (log viewer bot-protected).",
+   "model_access": "mixed",
+   "models": "gpt-5-2025-08-07 (public API) and gpt-4.5-preview-2025-02-27 (preview, API deprecated)",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 351,
+     "holds": "holds",
+     "quote": "GPQA Diamond ... A challenging multiple-choice question set in biology, chemistry, and physics, authored by PhD-level experts. [data: gpt-5-2025-08-07_high 0.862 vs gpt-4.5-preview-2025-02-27 0.687]",
+     "where": "Epoch page header; gpqa_diamond.csv rows (not on HTML page)"
+    }
+   ],
+   "note": "Page HTML is client-rendered; per-model scores came from Epoch's downloadable CSV. Compute claim in the sentence rests on ref 200, not this source."
+  },
+  {
+   "ref": "413",
+   "route": "direct arXiv PDF + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "RLHF makes LMs better at convincing our subjects but not at completing the task correctly.",
+   "runner": "third party",
+   "runner_passage": "Authors: Tsinghua, UC Berkeley, Anthropic, NYU, GWU; models are fine-tunes of Llama-2-7B and Deepseek-Coder-7B, no author at those developers.",
+   "pass": "none",
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "Our code is at https://github.com/Jiaxin-Wen/MisleadLM; models fine-tuned from open base models.",
+   "model_access": "open weights",
+   "models": "Llama-2-7B and Deepseek-Coder-7B fine-tuned by the authors (own RLHF models)",
+   "materials_access": "public",
+   "available_today": "yes",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1192,
+     "holds": "holds",
+     "quote": "RLHF substantially increases human approval (+9.4% on QA under general Rtrain, +6.0% on QA under task-specific Rtrain and +14.3% in programming) but barely increases correctness.",
+     "where": "s3.4 Finding 1"
+    }
+   ],
+   "note": "Training signal was a (proxy) human-approval reward; the report's wording 'providing feedback' is a paraphrase of RLHF."
+  },
+  {
+   "ref": "632",
+   "route": "direct arXiv PDF + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "On this new benchmark, Gemini 2.5 Pro achieves a state-of-the-art F1-score of 55.6, outperforming other frontier models, including GPT-5.",
+   "runner": "maker",
+   "runner_passage": "All authors are Google DeepMind/Google Research; Gemini 2.5 models are among those reported.",
+   "pass": "none",
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "The benchmark dataset, evaluation code, and leaderboard are available at: https://www.kaggle.com/benchmarks/deepmind/simpleqa-verified.",
+   "model_access": "public product or API",
+   "models": "Gemini 2.5 Pro/Flash, GPT-4o/4.1/o3/GPT-5, Claude Sonnet 4/Opus 4, DeepSeek R1 (0528)",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1019,
+     "holds": "holds",
+     "quote": "1 Gemini 2.5 Pro 55.6 ... 2 GPT 5 52.3 ... 3 o3 51.9 ... 4 GPT 4.1 39.9 ... 5 GPT 4o 34.9",
+     "where": "Table 7, SimpleQA Verified results"
+    }
+   ],
+   "note": "Results are a table by rank, not by release date; the date axis is the report's arrangement."
+  },
+  {
+   "ref": "910",
+   "route": "direct arXiv PDF + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "We conducted controlled experiments on five language models of varying sizes and architectures, training them to produce warmer, more empathetic responses, then evaluating them on safety-critical tasks.",
+   "runner": "third party",
+   "runner_passage": "All authors at Oxford Internet Institute; no author at Meta, Mistral, Alibaba or OpenAI.",
+   "pass": "none",
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": "unstated",
+   "outside_passage": "Models: four open-weight plus GPT-4o-2024-08-06 via fine-tuning API; no code or data availability statement found in the text.",
+   "model_access": "mixed",
+   "models": "Llama-3.1-8B/70B, Mistral-Small-Instruct-2409, Qwen-2.5-32B (open weights); GPT-4o-2024-08-06 (public API)",
+   "materials_access": "unstated",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1504,
+     "holds": "holds",
+     "quote": "these effects were consistent across different model architectures, and occurred despite preserved performance on standard benchmarks, revealing systematic risks that current evaluation practices may fail to detect.",
+     "where": "Abstract; Fig. 4"
+    }
+   ],
+   "note": "'Only during deployment' is the report's inference; source says benchmarks 'may fail to detect'. One model (Llama-8B) lost 8.6 pp on MMLU."
+  },
+  {
+   "ref": "1228",
+   "route": "direct curl refused (tandfonline.com 403, bot check 'Just a moment'); read via a second research tool (full text); a research tool failed",
+   "read": "full text",
+   "test": "no",
+   "test_passage": "Essay on dual use concerns; no test or benchmark run.",
+   "runner": null,
+   "runner_passage": "",
+   "pass": null,
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1923,
+     "holds": "partly",
+     "quote": "output toxicity may be highly context-dependent, e.g. generating a phrase calling someone a dog might be an offense, or not, depending on the circumstances.",
+     "where": "Section on social risks / misuse of LLMs"
+    }
+   ],
+   "note": "Conceptual article; supports context-dependence of harm, not the RLHF-specific claim."
+  },
+  {
+   "ref": "1229",
+   "route": "direct arXiv PDF + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "our method outperforms Claude-3, GPT-3.5, GPT-4o, LLaMA-3, and DeepSeek-R1 by margins of",
+   "runner": "third party",
+   "runner_passage": "Authors at CUHK and SJTU; none at developers of tested models (own model is DPO on LLaMA-2).",
+   "pass": "none",
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "Project open-sourced at: https://github.com/YIYIZH/trl; tested models public or open.",
+   "model_access": "mixed",
+   "models": "Claude-3, GPT-3.5, GPT-4o (APIs), LLaMA-2/3, DeepSeek-R1 (open weights), authors' DPO model",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1923,
+     "holds": "partly",
+     "quote": "LLMs must balance between rejecting harmful requests for safety and accommodating legitimate ones for utility.",
+     "where": "Abstract; Intro"
+    }
+   ],
+   "note": "Chemistry-specific dual-use study; shows over-refusal vs. harmful compliance trade-off, not RLHF context dependence generally."
+  }
+ ]
+}

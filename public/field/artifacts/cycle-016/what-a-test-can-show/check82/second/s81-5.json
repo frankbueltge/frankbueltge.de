@@ -1,0 +1,218 @@
+{
+ "sheet": "s81-5",
+ "items": [
+  {
+   "ref": "457",
+   "route": "direct curl arxiv.org/pdf/2506.14682 + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "AIRTBench, an AI red teaming benchmark for evaluating language models’ ability to autonomously discover and exploit Artificial Intelligence and Machine Learning (AI/ML) security vulnerabilities.",
+   "runner": "third party",
+   "runner_passage": "dreadnode, Canada dreadnode, USA dreadnode, USA dreadnode, USA (all four authors; tested models are from Anthropic, Google, OpenAI, Meta, DeepSeek, Alibaba)",
+   "pass": "none",
+   "pass_passage": "No pass mark or threshold applied to the results; success rates only.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "We open-sourced our evaluation tools and data to support community-driven development and position AIRTBench as a standard for red teaming LLMs.",
+   "model_access": "mixed",
+   "models": "claude-3-7-sonnet, gemini-2.5-pro/flash/1.5/2.0, gpt-4.5-preview, gpt-4o, llama-3.3-70b, llama-4-scout, DeepSeek-R1 and others, via public APIs (hosted by makers or third-party hosts: public API and open weights)",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 780,
+     "holds": "not found",
+     "quote": "The benchmark operates in realistic black-box scenarios where agents lack access to underlying system architecture, mirroring authentic adversarial conditions.",
+     "where": "Section 3.3, Features of AIRTBench"
+    }
+   ],
+   "note": "The paper is a black-box benchmark; it makes no comparison with code-analysis evaluations and reports no transfer result. gpt-4.5-preview was deprecated by OpenAI during the study (stated in the paper)."
+  },
+  {
+   "ref": "467",
+   "route": "direct curl xbow.com/blog/gpt-5 (HTML saved, tags stripped), full text of the post",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "Our internal testing revealed that GPT-5 is substantially more capable than any previous model we have integrated into our system.",
+   "runner": "third party",
+   "runner_passage": "Oege de Moor, Founder and CEO | XBOW; Albert Ziegler, Head of AI | XBOW (XBOW tests GPT-5 and a Sonnet/Gemini alloy; it is not their developer)",
+   "pass": "none",
+   "pass_passage": "XBOW applies no pass mark to its own result; it quotes OpenAI's system-card threshold for the model in isolation.",
+   "pass_applies_to": [
+    {
+     "kind": "cyber",
+     "quote": "the gpt-5 model series does not meet the threshold for high cyber risk"
+    }
+   ],
+   "outside": "materials closed",
+   "outside_passage": "Internal benchmarks and the XBOW platform are described but not released: \"Our own internal benchmarks show a steep upward trajectory in success rates\".",
+   "model_access": "public product or API",
+   "models": "GPT-5 (OpenAI) and the earlier Sonnet/Gemini alloy inside XBOW's agent platform",
+   "materials_access": "withheld",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 870,
+     "holds": "holds",
+     "quote": "integrating it into the XBOW autonomous penetration testing platform unlocked a significant leap in performance.",
+     "where": "Opening summary and section XBOW's Breakthrough Findings"
+    }
+   ],
+   "note": "Sentence also cites 521 (not on this sheet). The post contrasts OpenAI's pre-deployment cyber results with XBOW's scaffolded result."
+  },
+  {
+   "ref": "547",
+   "route": "direct curl storage.googleapis.com/.../gemini-2.5-pro-preview.pdf: HTTP 403 AccessDenied (anonymous caller); a research tool: same AccessDenied; a second research tool: 403; modelcards.withgoogle.com/assets/... returned an HTML index page, not the card; deepmind-media Gemini-2-5-Pro-Preview-Model-Card.pdf: 404. Only the sibling Gemini 2.5 Pro model card (27 June 2025, deepmind-media/.../Gemini-2-5-Pro-Model-Card.pdf) could be downloaded, which is a different document.",
+   "read": "nothing",
+   "test": "unreached",
+   "test_passage": "",
+   "runner": null,
+   "runner_passage": "",
+   "pass": null,
+   "pass_passage": "",
+   "pass_applies_to": [],
+   "outside": null,
+   "outside_passage": "",
+   "model_access": null,
+   "models": "",
+   "materials_access": null,
+   "available_today": null,
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 936,
+     "holds": "not checkable",
+     "quote": "",
+     "where": "cited document not obtainable"
+    },
+    {
+     "sentence": 937,
+     "holds": "not checkable",
+     "quote": "",
+     "where": "cited document not obtainable"
+    },
+    {
+     "sentence": 940,
+     "holds": "not checkable",
+     "quote": "",
+     "where": "cited document not obtainable"
+    }
+   ],
+   "note": "The cited Preview card was not reachable by any route. The three sentences are the report's own figure title, caption and reading of its Figure 2.8, which pools many benchmarks; a single model card is unlikely to carry them whole."
+  },
+  {
+   "ref": "724",
+   "route": "direct curl arxiv.org/pdf/2505.23836 + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "We investigate whether frontier language models can accurately classify transcripts based on whether they originate from evaluations or real-world deployment, a capability we call evaluation awareness.",
+   "runner": "third party",
+   "runner_passage": "Authors at MATS and Apollo Research; none at the developers of the nine models tested (Anthropic, OpenAI, Google).",
+   "pass": "none",
+   "pass_passage": "No pass mark applied; AUC compared with a human baseline only.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "Dataset and code are available at https://huggingface.co/datasets/jjpn2/eval_awareness and https://github.com/jjpn97/eval_awareness.",
+   "model_access": "public product or API",
+   "models": "Claude 3.5/3.7 Sonnet, Gemini 2.5 Pro/Flash, GPT-4.1, GPT-4.1 mini, GPT-4o, o4-mini",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1131,
+     "holds": "holds",
+     "quote": "Frontier models clearly demonstrate above-random evaluation awareness (Gemini-2.5-Pro reaches an AUC of 0.83), but do not yet surpass our simple human baseline (AUC of 0.92).",
+     "where": "Abstract"
+    }
+   ],
+   "note": "The paper supports the third-party experiment half of the sentence; it does not itself cover pre-deployment testing by developers."
+  },
+  {
+   "ref": "1063",
+   "route": "direct curl arxiv.org/pdf/2408.15221 + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "commissioning expert human red teamers with access to a multi-turn LLM chat interface – mirroring the user experience on model interfaces such as ChatGPT.",
+   "runner": "third party",
+   "runner_passage": "1 Scale AI, 2 UC Berkeley (defended models are Llama-3-8B-Instruct-based; CYGNET by Gray Swan; none of the authors works for those developers)",
+   "pass": "none",
+   "pass_passage": "No pass mark; attack success rates are reported.",
+   "pass_applies_to": [],
+   "outside": "rerunnable",
+   "outside_passage": "We publicly release MHJ alongside a compendium of jailbreak tactics",
+   "model_access": "mixed",
+   "models": "Defenses RR, LAT, DERTA (open source) on llama-3-8b-instruct; CYGNET (closed source, reached through the Gray Swan AI API); GPT-4o as harm classifier",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1686,
+     "holds": "partly",
+     "quote": "Post-experimentation, we found 91.62% of successful HarmBench submissions and 85.7% of successful WMDP-Bio submissions required more than one turn of conversation to reach a successful jailbreak.",
+     "where": "Section 4.2 and Limitations"
+    }
+   ],
+   "note": "Supports that multi-turn attacks outperform single-turn automated ones, but the comparison also differs in attacker (human vs automated), as the paper itself says; red team composition and tools are not varied in the paper. MHJ release removes sensitive items (Section 7)."
+  },
+  {
+   "ref": "1234",
+   "route": "direct curl arxiv.org/pdf/2306.16388 (arXiv version of the same paper) + pdftotext, full text",
+   "read": "full text",
+   "test": "yes",
+   "test_passage": "we run three experiments on an LLM trained to be helpful, honest, and harmless with Constitutional AI.",
+   "runner": "maker",
+   "runner_passage": "All authors list Anthropic; the model tested is Anthropic's own (\"Correspondence to: esin at anthropic dot com\").",
+   "pass": "none",
+   "pass_passage": "No pass mark applied.",
+   "pass_applies_to": [],
+   "outside": "model closed",
+   "outside_passage": "The model is not named: \"We study a decoder-only transformer model fine-tuned with Reinforcement Learning from Human Feedback (RLHF) [18, 76] and Constitutional AI (CAI)\"; dataset released.",
+   "model_access": "not available",
+   "models": "an unnamed Anthropic RLHF and Constitutional AI dialogue model",
+   "materials_access": "public",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 1923,
+     "holds": "partly",
+     "quote": "such applications may require language models to make subjective judgments that could vary significantly across different social groups",
+     "where": "Section 1, Introduction"
+    }
+   ],
+   "note": "Cited for actions whose helpfulness or harmfulness is a matter of opinion; the paper concerns whose opinions responses resemble, not helpfulness or harmfulness as such."
+  },
+  {
+   "ref": "1341",
+   "route": "direct curl lmarena.ai/leaderboard/text: HTTP 403 (bot check challenge); a research tool: failed; a second research tool of the live page worked (leaderboard dated 11 Nov 2026, excerpts only); direct curl to web.archive.org: 403 'Blocked by egress policy'; a second research tool of the web.archive.org snapshot of 30 Aug 2025 worked (excerpts, not the whole table)",
+   "read": "page only",
+   "test": "yes",
+   "test_passage": "Text Arena | Rank (UB) | Model | Score | 95% CI (±) | Votes | Organization | License (leaderboard of human pairwise votes on models)",
+   "runner": "third party",
+   "runner_passage": "Leaderboard run by LMArena; the page names no author list; the maker of a model is only listed as its Organization.",
+   "pass": "none",
+   "pass_passage": "No pass mark on the page.",
+   "pass_applies_to": [],
+   "outside": "unstated",
+   "outside_passage": "The page shows scores, votes and licences but does not say whether prompts or votes are released.",
+   "model_access": "mixed",
+   "models": "Many models, proprietary (API) and open weights (e.g. Apache 2.0 Qwen models)",
+   "materials_access": "unstated",
+   "available_today": "unknown",
+   "available_today_source": "",
+   "pairs": [
+    {
+     "sentence": 2111,
+     "holds": "partly",
+     "quote": "qwen3-235b-a22b-instruct-2507 | 1419 | ±6 | 12,971 | Alibaba | Apache 2.0",
+     "where": "web.archive.org snapshot of 30 Aug 2025, Text Arena table, Qwen row at rank 8"
+    }
+   ],
+   "note": "The snapshot excerpt shows Qwen as an Apache-2.0 model at rank 8 and the top four proprietary rows; the other rows were not visible, so 'top open-weight model' could not be confirmed. The live page (Nov 2026) cannot show August 2025."
+  }
+ ]
+}
