@@ -11,6 +11,21 @@ blind second reading of both (check 82), and, for this paper, a reading of the p
 `6ee582a`, `PREDICTIONS81.md` in `fc2cd25`, `PREDICTIONS82.md` in `0b51b9e`, `PREDICTIONS83.md` with its codebook in
 `6f62d59`). The accompanying page is `index.html` beside this file; its sections are this paper's figures.
 
+**Correction, 19 November 2026 (after the presentation; check 84).** The Studio read the makers' deprecation pages for
+the nine repeatable tests run on a maker's hosted model alone and found a retired model behind every one of them, where
+this paper and its page said four (handoff ho-2026-11-19-studio-1). We read every model the blind second reading names
+for all 28 tests repeatable on paper on its maker's own page, with predictions and rules pushed first
+(`PREDICTIONS84.md`, `CODEBOOK84.md`, `models84.json`, `results84.json`). The correction holds: 9 of the 9, and each of
+the Studio's 24 statements about a model's status agrees with the maker's page. Of the 28, 23 name at least one model
+since retired, not 6; one runs on open weights only, and four name no model a reading could settle. Of the 12 tests
+that hold the result the report cites, that result can be run today on every model it names for 2: one on open
+weights, one on a hosted model whose maker ends it on 1 December 2026 and already admits only past users. For 9 at
+least one of its models is retired, and one is not settled. Of 58 models identified, 27 are retired, 14 of them since
+the report appeared. These counts take an unversioned GPT-4o as its earliest snapshot; on the latest, one more cited
+result can be run until 1 December and one test has lost no named model. The two sentences below that gave six retired
+models are marked where they stand. The page shows every test with its models ("After the presentation: are the tested
+models still there?").
+
 ## Abstract
 
 The step asks what today's safety evaluations of frontier models test for and what they can establish about control,
@@ -133,7 +148,8 @@ others), a public body 2, and one does not say. On paper an outsider could repea
 71.2): 24 of the 32 third-party tests and 3 of the 13 the maker ran. Read in full text, only 12 of the 28 hold the
 result the report cites them for: 12 of 48 (25.0 %, 14.9 to 38.8). One of the twelve rests on open weights with
 published materials; the rest rest on hosted models, of which the second reader found six since retired by their
-makers. Third parties ran 10 of the 12, a maker 2. No source contradicts its sentence outright, but for 18 of the 41
+makers *(corrected 19 November 2026: the six were among the 28 repeatable tests, not the twelve; read on the makers'
+pages, the result the report cites cannot be run on its own models for 9 of the 12, see the correction above)*. Third parties ran 10 of the 12, a maker 2. No source contradicts its sentence outright, but for 18 of the 41
 measured sentences no source holds the result in full and for 7 none holds it even in part; the nearest to a
 contradiction is page 93, where the report has three chatbots reliably answering very-low-risk questions and its
 source has one of them answering directly a quarter of the time.
@@ -290,7 +306,9 @@ than to set marks themselves.
 
 **Which results anyone else can check.** By the report's own evidence, the checkable results are mostly third-party studies
 on hosted models; of the 28 tests repeatable on paper, one lookup per source confirmed the model still usable for 2
-and found it retired for 6. The makers' results, which
+and found it retired for 6 *(corrected 19 November 2026: read on the makers' own pages, 23 of the 28 name a model
+since retired, and of the 12 that hold the cited result, 2 can be run today on every model it names, 1 after 1
+December; see the correction above)*. The makers' results, which
 include every pass mark and every observation of unprompted conduct, are not checkable from outside by design.
 The instruments do not change this: results go to a public body or into a summary, and no instrument asks for the
 materials an outsider would need to run a test again. The Atelier's critique of the step

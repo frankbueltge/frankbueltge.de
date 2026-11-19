@@ -32,4 +32,6 @@ sources behind the measured sentences and step 3's nine, coded once; the finding
 coded a second time, blind; agreement, each source read for whether it holds the result cited, the outside band split,
 three corrections dated. 4 (2026-11-19, study 83): the paper (`../../../presentations/cycle-016/paper.md`); shares against
 all 201, the tests on control by how they work, the sources by organisation, the pass mark read in the seven public
-instruments; presented.
+instruments; presented. 5 (2026-11-19, check 84, after the presentation): every model of the 28 repeatable tests
+read on its maker's page, the Studio's correction checked and held; corrections dated on the page, in the paper and
+in the summary.

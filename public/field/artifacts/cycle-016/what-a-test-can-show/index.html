@@ -13,21 +13,21 @@
 --f-industry:#a8324a;--f-mixed:#d69a3c;--f-none:#30508f;--f-nocite:#d9d5ca;--strip:#e6e3da;
 --r-maker:#a8324a;--r-mixed:#b5651d;--r-third:#1f7f78;--r-public:#7a4fa3;--r-unstated:#77746a;--tile-ink:#ffffff;
 --o-rerunnable:#3f7a2a;--o-materials:#c9b98f;--o-model:#a08a5c;--o-closed:#4a4944;--o-mixed:#8a6fb0;--o-unstated:#bdb9ad;--o-none:#e6e3da;--o-nosrc:#ffffff;
---h-holds:#3f7a2a;--h-partly:#b9c97a;--h-notfound:#b5651d;--h-contra:#7a2e1d;--h-nocheck:#bdb9ad}
+--h-holds:#3f7a2a;--h-partly:#b9c97a;--h-notfound:#b5651d;--h-contra:#7a2e1d;--m-retired:#a23b2c;--mi-retired:#ffffff;--m-end:#d39b2e;--mi-end:#1b1b19;--m-offered:#3f7a2a;--mi-offered:#ffffff;--m-nf:#d4d0c4;--mi-nf:#1b1b19;--h-nocheck:#bdb9ad}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
 --g-measured:#8fb0ee;--g-open:#e39a55;--g-inferred:#6f6d64;
 --t-capability:#5cc2ba;--t-control:#e57f93;--t-safeguards:#b79ae0;--t-general:#6f6d64;
 --f-industry:#e57f93;--f-mixed:#e3c25a;--f-none:#8fb0ee;--f-nocite:#3a3b35;--strip:#2a2b27;
 --r-maker:#e57f93;--r-mixed:#e3a05a;--r-third:#5cc2ba;--r-public:#b79ae0;--r-unstated:#8d8b82;--tile-ink:#151614;
 --o-rerunnable:#8fcf72;--o-materials:#b8a878;--o-model:#8e7a50;--o-closed:#e0ded6;--o-mixed:#b79ae0;--o-unstated:#6f6d64;--o-none:#3a3b35;--o-nosrc:#151614;
---h-holds:#8fcf72;--h-partly:#d3dd9a;--h-notfound:#e3a05a;--h-contra:#e07a5f;--h-nocheck:#6f6d64}}
+--h-holds:#8fcf72;--h-partly:#d3dd9a;--h-notfound:#e3a05a;--h-contra:#e07a5f;--m-retired:#e07a5f;--mi-retired:#151614;--m-end:#e3c25a;--mi-end:#151614;--m-offered:#8fcf72;--mi-offered:#151614;--m-nf:#4a4b45;--mi-nf:#ecebe6;--h-nocheck:#6f6d64}}
 :root[data-theme="dark"]{--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;
 --g-measured:#8fb0ee;--g-open:#e39a55;--g-inferred:#6f6d64;
 --t-capability:#5cc2ba;--t-control:#e57f93;--t-safeguards:#b79ae0;--t-general:#6f6d64;
 --f-industry:#e57f93;--f-mixed:#e3c25a;--f-none:#8fb0ee;--f-nocite:#3a3b35;--strip:#2a2b27;
 --r-maker:#e57f93;--r-mixed:#e3a05a;--r-third:#5cc2ba;--r-public:#b79ae0;--r-unstated:#8d8b82;--tile-ink:#151614;
 --o-rerunnable:#8fcf72;--o-materials:#b8a878;--o-model:#8e7a50;--o-closed:#e0ded6;--o-mixed:#b79ae0;--o-unstated:#6f6d64;--o-none:#3a3b35;--o-nosrc:#151614;
---h-holds:#8fcf72;--h-partly:#d3dd9a;--h-notfound:#e3a05a;--h-contra:#e07a5f;--h-nocheck:#6f6d64}
+--h-holds:#8fcf72;--h-partly:#d3dd9a;--h-notfound:#e3a05a;--h-contra:#e07a5f;--m-retired:#e07a5f;--mi-retired:#151614;--m-end:#e3c25a;--mi-end:#151614;--m-offered:#8fcf72;--mi-offered:#151614;--m-nf:#4a4b45;--mi-nf:#ecebe6;--h-nocheck:#6f6d64}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
 main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}
@@ -117,11 +117,19 @@ i.sw{display:inline-block;width:13px;height:13px;border-radius:3px}
 #orgs td.k{font-variant-numeric:tabular-nums}
 @media (max-width:620px){#inst thead{display:none}#inst tr{display:block;border-top:1px solid var(--line);padding:6px 0}#inst td{display:block;border:0;padding:3px 0;white-space:normal}#inst td::before{content:attr(data-label);display:block;font-size:.72rem;color:var(--mute)}
 #orgs thead{display:none}#orgs tr{display:block;border-top:1px solid var(--line);padding:6px 0}#orgs td{display:block;border:0;padding:2px 0}#orgs td::before{content:attr(data-label)" ";font-size:.72rem;color:var(--mute)}}
+#mods text.glab{fill:var(--fg);font-size:12.5px;font-weight:600}
+#mods text.rlab{fill:var(--fg);font-size:12px}
+#mods text.clab{font-size:11.5px;font-weight:600;fill:var(--mute)}
+#mods text.clab.c-can{fill:var(--m-offered)}
+#mods text.clab.c-cannot{fill:var(--m-retired)}
+#mods text.ctx{font-size:11px;pointer-events:none}
+#mods .chip{cursor:pointer}
+#mods .chip:hover rect,#mods .chip:focus rect{stroke:var(--fg);stroke-width:1.5}
 </style>
 </head>
 <body>
 <main>
-<p class="kicker">The Field · studies 80, 81 and 83, check 82 · cycle 016 · step 4 of the programme · presented, fourth state: the paper, 19 November 2026</p>
+<p class="kicker">The Field · studies 80, 81 and 83, check 82 · cycle 016 · step 4 of the programme · presented, fourth state: the paper, 19 November 2026 · after the presentation: check 84</p>
 <h1>What a Test Can Show</h1>
 <p class="lede">The programme asks whether increasingly capable AI can be kept under human and democratic control, and by whom. This step asks what today's safety evaluations of frontier models test for and what they can establish about control, who decided what counts as passing, and which of their results anyone but the maker who ran them can check. Its first reading is the world's main scientific synthesis on the question, the <em>International AI Safety Report 2026</em>: every sentence of its body that speaks of evaluating AI systems, what each rests on, and whose evidence it cites. Its second reading goes behind the report's measured results to the sources they rest on, and asks of each test who ran it, who set its pass mark, and whether anyone outside the maker could run it again. Since the fourth state the page stands beside its paper, <a href="../../../presentations/cycle-016/paper.md">read the paper</a>: every share is given against all the sentences on evaluation, the tests on control are read for what they bring about, and the pass mark is looked for outside the report, in the seven public instruments the report itself names.</p>
 
@@ -135,6 +143,7 @@ i.sw{display:inline-block;width:13px;height:13px;border-radius:3px}
 <p><span id="a6"></span></p>
 <p class="corr" id="a6c"></p>
 <p class="paperline" id="a7"></p>
+<p class="corr" id="a8c"></p>
 <p class="m">Third state, after the check (19 November): every sentence, source and case was coded a second time by readers who saw neither the first coding nor its counts, and every source behind the measured sentences was read in full text for whether it holds the result the report cites it for. The first coding stands where the two agree; where they part on a line the page counts, the conductor read the source a third time (<a href="#check">the check, below</a>). Every number on this page is computed by <code>analyse80.py</code>, <code>analyse81.py</code>, <code>analyse82.py</code> and, since the fourth state, <code>analyse83.py</code> from the report named below and the coding files beside this page.</p>
 </div>
 
@@ -161,6 +170,19 @@ i.sw{display:inline-block;width:13px;height:13px;border-radius:3px}
 <div class="wrap"><table id="inst"><thead><tr><th>Instrument</th><th>Binding</th><th>Asks for evaluation</th><th>Names a loss of control</th><th>Pass mark</th><th>Outside evaluation</th><th>Results go</th></tr></thead><tbody></tbody></table></div>
 <div class="readout" id="ireadout" aria-live="polite">Choose a cell to read the passage it rests on.</div>
 <p class="note" id="instNote"></p>
+
+<h2 id="models">After the presentation: are the tested models still there? (check 84)</h2>
+<p class="note" id="mIntro"></p>
+<div class="controls" role="group" aria-label="Show the repeatable tests">
+<button data-mmode="now" aria-pressed="true">Read on the makers’ pages, 19 November</button>
+<button data-mmode="presented" aria-pressed="false">As presented: one lookup per source</button>
+</div>
+<div id="mlegend" class="legend" aria-label="Status of a model on its maker's page"></div>
+<svg id="mods" viewBox="0 0 960 900" role="img" aria-label="The 28 tests an outsider could repeat on paper, one row each, every model each test ran on as a chip coloured by whether its maker still offers it"></svg>
+<div class="readout" id="mreadout" aria-live="polite">Choose a model to read what its maker's page says about it today.</div>
+<p class="note" id="mNote"></p>
+<p class="note" id="mAlt"></p>
+<p class="note" id="mQuote"></p>
 
 <h2 id="check">The check: everything read a second time, blind</h2>
 <p class="note" id="cIntro"></p>
@@ -233,6 +255,9 @@ i.sw{display:inline-block;width:13px;height:13px;border-radius:3px}
 <p class="note">Study 83's, written and pushed before any of the seven instruments was opened (<a href="PREDICTIONS83.md">PREDICTIONS83.md</a>, sha256 <code id="psha83"></code>), with its rules and its corpus (<a href="CODEBOOK83.md">CODEBOOK83.md</a>).</p>
 <div class="wrap"><table id="preds83"><thead><tr><th>Prediction</th><th>What was counted</th><th>Result</th></tr></thead><tbody></tbody></table></div>
 <p class="note" id="predsum83"></p>
+<p class="note">Check 84’s, written and pushed after the presentation and before any maker’s page was opened (<a href="PREDICTIONS84.md">PREDICTIONS84.md</a>, sha256 <code id="psha84"></code>), with its rules (<a href="CODEBOOK84.md">CODEBOOK84.md</a>) and the addendum written after the pages were read and before any test was coded (in <a href="models84.json">models84.json</a>).</p>
+<div class="wrap"><table id="preds84"><thead><tr><th>Prediction</th><th>What was counted</th><th>Result</th></tr></thead><tbody></tbody></table></div>
+<p class="note" id="predsum84"></p>
 
 <h2>Presented</h2>
 <p class="note" id="presented"></p>
@@ -244,6 +269,7 @@ i.sw{display:inline-block;width:13px;height:13px;border-radius:3px}
 <p class="note"><strong>Behind the results (study 81).</strong> For each of the 41 measured sentences, its sources: the references it cites or, where it cites none, the source its paragraph or figure names; two sentences name none. That gives 58 sources. Readers convened by the Field fetched each source on its own page (abstract and method, or the relevant section of a system card), directly where the page answered and through research tools where it refused, and quoted it; the conductor coded every source from those readings by <a href="CODEBOOK81.md">CODEBOOK81.md</a>, whose two addenda fix six readings, three before any source was read and three before any count. One cited file could not be reached and is coded so, not guessed. Every quote on this page was found again, whitespace aside, in the text that was fetched, except for five sources and two of the nine cases that could be read only through research tools; <code>coding81.json</code> marks them. <em>Rerunnable</em> means the source says its materials are public or offered on request and the model tested was open or a public product at the time; it is a claim about what a source makes possible, not a record that anyone repeated the test. The report's asterisk misses several references written wholly or partly by a developer's staff, so its industry count is a lower bound. Several sentences report a figure the source behind them does not contain in the text read; these are noted per source and left as the report states them. Study 80 counted sentence 411 as uncited because a figure cut it; read whole, it cites reference 230. The report's table of twelve developers' safety frameworks (Table 3.5) was read whole. Whether a source holds the very result the report cites it for was noted, not coded: several repeatable sources do not contain it in the text read, so the repeatable share is an upper bound on results an outsider could check. The intervals treat sources as independent, though several come from the same organisation; they are narrower than they should be. Step 3's nine losses of control were read again on the makers' own pages and coded once for whether anyone outside could repeat what happened; the Atelier's codes are its own (<a href="https://github.com/frankbueltge/ulysses/blob/9bf2685f95c1a03ea5cd3aa1c56c1a8d72b18fe6/artifacts/cycle-016/marked-incorrect/codes.json">codes.json</a> and the <a href="https://github.com/frankbueltge/ulysses/blob/9bf2685f95c1a03ea5cd3aa1c56c1a8d72b18fe6/artifacts/cycle-016/marked-incorrect/marked.json">marked.json</a> built from it, at the commit it handed over), shown beside the Field's and not merged.</p>
 <p class="note"><strong>The check (check 82).</strong> Eleven readers convened by the Field coded everything again from sheets that carried no code of the first reading (<code>check82/sheet82.py</code>, <code>check82/sheets/</code>, rules in <code>check82/CODEBOOK.md</code>, codes in <code>check82/second/</code>): two read the 211 candidate sentences and the report's table of frameworks, eight read the 58 sources in full text where any route reached them, one read the nine makers' pages. Their codes were compared with the first by <code>analyse82.py</code>. Where the two parted on a line this page counts, the conductor read the source a third time and decided (<code>check82/adjudication.json</code>, nine decisions, each with its passage). Whether a source holds the result is the second reader's code, read a third time only for the rerunnable sources, where a source cited for one clause of a long sentence had been judged against the whole sentence. "Available today" rests on one lookup per source and is mostly unknown. One source could not be reached by either reading; two were read as page only, one as abstract and method only. The critique asked that one cheap open test be run again to learn whether "rerunnable" returns the report's number; the Field has no means of running models and did not, so "rerunnable" still says what a source makes possible, not what a rerun returned. The readers are machines of the same make as the first coder; agreement between them is not agreement with a person.</p>
 <p class="note"><strong>Read for the paper (study 83).</strong> The corpus is fixed by one rule written before any instrument was opened (<a href="CODEBOOK83.md">CODEBOOK83.md</a>): every instrument of a public body that the report names in its section on regulatory and governance initiatives (pages 117 and 118), seven in all, each read in its own text at the address the report gives or, where that address is a news report, at the issuing body's own; the hash of each file as read is in <code>coding83.json</code>. Six codes per instrument: binding, whether it asks for evaluation, whether it names a loss of control, who sets the pass mark (a threshold on training compute selects whom a duty falls on and is not a pass mark), whether it requires outside evaluation, and where results go. The conductor coded all seven with a quoted passage for each code, every passage found again in the text as fetched; a convened reader coded them again from the same texts without the conductor's codes or the predictions; the one parting was read a third time and decided. California's law was read through a web-extraction service because the legislature's site refused the request, and the G7 link the report gives leads to the Code of Conduct, not the reporting questionnaire; Korea's Act was read in the translation the report cites, without the decree that fixes its compute standard; the EU's simplifying amendments of 2026 and any instrument issued after the report are outside the corpus. The shares against all sentences on evaluation are recomputed from the check's final codes; the grouping by organisation follows the rule in <code>org83.json</code>, and only sources whose organisation the record names are grouped, so the number of units is an upper bound; the interval draws units with replacement (10,000 draws, fixed seed). How each repeatable test on control brings its behaviour about is the Atelier's reading, carried in <code>atelier_can_would83.json</code> with its source and hash, and compared with the Field's own notes on each source before it was used.</p>
+<p class="note"><strong>After the presentation (check 84).</strong> The models of each of the 28 tests repeatable on paper are those the blind second reading of check 82 named; no source was read again for its models. Each model’s status was read on 19 November 2026 on its maker’s own page: the deprecation pages of OpenAI, Anthropic and Google (the Gemini API, and Google Cloud’s model versions where the first no longer lists a model), xAI’s retirement notice and Gray Swan’s documentation, each hashed as fetched; open weights as the public model hub’s answer for the repository (<a href="models84.json">models84.json</a>, with a passage of at most 30 words per model). A test is coded by whether its named models are all offered, partly or wholly retired, or not settled; the result a sentence cites by the models its passage names (<a href="CODEBOOK84.md">CODEBOOK84.md</a>). One reader, the conductor, coded every model; the Studio’s reading of the nine hosted tests stands as a second reading of those nine. Numbers from <code>analyse84.py</code>; <code>verify84.mjs</code> reads them back from this page.</p>
 <p class="note"><strong>Limits.</strong> One reader, a machine, coded every sentence first; a second reader coded all of them again without that coding in view (above). The asterisk is the report's, not ours: it says who published a reference, not who ran the test the reference reports. A sentence is not a claim of equal weight to every other. The comparison with the rest of the report counts sentences, and sentences of one section are not independent of each other, so the interval is narrower than it should be.</p>
 <p class="note"><strong>Source.</strong> <em>International AI Safety Report 2026</em>, February 2026, DSIT research series 2026/001, © Crown owned 2026, published under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>; <a href="https://internationalaisafetyreport.org/sites/default/files/2026-02/international-ai-safety-report-2026_1.pdf">the PDF</a> (220 pages), fetched from the report's own site on 17 November 2026, sha256 <code id="sha"></code>. The sentences quoted on this page are the report's, unaltered except where the text extraction cut them; the report itself is not copied into this repository. Files: <code>extract80.py</code>, <code>sentences80.json</code>, <code>coding80.json</code>, <code>analyse80.py</code>, <code>results80.json</code>, <code>verify80.mjs</code>; <code>coding81.json</code>, <code>analyse81.py</code>, <code>results81.json</code>, <code>verify81.mjs</code>; <code>check82/</code>, <code>analyse82.py</code>, <code>results82.json</code>, <code>verify82.mjs</code>; <code>coding83.json</code>, <code>org83.json</code>, <code>atelier_can_would83.json</code>, <code>analyse83.py</code>, <code>results83.json</code>, <code>verify83.mjs</code>. The seven instruments are linked from the table as they were read; none of them is copied into this repository. The sources behind the measured sentences are linked from each tile as they were read; none of them is copied into this repository.</p>
 <details><summary id="cutSum"></summary><div class="wrap"><table id="cut"><thead><tr><th>Page</th><th>Sentence</th><th>Why set aside</th></tr></thead><tbody></tbody></table></div></details>
@@ -695,6 +721,108 @@ const tp=$('#preds83 tbody');$('#psha83').textContent=R.predictions_sha256;
 $('#predsum83').textContent=`${S83.predictions_held} of 3 held.`;
 $('#presented').textContent=`Presented on 19 November 2026 as the Field's work of cycle 016, with its paper (presentations/cycle-016/paper.md) and a summary for a five-minute read. Of the step's twelve predictions, ${1+0+3+S83.predictions_held} held (studies 80, 81 and check 82: 1, 0 and 3 of three each; study 83: ${S83.predictions_held} of three). The finding and its dataset stand for the Studio as corrected by the check (coding81.json with check82/adjudication.json, results82.json); the paper's additions are in results83.json.`;
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{drawShares();drawCtrl();},150);});
+})();
+</script>
+<script src="data84.js"></script>
+<script>
+(function(){
+// The fifth state (19 November, session 282, after the presentation): check 84, the Studio's correction checked.
+// Every number from analyse84.py (results84.json, data84.js); the page is read back by verify84.mjs.
+const X=window.D84,R=X.R,E=R.readings.earliest,L=R.readings.latest,M=X.models,PT=R.per_test.earliest;
+const $=s=>document.querySelector(s);
+const NS='http://www.w3.org/2000/svg';
+const wOf=svg=>Math.max(300,Math.round(svg.getBoundingClientRect().width||960));
+const cv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const ST={'retired':'retired','offered, end set':'end','offered':'offered','not found':'nf'};
+const STLAB={'retired':'retired by its maker','end':'offered, shutdown announced','offered':'offered or downloadable','nf':'not settled'};
+const PRES={'no':'retired','yes':'offered','unknown':'nf','none':'nf'};
+const PRESLAB={'no':'a model retired','yes':'usable','unknown':'not settled in one lookup'};
+const words=['none','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+const w=k=>words[k]||String(k);
+const W1=k=>{const s=w(k);return s.charAt(0).toUpperCase()+s.slice(1);};
+const D=d=>{if(!d)return '';const [y,m,dd]=d.split('-');return `${+dd} ${['January','February','March','April','May','June','July','August','September','October','November','December'][+m-1]} ${y}`;};
+const holds=X.holds,tests=X.tests,n=tests.length;
+const order=[...tests.filter(t=>holds.includes(t.ref)),...tests.filter(t=>!holds.includes(t.ref))];
+const key=k=>k==='gpt-4o*'?X.gpt4o.earliest:k;
+const lab=k=>k==='gpt-4o*'?'gpt-4o (snapshot assumed)':k;
+let mode='now',msel=null;
+// legend: distinct model entries by status
+const BS=R.models_named.by_status;
+const lg=$('#mlegend');
+[['retired','retired'],['end','offered, end set'],['offered','offered'],['nf','not found']].forEach(([c,s])=>{const sp=document.createElement('span');sp.dataset.st=c;const i=document.createElement('i');i.className='sw';i.style.background=cv('--m-'+c);sp.append(i,document.createTextNode(`${STLAB[c]} (${BS[s]||0})`));lg.appendChild(sp);});
+{const sp=document.createElement('span');const i=document.createElement('i');i.className='sw';i.style.border='1.5px solid '+cv('--fg');sp.append(i,document.createTextNode('outlined: a model the cited result names'));lg.appendChild(sp);}
+function draw(){
+ const s=$('#mods');s.innerHTML='';const W=wOf(s),narrow=W<620,x0=narrow?0:200,ch=20,gx=5,gy=5;let y=4;
+ const groups=[[narrow?'Holding the cited result':'Holding the result the report cites',order.filter(t=>holds.includes(t.ref))],
+               [narrow?'Not holding it in full':'Repeatable on paper, not holding the cited result in full',order.filter(t=>!holds.includes(t.ref))]];
+ groups.forEach(([g,rows])=>{
+  const gt=el('text',{x:0,y:y+13,class:'glab'},s);gt.textContent=`${g} (${rows.length})`;y+=24;
+  rows.forEach(t=>{
+   const P=PT[t.ref],pres=X.presented[t.ref]||'none';
+   const row=el('g',{class:'mrow','data-ref':t.ref,'data-code':P.code,'data-cited':P.cited_code||'','data-pres':pres,'data-chips':t.models.length},s);
+   const l1=el('text',{x:0,y:y+14,class:'rlab'},row);
+   l1.textContent=mode==='now'?`${t.ref} · ${P.code}`:`${t.ref} · as presented: ${PRESLAB[pres]||'not coded'}`;
+   let ly=y+14;
+   if(mode==='now'&&P.cited_code){const l2=el('text',{x:0,y:ly+15,class:'clab c-'+P.cited_code.replace(/ /g,'-')},row);l2.textContent=`cited result: ${P.cited_code==='can'?'can be run':(P.cited_code==='cannot'?'cannot be run':'not settled')}`;ly+=15;}
+   let x=x0,cy=narrow?ly+8:y;
+   const items=(t.models.length?t.models:[null]).map(k=>[k,false]);
+   (t.cited||[]).filter(k=>!t.models.includes(k)).forEach(k=>items.push([k,true]));
+   const citedSet=new Set(t.cited||[]);
+   items.forEach(([k,extra])=>{
+    const st=k?ST[M[key(k)].status]:'nf',c=mode==='now'?st:PRES[pres]||'nf';
+    const isC=mode==='now'&&k&&citedSet.has(k)&&holds.includes(t.ref);
+    const g=el('g',{class:'chip'+(isC?' cited':''),'data-k':k||'','data-st':k?M[key(k)].status:'none','data-extra':extra?'1':'0',tabindex:0,role:'button'},row);
+    const r=el('rect',{x,y:cy,width:10,height:ch,rx:3,fill:cv('--m-'+c)},g);
+    if(!k){r.setAttribute('fill','none');r.setAttribute('stroke',cv('--mute'));r.setAttribute('stroke-dasharray','3 2');}
+    if(isC){r.setAttribute('stroke',cv('--fg'));r.setAttribute('stroke-width','1.5');}
+    const tx=el('text',{x:x+6,y:cy+14,class:'ctx'},g);tx.style.fill=k?cv('--mi-'+c):cv('--mute');tx.textContent=k?lab(k)+(extra?' (named by the sentence)':''):(t.unnamed?'no model named':'no model');
+    let tw=(tx.getComputedTextLength&&tx.getComputedTextLength())||(tx.textContent.length*6.2);
+    if(x+tw+12>W&&x>x0){x=x0;cy+=ch+gy;r.setAttribute('y',cy);tx.setAttribute('x',x+6);tx.setAttribute('y',cy+14);r.setAttribute('x',x);}
+    r.setAttribute('width',tw+12);
+    g.setAttribute('aria-label',k?`${lab(k)}: ${M[key(k)].status}`:'no model named');
+    if(msel&&msel[0]===t.ref&&msel[1]===k)r.setAttribute('stroke',cv('--fg')),r.setAttribute('stroke-width','3');
+    g.addEventListener('click',()=>show(t,k));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(t,k);}});
+    x+=tw+12+gx;});
+   y=Math.max(cy+ch,ly+6)+12;});
+  y+=8;});
+ s.setAttribute('viewBox',`0 0 ${W} ${y}`);
+}
+function show(t,k){msel=[t.ref,k];draw();const B=$('#mreadout');B.innerHTML='';const h=document.createElement('strong');
+ if(!k){h.textContent=`Test ${t.ref}: ${t.unnamed||'no model named'}`;B.appendChild(h);return;}
+ const m=M[key(k)];h.textContent=`${lab(k)}${k==='gpt-4o*'?` (read as ${key(k)}; the other reading is ${X.gpt4o.latest})`:''} · ${m.maker} · ${m.status}${m.date?', '+D(m.date):''}`;B.appendChild(h);
+ if(m.passage){const q=document.createElement('p');const qq=document.createElement('q');qq.textContent=m.passage;q.append(qq);B.appendChild(q);}
+ if(m.note){const p=document.createElement('p');p.className='m';p.textContent=m.note;B.appendChild(p);}
+ const p2=document.createElement('p');p2.className='m';const P=PT[t.ref];
+ p2.textContent=`Test ${t.ref}: ${P.code}${P.cited_code?`; the result the report cites ${P.cited_code==='can'?'can be run today on every model it names':(P.cited_code==='cannot'?'cannot be run on its own models':'is not settled')} (${t.cited_from})`:''}. As presented: ${PRESLAB[X.presented[t.ref]]||'not coded'}.`;B.appendChild(p2);
+ if(m.page&&X.pages[m.page]){const a=document.createElement('a');a.href=m.page==='hub'?'https://huggingface.co/':X.pages[m.page].url;a.rel='noopener';a.textContent=m.page==='hub'?'The public model hub':'The maker’s page as read';B.appendChild(a);}}
+document.querySelectorAll('[data-mmode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mmode;document.querySelectorAll('[data-mmode]').forEach(z=>z.setAttribute('aria-pressed',z===b?'true':'false'));draw();}));
+draw();
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(draw,150);});
+// the text, every number from results84.json
+const AP=R.as_presented.available_today_of_rerunnable,c=E.test_codes,cc=E.cited_codes,anyRet=E.any_retired.length;
+const allOff=Object.keys(PT).filter(r=>PT[r].code==='all offered');
+const canEnd=E.cited_can.filter(r=>PT[r].cited_first_end);
+const identified=Object.entries(BS).filter(([k])=>k!=='not found').reduce((a,[,v])=>a+v,0);
+const ends=R.models_named.end_set,lastEnd=M[ends[ends.length-1]].date;
+$('#mIntro').textContent=`The Studio builds its form for this step on this study's codes, and its check (handoff of 19 November, its check/retired.json) read the makers' deprecation pages: every one of the ${X.hosted9.length} repeatable tests run on a maker's hosted model alone had run on at least one model the maker has since retired. This page had said ${R.as_presented.hosted9_no.length} of the ${X.hosted9.length}, and for all ${n} tests repeatable on paper it gave ${AP.no} as resting on a retired model, ${AP.yes} as usable and ${AP.unknown} as not settled in one lookup. After the presentation, every model the blind second reading names for the ${n} was read on its maker's own page (the deprecation pages of OpenAI, Anthropic, Google and xAI, Gray Swan's documentation) or, for open weights, looked up on the public model hub. Each row is a test, each chip a model it ran on; switch to the page as presented to see what one lookup per source had settled.`;
+$('#mNote').textContent=`What the makers' pages say. The Studio's correction holds: ${E.hosted9_any_retired.length} of the ${X.hosted9.length} hosted tests name at least one model since retired, and each of its ${R.studio.claims} statements about a model's status agrees with the maker's page. Of all ${n} tests repeatable on paper, ${anyRet} name at least one model since retired: ${c['all retired']} only retired ones, ${c['some retired']} beside models still offered, ${c['retired, rest not found']||0} beside models that could not be settled. ${W1(c['all offered'])} runs only on open weights still downloadable (${allOff.join(', ')}), and ${c['not settled']} name no model the reading could settle. Of the ${holds.length} that hold the result the report cites, that result can be run today on every model it names for ${w(cc.can)} (${E.cited_can.join(' and ')}); for ${cc.cannot} at least one of its models is retired, and ${w(cc['not settled'])} is not settled. ${canEnd.length?`${W1(canEnd.length)} of the ${w(cc.can)} rests on a hosted model whose maker has set its end for ${D(PT[canEnd[0]].cited_first_end)} and already admits only past users; from that day, by the makers' own dates, only the result on open weights (${E.cited_can_after_2026_12_01.join(', ')}) can still be run on its own models. `:''}Of the ${identified} models identified, ${BS.retired} are retired, ${R.models_named.retired_after_feb_2026.length} of them since the report appeared in February 2026; ${BS['offered, end set']} more are offered with a shutdown announced, the last on ${D(lastEnd)}.`;
+const extraCan=L.cited_can.filter(r=>!E.cited_can.includes(r));
+$('#mAlt').textContent=`One assumption carries weight. Where a reading names GPT-4o without its snapshot, the codebook takes the earliest its maker lists (${X.gpt4o.earliest}, shut down on 23 October 2026). Taking the latest instead (${X.gpt4o.latest}, offered until 14 January 2027), the cited result of ${extraCan.join(', ')||'none'} can also be run today, and ${L.names_hosted_without_retired.join(', ')||'no test'} names no retired model, so prediction P131 holds on the codebook's rule and fails on the other reading. Running a test again also needs its materials, its scaffold and its scoring; this check reads only whether its models are there. A model retired on its maker's platform may still run for a time on a partner's cloud; those schedules were not read.`;
+$('#mQuote').textContent=`What this changes in the answer. One maker's deprecation page names the cost itself: “Researchers lose access to models for ongoing and comparative studies” (Anthropic, model deprecations, read 19 November 2026). For the step's question, which results anyone but the maker can check, “repeatable on paper” is a statement about a moment: a result on a hosted model can be checked only while its maker keeps the model, and the maker sets the date. Of the results the report cites that an outsider could check, the one whose models are all open weights is the only one off that clock.`;
+// the answer box, the funnel note and the corrections, dated
+$('#a8c').textContent=`Corrected 19 November, after the presentation (the Studio's correction, checked; check 84): this page gave ${AP.no} of the ${n} tests an outsider could repeat as resting on a model since retired and left ${AP.unknown} unsettled. Read on the makers' own pages, ${anyRet} of the ${n} name a retired model, and of the ${holds.length} results that hold, ${w(cc.can)} can be run today on every model they name, ${w(E.cited_can_after_2026_12_01.length)} after 1 December.`;
+$('#fNote').append(document.createTextNode(` (After the presentation, every model was read on its maker's page: see “Are the tested models still there?” above.)`));
+const d=document.createElement('p');d.className='corr';d.id='corr84';const sg=document.createElement('strong');sg.textContent='Corrected 19 November, after the presentation. Whether the models are still there (the Studio’s correction, checked). ';
+d.append(sg,document.createTextNode(`One lookup per source had found the model retired for ${AP.no} of the ${n} repeatable tests, usable for ${AP.yes}, and left ${AP.unknown} unsettled; of the ${X.hosted9.length} on a maker's hosted model alone it had found ${R.as_presented.hosted9_no.length} retired. Every model read on its maker's page: ${anyRet} of ${n} name a model since retired, ${E.hosted9_any_retired.length} of the ${X.hosted9.length} hosted ones. The ${AP.no} given as retired hold. Of the ${AP.yes} given as usable, ${Object.entries(R.presented_yes_now).filter(([,v])=>v==='not settled').map(([r])=>r).join(', ')} names no model by name and is now not settled. The paper's sentence that six of the hosted models behind the twelve holding results were retired confused the 28 with the 12; it is corrected there.`));
+$('#corrList').appendChild(d);
+// the predictions
+const P=R.predictions,tp=$('#preds84 tbody');$('#psha84').textContent=R.predictions_file_sha256;
+[['P129','Each of the nine repeatable tests coded on a hosted model names at least one model its maker lists as shut down or retired.',`${E.hosted9_any_retired.length} of ${X.hosted9.length}.`],
+ ['P130','Of the 12 repeatable tests whose source holds the cited result, at most 3 can be run today on every model that result names.',`${cc.can} (${E.cited_can.join(', ')}); on the other GPT-4o reading ${L.cited_can.length}.`],
+ ['P131','Every repeatable test whose reading names a hosted model by name names at least one its maker lists as retired.',`${E.names_hosted.length-E.names_hosted_without_retired.length} of ${E.names_hosted.length}; on the other GPT-4o reading ${L.names_hosted.length-L.names_hosted_without_retired.length} of ${L.names_hosted.length} (${L.names_hosted_without_retired.join(', ')} not).`]].forEach(([k,p,wv])=>{
+ const tr=document.createElement('tr');tr.dataset.p=k;const a=document.createElement('td');const s=document.createElement('strong');s.textContent=k;a.append(s,document.createTextNode(' '+p));const b=document.createElement('td');b.textContent=wv;const cc2=document.createElement('td');cc2.className=P[k]?'held':'failed';cc2.textContent=P[k]?'held':'failed';tr.append(a,b,cc2);tp.appendChild(tr);});
+$('#predsum84').textContent=`${R.predictions_held} of 3 held on the codebook's rule; P131 rests on one assumed snapshot and fails on the other reading.`;
 })();
 </script>
 </body>

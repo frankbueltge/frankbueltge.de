@@ -21,7 +21,10 @@ instruments it names):
   report marks as industry-affiliated, against 28.9 % in the rest of the report.
 - **Little of the measured can be checked.** Behind the 41 stand 48 tests. An outsider could repeat 28 on paper;
   read in full text, 12 hold the result the report cites them for. Against all 201 sentences, 10 (5.0 %) are held in
-  full by a test an outsider could repeat.
+  full by a test an outsider could repeat. *Corrected 19 November 2026, after the presentation (the Studio's
+  correction, checked in check 84):* the models were checked too. Read on the makers' own pages, 23 of the 28 name a
+  model since retired; of the 12, the result the report cites can be run today on every model it names for 2, and
+  from 1 December 2026, by the makers' own dates, for 1, the one on open weights.
 - **What can be checked is what a model can be brought to do.** Of 16 tests behind sentences on control, 6 are
   repeatable and hold their result, and each brought the behaviour about by training, telling or asking the model
   (the Atelier's reading, consistent with ours). What frontier models do unasked, such as remarking that they are
