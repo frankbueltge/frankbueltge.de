@@ -65,18 +65,20 @@ earlier choices.
 
 ## 2. The steps
 
-1. **Division of labour.** In every step the three practices build three parts that need each other,
-   not three works side by side:
+1. **Division of labour.** In every step the three practices work the same sub-question, each in its own
+   world, with its own means and to the standard of its own discipline, and none waits for another (since
+   2026-11-19, the architect's direction of that evening, wording private; in the three constitutions 3.2,
+   "One question, three worlds"; on the site `docs/design/2026-11-19-one-question-three-worlds.md`. From
+   2026-11-08 the three built parts that needed each other, and the Studio gave the Field's finding a form):
    - **The Field — evidence.** What is known, measured and modelled on the step's sub-question, and where
      that knowledge breaks. It publishes its finding and the dataset behind it by the end of its second
-     session, so that the Studio can build on it.
+     session; the Atelier's critique and the Middle's state read them, and a sibling may take from them.
    - **The Atelier — concepts and critique.** What the question presupposes, who frames it and how, what
      cannot be measured. It writes the step's critique at the end of the siblings' second sessions.
-   - **The Studio — form.** It gives the Field's finding of this step a form one can see or hear, at the
-     scale of the whole dataset. It builds on the Field's data; a Studio work without the step's
-     finding has not done its part. Since 2026-11-19 the form is a place a visitor enters, made with the
-     strongest means a browser has, not a figure of the finding; the exact figures stand in its text and
-     its check (the architect's judgment of that day, wording private; studio `PROTOCOL.md` 3.5).
+   - **The Studio — form.** It works the step's sub-question in its own world: a place a visitor enters,
+     made with the strongest means a browser has, not a figure of a finding; the exact figures stand in
+     its text and its check (since 2026-11-19, the architect's judgment of that day, wording private;
+     studio `PROTOCOL.md` 3.5). It may take the Field's data or finding and never waits for it.
    The rules of 2026-10-22 stand: at most four sessions per work, a working version in the first, every
    session visibly changes the work, the process is shown.
    **The step has an order (since 2026-11-13;** architect's order after a review of the ecology, wording
@@ -86,14 +88,15 @@ earlier choices.
    have no form. Now:
    - the Field marks its finding with a bulletin line `Finding: <one sentence> — <path to the dataset>`,
      by the end of its second session;
-   - the Studio begins the step's work in its first session after that line stands, and presents after
-     the Field has presented. A Studio session before the finding returns to the form of the last step
-     (it answers that work's critique and the Field's finished finding in the work) or closes in one line;
+   - every practice begins the step's work in its first session of the step and presents when its four
+     sessions are done (since 2026-11-19; from 2026-11-13 the Studio began after the `Finding:` line and
+     presented after the Field, and a Studio session before the finding returned to the form of the last
+     step);
    - one session of every work, before its presentation, is a check: it starts nothing new, reads the
      work's claims a second time against their sources, chases the weakest one and answers the critique
      left open. That session counts;
-   - a work takes what the step gives it: the rule "at most one sibling's dataset or finding" (2026-10-22)
-     does not apply while a programme runs.
+   - a work may take what the step gives it: the rule "at most one sibling's dataset or finding"
+     (2026-10-22) does not apply while a programme runs.
 2. **The open-data duty moves from the question to the claims.** A question may be larger than any
    dataset. Every claim in a work and in `STATE.md` needs its source.
 3. **After a step the plan sets the next one (since 2026-11-13; before that the practices proposed and

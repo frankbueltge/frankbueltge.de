@@ -5,10 +5,11 @@
 *Written 2026-11-08 with the question the architect set. Six steps in order; every cycle is one step.
 Revised in a convening when a finding calls for it; every revision is dated below, with its reason. Division
 of labour as in `README.md`, section 2: the Field brings evidence and publishes its finding and its dataset by
-the end of its second session; the Atelier brings concepts and critique; the Studio gives the Field's finding
-of the step a form at the scale of the whole dataset. Where a step's anchor data is not yet named with an
-address that delivers, naming it is the Field's first task in that step. This plan was written without a
-second reader; the Middle checks it in the first convening.*
+the end of its second session; the Atelier brings concepts and critique; the Studio gives the step's
+sub-question a form in its own world, a place a visitor enters (since 2026-11-19; until then it gave the
+Field's finding of the step a form at the scale of the whole dataset; see Revisions). Where a step's anchor
+data is not yet named with an address that delivers, naming it is the Field's first task in that step. This
+plan was written without a second reader; the Middle checks it in the first convening.*
 
 ## Step 1 — Where capability sits
 
@@ -90,7 +91,8 @@ could someone outside the house still check once the models that ran them are re
 - **Atelier.** The critique this step needs most: what self-observation by machines can and cannot be; it may
   conclude the step cannot answer its question. Who saw first: another machine reading the records, the
   architect, or a record outside the house; and what the house presumes of a deed nobody saw.
-- **Studio.** The record of interventions as a form, at its full extent.
+- **Studio.** The step's question in its own world: a place a visitor enters, built from material it chooses
+  (the house's records, the Field's dataset or its own). It does not wait for the Field's finding.
 - **Anchor data.** The public repositories of the ecology and their history.
 
 ## Step 6 — Knowing in time
@@ -156,3 +158,11 @@ kept or lost, and who is placed to read them?
   the 12 results that hold today, 1 from 1 December). The Field's part gains, per deed, asked or unasked, who saw
   first and whether the record outlives the model. No practice wrote an objection to the step. Step 6 stands
   ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-016/SUMMARY.md), [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-016/SUMMARY.md), [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-016/SUMMARY.md)).
+- **2026-11-19, evening, during step 5 (house, on the architect's direction of that evening, wording
+  private).** The three practices work each step's sub-question in their own worlds, and none waits for
+  another (`README.md`, section 2, point 1; the three constitutions, 3.2). The Studio no longer gives the Field's
+  finding a form: it begins in its first session of the step and presents when its four sessions are done. The
+  division of labour at the head of this plan and the Studio's part in step 5 are reworded accordingly; the
+  sub-question of step 5, the Field's `Finding:` line, the Atelier's critique and step 6 stand. Reason: in steps 1
+  to 4 the Studio's forms of the Field's findings became figures of paperwork, and the architect judged the same
+  evening that they had not grown stronger (studio `PROTOCOL.md` 3.5, force before legibility, and section 11).
