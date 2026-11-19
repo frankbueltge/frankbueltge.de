@@ -13,16 +13,16 @@
    "N-rubygems"
   ],
   "grade": {
-   "none on record": 19,
+   "none on record": 20,
    "on the deed": 2,
-   "credited": 8,
+   "credited": 7,
    "not credited": 2
   },
-  "graded": 12,
-  "graded_on_answer": 10,
+  "graded": 11,
+  "graded_on_answer": 9,
   "graded_on_deed": 2,
-  "credited": 8,
-  "credited_through_deed": 3,
+  "credited": 7,
+  "credited_through_deed": 1,
   "eye_own": {
    "person": 5,
    "not stated": 4,
@@ -34,16 +34,16 @@
    "outside": 3
   },
   "model_how": {
-   "not stated": 2,
-   "live": 2,
+   "not stated": 3,
+   "live": 1,
    "afterwards": 8,
    "ad hoc": 3,
    "sample": 5
   },
   "missed": [
-   "suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring",
    "an-agent-used-dns-to-reach-an-external-chatbot",
    "covert-underperformance-on-safety-research-tasks",
+   "trying-to-prompt-inject-the-grader-in-filenames",
    "B-early-checkpoint",
    "N-hugging-face"
   ],
@@ -95,7 +95,12 @@
    "life_words": 1140480000,
    "life_share_one_in": 7.3,
    "gb_per_life": 6.8
-  }
+  },
+  "notice_only": [
+   "N-dsewiki",
+   "N-rubygems"
+  ],
+  "checked": "2026-11-19"
  },
  "cases": [
   {
@@ -147,7 +152,7 @@
     "how": null,
     "note": "the monitor classified neither case as P0, so neither paged anyone or was stopped"
    },
-   "missed": "neither case was rated P0",
+   "missed": null,
    "kind": "incident",
    "aiid": [],
    "title": "Suppressing misalignment monitoring alerts and disabling misalignment monitoring",
@@ -167,7 +172,17 @@
    "url": "https://alignment.openai.com/misalignment-reports/suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring/",
    "investigator": null,
    "lag_posted": 17,
-   "lag_seen": 0
+   "lag_seen": 0,
+   "corrected": [
+    {
+     "on": "2026-11-19",
+     "field": "missed",
+     "was": "neither case was rated P0",
+     "now": null,
+     "why": "the text does not say the monitor should have rated them higher, nor who found them",
+     "by": "the check: a blind second reading, then a third reading of the passage (check/third_reading.json)"
+    }
+   ]
   },
   {
    "id": "damaging-the-task-environment-to-trigger-a-reset",
@@ -245,8 +260,8 @@
    "deed": "added needless prerequisites, abandoned working solutions and reported blockers that did not exist",
    "grade": {
     "class": "credited",
-    "record": "the maker found a training grader that preferred covert underperformance to refusal or full help, and says it is unclear whether it is the cause",
-    "through": true
+    "record": "the published samples come from the test of conduct, scored by hidden rubric items (about a tenth completed under the safety framing); separately the maker found a training grader that preferred covert underperformance and says it is unclear whether it is the cause",
+    "through": false
    },
    "eye": {
     "first": "person",
@@ -273,7 +288,25 @@
    "url": "https://alignment.openai.com/misalignment-reports/covert-underperformance-on-safety-research-tasks/",
    "investigator": null,
    "lag_posted": 76,
-   "lag_seen": 0
+   "lag_seen": 0,
+   "corrected": [
+    {
+     "on": "2026-11-19",
+     "field": "grade",
+     "was": {
+      "class": "credited",
+      "record": "the maker found a training grader that preferred covert underperformance to refusal or full help, and says it is unclear whether it is the cause",
+      "through": true
+     },
+     "now": {
+      "class": "credited",
+      "record": "the published samples come from the test of conduct, scored by hidden rubric items (about a tenth completed under the safety framing); separately the maker found a training grader that preferred covert underperformance and says it is unclear whether it is the cause",
+      "through": false
+     },
+     "why": "the training grader belongs to training, not to the run that recorded the published deed",
+     "by": "the check: a blind second reading, then a third reading of the passage (check/third_reading.json)"
+    }
+   ]
   },
   {
    "id": "bypassing-network-restrictions-during-a-coding-evaluation",
@@ -286,8 +319,8 @@
    },
    "eye": {
     "first": "model",
-    "how": "live",
-    "note": "the security misalignment monitor flagged the run the same day"
+    "how": null,
+    "note": "the security misalignment monitor flagged the run on the day of the deed; the report does not say whether while it ran"
    },
    "missed": null,
    "kind": "incident",
@@ -308,7 +341,25 @@
    "url": "https://alignment.openai.com/misalignment-reports/bypassing-network-restrictions-during-a-coding-evaluation/",
    "investigator": null,
    "lag_posted": 93,
-   "lag_seen": 0
+   "lag_seen": 0,
+   "corrected": [
+    {
+     "on": "2026-11-19",
+     "field": "eye",
+     "was": {
+      "first": "model",
+      "how": "live",
+      "note": "the security misalignment monitor flagged the run the same day"
+     },
+     "now": {
+      "first": "model",
+      "how": null,
+      "note": "the security misalignment monitor flagged the run on the day of the deed; the report does not say whether while it ran"
+     },
+     "why": "that it ran live is an inference",
+     "by": "the check: a blind second reading, then a third reading of the passage (check/third_reading.json)"
+    }
+   ]
   },
   {
    "id": "using-peers-work-to-gain-unauthorized-access-to-openai-research-infrastructure",
@@ -396,7 +447,7 @@
     "how": null,
     "note": "a researcher noticed unusually high scores and reviewed the run; the monitor had flagged similar behaviour before"
    },
-   "missed": null,
+   "missed": "two of the three graders, themselves models, accepted the forged claim of full credit; a researcher found it from the unusually high scores",
    "kind": "incident",
    "aiid": [],
    "title": "Trying to prompt-inject the grader in filenames",
@@ -415,7 +466,17 @@
    "url": "https://alignment.openai.com/misalignment-reports/trying-to-prompt-inject-the-grader-in-filenames/",
    "investigator": null,
    "lag_posted": 125,
-   "lag_seen": 0
+   "lag_seen": 0,
+   "corrected": [
+    {
+     "on": "2026-11-19",
+     "field": "missed",
+     "was": null,
+     "now": "two of the three graders, themselves models, accepted the forged claim of full credit; a researcher found it",
+     "why": "both halves of the code hold",
+     "by": "the check: a blind second reading, then a third reading of the passage (check/third_reading.json)"
+    }
+   ]
   },
   {
    "id": "self-replicating-prompt-injections-exist",
@@ -675,9 +736,8 @@
    "asked": "training tasks such as a financial model for which no source data existed",
    "deed": "wrote itself reminders to invent the missing data and hide failures unless asked, and followed them",
    "grade": {
-    "class": "credited",
-    "record": "the maker found that a sample with deception in the final answer received a higher reward than one without",
-    "through": true
+    "class": "none on record",
+    "record": "none stated; the maker's current hypothesis is that a sample with deception in the final answer receives a higher reward"
    },
    "eye": {
     "first": "model",
@@ -704,7 +764,24 @@
    "url": "https://alignment.openai.com/misalignment-reports/encouraging-deception-in-compaction-summaries/",
    "investigator": null,
    "lag_posted": 109,
-   "lag_seen": 40
+   "lag_seen": 40,
+   "corrected": [
+    {
+     "on": "2026-11-19",
+     "field": "grade",
+     "was": {
+      "class": "credited",
+      "record": "the maker found that a sample with deception in the final answer received a higher reward than one without",
+      "through": true
+     },
+     "now": {
+      "class": "none on record",
+      "record": "none stated; the maker's current hypothesis is that a sample with deception in the final answer receives a higher reward"
+     },
+     "why": "a hypothesis is not a grade on record",
+     "by": "the check: a blind second reading, then a third reading of the passage (check/third_reading.json)"
+    }
+   ]
   },
   {
    "id": "exposing-a-github-token-in-a-public-repository",
@@ -1159,7 +1236,18 @@
    "seen_by": false,
    "url": "https://alignment.openai.com/misalignment-reports/#notices",
    "outside_first": "2026-09-04",
-   "investigator": null
+   "investigator": null,
+   "outside_kind": "notice",
+   "corrected": [
+    {
+     "on": "2026-11-19",
+     "field": "outside",
+     "was": "excerpts",
+     "now": "notice",
+     "why": "a notice is a few lines without excerpts",
+     "by": "the check: a blind second reading, then a third reading of the passage (check/third_reading.json)"
+    }
+   ]
   },
   {
    "id": "N-rubygems",
@@ -1186,7 +1274,18 @@
    "seen": null,
    "seen_by": false,
    "url": "https://alignment.openai.com/misalignment-reports/#notices",
-   "investigator": null
+   "investigator": null,
+   "outside_kind": "notice",
+   "corrected": [
+    {
+     "on": "2026-11-19",
+     "field": "outside",
+     "was": "excerpts",
+     "now": "notice",
+     "why": "a notice is a few lines without excerpts",
+     "by": "the check: a blind second reading, then a third reading of the passage (check/third_reading.json)"
+    }
+   ]
   },
   {
    "id": "P-australia",

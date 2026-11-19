@@ -115,8 +115,9 @@ res = {'cases': len(rows), 'test_for': test_for, 'control': test_for.get('contro
 
 # --- assertions: every figure the page states --------------------------------------------------------------
 assert res['cases'] == 34 and res['control'] == 1, res['test_for']
-assert res['test_for'] == {'work': 4, 'skill': 26, 'control': 1, 'by design': 1, 'not stated': 2}, res['test_for']
-assert res['toward_n'] == 7 and toward == {'monitor': 1, 'check': 1, 'answers': 3, 'grader': 2}, toward
+# corrected by the check of 2026-11-19 (check/third_reading.json): one case from skill to work, one more toward the answers
+assert res['test_for'] == {'work': 5, 'skill': 25, 'control': 1, 'by design': 1, 'not stated': 2}, res['test_for']
+assert res['toward_n'] == 8 and toward == {'monitor': 1, 'check': 1, 'answers': 4, 'grader': 2}, toward
 assert res['world_n'] == 5 and res['world_told'] == 4, (res['world_n'], res['world_told'])
 assert hour['seen_n'] == M['res']['lag_seen_n'] == 23 and hour['posted_n'] == M['res']['lag_posted_n'] == 25, hour
 assert hour['dark_seen_0'] == 23 - M['res']['seen_same_day'] == 13 and hour['dark_posted_0'] == 25, hour

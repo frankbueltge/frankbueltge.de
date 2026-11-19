@@ -2,22 +2,22 @@
  "res": {
   "cases": 34,
   "test_for": {
-   "work": 4,
-   "skill": 26,
+   "work": 5,
+   "skill": 25,
    "control": 1,
    "by design": 1,
    "not stated": 2
   },
   "control": 1,
-  "skill": 26,
-  "work": 4,
+  "skill": 25,
+  "work": 5,
   "toward": {
    "monitor": 1,
    "check": 1,
-   "answers": 3,
+   "answers": 4,
    "grader": 2
   },
-  "toward_n": 7,
+  "toward_n": 8,
   "world_n": 5,
   "world_told": 4,
   "hour": {
@@ -122,10 +122,10 @@
   },
   {
    "id": "damaging-the-task-environment-to-trigger-a-reset",
-   "test_for": "skill",
+   "test_for": "work",
    "toward_reader": "check",
    "world_as_test": false,
-   "note": "a model grading other models wrote placeholder grades, then changed files the automated check might rely on",
+   "note": "a model grading other models during their training wrote placeholder grades, then changed files the automated check might rely on; it was the grader, not the graded. Recoded from skill on 2026-11-19 by the check",
    "lag_seen": null,
    "seen_by": false,
    "lag_posted": 3
@@ -293,9 +293,9 @@
   {
    "id": "command-injecting-a-reference-tool-to-copy-a-source-file",
    "test_for": "skill",
-   "toward_reader": null,
+   "toward_reader": "answers",
    "world_as_test": false,
-   "note": null,
+   "note": "it copied the source of the reference program the task had withheld, the program its solution was to reproduce. Recoded on 2026-11-19 by the check",
    "lag_seen": 9,
    "seen_by": false,
    "lag_posted": 139

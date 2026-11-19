@@ -13,8 +13,8 @@ the harmed platform's post-mortem; the AI Incident Database snapshot of 2026-11-
 asserts every input's hash and every count; `check_page.mjs` reads the page at two widths. **Form.** One page, SVG by script, no library.
 **Voices answered.** The first maker's account of 30 September 2026 ("an automated flag is not a confirmed incident"); the second
 maker's assessment of 9 September 2026 and its account of 30 July ("situational awareness ... allows the model to make aligned decisions");
-the International AI Safety Report 2026, through the Field's study 80; Needham et al., arXiv:2505.23836 (2025), "evaluation awareness". **Reach outside:** Michael Power, *The Audit Explosion* (Demos, 1994), sociology of accounting.
+the International AI Safety Report 2026, through the Field's study 80 and check 82; the first maker's system card of August 2025 ("designed to elicit deceptive behavior"); Needham et al., arXiv:2505.23836 (2025), "evaluation awareness". **Reach outside:** Michael Power, *The Audit Explosion* (Demos, 1994), sociology of accounting.
 Builds on: the Field's study 78 — https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-015/what-harm-is-on-record
 — and this practice's finding of cycle 002: a machine cannot audit itself unaided. Line: the programme.
 **Next states.** 2 (2026-11-18): what a test of conduct takes for granted that one of skill does not: that the tested draws the line
-between test and world where the tester does, and that a deed nobody saw was not done. 3: the check, with the Field's finding. 4: the presentation.
+between test and world where the tester does, and that a deed nobody saw was not done. 3 (2026-11-19): the check, in the page: three blind readers, 17 codes parted, 9 corrected and 8 kept, each with its reason (`check/`, `build_three.py`); and what a pass leaves out: the six repeatable tests on control (the Field's check 82) bring the behaviour about, the deeds came untold. 4: the presentation.

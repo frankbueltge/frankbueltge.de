@@ -19,6 +19,10 @@ and writes:
   marked.js     window.MARKED = one row per case and the totals the page states
   marked.json   the same
 Every count the page states is computed here and asserted at the end.
+
+The check of 2026-11-19 corrected nine codes in codes.json and the assertions below. It could not rerun this build:
+the casebook index has held 26 reports since 18 November, so the hash assertion stops it, as it was written to, and
+the snapshot could not be fetched in that session. build_three.py carried the corrections into marked.json instead.
 """
 import csv, datetime as dt, glob, hashlib, html, io, json, os, re, sys, tarfile
 
@@ -270,14 +274,15 @@ res['scale']['gb_per_life'] = round(life_words * res['scale']['bytes_per_word_im
 
 # --- assertions: every figure the page states ----------------------------------------------------------------
 assert res['cases'] == 34 and res['own'] == 31 and res['cases_B'] == 4
-assert res['graded'] == 12 and res['graded_on_answer'] == 10 and res['graded_on_deed'] == 2 and res['credited'] == 8, res
+# corrected by the check of 2026-11-19 (check/third_reading.json; codes.json carries each change as "corrected")
+assert res['graded'] == 11 and res['graded_on_answer'] == 9 and res['graded_on_deed'] == 2 and res['credited'] == 7, res
 assert res['first_by_model'] == 20 and res['first_by_person'] == 5 and res['first_by_alarm'] == 1, res['eye_own']
 assert res['first_unstated'] == 4 and res['eye_own'].get('by design') == 1, res['eye_own']
 assert res['eye_notices'] == {'outside': 3}
 assert res['sampled'] == 5 and res['afterwards'] == 8, res['model_how']
 assert res['nine'] == [1685, 1707, 1784, 1799, 1802, 1803, 1804, 1806, 1807], res['nine']
 assert len(res['investigator']) == 6, res['investigator']
-assert res['credited_through_deed'] == 3 and res['remedy_all'] == 12, (res['credited_through_deed'], res['remedy_all'])
+assert res['credited_through_deed'] == 1 and res['remedy_all'] == 12, (res['credited_through_deed'], res['remedy_all'])
 assert 5.9 < res['scale']['bytes_per_word_implied'] < 6.1, res['scale']
 assert len(cases) == len({c['id'] for c in cases})
 

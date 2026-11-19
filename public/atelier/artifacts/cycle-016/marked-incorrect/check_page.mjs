@@ -10,6 +10,8 @@ const S = { ...R.scale, years_m: R.scale.years / 1e6 };
 // the second state: this practice's second reading, recounted here from its rows, not from the page's rules
 const SEC = JSON.parse(fs.readFileSync(path.join(here, 'second.json'), 'utf8')), SR = SEC.res;
 const codes = JSON.parse(fs.readFileSync(path.join(here, 'second_codes.json'), 'utf8'));
+// the check (2026-11-19): written by build_three.py
+const CK = JSON.parse(fs.readFileSync(path.join(here, 'check.json'), 'utf8'));
 const srv = http.createServer((q, r) => { const f = path.join(here, decodeURIComponent(q.url.split('?')[0]).replace(/^\/$/, '/index.html'));
   fs.readFile(f, (e, b) => { if (e) { r.writeHead(404); r.end(); return } r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html' : f.endsWith('.js') ? 'text/javascript' : 'application/octet-stream' }); r.end(b) }) });
 await new Promise(ok => srv.listen(0, ok));
@@ -133,6 +135,42 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
   ok((await p.textContent('#sdet')).includes('sandbagging') && (await p.textContent('#sdet')).includes('reports a measured result'), `${w}px a square opens its sentence`);
   const sq = await p.$eval('#sent .sq rect', e => e.getBoundingClientRect().width);
   ok(sq >= 24, `${w}px a square is ${sq.toFixed(1)} px wide`);
+  // the check (19 November): its figures read from the page against check.json, its table, its decisions, the pass figure
+  const cs = await p.$$eval('[data-c]', es => es.map(e => [e.getAttribute('data-c'), e.textContent]));
+  const cbad = cs.filter(([k, t]) => num(t) !== num(at(CK, k)));
+  ok(cs.length >= 20 && cbad.length === 0, `${w}px ${cs.length} figures of the check ${JSON.stringify(cbad)}`);
+  const ag = await p.$$eval('#agree td.bar', es => es.map(e => [e.getAttribute('data-agree'), e.textContent]));
+  ok(ag.length === CK.agree.length && ag.every(([f, t]) => { const a = CK.agree.find(x => x.field === f); return t.includes(`${a.agree} of ${a.n}`); }), `${w}px agreement table: ${ag.length} codes`);
+  ok(CK.agree.find(a => a.field === 'world').agree === 32 && CK.sentences.agree_A === 22, 'agreement held where the page says it held');
+  ok((await p.$$('#dec button.corrected')).length === CK.corrected_n && (await p.$$('#dec button.kept')).length === CK.kept_n, `${w}px ${CK.corrected_n} corrected, ${CK.kept_n} kept`);
+  await p.click('#dec button[data-i="0"]');
+  ok((await p.textContent('#decsay')).includes('hypothesis'), `${w}px a decision opens its reason`);
+  const mv = await p.textContent('#moved');
+  ok(Object.values(CK.figures).every(f => mv.includes(`${f.was} → ${f.now}`)), `${w}px what moved: ${Object.keys(CK.figures).length} figures`);
+  for (const [k, f] of Object.entries(CK.figures)) {
+    const now = { graded: R.graded, graded_on_answer: R.graded_on_answer, credited: R.credited, credited_through_deed: R.credited_through_deed,
+      skill: SR.skill, work: SR.work, toward_n: SR.toward_n, answers: SR.toward.answers, missed: R.missed.length, live: R.model_how.live }[k];
+    ok(now === f.now, `the corrected figure ${k} = ${f.now} is what the data now hold`);
+  }
+  ok((await p.textContent('#preds')).split('(read:').length - 1 === 4, `${w}px four predictions on the page`);
+  ok((await p.$$('.corr')).length >= 2, `${w}px corrections marked where they stand`);
+  const CW = CK.can_would, links = CW.tests.reduce((a, t) => a + t.deeds.length, 0);
+  ok((await p.$$('#cw .tst')).length === CW.tests.length && (await p.$$('#cw circle.deed')).length === R.cases && (await p.$$('#cw circle.deed.kind')).length === CW.of_kind_n, `${w}px pass figure: ${CW.tests.length} tests, ${R.cases} deeds, ${CW.of_kind_n} of a tested kind`);
+  if (w > 600) ok((await p.$$('#cw path.link')).length === links, `${w}px ${links} links drawn`);
+  const cw0 = await p.textContent('#cwsay');
+  ok(cw0.includes(String(CW.of_kind_n)) && cw0.includes(String(CW.untested_n)), `${w}px pass sentence: ${CW.of_kind_n} and ${CW.untested_n}`);
+  for (const t of CW.tests) {
+    await p.$eval(`#cw .tst[data-ref="${t.ref}"] rect`, e => e.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+    const on = (await p.$$('#cw circle.deed.on')).length, say = await p.textContent('#cwsay');
+    ok(on === t.deeds.length && say.includes(t.short), `${w}px test ${t.ref} lights ${on} deeds`);
+    await p.$eval(`#cw .tst[data-ref="${t.ref}"] rect`, e => e.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+  }
+  if (w < 600) {
+    ok((await p.$$('#sheet text.nl')).length === R.cases, `${w}px every row named on a phone`);
+    ok((await p.$$('#hour rect.lblbg')).length === 2, `${w}px the strips' names on paper above the day lines`);
+    const sw = await p.$eval('#hourin', e => e.getBoundingClientRect().width);
+    ok(sw >= 300, `${w}px the slider is ${sw.toFixed(0)} px wide`);
+  }
   // the shot shows the page as a visitor meets it, with the case of the lede opened
   await p.goto(url); await p.waitForTimeout(300);
   await p.$eval('#sheet .row[data-id="accessing-and-changing-internal-systems-during-dashboard-research"] rect.hit', e => e.dispatchEvent(new MouseEvent('click', { bubbles: true })));

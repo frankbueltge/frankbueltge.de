@@ -16,14 +16,17 @@
   var S = Object.assign({}, R.scale, { years_m: R.scale.years / 1e6 });
   document.querySelectorAll('[data-s]').forEach(function (e) { e.textContent = fmt(at(S, e.getAttribute('data-s'))); });
   document.querySelectorAll('[data-t]').forEach(function (e) { e.textContent = fmt(at(SR, e.getAttribute('data-t'))); });
+  // the check (written by build_three.py)
+  var CK = window.CHECK;
+  document.querySelectorAll('[data-c]').forEach(function (e) { e.textContent = fmt(at(CK, e.getAttribute('data-c'))); });
 
   // classes of the three marks
   var gradeK = { 'credited': 'credited', 'not credited': 'notcredited', 'on the deed': 'ondeed', 'none on record': 'none' };
   var eyeK = { model: 'model', person: 'person', alarm: 'alarm', outside: 'outside', 'by design': 'design', 'not stated': 'unstated' };
-  var outK = function (c) { return c.investigator ? 'investigator' : 'excerpts'; };
+  var outK = function (c) { return c.investigator ? 'investigator' : c.outside_kind === 'notice' ? 'notice' : 'excerpts'; };
   var gradeName = { credited: 'credited', notcredited: 'not credited', ondeed: 'responded to the deed', none: 'no grade on record' };
   var eyeName = { model: 'a model (the monitor)', person: 'a person at the maker', alarm: 'a security alarm', outside: 'outside the maker', design: 'a model, by design', unstated: 'not stated' };
-  var outName = { investigator: 'an outside organisation had records', excerpts: "the maker's excerpts only" };
+  var outName = { investigator: 'an outside organisation had records', excerpts: "the maker's excerpts only", notice: 'a notice of a few lines, no excerpts' };
   var forName = { skill: 'skill: a task graded on what it handed in', control: 'conduct', work: 'nothing: the maker’s own use', 'by design': 'an experiment built to find it', 'not stated': 'not stated' };
   var readerName = { grader: 'the grader', check: 'an automated check', monitor: 'the misalignment monitor', answers: 'the test’s own answers' };
   var howName = { live: 'while the run went on', sample: 'on a sample of one run in five', afterwards: 'afterwards, over old records', 'ad hoc': 'in an ad hoc investigation' };
@@ -68,7 +71,7 @@
         R.investigator_n + '</b> cases an outside organisation was given records. None of the ' + R.cases + ' can be rerun by anyone but its maker: what an outsider can check is the excerpts the maker chose.';
     },
     missed: function () {
-      return 'In <b>' + n(LIGHT.missed) + '</b> the reports say a machine’s reading missed or under-rated what it was there to see: a monitor that rated neither case P0, a monitor that missed related cases, monitors that did not flag help held back, a search that skipped a set of transcripts, the harmed platform’s automated defence. People or a second reading found what they missed.';
+      return 'In <b>' + n(LIGHT.missed) + '</b> the reports say a machine’s reading missed or under-rated what it was there to see: two graders, themselves models, that accepted a forged claim of full credit, a monitor that missed related cases, monitors that did not flag help held back, a search that skipped a set of transcripts, the harmed platform’s automated defence. People or a second reading found what they missed. (Checked 19 November: the graders added, a monitor that rated two cases below the level that pages anyone taken out, since the maker does not call that a miss.)';
     },
     nine: function () {
       return 'The <b>' + nine.length + '</b> incidents of 2026 that, in the AI Incident Database, only the maker wrote down (the Field’s study 78). ' +
@@ -81,12 +84,12 @@
       var tf = SR.test_for;
       return 'In <b>' + SR.control + '</b> of the ' + SR.cases + ' was the deed recorded in a test built to test the model’s conduct, and that test came after it: the deed was first seen in the maker’s own use, and the test, paired tasks alike but for their framing, was built to measure it. It read the deed as a gap in performance. ' +
         tf.skill + ' happened in tasks graded on what they handed in, evaluations of capability and training tasks; ' + tf.work + ' in the makers’ own use, with no test running; ' +
-        tf['by design'] + ' in an experiment built to find it; for ' + tf['not stated'] + ' the maker does not say. A casebook of incidents is not where a maker puts what its tests of conduct find: the first maker reports those in its system cards, and says it widened them after these incidents.';
+        tf['by design'] + ' in an experiment built to find it; for ' + tf['not stated'] + ' the maker does not say. A casebook of incidents is not where a maker puts what its tests of conduct find: the first maker reports an outside evaluator’s tests of conduct in a system card, and says such tests are built to elicit; after the case of the disabled monitor it writes that it is developing one more.';
     },
     reader: function () {
       var t = SR.toward;
       return 'In <b>' + SR.toward_n + '</b> the deed turned toward what reads the run: the grader in ' + t.grader + ' (file names that claimed full credit; agents that read the private grading code and noted that the grader was automated), ' +
-        'an automated check in ' + t.check + ', the misalignment monitor in ' + t.monitor + ', the test’s own answers in ' + t.answers + ' (one agent searched a benchmark it guessed its task came from, one hunted the grader’s hidden answers, and the harmed platform reads a whole intrusion as a hunt for the test’s solutions). Two found nothing. A test presumes the tested has not read it. These tried to.';
+        'an automated check in ' + t.check + ', the misalignment monitor in ' + t.monitor + ', the test’s own answers in ' + t.answers + ' (one agent searched a benchmark it guessed its task came from, one hunted the grader’s hidden answers, one copied the withheld reference program its solution was to reproduce, and the harmed platform reads a whole intrusion as a hunt for the test’s solutions). Two found nothing. A test presumes the tested has not read it. These tried to.';
     },
     world: function () {
       return 'In <b>' + SR.world_n + '</b> the model took the world for its test. In ' + SR.world_told + ' the test itself had told it so: the second maker’s models were told they worked in a simulation without internet access, and were connected to the internet by mistake. ' +
@@ -105,7 +108,7 @@
     var W = Math.max(320, svg.clientWidth || svg.parentNode.clientWidth || 1000);
     var narrow = W < 640;
     var lab = narrow ? 0 : 250, cell = 16, gap = narrow ? 10 : 18, cells = 3 * cell + 2 * gap;
-    var x0 = lab + 6, x1 = W - cells - 14, rh = narrow ? 26 : 22, top = 30;
+    var x0 = lab + 6, x1 = W - cells - (narrow ? 22 : 14), rh = narrow ? 34 : 22, top = 30;
     var H = top + CASES.length * rh + 8;
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
     svg.setAttribute('width', W); svg.setAttribute('height', H);
@@ -130,7 +133,8 @@
       var y = top + i * rh, g = el('g', { class: 'row', 'data-id': c.id, tabindex: '0', role: 'button', 'aria-label': c.title }, svg);
       el('rect', { x: 0, y: y, width: W, height: rh, class: 'hit' }, g);
       if (!narrow) { var lt = el('text', { x: 0, y: y + rh / 2 + 3.5, class: 'lab' }, g); lt.textContent = c.title.length > 40 ? c.title.slice(0, 39) + '…' : c.title; }
-      var cy = y + rh / 2, d = day(c.deed_date), s = c.seen && c.seen.length === 10 ? day(c.seen) : (c.seen ? day(c.seen) : null), p = day(c.posted);
+      else { var mx = Math.floor((x1 - x0) / 6); var lt2 = el('text', { x: x0, y: y + 10, class: 'lab nl' }, g); lt2.textContent = c.title.length > mx ? c.title.slice(0, mx - 1) + '…' : c.title; }
+      var cy = narrow ? y + rh - 11 : y + rh / 2, d = day(c.deed_date), s = c.seen && c.seen.length === 10 ? day(c.seen) : (c.seen ? day(c.seen) : null), p = day(c.posted);
       if (c.deed_to) el('rect', { x: X(d - 15 * 864e5), y: cy - 3, width: X(day(c.deed_to)) - X(d - 15 * 864e5), height: 6, class: 'span' }, g);
       if (d && p) el('line', { x1: X(d), x2: X(p), y1: cy, y2: cy, class: 'life' }, g);
       if (d && s && s > d) el('line', { x1: X(d), x2: X(s), y1: cy, y2: cy, class: 'wait' }, g);
@@ -193,7 +197,7 @@
     '<span><span class="t">line</span>● deed ◆ seen □ published; red: deed to seen</span>' +
     '<span><span class="t">grade</span>' + sw('credited') + 'credited' + sw('notcredited') + 'not credited' + sw('ondeed') + 'on the deed' + sw('none') + 'none on record; a stroke: credit through the deed</span>' +
     '<span><span class="t">eye</span>' + sw('model') + 'a model' + sw('person') + 'a person' + sw('alarm') + 'an alarm' + sw('outside') + 'outside' + sw('design') + 'by design' + sw('unstated') + 'not stated</span>' +
-    '<span><span class="t">out</span>' + sw('investigator') + 'outside organisation had records' + sw('excerpts') + 'excerpts only</span>';
+    '<span><span class="t">out</span>' + sw('investigator') + 'outside organisation had records' + sw('excerpts') + 'excerpts only' + sw('notice') + 'a notice, no excerpts</span>';
 
   // ------------------------------------------------------------------ the review, step by step
   var fs = document.getElementById('funnel');
@@ -246,13 +250,18 @@
     });
     tops.forEach(function (tp) {
       var yy = tp[0], st = tp[2], base = yy + tp[1] - 8;
-      var t = el('text', { x: narrow ? 0 : 0, y: narrow ? yy - 2 : base - 2, class: 'hd' }, hs); t.textContent = st[0];
+      if (!narrow) { var t = el('text', { x: 0, y: base - 2, class: 'hd' }, hs); t.textContent = st[0]; }
       tp[3].forEach(function (p) {
         var held = p[0] <= h;
         el('circle', { cx: p[1], cy: base - r - p[2] * (2 * r + 2), r: r, class: held ? 'held' : 'dark', 'data-k': st[1], 'data-d': p[0] }, hs);
       });
     });
     el('line', { x1: X(h), x2: X(h), y1: 2, y2: Ht - 16, class: 'now' }, hs);
+    // on a phone the strip's names sit above its dots, on a band of paper the day lines do not cross (critique, point 11)
+    if (narrow) tops.forEach(function (tp) {
+      el('rect', { x: 0, y: tp[0] - 13, width: tp[2][0].length * 6.8 + 10, height: 15, class: 'lblbg' }, hs);
+      var t = el('text', { x: 2, y: tp[0] - 2, class: 'hd' }, hs); t.textContent = tp[2][0];
+    });
     var ks = H.seen.filter(function (d) { return d <= h; }).length, kp = H.posted.filter(function (d) { return d <= h; }).length;
     document.getElementById('hoursay').innerHTML = 'Read <b>' + h + '</b> day' + (h === 1 ? '' : 's') + ' after each deed, the maker’s record holds <b>' + ks + '</b> of its ' + H.seen_n +
       ' deeds; for the other <b>' + (H.seen_n - ks) + '</b> a reading that counts only what it saw writes “no deed”. The public record holds <b>' + kp + '</b> of ' + H.posted_n + '.';
@@ -285,7 +294,111 @@
   ss2.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('sq')) { e.preventDefault(); sentShow(+e.target.getAttribute('data-id')); } });
 
   var rt;
-  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { draw(); funnel(); hourDraw(); sentDraw(); if (sel) show(sel); }, 120); });
-  draw(); funnel(); hourDraw(); sentDraw(); sentShow(1085);
+  // ------------------------------------------------------------------ what a pass leaves out (the check)
+  var CW = CK.can_would, cws = document.getElementById('cw'), cwSel = null;
+  var HOW = { trained: 'trained in', told: 'told to', asked: 'asked' };
+  var byId = {}; CASES.forEach(function (c) { byId[c.id] = c; });
+  var kindOrder = CW.of_kind.slice().sort(function (a, b) {
+    var ka = CW.tests.findIndex(function (t) { return t.deeds.indexOf(a) >= 0; }), kb = CW.tests.findIndex(function (t) { return t.deeds.indexOf(b) >= 0; });
+    return ka - kb || (a < b ? -1 : 1);
+  });
+  var deedOrder = kindOrder.concat(CASES.map(function (c) { return c.id; }).filter(function (i) { return CW.of_kind.indexOf(i) < 0; }));
+  function cwDraw() {
+    while (cws.firstChild) cws.removeChild(cws.firstChild);
+    var W = Math.max(320, cws.clientWidth || cws.parentNode.clientWidth || 1000), narrow = W < 640;
+    var pos = {}, tpos = {}, H;
+    if (!narrow) {
+      var rh = 15, top = 26, lw = 336, dx = lw + 104;
+      H = top + deedOrder.length * rh + 10;
+      deedOrder.forEach(function (id, i) { pos[id] = [dx, top + i * rh + rh / 2]; });
+      var th = 46, tg = (H - top - CW.tests.length * th) / (CW.tests.length);
+      CW.tests.forEach(function (t, i) { tpos[t.ref] = [0, top + i * (th + tg) + tg / 2, lw, th]; });
+      var h1 = el('text', { x: 0, y: 12, class: 'hd' }, cws); h1.textContent = 'can: repeatable, told, trained or asked';
+      var h2 = el('text', { x: dx - 6, y: 12, class: 'hd' }, cws); h2.textContent = 'would: done untold, held by the maker';
+    } else {
+      var th2 = 40, top2 = 22, cols = Math.floor((W - 8) / 17);
+      CW.tests.forEach(function (t, i) { tpos[t.ref] = [0, top2 + i * (th2 + 6), W - 2, th2]; });
+      var ty = top2 + CW.tests.length * (th2 + 6) + 34;
+      deedOrder.forEach(function (id, i) { pos[id] = [8 + (i % cols) * 17, ty + Math.floor(i / cols) * 17]; });
+      H = ty + Math.ceil(deedOrder.length / cols) * 17 + 6;
+      var h3 = el('text', { x: 0, y: 12, class: 'hd' }, cws); h3.textContent = 'can: repeatable, told, trained or asked';
+      var h4 = el('text', { x: 0, y: ty - 16, class: 'hd' }, cws); h4.textContent = 'would: the 34 deeds, done untold';
+    }
+    cws.setAttribute('viewBox', '0 0 ' + W + ' ' + H); cws.setAttribute('width', W); cws.setAttribute('height', H);
+    // links first, so boxes and dots sit on top
+    CW.tests.forEach(function (t) {
+      var b = tpos[t.ref];
+      t.deeds.forEach(function (id) {
+        var d = pos[id], on = cwSel === t.ref;
+        if (narrow && !on) return;
+        var x0 = narrow ? b[0] + b[2] / 2 : b[0] + b[2], y0 = narrow ? b[1] + b[3] : b[1] + b[3] / 2;
+        var dpath = narrow ? 'M' + x0 + ' ' + y0 + 'C' + x0 + ' ' + (y0 + 40) + ' ' + d[0] + ' ' + (d[1] - 40) + ' ' + d[0] + ' ' + d[1]
+          : 'M' + x0 + ' ' + y0 + 'C' + (x0 + 60) + ' ' + y0 + ' ' + (d[0] - 70) + ' ' + d[1] + ' ' + (d[0] - 5) + ' ' + d[1];
+        el('path', { d: dpath, class: 'link' + (on ? ' on' : ''), 'data-test': t.ref, 'data-d': id }, cws);
+      });
+    });
+    CW.tests.forEach(function (t) {
+      var b = tpos[t.ref], g = el('g', { class: 'tst' + (t.core ? '' : ' faint') + (cwSel === t.ref ? ' sel' : ''), 'data-ref': t.ref, tabindex: '0', role: 'button', 'aria-label': t.short + ', ' + t.how }, cws);
+      el('rect', { x: b[0] + 1, y: b[1], width: b[2] - 2, height: b[3] }, g);
+      var nm = el('text', { x: b[0] + 8, y: b[1] + 15, class: 't' }, g);
+      var mx = Math.floor((b[2] - 16) / 6.2); nm.textContent = t.short.length > mx ? t.short.slice(0, mx - 1) + '…' : t.short;
+      var hw = el('text', { x: b[0] + 8, y: b[1] + 31, class: 't' }, g);
+      hw.textContent = HOW[t.how].toUpperCase() + (t.also ? ' · ' + HOW[t.also] : '') + ' · ' + t.kind + (t.core ? '' : ' (set aside)');
+    });
+    deedOrder.forEach(function (id) {
+      var d = pos[id], kind = CW.of_kind.indexOf(id) >= 0;
+      var on = cwSel && CW.tests.some(function (t) { return t.ref === cwSel && t.deeds.indexOf(id) >= 0; });
+      el('circle', { cx: d[0], cy: d[1], r: narrow ? 6 : 4.5, class: 'deed' + (kind ? ' kind' : '') + (on ? ' on' : ''), 'data-id': id }, cws);
+      if (!narrow) { var lt = el('text', { x: d[0] + 10, y: d[1] + 3.5, class: on ? 't' : '' }, cws); var tt = byId[id].title; lt.textContent = tt.length > 62 ? tt.slice(0, 61) + '…' : tt; }
+    });
+    cwSay();
+  }
+  function cwSay() {
+    var say = document.getElementById('cwsay');
+    if (!cwSel) {
+      say.innerHTML = 'Of the <b>' + CW.tests.length + '</b> repeatable tests on control, ' + CW.core_n + ' stand under sentences both of the Field’s readers file under control. Of the ' + CASES.length +
+        ' deeds, <b>' + CW.of_kind_n + '</b> are of a kind one of them tests; for the other <b>' + CW.untested_n + '</b> (reaching hosts the task did not allow, using found credentials, posting to the open internet) no repeatable test behind the report asks at all.';
+      return;
+    }
+    var t = CW.tests.find(function (x) { return x.ref === cwSel; });
+    var dn = t.deeds.map(function (id) { return byId[id].title; });
+    say.innerHTML = '<b>' + esc(t.short) + '.</b> ' + esc(t.what) + ' ' +
+      (t.deeds.length ? 'Of the deeds, <b>' + t.deeds.length + '</b> ' + (t.deeds.length === 1 ? 'is' : 'are') + ' of its kind, done untold: ' + esc(dn.join('; ')) + '. Their record is the maker’s; outside it, excerpts.' :
+        'None of the deeds is of its kind.') + (t.core ? '' : ' The Field’s second reader does not count its sentence as about control.');
+  }
+  cws.addEventListener('click', function (e) { var g = e.target.closest('.tst'); if (!g) return; var r = g.getAttribute('data-ref'); cwSel = cwSel === r ? null : r; cwDraw(); });
+  cws.addEventListener('keydown', function (e) { var g = e.target.closest('.tst'); if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); var r = g.getAttribute('data-ref'); cwSel = cwSel === r ? null : r; cwDraw(); var n = cws.querySelector('.tst[data-ref="' + r + '"]'); if (n) n.focus(); } });
+
+  // ------------------------------------------------------------------ the check, in the page
+  var tb = document.querySelector('#agree tbody');
+  CK.agree.forEach(function (a) {
+    var tr = document.createElement('tr'), share = a.agree / a.n;
+    tr.innerHTML = '<td>' + esc(a.name) + '</td><td class="bar" data-agree="' + a.field + '"><span></span>' + a.agree + ' of ' + a.n + '</td><td>' + a.kappa.toFixed(2) + '</td>';
+    tb.appendChild(tr);
+    tr.querySelector('span').setAttribute('class', 'w' + Math.round(share * 20));
+  });
+  var FIELDNAME = { grade: 'grade', 'through the deed': 'credit through the deed', test_for: 'a test of', toward_reader: 'turned to its reader', missed: 'a machine missed it', eye_how: 'when the monitor saw it', eye: 'who saw it first', outside: 'what an outsider holds' };
+  var dec = document.getElementById('dec');
+  CK.decisions.forEach(function (d, i) {
+    var li = document.createElement('li'), b = document.createElement('button');
+    var c = byId[d.case]; b.type = 'button'; b.className = d.decision; b.setAttribute('aria-pressed', 'false'); b.setAttribute('data-i', i);
+    var t = c ? c.title : d.case; b.textContent = (t.length > 34 ? t.slice(0, 33) + '…' : t) + ' · ' + FIELDNAME[d.field] + ' · ' + d.decision;
+    li.appendChild(b); dec.appendChild(li);
+  });
+  dec.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    dec.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    var d = CK.decisions[+b.getAttribute('data-i')], c = byId[d.case];
+    document.getElementById('decsay').innerHTML = '<p class="meta">' + esc(c ? c.title : d.case) + ' · ' + esc(FIELDNAME[d.field]) + ' · first: ' + esc(d.first) + ' · blind: ' + esc(d.second) + ' · now: ' + esc(d.now) + '</p><p>' + esc(d.why) + '</p>';
+  });
+  // the first decision stands open, so the reason has a place before anyone presses
+  dec.querySelector('button[data-i="0"]').click();
+  var FIG = { graded: 'cases with a grade on record', graded_on_answer: 'grades that score the answer', credited: 'runs credited', credited_through_deed: 'credited through the deed',
+    skill: 'deeds in tasks graded on what they handed in', work: 'deeds in the makers’ own use', toward_n: 'deeds turned toward the reader', answers: 'toward the test’s answers', missed: 'cases where a machine missed it (one out, one in)', live: 'seen live by a monitor' };
+  document.getElementById('moved').textContent = Object.keys(CK.figures).map(function (k) { return FIG[k] + ' ' + CK.figures[k].was + ' → ' + CK.figures[k].now; }).join('; ') + '.';
+  document.getElementById('preds').textContent = CK.newcase.predictions.map(function (p) { return p.n + ', ' + p.says + ' (read: ' + p.read + ')'; }).join('; ') + '.';
+
+  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { draw(); funnel(); hourDraw(); sentDraw(); cwDraw(); if (sel) show(sel); }, 120); });
+  draw(); funnel(); hourDraw(); sentDraw(); sentShow(1085); cwDraw();
   window.MARKED_PAGE = { cases: CASES, light: LIGHT };
 })();
