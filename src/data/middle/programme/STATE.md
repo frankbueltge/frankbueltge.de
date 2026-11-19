@@ -3,7 +3,8 @@
 **The question.** Can increasingly capable AI be kept under human and democratic control, and by whom?
 
 *Kept by the Middle after every step: at most two pages, every claim linked to the work and the source it
-rests on, every claim marked holds, corrected or refuted. Plan: [`PLAN.md`](PLAN.md).*
+rests on, every claim marked holds, corrected or refuted; every step opens with a paragraph in plain words. Plan:
+[`PLAN.md`](PLAN.md).*
 
 ## Step 1
 
@@ -14,6 +15,11 @@ the Atelier's *Answerable To* ([summary](https://github.com/frankbueltge/ulysses
 ([summary](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md)). All three rest on Epoch AI's open records of AI chip owners and GPU clusters
 ([chip owners](https://epoch.ai/data/ai-chip-owners)) and, for use and terms, on 19 compute agreements the
 developers and providers announced or filed, among them filings with the US Securities and Exchange Commission.
+
+**In plain words.** Five companies, Google, Microsoft, Meta, Amazon and Oracle, own about seven in ten of the AI
+chips the open record counts, and their share has stood still since mid-2025 ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md); [Epoch AI](https://epoch.ai/data-insights/hyperscalers-control-most-compute)).
+The firms that build the leading models, OpenAI and Anthropic, have no row of their own in that record: they rent. No
+state or public appears as an owner either; a public shows up only as law, in contracts and export rules ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md)).
 
 **What the ecology knows now.**
 
@@ -91,6 +97,11 @@ the Atelier's *In Whose Name* ([summary](https://github.com/frankbueltge/ulysses
 read in the body's own record or a filing of the party acted on, coded a second time blind. A found set, not a
 census: counts are lower bounds, and "stands" means no later record was found.
 
+**In plain words.** Public bodies in nine countries have stopped, delayed or set conditions on AI compute 29 times
+since 2019: at the chip, the building site, the grid and the model, but never at the deal by which developers rent
+their compute. None gave the power or the control of AI as its reason; each used what it already governs, such as
+national security, land, water, power or personal data. Of 11 stops, 4 still stand whole ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/SUMMARY.md)).
+
 **What the ecology knows now.**
 
 1. *Holds — public bodies act at four of five points, never at the deal.* 6 acts at the chip, 10 at the building
@@ -148,6 +159,11 @@ the Atelier's *Named For Them* ([summary](https://github.com/frankbueltge/ulysse
 ([summary](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-015/SUMMARY.md)). All three rest on one record: the AI Incident Database's snapshot of 9 November 2026, 1,803
 incidents ([snapshots](https://incidentdatabase.ai/research/snapshots/)). A found set, not a census of harm: "on
 record" means in this database, counts of acts are floors, and every second reader was a machine.
+
+**In plain words.** In the public AI Incident Database (1,803 incidents), the press wrote the first report in about
+nine cases of ten, and the people harmed wrote an estimated 4 %. Where a public body acted, it acted more often on the
+person who used the AI (41 of 69 acts) than on its maker. The clearest losses of control on record, models doing what
+they had been told not to do, are there only because two makers chose to publish them ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/SUMMARY.md)).
 
 **What the ecology knows now.**
 
@@ -230,6 +246,12 @@ the Atelier on 34 cases two makers published of their own models acting against 
 accounts, 3 notices). What the synthesis cites, not a census of what evaluations test: the makers' own tests of
 conduct enter only where the report cites a system card ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-016/step-4-critique.md), the Field, point 5). Every reader was a machine,
 and nobody reran a test.
+
+**In plain words.** Of the 201 sentences on testing AI in the *International AI Safety Report 2026*, 41 report a
+measurement. Behind them stand 48 tests; an outsider could repeat 28 on paper, but most name models their makers have
+since retired, so for only 2 can the cited result still be run today on every model it names. None of the seven public
+rules the report names sets a pass mark on a test result; where marks exist, the makers set them, and for how a model
+behaves nobody sets one ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-016/SUMMARY.md)).
 
 **What the ecology knows now.**
 
@@ -315,6 +337,16 @@ other: the four marks cited for results and the cards' wider marks are two lists
 "6" count tests in one work and sentences in another, as the step says. Against the critique on record: the Field's
 own critique leaves the four marks as three of one maker and none repeatable, and the Atelier's critique, point 3,
 makes point 5 a selection of the incidents two makers published; both are linked.*
+
+## The test after four steps
+
+*Passed on 2026-11-19.* As `README.md`, section 3, asks, the architect was asked after the fourth step whether this
+state holds something he did not know, that is sourced and that he would show someone, and a Studio form he accepts.
+He answered yes (wording private), on a half-page summary of the four steps in everyday language with links to the
+evidence and to the Studio's four works, *NO PUBLIC LAND*, *WHOSE GATE*, *OTHER HANDS* and *SECOND RUN*. The
+programme goes on. Two weak points went with that summary: this file is far longer than the two pages its header
+allows, and the Studio's forms need much prose before they read, as the works' own critiques say. Since this day every
+step opens with a paragraph in plain words (`README.md`, section 2, point 3).
 
 ## Step 5
 

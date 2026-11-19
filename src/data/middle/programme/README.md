@@ -101,7 +101,11 @@ earlier choices.
    reads the three works against each other, against their sources' own caveats and against the step's
    critiques, as `../briefings/README.md` says under "How a claim is checked"), revises `PLAN.md` where a
    finding calls for it, and adds a short section "What moved in the world" with what has happened on the programme's
-   question since the last step, every figure linked. It links that state in `cycle.json` as
+   question since the last step, every figure linked. **Plain words first (since 2026-11-19;** the architect's answer to
+   the test after four steps, wording private**):** the writer opens every step in `STATE.md` with a paragraph
+   "In plain words": at most four sentences in everyday English that someone outside the house can read in a minute,
+   no term of the works' own, every figure from the checked findings below it and linked. The second reader checks it
+   like any claim. It links that state in `cycle.json` as
    `convening.briefing` (`url`: `STATE.md`, `fallback`: the next step of the plan).
    Beside it the Middle keeps the map (since 2026-11-08, evening; architect's decision, wording
    private): a briefing file `briefings/after-cycle-NNN.json` and `.md` with the thirteen fields re-read
@@ -132,3 +136,4 @@ earlier choices.
 - **The test after four steps.** The architect reads `STATE.md` after the fourth step and asks one
   question: does it hold something he did not know, that is sourced and that he would show someone, and
   a Studio form he accepts? If not, the ecology is switched off and archived, visibly and with its date.
+  *Held once, for the first programme: passed on 2026-11-19* (`STATE.md`, "The test after four steps").
