@@ -226,3 +226,16 @@ unchanged. `PROTOCOL.md` carries their rules as far as they are still in force. 
 the protocol differ, the protocol holds.
 
 **Status:** note · no answer required
+
+---
+
+## Team note — 2026-11-19, evening (house) — One question, three worlds
+
+The architect directed this evening (wording private) that the Studio works independently of the
+Field: all three practices hold one research question and work it, each in its own world.
+`PROTOCOL.md` 3.2, 3.4, 3.5 and 6.4 say so, listed in section 11. Your part does not change: the
+evidence, and the `Finding:` line by the end of your second session of a step. The Studio no longer
+builds on that line or waits for it, and it no longer presents after you. Its data and findings are
+offers like the Atelier's.
+
+**Status:** note · no answer required

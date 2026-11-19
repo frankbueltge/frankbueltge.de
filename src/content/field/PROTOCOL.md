@@ -147,16 +147,22 @@ work takes four sessions:
 
 At a cycle's open this practice declares in its bulletin what its discipline asks of the question.
 
-### 3.2 The order of a step
+### 3.2 One question, three worlds
 
-While a programme runs, the three practices build three parts of one step that need each other:
-the Field the evidence, the Atelier concepts and critique, the Studio a form for the Field's
-finding. The step has an order:
+While a programme runs, the three practices work the step's sub-question, each in its own world,
+with its own means and to the standard of its own discipline (1.2): the Field the evidence, the
+Atelier concepts and critique, the Studio a form a visitor enters. No practice waits for another:
+each begins the step's work in its first session of the step and presents when its four sessions
+are done.
 
 - The Field marks its finding with a bulletin line
   `Finding: <one sentence> — <path to the dataset>`, by the end of its second session of a step.
-- The Studio begins the step's work in its first session after that line stands.
-- The Studio presents after the Field has presented.
+  The Atelier's critique and the Middle's state read it. A sibling's work may take from it and
+  owes nothing to it.
+- What a sibling publishes in the step is material, never a condition (6.4).
+
+From 2026-11-13 to 2026-11-19 the Studio gave the Field's finding a form, began the step's work
+after the `Finding:` line and presented after the Field (11).
 
 ### 3.3 The check
 
@@ -171,11 +177,10 @@ an offer contradicts is checked (6.2), and "asserted" means that a script reads 
 ### 3.4 A session with nothing of the step to do
 
 A practice with nothing of the step to do in a session returns to its last presented work. This
-holds for the Studio before the finding, for a practice that has presented while a sibling still
-works, and for any practice while the state of a finished step is not yet checked. The practice
-answers there what its critique and the siblings' finished findings left open, as a dated state
-with its own `PROCESS.json` entry. Where nothing is owed, it closes in one line. It starts no side
-work to fill a session.
+holds for a practice that has presented while a sibling still works, and for any practice while
+the state of a finished step is not yet checked. The practice answers there what its critique and
+the siblings' finished findings left open, as a dated state with its own `PROCESS.json` entry.
+Where nothing is owed, it closes in one line. It starts no side work to fill a session.
 
 ### 3.5 This practice's part and its four sessions
 
@@ -186,8 +191,8 @@ It may not shrink the question to what one dataset counts.
 1. The first session ships a working page of the study that already shows its question and its
    central figure, with the predictions fixed before the analysis: at most three in a session, and
    only ones that can fail.
-2. The second publishes the finding and the dataset behind it under `Finding:` (3.2). The Studio
-   builds its form on them.
+2. The second publishes the finding and the dataset behind it under `Finding:` (3.2). A sibling
+   may take from them; none waits for them.
 3. The third is the check (3.3). Every item the study coded is coded a second time from its
    source, without the first coding in view, and the agreement is reported. The weakest claim is
    chased. The summary and the `Next step:` line are read against the siblings' open critique and
@@ -471,8 +476,8 @@ is recorded as noted.
 ### 6.4 Material from the siblings
 
 Where a sibling already holds an instrument or a dataset for the work, the work builds on it
-instead of rebuilding it. While a programme runs, a work takes what the step gives it: the three
-parts of a step need each other (3.2).
+instead of rebuilding it. While a programme runs, a work may take whatever the siblings publish in
+the step, beyond the limit of 7.2, and owes none of it (3.2).
 
 ### 6.5 The Middle and each practice's sovereignty
 
@@ -689,3 +694,10 @@ This section holds until cycle 014 ends.
   the work, to a channel the receiver opened itself, and the architect sends it. Section 8 said
   before that sending measures nothing and that an unsent packet is a complete outcome; those
   sentences stand in the archived text.
+- 2026-11-19: one question, three worlds (3.2, 3.4, 3.5, 6.4), set by the architect on that day
+  (his wording private). The Studio no longer gives this practice's finding a form and no longer
+  waits for it: each practice works the step's sub-question in its own world, begins the step's
+  work in its first session of the step and presents when its four sessions are done. The
+  `Finding:` line stays, by the end of the second session; the Atelier's critique and the Middle's
+  state read it, and a sibling may take from it. From 2026-11-13 to this day the Studio began
+  after that line and presented after this practice.
