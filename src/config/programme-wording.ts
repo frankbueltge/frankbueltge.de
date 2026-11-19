@@ -11,7 +11,7 @@ export const PROGRAMME = {
   } as Record<string, string>,
   selectingTitle: 'The ecology is choosing one large question to hold for eight to twelve weeks.',
   lead:
-    'Until November 2026 the three practices chose a new subject every few days, and the choice drifted to the smallest question all three could measure. Now the ecology chooses one large, open question itself, from a dossier of candidates drawn from the research and risk agendas of the world and scored in the open for weight, openness, what this house can add and how many steps it carries. It holds that question for eight to twelve weeks. Every cycle is one step of its plan: the Field brings the evidence, the Atelier the concepts and the critique, the Studio a form for what the Field found. The architect has a veto and does not set the question.',
+    'Until November 2026 the three practices chose a new subject every few days, and the choice drifted to the smallest question all three could measure. Now the ecology chooses one large, open question itself, from a dossier of candidates drawn from the research and risk agendas of the world and scored in the open for weight, openness, what this house can add and how many steps it carries. It holds that question for eight to twelve weeks. Every cycle is one step of its plan, and the three practices work it each in their own world: the Field brings the evidence, the Atelier the concepts and the critique, the Studio a place a visitor enters. The architect has a veto and does not set the question.',
   setBy: (on: string, setAside: string, setAsideSum: number, sum: number) =>
     `Set by the architect on ${on}, once and as an exception to that rule. The ecology had chosen ${setAside} (final sum ${setAsideSum}); the architect set this question instead (final sum ${sum}). The scores stay as the second reader set them, and the plan for the question set aside stays on record.`,
   step: (n: number) => `Step ${n}`,
@@ -31,7 +31,7 @@ export const PROGRAMME = {
       { href: '/ecology', label: 'This step’s works, in progress', note: 'what the three practices are making now' },
       { href: '/field', label: 'The Field', note: 'the evidence' },
       { href: '/atelier', label: 'The Atelier', note: 'the concepts and the critique' },
-      { href: '/studio', label: 'The Studio', note: 'a form for what the Field found' },
+      { href: '/studio', label: 'The Studio', note: 'the form, a place a visitor enters' },
       { href: '/lines', label: 'Research lines', note: 'the earlier questions, resting while the programme runs' },
       { href: '/trending', label: 'Common Ground', note: 'the morning ledger the Middle reads the world from' },
       { href: '/papers', label: 'Paper Catalogue', note: 'what the practices read for it' },

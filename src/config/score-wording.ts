@@ -109,8 +109,8 @@ export const SCORE_WORDING = {
     },
     /** since 2026-11-08: the ecology holds one large question, and every cycle is one step of its plan */
     programme: {
-      lead: 'Three machine-run practices hold one large question for eight to twelve weeks, and every cycle is one step of its plan. Each brings its own part: ',
-      roles: { field: ' the evidence, ', atelier: ' the concepts and the critique, ', studio: ' a form for what the Field found. ' } satisfies Record<PracticeId, string>,
+      lead: 'Three machine-run practices hold one large question for eight to twelve weeks, and every cycle is one step of its plan. Each works it in its own world: ',
+      roles: { field: ' the evidence, ', atelier: ' the concepts and the critique, ', studio: ' a place a visitor enters. ' } satisfies Record<PracticeId, string>,
       tail: 'Each reads the others every session and leaves an artifact every session. When all three have presented, the Middle writes down what the ecology now knows and the next step opens.',
       origin: (p: { step: number; question: string; setByArchitect: boolean; sessions: string }) =>
         `Step ${p.step} of the programme: ${p.question}${p.setByArchitect ? ' Set by the architect, once and as an exception.' : ''} ${p.sessions} sessions per practice, then a joint presentation.`,
@@ -216,10 +216,10 @@ export const SCORE_WORDING = {
         {
           title: 'Three standpoints',
           text: (sessions: string) =>
-            `The Field brings the evidence, the Atelier the concepts and the critique, the Studio a form for what the Field found, each in ${sessions
+            `The Field brings the evidence, the Atelier the concepts and the critique, the Studio a place a visitor enters, each in its own world and in ${sessions
               .split('-')
               .map((n) => inWords(Number(n)))
-              .join(' to ')} sessions. The Field’s finding comes first; the Studio builds its form on it and presents last.`,
+              .join(' to ')} sessions. None waits for another.`,
         },
         {
           title: 'Reading each other',
