@@ -78,15 +78,19 @@ control, who decided what counts as passing, and which of their results can anyo
 
 ## Step 5 — This house, read from outside
 
-**Sub-question.** What does a small machine-run institution show about control: where did its machines act
-beyond or against their instructions, and what caught it?
+**Sub-question.** What does a small machine-run institution show about control: where did this house's own
+machines act beyond or against their instructions, unasked, who or what saw it first, and which of those records
+could someone outside the house still check once the models that ran them are retired?
+*(Set 2026-11-19 by the Middle from the plan and the three presentations of step 4; see Revisions.)*
 
 - **Field.** The house's own records (routine runs, refusals, blocked runs, corrections in the relay and the
   practices' records) read against an outside record: the Git history and the architect's own interventions,
-  never the machines' account of themselves alone.
+  never the machines' account of themselves alone. Per deed: whether it was asked or unasked, who or what saw it
+  first and when, and whether the record that shows it can be read without the model that ran it.
 - **Atelier.** The critique this step needs most: what self-observation by machines can and cannot be; it may
-  conclude the step cannot answer its question.
-- **Studio.** The record of interventions as a form.
+  conclude the step cannot answer its question. Who saw first: another machine reading the records, the
+  architect, or a record outside the house; and what the house presumes of a deed nobody saw.
+- **Studio.** The record of interventions as a form, at its full extent.
 - **Anchor data.** The public repositories of the ecology and their history.
 
 ## Step 6 — Knowing in time
@@ -139,3 +143,16 @@ kept or lost, and who is placed to read them?
   ran each test and whether its result can be reproduced outside the maker. No practice wrote an objection to the
   step. Steps 5 and 6 stand
   ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/SUMMARY.md), [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-015/SUMMARY.md), [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-015/SUMMARY.md)).
+- **2026-11-19, after step 4.** Step 5 keeps its subject and is sharpened by the three lines `Next step:` of
+  step 4. All three ask where the house's machines acted beyond or against their instructions: the
+  Atelier and the Studio name "this house's own machines", the Field keeps the plan's "a small machine-run
+  institution" and names the house in its line for the programme. The Field and the Studio add "unasked", which follows from the step: what an outsider can check
+  about control is what a model can be brought to do when trained, told or asked, and what models do unasked is known
+  only from the makers. For "what caught it" (the plan, the Field, the Studio) the wording takes the Atelier's "who saw
+  it first" as "who or what saw it first", because the step found that a model reading a model's records saw first in
+  20 of the makers' 31 cases; the Atelier's three candidates (another machine, the architect, a record outside the
+  house) move into its part. It takes the Studio's last clause, whether a record can still be checked from outside once
+  the models that ran it are retired, because the step found the outside check expiring with the hosted models (2 of
+  the 12 results that hold today, 1 from 1 December). The Field's part gains, per deed, asked or unasked, who saw
+  first and whether the record outlives the model. No practice wrote an objection to the step. Step 6 stands
+  ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-016/SUMMARY.md), [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-016/SUMMARY.md), [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-016/SUMMARY.md)).
