@@ -1,0 +1,347 @@
+{
+ "rules": "is a translation written on the night, and the record says that is where this\npractice errs. So every step is a fixed rule, stated before the makers ran:\n\n1. Decode to mono, 22,050 Hz.\n2. Peak band: over the whole recording, the frequency where the loud moments stand furthest\n   above the steady background (98th percentile over median, per 21.5 Hz bin, 200 Hz to 10 kHz,\n   smoothed over five bins). Version 1 of this rule took the frequency with most median energy\n   and found background noise in three recordings; it is kept in the journal, not here. Band = [peak / 2.2, peak * 2.2], clamped to 200 Hz .. 10.5 kHz.\n3. Envelope: band energy in 10 ms frames, in dB. Floor = 20th percentile, top = 99.5th.\n   Active = above floor + 0.35 * (top - floor).\n4. Strophe: from the loudest active frame, extend left and right while the gap to the next\n   active frame is shorter than 0.6 s. Pad 0.25 s each side. Capped at 6 s around the peak.\n5. Notes: maximal runs of active frames inside the strophe, runs closer than 30 ms merged, runs\n   shorter than 25 ms dropped. Their count is the measured note count.\n6. Spectrogram: 0 to 11 kHz linear (0 to 3 kHz if the peak is under 1.2 kHz), grey, time axis\n   in seconds, frequency in kHz. Nothing else is written on it.",
+ "songs": [
+  {
+   "key": "a",
+   "peak_hz": 3704,
+   "band_hz": [
+    1684,
+    8148
+   ],
+   "clip_from_s": 7.454,
+   "clip_to_s": 9.501,
+   "clip_len_s": 2.046,
+   "fmax_hz": 11000,
+   "notes": [
+    [
+     0.25,
+     0.489
+    ],
+    [
+     0.609,
+     0.689
+    ],
+    [
+     0.739,
+     0.819
+    ],
+    [
+     0.869,
+     0.948
+    ],
+    [
+     0.998,
+     1.078
+    ],
+    [
+     1.118,
+     1.198
+    ],
+    [
+     1.318,
+     1.796
+    ]
+   ],
+   "note_count": 7
+  },
+  {
+   "key": "b",
+   "peak_hz": 495,
+   "band_hz": [
+    225,
+    1090
+   ],
+   "clip_from_s": 2.545,
+   "clip_to_s": 6.787,
+   "clip_len_s": 4.241,
+   "fmax_hz": 3000,
+   "notes": [
+    [
+     0.25,
+     0.509
+    ],
+    [
+     0.679,
+     1.727
+    ],
+    [
+     1.816,
+     3.802
+    ],
+    [
+     3.892,
+     3.922
+    ]
+   ],
+   "note_count": 4
+  },
+  {
+   "key": "c",
+   "peak_hz": 3962,
+   "band_hz": [
+    1801,
+    8717
+   ],
+   "clip_from_s": 16.953,
+   "clip_to_s": 21.853,
+   "clip_len_s": 4.9,
+   "fmax_hz": 11000,
+   "notes": [
+    [
+     0.26,
+     0.31
+    ],
+    [
+     0.609,
+     0.629
+    ],
+    [
+     0.669,
+     0.749
+    ],
+    [
+     0.869,
+     0.889
+    ],
+    [
+     1.008,
+     1.128
+    ],
+    [
+     1.477,
+     1.547
+    ],
+    [
+     1.697,
+     1.727
+    ],
+    [
+     2.166,
+     2.206
+    ],
+    [
+     2.335,
+     4.65
+    ]
+   ],
+   "note_count": 9
+  },
+  {
+   "key": "d",
+   "peak_hz": 4500,
+   "band_hz": [
+    2046,
+    9901
+   ],
+   "clip_from_s": 43.163,
+   "clip_to_s": 46.487,
+   "clip_len_s": 3.324,
+   "fmax_hz": 11000,
+   "notes": [
+    [
+     0.25,
+     0.27
+    ],
+    [
+     0.519,
+     0.609
+    ],
+    [
+     0.709,
+     0.759
+    ],
+    [
+     0.819,
+     3.074
+    ]
+   ],
+   "note_count": 4
+  },
+  {
+   "key": "e",
+   "peak_hz": 6352,
+   "band_hz": [
+    2887,
+    10500
+   ],
+   "clip_from_s": 29.733,
+   "clip_to_s": 31.84,
+   "clip_len_s": 2.106,
+   "fmax_hz": 11000,
+   "notes": [
+    [
+     0.25,
+     0.31
+    ],
+    [
+     0.4,
+     1.856
+    ]
+   ],
+   "note_count": 2
+  },
+  {
+   "key": "f",
+   "peak_hz": 3208,
+   "band_hz": [
+    1458,
+    7059
+   ],
+   "clip_from_s": 9.879,
+   "clip_to_s": 11.346,
+   "clip_len_s": 1.468,
+   "fmax_hz": 11000,
+   "notes": [
+    [
+     0.25,
+     0.639
+    ],
+    [
+     0.739,
+     1.218
+    ]
+   ],
+   "note_count": 2
+  },
+  {
+   "key": "g",
+   "peak_hz": 3015,
+   "band_hz": [
+    1370,
+    6632
+   ],
+   "clip_from_s": 168.239,
+   "clip_to_s": 170.335,
+   "clip_len_s": 2.096,
+   "fmax_hz": 11000,
+   "notes": [
+    [
+     0.25,
+     0.27
+    ],
+    [
+     0.509,
+     0.529
+    ],
+    [
+     0.689,
+     0.739
+    ],
+    [
+     0.958,
+     0.978
+    ],
+    [
+     1.298,
+     1.846
+    ]
+   ],
+   "note_count": 5
+  },
+  {
+   "key": "h",
+   "peak_hz": 5943,
+   "band_hz": [
+    2701,
+    10500
+   ],
+   "clip_from_s": 8.252,
+   "clip_to_s": 10.848,
+   "clip_len_s": 2.595,
+   "fmax_hz": 11000,
+   "notes": [
+    [
+     0.489,
+     0.539
+    ],
+    [
+     0.988,
+     1.078
+    ],
+    [
+     1.138,
+     1.238
+    ],
+    [
+     1.288,
+     1.407
+    ],
+    [
+     1.447,
+     1.747
+    ],
+    [
+     1.787,
+     2.345
+    ]
+   ],
+   "note_count": 6
+  },
+  {
+   "key": "i",
+   "peak_hz": 2153,
+   "band_hz": [
+    979,
+    4737
+   ],
+   "clip_from_s": 8.372,
+   "clip_to_s": 11.726,
+   "clip_len_s": 3.354,
+   "fmax_hz": 11000,
+   "notes": [
+    [
+     0.25,
+     0.649
+    ],
+    [
+     0.958,
+     1.487
+    ],
+    [
+     1.567,
+     1.727
+    ],
+    [
+     1.906,
+     2.076
+    ],
+    [
+     2.245,
+     2.425
+    ],
+    [
+     2.595,
+     2.764
+    ],
+    [
+     2.934,
+     3.104
+    ]
+   ],
+   "note_count": 7
+  },
+  {
+   "key": "j",
+   "peak_hz": 5534,
+   "band_hz": [
+    2515,
+    10500
+   ],
+   "clip_from_s": 15.985,
+   "clip_to_s": 17.852,
+   "clip_len_s": 1.867,
+   "fmax_hz": 11000,
+   "notes": [
+    [
+     0.25,
+     0.31
+    ],
+    [
+     0.579,
+     1.617
+    ]
+   ],
+   "note_count": 2
+  }
+ ]
+}

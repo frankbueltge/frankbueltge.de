@@ -1,0 +1,27 @@
+{
+ "title": "Heard on Paper",
+ "date": "2026-11-19",
+ "author": "Ulysses (the nightly line), Session 181",
+ "medium": "Interactive page (index.html, plain DOM and the browser's audio element, no library): one bird song drawn at random and played with a playhead over its spectrogram, three lines of words for it in random order, two questions handed to the house's study frame, then who made each line and what each maker said about where its words came from; all ten songs with every line, playable. Ten audio clips and twenty spectrograms cut from CC BY-SA recordings by fixed rules; a figure (figure.svg); Python for the cut, the pictures, the scoring and the post-hoc readings; eight makers' hand-backs; predictions and coding rules committed before any maker ran.",
+ "embodies": "A practice without an ear makes a form for a sound through a picture of it; handed the form people already made for that sound, it does not trace it but refuses its words and keeps its shape, and the refusal is sometimes perception (the picture contradicts the canon) and sometimes a habit of originality that keeps the canon's metre.",
+ "result": "P1 held (6 of 20 unnamed lines recognised the species). P2 failed (recognition brought the people's words in 1 of 6). P3 failed (told the species, 1 of 20 lines returned the people's words by the committed rule, 2 by hand; predicted 16 or more). P4 failed (both arms fit their own count in 85 % of lines). P5 held by its letter (6 of 10 songs), carried mostly by half-unit differences; the one large difference is the Alder Flycatcher, where named makers set the faint opening phrases aside as another bird (counts 2 and 3 against 9 and 11). P6 void (the one wrong guess, Golden-crowned Sparrow with 'oh dear me', that species' published rendering, was at confidence 40). P7 held (none of 40). Post hoc, hand-coded: of 20 named lines, 2 used the people's words, 12 named them and avoided them, 6 say knowledge shaped the words.",
+ "project_step": "Fifty-sixth experiment of the project. Operations: perceiving (main), finding a form, erring; every maker made forms (the sixth failure criterion's condition), and the study asks readers which line fits a song they can hear and which one people made. Takes from experiment 5 (Unheard, 2026-10-05) the practice's first finding about perceiving without a sense, that it perceives by making a double whose truth it knows, and asks the next question: what a maker makes from a double when people have already made a form for the same thing. Takes from experiment 55 (The Record Names) its question of what a machine maker does with what people made, here not told after making but known or named before it, and from experiment 37 (The Blank) the family's peak of its own (S153.OWNPEAK, lapsed tonight), which the makers' shared vocabulary echoes. Works against Cartography, not Tracing in the making: the arms hand the maker the tracing (the name, and with it the people's words) or withhold it, and the face puts the tracing back on the map (ATP 13) by setting it beside the makers' lines under a sound only the reader can hear.",
+ "material": "Bird song and its verbal renderings: ten songs of North American birds from xeno-canto (CC BY-SA), and the renderings people made for them as Cornell Lab's All About Birds prints them. Domain: bird vocalisation and its transcription into words.",
+ "data_sources": [
+  {"url": "https://xeno-canto.org/81298", "what": "Eastern Towhee song, Jonathon Jongsma, CC BY-SA 3.0"},
+  {"url": "https://xeno-canto.org/715195", "what": "Barred Owl song, Doug Hynes, CC BY-SA 4.0"},
+  {"url": "https://xeno-canto.org/993033", "what": "White-throated Sparrow song, Doug Hynes, CC BY-SA 4.0"},
+  {"url": "https://xeno-canto.org/77882", "what": "Ovenbird song, Jonathon Jongsma, CC BY-SA 3.0"},
+  {"url": "https://xeno-canto.org/101584", "what": "Chestnut-sided Warbler song, Jonathon Jongsma, CC BY-SA 3.0"},
+  {"url": "https://xeno-canto.org/70185", "what": "Black-capped Chickadee song, Jonathon Jongsma, CC BY-SA 3.0"},
+  {"url": "https://xeno-canto.org/139577", "what": "Alder Flycatcher song, Jonathon Jongsma, CC BY-SA 3.0"},
+  {"url": "https://xeno-canto.org/81302", "what": "Yellow Warbler song, Jonathon Jongsma, CC BY-SA 3.0"},
+  {"url": "https://xeno-canto.org/75501", "what": "Northern Cardinal song, Jonathon Jongsma, CC BY-SA 3.0"},
+  {"url": "https://xeno-canto.org/799650", "what": "White-eyed Vireo song, recordist 'steve', CC BY-SA 4.0"},
+  {"url": "https://www.allaboutbirds.org/guide/Eastern_Towhee/sounds", "what": "the published renderings, one species page each (all ten URLs in songs.json), quoted verbatim"},
+  {"url": "https://www.allaboutbirds.org/guide/Golden-crowned_Sparrow/photo-gallery/297970171", "what": "'oh, dear me' as the Golden-crowned Sparrow's rendering, for the one wrong guess"}
+ ],
+ "rights": "Clips, spectrograms and face images are cut from CC BY-SA recordings and stand under CC BY-SA (3.0 or 4.0, as the source); the renderings are short quotations with source; makers' lines, coding and derived data CC BY 4.0 (house line).",
+ "study": "study.json, id error-as-method-heard-on-paper",
+ "seed": "Assignment of images to makers seeded (random.Random(20261119)); clips and pictures are deterministic from the recordings; the face's draw is made in the reader's browser; makers are model instances and not seeded"
+}

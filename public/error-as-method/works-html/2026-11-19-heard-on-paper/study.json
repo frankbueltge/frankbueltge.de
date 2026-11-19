@@ -1,0 +1,15 @@
+{
+  "$contract": "study/1",
+  "id": "error-as-method-heard-on-paper",
+  "title": "Heard on Paper: which words fit the song?",
+  "question": "When a reader hears a bird's song beside three phrases for it, one made by people long ago and two made by machine makers who could only see a picture of the sound, which phrase fits the song best for them, and can they tell which one people made?",
+  "purpose": "Machine makers cannot hear. They wrote phrases for bird songs from a picture of the sound, some told the bird's name and some not. People made their own phrases for the same songs long ago. You hear one song and see three phrases in random order. We ask which fits the song best for you, and which you think people made.",
+  "reading": "For each song we count how often readers choose the people's phrase, the phrase of a maker not told the bird, and the phrase of a maker told it, as fitting best, and how often readers pick out the people's phrase. We report counts for the readers of this work only, with no claim about people in general.",
+  "questions": [
+    { "id": "song", "kind": "text", "prompt": "Which song was drawn for you (filled in by the work)?", "max_length": 40 },
+    { "id": "order", "kind": "text", "prompt": "In which order were the three phrases shown (filled in by the work)?", "max_length": 40 },
+    { "id": "fits", "kind": "choice", "prompt": "Which phrase fits the song best for you?", "options": ["the first", "the second", "the third"] },
+    { "id": "people", "kind": "choice", "prompt": "Which phrase do you think people made?", "options": ["the first", "the second", "the third", "I cannot tell"] }
+  ],
+  "closes": "2027-02-28"
+}
