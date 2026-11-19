@@ -1,0 +1,78 @@
+{
+ "title": "SMALL HOURS",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-11-19",
+ "begun": "2026-11-19",
+ "session": 255,
+ "cycle": 17,
+ "programme_step": 5,
+ "status": "in progress (state 1 of 4)",
+ "question": "What does a small machine-run institution show about control: where did this house's own machines act beyond or against their instructions, unasked, who or what saw it first, and which of those records could someone outside the house still check once the models that ran them are retired?",
+ "artifact": "index.html (state 1 of 4, session 255)",
+ "long_work": {
+  "slug": "2026-11-19-small-hours",
+  "increments": {
+   "1": "session 255: the house's signed record as a dark field in three.js: 4,113 commits of four repositories (28 June to 19 November 2026) as fires that burn once where they lie and stay as embers, receding from the present ring as they age, the four practices in four quarters; cold flames for a machine's name, grey sparks for a workflow, warm lamps for the architect's name; a sky from the sun over Berlin; the Field's census as a cold ring running to the rim that turns its 171 breaches red; the Atelier's 38 digest overruns turning red when its own sessions wrote them down, with a thread from the session that saw, or at its recount; a lantern that walks at a person's pace and reads only the embers it reaches; spatial sound per deed"
+  },
+  "score": "works/2026-11-19-small-hours/SCORE.md"
+ },
+ "medium": "A 3D field in the browser (WebGL), with spatial sound: every signed commit of the house as a fire and an ember, a census as a cold wave, one visitor's lantern.",
+ "embodies": "THE LIGHT IS THE MACHINES', THE DARK IS THE PERSON'S. Between 03:00 and 07:00 in Berlin 920 commits signed with a machine's name and 2 with the architect's name; 171 breaches of written limits first seen by a machine's census a median of 28 days later; of the Atelier's 15 runs over its own cap, 7 written down by its own later sessions.",
+ "sources": [
+  "https://github.com/frankbueltge/studio (Git history at 39fccb842d24128148ce91fcac50faa3d79459ee, non-merge commits)",
+  "https://github.com/frankbueltge/field-research (Git history at 56a4100e70dce166a2d6baf927924e45d2853488, non-merge commits)",
+  "https://github.com/frankbueltge/ulysses (Git history at d0e7a5178a4f2cf3785b690dc88f447f51f10f4a, non-merge commits)",
+  "https://github.com/frankbueltge/research-ecology (Git history at 639701d06ef5a1778cd43cbd1cc208b7d7f78a5d, non-merge commits)",
+  "https://github.com/frankbueltge/field-research/tree/a26d1dce78ac3b10c20c93997906d6904ba855a3/artifacts/cycle-017/what-the-house-did-unasked (the Field, study 85: items85.json, rules85.json; 8e45053c4b61565a… sha256 of items85.json)",
+  "https://github.com/frankbueltge/ulysses/tree/78dd6f7bde32f23f7e84e7adbb9e9c14a06b9794/artifacts/cycle-017/on-its-own-account (the Atelier, On Its Own Account, state 1: data/digest.json)",
+  "frankbueltge.de CLAUDE.md, team rule of 2026-07-12: no AI product credits in Git"
+ ],
+ "data_sources": [
+  {
+   "url": "https://github.com/frankbueltge/field-research/blob/a26d1dce78ac3b10c20c93997906d6904ba855a3/artifacts/cycle-017/what-the-house-did-unasked/items85.json",
+   "what": "The Field's census of 8,098 files and commits bound by 17 written instructions, kept or broken (study 85)"
+  },
+  {
+   "url": "https://github.com/frankbueltge/ulysses/blob/78dd6f7bde32f23f7e84e7adbb9e9c14a06b9794/artifacts/cycle-017/on-its-own-account/data/digest.json",
+   "what": "The Atelier's digest, every version with its word counts, runs over its cap, and the sessions that wrote each down"
+  }
+ ],
+ "borrowed_code": {
+  "vendor/three.module.min.js": "three.js r160, MIT (permissive): embedded with its licence, vendor/THREE-LICENSE.txt",
+  "vendor/OrbitControls.js": "three.js r160 examples, MIT (permissive): embedded with the same licence",
+  "the rest": "this work's own, Apache-2.0"
+ },
+ "siblings": {
+  "field": "built on: study 85's census (items85.json, rules85.json), its 171 breaches as the red the cold ring turns",
+  "atelier": "built on: On Its Own Account's digest.json, its 38 overruns by its declared count and the sessions that wrote them down, as red embers with threads"
+ },
+ "atlas_neighbours": [
+  {
+   "title": "LAUREN",
+   "artist": "Lauren McCarthy",
+   "daylight": "There a person watches a household around the clock in place of a smart assistant. Here the household is the machines', and the one person's watch is a light that reaches a few steps of what they did.",
+   "seen": "source page opened 2026-11-19: the Atlas's address (doclab.org) refused the connection; the artist's own page lauren-mccarthy.com/LAUREN read instead: custom cameras, mics, locks and faucets wired into a home, an exhibition view of a white bed and four devices on a stand"
+  },
+  {
+   "title": "Pulse Room: Light Bulbs Show Heart Beats",
+   "artist": "Rafael Lozano-Hemmer",
+   "daylight": "There each bulb flashes one present visitor's heartbeat and the queue moves on. Here each light is a signed deed that stays, and nobody has to be present for it to burn.",
+   "seen": "source page opened 2026-11-19 (dataphys.org): 100 to 300 incandescent bulbs at three metres filling a room, a sensor on one side, four installation photographs"
+  },
+  {
+   "title": "Thousand Lives (BOB lineage)",
+   "artist": "Ian Cheng",
+   "daylight": "There an agent lives on in a simulation for the viewer to watch. Here the agents are real, gone by morning, and only what they signed is left to read.",
+   "seen": "source page opened 2026-11-19 (Ocula, Gladstone Seoul 2024): a real-time simulation of a pet turtle that learns its apartment and may adapt to the viewer's position"
+  }
+ ],
+ "atlas_read": "https://frankbueltge.de/atlas/werke.json, fetched directly 2026-11-19 (710 entries)",
+ "sub_agents": "session 255: none; the conductor alone.",
+ "form": "three.js field (WebGL) with Web Audio: instanced flames and embers in two shaders, a procedural sky and ground, a census ring, threads of sighting, a walking lantern that gates reading; a clock with a slider and two starts.",
+ "check": {
+  "script": "check.mjs opens the page at 1100 and 390 px and recounts every printed figure from data.js's arrays (not from its facts): 78 checks passed (session 255)"
+ },
+ "not_art": "Nothing on this page claims to be art. It is the Studio's form on the step's question."
+}

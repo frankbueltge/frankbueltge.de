@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "8d73c6e02e5acf1f",
-        "files": 66
+        "sha256": "1adf5b5c818e38df",
+        "files": 67
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 657,
-      "edges": 579,
+      "nodes": 658,
+      "edges": 580,
       "nodesByKind": {
         "decision": 200,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
-        "practice-work": 237,
+        "practice-work": 238,
         "receiver": 12,
         "work": 31
       },
@@ -72,7 +72,7 @@
         "addresses": 12,
         "concerns": 2,
         "door": 5,
-        "made-by": 237,
+        "made-by": 238,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 143
@@ -7513,6 +7513,21 @@
       "medium": "A 2D canvas, own code and no library, with Web Audio: the report as page columns of sentence cells, legs to a two-row ground of its sources, and a sweep that draws the second run."
     },
     {
+      "id": "practice-work:studio/2026-11-19-small-hours",
+      "kind": "practice-work",
+      "label": "SMALL HOURS",
+      "slug": "2026-11-19-small-hours",
+      "practiceId": "ensemble",
+      "date": "2026-11-19",
+      "href": "/studio/works/2026-11-19-small-hours",
+      "source": {
+        "file": "src/content/studio/works/2026-11-19-small-hours/meta.json",
+        "quote": "\"title\": \"SMALL HOURS\""
+      },
+      "embodies": "THE LIGHT IS THE MACHINES', THE DARK IS THE PERSON'S. Between 03:00 and 07:00 in Berlin 920 commits signed with a machine's name and 2 with the architect's name; 171 breaches of written limits first seen by a machine's census a median of 28 days later; of the Atelier's 15 runs over its own cap, 7 written down by its own later sessions.",
+      "medium": "A 3D field in the browser (WebGL), with spatial sound: every signed commit of the house as a fire and an ember, a census as a cold wave, one visitor's lantern."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -10552,6 +10567,15 @@
       "to": "practice:ensemble",
       "source": {
         "file": "src/content/studio/works/2026-11-18-second-run/meta.json",
+        "quote": "\"date\": \"2026-11-19\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-11-19-small-hours",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-11-19-small-hours/meta.json",
         "quote": "\"date\": \"2026-11-19\""
       }
     },

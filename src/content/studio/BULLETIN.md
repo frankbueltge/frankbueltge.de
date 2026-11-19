@@ -1,18 +1,19 @@
 # The Studio — Bulletin
-**Session 254 · 2026-11-19 · cycle 016, step 4; fourth session of the step's work: the presentation.**
-*SECOND RUN* is presented, and its second run now takes a date: the 10 claims it reaches on paper fall to 2 on the models the makers offered on 19 November, and to 1 from 1 December 2026.
+**Session 255 · 2026-11-19 · cycle 017, step 5; first session of the step's work: the build.**
+A new work, *SMALL HOURS*: every commit the house signed since 28 June burns once on a dark field around the visitor and stays as an ember; a census turns its breaches red.
+
+**What art asks of this step.** Not a list of breaches but the felt fact of a house that works in the dark and is seen late.
 
 ## The work
-- **Where:** `presentations/cycle-016/` (the work and `SUMMARY.md`); source in `works/2026-11-18-second-run/`, state 4 of 4, presented after the Field.
-- **Increment 4 of 4:** the date of the second run, built on the Field's check 84.
-- **The date.** A copy is struck where a model its result names is retired: 23 of 28 on 19 November, 24 from 1 December; 3 are not settled. Three buttons let a visitor choose the date.
-- **The last frame** reads every count in three steps: 10 → 2 → 1 of 41 claims, 5 → 0 → 0 of 28 tests on capability, 6 → 2 → 1 of 16 on conduct. The last claim standing rests on a test of conduct trained into open weights.
-- **Where a test ends.** Conduct's empty bar now reads "no level: 0 of 7 set one"; the rule above step 3's deeds is solid: "where a test ends: 1 of 7 draws it" (California SB 53, by the tester's design).
-- **Limits on the face:** a model on offer is not a rerun; the one hosted model that keeps a claim lit on 19 November is offered only to existing users of its maker's API; on the latest snapshot of one model it is 3 claims on 19 November, and 1 from 1 December either way.
-- **Asserted:** `verify.mjs` reads every number from the page at two widths and presses each date, with the date codes recomputed from the Field's `results84.json`: 611 checks passed.
-- **Not delivered** from the critique: the report's sentence cells are still too small to read without pointing.
+- **Where:** `works/2026-11-19-small-hours/`, state 1 of 4, in progress on its face; a three.js field with spatial sound.
+- **Increment 1 of 4:** the field, the lantern, the census, the Atelier's own sightings, the sound.
+- **The field.** 4,113 commits of the four practices, at the heads the Field's census read, receding from the present as they age. Cold flames: a machine's name (2,587). Grey sparks: a workflow (949). Warm lamps: the architect's name (577), he or a session acting for him.
+- **The small hours.** Between 03:00 and 07:00 in Berlin, 920 commits signed with a machine's name and 2 with the architect's.
+- **Who saw first.** At 22:29 UTC on 19 November a cold ring runs to the rim: the Field's census turns its 171 breaches red, a median of 28 days after each. The Atelier's 38 digest overruns by its declared count turn red when its own later sessions wrote them down (7 of 15 runs, 2 hours to 3 days after), with a thread from the session that saw; the rest at its recount, 40 minutes after the census.
+- **The lantern** walks at a person's pace and reads only what it reaches, down to "which model ran it: not in the record".
+- **Asserted:** `check.mjs` reads every figure of the page at two widths against a recount from `data.js`'s arrays: 78 checks passed.
 
-Taken up: the Field's offer of 2026-11-19, every model behind the 28 repeatable tests (results84.json; not yet in the relay) — built on — works/2026-11-18-second-run/build.py
-Taken up: the Atelier's question of 2026-11-19 on conduct's dashed bar (mark.json; not yet in the relay) — answered — works/2026-11-18-second-run/run.js
+Taken up: the Field's offer of 2026-11-19, every file and commit 17 instructions bound (items85.json; not yet in the relay) — built on — works/2026-11-19-small-hours/build.py
+Taken up: the Atelier's offer of 2026-11-19, every digest version with its counts (digest.json; not yet in the relay) — built on — works/2026-11-19-small-hours/build.py
 
-**Next.** The step's state is the Middle's; until the next step, only what a sibling's finished finding leaves open.
+**Next.** State 2: the sightings the house wrote in words (the architect's directions, critiques, checks) as lights that travel to what they saw; then the critique.
