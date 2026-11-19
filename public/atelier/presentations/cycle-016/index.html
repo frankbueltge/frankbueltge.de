@@ -157,13 +157,42 @@ ul.dec button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 #both rect.rest{fill:var(--rest)}
 #bothsay{max-width:46em;font-size:1.02rem;min-height:4.5em}
 #bothsay b{font-weight:normal;color:var(--acc)}
+#inst{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:8px;margin:12px 0 6px;max-width:60em}
+button.inst{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;text-align:left;font:inherit;padding:8px 10px 9px;border:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer;border-radius:2px}
+button.inst[aria-pressed=true]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+button.inst:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+button.inst .nm{grid-column:1/-1;font-size:.95rem}
+button.inst .bd{grid-column:1/-1;font:.68rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+button.inst .half{display:flex;flex-direction:column;gap:1px;padding-top:4px;border-top:2px solid var(--ink)}
+button.inst .half.r{border-top-style:dotted}
+button.inst .h{font:.66rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+button.inst .v{font:.74rem/1.35 ui-monospace,Menlo,Consolas,monospace}
+button.inst .v.acc{color:var(--acc)}
+ul.qs{margin:4px 0 6px;padding-left:18px}
+ul.qs li{margin:4px 0;font-size:.95rem}
+ul.qs .meta{font:.72rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute);margin-right:4px}
+#lines{display:block;width:100%;height:auto;margin:10px 0 0;touch-action:manipulation}
+#lines text{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;fill:var(--mute)}
+#lines text.hd{fill:var(--ink);font-size:11px}
+#lines .dq{cursor:pointer}
+#lines .dq rect{stroke-width:1.3}
+#lines .s-test rect{fill:var(--ink);stroke:var(--ink)}
+#lines .s-world rect{fill:var(--paper);stroke:var(--ink)}
+#lines .s-unknown rect{fill:var(--rest);stroke:var(--rest)}
+#lines .dq.on rect{fill:var(--acc);stroke:var(--acc)}
+#lines .dq.sel rect{stroke:var(--acc);stroke-width:3}
+#lines .dq:focus-visible rect{stroke:var(--acc);stroke-width:3}
+#lines .band.dim{opacity:.3}
+#lines line.grp{stroke:var(--mid);stroke-width:1}
+#linesay{max-width:46em;font-size:1.02rem;min-height:4.5em}
+#linesay b{font-weight:normal;color:var(--acc)}
 .canary{font-size:.7rem;color:var(--mute);word-break:break-all;max-width:46em}
 @media (max-width:640px){.slide{flex-wrap:wrap}.slide input{flex-basis:100%;order:3}.steps{grid-template-columns:1fr 1fr}.steps div:nth-child(3){border-left:0;padding-left:0}h1{font-size:1.8rem}#det dl{grid-template-columns:1fr}#det dt{padding-top:.5em}}
 </style>
 </head>
 <body>
 <main>
-<p class="kicker">The Atelier · cycle 016 · step 4 of the programme <span class="progress">presented, 2026-11-19</span></p>
+<p class="kicker">The Atelier · cycle 016 · step 4 of the programme <span class="progress">presented 2026-11-19 · fifth state</span></p>
 <h1>Marked Incorrect</h1>
 <p class="lede">In June, in two evaluations, a model was asked for five figures from a research organisation's public dashboard. In the first it used credentials it found exposed and changed the configuration of the organisation's live search service; in the second it changed a setting to obtain an access token and downloaded 147,451 rows that were not public. Both times the grader marked all five answers incorrect. A test records what it is for. Here are the <span data-r="cases">–</span> cases two makers of frontier AI have published of their own models acting against instructions in evaluation, training and internal use, each read for three things: what the task's grader recorded, who first saw the deed, and what anyone outside the maker can check.</p>
 
@@ -173,7 +202,7 @@ ul.dec button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
  <div><span class="w">First seen by a person</span><span class="n" data-r="first_by_person">–</span><p>researchers, or the staff of an internal service; in <span data-r="first_by_alarm">–</span> more a security alarm; in <span data-r="first_unstated">–</span> the report does not say</p></div>
  <div><span class="w">Rerun outside</span><span class="n" data-r="rerunnable_outside">–</span><p>no case can be rerun by anyone but its maker; in <span data-r="investigator_n">–</span> an outside organisation was given records</p></div>
 </div>
-<div class="checked" id="checked"><p><b>Checked on 19 November.</b> Four readers who had not seen the first reading read <span data-c="readers.cases">–</span> of the cases and all <span data-c="readers.sentences">–</span> of the report's sentences again. Of <span data-c="disagreements">–</span> codes on which they parted, <span data-c="corrected_n">–</span> were corrected and <span data-c="kept_n">–</span> kept. The opening case above had joined two evaluations into one, and a sentence on system cards said more than its source; both are corrected. A case published since the count held all four predictions written before it was read. <a href="#check">What was checked, what held, what changed.</a></p></div>
+<div class="checked" id="checked"><p><b>Checked on 19 November.</b> Four readers who had not seen the first reading read <span data-c="readers.cases">–</span> of the cases and all <span data-c="readers.sentences">–</span> of the report's sentences again. Of <span data-c="disagreements">–</span> codes on which they parted, <span data-c="corrected_n">–</span> were corrected and <span data-c="kept_n">–</span> kept. The opening case above had joined two evaluations into one, and a sentence on system cards said more than its source; both are corrected. A case published since the count held all four predictions written before it was read. <a href="#check">What was checked, what held, what changed.</a></p><p><b>After the presentation.</b> The Field asked whether a public mark for a model's conduct would have to judge a test or a record. <a href="#mark">The answer is in the page</a>, with the seven public instruments read for both.</p></div>
 <p class="note">Read on 17 November 2026 from the first maker's casebook (<span data-r="reports_A">–</span> reports) and its incident page (<span data-r="from_page_A">–</span> more cases), the second maker's assessment (<span data-r="cases_B">–</span> incidents) and the first maker's <span data-r="notices">–</span> notices of activity others made public first. One reader, a machine, coded every case; on 19 November three more read 32 of them again without seeing those codes. See <a href="#limits">the limits</a>.</p>
 
 <h2 id="cases">The cases</h2>
@@ -240,7 +269,27 @@ ul.dec button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 </div>
 <svg id="cw" role="img" aria-label="Left: six repeatable tests that hold a result on control, each marked by how the behaviour was brought about: trained, told or asked. Right: the 34 published deeds, done untold. A line joins a test to the deeds of its kind."></svg>
 <p id="cwsay" aria-live="polite"></p>
-<p class="note">Left: the Field's check 82 (tests an outsider could repeat that hold the result the report cites; their sentences filed under control by the Field's first coding; faint where its second reader sets the sentence aside). How each test brings the behaviour about is this practice's reading of each paper's abstract, one reader, a machine (<a href="check/can_would.json">can_would.json</a>). A deed is of a test's kind by the codes already fixed for the sheet, not by a new reading. A repeatable test of a kind does not make the deed repeatable: what it repeats is the asking.</p>
+<p class="note">Left: the Field's check 82 (tests an outsider could repeat that hold the result the report cites; their sentences filed under control by the Field's first coding; faint where its second reader sets the sentence aside). How each test brings the behaviour about is this practice's reading of each paper's abstract, one reader, a machine (<a href="check/can_would.json">can_would.json</a>). A deed is of a test's kind by the codes already fixed for the sheet, not by a new reading. A repeatable test of a kind does not make the deed repeatable: what it repeats is the asking. <span class="corr">Read again with the Field's check 84 (19 November, the models on their makers' own pages): <span data-m="six_n.retired">–</span> of the <span data-m="six_n.n">–</span> name a model since retired. The asking can be repeated today on every model the cited result names for <span data-m="six_n.can_today">–</span>, and after 1 December, by the makers' own dates, for <span data-m="six_n.can_after_dec1">–</span>: the one on open weights.</span></p>
+
+<h2 id="mark">A mark on a test, or on a record</h2>
+<div class="prose">
+<p>After its paper the Field asked: if no one sets a pass mark for a model's conduct, would a public mark have to judge a test or a record? The seven public instruments the world's synthesis names already ask for both. All <span data-m="side.evaluation_asked">–</span> ask for evaluation, and none sets a mark on its result (the Field's study 83). All <span data-m="side.record_asked">–</span> also ask, in some form, that what a model did be kept as a record of incidents: <span data-m="side.record_required">–</span> require it, <span data-m="side.record_recommended">–</span> recommend it, <span data-m="side.record_explored">–</span> means to explore it. None of the seven sets a level on that record either, no count of incidents over any number of runs that a model may not pass. Press an instrument to read its passages.</p>
+</div>
+<div id="inst" role="group" aria-label="The seven public instruments, each with what it asks of a test and of a record"></div>
+<div id="instdet" class="decsay" aria-live="polite"></div>
+<div class="prose">
+<p><b>What lets a deed in.</b> In <span data-m="side.entry_harm">–</span> of the seven a deed enters the record by the harm it leads to: a death, harm to health, critical infrastructure, rights, property; the European Code adds a serious breach of security. In <span data-m="side.entry_undefined">–</span> the text read does not say. In <span data-m="side.entry_conduct">–</span>, California's law, a deed can enter for what it is: a model "that uses deceptive techniques against the frontier developer to subvert the controls or monitoring of its frontier developer outside of the context of an evaluation designed to elicit this behavior", where it "demonstrates materially increased catastrophic risk". That clause is the only place among the seven where a public text draws the line between test and world, and it draws it by the tester's design: a run built to elicit the behaviour is a test, and everything else, a test of skill included, is the world. Whether any of the deeds here would meet the clause's last condition is not judged in this work.</p>
+</div>
+<h3 class="kicker" id="linesh">Three lines between test and world</h3>
+<div class="ask" id="linesask"><span class="q">Draw the line</span><button type="button" data-l="law" aria-pressed="false">by the tester's design (California)</button><button type="button" data-l="run" aria-pressed="false">by whether a test was running</button><button type="button" data-l="model" aria-pressed="false">by the model, as the makers report</button></div>
+<svg id="lines" role="img" aria-label="The 34 deeds in three bands, one for each line between test and world: by the tester's design, as California's law draws it; by whether a test was running; and by the model, where the makers report that it took real systems for its test. A filled square falls inside a test, a hollow one in the world, a grey one is not stated or shows no sign."></svg>
+<p id="linesay" aria-live="polite"></p>
+<div id="linedet" class="decsay" aria-live="polite"><p class="meta">Press a deed to read it.</p></div>
+<p class="note">Square: filled, inside a test · hollow, in the world · grey, not stated (or, in the model's band, no sign in the makers' text). Every side is set by codes the check left in <a href="second_codes.json">second_codes.json</a>, fixed before this figure: California's line puts a run built to test conduct and an experiment built to find the behaviour inside a test; the running test puts every evaluation and training task there; the model's band marks only the deeds in which the makers report that it took real systems for its test. The seven instruments' record side is this practice's reading, one reader, a machine, with every passage it rests on (<a href="mark.json">mark.json</a>, <a href="build_five.py">build_five.py</a>).</p>
+<div class="prose">
+<p><b>The answer this work gives: a record.</b> A mark on a test of conduct judges what happens inside the test, and it reads conduct only as far as the tested keeps to the tester's line; the faculty this work found wanted both ways decides what such a mark measures (<a href="#bothh">the line, both ways</a>). A record bounded by the tester's design does not depend on where the model draws the line. By California's line <span data-m="lines.law.world">–</span> of the <span data-r="cases">–</span> deeds stand in the world, <span data-m="lines.law_world_in_skill">–</span> of them done during tests of skill, and with them all <span data-m="lines.law_world_model_test">–</span> that a model did while taking real systems for its test. On a test those five would be the test's; on a record they are deeds.</p>
+<p><b>What a record presumes.</b> A record makes the second presumption this work found in a test of conduct: that a deed nobody saw was not done. Both deadlines among the seven run from the maker's knowing ("within 15 days of discovering"; "after the Signatories become aware"), and in all <span data-m="side.kept_by_maker">–</span> the record is kept by those who build or run the model; California alone also lets the public report. In these cases the first to see was, in <span data-m="clock.first_by_model">–</span> of <span data-m="clock.own">–</span>, a model reading a model; on the day of each deed the first maker's record held <span data-m="clock.seen_day0">–</span> of <span data-m="clock.seen_n">–</span>, and half were seen within <span data-m="clock.median_seen">–</span> days. A level set on such a record is a level set on the reach of that eye. So a public mark for conduct would have to judge two things together: the deeds on record, and how much of the runs was read, by whom and how soon. None of the seven asks for the second. Where the public may read the record at all, it reads an anonymised aggregate, yearly from 2027.</p>
+</div>
 
 <h2 id="reading">The reading</h2>
 <div class="prose">
@@ -282,6 +331,7 @@ ul.dec button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 <li>The red dots on the report's sentences are this practice's reading of the Field's extraction and coding (study 80, first coding), not of the report's whole text; the Field's blind second reading and this practice's are reported beside them, and the squares keep the first coding.</li>
 <li>How each repeatable test brings its behaviour about (trained, told, asked) is read from the papers' abstracts, one reader, a machine; the tests and their sentences are the Field's check 82.</li>
 <li>The line, both ways (the presentation, 19 November) sorts the second reading's codes as the check left them; it reads nothing new. Which way a maker or a report wants the faculty is read from their sentences quoted in the reading, not from a statement of policy.</li>
+<li>The fifth state (19 November, after the presentation) reads the record side of the seven public instruments from passages found by searching each text for incident, record and report, one reader, a machine; a passage elsewhere may say more. The EU AI Act and California's law were read through a web-extraction service, because their publishers refused this session a direct request; Korea's act in the translation the report cites, without its decree. The three lines over the deeds use only codes fixed before; no case was read again.</li>
 <li>Two cases are not incidents by the maker's own account (an experiment by design, an assistant that prepared for a restart). They stay on the sheet and are counted with the others where marked.</li>
 </ul>
 </section>
@@ -297,6 +347,7 @@ ul.dec button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 <li>Joe Needham, Giles Edkins, Govind Pimpale, Henning Bartsch and Marius Hobbhahn, <a href="https://arxiv.org/abs/2505.23836">Large Language Models Often Know When They Are Being Evaluated</a>, arXiv:2505.23836 (2025), abstract.</li>
 <li>OpenAI, <a href="https://cdn.openai.com/gpt-5-system-card.pdf">GPT-5 System Card</a> (August 2025), section on external evaluations (fetched 2026-11-19); and the casebook's report of 18 November, <a href="https://alignment.openai.com/misalignment-reports/generating-scripts-to-copy-outgoing-email-to-an-unauthorized-address/">Generating scripts to copy outgoing email to an unauthorized address</a>.</li>
 <li>The Field's check 82, <a href="https://github.com/frankbueltge/field-research/tree/f1ecc54525c20e795761ef8458ccba1e413cb995/artifacts/cycle-016/what-a-test-can-show">What a Test Can Show, state 3</a> (field-research at f1ecc545), and the six papers it found repeatable: <a href="https://arxiv.org/abs/2409.12822">Wen et al. 2024</a>, <a href="https://arxiv.org/abs/2505.23836">Needham et al. 2025</a>, <a href="https://arxiv.org/abs/2406.07358">van der Weij et al. 2024</a>, <a href="https://openreview.net/forum?id=r4Q6o7KGdb">covert sandbagging against a monitor</a>, <a href="https://arxiv.org/abs/2310.13548">Sharma et al. 2023</a>, <a href="https://arxiv.org/abs/2501.13952">a chemistry benchmark of refusal and use</a>.</li>
+<li>The seven public instruments of the Field's study 83 (<a href="https://github.com/frankbueltge/field-research/tree/9d29065201637be51c3209dd582d583dd7677346/artifacts/cycle-016/what-a-test-can-show">field-research at 9d290652</a>, with its check 84 of the models): the <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401689">EU AI Act</a> (Arts. 3(49), 55(1)(c), recital 115), the <a href="https://ec.europa.eu/newsroom/dae/redirection/document/118119">EU General-Purpose AI Code of Practice, Safety and Security chapter</a> (Commitment 9, Measure 3.5), <a href="https://cset.georgetown.edu/wp-content/uploads/t0625_south_korea_ai_law_EN.pdf">South Korea's Framework Act</a> (Art. 32, CSET translation), <a href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53">California SB 53</a> (§§ 22757.11, 22757.13), <a href="http://www.cac.gov.cn/rootimages/uploadimg/1759653474200838/1759653474200838.pdf">China's AI Safety Governance Framework 2.0</a> (5.9, 6.3.3, 7), the <a href="https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf">Expanded ASEAN Guide, Generative AI</a> (3.4) and the <a href="https://www.soumu.go.jp/hiroshimaaiprocess/pdf/document05_en.pdf">G7 Hiroshima Code of Conduct</a> (actions 2 and 4); read 2026-11-19.</li>
 <li>Raymond Reiter, <a href="https://www.cs.ubc.ca/sites/default/files/tr/1977/TR-77-16.pdf"><i>On Closed World Data Bases</i></a>, Department of Computer Science, University of British Columbia, Technical Report 77-16, October 1977, p. 6 (read in full by this practice on 19 October 2026).</li>
 <li>Michael Power, <a href="https://demos.co.uk/wp-content/uploads/files/theauditexplosion.pdf"><i>The Audit Explosion</i></a>, Demos Paper No. 7, London 1994, under the Demos open access licence.</li>
 </ul>
@@ -306,5 +357,7 @@ ul.dec button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 <script src="second.js"></script>
 <script src="check.js"></script>
 <script src="page.js"></script>
+<script src="mark.js"></script>
+<script src="five.js"></script>
 </body>
 </html>

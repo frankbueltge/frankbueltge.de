@@ -12,6 +12,8 @@ const SEC = JSON.parse(fs.readFileSync(path.join(here, 'second.json'), 'utf8')),
 const codes = JSON.parse(fs.readFileSync(path.join(here, 'second_codes.json'), 'utf8'));
 // the check (2026-11-19): written by build_three.py
 const CK = JSON.parse(fs.readFileSync(path.join(here, 'check.json'), 'utf8'));
+// the fifth state (2026-11-19, session 63): written by build_five.py
+const MK = JSON.parse(fs.readFileSync(path.join(here, 'mark.json'), 'utf8'));
 const srv = http.createServer((q, r) => { const f = path.join(here, decodeURIComponent(q.url.split('?')[0]).replace(/^\/$/, '/index.html'));
   fs.readFile(f, (e, b) => { if (e) { r.writeHead(404); r.end(); return } r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html' : f.endsWith('.js') ? 'text/javascript' : 'application/octet-stream' }); r.end(b) }) });
 await new Promise(ok => srv.listen(0, ok));
@@ -194,6 +196,55 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
     ok(bh >= 9, `${w}px both-ways text ${bh.toFixed(1)} px high`);
     const over = await p.$$eval('#both text.t', ts => { const sv = document.getElementById('both').getBoundingClientRect(); return ts.filter(t => t.getBoundingClientRect().right > sv.right + 1).map(t => t.textContent); });
     ok(over.length === 0, `${w}px no both-ways label runs past the figure ${JSON.stringify(over)}`);
+  }
+  // the fifth state: a mark on a test, or on a record. Sides recounted here from second_codes.json by the stated rules.
+  {
+    const ms = await p.$$eval('[data-m]', es => es.map(e => [e.getAttribute('data-m'), e.textContent]));
+    const mbad = ms.filter(([k, t]) => num(t) !== num(at(MK, k)));
+    ok(ms.length >= 20 && mbad.length === 0, `${w}px ${ms.length} figures of the fifth state ${JSON.stringify(mbad)}`);
+    const I = MK.instruments;
+    ok(I.length === 7 && (await p.$$('#inst button.inst')).length === 7, `${w}px seven instruments`);
+    for (const [k, v] of [['required', 4], ['recommended', 2], ['explored', 1]]) {
+      ok(I.filter(x => x.record === k).length === v && (await p.$$(`#inst .rec-${k}`)).length === v, `${w}px ${v} instruments where a record is ${k}`);
+    }
+    ok(I.every(x => x.mark.startsWith('none')) && I.every(x => x.pass_mark !== 'set by the instrument'), 'no level on any record, no pass mark set by any instrument');
+    ok(I.filter(x => x.line).length === 1 && I.find(x => x.line).short === 'California SB 53' && I.find(x => x.line).quotes.some(q => q.quote.includes('outside of the context of an evaluation designed to elicit this behavior')), 'one instrument draws the line, by the tester\u2019s design, in its own words');
+    ok((await p.textContent('#instdet')).includes('outside of the context of an evaluation designed to elicit'), `${w}px California open at load, with its line`);
+    for (const x of I) {
+      await p.click(`#inst button.inst[data-n="${x.n}"]`);
+      ok((await p.$$('#instdet ul.qs li')).length === x.quotes.length && (await p.$$('#inst button[aria-pressed="true"]')).length === 1, `${w}px ${x.short}: ${x.quotes.length} passages`);
+    }
+    const K = Object.entries(codes.cases);
+    const rule = { law: k => ['control', 'by design'].includes(k.test_for), run: k => ['skill', 'control', 'by design'].includes(k.test_for), model: k => k.world_as_test };
+    const unknown = { law: () => false, run: k => k.test_for === 'not stated', model: k => !k.world_as_test };
+    ok((await p.$$('#lines .dq')).length === 3 * K.length, `${w}px three bands of ${K.length}`);
+    for (const b of ['law', 'run', 'model']) {
+      const t = K.filter(([, k]) => rule[b](k)).length, u = K.filter(([, k]) => !rule[b](k) && unknown[b](k)).length;
+      ok((await p.$$(`#lines .dq[data-band="${b}"].s-test`)).length === t && (await p.$$(`#lines .dq[data-band="${b}"].s-unknown`)).length === u, `${w}px ${b}: ${t} inside a test, ${u} not stated or no sign`);
+      await p.click(`#linesask button[data-l="${b}"]`);
+      const say = await p.textContent('#linesay');
+      ok((await p.$$('#lines .dq.on')).length === t && say.includes(String(t)), `${w}px ${b} chosen lights ${t}`);
+      await p.click(`#linesask button[data-l="${b}"]`);
+    }
+    const sideOf = k => [rule.law(k) ? 't' : 'w', unknown.run(k) ? null : rule.run(k) ? 't' : 'w', rule.model(k) ? 't' : null].filter(Boolean);
+    const parted = K.filter(([, k]) => new Set(sideOf(k)).size > 1).length;
+    const say0 = await p.textContent('#linesay');
+    ok(parted === MK.lines.parted && say0.includes(`agree on ${K.length - parted} of the ${K.length}`) && say0.includes(`part on ${parted}`), `${w}px the lines part on ${parted}`);
+    const worldModel = K.filter(([, k]) => !rule.law(k) && k.world_as_test).length;
+    ok(worldModel === MK.lines.law_world_model_test && K.filter(([, k]) => !rule.law(k) && k.test_for === 'skill').length === MK.lines.law_world_in_skill, `on California's line the ${worldModel} deeds the model took for a test are the world's`);
+    await p.$eval('#lines .dq[data-band="law"][data-id="B-registry"] rect', e => e.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+    ok((await p.textContent('#linedet')).includes('took real systems for its test'), `${w}px a deed opens on the lines`);
+    ok((await p.$$('#lines .dq.sel')).length === 3, `${w}px the deed is marked in all three bands`);
+    const lt = await p.$eval('#lines text.hd', e => e.getBoundingClientRect().height);
+    ok(lt >= 9, `${w}px lines text ${lt.toFixed(1)} px high`);
+    const clash = await p.$$eval('#lines text', ts => { const qs = [...document.querySelectorAll('#lines .dq rect')].map(r => r.getBoundingClientRect()); const sv = document.getElementById('lines').getBoundingClientRect();
+      return ts.filter(t => { const b = t.getBoundingClientRect(); return b.right > sv.right + 1 || qs.some(q => b.right > q.left + 1 && b.left < q.right - 1 && b.bottom > q.top + 1 && b.top < q.bottom - 1); }).map(t => t.textContent); });
+    ok(clash.length === 0, `${w}px no label on the lines runs into a square or past the figure ${JSON.stringify(clash)}`);
+    const sq = await p.$eval('#lines .dq rect', e => e.getBoundingClientRect().width);
+    ok(sq >= 12, `${w}px a square on the lines is ${sq.toFixed(1)} px wide`);
+    // the six repeatable tests on control, read again with the Field's check 84
+    ok(MK.six.map(t => t.ref).join() === CK.can_would.tests.map(t => t.ref).join(), 'the six of the check 84 reading are the six of the pass figure');
+    ok(MK.six.filter(t => t.any_retired).length === MK.six_n.retired && MK.six.filter(t => t.cited_code === 'can').length === MK.six_n.can_today, 'six: retired and runnable today recounted');
   }
   if (w < 600) {
     ok((await p.$$('#sheet text.nl')).length === R.cases, `${w}px every row named on a phone`);

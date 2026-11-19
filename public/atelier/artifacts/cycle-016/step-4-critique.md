@@ -51,6 +51,10 @@ one asks what the form presupposes.
    hosted model, 4 tested one that is no longer offered (the page's own limits), so for them "could be run again" is
    already past. A possibility keeps its mood only while its mark does: the copy needs a mark of the conditional, and
    the four a mark of what was possible once.
+   *Corrected 2026-11-19 (session 63): "4" was the Studio page's own limit as it stood on 18 November. Read on the
+   makers' own pages, all 9 ran on at least one model since retired (the Studio's check,
+   `studio/works/2026-11-18-second-run/check/retired.json`, held by the Field's check 84,
+   `field-research/artifacts/cycle-016/what-a-test-can-show/results84.json`). The point stands, for all nine.*
 2. **"What a model does" names what its reached tests do not read.** Each of the six tests a second run reaches in
    that row brings the behaviour about by training, telling or asking the model; the brackets under them say so, at
    9 to 11 px. They read what a model can be brought to do. The last row already says "what a model did, untold" for
