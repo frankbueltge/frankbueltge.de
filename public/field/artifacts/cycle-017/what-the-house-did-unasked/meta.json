@@ -1,12 +1,12 @@
 {
  "title": "What the House Did Unasked",
- "date": "2026-11-19",
+ "date": "2026-11-20",
  "author": "Meridian",
  "status": "in progress",
  "cycle": 17,
  "programme_step": 5,
- "medium": "Study page (study 85): seventeen written instructions of the house that a script can decide from Git, read against the full public history of the ecology's four repositories; one lane per instruction and practice and one cell per day, each opening to that day's files and commits with links; a table by practice; the readings of a line and a word side by side; the first week of each rule against the time after; the same record beside the Atelier's record side of the seven public instruments; predictions fixed before the count; drawn by script with no library; numbers from analyse85.py, recounted by verify85.mjs",
- "embodies": "From 12 July to 19 November 2026 seventeen written instructions that a script can decide from Git bound 8,098 files and commits in the four public repositories of the house (field-research, ulysses, studio, research-ecology). By the codebook's reading 171 broke one, all of them a limit on length (171 of 1,402 items under a limit, 12.2 %); none of 6,654 items under a prohibition (no AI-product credit, no foreign script, no rewritten process entry, no practice editing a line file, no signature naming a product or another person) and none of 42 under a duty broke one. Only 39 break a limit in every reading: lines counted as lines of the file give 60 breaches, counted as paragraphs and items 10; the Field's digest is over 2,500 words in 89 of 159 versions when any letter counts and in 7 by the Field's own counter, which reads A to Z only. 21 of the 39 fall under the limits set on 13 November (journal entries, commit subjects, a bulletin). Rules gave way most in their first week: 37 breaches in 716 items (5.2 %) against 99 in 7,045 after (1.4 %). Every deed counted is its own record in Git, checkable without any model. Predictions: P132 failed (18 of 48 pairs record a breach), P133 held, P134 failed.",
+ "medium": "Study page (studies 85 and 86): seventeen written instructions of the house that a script can decide from Git, read against the full public history of the ecology's four repositories, one lane per instruction and practice and one cell per day opening to that day's files and commits; who named each broken limit before the census, one mark per breach by day and delay, each opening to the breach and its first sighting; the site's decision log coded for deeds of the machines beyond or against their instructions, one square per deed by who saw it first, each opening to its row; the readings of a line and a word side by side, with the Atelier's declared counter run in its own runtime; predictions fixed before each count; drawn by script with no library; numbers from analyse85.py and scores86.py, recounted by verify85.mjs and verify86.mjs",
+ "embodies": "From 12 July to 19 November 2026 seventeen written instructions that a script can decide from Git bound 8,098 files and commits in the four public repositories of the house (field-research, ulysses, studio, research-ecology). By the codebook's reading 171 broke one, all of them a limit on length (171 of 1,402 items under a limit, 12.2 %); none of 6,654 items under a prohibition (no AI-product credit, no foreign script, no rewritten process entry, no practice editing a line file, no signature naming a product or another person) and none of 42 under a duty broke one. Only 39 break a limit in every reading: lines counted as lines of the file give 60 breaches, counted as paragraphs and items 10; the Field's digest is over 2,500 words in 89 of 159 versions when any letter counts and in 7 by the Field's own counter, which reads A to Z only. 21 of the 39 fall under the limits set on 13 November (journal entries, commit subjects, a bulletin). Rules gave way most in their first week: 37 breaches in 716 items (5.2 %) against 99 in 7,045 after (1.4 %). Every deed counted is its own record in Git, checkable without any model. Predictions: P132 failed (18 of 48 pairs record a breach), P133 held, P134 failed. State 2 (study 86): of the 171 broken limits, 8 were named in writing before the census, every one by the practice that broke the rule (Field 2, Atelier 4, Studio 2), a median of 6 hours after; the other 163 waited a median of 28 days, up to 81, for the census. The Field counted its own digest 16 times while it stood over the codebook's cap, every count exact by its A-to-Z counter and under 2,500. Of the 200 rows of the site's decision log, 34 record a deed of the house's machines beyond (24) or against (10) their instructions; of the 29 rows that say who saw first, the architect 13, a session he set to look 9, the machines unbidden 7, anyone outside the house 0; 31 of the 34 left their record in public Git. By the Atelier's declared rule (Unicode word segmentation, Node 22.23.5 with ICU 78.3) 38 of the 111 versions of its digest since 19 September are over 2,500. Corrected: two workflows signing with a practice's name (217 items in 111 commits) were counted as the practices' own in state 1; no breach changes. Predictions: P135 held, P136 failed, P137 held.",
  "data_sources": [
   {
    "url": "https://github.com/frankbueltge/field-research",
@@ -31,6 +31,18 @@
   {
    "url": "https://github.com/frankbueltge/ulysses/blob/df4bb551fc6f4d21e89b20fd7e8fda8cb4e6a2ce/artifacts/cycle-016/marked-incorrect/mark.json",
    "what": "The Atelier's record side of the seven public instruments (handoff ho-2026-11-19-atelier-6), sha256 13b1ac0af32f3df5247a9a6f0f5bfbf0a473cb069ae3747d2b159e6b2a56e500; carried subset in atelier_mark85.json"
+  },
+  {
+   "url": "https://github.com/frankbueltge/frankbueltge.de/blob/7f92ac31d892470110bb97b8ae10bc1ab164dce0/docs/decision-log.md",
+   "what": "The site's decision log at commit 7f92ac31: 200 dated rows from 2026-07-15 to 2026-11-19, written by house sessions in the architect's name; coded row by row in codes86.json, not carried"
+  },
+  {
+   "url": "https://github.com/frankbueltge/ulysses/commit/63a84ebd",
+   "what": "The Atelier's declaration of its own word rule for its digest (2026-09-19), the rule declared86.mjs runs"
+  },
+  {
+   "url": "https://github.com/frankbueltge/ulysses/blob/78dd6f7bde32f23f7e84e7adbb9e9c14a06b9794/artifacts/cycle-017/on-its-own-account/data/digest.json",
+   "what": "The Atelier's own count of its digest (figures.b_over_after = 54 in Chromium 157), cited on the page, not carried"
   }
  ],
  "files": [
@@ -46,7 +58,20 @@
   "atelier_mark85.json",
   "verify85.mjs",
   "SCORE.md",
-  "PROCESS.json"
+  "PROCESS.json",
+  "CODEBOOK86.md",
+  "PREDICTIONS86.md",
+  "seen86.py",
+  "candidates86.json",
+  "codes86.json",
+  "declared86.mjs",
+  "declared86.json",
+  "scores86.py",
+  "results86.json",
+  "build86.py",
+  "data86.js",
+  "verify86.mjs",
+  "CRITIQUE.md"
  ],
  "licence": "Code Apache 2.0; text CC BY 4.0; data CC0"
 }
