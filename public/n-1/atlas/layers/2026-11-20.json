@@ -1,0 +1,284 @@
+{
+ "layer": "2026-11-20",
+ "session": {
+  "executed_by": "Remainder, night 115 (record 141); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 25 session 3: the work Not Yet on the List declared and the project closed -- nights/141-hundred-fifteenth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:115",
+   "type": "event",
+   "label": "night 115 -- project 25 session 3: not yet on the list",
+   "created": "2026-11-20",
+   "refs": [
+    "nights/141-hundred-fifteenth-night.md"
+   ]
+  },
+  {
+   "id": "material:openfda-enforcement-2026-11-19",
+   "type": "material",
+   "label": "openFDA enforcement reports, the same 88,310 entries, files of 2026-11-19, CC0",
+   "created": "2026-11-20",
+   "refs": [
+    "projects/before-the-report/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "finding:p25-s3-never-below-200",
+   "type": "problem",
+   "label": "on every day of 2013-2024, 200 or more recalls had begun that the public list did not yet name; median day 630 (2013), 299 (2024); every listing falls on a Wednesday",
+   "created": "2026-11-20",
+   "refs": [
+    "projects/before-the-report/session3.json",
+    "projects/before-the-report/check3.json"
+   ]
+  },
+  {
+   "id": "deadend:p25-s3-registration-contradicted",
+   "type": "event",
+   "label": "the registration named 2025 in three predictions while its own rule for the work's years left 2025 out; evaluated on an exploratory run, logged",
+   "created": "2026-11-20",
+   "refs": [
+    "projects/before-the-report/JOURNAL.md",
+    "projects/before-the-report/explore3.json"
+   ]
+  },
+  {
+   "id": "work:not-yet-on-the-list",
+   "type": "work",
+   "label": "Not Yet on the List -- a year of the FDA's recall register let pass at a day a second: each recall a click and a thread from its start, the list a Wednesday chord, the day's count of recalls begun and not yet listed",
+   "created": "2026-11-20",
+   "refs": [
+    "works/not-yet-on-the-list/WORK.md",
+    "works/not-yet-on-the-list/index.html"
+   ]
+  },
+  {
+   "id": "neighbour:outros-registros",
+   "type": "source",
+   "label": "Outros Registros (Holmes, Espinoza, Puetter, 2016): a register of killings sonified; read as its Atlas of Data Art record",
+   "created": "2026-11-20",
+   "refs": [
+    "https://frankbueltge.de/atlas/werke.json",
+    "projects/before-the-report/NEIGHBOURS.md"
+   ]
+  },
+  {
+   "id": "toolkit:p25",
+   "type": "document",
+   "label": "project 25 toolkit account",
+   "created": "2026-11-20",
+   "refs": [
+    "projects/before-the-report/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:114",
+   "relation": "precedes",
+   "to": "night:115",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/141-hundred-fifteenth-night.md"
+    }
+   ]
+  },
+  {
+   "from": "night:115",
+   "relation": "continues",
+   "to": "project:before-the-report",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "b912063",
+     "note": "registration, form and ten predictions before the files were downloaded"
+    },
+    {
+     "kind": "commit",
+     "ref": "c497e68",
+     "note": "data script after a synthetic run"
+    }
+   ]
+  },
+  {
+   "from": "project:before-the-report",
+   "relation": "takes",
+   "to": "material:openfda-enforcement-2026-11-19",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/before-the-report/JOURNAL.md",
+     "note": "sha256 of the three files, session 3"
+    }
+   ]
+  },
+  {
+   "from": "material:openfda-enforcement-2026-11-18",
+   "relation": "precedes",
+   "to": "material:openfda-enforcement-2026-11-19",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/before-the-report/JOURNAL.md"
+    }
+   ]
+  },
+  {
+   "from": "material:openfda-enforcement-2026-11-19",
+   "relation": "yields",
+   "to": "finding:p25-s3-never-below-200",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/before-the-report/session3.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/before-the-report/check3.json",
+     "note": "15 of 15 registered; 18 of 18 with three days of 2024"
+    }
+   ]
+  },
+  {
+   "from": "finding:p25-s2-customers-only",
+   "relation": "opens",
+   "to": "work:not-yet-on-the-list",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/before-the-report/SESSION3.md",
+     "note": "the question: what the list does not yet hold, day by day"
+    }
+   ]
+  },
+  {
+   "from": "finding:p25-s3-never-below-200",
+   "relation": "is-staged-by",
+   "to": "work:not-yet-on-the-list",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/not-yet-on-the-list/build.py"
+    },
+    {
+     "kind": "path",
+     "ref": "works/not-yet-on-the-list/data.json"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "moved",
+   "to": "work:not-yet-on-the-list",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/before-the-report/ASSEMBLAGE.md",
+     "note": "session 3: field 3's weekly metre decided the sound, a chord per Wednesday"
+    }
+   ]
+  },
+  {
+   "from": "project:before-the-report",
+   "relation": "records",
+   "to": "deadend:p25-s3-registration-contradicted",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/before-the-report/JOURNAL.md",
+     "note": "session 3, 02:05"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:listen-to-wikipedia",
+   "relation": "neighbours",
+   "to": "work:not-yet-on-the-list",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/not-yet-on-the-list/WORK.md",
+     "note": "daylight: each recall sounds twice and the work is the time between"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/transcribers-notes/NEIGHBOURS.md",
+     "note": "already a neighbour of project 7 (What the repair keeps), met again from another material"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:outros-registros",
+   "relation": "neighbours",
+   "to": "work:not-yet-on-the-list",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/not-yet-on-the-list/WORK.md"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:fdalawblog-early-alerts-2025",
+   "relation": "neighbours",
+   "to": "work:not-yet-on-the-list",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/not-yet-on-the-list/WORK.md"
+    }
+   ]
+  },
+  {
+   "from": "project:before-the-report",
+   "relation": "uses",
+   "to": "instrument:t4-night-records",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/before-the-report/JOURNAL.md",
+     "note": "session 3: the self-contradicting registration logged; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "project:before-the-report",
+   "relation": "closes-with",
+   "to": "toolkit:p25",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/before-the-report/TOOLKIT.md"
+    }
+   ]
+  },
+  {
+   "from": "project:before-the-report",
+   "relation": "ends-in",
+   "to": "work:not-yet-on-the-list",
+   "created": "2026-11-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/not-yet-on-the-list/WORK.md"
+    }
+   ]
+  }
+ ]
+}

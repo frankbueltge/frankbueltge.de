@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Not Yet on the List</title>
+<meta name="description" content="One year of the FDA's recall register, let pass a day a second: every recall as it begins, quietly, and the weekly public list that names it weeks later.">
+<style>
+  :root { --bg: #f4f3ee; --ink: #1c1c1a; --muted: #6d6c66; --line: #cfcec7; --thread: 28, 28, 26; --pub: #b8432b; --wed: #1c1c1a; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #0f100f; --ink: #e4e3dd; --muted: #8f8e88; --line: #2f2f2c; --thread: 228, 227, 221; --pub: #ee8166; --wed: #e4e3dd; }
+  }
+  :root[data-theme="dark"] { --bg: #0f100f; --ink: #e4e3dd; --muted: #8f8e88; --line: #2f2f2c; --thread: 228, 227, 221; --pub: #ee8166; --wed: #e4e3dd; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; }
+  main { max-width: 72rem; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  h1 { font-size: 1rem; font-weight: normal; margin: 0 0 1.4rem; color: var(--muted); }
+  h1 b { color: var(--ink); font-weight: normal; }
+  .count { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem 1rem; margin: 0 0 .2rem; }
+  #n { font-size: clamp(3.2rem, 11vw, 7rem); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  #nlabel { max-width: 26rem; }
+  #day { color: var(--muted); margin: .4rem 0 1rem; font-variant-numeric: tabular-nums; min-height: 1.55em; }
+  #day b { color: var(--ink); font-weight: normal; }
+  .controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 0 0 .8rem; }
+  button, select { font: inherit; background: none; color: var(--ink); border: 1px solid var(--ink); border-radius: 0; padding: .45rem .9rem; cursor: pointer; }
+  button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .controls span { color: var(--muted); }
+  .stage { position: relative; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  canvas { display: block; width: 100%; height: clamp(300px, 58vh, 620px); touch-action: none; cursor: ew-resize; }
+  .key { display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; color: var(--muted); font-size: .85rem; margin: .6rem 0 2.2rem; }
+  .key i { display: inline-block; width: 1.4rem; height: 0; border-top: 1px solid rgba(var(--thread), .55); vertical-align: middle; margin-right: .4rem; }
+  .key i.p { border-top: 2px solid var(--pub); }
+  .key i.w { width: 0; height: .9rem; border-top: 0; border-left: 2px solid var(--wed); }
+  .text { max-width: 40rem; }
+  .text p { margin: 0 0 1rem; }
+  .text .small { color: var(--muted); font-size: .85rem; }
+  a { color: inherit; }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1><b>Not Yet on the List</b> &nbsp;·&nbsp; the FDA's recall register, one year let pass at a day a second</h1>
+
+  <div class="count"><span id="n">–</span><span id="nlabel">recalls had already begun and were not yet on the public list</span></div>
+  <div id="day" aria-live="polite">&nbsp;</div>
+
+  <div class="controls">
+    <button type="button" id="play" aria-pressed="false">play with sound</button>
+    <button type="button" id="quiet" aria-pressed="false">play silently</button>
+    <label><span>year</span> <select id="year" aria-label="year"></select></label>
+    <span id="hint">drag across the year to move through it</span>
+  </div>
+
+  <div class="stage"><canvas id="c" role="img" aria-label="Each recall is a thread that starts on the day the recall began and runs right until the Wednesday the public list named it."></canvas></div>
+  <div class="key">
+    <span><i></i>a recall, from the day it began, waiting</span>
+    <span><i class="p"></i>one the firm first announced in a press release</span>
+    <span><i class="w"></i>a Wednesday: the weekly list, naming the threads that end there</span>
+  </div>
+
+  <div class="text">
+    <p>Every recall of a food, a drug or a medical device in the United States begins on a day: the firm tells the people who hold the product — usually its customers, by letter or telephone, not the public. Weeks later the Food and Drug Administration names it in its weekly enforcement report, the public list. In {{LAST}}, {{BEGUN}} recalls began; {{PUB}} of them ({{PUBPCT}} %) began with a press release.</p>
+    <p>Here a year passes at one day per second. A recall that begins is a soft click and a thread that starts to grow; on each Wednesday the list appears as a chord, and the threads it names stop. The large number is what the list did not yet hold that day: in {{LAST}}, never fewer than {{MIN}} recalls, at most {{MAX}}, {{MED}} on the median day. In {{FIRST}} the median day stood at {{MED13}}.</p>
+    <p>Counted from the register itself: {{EVENTS}} recall events listed from June 2012 to November 2026, each from the day the firm began it to the first day the list named it. A recall that never reached the list is not in it, so the number is a floor.</p>
+    <p class="small">Data: openFDA food, drug and device enforcement reports (public domain), files of 19 November 2026. Made by Remainder, a machine-run artistic research practice; how the numbers were counted and checked: <a href="../../projects/before-the-report/">the study</a>. Page CC BY 4.0, data CC0.</p>
+  </div>
+</main>
+<script>
+(() => {
+  const DAY = 86400000;
+  const cv = document.getElementById('c'), cx = cv.getContext('2d');
+  const nEl = document.getElementById('n'), dayEl = document.getElementById('day');
+  const playB = document.getElementById('play'), quietB = document.getElementById('quiet'), yearS = document.getElementById('year');
+  let D = null, ev = [], year = 0, t0 = 0, days = 365, pos = 0, playing = false, sound = false, last = 0, ac = null, lastDay = -1;
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = d => new Date(d).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+  fetch('data.json').then(r => r.json()).then(j => {
+    D = j; D.e0 = Date.parse(j.epoch + 'T00:00:00Z');
+    j.years.slice().reverse().forEach(y => { const o = document.createElement('option'); o.value = y; o.textContent = y; yearS.appendChild(o); });
+    setYear(j.years[j.years.length - 1]);
+  });
+
+  function setYear(y) {
+    year = +y; yearS.value = y;
+    t0 = Math.round((Date.UTC(year, 0, 1) - D.e0) / DAY);
+    days = Math.round((Date.UTC(year + 1, 0, 1) - Date.UTC(year, 0, 1)) / DAY);
+    ev = [];
+    let k = 0;
+    for (const r of D.rows) {
+      if (r[0] < t0 + days && r[1] >= t0) { ev.push({ s: r[0] - t0, l: r[1] - t0, c: r[2], k: r[3], p: r[4] === 0, y: (k++ * 0.6180339887) % 1 }); }
+    }
+    pos = 0; lastDay = -1; draw();
+  }
+
+  function size() {
+    const r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function draw() {
+    if (!D) return;
+    const W = cv.clientWidth, H = cv.clientHeight, pad = 8, top = 10, base = H - 22;
+    const x = d => pad + (Math.max(0, Math.min(days, d)) / days) * (W - 2 * pad);
+    const th = css('--thread'), pub = css('--pub'), ink = css('--ink'), muted = css('--muted'), line = css('--line');
+    cx.clearRect(0, 0, W, H);
+    // months
+    cx.font = '11px ui-monospace, Menlo, monospace'; cx.fillStyle = muted; cx.strokeStyle = line; cx.lineWidth = 1;
+    for (let m = 0; m < 12; m++) {
+      const d = Math.round((Date.UTC(year, m, 1) - Date.UTC(year, 0, 1)) / DAY), xx = x(d);
+      cx.beginPath(); cx.moveTo(xx + .5, base); cx.lineTo(xx + .5, base + 5); cx.stroke();
+      cx.fillText(new Date(Date.UTC(year, m, 1)).toLocaleDateString('en-GB', { month: W < 600 ? 'narrow' : 'short', timeZone: 'UTC' }), xx + 3, H - 6);
+    }
+    const now = pos;
+    // Wednesdays passed
+    for (let d = 0; d < days; d++) {
+      if (new Date(Date.UTC(year, 0, 1) + d * DAY).getUTCDay() === 3 && d <= now) {
+        cx.strokeStyle = ink; cx.globalAlpha = .12; cx.beginPath(); cx.moveTo(x(d) + .5, top); cx.lineTo(x(d) + .5, base); cx.stroke();
+      }
+    }
+    cx.globalAlpha = 1;
+    let waiting = 0;
+    for (const e of ev) {
+      if (e.s > now) continue;
+      const y = top + e.y * (base - top - 6);
+      const named = e.l <= now, end = named ? e.l : now;
+      if (!named) waiting++;
+      if (e.p) { cx.strokeStyle = pub; cx.lineWidth = 1.6; cx.globalAlpha = named ? .55 : 1; }
+      else { cx.strokeStyle = `rgba(${th},1)`; cx.lineWidth = 1; cx.globalAlpha = named ? .05 : (e.k === 1 ? .62 : .42); }
+      cx.beginPath(); cx.moveTo(x(e.s), y + .5); cx.lineTo(x(end), y + .5); cx.stroke();
+      if (e.s >= 0 && !named) { cx.globalAlpha = 1; cx.fillStyle = e.p ? pub : ink; cx.fillRect(x(e.s) - .5, y - .5, 2, 2); }
+    }
+    cx.globalAlpha = 1;
+    // playhead
+    cx.strokeStyle = ink; cx.lineWidth = 1; cx.beginPath(); cx.moveTo(x(now) + .5, 0); cx.lineTo(x(now) + .5, base); cx.stroke();
+    const di = Math.min(days - 1, Math.floor(now));
+    const exact = D.backlog[String(year)] ? D.backlog[String(year)][di] : waiting;
+    nEl.textContent = exact.toLocaleString('en-US');
+    const date = Date.UTC(year, 0, 1) + di * DAY;
+    const listedToday = ev.filter(e => e.l === di).length, begunToday = ev.filter(e => e.s === di).length;
+    dayEl.innerHTML = `<b>${fmt(date)}</b> · ${begunToday} began` + (listedToday ? ` · the list named ${listedToday}` : '');
+  }
+
+  // sound: a quiet click for a recall begun with notice to customers; a struck tone for a press release; a chord for the Wednesday list
+  function audio() {
+    if (!ac) { ac = new (window.AudioContext || window.webkitAudioContext)(); }
+    if (ac.state === 'suspended') ac.resume();
+  }
+  function click(when, gain) {
+    const n = ac.createBufferSource(), len = Math.round(ac.sampleRate * .03), b = ac.createBuffer(1, len, ac.sampleRate), ch = b.getChannelData(0);
+    for (let i = 0; i < len; i++) ch[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 6);
+    const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 2400 + Math.random() * 1800; f.Q.value = 3;
+    const g = ac.createGain(); g.gain.value = gain;
+    n.buffer = b; n.connect(f); f.connect(g); g.connect(ac.destination); n.start(when);
+  }
+  function tone(when, freq, gain, dur) {
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'sine'; o.frequency.value = freq;
+    g.gain.setValueAtTime(0, when); g.gain.linearRampToValueAtTime(gain, when + .01); g.gain.exponentialRampToValueAtTime(.0001, when + dur);
+    o.connect(g); g.connect(ac.destination); o.start(when); o.stop(when + dur + .05);
+  }
+  function sounds(d) {
+    if (!sound || !ac) return;
+    const now = ac.currentTime + .03;
+    for (const e of ev) {
+      if (e.s === d) {
+        const w = now + Math.random() * .9;
+        if (e.p) tone(w, 880, .18, 1.6); else click(w, .5);
+      }
+    }
+    const named = ev.filter(e => e.l === d);
+    if (named.length) {
+      const byClass = [0, 0, 0, 0]; named.forEach(e => byClass[e.k]++);
+      const freqs = [146.83, 98.0, 146.83, 220.0]; // Class I lowest
+      const tot = Math.sqrt(named.length) / 12;
+      [1, 2, 3].forEach(k => { if (byClass[k]) tone(now, freqs[k], Math.min(.35, tot * byClass[k] / named.length + .02), 2.6); });
+      tone(now, 293.66, Math.min(.2, tot * .4), 2.2);
+    }
+  }
+
+  function frame(ts) {
+    if (!playing) return;
+    const dt = last ? (ts - last) / 1000 : 0; last = ts;
+    pos = Math.min(days - .001, pos + dt);
+    const d = Math.floor(pos);
+    while (lastDay < d) { lastDay++; sounds(lastDay); }
+    draw();
+    if (pos >= days - .001) { stop(); return; }
+    requestAnimationFrame(frame);
+  }
+  function start(withSound) {
+    if (!D) return;
+    sound = withSound; if (withSound) audio();
+    if (pos >= days - .01) { pos = 0; lastDay = -1; }
+    lastDay = Math.floor(pos) - 1;
+    playing = true; last = 0;
+    playB.setAttribute('aria-pressed', withSound); quietB.setAttribute('aria-pressed', !withSound);
+    playB.textContent = withSound ? 'pause' : 'play with sound'; quietB.textContent = withSound ? 'play silently' : 'pause';
+    requestAnimationFrame(frame);
+  }
+  function stop() {
+    playing = false;
+    playB.setAttribute('aria-pressed', 'false'); quietB.setAttribute('aria-pressed', 'false');
+    playB.textContent = 'play with sound'; quietB.textContent = 'play silently';
+  }
+  playB.onclick = () => (playing && sound) ? stop() : start(true);
+  quietB.onclick = () => (playing && !sound) ? stop() : start(false);
+  yearS.onchange = () => { stop(); setYear(yearS.value); };
+  document.addEventListener('keydown', e => { if (e.key === ' ' && e.target === document.body) { e.preventDefault(); playing ? stop() : start(true); } });
+  const seek = e => {
+    const r = cv.getBoundingClientRect();
+    pos = Math.max(0, Math.min(days - .001, (e.clientX - r.left - 8) / (r.width - 16) * days)); lastDay = Math.floor(pos); draw();
+  };
+  let drag = false;
+  cv.addEventListener('pointerdown', e => { drag = true; cv.setPointerCapture(e.pointerId); seek(e); });
+  cv.addEventListener('pointermove', e => { if (drag) seek(e); });
+  cv.addEventListener('pointerup', () => { drag = false; });
+  window.addEventListener('resize', () => { size(); draw(); });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+  size();
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>
