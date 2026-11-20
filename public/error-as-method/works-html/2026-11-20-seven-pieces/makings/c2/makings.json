@@ -1,0 +1,23 @@
+{"figures": [
+  {"file": "fig1.json", "drop": "drop1.json",
+   "first_seen": "a small lizard or dragon scuttling along, with a zigzag tail and a tall pointed hat floating over its back",
+   "name": "a shark swimming right, dorsal fin up",
+   "how": "I turned and moved only L1, the 'hat', so it sits flush on L2's back as a tall swept-back dorsal fin; the zigzag tail, the body and the open-jawed head stay as dropped.",
+   "seen_before": "no: tangram fish exist, but I have not seen this shark arrangement"},
+  {"file": "fig2.json", "drop": "drop2.json",
+   "first_seen": "a horned or crowned head (a bat-like M of three pieces) over a figure falling apart, with a big triangle sliding away at the bottom",
+   "name": "a horned owl seen from the front, wings spread",
+   "how": "I moved L2 up beside the stem to mirror L1 as the second wing, and moved M under the body as a tail; the horned head, the stem and the right wing stay as dropped.",
+   "seen_before": "unsure: frontal tangram birds and owls exist, but not this one that I know of"},
+  {"file": "fig3.json", "drop": "drop3.json",
+   "first_seen": "a goose or swan sitting on the water, long neck up, head turned back with a beak pointing left and a little crest",
+   "name": "a goose sitting, looking back over its body",
+   "how": "I turned S2 so the head is one solid wedge instead of a loose crest, and slid P up to sit flush under it as the beak; the body, tail and neck stay as dropped.",
+   "seen_before": "yes: the long-necked sitting bird (goose/swan) is a familiar tangram figure family, though not this exact arrangement"}
+ ],
+ "files_opened": ["brief.md", "square.json", "drop1.json", "drop2.json", "drop3.json", "tangram.py",
+   "drop1.png", "drop1-silhouette.png", "drop2.png", "drop2-silhouette.png", "drop3.png", "drop3-silhouette.png",
+   "try1a-silhouette.png", "try1b-silhouette.png", "try2a-silhouette.png", "try2b-silhouette.png",
+   "try3a-silhouette.png", "try3b-silhouette.png"],
+ "note": "My first check command ran from the wrong directory (the cd did not carry over), so python executed /home/user/error-as-method/works/2026-11-20-seven-pieces/tangram.py, which failed at once because drop1.json was missing there (no log line written), and an ls in the same call listed that directory's file names. I read no file contents there. Helper verts.py (prints piece vertices) and try*.json/png are my working files."
+}

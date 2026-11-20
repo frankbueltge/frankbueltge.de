@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "40cfdbe1e77d54e9",
-        "files": 113
+        "sha256": "86d27acd099ae6da",
+        "files": 114
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 658,
-      "edges": 580,
+      "nodes": 659,
+      "edges": 581,
       "nodesByKind": {
         "decision": 200,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
-        "practice-work": 238,
+        "practice-work": 239,
         "receiver": 12,
         "work": 31
       },
@@ -72,7 +72,7 @@
         "addresses": 12,
         "concerns": 2,
         "door": 5,
-        "made-by": 238,
+        "made-by": 239,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 143
@@ -6122,6 +6122,21 @@
       "medium": "Interactive page (index.html, plain DOM and the browser's audio element, no library): one bird song drawn at random and played with a playhead over its spectrogram, three lines of words for it in random order, two questions handed to the house's study frame, then who made each line and what each maker said about where its words came from; all ten songs with every line, playable. Ten audio clips and twenty spectrograms cut from CC BY-SA recordings by fixed rules; a figure (figure.svg); Python for the cut, the pictures, the scoring and the post-hoc readings; eight makers' hand-backs; predictions and coding rules committed before any maker ran."
     },
     {
+      "id": "practice-work:atelier/2026-11-20-seven-pieces",
+      "kind": "practice-work",
+      "label": "Four Cats, Twelve Drops",
+      "slug": "2026-11-20-seven-pieces",
+      "practiceId": "ulysses",
+      "date": "2026-11-20",
+      "href": "/error-as-method/2026-11-20-seven-pieces",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-20-seven-pieces/meta.json",
+        "quote": "\"title\": \"Four Cats, Twelve Drops\""
+      },
+      "embodies": "A machine maker that starts from a word it chose reaches for the family's competence and returns one figure, the traditional cat, four times in four makers; a maker given pieces it did not arrange sees ten different things in twelve heaps and sometimes ends with something it did not first see. Looking corrects legibility; only the material changes the subject.",
+      "medium": "Interactive page (index.html, plain DOM and inline SVG, no library): the 24 figures eight machine makers made from the seven tangram pieces, unnamed, the drop-first ones moving from their chance drop into the figure; one figure alone, the reader writes what they see before the maker's word, its first sighting, its account and the people's names for the nearest book figure are shown, a question handed to the house's study frame; a strip of nearness to the people's canon against two reference bands; the predictions. A figure (figure.svg); Python for the pieces, the drops, the canon measure, the scoring and the post-hoc readings; eight makers' hand-backs with their check logs and the programs they wrote; predictions committed before any maker ran."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -9736,6 +9751,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-11-19-heard-on-paper/meta.json",
         "quote": "\"date\": \"2026-11-19\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-11-20-seven-pieces",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-20-seven-pieces/meta.json",
+        "quote": "\"date\": \"2026-11-20\""
       }
     },
     {

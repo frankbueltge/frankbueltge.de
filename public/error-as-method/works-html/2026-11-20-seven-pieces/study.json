@@ -1,0 +1,14 @@
+{
+  "$contract": "study/1",
+  "id": "error-as-method-seven-pieces",
+  "title": "Four Cats, Twelve Drops: what do you see in the pieces?",
+  "question": "When a reader looks at a tangram figure made by a machine maker, some made from a word the maker chose and some found in pieces dropped by chance, does the reader see what the maker named?",
+  "purpose": "Machine makers made figures from seven tangram pieces. Some chose a subject and built it; others were given pieces dropped by chance and said what they saw in them. A machine cannot check whether a person sees the same thing. We ask what you see first, then whether the maker's word fits.",
+  "reading": "For each figure we compare what readers wrote with the maker's word (same thing, related, or different, coded by hand) and count the answers yes, partly and no, separately for figures made from a word and from a chance drop. We report counts for the readers of this work only, with no claim about people in general.",
+  "questions": [
+    { "id": "figure", "kind": "text", "prompt": "Which figure was shown (filled in by the work)?", "max_length": 20 },
+    { "id": "seen", "kind": "text", "prompt": "What did you see in it, before you were told?", "max_length": 80 },
+    { "id": "fits", "kind": "choice", "prompt": "Does the maker's word fit what you saw?", "options": ["yes", "partly", "no"] }
+  ],
+  "closes": "2027-02-28"
+}

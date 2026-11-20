@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Four Cats, Twelve Drops</title>
+<style>
+:root{--bg:#f3f0e8;--fg:#1c1a17;--mute:#6a6559;--card:#fffdf7;--line:#d8d1c2;--ink:#24211d;--w:#1f4e8c;--c:#b0442a;--moved:#d9902a;--band1:#c9c2b2;--band2:#9fb6d4}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#161513;--fg:#ebe7de;--mute:#a29c8f;--card:#211f1c;--line:#38352f;--ink:#e9e4d8;--w:#86aee6;--c:#ef8a6e;--moved:#f0b354;--band1:#4a463e;--band2:#3d5574}}
+:root[data-theme="dark"]{--bg:#161513;--fg:#ebe7de;--mute:#a29c8f;--card:#211f1c;--line:#38352f;--ink:#e9e4d8;--w:#86aee6;--c:#ef8a6e;--moved:#f0b354;--band1:#4a463e;--band2:#3d5574}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1080px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:30px;margin:4px 0 2px;font-weight:normal}
+h2{font-size:20px;font-weight:normal;margin:40px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+.sub{color:var(--mute);margin:0 0 16px;font-size:15px}
+.small{font:13px/1.45 system-ui,sans-serif;color:var(--mute)}
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:760px){.panels{grid-template-columns:1fr}}
+.panel h3{font:600 13px system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;margin:0 0 6px}
+.panel.w h3{color:var(--w)} .panel.c h3{color:var(--c)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cell{background:var(--card);border:1px solid var(--line);cursor:pointer;position:relative;aspect-ratio:1/1}
+.cell svg{width:100%;height:100%;display:block}
+.cell .lab{position:absolute;left:4px;right:4px;bottom:3px;font:12px/1.25 system-ui,sans-serif;color:var(--fg);display:none;text-shadow:0 0 3px var(--card),0 0 3px var(--card)}
+.names .cell .lab{display:block}
+.cell:hover{border-color:var(--fg)}
+.cell .mk{position:absolute;top:3px;left:5px;font:11px system-ui,sans-serif;color:var(--mute)}
+button{font:14px system-ui,sans-serif;background:var(--card);color:var(--fg);border:1px solid var(--line);padding:6px 12px;margin:4px 6px 4px 0;cursor:pointer;border-radius:3px}
+button.main{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+button:disabled{opacity:.45;cursor:default}
+.stage{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.stage{grid-template-columns:1fr}}
+.big{background:var(--card);border:1px solid var(--line);aspect-ratio:1/1;width:100%}
+.big svg{width:100%;height:100%;display:block}
+input[type=text]{font:16px Georgia,serif;width:100%;padding:8px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+.reveal{display:none;margin-top:10px}
+.reveal.on{display:block}
+.word{font-size:24px;margin:2px 0}
+.tag{display:inline-block;font:12px system-ui,sans-serif;padding:1px 7px;border-radius:9px;color:#fff}
+.tag.w{background:var(--w)} .tag.c{background:var(--c)}
+.q{color:var(--mute);font-style:italic}
+svg .piece{fill:var(--ink)}
+svg .piece.moved{fill:var(--moved)}
+svg .outl{stroke:var(--card);stroke-width:.03}
+.strip svg{width:100%;height:auto;display:block}
+table{border-collapse:collapse;font:14px/1.4 system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--mute)}
+.ok{color:var(--w)} .no{color:var(--c)}
+a{color:var(--w)}
+</style>
+</head>
+<body>
+<main>
+<h1>Four Cats, Twelve Drops</h1>
+<p class="sub">Seven tangram pieces, eight machine makers. Four were asked to make three figures of anything they liked. Four were given three heaps of pieces dropped by chance and could move at most two pieces in each.</p>
+
+<div class="panels" id="panels">
+  <div class="panel w"><h3>From a word: any subject they chose</h3><div class="grid" id="gw"></div></div>
+  <div class="panel c"><h3>From a chance drop: the drop, then what they saw in it</h3><div class="grid" id="gc"></div></div>
+</div>
+<p><button id="names">Show what each maker named its figure</button> <span class="small">Moved pieces flash amber. Click a figure to look at it alone.</span></p>
+
+<h2>Look at one</h2>
+<div class="stage">
+  <div><div class="big" id="big"></div><button id="replay" style="display:none">Play the drop again</button> <button id="another">Another figure</button></div>
+  <div>
+    <p><b>What do you see?</b> Write it before you are told.</p>
+    <input type="text" id="seen" maxlength="80" placeholder="a few words">
+    <p><button class="main" id="show" disabled>Show what the maker saw</button></p>
+    <div class="reveal" id="rev"></div>
+    <div id="ask"></div>
+  </div>
+</div>
+
+<h2>How near the people's canon</h2>
+<p class="small" style="max-width:760px">Each dot is one figure, placed by how closely its outline overlaps the nearest of 1,013 figures from a tangram book that people named (KILOGRAM; best overlap over turns and mirrorings). The grey band holds 300 random drops; the blue band holds the book's own figures measured against their nearest sibling. Post hoc, this scale turned out to measure mostly how gathered a figure is (r = 0.81 with compactness across the 24), so read it as "gathered like the book", not "copied from it". The book's figures are not shown here: they may be used for research but not republished.</p>
+<div class="strip" id="strip"></div>
+
+<h2>What came back</h2>
+<p style="max-width:760px">Every word-first maker made <b>a sitting cat with a square head, two small-triangle ears and a raised tail</b>, and three of the four also made a fish with a diamond body. Twelve figures held five subjects. Each of those makers said it knew the cat as a traditional figure. The drop-first makers made ten different subjects in twelve figures. In four of them the thing they ended with was not the thing they first saw: a lizard became a shark, a pair of sails a camel, a masthead a head.</p>
+<p style="max-width:760px">The word-first makers looked at their figures and corrected them: they lifted a cat's tail, opened a gap between two sails, and renamed a house that read as an arrow. They never changed a subject because of what they saw. They also never made an invalid figure. All four wrote their own small programs that turned an outline into piece positions, and solved the figure instead of trying pieces out.</p>
+<table id="pred"></table>
+<p class="small">Text, sources and the full record: <a href="../../2026-11-20-seven-pieces/">the work's page</a> · evidence in the repository folder <code>works/2026-11-20-seven-pieces/</code>. Makers' figures, coding and data CC BY 4.0. People's names for the canon figures from KILOGRAM (Ji et al. 2022, MIT licence).</p>
+</main>
+<script src="face-data.js"></script>
+<script src="/study/client.js"></script>
+<script>
+(function(){
+var NS='http://www.w3.org/2000/svg',I=D.items;
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function bbox(sets){var a=[1e9,1e9,-1e9,-1e9];sets.forEach(function(ps){ps.forEach(function(p){p.forEach(function(v){a[0]=Math.min(a[0],v[0]);a[1]=Math.min(a[1],v[1]);a[2]=Math.max(a[2],v[0]);a[3]=Math.max(a[3],v[1])})})});return a}
+function moved(it){if(!it.drop)return[];return it.fig.map(function(p,k){var d=it.drop[k];return p.some(function(v,j){return Math.abs(v[0]-d[j][0])>1e-3||Math.abs(v[1]-d[j][1])>1e-3})})}
+function cen(p){var x=0,y=0;p.forEach(function(v){x+=v[0];y+=v[1]});return[x/p.length,y/p.length]}
+function interp(d,f,t){ // rigid motion: centre moves, piece turns
+  var cd=cen(d),cf=cen(f),a0=Math.atan2(d[1][1]-d[0][1],d[1][0]-d[0][0]),a1=Math.atan2(f[1][1]-f[0][1],f[1][0]-f[0][0]);
+  var da=a1-a0;while(da>Math.PI)da-=2*Math.PI;while(da<-Math.PI)da+=2*Math.PI;
+  // a flip changes the vertex order's handedness: then fall back to straight lines
+  var rig=d.every(function(v,j){var dx=v[0]-cd[0],dy=v[1]-cd[1],c=Math.cos(da),s=Math.sin(da);return Math.abs(cd[0]+c*dx-s*dy+cf[0]-cd[0]-f[j][0])<1e-2&&Math.abs(cd[1]+s*dx+c*dy+cf[1]-cd[1]-f[j][1])<1e-2});
+  if(!rig)return d.map(function(v,j){return[v[0]+(f[j][0]-v[0])*t,v[1]+(f[j][1]-v[1])*t]});
+  var a=da*t,c=Math.cos(a),s=Math.sin(a),cx=cd[0]+(cf[0]-cd[0])*t,cy=cd[1]+(cf[1]-cd[1])*t;
+  return d.map(function(v){var dx=v[0]-cd[0],dy=v[1]-cd[1];return[cx+c*dx-s*dy,cy+s*dx+c*dy]})}
+function svgFor(it,pad){
+  var b=bbox(it.drop?[it.fig,it.drop]:[it.fig]),w=b[2]-b[0],h=b[3]-b[1],s=Math.max(w,h)*(1+2*pad);
+  var svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox',[(b[0]+b[2])/2-s/2,-(b[1]+b[3])/2-s/2,s,s].join(' '));
+  var g=[];it.fig.forEach(function(){var p=document.createElementNS(NS,'polygon');p.setAttribute('class','piece');svg.appendChild(p);g.push(p)});
+  return{svg:svg,polys:g}}
+function draw(o,pieces,mv,flash){pieces.forEach(function(p,k){o.polys[k].setAttribute('points',p.map(function(v){return v[0].toFixed(3)+','+(-v[1]).toFixed(3)}).join(' '));o.polys[k].setAttribute('class','piece'+(flash&&mv[k]?' moved':''))})}
+var anims=[];
+function animate(it,o,loop){
+  var mv=moved(it),start=null,hold=1200,move=1400,rest=2200,T=hold+move+rest;
+  var a={on:true};
+  function step(ts){if(!a.on)return;if(start==null)start=ts;var t=ts-start;if(!loop&&t>T){draw(o,it.fig,mv,false);return}
+    t=t%T;var u=t<hold?0:t<hold+move?(t-hold)/move:1;u=u*u*(3-2*u);
+    draw(o,it.fig.map(function(f,k){return interp(it.drop[k],f,u)}),mv,t>=hold-300&&t<hold+move+700);requestAnimationFrame(step)}
+  requestAnimationFrame(step);return a}
+function cell(it,i){
+  var c=document.createElement('div');c.className='cell';var o=svgFor(it,.08);c.appendChild(o.svg);
+  if(it.drop)anims.push(animate(it,o,true));else draw(o,it.fig,[],false);
+  var l=document.createElement('div');l.className='lab';l.textContent=it.name;c.appendChild(l);
+  var m=document.createElement('div');m.className='mk';m.textContent=it.maker;c.appendChild(m);
+  c.onclick=function(){open(i);document.getElementById('big').scrollIntoView({behavior:'smooth',block:'center'})};return c}
+var order={w:[],c:[]};I.forEach(function(it,i){order[it.arm==='W'?'w':'c'].push(i)});
+// columns by maker: rows are figure 1..3, columns makers
+function fill(id,idx){var g=document.getElementById(id);idx.sort(function(a,b){var A=I[a],B=I[b];return A.file<B.file?-1:A.file>B.file?1:A.maker<B.maker?-1:1});
+  g.style.gridTemplateColumns='repeat(4,minmax(0,1fr))';idx.forEach(function(i){g.appendChild(cell(I[i],i))})}
+fill('gw',order.w);fill('gc',order.c);
+document.getElementById('names').onclick=function(){var p=document.getElementById('panels');p.classList.toggle('names');this.textContent=p.classList.contains('names')?'Hide the names':'Show what each maker named its figure'};
+
+// stage
+var cur=null,curA=null,study=null,ans=null,shown=false;
+var seen=document.getElementById('seen'),showB=document.getElementById('show');
+seen.oninput=function(){showB.disabled=!seen.value.trim();if(ans)ans.seen=seen.value.trim().slice(0,80)};
+function open(i){
+  cur=i;var it=I[i];if(curA)curA.on=false;var big=document.getElementById('big');big.innerHTML='';
+  var o=svgFor(it,.06);big.appendChild(o.svg);
+  if(it.drop){curA=animate(it,o,false);document.getElementById('replay').style.display='inline-block';document.getElementById('replay').onclick=function(){if(curA)curA.on=false;curA=animate(it,o,false)}}
+  else{draw(o,it.fig,[],false);document.getElementById('replay').style.display='none'}
+  seen.value='';showB.disabled=true;shown=false;document.getElementById('rev').className='reveal';document.getElementById('ask').innerHTML='';
+  ans={figure:it.maker+'-'+it.file.replace('.json',''),seen:''};}
+function reveal(){
+  var it=I[cur],r=document.getElementById('rev');shown=true;
+  var h='<div><span class="tag '+(it.arm==='W'?'w':'c')+'">'+(it.arm==='W'?'from a word':'from a chance drop')+'</span> <span class="small">maker '+esc(it.maker)+'</span></div>';
+  h+='<div class="word">'+esc(it.name)+'</div>';
+  if(it.arm==='C')h+='<p class="small">First seen in the drop, before any piece moved: <span class="q">“'+esc(it.first_seen)+'”</span>. Pieces moved: '+it.changes+' of 7.</p>';
+  h+='<p class="small">How: <span class="q">“'+esc(it.how)+'”</span></p>';
+  h+='<p class="small">Seen before? <span class="q">“'+esc(it.seen_before)+'”</span></p>';
+  h+='<p class="small">Nearest figure in the tangram book: overlap '+it.nearest_iou.toFixed(2)+'. People named that other figure: '+it.people.map(esc).join(' · ')+'.</p>';
+  h+='<p class="small">You wrote: <span class="q">“'+esc(seen.value)+'”</span></p>';
+  r.innerHTML=h;r.className='reveal on';
+  var ask=document.getElementById('ask');
+  ask.innerHTML='<p><b>Does the maker\'s word fit what you saw?</b></p><div id="fits"></div>';
+  ['yes','partly','no'].forEach(function(o){var b=document.createElement('button');b.textContent=o;b.onclick=function(){ans.fits=o;[].forEach.call(document.getElementById('fits').children,function(x){x.className=''});b.className='main';send()};document.getElementById('fits').appendChild(b)});
+}
+function send(){
+  if(window.HouseStudy){
+    if(!study){var box=document.createElement('div');document.getElementById('ask').appendChild(box);
+      study=HouseStudy.mount(box,{study:'error-as-method-seven-pieces',onClosed:function(x){box.innerHTML='<p class="small">The record of answers is not open at the moment ('+esc(x&&x.reason||'closed')+'). Your answers stay in this page.</p>'},onResult:function(){}})}
+    study.submit(ans);
+  } else if(!document.getElementById('local')){var p=document.createElement('p');p.id='local';p.className='small';p.textContent='Your answers stay in this page. (On the site, you could add them to this work\'s record here.)';document.getElementById('ask').appendChild(p)}
+}
+showB.onclick=function(){if(seen.value.trim())reveal()};
+seen.onkeydown=function(e){if(e.key==='Enter'&&seen.value.trim())reveal()};
+document.getElementById('another').onclick=function(){var j;do{j=Math.floor(Math.random()*I.length)}while(j===cur&&I.length>1);study=null;open(j)};
+open(Math.floor(Math.random()*I.length));
+
+// strip
+(function(){
+  var W=1000,H=210,x0=40,x1=980,lo=.4,hi=1;function X(v){return x0+(v-lo)/(hi-lo)*(x1-x0)}
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="nearness to the canon, two reference bands and the 24 figures">';
+  function band(vals,y,cls,label){var q=function(p){var a=vals.slice().sort(function(a,b){return a-b});return a[Math.floor(p*(a.length-1))]};
+    s+='<rect x="'+X(q(.1))+'" y="'+y+'" width="'+(X(q(.9))-X(q(.1)))+'" height="16" fill="var(--'+cls+')" opacity=".9"/>';
+    s+='<line x1="'+X(q(.5))+'" x2="'+X(q(.5))+'" y1="'+(y-3)+'" y2="'+(y+19)+'" stroke="var(--fg)" stroke-width="2"/>';
+    s+='<text x="'+(X(q(.9))+8)+'" y="'+(y+12)+'" font-size="13" font-family="system-ui" fill="var(--mute)">'+label+'</text>'}
+  band(D.chance,20,'band1','300 random drops (10th to 90th percentile, median)');
+  band(D.canon_nn,48,'band2','the book\'s figures to their nearest sibling');
+  [['W',110,'var(--w)','from a word'],['C',160,'var(--c)','from a drop']].forEach(function(r){
+    s+='<text x="'+x0+'" y="'+(r[1]-14)+'" font-size="13" font-family="system-ui" fill="'+r[2]+'">'+r[3]+'</text>';
+    I.forEach(function(it,i){if(it.arm!==r[0])return;s+='<circle cx="'+X(it.nearest_iou)+'" cy="'+r[1]+'" r="7" fill="'+r[2]+'" opacity=".8" data-i="'+i+'" style="cursor:pointer"><title>'+esc(it.maker+': '+it.name+' ('+it.nearest_iou.toFixed(2)+')')+'</title></circle>'})});
+  for(var v=.4;v<=1.001;v+=.1){s+='<line x1="'+X(v)+'" x2="'+X(v)+'" y1="185" y2="190" stroke="var(--mute)"/><text x="'+X(v)+'" y="204" text-anchor="middle" font-size="12" font-family="system-ui" fill="var(--mute)">'+v.toFixed(1)+'</text>'}
+  s+='</svg>';var st=document.getElementById('strip');st.innerHTML=s;
+  [].forEach.call(st.querySelectorAll('circle'),function(c){c.onclick=function(){open(+c.getAttribute('data-i'));document.getElementById('big').scrollIntoView({behavior:'smooth',block:'center'})}})})();
+
+// predictions
+var P=D.predictions,rows=[
+ ['P1','Word-first figures land on the canon\'s ground (median ≥ 0.69)',P.P1.holds,'median '+P.P1.median_W.toFixed(2)+'; mostly compactness (post hoc)'],
+ ['P2','Two moves do not bring chance onto the canon (median ≤ 0.66)',P.P2.holds,'median '+P.P2.median_C.toFixed(2)],
+ ['P3','Word-first subjects come from the people\'s 50 commonest names (≥ 9 of 12)',P.P3.holds,P.P3.W_on_shelf+' of 12'],
+ ['P4','Drop-first names leave that shelf (≤ 6 of 12)',P.P4.holds,P.P4.C_on_shelf+' of 12'],
+ ['P5','A subject shared by ≥ 3 of 4 word-first makers',P.P5.holds,'cat: 4 of 4; fish: 3 of 4'],
+ ['P6','A word-first shape near the canon says its word to people (≥ half)',P.P6.holds,P.P6.named_as_people+' of '+P.P6.W_on_ground],
+ ['P7','Making is trial and error (≥ 3 checks a figure, an invalid try per maker)',P.P7.holds,'median '+P.P7.median+' checks; 0 invalid'],
+ ['P8','Drop-first makers change little (median ≤ 1 piece)',P.P8.holds,'median '+P.P8.median],
+ ['P9','The practice\'s own words do not leak (≤ 1 of 24)',P.P9.holds,P.P9.items_with_leak+' of 24']];
+document.getElementById('pred').innerHTML='<tr><th></th><th>predicted before the run</th><th></th><th>result</th></tr>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="'+(r[2]?'ok':'no')+'">'+(r[2]?'held':'failed')+'</td><td>'+r[3]+'</td></tr>'}).join('');
+})();
+</script>
+</body>
+</html>
