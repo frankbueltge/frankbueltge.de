@@ -1,30 +1,30 @@
 {
-  "date": "2026-11-19",
+  "date": "2026-11-20",
   "deletion": {
     "available": true,
-    "checked_at": "2026-11-19T14:43:06Z",
+    "checked_at": "2026-11-20T14:18:28Z",
     "counts": {
-      "botwall": 10,
-      "gone_404": 6,
-      "gone_410": 0,
+      "botwall": 13,
+      "gone_404": 0,
+      "gone_410": 1,
       "legal_451": 0,
       "ok": 280,
-      "other": 0,
-      "server_error": 0,
+      "other": 1,
+      "server_error": 1,
       "unreachable": 4
     },
-    "decided": 286,
-    "excluded_unverifiable": 14,
-    "gone": 6,
+    "decided": 282,
+    "excluded_unverifiable": 18,
+    "gone": 1,
     "gone_ci95": [
-      0.0096,
-      0.045
+      0.0006,
+      0.0198
     ],
-    "gone_rate": 0.021,
+    "gone_rate": 0.0035,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.0133
+      0.0134
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,153 +33,122 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-11-17",
+    "pool_day": "2026-11-18",
     "receipts": [
       {
-        "class": "gone_404",
-        "domain": "cedarnews.net",
-        "first_seen": "20261117140000",
-        "http_code": 404,
-        "title": "Delaware State Police investigate shooting in Bridgeville — Bridgeville, Delaware",
-        "url": "https://cedarnews.net/newstasks/1160200/shooting-delaware-state-police-investigate-bridgeville/"
-      },
-      {
-        "class": "gone_404",
-        "domain": "cedarnews.net",
-        "first_seen": "20261117190000",
-        "http_code": 404,
-        "title": "Deatherage Concludes Fall Season at NCAA Individual Championships - Florida State University",
-        "url": "https://cedarnews.net/newstasks/1161471/deatherage-concludes-fall-season-ncaa-individual-championships/"
-      },
-      {
-        "class": "gone_404",
-        "domain": "1075thegame.com",
-        "first_seen": "20261117010000",
-        "http_code": 404,
-        "title": "No. 17 Miami seeking more unselfish play as it hosts Rider",
-        "url": "https://www.1075thegame.com/2026/11/16/no-17-miami-seeking-more-unselfish-play-as-it-hosts-rider/"
-      },
-      {
-        "class": "gone_404",
-        "domain": "khop.com",
-        "first_seen": "20261117110000",
-        "http_code": 404,
-        "title": "Rosalía Celebrates Nine Grammy Nominations Following Latin Grammy Success",
-        "url": "https://www.khop.com/2026/11/16/rosalia-celebrates-nine-grammy-nominations-following-latin-grammy-success/"
-      },
-      {
-        "class": "gone_404",
-        "domain": "kpla.com",
-        "first_seen": "20261117120000",
-        "http_code": 404,
-        "title": "Tate McRae and Karol G Lead Billboard's Global Charts as International Hits Gain Momentum",
-        "url": "https://www.kpla.com/2026/11/17/tate-mcrae-and-karol-g-lead-billboards-global-charts-as-international-hits-gain-momentum/"
-      },
-      {
-        "class": "gone_404",
-        "domain": "pensacolasjet.com",
-        "first_seen": "20261117090000",
-        "http_code": 404,
-        "title": "Rosalía Celebrates Nine Grammy Nominations Following Latin Grammy Success",
-        "url": "https://www.pensacolasjet.com/2026/11/17/rosalia-celebrates-nine-grammy-nominations-following-latin-grammy-success/"
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20261118200000",
+        "http_code": 410,
+        "title": "Pope joins families of those killed by NI paramilitaries in prayer in Rome",
+        "url": "https://www.breakingnews.ie/ireland/pope-joins-families-of-those-killed-by-ni-paramilitaries-in-prayer-in-rome-1959145.html"
       }
     ],
-    "sample_drawn_at": "2026-11-18T14:29:50Z",
+    "sample_drawn_at": "2026-11-19T14:38:03Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 5772,
-      "replaced": 5603,
-      "trivial": 927,
-      "update": 459
+      "reframing": 5881,
+      "replaced": 6109,
+      "trivial": 1036,
+      "update": 544
     },
-    "day": "2026-11-18",
+    "day": "2026-11-19",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "JD",
-          "Vance"
+          "hits",
+          "lowest",
+          "level",
+          "since",
+          "August",
+          "price"
         ],
-        "after": "Jd Vance: JD Vance says US will not fight 'forever war' with Iran, defends Donald Trump's military action",
-        "before": "Donald Trump: JD Vance says US will not fight 'forever war' with Iran, defends Donald Trump's military action",
-        "detected": "2026-11-18T04:47:39Z",
+        "after": "Bitcoin price hits lowest level since August: Bitcoin price today: BTC USD falls near $71,000 after Jensen Huang resigns as Nvidia CEO and ETF outflows hit $1.44 billion in five days",
+        "before": "Bitcoin BTC USD crash after Nvidia CEO resigns: Bitcoin price today: BTC USD falls near $71,000 after Jensen Huang resigns as Nvidia CEO and ETF outflows hit $1.44 billion in five days",
+        "detected": "2026-11-19T20:31:11Z",
         "domain": "indiatimes.com",
         "removed": [
-          "Donald",
-          "Trump"
+          "crash",
+          "BTC",
+          "USD",
+          "after",
+          "resigns",
+          "Nvidia",
+          "CEO"
         ],
-        "similarity": 1.0,
-        "url": "https://timesofindia.indiatimes.com/world/us/jd-vance-says-us-will-not-fight-forever-war-with-iran-defends-donald-trumps-military-action/articleshow/135909834.cms",
+        "similarity": 0.812,
+        "url": "https://economictimes.indiatimes.com/news/international/us/bitcoin-price-today-btc-usd-falls-near-71000-after-jensen-huang-resigns-as-nvidia-ceo-and-etf-outflows-hit-1-44-billion-in-five-days/articleshow/135779473.cms",
+        "weight": 17,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Link",
+          "Active"
+        ],
+        "after": "ASRB ICAR Recruitment 2026: Apply Online for 1,393 T-3 & T-4 Posts at asrb.gov.in- Link Active",
+        "before": "ASRB ICAR Recruitment 2026: Apply Online Starts Today for 1,393 T-3 & T-4 Posts at asrb.gov.in",
+        "detected": "2026-11-19T07:03:03Z",
+        "domain": "jagranjosh.com",
+        "removed": [
+          "Starts",
+          "Today"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.jagranjosh.com/articles/asrb-icar-recruitment-2026-apply-online-starts-today-for-1393-t-3-t-4-posts-at-asrb-gov-in-1800019320-1",
         "weight": 8,
         "window": "24h"
       },
       {
         "added": [
-          "US",
-          "Federal",
-          "Reserve"
+          "Offers",
+          "Clear"
         ],
-        "after": "US interest rates: The Federal Reserve set to anger Trump with likely decision to raise rates by 25 basis point or higher",
-        "before": "Interest rates: The Fed set to anger Trump with likely decision to raise rates by 25 basis point or higher",
-        "detected": "2026-11-18T03:31:55Z",
-        "domain": "brisbanetimes.com.au",
+        "after": "Chris Evans Offers Clear Answer to if He's Playing Captain America in Avengers: Doomsday - Comic Book Movies and Superhero Movie News",
+        "before": "Chris Evans Offer Clears Answer to if He's Playing Captain America in Avengers: Doomsday - Comic Book Movies and Superhero Movie News",
+        "detected": "2026-11-19T01:01:23Z",
+        "domain": "superherohype.com",
         "removed": [
-          "Fed"
+          "Offer",
+          "Clears"
         ],
-        "similarity": 0.81,
-        "url": "https://www.brisbanetimes.com.au/business/the-economy/trump-s-fed-nightmare-rates-won-t-be-slashed-they-could-surge-now-20261111-p61d55.html",
-        "weight": 8,
-        "window": "1w"
-      },
-      {
-        "added": [
-          "Hereâ",
-          "Rivianâ"
-        ],
-        "after": "Elon Musk Just Killed the Cybertruck to Build Cybercabs. Hereâ€™s What It Means for Tesla Stock -- and Rivianâ€™s.",
-        "before": "Elon Musk Just Killed the Cybertruck to Build Cybercabs. Here's What It Means for Tesla Stock -- and Rivian's.",
-        "detected": "2026-11-18T09:48:23Z",
-        "domain": "fool.com",
-        "removed": [
-          "Here",
-          "Rivian"
-        ],
-        "similarity": 0.81,
-        "url": "https://www.fool.com/investing/2026/11/17/elon-musk-just-killed-the-cybertruck-to-build-cybercabs-heres-what-it-means-for-tesla-stock-and-rivians/?source=iedfolrf0000001",
+        "similarity": 0.833,
+        "url": "https://www.superherohype.com/movies/706929-chris-evans-clear-answer-playing-captain-america-avengers-doomsday",
         "weight": 8,
         "window": "24h"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 14558,
-      "PAGE_TEXTCHANGE": 128681,
-      "PAGE_TITLECHANGE": 50569,
-      "UNCHANGED_CONTENT": 719234
+      "HTTP_REDIRECT": 15347,
+      "PAGE_TEXTCHANGE": 137532,
+      "PAGE_TITLECHANGE": 52185,
+      "UNCHANGED_CONTENT": 732843
     },
-    "title_changes_en": 12761,
+    "title_changes_en": 13570,
     "trace": [
       {
         "bytes_billed": 25165824,
-        "created": "1795099063125",
-        "job_id": "world_gdg_counts_20261118",
+        "created": "1795184123908",
+        "job_id": "world_gdg_counts_20261119",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 230686720,
-        "created": "1795099068512",
-        "job_id": "world_gdg_titles_20261118",
+        "bytes_billed": 236978176,
+        "created": "1795184129491",
+        "job_id": "world_gdg_titles_20261119",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-11-19T14:43:06Z",
+  "generated_at": "2026-11-20T14:18:28Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-11-18.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-11-19.json",
   "schema_version": "1",
   "selection_version": "v1"
 }

@@ -1,0 +1,154 @@
+{
+  "date": "2026-11-20",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-20T14:18:28Z",
+    "counts": {
+      "botwall": 13,
+      "gone_404": 0,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 280,
+      "other": 1,
+      "server_error": 1,
+      "unreachable": 4
+    },
+    "decided": 282,
+    "excluded_unverifiable": 18,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0198
+    ],
+    "gone_rate": 0.0035,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0134
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-18",
+    "receipts": [
+      {
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20261118200000",
+        "http_code": 410,
+        "title": "Pope joins families of those killed by NI paramilitaries in prayer in Rome",
+        "url": "https://www.breakingnews.ie/ireland/pope-joins-families-of-those-killed-by-ni-paramilitaries-in-prayer-in-rome-1959145.html"
+      }
+    ],
+    "sample_drawn_at": "2026-11-19T14:38:03Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5881,
+      "replaced": 6109,
+      "trivial": 1036,
+      "update": 544
+    },
+    "day": "2026-11-19",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "hits",
+          "lowest",
+          "level",
+          "since",
+          "August",
+          "price"
+        ],
+        "after": "Bitcoin price hits lowest level since August: Bitcoin price today: BTC USD falls near $71,000 after Jensen Huang resigns as Nvidia CEO and ETF outflows hit $1.44 billion in five days",
+        "before": "Bitcoin BTC USD crash after Nvidia CEO resigns: Bitcoin price today: BTC USD falls near $71,000 after Jensen Huang resigns as Nvidia CEO and ETF outflows hit $1.44 billion in five days",
+        "detected": "2026-11-19T20:31:11Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "crash",
+          "BTC",
+          "USD",
+          "after",
+          "resigns",
+          "Nvidia",
+          "CEO"
+        ],
+        "similarity": 0.812,
+        "url": "https://economictimes.indiatimes.com/news/international/us/bitcoin-price-today-btc-usd-falls-near-71000-after-jensen-huang-resigns-as-nvidia-ceo-and-etf-outflows-hit-1-44-billion-in-five-days/articleshow/135779473.cms",
+        "weight": 17,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Link",
+          "Active"
+        ],
+        "after": "ASRB ICAR Recruitment 2026: Apply Online for 1,393 T-3 & T-4 Posts at asrb.gov.in- Link Active",
+        "before": "ASRB ICAR Recruitment 2026: Apply Online Starts Today for 1,393 T-3 & T-4 Posts at asrb.gov.in",
+        "detected": "2026-11-19T07:03:03Z",
+        "domain": "jagranjosh.com",
+        "removed": [
+          "Starts",
+          "Today"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.jagranjosh.com/articles/asrb-icar-recruitment-2026-apply-online-starts-today-for-1393-t-3-t-4-posts-at-asrb-gov-in-1800019320-1",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Offers",
+          "Clear"
+        ],
+        "after": "Chris Evans Offers Clear Answer to if He's Playing Captain America in Avengers: Doomsday - Comic Book Movies and Superhero Movie News",
+        "before": "Chris Evans Offer Clears Answer to if He's Playing Captain America in Avengers: Doomsday - Comic Book Movies and Superhero Movie News",
+        "detected": "2026-11-19T01:01:23Z",
+        "domain": "superherohype.com",
+        "removed": [
+          "Offer",
+          "Clears"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.superherohype.com/movies/706929-chris-evans-clear-answer-playing-captain-america-avengers-doomsday",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 15347,
+      "PAGE_TEXTCHANGE": 137532,
+      "PAGE_TITLECHANGE": 52185,
+      "UNCHANGED_CONTENT": 732843
+    },
+    "title_changes_en": 13570,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1795184123908",
+        "job_id": "world_gdg_counts_20261119",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 236978176,
+        "created": "1795184129491",
+        "job_id": "world_gdg_titles_20261119",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-20T14:18:28Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-19.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
