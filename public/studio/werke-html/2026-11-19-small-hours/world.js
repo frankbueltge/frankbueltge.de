@@ -18,13 +18,32 @@ const LANTERN_R = 34, WALK = 46;                 // the visitor's light, and how
 const theta = new Float32Array(N), cs = new Float32Array(N), sn = new Float32Array(N);
 const size = new Float32Array(N), breach = new Float32Array(N), tRel = new Float32Array(N), seenAt = new Float32Array(N);
 const breachOf = new Map(), ownOf = new Map();
-for (const b of S.breaches) { breach[b.c] = 1; seenAt[b.c] = CENSUS - T0; (breachOf.get(b.c) || breachOf.set(b.c, []).get(b.c)).push(b); }
+// a breach turns red when it is first seen: by the census, or earlier by the practice that broke the rule (study 86)
+for (const b of S.breaches) {
+  (breachOf.get(b.c) || breachOf.set(b.c, []).get(b.c)).push(b);
+  if (b.by !== undefined) { breach[b.c] = 2; seenAt[b.c] = Math.min(seenAt[b.c] || Infinity, C.t[b.by] - T0); }
+  else if (!breach[b.c]) { breach[b.c] = 1; seenAt[b.c] = CENSUS - T0; }
+}
 // the Atelier's digest over its own cap, by the count it declared: seen by its own next session, or by its recount
 for (const o of S.own) {
   ownOf.set(o.c, o); breach[o.c] = 2;
   seenAt[o.c] = (o.seen ? C.t[o.seen.c] : Math.min(S.recount, breachOf.has(o.c) ? CENSUS : Infinity)) - T0;
 }
-const threads = S.own.filter(o => o.seen);
+// threads run from the session that named a breach of its own practice to the breach it named
+const threads = [], paired = new Set();
+for (const o of S.own) if (o.seen) { threads.push({ from: o.seen.c, to: o.c }); paired.add(o.seen.c + ':' + o.c); }
+for (const b of S.breaches) if (b.by !== undefined && !paired.has(b.by + ':' + b.c)) { threads.push({ from: b.by, to: b.c }); paired.add(b.by + ':' + b.c); }
+const wasMachine = new Set(S.was);
+
+// ---------- the house's log: every deed beyond or against an instruction it wrote down, as a ring ----------
+const D = S.deeds, ND = D.length;
+const CLS = [0, 1, 2, 2, 3, 4, 5];               // who saw first -> the ring's light (see the page)
+const spread = new Float32Array(ND);              // rows of one day stand side by side within it, oldest outermost
+{ const byDay = new Map(); D.forEach((d, k) => (byDay.get(d.t) || byDay.set(d.t, []).get(d.t)).push(k));
+  for (const ks of byDay.values()) ks.forEach((k, n) => { spread[k] = ks.length - 1 - n; }); }
+const deedR = (k, T) => R0 + K * (T - D[k].t) + spread[k] * 0.9;
+const WAVE_MS = 3400;
+const dState = new Uint8Array(ND), dStart = new Float64Array(ND), dSounded = new Uint8Array(ND), dProg = new Float32Array(ND);
 for (let i = 0; i < N; i++) {
   const h = C.h[i], u = parseInt(h.slice(0, 7), 16) / 0x10000000, v = parseInt(h.slice(7, 12), 16) / 0x100000;
   theta[i] = SECTOR[C.r[i]] + (u - 0.5) * SPREAD;
@@ -55,7 +74,11 @@ const U = {
   uLantern: { value: new THREE.Vector2(0, 0) }, uLR: { value: LANTERN_R },
   uFog: { value: new THREE.Color(0x05070b) }, uFogD: { value: 0.0013 },
   uMonths: { value: new Float32Array(8) }, uCam: { value: new THREE.Vector3() },
+  // per deed: (written, seconds after the first commit; lag in seconds or -1; wave 0..1; class + 10*in Git + 100*spread)
+  uD: { value: D.map((d, k) => new THREE.Vector4(d.t - T0, d.lag === null ? -1 : d.lag * DAY, 0, CLS[d.seer] + 10 * d.git + 100 * spread[k])) },
+  uWave: { value: new THREE.Vector4(0, 0, 0, 0) }, uWaveCol: { value: new THREE.Color(1, 0.6, 0.2) },
 };
+const RING_COL = [[1.0, 0.60, 0.20], [1.0, 0.86, 0.58], [0.45, 0.72, 1.0], [0.62, 0.64, 0.70], [0.40, 0.40, 0.44], [1, 1, 1]];
 const FOG = `
 uniform vec3 uFog; uniform float uFogD; varying float vDepth;
 float fogF(){ return clamp(1.0 - exp(-uFogD*uFogD*vDepth*vDepth), 0.0, 1.0); }
@@ -84,10 +107,11 @@ scene.add(sky);
 
 // ---------- ground: dark earth, the rings of months receding, the present ring ----------
 const ground = new THREE.Mesh(new THREE.CircleGeometry(1500, 128), new THREE.ShaderMaterial({
-  uniforms: U,
+  uniforms: U, extensions: { derivatives: true },
   vertexShader: `varying vec3 vW; varying float vDepth; void main(){ vec4 w = modelMatrix*vec4(position,1.0); vW = w.xyz; vec4 mv = viewMatrix*w; vDepth = -mv.z; gl_Position = projectionMatrix*mv; }`,
   fragmentShader: `uniform float uDay; uniform float uR0; uniform float uT; uniform float uK; uniform float uMonths[8];
-    uniform vec2 uLantern; uniform float uLR; uniform float uSweepR; varying vec3 vW; ${FOG}
+    uniform vec2 uLantern; uniform float uLR; uniform float uSweepR; uniform vec4 uD[${ND}]; varying vec3 vW; ${FOG}
+    vec3 ringCol(float k){ return k < 0.5 ? vec3(1.0,0.60,0.20) : k < 1.5 ? vec3(1.0,0.86,0.58) : k < 2.5 ? vec3(0.45,0.72,1.0) : k < 3.5 ? vec3(0.62,0.64,0.70) : k < 4.5 ? vec3(0.40,0.40,0.44) : vec3(1.0); }
     float h(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
     float n(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.0-2.0*f);
       return mix(mix(h(i),h(i+vec2(1,0)),f.x), mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x), f.y); }
@@ -102,6 +126,31 @@ const ground = new THREE.Mesh(new THREE.CircleGeometry(1500, 128), new THREE.Sha
         if (uMonths[m] <= 0.0) continue;
         float rr = uR0 + uK * uMonths[m];
         c += vec3(0.07,0.075,0.085) * (1.0 - smoothstep(0.0, 0.5, abs(r - rr)));
+      }
+      // the house's log: a ring where each deed was written down, and how far back the sight reached
+      // a line of fixed width on the ground: where a pixel covers more ground than the line, it dims, not widens
+      float aa = max(fwidth(r), 1e-4), ang = atan(vW.z, vW.x);
+      const float LW = 0.45;
+      float cover = min(1.0, LW / aa);
+      for (int k = 0; k < ${ND}; k++) {
+        vec4 d = uD[k];
+        float age = uT - d.x;
+        if (age < 0.0) continue;
+        float cls = mod(d.w, 10.0), git = mod(floor(d.w / 10.0), 10.0), spr = floor(d.w / 100.0);
+        vec3 col = ringCol(cls);
+        float rw = uR0 + uK * age + spr * 0.9, p = d.z;
+        float ring = (1.0 - smoothstep(0.0, max(LW, aa), abs(r - rw))) * cover;
+        if (git < 0.5) ring *= step(0.5, fract(ang * rw / 5.0));
+        c += col * ring * (0.16 + 0.14 * p + 0.9 * (1.0 - p) * step(0.001, p));
+        if (d.y >= 0.0) {
+          float rd = rw + uK * d.y, reach = rw + (rd - rw) * p;
+          c += col * 0.035 * step(rw, r) * step(r, reach);
+          c += col * 0.2 * p * (1.0 - smoothstep(0.0, max(LW, aa), abs(r - rd))) * cover;
+          c += col * (1.0 - p) * 1.3 * exp(-pow((r - reach) / 2.0, 2.0)) * step(0.001, p);
+        } else {
+          float reach = rw + uK * 86400.0 * 5.0 * p;
+          c += col * (1.0 - p) * (1.0 - p) * 1.0 * exp(-pow((r - reach) / 3.0, 2.0)) * step(0.001, p);
+        }
       }
       float d = length(vW.xz - uLantern);
       c += vec3(0.55,0.36,0.14) * pow(1.0 - smoothstep(0.0, uLR, d), 2.2) * 0.55;
@@ -133,10 +182,10 @@ const COMMON = `
 uniform float uT; uniform float uK; uniform float uR0; uniform float uTime; uniform float uFlameLife;
 uniform float uSweepR; uniform vec2 uLantern; uniform float uLR; uniform float uDay;
 attribute float aT; attribute float aTh; attribute float aS; attribute float aKind; attribute float aB; attribute float aSeen;
-varying vec2 vUv; varying float vAge; varying float vKind; varying float vRed; varying float vLit; varying float vSeed; varying float vDepth;
+varying vec2 vUv; varying float vAge; varying float vKind; varying float vRed; varying float vLit; varying float vSeed; varying float vDepth; varying float vR;
 vec3 centre(out float age){ age = uT - aT; float r = uR0 + uK*age; return vec3(cos(aTh)*r, 0.0, sin(aTh)*r); }
 void setCommon(vec3 c, float age){
-  vUv = position.xy; vAge = age; vKind = aKind; vSeed = fract(aT*0.0137 + aTh*7.31);
+  vUv = position.xy; vAge = age; vKind = aKind; vSeed = fract(aT*0.0137 + aTh*7.31); vR = length(c.xz);
   vRed = (aB > 0.5 && uT >= aSeen && (aB > 1.5 || length(c.xz) < uSweepR)) ? 1.0 : 0.0;
   vLit = 1.0 - smoothstep(uLR*0.8, uLR, length(c.xz - uLantern));
 }`;
@@ -152,8 +201,8 @@ const embers = new THREE.Mesh(quad, new THREE.ShaderMaterial({
       vec4 w = vec4(c + vec3(position.x*s, 0.25 + aKind*0.02, position.y*s), 1.0);
       vec4 mv = viewMatrix*w; vDepth = -mv.z; gl_Position = projectionMatrix*mv;
     }`,
-  fragmentShader: `uniform float uTime; uniform float uFlameLife; uniform float uDay;
-    varying vec2 vUv; varying float vAge; varying float vKind; varying float vRed; varying float vLit; varying float vSeed; ${FOG}
+  fragmentShader: `uniform float uTime; uniform float uFlameLife; uniform float uDay; uniform vec4 uWave; uniform vec3 uWaveCol;
+    varying vec2 vUv; varying float vAge; varying float vKind; varying float vRed; varying float vLit; varying float vSeed; varying float vR; ${FOG}
     void main(){
       float d = length(vUv); if (d > 1.0) discard;
       float fresh = exp(-vAge / (uFlameLife*1.5));
@@ -162,7 +211,10 @@ const embers = new THREE.Mesh(quad, new THREE.ShaderMaterial({
       vec3 col = vKind < 0.5 ? cold : (vKind < 1.5 ? grey : warm);
       float a = (0.45 + 0.6*week + 1.1*fresh) * (vKind > 0.5 && vKind < 1.5 ? 0.5 : 1.0) * (0.8 + 0.2*sin(uTime*0.6 + vSeed*60.0));
       if (vRed > 0.5) { col = vec3(1.0, 0.16, 0.05); a = 1.3 + 0.45*sin(uTime*2.2 + vSeed*40.0); }
-      a *= (1.0 + 1.4*vLit) * (1.0 - 0.55*uDay);
+      // a sighting in words passes over what lay between its writing and its deed
+      float wv = uWave.z * step(uWave.x - 1.0, vR) * step(vR, uWave.y);
+      if (vRed < 0.5) col = mix(col, uWaveCol, 0.55*wv);
+      a *= (1.0 + 1.4*vLit + 2.2*wv) * (1.0 - 0.55*uDay);
       float core = exp(-d*d*10.0) + 0.18*exp(-d*d*2.0);
       vec3 c = col * core * a + vec3(1.0)*exp(-d*d*60.0)*(fresh*0.6 + 0.12);
       gl_FragColor = vec4(faded(c) * (1.0 - smoothstep(0.85,1.0,d)), 1.0);
@@ -220,10 +272,10 @@ const thrLines = new THREE.LineSegments(thrGeo, new THREE.LineBasicMaterial({ ve
 thrLines.frustumCulled = false; scene.add(thrLines);
 function updateThreads(T) {
   threads.forEach((o, k) => {
-    const j = o.seen.c, ts = C.t[j];
+    const j = o.from, ts = C.t[j];
     const on = T >= ts ? 0.35 + 0.65 * Math.exp(-(T - ts) / (2 * DAY)) : 0;
-    const ra = radiusAt(o.c, T), rb = radiusAt(j, T);
-    thrPos.set([cs[j] * rb, 1.2, sn[j] * rb, cs[o.c] * ra, 0.6, sn[o.c] * ra], k * 6);
+    const ra = radiusAt(o.to, T), rb = radiusAt(j, T);
+    thrPos.set([cs[j] * rb, 1.2, sn[j] * rb, cs[o.to] * ra, 0.6, sn[o.to] * ra], k * 6);
     thrCol.set([1.0 * on, 0.45 * on, 0.3 * on, 0.9 * on, 0.2 * on, 0.1 * on], k * 6);
   });
   thrGeo.attributes.position.needsUpdate = true; thrGeo.attributes.color.needsUpdate = true;
@@ -237,6 +289,7 @@ const lantern = new THREE.Vector2(0, 0), lanternGoal = new THREE.Vector2(0, 0);
 
 // ---------- time ----------
 const CENSUS_NIGHT = CENSUS - (22 * HOUR + 29 * 60) - HOUR;   // 00:00 in Berlin, the night of the census
+const AUGUST = Date.UTC(2026, 6, 31, 22) / 1000;                // 00:00 in Berlin, 1 August: the log's fullest month
 const END = Math.max(T1, S.recount) + 2 * HOUR;
 const st = { T: 0, playing: true, secPerDay: 10, sweep: null, swept: false, last: performance.now() };
 const months = [];
@@ -255,6 +308,8 @@ function sunElevation(unix) {     // degrees, Berlin (52.52 N, 13.40 E); a stand
 const fmtBerlin = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
 const fmtHour = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit', hour12: false });
 const fmtUTC = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false });
+const fmtDayOnly = iso => new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long' }).format(new Date(iso + 'T12:00:00Z'));
+const SEER_SAID = ['by the architect', 'by a session he had set to look', 'by another of the house’s machines, unbidden', 'by the machine that did it', 'by a guard or a test', '— the row does not say by whom', 'by someone outside the house'];
 
 // ---------- sound: each signed deed is heard where it lies ----------
 let ac = null, master, windG, windF, voices = [], lastVoice = 0;
@@ -316,10 +371,54 @@ function tock(i) {
   o.start(now); o.stop(now + 0.8);
 }
 
+// a sighting written in words is heard all around, as the ring is: who saw it decides its voice
+function sightSound(cls) {
+  if (!ac || !$('snd').checked) return;
+  const now = ac.currentTime, out = ac.createGain(); out.gain.value = 1; out.connect(master);
+  const partials = [
+    [[98, 0.20], [147, 0.09], [196, 0.06], [392, 0.018]],          // the architect: low and warm
+    [[147, 0.13], [220, 0.07], [440, 0.035], [880, 0.012]],        // a session he set to look: warm, higher
+    [[1046.5, 0.045], [1568, 0.03], [2093, 0.018]],               // the house's machines, unbidden: glass
+    [[880, 0.035], [1760, 0.015]],                                  // a guard or a test: a short chime
+  ][cls] || [];
+  partials.forEach(([f, a]) => {
+    const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(a, now + (cls === 3 ? 0.01 : 0.4));
+    g.gain.exponentialRampToValueAtTime(0.0001, now + (cls === 3 ? 1.2 : 5.0));
+    o.connect(g).connect(out); o.start(now); o.stop(now + 5.1);
+  });
+  if (cls >= 4) {                                   // the row does not say who saw: a breath with no voice
+    const s = ac.createBufferSource(); s.buffer = voices.noise; s.playbackRate.value = 0.35;
+    const f = ac.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 700;
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(0.35, now + 0.3); g.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+    s.connect(f).connect(g).connect(out); s.start(now);
+  }
+}
+
 // ---------- the clock ----------
 let fired = 0;                                    // index of the next commit to sound
 const idxAt = T => { let lo = 0, hi = N; while (lo < hi) { const m = (lo + hi) >> 1; if (C.t[m] <= T) lo = m + 1; else hi = m; } return lo; };
-function setT(T, silent) { st.T = T; fired = idxAt(T); if (silent) {} }
+// a jump settles every ring it passes without a wave; only a running clock sends one out
+function setT(T) { st.T = T; fired = idxAt(T); for (let k = 0; k < ND; k++) { dState[k] = T >= D[k].t ? 2 : 0; dSounded[k] = 1; } }
+let lastWave = -1;
+function updateDeeds(now) {
+  let wk = -1;
+  for (let k = 0; k < ND; k++) {
+    if (st.T < D[k].t) { dState[k] = 0; dProg[k] = 0; }
+    else if (dState[k] === 1) {
+      dProg[k] = Math.max(0, Math.min(1, (now - dStart[k]) / WAVE_MS));
+      if (now >= dStart[k] && !dSounded[k]) { dSounded[k] = 1; sightSound(CLS[D[k].seer]); lastWave = k; }
+      if (dProg[k] >= 1) dState[k] = 2; else if (now >= dStart[k]) wk = k;
+    } else dProg[k] = 1;
+    U.uD.value[k].z = dProg[k];
+  }
+  if (wk >= 0) {
+    const rw = deedR(wk, st.T), p = dProg[wk], lag = D[wk].lag;
+    const reach = lag === null ? K * DAY * 5 * p : K * lag * DAY * p;
+    U.uWave.value.set(rw, rw + reach + 1.5, (lag === null ? 0.7 : 1.0) * Math.sin(Math.PI * Math.min(1, p * 1.15)), 0);
+    U.uWaveCol.value.setRGB(...RING_COL[CLS[D[wk].seer]]);
+  } else U.uWave.value.z = 0;
+}
 function startSweep() {
   st.sweep = { start: performance.now(), dur: 6500, reached: new Set() };
   st.playing = false; sweepSound();
@@ -339,6 +438,9 @@ function step(dtReal) {
     const prev = st.T;
     st.T = Math.min(END, st.T + dtReal * DAY / st.secPerDay);
     if (prev < CENSUS && st.T >= CENSUS && !st.swept) { st.T = CENSUS; startSweep(); }
+    // the close of a day the log wrote deeds down: each sends its ring out, one after another
+    let q = 0; const now = performance.now();
+    for (let k = 0; k < ND; k++) if (prev < D[k].t && st.T >= D[k].t) { dState[k] = 1; dSounded[k] = 0; dStart[k] = now + 1100 * q++; }
     let n = 0;
     while (fired < N && C.t[fired] <= st.T) { if (n++ < 6) voice(fired); fired++; }
     if (st.T >= END) { st.playing = false; $('play').textContent = 'Run'; }
@@ -353,11 +455,15 @@ function hud() {
   $('hour').textContent = fmtHour.format(d) + ' in Berlin';
   const T = st.T, lo = idxAt(T - 3 * HOUR), hi = idxAt(T);
   let m = 0, w = 0, a = 0; for (let i = lo; i < hi; i++) { if (C.k[i] === 0) m++; else if (C.k[i] === 1) w++; else a++; }
-  if (!st.sweep && T >= S.recount && T < S.recount + 1.5 * HOUR) {
+  const now = performance.now();
+  if (!st.sweep && lastWave >= 0 && dState[lastWave] > 0 && now - dStart[lastWave] < WAVE_MS + 2600) {
+    const d = D[lastWave];
+    $('note').textContent = `The house’s log, ${fmtDayOnly(d.date)}: ${d.text} Seen first ${SEER_SAID[d.seer]}${d.lag === null ? '' : d.lag === 0 ? ', the same day' : `, ${d.lag} day${d.lag === 1 ? '' : 's'} after`}.${d.git ? '' : ' Its record is not in public Git.'}`;
+  } else if (!st.sweep && T >= S.recount && T < S.recount + 1.5 * HOUR) {
     $('note').textContent = 'Forty minutes later the Atelier recounts its own digest by the rule it declared, and finds more over its cap than the census did.';
   } else if (!st.sweep) {
     $('note').textContent = m + w + a === 0 ? (T < T0 ? 'Before the first commit.' : 'Nothing is signed in these three hours.')
-      : `In the last three hours: ${m} signed with a machine’s name, ${w} by a workflow, ${a} with the architect’s name.`;
+      : `In the last three hours: ${m} by the practices’ sessions, ${w} by workflows, ${a} with the architect’s name.`;
   }
   $('t').value = Math.round((T - T0) / HOUR);
   U.uDay.value = THREE.MathUtils.smoothstep(el, -6, 14);
@@ -383,7 +489,30 @@ function nearest(p) {
   }
   return best;
 }
-const KIND = ['signed with a machine’s name: a model-run session of the practice', 'signed by a workflow of the house: a script, which anyone can run again without a model', 'signed with the architect’s name: he, or a session acting for him; the record does not say which'];
+// the rings of the log the lantern stands on: its line, or the stretch it reached back over
+function ringsAt(p) {
+  if (lantern.distanceTo(new THREE.Vector2(p.x, p.z)) > LANTERN_R) return [];
+  const r = Math.hypot(p.x, p.z), on = [], over = [];
+  for (let k = 0; k < ND; k++) {
+    if (st.T < D[k].t) continue;
+    const rw = deedR(k, st.T), rd = D[k].lag === null ? rw : rw + K * D[k].lag * DAY;
+    if (Math.abs(r - rw) < 1.1 || Math.abs(r - rd) < 1.1) on.push(k); else if (r > rw && r < rd) over.push(k);
+  }
+  return on.length ? on : over;
+}
+const KIND = ['signed with a machine’s name by a model-run session of the practice', 'signed by a workflow of the house: a script, which anyone can run again without a model', 'signed with the architect’s name: he, or a session acting for him; the record does not say which'];
+const SEER_CLASS = ['warm', 'pale', 'cold', 'cold', 'grey', 'dim', 'warm'];
+function ringCard(k) {
+  const d = D[k];
+  let h = `<b>The house’s log</b> · a row of ${fmtDayOnly(d.date)} 2026 · <a href="${S.log}#L${d.line}" target="_blank" rel="noopener">line ${d.line}</a><br>`;
+  h += `“${esc(d.text)}”<br><i>the Field’s paraphrase of the row, which house sessions write in the architect’s name</i><br>`;
+  h += `${d.rel === 'against' ? 'against a standing instruction' : 'beyond the instructions: unasked'}; done by ${d.actor === 'model session' ? 'a model-run session' : d.actor === 'unclear' ? 'a machine the row does not name' : 'a workflow or a pipeline'}<br>`;
+  h += `seen first <span class="${SEER_CLASS[d.seer]}">${SEER_SAID[d.seer].replace(/^— /, '')}</span>`;
+  h += d.lag === null ? '; how long after the deed, the row does not say' : d.lag === 0 ? ', the same day' : `, ${d.lag} day${d.lag === 1 ? '' : 's'} after the deed`;
+  h += d.git ? '<br>its record, by the row’s account: in Git, where anyone can open it after the models are gone'
+    : '<br><span class="red">its record: not in public Git; it stayed with the run, the prompt or the service that held it</span>';
+  return h;
+}
 const later = sec => { if (sec >= 1.5 * DAY) return Math.round(sec / DAY) + ' days later'; const h = Math.round(sec / HOUR); return h <= 1 ? 'within the hour' : h + ' hours later'; };
 const esc = s => s.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 function card(i) {
@@ -391,11 +520,17 @@ function card(i) {
   const bs = breachOf.get(i) || [];
   const seen = st.T >= CENSUS && (!st.sweep || radiusAt(i, st.T) < U.uSweepR.value);
   let h = `<b>${S.practices[C.r[i]]}</b> · ${fmtBerlin.format(d)}, ${fmtHour.format(d)} in Berlin<br>`;
-  h += `<span class="sig">${esc(S.signers[C.g[i]])}</span><br><i>${KIND[C.k[i]]}</i><br>`;
+  h += `<span class="sig">${esc(S.signers[C.g[i]])}</span><br><i>${KIND[C.k[i]]}${wasMachine.has(i) ? '; it signs with a practice’s name (counted as a session in state 1, corrected 20 November)' : ''}</i><br>`;
   h += `“${esc(C.s[i])}”<br>${C.f[i]} file${C.f[i] === 1 ? '' : 's'}, ${C.l[i].toLocaleString('en-GB')} lines · <a href="https://github.com/frankbueltge/${repo}/commit/${C.h[i]}" target="_blank" rel="noopener">${C.h[i]}</a>`;
   if (C.b[i]) h += `<br>checked by the census against written rules ${C.b[i] === 1 ? 'once' : C.b[i] + ' times'}`;
-  for (const b of bs) h += `<br><span class="red">broke one: ${esc(b.rule)} ${b.v} over a limit of ${b.lim}${b.path ? ' (' + esc(b.path) + ')' : ''}</span>`;
   const o = ownOf.get(i);
+  for (const b of bs) {
+    h += `<br><span class="red">broke one: ${esc(b.rule)} ${b.v} over a limit of ${b.lim}${b.path ? ' (' + esc(b.path) + ')' : ''}</span>`;
+    if (o) continue;
+    if (b.by !== undefined) h += st.T >= C.t[b.by] ? `<br>first named: by ${S.practices[C.r[b.by]].replace('The', 'the')} itself, ${fmtBerlin.format(new Date(C.t[b.by] * 1000))}, ${later(C.t[b.by] - C.t[i])} (<a href="https://github.com/frankbueltge/${S.repos[C.r[b.by]]}/commit/${C.h[b.by]}" target="_blank" rel="noopener">${C.h[b.by].slice(0, 7)}</a>), before the census`
+      : `<br>not named by anyone yet, on this clock`;
+    else h += seen ? `<br>first seen: the Field’s census, ${fmtUTC.format(new Date(CENSUS * 1000))} UTC, ${later(CENSUS - C.t[i])}: a machine reading the record` : `<br>not seen by anyone yet, on this clock`;
+  }
   if (o) {
     h += `<br><span class="red">over the Atelier’s own cap, by the count it declared: ${o.n.toLocaleString('en-GB')} words of 2,500 (its digest, run ${o.run} of 15)</span>`;
     if (o.seen) h += `<br>first seen: the Atelier’s own session of ${fmtBerlin.format(new Date(C.t[o.seen.c] * 1000))}, ${later(C.t[o.seen.c] - C.t[i])} (<a href="https://github.com/frankbueltge/ulysses/commit/${C.h[o.seen.c]}" target="_blank" rel="noopener">${C.h[o.seen.c].slice(0, 7)}</a>): the practice reading its own record`;
@@ -405,9 +540,15 @@ function card(i) {
       h += `<br>first seen: ${t === CENSUS ? 'the Field’s census' : 'the Atelier’s recount'}, ${fmtUTC.format(new Date(t * 1000))} UTC, ${later(t - C.t[i])}`;
     }
   }
-  if (bs.length && !o) h += seen ? `<br>first seen: the Field’s census, ${fmtUTC.format(new Date(CENSUS * 1000))} UTC, ${later(CENSUS - C.t[i])}: a machine reading the record` : `<br>not seen by anyone yet, on this clock`;
   h += `<br><span class="dim">which model ran it: not in the record</span>`;
   return h;
+}
+// what the lantern reads at a point: a ring of the log when it stands on one, else the deed nearest
+function readAt(p) {
+  const rings = ringsAt(p), i = nearest(p);
+  const r = Math.hypot(p.x, p.z), onLine = rings.some(k => Math.abs(r - deedR(k, st.T)) < 1.1);
+  if (rings.length && (onLine || i < 0)) return rings.slice(0, 2).map(ringCard).join('<hr>') + (rings.length > 2 ? `<br><span class="dim">and ${rings.length - 2} more rows of that stretch</span>` : '');
+  return i >= 0 ? card(i) : null;
 }
 let downAt = null;
 renderer.domElement.addEventListener('pointerdown', e => { downAt = [e.clientX, e.clientY]; });
@@ -415,19 +556,19 @@ renderer.domElement.addEventListener('pointerup', e => {
   if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
   startSound();
   const p = groundAt(e); if (!p) return;
-  const i = nearest(p);
-  if (i >= 0) { showTip(e, i); return; }
+  const html = readAt(p);
+  if (html) { showTip(e, html); return; }
   lanternGoal.set(p.x, p.z); $('tip').hidden = true;
 });
 renderer.domElement.addEventListener('pointermove', e => {
   if (e.pointerType !== 'mouse') return;
   const p = groundAt(e); if (!p) { $('tip').hidden = true; return; }
-  const i = nearest(p); if (i < 0) { $('tip').hidden = true; renderer.domElement.style.cursor = 'crosshair'; return; }
-  renderer.domElement.style.cursor = 'pointer'; showTip(e, i);
+  const html = readAt(p); if (!html) { $('tip').hidden = true; renderer.domElement.style.cursor = 'crosshair'; return; }
+  renderer.domElement.style.cursor = 'pointer'; showTip(e, html);
 });
-function showTip(e, i) {
+function showTip(e, html) {
   const r = renderer.domElement.getBoundingClientRect(), tip = $('tip');
-  tip.innerHTML = card(i); tip.hidden = false;
+  tip.innerHTML = html; tip.hidden = false;
   const x = Math.min(e.clientX - r.left + 14, r.width - tip.offsetWidth - 8), y = Math.min(e.clientY - r.top + 10, r.height - tip.offsetHeight - 8);
   tip.style.left = Math.max(8, x) + 'px'; tip.style.top = Math.max(8, y) + 'px';
 }
@@ -441,6 +582,7 @@ document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', 
   const go = b.dataset.go;
   if (go === 'first') { setT(T0 - 6 * HOUR); st.secPerDay = 2; st.swept = false; }
   else if (go === 'census') { setT(CENSUS_NIGHT); st.secPerDay = 10; st.swept = false; }
+  else if (go === 'august') { setT(AUGUST); st.secPerDay = 4; st.swept = false; }
   st.sweep = null; ring.material.opacity = 0; st.playing = true; $('play').textContent = 'Pause';
   document.getElementById('stage').scrollIntoView({ behavior: 'smooth' });
 }));
@@ -450,7 +592,7 @@ window.addEventListener('keydown', e => { if (e.key === ' ' && e.target === docu
 // ---------- loop ----------
 function resize() { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
 window.addEventListener('resize', resize); resize();
-window.__SH = { st, setT, radiusAt, idxAt, lantern, U, scene, embers, flames, ground, renderer, renderOnce: () => renderer.render(scene, camera), camera, controls };
+window.__SH = { st, setT, radiusAt, idxAt, lantern, lanternGoal, U, scene, embers, flames, ground, renderer, renderOnce: () => renderer.render(scene, camera), camera, controls, D, deedR, dState, dStart, dProg, readAt, ringsAt };
 
 function frame(now) {
   const dt = Math.min(0.1, (now - st.last) / 1000); st.last = now;
@@ -461,7 +603,7 @@ function frame(now) {
   U.uLantern.value.copy(lantern);
   lamp.position.set(lantern.x, 6, lantern.y); lamp.intensity = 40 * (1 - 0.6 * U.uDay.value);
   lampFlame.position.set(lantern.x, 3.2 + Math.sin(now / 300) * 0.08, lantern.y);
-  U.uTime.value = now / 1000; U.uT.value = st.T - T0; updateThreads(st.T);
+  U.uTime.value = now / 1000; U.uT.value = st.T - T0; updateThreads(st.T); updateDeeds(now);
   U.uFlameLife.value = Math.max(3 * HOUR, (DAY / st.secPerDay) * 0.9);
   if (ac && windG) { const night = 1 - U.uDay.value; windG.gain.setTargetAtTime($('snd').checked ? 0.06 + 0.12 * night : 0, ac.currentTime, 0.3); }
   if (ac && ac.listener.positionX) { ac.listener.positionX.value = camera.position.x; ac.listener.positionY.value = camera.position.y; ac.listener.positionZ.value = camera.position.z;

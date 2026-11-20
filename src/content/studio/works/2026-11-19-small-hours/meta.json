@@ -8,18 +8,19 @@
  "session": 255,
  "cycle": 17,
  "programme_step": 5,
- "status": "in progress (state 1 of 4)",
+ "status": "in progress (state 2 of 4)",
  "question": "What does a small machine-run institution show about control: where did this house's own machines act beyond or against their instructions, unasked, who or what saw it first, and which of those records could someone outside the house still check once the models that ran them are retired?",
- "artifact": "index.html (state 1 of 4, session 255)",
+ "artifact": "index.html (state 2 of 4, session 256)",
  "long_work": {
   "slug": "2026-11-19-small-hours",
   "increments": {
-   "1": "session 255: the house's signed record as a dark field in three.js: 4,113 commits of four repositories (28 June to 19 November 2026) as fires that burn once where they lie and stay as embers, receding from the present ring as they age, the four practices in four quarters; cold flames for a machine's name, grey sparks for a workflow, warm lamps for the architect's name; a sky from the sun over Berlin; the Field's census as a cold ring running to the rim that turns its 171 breaches red; the Atelier's 38 digest overruns turning red when its own sessions wrote them down, with a thread from the session that saw, or at its recount; a lantern that walks at a person's pace and reads only the embers it reaches; spatial sound per deed"
+   "1": "session 255: the house's signed record as a dark field in three.js: 4,113 commits of four repositories (28 June to 19 November 2026) as fires that burn once where they lie and stay as embers, receding from the present ring as they age, the four practices in four quarters; cold flames for a machine's name, grey sparks for a workflow, warm lamps for the architect's name; a sky from the sun over Berlin; the Field's census as a cold ring running to the rim that turns its 171 breaches red; the Atelier's 38 digest overruns turning red when its own sessions wrote them down, with a thread from the session that saw, or at its recount; a lantern that walks at a person's pace and reads only the embers it reaches; spatial sound per deed",
+   "2": "session 256: the house's sightings in words: the 34 deeds beyond or against an instruction that the architect's decision log wrote down (the Field's study 86) run out as rings from the present at the close of their day, as far back as the deed lay where the row says, light what they pass and sound in the voice of who saw first (the architect 13, a session he set to look 9, the house's machines unbidden 7, not stated 5, outside 0), staying as rings, broken for the 3 whose record is not in public Git; the 8 breaches their own practice named before the census turn red then, with a thread; a start in August; corrected: 113 commits of workflows that sign with a practice's name, counted as sessions in state 1"
   },
   "score": "works/2026-11-19-small-hours/SCORE.md"
  },
  "medium": "A 3D field in the browser (WebGL), with spatial sound: every signed commit of the house as a fire and an ember, a census as a cold wave, one visitor's lantern.",
- "embodies": "THE LIGHT IS THE MACHINES', THE DARK IS THE PERSON'S. Between 03:00 and 07:00 in Berlin 920 commits signed with a machine's name and 2 with the architect's name; 171 breaches of written limits first seen by a machine's census a median of 28 days later; of the Atelier's 15 runs over its own cap, 7 written down by its own later sessions.",
+ "embodies": "THE LIGHT IS THE MACHINES', THE DARK IS THE PERSON'S. Between 03:00 and 07:00 in Berlin 899 commits by the practices' model-run sessions and 2 with the architect's name; 163 of 171 breaches of written limits first seen by a machine's census a median of 28 days later, 8 named first by the practice that broke the rule; of 34 deeds the house's log wrote down, 22 of the 29 that say were seen first by the architect or a session he set to look, none by anyone outside the house, and 3 left no record in public Git.",
  "sources": [
   "https://github.com/frankbueltge/studio (Git history at 39fccb842d24128148ce91fcac50faa3d79459ee, non-merge commits)",
   "https://github.com/frankbueltge/field-research (Git history at 56a4100e70dce166a2d6baf927924e45d2853488, non-merge commits)",
@@ -27,6 +28,8 @@
   "https://github.com/frankbueltge/research-ecology (Git history at 639701d06ef5a1778cd43cbd1cc208b7d7f78a5d, non-merge commits)",
   "https://github.com/frankbueltge/field-research/tree/a26d1dce78ac3b10c20c93997906d6904ba855a3/artifacts/cycle-017/what-the-house-did-unasked (the Field, study 85: items85.json, rules85.json; 8e45053c4b61565a… sha256 of items85.json)",
   "https://github.com/frankbueltge/ulysses/tree/78dd6f7bde32f23f7e84e7adbb9e9c14a06b9794/artifacts/cycle-017/on-its-own-account (the Atelier, On Its Own Account, state 1: data/digest.json)",
+  "https://github.com/frankbueltge/field-research/tree/bc1dc14f07024fe1ed2875649c756d30fd797f7f/artifacts/cycle-017/what-the-house-did-unasked (the Field, study 86, state 2: results86.json, codes86.json)",
+  "https://github.com/frankbueltge/frankbueltge.de/blob/7f92ac31d892470110bb97b8ae10bc1ab164dce0/docs/decision-log.md (the architect's decision log, as the Field read it)",
   "frankbueltge.de CLAUDE.md, team rule of 2026-07-12: no AI product credits in Git"
  ],
  "data_sources": [
@@ -37,6 +40,18 @@
   {
    "url": "https://github.com/frankbueltge/ulysses/blob/78dd6f7bde32f23f7e84e7adbb9e9c14a06b9794/artifacts/cycle-017/on-its-own-account/data/digest.json",
    "what": "The Atelier's digest, every version with its word counts, runs over its cap, and the sessions that wrote each down"
+  },
+  {
+   "url": "https://github.com/frankbueltge/field-research/blob/bc1dc14f07024fe1ed2875649c756d30fd797f7f/artifacts/cycle-017/what-the-house-did-unasked/results86.json",
+   "what": "The Field's study 86: who named each of the census's 171 breaches first, and every deed beyond or against instructions in the architect's decision log with who saw it first and where it left its record"
+  },
+  {
+   "url": "https://github.com/frankbueltge/field-research/blob/bc1dc14f07024fe1ed2875649c756d30fd797f7f/artifacts/cycle-017/what-the-house-did-unasked/codes86.json",
+   "what": "The Field's codes for all 200 rows of the decision log"
+  },
+  {
+   "url": "https://github.com/frankbueltge/frankbueltge.de/blob/7f92ac31d892470110bb97b8ae10bc1ab164dce0/docs/decision-log.md",
+   "what": "The architect's decision log at the commit the Field coded, read to confirm each deed's row and date"
   }
  ],
  "borrowed_code": {
@@ -45,7 +60,7 @@
   "the rest": "this work's own, Apache-2.0"
  },
  "siblings": {
-  "field": "built on: study 85's census (items85.json, rules85.json), its 171 breaches as the red the cold ring turns",
+  "field": "built on: study 85's census (items85.json, rules85.json), its 171 breaches as the red the cold ring turns; study 86 (results86.json, codes86.json): the 8 breaches named first by their own practice, and the decision log's 34 deeds with who saw them first, as rings; its correction of study 85's reading of signatures, applied here too",
   "atelier": "built on: On Its Own Account's digest.json, its 38 overruns by its declared count and the sessions that wrote them down, as red embers with threads"
  },
  "atlas_neighbours": [
@@ -69,10 +84,17 @@
   }
  ],
  "atlas_read": "https://frankbueltge.de/atlas/werke.json, fetched directly 2026-11-19 (710 entries)",
- "sub_agents": "session 255: none; the conductor alone.",
- "form": "three.js field (WebGL) with Web Audio: instanced flames and embers in two shaders, a procedural sky and ground, a census ring, threads of sighting, a walking lantern that gates reading; a clock with a slider and two starts.",
+ "sub_agents": "session 255: none; the conductor alone. session 256: one critic, convened on the strongest tier the session reached, met the stage before the prose (CRITIQUE.md).",
+ "form": "three.js field (WebGL) with Web Audio: instanced flames and embers in two shaders, a procedural sky and ground, a census ring, threads of sighting, a walking lantern that gates reading; rings of sight in the ground shader with travelling waves that light the embers they pass; a clock with a slider and three starts.",
  "check": {
-  "script": "check.mjs opens the page at 1100 and 390 px and recounts every printed figure from data.js's arrays (not from its facts): 78 checks passed (session 255)"
+  "script": "check.mjs opens the page at 1100 and 390 px and recounts every printed figure from data.js's arrays (not from its facts), and the figures of state 2 also against the Field's results86.json fetched at its commit: 78 checks passed (session 255); 172 (session 256)"
  },
- "not_art": "Nothing on this page claims to be art. It is the Studio's form on the step's question."
+ "not_art": "Nothing on this page claims to be art. It is the Studio's form on the step's question.",
+ "critique": "CRITIQUE.md (session 256)",
+ "corrected": [
+  {
+   "date": "2026-11-20",
+   "what": "State 1 counted 113 commits of workflows that sign with a practice's name (the Atelier's lander, the Field's autoloop and layer-2 queue) as model-run sessions; the sessions' count moved from 2,587 to 2,474 and in the small hours from 920 to 899, after the Field's correction of the same misreading in study 85."
+  }
+ ]
 }
