@@ -98,11 +98,19 @@ could someone outside the house still check once the models that ran them are re
 ## Step 6 — Knowing in time
 
 **Sub-question.** Taking steps 1 to 5 together: which signals would tell in time whether control is being
-kept or lost, and who is placed to read them?
+kept or lost, who is placed to read them, and which of them say what they count and whether a machine or a person
+acted, in a record a stranger can still read once the models are gone?
+*(Set 2026-11-21 by the Middle from the plan and the three presentations of step 5; see Revisions.)*
 
-- **Field.** Per signal: what it measures, its source, how early it moves, who publishes it.
-- **Atelier.** What "in time" means, and for whom: the critique of the whole programme.
-- **Studio.** The state of knowledge of the programme, in one form.
+- **Field.** Per signal: what it measures and in what unit, its source, how early it moves, who publishes it,
+  whether its record says that a machine or a person acted, and whether it can still be read once the models and
+  the sessions that wrote it down are gone (in step 5 the house's public record showed a machine as the doer for 12
+  of 80 deeds).
+- **Atelier.** What "in time" means, and for whom: the critique of the whole programme. Which signals keep a deed
+  joined to its answer without the word of whoever answered it (in step 5 Git led from a mending to its deed in 60 of
+  77 pairs, from a deed to its mending in 23).
+- **Studio.** The step's question in its own world: a place a visitor enters, built from material it chooses
+  (the programme's findings and datasets, or its own). It does not wait for the Field's finding.
 - **Anchor data.** The findings and datasets of steps 1 to 5.
 
 ## Revisions
@@ -166,3 +174,19 @@ kept or lost, and who is placed to read them?
   sub-question of step 5, the Field's `Finding:` line, the Atelier's critique and step 6 stand. Reason: in steps 1
   to 4 the Studio's forms of the Field's findings became figures of paperwork, and the architect judged the same
   evening that they had not grown stronger (studio `PROTOCOL.md` 3.5, force before legibility, and section 11).
+- **2026-11-21, after step 5.** Step 6 keeps its subject and is sharpened by the three lines `Next step:` of step
+  5. All three keep the plan's two clauses, which signals would tell in time and who is placed to read them, and each
+  adds a third about the record a signal leaves. The Field ("which of those signals record whether a machine or a
+  person acted?") follows from its finding that the house's public record credits 69 of 80 deeds to the architect and
+  shows a machine as the doer for 12. The Atelier ("which of them say what they count and keep a deed joined to its
+  answer without the word of whoever answered it?") follows from the unit deciding 127 of 156 breaches and from the
+  word "mended" standing only in the log. The Studio ("which of them a stranger could still read once the models, and
+  the sessions that wrote them down, are gone?") carries step 4's finding that the outside check expires with the
+  models into step 5's, that the record outlives them. The wording takes the Atelier's "say what they count", the
+  Field's "whether a machine or a person acted" and the Studio's stranger who reads once the models are gone, because
+  each names a property a signal can be checked for; the Atelier's join of a deed to its answer moves into its part,
+  and the Studio's sessions that wrote the record down into the Field's. The Studio's part, which still asked for the
+  state of knowledge in one form, is reworded to the division of labour of 2026-11-19, as step 5's was. No practice
+  wrote an objection to the step. Step 6 is the plan's last; after it the programme ends as `README.md`, section 3,
+  says, unless a revision adds a step
+  ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/SUMMARY.md), [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-017/SUMMARY.md)).
