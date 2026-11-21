@@ -1,0 +1,140 @@
+{
+  "date": "2026-11-21",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-21T13:43:45Z",
+    "counts": {
+      "botwall": 19,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 279,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 279,
+    "excluded_unverifiable": 21,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0136
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0136
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-19",
+    "receipts": [],
+    "sample_drawn_at": "2026-11-20T14:15:42Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5194,
+      "replaced": 6236,
+      "trivial": 1329,
+      "update": 590
+    },
+    "day": "2026-11-20",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Partey",
+          "Father"
+        ],
+        "after": "Emotional Twist at Thomas Partey's Father's Funeral as Black Stars Teammates Make a Surprise Visit – Ghanamma.com",
+        "before": "Emotional Twist at Thomas Parteyâ€™s Fatherâ€™s Funeral as Black Stars Teammates Make a Surprise Visit – Ghanamma.com",
+        "detected": "2026-11-20T16:03:16Z",
+        "domain": "ghanamma.com",
+        "removed": [
+          "Parteyâ",
+          "Fatherâ"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.ghanamma.com/2026/11/13/emotional-twist-at-thomas-parteys-fathers-funeral-as-black-stars-teammates-make-a-surprise-visit/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "did",
+          "not",
+          "comply",
+          "with",
+          "HC"
+        ],
+        "after": "Tenant did not comply with 2005 Supreme Court eviction order and his son sold part of landlord's property using parents' settlement deed; buyer files suit against landlord but Madras HC strikes it off",
+        "before": "Tenant defied 2005 Supreme Court eviction order and his son sold part of landlord's property using parents' settlement deed; buyer files suit against landlord but Madras High Court strikes it off",
+        "detected": "2026-11-20T05:02:38Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "defied",
+          "High",
+          "Court"
+        ],
+        "similarity": 0.8,
+        "url": "https://timesofindia.indiatimes.com/business/india-business/tenant-defied-2005-supreme-court-eviction-order-and-his-son-sold-part-of-landlords-property-using-parents-settlement-deed-buyer-files-suit-against-landlord-but-madras-high-court-strikes-it-off/articleshow/135773938.cms",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Another",
+          "AI",
+          "company"
+        ],
+        "after": "Another AI company is about to be worth more than $1 trillion. What that means for the rest of us.",
+        "before": "Anthropic is about to be worth more than $1 trillion. What that means for the rest of us.",
+        "detected": "2026-11-20T22:33:18Z",
+        "domain": "aol.com",
+        "removed": [
+          "Anthropic"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.aol.com/articles/anthropic-worth-more-1-trillion-211331000.html",
+        "weight": 7,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14560,
+      "PAGE_TEXTCHANGE": 129721,
+      "PAGE_TITLECHANGE": 51105,
+      "UNCHANGED_CONTENT": 722910
+    },
+    "title_changes_en": 13349,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1795268362793",
+        "job_id": "world_gdg_counts_20261120",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 231735296,
+        "created": "1795268367492",
+        "job_id": "world_gdg_titles_20261120",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-21T13:43:45Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-20.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
