@@ -195,27 +195,39 @@ waits for them (3.2). Every claim in the work has its source (5.2). Nothing the 
 to be art.
 
 **Force before legibility.** The form is a place a visitor enters and stays in, not a figure of a
-finding: a world, a scene, an instrument or a stretch of time, with depth, light, motion and sound,
-in which what the work has found is felt before a word is read. Where its material is paperwork
+finding: a world, a scene, an instrument, a stretch of time or a form that has no name yet, in
+which what the work has found is felt before a word is read. Where its material is paperwork
 (acts, reports, sentences), the work makes felt what the paperwork is about and does not set the
 paperwork itself out as marks on a sheet. The exact figures stand in the work's text and in its
-check, so the picture need not be read like a chart. Force is not decoration: every depth, light
-and sound carries something of what the work has found. The bar is the strongest work this
-practice has made, named in the score; on 2026-11-19 the house named CLEAR AIR (cycle 012), GOING
-OUT (cycle 010) and UNWOVEN (cycle 011).
+check, so the picture need not be read like a chart. Force is not decoration: everything a visitor
+sees, hears or does in the work carries something of what the work has found. The bar is the
+strongest work this practice has made, named in the score; on 2026-11-19 the house named CLEAR AIR
+(cycle 012), GOING OUT (cycle 010) and UNWOVEN (cycle 011). The bar measures force and is no model
+of form: a work stands beside it without looking like it.
+
+**The means follow the question.** The Studio does not start from a technique. In its first
+session of a step it asks what this question needs in order to be met with the senses (its scale,
+its time, its distance, its voices, what a visitor must do), and then chooses the means that stage
+it best from everything a browser can do today (5.3). No library, engine or kind of scene is the
+default, and none is the measure: a work is strong by what it makes felt of the question, never by
+what it is made with. A technique that would look the same over any other subject is decoration.
+Each work also goes a step past the last: it does not take the last work's means or its kind of
+scene by habit, and it tries something this practice has not done before.
 
 The Studio begins the step's work in its first session of the step (3.2) and takes the four
 sessions of 3.1: build; second state and its critique; check; presentation.
 
 - Before the first state, `SCORE.md` says in one line each: what a visitor meets in the first ten
-  seconds, before any text; the means (engine, libraries, sound) and why they serve; what the work
-  must do to stand beside the bar; and what the nearest thing is that already exists, the source's
-  own chart included, and what this form shows that it does not.
+  seconds, before any text; the means, why this question asks for them, what else was weighed and
+  what in them is new to this practice; what the work must do to stand beside the bar; and what
+  the nearest thing is that already exists, the source's own chart included, and what this form
+  shows that it does not.
 - The critic of the second session meets the work first with its prose hidden and answers two
   questions in this order: does it hold a visitor (the first ten seconds; would one stay, come back,
   show it to someone; does it stand beside the bar and its Atlas neighbours), and what does the
-  form make felt of the step's question before any text is read. A critique asks for force
-  before legibility: it never asks for a chart, a key or a count in place of the form.
+  form make felt of the step's question before any text is read. It then says in one line whether
+  the means carry the question or only show themselves. A critique asks for force before
+  legibility: it never asks for a chart, a key or a count in place of the form.
 - In the check, the script reads the page's numbers from the page (5.2).
 
 ## 4. The session and its record
@@ -304,13 +316,21 @@ Verification lives inside the work, not in gates in front of it.
 - **The licence rule.** Code libraries may be committed: permissive licences are embedded with
   attribution, copyleft is used as a tool and never embedded, and code with no stated licence is
   never embedded.
-- **Rich means are the default.** The default work is a real-time piece: a 3D or WebGL scene,
-  shaders, particles, generative motion, sound built as material. three.js runs on these pages
-  (CLEAR AIR vendored it under its MIT licence); Tone.js, PixiJS or regl may be vendored the same
-  way. A work drawn as a flat figure of marks (a chart, a sheet of type, a grid of squares, a
-  diagram that needs a key) says in its score why that form serves it better, and legibility is not
-  a reason. A session that ships a page without script, or a single static figure, says in its
-  bulletin why that form served the work better than a richer one.
+- **The means are chosen for the question (3.5).** No library, engine or kind of scene is the
+  default. Before it chooses, the first session of a step looks at what is current, and it takes
+  what stages this question best: graphics on WebGPU or WebGL, shaders, computing on the graphics
+  card, WebAssembly, physics, sound made in real time and placed in space, video, live data, type
+  in motion, a 2D or 3D engine, any current library or framework under the licence rule. three.js,
+  which CLEAR AIR and SMALL HOURS vendored, is one of them and no more than that. A work that
+  takes the means or the kind of scene of the work before it says in its score why this question
+  asks for them again.
+- **Rich means stay the rule.** A work drawn as a flat figure of marks (a chart, a sheet of type,
+  a grid of squares, a diagram that needs a key) says in its score why that form serves it better,
+  and legibility is not a reason. A session that ships a page without script, or a single static
+  figure, says in its bulletin why that form served the work better than a richer one.
+- **What not every browser runs.** Where a work uses what not every current browser or phone can
+  run, it carries a second path or says on its face what it needs. The session checks the path its
+  own browser can run and says in the bulletin which one that was.
 - **No work owes** a no-JavaScript version, a reduced-motion substitute or a size budget.
 
 ### 5.4 The score
@@ -332,9 +352,9 @@ The Studio's `Builds on:` names what it takes. The Studio's score holds more tha
 At the end of the second session a voice that did not build the work meets it as a visitor does:
 a convened sub-agent on the strongest tier the session can reach, because it judges force, or the
 conductor alone only when dispatch is unavailable, and then recorded as such. In at most 20 lines
-the critique says whether the work holds a visitor, whether it carries, and what it lacks. It is
-committed as `CRITIQUE.md` beside the work. The sessions after it answer it in the work, not in
-prose.
+the critique says whether the work holds a visitor, whether it carries, whether its means carry
+the question or only show themselves (3.5), and what it lacks. It is committed as `CRITIQUE.md`
+beside the work. The sessions after it answer it in the work, not in prose.
 
 ### 5.6 The visible process
 
@@ -748,3 +768,16 @@ This section holds until cycle 014 ends.
   take from it. From 2026-11-13 to this day the Studio began after that line and presented after
   the Field, and in steps 1 to 4 its forms of the Field's findings became figures of paperwork (the
   entry above).
+- 2026-11-21: the means follow the question (3.5, 5.3, 5.5), set by a house session on the
+  architect's clarification of that day (his wording private). His judgment of 2026-11-19 was not
+  about one library: he wants works of force made with the newest means, chosen for the question
+  they stage, and strong by what they make felt of that question and not by the technique. The
+  text of 2026-11-19 named a 3D or WebGL scene as the default work and three.js as its example,
+  and the first work under it, SMALL HOURS, took the engine and the kind of scene of CLEAR AIR. Now
+  no library, engine or kind of scene is the default; the first session looks at what is current
+  and chooses for the question; a work that repeats the last work's means says why; each work
+  tries something this practice has not done before; the score names what was weighed and what is
+  new; the critic says whether the means carry the question or only show themselves; and a work
+  that uses what not every browser runs carries a second path or says what it needs. Unchanged:
+  force before legibility, the form as a place a visitor enters, and the reason a flat figure of
+  marks owes.

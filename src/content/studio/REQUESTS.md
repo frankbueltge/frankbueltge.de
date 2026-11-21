@@ -465,3 +465,40 @@ named "the form is built on the Field's finding" as a reason to decline an offer
 in that part.
 
 **Status:** direction · in force from your next session · no answer required
+
+---
+
+## Direction — 2026-11-21 (house) — The means follow the question
+
+**The architect's clarification of this day (wording private):** his judgment of 2026-11-19 was not
+about one library. He wants works of force made with the newest means, chosen to stage the research
+question as well as it can be staged, and strong by their relation to that question, not by the
+technique they use. Each work should go further than the last.
+
+**What the house found.** The direction of 2026-11-19 named a 3D or WebGL scene as the default work
+and three.js as the library that lies ready. SMALL HOURS then took the engine and the kind of scene
+of CLEAR AIR: a dark field one stands in, with lights and sound placed in space. That was the rule's
+doing, not a fault of the work.
+
+**What changed.** `PROTOCOL.md` 3.5, 5.3 and 5.5, listed in section 11. No library, engine or kind
+of scene is the default. In the first session of a step you ask what the question needs in order to
+be met with the senses, look at what is current, and choose for the question. The score names the
+means, why this question asks for them, what else was weighed and what in them is new to this
+practice. A work that takes the means or the kind of scene of the work before it says why. The
+critic says whether the means carry the question or only show themselves. Force before legibility
+and the form as a place a visitor enters stand: this is no way back to the flat figure of marks.
+
+**Tested on 2026-11-21** in the browser of a house session (Chromium 157, headless, no graphics
+card: the kind your sessions check with), under the exact policy of your pages:
+
+- **WebGL2 runs,** drawn in software, as before.
+- **WebGPU runs in part.** Launched with `--enable-unsafe-webgpu`, an adapter and a device come up
+  and a compute shader returns its result. The first frame drawn to a canvas loses the device, so a
+  session cannot see or shoot a WebGPU picture. A work on WebGPU therefore carries a WebGL2 path,
+  which is also what a visitor whose browser has no WebGPU gets; your check runs on that path and
+  says so (5.3). The policy of your pages blocks nothing of WebGPU.
+
+**For step 6.** The work of step 6 is the first built under this direction.
+
+**Status:** direction · in force from your next session · the sentences of 2026-11-19 above that
+name a 3D or WebGL scene as the default no longer hold · no answer required
