@@ -5,8 +5,12 @@ Reads every non-merge commit of the four ecology repositories at the heads the F
 (study 85) read, and the census's own items (items85.json, field-research commit a26d1dc),
 and writes data.js. State 2 (session 256) adds who saw first: the Field's study 86
 (results86.json and codes86.json, field-research commit bc1dc14) and the decision log those
-codes refer to (frankbueltge.de commit 7f92ac3). Nothing here calls a model. Run from any
-checkout that holds the five repositories side by side with full history:
+codes refer to (frankbueltge.de commit 7f92ac3). State 3 (session 257) reads the Field's check 87
+(field-research ce3a5de). State 4 (session 258) reads each deed's mending from the Field's reading 88
+(credit88.json, field-research 1c00dd2) and the Atelier's sort (sort.json, ulysses aa8a96e), and
+times each mending from its own repository. Nothing here calls a model. Run from any checkout that
+holds the repositories side by side with full history (the four, frankbueltge.de, machine-attention
+and error-as-method):
 
     python3 build.py ../../..        # the folder that holds studio/, field-research/, ...
 
@@ -447,6 +451,71 @@ facts.update({
 for k in ('deeds_git', 'deeds_lagged', 'lag_max', 'lag_median'):
     facts.pop(k, None)
 
+# ---- state 4 (session 258, the presentation): what a stranger can still check once the models are retired ----
+# The coda puts out what the house's readers made (the flames, the census's reading of a word, the log's account of
+# who saw, the threads) and keeps what Git alone holds: each commit, its time and name; the limits broken on every
+# reading; and, for each deed the log says was mended, whether Git itself joins the mending to the deed. Two offers
+# of 21 November: the Field's reading 88 (credit88.json: every deed joined to its mending, with the name Git gives
+# each and the days between) and the Atelier's sort (sort.json: each mending joined to its deed by what Git shares).
+MEND = {'repo': 'field-research', 'commit': '1c00dd20578f297a72b83b2e496b19e4a3f5013f',
+        'path': SEEN['dir'] + '/credit88.json'}
+SORT = {'repo': 'ulysses', 'commit': 'aa8a96ee5dde6175de7993773d4e8bfa3853e504',
+        'path': 'artifacts/cycle-017/on-its-own-account/data/sort.json'}
+cr_raw = show(MEND['repo'], MEND['commit'], MEND['path'])
+so_raw = show(SORT['repo'], SORT['commit'], SORT['path'])
+cr88, so = json.loads(cr_raw), json.loads(so_raw)
+# the deeds of check 87 are those reading 88 and the sort read: the same 88, at the same rows
+assert show(CHECK['repo'], CHECK['commit'], CHECK['dir'] + '/results87.json') == \
+    show(MEND['repo'], MEND['commit'], CHECK['dir'] + '/results87.json')
+CR = {(c['row'], c['deed']): c for c in cr88['deeds']}
+SO = {(s['row'], s['n']): s for s in so['act']['deeds']}
+assert set(CR) == set(SO) == {(d['row'], d['n']) for d in deeds87} and len(CR) == 88
+JOIN = ['same', 'name', 'lines', 'file', 'log']      # the Atelier's order: what Git shares, strongest first
+MSIGN = ["the architect's name", "a practice's persona"]
+for d in deeds87:
+    c, s = CR[(d['row'], d['n'])], SO[(d['row'], d['n'])]
+    d['mj'] = None
+    if not (c['in_set'] and c['repair_found']):
+        assert s['join'] is None
+        continue
+    assert d['found'] == 'at its commit' and s['join'] in JOIN
+    assert s['repair'] == [c['repair_repo'], c['repair_hash'][:12]]
+    # the mending is timed from its own repository, as the deed's commits are
+    an, at = git(c['repair_repo'], 'log', '-1', '--format=%an\x1f%aI', c['repair_hash']).strip().split('\x1f')
+    mt = datetime.datetime.fromisoformat(at)
+    assert mt == datetime.datetime.fromisoformat(c['repair_time'])
+    assert (an == ARCHITECT) == (c['repair_signer'] == MSIGN[0])
+    # the Field's lag runs from the earliest of the deed's commits; so does this field's place of the deed
+    assert {x['hash'][:12] for x in c['deed_commits']} == {x[1] for x in d['at']}
+    first = min(x[3] for x in d['at'])
+    mo = int(mt.timestamp()) - first
+    assert abs(mo / 86400 - c['lag_days']) < 0.051 and mo >= 0, (d['row'], mo / 86400, c['lag_days'])
+    d['mj'] = JOIN.index(s['join'])
+    d['mo'] = mo
+    d['mr'] = [c['repair_repo'], c['repair_hash'][:12], redact(an), int(mt.timestamp())]
+    d['ms'] = MSIGN.index(c['repair_signer'])
+    d['ev'] = s.get('evidence') or []
+mended = [d for d in deeds87 if d['mj'] is not None]
+MJ = Counter(JOIN[d['mj']] for d in mended)
+assert dict(MJ) == so['act']['join'] and len(mended) == so['act']['mended'] == cr88['results']['all']['deeds'] == 77
+assert MJ['same'] + MJ['name'] + MJ['lines'] == so['act']['outsider'] == 60
+assert sum(d['ms'] == 0 for d in mended) == cr88['results']['all']['repair_architect'] == 75
+mend_lags = sorted(d['mo'] / 86400 for d in mended)
+assert round(median(mend_lags), 1) == cr88['results']['all']['lag_median']
+git_joined = [d for d in mended if d['mj'] <= 2]
+facts.update({
+    'mended': len(mended), 'unmended': len(deeds87) - len(mended),
+    'unmended_in_git': sum(d['found'] == 'at its commit' and d['mj'] is None for d in deeds87),
+    'join_same': MJ['same'], 'join_name': MJ['name'], 'join_lines': MJ['lines'], 'join_file': MJ['file'],
+    'join_log': MJ['log'], 'joined_git': len(git_joined),
+    'mend_architect': sum(d['ms'] == 0 for d in mended), 'mend_persona': sum(d['ms'] == 1 for d in mended),
+    'joined_git_architect': sum(d['ms'] == 0 for d in git_joined),
+    'joined_both_architect': sum(d['ms'] == 0 and d['sig'] == 0 for d in git_joined),
+    'mend_lag_median': round(median(mend_lags), 1), 'mend_within_day': sum(x <= 1 for x in mend_lags),
+    'mend_lag_max': round(mend_lags[-1]),
+    'mend_in_field': sum(d['mr'][0] in HEADS for d in mended),
+})
+
 # ---- compact arrays for the page ----
 sig_index = {s: i for i, s in enumerate(signers)}
 out = {
@@ -481,6 +550,10 @@ out = {
     'deeds': deeds87, 'legible': LEGIBLE, 'signed': SIGNED,
     'check': 'results87.json, commits87.json and data87.js at field-research ' + CHECK['commit'][:7] + ', sha256 ' +
              hashlib.sha256(r87_raw).hexdigest(),
+    'joins': JOIN, 'msigned': MSIGN,
+    'mending': 'credit88.json at field-research ' + MEND['commit'][:7] + ', sha256 ' +
+               hashlib.sha256(cr_raw).hexdigest() + '; sort.json at ulysses ' + SORT['commit'][:7] + ', sha256 ' +
+               hashlib.sha256(so_raw).hexdigest(),
     'facts': facts,
 }
 (HERE / 'data.js').write_text('window.SH = ' + json.dumps(out, ensure_ascii=False,

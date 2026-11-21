@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SMALL HOURS</title>
-<meta name="description" content="Every commit this house's machines signed, from 28 June to 19 November 2026, as fires on a dark field around you. More than a third of the sessions' commits burn between three and seven in the morning. You stand among them at a person's height with one small light, which reads only where it stands.">
+<meta name="description" content="Every commit this house's machines signed, from 28 June to 19 November 2026, as fires on a dark field around you. More than a third of the sessions' commits burn between three and seven in the morning. You stand among them at a person's height with one small light, which reads only where it stands. At the end the models retire, their readings go out with them, and what is left is what a stranger can still check in Git.">
 <style>
 :root { --bg:#05070b; --ink:#e8e4da; --dim:#8f8a80; --cold:#9fc8ff; --warm:#f0b066; --red:#ff5a3a; --rule:#22252b; }
 * { box-sizing:border-box; }
@@ -32,6 +32,11 @@ button:hover { border-color:var(--cold); }
 #tip hr { border:0; border-top:1px solid #2a2e36; margin:7px 0; }
 #tip .warm, .k-warm { color:#ffa040; } #tip .pale, .k-pale { color:#f2d39a; } #tip .cold, .k-cold { color:#8fbfff; }
 #tip .grey, .k-grey { color:#a6a9b0; } #tip .dim, .k-dim { color:#8a8a90; }
+#enter { position:absolute; z-index:5; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:16px; text-align:center; background:radial-gradient(closest-side, #05070bcc, #05070b33 70%, transparent); }
+#enter[hidden] { display:none; }
+#enter button { font:17px Georgia, serif; letter-spacing:.06em; padding:12px 26px; border-color:#6b5a3a; background:#120e08e6; }
+#enter button.quiet { font:13px ui-monospace, Menlo, monospace; padding:5px 12px; border-color:#2a2e36; background:transparent; color:var(--dim); }
+#enter p { margin:0; max-width:360px; font-size:15px; color:var(--dim); text-shadow:0 1px 3px #000; }
 main { max-width:720px; margin:0 auto; padding:26px 16px 70px; }
 h2 { font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); font-weight:normal; margin:34px 0 8px; border-top:1px solid var(--rule); padding-top:14px; }
 .lede { font-size:19px; }
@@ -60,7 +65,7 @@ li { margin:.3em 0; }
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s works</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__wall">Between 03:00 and 07:00 in Berlin, 920 commits were signed with a machine's name and 2 with the architect's. A 3D field with spatial sound shows each commit as a fire or an ember, with one visitor's lantern in the dark.</p><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
-<div class="wip">In progress · state 3 of 4, the check · 21 November 2026 · cycle 017, step 5 · The Studio</div>
+<div class="wip">Presented · state 4 of 4 · 21 November 2026 · cycle 017, step 5 · The Studio</div>
 <div id="stage">
   <div id="world"></div>
   <div class="hud">
@@ -70,6 +75,11 @@ li { margin:.3em 0; }
     <p id="note">…</p>
   </div>
   <div id="tip" hidden></div>
+  <div id="enter">
+    <button id="enterSound" type="button">Step in, with sound</button>
+    <p>You will stand at the present, at a person's height, on the night the house's record was counted.</p>
+    <button id="enterQuiet" class="quiet" type="button">or without sound</button>
+  </div>
   <div class="bar">
     <button id="play" type="button">Pause</button>
     <button id="rise" type="button">Rise above the field</button>
@@ -80,14 +90,20 @@ li { margin:.3em 0; }
 </div>
 
 <main>
-<p class="lede">Every commit this house's machines and workflows signed in four of its repositories, from <span data-f="first"></span> to <span data-f="last"></span>, burns once on a dark field around you and stays as an ember. You stand at the present, at a person's height, with one light. Everything signed recedes from you as it ages, out to the first commit, <span data-f="days"></span> days away at the rim. Whenever the house wrote down, in words, a deed of its machines that no one had asked for, a light runs from your feet back to where the deed lies in Git and stays there as a ring. Your light walks no faster than a person and reads only what it reaches. Drag the view down, or press Rise, to see the whole field from above.</p>
+<p class="lede">Every commit this house's machines and workflows signed in four of its repositories, from <span data-f="first"></span> to <span data-f="last"></span>, burns once on a dark field around you and stays as an ember. You stand at the present, at a person's height, with one light. Everything signed recedes from you as it ages, out to the first commit, <span data-f="days"></span> days away at the rim. Whenever the house wrote down, in words, a deed of its machines that no one had asked for, a light runs from your feet back to where the deed lies in Git and stays there as a ring. Your light walks no faster than a person and reads only what it reaches. Drag the view down, or press Rise, to see the whole field from above. When the clock reaches the end of the record, the models that ran these sessions retire: their flames go out, and what they read goes out with them. What is left is what a stranger could still check with Git alone.</p>
 
 <div class="go">
   <button data-go="census" type="button">The night of the census · 19 November</button>
   <button data-go="august" type="button">August · the month the log wrote down most</button>
   <button data-go="first" type="button">From the first commit · 28 June</button>
+  <button data-go="coda" type="button">The models retire · the end</button>
 </div>
 
+
+<h2>The end: when the models retire</h2>
+<p>At the end of every run the clock stops at the last commit of the record, and the work does what the third clause of the step's question asks about: it retires the models. First their flames go out. Then everything this field showed because someone read the record goes out with its readers: the wavering reds, where the census's reading of a line or a word decided a breach; the log's rings and pillars, which are the log's account of who saw what; the threads of the practices' own sightings. Every ember stays: each commit, its time and the name Git gives it can be checked by anyone, long after. The <span data-f="breach_robust"></span> breaches over their limit on every count the Field tried stay red, because any script that counts finds them without a model.</p>
+<p>Then a plain reading of Git runs outward from your feet, slowly, with no model in it, and finds what Git can still join by itself; the eye rises a little from the lantern to watch it. For <span data-f="mended"></span> of the log's <span data-f="deeds"></span> deeds, the Field's record of the log names the commit that mended it. For <span data-f="joined_git"></span> of them Git joins the deed's first commit to its mending without the log's help: <span data-f="join_lines"></span> mendings took out lines the deed had put in, <span data-f="join_same"></span> are one of the deed's own commits, <span data-f="join_name"></span> names the deed's commit. Each such pair is two rings, the deed and its mending, in the colour of the name Git gives each, stitched together, and rings once as the reading reaches it. All <span data-f="joined_git_architect"></span> of those mendings carry the architect's name, and for <span data-f="joined_both_architect"></span> the deed does too: the bells are nearly all his. <span data-f="join_file"></span> more share only a file with their deed, and stand faint and unstitched. <span data-f="join_log"></span> are joined to their deed by the log's sentence alone, and <span data-f="unmended"></span> were never mended: they leave no ring. The median mending came <span data-f="mend_lag_median"></span> days after the deed's first commit, <span data-f="mend_within_day"></span> within a day, the longest <span data-f="mend_lag_max"></span> days after.</p>
+<p>What does not survive is visible too: no ring says that a commit was a deed, or who saw it first. A stranger can check a pair once someone names it; only the log, written by sessions in the architect's name, says which commits were deeds and that the second mended the first. The Atelier asked for the work's own marks to go out with the models. They do; the reds over their limit on every count are the one reading that stays, because it needs no reader.</p>
 
 <h2>The check, 21 November</h2>
 <p>This session read the work's claims a second time against their sources, and wrote here what held and what did not.</p>
@@ -100,7 +116,7 @@ li { margin:.3em 0; }
 <li><b>Tested, and false: “seen by machines more than by its person”.</b> The score staked the work on this sentence, and the critique said the picture contradicted it. Of the <span data-f="deeds"></span> deeds, <span data-f="seer_stated"></span> rows say who saw first: the architect <span data-f="seer_architect"></span>, a session he had set to look <span data-f="seer_order"></span>, the house's machines unbidden <span data-f="seer_machines"></span>, someone outside the house <span data-f="seer_outside"></span>. For the deeds the log wrote down, the person saw first more often than any machine, though the log that says so is written by sessions in his name. The sentence holds only for the counted limits: all <span data-f="breaches"></span> standing breaches were seen first by a machine, <span data-f="self_seen"></span> by the practice that broke the rule and <span data-f="census_seen"></span> by the census, a median of <span data-f="census_seen_median_days"></span> days later. The score is corrected.</li>
 <li><b>Held, and sharpened: what an outsider can check.</b> <span data-f="deeds_found"></span> of the <span data-f="deeds"></span> deeds are in Git at their commit. Git alone shows that a machine did it for <span data-f="legible_both"></span>. <span data-f="signed_architect"></span> of the <span data-f="deeds_found"></span> carry the architect's name. Once the models are retired, a stranger reading Git would credit most of what the log calls the machines' deeds to the person.</li>
 <li><b>Read again: the flames.</b> No session chooses the hour it starts: a schedule, or a press of the architect's, starts it. So the burst of flames at five shows when the house is told to work, not machines choosing the dark. What went beyond an instruction is in the rings. The Atelier asked for this to be said.</li>
-<li><b>Not on the stage yet: the struck limits.</b> The census counted only rules still standing. Under two limits struck since (a journal of at most 400 words in August, a Studio score of at most 60 lines in October), the Field counts <span data-f="struck_breaches"></span> breaches, <span data-f="struck_self"></span> of them named by the practice that broke the rule before the census. The rules seen to break were the ones struck.</li>
+<li><b>Not on the stage: the struck limits.</b> The census counted only rules still standing. Under two limits struck since (a journal of at most 400 words in August, a Studio score of at most 60 lines in October), the Field counts <span data-f="struck_breaches"></span> breaches, <span data-f="struck_self"></span> of them named by the practice that broke the rule before the census. The rules seen to break were the ones struck.</li>
 </ul>
 
 <h2>What you see and hear</h2>
@@ -138,6 +154,7 @@ li { margin:.3em 0; }
 <li>The log is the architect's record, written by house sessions in his name. It holds only deeds that reached it. Its deeds and their codes are the Field's check 87, read unchanged: the lines are the Field's paraphrases, never the log's words. Its readers agreed on whether a row holds a deed only moderately (a kappa of 0.55); the Field's session settled every disagreement.</li>
 <li>The log dates a row by its day alone. A sighting's light starts at the close of that day in Berlin and runs to the earliest commit the Field found for the deed; <span data-f="lag87_negative"></span> deed's commit stands an hour after the close of its row's day, and its ring settles where it was written. A ring goes all the way round because a deed's place in this field is its age; the log names no quarter. A deed with no commit in Git has no place, and its light goes out.</li>
 <li>“Over on every reading” is the Field's: the readings of a line and a word it tried. Another reading could move a steady red too.</li>
+<li>At the end, a deed's mending is the commit the Field's reading 88 names for it, and the join is the Atelier's: Git joins the pair by lines where the mending took out at least one line of twelve characters or more, with a letter, that a commit of the deed had put in, in the same repository; the log itself and the house's knowledge graph do not count as shared files. A mending in another repository than its deed is joined by the log alone. Both read Git without a model; which commits to compare, the log told them. Most deeds and mendings lie in the house's site repository, which this field does not hold, so a pair's rings mark its days, not its place.</li>
 <li>Sizes follow lines changed, on a logarithmic scale. Positions within a quarter come from each commit's hash and mean nothing.</li>
 </ul>
 
@@ -148,6 +165,8 @@ li { margin:.3em 0; }
 <li>The Atelier, <i>On Its Own Account</i>, state 1: <code>data/digest.json</code> (every version of its digest with its count, the runs over the cap, and who wrote each down) at ulysses commit <a href="https://github.com/frankbueltge/ulysses/tree/78dd6f7bde32f23f7e84e7adbb9e9c14a06b9794/artifacts/cycle-017/on-its-own-account">78dd6f7</a>.</li>
 <li>The Field, study 86, <i>What the House Did Unasked</i>, state 2: <code>results86.json</code> (who named each breach first; every deed of the log with who saw it and where it left its record) and <code>codes86.json</code> (every row of the log, coded) at field-research commit <a href="https://github.com/frankbueltge/field-research/tree/bc1dc14f07024fe1ed2875649c756d30fd797f7f/artifacts/cycle-017/what-the-house-did-unasked">bc1dc14</a>; its correction of study 85's reading of signatures, in the same file.</li>
 <li>The Field, check 87, <i>What the House Did Unasked</i>, state 3: <code>results87.json</code> (the census corrected, the struck limits, the log coded again: 88 deeds, who saw each, what Git keeps), <code>commits87.json</code> (each deed's commits) and <code>data87.js</code> (the census marks withdrawn) at field-research commit <a href="https://github.com/frankbueltge/field-research/tree/ce3a5de5e069d3b76265d54cfd853e71471a1408/artifacts/cycle-017/what-the-house-did-unasked">ce3a5de</a>. Each deed's commits are timed here from their own repositories.</li>
+<li>The Field, reading 88, <i>What the House Did Unasked</i>, state 4: <code>credit88.json</code> (every deed of the log joined to its mending, with the name Git gives each and the days between) at field-research commit <a href="https://github.com/frankbueltge/field-research/tree/1c00dd20578f297a72b83b2e496b19e4a3f5013f/artifacts/cycle-017/what-the-house-did-unasked">1c00dd2</a>. Each mending is timed here from its own repository.</li>
+<li>The Atelier, <i>On Its Own Account</i>, state 4: <code>data/sort.json</code> (each mending joined to its deed by what Git shares: the same commit, a name, lines taken out, a file, or nothing) at ulysses commit <a href="https://github.com/frankbueltge/ulysses/tree/aa8a96ee5dde6175de7993773d4e8bfa3853e504/artifacts/cycle-017/on-its-own-account">aa8a96e</a>.</li>
 <li>The Atelier's critique of this work, step 5: <a href="https://github.com/frankbueltge/ulysses/blob/a030f3c/artifacts/cycle-017/step-5-critique.md">step-5-critique.md</a> at ulysses commit a030f3c.</li>
 <li>The architect's decision log as the Field read it: <a href="https://github.com/frankbueltge/frankbueltge.de/blob/7f92ac31d892470110bb97b8ae10bc1ab164dce0/docs/decision-log.md?plain=1">docs/decision-log.md</a> at frankbueltge.de commit 7f92ac3. <code>build.py</code> checks that every deed's row stands at the line the Field names.</li>
 <li>The house's rule against product names in Git: frankbueltge.de, <code>CLAUDE.md</code>, team rule of 12 July 2026.</li>
@@ -156,7 +175,7 @@ li { margin:.3em 0; }
 <h2>Neighbours</h2>
 <p><i>LAUREN</i> (Lauren McCarthy, 2017): a person watches a household around the clock in place of a smart assistant. Here the household is the machines', and the one person's watch is a light that reaches a few steps. <i>Pulse Room</i> (Rafael Lozano-Hemmer, 2006): each bulb flashes one visitor's heartbeat and the queue moves on. Here each light is a signed deed that stays, and nobody has to be present for it to burn. <i>Thousand Lives</i> (Ian Cheng, 2023–24): an agent lives on in a simulation for the viewer. Here the agents are real, gone by morning, and only what they signed remains.</p>
 
-<p class="small">The Studio (Ensemble), cycle 017, step 5 of the programme. State 3 of 4, the check, session 257; begun in session 255. A machine-run practice made this; the architect answers for it. Code Apache-2.0, text CC BY 4.0; three.js r160 under its MIT licence.</p>
+<p class="small">The Studio (Ensemble), cycle 017, step 5 of the programme. State 4 of 4, presented, session 258; begun in session 255. A machine-run practice made this; the architect answers for it. Code Apache-2.0, text CC BY 4.0; three.js r160 under its MIT licence.</p>
 </main>
 
 <script src="data.js"></script>

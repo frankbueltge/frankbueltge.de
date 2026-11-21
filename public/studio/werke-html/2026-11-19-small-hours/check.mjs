@@ -27,7 +27,11 @@ const med = xs => { const a = [...xs].sort((x, y) => x - y); return a.length % 2
 // state 2: the Field's own file, fetched at its commit, as a second source for the figures of who saw first
 const R86 = await (await fetch('https://raw.githubusercontent.com/frankbueltge/field-research/bc1dc14f07024fe1ed2875649c756d30fd797f7f/artifacts/cycle-017/what-the-house-did-unasked/results86.json')).json();
 const R87 = await (await fetch('https://raw.githubusercontent.com/frankbueltge/field-research/ce3a5de5e069d3b76265d54cfd853e71471a1408/artifacts/cycle-017/what-the-house-did-unasked/results87.json')).json();
+// state 4: the mendings, from the Field's reading 88 and the Atelier's sort, each fetched at its commit
+const CR88 = await (await fetch('https://raw.githubusercontent.com/frankbueltge/field-research/1c00dd20578f297a72b83b2e496b19e4a3f5013f/artifacts/cycle-017/what-the-house-did-unasked/credit88.json')).json();
+const SORT = await (await fetch('https://raw.githubusercontent.com/frankbueltge/ulysses/aa8a96ee5dde6175de7993773d4e8bfa3853e504/artifacts/cycle-017/on-its-own-account/data/sort.json')).json();
 const SELF = ST.filter(b => b.by !== undefined), DD = S.deeds;
+const MD = DD.filter(d => d.mj !== null && d.mj !== undefined), GJ = MD.filter(d => d.mj <= 2), mlags = MD.map(d => d.mo / 86400);
 const seerIs = (...names) => DD.filter(d => names.includes(S.seers[d.seer])).length;
 const lags = DD.filter(d => d.lag !== null).map(d => d.lag);
 const earliestRepo = d => d.at.reduce((a, b) => (b[3] < a[3] ? b : a))[0];
@@ -88,6 +92,12 @@ const expect = {
   deeds_not_git: DD.filter(d => d.found === 'not in Git').length,
   deeds_aug: DD.filter(d => d.date.startsWith('2026-08')).length, deeds_sep: DD.filter(d => d.date.startsWith('2026-09')).length,
   deeds_oct: DD.filter(d => d.date.startsWith('2026-10')).length, deeds_nov: DD.filter(d => d.date.startsWith('2026-11')).length,
+  // state 4
+  mended: MD.length, unmended: DD.length - MD.length, joined_git: GJ.length,
+  join_same: MD.filter(d => d.mj === 0).length, join_name: MD.filter(d => d.mj === 1).length, join_lines: MD.filter(d => d.mj === 2).length,
+  join_file: MD.filter(d => d.mj === 3).length, join_log: MD.filter(d => d.mj === 4).length,
+  joined_git_architect: GJ.filter(d => d.ms === 0).length, joined_both_architect: GJ.filter(d => d.ms === 0 && d.sig === 0).length,
+  mend_lag_median: Math.round(med(mlags) * 10) / 10, mend_within_day: mlags.filter(x => x <= 1).length, mend_lag_max: Math.round(Math.max(...mlags)),
   own_recount: new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long' }).format(new Date(S.recount * 1000)) + ', ' + new Date(S.recount * 1000).toISOString().slice(11, 16) + ' UTC',
 };
 { // the sighting delays, per run, from the run's first version
@@ -118,7 +128,18 @@ const field = { breaches: NOW.breach, breach_robust: NOW.robust, breach_reading:
   deeds_aug: B.by_month['2026-08'], deeds_sep: B.by_month['2026-09'], deeds_oct: B.by_month['2026-10'], deeds_nov: B.by_month['2026-11'],
   deeds_was: R86.partB.deeds, seer_architect_was: R86.partB.architect, seer_order_was: R86.partB.at_his_order,
   seer_machines_was: R86.partB.machines_unbidden, deeds_git_was: R86.partB.in_git,
-  corrected_commits: Object.values(R86.correction85.commits_recoded).reduce((a, b) => a + b, 0) + 2 };
+  corrected_commits: Object.values(R86.correction85.commits_recoded).reduce((a, b) => a + b, 0) + 2,
+  // state 4, against the siblings' own files
+  mended: CR88.results.all.deeds, unmended: CR88.results.deeds - CR88.results.in_set, mend_lag_median: CR88.results.all.lag_median,
+  mend_within_day: CR88.results.all.lag_within_1, mend_lag_max: Math.round(CR88.results.all.lag_max),
+  joined_git: SORT.act.outsider, join_same: SORT.act.join.same, join_name: SORT.act.join.name, join_lines: SORT.act.join.lines,
+  join_file: SORT.act.join.file, join_log: SORT.act.join.log };
+// the Field and the Atelier pair the same deeds with the same mendings, and every mending's name agrees
+{ const so = new Map(SORT.act.deeds.map(d => [d.row + ':' + d.n, d]));
+  const agree = CR88.deeds.every(c => { const s = so.get(c.row + ':' + c.deed); return s && (c.in_set ? s.repair[1] === c.repair_hash.slice(0, 12) : s.join === null); });
+  const archJoined = SORT.act.deeds.filter(d => ['same', 'name', 'lines'].includes(d.join) && d.repair_signer === "the architect's name").length;
+  field.joined_git_architect = archJoined;
+  if (!agree) { console.log('FAIL the Field and the Atelier pair different mendings'); process.exitCode = 1; } }
 // the +2: the Field's layer-2 queue, two commits this work also reads as a workflow; the Field's correction names its lander and its autoloop
 // the breach limits against the census's own rule file are asserted in build.py
 
@@ -142,6 +163,22 @@ for (const width of [1100, 390]) {
   // the critique's one change, in the work: the eye stands at the lantern, at a person's height
   const eye = await p.evaluate(() => { const c = window.__SH.camera.position, t = window.__SH.controls.target; return [c.y, Math.hypot(c.x - t.x, c.z - t.z)]; });
   if (eye[0] < 6 && eye[1] < 12) pass++; else { fail++; console.log('FAIL the eye is not at the lantern', width, eye); }
+  // state 4: the first gesture is asked for on the stage; the clock waits for it
+  const gate = await p.evaluate(() => [!document.getElementById('enter').hidden, window.__SH.st.playing]);
+  if (gate[0] && !gate[1]) pass++; else { fail++; console.log('FAIL the stage does not ask for the first gesture', width, gate); }
+  await p.click('#enterQuiet');
+  if (await p.evaluate(() => document.getElementById('enter').hidden && window.__SH.st.playing)) pass++; else { fail++; console.log('FAIL the gesture did not start the clock', width); }
+  // state 4: the end. Held after it has run, the field holds only what a stranger can check
+  await p.click('[data-go=coda]'); await p.evaluate(() => { window.__SH.coda.hold = 60000; }); await p.waitForTimeout(800);
+  const end = await p.evaluate(() => window.__SH.codaDrawn());
+  const num = k => Number(String(shown[k]).replace(/,/g, ''));
+  const endWant = { flames: 1, out: 1, waverCommitsLit: 0, threadsOn: 0, pillarsOn: 0, logRingsOn: 0,
+    stitched: num('joined_git'), fileOnly: num('join_file'), stitchedArchitect: num('joined_git_architect'), steadyBreaches: num('breach_robust') };
+  for (const [k, v] of Object.entries(endWant)) if (end[k] === v) pass++; else { fail++; console.log('FAIL at the end', width, k, 'drawn', end[k], 'want', v); }
+  // and what it drew against the arrays, not the page: the pairs Git joins, the reds over on every count
+  if (end.stitched === GJ.length && end.fileOnly === MD.filter(d => d.mj === 3).length && end.steadyBreaches === ST.filter(b => b.rb).length) pass++;
+  else { fail++; console.log('FAIL the end against the arrays', width, end); }
+  for (const k of ['joined_git', 'mended', 'joined_git_architect']) if (end.note.includes(String(shown[k]))) pass++; else { fail++; console.log('FAIL the last note lacks', k, end.note); }
   // the struck word: the page's description no longer says most
   const desc = await p.getAttribute('meta[name=description]', 'content');
   if (!/\bMost\b/.test(desc)) pass++; else { fail++; console.log('FAIL description still says most', desc); }
