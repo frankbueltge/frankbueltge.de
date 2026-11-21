@@ -53,7 +53,8 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
   await p.waitForSelector('html[data-check="1"]', { timeout: 30000 });
   ok(errs.length === 0, `${w}px no errors ${errs.join(' | ')}`);
   ok(await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), `${w}px no sideways scroll of the page`);
-  ok(await p.textContent('.progress') === 'in progress · state 3 of 4 · checked', `${w}px the work says it is checked`);
+  // state 4 (the presentation) replaces the label; the check's findings stay on the page
+  ok(['in progress · state 3 of 4 · checked', 'presented 21 November · state 4 of 4'].includes(await p.textContent('.progress')), `${w}px the work says it is checked or presented`);
   const fr = await p.$$eval('[data-ck]', es => es.map(e => [e.getAttribute('data-ck'), e.textContent]));
   const bad = fr.filter(([k, t]) => { const v = get(k); return typeof v === 'number' ? num(t) !== v : t !== String(v) });
   ok(fr.length === 57 && bad.length === 0, `${w}px ${fr.length} figures of the check read from the page ${JSON.stringify(bad)}`);

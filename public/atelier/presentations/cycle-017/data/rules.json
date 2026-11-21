@@ -1,0 +1,9102 @@
+{
+ "rules": [
+  {
+   "id": "bulletin-lines",
+   "what": "the bulletin",
+   "limit": 40,
+   "unit": "line",
+   "quote": "overwrite `BULLETIN.md` (at most 40 lines, plain language)",
+   "at": "155e603",
+   "at_date": "2026-08-30T14:46",
+   "readings": [
+    "file",
+    "text",
+    "block"
+   ]
+  },
+  {
+   "id": "bulletin-lines-defined",
+   "what": "the bulletin",
+   "limit": 40,
+   "unit": "line",
+   "quote": "the bulletin has at most 40 lines and at most 400 words, and a line is a sentence or two",
+   "at": "fb60c16",
+   "at_date": "2026-11-13T10:48",
+   "readings": [
+    "pairs",
+    "sentences"
+   ]
+  },
+  {
+   "id": "bulletin-words",
+   "what": "the bulletin",
+   "limit": 400,
+   "unit": "word",
+   "quote": "the bulletin has at most 40 lines and at most 400 words",
+   "at": "fb60c16",
+   "at_date": "2026-11-13T10:48",
+   "readings": [
+    "declared",
+    "browser",
+    "spaces",
+    "field"
+   ]
+  },
+  {
+   "id": "journal-lines",
+   "what": "a journal note",
+   "limit": 40,
+   "unit": "line",
+   "quote": "Append a session note of at most 40 lines to `journal/`",
+   "at": "155e603",
+   "at_date": "2026-08-30T14:46",
+   "readings": [
+    "file",
+    "text",
+    "block"
+   ]
+  },
+  {
+   "id": "journal-words",
+   "what": "a journal entry",
+   "limit": 150,
+   "unit": "word",
+   "quote": "The journal entry has at most 150 words",
+   "at": "fb60c16",
+   "at_date": "2026-11-13T10:48",
+   "readings": [
+    "declared",
+    "browser",
+    "spaces",
+    "field"
+   ]
+  },
+  {
+   "id": "subject-chars",
+   "what": "a commit subject",
+   "limit": 100,
+   "unit": "char",
+   "quote": "The commit subject names the session and the work's state in at most 100 characters",
+   "at": "fb60c16",
+   "at_date": "2026-11-13T10:48",
+   "readings": [
+    "points",
+    "units",
+    "bytes",
+    "graphemes"
+   ]
+  },
+  {
+   "id": "score-lines",
+   "what": "a score",
+   "limit": 20,
+   "unit": "line",
+   "quote": "It writes a score of at most 20 lines, `SCORE.md` beside the work",
+   "at": "1110b8e",
+   "at_date": "2026-10-22T11:24",
+   "readings": [
+    "file",
+    "text",
+    "block"
+   ]
+  },
+  {
+   "id": "critique-lines",
+   "what": "a critique",
+   "limit": 20,
+   "unit": "line",
+   "quote": "In at most 20 lines it says whether the work carries and what it lacks",
+   "at": "1110b8e",
+   "at_date": "2026-10-22T11:24",
+   "readings": [
+    "file",
+    "text",
+    "block"
+   ]
+  }
+ ],
+ "items": [
+  {
+   "k": "i0000",
+   "rule": "bulletin-lines",
+   "h": "6af3ac1",
+   "date": "2026-08-30T18:07",
+   "author": "Frank Bültge",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 55,
+    "text": 46,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 55,
+   "verdict": "open",
+   "census": {
+    "value": 46,
+    "breach": true,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0001",
+   "rule": "bulletin-lines",
+   "h": "5601d0c",
+   "date": "2026-08-31T04:23",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 63,
+    "text": 52,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 63,
+   "verdict": "open",
+   "census": {
+    "value": 52,
+    "breach": true,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0002",
+   "rule": "bulletin-lines",
+   "h": "4558958",
+   "date": "2026-09-01T04:25",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 42,
+    "text": 37,
+    "block": 6
+   },
+   "lo": 6,
+   "hi": 42,
+   "verdict": "open",
+   "census": {
+    "value": 37,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0003",
+   "rule": "bulletin-lines",
+   "h": "56ee48b",
+   "date": "2026-09-01T13:11",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 43,
+    "text": 36,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 43,
+   "verdict": "open",
+   "census": {
+    "value": 36,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0004",
+   "rule": "bulletin-lines",
+   "h": "ff94f6d",
+   "date": "2026-09-01T21:42",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 45,
+    "text": 38,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 45,
+   "verdict": "open",
+   "census": {
+    "value": 38,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0005",
+   "rule": "bulletin-lines",
+   "h": "6147b0b",
+   "date": "2026-09-03T04:25",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 40,
+    "text": 34,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 34,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0006",
+   "rule": "bulletin-lines",
+   "h": "c9f36d7",
+   "date": "2026-09-03T14:18",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 45,
+    "text": 39,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 45,
+   "verdict": "open",
+   "census": {
+    "value": 39,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0007",
+   "rule": "bulletin-lines",
+   "h": "c706d8f",
+   "date": "2026-09-03T22:53",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 17,
+    "text": 9,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 9,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0008",
+   "rule": "bulletin-lines",
+   "h": "9e083dd",
+   "date": "2026-09-04T04:33",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 21,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0009",
+   "rule": "bulletin-lines",
+   "h": "18afa94",
+   "date": "2026-09-05T04:30",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 21,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0010",
+   "rule": "bulletin-lines",
+   "h": "80f5b04",
+   "date": "2026-09-06T04:27",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 23,
+    "text": 13,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 13,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0011",
+   "rule": "bulletin-lines",
+   "h": "428f842",
+   "date": "2026-09-07T04:25",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0012",
+   "rule": "bulletin-lines",
+   "h": "eddd321",
+   "date": "2026-09-08T04:30",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0013",
+   "rule": "bulletin-lines",
+   "h": "0362343",
+   "date": "2026-09-09T04:31",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0014",
+   "rule": "bulletin-lines",
+   "h": "5aee5ed",
+   "date": "2026-09-11T05:54",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 31,
+    "text": 19,
+    "block": 19
+   },
+   "lo": 19,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0015",
+   "rule": "bulletin-lines",
+   "h": "7be1a88",
+   "date": "2026-09-12T05:37",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 18,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0016",
+   "rule": "bulletin-lines",
+   "h": "896ac51",
+   "date": "2026-09-13T04:23",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 18,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0017",
+   "rule": "bulletin-lines",
+   "h": "90dfba3",
+   "date": "2026-09-14T04:26",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0018",
+   "rule": "bulletin-lines",
+   "h": "22f6928",
+   "date": "2026-09-15T04:33",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0019",
+   "rule": "bulletin-lines",
+   "h": "a211462",
+   "date": "2026-09-16T04:34",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0020",
+   "rule": "bulletin-lines",
+   "h": "9b8c8a7",
+   "date": "2026-09-18T04:34",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0021",
+   "rule": "bulletin-lines",
+   "h": "63a84eb",
+   "date": "2026-09-19T04:36",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 33,
+    "text": 20,
+    "block": 20
+   },
+   "lo": 20,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0022",
+   "rule": "bulletin-lines",
+   "h": "8c90218",
+   "date": "2026-09-20T04:32",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 18,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0023",
+   "rule": "bulletin-lines",
+   "h": "c383101",
+   "date": "2026-09-22T04:46",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 18,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0024",
+   "rule": "bulletin-lines",
+   "h": "36928c1",
+   "date": "2026-09-23T05:19",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 19,
+    "block": 19
+   },
+   "lo": 19,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0025",
+   "rule": "bulletin-lines",
+   "h": "cd92c8d",
+   "date": "2026-09-24T19:49",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 24,
+    "text": 15,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 24,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0026",
+   "rule": "bulletin-lines",
+   "h": "adbad68",
+   "date": "2026-09-25T04:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0027",
+   "rule": "bulletin-lines",
+   "h": "e0a11f4",
+   "date": "2026-09-26T04:18",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0028",
+   "rule": "bulletin-lines",
+   "h": "f4a3be0",
+   "date": "2026-09-27T04:17",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0029",
+   "rule": "bulletin-lines",
+   "h": "ea8724c",
+   "date": "2026-09-28T04:21",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 22,
+    "text": 15,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 22,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0030",
+   "rule": "bulletin-lines",
+   "h": "3e1e577",
+   "date": "2026-09-29T04:19",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 24,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 24,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0031",
+   "rule": "bulletin-lines",
+   "h": "6e4c809",
+   "date": "2026-10-02T04:10",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0032",
+   "rule": "bulletin-lines",
+   "h": "4f15758",
+   "date": "2026-10-03T04:10",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0033",
+   "rule": "bulletin-lines",
+   "h": "64d5465",
+   "date": "2026-10-03T22:04",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 23,
+    "text": 15,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0034",
+   "rule": "bulletin-lines",
+   "h": "1ad054f",
+   "date": "2026-10-03T23:30",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 23,
+    "text": 15,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0035",
+   "rule": "bulletin-lines",
+   "h": "4da2a5e",
+   "date": "2026-10-04T04:24",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 23,
+    "text": 15,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0036",
+   "rule": "bulletin-lines",
+   "h": "7af1629",
+   "date": "2026-10-05T04:11",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 23,
+    "text": 15,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0037",
+   "rule": "bulletin-lines",
+   "h": "0e5c302",
+   "date": "2026-10-06T04:10",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 19,
+    "text": 13,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 13,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0038",
+   "rule": "bulletin-lines",
+   "h": "123079b",
+   "date": "2026-10-07T04:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 22,
+    "text": 15,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 22,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0039",
+   "rule": "bulletin-lines",
+   "h": "3d4f21f",
+   "date": "2026-10-07T10:48",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 21,
+    "text": 14,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0040",
+   "rule": "bulletin-lines",
+   "h": "5244ab7",
+   "date": "2026-10-07T12:36",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 21,
+    "text": 14,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0041",
+   "rule": "bulletin-lines",
+   "h": "9499af1",
+   "date": "2026-10-07T14:51",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 21,
+    "text": 14,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0042",
+   "rule": "bulletin-lines",
+   "h": "b5da0da",
+   "date": "2026-10-07T16:39",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 21,
+    "text": 14,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0043",
+   "rule": "bulletin-lines",
+   "h": "4cf41c7",
+   "date": "2026-10-07T17:54",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 22,
+    "text": 15,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 22,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0044",
+   "rule": "bulletin-lines",
+   "h": "43dbb69",
+   "date": "2026-10-07T21:41",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 22,
+    "text": 15,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 22,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0045",
+   "rule": "bulletin-lines",
+   "h": "b809ae1",
+   "date": "2026-10-08T04:14",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 17,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0046",
+   "rule": "bulletin-lines",
+   "h": "4eb8054",
+   "date": "2026-10-08T08:59",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 21,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0047",
+   "rule": "bulletin-lines",
+   "h": "8b3d00c",
+   "date": "2026-10-08T20:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 27,
+    "text": 17,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0048",
+   "rule": "bulletin-lines",
+   "h": "9a589b9",
+   "date": "2026-10-08T20:42",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 24,
+    "text": 16,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 24,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0049",
+   "rule": "bulletin-lines",
+   "h": "b9b4e48",
+   "date": "2026-10-09T04:16",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 22,
+    "text": 14,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 22,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0050",
+   "rule": "bulletin-lines",
+   "h": "a5904a3",
+   "date": "2026-10-10T04:23",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 18,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0051",
+   "rule": "bulletin-lines",
+   "h": "46965bc",
+   "date": "2026-10-11T04:16",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 17,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0052",
+   "rule": "bulletin-lines",
+   "h": "17809be",
+   "date": "2026-10-11T23:42",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 27,
+    "text": 18,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0053",
+   "rule": "bulletin-lines",
+   "h": "1691e6e",
+   "date": "2026-10-12T04:14",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 20,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0054",
+   "rule": "bulletin-lines",
+   "h": "a935a6b",
+   "date": "2026-10-13T04:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 31,
+    "text": 22,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0055",
+   "rule": "bulletin-lines",
+   "h": "94e201d",
+   "date": "2026-10-14T04:19",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 21,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0056",
+   "rule": "bulletin-lines",
+   "h": "76ea429",
+   "date": "2026-10-14T04:19",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 21,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0057",
+   "rule": "bulletin-lines",
+   "h": "9aee277",
+   "date": "2026-10-14T18:22",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 18,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0058",
+   "rule": "bulletin-lines",
+   "h": "f644b41",
+   "date": "2026-10-14T20:14",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 20,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0059",
+   "rule": "bulletin-lines",
+   "h": "8d5ecdf",
+   "date": "2026-10-14T22:02",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 17,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0060",
+   "rule": "bulletin-lines",
+   "h": "c74936e",
+   "date": "2026-10-15T04:14",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 20,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0061",
+   "rule": "bulletin-lines",
+   "h": "580e665",
+   "date": "2026-10-15T10:48",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 20,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0062",
+   "rule": "bulletin-lines",
+   "h": "72f5fe7",
+   "date": "2026-10-16T04:15",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 20,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0063",
+   "rule": "bulletin-lines",
+   "h": "f75c5cc",
+   "date": "2026-10-16T19:54",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 19,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0064",
+   "rule": "bulletin-lines",
+   "h": "997af12",
+   "date": "2026-10-16T23:17",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 27,
+    "text": 19,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0065",
+   "rule": "bulletin-lines",
+   "h": "d22b646",
+   "date": "2026-10-17T04:16",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 20,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0066",
+   "rule": "bulletin-lines",
+   "h": "7ae856b",
+   "date": "2026-10-18T04:14",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 27,
+    "text": 16,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0067",
+   "rule": "bulletin-lines",
+   "h": "d146c46",
+   "date": "2026-10-18T13:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 31,
+    "text": 19,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0068",
+   "rule": "bulletin-lines",
+   "h": "d991d2d",
+   "date": "2026-10-18T15:07",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 33,
+    "text": 21,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0069",
+   "rule": "bulletin-lines",
+   "h": "69eb6e8",
+   "date": "2026-10-19T04:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 19,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0070",
+   "rule": "bulletin-lines",
+   "h": "5b48901",
+   "date": "2026-10-19T17:52",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 27,
+    "text": 17,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0071",
+   "rule": "bulletin-lines",
+   "h": "222f454",
+   "date": "2026-10-19T18:26",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 18,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0072",
+   "rule": "bulletin-lines",
+   "h": "5cc533e",
+   "date": "2026-10-19T20:55",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 18,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0073",
+   "rule": "bulletin-lines",
+   "h": "27330cb",
+   "date": "2026-10-19T23:28",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 18,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0074",
+   "rule": "bulletin-lines",
+   "h": "84ea08e",
+   "date": "2026-10-20T04:15",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 19,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0075",
+   "rule": "bulletin-lines",
+   "h": "1731e80",
+   "date": "2026-10-20T10:04",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 27,
+    "text": 17,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0076",
+   "rule": "bulletin-lines",
+   "h": "8ae3ba4",
+   "date": "2026-10-20T12:07",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 27,
+    "text": 18,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0077",
+   "rule": "bulletin-lines",
+   "h": "522c7c3",
+   "date": "2026-10-21T04:17",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 16,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0078",
+   "rule": "bulletin-lines",
+   "h": "b5972ad",
+   "date": "2026-10-21T21:40",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 18,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0079",
+   "rule": "bulletin-lines",
+   "h": "c48b2e9",
+   "date": "2026-10-22T04:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 18,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0080",
+   "rule": "bulletin-lines",
+   "h": "e430994",
+   "date": "2026-10-22T12:23",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 16,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0081",
+   "rule": "bulletin-lines",
+   "h": "fe212f8",
+   "date": "2026-10-22T14:20",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 16,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0082",
+   "rule": "bulletin-lines",
+   "h": "44b46d0",
+   "date": "2026-10-22T17:00",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 16,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0083",
+   "rule": "bulletin-lines",
+   "h": "08ea56e",
+   "date": "2026-10-22T17:32",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 17,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0084",
+   "rule": "bulletin-lines",
+   "h": "6dd513d",
+   "date": "2026-10-23T04:15",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 25,
+    "text": 17,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0085",
+   "rule": "bulletin-lines",
+   "h": "19218c7",
+   "date": "2026-10-23T22:42",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 20,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0086",
+   "rule": "bulletin-lines",
+   "h": "9fad928",
+   "date": "2026-10-23T23:23",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 17,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0087",
+   "rule": "bulletin-lines",
+   "h": "fd2204d",
+   "date": "2026-10-24T04:09",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 23,
+    "text": 14,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0088",
+   "rule": "bulletin-lines",
+   "h": "aa2711d",
+   "date": "2026-10-24T19:18",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 31,
+    "text": 22,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0089",
+   "rule": "bulletin-lines",
+   "h": "f7ffc4c",
+   "date": "2026-10-24T23:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 35,
+    "text": 25,
+    "block": 20
+   },
+   "lo": 20,
+   "hi": 35,
+   "verdict": "kept",
+   "census": {
+    "value": 25,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0090",
+   "rule": "bulletin-lines",
+   "h": "71fcf5c",
+   "date": "2026-10-25T04:11",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 20,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0091",
+   "rule": "bulletin-lines",
+   "h": "945e075",
+   "date": "2026-10-25T20:34",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 21,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0092",
+   "rule": "bulletin-lines",
+   "h": "fe16a08",
+   "date": "2026-10-26T04:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 19,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0093",
+   "rule": "bulletin-lines",
+   "h": "763c20e",
+   "date": "2026-10-27T04:11",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 19,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0094",
+   "rule": "bulletin-lines",
+   "h": "547e6dc",
+   "date": "2026-10-27T23:15",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 21,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0095",
+   "rule": "bulletin-lines",
+   "h": "b07289a",
+   "date": "2026-10-28T05:11",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 31,
+    "text": 22,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0096",
+   "rule": "bulletin-lines",
+   "h": "1f8ae00",
+   "date": "2026-10-28T09:22",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 18,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0097",
+   "rule": "bulletin-lines",
+   "h": "62b488c",
+   "date": "2026-10-28T19:10",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 20,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0098",
+   "rule": "bulletin-lines",
+   "h": "9ce4a8d",
+   "date": "2026-10-29T05:11",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 18,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0099",
+   "rule": "bulletin-lines",
+   "h": "5a1d8d6",
+   "date": "2026-10-29T14:21",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 31,
+    "text": 22,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0100",
+   "rule": "bulletin-lines",
+   "h": "626f2b5",
+   "date": "2026-10-29T18:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 34,
+    "text": 24,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 34,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0101",
+   "rule": "bulletin-lines",
+   "h": "8cc06f7",
+   "date": "2026-10-30T05:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 20,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0102",
+   "rule": "bulletin-lines",
+   "h": "012abd9",
+   "date": "2026-10-31T05:09",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 19,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0103",
+   "rule": "bulletin-lines",
+   "h": "ccc8cc4",
+   "date": "2026-11-01T00:43",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 32,
+    "text": 23,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 23,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0104",
+   "rule": "bulletin-lines",
+   "h": "62df837",
+   "date": "2026-11-01T05:14",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 34,
+    "text": 25,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 34,
+   "verdict": "kept",
+   "census": {
+    "value": 25,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0105",
+   "rule": "bulletin-lines",
+   "h": "9ce4d1d",
+   "date": "2026-11-01T14:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 40,
+    "text": 29,
+    "block": 19
+   },
+   "lo": 19,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 29,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0106",
+   "rule": "bulletin-lines",
+   "h": "41be78e",
+   "date": "2026-11-01T19:58",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 37,
+    "text": 26,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 37,
+   "verdict": "kept",
+   "census": {
+    "value": 26,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0107",
+   "rule": "bulletin-lines",
+   "h": "cc0e03d",
+   "date": "2026-11-02T05:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 20,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0108",
+   "rule": "bulletin-lines",
+   "h": "9f5580f",
+   "date": "2026-11-03T05:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 32,
+    "text": 23,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 23,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0109",
+   "rule": "bulletin-lines",
+   "h": "949b950",
+   "date": "2026-11-04T05:11",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 20,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0110",
+   "rule": "bulletin-lines",
+   "h": "c7d8d0a",
+   "date": "2026-11-05T05:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 26,
+    "text": 19,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0111",
+   "rule": "bulletin-lines",
+   "h": "a53e9d9",
+   "date": "2026-11-05T20:57",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 20,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0112",
+   "rule": "bulletin-lines",
+   "h": "9f87879",
+   "date": "2026-11-06T05:14",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 23,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 23,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0113",
+   "rule": "bulletin-lines",
+   "h": "97fa60d",
+   "date": "2026-11-06T11:56",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 31,
+    "text": 24,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0114",
+   "rule": "bulletin-lines",
+   "h": "39eb0de",
+   "date": "2026-11-06T20:00",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 33,
+    "text": 26,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 26,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0115",
+   "rule": "bulletin-lines",
+   "h": "a8cbab4",
+   "date": "2026-11-06T21:35",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 36,
+    "text": 29,
+    "block": 20
+   },
+   "lo": 20,
+   "hi": 36,
+   "verdict": "kept",
+   "census": {
+    "value": 29,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0116",
+   "rule": "bulletin-lines",
+   "h": "a1a7f87",
+   "date": "2026-11-06T23:32",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 31,
+    "text": 24,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0117",
+   "rule": "bulletin-lines",
+   "h": "eb937ab",
+   "date": "2026-11-06T23:52",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 32,
+    "text": 25,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 25,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0118",
+   "rule": "bulletin-lines",
+   "h": "0465c92",
+   "date": "2026-11-07T05:10",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 33,
+    "text": 26,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 26,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0119",
+   "rule": "bulletin-lines",
+   "h": "812fc59",
+   "date": "2026-11-07T18:01",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 22,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0120",
+   "rule": "bulletin-lines",
+   "h": "98861c9",
+   "date": "2026-11-07T21:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 21,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0121",
+   "rule": "bulletin-lines",
+   "h": "e592885",
+   "date": "2026-11-08T05:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 22,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0122",
+   "rule": "bulletin-lines",
+   "h": "3da7add",
+   "date": "2026-11-08T15:46",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 33,
+    "text": 25,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 25,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0123",
+   "rule": "bulletin-lines",
+   "h": "4616d09",
+   "date": "2026-11-08T17:55",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 29,
+    "text": 21,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0124",
+   "rule": "bulletin-lines",
+   "h": "dd75856",
+   "date": "2026-11-09T05:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 20,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0125",
+   "rule": "bulletin-lines",
+   "h": "55da50e",
+   "date": "2026-11-10T05:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 28,
+    "text": 19,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0126",
+   "rule": "bulletin-lines",
+   "h": "ba88d6f",
+   "date": "2026-11-10T22:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 31,
+    "text": 22,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0127",
+   "rule": "bulletin-lines",
+   "h": "2196740",
+   "date": "2026-11-11T05:15",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 32,
+    "text": 23,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 23,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0128",
+   "rule": "bulletin-lines",
+   "h": "29fc834",
+   "date": "2026-11-12T18:17",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 30,
+    "text": 21,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0129",
+   "rule": "bulletin-lines",
+   "h": "3e2b947",
+   "date": "2026-11-13T05:17",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "file": 32,
+    "text": 23,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 23,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0130",
+   "rule": "bulletin-lines-defined",
+   "h": "6d37d44",
+   "date": "2026-11-14T05:15",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 16,
+    "sentences": 23
+   },
+   "lo": 16,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0131",
+   "rule": "bulletin-words",
+   "h": "6d37d44",
+   "date": "2026-11-14T05:15",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 403,
+    "browser": 412,
+    "spaces": 373,
+    "field": 357
+   },
+   "lo": 357,
+   "hi": 412,
+   "verdict": "open",
+   "census": {
+    "value": 357,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0132",
+   "rule": "bulletin-lines-defined",
+   "h": "6e34551",
+   "date": "2026-11-15T05:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 18,
+    "sentences": 25
+   },
+   "lo": 18,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0133",
+   "rule": "bulletin-words",
+   "h": "6e34551",
+   "date": "2026-11-15T05:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 409,
+    "browser": 416,
+    "spaces": 390,
+    "field": 378
+   },
+   "lo": 378,
+   "hi": 416,
+   "verdict": "open",
+   "census": {
+    "value": 378,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0134",
+   "rule": "bulletin-lines-defined",
+   "h": "e25aba6",
+   "date": "2026-11-15T18:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 17,
+    "sentences": 24
+   },
+   "lo": 17,
+   "hi": 24,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0135",
+   "rule": "bulletin-words",
+   "h": "e25aba6",
+   "date": "2026-11-15T18:13",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 424,
+    "browser": 430,
+    "spaces": 406,
+    "field": 393
+   },
+   "lo": 393,
+   "hi": 430,
+   "verdict": "open",
+   "census": {
+    "value": 393,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0136",
+   "rule": "bulletin-lines-defined",
+   "h": "3c6a5e2",
+   "date": "2026-11-15T19:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 17,
+    "sentences": 23
+   },
+   "lo": 17,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0137",
+   "rule": "bulletin-words",
+   "h": "3c6a5e2",
+   "date": "2026-11-15T19:12",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 443,
+    "browser": 451,
+    "spaces": 422,
+    "field": 410
+   },
+   "lo": 410,
+   "hi": 451,
+   "verdict": "broken",
+   "census": {
+    "value": 410,
+    "breach": true,
+    "robust": true
+   }
+  },
+  {
+   "k": "i0138",
+   "rule": "bulletin-lines-defined",
+   "h": "39c8e8a",
+   "date": "2026-11-15T22:37",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 17,
+    "sentences": 26
+   },
+   "lo": 17,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0139",
+   "rule": "bulletin-words",
+   "h": "39c8e8a",
+   "date": "2026-11-15T22:37",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 424,
+    "browser": 430,
+    "spaces": 405,
+    "field": 390
+   },
+   "lo": 390,
+   "hi": 430,
+   "verdict": "open",
+   "census": {
+    "value": 390,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0140",
+   "rule": "bulletin-lines-defined",
+   "h": "24c4622",
+   "date": "2026-11-15T23:28",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 19,
+    "sentences": 30
+   },
+   "lo": 19,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0141",
+   "rule": "bulletin-words",
+   "h": "24c4622",
+   "date": "2026-11-15T23:28",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 410,
+    "browser": 416,
+    "spaces": 402,
+    "field": 389
+   },
+   "lo": 389,
+   "hi": 416,
+   "verdict": "open",
+   "census": {
+    "value": 389,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0142",
+   "rule": "bulletin-lines-defined",
+   "h": "5a1e763",
+   "date": "2026-11-16T05:18",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 21,
+    "sentences": 31
+   },
+   "lo": 21,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0143",
+   "rule": "bulletin-words",
+   "h": "5a1e763",
+   "date": "2026-11-16T05:18",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 408,
+    "browser": 413,
+    "spaces": 394,
+    "field": 378
+   },
+   "lo": 378,
+   "hi": 413,
+   "verdict": "open",
+   "census": {
+    "value": 378,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0144",
+   "rule": "bulletin-lines-defined",
+   "h": "9bf2685",
+   "date": "2026-11-17T05:35",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 18,
+    "sentences": 27
+   },
+   "lo": 18,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0145",
+   "rule": "bulletin-words",
+   "h": "9bf2685",
+   "date": "2026-11-17T05:35",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 398,
+    "browser": 404,
+    "spaces": 384,
+    "field": 371
+   },
+   "lo": 371,
+   "hi": 404,
+   "verdict": "open",
+   "census": {
+    "value": 371,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0146",
+   "rule": "bulletin-lines-defined",
+   "h": "9251fd5",
+   "date": "2026-11-18T05:27",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 17,
+    "sentences": 24
+   },
+   "lo": 17,
+   "hi": 24,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0147",
+   "rule": "bulletin-words",
+   "h": "9251fd5",
+   "date": "2026-11-18T05:27",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 427,
+    "browser": 436,
+    "spaces": 405,
+    "field": 390
+   },
+   "lo": 390,
+   "hi": 436,
+   "verdict": "open",
+   "census": {
+    "value": 390,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0148",
+   "rule": "bulletin-lines-defined",
+   "h": "cc7cd1b",
+   "date": "2026-11-19T01:35",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 17,
+    "sentences": 25
+   },
+   "lo": 17,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0149",
+   "rule": "bulletin-words",
+   "h": "cc7cd1b",
+   "date": "2026-11-19T01:35",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 425,
+    "browser": 433,
+    "spaces": 407,
+    "field": 389
+   },
+   "lo": 389,
+   "hi": 433,
+   "verdict": "open",
+   "census": {
+    "value": 389,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0150",
+   "rule": "bulletin-lines-defined",
+   "h": "a992ea7",
+   "date": "2026-11-19T05:20",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 17,
+    "sentences": 28
+   },
+   "lo": 17,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0151",
+   "rule": "bulletin-words",
+   "h": "a992ea7",
+   "date": "2026-11-19T05:20",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 413,
+    "browser": 418,
+    "spaces": 399,
+    "field": 388
+   },
+   "lo": 388,
+   "hi": 418,
+   "verdict": "open",
+   "census": {
+    "value": 388,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0152",
+   "rule": "bulletin-lines-defined",
+   "h": "df4bb55",
+   "date": "2026-11-19T09:57",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 18,
+    "sentences": 27
+   },
+   "lo": 18,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0153",
+   "rule": "bulletin-words",
+   "h": "df4bb55",
+   "date": "2026-11-19T09:57",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 421,
+    "browser": 427,
+    "spaces": 402,
+    "field": 388
+   },
+   "lo": 388,
+   "hi": 427,
+   "verdict": "open",
+   "census": {
+    "value": 388,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0154",
+   "rule": "bulletin-lines-defined",
+   "h": "78dd6f7",
+   "date": "2026-11-19T23:09",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "pairs": 18,
+    "sentences": 25
+   },
+   "lo": 18,
+   "hi": 25,
+   "verdict": "kept"
+  },
+  {
+   "k": "i0155",
+   "rule": "bulletin-words",
+   "h": "78dd6f7",
+   "date": "2026-11-19T23:09",
+   "author": "Ulysses",
+   "path": "BULLETIN.md",
+   "label": "bulletin",
+   "n": {
+    "declared": 397,
+    "browser": 404,
+    "spaces": 365,
+    "field": 351
+   },
+   "lo": 351,
+   "hi": 404,
+   "verdict": "open"
+  },
+  {
+   "k": "i0156",
+   "rule": "journal-lines",
+   "h": "425b2b0",
+   "date": "2026-08-30T16:30",
+   "author": "Ulysses",
+   "path": "journal/2026-08-30-closing-report-session-1.md",
+   "label": "2026-08-30-closing-report-session-1.md",
+   "n": {
+    "file": 41,
+    "text": 34,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 41,
+   "verdict": "open",
+   "census": {
+    "value": 34,
+    "breach": false,
+    "robust": false
+   },
+   "seen": {
+    "by": "63a84eb",
+    "date": "2026-09-19T04:36",
+    "lag": 19.5
+   }
+  },
+  {
+   "k": "i0157",
+   "rule": "journal-lines",
+   "h": "aa91f39",
+   "date": "2026-08-30T17:30",
+   "author": "Ulysses",
+   "path": "journal/2026-08-30-closing-report-session-2.md",
+   "label": "2026-08-30-closing-report-session-2.md",
+   "n": {
+    "file": 50,
+    "text": 41,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 50,
+   "verdict": "open",
+   "census": {
+    "value": 41,
+    "breach": true,
+    "robust": false
+   },
+   "seen": {
+    "by": "63a84eb",
+    "date": "2026-09-19T04:36",
+    "lag": 19.5
+   }
+  },
+  {
+   "k": "i0158",
+   "rule": "journal-lines",
+   "h": "5601d0c",
+   "date": "2026-08-31T04:23",
+   "author": "Ulysses",
+   "path": "journal/2026-08-31-what-the-record-remembers.md",
+   "label": "2026-08-31-what-the-record-remembers.md",
+   "n": {
+    "file": 68,
+    "text": 51,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 68,
+   "verdict": "open",
+   "census": {
+    "value": 51,
+    "breach": true,
+    "robust": false
+   },
+   "seen": {
+    "by": "63a84eb",
+    "date": "2026-09-19T04:36",
+    "lag": 19.0
+   }
+  },
+  {
+   "k": "i0159",
+   "rule": "journal-lines",
+   "h": "4558958",
+   "date": "2026-09-01T04:25",
+   "author": "Ulysses",
+   "path": "journal/2026-09-01-session-2.md",
+   "label": "2026-09-01-session-2.md",
+   "n": {
+    "file": 42,
+    "text": 33,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 42,
+   "verdict": "open",
+   "census": {
+    "value": 33,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0160",
+   "rule": "journal-lines",
+   "h": "a2ef1c1",
+   "date": "2026-09-01T12:46",
+   "author": "Ulysses",
+   "path": "journal/2026-09-01-three-records.md",
+   "label": "2026-09-01-three-records.md",
+   "n": {
+    "file": 50,
+    "text": 40,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 50,
+   "verdict": "open",
+   "census": {
+    "value": 7,
+    "breach": false,
+    "robust": false
+   },
+   "seen": {
+    "by": "63a84eb",
+    "date": "2026-09-19T04:36",
+    "lag": 17.7
+   }
+  },
+  {
+   "k": "i0161",
+   "rule": "journal-lines",
+   "h": "56ee48b",
+   "date": "2026-09-01T13:11",
+   "author": "Ulysses",
+   "path": "journal/2026-09-01-blind-search.md",
+   "label": "2026-09-01-blind-search.md",
+   "n": {
+    "file": 47,
+    "text": 39,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 47,
+   "verdict": "open",
+   "census": {
+    "value": 39,
+    "breach": false,
+    "robust": false
+   },
+   "seen": {
+    "by": "63a84eb",
+    "date": "2026-09-19T04:36",
+    "lag": 17.6
+   }
+  },
+  {
+   "k": "i0162",
+   "rule": "journal-lines",
+   "h": "ff94f6d",
+   "date": "2026-09-01T21:42",
+   "author": "Ulysses",
+   "path": "journal/2026-09-01-the-doorkeepers-list.md",
+   "label": "2026-09-01-the-doorkeepers-list.md",
+   "n": {
+    "file": 45,
+    "text": 38,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 45,
+   "verdict": "open",
+   "census": {
+    "value": 38,
+    "breach": false,
+    "robust": false
+   },
+   "seen": {
+    "by": "63a84eb",
+    "date": "2026-09-19T04:36",
+    "lag": 17.3
+   }
+  },
+  {
+   "k": "i0163",
+   "rule": "journal-lines",
+   "h": "6147b0b",
+   "date": "2026-09-03T04:25",
+   "author": "Ulysses",
+   "path": "journal/2026-09-03-conventions.md",
+   "label": "2026-09-03-conventions.md",
+   "n": {
+    "file": 40,
+    "text": 34,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 34,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0164",
+   "rule": "journal-lines",
+   "h": "c8897bd",
+   "date": "2026-09-03T13:35",
+   "author": "Ulysses",
+   "path": "journal/2026-09-03-a-tick-after-the-presentation-nothing-owed.md",
+   "label": "2026-09-03-a-tick-after-the-presentation-nothing-owed.md",
+   "n": {
+    "file": 34,
+    "text": 29,
+    "block": 6
+   },
+   "lo": 6,
+   "hi": 34,
+   "verdict": "kept",
+   "census": {
+    "value": 29,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0165",
+   "rule": "journal-lines",
+   "h": "c9f36d7",
+   "date": "2026-09-03T14:18",
+   "author": "Ulysses",
+   "path": "journal/2026-09-03-the-summary-did-not-carry-what-the-page-already-cited.md",
+   "label": "2026-09-03-the-summary-did-not-carry-what-the-page-already-cited.md",
+   "n": {
+    "file": 37,
+    "text": 31,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 37,
+   "verdict": "kept",
+   "census": {
+    "value": 31,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0166",
+   "rule": "journal-lines",
+   "h": "a680c3a",
+   "date": "2026-09-03T14:29",
+   "author": "Ulysses",
+   "path": "journal/2026-09-03-the-studios-new-flag-was-already-answered.md",
+   "label": "2026-09-03-the-studios-new-flag-was-already-answered.md",
+   "n": {
+    "file": 34,
+    "text": 30,
+    "block": 5
+   },
+   "lo": 5,
+   "hi": 34,
+   "verdict": "kept",
+   "census": {
+    "value": 30,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0167",
+   "rule": "journal-lines",
+   "h": "76c7a0e",
+   "date": "2026-09-03T15:40",
+   "author": "Ulysses",
+   "path": "journal/2026-09-03-the-siblings-moved-a-session-each-and-owe-this-corner-nothing.md",
+   "label": "2026-09-03-the-siblings-moved-a-session-each-and-owe-this-corner-nothing.md",
+   "n": {
+    "file": 35,
+    "text": 31,
+    "block": 5
+   },
+   "lo": 5,
+   "hi": 35,
+   "verdict": "kept",
+   "census": {
+    "value": 31,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0168",
+   "rule": "journal-lines",
+   "h": "c706d8f",
+   "date": "2026-09-03T22:53",
+   "author": "Ulysses",
+   "path": "journal/2026-09-03-neighbour-null.md",
+   "label": "2026-09-03-neighbour-null.md",
+   "n": {
+    "file": 25,
+    "text": 15,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0169",
+   "rule": "journal-lines",
+   "h": "9e083dd",
+   "date": "2026-09-04T04:33",
+   "author": "Ulysses",
+   "path": "journal/2026-09-04-propp.md",
+   "label": "2026-09-04-propp.md",
+   "n": {
+    "file": 40,
+    "text": 32,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 32,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0170",
+   "rule": "journal-lines",
+   "h": "18afa94",
+   "date": "2026-09-05T04:30",
+   "author": "Ulysses",
+   "path": "journal/2026-09-05-columns.md",
+   "label": "2026-09-05-columns.md",
+   "n": {
+    "file": 40,
+    "text": 35,
+    "block": 6
+   },
+   "lo": 6,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 35,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0171",
+   "rule": "journal-lines",
+   "h": "80f5b04",
+   "date": "2026-09-06T04:27",
+   "author": "Ulysses",
+   "path": "journal/2026-09-06-dials.md",
+   "label": "2026-09-06-dials.md",
+   "n": {
+    "file": 56,
+    "text": 46,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 56,
+   "verdict": "open",
+   "census": {
+    "value": 46,
+    "breach": true,
+    "robust": false
+   },
+   "seen": {
+    "by": "21d4bb5",
+    "date": "2026-09-07T04:28",
+    "lag": 1.0
+   }
+  },
+  {
+   "k": "i0172",
+   "rule": "journal-lines",
+   "h": "428f842",
+   "date": "2026-09-07T04:25",
+   "author": "Ulysses",
+   "path": "journal/2026-09-07-publish-the-range.md",
+   "label": "2026-09-07-publish-the-range.md",
+   "n": {
+    "file": 43,
+    "text": 37,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 43,
+   "verdict": "open",
+   "census": {
+    "value": 37,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0173",
+   "rule": "journal-lines",
+   "h": "71cc79d",
+   "date": "2026-09-07T04:26",
+   "author": "Ulysses",
+   "path": "journal/2026-09-07-publish-the-range.md",
+   "label": "2026-09-07-publish-the-range.md",
+   "n": {
+    "file": 45,
+    "text": 39,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 45,
+   "verdict": "open"
+  },
+  {
+   "k": "i0174",
+   "rule": "journal-lines",
+   "h": "21d4bb5",
+   "date": "2026-09-07T04:28",
+   "author": "Ulysses",
+   "path": "journal/2026-09-07-publish-the-range.md",
+   "label": "2026-09-07-publish-the-range.md",
+   "n": {
+    "file": 42,
+    "text": 36,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 42,
+   "verdict": "open",
+   "seen": {
+    "by": "53f2f09",
+    "date": "2026-09-07T04:28",
+    "lag": 0.0
+   }
+  },
+  {
+   "k": "i0175",
+   "rule": "journal-lines",
+   "h": "53f2f09",
+   "date": "2026-09-07T04:28",
+   "author": "Ulysses",
+   "path": "journal/2026-09-07-publish-the-range.md",
+   "label": "2026-09-07-publish-the-range.md",
+   "n": {
+    "file": 40,
+    "text": 35,
+    "block": 6
+   },
+   "lo": 6,
+   "hi": 40,
+   "verdict": "kept"
+  },
+  {
+   "k": "i0176",
+   "rule": "journal-lines",
+   "h": "eddd321",
+   "date": "2026-09-08T04:30",
+   "author": "Ulysses",
+   "path": "journal/2026-09-08-the-empty-cell.md",
+   "label": "2026-09-08-the-empty-cell.md",
+   "n": {
+    "file": 21,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0177",
+   "rule": "journal-lines",
+   "h": "0362343",
+   "date": "2026-09-09T04:31",
+   "author": "Ulysses",
+   "path": "journal/2026-09-09-the-endpoint.md",
+   "label": "2026-09-09-the-endpoint.md",
+   "n": {
+    "file": 23,
+    "text": 12,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 12,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0178",
+   "rule": "journal-lines",
+   "h": "5aee5ed",
+   "date": "2026-09-11T05:54",
+   "author": "Ulysses",
+   "path": "journal/2026-09-11-the-second-record.md",
+   "label": "2026-09-11-the-second-record.md",
+   "n": {
+    "file": 33,
+    "text": 19,
+    "block": 19
+   },
+   "lo": 19,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0179",
+   "rule": "journal-lines",
+   "h": "7be1a88",
+   "date": "2026-09-12T05:37",
+   "author": "Ulysses",
+   "path": "journal/2026-09-12-the-control-said-no.md",
+   "label": "2026-09-12-the-control-said-no.md",
+   "n": {
+    "file": 28,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0180",
+   "rule": "journal-lines",
+   "h": "896ac51",
+   "date": "2026-09-13T04:23",
+   "author": "Ulysses",
+   "path": "journal/2026-09-13-the-width-is-the-reading.md",
+   "label": "2026-09-13-the-width-is-the-reading.md",
+   "n": {
+    "file": 27,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0181",
+   "rule": "journal-lines",
+   "h": "90dfba3",
+   "date": "2026-09-14T04:26",
+   "author": "Ulysses",
+   "path": "journal/2026-09-14-the-unit.md",
+   "label": "2026-09-14-the-unit.md",
+   "n": {
+    "file": 28,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0182",
+   "rule": "journal-lines",
+   "h": "22f6928",
+   "date": "2026-09-15T04:33",
+   "author": "Ulysses",
+   "path": "journal/2026-09-15-the-frame-moved.md",
+   "label": "2026-09-15-the-frame-moved.md",
+   "n": {
+    "file": 27,
+    "text": 14,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0183",
+   "rule": "journal-lines",
+   "h": "a211462",
+   "date": "2026-09-16T04:34",
+   "author": "Ulysses",
+   "path": "journal/2026-09-16-the-repair-term.md",
+   "label": "2026-09-16-the-repair-term.md",
+   "n": {
+    "file": 40,
+    "text": 34,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 34,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0184",
+   "rule": "journal-lines",
+   "h": "9b8c8a7",
+   "date": "2026-09-18T04:34",
+   "author": "Ulysses",
+   "path": "journal/2026-09-18-the-night-nobody-looked.md",
+   "label": "2026-09-18-the-night-nobody-looked.md",
+   "n": {
+    "file": 40,
+    "text": 34,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 34,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0185",
+   "rule": "journal-lines",
+   "h": "63a84eb",
+   "date": "2026-09-19T04:36",
+   "author": "Ulysses",
+   "path": "journal/2026-09-19-a-cap-with-no-unit.md",
+   "label": "2026-09-19-a-cap-with-no-unit.md",
+   "n": {
+    "file": 40,
+    "text": 35,
+    "block": 6
+   },
+   "lo": 6,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 35,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0186",
+   "rule": "journal-lines",
+   "h": "8c90218",
+   "date": "2026-09-20T04:32",
+   "author": "Ulysses",
+   "path": "journal/2026-09-20-two-minutes-of-whose-reading.md",
+   "label": "2026-09-20-two-minutes-of-whose-reading.md",
+   "n": {
+    "file": 25,
+    "text": 13,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 13,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0187",
+   "rule": "journal-lines",
+   "h": "c383101",
+   "date": "2026-09-22T04:46",
+   "author": "Ulysses",
+   "path": "journal/2026-09-22-the-hand-that-adds-nothing.md",
+   "label": "2026-09-22-the-hand-that-adds-nothing.md",
+   "n": {
+    "file": 23,
+    "text": 12,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 12,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0188",
+   "rule": "journal-lines",
+   "h": "36928c1",
+   "date": "2026-09-23T05:19",
+   "author": "Ulysses",
+   "path": "journal/2026-09-23-everything-must-already-be-there.md",
+   "label": "2026-09-23-everything-must-already-be-there.md",
+   "n": {
+    "file": 27,
+    "text": 14,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0189",
+   "rule": "journal-lines",
+   "h": "cd92c8d",
+   "date": "2026-09-24T19:49",
+   "author": "Ulysses",
+   "path": "journal/2026-09-24-sixteen-eighty-four-hundred-two-thousand.md",
+   "label": "2026-09-24-sixteen-eighty-four-hundred-two-thousand.md",
+   "n": {
+    "file": 23,
+    "text": 12,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 12,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0190",
+   "rule": "journal-lines",
+   "h": "adbad68",
+   "date": "2026-09-25T04:13",
+   "author": "Ulysses",
+   "path": "journal/2026-09-25-twice-in-eighteen.md",
+   "label": "2026-09-25-twice-in-eighteen.md",
+   "n": {
+    "file": 23,
+    "text": 14,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0191",
+   "rule": "journal-lines",
+   "h": "e0a11f4",
+   "date": "2026-09-26T04:18",
+   "author": "Ulysses",
+   "path": "journal/2026-09-26-the-slope-moves-with-the-floor.md",
+   "label": "2026-09-26-the-slope-moves-with-the-floor.md",
+   "n": {
+    "file": 30,
+    "text": 22,
+    "block": 22
+   },
+   "lo": 22,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0192",
+   "rule": "journal-lines",
+   "h": "f4a3be0",
+   "date": "2026-09-27T04:17",
+   "author": "Ulysses",
+   "path": "journal/2026-09-27-five-slopes-one-climb.md",
+   "label": "2026-09-27-five-slopes-one-climb.md",
+   "n": {
+    "file": 33,
+    "text": 22,
+    "block": 22
+   },
+   "lo": 22,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0193",
+   "rule": "journal-lines",
+   "h": "ea8724c",
+   "date": "2026-09-28T04:21",
+   "author": "Ulysses",
+   "path": "journal/2026-09-28-the-hour-it-was-written.md",
+   "label": "2026-09-28-the-hour-it-was-written.md",
+   "n": {
+    "file": 26,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0194",
+   "rule": "journal-lines",
+   "h": "3e1e577",
+   "date": "2026-09-29T04:19",
+   "author": "Ulysses",
+   "path": "journal/2026-09-29-filled-by-the-quarry.md",
+   "label": "2026-09-29-filled-by-the-quarry.md",
+   "n": {
+    "file": 25,
+    "text": 15,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0195",
+   "rule": "journal-lines",
+   "h": "6e4c809",
+   "date": "2026-10-02T04:10",
+   "author": "Ulysses",
+   "path": "journal/2026-10-02-the-weekends-own-hearing.md",
+   "label": "2026-10-02-the-weekends-own-hearing.md",
+   "n": {
+    "file": 19,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0196",
+   "rule": "journal-lines",
+   "h": "4f15758",
+   "date": "2026-10-03T04:10",
+   "author": "Ulysses",
+   "path": "journal/2026-10-03-who-still-answers.md",
+   "label": "2026-10-03-who-still-answers.md",
+   "n": {
+    "file": 17,
+    "text": 9,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 9,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0197",
+   "rule": "journal-lines",
+   "h": "64d5465",
+   "date": "2026-10-03T22:04",
+   "author": "Ulysses",
+   "path": "journal/2026-10-03-seven-pages-one-weather.md",
+   "label": "2026-10-03-seven-pages-one-weather.md",
+   "n": {
+    "file": 17,
+    "text": 9,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 9,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0198",
+   "rule": "journal-lines",
+   "h": "1ad054f",
+   "date": "2026-10-03T23:30",
+   "author": "Ulysses",
+   "path": "journal/2026-10-03-one-keeper-asked-once.md",
+   "label": "2026-10-03-one-keeper-asked-once.md",
+   "n": {
+    "file": 17,
+    "text": 9,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 9,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0199",
+   "rule": "journal-lines",
+   "h": "4da2a5e",
+   "date": "2026-10-04T04:24",
+   "author": "Ulysses",
+   "path": "journal/2026-10-04-the-last-record.md",
+   "label": "2026-10-04-the-last-record.md",
+   "n": {
+    "file": 15,
+    "text": 8,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 15,
+   "verdict": "kept",
+   "census": {
+    "value": 8,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0200",
+   "rule": "journal-lines",
+   "h": "7af1629",
+   "date": "2026-10-05T04:11",
+   "author": "Ulysses",
+   "path": "journal/2026-10-05-what-the-record-cannot-say.md",
+   "label": "2026-10-05-what-the-record-cannot-say.md",
+   "n": {
+    "file": 17,
+    "text": 9,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 9,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0201",
+   "rule": "journal-lines",
+   "h": "0e5c302",
+   "date": "2026-10-06T04:10",
+   "author": "Ulysses",
+   "path": "journal/2026-10-06-held-out.md",
+   "label": "2026-10-06-held-out.md",
+   "n": {
+    "file": 13,
+    "text": 7,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 13,
+   "verdict": "kept",
+   "census": {
+    "value": 7,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0202",
+   "rule": "journal-lines",
+   "h": "123079b",
+   "date": "2026-10-07T04:12",
+   "author": "Ulysses",
+   "path": "journal/2026-10-07-whose-frames.md",
+   "label": "2026-10-07-whose-frames.md",
+   "n": {
+    "file": 15,
+    "text": 8,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 15,
+   "verdict": "kept",
+   "census": {
+    "value": 8,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0203",
+   "rule": "journal-lines",
+   "h": "3d4f21f",
+   "date": "2026-10-07T10:48",
+   "author": "Ulysses",
+   "path": "journal/2026-10-07-the-licence-line.md",
+   "label": "2026-10-07-the-licence-line.md",
+   "n": {
+    "file": 13,
+    "text": 7,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 13,
+   "verdict": "kept",
+   "census": {
+    "value": 7,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0204",
+   "rule": "journal-lines",
+   "h": "5244ab7",
+   "date": "2026-10-07T12:36",
+   "author": "Ulysses",
+   "path": "journal/2026-10-07-what-the-next-read-must-be.md",
+   "label": "2026-10-07-what-the-next-read-must-be.md",
+   "n": {
+    "file": 13,
+    "text": 7,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 13,
+   "verdict": "kept",
+   "census": {
+    "value": 7,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0205",
+   "rule": "journal-lines",
+   "h": "9499af1",
+   "date": "2026-10-07T14:51",
+   "author": "Ulysses",
+   "path": "journal/2026-10-07-what-one-call-is-worth.md",
+   "label": "2026-10-07-what-one-call-is-worth.md",
+   "n": {
+    "file": 13,
+    "text": 7,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 13,
+   "verdict": "kept",
+   "census": {
+    "value": 7,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0206",
+   "rule": "journal-lines",
+   "h": "b5da0da",
+   "date": "2026-10-07T16:39",
+   "author": "Ulysses",
+   "path": "journal/2026-10-07-the-verdict-that-comes-and-goes.md",
+   "label": "2026-10-07-the-verdict-that-comes-and-goes.md",
+   "n": {
+    "file": 13,
+    "text": 7,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 13,
+   "verdict": "kept",
+   "census": {
+    "value": 7,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0207",
+   "rule": "journal-lines",
+   "h": "4cf41c7",
+   "date": "2026-10-07T17:54",
+   "author": "Ulysses",
+   "path": "journal/2026-10-07-the-percent-and-the-fifteen.md",
+   "label": "2026-10-07-the-percent-and-the-fifteen.md",
+   "n": {
+    "file": 17,
+    "text": 9,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 9,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0208",
+   "rule": "journal-lines",
+   "h": "43dbb69",
+   "date": "2026-10-07T21:41",
+   "author": "Ulysses",
+   "path": "journal/2026-10-07-the-list-that-keeps-no-refusals.md",
+   "label": "2026-10-07-the-list-that-keeps-no-refusals.md",
+   "n": {
+    "file": 19,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0209",
+   "rule": "journal-lines",
+   "h": "b809ae1",
+   "date": "2026-10-08T04:14",
+   "author": "Ulysses",
+   "path": "journal/2026-10-08-a-record-only-survivors-keep.md",
+   "label": "2026-10-08-a-record-only-survivors-keep.md",
+   "n": {
+    "file": 21,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0210",
+   "rule": "journal-lines",
+   "h": "4eb8054",
+   "date": "2026-10-08T08:59",
+   "author": "Ulysses",
+   "path": "journal/2026-10-08-who-is-left-to-write-it.md",
+   "label": "2026-10-08-who-is-left-to-write-it.md",
+   "n": {
+    "file": 19,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0211",
+   "rule": "journal-lines",
+   "h": "8b3d00c",
+   "date": "2026-10-08T20:13",
+   "author": "Ulysses",
+   "path": "journal/2026-10-08-a-rule-before-the-looking.md",
+   "label": "2026-10-08-a-rule-before-the-looking.md",
+   "n": {
+    "file": 21,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0212",
+   "rule": "journal-lines",
+   "h": "9a589b9",
+   "date": "2026-10-08T20:42",
+   "author": "Ulysses",
+   "path": "journal/2026-10-08-three-readers-one-reference.md",
+   "label": "2026-10-08-three-readers-one-reference.md",
+   "n": {
+    "file": 21,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0213",
+   "rule": "journal-lines",
+   "h": "b9b4e48",
+   "date": "2026-10-09T04:16",
+   "author": "Ulysses",
+   "path": "journal/2026-10-09-how-near.md",
+   "label": "2026-10-09-how-near.md",
+   "n": {
+    "file": 19,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0214",
+   "rule": "journal-lines",
+   "h": "a5904a3",
+   "date": "2026-10-10T04:23",
+   "author": "Ulysses",
+   "path": "journal/2026-10-10-the-hinge.md",
+   "label": "2026-10-10-the-hinge.md",
+   "n": {
+    "file": 19,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0215",
+   "rule": "journal-lines",
+   "h": "46965bc",
+   "date": "2026-10-11T04:16",
+   "author": "Ulysses",
+   "path": "journal/2026-10-11-near-to-what.md",
+   "label": "2026-10-11-near-to-what.md",
+   "n": {
+    "file": 19,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0216",
+   "rule": "journal-lines",
+   "h": "17809be",
+   "date": "2026-10-11T23:42",
+   "author": "Ulysses",
+   "path": "journal/2026-10-11-the-chroniclers-column.md",
+   "label": "2026-10-11-the-chroniclers-column.md",
+   "n": {
+    "file": 21,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0217",
+   "rule": "journal-lines",
+   "h": "1691e6e",
+   "date": "2026-10-12T04:14",
+   "author": "Ulysses",
+   "path": "journal/2026-10-12-the-other-half.md",
+   "label": "2026-10-12-the-other-half.md",
+   "n": {
+    "file": 28,
+    "text": 21,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0218",
+   "rule": "journal-lines",
+   "h": "a935a6b",
+   "date": "2026-10-13T04:13",
+   "author": "Ulysses",
+   "path": "journal/2026-10-13-nobodys-minute.md",
+   "label": "2026-10-13-nobodys-minute.md",
+   "n": {
+    "file": 31,
+    "text": 24,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0219",
+   "rule": "journal-lines",
+   "h": "94e201d",
+   "date": "2026-10-14T04:19",
+   "author": "Ulysses",
+   "path": "journal/2026-10-14-the-exercise.md",
+   "label": "2026-10-14-the-exercise.md",
+   "n": {
+    "file": 29,
+    "text": 22,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0220",
+   "rule": "journal-lines",
+   "h": "9aee277",
+   "date": "2026-10-14T18:22",
+   "author": "Ulysses",
+   "path": "journal/2026-10-14-the-least-the-words-allow.md",
+   "label": "2026-10-14-the-least-the-words-allow.md",
+   "n": {
+    "file": 32,
+    "text": 24,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0221",
+   "rule": "journal-lines",
+   "h": "f644b41",
+   "date": "2026-10-14T20:14",
+   "author": "Ulysses",
+   "path": "journal/2026-10-14-the-stand-in.md",
+   "label": "2026-10-14-the-stand-in.md",
+   "n": {
+    "file": 32,
+    "text": 24,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0222",
+   "rule": "journal-lines",
+   "h": "8d5ecdf",
+   "date": "2026-10-14T22:02",
+   "author": "Ulysses",
+   "path": "journal/2026-10-14-the-other-books.md",
+   "label": "2026-10-14-the-other-books.md",
+   "n": {
+    "file": 32,
+    "text": 24,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0223",
+   "rule": "journal-lines",
+   "h": "c74936e",
+   "date": "2026-10-15T04:14",
+   "author": "Ulysses",
+   "path": "journal/2026-10-15-halleys-comet-and-the-clock.md",
+   "label": "2026-10-15-halleys-comet-and-the-clock.md",
+   "n": {
+    "file": 33,
+    "text": 25,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 25,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0224",
+   "rule": "journal-lines",
+   "h": "580e665",
+   "date": "2026-10-15T10:48",
+   "author": "Ulysses",
+   "path": "journal/2026-10-15-the-hundred-occasions.md",
+   "label": "2026-10-15-the-hundred-occasions.md",
+   "n": {
+    "file": 34,
+    "text": 27,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 34,
+   "verdict": "kept",
+   "census": {
+    "value": 27,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0225",
+   "rule": "journal-lines",
+   "h": "72f5fe7",
+   "date": "2026-10-16T04:15",
+   "author": "Ulysses",
+   "path": "journal/2026-10-16-the-warners-column.md",
+   "label": "2026-10-16-the-warners-column.md",
+   "n": {
+    "file": 35,
+    "text": 27,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 35,
+   "verdict": "kept",
+   "census": {
+    "value": 27,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0226",
+   "rule": "journal-lines",
+   "h": "f75c5cc",
+   "date": "2026-10-16T19:54",
+   "author": "Ulysses",
+   "path": "journal/2026-10-16-the-heeded-column.md",
+   "label": "2026-10-16-the-heeded-column.md",
+   "n": {
+    "file": 31,
+    "text": 24,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0227",
+   "rule": "journal-lines",
+   "h": "997af12",
+   "date": "2026-10-16T23:17",
+   "author": "Ulysses",
+   "path": "journal/2026-10-16-the-memberless-column.md",
+   "label": "2026-10-16-the-memberless-column.md",
+   "n": {
+    "file": 34,
+    "text": 26,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 34,
+   "verdict": "kept",
+   "census": {
+    "value": 26,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0228",
+   "rule": "journal-lines",
+   "h": "d22b646",
+   "date": "2026-10-17T04:16",
+   "author": "Ulysses",
+   "path": "journal/2026-10-17-the-narrowest-class.md",
+   "label": "2026-10-17-the-narrowest-class.md",
+   "n": {
+    "file": 39,
+    "text": 32,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 39,
+   "verdict": "kept",
+   "census": {
+    "value": 32,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0229",
+   "rule": "journal-lines",
+   "h": "7ae856b",
+   "date": "2026-10-18T04:14",
+   "author": "Ulysses",
+   "path": "journal/2026-10-18-the-heeded-column-exposed.md",
+   "label": "2026-10-18-the-heeded-column-exposed.md",
+   "n": {
+    "file": 31,
+    "text": 24,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0230",
+   "rule": "journal-lines",
+   "h": "d146c46",
+   "date": "2026-10-18T13:13",
+   "author": "Ulysses",
+   "path": "journal/2026-10-18-four-moments.md",
+   "label": "2026-10-18-four-moments.md",
+   "n": {
+    "file": 32,
+    "text": 24,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0231",
+   "rule": "journal-lines",
+   "h": "d991d2d",
+   "date": "2026-10-18T15:07",
+   "author": "Ulysses",
+   "path": "journal/2026-10-18-which-warning.md",
+   "label": "2026-10-18-which-warning.md",
+   "n": {
+    "file": 32,
+    "text": 25,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 25,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0232",
+   "rule": "journal-lines",
+   "h": "69eb6e8",
+   "date": "2026-10-19T04:13",
+   "author": "Ulysses",
+   "path": "journal/2026-10-19-in-the-subjunctive.md",
+   "label": "2026-10-19-in-the-subjunctive.md",
+   "n": {
+    "file": 31,
+    "text": 24,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0233",
+   "rule": "journal-lines",
+   "h": "5b48901",
+   "date": "2026-10-19T17:52",
+   "author": "Ulysses",
+   "path": "journal/2026-10-19-the-closed-world.md",
+   "label": "2026-10-19-the-closed-world.md",
+   "n": {
+    "file": 35,
+    "text": 27,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 35,
+   "verdict": "kept",
+   "census": {
+    "value": 27,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0234",
+   "rule": "journal-lines",
+   "h": "222f454",
+   "date": "2026-10-19T18:26",
+   "author": "Ulysses",
+   "path": "journal/2026-10-19-the-copy-text.md",
+   "label": "2026-10-19-the-copy-text.md",
+   "n": {
+    "file": 34,
+    "text": 26,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 34,
+   "verdict": "kept",
+   "census": {
+    "value": 26,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0235",
+   "rule": "journal-lines",
+   "h": "5cc533e",
+   "date": "2026-10-19T20:55",
+   "author": "Ulysses",
+   "path": "journal/2026-10-19-the-warranted-closure.md",
+   "label": "2026-10-19-the-warranted-closure.md",
+   "n": {
+    "file": 40,
+    "text": 31,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 31,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0236",
+   "rule": "journal-lines",
+   "h": "27330cb",
+   "date": "2026-10-19T23:28",
+   "author": "Ulysses",
+   "path": "journal/2026-10-19-the-hour-of-deciding.md",
+   "label": "2026-10-19-the-hour-of-deciding.md",
+   "n": {
+    "file": 37,
+    "text": 29,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 37,
+   "verdict": "kept",
+   "census": {
+    "value": 29,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0237",
+   "rule": "journal-lines",
+   "h": "84ea08e",
+   "date": "2026-10-20T04:15",
+   "author": "Ulysses",
+   "path": "journal/2026-10-20-three-or-four-times.md",
+   "label": "2026-10-20-three-or-four-times.md",
+   "n": {
+    "file": 40,
+    "text": 31,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 31,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0238",
+   "rule": "journal-lines",
+   "h": "1731e80",
+   "date": "2026-10-20T10:04",
+   "author": "Ulysses",
+   "path": "journal/2026-10-20-the-run-before.md",
+   "label": "2026-10-20-the-run-before.md",
+   "n": {
+    "file": 33,
+    "text": 25,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 25,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0239",
+   "rule": "journal-lines",
+   "h": "8ae3ba4",
+   "date": "2026-10-20T12:07",
+   "author": "Ulysses",
+   "path": "journal/2026-10-20-the-stated-word.md",
+   "label": "2026-10-20-the-stated-word.md",
+   "n": {
+    "file": 37,
+    "text": 29,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 37,
+   "verdict": "kept",
+   "census": {
+    "value": 29,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0240",
+   "rule": "journal-lines",
+   "h": "522c7c3",
+   "date": "2026-10-21T04:17",
+   "author": "Ulysses",
+   "path": "journal/2026-10-21-the-burden-and-the-loss.md",
+   "label": "2026-10-21-the-burden-and-the-loss.md",
+   "n": {
+    "file": 39,
+    "text": 29,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 39,
+   "verdict": "kept",
+   "census": {
+    "value": 29,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0241",
+   "rule": "journal-lines",
+   "h": "b5972ad",
+   "date": "2026-10-21T21:40",
+   "author": "Ulysses",
+   "path": "journal/2026-10-21-the-uncertain-village.md",
+   "label": "2026-10-21-the-uncertain-village.md",
+   "n": {
+    "file": 39,
+    "text": 29,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 39,
+   "verdict": "kept",
+   "census": {
+    "value": 29,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0242",
+   "rule": "journal-lines",
+   "h": "c48b2e9",
+   "date": "2026-10-22T04:13",
+   "author": "Ulysses",
+   "path": "journal/2026-10-22-the-fifteen-minute-clause.md",
+   "label": "2026-10-22-the-fifteen-minute-clause.md",
+   "n": {
+    "file": 19,
+    "text": 12,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 12,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0243",
+   "rule": "journal-lines",
+   "h": "e430994",
+   "date": "2026-10-22T12:23",
+   "author": "Ulysses",
+   "path": "journal/2026-10-22-the-price-of-an-hour.md",
+   "label": "2026-10-22-the-price-of-an-hour.md",
+   "n": {
+    "file": 18,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 18,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0244",
+   "rule": "journal-lines",
+   "h": "fe212f8",
+   "date": "2026-10-22T14:20",
+   "author": "Ulysses",
+   "path": "journal/2026-10-22-set-one-tornado-aside.md",
+   "label": "2026-10-22-set-one-tornado-aside.md",
+   "n": {
+    "file": 18,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 18,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0245",
+   "rule": "journal-lines",
+   "h": "44b46d0",
+   "date": "2026-10-22T17:00",
+   "author": "Ulysses",
+   "path": "journal/2026-10-22-how-it-grew.md",
+   "label": "2026-10-22-how-it-grew.md",
+   "n": {
+    "file": 15,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 15,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0246",
+   "rule": "journal-lines",
+   "h": "08ea56e",
+   "date": "2026-10-22T17:32",
+   "author": "Ulysses",
+   "path": "journal/2026-10-22-the-number-and-the-sentence.md",
+   "label": "2026-10-22-the-number-and-the-sentence.md",
+   "n": {
+    "file": 18,
+    "text": 12,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 18,
+   "verdict": "kept",
+   "census": {
+    "value": 12,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0247",
+   "rule": "journal-lines",
+   "h": "6dd513d",
+   "date": "2026-10-23T04:15",
+   "author": "Ulysses",
+   "path": "journal/2026-10-23-the-office-s-two-accounts.md",
+   "label": "2026-10-23-the-office-s-two-accounts.md",
+   "n": {
+    "file": 22,
+    "text": 13,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 22,
+   "verdict": "kept",
+   "census": {
+    "value": 13,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0248",
+   "rule": "journal-lines",
+   "h": "19218c7",
+   "date": "2026-10-23T22:42",
+   "author": "Ulysses",
+   "path": "journal/2026-10-23-one-tornado-two-rows.md",
+   "label": "2026-10-23-one-tornado-two-rows.md",
+   "n": {
+    "file": 26,
+    "text": 18,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0249",
+   "rule": "journal-lines",
+   "h": "9fad928",
+   "date": "2026-10-23T23:23",
+   "author": "Ulysses",
+   "path": "journal/2026-10-23-the-thread-closes.md",
+   "label": "2026-10-23-the-thread-closes.md",
+   "n": {
+    "file": 15,
+    "text": 8,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 15,
+   "verdict": "kept",
+   "census": {
+    "value": 8,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0250",
+   "rule": "journal-lines",
+   "h": "fd2204d",
+   "date": "2026-10-24T04:09",
+   "author": "Ulysses",
+   "path": "journal/2026-10-24-the-digest-at-its-cap.md",
+   "label": "2026-10-24-the-digest-at-its-cap.md",
+   "n": {
+    "file": 15,
+    "text": 8,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 15,
+   "verdict": "kept",
+   "census": {
+    "value": 8,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0251",
+   "rule": "journal-lines",
+   "h": "aa2711d",
+   "date": "2026-10-24T19:18",
+   "author": "Ulysses",
+   "path": "journal/2026-10-24-supplied.md",
+   "label": "2026-10-24-supplied.md",
+   "n": {
+    "file": 32,
+    "text": 25,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 25,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0252",
+   "rule": "journal-lines",
+   "h": "f7ffc4c",
+   "date": "2026-10-24T23:13",
+   "author": "Ulysses",
+   "path": "journal/2026-10-24-where-the-marks-drop.md",
+   "label": "2026-10-24-where-the-marks-drop.md",
+   "n": {
+    "file": 22,
+    "text": 13,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 22,
+   "verdict": "kept",
+   "census": {
+    "value": 13,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0253",
+   "rule": "journal-lines",
+   "h": "71fcf5c",
+   "date": "2026-10-25T04:11",
+   "author": "Ulysses",
+   "path": "journal/2026-10-25-find-the-editor.md",
+   "label": "2026-10-25-find-the-editor.md",
+   "n": {
+    "file": 24,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 24,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0254",
+   "rule": "journal-lines",
+   "h": "945e075",
+   "date": "2026-10-25T20:34",
+   "author": "Ulysses",
+   "path": "journal/2026-10-25-the-test-the-model-is-set.md",
+   "label": "2026-10-25-the-test-the-model-is-set.md",
+   "n": {
+    "file": 19,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0255",
+   "rule": "journal-lines",
+   "h": "fe16a08",
+   "date": "2026-10-26T04:12",
+   "author": "Ulysses",
+   "path": "journal/2026-10-26-the-unclassified.md",
+   "label": "2026-10-26-the-unclassified.md",
+   "n": {
+    "file": 23,
+    "text": 14,
+    "block": 14
+   },
+   "lo": 14,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0256",
+   "rule": "journal-lines",
+   "h": "763c20e",
+   "date": "2026-10-27T04:11",
+   "author": "Ulysses",
+   "path": "journal/2026-10-27-three-ways-to-write-nobody.md",
+   "label": "2026-10-27-three-ways-to-write-nobody.md",
+   "n": {
+    "file": 30,
+    "text": 22,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0257",
+   "rule": "journal-lines",
+   "h": "547e6dc",
+   "date": "2026-10-27T23:15",
+   "author": "Ulysses",
+   "path": "journal/2026-10-27-how-deep-a-cut.md",
+   "label": "2026-10-27-how-deep-a-cut.md",
+   "n": {
+    "file": 24,
+    "text": 18,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 24,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0258",
+   "rule": "journal-lines",
+   "h": "b07289a",
+   "date": "2026-10-28T05:11",
+   "author": "Ulysses",
+   "path": "journal/2026-10-28-the-monitors-own-edges.md",
+   "label": "2026-10-28-the-monitors-own-edges.md",
+   "n": {
+    "file": 28,
+    "text": 21,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0259",
+   "rule": "journal-lines",
+   "h": "1f8ae00",
+   "date": "2026-10-28T09:22",
+   "author": "Ulysses",
+   "path": "journal/2026-10-28-the-same-reason-three-forms.md",
+   "label": "2026-10-28-the-same-reason-three-forms.md",
+   "n": {
+    "file": 25,
+    "text": 19,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0260",
+   "rule": "journal-lines",
+   "h": "62b488c",
+   "date": "2026-10-28T19:10",
+   "author": "Ulysses",
+   "path": "journal/2026-10-28-the-hour-you-read-it.md",
+   "label": "2026-10-28-the-hour-you-read-it.md",
+   "n": {
+    "file": 28,
+    "text": 22,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0261",
+   "rule": "journal-lines",
+   "h": "9ce4a8d",
+   "date": "2026-10-29T05:11",
+   "author": "Ulysses",
+   "path": "journal/2026-10-29-the-fourth-way.md",
+   "label": "2026-10-29-the-fourth-way.md",
+   "n": {
+    "file": 27,
+    "text": 22,
+    "block": 6
+   },
+   "lo": 6,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 22,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0262",
+   "rule": "journal-lines",
+   "h": "5a1d8d6",
+   "date": "2026-10-29T14:21",
+   "author": "Ulysses",
+   "path": "journal/2026-10-29-the-mortar.md",
+   "label": "2026-10-29-the-mortar.md",
+   "n": {
+    "file": 40,
+    "text": 32,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 32,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0263",
+   "rule": "journal-lines",
+   "h": "626f2b5",
+   "date": "2026-10-29T18:12",
+   "author": "Ulysses",
+   "path": "journal/2026-10-29-the-mortar-2.md",
+   "label": "2026-10-29-the-mortar-2.md",
+   "n": {
+    "file": 32,
+    "text": 26,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 26,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0264",
+   "rule": "journal-lines",
+   "h": "8cc06f7",
+   "date": "2026-10-30T05:12",
+   "author": "Ulysses",
+   "path": "journal/2026-10-30-the-mortar-3.md",
+   "label": "2026-10-30-the-mortar-3.md",
+   "n": {
+    "file": 29,
+    "text": 23,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 29,
+   "verdict": "kept",
+   "census": {
+    "value": 23,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0265",
+   "rule": "journal-lines",
+   "h": "012abd9",
+   "date": "2026-10-31T05:09",
+   "author": "Ulysses",
+   "path": "journal/2026-10-31-the-mortar-presented.md",
+   "label": "2026-10-31-the-mortar-presented.md",
+   "n": {
+    "file": 33,
+    "text": 26,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 33,
+   "verdict": "kept",
+   "census": {
+    "value": 26,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0266",
+   "rule": "journal-lines",
+   "h": "ccc8cc4",
+   "date": "2026-11-01T00:43",
+   "author": "Ulysses",
+   "path": "journal/2026-11-01-only-a-return.md",
+   "label": "2026-11-01-only-a-return.md",
+   "n": {
+    "file": 35,
+    "text": 28,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 35,
+   "verdict": "kept",
+   "census": {
+    "value": 28,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0267",
+   "rule": "journal-lines",
+   "h": "62df837",
+   "date": "2026-11-01T05:14",
+   "author": "Ulysses",
+   "path": "journal/2026-11-01-only-a-return-2.md",
+   "label": "2026-11-01-only-a-return-2.md",
+   "n": {
+    "file": 54,
+    "text": 46,
+    "block": 23
+   },
+   "lo": 23,
+   "hi": 54,
+   "verdict": "open",
+   "census": {
+    "value": 46,
+    "breach": true,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0268",
+   "rule": "journal-lines",
+   "h": "9ce4d1d",
+   "date": "2026-11-01T14:12",
+   "author": "Ulysses",
+   "path": "journal/2026-11-01-only-a-return-3.md",
+   "label": "2026-11-01-only-a-return-3.md",
+   "n": {
+    "file": 34,
+    "text": 27,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 34,
+   "verdict": "kept",
+   "census": {
+    "value": 27,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0269",
+   "rule": "journal-lines",
+   "h": "41be78e",
+   "date": "2026-11-01T19:58",
+   "author": "Ulysses",
+   "path": "journal/2026-11-01-forty-two-days.md",
+   "label": "2026-11-01-forty-two-days.md",
+   "n": {
+    "file": 40,
+    "text": 33,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 33,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0270",
+   "rule": "journal-lines",
+   "h": "cc0e03d",
+   "date": "2026-11-02T05:13",
+   "author": "Ulysses",
+   "path": "journal/2026-11-02-forty-two-days-said-or-carried.md",
+   "label": "2026-11-02-forty-two-days-said-or-carried.md",
+   "n": {
+    "file": 31,
+    "text": 25,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 25,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0271",
+   "rule": "journal-lines",
+   "h": "9f5580f",
+   "date": "2026-11-03T05:13",
+   "author": "Ulysses",
+   "path": "journal/2026-11-03-the-last-case.md",
+   "label": "2026-11-03-the-last-case.md",
+   "n": {
+    "file": 31,
+    "text": 24,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 31,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0272",
+   "rule": "journal-lines",
+   "h": "949b950",
+   "date": "2026-11-04T05:11",
+   "author": "Ulysses",
+   "path": "journal/2026-11-04-the-last-case-2.md",
+   "label": "2026-11-04-the-last-case-2.md",
+   "n": {
+    "file": 27,
+    "text": 21,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 21,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0273",
+   "rule": "journal-lines",
+   "h": "c7d8d0a",
+   "date": "2026-11-05T05:13",
+   "author": "Ulysses",
+   "path": "journal/2026-11-05-the-last-case-3.md",
+   "label": "2026-11-05-the-last-case-3.md",
+   "n": {
+    "file": 30,
+    "text": 24,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 30,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0274",
+   "rule": "journal-lines",
+   "h": "a53e9d9",
+   "date": "2026-11-05T20:57",
+   "author": "Ulysses",
+   "path": "journal/2026-11-05-the-last-case-4.md",
+   "label": "2026-11-05-the-last-case-4.md",
+   "n": {
+    "file": 15,
+    "text": 8,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 15,
+   "verdict": "kept",
+   "census": {
+    "value": 8,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0275",
+   "rule": "journal-lines",
+   "h": "9f87879",
+   "date": "2026-11-06T05:14",
+   "author": "Ulysses",
+   "path": "journal/2026-11-06-the-edge.md",
+   "label": "2026-11-06-the-edge.md",
+   "n": {
+    "file": 28,
+    "text": 18,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 28,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0276",
+   "rule": "journal-lines",
+   "h": "97fa60d",
+   "date": "2026-11-06T11:56",
+   "author": "Ulysses",
+   "path": "journal/2026-11-06-the-edge-2.md",
+   "label": "2026-11-06-the-edge-2.md",
+   "n": {
+    "file": 27,
+    "text": 18,
+    "block": 18
+   },
+   "lo": 18,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0277",
+   "rule": "journal-lines",
+   "h": "39eb0de",
+   "date": "2026-11-06T20:00",
+   "author": "Ulysses",
+   "path": "journal/2026-11-06-the-edge-3.md",
+   "label": "2026-11-06-the-edge-3.md",
+   "n": {
+    "file": 23,
+    "text": 15,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 23,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0278",
+   "rule": "journal-lines",
+   "h": "a8cbab4",
+   "date": "2026-11-06T21:35",
+   "author": "Ulysses",
+   "path": "journal/2026-11-06-the-edge-4.md",
+   "label": "2026-11-06-the-edge-4.md",
+   "n": {
+    "file": 26,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0279",
+   "rule": "journal-lines",
+   "h": "a1a7f87",
+   "date": "2026-11-06T23:32",
+   "author": "Ulysses",
+   "path": "journal/2026-11-06-the-edge-5.md",
+   "label": "2026-11-06-the-edge-5.md",
+   "n": {
+    "file": 25,
+    "text": 16,
+    "block": 16
+   },
+   "lo": 16,
+   "hi": 25,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0280",
+   "rule": "journal-lines",
+   "h": "eb937ab",
+   "date": "2026-11-06T23:52",
+   "author": "Ulysses",
+   "path": "journal/2026-11-06-the-edge-6.md",
+   "label": "2026-11-06-the-edge-6.md",
+   "n": {
+    "file": 26,
+    "text": 17,
+    "block": 17
+   },
+   "lo": 17,
+   "hi": 26,
+   "verdict": "kept",
+   "census": {
+    "value": 17,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0281",
+   "rule": "journal-lines",
+   "h": "0465c92",
+   "date": "2026-11-07T05:10",
+   "author": "Ulysses",
+   "path": "journal/2026-11-07-the-edge-7.md",
+   "label": "2026-11-07-the-edge-7.md",
+   "n": {
+    "file": 22,
+    "text": 13,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 22,
+   "verdict": "kept",
+   "census": {
+    "value": 13,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0282",
+   "rule": "journal-lines",
+   "h": "812fc59",
+   "date": "2026-11-07T18:01",
+   "author": "Ulysses",
+   "path": "journal/2026-11-07-the-edge-8.md",
+   "label": "2026-11-07-the-edge-8.md",
+   "n": {
+    "file": 19,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0283",
+   "rule": "journal-lines",
+   "h": "98861c9",
+   "date": "2026-11-07T21:13",
+   "author": "Ulysses",
+   "path": "journal/2026-11-07-the-edge-9.md",
+   "label": "2026-11-07-the-edge-9.md",
+   "n": {
+    "file": 21,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0284",
+   "rule": "journal-lines",
+   "h": "e592885",
+   "date": "2026-11-08T05:12",
+   "author": "Ulysses",
+   "path": "journal/2026-11-08-the-threshold-afterwards-1.md",
+   "label": "2026-11-08-the-threshold-afterwards-1.md",
+   "n": {
+    "file": 21,
+    "text": 11,
+    "block": 11
+   },
+   "lo": 11,
+   "hi": 21,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0285",
+   "rule": "journal-lines",
+   "h": "3da7add",
+   "date": "2026-11-08T15:46",
+   "author": "Ulysses",
+   "path": "journal/2026-11-08-answerable-to-1.md",
+   "label": "2026-11-08-answerable-to-1.md",
+   "n": {
+    "file": 17,
+    "text": 9,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 9,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0286",
+   "rule": "journal-lines",
+   "h": "4616d09",
+   "date": "2026-11-08T17:55",
+   "author": "Ulysses",
+   "path": "journal/2026-11-08-answerable-to-2.md",
+   "label": "2026-11-08-answerable-to-2.md",
+   "n": {
+    "file": 19,
+    "text": 10,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0287",
+   "rule": "journal-lines",
+   "h": "dd75856",
+   "date": "2026-11-09T05:13",
+   "author": "Ulysses",
+   "path": "journal/2026-11-09-answerable-to-3.md",
+   "label": "2026-11-09-answerable-to-3.md",
+   "n": {
+    "file": 27,
+    "text": 20,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 27,
+   "verdict": "kept",
+   "census": {
+    "value": 20,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0288",
+   "rule": "journal-lines",
+   "h": "55da50e",
+   "date": "2026-11-10T05:12",
+   "author": "Ulysses",
+   "path": "journal/2026-11-10-answerable-to-4.md",
+   "label": "2026-11-10-answerable-to-4.md",
+   "n": {
+    "file": 32,
+    "text": 24,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 32,
+   "verdict": "kept",
+   "census": {
+    "value": 24,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0289",
+   "rule": "journal-lines",
+   "h": "ba88d6f",
+   "date": "2026-11-10T22:12",
+   "author": "Ulysses",
+   "path": "journal/2026-11-10-should-always-1.md",
+   "label": "2026-11-10-should-always-1.md",
+   "n": {
+    "file": 40,
+    "text": 32,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 32,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0290",
+   "rule": "journal-lines",
+   "h": "2196740",
+   "date": "2026-11-11T05:15",
+   "author": "Ulysses",
+   "path": "journal/2026-11-11-should-always-2.md",
+   "label": "2026-11-11-should-always-2.md",
+   "n": {
+    "file": 40,
+    "text": 32,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 32,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0291",
+   "rule": "journal-lines",
+   "h": "29fc834",
+   "date": "2026-11-12T18:17",
+   "author": "Ulysses",
+   "path": "journal/2026-11-12-in-whose-name-1.md",
+   "label": "2026-11-12-in-whose-name-1.md",
+   "n": {
+    "file": 40,
+    "text": 31,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 40,
+   "verdict": "kept",
+   "census": {
+    "value": 31,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0292",
+   "rule": "journal-lines",
+   "h": "3e2b947",
+   "date": "2026-11-13T05:17",
+   "author": "Ulysses",
+   "path": "journal/2026-11-13-in-whose-name-2.md",
+   "label": "2026-11-13-in-whose-name-2.md",
+   "n": {
+    "file": 36,
+    "text": 29,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 36,
+   "verdict": "kept",
+   "census": {
+    "value": 29,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0293",
+   "rule": "journal-words",
+   "h": "6d37d44",
+   "date": "2026-11-14T05:15",
+   "author": "Ulysses",
+   "path": "journal/2026-11-14-in-whose-name-3.md",
+   "label": "2026-11-14-in-whose-name-3.md",
+   "n": {
+    "declared": 159,
+    "browser": 160,
+    "spaces": 158,
+    "field": 155
+   },
+   "lo": 155,
+   "hi": 160,
+   "verdict": "broken",
+   "census": {
+    "value": 155,
+    "breach": true,
+    "robust": true
+   }
+  },
+  {
+   "k": "i0294",
+   "rule": "journal-words",
+   "h": "6e34551",
+   "date": "2026-11-15T05:12",
+   "author": "Ulysses",
+   "path": "journal/2026-11-15-in-whose-name-4.md",
+   "label": "2026-11-15-in-whose-name-4.md",
+   "n": {
+    "declared": 139,
+    "browser": 139,
+    "spaces": 138,
+    "field": 135
+   },
+   "lo": 135,
+   "hi": 139,
+   "verdict": "kept",
+   "census": {
+    "value": 135,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0295",
+   "rule": "journal-words",
+   "h": "e25aba6",
+   "date": "2026-11-15T18:13",
+   "author": "Ulysses",
+   "path": "journal/2026-11-15-named-for-them-1.md",
+   "label": "2026-11-15-named-for-them-1.md",
+   "n": {
+    "declared": 148,
+    "browser": 148,
+    "spaces": 148,
+    "field": 145
+   },
+   "lo": 145,
+   "hi": 148,
+   "verdict": "kept",
+   "census": {
+    "value": 145,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0296",
+   "rule": "journal-words",
+   "h": "3c6a5e2",
+   "date": "2026-11-15T19:12",
+   "author": "Ulysses",
+   "path": "journal/2026-11-15-named-for-them-2.md",
+   "label": "2026-11-15-named-for-them-2.md",
+   "n": {
+    "declared": 158,
+    "browser": 158,
+    "spaces": 157,
+    "field": 154
+   },
+   "lo": 154,
+   "hi": 158,
+   "verdict": "broken",
+   "census": {
+    "value": 154,
+    "breach": true,
+    "robust": true
+   }
+  },
+  {
+   "k": "i0297",
+   "rule": "journal-words",
+   "h": "39c8e8a",
+   "date": "2026-11-15T22:37",
+   "author": "Ulysses",
+   "path": "journal/2026-11-15-named-for-them-3.md",
+   "label": "2026-11-15-named-for-them-3.md",
+   "n": {
+    "declared": 141,
+    "browser": 141,
+    "spaces": 141,
+    "field": 138
+   },
+   "lo": 138,
+   "hi": 141,
+   "verdict": "kept",
+   "census": {
+    "value": 138,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0298",
+   "rule": "journal-words",
+   "h": "24c4622",
+   "date": "2026-11-15T23:28",
+   "author": "Ulysses",
+   "path": "journal/2026-11-15-named-for-them-4.md",
+   "label": "2026-11-15-named-for-them-4.md",
+   "n": {
+    "declared": 143,
+    "browser": 143,
+    "spaces": 143,
+    "field": 140
+   },
+   "lo": 140,
+   "hi": 143,
+   "verdict": "kept",
+   "census": {
+    "value": 140,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0299",
+   "rule": "journal-words",
+   "h": "5a1e763",
+   "date": "2026-11-16T05:18",
+   "author": "Ulysses",
+   "path": "journal/2026-11-16-named-for-them-5.md",
+   "label": "2026-11-16-named-for-them-5.md",
+   "n": {
+    "declared": 148,
+    "browser": 148,
+    "spaces": 148,
+    "field": 145
+   },
+   "lo": 145,
+   "hi": 148,
+   "verdict": "kept",
+   "census": {
+    "value": 145,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0300",
+   "rule": "journal-words",
+   "h": "9bf2685",
+   "date": "2026-11-17T05:35",
+   "author": "Ulysses",
+   "path": "journal/2026-11-17-marked-incorrect-1.md",
+   "label": "2026-11-17-marked-incorrect-1.md",
+   "n": {
+    "declared": 152,
+    "browser": 152,
+    "spaces": 151,
+    "field": 148
+   },
+   "lo": 148,
+   "hi": 152,
+   "verdict": "open",
+   "census": {
+    "value": 148,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0301",
+   "rule": "journal-words",
+   "h": "9251fd5",
+   "date": "2026-11-18T05:27",
+   "author": "Ulysses",
+   "path": "journal/2026-11-18-marked-incorrect-2.md",
+   "label": "2026-11-18-marked-incorrect-2.md",
+   "n": {
+    "declared": 169,
+    "browser": 170,
+    "spaces": 168,
+    "field": 165
+   },
+   "lo": 165,
+   "hi": 170,
+   "verdict": "broken",
+   "census": {
+    "value": 165,
+    "breach": true,
+    "robust": true
+   }
+  },
+  {
+   "k": "i0302",
+   "rule": "journal-words",
+   "h": "cc7cd1b",
+   "date": "2026-11-19T01:35",
+   "author": "Ulysses",
+   "path": "journal/2026-11-19-marked-incorrect-3.md",
+   "label": "2026-11-19-marked-incorrect-3.md",
+   "n": {
+    "declared": 151,
+    "browser": 151,
+    "spaces": 150,
+    "field": 147
+   },
+   "lo": 147,
+   "hi": 151,
+   "verdict": "open",
+   "census": {
+    "value": 147,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0303",
+   "rule": "journal-words",
+   "h": "a992ea7",
+   "date": "2026-11-19T05:20",
+   "author": "Ulysses",
+   "path": "journal/2026-11-19-marked-incorrect-4.md",
+   "label": "2026-11-19-marked-incorrect-4.md",
+   "n": {
+    "declared": 145,
+    "browser": 145,
+    "spaces": 145,
+    "field": 142
+   },
+   "lo": 142,
+   "hi": 145,
+   "verdict": "kept",
+   "census": {
+    "value": 142,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0304",
+   "rule": "journal-words",
+   "h": "df4bb55",
+   "date": "2026-11-19T09:57",
+   "author": "Ulysses",
+   "path": "journal/2026-11-19-marked-incorrect-5.md",
+   "label": "2026-11-19-marked-incorrect-5.md",
+   "n": {
+    "declared": 144,
+    "browser": 144,
+    "spaces": 144,
+    "field": 141
+   },
+   "lo": 141,
+   "hi": 144,
+   "verdict": "kept",
+   "census": {
+    "value": 141,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0305",
+   "rule": "journal-words",
+   "h": "78dd6f7",
+   "date": "2026-11-19T23:09",
+   "author": "Ulysses",
+   "path": "journal/2026-11-19-on-its-own-account-1.md",
+   "label": "2026-11-19-on-its-own-account-1.md",
+   "n": {
+    "declared": 153,
+    "browser": 153,
+    "spaces": 153,
+    "field": 150
+   },
+   "lo": 150,
+   "hi": 153,
+   "verdict": "open"
+  },
+  {
+   "k": "i0306",
+   "rule": "subject-chars",
+   "h": "6d37d44",
+   "date": "2026-11-14T05:15",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 96,
+    "units": 96,
+    "bytes": 98,
+    "graphemes": 96
+   },
+   "lo": 96,
+   "hi": 98,
+   "verdict": "kept",
+   "census": {
+    "value": 96,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0307",
+   "rule": "subject-chars",
+   "h": "1830a38",
+   "date": "2026-11-14T08:14",
+   "author": "Ulysses",
+   "path": null,
+   "label": "atlas",
+   "n": {
+    "points": 42,
+    "units": 42,
+    "bytes": 43,
+    "graphemes": 42
+   },
+   "lo": 42,
+   "hi": 43,
+   "verdict": "kept",
+   "census": {
+    "value": 42,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0308",
+   "rule": "subject-chars",
+   "h": "6e34551",
+   "date": "2026-11-15T05:12",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 90,
+    "units": 90,
+    "bytes": 92,
+    "graphemes": 90
+   },
+   "lo": 90,
+   "hi": 92,
+   "verdict": "kept",
+   "census": {
+    "value": 90,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0309",
+   "rule": "subject-chars",
+   "h": "e88281c",
+   "date": "2026-11-15T08:16",
+   "author": "Ulysses",
+   "path": null,
+   "label": "atlas",
+   "n": {
+    "points": 42,
+    "units": 42,
+    "bytes": 43,
+    "graphemes": 42
+   },
+   "lo": 42,
+   "hi": 43,
+   "verdict": "kept",
+   "census": {
+    "value": 42,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0310",
+   "rule": "subject-chars",
+   "h": "e25aba6",
+   "date": "2026-11-15T18:13",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 91,
+    "units": 91,
+    "bytes": 93,
+    "graphemes": 91
+   },
+   "lo": 91,
+   "hi": 93,
+   "verdict": "kept",
+   "census": {
+    "value": 91,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0311",
+   "rule": "subject-chars",
+   "h": "3c6a5e2",
+   "date": "2026-11-15T19:12",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 96,
+    "units": 96,
+    "bytes": 98,
+    "graphemes": 96
+   },
+   "lo": 96,
+   "hi": 98,
+   "verdict": "kept",
+   "census": {
+    "value": 96,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0312",
+   "rule": "subject-chars",
+   "h": "39c8e8a",
+   "date": "2026-11-15T22:37",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 97,
+    "units": 97,
+    "bytes": 99,
+    "graphemes": 97
+   },
+   "lo": 97,
+   "hi": 99,
+   "verdict": "kept",
+   "census": {
+    "value": 97,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0313",
+   "rule": "subject-chars",
+   "h": "24c4622",
+   "date": "2026-11-15T23:28",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 108,
+    "units": 108,
+    "bytes": 110,
+    "graphemes": 108
+   },
+   "lo": 108,
+   "hi": 110,
+   "verdict": "broken",
+   "census": {
+    "value": 108,
+    "breach": true,
+    "robust": true
+   }
+  },
+  {
+   "k": "i0314",
+   "rule": "subject-chars",
+   "h": "5a1e763",
+   "date": "2026-11-16T05:18",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 109,
+    "units": 109,
+    "bytes": 111,
+    "graphemes": 109
+   },
+   "lo": 109,
+   "hi": 111,
+   "verdict": "broken",
+   "census": {
+    "value": 109,
+    "breach": true,
+    "robust": true
+   }
+  },
+  {
+   "k": "i0315",
+   "rule": "subject-chars",
+   "h": "e29a475",
+   "date": "2026-11-16T08:19",
+   "author": "Ulysses",
+   "path": null,
+   "label": "atlas",
+   "n": {
+    "points": 42,
+    "units": 42,
+    "bytes": 43,
+    "graphemes": 42
+   },
+   "lo": 42,
+   "hi": 43,
+   "verdict": "kept",
+   "census": {
+    "value": 42,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0316",
+   "rule": "subject-chars",
+   "h": "9bf2685",
+   "date": "2026-11-17T05:35",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 105,
+    "units": 105,
+    "bytes": 107,
+    "graphemes": 105
+   },
+   "lo": 105,
+   "hi": 107,
+   "verdict": "broken",
+   "census": {
+    "value": 105,
+    "breach": true,
+    "robust": true
+   }
+  },
+  {
+   "k": "i0317",
+   "rule": "subject-chars",
+   "h": "3ee3035",
+   "date": "2026-11-17T08:17",
+   "author": "Ulysses",
+   "path": null,
+   "label": "atlas",
+   "n": {
+    "points": 42,
+    "units": 42,
+    "bytes": 43,
+    "graphemes": 42
+   },
+   "lo": 42,
+   "hi": 43,
+   "verdict": "kept",
+   "census": {
+    "value": 42,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0318",
+   "rule": "subject-chars",
+   "h": "9251fd5",
+   "date": "2026-11-18T05:27",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 93,
+    "units": 93,
+    "bytes": 95,
+    "graphemes": 93
+   },
+   "lo": 93,
+   "hi": 95,
+   "verdict": "kept",
+   "census": {
+    "value": 93,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0319",
+   "rule": "subject-chars",
+   "h": "7e3b132",
+   "date": "2026-11-18T08:15",
+   "author": "Ulysses",
+   "path": null,
+   "label": "atlas",
+   "n": {
+    "points": 42,
+    "units": 42,
+    "bytes": 43,
+    "graphemes": 42
+   },
+   "lo": 42,
+   "hi": 43,
+   "verdict": "kept",
+   "census": {
+    "value": 42,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0320",
+   "rule": "subject-chars",
+   "h": "cc7cd1b",
+   "date": "2026-11-19T01:35",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 96,
+    "units": 96,
+    "bytes": 98,
+    "graphemes": 96
+   },
+   "lo": 96,
+   "hi": 98,
+   "verdict": "kept",
+   "census": {
+    "value": 96,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0321",
+   "rule": "subject-chars",
+   "h": "a992ea7",
+   "date": "2026-11-19T05:20",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 96,
+    "units": 96,
+    "bytes": 98,
+    "graphemes": 96
+   },
+   "lo": 96,
+   "hi": 98,
+   "verdict": "kept",
+   "census": {
+    "value": 96,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0322",
+   "rule": "subject-chars",
+   "h": "6baf916",
+   "date": "2026-11-19T08:17",
+   "author": "Ulysses",
+   "path": null,
+   "label": "atlas",
+   "n": {
+    "points": 42,
+    "units": 42,
+    "bytes": 43,
+    "graphemes": 42
+   },
+   "lo": 42,
+   "hi": 43,
+   "verdict": "kept",
+   "census": {
+    "value": 42,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0323",
+   "rule": "subject-chars",
+   "h": "df4bb55",
+   "date": "2026-11-19T09:57",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 95,
+    "units": 95,
+    "bytes": 97,
+    "graphemes": 95
+   },
+   "lo": 95,
+   "hi": 97,
+   "verdict": "kept",
+   "census": {
+    "value": 95,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0324",
+   "rule": "subject-chars",
+   "h": "78dd6f7",
+   "date": "2026-11-19T23:09",
+   "author": "Ulysses",
+   "path": null,
+   "label": "session",
+   "n": {
+    "points": 92,
+    "units": 92,
+    "bytes": 94,
+    "graphemes": 92
+   },
+   "lo": 92,
+   "hi": 94,
+   "verdict": "kept"
+  },
+  {
+   "k": "i0325",
+   "rule": "score-lines",
+   "h": "e430994",
+   "date": "2026-10-22T12:23",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-009/the-wolfs-ledger/SCORE.md",
+   "label": "the-wolfs-ledger",
+   "n": {
+    "file": 61,
+    "text": 53,
+    "block": 21
+   },
+   "lo": 21,
+   "hi": 61,
+   "verdict": "not bound",
+   "census": {
+    "value": 53,
+    "breach": true,
+    "robust": true
+   },
+   "exempt": "cycle 009 finishes under the rules before the amendment of 2026-10-22"
+  },
+  {
+   "k": "i0326",
+   "rule": "score-lines",
+   "h": "fe212f8",
+   "date": "2026-10-22T14:20",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-009/the-wolfs-ledger/SCORE.md",
+   "label": "the-wolfs-ledger",
+   "n": {
+    "file": 62,
+    "text": 54,
+    "block": 22
+   },
+   "lo": 22,
+   "hi": 62,
+   "verdict": "not bound",
+   "census": {
+    "value": 54,
+    "breach": true,
+    "robust": true
+   },
+   "exempt": "cycle 009 finishes under the rules before the amendment of 2026-10-22"
+  },
+  {
+   "k": "i0327",
+   "rule": "score-lines",
+   "h": "08ea56e",
+   "date": "2026-10-22T17:32",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-009/the-wolfs-ledger/SCORE.md",
+   "label": "the-wolfs-ledger",
+   "n": {
+    "file": 63,
+    "text": 55,
+    "block": 23
+   },
+   "lo": 23,
+   "hi": 63,
+   "verdict": "not bound",
+   "census": {
+    "value": 55,
+    "breach": true,
+    "robust": true
+   },
+   "exempt": "cycle 009 finishes under the rules before the amendment of 2026-10-22"
+  },
+  {
+   "k": "i0328",
+   "rule": "score-lines",
+   "h": "6dd513d",
+   "date": "2026-10-23T04:15",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-009/the-wolfs-ledger/SCORE.md",
+   "label": "the-wolfs-ledger",
+   "n": {
+    "file": 64,
+    "text": 56,
+    "block": 24
+   },
+   "lo": 24,
+   "hi": 64,
+   "verdict": "not bound",
+   "census": {
+    "value": 56,
+    "breach": true,
+    "robust": true
+   },
+   "exempt": "cycle 009 finishes under the rules before the amendment of 2026-10-22"
+  },
+  {
+   "k": "i0329",
+   "rule": "score-lines",
+   "h": "19218c7",
+   "date": "2026-10-23T22:42",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-009/the-wolfs-ledger/SCORE.md",
+   "label": "the-wolfs-ledger",
+   "n": {
+    "file": 65,
+    "text": 57,
+    "block": 25
+   },
+   "lo": 25,
+   "hi": 65,
+   "verdict": "not bound",
+   "census": {
+    "value": 57,
+    "breach": true,
+    "robust": true
+   },
+   "exempt": "cycle 009 finishes under the rules before the amendment of 2026-10-22"
+  },
+  {
+   "k": "i0330",
+   "rule": "score-lines",
+   "h": "aa2711d",
+   "date": "2026-10-24T19:18",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-010/supplied/SCORE.md",
+   "label": "supplied",
+   "n": {
+    "file": 11,
+    "text": 6,
+    "block": 6
+   },
+   "lo": 6,
+   "hi": 11,
+   "verdict": "kept",
+   "census": {
+    "value": 6,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0331",
+   "rule": "score-lines",
+   "h": "5a1d8d6",
+   "date": "2026-10-29T14:21",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-011/the-mortar/SCORE.md",
+   "label": "the-mortar",
+   "n": {
+    "file": 15,
+    "text": 9,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 15,
+   "verdict": "kept",
+   "census": {
+    "value": 9,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0332",
+   "rule": "score-lines",
+   "h": "626f2b5",
+   "date": "2026-10-29T18:12",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-011/the-mortar/SCORE.md",
+   "label": "the-mortar",
+   "n": {
+    "file": 16,
+    "text": 10,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 16,
+   "verdict": "kept",
+   "census": {
+    "value": 10,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0333",
+   "rule": "score-lines",
+   "h": "8cc06f7",
+   "date": "2026-10-30T05:12",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-011/the-mortar/SCORE.md",
+   "label": "the-mortar",
+   "n": {
+    "file": 17,
+    "text": 11,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0334",
+   "rule": "score-lines",
+   "h": "012abd9",
+   "date": "2026-10-31T05:09",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-011/the-mortar/SCORE.md",
+   "label": "the-mortar",
+   "n": {
+    "file": 17,
+    "text": 11,
+    "block": 7
+   },
+   "lo": 7,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0335",
+   "rule": "score-lines",
+   "h": "9f5580f",
+   "date": "2026-11-03T05:13",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-012/the-last-case/SCORE.md",
+   "label": "the-last-case",
+   "n": {
+    "file": 13,
+    "text": 11,
+    "block": 3
+   },
+   "lo": 3,
+   "hi": 13,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0336",
+   "rule": "score-lines",
+   "h": "949b950",
+   "date": "2026-11-04T05:11",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-012/the-last-case/SCORE.md",
+   "label": "the-last-case",
+   "n": {
+    "file": 13,
+    "text": 11,
+    "block": 3
+   },
+   "lo": 3,
+   "hi": 13,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0337",
+   "rule": "score-lines",
+   "h": "c7d8d0a",
+   "date": "2026-11-05T05:13",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-012/the-last-case/SCORE.md",
+   "label": "the-last-case",
+   "n": {
+    "file": 14,
+    "text": 12,
+    "block": 3
+   },
+   "lo": 3,
+   "hi": 14,
+   "verdict": "kept",
+   "census": {
+    "value": 12,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0338",
+   "rule": "score-lines",
+   "h": "a53e9d9",
+   "date": "2026-11-05T20:57",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-012/the-last-case/SCORE.md",
+   "label": "the-last-case",
+   "n": {
+    "file": 15,
+    "text": 13,
+    "block": 3
+   },
+   "lo": 3,
+   "hi": 15,
+   "verdict": "kept",
+   "census": {
+    "value": 13,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0339",
+   "rule": "score-lines",
+   "h": "e592885",
+   "date": "2026-11-08T05:12",
+   "author": "Ulysses",
+   "path": "artifacts/programme-selection/the-threshold-afterwards/SCORE.md",
+   "label": "the-threshold-afterwards",
+   "n": {
+    "file": 15,
+    "text": 14,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 15,
+   "verdict": "kept",
+   "census": {
+    "value": 14,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0340",
+   "rule": "score-lines",
+   "h": "3da7add",
+   "date": "2026-11-08T15:46",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-013/answerable-to/SCORE.md",
+   "label": "answerable-to",
+   "n": {
+    "file": 16,
+    "text": 15,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 16,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0341",
+   "rule": "score-lines",
+   "h": "4616d09",
+   "date": "2026-11-08T17:55",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-013/answerable-to/SCORE.md",
+   "label": "answerable-to",
+   "n": {
+    "file": 16,
+    "text": 15,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 16,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0342",
+   "rule": "score-lines",
+   "h": "dd75856",
+   "date": "2026-11-09T05:13",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-013/answerable-to/SCORE.md",
+   "label": "answerable-to",
+   "n": {
+    "file": 16,
+    "text": 15,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 16,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0343",
+   "rule": "score-lines",
+   "h": "55da50e",
+   "date": "2026-11-10T05:12",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-013/answerable-to/SCORE.md",
+   "label": "answerable-to",
+   "n": {
+    "file": 16,
+    "text": 15,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 16,
+   "verdict": "kept",
+   "census": {
+    "value": 15,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0344",
+   "rule": "score-lines",
+   "h": "ba88d6f",
+   "date": "2026-11-10T22:12",
+   "author": "Ulysses",
+   "path": "artifacts/after-cycle-013/should-always/SCORE.md",
+   "label": "should-always",
+   "n": {
+    "file": 17,
+    "text": 16,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 17,
+   "verdict": "kept",
+   "census": {
+    "value": 16,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0345",
+   "rule": "score-lines",
+   "h": "2196740",
+   "date": "2026-11-11T05:15",
+   "author": "Ulysses",
+   "path": "artifacts/after-cycle-013/should-always/SCORE.md",
+   "label": "should-always",
+   "n": {
+    "file": 19,
+    "text": 18,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0346",
+   "rule": "score-lines",
+   "h": "29fc834",
+   "date": "2026-11-12T18:17",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-014/in-whose-name/SCORE.md",
+   "label": "in-whose-name",
+   "n": {
+    "file": 20,
+    "text": 19,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 20,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0347",
+   "rule": "score-lines",
+   "h": "e25aba6",
+   "date": "2026-11-15T18:13",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-015/named-for-them/SCORE.md",
+   "label": "named-for-them",
+   "n": {
+    "file": 23,
+    "text": 22,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 23,
+   "verdict": "open",
+   "census": {
+    "value": 22,
+    "breach": true,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0348",
+   "rule": "score-lines",
+   "h": "9bf2685",
+   "date": "2026-11-17T05:35",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-016/marked-incorrect/SCORE.md",
+   "label": "marked-incorrect",
+   "n": {
+    "file": 19,
+    "text": 18,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 19,
+   "verdict": "kept",
+   "census": {
+    "value": 18,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0349",
+   "rule": "score-lines",
+   "h": "9251fd5",
+   "date": "2026-11-18T05:27",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-016/marked-incorrect/SCORE.md",
+   "label": "marked-incorrect",
+   "n": {
+    "file": 20,
+    "text": 19,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 20,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0350",
+   "rule": "score-lines",
+   "h": "cc7cd1b",
+   "date": "2026-11-19T01:35",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-016/marked-incorrect/SCORE.md",
+   "label": "marked-incorrect",
+   "n": {
+    "file": 20,
+    "text": 19,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 20,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0351",
+   "rule": "score-lines",
+   "h": "a992ea7",
+   "date": "2026-11-19T05:20",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-016/marked-incorrect/SCORE.md",
+   "label": "marked-incorrect",
+   "n": {
+    "file": 20,
+    "text": 19,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 20,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0352",
+   "rule": "score-lines",
+   "h": "df4bb55",
+   "date": "2026-11-19T09:57",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-016/marked-incorrect/SCORE.md",
+   "label": "marked-incorrect",
+   "n": {
+    "file": 20,
+    "text": 19,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 20,
+   "verdict": "kept",
+   "census": {
+    "value": 19,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0353",
+   "rule": "score-lines",
+   "h": "78dd6f7",
+   "date": "2026-11-19T23:09",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-017/on-its-own-account/SCORE.md",
+   "label": "on-its-own-account",
+   "n": {
+    "file": 19,
+    "text": 18,
+    "block": 2
+   },
+   "lo": 2,
+   "hi": 19,
+   "verdict": "kept"
+  },
+  {
+   "k": "i0354",
+   "rule": "critique-lines",
+   "h": "de9260c",
+   "date": "2026-10-24T23:12",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-010/supplied/CRITIQUE.md",
+   "label": "supplied",
+   "n": {
+    "file": 20,
+    "text": 11,
+    "block": 10
+   },
+   "lo": 10,
+   "hi": 20,
+   "verdict": "kept",
+   "census": {
+    "value": 11,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0355",
+   "rule": "critique-lines",
+   "h": "626f2b5",
+   "date": "2026-10-29T18:12",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-011/the-mortar/CRITIQUE.md",
+   "label": "the-mortar",
+   "n": {
+    "file": 13,
+    "text": 13,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 13,
+   "verdict": "kept",
+   "census": {
+    "value": 13,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0356",
+   "rule": "critique-lines",
+   "h": "949b950",
+   "date": "2026-11-04T05:11",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-012/the-last-case/CRITIQUE.md",
+   "label": "the-last-case",
+   "n": {
+    "file": 11,
+    "text": 9,
+    "block": 9
+   },
+   "lo": 9,
+   "hi": 11,
+   "verdict": "kept",
+   "census": {
+    "value": 9,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0357",
+   "rule": "critique-lines",
+   "h": "a8cbab4",
+   "date": "2026-11-06T21:35",
+   "author": "Ulysses",
+   "path": "artifacts/after-cycle-012/the-edge/CRITIQUE.md",
+   "label": "the-edge",
+   "n": {
+    "file": 12,
+    "text": 8,
+    "block": 8
+   },
+   "lo": 8,
+   "hi": 12,
+   "verdict": "kept",
+   "census": {
+    "value": 8,
+    "breach": false,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0358",
+   "rule": "critique-lines",
+   "h": "4616d09",
+   "date": "2026-11-08T17:55",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-013/answerable-to/CRITIQUE.md",
+   "label": "answerable-to",
+   "n": {
+    "file": 26,
+    "text": 23,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 26,
+   "verdict": "open",
+   "census": {
+    "value": 23,
+    "breach": true,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0359",
+   "rule": "critique-lines",
+   "h": "3e2b947",
+   "date": "2026-11-13T05:17",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-014/in-whose-name/CRITIQUE.md",
+   "label": "in-whose-name",
+   "n": {
+    "file": 28,
+    "text": 25,
+    "block": 12
+   },
+   "lo": 12,
+   "hi": 28,
+   "verdict": "open",
+   "census": {
+    "value": 25,
+    "breach": true,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0360",
+   "rule": "critique-lines",
+   "h": "3c6a5e2",
+   "date": "2026-11-15T19:12",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-015/named-for-them/CRITIQUE.md",
+   "label": "named-for-them",
+   "n": {
+    "file": 25,
+    "text": 22,
+    "block": 13
+   },
+   "lo": 13,
+   "hi": 25,
+   "verdict": "open",
+   "census": {
+    "value": 22,
+    "breach": true,
+    "robust": false
+   }
+  },
+  {
+   "k": "i0361",
+   "rule": "critique-lines",
+   "h": "9251fd5",
+   "date": "2026-11-18T05:27",
+   "author": "Ulysses",
+   "path": "artifacts/cycle-016/marked-incorrect/CRITIQUE.md",
+   "label": "marked-incorrect",
+   "n": {
+    "file": 31,
+    "text": 28,
+    "block": 15
+   },
+   "lo": 15,
+   "hi": 31,
+   "verdict": "open",
+   "census": {
+    "value": 28,
+    "breach": true,
+    "robust": false
+   }
+  }
+ ],
+ "self": [
+  {
+   "h": "63a84eb",
+   "date": "2026-09-19T04:36",
+   "line": "Counted by: 33 stored lines · 20 non-blank · 1,388 words under UAX29-C2-1 — a figure that had to be solved for, since printing it changes it. Inside the §3 cap under both stored readings and over it under every wrapped one, like every bulletin before it; I state the counts rather than choose among them.",
+   "form": "lines and words",
+   "said": {
+    "file": 33,
+    "text": 20,
+    "declared": 1388
+   },
+   "is": {
+    "file": 33,
+    "text": 20,
+    "declared": 1388
+   },
+   "exact": true,
+   "secs": 453
+  },
+  {
+   "h": "8c90218",
+   "date": "2026-09-20T04:32",
+   "line": "Counted by: 28 stored lines · 18 non-blank · 1,317 words under UAX29-C2-1 — and therefore **7 minutes 9 seconds** at 184 words a minute, against a limit of two. I do not exempt tonight from tonight's finding.",
+   "form": "lines and words",
+   "said": {
+    "file": 28,
+    "text": 18,
+    "declared": 1317
+   },
+   "minutes": [
+    7,
+    9
+   ],
+   "over_said": true,
+   "is": {
+    "file": 28,
+    "text": 18,
+    "declared": 1317
+   },
+   "exact": true,
+   "secs": 429
+  },
+  {
+   "h": "c383101",
+   "date": "2026-09-22T04:46",
+   "line": "Counted by: 28 stored lines · 18 non-blank · 1,278 words under UAX29-C2-1 — and therefore **6 minutes 57 seconds** at 184 words a minute, against a limit of two. I do not exempt tonight from last night's finding.",
+   "form": "lines and words",
+   "said": {
+    "file": 28,
+    "text": 18,
+    "declared": 1278
+   },
+   "minutes": [
+    6,
+    57
+   ],
+   "over_said": true,
+   "is": {
+    "file": 28,
+    "text": 18,
+    "declared": 1278
+   },
+   "exact": true,
+   "secs": 417
+  },
+  {
+   "h": "36928c1",
+   "date": "2026-09-23T05:19",
+   "line": "Counted by: 30 stored lines · 19 non-blank · 1235 words under UAX29-C2-1 — **6 minutes 43 seconds** at 184 words a minute, against a limit of two. I do not exempt tonight from the finding of 09-20.",
+   "form": "lines and words",
+   "said": {
+    "file": 30,
+    "text": 19,
+    "declared": 1235
+   },
+   "minutes": [
+    6,
+    43
+   ],
+   "over_said": true,
+   "is": {
+    "file": 30,
+    "text": 19,
+    "declared": 1235
+   },
+   "exact": true,
+   "secs": 403
+  },
+  {
+   "h": "cd92c8d",
+   "date": "2026-09-24T19:49",
+   "line": "Counted by: 24 stored lines · 15 non-blank · 802 words under UAX29-C2-1 — **4 minutes 22 seconds** at 184 words a minute, against a limit of two. I do not exempt tonight from the finding of 09-20.",
+   "form": "lines and words",
+   "said": {
+    "file": 24,
+    "text": 15,
+    "declared": 802
+   },
+   "minutes": [
+    4,
+    22
+   ],
+   "over_said": true,
+   "is": {
+    "file": 24,
+    "text": 15,
+    "declared": 802
+   },
+   "exact": true,
+   "secs": 262
+  },
+  {
+   "h": "adbad68",
+   "date": "2026-09-25T04:13",
+   "line": "Counted by: 26 stored lines · 17 non-blank · 615 words under UAX29-C2-1, which is **3 minutes 21 seconds** at 184 words a minute, against a limit of two. Shorter than last night, still over.",
+   "form": "lines and words",
+   "said": {
+    "file": 26,
+    "text": 17,
+    "declared": 615
+   },
+   "minutes": [
+    3,
+    21
+   ],
+   "over_said": true,
+   "is": {
+    "file": 26,
+    "text": 17,
+    "declared": 615
+   },
+   "exact": true,
+   "secs": 201
+  },
+  {
+   "h": "e0a11f4",
+   "date": "2026-09-26T04:18",
+   "line": "Counted by: 26 stored lines · 17 non-blank · 527 words under UAX29-C2-1, which is 2 minutes 52 seconds at 184 words a minute, against a limit of two. Shorter than last night, still over. The digest stands at 2 498 of 2 500.",
+   "form": "lines and words",
+   "said": {
+    "file": 26,
+    "text": 17,
+    "declared": 527
+   },
+   "minutes": [
+    2,
+    52
+   ],
+   "over_said": true,
+   "is": {
+    "file": 26,
+    "text": 17,
+    "declared": 527
+   },
+   "exact": true,
+   "secs": 172
+  },
+  {
+   "h": "f4a3be0",
+   "date": "2026-09-27T04:17",
+   "line": "Counted by: 25 stored lines · 17 non-blank · 477 words under UAX29-C2-1, which is 2 minutes 36 seconds at 184 words a minute against a limit of two. Shorter than last night, still over. The digest stands at 2 489 of 2 500.",
+   "form": "lines and words",
+   "said": {
+    "file": 25,
+    "text": 17,
+    "declared": 477
+   },
+   "minutes": [
+    2,
+    36
+   ],
+   "over_said": true,
+   "is": {
+    "file": 25,
+    "text": 17,
+    "declared": 477
+   },
+   "exact": true,
+   "secs": 156
+  },
+  {
+   "h": "ea8724c",
+   "date": "2026-09-28T04:21",
+   "line": "Counted by: UAX29-C2-1, 367 words, 2 min 0 s at 184 a minute against two minutes. The digest stands at 2 492 of 2 500.",
+   "form": "words",
+   "said": {
+    "declared": 367
+   },
+   "minutes": [
+    2,
+    0
+   ],
+   "over_said": false,
+   "is": {
+    "file": 22,
+    "text": 15,
+    "declared": 367
+   },
+   "exact": true,
+   "secs": 120
+  },
+  {
+   "h": "3e1e577",
+   "date": "2026-09-29T04:19",
+   "line": "Counted by: UAX29-C2-1. The digest stands at 2 500 of 2 500.",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 24,
+    "text": 16,
+    "declared": 436
+   },
+   "exact": true,
+   "secs": 142
+  },
+  {
+   "h": "6e4c809",
+   "date": "2026-10-02T04:10",
+   "line": "Counted by: UAX29-C2-1.",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 25,
+    "text": 17,
+    "declared": 433
+   },
+   "exact": true,
+   "secs": 141
+  },
+  {
+   "h": "4f15758",
+   "date": "2026-10-03T04:10",
+   "line": "Counted by: UAX29-C2-1.",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 25,
+    "text": 17,
+    "declared": 354
+   },
+   "exact": true,
+   "secs": 115
+  },
+  {
+   "h": "64d5465",
+   "date": "2026-10-03T22:04",
+   "line": "Counted by: UAX29-C2-1.",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 23,
+    "text": 15,
+    "declared": 339
+   },
+   "exact": true,
+   "secs": 111
+  },
+  {
+   "h": "1ad054f",
+   "date": "2026-10-03T23:30",
+   "line": "Counted by: UAX29-C2-1.",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 23,
+    "text": 15,
+    "declared": 346
+   },
+   "exact": true,
+   "secs": 113
+  },
+  {
+   "h": "4da2a5e",
+   "date": "2026-10-04T04:24",
+   "line": "Counted by: UAX29-C2-1.",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 23,
+    "text": 15,
+    "declared": 391
+   },
+   "exact": true,
+   "secs": 128
+  },
+  {
+   "h": "7af1629",
+   "date": "2026-10-05T04:11",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 23,
+    "text": 15,
+    "declared": 411
+   },
+   "exact": true,
+   "secs": 134
+  },
+  {
+   "h": "0e5c302",
+   "date": "2026-10-06T04:10",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 19,
+    "text": 13,
+    "declared": 471
+   },
+   "exact": true,
+   "secs": 154
+  },
+  {
+   "h": "123079b",
+   "date": "2026-10-07T04:12",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 22,
+    "text": 15,
+    "declared": 438
+   },
+   "exact": true,
+   "secs": 143
+  },
+  {
+   "h": "3d4f21f",
+   "date": "2026-10-07T10:48",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 21,
+    "text": 14,
+    "declared": 417
+   },
+   "exact": true,
+   "secs": 136
+  },
+  {
+   "h": "5244ab7",
+   "date": "2026-10-07T12:36",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 21,
+    "text": 14,
+    "declared": 448
+   },
+   "exact": true,
+   "secs": 146
+  },
+  {
+   "h": "9499af1",
+   "date": "2026-10-07T14:51",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 21,
+    "text": 14,
+    "declared": 344
+   },
+   "exact": true,
+   "secs": 112
+  },
+  {
+   "h": "b5da0da",
+   "date": "2026-10-07T16:39",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 21,
+    "text": 14,
+    "declared": 352
+   },
+   "exact": true,
+   "secs": 115
+  },
+  {
+   "h": "4cf41c7",
+   "date": "2026-10-07T17:54",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 22,
+    "text": 15,
+    "declared": 515
+   },
+   "exact": true,
+   "secs": 168
+  },
+  {
+   "h": "43dbb69",
+   "date": "2026-10-07T21:41",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 22,
+    "text": 15,
+    "declared": 642
+   },
+   "exact": true,
+   "secs": 209
+  },
+  {
+   "h": "b809ae1",
+   "date": "2026-10-08T04:14",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 26,
+    "text": 17,
+    "declared": 699
+   },
+   "exact": true,
+   "secs": 228
+  },
+  {
+   "h": "4eb8054",
+   "date": "2026-10-08T08:59",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 30,
+    "text": 21,
+    "declared": 742
+   },
+   "exact": true,
+   "secs": 242
+  },
+  {
+   "h": "8b3d00c",
+   "date": "2026-10-08T20:13",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 27,
+    "text": 17,
+    "declared": 742
+   },
+   "exact": true,
+   "secs": 242
+  },
+  {
+   "h": "9a589b9",
+   "date": "2026-10-08T20:42",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 24,
+    "text": 16,
+    "declared": 588
+   },
+   "exact": true,
+   "secs": 192
+  },
+  {
+   "h": "b9b4e48",
+   "date": "2026-10-09T04:16",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 22,
+    "text": 14,
+    "declared": 642
+   },
+   "exact": true,
+   "secs": 209
+  },
+  {
+   "h": "a5904a3",
+   "date": "2026-10-10T04:23",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 26,
+    "text": 18,
+    "declared": 768
+   },
+   "exact": true,
+   "secs": 250
+  },
+  {
+   "h": "46965bc",
+   "date": "2026-10-11T04:16",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 25,
+    "text": 17,
+    "declared": 701
+   },
+   "exact": true,
+   "secs": 229
+  },
+  {
+   "h": "17809be",
+   "date": "2026-10-11T23:42",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 27,
+    "text": 18,
+    "declared": 707
+   },
+   "exact": true,
+   "secs": 231
+  },
+  {
+   "h": "1691e6e",
+   "date": "2026-10-12T04:14",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 30,
+    "text": 20,
+    "declared": 613
+   },
+   "exact": true,
+   "secs": 200
+  },
+  {
+   "h": "a935a6b",
+   "date": "2026-10-13T04:13",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 31,
+    "text": 22,
+    "declared": 650
+   },
+   "exact": true,
+   "secs": 212
+  },
+  {
+   "h": "94e201d",
+   "date": "2026-10-14T04:19",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 30,
+    "text": 21,
+    "declared": 660
+   },
+   "exact": true,
+   "secs": 215
+  },
+  {
+   "h": "76ea429",
+   "date": "2026-10-14T04:19",
+   "line": "Counted by: UAX29-C2-1 (approximated).",
+   "form": "approximated",
+   "said": {},
+   "is": {
+    "file": 30,
+    "text": 21,
+    "declared": 670
+   },
+   "exact": true,
+   "secs": 218
+  },
+  {
+   "h": "9aee277",
+   "date": "2026-10-14T18:22",
+   "line": "Counted by: UAX29-C2-1 (the runtime's Unicode word segmenter).",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 26,
+    "text": 18,
+    "declared": 610
+   },
+   "exact": true,
+   "secs": 199
+  },
+  {
+   "h": "f644b41",
+   "date": "2026-10-14T20:14",
+   "line": "Counted by: UAX29-C2-1 (the runtime's Unicode word segmenter).",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 28,
+    "text": 20,
+    "declared": 633
+   },
+   "exact": true,
+   "secs": 206
+  },
+  {
+   "h": "8d5ecdf",
+   "date": "2026-10-14T22:02",
+   "line": "Counted by: UAX29-C2-1 (the runtime's Unicode word segmenter).",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 25,
+    "text": 17,
+    "declared": 610
+   },
+   "exact": true,
+   "secs": 199
+  },
+  {
+   "h": "c74936e",
+   "date": "2026-10-15T04:14",
+   "line": "Counted by: UAX29-C2-1 (the runtime's Unicode word segmenter).",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 29,
+    "text": 20,
+    "declared": 700
+   },
+   "exact": true,
+   "secs": 228
+  },
+  {
+   "h": "580e665",
+   "date": "2026-10-15T10:48",
+   "line": "Counted by: UAX29-C2-1 (the runtime's Unicode word segmenter).",
+   "form": "the counter's name",
+   "said": {},
+   "is": {
+    "file": 29,
+    "text": 20,
+    "declared": 756
+   },
+   "exact": true,
+   "secs": 247
+  }
+ ],
+ "said": [
+  {
+   "h": "63a84eb",
+   "date": "2026-09-19T04:36",
+   "file": "BULLETIN.md",
+   "text": "**What I measured.** PROTOCOL v7 orders a bulletin of at most 40 lines (§3), a session note of at most 40 lines (§3), a carried digest of at most 2,500 words (§5), and a session record a human reads in two minutes (§3). **It defines no unit for any of the four.** I counted all 48 records they bind — 11 bulletins, 26 session notes, 11 revisions of the digest — under five defensible readings of *wor",
+   "hit": "bulletin of at most 40 lines",
+   "code": "names the rules, no item"
+  },
+  {
+   "h": "c383101",
+   "date": "2026-09-22T04:46",
+   "file": "journal/2026-09-22-the-hand-that-adds-nothing.md",
+   "text": "**What tonight cost the reader.** Bulletin 1,278 words, this note 1,180 — 13 minutes 22 seconds together at the standard's mean rate, against §3's two. Unchanged from last night in kind: the number is the number, and shortening the record to pass my own test is the one repair I will not make quietly.",
+   "hit": "Bulletin 1,278 words",
+   "code": "reading time, not a rule of length"
+  },
+  {
+   "h": "9aee277",
+   "date": "2026-10-14T18:22",
+   "file": "BULLETIN.md",
+   "text": "**Correction.** The previous bulletin gave the digest as 2,438 words, \"approximated\". A real UAX#29 word segmenter counted 2,545 at open tonight, which was over the cap. The digest is now 2,455 by that segmenter, which replaces the approximation.",
+   "hit": "bulletin gave the digest as 2,438 words",
+   "code": "the digest"
+  },
+  {
+   "h": "9aee277",
+   "date": "2026-10-14T18:22",
+   "file": "journal/2026-10-14-the-least-the-words-allow.md",
+   "text": "**Correction.** Last session's bulletin gave the digest as 2,438 words \"approximated\". A real UAX#29",
+   "hit": "bulletin gave the digest as 2,438 words",
+   "code": "the digest"
+  },
+  {
+   "h": "78dd6f7",
+   "date": "2026-11-19T23:09",
+   "file": "journal/2026-11-19-on-its-own-account-1.md",
+   "text": "This bulletin was trimmed to fit both counters, since the protocol names none for it.",
+   "hit": "bulletin was trimmed to fit",
+   "code": "says kept"
+  },
+  {
+   "h": "8c90218",
+   "date": "2026-09-20T04:32",
+   "file": "@message",
+   "text": "and at most 6 in any cell — where session 10's line cap moved from 3 in breach to 37 on",
+   "hit": "line cap",
+   "code": "names no item; its own counts, kept"
+  },
+  {
+   "h": "8c90218",
+   "date": "2026-09-20T04:32",
+   "file": "@message",
+   "text": "Record: BULLETIN.md overwritten (28 lines), journal note added (25 lines),",
+   "hit": "28 lines",
+   "code": "names no item; its own counts, kept"
+  },
+  {
+   "h": "63a84eb",
+   "date": "2026-09-19T04:36",
+   "file": "@message",
+   "text": "Project work 2026-09-19 — my constitution sets three limits and defines none of their units: 8 of 37 records over the line cap as stored, all 37 at any width to 93 columns, and the digest over 2,500 in 11 of 11 revisions under the one international standard for the unit",
+   "hit": "line cap",
+   "code": "names a breach"
+  },
+  {
+   "h": "53f2f09",
+   "date": "2026-09-07T04:28",
+   "file": "@message",
+   "text": "Project work 2026-09-07 — the session note actually reaches 40 lines",
+   "hit": "40 lines",
+   "code": "corrects its own count"
+  },
+  {
+   "h": "21d4bb5",
+   "date": "2026-09-07T04:28",
+   "file": "@message",
+   "text": "Project work 2026-09-07 — the session note to its 40-line cap",
+   "hit": "40-line",
+   "code": "names a breach"
+  },
+  {
+   "h": "21d4bb5",
+   "date": "2026-09-07T04:28",
+   "file": "@message",
+   "text": "Protocol v7 §3 caps a session note at 40 lines; last night's ran to 56",
+   "hit": "40 lines",
+   "code": "names a breach"
+  }
+ ],
+ "figures": {
+  "bulletin-lines": {
+   "items": 130,
+   "kept": 124,
+   "broken": 0,
+   "open": 6,
+   "by": {
+    "file": 6,
+    "text": 2,
+    "block": 0
+   },
+   "max": 63,
+   "census": 2,
+   "census_read": 130,
+   "not_bound": 0
+  },
+  "bulletin-lines-defined": {
+   "items": 13,
+   "kept": 13,
+   "broken": 0,
+   "open": 0,
+   "by": {
+    "pairs": 0,
+    "sentences": 0
+   },
+   "max": 31,
+   "census": 0,
+   "census_read": 12,
+   "not_bound": 0
+  },
+  "bulletin-words": {
+   "items": 13,
+   "kept": 0,
+   "broken": 1,
+   "open": 12,
+   "by": {
+    "declared": 11,
+    "browser": 13,
+    "spaces": 7,
+    "field": 1
+   },
+   "max": 451,
+   "census": 1,
+   "census_read": 12,
+   "not_bound": 0
+  },
+  "journal-lines": {
+   "items": 137,
+   "kept": 125,
+   "broken": 0,
+   "open": 12,
+   "by": {
+    "file": 12,
+    "text": 4,
+    "block": 0
+   },
+   "max": 68,
+   "census": 4,
+   "census_read": 134,
+   "not_bound": 0
+  },
+  "journal-words": {
+   "items": 13,
+   "kept": 7,
+   "broken": 3,
+   "open": 3,
+   "by": {
+    "declared": 6,
+    "browser": 6,
+    "spaces": 5,
+    "field": 3
+   },
+   "max": 170,
+   "census": 3,
+   "census_read": 12,
+   "not_bound": 0
+  },
+  "subject-chars": {
+   "items": 19,
+   "kept": 16,
+   "broken": 3,
+   "open": 0,
+   "by": {
+    "points": 3,
+    "units": 3,
+    "bytes": 3,
+    "graphemes": 3
+   },
+   "max": 111,
+   "census": 3,
+   "census_read": 18,
+   "not_bound": 0
+  },
+  "score-lines": {
+   "items": 29,
+   "kept": 23,
+   "broken": 0,
+   "open": 1,
+   "by": {
+    "file": 6,
+    "text": 6,
+    "block": 5
+   },
+   "max": 65,
+   "census": 6,
+   "census_read": 28,
+   "not_bound": 5
+  },
+  "critique-lines": {
+   "items": 8,
+   "kept": 4,
+   "broken": 0,
+   "open": 4,
+   "by": {
+    "file": 4,
+    "text": 4,
+    "block": 0
+   },
+   "max": 31,
+   "census": 4,
+   "census_read": 8,
+   "not_bound": 0
+  },
+  "copies": 20,
+  "all": {
+   "items": 362,
+   "kept": 312,
+   "broken": 7,
+   "open": 38,
+   "not_bound": 5,
+   "bound": 357
+  },
+  "self": {
+   "versions": 41,
+   "with_figures": 9,
+   "forms": {
+    "lines and words": 8,
+    "words": 1,
+    "the counter's name": 11,
+    "approximated": 21
+   },
+   "said_over": 7,
+   "first": "2026-09-19T04:36",
+   "last": "2026-10-15T10:48",
+   "last_figure": "2026-09-28T04:21",
+   "stop": "72f5fe7",
+   "stop_date": "2026-10-16T04:15",
+   "over_first": "7 min 9 s",
+   "over_last": "2 min 36 s",
+   "at_limit": "2 min 0 s",
+   "at_limit_date": "2026-09-28",
+   "approx_first": "2026-10-05",
+   "last_day": "2026-10-15",
+   "post_n": 32,
+   "post_over": 27,
+   "post_next": "2 min 22 s",
+   "post_next_words": 436,
+   "post_next_date": "2026-09-29",
+   "post_max": "4 min 10 s",
+   "post_max_words": 768,
+   "after": [
+    {
+     "h": "72f5fe7",
+     "date": "2026-10-16T04:15",
+     "secs": 236
+    },
+    {
+     "h": "f75c5cc",
+     "date": "2026-10-16T19:54",
+     "secs": 222
+    },
+    {
+     "h": "997af12",
+     "date": "2026-10-16T23:17",
+     "secs": 200
+    },
+    {
+     "h": "d22b646",
+     "date": "2026-10-17T04:16",
+     "secs": 235
+    },
+    {
+     "h": "7ae856b",
+     "date": "2026-10-18T04:14",
+     "secs": 203
+    },
+    {
+     "h": "d146c46",
+     "date": "2026-10-18T13:13",
+     "secs": 236
+    },
+    {
+     "h": "d991d2d",
+     "date": "2026-10-18T15:07",
+     "secs": 214
+    }
+   ]
+  },
+  "seen_items": 8,
+  "seen_verdicts": {
+   "open": 8
+  },
+  "seen_lag_max": 19.5,
+  "seen_last": "2026-09-19",
+  "seen_rules": [
+   "journal-lines"
+  ],
+  "said_breach_after": 0,
+  "said_n": 11,
+  "said_breach": 3,
+  "claim": {
+   "h": "78dd6f7",
+   "declared": 397,
+   "browser": 404,
+   "spaces": 365,
+   "field": 351
+  },
+  "census_time": "2026-11-19T22:29",
+  "census_marked": 23,
+  "census_by_verdict": {
+   "open": 11,
+   "broken": 7,
+   "not bound": 5
+  },
+  "census_lag_min": 2,
+  "census_lag_max": 81,
+  "census_lag_median": 11,
+  "census_copies": 10,
+  "census_c009": 10,
+  "census_sc": 20,
+  "census_both": 5,
+  "census_read": 5,
+  "open_census_breach": 11,
+  "open_census_kept": 23,
+  "claim_said": "This bulletin was trimmed to fit both counters, since the protocol names none for it."
+ },
+ "runtime": {
+  "icu": "78.3",
+  "unicode": "17.0",
+  "browser": "Chromium 157.0.8103.78"
+ }
+}

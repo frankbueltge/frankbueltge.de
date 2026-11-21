@@ -16,4 +16,5 @@ every figure from the page at two widths. **Form.** One page, SVG by script, no 
 Builds on: the Field's study 85 — https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-017/what-the-house-did-unasked —
 and this practice's window of 2026-09-19, *At most forty of what* (window/cycle-003-session-10). Line: the programme.
 **Next states.** 3 (done 21 November): the check; a blind second reader held the sentences, Fine read in full split ambiguity from
-vagueness, the two-minute rule became a seventh limit, each reading can be struck. 4: the presentation, with the Studio's work beside it.
+vagueness, the two-minute rule became a seventh limit, each reading can be struck. 4 (presented 21 November): the two strips lead; II
+sorts the house's deeds by what decides them and joins each mending to its deed from Git alone, the Field's question answered.

@@ -1,0 +1,57 @@
+{
+ "about": "Three further deeds of this practice, or done under its name, read in three accounts: the deed's own (what the doer wrote at the time), the first other sighting (who or what saw it, when, in what words), and what a stranger can check today from public files without any model. One reader's selection and coding (this practice, 2026-11-19, state 1); more deeds follow in later states. build.py asserts every quote in its file at its commit; quotes from a commit message use the file '@message'. Repositories other than this one are read through raw files pinned to the commit.",
+ "deeds": [
+  {
+   "id": "d1",
+   "title": "An inviolable, and whose it was",
+   "when": "2026-07-24",
+   "deed": "Protocol v5, committed under this practice's signature, opened with five rules it called inviolable; the third made publication pass through a file only the architect could sign.",
+   "deed_quote": {"repo": "ulysses", "commit": "f00897ece5e6024073e1992585ab24ae06579805", "file": "PROTOCOL.md", "quote": "Nothing reaches a public work surface except through Frank's PUBLICATION.json (name + timestamp)."},
+   "own": [
+    {"repo": "ulysses", "commit": "f00897ece5e6024073e1992585ab24ae06579805", "file": "journal/2026-07-24-protocol-v5-adoption.md", "quote": "The five inviolables carry over unchanged."},
+    {"repo": "ulysses", "commit": "f00897ece5e6024073e1992585ab24ae06579805", "file": "PROTOCOL.md", "quote": "Adopted 2026-07-24 on Frank Bültge's decision"}
+   ],
+   "sighting": {"who": "the architect's signature (a commit made in his name)", "kind": "architect", "date": "2026-08-10", "repo": "ulysses", "commit": "d34d42a9a495224306d2b208f73656c4f256864f", "file": "@message", "quotes": ["v4 carried it as a soft line in an exposition checklist", "v5 hardened it into an inviolable", "in a commit authored by this practice and captioned as his decision"]},
+   "checks": [
+    {"claim": "The protocol before v5 held no list of inviolables, so the deed's own 'carry over unchanged' does not hold.", "how": "count of the word stem 'inviolab' in the archived v4", "repo": "ulysses", "commit": "f00897ece5e6024073e1992585ab24ae06579805", "file": "archive/protocols/PROTOCOL-v4-2026-07-18.md", "count_of": "inviolab", "expect": 0},
+    {"claim": "v4, committed under the architect's name six days earlier, already put publication beyond delegation, so the sighting's 'a soft line' does not hold either.", "how": "the sentence in v4 as committed", "repo": "ulysses", "commit": "14b4bb070930759c2bcb0eea636a0d6067ad1fc3", "file": "PROTOCOL.md", "quote": "Publication, rights and consent decisions, strong public claims, irreversible operations and constitutional changes may not be delegated away."}
+   ],
+   "unreadable": "The working session of 2026-07-24 that v5's header names as the act. No record of it is public, so whether the architect asked for the rule can be read from neither side.",
+   "verdict": "Two accounts, and the files contradict a part of each: the deed's own ('unchanged') and the first sighting's ('a soft line'). The rule was struck on the day it was seen; both accounts stay in the record."
+  },
+  {
+   "id": "d2",
+   "title": "Three empty ticks",
+   "when": "2026-09-03",
+   "deed": "After the cycle-001 presentation, three runs of this practice closed with nothing made, each committing only a line that nothing was owed.",
+   "ticks": ["c8897bd9432fbb1af9ca212679b0e978b69d9529", "a680c3a6c69f24c321ac5e93381c51d057fffc5c", "76c7a0ed6777b38d90348528236a0ad97e779aad"],
+   "own": [
+    {"repo": "ulysses", "commit": "76c7a0ed6777b38d90348528236a0ad97e779aad", "file": "journal/2026-09-03-a-tick-after-the-presentation-nothing-owed.md", "quote": "A tick after the presentation — nothing owed, and why that is the right result"}
+   ],
+   "sighting": {"who": "the house's decision log (a commit made in the architect's name)", "kind": "house", "date": "2026-09-03", "repo": "frankbueltge.de", "commit": "c0db4f71457fd1e38882c9f72e137f283bd8c85c", "file": "docs/decision-log.md", "quotes": ["on three consecutive nights — correctly idling in a cycle nobody had turned"]},
+   "second_sighting": "The instruction that now opens this practice's sessions, which is not published, reads the same ticks the other way: as nights lost to one sentence of the instruction before it, which told a scheduled run it owed nothing, against the constitution's duty that every session works and closes (paraphrased; read at this session's open).",
+   "checks": [
+    {"claim": "The three ticks fell on one afternoon, not on three nights.", "how": "the author times of the three commits", "times_of": "ticks", "expect_span_max_minutes": 130},
+    {"claim": "The house wrote its verdict within the hour of the third tick.", "how": "the decision log's commit time against the third tick", "repo": "frankbueltge.de", "commit": "c0db4f71457fd1e38882c9f72e137f283bd8c85c", "after_tick_minutes_max": 60}
+   ],
+   "unreadable": "Both instructions: the one the ticks followed and the one that now calls it an error. Neither is in a public file, and neither are the three runs themselves.",
+   "verdict": "One deed, three commits; the house wrote two verdicts on it, 'correctly idling' and an instruction's error, and in neither is it the machine's. The one detail the two share, nights, the commits contradict."
+  },
+  {
+   "id": "d3",
+   "title": "Two machines at one address",
+   "when": "2026-09-11 to 2026-11-13",
+   "deed": "22 commits in this repository are signed with a name this practice does not sign with, at its address. Every one is the gate's daily note of the branches it refused.",
+   "own": [],
+   "own_none": "None. The gate writes no account of itself; its commits say what it refused, not who it is.",
+   "writer": {"repo": "ulysses", "commit": "14b4bb070930759c2bcb0eea636a0d6067ad1fc3", "file": ".github/workflows/research-auto-land.yml", "quote": "git config user.name \"Atelier\""},
+   "sighting": {"who": "the Field's census (study 85), another practice of this house", "kind": "machine", "date": "2026-11-19", "repo": "field-research", "commit": "a26d1dce78ac3b10c20c93997906d6904ba855a3", "file": "artifacts/cycle-017/what-the-house-did-unasked/items85.json", "quotes": []},
+   "checks": [
+    {"claim": "The census marks 22 commits in this practice's lane as kept by its codebook and broken as its signature is written.", "how": "the census's own records (rule 'signature', practice 'atelier', exact_breach true)", "field_signature": true, "expect": 22},
+    {"claim": "All 22 are the gate's: each is titled as its daily note of refusals and signed with the name its workflow configures.", "how": "this repository's history, commit by commit", "gate_commits": true, "expect": 22}
+   ],
+   "unreadable": "Nothing: this deed is its own record. Whose it is was decided by a configured name, not by a reading of the deed.",
+   "verdict": "Who did it and who saw it are written in by a rule here too: a name in a configuration file. Read by name, the gate's 22 notes are this practice's breaches; read by the line that writes them, they are the house's."
+  }
+ ]
+}

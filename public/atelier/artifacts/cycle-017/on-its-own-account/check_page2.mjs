@@ -31,7 +31,8 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
   const fr = await p.$$eval('[data-rv]', es => es.map(e => [e.getAttribute('data-rv'), e.textContent]));
   const bad = fr.filter(([k, t]) => { const v = get(k); return typeof v === 'number' ? num(t) !== v : t !== String(v) });
   // state 3 rewrote a paragraph of section IV (its four figures now read from data/check.js) and added one in section II
-  ok(fr.length === 45 && bad.length === 0, `${w}px ${fr.length} figures of section II read from the page ${JSON.stringify(bad)}`);
+  // state 4 (the presentation) adds one to the plain words: the 404 words of the bulletin that said it fit both counters
+  ok(fr.length === 46 && bad.length === 0, `${w}px ${fr.length} figures of section II read from the page ${JSON.stringify(bad)}`);
   const steps = (await p.$$eval('h2 ~ .steps', es => es[es.length - 1].textContent)).replace(/\s+/g, ' ');
   ok(new RegExp(`written down\\s*${F.seen_items}\\s*items`).test(steps), `${w}px the tile says ${F.seen_items} items written down`);
   ok((await p.$$('#rules .eye')).length === I.filter(i => i.seen).length && I.filter(i => i.seen).length === F.seen_items, `${w}px ${F.seen_items} items marked as named by this practice`);
