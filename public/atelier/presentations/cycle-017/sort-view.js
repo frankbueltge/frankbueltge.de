@@ -1,5 +1,7 @@
 // State 4, the presentation: the house's deeds sorted by what decides them, and each mending joined to its deed
 // from Git alone. Draws data/sort.js (written by build4.py); every figure on the page comes from it.
+// State 5 (2026-11-21, after the presentation): the same lanes read from the deed's end, from data/both.js
+// (written by build5.py): every later commit that took out a line the deed wrote before its mending, as a tick.
 (function () {
   'use strict';
   var S = window.SORT;
@@ -23,6 +25,11 @@
     if (v != null) e.textContent = typeof v === 'number' ? fmt(v) : v;
   });
 
+  // state 5: figures of the reading from both ends, from data/both.js
+  if (window.BOTH) document.querySelectorAll('[data-bo]').forEach(function (e) {
+    var v = e.getAttribute('data-bo').split('.').reduce(function (o, k) { return o == null ? o : o[k]; }, window.BOTH.results);
+    if (v != null) e.textContent = typeof v === 'number' ? fmt(v) : v;
+  });
   var svg = document.getElementById('sortf');
   if (!svg) return;
   var d0 = new Date(S.days[0] + 'T00:00:00Z'), d1 = new Date(S.days[1] + 'T00:00:00Z');
@@ -99,6 +106,34 @@
     el('rect', { x: X0, y: y - LANE / 2, width: X1 - X0, height: LANE, class: 'hit', 'data-i': i }, g);
     lanes.push({ i: i, g: g });
   });
+  // state 5: the lanes read from the deed's end
+  var B = window.BOTH, BP = {};
+  if (B) B.pairs.forEach(function (r) { BP[r.row + '|' + r.n] = r; });
+  var LEAD = 0, TICKS = 0;
+  order.forEach(function (i, j) {
+    var d = D[i], y = T3 + 6 + j * LANE, a = x(ix(d.deed_day)), L = lanes[j], r = BP[d.row + '|' + d.n];
+    if (!B || !d.join || d.join === 'file' || d.join === 'log') return;
+    var g = el('g', { class: 'fo' }, L.g), b = x(ix(d.repair_day));
+    if (d.join === 'same') { el('circle', { cx: a, cy: y, r: 2.2, class: 'lead-mk' }, g); L.g.classList.add('leads'); LEAD++; return; }
+    if (!r) return;
+    if (d.join === 'name' || !r.hands.length) {
+      el('line', { x1: a, x2: Math.max(b, a + 1.5), y1: y, y2: y, class: 'lead' }, g);
+      el('line', { x1: b, x2: b, y1: y - 1.4, y2: y + 1.4, class: 'lead' }, g);
+      L.g.classList.add('leads'); LEAD++;
+      if (d.join === 'name') return;
+    }
+    if (r.hands.length) {
+      var f = x(ix(r.hands[0].day));
+      el('line', { x1: a, x2: Math.max(f, a + 1), y1: y, y2: y, class: 'stray' }, g);
+      el('line', { x1: f, x2: Math.max(b, f + 1), y1: y, y2: y, class: 'gap' }, g);
+      el('line', { x1: b, x2: b, y1: y - 1.2, y2: y + 1.2, class: 'gap-end' }, g);
+      r.hands.forEach(function (h, k) {
+        el('line', { x1: x(ix(h.day)), x2: x(ix(h.day)), y1: y - 1.45, y2: y + 1.45, class: 'hand' + (k === 0 ? ' first' : '') }, g);
+        TICKS++;
+      });
+    }
+  });
+  svg.setAttribute('data-lead', String(LEAD)); svg.setAttribute('data-ticks', String(TICKS));
   svg.setAttribute('viewBox', '0 0 1000 ' + Math.ceil(T3 + 12 + order.length * LANE));
   var sel = el('rect', { x: X0 - 4, y: 0, width: X1 - X0 + 8, height: LANE + 1, class: 'sel', visibility: 'hidden' }, svg);
 
@@ -110,7 +145,7 @@
   var SAY = {
     all: 'Each lane is one deed of the house\'s log, from the day of its first commit to the commit the log says mended it. Choose who can still join them, or touch a lane.',
     anyone: '<b>' + fmt(derived['act.anyone']) + '</b> of the ' + fmt(A.mended) + ' mendings join themselves: ' + fmt(J.same || 0) + ' are the deed\'s own commit, ' + fmt(J.name || 0) + ' names the deed\'s commit. Anyone who reads the mending has the join.',
-    git: '<b>' + fmt(J.lines || 0) + '</b> take out lines with the text the deed wrote, in the same file. Anyone with Git who follows the file from the deed comes to the mending. Git does not say it was a mending: that word is still a later reader\'s.',
+    git: '<b>' + fmt(J.lines || 0) + '</b> take out lines with the text the deed wrote, in the same file. Anyone with Git who holds the mending can check it against the deed' + (B ? '; from the deed, the first later commit to take out one of its lines is the mending in only ' + fmt(B.results.first) + ' (read from the deed\'s end)' : '') + '. Git does not say it was a mending: that word is still a later reader\'s. <i>Corrected 2026-11-21: this said that anyone who follows the file from the deed comes to the mending.</i>',
     reader: '<b>' + fmt(J.file || 0) + '</b> change a file the deed changed and none of its lines. A reader must judge that the one answers the other, as a reader decides a limit that names no unit.',
     logonly: '<b>' + fmt(J.log || 0) + '</b> change nothing the deed changed, or lie in another repository. Only the log\'s sentence joins them, and the log is written by the house\'s sessions in the architect\'s name.',
     none: '<b>' + fmt(A.unmended) + '</b> deeds have no mending on record. Their lane runs on to today.'
@@ -131,11 +166,28 @@
     b.addEventListener('click', function () {
       cur = b.getAttribute('data-w');
       document.querySelectorAll('#sortask button[data-w]').forEach(function (c) { c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); });
-      apply();
+      if (dir === 'fore') setDir('back'); else apply();
     });
   });
   var qb = document.getElementById('sortq');
-  qb.addEventListener('click', function () { q = !q; qb.setAttribute('aria-pressed', q ? 'true' : 'false'); apply(); });
+  var dir = 'back', R5 = B ? B.results : null;
+  var DSAY = R5 ? {
+    back: null,
+    fore: 'Read from the deed\'s end, Git leads to the mending in <b>' + fmt(R5.lead_all) + '</b> of the ' + fmt(A.mended) + ': ' + fmt(J.same || 0) + ' are the deed\'s own commit, ' + fmt(J.name || 0) + ' names the deed\'s hash in its message, and in ' + fmt(R5.first) + ' of the ' + fmt(R5.lines) + ' joined by lines the mending is the first later commit to take out a line the deed wrote. In the other ' + fmt(R5.lines - R5.first) + ', ' + fmt(R5.hands_total) + ' other commits did so first (ticks), a median of ' + fmt(R5.hands_median_any) + ' a lane; Git marks none of them, nor the mending, as an answer.'
+  } : {};
+  function setDir(v) {
+    dir = v;
+    if (v === 'fore') {
+      cur = 'all'; q = false; qb.setAttribute('aria-pressed', 'false');
+      document.querySelectorAll('#sortask button[data-w]').forEach(function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-w') === 'all' ? 'true' : 'false'); });
+      apply();
+    }
+    svg.classList.toggle('fore', v === 'fore');
+    document.querySelectorAll('#dirask button').forEach(function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-d') === v ? 'true' : 'false'); });
+    if (v === 'fore') say.innerHTML = DSAY.fore; else apply();
+  }
+  document.querySelectorAll('#dirask button').forEach(function (b) { b.addEventListener('click', function () { setDir(b.getAttribute('data-d')); }); });
+  qb.addEventListener('click', function () { q = !q; qb.setAttribute('aria-pressed', q ? 'true' : 'false'); if (dir === 'fore') setDir('back'); else apply(); });
 
   // one deed
   var det = document.getElementById('sdeed'), pick = document.getElementById('spick');
@@ -164,6 +216,20 @@
       if (d.join === 'file') t += d.evidence.map(function (e) { return '<span class="mono">' + e + '</span>'; }).join(', ') + ', which the deed changed, and none of the deed\'s lines.';
       if (d.join === 'log') t += d.why + '.';
       h += '<p class="said"><b class="j">' + t + '</b></p>';
+      var r = BP[d.row + '|' + d.n];
+      if (r) {
+        var lk = function (hh) { return '<a class="mono" href="' + REPO + r.repo + '/commit/' + hh + '">' + hh.slice(0, 7) + '</a>'; };
+        var fw = r.hands.length
+          ? 'From the deed\'s end: ' + r.hands.length + ' later commit' + (r.hands.length > 1 ? 's' : '') + ' took out lines the deed wrote before the mending did. The first, ' + lk(r.hands[0].h) + ', came ' + r.hands[0].hours + ' hours after the deed, signed with ' + r.hands[0].signer + (r.hands[0].mends_another ? ', and the log calls it the mending of another deed' : '') + '.'
+          : 'From the deed\'s end: the mending is the first later commit to take out a line the deed wrote.';
+        if (d.join === 'name') fw = 'From the deed\'s end: the mending carries the deed\'s hash in its message, so a search of later messages finds it. ' + (r.hands.length ? r.hands.length + ' later commit' + (r.hands.length > 1 ? 's' : '') + ' took out the deed\'s lines before it.' : '');
+        var bk = 'From the mending\'s end: the lines it took out were written by ' + r.back.writers + ' commit' + (r.back.writers > 1 ? 's' : '') + '; the deed wrote ' + r.back.deed + ' of ' + r.back.lines + (r.back.deed_rank === 1 ? ', and no commit wrote more' : '') + '.';
+        h += '<p class="meta both">' + fw + '</p><p class="meta both">' + bk + '</p>';
+      } else if (B && (d.join === 'file' || d.join === 'log')) {
+        h += '<p class="meta both">From the deed\'s end: Git cannot lead to a mending that takes out none of the deed\'s lines.</p>';
+      } else if (B && d.join === 'same') {
+        h += '<p class="meta both">From the deed\'s end: the deed is its own mending, read from either end.</p>';
+      }
     } else {
       h += '<p class="said"><b class="j">No mending is on record for this deed.</b></p>';
     }

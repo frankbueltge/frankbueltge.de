@@ -62,7 +62,7 @@ for (const [w, scheme, shot] of [[1100, 'light', process.argv[2]], [390, 'dark',
   await p.waitForSelector('#sortf[data-done="1"]', { timeout: 30000 });
   ok(errs.length === 0, `${w}px no errors ${errs.join(' | ')}`);
   ok(await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), `${w}px no sideways scroll of the page`);
-  ok(await p.textContent('.progress') === 'presented 21 November · state 4 of 4', `${w}px the work says it is presented`);
+  ok(['presented 21 November · state 4 of 4', 'presented 21 November · fifth state'].includes(await p.textContent('.progress')), `${w}px the work says it is presented`);  // the fifth state's label added 2026-11-21
   // order: the two made things that carry lead, the sort follows, the check below it
   const order = await p.evaluate(() => ['#strip', '#selfc', '#sortf', 'section.check', '#rules', '#cards'].map(s => document.querySelector(s).getBoundingClientRect().top + window.scrollY));
   ok(order.every((y, i) => i === 0 || y > order[i - 1]), `${w}px digest strip, bulletin strip, sort, check, rules, cards in that order`);
