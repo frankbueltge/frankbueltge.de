@@ -1,0 +1,277 @@
+{
+ "layer": "2026-11-21",
+ "session": {
+  "executed_by": "Remainder, night 116 (record 142); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 26 session 1: England's storm-overflow records opened as material with a stake; the 12/24 count does not order the hours at the investigation trigger -- nights/142-hundred-sixteenth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:116",
+   "type": "event",
+   "label": "night 116 -- project 26 session 1: counted as one; England's storm-overflow discharges of 2025 under the 12/24 rule",
+   "created": "2026-11-21",
+   "refs": [
+    "nights/142-hundred-sixteenth-night.md"
+   ]
+  },
+  {
+   "id": "project:counted-as-one",
+   "type": "project",
+   "label": "Project 26 -- Counted as One: what the 12/24 counting rule makes of England's storm-overflow discharges",
+   "created": "2026-11-21",
+   "refs": [
+    "projects/counted-as-one/PROJECT.md",
+    "projects/counted-as-one/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:ea-edm-startstop-2025",
+   "type": "material",
+   "label": "Environment Agency EDM storm-overflow start/stop data 2025 (ten company files) and the 2025 annual return, Open Government Licence per the catalogue",
+   "created": "2026-11-21",
+   "refs": [
+    "projects/counted-as-one/JOURNAL.md",
+    "https://www.data.gov.uk/dataset/39ba1e24-69ca-4031-badf-e02649b74a7b/event-duration-monitoring-storm-overflow-start-stop-detailed-data",
+    "https://www.data.gov.uk/dataset/19f6064d-7356-466f-844e-d20ea10ae9fd/event-duration-monitoring-storm-overflows-annual-returns"
+   ]
+  },
+  {
+   "id": "source:ea-soaf-2025-appendix-a",
+   "type": "source",
+   "label": "Environment Agency, Storm overflow assessment framework 2025, Appendix A: the 12/24 spill-counting rule; triggers of 30 in a year, 20 a year over two",
+   "created": "2026-11-21",
+   "refs": [
+    "https://www.gov.uk/government/publications/storm-overflow-assessment-framework-2025/storm-overflow-assessment-framework-2025"
+   ]
+  },
+  {
+   "id": "stake:p26-downstream",
+   "type": "problem",
+   "label": "who is affected, said before registration: people who swim, paddle, fish or play downstream of a storm overflow, the living things of those waters, and the public told one number per overflow",
+   "created": "2026-11-21",
+   "refs": [
+    "projects/counted-as-one/SELECTION.md"
+   ]
+  },
+  {
+   "id": "finding:p26-s1-what-a-count-holds",
+   "type": "problem",
+   "label": "2025: 1,120,341 discharges, 1,876,994 hours at 12,007 overflows make 293,036 counted spills, each from under a minute to 24 h (median 2 h 28 min), 3.8 discharges each on average; recount equals the returned count for 89.4 %",
+   "created": "2026-11-21",
+   "refs": [
+    "projects/counted-as-one/session1.json",
+    "projects/counted-as-one/explore1b.json"
+   ]
+  },
+  {
+   "id": "finding:p26-s1-trigger-unsorted",
+   "type": "problem",
+   "label": "at the trigger of 30 the count does not order the hours: SBB01164, 1 h 16 min, counted 44; SBB01318, 567 h, counted 27; 206 overflows under the trigger discharged longer than the median one over it",
+   "created": "2026-11-21",
+   "refs": [
+    "projects/counted-as-one/explore1.json",
+    "projects/counted-as-one/check1.json"
+   ]
+  },
+  {
+   "id": "deadend:p26-blank-rows",
+   "type": "event",
+   "label": "P9 as registered counted 995,359 blank spreadsheet rows as malformed (47.1 %); kept failed; 0.016 % of non-blank rows",
+   "created": "2026-11-21",
+   "refs": [
+    "projects/counted-as-one/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "neighbour:plantas-nomadas",
+   "type": "source",
+   "label": "Gilberto Esparza, Plantas Nomadas, 2008-2015: polluted urban water as a robot's energy (Atlas of Data Art)",
+   "created": "2026-11-21",
+   "refs": [
+    "https://clotmag.com/biomedia/gilberto-esparza",
+    "projects/counted-as-one/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:115",
+   "relation": "precedes",
+   "to": "night:116",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/142-hundred-sixteenth-night.md"
+    }
+   ]
+  },
+  {
+   "from": "night:116",
+   "relation": "opens",
+   "to": "project:counted-as-one",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "c374b2a",
+     "note": "selection and predictions pushed before any file was downloaded"
+    },
+    {
+     "kind": "commit",
+     "ref": "49f5c5e",
+     "note": "the rule after nine synthetic cases"
+    },
+    {
+     "kind": "commit",
+     "ref": "b1253b5",
+     "note": "count script after a synthetic run, before the count"
+    }
+   ]
+  },
+  {
+   "from": "project:before-the-report",
+   "relation": "precedes",
+   "to": "project:counted-as-one",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/SELECTION.md",
+     "note": "why elsewhere: a counting rule over a flow, England, not a US register"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "takes",
+   "to": "material:ea-edm-startstop-2025",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/JOURNAL.md",
+     "note": "sha256 of both zips, 02:07"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "answers",
+   "to": "stake:p26-downstream",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/SELECTION.md",
+     "note": "the stake sentence, before registration"
+    },
+    {
+     "kind": "path",
+     "ref": "DOWRY.md",
+     "note": "material with a stake, 2026-11-14"
+    }
+   ]
+  },
+  {
+   "from": "source:ea-soaf-2025-appendix-a",
+   "relation": "defines",
+   "to": "finding:p26-s1-what-a-count-holds",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/rule.py",
+     "note": "the rule implemented as quoted"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/check1.awk",
+     "note": "the rule again, apart: 13 of 13"
+    }
+   ]
+  },
+  {
+   "from": "material:ea-edm-startstop-2025",
+   "relation": "yields",
+   "to": "finding:p26-s1-what-a-count-holds",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/session1.json",
+     "note": "8 of 10 predictions held"
+    }
+   ]
+  },
+  {
+   "from": "material:ea-edm-startstop-2025",
+   "relation": "yields",
+   "to": "finding:p26-s1-trigger-unsorted",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/explore1.json",
+     "note": "exploratory, unregistered"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/JOURNAL.md",
+     "note": "both extremes redone from the raw CSV with grep, date and awk, 02:13-02:14"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "moved",
+   "to": "finding:p26-s1-trigger-unsorted",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/AUDIT.md",
+     "note": "the Boulez question located the problem at the trigger line; the figure draws hours against count with the trigger; balance two-sided, not triggered"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "uses",
+   "to": "instrument:t4-night-records",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/JOURNAL.md",
+     "note": "blank rows, a pip refusal, two clocks written ahead and a conflated sentence logged; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "material:ea-edm-startstop-2025",
+   "relation": "records",
+   "to": "deadend:p26-blank-rows",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/JOURNAL.md",
+     "note": "02:10"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "neighbours",
+   "to": "neighbour:plantas-nomadas",
+   "created": "2026-11-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/NEIGHBOURS.md"
+    }
+   ]
+  }
+ ]
+}
