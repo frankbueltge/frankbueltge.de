@@ -321,6 +321,132 @@ facts = {
     'deeds_lagged': len(deed_lags), 'lag_max': round(deed_lags[-1]), 'lag_median': round(median(deed_lags)),
 }
 
+# ---- state 3 (session 257, the check): the Field's check 87, read from its commit ----
+# The check reads every claim a second time against its source. Two of the work's sources moved on 20 November:
+# the Field withdrew 15 of the census's 171 breaches (presentation copies, and a score older than its rule), and
+# coded the decision log again with five blind readers: 88 deeds where state 2 drew 34, each looked for at its commit.
+CHECK = {'repo': 'field-research', 'commit': 'ce3a5de5e069d3b76265d54cfd853e71471a1408', 'dir': SEEN['dir']}
+r87_raw = show(CHECK['repo'], CHECK['commit'], CHECK['dir'] + '/results87.json')
+r87 = json.loads(r87_raw)
+c87 = json.loads(show(CHECK['repo'], CHECK['commit'], CHECK['dir'] + '/commits87.json'))
+d87 = show(CHECK['repo'], CHECK['commit'], CHECK['dir'] + '/data87.js').decode()
+drop = json.loads(d87[d87.index('window.DATA87=') + len('window.DATA87='):].strip().rstrip(';'))['drop']
+
+
+def withdrawn(rule, practice, commit, path):
+    return any(rule == r and practice == p and commit.startswith(c) and path == q for r, p, c, q in drop)
+
+
+n_drop = 0
+for it in items:
+    if withdrawn(it['rule'], it['practice'], it['commit'], it['path']):
+        n_drop += 1
+        bound[index[(it['repo'], it['commit'])]] -= 1
+assert n_drop == len(drop) == r87['correction85']['removed']['bound'] == 25
+for b in breaches:
+    c = commits[b['c']]
+    b['wd'] = withdrawn(b['rule'], PRACTICE_KEY[c['repo']], c['h'], b['path'])
+standing = [b for b in breaches if not b['wd']]
+now87 = r87['correction85']['census_now']
+assert len(standing) == now87['breach'] == 156 and sum(b['robust'] for b in standing) == now87['robust'] == 29
+assert sum(bound.values()) == now87['bound'] == 8073
+assert all(not b['wd'] for b in breaches if 'by' in b)          # the 8 its own practice named all stand
+st_days = sorted((census_time - commits[b['c']]['t']).total_seconds() / 86400 for b in standing)
+st_census_days = sorted((census_time - commits[b['c']]['t']).total_seconds() / 86400 for b in standing if 'by' not in b)
+
+# The deeds: results87.json's 88, each with the commits commits87.json found it at, timed from those repositories.
+ARCH = lambda t: t.replace("Frank's", "the architect's").replace('Frank', 'the architect')
+C87 = {(c['row'], c['deed']): c for c in c87['deeds']}
+LEGIBLE = ['deed and maker', 'act only', 'nothing']
+SIGNED = ["the architect's name", "a practice's persona", 'a workflow or bot', 'other']
+deeds87 = []
+for d in r87['deeds']:
+    assert log_lines[d['log_line'] - 1].startswith('| ' + d['date'] + ' |'), d['row']
+    c = C87[(d['row'], d['n'])]
+    assert c['found'] == d['found'] and c['legible'] == d['legible'] and c['log_line'] == d['log_line']
+    found = []
+    for x in c['commits']:
+        an, at = git(x['repo'], 'log', '-1', '--format=%an\x1f%aI', x['hash']).strip().split('\x1f')
+        found.append({'repo': x['repo'], 'h': x['hash'], 'an': an, 't': datetime.datetime.fromisoformat(at),
+                      'i': index.get((x['repo'], x['hash']))})
+    day = datetime.date.fromisoformat(d['date'])
+    close = datetime.datetime.combine(day + datetime.timedelta(days=1), datetime.time(0), tzinfo=BERLIN)
+    first = min(found, key=lambda x: x['t']) if found else None
+    at_commit = d['found'] == 'at its commit'
+    lag = (close - first['t']).total_seconds() / 86400 if at_commit else None
+    deeds87.append({
+        't': int(close.timestamp()), 'date': d['date'], 'row': d['row'], 'n': d['n'], 'line': d['log_line'],
+        'seer': SEERS.index(d['seer']), 'rel': d['relation'], 'kind': d['kind'], 'actor': d['actor'],
+        'found': d['found'], 'leg': LEGIBLE.index(d['legible']), 'sig': SIGNED.index(d['signed']),
+        'lag': round(lag, 3) if lag is not None else None,
+        'rowlag': d['lag_days'],
+        'at': [[x['repo'], x['h'][:12], redact(x['an']), int(x['t'].timestamp())] for x in found],
+        'em': [x['i'] for x in found if x['i'] is not None and at_commit],
+        'text': redact(ARCH(d['deed_line'])),
+    })
+deeds87.sort(key=lambda d: (d['t'], -d['row'], d['n']))
+B87, P87 = r87['partB'], r87['partC']
+assert len(deeds87) == B87['deeds'] == 88
+seer87 = Counter(SEERS[d['seer']] for d in deeds87)
+assert dict(seer87) == B87['seer']
+assert Counter(d['found'] for d in deeds87) == Counter(P87['found'])
+assert Counter(LEGIBLE[d['leg']] for d in deeds87) == Counter(P87['legible'])
+assert Counter(SIGNED[d['sig']] for d in deeds87) == Counter(P87['signed'])
+assert Counter(d['date'][:7] for d in deeds87) == Counter(B87['by_month'])
+lags87 = sorted(d['lag'] for d in deeds87 if d['lag'] is not None)
+assert len(lags87) == P87['found']['at its commit'] == 80
+in_field = [d for d in deeds87 if d['em']]
+first_repo = Counter(min((x for x in d['at']), key=lambda x: x[3])[0] for d in deeds87 if d['at'])
+struck = r87['partA']['struck']
+facts_was = {k: facts[k] for k in ('breaches', 'breach_commits', 'breach_robust', 'bound_items', 'census_seen',
+                                   'census_median_days', 'deeds', 'seer_architect', 'seer_order', 'seer_machines',
+                                   'seer_unstated', 'deeds_git', 'deeds_not_git')}
+facts.update({f + '_was': v for f, v in facts_was.items()})
+facts.update({
+    # the census as the Field corrected it on 20 November
+    'bound_items': sum(bound.values()), 'bound_commits': sum(1 for v in bound.values() if v > 0),
+    'breaches': len(standing), 'breach_commits': len({b['c'] for b in standing}),
+    'breach_robust': sum(b['robust'] for b in standing),
+    'breach_reading': len(standing) - sum(b['robust'] for b in standing),
+    'breaches_withdrawn': sum(b['wd'] for b in breaches),
+    'census_median_days': round(median(st_days)), 'census_max_days': round(st_days[-1]),
+    'census_seen': len(standing) - len(selfseen),
+    'census_seen_median_days': round(median(st_census_days)), 'census_seen_max_days': round(st_census_days[-1]),
+    # the struck limits the census did not count (results87, partA)
+    'struck_breaches': struck['breach'], 'struck_self': struck['seen_by']['the practice itself'],
+    'struck_census': struck['seen_by']['the census'],
+    # the log, coded again
+    'deeds': len(deeds87), 'deed_rows': B87['rows_with_deeds'],
+    'blind_added': B87['agreement']['deed']['blind_only'], 'blind_missed': B87['agreement']['deed']['published_only'],
+    'deeds_beyond': sum(d['rel'] == 'beyond' for d in deeds87),
+    'deeds_against': sum(d['rel'] == 'against' for d in deeds87),
+    'deeds_authority': sum(d['kind'] == 'authority' for d in deeds87),
+    'seer_architect': seer87['the architect'], 'seer_order': seer87["a session at the architect's order"],
+    'seer_machines': seer87['another machine of the house'] + seer87['the acting machine itself'] +
+    seer87['a guard, test, gate or CI'],
+    'seer_unstated': seer87['not stated'], 'seer_outside': seer87['someone outside the house'],
+    'seer_stated': len(deeds87) - seer87['not stated'],
+    'seer_person': seer87['the architect'] + seer87["a session at the architect's order"],
+    'deeds_found': sum(d['found'] == 'at its commit' for d in deeds87),
+    'deeds_not_git': sum(d['found'] == 'not in Git' for d in deeds87),
+    'deeds_not_found': sum(d['found'] == 'not found' for d in deeds87),
+    'legible_both': sum(d['leg'] == 0 for d in deeds87), 'legible_act': sum(d['leg'] == 1 for d in deeds87),
+    'legible_none': sum(d['leg'] == 2 for d in deeds87),
+    'signed_architect': sum(d['sig'] == 0 and d['found'] == 'at its commit' for d in deeds87),
+    'signed_persona': sum(d['sig'] == 1 and d['found'] == 'at its commit' for d in deeds87),
+    'signed_workflow': sum(d['sig'] == 2 and d['found'] == 'at its commit' for d in deeds87),
+    'deeds_site': first_repo['frankbueltge.de'],
+    'deeds_in_field': len(in_field),
+    'deeds_aug': sum(d['date'].startswith('2026-08') for d in deeds87),
+    'deeds_sep': sum(d['date'].startswith('2026-09') for d in deeds87),
+    'deeds_oct': sum(d['date'].startswith('2026-10') for d in deeds87),
+    'deeds_nov': sum(d['date'].startswith('2026-11') for d in deeds87),
+    'lag87_median': round(median(lags87)), 'lag87_max': round(lags87[-1]),
+    'lag87_week': sum(x > 7 for x in lags87), 'lag87_negative': sum(x < 0 for x in lags87),
+})
+for k in ('deeds_git', 'deeds_lagged', 'lag_max', 'lag_median'):
+    facts.pop(k, None)
+
 # ---- compact arrays for the page ----
 sig_index = {s: i for i, s in enumerate(signers)}
 out = {
@@ -341,7 +467,8 @@ out = {
         'b': [bound.get(i, 0) for i in range(n)],
     },
     'breaches': [{'c': b['c'], 'rule': b['rule'], 'path': b['path'], 'v': b['value'],
-                  'lim': b['limit'], 'rb': int(b['robust']), **({'by': b['by']} if 'by' in b else {})}
+                  'lim': b['limit'], 'rb': int(b['robust']), **({'by': b['by']} if 'by' in b else {}),
+                  **({'wd': 1} if b['wd'] else {})}
                  for b in breaches],
     'own': own, 'recount': int(recount_time.timestamp()),
     'atelier': 'digest.json at ulysses ' + ATELIER['commit'][:7] + ', sha256 ' +
@@ -351,7 +478,9 @@ out = {
     'was': [i for i, c in enumerate(commits) if c['was_machine']],
     'seers': SEERS,
     'log': 'https://github.com/frankbueltge/frankbueltge.de/blob/' + LOG['commit'] + '/docs/decision-log.md?plain=1',
-    'deeds': deeds,
+    'deeds': deeds87, 'legible': LEGIBLE, 'signed': SIGNED,
+    'check': 'results87.json, commits87.json and data87.js at field-research ' + CHECK['commit'][:7] + ', sha256 ' +
+             hashlib.sha256(r87_raw).hexdigest(),
     'facts': facts,
 }
 (HERE / 'data.js').write_text('window.SH = ' + json.dumps(out, ensure_ascii=False,
