@@ -3,7 +3,8 @@
 // visitor sees, and compare them with counts recomputed here from items85.json, candidates86.json, codes86.json and
 // declared86.json, independently of scores86.py's summary and of the page's own script; press a mark and a square and
 // check their readouts and links; check errors and sideways scroll; write process/2.png from the light pass
-// (NOSHOT=1 skips it).
+// (NOSHOT=1 skips it). Since check 87 (state 3) the breaches are those the Atelier's correction leaves, derived here
+// independently, and the unit chart shows the check's deeds, which verify87.mjs reads.
 // Usage: node verify86.mjs [clones-dir]   With the directory that holds full clones of `ulysses` and `field-research`,
 // the correction of study 85 (who signed) is recounted from Git too; without it, that one check is reported as skipped.
 import { createRequire } from 'module'; import path from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
@@ -12,7 +13,16 @@ const require = createRequire('/opt/node-tools/node_modules/'); const { chromium
 const here = path.dirname(fileURLToPath(import.meta.url)); const url = 'file://' + path.join(here, 'index.html');
 const rd = f => JSON.parse(fs.readFileSync(path.join(here, f), 'utf8'));
 const ALL = rd('items85.json'), CA = rd('candidates86.json').candidates, CO = rd('codes86.json'), DE = rd('declared86.json');
-const RES = rd('results86.json');
+const RES = rd('results86.json'), ALL85 = ALL;
+// The Atelier's correction (check 87, 20 November 2026), derived here on its own: a score or critique of the Atelier
+// under presentations/ whose content equals a file counted beside its work is a copy; a file first committed before
+// the 20-line rule took effect is not bound by it (first commits in first87.json). Those items leave the census.
+const FIRST = rd('first87.json'), RU85 = rd('rules85.json'), keyOf = d => [d.rule, d.practice, d.commit, d.path].join('|');
+const START = Object.fromEntries(RU85.filter(r => r.practice === 'atelier' && ['score-lines', 'critique-lines'].includes(r.rule)).map(r => [r.rule, Date.parse(r.start)]));
+const MINE = ALL85.filter(i => i.practice === 'atelier' && i.rule in START);
+const ART = new Set(MINE.filter(i => !i.path.startsWith('presentations/')).map(i => i.rule + '|' + i.blob));
+const DROP = new Set(MINE.filter(i => (i.path.startsWith('presentations/') && ART.has(i.rule + '|' + i.blob)) || Date.parse(FIRST[i.path].time) < START[i.rule]).map(keyOf));
+
 
 let checks = 0, fails = 0;
 const eq = (a, b, what) => { checks++; if (String(a).trim() !== String(b).trim()) { fails++; console.log('FAIL', what, JSON.stringify(a), '!=', JSON.stringify(b)); } };
@@ -24,7 +34,7 @@ const key = d => [d.rule, d.practice, d.commit, d.path].join('|');
 
 // ---- part A, recomputed here
 const CENSUS = Date.parse('2026-11-19T22:29:21Z');
-const I = ALL.filter(i => i.breach);
+const I = ALL.filter(i => i.breach && !DROP.has(keyOf(i)));
 const cand = Object.fromEntries(CA.map(c => [c.id, c]));
 const sight = {}, under = new Set(), within = new Set();
 for (const p of CO.partA) {
@@ -139,13 +149,10 @@ for (const [w, scheme] of [[1100, 'light'], [390, 'dark']]) {
   ok(sw <= w, `${w}: sideways scroll ${sw}`);
   const K = await page.evaluate(() => [...document.querySelectorAll('[data-k86]')].map(e => [e.getAttribute('data-k86'), e.textContent]));
   for (const [k, v] of K) { ok(k in E, `${w}: unchecked figure ${k}`); if (k in E) eq(v, E[k], `${w}: figure ${k}`); }
-  for (const k of Object.keys(E)) ok(K.some(([x]) => x === k), `${w}: figure ${k} on the page`);
-  // unit chart
-  const U = await page.$$eval('#units text[data-group]', ts => ts.map(t => [t.dataset.group, t.textContent]));
-  for (const [s, v] of U) eq(v, g(S(s)), `${w}: unit count ${s}`);
-  eq(U.reduce((a, [, v]) => a + Number(v), 0), deeds.length, `${w}: unit counts add up`);
-  eq(await page.$$eval('#units rect[data-row]', r => r.length), deeds.length, `${w}: squares drawn`);
-  eq(await page.$$eval('#units rect[data-row].g', r => r.length), deeds.filter(d => d.final.trace === 'in Git').length, `${w}: filled squares`);
+  // state 3 replaced the answer box's paragraph on the first coding of the log with the check's (verify87.mjs)
+  const RETIRED = new Set(['b_rows', 'b_deeds2', 'b_stated', 'b_arch', 'b_order', 'b_unbidden', 'b_outside', 'b_git', 'b_nogit']);
+  for (const k of Object.keys(E)) if (!RETIRED.has(k)) ok(K.some(([x]) => x === k), `${w}: figure ${k} on the page`);
+  // the unit chart shows the check's deeds since state 3: verify87.mjs reads it
   // scatter
   eq(await page.$$eval('#seen circle', c => c.length), I.length, `${w}: marks drawn`);
   eq(await page.$$eval('#seen circle.pr', c => c.length), seen.length, `${w}: marks named before the census`);
@@ -156,9 +163,6 @@ for (const [w, scheme] of [[1100, 'light'], [390, 'dark']]) {
   await page.locator('#seen circle.pr').last().click();
   const ro = await page.$eval('#seenout', e => ({ t: e.textContent, links: [...e.querySelectorAll('a')].map(a => a.href) }));
   ok(/named first by the practice/.test(ro.t) && ro.links.filter(h => /github\.com\/frankbueltge\/[^/]+\/commit\/[0-9a-f]{12}$/.test(h)).length >= 2, `${w}: mark readout ${ro.t.slice(0, 100)}`);
-  await page.click('#units rect[data-row]');
-  const uo = await page.$eval('#unitout', e => ({ t: e.textContent, links: [...e.querySelectorAll('a')].map(a => a.href) }));
-  ok(uo.links.length === 1 && /decision-log\.md\?plain=1#L\d+$/.test(uo.links[0]) && /seen first by/.test(uo.t), `${w}: square readout ${uo.t.slice(0, 100)}`);
   // predictions
   const P = await page.$$eval('#preds86 p', ps => ps.map(p => [p.dataset.pred, p.querySelector('span').textContent]));
   eq(P.length, 3, `${w}: three predictions`); for (const [k, v] of P) eq(v, V[k], `${w}: prediction ${k}`);

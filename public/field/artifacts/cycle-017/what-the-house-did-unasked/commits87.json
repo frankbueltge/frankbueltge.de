@@ -1,0 +1,2146 @@
+{
+ "check": 87,
+ "part": "C",
+ "session": 285,
+ "date": "2026-11-20",
+ "note": "Each final deed of codes87.json looked for at its commit by five convened readers in full clones of the site and four practice repositories, each hash then opened by this session; five deeds in two further repositories (error-as-method, machine-attention) were looked up here. Codes as in CODEBOOK87.md part C. Paraphrases only.",
+ "deeds": [
+  {
+   "row": 4,
+   "deed": 1,
+   "log_line": 13,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "de87e92ae2bb746338a0c84eec17c9b341ffeab9",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-07-28",
+     "what": "Paper catalogue introduced; the builder writes each work's abstract (zusammenfassung) into the published register regardless of access"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "bf493cd7792c905f329f2e49357f393bdd6eb088",
+     "author": "Katalog-Scout",
+     "date": "2026-07-28",
+     "what": "First nightly bot commit of the paper catalogue; the nightly Katalog-Scout commits kept publishing the abstracts until 2026-11-14"
+    }
+   ],
+   "repair": "fc35932b2b25f0269247b5d5a98643c3f182b55d",
+   "legible": "deed and maker",
+   "legible_why": "The nightly Katalog-Scout bot commits carry the abstracts, and the repair message names the katalog-scout as the writer and says the register published 4,548 abstracts (977 paywalled) and body texts indexed as abstracts, removed after a legal review.",
+   "signed": "a workflow or bot",
+   "searched": "git log -S on katalog.py and papers.json for abstract/zusammenfassung, then read the removal commit #1372 and the commit that first wrote the field.",
+   "set": "a"
+  },
+  {
+   "row": 12,
+   "deed": 1,
+   "log_line": 21,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "b83a3345edf2540a279f89da42718b57b9f1179b",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-11-13",
+     "what": "Comma first build (#1336): Pages Functions read OONI one raw minute at a time, per request; this is the build that ran dry"
+    }
+   ],
+   "repair": "ca35bc4081d9bcb921445aaa6f3c7d334deb6081",
+   "legible": "act only",
+   "legible_why": "The repair message says the first build read a raw minute every minute and ran dry within hours (so the act and its fault are in Git), but all commits carry the architect's name and no message says a session or machine built it; the exhaustion itself and Frank hearing the refusal are not in Git. #1348 (75eb302) is an intermediate repair.",
+   "signed": "the architect's name",
+   "searched": "Listed Comma commits 2026-11-13/14 from the site log, read messages of #1336, #1348 (75eb3027971091c07e8256d075b701f1b9fac732) and #1352.",
+   "set": "a"
+  },
+  {
+   "row": 27,
+   "deed": 1,
+   "log_line": 36,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "d531d21fa44f86cfcb6c3c13c26c784458403c56",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-11-01",
+     "what": "Briefing map of eleven fields created (src/lib/briefing/map.ts), with the AI field defined by plain mention terms (AI, ChatGPT, OpenAI, chatbot...)"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "18d9887a544b0e3f4087549227d9afe4b269bad0",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-11-02",
+     "what": "The map's fields seated on Ducking's desk as faders, including the AI fader fed by those terms"
+    }
+   ],
+   "repair": "d0a264dba38b657e965648421f387aae31b6ba44",
+   "legible": "act only",
+   "legible_why": "The repair message says the AI terms caught every mention so the AI fader was mostly app-store and developer chatter, but it frames the change as Frank's decision of the day and names no session or machine as author.",
+   "signed": "the architect's name",
+   "searched": "git log on map.ts, attention.ts and voices.py; checked the first version of map.ts for the AI field terms; read the fix commit #1240.",
+   "set": "a"
+  },
+  {
+   "row": 38,
+   "deed": 1,
+   "log_line": 47,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "research-ecology",
+     "hash": "72e49c000c9a5dc84092370c04f8892f7ad1ec67",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-11-01",
+     "what": "briefings/after-cycle-011.md added (#48), the briefing with the unchecked claims"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "a6fdc49fee1486bcfba1c318c260a174bd27a915",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-11-01",
+     "what": "Site links the briefing and its fallback question into the open convening (cycle.json), so the site repeated it"
+    }
+   ],
+   "repair": "4af97d9966cd0bd2da39830b445968d4694bea9c",
+   "legible": "deed and maker",
+   "legible_why": "The follow-up commit message (e5a83fc35c2bf34028f648ee29146e68c59bc519 in research-ecology) states that 27 of 69 claims failed a check against their sources and that each routine run is a new session, so a second reader is added; the correction commit #50 is titled as correcting what the sources do not say. The author line itself is still the architect's.",
+   "signed": "the architect's name",
+   "searched": "git log of briefings/after-cycle-011.md in research-ecology, site log for 2026-11-01, read #1207, #48, #50 and #51.",
+   "set": "a"
+  },
+  {
+   "row": 57,
+   "deed": 1,
+   "log_line": 66,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "b1d92ef5da76ebb43501e5f7787afd80c728e1b8",
+     "author": "Frank Bültge",
+     "date": "2026-06-25",
+     "what": "Round Numbers pipeline package built (Benford/last-digit plus bootstrap), the instrument that later repeated an identical series nightly"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "d7f86b34947de0e5eec8d43cb7ba82d193cf9cb3",
+     "author": "Frank Bültge",
+     "date": "2026-06-25",
+     "what": "Nightly workflow for round-number added"
+    }
+   ],
+   "repair": "81289d0ed68e8dac38349b7264c07529e4feb4ed",
+   "legible": "act only",
+   "legible_why": "The retire commit (#1104) says 114 of 115 nightly files carry a byte-identical series block, so the fault is readable in Git, but both it and the introducing commits are authored by Frank Bültge with nothing marking a machine as maker.",
+   "signed": "the architect's name",
+   "searched": "git log --diff-filter=A on pipelines/round-number and workflows; read the retire commit message of 2026-10-17 (#1104).",
+   "set": "c"
+  },
+  {
+   "row": 57,
+   "deed": 2,
+   "log_line": 66,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "fc310d24f21191030a37ca478fbe0ac2ad22856c",
+     "author": "Frank Bültge",
+     "date": "2026-06-22",
+     "what": "Instrument IV 'The Pattern' created: pipelines/pattern/refresh.py with the permutation test that later could not fail on trending series (its own methodology sheet already named trends fooling the test)"
+    }
+   ],
+   "repair": "81289d0ed68e8dac38349b7264c07529e4feb4ed",
+   "legible": "act only",
+   "legible_why": "The retire commit states false_discovery_rate 0.0 on all 118 nights and answers #724, so the fault is readable, but authorship is Frank Bültge throughout and nothing in Git marks a machine as maker.",
+   "signed": "the architect's name",
+   "searched": "git log --diff-filter=A for pipelines/pattern; commit message of #1104 and of fc310d2.",
+   "set": "c"
+  },
+  {
+   "row": 57,
+   "deed": 3,
+   "log_line": 66,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "e608a232ea698fbcd79877f1bbd5321f7921154c",
+     "author": "Frank Bültge",
+     "date": "2026-06-26",
+     "what": "Ghost Fleet 'Framing A': EEZ/high-seas focus, the ranking resting on highSeas/mpa fields the source never fills"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "1dfdc98c3a8d3d7ab3e8d6bbc9fcc2a861e97e95",
+     "author": "Frank Bültge",
+     "date": "2026-06-26",
+     "what": "Ghost Fleet pipeline package (GFW gap-events client, selection, index)"
+    }
+   ],
+   "repair": "81289d0ed68e8dac38349b7264c07529e4feb4ed",
+   "legible": "act only",
+   "legible_why": "The retire commit records that highSeas and every mpa field are empty in all 1,500 gap events, so the fault is readable, but the author line is Frank Bültge on every relevant commit.",
+   "signed": "the architect's name",
+   "searched": "git log of pipelines/ghost-fleet; message of #1104.",
+   "set": "c"
+  },
+  {
+   "row": 65,
+   "deed": 1,
+   "log_line": 74,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "4da2a5e0fdd21b537dba4115ffbd2e2ea048211f",
+     "author": "Ulysses",
+     "date": "2026-10-04",
+     "what": "Cycle 004 session on 156 'extinct' birds, i.e. the seed read as species extinction"
+    },
+    {
+     "repo": "studio",
+     "hash": "b52775e0870fd8ad0e07220219c63eaf4cb2196d",
+     "author": "Ensemble",
+     "date": "2026-10-04",
+     "what": "Session 152, Proof of Life: records of extinct birds; cycle 004/005 sessions (e.g. 052de491c86dec435c4ade467cefc902aaf00806, tortoise photographs) stayed with species"
+    }
+   ],
+   "repair": "89a23d94a8bd9594055176a3d3f43c0086f00789",
+   "legible": "deed and maker",
+   "legible_why": "The direction commits in field-research (90a843e549056d88ab8c2c86e9a83889a3680a99), ulysses and studio say cycles 004 and 005 read the seed as species extinction and that it meant humanity and AI, and the session commits are signed by the practices' personas.",
+   "signed": "a practice's persona",
+   "searched": "site cycle.json history 2026-10-03 to 10-08, then practice repo logs 2026-10-03 to 10-08 for extinct/tortoise/species; the first Meridian cycle-004 commits have uninformative subjects, so Field's own commit is not pinned.",
+   "set": "a"
+  },
+  {
+   "row": 67,
+   "deed": 1,
+   "log_line": 76,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "5c556794ef85196a0c95212c0c9f65cebd985bbb",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-07-16",
+     "what": "One example: a verbatim quotation of Frank's message written into public/_redirects (removed in the 2026-10-05 sweep); the deed is spread over many commits"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "2780f2fe75753aea92dc23918b930ff932491f4b",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-15",
+     "what": "First guard for the privacy rule; found 39 verbatim quotations that two hand passes missed (earlier pass #638, 9ab4c2f7b1f0c8ad80cc46e9fa29fa9ffbe8992b)"
+    }
+   ],
+   "repair": "d93ca69d8130b9eba463daa71ae9f0242e5c5c6f",
+   "legible": "act only",
+   "legible_why": "Git shows verbatim quotations standing in files and the sweep that removed them under a standing rule, but the quotations were written in commits under the architect's name and nothing outside the log says a session wrote them.",
+   "signed": "the architect's name",
+   "searched": "git log on private-quotes.ts, subject greps for quot/verbatim/private, and -S on one removed quotation in _redirects to find its introducing commit.",
+   "set": "a"
+  },
+  {
+   "row": 72,
+   "deed": 1,
+   "log_line": 81,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "7fa0745130eb86af0db9958655a4150ecebbec9f",
+     "author": "Frank Bültge",
+     "date": "2026-08-11",
+     "what": "Register gains a fifth source, the nightly fork, filed under ns 'atelier' (so counted as the Atelier)"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "486c67513d4d019ff59f9b1155cb5e0098a6c0fc",
+     "author": "Frank Bültge",
+     "date": "2026-08-01",
+     "what": "Register built to read only works (allWorks), which after v3 left almost only the Studio"
+    }
+   ],
+   "repair": "bee70e6f77e2b43ea54b7ee85704ff67d530c062",
+   "legible": "act only",
+   "legible_why": "The repair message says the register showed almost nothing but the Studio for two months, so the fault is readable, but all commits are authored Frank Bültge with no machine marker.",
+   "signed": "the architect's name",
+   "searched": "git log of src/lib/engines/register.ts; diff of 7fa0745 and message of bee70e6 (#1026).",
+   "set": "c"
+  },
+  {
+   "row": 82,
+   "deed": 1,
+   "log_line": 91,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "12046639aa0bc70b2e5cc43e2ae90736398ce5ee",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-09-03",
+     "what": "Trending polish (#856): recipe, figures and shared stylesheet; the register cards kept bare numbers and were not in structured data"
+    }
+   ],
+   "repair": "8ac43dce783dd7875a5692c1e63f69bba75f142d",
+   "legible": "act only",
+   "legible_why": "The repair message says it was asked whether the polish amounted to much and that measuring showed the by-source block had only been repainted, with bare numbers; it names no session or machine and is signed by the architect.",
+   "signed": "the architect's name",
+   "searched": "Site log 2026-09-02/03 for trending commits; read #856 and #864.",
+   "set": "a"
+  },
+  {
+   "row": 83,
+   "deed": 1,
+   "log_line": 92,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "469a4681625461a8ae111020f93cb6f8f3fe18d3",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-09-03",
+     "what": "Front door gives the globe back (#861): turning globe removed from the entrance, its plate (EntranceGlobeFigure) left mounted"
+    }
+   ],
+   "repair": "94700dad389032794ef7c61e4ddac0aadf256482",
+   "legible": "act only",
+   "legible_why": "The repair message says the earlier change left the drawing standing and that the owner's instruction covered the picture, so the fault is readable; the commits are signed by the architect and call it the owner's decision, with no machine named.",
+   "signed": "the architect's name",
+   "searched": "Site log 2026-09-03 for globe/front-door commits; read #861 and #863 messages and stats.",
+   "set": "a"
+  },
+  {
+   "row": 86,
+   "deed": 1,
+   "log_line": 95,
+   "found": "not found",
+   "commits": [],
+   "repair": "ed10f55a7ed4faa76e0a697f02db23f8994364f4",
+   "legible": "nothing",
+   "legible_why": "The wrong inventory line (host TLDs, 13 weekly / 59 hosts) appears in no committed file before the correction commit that quotes it; the committed G0 plan (0a6e8dc59b155b3b4bc746c8812f746632974d1f) only says 'hosts by top-level domain' without naming a file, so no commit holds the claim.",
+   "signed": "the architect's name",
+   "searched": "git log -S on '13 weekly', '59 hosts', 'host TLDs', 'hosts / bycatch' limited to docs and globe paths; the phrase first occurs in the correction (#858); read the G0 plan text.",
+   "set": "a"
+  },
+  {
+   "row": 86,
+   "deed": 2,
+   "log_line": 95,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "3006f0eb3fee5f70096dfe07b5140db87a84d440",
+     "author": "Frank Bültge",
+     "date": "2026-09-03",
+     "what": "Living Globe G3 1/3: invoked past and consensus country layers built without centroids"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "60fce0850af2e709c355b807d90ab1a0a47fe221",
+     "author": "Frank Bültge",
+     "date": "2026-09-03",
+     "what": "G3 2/3: world chamber and Common Ground country layers, also without centroids"
+    }
+   ],
+   "repair": "ed10f55a7ed4faa76e0a697f02db23f8994364f4",
+   "legible": "act only",
+   "legible_why": "The deed is a missing field fixed the next evening in #858; its message may say so, but nothing marks it as unasked or a machine's, and the author is Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "git log of src/lib/globe 2026-09-03; the four layers named are in the two earlier G3 commits.",
+   "set": "c"
+  },
+  {
+   "row": 87,
+   "deed": 1,
+   "log_line": 96,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "62255804baeccbac8428dfbfecbc159667350cdf",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-09-02",
+     "what": "Common Ground (#820) added as a new /trending experiment, built beside the re-skin"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "5de942a3bab04a6d775d7491620d120fc8850243",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-09-02",
+     "what": "Common Ground layer 2 (#823), more surfaces built outside the recipe"
+    }
+   ],
+   "repair": "12046639aa0bc70b2e5cc43e2ae90736398ce5ee",
+   "legible": "act only",
+   "legible_why": "The #856 message says Common Ground was built in parallel with the re-skin and against none of it (hand-tuned clamps, copied styles, raw ids), but no commit names a session or machine and all are under the architect's name.",
+   "signed": "the architect's name",
+   "searched": "Site log 2026-09-01/02 for trending/Common Ground commits; read #820, #823 and #856.",
+   "set": "a"
+  },
+  {
+   "row": 88,
+   "deed": 1,
+   "log_line": 97,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "101436b36f1b5a93408f598c3b045339abb4a09b",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-09-03",
+     "what": "Living Globe G1 (#839): replaces the entrance globe with the compact form of the full LivingGlobe island, mounted on every screen"
+    }
+   ],
+   "repair": "35dceedd45d4991ef701c386bef6ec55db712531",
+   "legible": "act only",
+   "legible_why": "The repair message says the mobile audit fell to sixty and that the compact hero mounted the whole instrument on every screen, which shows act and fault, but not who or what built it; signed by the architect.",
+   "signed": "the architect's name",
+   "searched": "Read #857, #830 and #839 messages and stats; chose G1 as the commit that made the compact hero mount the full island.",
+   "set": "a"
+  },
+  {
+   "row": 88,
+   "deed": 2,
+   "log_line": 97,
+   "found": "not in Git",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "35dceedd45d4991ef701c386bef6ec55db712531",
+     "author": "Frank Bültge",
+     "date": "2026-09-03",
+     "what": "Squash of the phone-gate PR; its message says the first version gated the mount but let archives out, caught by the browser check. The faulty intermediate commit is not on main."
+    }
+   ],
+   "repair": "35dceedd45d4991ef701c386bef6ec55db712531",
+   "legible": "act only",
+   "legible_why": "Only the squash message records that the first version still fetched archives and the browser check caught it; the faulty code itself is not in Git, and the author is Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "git log --all around 2026-09-03 and branch list; no branch or commit holds the first version, only the squash message.",
+   "set": "c"
+  },
+  {
+   "row": 89,
+   "deed": 1,
+   "log_line": 98,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "3006f0eb3fee5f70096dfe07b5140db87a84d440",
+     "author": "Frank Bültge",
+     "date": "2026-09-03",
+     "what": "G3 1/3 country layers (balance etc.) ship with only the alpha-3 code crossing into the island, so the card read 'centroid of the country QAT'"
+    }
+   ],
+   "repair": "60fce0850af2e709c355b807d90ab1a0a47fe221",
+   "legible": "act only",
+   "legible_why": "The wording repair (country name carried in the record) is in the next commit, but nothing in Git says it was a fault or a machine's, and both commits are authored Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "git log of src/lib/globe 2026-09-03; the wording repair is in #855 per its row.",
+   "set": "c"
+  },
+  {
+   "row": 91,
+   "deed": 1,
+   "log_line": 100,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "101436b36f1b5a93408f598c3b045339abb4a09b",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-09-03",
+     "what": "G1 decision-log text notes the ground seam visible since 2026-09-02 and leaves it to G3's tessellation check (the wrong attribution to the sea polygon)"
+    }
+   ],
+   "repair": "3006f0eb3fee5f70096dfe07b5140db87a84d440",
+   "legible": "act only",
+   "legible_why": "The repair message says the seam came from the land and not from the sea polygon as the earlier note assumed, so the error is readable, but no author beyond the architect's name is shown and the earlier attribution sits mostly in the decision log text.",
+   "signed": "the architect's name",
+   "searched": "git log -S tessellation over docs and globe paths; read #853 message.",
+   "set": "a"
+  },
+  {
+   "row": 92,
+   "deed": 1,
+   "log_line": 101,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "0a978b7566b07882280cbbde84a980b4883a78e2",
+     "author": "Frank Bültge",
+     "date": "2026-09-03",
+     "what": "G2 stories squash; message describes a selection whose frame is already on screen opening at once, the fix for the closing card that never opened. Faulty intermediate state not on main."
+    }
+   ],
+   "repair": "0a978b7566b07882280cbbde84a980b4883a78e2",
+   "legible": "act only",
+   "legible_why": "The squash message describes the fix but never says a card failed to open; the faulty version was never committed to main and the author is Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "squash message of #852 and branch list; no intermediate commit reachable.",
+   "set": "c"
+  },
+  {
+   "row": 92,
+   "deed": 2,
+   "log_line": 101,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "0a978b7566b07882280cbbde84a980b4883a78e2",
+     "author": "Frank Bültge",
+     "date": "2026-09-03",
+     "what": "G2 squash message states: found while walking the stories in a browser, an open card relabelled itself to another night's vessel; cardStands now closes it"
+    }
+   ],
+   "repair": "0a978b7566b07882280cbbde84a980b4883a78e2",
+   "legible": "act only",
+   "legible_why": "The squash message states the card fault and its fix in plain words, but the faulty code is not a separate commit and the author line is Frank Bültge, so no machine is shown.",
+   "signed": "the architect's name",
+   "searched": "squash message of #852.",
+   "set": "c"
+  },
+  {
+   "row": 93,
+   "deed": 1,
+   "log_line": 102,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "c8897bd9432fbb1af9ca212679b0e978b69d9529",
+     "author": "Ulysses",
+     "date": "2026-09-03",
+     "what": "Empty tick: cycle 001 presented, nothing owed (first of three idle nights past the budget)"
+    },
+    {
+     "repo": "ulysses",
+     "hash": "a680c3a6c69f24c321ac5e93381c51d057fffc5c",
+     "author": "Ulysses",
+     "date": "2026-09-03",
+     "what": "Second empty tick on cycle 001"
+    },
+    {
+     "repo": "ulysses",
+     "hash": "76c7a0ed6777b38d90348528236a0ad97e779aad",
+     "author": "Ulysses",
+     "date": "2026-09-03",
+     "what": "Third empty tick on cycle 001"
+    },
+    {
+     "repo": "studio",
+     "hash": "d26b4f3cfc7b8860f7cd4dbb9fd82ba4385ef705",
+     "author": "Ensemble",
+     "date": "2026-09-03",
+     "what": "Studio session 124 in cycle 001, one of 11 against a budget of 3-5"
+    },
+    {
+     "repo": "field-research",
+     "hash": "ae3350b035d5e6fe034e81c283becd612d829efe",
+     "author": "Meridian",
+     "date": "2026-09-03",
+     "what": "Field research session after cycle 001 had already presented"
+    }
+   ],
+   "repair": "c0db4f71457fd1e38882c9f72e137f283bd8c85c",
+   "legible": "deed and maker",
+   "legible_why": "Persona authors (Ulysses, Ensemble, Meridian) show a machine ran the sessions, and the repair message #851 states the counts 10, 8, 11 against a budget of three to five and that nothing read the cycle clock.",
+   "signed": "a practice's persona",
+   "searched": "git log of the three practice repos 2026-08-30 to 09-04; message of site commit c0db4f7 (#851).",
+   "set": "c"
+  },
+  {
+   "row": 94,
+   "deed": 1,
+   "log_line": 103,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "97cc706e19dba4d7c42756f4617d98e49d70cab2",
+     "author": "Frank Bültge",
+     "date": "2026-08-11",
+     "what": "Entrance ops room with a signal log built from the works register only (#533)"
+    }
+   ],
+   "repair": "685e0a0bb4c26550c028a0e4d30926ea94e54fb1",
+   "legible": "act only",
+   "legible_why": "The repair message #848 says the log read allWorks and nothing else, so the fault is readable, but all authorship is Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "git log --grep signal log; message of 97cc706 and 685e0a0.",
+   "set": "c"
+  },
+  {
+   "row": 95,
+   "deed": 1,
+   "log_line": 104,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "62255804baeccbac8428dfbfecbc159667350cdf",
+     "author": "Frank Bültge",
+     "date": "2026-09-02",
+     "what": "Trending audience built with edge and umami halves; TrendingAudience.astro shows the beacon column"
+    }
+   ],
+   "repair": "bed32502f806aa25aa0508e083e8cc4ecf402b8c",
+   "legible": "act only",
+   "legible_why": "The repair commit #844 explains the beacon cannot count crawlers, but it is framed as Frank's decision and authored by Frank Bültge, so no machine or breach is shown.",
+   "signed": "the architect's name",
+   "searched": "git log --diff-filter=A for audience.py and TrendingAudience.astro.",
+   "set": "c"
+  },
+  {
+   "row": 96,
+   "deed": 1,
+   "log_line": 105,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "101436b36f1b5a93408f598c3b045339abb4a09b",
+     "author": "Frank Bültge",
+     "date": "2026-09-03",
+     "what": "G1 squash; its message includes the inner commit saying the mount effect used the first closure's frame, fixed before merge. Faulty version not on main."
+    }
+   ],
+   "repair": "101436b36f1b5a93408f598c3b045339abb4a09b",
+   "legible": "act only",
+   "legible_why": "The squash message states the stale-closure fault and the ref fix, but the faulty state was never a commit on main and the author is Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "squash message of #839, branch list.",
+   "set": "c"
+  },
+  {
+   "row": 96,
+   "deed": 2,
+   "log_line": 105,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "101436b36f1b5a93408f598c3b045339abb4a09b",
+     "author": "Frank Bültge",
+     "date": "2026-09-03",
+     "what": "G1 squash; message states arcs were culled by deck.gl's back-face default (twelve arcs drawn, two pixels changed) and the fix"
+    }
+   ],
+   "repair": "101436b36f1b5a93408f598c3b045339abb4a09b",
+   "legible": "act only",
+   "legible_why": "The squash message states the culling fault and fix, but the faulty code is not separately committed on main and the author is Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "squash message of #839.",
+   "set": "c"
+  },
+  {
+   "row": 99,
+   "deed": 1,
+   "log_line": 108,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "230bcf6b249a13be587da63191b0ea1662a439ad",
+     "author": "Frank Bültge",
+     "date": "2026-07-06",
+     "what": "Atlas page created"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "de87e92ae2bb746338a0c84eec17c9b341ffeab9",
+     "author": "Frank Bültge",
+     "date": "2026-07-28",
+     "what": "Papers catalogue page created"
+    }
+   ],
+   "repair": "4e52b96281454f83ca04a7314c20e2f92a34a0ae",
+   "legible": "act only",
+   "legible_why": "The repair message #833 says /atlas and /papers pushed a 390 px viewport sideways, but authorship is Frank Bültge and nothing marks a machine.",
+   "signed": "the architect's name",
+   "searched": "git log --diff-filter=A for atlas and papers pages; message of 4e52b96.",
+   "set": "c"
+  },
+  {
+   "row": 99,
+   "deed": 2,
+   "log_line": 108,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "4e52b96281454f83ca04a7314c20e2f92a34a0ae",
+     "author": "Frank Bültge",
+     "date": "2026-09-02",
+     "what": "Squash of #833; message says .lift's border and shadow reached nothing because .ops-panel is unlayered CSS; restated in ops-room.css. Faulty state not on main."
+    }
+   ],
+   "repair": "4e52b96281454f83ca04a7314c20e2f92a34a0ae",
+   "legible": "act only",
+   "legible_why": "The message states the cascade finding, but the fault arose and was fixed inside one PR, and the author is Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "message of 4e52b96; .lift came in 209a6446 (#826).",
+   "set": "c"
+  },
+  {
+   "row": 113,
+   "deed": 1,
+   "log_line": 122,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "c2245589d215b507c1e9625b130bdee9ca446a84",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-31",
+     "what": "loadArtifacts added to v3.ts (#791), reading only artifacts/cycle-NNN/<date>-<slug>/, the Field's convention"
+    }
+   ],
+   "repair": "d3925b9111d5b7448e40d20ed8bbc15316dfbb71",
+   "legible": "act only",
+   "legible_why": "The repair message says the loader read one path which only the Field writes and two lanes read no artifact on an evening both had delivered, so fault is clear, but it was found by Frank and nothing names a machine author.",
+   "signed": "the architect's name",
+   "searched": "git log of src/lib/ecology/v3.ts and -S loadArtifacts; read #821.",
+   "set": "a"
+  },
+  {
+   "row": 114,
+   "deed": 1,
+   "log_line": 123,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "a0d655aad257fe842609d3dc4585205d62809068",
+     "author": "Frank Bültge",
+     "date": "2026-08-12",
+     "what": "Ecology pyramid (#560): station sheets rebuilt, /season removed, studio index cut, leaving the season floor figure on no page"
+    }
+   ],
+   "repair": "3272aec0d36d72dcbbfeed94f6b1d648d93f853e",
+   "legible": "act only",
+   "legible_why": "The repair message #813 says the figure had rendered on no page since the station sheets of 2026-08-12 and the build gate failed, but the author is Frank Bültge and no machine is marked.",
+   "signed": "the architect's name",
+   "searched": "git log of src/pages/studio/index.astro and Aug 12 commits; message of 3272aec.",
+   "set": "c"
+  },
+  {
+   "row": 116,
+   "deed": 1,
+   "log_line": 125,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "f1aa8191909b6b46bff342bf5482a328a9e104eb",
+     "author": "Frank Bültge",
+     "date": "2026-09-01",
+     "what": "The Middle gets its score back: plain sketch figure (#809)"
+    }
+   ],
+   "repair": "e1434ef3a1974df0c006cfb77176dc88dc688817",
+   "legible": "act only",
+   "legible_why": "The follow-up #812 redraws it in the original partitur's ink, but nothing in Git says it went against an instruction, and both commits are authored Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "git log of src/lib/ecology/middle-score.ts.",
+   "set": "c"
+  },
+  {
+   "row": 117,
+   "deed": 1,
+   "log_line": 126,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "3c227624145bd1c91c45167530342eb5cc5565ab",
+     "author": "Frank Bültge",
+     "date": "2026-08-30",
+     "what": "First v3 ecology entrance (#782): three bulletins side by side in a md:grid-cols-3 grid, no figure"
+    }
+   ],
+   "repair": "1e14aaa66a4d4e44f361d50bbcc0eff5fb4e4b52",
+   "legible": "act only",
+   "legible_why": "The entrance and its later redraw (#811, 'after the architect's UX verdict') are in Git, but all commits carry the architect's author line and nothing outside the log says the first page was a fault or that a machine built it.",
+   "signed": "the architect's name",
+   "searched": "git log --follow on EcologyV3Entrance.astro; first commit is #782, diff shows grid-cols-3; #808 and #811 follow on 2026-09-01.",
+   "set": "d"
+  },
+  {
+   "row": 118,
+   "deed": 1,
+   "log_line": 127,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "c9a8e5469092b034039bd5f54517d26aea4fb3be",
+     "author": "Frank Bültge",
+     "date": "2026-09-01",
+     "what": "Front door (#806): board reduced to one chip per running system, full board moved to /now"
+    }
+   ],
+   "repair": "209b9a6aea772330cbf547eeb4f6e1cf70ad4d97",
+   "legible": "act only",
+   "legible_why": "The cut and its reversal (#810 'the board returns to the entrance, whole') are both visible, but the author is the architect and nothing calls the first cut a fault or names a machine.",
+   "signed": "the architect's name",
+   "searched": "git log 2026-09-01 subjects; #806 message describes the chips; #810 restores the rows.",
+   "set": "d"
+  },
+  {
+   "row": 123,
+   "deed": 1,
+   "log_line": 132,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "3c227624145bd1c91c45167530342eb5cc5565ab",
+     "author": "Frank Bültge",
+     "date": "2026-08-30",
+     "what": "v3 entrance (#782) shipped while naming.ts door one-liners and overview card still described the v2 apparatus (work-line, adversarial review, claims ledger, concept gate)"
+    }
+   ],
+   "repair": "03e374077a3c36319b0f3d4e66dfb3ae635ca8aa",
+   "legible": "act only",
+   "legible_why": "The repair (#805) says the entrance texts 'still described sovereign practices' and 'stop advertising the v2 apparatus', but the deed is an omission with no single faulty commit, and the author is the architect.",
+   "signed": "the architect's name",
+   "searched": "git show of #805 diff on naming.ts lists the removed v2 strings; the stale strings predate v3 (omission), so the v3 entrance commit is the nearest point of drift.",
+   "set": "d"
+  },
+  {
+   "row": 124,
+   "deed": 1,
+   "log_line": 133,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "a0d655aad257fe842609d3dc4585205d62809068",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-12",
+     "what": "Pyramid rewrite (#560) drops the .field-surface scope of /field, so the claim plate lost its colour"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "9c081f017c9f163ad71947c9dda73d0a260b2f09",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-21",
+     "what": "Steuerzentrale ops room (#715) adds the countdown to the 2026-09-05 reading that was later held early"
+    }
+   ],
+   "repair": "0f67b3cb4263790defee9606d2a93aa6152604dc",
+   "legible": "act only",
+   "legible_why": "The repair message says the site stops announcing a reading already held and that /field lost its scope in the 2026-08-12 rewrite, so faults are readable; all commits carry the architect's name and no machine is named.",
+   "signed": "the architect's name",
+   "searched": "git log of field/index.astro and -S 2026-09-05 in ZentralePage.astro; read #804. Other stale items (neighbors page, season text) not individually traced.",
+   "set": "a"
+  },
+  {
+   "row": 124,
+   "deed": 2,
+   "log_line": 133,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "a0d655aad257fe842609d3dc4585205d62809068",
+     "author": "Frank Bültge",
+     "date": "2026-08-12",
+     "what": "Pyramid rewrite (#560): src/pages/field/index.astro loses the Frame import that supplied field-plate.css and the .field-surface scope"
+    }
+   ],
+   "repair": "0f67b3cb4263790defee9606d2a93aa6152604dc",
+   "legible": "act only",
+   "legible_why": "The repair message (#804) states the plate lost .field-surface in the 2026-08-12 rewrite so shapes fell back to browser black, which shows fault and act, but both commits are signed by the architect and no maker is named.",
+   "signed": "the architect's name",
+   "searched": "git log on field/index.astro; #560 diff removes Frame import; #804 message names the cause.",
+   "set": "d"
+  },
+  {
+   "row": 125,
+   "deed": 1,
+   "log_line": 134,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "48ec7b794b603da5296272e8c261d0a4da75560c",
+     "author": "Frank Bültge",
+     "date": "2026-09-01",
+     "what": "#793: the scoping brief (carrying the shallow-scan leads, marked untrusted) and the field map that reports fourteen places the brief was wrong"
+    }
+   ],
+   "repair": null,
+   "legible": "deed and maker",
+   "legible_why": "The commit message itself says the map was executed by a fresh session and reports that the commission was wrong and that three scan claims were garbled or unsupported, though the author line is the architect's.",
+   "signed": "the architect's name",
+   "searched": "git log by the two doc paths and --grep '#793'; one squash commit holds both files.",
+   "set": "d"
+  },
+  {
+   "row": 126,
+   "deed": 1,
+   "log_line": 135,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "099d8388d50421223312405b1706b1c3a8b6c231",
+     "author": "Ulysses",
+     "date": "2026-08-10",
+     "what": "First post-fork commit in the ulysses repo signed Ulysses (ulysses@ulysses.invalid), while error-as-method (not among the clones) also signs Ulysses"
+    },
+    {
+     "repo": "ulysses",
+     "hash": "f98434f60e7982f2763dde6a8e089ec41ea2a946",
+     "author": "Frank Bültge",
+     "date": "2026-08-31",
+     "what": "Naming note: the name Ulysses returns to the nightly line and this practice finds its own"
+    }
+   ],
+   "repair": "f98434f60e7982f2763dde6a8e089ec41ea2a946",
+   "legible": "act only",
+   "legible_why": "Two repos signing as Ulysses is visible in author lines and the naming commit records the resolution, but nothing in Git says the collision was undecided or unintended.",
+   "signed": "a practice's persona",
+   "searched": "ulysses author lines (ulysses.invalid vs irrtum-als-methode.invalid) and REQUESTS.md log for 2026-08-31; error-as-method repo is not among the clones so its signing commits were not inspected.",
+   "set": "d"
+  },
+  {
+   "row": 129,
+   "deed": 1,
+   "log_line": 138,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "5f914627c589932ae84477ade9c3fa6704b3b110",
+     "author": "Frank Bültge",
+     "date": "2026-08-23",
+     "what": "#736: Poetics programme, CONSTITUTION-draft, W1 twenty-five work"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "8c662889716197d839ad29cf5ccd0e156fc364fa",
+     "author": "Frank Bültge",
+     "date": "2026-08-23",
+     "what": "#742: CONSTITUTION.md promoted to v1.0 with an ARCHIVED header and post-mortem, REGISTER and CHAIN added, W1 reading"
+    }
+   ],
+   "repair": null,
+   "legible": "act only",
+   "legible_why": "Git shows the constitution and W1 and the same-day ARCHIVED post-mortem, but the post-mortem is written in the practice's voice under the architect's author line and does not say the founding was unasked or machine-made.",
+   "signed": "the architect's name",
+   "searched": "git log on docs/poetics and --grep '#736'; archived header found in #742 version of CONSTITUTION.md.",
+   "set": "d"
+  },
+  {
+   "row": 132,
+   "deed": 1,
+   "log_line": 141,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "4f9ca316bb6607719df761da9d20807fa3e45a52",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-09",
+     "what": "CLAUDE.md gains 'GCP gezielt (Frank, 2026-08-09)' with the clause 'nie zur Laufzeit der Site', credited to Frank"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "61d0e0750560905697c694f6af9504e621e3bccc",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-09",
+     "what": "Portfolio audit document whose section 8 proposed that wording"
+    }
+   ],
+   "repair": "e6558c8b6b4637c44015b7773a46eb3b9e767adc",
+   "legible": "deed and maker",
+   "legible_why": "The repair message says the clause was the portfolio audit's own proposed wording (marked not executed) that entered CLAUDE.md under a byline of Frank's decision, a misattribution; the audit as a machine product is implied, though the author lines of both commits read Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "git log -S 'nie zur Laufzeit' on CLAUDE.md; read both commit diffs and #728.",
+   "set": "a"
+  },
+  {
+   "row": 132,
+   "deed": 2,
+   "log_line": 141,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "46abc19bb2e1c04df21582f86bf28447c2e65f33",
+     "author": "Frank Bültge",
+     "date": "2026-08-14",
+     "what": "World chamber commit that names GCP_SA_KEY as pending"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "9ab4c2f7b1f0c8ad80cc46e9fa29fa9ffbe8992b",
+     "author": "Frank Bültge",
+     "date": "2026-08-15",
+     "what": "#638: status header says chamber 2 still awaits GCP_SA_KEY"
+    }
+   ],
+   "repair": "e6558c8b6b4637c44015b7773a46eb3b9e767adc",
+   "legible": "act only",
+   "legible_why": "The repair (#728) corrects the key claim and adds a rule for functions/, but the commits are architect-signed and Git does not say a machine wrote the stale claim or that it breached an instruction.",
+   "signed": "the architect's name",
+   "searched": "git log -S GCP_SA_KEY 2026-08-12..23; the functions/ rule file arrives in #728.",
+   "set": "d"
+  },
+  {
+   "row": 133,
+   "deed": 1,
+   "log_line": 142,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "59911807e24f001892f89a6053480c26ce8b7f90",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-15",
+     "what": "Validity gate and live deletion check shipped (PR #624, merged 871bb20ffec6524e82883f9330f8c75fb382da0a) with a decision-log line absent from the change; the omission is the deed"
+    }
+   ],
+   "repair": "c8e627caa69fabbd3a688f50e83567aa6c9696f9",
+   "legible": "act only",
+   "legible_why": "The repair message says the method sheet described the gate since 2026-08-14 while neither it nor the decision log said what it implies for earlier nights, so the gap is readable; the Machine Attention report not being updated is outside these clones, and no machine author is named.",
+   "signed": "the architect's name",
+   "searched": "Site log 2026-08-14/15 and 2026-08-22 for redaction commits; checked #624's file stat for a decision-log change (none); read #734.",
+   "set": "a"
+  },
+  {
+   "row": 133,
+   "deed": 2,
+   "log_line": 142,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "202bb461262363ce46bc18fe10f9d08181395fc9",
+     "author": "Frank Bültge",
+     "date": "2026-06-25",
+     "what": "Pipeline rule that any 4xx on the newest capture counts as a deletion (so 403 bot-walls were published)"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "199e4483553b22164831f0bd30a5ae6cabb3f307",
+     "author": "Gegenmessung",
+     "date": "2026-06-26",
+     "what": "First nightly 'redaction: Schwärzung' record commit by the workflow (54 such commits before the gate)"
+    }
+   ],
+   "repair": "59911807e24f001892f89a6053480c26ce8b7f90",
+   "legible": "deed and maker",
+   "legible_why": "The gate commit (#624) states the false-positive class (4xx or bot-wall read as deletion), that day records are left untouched, and the records are committed by the bot author 'Gegenmessung'.",
+   "signed": "a workflow or bot",
+   "searched": "git log over pipelines/redaction and --grep 'redaction: Schwärzung' before 2026-08-15; #624 merge 871bb20 and fix 5991180.",
+   "set": "d"
+  },
+  {
+   "row": 134,
+   "deed": 1,
+   "log_line": 143,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "machine-attention",
+     "hash": "01c7514de2d537ead0e708c451efa7896386827d",
+     "author": "Frank Bültge",
+     "date": "2026-08-15",
+     "what": "Memory Hole V0 merged and set running nightly; the export's project list, written 9 August, was not extended"
+    }
+   ],
+   "repair": "10c1859",
+   "legible": "act only",
+   "legible_why": "The repair's message says Memory Hole had run nightly since 13 August and was missing from the list, but both commits carry the architect's name and nothing says a machine left it out.",
+   "signed": "the architect's name",
+   "searched": "Clone of machine-attention: history of practice/src/practice/export.py and the Memory Hole merges.",
+   "set": "d (completed here)"
+  },
+  {
+   "row": 134,
+   "deed": 2,
+   "log_line": 143,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "machine-attention",
+     "hash": "aeb3bdcbf244694bae4de8e742666726b89b9e15",
+     "author": "Frank Bültge",
+     "date": "2026-08-09",
+     "what": "The anchor gate built (D2); from the next nights it deadlocked the sentinel and Dark Ocean"
+    }
+   ],
+   "repair": "c51deec",
+   "legible": "act only",
+   "legible_why": "The nightly discovery pass names the deadlock on 11 and 12 August and the repair says the handshake ends it, but every commit carries the architect's name; the two lost nights left no file.",
+   "signed": "the architect's name",
+   "searched": "Clone of machine-attention: messages naming the deadlock (4938b68, 6d73c34, c51deec) and the anchor commits of 9 August.",
+   "set": "d (completed here)"
+  },
+  {
+   "row": 135,
+   "deed": 1,
+   "log_line": 144,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "699e925cf83dbf6a88b9e17faf0ecafb6203aae0",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-06-12",
+     "what": "Protokoll description with 'twelve open sources' (one of thirteen stale descriptions)"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "fc310d24f21191030a37ca478fbe0ac2ad22856c",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-06-22",
+     "what": "Patterns description claiming the permutation test proves it cannot tell signal from noise (later reversed by the data)"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "9c54710afd509a275ead11dd30c1580dbdd1ebab",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-05",
+     "what": "Society description with 'twenty-five agents'"
+    }
+   ],
+   "repair": "44544edaba1a0ff1f22eb30ceaa027521926df9d",
+   "legible": "act only",
+   "legible_why": "The repair title and message say thirteen descriptions had stopped being true, but each description was true or plausible when written and was authored under the architect's name; only three of the thirteen were traced to introducing commits.",
+   "signed": "the architect's name",
+   "searched": "git log -S on werke.ts for the removed phrases (twelve open, twenty-five agents, proves with a permutation test); read #727.",
+   "set": "a"
+  },
+  {
+   "row": 135,
+   "deed": 2,
+   "log_line": 144,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "91392234a2454b54c6c96f19c0ca3dda1aa4154b",
+     "author": "Frank Bültge",
+     "date": "2026-06-23",
+     "what": "gegenmessung.yml: revision refresh runs only when DOW=1 and run() turns any failure into a ::warning:: skip"
+    }
+   ],
+   "repair": "5731ec07c0447471b48e02ab22337d44e32d2bc8",
+   "legible": "act only",
+   "legible_why": "The workflow is in Git and the repair (#1064, closes #723) says a failing pipeline now turns the run red, but nothing says the original was unasked or machine-made.",
+   "signed": "the architect's name",
+   "searched": "workflow listing at 2026-08-22; git log -S 'pipelines/revision/refresh.py' on gegenmessung.yml; #727 message points to #723.",
+   "set": "d"
+  },
+  {
+   "row": 137,
+   "deed": 1,
+   "log_line": 146,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "ff7cadd2ca1a0a4f08ed136f83ef1cf5f3bd042e",
+     "author": "Frank Bültge",
+     "date": "2026-08-01",
+     "what": "zentrale v2 gate lane: adds a second data-zx=\"gate\" element"
+    }
+   ],
+   "repair": "9c081f017c9f163ad71947c9dda73d0a260b2f09",
+   "legible": "act only",
+   "legible_why": "Both commits are signed by the architect; the repair (#715) renames to gatelane but the commit does not say it was a defect or name a machine.",
+   "signed": "the architect's name",
+   "searched": "git log -S 'data-zx=\"gate\"' (introduced 8f23e74 2026-07-17, duplicated in ff7cadd).",
+   "set": "d"
+  },
+  {
+   "row": 137,
+   "deed": 2,
+   "log_line": 146,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "ff7cadd2ca1a0a4f08ed136f83ef1cf5f3bd042e",
+     "author": "Frank Bültge",
+     "date": "2026-08-01",
+     "what": "v2 ZentralePage status text uses fixed -500 Tailwind colours (text-green-500, text-red-500, text-amber-500)"
+    }
+   ],
+   "repair": "9c081f017c9f163ad71947c9dda73d0a260b2f09",
+   "legible": "act only",
+   "legible_why": "The colours are in Git but only the log reports the 2.2:1 contrast; commit authors are the architect.",
+   "signed": "the architect's name",
+   "searched": "grep of text-*-500 in ZentralePage at ff7cadd; replaced by theme-selected levels in #715.",
+   "set": "d"
+  },
+  {
+   "row": 138,
+   "deed": 1,
+   "log_line": 147,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "b9c5899444d0c3f99a9227f4462b44706d06b8dc",
+     "author": "Ulysses <ulysses@ulysses.invalid>",
+     "date": "2026-08-21",
+     "what": "Project work session that ran the owed section-7 cold reading, whose message says the session is inward and breaches the one-in-four floor, recorded rather than argued away, and puts it to the architect in REQUESTS.md"
+    }
+   ],
+   "repair": "c538bebbf5615c1edc8af5b4723e2d28dbd9a3ad",
+   "legible": "deed and maker",
+   "legible_why": "The practice's own commit message states the floor breach and the question put to the architect, and the author line is the Ulysses persona; the ruling that followed (c538beb) is a separate commit.",
+   "signed": "a practice's persona",
+   "searched": "Listed ulysses commits of 2026-08-19 to 08-23, opened the 08-21 Ulysses session commit and the c538beb ruling commit, grepped the diff for the breach wording.",
+   "set": "b"
+  },
+  {
+   "row": 138,
+   "deed": 2,
+   "log_line": 147,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "field-research",
+     "hash": "a7a16b52e2b97aff517624e237d67c129a19c8ba",
+     "author": "Frank Bültge",
+     "date": "2026-08-16",
+     "what": "Window seed and SITE-API.md contract offered to Meridian while field auto-land.yml has no path check"
+    },
+    {
+     "repo": "studio",
+     "hash": "e75d9bc8344248cdcef7315a453222611365753f",
+     "author": "Frank Bültge",
+     "date": "2026-08-16",
+     "what": "Window contract in SITE-API.md offered to the studio, auto-land.yml unguarded"
+    },
+    {
+     "repo": "ulysses",
+     "hash": "1bce8d1929a775c50ec59b27f601ab6eb88b8509",
+     "author": "Frank Bültge",
+     "date": "2026-08-16",
+     "what": "Same offer to ulysses, whose gate did enforce an allowlist and refused it"
+    }
+   ],
+   "repair": null,
+   "legible": "act only",
+   "legible_why": "The offer is in Git but nothing in Git says field and studio auto-land lacked a path check or that the offer was unguarded.",
+   "signed": "the architect's name",
+   "searched": "SITE-API.md history 2026-08-13..23; ulysses 1260e8b adds window/ to ALLOW_RE on 2026-08-21; no later path-check commit found in field-research or studio auto-land.yml.",
+   "set": "d"
+  },
+  {
+   "row": 140,
+   "deed": 1,
+   "log_line": 149,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "7fa0745130eb86af0db9958655a4150ecebbec9f",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-11",
+     "what": "Mirror of the revived nightly line's works added to the shared register source (as an Atelier namespace source) while /atelier/works kept its own glob of two mirrors"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "aaa6b0ee068d8d1be23f2c9b528415e529ec7a79",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-16",
+     "what": "Rewrote /atelier/works as a register sheet that still re-globbed only the native and interactive mirrors, leaving the nightly works out"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "a0d655aad257fe842609d3dc4585205d62809068",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-12",
+     "what": "Pyramid commit that first drew the line map (slabs without line attribution)"
+    }
+   ],
+   "repair": "81d2023be449e7b4ff636c114f2ff6040d06ef95",
+   "legible": "deed and maker",
+   "legible_why": "The repair message reports the two missing-works and silent-slab findings as faults and mentions a parallel session and this branch, so a reader can tell sessions made it, although every author line reads Frank Bültge.",
+   "signed": "the architect's name",
+   "searched": "git log of src/pages/atelier/works.astro, diff of the repair 81d2023 (shows the removed two-mirror glob), history of register.ts and LineMap.astro to find where the omission entered.",
+   "set": "b"
+  },
+  {
+   "row": 141,
+   "deed": 1,
+   "log_line": 150,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "c35724ca5a4daeefb1b3bea3ab60c3fd36aa0575",
+     "author": "Ulysses",
+     "date": "2026-08-13",
+     "what": "SITE-API.md gains the 'Consult the atlas before you build' duty"
+    },
+    {
+     "repo": "field-research",
+     "hash": "ce141b7b86fb4350494f1eb7ff512e1e3ad8a793",
+     "author": "Meridian",
+     "date": "2026-08-13",
+     "what": "Same atlas-duty paragraph"
+    },
+    {
+     "repo": "studio",
+     "hash": "f31d00bc36301271d493a21eaf042ea1838f1b66",
+     "author": "Ensemble",
+     "date": "2026-08-13",
+     "what": "Same atlas-duty paragraph"
+    }
+   ],
+   "repair": "1bce8d1929a775c50ec59b27f601ab6eb88b8509",
+   "legible": "act only",
+   "legible_why": "The persona commits show the wording and the 2026-08-16 architect commits remove it (also a7a16b5, e75d9bc), but no commit says it was retracted or unasked.",
+   "signed": "a practice's persona",
+   "searched": "git log -S 'Consult the atlas before you build' on SITE-API.md in the three practice repos.",
+   "set": "d"
+  },
+  {
+   "row": 142,
+   "deed": 1,
+   "log_line": 151,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "96c7c480582e430e2e15260e3214197cf49549a6",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-02",
+     "what": "Refrain score fixed at natural size with a wider pitch so a narrow viewport scrolls sideways"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "a0d655aad257fe842609d3dc4585205d62809068",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-12",
+     "what": "Line map first built as a static figure"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "73b83fd8758c69ab8f76378fc84227fc41787ecb",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-13",
+     "what": "Refrain made self-carried by restating the older cream-sheet tokens, the stale chrome later replaced"
+    }
+   ],
+   "repair": "fb36706aa73d7981a166e1e1aebe5e76347f776f",
+   "legible": "act only",
+   "legible_why": "The repair message lists the three findings (still map, sideways scroll, wrong design) as faults, but every author line is Frank Bültge and nothing in Git says a machine made the figures.",
+   "signed": "the architect's name",
+   "searched": "Followed git log of refrain.ts and atelier-refrain.css and LineMap.astro, read the messages of 96c7c48, 73b83fd and the repair fb36706.",
+   "set": "b"
+  },
+  {
+   "row": 144,
+   "deed": 1,
+   "log_line": 153,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "9ab4c2f7b1f0c8ad80cc46e9fa29fa9ffbe8992b",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-15",
+     "what": "The Invoked Past goes live with the first refresh pipeline, naming a standout year with no explanation of why"
+    }
+   ],
+   "repair": "0eba62bcb8e04abff545cf3d7920dca595b2c00d",
+   "legible": "act only",
+   "legible_why": "The v1.1 repair message says the launched page lacked the explanation and that the fault was the writer's own, but the author line is the architect's name and it never says a machine wrote it.",
+   "signed": "the architect's name",
+   "searched": "git log of pipelines/invoked/refresh.py gave the launch commit and the same-day v1.1 commit; read both messages.",
+   "set": "b"
+  },
+  {
+   "row": 145,
+   "deed": 1,
+   "log_line": 154,
+   "found": "not in Git",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "9ab4c2f7b1f0c8ad80cc46e9fa29fa9ffbe8992b",
+     "author": "Frank Bültge",
+     "date": "2026-08-15",
+     "what": "#638 squash holds the finished instrument and its tests, not the flawed ranking nor the discovery of the flaw"
+    }
+   ],
+   "repair": null,
+   "legible": "nothing",
+   "legible_why": "The flaw was found and fixed before the first commit of pipelines/invoked, so no commit shows it or that tests found it.",
+   "signed": "the architect's name",
+   "searched": "git log --diff-filter=A on pipelines/invoked; first commit is #638 squash with the final method.",
+   "set": "d"
+  },
+  {
+   "row": 146,
+   "deed": 1,
+   "log_line": 155,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "ccb2c1d38a6a1ac28a28bcde5fdfc92adce73ec1",
+     "author": "Frank Bültge",
+     "date": "2026-08-14",
+     "what": "#602: ten instrument-candidate specs and the overview index that omitted The Front"
+    }
+   ],
+   "repair": "9ab4c2f7b1f0c8ad80cc46e9fa29fa9ffbe8992b",
+   "legible": "act only",
+   "legible_why": "The repair message (#638) names the stale 'proposal, not commissioned' headers and the dropped Front, but both commits carry the architect's author line and do not name a machine.",
+   "signed": "the architect's name",
+   "searched": "git log on the specs 2026-08-14..15; the staleness arose when the specs shipped; #602 created the files.",
+   "set": "d"
+  },
+  {
+   "row": 147,
+   "deed": 1,
+   "log_line": 156,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "1026061649c39e4ba25b8fb79d5cea57d99d2311",
+     "author": "Frank Bültge",
+     "date": "2026-08-09",
+     "what": "Governance commit that wrote the USP rework program, including the #16 row that assumed daily orbital snapshots exist"
+    }
+   ],
+   "repair": "806afce511e09f66ad44ed6054866928f7bf43ec",
+   "legible": "act only",
+   "legible_why": "The false premise is in Git and the repair message calls it false, but both are credited to the architect and nothing shows a machine wrote it.",
+   "signed": "the architect's name",
+   "searched": "Path-limited -S on the program and audit docs for 'orbital snapshots' found the introducing commit; the repair message of #642 states the premise was false.",
+   "set": "e"
+  },
+  {
+   "row": 147,
+   "deed": 2,
+   "log_line": 156,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "b91ea34119bc2124cc0dec4594d2ab64a0e0dcc8",
+     "author": "Frank Bültge",
+     "date": "2026-08-09",
+     "what": "Added consensus/baseline.test.ts (the ~10,000-expect() guard)"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "aeae3090d48b3dbdf034510badcfe48bfc5ff789",
+     "author": "Frank Bültge",
+     "date": "2026-08-05",
+     "what": "Added society/engine.test.ts (12,000-tick simulations under the 5 s default)"
+    }
+   ],
+   "repair": "806afce511e09f66ad44ed6054866928f7bf43ec",
+   "legible": "act only",
+   "legible_why": "The repair commit message says both tests failed at random as 5 s timeouts, but the commits are under the architect's name with no sign of a machine or a breach.",
+   "signed": "the architect's name",
+   "searched": "git log --diff-filter=A on the two test files; diff of #642 shows the timeout and assertion changes.",
+   "set": "e"
+  },
+  {
+   "row": 148,
+   "deed": 1,
+   "log_line": 157,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "studio",
+     "hash": "658a6fd975c186a13415baf91cb1934179f33a65",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-12",
+     "what": "Added the 'memory is recall' rule and tool to the Studio constitution while leaving the orientation step that ordered reading the curated memory/, creating the contradiction"
+    }
+   ],
+   "repair": "fe17269bcbfc4bc5f4b8de2038ddf47a637b9e24",
+   "legible": "act only",
+   "legible_why": "The repair commits (studio fe17269, field-research fa33099) date the contradiction and its three days, but they are signed with the architect's name 'on Frank's go' and name no machine as the maker.",
+   "signed": "the architect's name",
+   "searched": "Read the repair commits in studio and field-research; located the studio rule commit by git log of tools/memory/cli.py; field-research's older 'curated first' orientation wording could not be pinned to one commit by pickaxe, so only the studio commit is given.",
+   "set": "b"
+  },
+  {
+   "row": 149,
+   "deed": 1,
+   "log_line": 158,
+   "found": "not in Git",
+   "commits": [],
+   "repair": null,
+   "legible": "nothing",
+   "legible_why": "The atlas-duty text lived only in the four cloud routine prompts, which are in no repository; Git holds only decision-log rows (bdeefb89, ea744428 on the site) and a later handoff note, which are the log or post-date the deed.",
+   "signed": "other",
+   "searched": "Searched the site and practice repos for 2026-08-13 to 08-15 commits mentioning atlas or routines; the commits found (site bdeefb89, ea744428, 09f4489) are decision-log rows and a handoff document, not the prompt edit.",
+   "set": "b"
+  },
+  {
+   "row": 150,
+   "deed": 1,
+   "log_line": 159,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "studio",
+     "hash": "11bb78ff085e1ec1342807577117186dce62b43e",
+     "author": "Ensemble",
+     "date": "2026-08-10",
+     "what": "Session 84: first premiere gate failed on all three voices"
+    },
+    {
+     "repo": "studio",
+     "hash": "a20d9ae8d78b91a276db4a219bedda6346222e2a",
+     "author": "Ensemble",
+     "date": "2026-08-12",
+     "what": "Session 89: second gate sent the work back"
+    },
+    {
+     "repo": "studio",
+     "hash": "c6258a40316b2c58a87e4e04692b2c03c9491974",
+     "author": "Ensemble",
+     "date": "2026-08-13",
+     "what": "Session 92: third gate sent the work back"
+    },
+    {
+     "repo": "studio",
+     "hash": "44e8e5d4977ec61a393c345201b76b5ba17eb399",
+     "author": "Ensemble",
+     "date": "2026-08-14",
+     "what": "Session 93: fourth gate sent the work back"
+    },
+    {
+     "repo": "studio",
+     "hash": "95689460f45af471123f1cb84f6995b8b1e31fed",
+     "author": "Ensemble",
+     "date": "2026-08-14",
+     "what": "Session 94: fifth gate sent the work back"
+    },
+    {
+     "repo": "studio",
+     "hash": "fc250a9e1c255a7dcd1d8d0efc131d61e99b3787",
+     "author": "Ensemble",
+     "date": "2026-08-15",
+     "what": "Session 95: sixth gate sent the work back (session 91, b619af4, was a partial pass)"
+    }
+   ],
+   "repair": "a6d5855603a7076a320a9446e7cbcff761f4a478",
+   "legible": "deed and maker",
+   "legible_why": "The persona commits show the repeated gate failures, and the architect's PR #17 commit message states the gate could not close, counting six attempts and forty-four sessions without a premiere.",
+   "signed": "a practice's persona",
+   "searched": "git log --grep for 'session NN' in studio between 08-10 and 08-15; PR #17 commit message read.",
+   "set": "e"
+  },
+  {
+   "row": 151,
+   "deed": 1,
+   "log_line": 160,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "f7ce973e127a41cbd4389b55fe808940d62955b3",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-14",
+     "what": "Example: decision-log row quoting the architect's messages around the merge authority; many earlier log, CLAUDE.md and doc commits did the same"
+    }
+   ],
+   "repair": "86532f401efbc890b238cc354d153e6bdb06657b",
+   "legible": "act only",
+   "legible_why": "The redaction commit says private messages were quoted verbatim and that this was never authorized, but the author line is Frank Bültge and nothing says a machine did the quoting.",
+   "signed": "the architect's name",
+   "searched": "Found the redaction commit 86532f4 (and the later guard commit 2780f2f) by message search; the quoting was spread over many commits and the clone's history shows the quoted spans as placeholders, so f7ce973 is only a representative example.",
+   "set": "b"
+  },
+  {
+   "row": 153,
+   "deed": 1,
+   "log_line": 162,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "0e64d38dbdccb48192b853ed48db20ffa8a6ec1a",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-15",
+     "what": "Decision-log row founding n-1 that states it publishes on its own site with no human in the path, the false rationale"
+    }
+   ],
+   "repair": "2b194fb6b1f3904916bd44a2b03a89fe43738b4d",
+   "legible": "act only",
+   "legible_why": "The wrong sentence exists only inside the decision-log row of 0e64d38; the repair commit message states the correct rule (practices publish autonomously, only engine-site PRs are human-merged) without saying anyone had claimed otherwise, and authors are the architect's name.",
+   "signed": "the architect's name",
+   "searched": "Listed decision-log commits of the night of 2026-08-14/15 and read the diff of 0e64d38 for the no-human-in-the-path rationale; read the n-1 mirror commit 2b194fb.",
+   "set": "b"
+  },
+  {
+   "row": 157,
+   "deed": 1,
+   "log_line": 166,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "ccb2c1d38a6a1ac28a28bcde5fdfc92adce73ec1",
+     "author": "Frank Bültge",
+     "date": "2026-08-14",
+     "what": "Specs commit from the 2026-08-13 passes, listing only NewsDiffs as the news-diff neighbour"
+    }
+   ],
+   "repair": "6bb349644c923a4d18377571a7e7ca5da1cea33c",
+   "legible": "act only",
+   "legible_why": "The seal commit message says the earlier pass had only declared NewsDiffs dead, but both commits carry the architect's name and no machine is named.",
+   "signed": "the architect's name",
+   "searched": "Looked at 08-13/14 spec and audit commits; grep of the diff confirmed NewsDiffs in #602, and the seal commit message names the miss.",
+   "set": "e"
+  },
+  {
+   "row": 159,
+   "deed": 1,
+   "log_line": 168,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "7fa0745130eb86af0db9958655a4150ecebbec9f",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-11",
+     "what": "register.ts gives the nightly fork the Atelier namespace and omits its inherited half, so within the Atelier the two lines were no longer distinguishable"
+    }
+   ],
+   "repair": "f3beac39cbe6c7f35458ae14e16971eb8420ae5e",
+   "legible": "act only",
+   "legible_why": "The repair message says the correct register repair produced the opposite fault, which the architect saw, but the author line is the architect's name and no machine is named.",
+   "signed": "the architect's name",
+   "searched": "git log of register.ts, read its fork-source diff in 7fa0745 and the repair message of f3beac3 that names the register.ts change.",
+   "set": "b"
+  },
+  {
+   "row": 160,
+   "deed": 1,
+   "log_line": 169,
+   "found": "not in Git",
+   "commits": [],
+   "repair": null,
+   "legible": "nothing",
+   "legible_why": "The Ulysses routine prompt with its outdated path list lives in no repository; only decision-log commits (site ea744428, bdeefb89) record the discovery.",
+   "signed": "other",
+   "searched": "Checked site and ulysses commits of 2026-08-12 to 08-14 for any prompt text; found only the decision-log rows, which state that routine prompts live in no repo.",
+   "set": "b"
+  },
+  {
+   "row": 160,
+   "deed": 2,
+   "log_line": 169,
+   "found": "not in Git",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "c83ca85c092de092f7ecc3ac1838faf103e894d3",
+     "author": "Frank Bültge",
+     "date": "2026-08-13",
+     "what": "The four catalogue feeds (PR #582) that were reachable but unannounced; this is the repair, not the omission"
+    }
+   ],
+   "repair": null,
+   "legible": "nothing",
+   "legible_why": "The omission (prompts never naming the feeds) lives in routine prompts that sit in no repository, and the decision-log rows are the only record.",
+   "signed": "the architect's name",
+   "searched": "Found PR #582 and the two decision-log commits; the routine prompts and trigger edits are outside every repo.",
+   "set": "e"
+  },
+  {
+   "row": 161,
+   "deed": 1,
+   "log_line": 170,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "b71ddd2dfb4ec2fd5a2d192c59b8eae82c0cbc4b",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-12",
+     "what": "Protocol text first naming archive/trace as where older trace is rotated, while the auto-land gate still protected archive/"
+    },
+    {
+     "repo": "ulysses",
+     "hash": "9ee989233e734c67dc270f22a13cb54aa0f8015a",
+     "author": "Ulysses <ulysses@ulysses.invalid>",
+     "date": "2026-08-11",
+     "what": "The practice's first rotation of its older record into archive/trace, the kind of write the gate could not land"
+    }
+   ],
+   "repair": "87c11a8fb5fbddff0c5895d47f0e99c829f7751e",
+   "legible": "act only",
+   "legible_why": "The Ulysses-signed repair message says the constitution ordered a write the gate forbade and rotations sat unmerged, so the fault is legible, but the rule-writing commits are credited to the architect and nothing says who wrote the unfollowable rule.",
+   "signed": "the architect's name",
+   "searched": "Matched the log's c794e8b to ulysses 87c11a8 by message; grepped PROTOCOL.md history for archive/trace (first in b71ddd2) and found the 2026-08-11 rotation commit 9ee9892.",
+   "set": "b"
+  },
+  {
+   "row": 162,
+   "deed": 1,
+   "log_line": 171,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "error-as-method",
+     "hash": "94e207d531532d19690d2265c4c7e4ac8437963d",
+     "author": "Frank Bültge",
+     "date": "2026-08-12",
+     "what": "The fork note declares pulse/ not carried, as instrument data for a unit of work the line does not use"
+    }
+   ],
+   "repair": "177b8de",
+   "legible": "act only",
+   "legible_why": "The repair's diff of PROTOCOL.md says the reason was wrong about the rhizome, but its message only says the note was amended the same day, and both commits carry the architect's name.",
+   "signed": "the architect's name",
+   "searched": "Full clone of error-as-method: the commit whose fork note gives the rationale, and the same-day amendment the row names.",
+   "set": "e (completed here)"
+  },
+  {
+   "row": 162,
+   "deed": 2,
+   "log_line": 171,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "9d1a263bf1f06c4e37245baafa13b9941aa08421",
+     "author": "Ulysses <ulysses@ulysses.invalid>",
+     "date": "2026-07-31",
+     "what": "The first work-line entry in pulse/vital-signs.json, its counter restarted at 27 and colliding with the nightly series"
+    }
+   ],
+   "repair": "900860b",
+   "legible": "act only",
+   "legible_why": "The persona's repair of 4 August adds a note in the file that the two counters collide, but no commit message says so; the unmarked conjecture was not pinned to a commit.",
+   "signed": "a practice's persona",
+   "searched": "The error-as-method request of 12 August names the closure index and its repair of 4 August; ulysses history of pulse/vital-signs.json.",
+   "set": "e (completed here)"
+  },
+  {
+   "row": 163,
+   "deed": 1,
+   "log_line": 172,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "e3d1e355b2b213f99e30f102ce5c4394ec52e07b",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-07-02",
+     "what": "Shared memory recall tool added with a fixed source list that later constitutions outgrew"
+    },
+    {
+     "repo": "field-research",
+     "hash": "2ae697be15d1be0cc8e017899edbe69ded8460fa",
+     "author": "Meridian <field-research>",
+     "date": "2026-07-11",
+     "what": "Earliest commit in the clone holding tools/memory/cli.py with its source list; four gaps surfaced later"
+    }
+   ],
+   "repair": "09b5b509686bb6b47f79b8cc10bfd6ebe1d80c0c",
+   "legible": "act only",
+   "legible_why": "Repair commits (field-research 09b5b50, studio 658a6fd) describe the stale source list as a failure class, but they carry the architect's name and no deed commit shows a machine skipping an update.",
+   "signed": "the architect's name",
+   "searched": "git log --reverse of tools/memory/cli.py in field-research, ulysses and studio; studio had no tool before 658a6fd; error-as-method repair 9540eab is in a repository not among the clones.",
+   "set": "b"
+  },
+  {
+   "row": 163,
+   "deed": 2,
+   "log_line": 172,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "error-as-method",
+     "hash": "8791a78c4c6a6b6880727d592223279f5d84ab84",
+     "author": "Frank Bültge",
+     "date": "2026-08-10",
+     "what": "The fork: a constitution that names SITE-API.md and protects it, the file absent"
+    }
+   ],
+   "repair": "94e207d",
+   "legible": "act only",
+   "legible_why": "The repair's message says the file was named by the constitution since the fork and absent until then, but both commits carry the architect's name and nothing says a machine wrote them.",
+   "signed": "the architect's name",
+   "searched": "Full clone of error-as-method: the fork commit and the commit that wrote SITE-API.md two days later.",
+   "set": "e (completed here)"
+  },
+  {
+   "row": 164,
+   "deed": 1,
+   "log_line": 173,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "b1716056d55f2726aa3bc46fba885484642b9234",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-08",
+     "what": "Protocol v6 written with the SCORE and process-record floors in section 8, with no validator check of any size"
+    },
+    {
+     "repo": "ulysses",
+     "hash": "3b2c998b75b2635f7aac34c0336e67cea824f404",
+     "author": "Ulysses <ulysses@ulysses.invalid>",
+     "date": "2026-08-11",
+     "what": "Practice session commit that grew the work-line record far past the floors (TRACE about 85,000 words against a 3,000-word floor)"
+    }
+   ],
+   "repair": "b71ddd2dfb4ec2fd5a2d192c59b8eae82c0cbc4b",
+   "legible": "deed and maker",
+   "legible_why": "The repair message sets the measured sizes against the floors and says the validator checked none, and the over-floor record was committed under the Ulysses persona.",
+   "signed": "a practice's persona",
+   "searched": "Read the v6 floor line in PROTOCOL.md at b171605, measured TRACE.md and SCORE.md word counts at a pre-repair commit with git show | wc -w, and read the b71ddd2 message.",
+   "set": "b"
+  },
+  {
+   "row": 164,
+   "deed": 2,
+   "log_line": 173,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "e3d1e355b2b213f99e30f102ce5c4394ec52e07b",
+     "author": "Frank Bültge",
+     "date": "2026-07-02",
+     "what": "Added tools/memory/cli.py with the SOURCE_GLOBS list that was never extended"
+    }
+   ],
+   "repair": "b71ddd2dfb4ec2fd5a2d192c59b8eae82c0cbc4b",
+   "legible": "act only",
+   "legible_why": "The repair message dates SOURCE_GLOBS to 2026-07-02 and says it was never extended, but all of it is under the architect's name with no machine shown.",
+   "signed": "the architect's name",
+   "searched": "git log --diff-filter=A on tools/memory/cli.py; read b71ddd2 message.",
+   "set": "e"
+  },
+  {
+   "row": 164,
+   "deed": 3,
+   "log_line": 173,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "f00897ece5e6024073e1992585ab24ae06579805",
+     "author": "Ulysses",
+     "date": "2026-07-24",
+     "what": "Protocol v5 fold that left two appendix lines for the Foundation"
+    },
+    {
+     "repo": "ulysses",
+     "hash": "b1716056d55f2726aa3bc46fba885484642b9234",
+     "author": "Frank Bültge",
+     "date": "2026-08-08",
+     "what": "Protocol v6 fold that left one appendix line"
+    }
+   ],
+   "repair": "169c659119ff725b87e56a9891e7bf6b6283b64d",
+   "legible": "act only",
+   "legible_why": "The repair message says the anchoring of 2026-07-19 (391311646) was folded away, but the commits are credited to the architect, one under a persona name with a message citing his decision.",
+   "signed": "the architect's name",
+   "searched": "PROTOCOL.md history 07-19 to 08-12; read 169c659 message naming the v5 and v6 folds.",
+   "set": "e"
+  },
+  {
+   "row": 164,
+   "deed": 4,
+   "log_line": 173,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "b71ddd2dfb4ec2fd5a2d192c59b8eae82c0cbc4b",
+     "author": "Frank Bültge",
+     "date": "2026-08-12",
+     "what": "Prescribed archive/trace/ without creating it"
+    },
+    {
+     "repo": "ulysses",
+     "hash": "169c659119ff725b87e56a9891e7bf6b6283b64d",
+     "author": "Frank Bültge",
+     "date": "2026-08-12",
+     "what": "Named the Foundation requirements file by bare name"
+    }
+   ],
+   "repair": "48bdb1f4074cf39c11da2aa6dc9874cbc4e0fe1f",
+   "legible": "act only",
+   "legible_why": "The fix commit message says the new test failed first on two of the same night's changes (first person, 'caught me'), but all are credited to the architect.",
+   "signed": "the architect's name",
+   "searched": "Read 48bdb1f diff and message and traced the two faults to the two earlier commits.",
+   "set": "e"
+  },
+  {
+   "row": 166,
+   "deed": 1,
+   "log_line": 175,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "e865d4a7303294a827fe3cdc19e6f2cb1d6dc15d",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-11",
+     "what": "/error-as-method surface built for the pair while no Atelier page named the fork"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "068997d1dc6e15f536b2d0bf5139a90a457fb9f4",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-07-16",
+     "what": "Works room written gating the sources disclosure on meta.quellen, so it never rendered"
+    }
+   ],
+   "repair": "bdf684dd9cd539962bf98b88c87004a89108ebd4",
+   "legible": "act only",
+   "legible_why": "The repair message says the pair was built on one side only and names the never-rendered expander, but both sides are signed with the architect's name and no machine is named.",
+   "signed": "the architect's name",
+   "searched": "Opened #552 (bdf684d), listed commits that added error-as-method pages, and used a path-limited pickaxe on works.astro for 'quellen'.",
+   "set": "b"
+  },
+  {
+   "row": 166,
+   "deed": 2,
+   "log_line": 175,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "068997d1dc6e15f536b2d0bf5139a90a457fb9f4",
+     "author": "Frank Bültge",
+     "date": "2026-07-16",
+     "what": "atelier works.astro introduced the meta.quellen check while works commit 'sources'"
+    }
+   ],
+   "repair": "bdf684dd9cd539962bf98b88c87004a89108ebd4",
+   "legible": "act only",
+   "legible_why": "The repair PR is in Git but its message calls it a fix only in passing, and the author line is the architect.",
+   "signed": "the architect's name",
+   "searched": "Path-limited -S 'meta.quellen' on works.astro found both commits.",
+   "set": "e"
+  },
+  {
+   "row": 169,
+   "deed": 1,
+   "log_line": 178,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "ulysses",
+     "hash": "f00897ece5e6024073e1992585ab24ae06579805",
+     "author": "Ulysses <ulysses@ulysses.invalid>",
+     "date": "2026-07-24",
+     "what": "Protocol v5 in force, authored by the practice and captioned as Frank Bültge's decision, hardening publication into the PUBLICATION.json inviolable"
+    }
+   ],
+   "repair": "d34d42a9a495224306d2b208f73656c4f256864f",
+   "legible": "deed and maker",
+   "legible_why": "The repair message says v5 hardened the gate in a commit authored by this practice and captioned as the architect's decision that his log does not record, and the deed commit itself is signed Ulysses.",
+   "signed": "a practice's persona",
+   "searched": "Log of PROTOCOL.md history, opened f00897e and confirmed the PUBLICATION.json line at line 34, read the strike commit d34d42a.",
+   "set": "b"
+  },
+  {
+   "row": 173,
+   "deed": 1,
+   "log_line": 182,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "914ac778e975abf8c1e9eb1cf242ebcfc6a44922",
+     "author": "Frank Bültge",
+     "date": "2026-08-09",
+     "what": "Afternoon vocabulary pass (four words)"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "348d1320885f1f5dd505bd0e626f84334e737d75",
+     "author": "Frank Bültge",
+     "date": "2026-08-09",
+     "what": "Evening pass adding HOUSE and the Research nav group"
+    }
+   ],
+   "repair": "fd2bbff1e996c62a4598d81c2763c0f69c6cf47e",
+   "legible": "act only",
+   "legible_why": "The repair message says Frank corrected both earlier passes and that 'house' was withdrawn, but every commit is under the architect's name.",
+   "signed": "the architect's name",
+   "searched": "Listed all 08-09 site commits and read the three messages.",
+   "set": "e"
+  },
+  {
+   "row": 174,
+   "deed": 1,
+   "log_line": 183,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "914ac778e975abf8c1e9eb1cf242ebcfc6a44922",
+     "author": "Frank Bültge",
+     "date": "2026-08-09",
+     "what": "The four-word vocabulary that left ecology and Machine Attention on one level"
+    }
+   ],
+   "repair": "348d1320885f1f5dd505bd0e626f84334e737d75",
+   "legible": "act only",
+   "legible_why": "The next commit says Frank's question found a hole in the vocabulary settled four hours earlier, under the architect's name with no machine shown.",
+   "signed": "the architect's name",
+   "searched": "Read 914ac778 and 348d1320 messages.",
+   "set": "e"
+  },
+  {
+   "row": 175,
+   "deed": 1,
+   "log_line": 184,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "a5c670da042fa5e0e72c7e81d7ca4ada4516ea86",
+     "author": "Frank Bültge",
+     "date": "2026-07-31",
+     "what": "Nav commit that titled the page Experiments over the /holdings route"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "46d3339be1b0f89307f66955d948f44f1c1bcde8",
+     "author": "Frank Bültge",
+     "date": "2026-08-08",
+     "what": "Listed Machine Attention as an experiment and the observatory as its background project"
+    }
+   ],
+   "repair": "914ac778e975abf8c1e9eb1cf242ebcfc6a44922",
+   "legible": "act only",
+   "legible_why": "The repair message describes the overlap, but the commits are under the architect's name.",
+   "signed": "the architect's name",
+   "searched": "Searched 07-30 to 08-09 commits for experiments/holdings and Machine Attention.",
+   "set": "e"
+  },
+  {
+   "row": 179,
+   "deed": 1,
+   "log_line": 188,
+   "found": "not in Git",
+   "commits": [],
+   "repair": null,
+   "legible": "nothing",
+   "legible_why": "The first cut was corrected mid-flight in the session and never committed; the v2 commits show only the final result.",
+   "signed": "the architect's name",
+   "searched": "Listed commits in ulysses, field-research and studio 08-07 evening to 08-08 03:00; none is a discarded first cut.",
+   "set": "e"
+  },
+  {
+   "row": 180,
+   "deed": 1,
+   "log_line": 189,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "d8d4b9c48750c52f980bbfe6fc949ce4f79c9e72",
+     "author": "Frank Bültge",
+     "date": "2026-08-03",
+     "what": "Created anatomy.ts and its test"
+    },
+    {
+     "repo": "frankbueltge.de",
+     "hash": "ba678d9085c0305f93898b417f0f2bd556d197ab",
+     "author": "Frank Bültge",
+     "date": "2026-08-08",
+     "what": "Mirror resync that made the figure drift, fixed in the same PR; its message says the test caught it"
+    }
+   ],
+   "repair": "ba678d9085c0305f93898b417f0f2bd556d197ab",
+   "legible": "act only",
+   "legible_why": "The PR message states the test caught the drift, but it is credited to the architect.",
+   "signed": "the architect's name",
+   "searched": "Path log on anatomy.ts and anatomy.test.ts; read the PR message.",
+   "set": "e"
+  },
+  {
+   "row": 180,
+   "deed": 2,
+   "log_line": 189,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "db69f726a08e9d63a53adc3b334f4580ac161cab",
+     "author": "Frank Bültge",
+     "date": "2026-07-24",
+     "what": "Wrote the studio door string 'under no label'"
+    },
+    {
+     "repo": "studio",
+     "hash": "0fa6c5ab1025a69f5b3f2c209648cbaa7f8d78d9",
+     "author": "Frank Bültge",
+     "date": "2026-08-08",
+     "what": "Constitution change that made the string false"
+    }
+   ],
+   "repair": "ba678d9085c0305f93898b417f0f2bd556d197ab",
+   "legible": "act only",
+   "legible_why": "The PR message says the approved string now contradicted the constitution and was changed under the currency rule, all under the architect's name.",
+   "signed": "the architect's name",
+   "searched": "Path-limited -S on naming.ts; read ba678d9 message.",
+   "set": "e"
+  },
+  {
+   "row": 181,
+   "deed": 1,
+   "log_line": 190,
+   "found": "at its commit",
+   "commits": [
+    {
+     "repo": "frankbueltge.de",
+     "hash": "b1fa3893679e86a459af49b89aa62278e63d9f62",
+     "author": "Frank Bültge <f.bueltge@gmail.com>",
+     "date": "2026-08-05",
+     "what": "The /season register and page built, the source of the stale parked concept, missing claimed episode and topic-bearing open slots"
+    }
+   ],
+   "repair": "0e6a27a4569e5ce2dfec06ce18e400d3a467afd2",
+   "legible": "act only",
+   "legible_why": "The repair message lists three drifts fixed against the practices' committed records, but both commits are signed Frank Bültge and nothing names a machine.",
+   "signed": "the architect's name",
+   "searched": "git log of src/data/season/season1.ts gave the creation and fix commits; read both messages.",
+   "set": "b"
+  },
+  {
+   "row": 185,
+   "deed": 1,
+   "log_line": 194,
+   "found": "not in Git",
+   "commits": [],
+   "repair": "14a2d97191c74dfc91bcbb482dfd4c9fb597037d",
+   "legible": "nothing",
+   "legible_why": "A missing log is an omission with no commit; Git shows only a gap in docs/decision-log.md history and later catch-up commits (14a2d97 adding six dated rows, a0b3aaa saying the log resumes after its drift).",
+   "signed": "other",
+   "searched": "git log of docs/decision-log.md from 2026-07-17 to 08-03 showed commits on 07-20, 07-25 and 07-31 and 08-01 only, with the catch-up commits as repair.",
+   "set": "b"
+  }
+ ]
+}

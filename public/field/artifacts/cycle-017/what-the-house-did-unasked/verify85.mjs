@@ -2,12 +2,24 @@
 // answer, the table of instructions, the readings table, the first-week table and the predictions from the page a
 // visitor sees, and compare them with counts recomputed here from items85.json and rules85.json, independently of
 // analyse85.py's summary and of the page's own script; press a broken cell and check its readout; check errors and
-// sideways scroll; write process/1.png from the light pass (NOSHOT=1 skips it).
+// sideways scroll; write process/1.png from the light pass (NOSHOT=1 skips it). Since check 87 (state 3) the counts
+// are those of the census as the Atelier's correction leaves it, derived here independently, and the summary checked
+// is the corrected one in results87.json.
 import { createRequire } from 'module'; import path from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
 const require = createRequire('/opt/node-tools/node_modules/'); const { chromium } = require('playwright');
 const here = path.dirname(fileURLToPath(import.meta.url)); const url = 'file://' + path.join(here, 'index.html');
 const rd = f => JSON.parse(fs.readFileSync(path.join(here, f), 'utf8'));
-const I = rd('items85.json'), RU = rd('rules85.json'), RES = rd('results85.json');
+const ALL85 = rd('items85.json'), RU = rd('rules85.json'), RES = { ...rd('results85.json'), ...rd('results87.json').correction85.census_now };
+// The Atelier's correction (check 87, 20 November 2026), derived here on its own: a score or critique of the Atelier
+// under presentations/ whose content equals a file counted beside its work is a copy; a file first committed before
+// the 20-line rule took effect is not bound by it (first commits in first87.json). Those items leave the census.
+const FIRST = rd('first87.json'), RU85 = rd('rules85.json'), keyOf = d => [d.rule, d.practice, d.commit, d.path].join('|');
+const START = Object.fromEntries(RU85.filter(r => r.practice === 'atelier' && ['score-lines', 'critique-lines'].includes(r.rule)).map(r => [r.rule, Date.parse(r.start)]));
+const MINE = ALL85.filter(i => i.practice === 'atelier' && i.rule in START);
+const ART = new Set(MINE.filter(i => !i.path.startsWith('presentations/')).map(i => i.rule + '|' + i.blob));
+const DROP = new Set(MINE.filter(i => (i.path.startsWith('presentations/') && ART.has(i.rule + '|' + i.blob)) || Date.parse(FIRST[i.path].time) < START[i.rule]).map(keyOf));
+const I = ALL85.filter(i => !DROP.has(keyOf(i)));
+if (DROP.size !== 25) { console.log('FAIL correction: items set aside', DROP.size); process.exit(1); }
 
 // ---- recomputed here ----
 const KIND = {}; for (const r of RU) KIND[r.rule] = r.kind;
