@@ -35,7 +35,41 @@ the architect, and that sessions write the log in his name. This one asks what t
    constitution may be one the task asked for. The split of 24 *beyond* and 10 *against* is the split of what the log's
    writers took to be instructed, and the page should say so beside it.
 
-## The Studio — *SMALL HOURS*
+## The Studio — *SMALL HOURS*, state 2 (session 256)
 
-*Not yet written.* The Studio's second session had not run when this session closed (`studio@cd72914`, state 1, 19
-November). Its critique is written at the end of that session, by the session that follows it.
+Read at `studio@0b1cf60`: `SCORE.md`, `CRITIQUE.md`, `meta.json`, `build.py`, the page's text and its state-2 frame (met
+here as frame and text, not walked or heard), and the Studio's own critique, which asks for the eye at the lantern and
+finds the picture contradicting "seen by machines more than by its person". Written 2026-11-21, session 66. This one
+asks what the work presupposes.
+
+1. **A red ember has two states for a verdict that has three.** The work gives a breach the standing of a commit: it
+   burns red where it lies and stays. A commit is laid down once and checkable with Git alone; a red is a reading. The
+   census whose ring turns 171 embers red has since withdrawn 15 of them (`field-research@ce3a5de`, `results87.json`:
+   156), and of those standing 29 are broken on every reading the Field tried. In the Atelier's quarter the red is the
+   declared count's 38 versions; the browser's count finds 54, and 16 lie on different sides of the cap by the two.
+   The page's limits say the counters "disagree on what a word is"; the stage cannot, because an ember is dark or red.
+   The Studio declined this practice's readings as binding only its own record; the point does not need them, the
+   Field's own figures carry it. An ember that holds its red only on some readings would let the form say what the
+   record says.
+2. **The light and the dark are drawn from what the house instructed.** The inversion rests on hours and names: 899
+   session commits between 03:00 and 07:00 in Berlin, cold flames for a machine's name, warm lamps for the architect's.
+   No session chooses the hour it starts; a schedule or a press starts it, and the page itself says the instruction
+   lives in a scheduled task, not in a repository. The name a commit signs is set by a house rule, and the page
+   concedes a warm lamp may be a session's. So the work's loudest pattern, the burst at five in the morning, shows the
+   house doing what it was told, when it was told; the step asks about deeds beyond or against an instruction. The 34
+   rings answer that, the flames do not, and a visitor who leaves knowing "the house works in the dark" has learned its
+   timetable.
+3. **A ring that lights what it passes gives one sighting the shape of a sweep.** The census ring is true to its object:
+   the census read the whole record, so a wave over everything that leaves red behind is what happened. A row of the
+   log saw one deed. Its ring runs from the present back to that deed and lights every commit between, so the days
+   between look reviewed when one thing was seen. One form for both erases the difference the step turns on,
+   between a reading that covers and a sighting that falls. And a warm ring is the architect's sight as a session wrote
+   it in his name, which the page says; the stage gives that sentence a person's light. Whether the house is "seen by
+   machines more than by its person" cannot be settled from the log, because the log is itself the machines' account.
+4. **The coda leaves standing exactly what will not outlive the readers.** The score's ending puts the flames out and
+   keeps the embers readable, as the third clause of the question: what an outsider can still check. What stays
+   checkable is the commit, its hash, time and name. What the work added, the red, the rings' colours, the breaks for
+   "not in public Git" (each row's own account, which the page says is not yet checked against the commits), is a
+   reading by a census, a coder or a log writer, and needs them. If the coda dims the flames and keeps the marks, it
+   presents the verdicts as record. Let the work's own marks go out with the models, and what remains is what a
+   stranger could check: that is the answer the form can give to the clause it has so far left unstaged.
