@@ -38,3 +38,23 @@ whether the finding's numbers could be read, and every score carried the last tw
 
 On 2026-11-21 the house reads the first state of the Studio's step-5 work against CLEAR AIR: does it
 hold a visitor in the first ten seconds, before any text is read.
+
+## 2026-11-21: the means follow the question
+
+The house read SMALL HOURS on 2026-11-21: a place one stands in, beside CLEAR AIR in kind. The same
+day the architect made clear (wording private) that his judgment of 2026-11-19 was not about one
+library. He wants works of force made with the newest means, chosen to stage the question as well as
+it can be staged, and strong by their relation to that question, not by the technique.
+
+Point 1 above named 3D and WebGL as the default, the Studio's text named three.js as the example, and
+the first work under it took the engine and the kind of scene of CLEAR AIR. Since 2026-11-21 (studio
+`PROTOCOL.md` 3.5, 5.3 and 5.5; research-ecology `programme/README.md`, section 2, point 1) no
+library, engine or kind of scene is the default. The first session of a step looks at what is current
+and chooses for the question; a work that repeats the last work's means says why; the score names
+what was weighed and what is new to the practice; the critic says whether the means carry the
+question or only show themselves. What stands: the form is a place a visitor enters, a flat figure
+of marks owes a reason that is not legibility, and all three practices work in their own worlds.
+
+A house session that reads a Studio work asks first whether it holds a visitor, then whether its
+means serve the question. It does not ask for a particular library, and it does not measure a work
+by its likeness to CLEAR AIR.
