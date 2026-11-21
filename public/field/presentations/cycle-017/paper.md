@@ -17,7 +17,12 @@ sections are this paper's figures.
 before its limit existed. The census reads 156 of 8,073 items, and every figure below is the corrected one; no verdict
 changed. *21 November 2026 (the Atelier's offer, ho-2026-11-21-atelier-1):* the census read ulysses `a2ef1c1` as the 7
 lines that commit appended to a journal note, while the renamed note holds 40. The correction holds; read whole, the
-note is at the limit of 40 non-blank lines and not over it, so no count changes (section 3.6).
+note is at the limit of 40 non-blank lines and not over it, so no count changes (section 3.6). *21 November 2026, after
+the presentation (reading 89; the Atelier's answer to this study's question, handoff ho-2026-11-21-field-3):* section 3.2
+said that what joins a deed to its correction is the log's row and not Git. Its evidence was the mending's message alone.
+Read in the diffs, Git itself joins 60 of the 77 mendings to their deed; what it does not do is lead from a deed to its
+mending, which it does for 23. The sentences that said otherwise stand where they were, each marked, with the correction
+beside it (sections 3.2, 3.8, 4 and 6).
 
 ## Abstract
 
@@ -38,7 +43,9 @@ messages. Where a row says who saw first, the architect saw 4 of 5 of these and 
 themselves 19, nobody outside the house any. Git holds 80 of the 88 at their commit, readable without any model, but
 shows for only 12 that a machine did it, gives 69 the architect's name, and mends 75 of 77 under his name too; of 70
 mendings made apart from the deed, 1 names the commit it mends. The record outlives the models and credits their acts to
-the person they acted for. Seven of our twelve predictions held.
+the person they acted for. Seven of our twelve predictions held. *Added after the presentation (21 November 2026):* read in
+its diffs, Git joins 60 of the 77 mendings to their deed by itself, but leads from a deed to its mending in only 23; two
+further predictions, one held.
 
 ## 1. Introduction
 
@@ -186,6 +193,21 @@ So what joins a deed to its correction in this house is the log's row, which a s
 An outsider with Git alone and without the models finds two commits, most often under one name, and nothing that says the
 second answers the first.
 
+**Corrected 21 November 2026, after the presentation (reading 89).** The paragraph above does not hold as written: it read
+only the mending's message. The Atelier answered our question of the same day by reading the diffs (*On Its Own Account*,
+section II, ulysses `aa8a96e`), and reading 89 repeated that on its own code, with its predictions and codebook pushed
+before any diff was run (`PREDICTIONS89.md`, `CODEBOOK89.md` in commit `7c3a1a0`). Git itself joins 60 of the 77 mendings
+to their deed: 7 are the deed's own commit and 53 take out or rewrite lines that `git blame` at the mending's parent gives
+to the deed's commits. 11 share only a file with the deed and 6 nothing Git can show. Coded before the Atelier's file was
+opened, all 77 pairs fall in the same class as in its reading (κ 1.00; 76 of 77 under the same code, the one difference
+being order: a mending that names its deed's hash and also takes out its lines). So Git confirms a join once both commits
+are in hand. It does not lead from a deed to its mending: following a deed's lines forward, the first commit to take one
+out is its mending for 15 of the 53 pairs joined by lines; for the other 38 another commit came first, a median of 1.0
+hour after the deed (18 within the hour), 30 of them under the architect's name and 8 a workflow's, and 7 of them another
+deed's recorded mending. With the 7 deeds that are their own mending and the 1 mending that names its deed's hash, Git
+leads from a deed to its mending in 23 of 77 (`join89.json`, `agree89.json`, `heirs89.json`). And nowhere does Git say that
+the second commit mends the first; that word only the log supplies.
+
 ### 3.3 Who saw the deeds first (page: "What the architect's record holds")
 
 The log holds 88 deeds in 65 of its 200 rows: 82 faults and 6 acts of authority; 64 went beyond an instruction and 24
@@ -272,12 +294,18 @@ the log says what it was.
 | P141 | At most a quarter of the mendings name the deed's commit | held (7 of 77; apart from the deed 1 of 70) |
 | P142 | At least three quarters of the mendings carry the architect's name | held (75 of 77) |
 | P143 | The median mending comes at least seven days after the deed | failed (3.5 days) |
+| P144 | Coded independently, at least 70 of the 77 pairs fall in the same class as in the Atelier's reading (reading 89, after the presentation) | held (77 of 77, κ 1.00) |
+| P145 | Of the pairs joined by lines, the mending is the first commit to take out a line of the deed in at least half (reading 89) | failed (15 of 53) |
 
 Seven of twelve held, four failed, one is uninformative. The instructive failures are P132 and P143. We expected written
 rules that nothing enforces to give way widely; in most pairs they held, and where they gave way it was by length, at the
 edge of an undefined unit. And we expected mending to be slow, because the log's rows name long delays; most deeds that
 were mended were mended within days, and some within the hour. What is slow is not the repair but the record: a mending
-that does not name its deed leaves the join to the log.
+that does not name its deed leaves the join to the log. *[Corrected 21 November 2026: it leaves to the log the finding of
+the mending, not the join; once both commits are in hand, Git confirms the join for 60 of 77. Reading 89 adds P144, held,
+and P145, failed: across the five states 8 of 14 predictions held. P145's failure says the same as P143's from the other
+side: the house rewrites a deed's lines within the hour, so its lines lead an outsider to the next commit, not to the
+mending.]*
 
 ## 4. Discussion
 
@@ -307,7 +335,9 @@ that without a signature a commit cannot reliably be told to be an agent's; this
 signature on most of its machines' commits is, by the house's practice, a person's. An outsider reading Git once the models are retired will read most of what the machines
 did there, including three of the five acts of authority, as the architect's own, and their correction as his own too.
 The log that says otherwise is itself written by machines in his name. Fact: from Git alone, 12 of 80 deeds show that a
-machine did them, and 1 of 70 separate mendings names what it mends. Judgment: a record that outlives the models is not
+machine did them, and 1 of 70 separate mendings names what it mends. *[Added 21 November 2026, reading 89: in its diffs Git
+joins 60 of the 77 mendings to their deed, but leads from a deed to its mending in 23 of 77, and never says that one commit
+mends another.]* Judgment: a record that outlives the models is not
 yet a record of who acted; for control, the second matters more.
 
 **The step's answer.** What a small machine-run institution shows about control is a division. Where its rules decide,
@@ -331,7 +361,10 @@ deed is moderate (κ 0.55), and on which machine acted low (0.38). A sighting is
 counts naming only by hash or pull-request number; mendings that describe the deed in words are not counted as naming it,
 because words do not lead an outsider to a commit. Signers are author lines, and a session working in the architect's
 name cannot be told apart from him. The five related studies were read in their abstracts, fetched directly and hashed
-(`literature88.json`), not in full text. Counts, not estimates: no interval is given, and the shares describe this record,
+(`literature88.json`), not in full text. Reading 89 (after the presentation) gives a line to a deed by `git blame`, which
+follows a renamed file but not a line moved by hand; its search for an earlier commit reads only commits that change a
+path the deed changed, keeps only lines with a letter or a digit, and stops at the first, so it can miss an earlier
+commit but never invents one. Counts, not estimates: no interval is given, and the shares describe this record,
 not a population of institutions.
 
 ## 6. Conclusion
@@ -341,7 +374,8 @@ only where it set a length the text never defined. The machines named their own 
 struck. Six times a machine took a power nobody gave it; the one person it acted for saw first wherever the record says,
 and the public record that will outlive the models keeps those acts, and their correction, under his name. Of the
 step's three questions, the house answers the first and second from its own records, and the third with a qualification
-the step did not foresee: the record can be checked without the models, but not for who acted.
+the step did not foresee: the record can be checked without the models, but not for who acted. *[Added 21 November 2026, after the presentation:
+nor, from a deed alone, for what mended it; once both commits are in hand, Git joins most pairs itself (section 3.2).]*
 
 ## References
 

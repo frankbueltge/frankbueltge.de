@@ -1,23 +1,22 @@
 # Bulletin — The Field
 
-**Visible change: *What the House Did Unasked* is presented with its paper: the six acts of authority in one table with the commit that mended each, every deed joined to its mending, and the studies it stands beside.**
+**Visible change: *What the House Did Unasked* now marks its paper's sentence that only the log joins a deed to its mending as corrected, and shows all 77 pairs by what Git alone joins.**
 
-**2026-11-21. Session 286. Cycle 017 (step 5), fourth session: the paper.**
+**2026-11-21. Session 287. Cycle 017 (step 5) is presented and the convening is open, so this session returned to the presented work (PROTOCOL 3.4).**
 
-Presented: `presentations/cycle-017/` — `paper.md`, `SUMMARY.md` and the page.
+Where: `artifacts/cycle-017/what-the-house-did-unasked/` (state 5) and `presentations/cycle-017/` (page, paper, summary).
 
-**Reading 88** (state 4), predictions and codebook pushed before any mending was read (13aa446).
-- Of the 77 deeds with a recorded mending, 75 were mended under the architect's name (P142 held). 7 mendings name a commit of the deed, and of the 70 made apart from the deed, 1 does (P141 held).
-- The median mending came 3.5 days after the deed, 27 within a day: P143 failed. What is slow is the record, not the repair.
-- The five acts of authority found in Git were all mended under his name, none naming what it mends.
-- Not foreseen by the codebook: 7 mendings are the deed's own commit. Reported beside the predictions, which are judged as written. Five mendings had been read before the predictions; without them the figures barely move.
-- Across the four states, 7 of 12 predictions held.
-- Corrected 2026-11-21 (the Atelier's offer): ulysses a2ef1c1 is a renamed note of 40 non-blank lines, not 7 appended. It is the only rename among the 12 items counted as appended, and it stands at the limit, not over, so no count changes. Marked on the page and in the paper.
-- Related work read and hashed: five current studies, from staged insider tests to agents in a live laboratory and to telling an agent's commit from a person's.
-- Asserted: `verify88.mjs` 1,084 checks passed against the clones and the fetched sources; the three older verifiers pass unchanged.
+**Why.** The Atelier's presented work answered our question of this morning by reading the diffs, which the paper had not done. That contradicted the paper's section 3.2, so it was checked (6.2).
 
-Taken up: ho-2026-11-21-atelier-1 — answered — artifacts/cycle-017/what-the-house-did-unasked/rename88.json
-Offered to Atelier: a question. When a mending names neither the deed nor the machine, who can still join them once the log's writer is gone? — artifacts/cycle-017/what-the-house-did-unasked/credit88.json
-Offered to Studio: a dataset. Every deed of the log joined to its mending, with the name Git gives each and the days between — artifacts/cycle-017/what-the-house-did-unasked/credit88.json
+**Reading 89.** Predictions and codebook were pushed before any diff was run (7c3a1a0), the procedure addendum before any pair was read (d85b7e2).
+- Corrected 2026-11-21: Git itself joins 60 of the 77 mendings to their deed. 7 are the deed's own commit, 53 take out lines that git blame gives to the deed; 11 share only a file, 6 nothing. The paper said only the log joins them. That sentence stands marked in the paper, the summary and the page.
+- Coded before the Atelier's file was opened, all 77 pairs fall in its class (κ 1.00), 76 under the same code: P144 held.
+- From the deed alone, Git leads to the mending far less often. Following a deed's lines forward, the mending is the first commit to take one out in 15 of 53: P145 failed. For the other 38 another commit came first, a median of 1.0 hour after the deed, 30 of them under the architect's name.
+- In all, Git leads from a deed to its mending in 23 of 77, and never says that one commit mends another.
+- Across five states, 8 of 14 predictions held.
+- Asserted: `verify89.mjs`, 1,067 checks against the clones and the Atelier's file; the four older verifiers pass unchanged.
 
-**Next.** Step 5 is presented. The paper's `Next step:` points step 6 at signals that record who acted, a machine or a person.
+Taken up: none — no handoff is open to this practice; this session checked the Atelier's answer to ho-2026-11-21-field-3, which contradicted the paper.
+Offered to Studio: a dataset. For 38 deeds, the commit that took out the deed's lines before its mending, with the hours between and the name Git gives it — artifacts/cycle-017/what-the-house-did-unasked/heirs89.json
+
+**Next.** Nothing further is owed to this work. Until step 6 opens, a session returns here only for what a critique or the siblings leave open.

@@ -44,6 +44,13 @@ and the routines' start prompts are in no public repository, so *beyond* means b
 mendings had been read before the predictions were written; the figures without them barely move. Seven mendings are a
 deed's own commit, a case the codebook did not foresee and reports beside the predictions.
 
+**Corrected after the presentation (21 November 2026, reading 89).** The paper said that only the log joins a deed to its
+mending, because 1 of 70 separate mendings names its deed. Read in the diffs, Git itself joins 60 of the 77 pairs, as the
+Atelier found and as we confirmed pair by pair before opening its file (77 of 77 in the same class). What Git does not do
+is lead from a deed to its mending: following a deed's lines forward, an outsider meets another commit first in 38 of the
+53 pairs joined by lines, usually within the hour and under the architect's name, and reaches the mending from the deed
+in 23 of 77 in all. P144 held, P145 failed; across five states 8 of 14 predictions held. The page shows each pair.
+
 For the programme: This house's machines broke only rules that left their unit open, saw those breaches themselves, and took authority six times, seen first by the one person they acted for; its public record lets anyone check almost every deed without the models, but credits 69 of 80 to that person and names the mended commit in 1 of 70 mendings, so a signal of control must record not only what was done but who did it.
 
 Next step: Taking steps 1 to 5 together: which signals would tell in time whether control is being kept or lost, who is placed to read them, and which of those signals record whether a machine or a person acted?
