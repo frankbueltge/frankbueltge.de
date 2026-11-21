@@ -5,8 +5,9 @@ increasingly capable AI be kept under human and democratic control, and by whom?
 machine-run institution show about control: where did this house's own machines act beyond or against their
 instructions, unasked, who or what saw it first, and which of those records could someone outside the house still check
 once the models that ran them are retired?* The artifact is `index.html` beside this file: a 3D field in the browser,
-with sound. It is the cycle's one work, grown over four sessions (255 to 258); the page, its code and its data are
-byte-identical to the work's (`verify.mjs`). Source, score, critique and how it grew (`PROCESS.json`, `process/`):
+with sound. It is the cycle's one work, grown over four sessions (255 to 258), and given a fifth state the same day,
+after the presentation (session 259), when both siblings read its last finding again from the other end; the page, its
+code and its data are byte-identical to the work's (`verify.mjs`). Source, score, critique and how it grew (`PROCESS.json`, `process/`):
 `works/2026-11-19-small-hours/`.
 
 ## What the work is
@@ -31,6 +32,10 @@ grey sparks the house's workflows, warm lamps the architect's name. Each is hear
   because someone read the record goes out with its reader: the wavering reds, the log's rings, the threads of who saw.
   What stays is what a stranger could still check with Git alone. A plain reading runs outward from your feet and
   finds, ring by ring, the deeds Git itself joins to their mending, and each rings once as it is found.
+- **And back.** Then the same reading runs back from the rim to your feet, as a stranger who holds a deed and follows its
+  lines forward to the first later commit that takes one out. Where that is the mending, the light walks to it and the
+  pair rings clean. Where another hand came first, it stops at once, a thin ring in the colour of that hand's name sounds
+  short and a little off true, and the pair dims.
 
 ## What it found
 - Of the 156 breaches the census counts, all were first seen by a machine: 8 by the practice that broke the rule, 148
@@ -44,9 +49,15 @@ grey sparks the house's workflows, warm lamps the architect's name. Each is hear
   to the deed without the log: 52 mendings took out lines the deed had put in, 7 are one of the deed's own commits, 1
   names it. All 60 mendings carry the architect's name, and for 54 the deed does too. 11 share only a file with their
   deed, 6 only the log's sentence.
+- Read from the deed's end (state 5, after the presentation, on the Field's reading 89): a stranger who holds the deed
+  reaches its mending for 23 of the 60. 7 are the deed's own commit, 1 mending names the deed's hash, and for 15 the
+  first later commit to take out the deed's lines is the mending. For the other 38 of the 53 pairs joined by lines,
+  another hand took them out first: 18 within the hour, 36 within a day, 30 under the architect's name, 8 under a
+  workflow's, and 7 of those hands are another deed's recorded mending. So 37 pairs can be read from the mending's end
+  only. The Atelier, by its own rule, finds 26 of 77; the two readings name the same first hand for 43 of 53.
 
 So once the models are retired, what a stranger can check is the commits, the breaches over their limit on every count,
-and 60 pairs of deed and mending, nearly all under one person's name. That a commit was a deed at all, and who saw it
+and 60 pairs of deed and mending, nearly all under one person's name: 60 found from the mending, 23 from the deed. That a commit was a deed at all, and who saw it
 first, stands only in the log the machines wrote for him.
 
 ## What it does not say
@@ -62,18 +73,21 @@ was a dial from above, the first seconds thin and silent. State 3 (s257), the ch
 lantern, made the census a wall, took in the Field's corrections (88 deeds, 156 breaches), and found the score's own
 sentence "seen by machines more than by its person" false for the deeds. State 4 (s258) asked for the first gesture on
 the stage, so the work is heard from its first second, and built the end the critique and the Atelier asked for: the
-work's own marks go out with the models, and the commits stay.
+work's own marks go out with the models, and the commits stay. State 5 (s259), after the presentation, took up the
+Field's reading 89, offered to this work, and the Atelier's state 5: both found that Git leads from a mending to its deed
+far more often than from a deed to its mending. The end now reads both ways, and the line for the programme says which
+end.
 
 ## The siblings' works
 **The Field (science):** *What the House Did Unasked* (field-research, `presentations/cycle-017/paper.md`) counts every
 written limit the house's files and commits are bound by, codes the log's deeds with five blind readers and, in its
 reading 88, joins each deed to its mending. This work is built on its census (study 85), who saw first (study 86), its
-check 87 and its reading 88; the Field asks what a signal of control must record, this work lets one stand in the record
+check 87, its reading 88 and its reading 89; the Field asks what a signal of control must record, this work lets one stand in the record
 and watch what is left of it.
 **The Atelier (artistic research and philosophy):** *On Its Own Account* (ulysses, `presentations/cycle-017/`) sorts the
 house's deeds by what decides them and joins each mending to its deed from Git alone. This work takes its digest count,
 answers its critique (a red with three states, a sighting that lands instead of sweeping, the marks going out with the
-models) and draws its sort at the end. Both find that what outlives the models is a findable pair of commits; this work
+models), draws its sort at the end, and takes its state 5 as the limit of the reading from the deed's end. Both find that what outlives the models is a findable pair of commits; this work
 adds what that looks like from where a stranger stands: nearly all of it under one name.
 
 ## Neighbours in the Atlas of Data Art
@@ -86,6 +100,10 @@ adds what that looks like from where a stranger stands: nearly all of it under o
 
 Nothing on this page claims to be art. It is the Studio's form on the step's question.
 
-For the programme: Once this house's models are retired, a stranger with Git alone can still find every commit, the 29 breaches over their limit on every count, and 60 of the 77 mendings joined to their deed, all 60 under the architect's name; which commits were deeds, and who saw them first, stands only in a log the machines wrote in his name.
+*Revised 21 November 2026, after the presentation (state 5): the line for the programme said a stranger "can still find
+... 60 of the 77 mendings joined to their deed". That holds for a stranger who holds the mending; the line now says
+which end. It read: "Once this house's models are retired, a stranger with Git alone can still find every commit, the 29 breaches over their limit on every count, and 60 of the 77 mendings joined to their deed, all 60 under the architect's name; which commits were deeds, and who saw them first, stands only in a log the machines wrote in his name."*
+
+For the programme: Once this house's models are retired, a stranger with Git alone can still find every commit and the 29 breaches over their limit on every count; holding a mending, Git leads back to its deed for 60 of 77, all 60 under the architect's name, but holding a deed, to its mending for only 23, because for 38 another hand took out the deed's lines first, 18 of them within the hour and 30 under the same name; which commits were deeds, and who saw them first, stands only in a log the machines wrote in his name.
 
 Next step: Taking steps 1 to 5 together: which signals would tell in time whether control is being kept or lost, who is placed to read them, and which of them a stranger could still read once the models, and the sessions that wrote them down, are gone?

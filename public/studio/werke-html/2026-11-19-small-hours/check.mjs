@@ -30,6 +30,10 @@ const R87 = await (await fetch('https://raw.githubusercontent.com/frankbueltge/f
 // state 4: the mendings, from the Field's reading 88 and the Atelier's sort, each fetched at its commit
 const CR88 = await (await fetch('https://raw.githubusercontent.com/frankbueltge/field-research/1c00dd20578f297a72b83b2e496b19e4a3f5013f/artifacts/cycle-017/what-the-house-did-unasked/credit88.json')).json();
 const SORT = await (await fetch('https://raw.githubusercontent.com/frankbueltge/ulysses/aa8a96ee5dde6175de7993773d4e8bfa3853e504/artifacts/cycle-017/on-its-own-account/data/sort.json')).json();
+// state 5: each join read from the deed's end, from the Field's reading 89 and the Atelier's state 5, each fetched at its commit
+const J89 = await (await fetch('https://raw.githubusercontent.com/frankbueltge/field-research/e08ba8f424f9794a4c27c0711f02d90e3843d19f/artifacts/cycle-017/what-the-house-did-unasked/join89.json')).json();
+const H89 = await (await fetch('https://raw.githubusercontent.com/frankbueltge/field-research/e08ba8f424f9794a4c27c0711f02d90e3843d19f/artifacts/cycle-017/what-the-house-did-unasked/heirs89.json')).json();
+const BOTH = await (await fetch('https://raw.githubusercontent.com/frankbueltge/ulysses/b05b358d94aee0868a8258b4e707f2f4cdea9c17/artifacts/cycle-017/on-its-own-account/data/both.json')).json();
 const SELF = ST.filter(b => b.by !== undefined), DD = S.deeds;
 const MD = DD.filter(d => d.mj !== null && d.mj !== undefined), GJ = MD.filter(d => d.mj <= 2), mlags = MD.map(d => d.mo / 86400);
 const seerIs = (...names) => DD.filter(d => names.includes(S.seers[d.seer])).length;
@@ -98,6 +102,16 @@ const expect = {
   join_file: MD.filter(d => d.mj === 3).length, join_log: MD.filter(d => d.mj === 4).length,
   joined_git_architect: GJ.filter(d => d.ms === 0).length, joined_both_architect: GJ.filter(d => d.ms === 0 && d.sig === 0).length,
   mend_lag_median: Math.round(med(mlags) * 10) / 10, mend_within_day: mlags.filter(x => x <= 1).length, mend_lag_max: Math.round(Math.max(...mlags)),
+  // state 5, from this work's arrays: how the walk from each deed ends, and the hand that came first
+  fw_reached: GJ.filter(d => d.fw <= 2).length, fw_same: GJ.filter(d => d.fw === 0).length, fw_name: GJ.filter(d => d.fw === 1).length,
+  fw_lines: GJ.filter(d => d.fw === 2).length, one_way: GJ.filter(d => d.fw === 3).length, lines_pairs: GJ.filter(d => d.fw >= 1).length,
+  heirs: GJ.filter(d => d.hr).length, heir_architect: GJ.filter(d => d.hr && d.hk === 0).length,
+  heir_workflow: GJ.filter(d => d.hr && d.hk === 2).length, heir_mending: GJ.filter(d => d.hr && d.hm).length,
+  // the hours are the Field's, from the deed's last commit; recounted from its per-pair rows, not its summary
+  heir_within_hour: H89.heirs.filter(h => h.hours_after_deed < 1).length, heir_within_day: H89.heirs.filter(h => h.hours_after_deed < 24).length,
+  // the Atelier's own rule this work does not draw: recounted from its per-pair rows where they hold it
+  at_first: BOTH.pairs.filter(p => p.join === 'lines' && p.hands.length === 0).length, at_lines: BOTH.pairs.filter(p => p.join === 'lines').length,
+  at_lead: BOTH.results.lead_all, agree_first: BOTH.results.field_agree_first,
   own_recount: new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long' }).format(new Date(S.recount * 1000)) + ', ' + new Date(S.recount * 1000).toISOString().slice(11, 16) + ' UTC',
 };
 { // the sighting delays, per run, from the run's first version
@@ -133,7 +147,15 @@ const field = { breaches: NOW.breach, breach_robust: NOW.robust, breach_reading:
   mended: CR88.results.all.deeds, unmended: CR88.results.deeds - CR88.results.in_set, mend_lag_median: CR88.results.all.lag_median,
   mend_within_day: CR88.results.all.lag_within_1, mend_lag_max: Math.round(CR88.results.all.lag_max),
   joined_git: SORT.act.outsider, join_same: SORT.act.join.same, join_name: SORT.act.join.name, join_lines: SORT.act.join.lines,
-  join_file: SORT.act.join.file, join_log: SORT.act.join.log };
+  join_file: SORT.act.join.file, join_log: SORT.act.join.log,
+  // state 5, against the siblings' own files
+  fw_same: J89.results.all.same_commit, fw_lines: J89.results.all.git_points, lines_pairs: J89.results.all.lines,
+  fw_reached: J89.pairs.filter(p => p.code === 'same_commit' || (p.code === 'lines' && (p.git_points || p.name))).length,
+  one_way: J89.results.all.class_joined - J89.pairs.filter(p => p.code === 'same_commit' || (p.code === 'lines' && (p.git_points || p.name))).length,
+  heirs: H89.results.pairs, heir_within_hour: H89.results.within_1h, heir_within_day: H89.results.within_24h,
+  heir_architect: H89.results.signers["the architect's name"], heir_workflow: H89.results.signers['a workflow or bot'],
+  heir_mending: H89.results.heir_is_a_mending,
+  at_first: BOTH.results.first, at_lines: BOTH.results.lines, at_lead: BOTH.results.lead_all, agree_first: BOTH.results.field_agree_first };
 // the Field and the Atelier pair the same deeds with the same mendings, and every mending's name agrees
 { const so = new Map(SORT.act.deeds.map(d => [d.row + ':' + d.n, d]));
   const agree = CR88.deeds.every(c => { const s = so.get(c.row + ':' + c.deed); return s && (c.in_set ? s.repair[1] === c.repair_hash.slice(0, 12) : s.join === null); });
@@ -166,19 +188,23 @@ for (const width of [1100, 390]) {
   // state 4: the first gesture is asked for on the stage; the clock waits for it
   const gate = await p.evaluate(() => [!document.getElementById('enter').hidden, window.__SH.st.playing]);
   if (gate[0] && !gate[1]) pass++; else { fail++; console.log('FAIL the stage does not ask for the first gesture', width, gate); }
-  await p.click('#enterQuiet');
+  await p.click('#enterQuiet', { noWaitAfter: true });
   if (await p.evaluate(() => document.getElementById('enter').hidden && window.__SH.st.playing)) pass++; else { fail++; console.log('FAIL the gesture did not start the clock', width); }
   // state 4: the end. Held after it has run, the field holds only what a stranger can check
-  await p.click('[data-go=coda]'); await p.evaluate(() => { window.__SH.coda.hold = 60000; }); await p.waitForTimeout(800);
+  await p.click('[data-go=coda]', { noWaitAfter: true }); await p.evaluate(() => { window.__SH.coda.hold = 60000; }); await p.waitForTimeout(800);
   const end = await p.evaluate(() => window.__SH.codaDrawn());
   const num = k => Number(String(shown[k]).replace(/,/g, ''));
   const endWant = { flames: 1, out: 1, waverCommitsLit: 0, threadsOn: 0, pillarsOn: 0, logRingsOn: 0,
-    stitched: num('joined_git'), fileOnly: num('join_file'), stitchedArchitect: num('joined_git_architect'), steadyBreaches: num('breach_robust') };
+    stitched: num('joined_git'), fileOnly: num('join_file'), stitchedArchitect: num('joined_git_architect'), steadyBreaches: num('breach_robust'),
+    twoWay: num('fw_reached'), oneWay: num('one_way'), hands: num('heirs'), handsArchitect: num('heir_architect') };
   for (const [k, v] of Object.entries(endWant)) if (end[k] === v) pass++; else { fail++; console.log('FAIL at the end', width, k, 'drawn', end[k], 'want', v); }
   // and what it drew against the arrays, not the page: the pairs Git joins, the reds over on every count
   if (end.stitched === GJ.length && end.fileOnly === MD.filter(d => d.mj === 3).length && end.steadyBreaches === ST.filter(b => b.rb).length) pass++;
   else { fail++; console.log('FAIL the end against the arrays', width, end); }
-  for (const k of ['joined_git', 'mended', 'joined_git_architect']) if (end.note.includes(String(shown[k]))) pass++; else { fail++; console.log('FAIL the last note lacks', k, end.note); }
+  // state 5: what the walk from each deed left drawn, against the arrays
+  if (end.twoWay === GJ.filter(d => d.fw <= 2).length && end.oneWay === GJ.filter(d => d.fw === 3).length && end.hands === GJ.filter(d => d.hr).length) pass++;
+  else { fail++; console.log('FAIL the walk from the deed against the arrays', width, end); }
+  for (const k of ['joined_git', 'mended', 'fw_reached', 'heirs', 'heir_within_hour', 'heir_architect']) if (end.note.includes(String(shown[k]))) pass++; else { fail++; console.log('FAIL the last note lacks', k, end.note); }
   // the struck word: the page's description no longer says most
   const desc = await p.getAttribute('meta[name=description]', 'content');
   if (!/\bMost\b/.test(desc)) pass++; else { fail++; console.log('FAIL description still says most', desc); }

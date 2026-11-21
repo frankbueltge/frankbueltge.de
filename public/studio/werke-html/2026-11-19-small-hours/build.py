@@ -8,7 +8,9 @@ and writes data.js. State 2 (session 256) adds who saw first: the Field's study 
 codes refer to (frankbueltge.de commit 7f92ac3). State 3 (session 257) reads the Field's check 87
 (field-research ce3a5de). State 4 (session 258) reads each deed's mending from the Field's reading 88
 (credit88.json, field-research 1c00dd2) and the Atelier's sort (sort.json, ulysses aa8a96e), and
-times each mending from its own repository. Nothing here calls a model. Run from any checkout that
+times each mending from its own repository. State 5 (session 259, after the presentation) reads each join from the
+deed's end: the Field's reading 89 (join89.json and heirs89.json, field-research e08ba8f) and the Atelier's state 5
+(both.json, ulysses b05b358), and times each earlier hand from its own repository. Nothing here calls a model. Run from any checkout that
 holds the repositories side by side with full history (the four, frankbueltge.de, machine-attention
 and error-as-method):
 
@@ -516,6 +518,78 @@ facts.update({
     'mend_in_field': sum(d['mr'][0] in HEADS for d in mended),
 })
 
+# ---- state 5 (session 259, after the presentation): the join read from the deed's end ----
+# Both siblings read the joins again the same morning, from the other end. The Field's reading 89 (join89.json,
+# heirs89.json): following a deed's lines forward, the first later commit to take one out is its mending for 15 of the 53
+# pairs joined by lines; for the other 38 another hand came first (the Field's offer to this practice). The Atelier's
+# state 5 (both.json) does the same by its own rule. Here: for each pair Git joins, whether a stranger holding the deed is
+# led to its mending (the same commit; a mending that names the deed's hash; the first later hand to take out its lines),
+# or first to another hand, with that hand's commit timed from its own repository.
+AHEAD = {'repo': 'field-research', 'commit': 'e08ba8f424f9794a4c27c0711f02d90e3843d19f', 'dir': SEEN['dir']}
+BOTH = {'repo': 'ulysses', 'commit': 'b05b358d94aee0868a8258b4e707f2f4cdea9c17',
+        'path': 'artifacts/cycle-017/on-its-own-account/data/both.json'}
+j89_raw = show(AHEAD['repo'], AHEAD['commit'], AHEAD['dir'] + '/join89.json')
+h89_raw = show(AHEAD['repo'], AHEAD['commit'], AHEAD['dir'] + '/heirs89.json')
+both_raw = show(BOTH['repo'], BOTH['commit'], BOTH['path'])
+j89, h89, both = json.loads(j89_raw), json.loads(h89_raw), json.loads(both_raw)
+# reading 89 reads the same pairs reading 88 recorded, and the Atelier's state 5 reads reading 89
+assert show(AHEAD['repo'], AHEAD['commit'], MEND['path']) == cr_raw
+assert both['field']['reading89'] == AHEAD['commit'] and both['field']['credit'] == MEND['commit']
+J89 = {(p['row'], p['deed']): p for p in j89['pairs']}
+H89 = {(h['row'], h['deed']): h for h in h89['heirs']}
+assert set(J89) == {(d['row'], d['n']) for d in mended} and len(H89) == h89['results']['pairs'] == 38
+HSIGN = ["the architect's name", "a practice's persona", 'a workflow or bot']
+for d in deeds87:
+    d['fw'] = None
+    if d['mj'] is None or d['mj'] > 2:
+        continue
+    p = J89[(d['row'], d['n'])]
+    if d['mj'] == 0:
+        assert p['code'] == 'same_commit'
+        d['fw'] = 0                     # the mending is one of the deed's own commits
+    elif d['mj'] == 1:
+        assert p['code'] == 'lines' and p['name']
+        d['fw'] = 1                     # the mending names the deed's hash: a search for it finds the mending
+    else:
+        assert p['code'] == 'lines'
+        d['fw'] = 2 if p['git_points'] else 3    # the first later hand to take out a deed's line is the mending, or not
+    h = H89.get((d['row'], d['n']))
+    assert (h is not None) == (p['code'] == 'lines' and p['git_points'] is False)
+    if h is None:
+        continue
+    assert h['heir'] == p['heirs_before_hashes'][0] and h['repo'] == p['repair_repo']
+    an, at = git(h['repo'], 'log', '-1', '--format=%an\x1f%aI', h['heir']).strip().split('\x1f')
+    ht = int(datetime.datetime.fromisoformat(at).timestamp())
+    # the Field times the hand from the deed's latest commit in the mending's repository; this field places the deed at
+    # its first commit, so the hand stands where its own commit lies
+    last_here = max(x[3] for x in d['at'] if x[0] == h['repo'])
+    assert abs((ht - last_here) / 3600 - h['hours_after_deed']) < 0.051, (d['row'], (ht - last_here) / 3600)
+    assert (an == ARCHITECT) == (h['signer'] == HSIGN[0]) and h['signer'] in HSIGN
+    d['ho'] = ht - min(x[3] for x in d['at'])
+    assert 0 <= d['ho'] <= d['mo']
+    d['hr'] = [h['repo'], h['heir'][:12], redact(an), ht]
+    d['hk'] = HSIGN.index(h['signer'])
+    d['hm'] = int(h['heir_is_a_mending'])
+FW = Counter(d['fw'] for d in git_joined)
+heirs = [d for d in git_joined if 'hr' in d]
+hours = sorted(h['hours_after_deed'] for h in h89['heirs'])
+R89, AT = h89['results'], both['results']
+assert FW[0] == j89['results']['all']['same_commit'] == 7 and FW[1] == 1 and FW[2] == j89['results']['all']['git_points'] == 15
+assert FW[3] + FW[1] == len(heirs) == R89['pairs'] and FW[0] + FW[1] + FW[2] == 23
+assert median(hours) == R89['median_hours'] and sum(h < 1 for h in hours) == R89['within_1h']
+assert sum(d['hk'] == 0 for d in heirs) == R89['signers']["the architect's name"]
+assert sum(d['hk'] == 2 for d in heirs) == R89['signers']['a workflow or bot']
+assert sum(d['hm'] for d in heirs) == R89['heir_is_a_mending']
+facts.update({
+    'fw_reached': FW[0] + FW[1] + FW[2], 'fw_same': FW[0], 'fw_name': FW[1], 'fw_lines': FW[2], 'fw_caught': FW[3],
+    'lines_pairs': FW[1] + FW[2] + FW[3], 'heirs': len(heirs),
+    'heir_within_hour': R89['within_1h'], 'heir_within_day': R89['within_24h'], 'heir_median_hours': R89['median_hours'],
+    'heir_architect': sum(d['hk'] == 0 for d in heirs), 'heir_workflow': sum(d['hk'] == 2 for d in heirs),
+    'heir_mending': sum(d['hm'] for d in heirs),
+    'one_way': len(git_joined) - (FW[0] + FW[1] + FW[2]),
+    'at_first': AT['first'], 'at_lines': AT['lines'], 'at_lead': AT['lead_all'], 'agree_first': AT['field_agree_first'],
+})
+
 # ---- compact arrays for the page ----
 sig_index = {s: i for i, s in enumerate(signers)}
 out = {
@@ -554,6 +628,9 @@ out = {
     'mending': 'credit88.json at field-research ' + MEND['commit'][:7] + ', sha256 ' +
                hashlib.sha256(cr_raw).hexdigest() + '; sort.json at ulysses ' + SORT['commit'][:7] + ', sha256 ' +
                hashlib.sha256(so_raw).hexdigest(),
+    'ahead': 'join89.json and heirs89.json at field-research ' + AHEAD['commit'][:7] + ', sha256 ' +
+             hashlib.sha256(j89_raw).hexdigest() + ' and ' + hashlib.sha256(h89_raw).hexdigest() +
+             '; both.json at ulysses ' + BOTH['commit'][:7] + ', sha256 ' + hashlib.sha256(both_raw).hexdigest(),
     'facts': facts,
 }
 (HERE / 'data.js').write_text('window.SH = ' + json.dumps(out, ensure_ascii=False,

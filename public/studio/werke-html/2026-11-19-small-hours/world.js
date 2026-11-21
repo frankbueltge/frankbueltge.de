@@ -102,6 +102,12 @@ const U = {
   // the join Git makes (0 same commit, 1 names it, 2 takes out its lines, 3 a file only, 4 none) + 10*the deed's name + 100*the mending's
   uM: { value: Array.from({ length: Math.ceil(ND / 2) }, (_, n) => new THREE.Vector4(...[2 * n, 2 * n + 1].flatMap(k => {
     const d = D[k]; return !d || d.mj === null || d.mj === undefined ? [0, -1] : [d.mo, d.mj + 10 * d.sig + 100 * d.ms]; }))) },
+  // (state 5) a stranger holding a deed, reading forward (V): per deed, two to a vec4, the first later hand's offset in
+  // seconds after the deed's first commit (or -1), and how the reading from the deed ends (0 the same commit, 1 the
+  // mending names it, 2 the first later hand is the mending, 3 another hand first) + 10*that hand's name + 100*it mends another deed
+  uCodaV: { value: 0 }, uCodaVB: { value: 0 },
+  uV: { value: Array.from({ length: Math.ceil(ND / 2) }, (_, n) => new THREE.Vector4(...[2 * n, 2 * n + 1].flatMap(k => {
+    const d = D[k]; return !d || d.fw === null || d.fw === undefined ? [-1, -1] : [d.ho ?? -1, d.fw + 10 * (d.hk ?? 0) + 100 * (d.hm ?? 0)]; }))) },
 };
 const RING_COL = [[1.0, 0.60, 0.20], [1.0, 0.86, 0.58], [0.45, 0.72, 1.0], [0.62, 0.64, 0.70], [0.40, 0.40, 0.44], [1, 1, 1]];
 const FOG = `
@@ -137,6 +143,7 @@ const ground = new THREE.Mesh(new THREE.CircleGeometry(1500, 128), new THREE.Sha
   fragmentShader: `uniform float uDay; uniform float uR0; uniform float uT; uniform float uK; uniform float uMonths[8];
     uniform vec2 uLantern; uniform float uLR; uniform float uSweepR; uniform float uLow; uniform vec4 uD[${ND}]; varying vec3 vW; ${FOG}
     uniform float uCodaO; uniform float uCodaW; uniform float uCodaB; uniform vec4 uM[${Math.ceil(ND / 2)}];
+    uniform float uCodaV; uniform float uCodaVB; uniform vec4 uV[${Math.ceil(ND / 2)}];
     vec3 nameCol(float k){ return k < 0.5 ? vec3(1.0,0.62,0.22) : k < 1.5 ? vec3(0.45,0.70,1.0) : k < 2.5 ? vec3(0.6,0.62,0.66) : vec3(0.4,0.4,0.44); }
     vec3 ringCol(float k){ return k < 0.5 ? vec3(1.0,0.60,0.20) : k < 1.5 ? vec3(1.0,0.86,0.58) : k < 2.5 ? vec3(0.45,0.72,1.0) : k < 3.5 ? vec3(0.62,0.64,0.70) : k < 4.5 ? vec3(0.40,0.40,0.44) : vec3(1.0); }
     float h(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
@@ -180,10 +187,28 @@ const ground = new THREE.Mesh(new THREE.CircleGeometry(1500, 128), new THREE.Sha
             float rd = rw + uK * d.y, rm = rd - uK * mo, since = uCodaW - rd;
             float vis = step(0.0, since), flash = exp(-max(0.0, since) / 30.0), strong = j < 2.5 ? 1.0 : 0.3;
             float onD = (1.0 - smoothstep(0.0, max(LW, aa), abs(r - rd))) * cover, onM = (1.0 - smoothstep(0.0, max(LW, aa), abs(r - rm))) * cover;
-            c += (nameCol(mod(floor(code / 10.0), 10.0)) * onD + nameCol(floor(code / 100.0)) * onM) * vis * strong * (0.32 + 1.5 * flash);
+            // (state 5) the same pair read from the deed's end: a stranger who holds the deed follows its lines forward,
+            // through the days after it, to the first later commit that takes one out, and stops there
+            vec4 v = uV[k / 2]; float ho = odd ? v.z : v.x, fc = odd ? v.w : v.y;
+            float fw = mod(fc, 10.0), hk = mod(floor(fc / 10.0), 10.0);
+            bool reading = uCodaV > 0.0 && j < 2.5 && fc >= 0.0;
+            float pastD = reading ? rd - uCodaV : -1.0, started = step(0.0, pastD);
+            bool caught = fw > 2.5;
+            float rh = ho >= 0.0 ? rd - uK * ho : rm;
+            float arrM = reading && !caught ? rm - uCodaV : -1.0, met = step(0.0, arrM), metFlash = met * exp(-max(0.0, arrM) / 30.0);
+            float arrH = reading && ho >= 0.0 ? rh - uCodaV : -1.0, hit = step(0.0, arrH), hitFlash = hit * exp(-max(0.0, arrH) / 25.0);
+            float cut = caught ? started : 0.0;                       // from the deed, this pair cannot be walked
+            float both = met;                                         // walked from either end
+            c += (nameCol(mod(floor(code / 10.0), 10.0)) * onD * (1.0 - 0.6 * cut) + nameCol(floor(code / 100.0)) * onM * (1.0 - 0.45 * cut)) * vis * strong * (0.32 + 1.5 * flash + 0.9 * both + 1.6 * metFlash);
             if (j < 2.5) {
               float inD = step(max(rm, rd - 2.4), r) * step(r, rd), inM = step(rm, r) * step(r, min(rd, rm + 2.4));
-              c += vec3(0.92, 0.9, 0.84) * stitchOn * max(inD, inM) * vis * (0.3 + 1.2 * flash);
+              c += vec3(0.92, 0.9, 0.84) * stitchOn * max(inD * (1.0 - cut), inM * (1.0 - 0.45 * cut)) * vis * (0.3 + 1.2 * flash + 0.8 * both + 1.4 * metFlash);
+              // the light that walks from the deed: it runs inward with the reading and goes out where it stops
+              float front = max(caught ? rh : rm, uCodaV), walking = started * (caught ? 1.0 - hit : 1.0 - met);
+              c += vec3(1.0, 0.92, 0.78) * walking * exp(-pow((r - front) / 1.4, 2.0)) * 1.1;
+              // where it stopped short: the first later hand, a ring in the colour of the name Git gives it
+              float onH = (1.0 - smoothstep(0.0, max(LW * 0.8, aa), abs(r - rh))) * cover;
+              c += nameCol(hk) * onH * hit * step(0.0, ho) * (0.3 + 2.2 * hitFlash);
             }
           }
         }
@@ -206,6 +231,7 @@ const ground = new THREE.Mesh(new THREE.CircleGeometry(1500, 128), new THREE.Sha
       c += vec3(0.55,0.36,0.14) * pow(1.0 - smoothstep(0.0, uLR, d), mix(2.2, 5.0, uLow)) * mix(0.55, 0.22, uLow);
       c += vec3(0.85,0.55,0.22) * (1.0 - smoothstep(0.0, 0.6, abs(d - uLR))) * 0.25;
       c += vec3(0.8, 0.8, 0.76) * (1.0 - smoothstep(0.0, 2.5, abs(r - uCodaW))) * uCodaB * 0.7;   // a stranger's plain reading
+      c += vec3(0.86, 0.82, 0.72) * (1.0 - smoothstep(0.0, 2.5, abs(r - uCodaV))) * uCodaVB * 0.7; // (state 5) and from the deed's end
       float sw = 1.0 - smoothstep(0.0, 3.0, abs(r - uSweepR));
       c += vec3(0.45,0.7,1.0) * sw * step(uSweepR, 5000.0) * step(1.0, uSweepR) * 0.8;
       gl_FragColor = vec4(fogged(c), 1.0);
@@ -328,6 +354,7 @@ function wall(height) {
 }
 const ring = wall(26);
 const plain = wall(3.2); plain.material.uniforms.uCol.value.setRGB(0.85, 0.85, 0.8);   // (state 4) a stranger's plain reading of Git
+const ahead = wall(3.2); ahead.material.uniforms.uCol.value.setRGB(0.88, 0.8, 0.66);   // (state 5) the same reading from the deed's end
 const sightWalls = [0, 1, 2, 3, 4, 5].map(() => wall(4.5));
 
 // where a sighting's light lands on a commit of this field: a pillar of the light of who saw it, which stays
@@ -505,25 +532,34 @@ function sightSound(cls) {
 // a deed's first commit and its mending, two rings in the colour of the name Git gives each, stitched where Git makes
 // the join (the same commit, a mending that names it, or one that takes out lines the deed put in), unstitched and faint
 // where they share only a file. A mending the log alone joins to its deed has no ring.
-const coda = { t0: null, hold: null, pending: null, rung: new Set(), far: RMAX + 30 };
-const CF = [0, 4500], CO = [4500, 11500], CW = [12000, 26000];
+// (state 5, after the presentation) Then the same reading runs back, from the rim to your feet: a stranger who holds a
+// deed follows its lines forward, through the days after it, to the first later commit that takes one out (the Field's
+// reading 89). Where that is the mending, the light walks to it and the pair rings clean, joined from either end. Where
+// another hand came first, it stops there at once, a ring in the colour of that hand's name sounds short and off true,
+// and the deed's side of the stitch goes out: the pair can be walked from the mending's end only.
+const coda = { t0: null, hold: null, pending: null, rung: new Set(), met: new Set(), hit: new Set(), far: RMAX + 30 };
+const CF = [0, 4500], CO = [4500, 11500], CW = [12000, 26000], CV = [29000, 45000];
 const lerp01 = (e, [a, b]) => Math.max(0, Math.min(1, (e - a) / (b - a)));
 const pairR = k => deedPlace(k, st.T);                                     // the deed's first commit, now
 const mendR = k => pairR(k) - K * D[k].mo;                                  // its mending, closer to the present
+const heirR = k => pairR(k) - K * (D[k].ho ?? D[k].mo);                     // (state 5) the first later hand to take out its lines
+const ahead_ = k => inCoda(k) && D[k].fw !== null && D[k].fw !== undefined;  // a pair Git joins, read from the deed's end
 const inCoda = k => D[k].mj !== null && D[k].mj !== undefined && D[k].mj <= 3 && lagS(k) >= 0;
 function startCoda() {
   if (coda.t0 !== null) return;
   st.playing = false; $('play').textContent = 'Run'; coda.pending = null;
-  coda.t0 = performance.now(); coda.rung = new Set(); coda.rose = false; retireSound();
+  coda.t0 = performance.now(); coda.rung = new Set(); coda.met = new Set(); coda.hit = new Set(); coda.rose = false; retireSound();
   // the reading runs to the farthest pair: a few deeds began on the site before this field's first commit, beyond its rim
   coda.far = Math.max(RMAX + 30, ...[...Array(ND).keys()].filter(inCoda).map(k => pairR(k) + 20));
 }
-function stopCoda() { coda.t0 = null; coda.hold = null; coda.pending = null; plain.visible = false; U.uCodaF.value = U.uCodaO.value = U.uCodaW.value = U.uCodaB.value = 0; }
+function stopCoda() { coda.t0 = null; coda.hold = null; coda.pending = null; plain.visible = ahead.visible = false; U.uCodaF.value = U.uCodaO.value = U.uCodaW.value = U.uCodaB.value = U.uCodaV.value = U.uCodaVB.value = 0; }
 function codaNote(e) {
   if (e < CO[0]) return 'The models that ran these sessions are retired. Their flames go out.';
   if (e < CW[0]) return 'What they read goes with them: who saw first, the threads, every red a reading decided. The reds over their limit on every count stay: a script finds them without a model.';
-  if (e < CW[1] + 1500) return 'A stranger reads what is left, with Git and no model. Where a mending took out lines its deed had put in, Git joins the two.';
-  return `Left for a stranger: ${F.joined_git} of the ${F.mended} mendings, joined to their deed by Git itself, all ${F.joined_git_architect} under the architect’s name. That any commit was a deed, and who saw it, only the log says.`;
+  if (e < CW[1] + 1500) return 'A stranger reads what is left, with Git and no model. Where a mending took out lines its deed had put in, Git leads from the mending back to the deed.';
+  if (e < CV[0]) return `From the mending’s end, Git joins ${F.joined_git} of the ${F.mended} to their deed, all ${F.joined_git_architect} mendings under the architect’s name. Now the other way, from the deed.`;
+  if (e < CV[1] + 1500) return 'A stranger who holds a deed follows its lines forward, to the first later commit that takes one out.';
+  return `Holding a mending, a stranger finds its deed: ${F.joined_git} of ${F.mended}. Holding a deed, its mending: ${F.fw_reached}. For ${F.heirs}, another hand took out the deed’s lines first, ${F.heir_within_hour} within the hour, ${F.heir_architect} under the architect’s name. That any commit was a deed, and who saw it, only the log says.`;
 }
 function updateCoda(now) {
   if (coda.pending !== null && now >= coda.pending) startCoda();
@@ -537,6 +573,15 @@ function updateCoda(now) {
   plain.visible = w > 0 && w < 1; plain.scale.set(wr, 3.2 + wr * 0.01, wr); plain.material.uniforms.uOp.value = 0.55 * (1 - w * w);
   // each pair rings once as the reading reaches it, in the voice of the name Git gives its mending
   if (coda.hold === null) for (let k = 0; k < ND; k++) if (inCoda(k) && !coda.rung.has(k) && wr >= pairR(k)) { coda.rung.add(k); pairSound(k); }
+  // (state 5) and back, from the rim to your feet: from each deed, forward
+  const v = lerp01(e, CV), vr = coda.far - (coda.far - R0 + 2) * v;
+  U.uCodaV.value = v > 0 ? (v < 1 ? Math.max(0.001, vr) : 0.001) : 0; U.uCodaVB.value = v > 0 && v < 1 ? 1 - v * v : 0;
+  ahead.visible = v > 0 && v < 1; ahead.scale.set(Math.max(1, vr), 3.2 + vr * 0.01, Math.max(1, vr)); ahead.material.uniforms.uOp.value = 0.5 * (1 - v * v);
+  if (v > 0 && coda.hold === null) for (let k = 0; k < ND; k++) {
+    if (!ahead_(k)) continue;
+    if (D[k].ho !== undefined && !coda.hit.has(k) && U.uCodaV.value <= heirR(k)) { coda.hit.add(k); if (D[k].fw === 3) falseSound(k); }
+    if (D[k].fw !== 3 && !coda.met.has(k) && U.uCodaV.value <= mendR(k)) { coda.met.add(k); meetSound(k); }
+  }
   if (ac && windG) windG.gain.setTargetAtTime($('snd').checked ? 0.035 + 0.05 * (1 - U.uCodaF.value) : 0, ac.currentTime, 0.6);
   $('note').textContent = codaNote(e);
 }
@@ -561,6 +606,37 @@ function pairSound(k) {                           // the architect's name: the l
     const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = fq;
     g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(a * soft, now + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, now + 3.4);
     o.connect(g).connect(master); o.start(now); o.stop(now + 3.5);
+  });
+}
+
+// (state 5) from the deed's end: where the walk reaches the mending, the pair's bell and the deed's, together and clean;
+// where another hand came first, that hand's voice, short and a little off true
+function meetSound(k) {
+  if (!ac || !$('snd').checked) return;
+  const now = Math.max(ac.currentTime, lastPair + 0.16); lastPair = now;
+  const d = D[k], lowM = d.ms === 0, lowD = d.sig === 0;
+  const parts = [...(lowM ? [[196, 0.14], [493, 0.05]] : [[1046.5, 0.05]]), ...(lowD ? [[294, 0.09], [587, 0.03], [988, 0.015]] : [[1568, 0.04]])];
+  parts.forEach(([fq, a]) => {
+    const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = fq;
+    g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(a, now + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, now + 5.5);
+    o.connect(g).connect(master); o.start(now); o.stop(now + 5.6);
+  });
+}
+function falseSound(k) {
+  if (!ac || !$('snd').checked) return;
+  const now = Math.max(ac.currentTime, lastPair + 0.09); lastPair = now;
+  const d = D[k];
+  if (d.hk === 2) {                               // a workflow's hand: the dry click of the field, twice
+    [0, 0.05].forEach(dt => { const o = ac.createOscillator(), g = ac.createGain(); o.type = 'square'; o.frequency.value = 2400;
+      g.gain.setValueAtTime(0.05, now + dt); g.gain.exponentialRampToValueAtTime(0.0001, now + dt + 0.03); o.connect(g).connect(master); o.start(now + dt); o.stop(now + dt + 0.04); });
+    return;
+  }
+  // the architect's name (or a practice's): its bell, a little sharp, damped at once
+  const parts = d.hk === 0 ? [[207.6, 0.13], [522, 0.04]] : [[1108.7, 0.045]];
+  parts.forEach(([fq, a]) => {
+    const o = ac.createOscillator(), g = ac.createGain(), f = ac.createBiquadFilter(); o.frequency.value = fq; f.type = 'lowpass'; f.frequency.value = 900;
+    g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(a, now + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
+    o.connect(f).connect(g).connect(master); o.start(now); o.stop(now + 0.6);
   });
 }
 
@@ -728,19 +804,26 @@ const JOIN_SAID = [
   d => `Git joins them by itself: the mending took out ${d.ev.reduce((a, [, n]) => a + n, 0).toLocaleString('en-GB')} line${d.ev.reduce((a, [, n]) => a + n, 0) === 1 ? '' : 's'} the deed had put in, in ${d.ev.map(([f]) => esc(f)).join(', ')}.`,
   d => `Git shows only that the mending changed a file the deed changed (${d.ev.map(f => esc(f)).join(', ')}), and took out none of its lines.`];
 const commitLink = ([repo, hash]) => `<a href="https://github.com/frankbueltge/${repo}/commit/${hash}" target="_blank" rel="noopener">${repo} ${hash.slice(0, 7)}</a>`;
+// (state 5) the same pair, from the deed's end
+const AHEAD_SAID = [
+  d => 'From the deed, too: the mending is one of its own commits.',
+  d => `From the deed, too: the mending names the deed’s commit, so a search for its hash finds it. Following its lines, another hand comes first: ${commitLink(d.hr)}, signed ${esc(d.hr[2])}, ${later(d.ho)}.`,
+  d => 'From the deed, too: following its lines forward, the first later commit to take one out is the mending.',
+  d => `Not from the deed: following its lines forward, the first later commit to take one out is ${commitLink(d.hr)}, signed <span class="sig">${esc(d.hr[2])}</span>, ${later(d.ho)}${d.hm ? ', the mending of another deed' : ''}. A stranger who holds the deed is led there, and Git does not say which later hand, if any, mended it.`];
 function pairCard(k) {
   const d = D[k], f = d.at.reduce((a, b) => (b[3] < a[3] ? b : a));
   let h = `<b>A deed and its mending, as Git keeps them</b><br>`;
   h += `the deed’s first commit: ${commitLink(f)}, ${fmtDayOnly(new Date(f[3] * 1000).toISOString().slice(0, 10))}, signed <span class="sig">${esc(f[2])}</span><br>`;
   h += `its mending: ${commitLink(d.mr)}, ${fmtDayOnly(new Date(d.mr[3] * 1000).toISOString().slice(0, 10))}, signed <span class="sig">${esc(d.mr[2])}</span>, ${later(d.mo)}<br>`;
   h += `<span class="${d.mj <= 2 ? 'warm' : 'dim'}">${JOIN_SAID[d.mj](d)}</span><br>`;
+  if (U.uCodaV.value > 0 && U.uCodaV.value <= pairR(k) && d.fw !== null && d.fw !== undefined) h += `<span class="${d.fw === 3 ? 'red' : 'warm'}">${AHEAD_SAID[d.fw](d)}</span><br>`;
   h += `<span class="dim">That the first was a deed and the second its mending, and who saw it first, the house’s log says, as the Field read it: <a href="${S.log}#L${d.line}" target="_blank" rel="noopener">line ${d.line}</a>, written by sessions in the architect’s name.</span>`;
   return h;
 }
 function pairsAt(p) {
   if (lantern.distanceTo(new THREE.Vector2(p.x, p.z)) > LANTERN_R) return [];
   const r = Math.hypot(p.x, p.z), on = [];
-  for (let k = 0; k < ND; k++) if (inCoda(k) && U.uCodaW.value >= pairR(k) && (Math.abs(r - pairR(k)) < 1.1 || Math.abs(r - mendR(k)) < 1.1)) on.push(k);
+  for (let k = 0; k < ND; k++) if (inCoda(k) && U.uCodaW.value >= pairR(k) && (Math.abs(r - pairR(k)) < 1.1 || Math.abs(r - mendR(k)) < 1.1 || (coda.hit.has(k) && Math.abs(r - heirR(k)) < 1.1))) on.push(k);
   return on;
 }
 function codaCard(i) {
@@ -824,11 +907,16 @@ function codaDrawn() {
   return { flames: U.uCodaF.value, out: U.uCodaO.value, wave: w,
     stitched: pairs.filter(k => D[k].mj <= 2).length, fileOnly: pairs.filter(k => D[k].mj === 3).length,
     stitchedArchitect: pairs.filter(k => D[k].mj <= 2 && D[k].ms === 0).length,
+    // (state 5) read from the same uniforms the shader is given
+    twoWay: pairs.filter(k => ahead_(k) && D[k].fw !== 3 && U.uCodaV.value > 0 && U.uCodaV.value <= mendR(k)).length,
+    oneWay: pairs.filter(k => ahead_(k) && D[k].fw === 3 && U.uCodaV.value > 0 && U.uCodaV.value <= pairR(k)).length,
+    hands: pairs.filter(k => ahead_(k) && D[k].ho !== undefined && U.uCodaV.value > 0 && U.uCodaV.value <= heirR(k)).length,
+    handsArchitect: pairs.filter(k => ahead_(k) && D[k].hk === 0 && U.uCodaV.value > 0 && U.uCodaV.value <= heirR(k)).length,
     steadyCommits: redLit.size, steadyBreaches: S.breaches.filter(b => !b.wd && b.rb && redLit.has(b.c)).length,
     waverCommitsLit: out ? 0 : waver.size, threadsOn: out ? 0 : threads.length, pillarsOn: pillars.filter(p => p.m.visible).length,
     logRingsOn: out ? 0 : D.filter((d, k) => T >= d.t).length, note: $('note').textContent };
 }
-window.__SH = { coda, startCoda, stopCoda, codaDrawn, setPhi: v => { wantPhi = v; }, pairR, mendR, inCoda, ring, sightWalls, sph, eyeDist, pillars, steady, breach, st, setT, radiusAt, idxAt, lantern, lanternGoal, U, scene, embers, flames, ground, renderer, renderOnce: () => renderer.render(scene, camera), camera, controls, D, deedR, deedPlace, dState, dStart, dProg, dSounded, dDur, readAt, ringsAt };
+window.__SH = { coda, startCoda, stopCoda, codaDrawn, setPhi: v => { wantPhi = v; }, pairR, mendR, heirR, inCoda, ahead, ring, sightWalls, sph, eyeDist, pillars, steady, breach, st, setT, radiusAt, idxAt, lantern, lanternGoal, U, scene, embers, flames, ground, renderer, renderOnce: () => renderer.render(scene, camera), camera, controls, D, deedR, deedPlace, dState, dStart, dProg, dSounded, dDur, readAt, ringsAt };
 
 function frame(now) {
   const dt = Math.min(0.1, (now - st.last) / 1000); st.last = now;
