@@ -25,3 +25,9 @@ repair found in none is reported as *not found* and left out.
 
 **Reported.** Each prediction on the whole set and without the five deeds read before. Counts, not estimates: the 77
 are the deeds the log holds, not a sample, so no interval is given.
+
+**Addendum after the count (2026-11-21, written after the first run, before any figure was put on the page).** The
+codebook did not foresee that check 87 records, for 7 of the 77 deeds, a repair that is itself one of the deed's own
+commits: a commit that made and mended in one. For six of the seven `names_deed` is met trivially (the commit carries
+its own pull-request number). The predictions are judged as written; the deeds whose repair is a separate commit (70) are
+reported beside them, as `repair_apart` in `credit88.json`.

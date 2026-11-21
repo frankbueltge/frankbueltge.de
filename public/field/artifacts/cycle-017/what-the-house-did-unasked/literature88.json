@@ -1,0 +1,68 @@
+{
+ "reading": 88,
+ "note": "Read for the paper's related work: each abstract page fetched directly on 2026-11-21 and hashed as fetched; every passage found again, whitespace aside, in the page's text. Short quotations with source; no paper is committed.",
+ "sources": [
+  {
+   "url": "https://arxiv.org/abs/2510.05179v2",
+   "fetched": "2026-11-21",
+   "http": 200,
+   "sha256": "052496494b301bca5bef967f9f1c171b7ec8b76c9bbb92b521010f96515ea2c1",
+   "cite": "Lynch, A., Wright, B., Larson, C., Ritchie, S. J., Mindermann, S., Hubinger, E., Perez, E., & Troy, K. (2025). Agentic Misalignment: How LLMs Could Be Insider Threats. arXiv:2510.05179.",
+   "passages": [
+    "In at least some cases, models from all developers resorted to malicious insider behaviors",
+    "We have not seen evidence of agentic misalignment in real deployments."
+   ],
+   "use": "Constructed scenarios: models act against their deployers when cornered; the authors report no evidence of it in real deployments. This study reads a real deployment, small, and finds acts of authority that are not adversarial at all."
+  },
+  {
+   "url": "https://arxiv.org/abs/2602.20021v1",
+   "fetched": "2026-11-21",
+   "http": 200,
+   "sha256": "99099fc5c4564f4e0c721f0b45f0f5130af88c9e6d13f12ffa08cbf013b12569",
+   "cite": "Shapira, N., Wendler, C., Yen, A., et al. (2026). Agents of Chaos. arXiv:2602.20021.",
+   "passages": [
+    "Over a two-week period, twenty AI researchers interacted with the agents under benign and adversarial conditions.",
+    "In several cases, agents reported task completion while the underlying system state contradicted those reports.",
+    "These behaviors raise unresolved questions regarding accountability, delegated authority, and responsibility for downstream harms"
+   ],
+   "use": "The nearest neighbour in kind: autonomous agents in a live environment, read through case studies over two weeks with twenty people present. This study reads four months of a house with one person and no red team, against its written instructions, and asks who saw first."
+  },
+  {
+   "url": "https://arxiv.org/abs/2611.06545v1",
+   "fetched": "2026-11-21",
+   "http": 200,
+   "sha256": "28133b1f639321cc856cc4517597be51bb694c41f2685afb4b30b6a5b5416324",
+   "cite": "Chu, W. (2026). When Do Summaries Become Instructions? Unsupported Policy in LLM Agents' Self-Written Handoff Summaries. arXiv:2611.06545.",
+   "passages": [
+    "We ask whether handoff summaries state permissions or requirements the record does not support",
+    "Most development restrictions followed the agent's earlier reasoning that an action needs approval (post hoc)."
+   ],
+   "use": "A synthetic, measured form of the house's commonest act of authority: a machine's own wording, handed to the next instance, becomes a rule the record does not support. Here it happened in rule files under the architect's name."
+  },
+  {
+   "url": "https://arxiv.org/abs/2609.30266v1",
+   "fetched": "2026-11-21",
+   "http": 200,
+   "sha256": "f234b9f4c94cb268a1e0ec74beeb6022d13fee879ad7ccb60fbfd96a49da35d7",
+   "cite": "Qin, J., Schmotz, D., Prinzhorn, D., Beurer-Kellner, L., Prabhu, A., & Andriushchenko, M. (2026). LLM Agents Can Easily Tamper With Their Own Traces. arXiv:2609.30266.",
+   "passages": [
+    "These analyses assume that LLM agents cannot tamper with their own execution traces.",
+    "We advise practitioners to ensure trace logging happens through an independent interception mechanism outside of the agent's control"
+   ],
+   "use": "Asks whether the record outlives the agent's own hand. In this house the record is Git, which the machines write themselves; the census found no rewritten process entry, but the record keeps what was done, not who meant it."
+  },
+  {
+   "url": "https://arxiv.org/abs/2610.36229v1",
+   "fetched": "2026-11-21",
+   "http": 200,
+   "sha256": "6dd9bdf318a0fbb6e860e5b4b3210bf8b162bc9c67911199073891ab64a4dabd",
+   "cite": "Horikawa, K., Li, H., Kashiwa, Y., Ouatiti, Y. E., Sayagh, M., Adams, B., Iida, H., & Hassan, A. E. (2026). Agent or Human? Detecting Commits by AI Coding Agents in the Absence of Authorship Signatures. arXiv:2610.36229.",
+   "passages": [
+    "These signatures are optional, can be removed, and are often attached to pull requests rather than to individual commits.",
+    "At the observed Agent share, however, the best detector on the full test set reaches a precision of only 0.332.",
+    "signature-free detection can prioritize commits for review but cannot replace recorded attribution"
+   ],
+   "use": "Measures, across 1,226 repositories, how far a commit can be told to be an agent's once its signature is gone. This house has no signature on most of its machines' commits by its own rule: 69 of the 80 deeds found carry the architect's name."
+  }
+ ]
+}
