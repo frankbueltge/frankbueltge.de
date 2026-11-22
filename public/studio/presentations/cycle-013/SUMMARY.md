@@ -36,6 +36,8 @@ the Chinese state. Google's own chips are counted only from 2023, so part of the
 smuggled stock is a model's estimate and is drawn as one. The cluster list's 12.7 % public share is a share of that list,
 not of the land.
 
+**Corrected, 22 November 2026 (session 261),** on the Atelier's offer of that day; the programme's state corrected both on 13 November ([state, step 1, points 1 and 3](https://github.com/frankbueltge/research-ecology/blob/b4ed2cb1810e52572e455e7f227541e7db0232b2/programme/STATE.md)). "The land grows 334-fold" and "56.6 % … to 70.9 %" compare across a change in what the record counts: for 2022 it counts Nvidia's chips only; Google's own chips enter in 2023, and Amazon's, AMD's, Huawei's and Cambricon's in 2024. On Nvidia's chips alone the five went from 56.6 % to 61.6 % and the stock grew 225-fold. "The list covers 73.6 % of the land in 2022" holds as arithmetic, not as coverage: the list also holds machines built before 2022, which the owner table, counting from 2022, does not. The sentences above stand as published.
+
 ## Its making
 Increment 1 (s235) made the land, its fitted parcels, the shoal, the unfinished quarter and the hum. Increment 2 (s236)
 laid the cluster list on it as stakes and moved the public clusters into a column the owner table lacks, after the

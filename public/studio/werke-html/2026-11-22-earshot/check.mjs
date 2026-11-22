@@ -1,6 +1,8 @@
 // EARSHOT: read every figure the page prints and recount it, from the signals in data.js and again from the
 // Field's own file at its commit; read the clock the page runs and hold it against each passage's own hour;
 // open the page at 1100 and 390 px, run it, stand in a room, and shoot it.
+// State 2: the same for the two cases as it happened (the Field's study 91 at its commit): every date, passage
+// and source against the Field's file, every hour the page places against its date, and the run of each case.
 // Run with a static server on this folder:  python3 -m http.server 8771 --bind 127.0.0.1   then   node check.mjs
 import { readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -88,6 +90,54 @@ ok(D.clock.murmur.every(id => F.find(f => f.id === id).public === 'aggregate onl
 const cn6 = F.find(f => f.id === 'CN6');
 ok(/at least six months/.test(cn6.quote) && S.find(s => s.id === 'CN6').retention_end_h === 4380, 'CN6 kept six months');
 
+// ---------- state 2: the cases, against the Field's study 91 ----------
+const mraw = Buffer.from(await (await fetch(D.moved.url)).arrayBuffer());
+ok(createHash('sha256').update(mraw).digest('hex') === D.moved.sha256, 'moved91.json sha256');
+const M = JSON.parse(mraw.toString('utf8'));
+const dayOf = iso => Math.round(Date.parse(iso + 'T00:00:00Z') / 864e5);
+for (const mc of M.cases) {
+  const c = D.cases.find(x => x.id === mc.id);
+  ok(!!c, 'case ' + mc.id + ' present');
+  if (!c) continue;
+  ok(c.began === mc.began, mc.id + ' began');
+  ok(c.today_day === dayOf(D.moved.record_date) - dayOf(mc.began), mc.id + ' today counted from the deed');
+  ok(c.events.length === mc.events.length, mc.id + ' every event of the record');
+  for (const me of mc.events) {
+    const e = c.events.find(x => x.key === me.key);
+    ok(!!e, mc.id + ' ' + me.key + ' present'); if (!e) continue;
+    ok(e.date === me.date && e.src === me.src[0] && e.quote === me.src[1] && e.public === me.public, mc.id + ' ' + me.key + ' date, source and passage as the Field coded them');
+    ok(e.day === dayOf(me.date) - dayOf(mc.began) && e.h === e.day * 24, mc.id + ' ' + me.key + ' hour from its date');
+    if (e.kind === 'voice') {
+      ok(e.words.map(w => w[0]).join(' ') === e.show.split(/\s+/).join(' '), mc.id + ' ' + me.key + ' words shown are what is said');
+      ok(e.show === me.src[1] || (me.src[1].includes('\u201c' + e.show + '\u201d')), mc.id + ' ' + me.key + ' says the passage, or the words it quotes');
+      ok(existsSync(new URL('./audio/' + e.vid + '.mp3', import.meta.url)), mc.id + ' ' + me.key + ' audio');
+      // only what was public on its day is said in the street
+      if (e.place === 'street' || e.echo === 'street') ok(me.public === true, mc.id + ' ' + me.key + ' public on its day, so said in the street');
+    } else ok(!e.vid, mc.id + ' ' + me.key + ' not public that day or the deed itself: not spoken');
+    if (me.public === false) ok(e.place !== 'street' || e.kind === 'silent', mc.id + ' ' + me.key + ' not spoken in the street');
+  }
+  // the street hears first: no public body speaks of the case before the street does
+  const firstStreet = Math.min(...c.events.filter(e => e.kind === 'voice' && e.place === 'street').map(e => e.day));
+  const bodyDays = c.events.filter(e => (e.wake && !['street', 'maker'].includes(e.wake.room)) || (e.kind === 'voice' && !['street', 'maker'].includes(e.place))).map(e => e.day);
+  ok(bodyDays.length > 0 && Math.min(...bodyDays) > firstStreet, mc.id + ' a public body speaks after the street');
+  ok(c.events.find(e => e.key === 'first_public').day === firstStreet, mc.id + ' the first voice in the street is the first public one');
+  const kn = c.events.find(e => e.knew);
+  ok(kn ? c.paper_from_h === kn.h && mc.maker_knew.date === kn.date : c.paper_from_h === null && mc.maker_knew.date === null, mc.id + ' the paper\'s hours counted from the maker\'s own dated knowing, or not at all');
+}
+const W = M.cases.find(c => c.id === 'wiki').delays_days, X = M.cases.find(c => c.id === 'escape').delays_days;
+const dd = (c, a, b) => { const k = M.cases.find(x => x.id === c); const ev = key => k.events.find(e => e.key === key).date; return dayOf(ev(b)) - dayOf(ev(a)); };
+expect.wiki_first = dd('wiki', 'began', 'first_public'); expect.escape_first = dd('escape', 'began', 'first_public');
+expect.wiki_maker = dd('wiki', 'first_public', 'maker_public'); expect.escape_maker = dd('escape', 'first_public', 'maker_public');
+expect.wiki_body = dd('wiki', 'first_public', 'body'); expect.escape_body = dd('escape', 'first_public', 'body');
+ok(expect.wiki_first === W.began_to_first_public && expect.escape_first === X.began_to_first_public && expect.wiki_maker === W.first_public_to_maker && expect.escape_maker === X.first_public_to_maker && expect.wiki_body === W.first_public_to_body && expect.escape_body === X.first_public_to_body, 'delays recounted from the dates agree with the Field\'s');
+const MS = M.signals, due = MS.filter(m => m.due === 'due'), traced = due.filter(m => m.moved !== 'no trace found');
+const streetIds = S.filter(s => s.room === 'street').map(s => s.id);
+expect.due = due.length; expect.traced = traced.length;
+expect.traced_body = traced.filter(m => m.hosts.includes('public body')).length;
+expect.street_all = streetIds.length;
+expect.street_traced = traced.filter(m => streetIds.includes(m.id)).length;
+for (const m of MS) { const s = S.find(x => x.id === m.id); ok(s.due === m.due && s.moved === m.moved, m.id + ' due and trace as the Field coded them'); }
+
 const browser = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
 for (const [w, h] of [[1100, 820], [390, 844]]) {
   const p = await browser.newPage({ viewport: { width: w, height: h } });
@@ -106,8 +156,9 @@ for (const [w, h] of [[1100, 820], [390, 844]]) {
   const voiced = new Set(clock.events.filter(e => e.kind === 'voice').map(e => e.id));
   ok(S.filter(s => s.when.phase === 'none').every(s => !voiced.has(s.id)), w + 'px no signal without an hour sounds on the clock');
   // audio: every voice decodes, at the length the data says
-  const durs = await p.evaluate(async () => { const ac = new OfflineAudioContext(1, 100, 24000); const out = {}; for (const s of window.EARSHOT.signals) { const b = await (await fetch('audio/' + s.id + '.mp3')).arrayBuffer(); out[s.id] = (await ac.decodeAudioData(b)).duration; } return out; });
+  const durs = await p.evaluate(async () => { const ac = new OfflineAudioContext(1, 100, 24000); const out = {}; const items = window.EARSHOT.signals.map(s => s.id).concat(window.EARSHOT.cases.flatMap(c => c.events.filter(e => e.vid).map(e => e.vid))); for (const id of items) { const b = await (await fetch('audio/' + id + '.mp3')).arrayBuffer(); out[id] = (await ac.decodeAudioData(b)).duration; } return out; });
   for (const s of S) ok(Math.abs(durs[s.id] - s.dur) < 0.15, w + 'px ' + s.id + ' decodes at ' + durs[s.id].toFixed(2) + ' s');
+  for (const e of D.cases.flatMap(c => c.events.filter(e => e.vid))) ok(Math.abs(durs[e.vid] - e.dur) < 0.15, w + 'px ' + e.vid + ' decodes at ' + durs[e.vid].toFixed(2) + ' s');
   // run: a moment after a numbered signal sounds, it lights its room and nothing of it reaches the street's words
   await p.evaluate(() => window.__earshot.seek(window.__earshot.hToTau(72) - 0.5));
   await p.waitForTimeout(2600);
@@ -115,6 +166,33 @@ for (const [w, h] of [[1100, 820], [390, 844]]) {
   ok(run.voices.some(([id, room]) => id === 'NY4' && room === 'dfs'), w + 'px NY4 sounds in New York\'s office at 72 h');
   ok(run.lit.dfs > 0.5, w + 'px that room is lit');
   ok(run.voices.filter(([, room]) => room === 'street').every(([id]) => S.find(s => s.id === id).room === 'street'), w + 'px only the street\'s own texts in the street');
+  // as it happened: what each case's run sounds, read from the page's own clock
+  for (const c of D.cases) {
+    const evs = await p.evaluate(id => window.__earshot.buildEvents(id), c.id);
+    const recEnd = await p.evaluate(id => window.__earshot.hToTau(window.EARSHOT.cases.find(x => x.id === id).today_h), c.id);
+    ok(evs.every(e => e.tau <= recEnd + 1e-9), w + 'px ' + c.id + ' nothing after today');
+    ok(evs.some(e => e.kind === 'today' && Math.abs(e.tau - recEnd) < 1e-9), w + 'px ' + c.id + ' the run ends today');
+    const vids = evs.filter(e => e.kind === 'voice').map(e => e.id);
+    ok(vids.every(id => S.find(s => s.id === id).due === 'due'), w + 'px ' + c.id + ' no signal not yet due sounds');
+    ok(vids.every(id => S.find(s => s.id === id).when.phase !== 'at') && !evs.some(e => e.kind === 'murmur'), w + 'px ' + c.id + ' no hour of the paper is sounded as if it happened');
+    for (const e of evs.filter(e => e.kind === 'case' && e.h >= 0)) { const back = await p.evaluate(t => window.__earshot.tauToH(t), e.tau); ok(Math.abs(back - e.h) / Math.max(1, e.h) < 1e-4 || e.id === 'knew_undated', w + 'px ' + c.id + ' ' + e.id + ' placed at its hour'); }
+    const paper = evs.filter(e => e.kind === 'paper');
+    ok(c.paper_from_h === null ? paper.length === 0 : paper.length === D.paper_hours.length && paper.every(e => D.paper_hours.includes(e.h - c.paper_from_h)), w + 'px ' + c.id + ' the paper\'s hours from the maker\'s knowing');
+  }
+  // run the escape: the first voice of the record in the street, and a report carried in from the street
+  await p.evaluate(() => window.__earshot.setMode('escape', false));
+  const fp = D.cases.find(c => c.id === 'escape').events.find(e => e.key === 'first_public');
+  await p.evaluate(h => window.__earshot.seek(window.__earshot.hToTau(h) - 0.3), fp.h);
+  await p.waitForTimeout(2500);
+  const r1 = await p.evaluate(() => { const s = window.__earshot; return { telling: s.telling && s.telling.e.key, voices: s.voices.map(v => [v.id, v.room]), time: document.getElementById('time').textContent }; });
+  ok(r1.telling === 'first_public' && r1.voices.some(([id, room]) => id === 'escape-first_public' && room === 'street'), w + 'px escape: the harmed party is heard in the street');
+  ok(r1.time.startsWith('16 July 2026 · 7 days after the deed'), w + 'px escape: the page names the day: ' + r1.time);
+  const rs = D.cases.find(c => c.id === 'escape').events.find(e => e.key === 'report_sent');
+  await p.evaluate(h => window.__earshot.seek(window.__earshot.hToTau(h) - 0.2), rs.h);
+  await p.waitForTimeout(4200);
+  const r2 = await p.evaluate(() => { const s = window.__earshot; return { visitor: s.visitor, voices: s.voices.map(v => [v.id, v.room]), lit: s.lit.oes }; });
+  ok(r2.visitor.oes === true && r2.voices.some(([id, room]) => id === 'CA6' && room === 'oes') && r2.lit > 0.5, w + 'px escape: someone from the street carries a report into the office, and its channel speaks');
+  await p.evaluate(() => window.__earshot.setMode('paper', true));
   ok(errs.length === 0, w + 'px no page errors: ' + errs.join(' | '));
   if (shot && w === 1100) {
     await p.evaluate(() => window.__earshot.seek(window.__earshot.hToTau(360) - 0.4));
