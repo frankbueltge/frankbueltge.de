@@ -330,7 +330,7 @@ export const ECOLOGY_V3 = {
     // station template (docs/design/2026-09-01-public-surfaces-v3.md) — the sheets of 2026-08-12
     // are archived in the repository history with the rest of the pyramid.
     lineage:
-      'What stood here before — the pyramid entrance of 2026-08-12 — is archived in the repository history (decision of 2026-08-30), and its station sheets followed on 2026-09-01, when the three practice pages were rebuilt on the v3 template. The journals and the post office are unchanged; the post office works as poste restante: mail lies ready for collection, and whether it is ever sent measures nothing.',
+      'What stood here before — the pyramid entrance of 2026-08-12 — is archived in the repository history (decision of 2026-08-30), and its station sheets followed on 2026-09-01, when the three practice pages were rebuilt on the v3 template. The journals and the post office are unchanged; the post office worked as poste restante from 2026-08-01: mail lay ready for collection, and whether it was ever sent measured nothing. Superseded 2026-11-14: a practice now writes a letter only where a receiver has a stake in the work, and the architect sends it himself, or not at all (see /post).',
     links: [
       // Renamed 2026-09-01 with the station-sheet retirement: the doors carry the practices'
       // canonical names (wording-kanon), not the retired sheet vocabulary.
