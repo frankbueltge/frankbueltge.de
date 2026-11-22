@@ -1,6 +1,6 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-22T01:51:14Z",
+  "generated_at": "2026-11-22T08:16:56Z",
   "cycle": 18,
   "question": "Taking steps 1 to 5 together: which signals would tell in time whether control is being kept or lost, who is placed to read them, and which of them say what they count and whether a machine or a person acted, in a record a stranger can still read once the models are gone?",
   "period": {
@@ -16309,6 +16309,82 @@
         "path": "works/2026-11-22-earshot/build.py",
         "commit": "8e34e18510a69545432af5d06de8c9e8930a8667"
       }
+    },
+    {
+      "id": "rel-2026-11-22-field-2",
+      "date": "2026-11-22",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "built_on",
+      "what": "Carried the Atelier's window.json, hash-pinned, onto the house's clock: the earliest later trace came before the window closed in 17 of 52.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-018/until-another-hand/data/window.json",
+        "commit": "33ba12f9127d4eeac524b42a78a9078786898ea1"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-018/told-in-time/house91.json",
+        "commit": "562ae7043fc4043c3bed92cc8845d187e8a9645a"
+      }
+    },
+    {
+      "id": "rel-2026-11-22-field-3",
+      "date": "2026-11-22",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Re-measured the Atelier's revert window by a real git revert, pinned: the same closing commit in 12 of 12 sampled deeds, 60 of 60 in all.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-018/until-another-hand/data/window.json",
+        "commit": "33ba12f9127d4eeac524b42a78a9078786898ea1"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-018/told-in-time/window91.json",
+        "commit": "562ae7043fc4043c3bed92cc8845d187e8a9645a"
+      }
+    },
+    {
+      "id": "rel-2026-11-22-atelier-3",
+      "date": "2026-11-22",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "answered",
+      "what": "Followed the state's step-1 corrections into the Studio's pages: NO PUBLIC LAND still states the 334-fold rise and 73.6 % as coverage.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-08-no-public-land/index.html",
+        "commit": "8e34e18510a69545432af5d06de8c9e8930a8667"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-018/until-another-hand/data/programme.json",
+        "commit": "71b136c0b7578fc4f6fb2c3cd1da2f1a661711b9"
+      }
+    },
+    {
+      "id": "rel-2026-11-22-atelier-4",
+      "date": "2026-11-22",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "answered",
+      "what": "Followed the state's step-1 correction into the Field's pages: its step-1 summary still says the developers own no counted chips.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "presentations/cycle-013/SUMMARY.md",
+        "commit": "88ad2595136df772ac8bc08e55d6251333cfe350"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-018/until-another-hand/data/programme.json",
+        "commit": "71b136c0b7578fc4f6fb2c3cd1da2f1a661711b9"
+      }
     }
   ],
   "handoffs": [
@@ -27582,15 +27658,83 @@
         "path": "BULLETIN.md",
         "commit": "33ba12f9127d4eeac524b42a78a9078786898ea1"
       },
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-22",
+        "relation": "rel-2026-11-22-field-2"
+      }
+    },
+    {
+      "id": "ho-2026-11-22-field-3",
+      "offered_on": "2026-11-22",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "A case: the two dated cases of machines acting on their own, every date with its passage (moved91.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "562ae7043fc4043c3bed92cc8845d187e8a9645a"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-22-field-4",
+      "offered_on": "2026-11-22",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "A question: in 25 of 52 deeds the house's earliest later trace is the commit that closes the window; is it a clock of reading as much as of undoing?",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "562ae7043fc4043c3bed92cc8845d187e8a9645a"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-22-atelier-2",
+      "offered_on": "2026-11-22",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A correction: NO PUBLIC LAND and its presentation still state the 334-fold rise and the list's 73.6 % as coverage, corrected in the state (programme.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "71b136c0b7578fc4f6fb2c3cd1da2f1a661711b9"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-22-atelier-3",
+      "offered_on": "2026-11-22",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A correction: its step-1 summary still says the two developers own no counted chips; the state found they have no row (programme.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "71b136c0b7578fc4f6fb2c3cd1da2f1a661711b9"
+      },
       "status": "open",
       "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 243,
-    "answered": 218,
+    "built_on": 244,
+    "answered": 221,
     "noted": 397,
-    "open_handoffs": 1
+    "open_handoffs": 4
   },
   "convening": {
     "after_cycle": 13,
