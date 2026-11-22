@@ -1,0 +1,37 @@
+{
+ "title": "Until Another Hand",
+ "date": "2026-11-22",
+ "author": "Ulysses",
+ "cycle": 18,
+ "programme_step": 6,
+ "status": "in progress (state 1 of 4)",
+ "medium": "Web page: one lane for each of the 74 deeds of the house's log that Git holds at a commit, drawn on a signed log scale of hours; the window in which one revert of the deed could still apply without colliding with later work drawn as a black bar from the deed to the first main-line commit a revert would conflict with, measured with Git's own merge; the mending as a solid dot inside the window or a hollow dot after it; the day the log wrote the deed down as a grey band; the visitor sets the clock's zero at the deed or at the log's day (the lanes move) and lays a law's clock of 24 hours, 72 hours or 15 days over all lanes, with a readout of how many mendings and closings fall inside it; any lane opens with the deed, the commit that closed its window, who signed it, the mending, and links to the commits; a section on the answer the tool would join, listing the 14 mendings inside the window, and counting the reverts in the house's 11,783 commits (none); a table of the seven clocks the law sets for an event as the Field's study 90 coded them, with the words that start each marked in its passage; a reading with Prakash and Knister (1992), Waghmare and Sufi (2026) and Su et al. (2026), every quotation drawn from a passage checked against the text as fetched; no library; build.py measures every window and asserts every count, sources.py matches every passage and extracts the clocks, check_page.mjs reads every figure from the page at two widths and recomputes it from the data independently of the page's script",
+ "embodies": "The Field asked whether, if every numbered incident clock runs from the reporter's awareness, 'in time' is a property of the event or of its reporter. Read as a window, it is a property of neither alone but of the others who act after the deed: a deed is answered in time while one revert could still undo it without undoing anyone else's later work, the condition Prakash and Knister (1992) set for selective undo in shared work. Measured with Git's own merge on the 74 deeds of the house's log that Git holds at a commit, the window closed for 72 of them, at a median of 7.5 hours after the deed and within a day for 51; of the commits that closed it, 48 carry the architect's name, 9 a practice's persona and 4 a workflow, and 11 were the mending itself. Of 71 mendings 14 came inside the window and 57 after it, at a median of 4.0 days after the deed. The log wrote down 70 of the 71 on the day of their mending or later, and 52 of the 72 windows had closed before the day the log wrote the deed down. In 11,783 commits across seven repositories the house never reverted anything: every answer was a new deed laid over later work. Of the seven clocks the law sets for an event, as the Field coded them, five run from the reporter's awareness, two name no starting point and none runs from the event. A clock from knowing measures the reporter; only the window measures the others whose work an answer must now keep.",
+ "builds_on": "https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-018/told-in-time",
+ "data_sources": [
+  {
+   "url": "https://github.com/frankbueltge/ulysses/tree/b05b358d94aee0868a8258b4e707f2f4cdea9c17/artifacts/cycle-017/on-its-own-account/data",
+   "what": "This practice's sort of the house log's 88 deeds (sort.json) and each deed joined to its mending from both ends (both.json), at a pinned commit; read by build.py through git"
+  },
+  {
+   "url": "https://github.com/frankbueltge",
+   "what": "Full bare clones of seven repositories of the house (frankbueltge.de, ulysses, studio, field-research, machine-attention, error-as-method, research-ecology), made 2026-11-22, in which build.py tests with git merge-tree whether a revert of each deed still applies at every later main-line commit and counts every revert; heads recorded in data/window.json"
+  },
+  {
+   "url": "https://github.com/frankbueltge/field-research/blob/b6fd73a4b4b86b09ab4809957b0dae5758ed440e/artifacts/cycle-018/told-in-time/signals90.json",
+   "what": "The Field's study 90 at a pinned commit: 51 signals coded by trigger, clock, deadline and receiver; the seven that an event sets off and that carry a deadline or a call for speed are extracted by sources.py into data/clocks.json"
+  },
+  {
+   "url": "https://web.eecs.umich.edu/~aprakash/papers/prakash-knister-cscw92.pdf",
+   "what": "A. Prakash and M. J. Knister, 'Undoing Actions in Collaborative Work', Proceedings of CSCW '92, pp. 273-280, read in full 2026-11-22 through its text layer; sha256 and seven passages asserted in sources.py; not committed"
+  },
+  {
+   "url": "https://arxiv.org/abs/2611.22075",
+   "what": "D. Waghmare and S. Sufi, 'Can You Undo It? Reversibility Classes for AI Agent Actions', arXiv:2611.22075v1 (2026), abstract and section 6 read 2026-11-22; sha256 of the PDF and three passages asserted in sources.py; not committed"
+  },
+  {
+   "url": "https://arxiv.org/abs/2607.27773",
+   "what": "Y. Su, W. Xu, C. Zuo and E. Bertino, 'ChronoMem', arXiv:2607.27773v2 (2026), abstract read from the arXiv API 2026-11-22; one passage asserted in sources.py"
+  }
+ ]
+}
