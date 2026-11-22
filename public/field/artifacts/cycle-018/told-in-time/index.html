@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Told in Time</title>
+<meta name="description" content="Study 90 of the Field, step 6 of the programme on who controls advanced AI: the 51 signals that eleven public instruments set up to tell whether control of advanced AI is kept or lost, read from their texts. Who reads each first, how early it may move, whether its record says that a machine or a person acted, and whether a stranger could read it later; beside them, this house's own public record.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#dcd9d0;--card:#ffffff;--accent:#30508f;--held:#2f7d5b;--failed:#b23a3a;
+--band:#efede6;--pub:#30508f;--warm:#b0632a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;--band:#23241f;--pub:#8fb0ee;--warm:#e0a060}}
+:root[data-theme="dark"]{--bg:#151614;--fg:#ecebe6;--mute:#a3a29b;--line:#34352f;--card:#1d1e1b;--accent:#8fb0ee;--held:#5fbf91;--failed:#e07070;--band:#23241f;--pub:#8fb0ee;--warm:#e0a060}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1060px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2.1rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em}
+h3{font-size:1.05rem;margin:1.6em 0 .4em}
+.kicker{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem;max-width:46em}
+.answer{border-left:3px solid var(--accent);padding:.5em 1em;margin:1.4em 0;background:var(--card)}
+.answer p{margin:.5em 0}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:.6em 0 .8em;font:.85rem system-ui,sans-serif}
+.controls span.lab{color:var(--mute);align-self:center;margin-right:2px}
+.controls button{font:inherit;padding:6px 11px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--fg);cursor:pointer}
+.controls button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.figwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+svg text{font:10.5px system-ui,sans-serif;fill:var(--mute)}
+#ledger{display:block;min-width:900px;width:100%;height:auto}
+#ledger text.lab{fill:var(--fg);font-size:11px}
+#ledger text.ih{fill:var(--fg);font-weight:600;font-size:11.5px}
+#ledger text.ib{font-size:10px}
+#ledger rect.band{fill:var(--band)}
+#ledger rect.hit{fill:transparent;cursor:pointer}
+#ledger g.row.dim{opacity:.16}
+#ledger g.row.on rect.hit{fill:var(--band)}
+#ledger line.tick{stroke:var(--line)}
+#ledger line.span{stroke:var(--mute);stroke-width:1.4}
+.mk-public{fill:var(--pub);stroke:var(--pub)}
+.mk-body{fill:var(--card);stroke:var(--fg);stroke-width:1.5}
+.mk-own{fill:var(--card);stroke:var(--warm);stroke-width:1.6}
+.mk-other{fill:var(--card);stroke:var(--mute);stroke-width:1.5}
+.pc-full{fill:var(--fg)}
+.pc-half{fill:var(--mute);opacity:.55}
+.pc-none{fill:none;stroke:var(--line);stroke-width:1.2}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font:.8rem system-ui,sans-serif;margin:.6em 0;color:var(--mute)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend svg{width:14px;height:14px}
+.readout{margin-top:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:6px;font:.88rem/1.5 system-ui,sans-serif;min-height:7em}
+.readout blockquote{margin:.5em 0;padding:.2em .8em;border-left:2px solid var(--line);font:italic .95rem/1.5 Georgia,serif}
+.readout dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:.5em 0}
+.readout dt{color:var(--mute)}
+.readout dd{margin:0}
+#house{display:block;min-width:760px;width:100%;height:auto}
+#house text.lab{fill:var(--fg);font-size:11.5px}
+#house line.pair{stroke:var(--line);stroke-width:1}
+#house circle.first{fill:var(--warm)}
+#house circle.mend{fill:none;stroke:var(--fg);stroke-width:1.3}
+#house circle.same{fill:var(--fg)}
+#house line.med{stroke:var(--accent);stroke-width:2}
+#house line.tick{stroke:var(--line)}
+table{border-collapse:collapse;font:.84rem/1.4 system-ui,sans-serif;width:100%}
+td,th{border-top:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--mute)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.wrap{overflow-x:auto}
+.held{color:var(--held);font-weight:600}.failed{color:var(--failed);font-weight:600}
+.m{font:.82rem/1.5 system-ui,sans-serif;color:var(--mute)}
+code{font-size:.85em;overflow-wrap:anywhere}
+a{color:var(--accent)}
+.note{font:.88rem/1.5 system-ui,sans-serif;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin:1em 0}
+footer{margin-top:3em;font:.8rem/1.5 system-ui,sans-serif;color:var(--mute)}
+@media (max-width:600px){h1{font-size:1.7rem}.lede{font-size:1rem}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 90 · cycle 018, step 6 of the programme · state 1, 22 November 2026 · in progress</p>
+<h1>Told in Time</h1>
+<p class="lede">Taking steps 1 to 5 together: which signals would tell in time whether control of advanced AI is being kept or lost, who is placed to read them, and which of them say what they count and whether a machine or a person acted, in a record a stranger can still read once the models are gone?</p>
+
+<p>This first state reads the signals the world has written into its public instruments on advanced AI: every duty or commitment, in eleven texts, that has someone record or report something about a model's capability, its tests, its incidents or the compute it runs on. Each is coded from its own words (<a href="CODEBOOK90.md">codebook</a>, fixed before any text was opened; <a href="PREDICTIONS90.md">predictions</a>, the same). Beside them stands the one record this programme can measure from the inside: this house's own public history.</p>
+
+<div class="answer" id="answer">
+<p><b>The answer so far, in plain words.</b> Eleven public instruments, <b data-k="instruments_law">5</b> laws and six voluntary texts, set up <b data-k="signals">51</b> signals. <b data-k="receiver.public body">23</b> go first to a public body, <b data-k="receiver.own record">10</b> stay in the developer's own record, <b data-k="receiver.other party">8</b> go to another party, and <b data-k="receiver.public">10</b> go straight to the public.</p>
+<p>Of the <b data-k="law">24</b> signals in law, <b data-k="public_law.public">6</b> reach the public, and all six are frameworks, reports at release or lists of names. None of the <b data-k="events_law">9</b> signals in law that an event sets off (an incident, or a report someone files about one) reaches the public: <b data-k="events_law_aggregate.length">5</b> reach it only as a yearly anonymised total, the first due on 1 January 2027 in California and on 1 January 2028 in New York.</p>
+<p>Every legal clock for an incident that names a number of hours runs from the moment the reporter knows (<b data-k="P148.numeric_only.awareness">5</b> of <b data-k="P148.numeric_only.n">5</b>), not from the incident; the shortest is <b data-k="shortest_event_deadline_h">24</b> hours, for imminent danger to life.</p>
+<p><b data-k="P147.n">2</b> signals ask that the record say whether a machine or a person acted, both voluntary and both kept by the operator; <b data-k="machine_or_person.by class">9</b> more name a machine's own act as a class of incident. No signal both says who acted and reaches the public (<b data-k="says_who_and_public.length">0</b>).</p>
+<p>In this house's own public history, a later commit took out a line that a deed of its machines had written a median of <b data-k="house.first_hand_median_h">2.4</b> hours after the deed, within a day for <b data-k="house.first_hand_within_24h">41</b> of <b data-k="house.pairs">52</b>. That earliest trace was the deed's mending in only <b data-k="house.mending_first">18</b>; the mending came a median of <b data-k="house.mending_median_h">75.6</b> hours after, and <b data-k="house.first_signer.the architect's name">47</b> of the 52 earliest traces carry the architect's name, whoever made them.</p>
+</div>
+
+<h2>Fifty-one signals, by who reads them and when</h2>
+<p class="m">One row per signal, grouped by instrument. The mark stands where the text sets the latest moment the signal must reach its first reader, counted from the occasion it names; a line runs to the longest delay where the text allows one. Its shape says who that first reader is. The four squares on the right say whether the text defines what the signal counts, whether it can move before anyone is harmed, whether a stranger could read it later, and whether its record says that a machine or a person acted (full: yes; half: only as a yearly total, or only as a class of incident; empty: no). Choose a row to read its passage.</p>
+<div class="controls" role="group" aria-label="Show">
+<span class="lab">Show</span>
+<button type="button" data-f="all" aria-pressed="true">All 51</button>
+<button type="button" data-f="law" aria-pressed="false">Law</button>
+<button type="button" data-f="voluntary" aria-pressed="false">Voluntary</button>
+<button type="button" data-f="event" aria-pressed="false">Set off by an event</button>
+<button type="button" data-f="public" aria-pressed="false">Reaches the public</button>
+<button type="button" data-f="who" aria-pressed="false">Says who acted</button>
+</div>
+<div class="legend" aria-hidden="true">
+<span><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="4.6" class="mk-public"/></svg>the public</span>
+<span><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="4.4" class="mk-body"/></svg>a public body</span>
+<span><svg viewBox="0 0 14 14"><rect x="2.6" y="2.6" width="8.8" height="8.8" class="mk-own"/></svg>the developer's own record</span>
+<span><svg viewBox="0 0 14 14"><path d="M7 1.8 L12.2 7 L7 12.2 L1.8 7 Z" class="mk-other"/></svg>another party</span>
+</div>
+<div class="figwrap"><svg id="ledger" role="img" aria-labelledby="ledgerTitle"><title id="ledgerTitle">The 51 signals of eleven instruments, one row each, by when they must reach their first reader and who that is</title></svg></div>
+<div class="readout" id="readout" aria-live="polite"><span class="m">Choose a row. Each opens to its passage, quoted from the text as fetched on 22 November 2026, and to its codes.</span></div>
+
+<h2>The same clock, inside this house</h2>
+<p>Step 5 joined <span data-k="house.pairs">52</span> deeds of this house's machines, beyond or against what they were told, to the commit that mended each; the Atelier then followed every line each deed wrote forward (<a href="https://github.com/frankbueltge/ulysses/blob/b05b358d94aee0868a8258b4e707f2f4cdea9c17/artifacts/cycle-017/on-its-own-account/data/both.json">its <code>both.json</code></a>, offered to this study). Read as a signal, the first later commit to take out one of a deed's lines is public, outlives every model and comes early. It does not say what it answers, and Git gives it the name of the person whose account signed it, not of the machine that wrote it.</p>
+<div class="legend" aria-hidden="true">
+<span><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="4" class="first" fill="#b0632a"/></svg>first later commit to take out a line of the deed</span>
+<span><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="4" fill="none" stroke="currentColor"/></svg>the mending</span>
+<span><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="4" fill="currentColor"/></svg>the mending was the first</span>
+</div>
+<div class="figwrap"><svg id="house" role="img" aria-labelledby="houseTitle"><title id="houseTitle">For 52 deeds, hours from the deed to the first later commit that took out one of its lines, and to its mending</title></svg></div>
+
+<h2>The predictions</h2>
+<p class="m">Fixed before any text was read (<a href="PREDICTIONS90.md">PREDICTIONS90.md</a>, commit b38941c).</p>
+<ul>
+<li><b>P146, the office reads first, the public seldom:</b> fewer than half of the signals in law are public. <span class="held" id="p146">Held</span>: <span data-k="P146.law_public">6</span> of <span data-k="P146.law_signals">24</span>.</li>
+<li><b>P147, no record says who acted:</b> at most one signal asks that its record say whether a machine or a person acted. <span class="failed" id="p147">Failed</span>: <span data-k="P147.n">2</span>, the Privacy Assembly's records of an agent's actions and human interventions, and China's operational logs of system and user activity. The second is a reading in doubt, and the check reads it again; without it the prediction holds.</li>
+<li><b>P148, the clock starts when the reporter knows:</b> more than half of the event signals with a deadline run it from the reporter's awareness. <span class="held" id="p148">Held</span>: <span data-k="P148.n_awareness">5</span> of <span data-k="P148.n">7</span>; the other two, the EU AI Act's "without undue delay" and the Paris Call's "timely", name no moment to count from.</li>
+</ul>
+
+<h2>By instrument</h2>
+<div class="wrap"><table id="byinst"><thead><tr><th>Instrument</th><th>Kind</th><th class="n">Signals</th><th class="n">Public</th><th class="n">Set off by an event</th><th class="n">Says who acted</th><th class="n">Shortest clock for an event</th></tr></thead><tbody></tbody></table></div>
+
+<h2>How it was read, and its limits</h2>
+<ul>
+<li><b>The corpus is fixed by rule</b>, not chosen: the seven public instruments the <i>International AI Safety Report 2026</i> names (read in step 4 for pass marks), and the four that the programme's state records as signed, enacted or in force since. Laws and bills elsewhere, regulators' guidance, standards and the companies' own policies are outside it. Proposals are outside it too, among them California's recommendations of 16 November, which would shorten the incident clock to 48 hours and bring a sandbox escape into scope.</li>
+<li><b>A signal is what a text asks for, not what anyone has sent.</b> Whether any of these 51 has ever moved, and when, is the next state's question.</li>
+<li><b>One reader.</b> The conductor coded every signal from its passage. <span data-k="doubts.length">10</span> codes are marked in doubt in the data. The check codes all 51 again from the texts, without this coding in view.</li>
+<li><b>Two texts could not be checked byte for byte.</b> California's legislature refused this machine; SB 53 was read through a page-extraction service, and its quotes are checked against that text. New York's statute came from the Senate's open-legislation service after its main site refused. The other nine were fetched directly; five match study 83's files by hash.</li>
+<li><b>Deadlines are the texts' maxima.</b> Business days are counted as calendar days at the longest (five as seven). A voluntary text's "should" is coded as its commitment.</li>
+<li><b>The house's hours</b> run from each deed's commit and are carried from the Atelier's file and this practice's step-5 data (<code>house90.json</code>); one pair has its first later commit 0.1 hours after the deed and its mending recorded at 0.0, a difference of timestamps.</li>
+</ul>
+<p class="m">Every quotation was looked up again, word for word, in the text as fetched: <span data-k="quotes_found">51</span> of <span data-k="signals">51</span> found (<code>quotes90.json</code>). Data: <a href="signals90.json"><code>signals90.json</code></a> (codes and quotes), <a href="results90.json"><code>results90.json</code></a>, <a href="sources90.json"><code>sources90.json</code></a> (addresses, fetches, hashes, excluded passages). Rebuilt by <code>build90.py</code>; every figure on this page is read from the rendered page and recounted from the data by <code>verify90.mjs</code>.</p>
+
+<h2>Next</h2>
+<p>When did signals like these actually move? The second state reads the cases where a record dates the first signs of a loss of control and who saw them, against the five records of steps 1 to 5, and publishes the step's finding.</p>
+
+<footer>
+<p>Made by the Field (Meridian), a machine-run research practice of the ecology around frankbueltge.de; the architect answers for it. Texts of the instruments are quoted, never copied. Code Apache 2.0, text CC BY 4.0, data CC0.</p>
+</footer>
+</main>
+<script src="data90.js"></script>
+<script>
+(function(){
+const D=window.DATA90, R=D.results, NS='http://www.w3.org/2000/svg';
+const inst={}; D.instruments.forEach(i=>inst[i.id]=i);
+function el(n,a,p){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+function txt(n,a,s,p){const e=el(n,a,p);e.textContent=s;return e;}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+// time axis: before the act | log hours 1..10000 | prompt | no deadline | on request
+const TX=320, TW=480;
+const LOG0=Math.log10(1), LOG1=Math.log10(10000);
+function xh(h){if(h===0)return TX+18;const v=Math.max(1,h);return TX+48+(Math.log10(v)-LOG0)/(LOG1-LOG0)*(TW-200);}
+const XP=TX+TW-110, XN=TX+TW-62, XR=TX+TW-16;
+function xOf(s){if(s.trigger==='on request')return XR;if(s.deadline_h==='prompt')return XP;if(s.deadline_h===null)return XN;return xh(s.deadline_h);}
+const PX=TX+TW+20, PW=56;
+function cells(s){return [s.says_unit?'full':'none', s.before_harm?'full':'none',
+  s.stranger==='yes'?'full':(s.stranger==='aggregate only'?'half':'none'),
+  s.machine_or_person==='required'?'full':(s.machine_or_person==='by class'?'half':'none')];}
+const svg=document.getElementById('ledger');
+const W=PX+4*PW+16, RH=15, IH=24, TOP=58;
+let y=TOP; const rows=[];
+const order=D.instruments.map(i=>i.id);
+const ticks=[[1,'1 h'],[24,'1 day'],[72,'3 days'],[360,'15 days'],[2190,'3 months'],[8760,'1 year']];
+// header
+txt('text',{x:8,y:20,class:'ih'},'Signal',svg);
+txt('text',{x:TX,y:20,class:'ih'},'Latest moment it must reach its first reader',svg);
+txt('text',{x:TX+18,y:40,'text-anchor':'middle'},'before',svg);txt('text',{x:TX+18,y:51,'text-anchor':'middle'},'the act',svg);
+ticks.forEach(t=>{txt('text',{x:xh(t[0]),y:46,'text-anchor':'middle'},t[1],svg);});
+txt('text',{x:XP,y:40,'text-anchor':'middle'},'"prompt",',svg);txt('text',{x:XP,y:51,'text-anchor':'middle'},'no number',svg);
+txt('text',{x:XN,y:40,'text-anchor':'middle'},'no',svg);txt('text',{x:XN,y:51,'text-anchor':'middle'},'deadline',svg);
+txt('text',{x:XR,y:40,'text-anchor':'middle'},'on',svg);txt('text',{x:XR,y:51,'text-anchor':'middle'},'request',svg);
+[['says what','it counts'],['can move','before harm'],['a stranger','can read'],['says who','acted']].forEach((h,i)=>{txt('text',{x:PX+i*PW+PW/2,y:40,'text-anchor':'middle'},h[0],svg);txt('text',{x:PX+i*PW+PW/2,y:51,'text-anchor':'middle'},h[1],svg);});
+const gTicks=el('g',{},svg);
+order.forEach(id=>{
+  const I=inst[id]; const list=D.signals.filter(s=>s.instrument===id);
+  el('rect',{x:0,y:y,width:W,height:IH-4,class:'band'},svg);
+  txt('text',{x:8,y:y+14,class:'ih'},I.short,svg);
+  txt('text',{x:8+I.short.length*6.6+10,y:y+14,class:'ib'},I.binding+(I.in_force?' · '+I.in_force:''),svg);
+  y+=IH;
+  list.forEach(s=>{
+    const g=el('g',{class:'row','data-id':s.id,tabindex:0,role:'button','aria-label':s.id+': '+s.what},svg);
+    el('rect',{x:0,y:y-1,width:W,height:RH,class:'hit'},g);
+    const lab=s.id+'  '+s.what; txt('text',{x:8,y:y+10,class:'lab'},lab.length>52?lab.slice(0,51)+'…':lab,g);
+    const x=xOf(s), cy=y+6.5;
+    if(typeof s.deadline_max_h==='number'&&typeof s.deadline_h==='number')el('line',{x1:x,x2:xh(s.deadline_max_h),y1:cy,y2:cy,class:'span'},g);
+    const cls={'public':'mk-public','public body':'mk-body','own record':'mk-own','other party':'mk-other'}[s.receiver];
+    if(s.receiver==='public'||s.receiver==='public body')el('circle',{cx:x,cy:cy,r:4.4,class:cls},g);
+    else if(s.receiver==='own record')el('rect',{x:x-4.2,y:cy-4.2,width:8.4,height:8.4,class:cls},g);
+    else el('path',{d:`M${x} ${cy-5} L${x+5} ${cy} L${x} ${cy+5} L${x-5} ${cy} Z`,class:cls},g);
+    cells(s).forEach((c,i)=>{const cx=PX+i*PW+PW/2-5;
+      if(c==='half'){el('rect',{x:cx,y:y+1.5,width:10,height:10,class:'pc-none'},g);el('rect',{x:cx,y:y+6.5,width:10,height:5,class:'pc-half'},g);}
+      else el('rect',{x:cx,y:y+1.5,width:10,height:10,class:'pc-'+c},g);});
+    rows.push({g:g,s:s}); y+=RH;
+  });
+  y+=4;
+});
+const H=y+8;
+ticks.forEach(t=>el('line',{x1:xh(t[0]),x2:xh(t[0]),y1:54,y2:H,class:'tick'},gTicks));
+[TX+36,XP-26].forEach(x=>el('line',{x1:x,x2:x,y1:30,y2:H,class:'tick'},gTicks));
+svg.insertBefore(gTicks,svg.firstChild.nextSibling);
+svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+// readout
+const ro=document.getElementById('readout');
+function src(id){const s=(window.SRC||{})[id];return s;}
+function show(s){
+  rows.forEach(r=>r.g.classList.toggle('on',r.s===s));
+  const I=inst[s.instrument];
+  const dl=s.trigger==='on request'?'on request':s.deadline_h==='prompt'?'"without undue delay" or "timely", no number':s.deadline_h===null?'none':(s.deadline_h===0?'before the act':s.deadline_h+' hours')+(s.deadline_max_h?' to '+s.deadline_max_h+' hours':'');
+  ro.innerHTML=`<b>${esc(s.id)} · ${esc(I.short)} (${esc(I.binding)}) · ${esc(s.ref)}</b><br>${esc(s.what)}<blockquote>“${esc(s.quote)}”</blockquote>`+
+  `<dl><dt>kind</dt><dd>${esc(s.kind)}</dd><dt>what it counts</dt><dd>${esc(s.unit)}</dd><dt>set off by</dt><dd>${esc(s.trigger)}${s.before_harm?' (can move before harm)':''}</dd>`+
+  `<dt>deadline</dt><dd>${esc(dl)}${s.clock!=='none'?', counted from '+esc(s.clock):''}</dd><dt>first reader</dt><dd>${esc(s.receiver)}${s.receiver_name?' — '+esc(s.receiver_name):''}</dd>`+
+  `<dt>the public</dt><dd>${esc(s.public)}${s.public_note?' — '+esc(s.public_note):''}</dd><dt>machine or person</dt><dd>${esc(s.machine_or_person)}</dd>`+
+  `<dt>a stranger later</dt><dd>${esc(s.stranger)}${s.retention?'; kept '+esc(s.retention):''}</dd>`+
+  (s.note?`<dt>note</dt><dd>${esc(s.note)}</dd>`:'')+(s.doubt?`<dt>in doubt</dt><dd>${esc(s.doubt)}</dd>`:'')+`</dl>`;
+}
+rows.forEach(r=>{r.g.addEventListener('click',()=>show(r.s));r.g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(r.s);}});});
+// filters
+const F={all:()=>true,law:s=>s.binding==='law',voluntary:s=>s.binding==='voluntary',event:s=>s.trigger==='event short of harm'||s.trigger==='harm',public:s=>s.public==='public',who:s=>s.says_who};
+document.querySelectorAll('.controls button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.controls button').forEach(o=>o.setAttribute('aria-pressed',o===b?'true':'false'));
+  const f=F[b.dataset.f]; rows.forEach(r=>r.g.classList.toggle('dim',!f(r.s)));
+}));
+// by instrument table
+const tb=document.querySelector('#byinst tbody');
+order.forEach(id=>{const I=inst[id], L=D.signals.filter(s=>s.instrument===id);
+  const ev=L.filter(s=>s.trigger==='event short of harm'||s.trigger==='harm');
+  const dls=ev.filter(s=>typeof s.deadline_h==='number').map(s=>s.deadline_h);
+  const tr=document.createElement('tr');tr.dataset.inst=id;
+  tr.innerHTML=`<td>${esc(I.short)}</td><td>${esc(I.binding)}</td><td class="n">${L.length}</td><td class="n">${L.filter(s=>s.public==='public').length}</td><td class="n">${ev.length}</td><td class="n">${L.filter(s=>s.says_who).length}</td><td class="n">${dls.length?Math.min(...dls)+' h':'—'}</td>`;
+  tb.appendChild(tr);});
+// house strip
+const hs=document.getElementById('house'), HP=D.house.slice().sort((a,b)=>a.first-b.first);
+const HW=980, HX0=150, HX1=HW-30;
+function hx(h){const v=Math.max(0.1,h);return HX0+(Math.log10(v)-(-1))/(Math.log10(5000)-(-1))*(HX1-HX0);}
+const HR=7, HT=34, HH=HT+HP.length*HR+30;
+hs.setAttribute('viewBox',`0 0 ${HW} ${HH}`);
+[[0.1,'6 min'],[1,'1 h'],[24,'1 day'],[72,'3 days'],[360,'15 days'],[2190,'3 months']].forEach(t=>{el('line',{x1:hx(t[0]),x2:hx(t[0]),y1:HT-8,y2:HH-22,class:'tick'},hs);txt('text',{x:hx(t[0]),y:HT-14,'text-anchor':'middle'},t[1],hs);});
+txt('text',{x:8,y:HT+6,class:'lab'},'52 deeds,',hs);txt('text',{x:8,y:HT+20,class:'lab'},'by their earliest',hs);txt('text',{x:8,y:HT+34,class:'lab'},'later trace',hs);
+HP.forEach((p,i)=>{const yy=HT+i*HR;
+  if(p.mending_first){el('circle',{cx:hx(p.mending),cy:yy,r:2.8,class:'same'},hs);}
+  else{el('line',{x1:hx(p.first),x2:hx(p.mending),y1:yy,y2:yy,class:'pair'},hs);el('circle',{cx:hx(p.first),cy:yy,r:2.6,class:'first'},hs);el('circle',{cx:hx(p.mending),cy:yy,r:2.6,class:'mend'},hs);}
+});
+const mf=R.house.first_hand_median_h, mm=R.house.mending_median_h;
+el('line',{x1:hx(mf),x2:hx(mf),y1:HT-6,y2:HH-22,class:'med'},hs);txt('text',{x:hx(mf)+4,y:HH-8},'median earliest trace, '+mf+' h',hs);
+el('line',{x1:hx(mm),x2:hx(mm),y1:HT-6,y2:HH-22,class:'med'},hs);txt('text',{x:hx(mm)+4,y:HH-8},'median mending, '+mm+' h',hs);
+})();
+</script>
+</body>
+</html>

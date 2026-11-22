@@ -1,0 +1,115 @@
+{
+ "what": "The eleven texts of study 90 (session 288), each fetched on 2026-11-22. No document is copied into this repository; the quotes in signals90.py are checked against these copies by check_quotes90.py (quotes90.json).",
+ "fetched": "2026-11-22",
+ "sources": [
+  {
+   "instrument": "eu-act",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401689",
+   "fetched": "direct, HTTP 200",
+   "sha256": "4726315b8531578ee9629f149abdf305a807fa57ad8283cd8063d26d6ecec54e",
+   "note": "The page is generated; its hash differs from study 83's fetch of 2026-11-19 (e9fd3ba3...). Chapter V (general-purpose models) and Article 3(49) read."
+  },
+  {
+   "instrument": "eu-code",
+   "url": "https://ec.europa.eu/newsroom/dae/redirection/document/118119",
+   "fetched": "direct, HTTP 200",
+   "sha256": "d879f9b54c6068aae57ebaead9d90ddaa46f2503312b9185367a724fa8da2f4a",
+   "note": "Same file as study 83 (hash matches)."
+  },
+  {
+   "instrument": "korea",
+   "url": "https://cset.georgetown.edu/wp-content/uploads/t0625_south_korea_ai_law_EN.pdf",
+   "fetched": "direct, HTTP 200",
+   "sha256": "9a09e89ff0d62f14c542811178325273f70507f7043764483895b8d87204c0d0",
+   "note": "The translation the International AI Safety Report cites; same file as study 83 (hash matches)."
+  },
+  {
+   "instrument": "sb53",
+   "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53",
+   "fetched": "refused directly (HTTP 403, a challenge page, twice); read through a page-extraction service",
+   "sha256": null,
+   "note": "Not byte-checkable: the quotes are checked against the extraction service's text. Study 83 fetched the same address directly on 2026-11-19 (sha256 92a428f4...)."
+  },
+  {
+   "instrument": "china",
+   "url": "http://www.cac.gov.cn/rootimages/uploadimg/1759653474200838/1759653474200838.pdf",
+   "fetched": "direct, HTTP 200",
+   "sha256": "50735b9ca01bff746169fa58e554abb97b4e62c27d4c97afd64f18ff83bba705",
+   "note": "Same file as study 83 (hash matches); the English text is part of the published file."
+  },
+  {
+   "instrument": "asean",
+   "url": "https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf",
+   "fetched": "direct, HTTP 200",
+   "sha256": "d2f9f1293e9af2f3ca4cc3954e39f94ed6fcd6b52f5e72b28d0d51fc9954ddbd",
+   "note": "Same file as study 83 (hash matches)."
+  },
+  {
+   "instrument": "haip",
+   "url": "https://www.soumu.go.jp/hiroshimaaiprocess/pdf/document05_en.pdf",
+   "fetched": "direct, HTTP 200",
+   "sha256": "14cfe36633502daa48231b49ca7f186c53a72add181b328047665763ecb13ac4",
+   "note": "Same file as study 83 (hash matches)."
+  },
+  {
+   "instrument": "paris",
+   "url": "https://www.elysee.fr/en/emmanuel-macron/2026/11/09/paris-call-for-ai-safety-and-security",
+   "fetched": "direct, HTTP 200",
+   "sha256": "6c490099293b8cb0531e9446b4e898f279e14bfbda19bfbb996415888a27c2c3",
+   "note": "On 2026-11-22 the page lists 19 governments and 11 companies as signatories; the programme's state recorded eight governments. The page says the statement remains open to new endorsements."
+  },
+  {
+   "instrument": "raise",
+   "url": "https://legislation.nysenate.gov/pdf/laws/GBS1422/",
+   "fetched": "direct, HTTP 200 (sections 1420, 1421, 1422 and 1428, each from the same endpoint)",
+   "sha256": {
+    "1420": "d74845ef37d8aa0f95db008e5aaff52ad67f2f0e75227c3724c58f4744d5c830",
+    "1421": "ea13cc8287ff0b0200a1ba8cfd5789e002ca0417b7b1c83933303fa7ec2f7898",
+    "1422": "af846ec24e13d4bee0338066b2b8d3d76aea83959a787b8855cb152f7660f5ff",
+    "1428": "402e2f18a71597bf65a2538f3ac5e5672a7b91e142cb5629b4a7d59ba0db708c"
+   },
+   "note": "www.nysenate.gov refused this machine (HTTP 403); the Senate's open-legislation PDF endpoint delivered. Revision of 2026-04-03, effective 2027-01-01."
+  },
+  {
+   "instrument": "bis",
+   "url": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf",
+   "fetched": "direct, HTTP 200",
+   "sha256": "ae455160b91d3fb24e6aee93aeeae766a5ad5fb78e0b3514762aa44640b694e4",
+   "note": "91 FR 74970, published 2026-11-19."
+  },
+  {
+   "instrument": "gpa",
+   "url": "https://globalprivacyassembly.com/wp-content/uploads/2026/11/Resolution-on-Privacy-protective-Agentic-AI.pdf",
+   "fetched": "direct, HTTP 200",
+   "sha256": "1541d9c5a57f7547a381639c3e1a14eb5ec35a2a94ce85681ca15900dfa2629e",
+   "note": "Adopted at the Assembly's 48th conference."
+  }
+ ],
+ "excluded_passages": [
+  {
+   "instrument": "china",
+   "ref": "\u00a7 5.11",
+   "why": "Developers 'will be required to conduct regular testing to determine whether a model would pose a potential risk of loss of control': a test, with no record or report named, so not a signal by the codebook."
+  },
+  {
+   "instrument": "eu-act",
+   "ref": "Art. 73",
+   "why": "Serious-incident reporting for high-risk AI systems, a duty the Act sets apart from general-purpose models; out by the codebook."
+  },
+  {
+   "instrument": "eu-act",
+   "ref": "Art. 53(1)(d)",
+   "why": "Public summary of training content: about data and copyright, out by the codebook."
+  },
+  {
+   "instrument": "korea",
+   "ref": "Art. 31, Art. 34",
+   "why": "Notice to users of generative AI (Art. 31) and duties for high-impact AI in listed domains (Art. 34), which the Act sets apart from the compute-threshold duty of Art. 32."
+  },
+  {
+   "instrument": "gpa",
+   "ref": "notice to affected individuals",
+   "why": "A duty to inform individuals that they deal with an agent; out by the codebook."
+  }
+ ]
+}
