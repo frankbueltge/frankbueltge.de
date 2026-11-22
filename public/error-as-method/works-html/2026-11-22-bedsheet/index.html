@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bedsheet</title>
+<style>
+:root{--bg:#f2efe7;--fg:#1d1b18;--mute:#666054;--card:#fffdf8;--line:#d6cfbf;--pick:#c2410c;--ok:#2f6b3a;--maker:#1f4e8c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151412;--fg:#ece8df;--mute:#a39d90;--card:#201e1b;--line:#3a362f;--pick:#f28c4b;--ok:#7cc48a;--maker:#8bb4ec}}
+:root[data-theme="dark"]{--bg:#151412;--fg:#ece8df;--mute:#a39d90;--card:#201e1b;--line:#3a362f;--pick:#f28c4b;--ok:#7cc48a;--maker:#8bb4ec}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{overflow-wrap:anywhere;max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:30px;margin:4px 0 2px;font-weight:normal}
+h2{font-size:20px;font-weight:normal;margin:40px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+h3{font:600 13px system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;margin:18px 0 6px;color:var(--mute)}
+.sub{color:var(--mute);margin:0 0 14px;font-size:15px}
+.small{font:13px/1.45 system-ui,sans-serif;color:var(--mute)}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+@media (max-width:520px){.wall{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}}
+.f{position:relative;cursor:pointer;background:var(--card);border:2px solid transparent;padding:3px;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center}
+.f img{max-width:100%;max-height:100%;display:block;box-shadow:0 0 0 1px var(--line)}
+.f.picked{border-color:var(--pick)}
+.f .tick{position:absolute;top:-9px;right:-2px;font:700 10px system-ui,sans-serif;color:var(--pick);background:var(--bg);padding:0 3px;display:none}
+.f.picked .tick{display:block}
+.shown .f{cursor:default}
+.shown .f.maker{border-color:var(--maker)}
+.shown .f.maker .tick{display:block;color:var(--maker)}
+.shown .f.people.picked{opacity:.55}
+.f .cap{display:none}
+.sorted .f .cap{display:block;position:absolute;left:0;right:0;bottom:-17px;font:10px/1.2 system-ui,sans-serif;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.sorted .wall{row-gap:22px}
+button{font:14px system-ui,sans-serif;background:var(--card);color:var(--fg);border:1px solid var(--line);padding:7px 13px;margin:4px 6px 4px 0;cursor:pointer;border-radius:3px}
+button.main{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+button:disabled{opacity:.45;cursor:default}
+.bar{max-width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:10px 0 14px}
+#score{font:15px system-ui,sans-serif;margin-left:6px}
+.quote{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:10px 0}
+.quote b{font:600 12px system-ui,sans-serif;color:var(--maker)}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.stage{grid-template-columns:1fr}}
+.one{background:var(--card);border:1px solid var(--line);padding:14px;display:flex;justify-content:center}
+.one img{max-width:100%;max-height:300px}
+table{border-collapse:collapse;font:14px/1.4 system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+.held{color:var(--ok)} .failed{color:var(--pick)}
+a{color:inherit}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+<h1>Bedsheet</h1>
+<p class="sub">Sixty-six flags. Fifty fly over US states today. Sixteen were made tonight by eight machine makers, for two states that do not exist. <b>Tap every flag you think a machine made</b>, then press <i>Show me</i>.</p>
+
+<div class="bar">
+  <button class="main" id="show">Show me</button>
+  <button id="sort" disabled>Sort them</button>
+  <button id="again">Shuffle and start again</button>
+  <span id="score"></span>
+</div>
+<div id="board"><div class="wall" id="wall"></div></div>
+
+<h2>What happened</h2>
+<p>Each maker made a flag for <b>Superior</b> (the Upper Peninsula of Michigan) and for <b>Chesapeake Shore</b> (the Eastern Shore of Maryland). It drew each flag as code, rendered it, looked at it, and redrew it until it would hand it over. Four makers worked from the words alone. Four were first shown the fifty state flags on one sheet and told that each new flag was to take its place among them.</p>
+<p>Of the fifty, 26 set a seal or coat of arms on a field of one colour, 37 carry lettering, and only 13 have neither. A guide from the field of flag design says <i>“No Lettering or Seals”</i> (NAVA, <i>Good Flag, Bad Flag</i>). <b>All sixteen new flags follow the guide, and none follows the majority of the fifty.</b> The four makers who had seen the fifty did the same as the four who had not. They saw the seals, and they said why they left them out:</p>
+<div id="saw"></div>
+<p>Seeing the fifty changed something else: the subject. Without the sheet, all four Chesapeake Shore flags were a skipjack, the Bay's sailing oyster boat. With it, three were a red crab on a gold band between two blues. The Superior flag was the same in all eight: blue over green, a star in the sky; in seven, after looking, a line of pines.</p>
+<p class="small">The makers had seen what people made and corrected it towards the guide. The people are not of one mind, though. Utah and Minnesota adopted simple flags in 2024, which all four makers cited, and in the same year Maine's voters rejected a return to a simpler flag, 56 to 44 per cent.</p>
+
+<h2>One flag, and your view</h2>
+<div class="stage">
+  <div><div class="one"><img id="oneimg" alt=""></div><p class="small" id="onecap"></p><button id="other">Another flag</button></div>
+  <div>
+    <p><b>Does this flag look as if it belongs among the fifty?</b></p>
+    <div id="q1"></div>
+    <p><b>If this state were real, which would you rather it flew?</b></p>
+    <div id="q2"></div>
+    <div id="ask"></div>
+  </div>
+</div>
+
+<h2>The predictions, committed before any maker ran</h2>
+<table id="preds"><tr><th>#</th><th>Prediction</th><th>Result</th></tr></table>
+<p class="small">The coding of seals and lettering is this practice's, by eye, the people's flags before the run and the makers' after; one coder. Measures: <code>measure.py</code>. Every version of every flag and the makers' notes: <code>makings/</code>. The makers carried this practice's name in their context; the brief named no theme.</p>
+
+<h2>Sources</h2>
+<p class="small">"Seal on a bedsheet": <a href="https://en.wiktionary.org/wiki/seal_on_a_bedsheet">en.wiktionary.org/wiki/seal_on_a_bedsheet</a>. State flags: Wikimedia Commons, the 50 files listed with URL and SHA-256 in <code>people/MANIFEST.json</code>, fetched 2026-11-22; each carries a public-domain or free-use tag on Commons (recorded in the manifest). NAVA, <i>Good Flag, Bad Flag</i>, compiled by Ted Kaye (2006, rev. 2020), principles as quoted at <a href="https://portlandflag.org/good-flag-bad-flag">portlandflag.org/good-flag-bad-flag</a>. Maine Question 5 (2024): <a href="https://en.wikipedia.org/wiki/2024_Maine_Question_5">en.wikipedia.org/wiki/2024_Maine_Question_5</a>. Minnesota adopted its flag on 11 May 2024: <a href="https://en.wikipedia.org/wiki/Flags_of_the_U.S._states_and_territories">en.wikipedia.org/wiki/Flags_of_the_U.S._states_and_territories</a>.</p>
+</main>
+<script src="face-data.js"></script>
+<script src="/study/client.js"></script>
+<script>
+(function(){
+var wall=document.getElementById('wall'),board=document.getElementById('board'),score=document.getElementById('score');
+var showB=document.getElementById('show'),sortB=document.getElementById('sort');
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+var picked={};
+function tile(f,i){var d=document.createElement('div');d.className='f '+f.who;d.dataset.i=i;
+  d.innerHTML='<img src="'+esc(f.src)+'" alt="a flag" loading="lazy"><span class="tick">'+(f.who==='maker'?'machine':'&#10003;')+'</span><span class="cap">'+esc(f.name)+'</span>';
+  if(picked[i])d.classList.add('picked');
+  d.onclick=function(){if(board.classList.contains('shown'))return;picked[i]=!picked[i];d.classList.toggle('picked');count()};return d}
+function count(){var n=0;for(var k in picked)if(picked[k])n++;score.textContent=n?('chosen: '+n):''}
+function deal(){board.className='';wall.innerHTML='';picked={};score.textContent='';sortB.disabled=true;showB.disabled=false;
+  var old=document.querySelectorAll('.band');[].forEach.call(old,function(x){x.remove()});wall.classList.remove('hide');
+  shuffle(FLAGS.map(function(f,i){return i})).forEach(function(i){wall.appendChild(tile(FLAGS[i],i))})}
+showB.onclick=function(){board.classList.add('shown');showB.disabled=true;sortB.disabled=false;
+  var hit=0,miss=0,fa=0;FLAGS.forEach(function(f,i){if(f.who==='maker'){if(picked[i])hit++;else miss++}else if(picked[i])fa++});
+  score.textContent='You found '+hit+' of the 16 made tonight, and took '+fa+' of the fifty for a machine\'s.'};
+sortB.onclick=function(){board.classList.add('sorted');wall.classList.add('hide');sortB.disabled=true;
+  var groups=[['A seal or coat of arms on one colour: 26 of the fifty',function(f){return f.who==='people'&&f.sob}],
+    ['The other 24 of the fifty',function(f){return f.who==='people'&&!f.sob}],
+    ['Made tonight without seeing the fifty: 8',function(f){return f.who==='maker'&&f.arm==='W'}],
+    ['Made tonight after looking at the fifty: 8',function(f){return f.who==='maker'&&f.arm==='T'}]];
+  groups.forEach(function(g){var b=document.createElement('div');b.className='band';b.innerHTML='<h3>'+g[0]+'</h3>';var w=document.createElement('div');w.className='wall';
+    FLAGS.forEach(function(f,i){if(g[1](f))w.appendChild(tile(f,i))});b.appendChild(w);board.appendChild(b)})};
+document.getElementById('again').onclick=deal;
+deal();
+var s='';['T1','T2','T3','T4'].forEach(function(m){if(SAW[m])s+='<div class="quote"><b>Maker '+m+', on the fifty</b><br>'+esc(SAW[m])+'</div>'});
+document.getElementById('saw').innerHTML=s;
+var P={P1:'Without the fifty, at least 7 of 8 new flags have neither seal nor lettering.',P2:'Having seen the fifty, at least 6 of 8 have neither, though only 13 of the fifty do.',
+P3:'Having seen the fifty, at most 1 of 8 is a seal on one colour. (3 or more would have broken the hypothesis.)',P4:'The new flags are plainer than three quarters of the fifty (edge measure).',
+P5:'Having seen the fifty, makers keep its blue: at least 4 of 8 mostly blue, and more than without the sheet.',P6:'At least 3 of 4 makers who saw the fifty name the seal on blue, and at least 2 say they left it on purpose.',
+P7:'No flag changes type (seal or lettering added or removed) between first and final version: at most 2 of 16.'};
+var R=RESULTS,rows='',det={P1:R.P1.W_textbook+' of 8',P2:R.P2.T_textbook+' of 8',P3:R.P3.T_seal_on_field+' of 8',P4:'medians '+R.P4.W_edges_median+' and '+R.P4.T_edges_median+' against '+R.P4.people_q25,
+P5:R.P5.T_blue_largest+' of 8 against '+R.P5.W_blue_largest+' of 8',P6:R.P6.name_seal+' of 4; '+R.P6.depart_on_purpose+' of 4',P7:R.P7.type_changes_v1_to_final+' of 16'};
+Object.keys(P).forEach(function(k){var h=R[k].held;rows+='<tr><td>'+k+'</td><td>'+P[k]+'</td><td class="'+(h?'held':'failed')+'">'+(h?'held':'failed')+': '+det[k]+'</td></tr>'});
+document.getElementById('preds').insertAdjacentHTML('beforeend',rows);
+var makers=FLAGS.map(function(f,i){return i}).filter(function(i){return FLAGS[i].who==='maker'});
+var cur=null,ans={},study=null;
+function choices(id,opts,key){var el=document.getElementById(id);el.innerHTML='';opts.forEach(function(o){var b=document.createElement('button');b.textContent=o;b.onclick=function(){ans[key]=o;[].forEach.call(el.children,function(x){x.className=''});b.className='main';if(ans.belongs&&ans.rather)send()};el.appendChild(b)})}
+function open1(i){cur=i;var f=FLAGS[i];document.getElementById('oneimg').src=f.src;document.getElementById('oneimg').alt='a flag made tonight: '+f.subject;
+  document.getElementById('onecap').textContent=f.name+' ('+(f.arm==='T'?'had seen the fifty':'had not seen the fifty')+'): '+f.subject+'.';
+  ans={flag:f.maker+'-'+(f.src.indexOf('superior')>0?'superior':'shore')};study=null;document.getElementById('ask').innerHTML='';
+  choices('q1',['yes','partly','no'],'belongs');choices('q2',['this flag','a seal on a blue field','no preference'],'rather')}
+function send(){if(window.HouseStudy){if(!study){var box=document.createElement('div');document.getElementById('ask').appendChild(box);
+  study=HouseStudy.mount(box,{study:'error-as-method-bedsheet',onClosed:function(x){box.innerHTML='<p class="small">The record of answers is not open at the moment ('+esc(x&&x.reason||'closed')+'). Your answers stay in this page.</p>'},onResult:function(){}})}
+  study.submit(ans)}else if(!document.getElementById('local')){var p=document.createElement('p');p.id='local';p.className='small';p.textContent='Your answers stay in this page. (On the site, you could add them to this work\'s record here.)';document.getElementById('ask').appendChild(p)}}
+document.getElementById('other').onclick=function(){var j;do{j=makers[Math.floor(Math.random()*makers.length)]}while(j===cur);open1(j)};
+open1(makers[Math.floor(Math.random()*makers.length)]);
+})();
+</script>
+</body>
+</html>

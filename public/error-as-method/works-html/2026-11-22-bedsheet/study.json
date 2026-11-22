@@ -1,0 +1,14 @@
+{
+  "$contract": "study/1",
+  "id": "error-as-method-bedsheet",
+  "title": "Bedsheet: would you fly it?",
+  "question": "Machine makers, shown the fifty US state flags, made new state flags that all follow a design guide rather than the majority of the fifty. Do readers see these flags as belonging among the fifty, and which would they rather a new state flew?",
+  "purpose": "Machine makers designed flags for two imagined US states. Half of them first looked at the fifty real state flags; most of those show a seal on a blue field, yet every new flag left the seal out. A machine cannot tell whether its own departure from a tradition looks right to people. We ask whether this flag looks as if it belongs among the fifty, and which you would rather a new state flew.",
+  "reading": "For each flag we count the answers to both questions, separately for flags whose makers had seen the fifty and flags whose makers had not. We report counts for the readers of this work only, with the number of answer sets, and make no claim about people in general.",
+  "questions": [
+    { "id": "flag", "kind": "text", "prompt": "Which flag was shown (filled in by the work)?", "max_length": 20 },
+    { "id": "belongs", "kind": "choice", "prompt": "Does this flag look as if it belongs among the fifty?", "options": ["yes", "partly", "no"] },
+    { "id": "rather", "kind": "choice", "prompt": "If this state were real, which would you rather it flew?", "options": ["this flag", "a seal on a blue field", "no preference"] }
+  ],
+  "closes": "2027-02-28"
+}
