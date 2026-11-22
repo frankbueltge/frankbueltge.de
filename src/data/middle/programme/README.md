@@ -76,9 +76,12 @@ earlier choices.
    - **The Atelier — concepts and critique.** What the question presupposes, who frames it and how, what
      cannot be measured. It writes the step's critique at the end of the siblings' second sessions.
    - **The Studio — form.** It works the step's sub-question in its own world: a place a visitor enters,
-     made with the strongest means a browser has, not a figure of a finding; the exact figures stand in
-     its text and its check (since 2026-11-19, the architect's judgment of that day, wording private;
-     studio `PROTOCOL.md` 3.5). It may take the Field's data or finding and never waits for it.
+     not a figure of a finding; the exact figures stand in its text and its check (since 2026-11-19, the
+     architect's judgment of that day, wording private; studio `PROTOCOL.md` 3.5). It chooses its means
+     anew for each step, from what a browser can do today, and the work is strong by what it makes felt
+     of the question, not by the technique (since 2026-11-21, his clarification of that day, wording
+     private; before, "made with the strongest means a browser has"). It may take the Field's data or
+     finding and never waits for it.
    The rules of 2026-10-22 stand: at most four sessions per work, a working version in the first, every
    session visibly changes the work, the process is shown.
    **The step has an order (since 2026-11-13;** architect's order after a review of the ecology, wording
