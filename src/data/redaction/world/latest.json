@@ -1,30 +1,30 @@
 {
-  "date": "2026-11-21",
+  "date": "2026-11-22",
   "deletion": {
     "available": true,
-    "checked_at": "2026-11-21T13:43:45Z",
+    "checked_at": "2026-11-22T13:36:13Z",
     "counts": {
-      "botwall": 19,
-      "gone_404": 0,
+      "botwall": 14,
+      "gone_404": 1,
       "gone_410": 0,
       "legal_451": 0,
-      "ok": 279,
+      "ok": 283,
       "other": 0,
       "server_error": 0,
       "unreachable": 2
     },
-    "decided": 279,
-    "excluded_unverifiable": 21,
-    "gone": 0,
+    "decided": 284,
+    "excluded_unverifiable": 16,
+    "gone": 1,
     "gone_ci95": [
-      0.0,
-      0.0136
+      0.0006,
+      0.0197
     ],
-    "gone_rate": 0.0,
+    "gone_rate": 0.0035,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.0136
+      0.0133
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,108 +33,116 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-11-19",
-    "receipts": [],
-    "sample_drawn_at": "2026-11-20T14:15:42Z",
+    "pool_day": "2026-11-20",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "klif.com",
+        "first_seen": "20261120200000",
+        "http_code": 404,
+        "title": "Arlington Police Investigate Death After Fight At Cowboys Game",
+        "url": "https://www.klif.com/2026/11/20/arlington-police-investigate-death-after-fight-at-cowboys-game/"
+      }
+    ],
+    "sample_drawn_at": "2026-11-21T13:39:40Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 5194,
-      "replaced": 6236,
-      "trivial": 1329,
-      "update": 590
+      "reframing": 3602,
+      "replaced": 4509,
+      "trivial": 582,
+      "update": 348
     },
-    "day": "2026-11-20",
+    "day": "2026-11-21",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "Partey",
-          "Father"
+          "4811",
+          "Viral",
+          "News",
+          "Gurgaon",
+          "News"
         ],
-        "after": "Emotional Twist at Thomas Partey's Father's Funeral as Black Stars Teammates Make a Surprise Visit – Ghanamma.com",
-        "before": "Emotional Twist at Thomas Parteyâ€™s Fatherâ€™s Funeral as Black Stars Teammates Make a Surprise Visit – Ghanamma.com",
-        "detected": "2026-11-20T16:03:16Z",
+        "after": "Gurgaon woman pays Rs 4811 for dinner restaurant refuses to remove Rs 401 service charge despite objection; consumer commission says mandatory service charge violates CCPA rules, orders refund and Rs 31,000 compensation Viral News | Gurgaon News",
+        "before": "Gurgaon woman pays Rs 4,811 for dinner, restaurant refuses to remove Rs 401 service charge despite objection; consumer commission says mandatory service charge violates CCPA rules, orders refund and Rs 31,000 compensation",
+        "detected": "2026-11-21T05:17:19Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "4",
+          "811"
+        ],
+        "similarity": 0.848,
+        "url": "https://timesofindia.indiatimes.com/city/gurgaon/gurgaon-woman-pays-rs-4811-for-dinner-restaurant-refuses-to-remove-rs-401-service-charge-despite-objection-consumer-commission-says-mandatory-service-charge-violates-ccpa-rules-orders-refund-and-rs-31000-compensation/articleshow/135821949.cms",
+        "weight": 11,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Aljaz",
+          "Skorjanec"
+        ],
+        "after": "Strictly's Aljaz Skorjanec appears nervous as he gears himself up to dance with Delta Goodrem after Kai Widdrington was forced to pull out last minute due to illness",
+        "before": "Strictly's Aljaž Škorjanec appears nervous as he gears himself up to dance with Delta Goodrem after Kai Widdrington was forced to pull out last minute due to illness",
+        "detected": "2026-11-21T16:48:03Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Aljaž",
+          "Škorjanec"
+        ],
+        "similarity": 0.862,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16292431/Strictly-Aljaz-skorjanec-nervous-replace-Kai-Widdrington-dance-Delta-Goodrem-illness.html",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Partey",
+          "Law"
+        ],
+        "after": "Thomas Partey's Wife Janine Mackson Steals Attention With Dance Moves At Father-In-Law's Burial – Ghanamma.com",
+        "before": "Thomas Parteyâ€™s Wife Janine Mackson Steals Attention With Dance Moves At Father-In-Lawâ€™s Burial – Ghanamma.com",
+        "detected": "2026-11-21T16:46:31Z",
         "domain": "ghanamma.com",
         "removed": [
           "Parteyâ",
-          "Fatherâ"
+          "Lawâ"
         ],
         "similarity": 0.8,
-        "url": "https://www.ghanamma.com/2026/11/13/emotional-twist-at-thomas-parteys-fathers-funeral-as-black-stars-teammates-make-a-surprise-visit/",
+        "url": "https://www.ghanamma.com/2026/11/14/thomas-parteys-wife-janine-mackson-steals-attention-with-dance-moves-at-father-in-laws-burial/",
         "weight": 8,
         "window": "1w"
-      },
-      {
-        "added": [
-          "did",
-          "not",
-          "comply",
-          "with",
-          "HC"
-        ],
-        "after": "Tenant did not comply with 2005 Supreme Court eviction order and his son sold part of landlord's property using parents' settlement deed; buyer files suit against landlord but Madras HC strikes it off",
-        "before": "Tenant defied 2005 Supreme Court eviction order and his son sold part of landlord's property using parents' settlement deed; buyer files suit against landlord but Madras High Court strikes it off",
-        "detected": "2026-11-20T05:02:38Z",
-        "domain": "indiatimes.com",
-        "removed": [
-          "defied",
-          "High",
-          "Court"
-        ],
-        "similarity": 0.8,
-        "url": "https://timesofindia.indiatimes.com/business/india-business/tenant-defied-2005-supreme-court-eviction-order-and-his-son-sold-part-of-landlords-property-using-parents-settlement-deed-buyer-files-suit-against-landlord-but-madras-high-court-strikes-it-off/articleshow/135773938.cms",
-        "weight": 8,
-        "window": "1w"
-      },
-      {
-        "added": [
-          "Another",
-          "AI",
-          "company"
-        ],
-        "after": "Another AI company is about to be worth more than $1 trillion. What that means for the rest of us.",
-        "before": "Anthropic is about to be worth more than $1 trillion. What that means for the rest of us.",
-        "detected": "2026-11-20T22:33:18Z",
-        "domain": "aol.com",
-        "removed": [
-          "Anthropic"
-        ],
-        "similarity": 0.81,
-        "url": "https://www.aol.com/articles/anthropic-worth-more-1-trillion-211331000.html",
-        "weight": 7,
-        "window": "24h"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 14560,
-      "PAGE_TEXTCHANGE": 129721,
-      "PAGE_TITLECHANGE": 51105,
-      "UNCHANGED_CONTENT": 722910
+      "HTTP_REDIRECT": 11347,
+      "PAGE_TEXTCHANGE": 98457,
+      "PAGE_TITLECHANGE": 39081,
+      "UNCHANGED_CONTENT": 609488
     },
-    "title_changes_en": 13349,
+    "title_changes_en": 9041,
     "trace": [
       {
-        "bytes_billed": 25165824,
-        "created": "1795268362793",
-        "job_id": "world_gdg_counts_20261120",
+        "bytes_billed": 20971520,
+        "created": "1795354308757",
+        "job_id": "world_gdg_counts_20261121",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 231735296,
-        "created": "1795268367492",
-        "job_id": "world_gdg_titles_20261120",
+        "bytes_billed": 190840832,
+        "created": "1795354314497",
+        "job_id": "world_gdg_titles_20261121",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-11-21T13:43:45Z",
+  "generated_at": "2026-11-22T13:36:13Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-11-20.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-11-21.json",
   "schema_version": "1",
   "selection_version": "v1"
 }
