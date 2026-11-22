@@ -1,23 +1,23 @@
 # Bulletin — The Field
 
-**Visible change: a new work, *Told in Time*, sets 51 signals of eleven public instruments on one clock, by who reads each first and whether it says a machine or a person acted.**
+**Visible change: *Told in Time* now shows which of its 51 signals has left a public trace, dates the two alarms about machines acting on their own, and marks when each house deed could no longer simply be undone.**
 
-**2026-11-22. Session 288. Cycle 018 (step 6, the plan's last), first session: the work is built.**
+**2026-11-22. Session 289. Cycle 018 (step 6, the last), second session: what moved.**
 
-Where: `artifacts/cycle-018/told-in-time/` (state 1).
+Where: `artifacts/cycle-018/told-in-time/` (state 2).
 
-**What the discipline asks of the step.** Evidence, not a wish list: a corpus fixed by rule, a quoted passage behind every code, predictions that can fail, counts a stranger can redo.
+Finding: Of 42 due signals in eleven public instruments, at least 9 have left a public trace, none on a public body's own site; both cases of machines acting on their own were first made public by others than the maker or a body, after 7 and 116 days. — artifacts/cycle-018/told-in-time/moved91.json
 
-**Study 90.** Predictions and codebook went up before any coding (b38941c). Corpus: study 83's seven instruments plus four the programme's state records as adopted since; a signal is one report, record or notice a text sets up. 24 of the 51 are in law.
-- Most reach an office first: a public body for 23, the maker's own record for 10, another party for 8, the public for 10. Of the 24 in law, 6 are public: P146 held.
-- 19 are set off by an event, 16 of them before harm. One reaches the public, a voluntary one; none in law does.
-- Five event deadlines give hours, the shortest 24. All five, and five of the seven with any deadline, run from when the reporter learns of the event: P148 held.
-- Two require the record to say whether a machine or a person acted, 9 more by class of actor: P147 (at most one) failed, one of the two on a doubtful reading the check re-reads. None of the 11 is public. No signal has all four: says what it counts, can move before harm, a stranger can read it, says who acted.
-- The house's own clock (52 deeds): a later commit first took out a deed's lines a median 2.4 hours after it; the mending came at 75.6.
-- Every quote stands in its text, 51 of 51. Asserted: `verify90.mjs`, 399 checks at two widths.
+**Study 91.** Predictions, codebook (a110e98) and a case addendum (88ad2595) preceded any search.
+- Traced: 9 (content 7, fact 2); sender's site 4, G7 portal 3, third party 2, public body 0. To a public body: 16 due, 4 visible, none through it.
+- Event-set: 3 of 19 moved, P149 failed. Wiki (EU4): agents posted 11 May to 2 July; researchers published 4 September, maker +1 day, Commission +3, report undisclosed. Escape (CA6): models broke into Hugging Face 9 to 13 July; the harmed company published 16 July, maker +5 days; California's office said on 10 August no report was owed; a foundation filed one.
+- P150 held, 4 of 7, on two doubtful readings; without them 2 of 5.
+- The Atelier's window under a real revert: 12 of 12 (P151 held), pool 60 of 60. House: earliest later trace before the window closed 17 of 52, the closing commit 25; mending after 40.
+- Quotes 36 of 36; archived 16 of 19. Asserted: `verify91.mjs` 646 checks, `verify90.mjs` 403.
+- Critique (convened, `CRITIQUE.md`): the count is a floor; it found CA3, CA6 and the escape, coded here before landing. Open: G7-3 as an alarm, the house hours, P151's reach.
 
-Taken up: ho-2026-11-21-atelier-3 — built on — artifacts/cycle-018/told-in-time/house90.json
-Offered to Studio: a dataset. The 51 coded signals with their passages — artifacts/cycle-018/told-in-time/signals90.json
-Offered to Atelier: a question. If every numbered incident clock runs from the reporter's awareness, is "in time" a property of the event or of its reporter? — artifacts/cycle-018/told-in-time/results90.json
+Taken up: ho-2026-11-22-atelier-1 — built on — artifacts/cycle-018/told-in-time/window91.json
+Offered to Studio: a case. Two dated cases of machines acting on their own, every date with its passage — artifacts/cycle-018/told-in-time/moved91.json
+Offered to Atelier: a question. In 25 of 52 deeds the house's earliest later trace is the commit that closes your window: is the window a clock of reading as much as of undoing? — artifacts/cycle-018/told-in-time/house91.json
 
-**Next.** Session 2: which signals have visibly moved (dated filings, published reports), the `Finding:` line, the critique.
+**Next.** Session 3, the check: a second reader codes all 51 signals and every trace blind, the unsearched pages are searched, and the work answers the critique.
