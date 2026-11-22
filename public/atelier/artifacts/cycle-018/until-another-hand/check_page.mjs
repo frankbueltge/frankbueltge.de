@@ -1,4 +1,4 @@
-// Until Another Hand, state 1: read every figure of the page as a visitor's browser shows it, at two widths, and
+// Until Another Hand, states 1 and 2: read every figure of the page as a visitor's browser shows it, at two widths, and
 // compare it with the data the builds wrote. The expected values are computed here from data/window.json and
 // data/clocks.json, independently of the page's own script.
 // Usage: node check_page.mjs <url of index.html>     (needs Playwright with a browser)
@@ -10,6 +10,7 @@ const { chromium } = require('playwright');
 const W = JSON.parse(fs.readFileSync(new URL('./data/window.json', import.meta.url)));
 const C = JSON.parse(fs.readFileSync(new URL('./data/clocks.json', import.meta.url)));
 const S = JSON.parse(fs.readFileSync(new URL('./sources.json', import.meta.url)));
+const PG = JSON.parse(fs.readFileSync(new URL('./data/programme.json', import.meta.url)));
 const DRAWN = ['mended inside the window', 'mended after the window closed', 'unmended, window open at head', 'unmended, window closed'];
 const D = W.deeds.filter(r => DRAWN.includes(r.state));
 const mended = D.filter(r => r.repair_hours != null);
@@ -26,6 +27,22 @@ const E = {
   mendBeforeLog: mended.filter(r => r.repair_hours < r.log_hours[0]).length,
   commits: W.results.house_commits.toLocaleString('en'), reverts: W.results.house_reverts,
 };
+// section IV, recomputed from the cases rather than read from the build's summary
+const PK = PG.cases;
+const firstCopy = c => c.copies.length ? Math.min(...c.copies.map(k => k.first_t)) : null;
+const PE = {
+  n: PK.length,
+  inTime: PK.filter(c => firstCopy(c) === null || c.correction_t <= firstCopy(c)).length,
+  winMed: one(med(PK.filter(c => firstCopy(c) !== null && firstCopy(c) < c.correction_t).map(c => (firstCopy(c) - c.first_t) / 3600))),
+  corrMed: one(med(PK.map(c => (c.correction_t - c.first_t) / 3600))),
+  pages: new Set(PK.flatMap(c => c.today.filter(x => !x.marked && x.reading === 'asserts').map(x => x.repo + ':' + x.path))).size,
+  served: new Set(PK.flatMap(c => c.served.filter(x => x.reading === 'asserts').map(x => x.path))).size,
+  lag: new Set(PK.flatMap(c => c.served.filter(x => x.reading === 'lags').map(x => x.path))).size,
+  inState: PK.filter(c => c.correction_unit === 'middle:state:0').length,
+  own: PK.reduce((a, c) => a + c.today.filter(x => x.repo === 'ulysses' && x.marked && /cycle-013/.test(x.path)).length, 0),
+  excluded: PG.excluded.length,
+};
+PE.late = PE.n - PE.inTime;
 let fails = 0, checks = 0;
 const ok = (c, m) => { checks++; if (!c) { fails++; console.log('FAIL ' + m); } };
 
@@ -93,7 +110,29 @@ for (const width of [1100, 390]) {
   ok(marks.length === C.clocks.filter(c => c.words).length, `${width}: every clock's words marked in its passage (${marks.length})`);
   const qs = await p.$$eval('q[id^="q-"]', q => q.map(x => [x.id, x.textContent]));
   const P = {}; S.forEach(s => s.passages.forEach((x, i) => { P[s.id + (i + 1)] = x.text; }));
-  ok(qs.length === 11 && qs.every(([id, t]) => P[id.slice(2)] === t), `${width}: the 11 quotations are the checked passages`);
+  const nP = S.reduce((a, x) => a + x.passages.length, 0);
+  ok(qs.length === nP && qs.every(([id, t]) => P[id.slice(2)] === t), `${width}: the ${nP} quotations are the checked passages`);
+  // section IV: the programme's own answers
+  const psay = await p.textContent('#psay');
+  ok(psay.includes(`Of the ${PE.n} corrections, ${PE.inTime} came while the wrong wording stood in one work only. For ${PE.late} another work`), `${width}: IV readout, ${PE.inTime} in time of ${PE.n}`);
+  ok(psay.includes(`a median of ${PE.winMed} hours after it was written; the corrections came a median of ${PE.corrMed} hours after`), `${width}: IV readout, medians ${PE.winMed} and ${PE.corrMed}`);
+  ok(psay.includes(`The ${PE.inState} the programme made in its state`) && psay.includes(`${PE.pages} pages a visitor meets still assert them, and the site serves ${PE.served} of them, besides ${PE.lag} copies`), `${width}: IV readout, ${PE.pages} pages, ${PE.served} served, ${PE.lag} lagging`);
+  const p2 = await p.textContent('#p2');
+  ok(p2.includes(`Of ${PE.n} corrections`) && p2.includes(`${PE.late} came after another work`) && p2.includes(`${PE.pages} pages a visitor meets still state them, and the site serves ${PE.served}`) && p2.includes(`its own ${PE.own} pages`), `${width}: plain words, state 2`);
+  ok(await p.$$eval('#plan g.plane', g => g.length) === PE.n, `${width}: ${PE.n} lanes in IV`);
+  const bigs = await p.$$eval('#plan text.big', t => t.map(x => +x.textContent));
+  ok(JSON.stringify(bigs) === JSON.stringify(PK.map(c => c.today.filter(x => !x.marked && x.reading === 'asserts').length)), `${width}: IV, pages asserting per lane ${bigs}`);
+  ok(await p.$$eval('#plan line.corr:not(.own)', l => l.length) === PE.n && await p.$$eval('#plan line.corr.own', l => l.length) === 1, `${width}: IV, one correction per lane and this practice's own`);
+  ok(await p.$$eval('#plan rect.copy', r => r.length) === PK.reduce((a, c) => a + c.copies.length, 0), `${width}: IV, every copy drawn`);
+  ok((await p.textContent('#pin')).includes(`the ${PE.excluded} that could not`) && (await p.textContent('#method')).includes(`${PE.excluded} corrections could not be followed`), `${width}: IV, ${PE.excluded} excluded named`);
+  for (let i = 0; i < PK.length; i++) {
+    await p.click(`#plan g.plane:nth-of-type(${i + 1}) rect.hit`, { force: true });
+    const det = await p.textContent('#pdet');
+    const c = PK[i];
+    const un = c.today.filter(x => !x.marked);
+    ok(det.includes(`${c.copies_before} took it over before the correction`) && det.includes(`${c.asserting_today} pages assert it today`) &&
+       (await p.$$eval('#pdet li', l => l.length)) === un.length, `${width}: IV, lane ${c.id} opens with its copies and its ${un.length} unreached pages`);
+  }
   if (width === 390) {
     const sw = await p.evaluate(() => document.documentElement.scrollWidth);
     ok(sw <= 392, `390: the page itself does not scroll sideways (${sw})`);

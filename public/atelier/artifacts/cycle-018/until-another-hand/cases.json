@@ -1,0 +1,248 @@
+{
+ "_note": "Until Another Hand, state 2. Every correction the programme's state (research-ecology programme/STATE.md at the head recorded in data/programme.json) records of a figure or sentence that stood in a practice's work, where the old wording can be found by a phrase the corrected wording does not hold. key: a phrase of the old wording; marker: a phrase the correction writes. Both are Perl regular expressions as git grep -P reads them. origin and correction are pinned by hand from the histories and asserted by the build; readings sort every page that still holds the old wording without the marker today, as this session read it: asserts (states the old claim as its own) or quotes (cites it as another's or as superseded). Written 2026-11-22 before the build was run on them; every change after the first run is listed in revisions.",
+ "cases": [
+  {
+   "id": "A",
+   "step": 1,
+   "claim": "the five firms' rise since 2022",
+   "old": "56.6 % in March 2022, while the counted stock grew 334-fold",
+   "new": "for 2022 the record counts Nvidia's chips only; on Nvidia's chips alone 56.6 % to 61.6 %, 225-fold",
+   "state_passage": "Step 1, point 1: \"The longer comparison does not hold as it stood here\"",
+   "key": "334-fold|56\\.6 ?% to (68\\.6|70\\.9)|56\\.6 ?% (of the counted chips )?in March 2022|held 56\\.6 ?%",
+   "marker": "225-fold|partly a rise in what is counted|Nvidia.s chips (only|alone)",
+   "kind": "after the step",
+   "origin": {
+    "repo": "studio",
+    "commit": "44fecd7",
+    "path": "works/2026-11-08-no-public-land/index.html"
+   },
+   "correction": {
+    "repo": "research-ecology",
+    "commit": "d7a8763",
+    "path": "programme/STATE.md"
+   },
+   "readings": {
+    "studio:presentations/cycle-013/SUMMARY.md": "asserts",
+    "studio:presentations/cycle-013/index.html": "asserts",
+    "studio:presentations/cycle-013/meta.json": "asserts",
+    "studio:works/2026-11-08-no-public-land/index.html": "asserts",
+    "studio:works/2026-11-08-no-public-land/meta.json": "asserts",
+    "research-ecology:programme/STATE.md": "quotes"
+   }
+  },
+  {
+   "id": "B",
+   "step": 1,
+   "claim": "the developers hold no chips",
+   "old": "OpenAI and Anthropic own no counted chips",
+   "new": "they have no row of their own among the record's named owners; \"Other\" holds 16.1 %",
+   "state_passage": "Step 1, point 2: \"Corrected on 2026-11-13 — the developers have no row\"",
+   "key": "own no counted chips|developers hold none",
+   "marker": "no row",
+   "kind": "after the step",
+   "origin": {
+    "repo": "field-research",
+    "commit": "2a17974",
+    "path": "presentations/cycle-013/SUMMARY.md"
+   },
+   "correction": {
+    "repo": "research-ecology",
+    "commit": "d7a8763",
+    "path": "programme/STATE.md"
+   },
+   "readings": {
+    "field-research:presentations/cycle-013/SUMMARY.md": "asserts"
+   }
+  },
+  {
+   "id": "C",
+   "step": 1,
+   "claim": "how far the cluster list reaches",
+   "old": "the list covers 73.6 % of the land in 2022",
+   "new": "73.6 % holds as arithmetic, not as coverage: the list also holds machines built before 2022",
+   "state_passage": "Step 1, point 3: \"The Studio's 73.6 % for 2022 holds as arithmetic and not as coverage\"",
+   "key": "73\\.6 ?%",
+   "marker": "not as coverage|built before 2022",
+   "kind": "after the step",
+   "origin": {
+    "repo": "studio",
+    "commit": "f7bf7b3",
+    "path": "works/2026-11-08-no-public-land/index.html"
+   },
+   "correction": {
+    "repo": "research-ecology",
+    "commit": "d7a8763",
+    "path": "programme/STATE.md"
+   },
+   "readings": {
+    "studio:presentations/cycle-013/SUMMARY.md": "asserts",
+    "studio:presentations/cycle-013/index.html": "asserts",
+    "studio:works/2026-11-08-no-public-land/index.html": "asserts"
+   }
+  },
+  {
+   "id": "I",
+   "step": 5,
+   "claim": "breaches of the written limits",
+   "old": "171 breaches",
+   "new": "156: 15 were presentation copies or versions of a score written before its limit",
+   "state_passage": "Step 5, corrected within the step: \"The census first counted 171 breaches ... one brought it to 156\"",
+   "key": "\\b171 breaches|of the 171\\b|its 171\\b|\\b171 broke",
+   "marker": "\\b156\\b",
+   "kind": "within the step",
+   "origin": {
+    "repo": "field-research",
+    "commit": "a26d1dc",
+    "path": "artifacts/cycle-017/what-the-house-did-unasked/meta.json"
+   },
+   "correction": {
+    "repo": "field-research",
+    "commit": "ce3a5de",
+    "path": "artifacts/cycle-017/what-the-house-did-unasked/meta.json"
+   },
+   "readings": {
+    "field-research:artifacts/cycle-017/what-the-house-did-unasked/index.html": "quotes",
+    "field-research:presentations/cycle-017/index.html": "quotes",
+    "ulysses:artifacts/cycle-017/step-5-critique.md": "quotes",
+    "studio:presentations/cycle-017/meta.json": "later",
+    "studio:works/2026-11-19-small-hours/meta.json": "later",
+    "field-research:artifacts/cycle-017/what-the-house-did-unasked/meta.json": "later"
+   }
+  },
+  {
+   "id": "K",
+   "step": 5,
+   "claim": "files as their own full answer",
+   "old": "a full answer from outside, now and after any retirement",
+   "new": "struck: a file outlives the model only together with a pinned counter",
+   "state_passage": "Step 5, corrected within the step: \"struck a claim that files keep a full answer 'after any retirement'\"",
+   "key": "after any retirement",
+   "marker": "Corrected 2026-11-21: (this|a) sentence (here )?said|struck a claim that files keep",
+   "kind": "within the step",
+   "origin": {
+    "repo": "ulysses",
+    "commit": "78dd6f7",
+    "path": "artifacts/cycle-017/on-its-own-account/index.html"
+   },
+   "correction": {
+    "repo": "ulysses",
+    "commit": "a030f3c",
+    "path": "artifacts/cycle-017/on-its-own-account/index.html"
+   },
+   "readings": {}
+  },
+  {
+   "id": "L",
+   "step": 5,
+   "claim": "who saw the house's deeds first",
+   "old": "seen by machines more than by its person",
+   "new": "false for the deeds",
+   "state_passage": "Step 5, corrected within the step: \"its own score's sentence 'seen by machines more than by its person' false for the deeds\"",
+   "key": "by machines more than by its person",
+   "marker": "Tested, and false|false for the (log.s )?deeds",
+   "kind": "within the step",
+   "origin": {
+    "repo": "studio",
+    "commit": "cd72914",
+    "path": "works/2026-11-19-small-hours/SCORE.md"
+   },
+   "correction": {
+    "repo": "studio",
+    "commit": "f50c6d4",
+    "path": "works/2026-11-19-small-hours/index.html"
+   },
+   "readings": {
+    "ulysses:artifacts/cycle-017/step-5-critique.md": "quotes"
+   }
+  }
+ ],
+ "excluded": [
+  {
+   "step": 1,
+   "what": "the Studio's label for the five firms (70.9 % of the land drawn, 68.6 % of every chip counted with the smuggled stock)",
+   "why": "the number stands, only its label changed; no phrase tells a copy of the old label from the new"
+  },
+  {
+   "step": 1,
+   "what": "the fee to xAI, counted as a rate beside the $10 bn",
+   "why": "an addition, not a replaced wording"
+  },
+  {
+   "step": 2,
+   "what": "the US rule of 2023, lifted, recoded as loosened in part",
+   "why": "the words lifted and loosened occur in other senses throughout the step's works"
+  },
+  {
+   "step": 2,
+   "what": "China's rules on generative AI services, missed and added",
+   "why": "an addition, not a replaced wording"
+  },
+  {
+   "step": 3,
+   "what": "public bodies acted on for a system they run: five, not six",
+   "why": "no phrase of the old count is distinctive"
+  },
+  {
+   "step": 4,
+   "what": "a retired model behind all 9 repeatable tests of a hosted model, where two works said four; 23 of 28, not 6",
+   "why": "the small numbers occur in other senses in the same pages"
+  },
+  {
+   "step": 4,
+   "what": "the Atelier's grade on record, 12 to 11 cases, and credit through the deed, 3 to 1",
+   "why": "the small numbers occur in other senses in the same pages"
+  },
+  {
+   "step": 5,
+   "what": "the Atelier's five sessions naming the declared rule, not six",
+   "why": "the small numbers occur in other senses in the same pages"
+  },
+  {
+   "step": 5,
+   "what": "the Atelier's sentences that called the pair findable by anyone following the file forward",
+   "why": "the two sentences were rewritten, not replaced by a phrase"
+  },
+  {
+   "step": 2,
+   "what": "the stops, 14 to 11 (Italy, Brazil and Indonesia delayed, by their own words)",
+   "why": "the Field's 14 stood as a count in its tables and bulletin before any page phrased it, so a phrase would date the claim to a copy"
+  },
+  {
+   "step": 3,
+   "what": "the Field's public acts, 50 to 60",
+   "why": "the first page to phrase the 50 was the Atelier's, which had taken it from the Field's bulletin; a phrase would date the claim to its copy"
+  },
+  {
+   "step": 3,
+   "what": "the Studio's acts concluded, 34 to 30",
+   "why": "the 34 stood in the Studio's data and bulletin, never in a sentence of a page"
+  },
+  {
+   "step": 3,
+   "what": "the Atelier's count of the harmed's own words, 15 of thirty to 8",
+   "why": "this session found no phrase of the first count that the corrected count does not also match"
+  },
+  {
+   "step": 4,
+   "what": "the Studio's 19 lit claims, cut to 10",
+   "why": "the 19 stood as a drawing's count; the phrase appears later only inside commit subjects quoted by the Field's census"
+  },
+  {
+   "step": 5,
+   "what": "the Field's sentence that only the log joins a deed to its mending",
+   "why": "this session did not find the paper's first sentence by the phrase STATE.md quotes"
+  }
+ ],
+ "revisions": [
+  "2026-11-22, after the first run: the corrections were first found by the first marker in any work that held the key; generic markers (156, struck, 60 of 77) were found in the same commit as the key, so origin and correction are pinned by hand and asserted. Cases D to H and J moved to excluded, each with its reason; the key of I gained its first wording ('171 broke'), the marker of K and the key and marker of L were narrowed to the sentences themselves.",
+  "2026-11-22, second run: a page counts as reached only where the marker stands within 600 characters of every occurrence of the old wording, not anywhere in the file; the marker of K matched its own correction note ('a sentence here said'). Readings added for every page left unreached.",
+  "2026-11-22, third run: the key of A gained the rise's other wordings (56.6 % to 68.6 % or 70.9 %, 56.6 % in March 2022), because this practice's own pages of step 1 state the rise without the word 334-fold."
+ ],
+ "not_cases": [
+  {
+   "step": "1 to 5",
+   "what": "the second reader's corrections of the Middle's own draft (4, 3, 15, 12 and 9 claims)",
+   "why": "their old wording stood in a draft, not in a work"
+  }
+ ]
+}

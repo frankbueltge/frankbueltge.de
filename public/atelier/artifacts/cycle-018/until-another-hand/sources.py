@@ -5,7 +5,11 @@ Run from this folder:  python3 sources.py <download dir> <dir of bare clones>
   <download dir>/pk/cscw92.pdf  Prakash and Knister, "Undoing Actions in Collaborative Work", CSCW '92, pp. 273-280,
                                  https://web.eecs.umich.edu/~aprakash/papers/prakash-knister-cscw92.pdf (fetched 2026-11-22)
   <download dir>/ax/ws.pdf      Waghmare and Sufi, arXiv:2611.22075v1 (2026-11-17)
-  <download dir>/ax/abs.xml     the arXiv API's record of 2607.27773 and 2611.22075 (abstracts)
+  <download dir>/ax/abs.xml     the arXiv API's record of 2607.27773 and 2611.22075 (abstracts); on 2026-11-22, session 2,
+                                 the API answered 503 and 429, and the abstract page arxiv.org/abs/2607.27773v2 was read
+  <download dir>/ww/ww.pdf      Woo and Walsh, "On the shoulders of fallen giants", Quantitative Science Studies 5(1),
+                                 2024, https://doi.org/10.1162/qss_a_00303, open-access copy fetched 2026-11-22 from
+                                 https://re.public.polimi.it/retrieve/f85a6ad4-5340-4258-ba0f-ccba54cfad60/Woo%26Walsh24FallenGiantsQSS.pdf
 The source texts are not committed; their hashes and the quoted passages are (sources.json). A passage counts as
 found when it stands in the text once whitespace and line-end hyphens are removed, so a quotation cannot drift from
 its source. Also writes data/clocks.json and data/clocks.js: the signals of the Field's study 90 (field-research
@@ -41,9 +45,11 @@ def pdf_text(path, mode):
 
 PK = os.path.join(DL, 'pk', 'cscw92.pdf')
 WS = os.path.join(DL, 'ax', 'ws.pdf')
+WW = os.path.join(DL, 'ww', 'ww.pdf')
 ABS = open(os.path.join(DL, 'ax', 'abs.xml'), encoding='utf-8').read()
 pk_text = squash(pdf_text(PK, '-raw'))
 ws_text = squash(pdf_text(WS, '-raw'))
+ww_text = squash(pdf_text(WW, '-raw'))
 
 SOURCES = [
     {'id': 'pk', 'cite': 'A. Prakash and M. J. Knister, "Undoing Actions in Collaborative Work", Proceedings of CSCW '
@@ -81,6 +87,17 @@ SOURCES = [
      'passages': [
          ('abstract', 'tests whether an agent can behave counterfactually after rollback by answering queries and '
                       'summarizing history as if future updates had never occurred'),
+     ]},
+    {'id': 'ww', 'cite': 'S. Woo and J. P. Walsh, "On the shoulders of fallen giants: What do references to retracted '
+                         'research tell us about citation behaviors?", Quantitative Science Studies 5(1) (2024), 1-30',
+     'url': 'https://doi.org/10.1162/qss_a_00303', 'sha256': sha(WW),
+     'read': 'sections 3 and 6.2, 2026-11-22, session 2 (open-access copy of the published article)', 'text': ww_text,
+     'passages': [
+         ('3', 'retracted articles often continue to be cited as if they were legitimate scientific findings'),
+         ('3', 'such a citation should at minimum include a caveat'),
+         ('6.2', 'many journals and indexing databases, such as PubMed and Web of Science, fail to display retraction '
+                 'notices'),
+         ('6.2', 'this intervention rests on a strong, and likely fallacious, assumption'),
      ]},
 ]
 out = []
