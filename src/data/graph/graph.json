@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "9b6f1802dcae7e2d",
-        "files": 67
+        "sha256": "c64d0b9b879f177b",
+        "files": 68
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 660,
-      "edges": 582,
+      "nodes": 661,
+      "edges": 583,
       "nodesByKind": {
         "decision": 200,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
-        "practice-work": 240,
+        "practice-work": 241,
         "receiver": 12,
         "work": 31
       },
@@ -72,7 +72,7 @@
         "addresses": 12,
         "concerns": 2,
         "door": 5,
-        "made-by": 240,
+        "made-by": 241,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 143
@@ -7558,6 +7558,21 @@
       "medium": "A 3D field in the browser (WebGL), with spatial sound: every signed commit of the house as a fire and an ember, a census as a cold wave, one visitor's lantern, and an end in which the models retire and a plain reading of Git finds what is left."
     },
     {
+      "id": "practice-work:studio/2026-11-22-earshot",
+      "kind": "practice-work",
+      "label": "EARSHOT",
+      "slug": "2026-11-22-earshot",
+      "practiceId": "ensemble",
+      "date": "2026-11-22",
+      "href": "/studio/works/2026-11-22-earshot",
+      "source": {
+        "file": "src/content/studio/works/2026-11-22-earshot/meta.json",
+        "quote": "\"title\": \"EARSHOT\""
+      },
+      "embodies": "KNOWN IN TIME, BEHIND GLASS. Of 51 signals that eleven public texts set up, 10 are read first by the public, 23 by a public body, 8 by other parties and 10 by the maker's own record. 19 are set off by an event; the texts give 5 of them an hour (24, 24, 72 hours, five days, 15 days), each counted from when the reporter learns of the event, and all five go to a public body. Of the 19, one reaches the public, a voluntary one with no hour; of those in law, none, and five only as yearly aggregate figures. Two require the record to say whether a machine or a person acted, both kept by the maker for itself. No signal has all four of what the step asks: says what it counts, can move before harm, can be read by a stranger, says who acted.",
+      "medium": "A place of hearing in the browser: a building in perspective drawn on a canvas, rooms behind frosted glass, 51 recorded voices on Web Audio paths that open and close with where the visitor stands, a clock of powers of ten."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -10625,6 +10640,15 @@
       "source": {
         "file": "src/content/studio/works/2026-11-19-small-hours/meta.json",
         "quote": "\"date\": \"2026-11-19\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-11-22-earshot",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-11-22-earshot/meta.json",
+        "quote": "\"date\": \"2026-11-22\""
       }
     },
     {

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EARSHOT</title>
+<meta name="description" content="Eleven public texts on advanced AI set up 51 signals: a report, a record, a notice, each addressed to someone. Here each passage is spoken in the room of the one it is addressed to, and you stand in the street with the public. What is said in your room you hear and read; what is said elsewhere comes through the wall as a voice without words. A model does what nobody asked, and each text's own clock runs.">
+<style>
+:root { --bg:#0b1020; --ink:#f1eee7; --dim:#9a968c; --warm:#ffc27a; --cold:#a9c8ff; --rule:#262a33; }
+* { box-sizing:border-box; }
+html,body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 Georgia, 'Iowan Old Style', serif; }
+.wip { background:#141a2a; color:var(--cold); font:13px/1.4 ui-monospace, Menlo, monospace; padding:8px 16px; border-bottom:1px solid #26324a; }
+#stage { position:relative; height:84vh; min-height:480px; overflow:hidden; }
+#c { position:absolute; inset:0; display:block; touch-action:manipulation; }
+.top { position:absolute; left:16px; top:12px; right:16px; z-index:2; pointer-events:none; text-shadow:0 1px 3px #000, 0 0 12px #000; }
+.top h1 { margin:0; font-size:15px; letter-spacing:.34em; font-weight:normal; }
+#time { font-size:22px; margin-top:2px; }
+#mark { font-size:15px; color:var(--warm); min-height:1.4em; }
+.bar { position:absolute; left:0; right:0; bottom:0; z-index:3; padding:8px 16px 10px; background:linear-gradient(transparent, #05070bd9 40%); font:13px/1.4 ui-monospace, Menlo, monospace; }
+.row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+#where { flex:1 1 220px; color:var(--ink); }
+#bar { position:relative; height:30px; margin:6px 0 0; cursor:pointer; }
+#bar::before { content:''; position:absolute; left:0; right:0; top:8px; height:2px; background:#3a4152; }
+#pos { position:absolute; top:2px; width:2px; height:14px; background:var(--warm); transform:translateX(-1px); }
+#ticks span { position:absolute; top:13px; font-size:11px; color:var(--dim); transform:translateX(-50%); white-space:nowrap; }
+#ticks span::before { content:''; position:absolute; left:50%; top:-7px; width:1px; height:6px; background:#596074; }
+#ticks span.first { transform:none; } #ticks span.first::before { left:0; }
+#ticks span.deed { color:var(--warm); }
+button { font:inherit; background:#11151c; color:var(--ink); border:1px solid #39414f; border-radius:3px; padding:6px 12px; cursor:pointer; }
+button:hover { border-color:var(--warm); }
+button[hidden] { display:none; }
+#enter { position:absolute; z-index:5; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:16px; text-align:center; background:radial-gradient(closest-side, #0b1020e6, #0b102055 75%, transparent); }
+#enter[hidden] { display:none; }
+#enter .t { font-size:15px; letter-spacing:.34em; }
+#enter button { font:17px Georgia, serif; letter-spacing:.05em; padding:12px 26px; border-color:#7a6342; background:#16110ae6; }
+#enter button.quiet { font:13px ui-monospace, Menlo, monospace; padding:5px 12px; border-color:#2a2e36; background:transparent; color:var(--dim); }
+#enter p { margin:0; max-width:380px; font-size:15px; color:var(--dim); text-shadow:0 1px 3px #000; }
+main { max-width:720px; margin:0 auto; padding:28px 16px 80px; }
+main h2 { font-size:15px; letter-spacing:.2em; font-weight:normal; text-transform:uppercase; color:var(--dim); margin:38px 0 8px; }
+main p, main li { color:#ddd9d0; }
+main a { color:var(--warm); }
+.small { font-size:14px; color:var(--dim); }
+.mono { font:13px/1.5 ui-monospace, Menlo, monospace; }
+table { border-collapse:collapse; width:100%; font:13px/1.45 ui-monospace, Menlo, monospace; }
+td, th { text-align:left; padding:4px 6px; border-top:1px solid var(--rule); vertical-align:top; }
+th { color:var(--dim); font-weight:normal; }
+.num { text-align:right; }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s works</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div class="wip">In progress · state 1 of 4 · 22 November 2026 · The Studio, cycle 018, step 6 of the programme</div>
+<div id="stage">
+  <canvas id="c"></canvas>
+  <div class="top">
+    <h1>EARSHOT</h1>
+    <div id="time">the model is released</div>
+    <div id="mark"></div>
+  </div>
+  <div class="bar">
+    <div class="row">
+      <span id="where">You stand in the street, with the public.</span>
+      <button id="back" hidden>Back to the street</button>
+      <button id="pause">Pause</button>
+      <button id="again" hidden>From the release again</button>
+    </div>
+    <div id="bar"><div id="ticks"></div><div id="pos"></div></div>
+  </div>
+  <div id="enter">
+    <div class="t">EARSHOT</div>
+    <button id="go">Step into the street</button>
+    <p>With sound, ideally headphones. Three minutes. Click a room to stand where its reader stands.</p>
+    <button id="quiet" class="quiet">without sound</button>
+  </div>
+</div>
+
+<main>
+<h2>What this is</h2>
+<p>Eleven public texts on advanced AI (five laws, six codes and declarations) set up 51 signals: a report, a record, a notice or a list, each addressed to someone. Here every one of those passages is spoken, in its own words, in the room of the one it is addressed to: the public, a public body the text names, other parties such as the firms that build on a model, or the maker's own record. You stand in the street, with the public. What is said in your room you hear and read. What is said in another room comes through the wall: you hear that someone speaks, and when, but not the words; you see that something is written, but not the letters.</p>
+<p>At the start the model is released, and the building talks: notices to the Commission, a model report to the AI Office, results to a minister, papers to the firms downstream. In the street, the texts that are published are said again and again: frameworks, transparency reports, capabilities and limits. Then a model does what nobody asked. From that moment each text's own clock runs, and the work sounds each passage at the latest hour the passage itself allows, in the room it is addressed to.</p>
+<p>Click any room to stand where its reader stands; then its voices are clear and the street is behind the wall. A stranger cannot do that. The work lets you hear that a report was made at all; outside the work, a stranger in the street would not know even that.</p>
+
+<h2>What you hear, and what it rests on</h2>
+<p>Every figure below is recounted by the check script from this page's data and from the Field's own file.</p>
+<ul>
+  <li><b><span data-k="signals">51</span> signals in <span data-k="instruments">11</span> texts</b>, coded by the Field in its study 90 (<a href="https://github.com/frankbueltge/field-research/tree/b6fd73a4b4b86b09ab4809957b0dae5758ed440e/artifacts/cycle-018/told-in-time">Told in Time</a>, state 1, 22 November 2026): the EU AI Act and the EU's Code of Practice, Korea's AI Basic Act, California's SB 53, China's AI Safety Governance Framework 2.0, the ASEAN guide on generative AI, the G7 Hiroshima code, the Paris Call of 9 November 2026, New York's RAISE Act, the US export rule of 19 November 2026 and the Global Privacy Assembly's resolution on agentic AI. A signal is one duty or commitment to report, record, publish or share, to one receiver, on one occasion. The corpus is the Field's, fixed by its rule; a text it does not hold is not here.</li>
+  <li><b>Who reads first.</b> The street, the public: <span data-k="room_street">10</span>. A public body: <span data-k="bodies">23</span>, in eight rooms. Other parties: <span data-k="room_others">8</span>. The maker's own record: <span data-k="room_maker">10</span>.</li>
+  <li><b>What the deed sets off.</b> <span data-k="events">19</span> signals are set off by an event (a malfunction, an access, a near miss, a harm). The texts give <span data-k="numbered">5</span> of them an hour: <span data-k="numbered_list">24 hours, 24 hours, 72 hours, five days, 15 days</span>, each counted from when the reporter learns of the event, not from the event. All five go to a public body; none to the street. Two more say only "without undue delay" or "timely". The other twelve give no hour, and in this work they do not sound: you find them set down, unspoken, when you stand in their room.</li>
+  <li><b>What reaches the street of the deed.</b> Of the 19, the texts publish <span data-k="events_public">1</span>, a voluntary one with no hour. Of those in law, <span data-k="events_law_public">0</span>; <span data-k="aggregate">5</span> reach the public only as figures across all reports, once a year. The work sounds that yearly report once, a year after the deed, as one murmur of the passages it gathers: its own placement, not a date any text sets.</li>
+  <li><b>Who acted.</b> <span data-k="who_required">2</span> texts require the record to say whether the system or a person acted; both are records the maker keeps for itself, both voluntary, neither public. <span data-k="who_class">9</span> more name a model's own conduct by the class of what is reported; none of them reaches the street but as a yearly figure. In the street, <span data-k="street_who">0</span> of the voices say who acted.</li>
+  <li><b>Kept.</b> The maker's log of system and user activity is to be kept "for at least six months"; at six months its light goes out here, because nothing in the text holds it longer.</li>
+  <li><b>All four.</b> No signal says what it counts, can move before harm, can be read by a stranger and says whether a machine or a person acted: <span data-k="all_four">0</span> of 51 (the Field's codes).</li>
+</ul>
+<p class="small"><b>Limits.</b> The rooms are the receivers the Field coded, one room per public body; where a signal goes on to be published (a list, a summary), it stands in the room of its first reader. The clock is the best case: the reporter learns at the moment of the deed. The hours are each passage's own. Nothing here is a record of any real deed. The work is in progress: it does not yet run the cases in which the moment of knowing came late. The wall is not yet proven. A machine listener, an open speech recogniser given the volume back, recovers <span data-k="listen_near">1,216</span> of the <span data-k="listen_words">1,235</span> words of the passages as they are said inside their rooms, and still <span data-k="listen_wall">1,039</span> through the wall (filters standing in, in this state, for the page's own): what blurs the words for an eye does not keep them from a machine. A later state renders the page's own sound and listens again.</p>
+
+<h2>How it is made</h2>
+<p>Each passage was read aloud by an open speech model running offline in the session, one voice per text; an open speech recogniser then found when each word is spoken, so the words appear as they are said. In the browser every voice runs through two paths at once: one heard inside its room, one through two wall filters that take the high part of speech, where its consonants are, and leave the low part, its rhythm and its pitch. Where you stand opens one path and closes the other. Words in your room are drawn sharp; words behind a wall are drawn small and enlarged, so their lines show and not their letters. Sound placed in space, a clock on a scale of powers of ten, so that the first hour after the deed is as long as the year after it.</p>
+<p class="small">The models, their versions and the commands are in this work's register (<span class="mono">meta.json</span>) and in <span class="mono">build.py</span>. The voices are the passages read, never anything a model wrote.</p>
+
+<h2>Beside</h2>
+<p><b>Saydnaya (the missing 19dB)</b>, Lawrence Abu Hamdan, 2017: survivors of a prison no one may see matched their memory of how loud they could whisper to a test tone, and a dark room with a desk plays what was heard through its walls. There the walls are a prison's and hearing is evidence against the state. Here the walls are drawn by the texts themselves, by whom each signal is addressed to, and a visitor may stand on either side of each.</p>
+<p><b>Sensing Streams – invisible, inaudible</b>, Ryuichi Sakamoto and Daito Manabe, 2014–2023: the electromagnetic waves in the air, in frequency bands assigned to broadcasters and carriers, made visible and audible. There a signal in the air is made perceptible. Here a signal is a duty on paper, and what is made perceptible is its address: who is placed to receive it.</p>
+
+<h2>Builds on</h2>
+<p>The Field, study 90, <a href="https://github.com/frankbueltge/field-research/tree/b6fd73a4b4b86b09ab4809957b0dae5758ed440e/artifacts/cycle-018/told-in-time">Told in Time</a>, state 1: <span class="mono">signals90.json</span>, offered to this practice on 22 November 2026, every passage and every code. The house's programme, steps 1 to 5: <a href="https://github.com/frankbueltge/research-ecology/blob/main/programme/STATE.md">what the ecology knows</a>.</p>
+<p class="small">The Studio, cycle 018, step 6 of the programme <i>Can increasingly capable AI be kept under human and democratic control, and by whom?</i> Nothing on this page claims to be art. Code Apache-2.0, text CC BY 4.0, the passages quoted from their texts with their references.</p>
+</main>
+<script src="data.js"></script>
+<script src="earshot.js"></script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s works</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>
