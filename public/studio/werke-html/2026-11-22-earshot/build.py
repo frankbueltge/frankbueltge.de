@@ -9,6 +9,11 @@ State 2 adds the Field's study 91: whether each signal was due and has left a pu
 of a machine acting on its own, each event with its date and the passage that dates it. The voices of the cases
 read those passages (case_voices.json, audio/<case>-<event>.mp3).
 
+State 3 (the check, session 262) takes the Field's own check of study 90 and 91 (check 92, state 3 of Told in Time):
+the final codes of the 51 signals after a blind second coding (codes92.json), the reconciled traces (traces92.json) and
+the wiki case's corrected first day (results92.json). The passages stay those of study 90; only codes, traces and the
+wiki's first day change. Nothing is rendered again: the voices are the same passages.
+
 Run from this folder with a Python that has kokoro-onnx, soundfile and faster-whisper (see README.md):
     python3 build.py --models <dir with kokoro-v1.0.onnx and voices-v1.0.bin> --cache <scratch dir>
 Without --voices / --case-voices it reuses the audio and timings already written and only rebuilds data.js.
@@ -27,7 +32,18 @@ MOVED_COMMIT = "562ae7043fc4043c3bed92cc8845d187e8a9645a"
 MOVED_URL = ("https://raw.githubusercontent.com/frankbueltge/field-research/" + MOVED_COMMIT +
              "/artifacts/cycle-018/told-in-time/moved91.json")
 MOVED_SHA = "1ad84d1f60e36d6f26e73bd3d6a163af956893f9afb98861e252d8e5b955a59e"
-RECORD_DATE = "2026-11-22"  # the day the Field searched; the record runs to here and no further
+# State 3: the Field's check 92, at the commit of its state 3.
+CHECK_COMMIT = "809bab980be2ac8eb60a307b593b8c030e65321b"
+CHECK_BASE = ("https://raw.githubusercontent.com/frankbueltge/field-research/" + CHECK_COMMIT +
+              "/artifacts/cycle-018/told-in-time/")
+CHECK_FILES = {
+    "codes92.json": "e2a016296ea61d7434c70819785eb5faec1611c5dc8e1e1b918b2ac04c4b417d",
+    "traces92.json": "9c8363b571c41ebc2996f6cd4d8f3f88496fd3c8fa3c80cac40f07c82ff85cc8",
+    "results92.json": "7bfa5f744835c50ff2be5acd2419e9ebf93c83cb68a3afa351c34c42b6df9dd2",
+}
+FINAL_CODES = ["kind", "unit", "trigger", "before_harm", "deadline_h", "deadline_max_h", "clock", "receiver", "public",
+               "machine_or_person", "stranger"]
+RECORD_DATE = "2026-11-23"  # the day of the Field's check, which searched again; the record runs to here and no further
 
 # One voice per instrument, all from the open model's English voices.
 VOICE = {
@@ -85,7 +101,7 @@ BEFORE = ["CN3", "EU1", "KR1", "COP2", "NY7", "EU3", "AS2", "CN4", "BIS2", "GPA3
 DEED = ["CN6", "GPA1", "CN7", "PC5"]
 # the hour each passage names for itself
 AT = {"CA5": 24, "NY5": 24, "NY4": 72, "COP3": 120, "CA4": 360}
-EVERY = {"BIS1": 792, "CA3": 2190, "NY3": 2190, "BIS3": 9840}
+EVERY = {"BIS1": 792, "CA3": 2208, "NY3": 2208, "BIS3": 9840}  # CA3, NY3: every three months, 2208 h since check 92
 # The yearly reports of California's office and attorney general and of New York's office publish only
 # anonymised, aggregated figures (the Field's codes, "aggregate only"). The work sounds them once, in the
 # street, as one murmur of the passages they gather, at a year: its own placement of "a yearly report".
@@ -139,6 +155,47 @@ PAPER_HOURS = [24, 72, 120, 360]
 def fetch(url):
     with urllib.request.urlopen(url, timeout=60) as r:
         return r.read()
+
+
+def fetch_pinned(name):
+    raw = fetch(CHECK_BASE + name)
+    sha = hashlib.sha256(raw).hexdigest()
+    if sha != CHECK_FILES[name]:
+        raise SystemExit(name + " changed: " + sha)
+    return json.loads(raw)
+
+
+def apply_check(src, moved, codes, traces, results):
+    """The Field's check 92 over studies 90 and 91: final codes, reconciled traces, the wiki's first day."""
+    final = {c["id"]: c for c in codes["signals"]}
+    changed = []
+    for s in src["signals"]:
+        f = final[s["id"]]
+        for k in FINAL_CODES:
+            if s[k] != f[k]:
+                changed.append({"id": s["id"], "code": k, "from": s[k], "to": f[k]})
+                s[k] = f[k]
+        s["all_four"] = s["id"] in results["A"]["final"]["all_four"]
+    assert {(c["id"], c["code"]) for c in changed} == {(c["id"], c["code"]) for c in codes["changed"]}, changed
+    tr = {t["id"]: t for t in traces["signals"]}
+    for m in moved["signals"]:
+        t = tr.get(m["id"])
+        if t:
+            m["moved"], m["first"], m["host"], m["hosts"] = t["moved"], t["first"], t["host"], t["hosts"]
+        else:
+            assert m["due"] != "due", m["id"]
+            m["hosts"] = []
+    w = results["wiki"]
+    c = next(x for x in moved["cases"] if x["id"] == "wiki")
+    b = next(e for e in c["events"] if e["key"] == "began")
+    assert c["began"] == w["state2_began"] == b["date"]
+    c["began_state2"] = c["began"]
+    c["began"] = b["date"] = w["began"]
+    b["src"] = w["began_src"]
+    c["delays_days"] = w["delays_days"]
+    c["earliest_activity"] = w["earliest_activity"]
+    c["maker_staff_viewed"] = w["maker_staff_viewed"]
+    return changed
 
 
 def norm(w):
@@ -282,6 +339,8 @@ def case_items(moved):
                     "today_day": today, "today_h": today * 24, "first_reader": c["first_reader"],
                     "says_machine": c["says_machine"], "delays_days": c["delays_days"],
                     "maker_knew": c["maker_knew"], "report_sent": c.get("report_sent"),
+                    "began_state2": c.get("began_state2"), "earliest_activity": c.get("earliest_activity"),
+                    "maker_staff_viewed": c.get("maker_staff_viewed"),
                     "paper_from_h": knew[0]["h"] if knew else None, "events": evs})
     return out
 
@@ -351,6 +410,8 @@ def main():
     if msha != MOVED_SHA:
         raise SystemExit("moved91.json changed: " + msha)
     moved = json.loads(mraw)
+    codes, traces, results92 = (fetch_pinned(n) for n in ("codes92.json", "traces92.json", "results92.json"))
+    changed = apply_check(src, moved, codes, traces, results92)
     mov = {m["id"]: m for m in moved["signals"]}
     assert set(mov) == {x["id"] for x in signals}
     cases = case_items(moved)
@@ -397,7 +458,7 @@ def main():
             "before_harm": s["before_harm"], "all_four": s["all_four"], "when": when,
             "murmur": sid in MURMUR, "retention_end_h": RETENTION_END.get(sid), "voice": VOICE[s["instrument"]],
             "due": mov[sid]["due"], "moved": mov[sid]["moved"], "trace_first": mov[sid]["first"],
-            "trace_host": mov[sid]["host"],
+            "trace_host": mov[sid]["host"], "trace_hosts": mov[sid]["hosts"],
         })
     # sanity: every passage named its own hour where the clock puts it
     for sid, h in AT.items():
@@ -415,15 +476,17 @@ def main():
         "clock": {"from_h": 1 / 60, "to_h": RUN_END_H, "murmur_h": MURMUR_H, "murmur": MURMUR},
         "moved": {"url": MOVED_URL, "sha256": MOVED_SHA, "commit": MOVED_COMMIT, "study": 91,
                   "record_date": RECORD_DATE},
+        "check": {"commit": CHECK_COMMIT, "base": CHECK_BASE, "files": CHECK_FILES, "check": 92, "changed": changed},
         "cases": cases,
         "paper_hours": PAPER_HOURS,
-        "field": {"receiver": results["receiver"], "events": results["events"],
-                  "event_deadlines_h": results["event_deadlines_h"], "all_four": results["all_four"],
-                  "events_public": results["events_public"], "events_law_public": results["events_law_public"]},
+        "field": {"receiver": results92["A"]["final"]["receiver"], "events": results92["A"]["final"]["events"],
+                  "event_deadlines_h": results["event_deadlines_h"], "all_four": results92["A"]["final"]["all_four"],
+                  "events_public": results["events_public"], "events_law_public": results["events_law_public"],
+                  "on_public_body_site": results92["B"]["on_public_body_site"], "moved": results92["B"]["moved"]},
     }
     with open(os.path.join(HERE, "data.js"), "w") as f:
         f.write("// EARSHOT data, written by build.py from the Field's study 90 at " + FIELD_COMMIT[:7] +
-                " and study 91 at " + MOVED_COMMIT[:7] + "\n")
+                ", study 91 at " + MOVED_COMMIT[:7] + " and its check 92 at " + CHECK_COMMIT[:7] + "\n")
         f.write("window.EARSHOT = " + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n")
     low = [x["id"] for x in out if x["matched"] < 0.6 * len(x["words"])]
     print("signals", len(out), "rooms", {r: len(v["signals"]) for r, v in rooms.items()}, "weak alignment", low)

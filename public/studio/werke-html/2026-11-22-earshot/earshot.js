@@ -49,7 +49,7 @@
     const rec = mode !== 'paper', c = CASES[mode];
     const live = s => !rec || s.due === 'due';
     const ev = [];
-    STREET_LOOP = SIG.filter(s => s.room === 'street' && live(s) && (!rec || s.moved !== 'no trace found')).map(s => s.id);
+    STREET_LOOP = SIG.filter(s => s.room === 'street' && s.when.phase !== 'none' && live(s) && (!rec || s.moved !== 'no trace found')).map(s => s.id);
     SIG.filter(s => s.when.phase === 'before' && s.room !== 'street' && live(s)).sort((a, b) => a.when.order - b.when.order)
       .forEach((s, i) => ev.push({ tau: 2.5 + i * 2.6, kind: 'voice', id: s.id }));
     ev.push({ tau: PRE, kind: 'deed' });
@@ -92,7 +92,12 @@
     eye: null, eyeTo: null, voices: [], lit: {}, flash: {}, ended: false, markText: '', markAt: -99, fired: new Set(),
     loopNext: 0, loopIdx: 0, deedAt: -1, retained: {}, layout: null,
     mode: 'paper', queue: [], telling: null, deedOn: false, notes: [], walk: null, visitor: {}, alarm: 0, pulseAt: 0,
+    cold: {}, woken: {}, spreads: [], shut: {}, ear: false,
   };
+  const EH = window.EARSHOT_HEARD || null;
+  const CASEV = Object.fromEntries((E.cases || []).flatMap(c => c.events.filter(e => e.vid).map(e => [e.vid, e])));
+  // State 3: in a case the doors stay shut until the record reaches today; you are the public.
+  const locked = () => st.mode !== 'paper' && !st.ended;
   window.__earshot = st;
 
   // ---------- the building ----------
@@ -164,8 +169,7 @@
     return b;
   }
 
-  function startAudio() {
-    AC = new (window.AudioContext || window.webkitAudioContext)();
+  function graph() {
     master = AC.createGain(); master.gain.value = 0.9;
     const comp = AC.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3;
     master.connect(comp).connect(AC.destination);
@@ -180,6 +184,10 @@
     const af = AC.createBiquadFilter(); af.type = 'lowpass'; af.frequency.value = 900;
     const ag = AC.createGain(); ag.gain.value = 0.05;
     air.connect(af).connect(ag).connect(master); air.start();
+  }
+  function startAudio() {
+    AC = new (window.AudioContext || window.webkitAudioContext)();
+    graph();
     const caseIds = (E.cases || []).flatMap(c => c.events.filter(e => e.vid).map(e => e.vid));
     return Promise.all(SIG.map(s => s.id).concat(caseIds).map(id => fetch('audio/' + id + '.mp3').then(r => r.arrayBuffer()).then(a => AC.decodeAudioData(a))
       .then(buf => { buffers[id] = buf; }).catch(() => {})));
@@ -224,6 +232,30 @@
     const T = AC.currentTime, k = now ? 0.001 : 0.35;
     c.near.gain.setTargetAtTime(inside ? 1 : 0, T, k);
     c.wall.gain.setTargetAtTime(inside ? 0 : 0.8, T, k);
+  }
+
+  // For the check (state 3): one voice rendered offline through the page's own graph, the same chain, reverbs,
+  // compressor and street air, with the listener in its room or on the other side of the wall. Mono 16-bit WAV.
+  async function renderOffline(id, listener) {
+    const item = byId[id] || CASEV[id], room = byId[id] ? byId[id].room : item.place;
+    const ab = await (await fetch('audio/' + id + '.mp3')).arrayBuffer();
+    const sr = 24000, buf = await new OfflineAudioContext(1, sr, sr).decodeAudioData(ab);
+    const saved = { AC, master, nearVerb, wallVerb, listener: st.listener };
+    AC = new OfflineAudioContext(2, Math.ceil((buf.duration + 2.4) * sr), sr);
+    graph(); st.listener = listener;
+    const c = chain(room, 0.5), q = roomPos(room, 0.5);
+    c.pan.positionX.value = q.x; c.pan.positionY.value = q.y; c.pan.positionZ.value = q.z;
+    const src = AC.createBufferSource(); src.buffer = buf; src.connect(c.inG); src.start(0.1);
+    const out = await AC.startRendering();
+    ({ AC, master, nearVerb, wallVerb } = saved); st.listener = saved.listener;
+    const L = out.getChannelData(0), R = out.getChannelData(1), n = L.length, wav = new DataView(new ArrayBuffer(44 + n * 2));
+    const w4 = (o, t) => { for (let i = 0; i < 4; i++) wav.setUint8(o + i, t.charCodeAt(i)); };
+    w4(0, 'RIFF'); wav.setUint32(4, 36 + n * 2, true); w4(8, 'WAVE'); w4(12, 'fmt '); wav.setUint32(16, 16, true);
+    wav.setUint16(20, 1, true); wav.setUint16(22, 1, true); wav.setUint32(24, sr, true); wav.setUint32(28, sr * 2, true);
+    wav.setUint16(32, 2, true); wav.setUint16(34, 16, true); w4(36, 'data'); wav.setUint32(40, n * 2, true);
+    for (let i = 0; i < n; i++) wav.setInt16(44 + i * 2, Math.max(-1, Math.min(1, (L[i] + R[i]) / 2)) * 32767, true);
+    let bin = ''; const u = new Uint8Array(wav.buffer); for (let i = 0; i < u.length; i += 8192) bin += String.fromCharCode.apply(null, u.subarray(i, i + 8192));
+    return btoa(bin);
   }
 
   function tickBuffer(len, pitch) {
@@ -290,8 +322,12 @@
   // ---------- voices ----------
   // One passage spoken in one room. Its words appear as they are spoken: sharp from inside the room, through the
   // glass only as lines of light.
+  // The deed's cold light. On paper it goes from the maker's room straight to the room a report is owed to, as the
+  // texts imagine; as it happened it comes up from the street, where the deed was first told.
+  function wake(room, from, delay) { if (room === 'street' || st.woken[room] && st.cold[room] > 0.6) return; st.spreads.push({ to: room, from, t0: st.now + (delay || 0) }); }
   function speak(id, opts = {}) {
     const s = opts.item || byId[id], room = opts.room || s.room;
+    if (!opts.item && s.when && (s.when.phase === 'at' || s.when.phase === 'deed') && !opts.murmur && room !== 'maker') wake(room, 'maker', (opts.off || 0) - 1.4);
     const v = { id, s, room, t0: st.now + (opts.off || 0), dur: s.dur, slot: opts.slot ?? slotFor(room), again: !!opts.again,
       murmur: !!opts.murmur, rate: opts.rate || 1, gain: opts.gain ?? 1, lay: null, caseV: !!opts.item, panRoom: opts.panRoom || null };
     if (v.again) v.dur = Math.min(s.dur, 3.2);
@@ -333,7 +369,7 @@
     switch (ev.kind) {
       case 'voice': speak(ev.id, { again: ev.again }); break;
       case 'deed':
-        st.deedAt = st.tau; st.flash.maker = 1; deedSound(); startTickers();
+        st.deedAt = st.tau; st.flash.maker = 1; st.cold.maker = 1; st.woken.maker = true; deedSound(); startTickers();
         if (rec) { const b = c.events.find(e => e.key === 'began'); st.deedOn = true; startPulse(); mark(fmtDate(DAY0(st.mode)) + ' · ' + b.label + ' ' + b.sub, 6); }
         break;
       case 'murmur': murmur(); break;
@@ -349,7 +385,7 @@
       }
       case 'today':
         st.ended = true; st.deedOn = false; stopPulse();
-        mark(fmtDate(DAY0(st.mode) + ev.h * 3600e3) + ' · today: the record runs to here', 1e9);
+        mark(fmtDate(DAY0(st.mode) + ev.h * 3600e3) + ' · today: the record runs to here, and the doors open', 1e9);
         document.getElementById('again').hidden = false; offerNext(); break;
       case 'end': st.ended = true; document.getElementById('again').hidden = false; offerNext(); break;
     }
@@ -361,7 +397,9 @@
     for (const v of st.voices) if (v.room === 'street' && !v.caseV && !v.murmur) { try { v.src && v.src.stop(); } catch (x) {} v.t0 = -1e9; }
     if (e.walk) { st.walk = { t0: st.now, room: e.place }; off = 3.0; }
     if (e.key === 'precursor') { alarm(); st.alarm = 1; }
+    if (e.place !== 'street') wake(e.place, e.walk ? null : (e.place === 'maker' ? null : 'street'), off - 1);
     if (e.wake) {
+      wake(e.wake.room, e.walk ? null : 'street', off - 1.6);
       const w = byId[e.wake.signal];
       speak(w.id, { room: e.wake.room, off });
       if (e.walk) { off += w.dur + 0.3; until = off; } else { off += 1.2; until = off - 1.2 + w.dur; }
@@ -391,6 +429,13 @@
     st.fired = new Set(events.filter(e => e.tau < st.tau - 0.05));
     for (const v of st.voices) { try { v.src && v.src.stop(); } catch (e) {} }
     st.voices = []; st.queue = []; st.telling = null; st.notes = []; st.walk = null; st.visitor = {}; st.alarm = 0;
+    st.cold = {}; st.woken = {}; st.spreads = []; st.shut = {};
+    const woke = r => { if (r && r !== 'street') { st.woken[r] = true; st.cold[r] = 0.45; } };
+    if (st.tau >= PRE) woke('maker');
+    for (const e of events) if (e.tau < st.tau - 0.05) {
+      if (e.kind === 'voice' && byId[e.id] && ['at', 'deed'].includes(byId[e.id].when.phase)) woke(byId[e.id].room);
+      if (e.kind === 'case' && e.ce.kind === 'voice') { woke(e.ce.place); if (e.ce.wake) woke(e.ce.wake.room); }
+    }
     st.ended = st.tau >= (rec ? REC_END : END); document.getElementById('again').hidden = !st.ended;
     if (!st.ended) { st.markAt = -99; hideNext(); }
     st.retained = {};
@@ -440,6 +485,40 @@
     drawStreet(false);
     for (const id of Object.keys(L.rooms)) if (id !== 'street') drawRoom(id);
     drawStreet(true);
+    drawSpreads();
+  }
+  // the deed's cold light on its way to a room that wakes because of it
+  function drawSpreads() {
+    const L = st.layout;
+    for (const sp of st.spreads) {
+      const el = st.now - sp.t0; if (el < 0) continue;
+      const r = L.rooms[sp.to], to = [r.x + r.w / 2, r.y + r.h / 2];
+      const from = sp.from === 'street' ? [to[0], L.gy + 120] : sp.from === 'maker' ? [L.rooms.maker.x + L.rooms.maker.w / 2, L.rooms.maker.y + L.rooms.maker.h / 2] : to;
+      const a = Math.min(1, el / 2.2), e = a * a * (3 - 2 * a), x = from[0] + (to[0] - from[0]) * e, y = from[1] + (to[1] - from[1]) * e;
+      const gl = ctx.createRadialGradient(x, y, 2, x, y, 120);
+      gl.addColorStop(0, 'rgba(170,205,255,' + (0.55 * (1 - 0.4 * a)) + ')'); gl.addColorStop(1, 'rgba(170,205,255,0)');
+      ctx.fillStyle = gl; ctx.fillRect(x - 120, y - 120, 240, 240);
+    }
+  }
+  // what a machine at the wall heard (state 3): the page's own sound rendered and given to an open recogniser
+  function earWords(g, v, r, side, top, size, color) {
+    const h = EH && EH.rows[v.id] && EH.rows[v.id][side]; if (!h) return;
+    const el = (st.now - v.t0) * v.rate; if (el < 0) return;
+    const ref = new Set((v.s.show || v.s.quote).split(/\s+/).map(w => w.toLowerCase().replace(/[^a-z0-9]/g, '')));
+    g.font = size + 'px ui-monospace, Menlo, monospace'; g.textBaseline = 'top';
+    const sp = g.measureText(' ').width, maxW = r.w - 44; let x = 0, line = 0;
+    const lines = Math.max(1, Math.floor((r.y + r.h - 10 - top) / (size * 1.3)));
+    const fade = el > v.dur + 3.5 ? Math.max(0, 1 - (el - v.dur - 3.5) / 1.6) : 1;
+    const out = [];
+    for (const [w, a] of h) { const ww = g.measureText(w).width; if (x > 0 && x + ww > maxW) { x = 0; line++; } out.push([w, a, x, line]); x += ww + sp; }
+    const sc = Math.max(0, line + 1 - lines);
+    for (const [w, a, wx, ln] of out) {
+      if (a - 0.1 > el || ln < sc) continue;
+      const miss = !ref.has(w.toLowerCase().replace(/[^a-z0-9]/g, ''));
+      g.globalAlpha = fade * Math.min(1, (el - a + 0.1) / 0.2); g.fillStyle = miss ? '#ff9d8a' : color;
+      g.fillText(w, r.x + 22 + wx, top + (ln - sc) * size * 1.3);
+    }
+    g.globalAlpha = 1;
   }
 
   // the inside of a room, in world coordinates, into g
@@ -448,7 +527,10 @@
     const x0 = r.x, x1 = r.x + r.w, y0 = r.y, y1 = r.y + r.h;
     const B = [P(x0, y0, DEPTH), P(x1, y0, DEPTH), P(x1, y1, DEPTH), P(x0, y1, DEPTH)];
     const base = id === 'maker' ? [20, 26, 38] : [24, 24, 30];
-    const warm = (a, k) => 'rgba(' + Math.round(base[0] + (255 - base[0]) * a * k) + ',' + Math.round(base[1] + (190 - base[1]) * a * k) + ',' + Math.round(base[2] + (120 - base[2]) * a * k) + ',1)';
+    // a room that has heard of the deed: its light turns from lamp-warm to the deed's cold
+    const cd = Math.min(1, (st.cold[id] || 0) * 1.6), lt = Math.max(lit, (st.cold[id] || 0) * 0.85);
+    const tgt = [255 + (150 - 255) * cd, 190 + (196 - 190) * cd, 120 + (255 - 120) * cd];
+    const warm = (a, k) => { a = Math.max(a, lt); return 'rgba(' + Math.round(base[0] + (tgt[0] - base[0]) * a * k) + ',' + Math.round(base[1] + (tgt[1] - base[1]) * a * k) + ',' + Math.round(base[2] + (tgt[2] - base[2]) * a * k) + ',1)'; };
     // ceiling, floor, side walls, back wall
     quad(g, [x0, y0], [x1, y0], B[1], B[0], warm(lit, 0.16));
     quad(g, [x0, y1], [x1, y1], B[2], B[3], warm(lit, 0.32));
@@ -457,10 +539,10 @@
     quad(g, B[0], B[1], B[2], B[3], warm(lit, 0.42));
     // the lamp and its pool of light on the back wall
     const lampX = (x0 + x1) / 2, lamp = P(lampX, y0 + 30, DEPTH * 0.45), top = P(lampX, y0, DEPTH * 0.45);
-    if (lit > 0.02) {
-      const bw = B[1][0] - B[0][0], c = P(lampX, y0 + r.h * 0.55, DEPTH);
+    if (lt > 0.02 || lit > 0.02) {
+      const bw = B[1][0] - B[0][0], c = P(lampX, y0 + r.h * 0.55, DEPTH), pc = cd > 0.5 ? '160,200,255,' : '255,205,140,';
       const gl = g.createRadialGradient(c[0], c[1], 4, c[0], c[1], bw * 0.6);
-      gl.addColorStop(0, 'rgba(255,205,140,' + (0.42 * lit) + ')'); gl.addColorStop(1, 'rgba(255,205,140,0)');
+      gl.addColorStop(0, 'rgba(' + pc + (0.42 * Math.max(lit, lt)) + ')'); gl.addColorStop(1, 'rgba(' + pc + '0)');
       g.fillStyle = gl; g.fillRect(B[0][0], B[0][1], bw, B[2][1] - B[0][1]);
     }
     g.strokeStyle = '#4a4b52'; g.lineWidth = 1.2; g.beginPath(); g.moveTo(top[0], top[1]); g.lineTo(lamp[0], lamp[1]); g.stroke();
@@ -609,13 +691,17 @@
       const panes = Math.max(2, Math.round(r.w / 120));
       for (let i = 1; i < panes; i++) { const x = r.x + i * r.w / panes; ctx.beginPath(); ctx.moveTo(x, r.y); ctx.lineTo(x, r.y + r.h); ctx.stroke(); }
       ctx.beginPath(); ctx.moveTo(r.x, r.y + r.h * 0.72); ctx.lineTo(r.x + r.w, r.y + r.h * 0.72); ctx.stroke();
+      if (st.ear) for (const v of st.voices.filter(v => v.room === id && !v.murmur)) earWords(ctx, v, r, 'wall', r.y + 50, 15, '#bcd6ff');
+      if (st.shut[id] > 0.01) { ctx.strokeStyle = 'rgba(255,170,120,' + (0.9 * st.shut[id]) + ')'; ctx.lineWidth = 4; ctx.strokeRect(r.x + 2, r.y + 2, r.w - 4, r.h - 4); }
     }
+    if (inside && st.ear) for (const v of st.voices.filter(v => v.room === id && v.caseV)) earWords(ctx, v, r, 'near', r.y + r.h - 64, 14, '#bcd6ff');
     // the name on the door can be read from anywhere: who is placed to read here is no secret
     ctx.fillStyle = 'rgba(8,10,14,0.55)'; ctx.fillRect(r.x, r.y, r.w, 40);
     ctx.textBaseline = 'top'; ctx.fillStyle = inside ? '#fbf7ee' : '#d6d2c8'; ctx.font = '600 17px ' + FONT;
     ctx.fillText(meta.name.toUpperCase(), r.x + 12, r.y + 5, r.w - 24);
     ctx.font = '13.5px ' + FONT; ctx.fillStyle = inside ? '#d8d3c8' : '#99958c';
     ctx.fillText(meta.sub, r.x + 12, r.y + 24, r.w - 24);
+    if (!inside && locked()) { ctx.font = '600 12px ' + FONT; ctx.fillStyle = st.shut[id] > 0.01 ? '#ffb07a' : '#7d7a72'; ctx.textAlign = 'right'; ctx.fillText('SHUT', r.x + r.w - 12, r.y + 7); ctx.textAlign = 'left'; }
     if (inside) { ctx.strokeStyle = 'rgba(255,214,160,0.8)'; ctx.lineWidth = 3; ctx.strokeRect(r.x - 1.5, r.y - 1.5, r.w + 3, r.h + 3); you(ctx, r.x + 34, r.y + r.h - 4, 118); }
   }
 
@@ -692,6 +778,15 @@
       ctx.save(); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(c, r.x, r.y, r.w, r.h); ctx.restore();
     }
     st.eye = saveEye;
+    if (st.ear) {
+      if (inside) for (const v of clear.filter(v => v.caseV)) earWords(ctx, v, r, 'near', r.y + (L.tall ? 330 : 166), L.tall ? 17 : 15, '#bcd6ff');
+      else for (const v of clear) earWords(ctx, v, r, 'wall', top, L.tall ? 18 : 16, '#bcd6ff');
+    }
+    if (inside) {
+      const ids = (roomById.street.signals || []).filter(x => byId[x].when.phase === 'none');
+      if (ids.length) { ctx.font = '13px ' + FONT; ctx.fillStyle = 'rgba(200,196,186,0.6)'; ctx.textBaseline = 'top';
+        ['Set down here, with no hour:'].concat(ids.map(x => '· ' + byId[x].what + ' (' + byId[x].inst + ')')).forEach((t, i) => ctx.fillText(t, r.x + r.w * 0.6, r.y + r.h - 64 + i * 17, r.w * 0.38)); }
+    }
     for (const n of st.notes) {
       const el = st.now - n.t0; if (el > 9) continue;
       const a = Math.min(1, el / 0.6) * Math.min(1, (9 - el) / 1.2);
@@ -716,7 +811,7 @@
     } else if (rec) elTime.textContent = h === null ? 'the model is released' : fmtH(h) + ' after the deed · ' + dateAtH(st.mode, h);
     else elTime.textContent = h === null ? 'the model is released' : (st.ended ? 'two years after the deed' : fmtH(h) + ' after the deed');
     const m = roomById[st.listener];
-    elWhere.textContent = st.listener === 'street' ? 'You stand in the street, with the public.' : 'You stand in: ' + m.name + ' (' + m.sub + ').';
+    elWhere.textContent = st.listener === 'street' ? 'You stand in the street, with the public.' + (locked() ? ' The doors are shut until today.' : (st.mode !== 'paper' ? ' The doors are open: click a room.' : '')) : 'You stand in: ' + m.name + ' (' + m.sub + ').';
     elMark.textContent = st.now - st.markAt < (st.markDur || 3.2) ? st.markText : (st.mode === 'paper' && st.deedAt >= 0 && st.tau - st.deedAt < 5 && st.tau >= PRE ? 'A model does what nobody asked.' : '');
     elPos.style.left = (100 * st.tau / END).toFixed(2) + '%';
     document.getElementById('back').hidden = st.listener === 'street';
@@ -735,7 +830,15 @@
   }
   const elModes = document.getElementById('modes'), elNext = document.getElementById('next');
   function modeButtons() { for (const b of elModes.querySelectorAll('button')) b.classList.toggle('on', b.dataset.mode === st.mode); }
-  function offerNext() { if (st.mode === 'paper') elNext.hidden = false; }
+  function offerNext() {
+    elNext.textContent = '';
+    const add = (t, m) => { const b = document.createElement('button'); b.textContent = t; b.addEventListener('click', () => setMode(m, m === 'paper')); elNext.appendChild(b); };
+    elNext.appendChild(document.createTextNode(st.mode === 'paper' ? 'Two years on paper. Now as it happened: ' : 'The doors are open. Stand in any room, or hear: '));
+    if (st.mode !== 'escape') add('the escape, 2026', 'escape');
+    if (st.mode !== 'wiki') add('the wiki, 2026', 'wiki');
+    if (st.mode !== 'paper') add('on paper, what the texts promise', 'paper');
+    elNext.hidden = false;
+  }
   function hideNext() { elNext.hidden = true; }
 
   // ---------- loop ----------
@@ -756,6 +859,9 @@
       st.lit[k] = active ? Math.min(1, (st.lit[k] || 0) + dt * 2) : Math.max(0, (st.lit[k] || 0) - dt * 0.5);
     }
     for (const k of Object.keys(st.flash)) st.flash[k] = Math.max(0, st.flash[k] - dt * 0.7);
+    for (const k of Object.keys(st.shut)) st.shut[k] = Math.max(0, st.shut[k] - dt * 0.8);
+    st.spreads = st.spreads.filter(sp => { if (st.now - sp.t0 < 2.4) return true; st.cold[sp.to] = 1; st.woken[sp.to] = true; return false; });
+    for (const k of Object.keys(st.cold)) st.cold[k] = Math.max(st.woken[k] ? 0.45 : 0, st.cold[k] - dt * 0.05);
     const f = 1 - Math.pow(0.03, dt);
     for (const [a, b] of [[st.cam, st.camTo], [st.eye, st.eyeTo]]) for (const k of Object.keys(b)) a[k] += (b[k] - a[k]) * f;
     draw(); hud();
@@ -764,6 +870,7 @@
 
   function standIn(id) {
     if (!roomById[id] || id === st.listener) return;
+    if (id !== 'street' && locked()) { st.shut[id] = 1; mark('The door is shut. You are the public; the rooms open when the record reaches today.', 4); return; }
     st.listener = id; st.camTo = camFor(id); st.eyeTo = eyeFor(id);
     for (const v of st.voices) v.lay = null;
     if (AC) { for (const v of st.voices) if (v.chain) setOpen(v.chain, false); for (const t of Object.values(tickers)) setOpen(t.c, false); placePanners(); }
@@ -797,14 +904,17 @@
     const t = parseFloat(Q.get('t'));
     if (!isNaN(t)) seek(t);
     if (Q.get('in') && roomById[Q.get('in')]) standIn(Q.get('in'));
+    if (Q.get('ear')) { st.ear = true; if (elEar) elEar.classList.add('on'); }
   }
-  document.getElementById('go').addEventListener('click', () => begin(true));
-  document.getElementById('quiet').addEventListener('click', () => begin(false));
+  document.getElementById('go').addEventListener('click', () => begin(true, 'escape'));
+  document.getElementById('quiet').addEventListener('click', () => begin(false, 'escape'));
+  const elEar = document.getElementById('ear');
+  if (elEar) { if (!EH) elEar.hidden = true; elEar.addEventListener('click', () => { st.ear = !st.ear; elEar.classList.toggle('on', st.ear); }); }
   window.addEventListener('resize', resize);
   resize(); ticksOnBar();
-  if (Q.get('auto')) begin(Q.get('auto') === 'sound');
+  if (Q.get('auto')) begin(Q.get('auto') === 'sound', Q.get('case') || 'paper');
   requestAnimationFrame(t => { st.last = t; requestAnimationFrame(frame); });
   // for the check: the clock and its events, as the page runs them
   st.events = events.map(e => ({ tau: e.tau, kind: e.kind, id: e.id || null, h: e.h || null, again: !!e.again }));
-  Object.assign(st, { PRE, RUN, END, hToTau, tauToH, seek, standIn, setMode, buildEvents: m => buildEvents(m).map(e => ({ tau: e.tau, kind: e.kind, id: e.id || (e.ce && (e.ce.vid || e.ce.key)) || null, h: e.h ?? null, ph: e.ph || null })), recEnd: () => REC_END });
+  Object.assign(st, { PRE, RUN, END, hToTau, tauToH, seek, standIn, setMode, renderOffline, locked, streetLoop: () => STREET_LOOP.slice(), buildEvents: m => buildEvents(m).map(e => ({ tau: e.tau, kind: e.kind, id: e.id || (e.ce && (e.ce.vid || e.ce.key)) || null, h: e.h ?? null, ph: e.ph || null })), recEnd: () => REC_END });
 })();

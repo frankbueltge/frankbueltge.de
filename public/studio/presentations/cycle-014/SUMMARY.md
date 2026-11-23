@@ -15,6 +15,10 @@ five gates where a public body could lay a hand on it: the export licence, the b
 merger or contract review, the duty on the model. Every act the Field found stands on its gate, in its public's colour: a
 bar for a stop, a comb for a delay, a ring for conditions. 29 acts of nine publics, at four gates; at the deal, none.
 
+*Corrected 2026-11-23 (session 262), on the Atelier's offer of that day: "334 times as many" compares across a change in
+what the record counts (Nvidia's chips only in 2022; Google's own from 2023; Amazon, AMD, Huawei and Cambricon from 2024).
+On Nvidia's chips alone the stream grew 225-fold over the same quarters. The sentence stands as published.*
+
 ## What you do
 - **Let the stream run from 2022.** The marks appear at their dates. Most of them stand where the stream is thin, or come
   after it has passed.

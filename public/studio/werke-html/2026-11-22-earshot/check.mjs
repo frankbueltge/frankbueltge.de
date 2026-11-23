@@ -3,6 +3,9 @@
 // open the page at 1100 and 390 px, run it, stand in a room, and shoot it.
 // State 2: the same for the two cases as it happened (the Field's study 91 at its commit): every date, passage
 // and source against the Field's file, every hour the page places against its date, and the run of each case.
+// State 3 (the check, session 262): the Field's own check 92 at its commit (final codes, reconciled traces, the wiki's
+// first day) in place of the codes of studies 90 and 91; the listener's totals from the page's own sound; the doors shut
+// while a case runs; a room that hears of the deed lit cold.
 // Run with a static server on this folder:  python3 -m http.server 8771 --bind 127.0.0.1   then   node check.mjs
 import { readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -21,7 +24,17 @@ const ok = (c, what) => { if (c) pass++; else fails.push(what); };
 // the Field's file, at the commit this work built on, byte for byte
 const raw = Buffer.from(await (await fetch(D.source.url)).arrayBuffer());
 ok(createHash('sha256').update(raw).digest('hex') === D.source.sha256, 'signals90.json sha256');
-const F = JSON.parse(raw.toString('utf8')).signals;
+const F90 = JSON.parse(raw.toString('utf8')).signals;
+// state 3: the Field's check 92, each file at its pin
+const pinned = {};
+for (const [name, sha] of Object.entries(D.check.files)) {
+  const b = Buffer.from(await (await fetch(D.check.base + name)).arrayBuffer());
+  ok(createHash('sha256').update(b).digest('hex') === sha, name + ' sha256');
+  pinned[name] = JSON.parse(b.toString('utf8'));
+}
+const FINAL = Object.fromEntries(pinned['codes92.json'].signals.map(c => [c.id, c]));
+const F = F90.map(f => ({ ...f, ...FINAL[f.id], all_four: pinned['results92.json'].A.final.all_four.includes(f.id) }));
+ok(D.check.changed.length === pinned['codes92.json'].changed.length, 'every code the Field changed is applied');
 ok(F.length === S.length, 'same number of signals as the Field');
 for (const f of F) {
   const s = S.find(x => x.id === f.id);
@@ -37,7 +50,7 @@ for (const f of F) {
   else ok(!['street', 'others', 'maker'].includes(s.room), f.id + ' in a public body\'s room');
 }
 
-// figures, recounted from the Field's codes
+// figures, recounted from the Field's final codes
 const ev = F.filter(f => f.trigger === 'event short of harm' || f.trigger === 'harm');
 const numbered = ev.filter(f => typeof f.deadline_h === 'number');
 const at = S.filter(s => s.when.phase === 'at');
@@ -60,14 +73,21 @@ const expect = {
 };
 // the machine listener (listen.py): every passage heard, the totals the page prints recounted from its rows
 const L = JSON.parse(readFileSync(new URL('./listen.json', import.meta.url), 'utf8'));
-ok(L.rows.length === S.length && S.every(s => L.rows.some(r => r.id === s.id)), 'the listener heard every voice');
-const sum = k => L.rows.reduce((a, r) => a + r[k], 0);
-ok(sum('words') === L.words && sum('near') === L.near && sum('wall') === L.wall_words, 'listener totals are the sum of its rows');
+const LS = L.rows.filter(r => r.kind === 'signal'), LR = L.rows.filter(r => r.kind === 'record');
+const caseVids = D.cases.flatMap(c => c.events.filter(e => e.vid).map(e => e.vid));
+ok(LS.length === S.length && S.every(s => LS.some(r => r.id === s.id)), 'the listener heard every passage, on both sides');
+ok(LR.length === caseVids.length && caseVids.every(v => LR.some(r => r.id === v)), 'the listener heard every sentence of the record');
+const sum = (rows, k) => rows.reduce((a, r) => a + r[k], 0);
+ok(sum(LS, 'words') === L.words && sum(LS, 'near') === L.near && sum(LS, 'wall') === L.wall_words, 'listener totals are the sum of its rows');
+ok(sum(LR, 'words') === L.record_words && sum(LR, 'wall') === L.record_wall, 'record totals are the sum of its rows');
 ok(L.rows.every(r => r.near <= r.words && r.wall <= r.words), 'listener never recovers more words than a passage has');
+ok(/own audio graph/.test(L.wall), 'state 3: the wall is the page\'s own sound');
+const HW = {}; new Function('window', readFileSync(new URL('./heard.js', import.meta.url), 'utf8'))(HW);
+ok(L.rows.every(r => HW.EARSHOT_HEARD.rows[r.id] && HW.EARSHOT_HEARD.rows[r.id].wall.map(w => w[0]).join(' ') === r.heard_wall && HW.EARSHOT_HEARD.rows[r.id].near.map(w => w[0]).join(' ') === r.heard_near), 'the ear on the page writes what the listener heard');
 const fmt = n => n.toLocaleString('en-US');
-expect.listen_words = fmt(sum('words'));
-expect.listen_near = fmt(sum('near'));
-expect.listen_wall = fmt(sum('wall'));
+expect.ear_words = fmt(sum(LS, 'words')); expect.ear_near = fmt(sum(LS, 'near')); expect.ear_wall = fmt(sum(LS, 'wall'));
+expect.record_words = fmt(sum(LR, 'words')); expect.record_wall = fmt(sum(LR, 'wall'));
+expect.listen1_wall = fmt(L.state1.wall_words);
 // the five hours, as the work sounds them: the hour each passage names for itself
 const hoursWord = { 24: '24 hours', 72: '72 hours', 120: 'five days', 360: '15 days' };
 expect.numbered_list = at.map(s => s.when.h).sort((a, b) => a - b).map(h => hoursWord[h]).join(', ');
@@ -86,6 +106,8 @@ for (const s of at) {
 const req = F.filter(f => f.machine_or_person === 'required');
 ok(req.every(f => f.receiver === 'own record' && f.binding === 'voluntary' && f.public === 'not public'), 'who-acted records: own, voluntary, not public');
 ok(S.filter(s => s.when.phase === 'none').length === 17, 'seventeen set no hour and do not sound');
+ok(S.find(s => s.id === 'G7-3').room === 'street' && S.find(s => s.id === 'G7-3').when.phase === 'none', 'G7-3 in the street since the check, with no hour');
+ok(S.filter(s => s.id === 'CA3' || s.id === 'NY3').every(s => s.when.h === 2208 && s.deadline_h === 2208), 'quarterly clocks at 2208 h');
 ok(D.clock.murmur.every(id => F.find(f => f.id === id).public === 'aggregate only'), 'the murmur gathers only aggregate signals');
 const cn6 = F.find(f => f.id === 'CN6');
 ok(/at least six months/.test(cn6.quote) && S.find(s => s.id === 'CN6').retention_end_h === 4380, 'CN6 kept six months');
@@ -94,6 +116,9 @@ ok(/at least six months/.test(cn6.quote) && S.find(s => s.id === 'CN6').retentio
 const mraw = Buffer.from(await (await fetch(D.moved.url)).arrayBuffer());
 ok(createHash('sha256').update(mraw).digest('hex') === D.moved.sha256, 'moved91.json sha256');
 const M = JSON.parse(mraw.toString('utf8'));
+{ const w = pinned['results92.json'].wiki, mc = M.cases.find(c => c.id === 'wiki'), b = mc.events.find(e => e.key === 'began');
+  ok(mc.began === w.state2_began && b.date === w.state2_began, 'the wiki began on ' + w.state2_began + ' in study 91');
+  mc.began = b.date = w.began; b.src = w.began_src; mc.delays_days = w.delays_days; }
 const dayOf = iso => Math.round(Date.parse(iso + 'T00:00:00Z') / 864e5);
 for (const mc of M.cases) {
   const c = D.cases.find(x => x.id === mc.id);
@@ -129,14 +154,24 @@ const dd = (c, a, b) => { const k = M.cases.find(x => x.id === c); const ev = ke
 expect.wiki_first = dd('wiki', 'began', 'first_public'); expect.escape_first = dd('escape', 'began', 'first_public');
 expect.wiki_maker = dd('wiki', 'first_public', 'maker_public'); expect.escape_maker = dd('escape', 'first_public', 'maker_public');
 expect.wiki_body = dd('wiki', 'first_public', 'body'); expect.escape_body = dd('escape', 'first_public', 'body');
+expect.wiki_last = dd('wiki', 'ended', 'first_public'); expect.wiki_lasted = dd('wiki', 'began', 'ended');
+ok(expect.wiki_last === W.ended_to_first_public && expect.wiki_lasted === W.lasted, 'the wiki\'s span and its last edit agree with the Field\'s check');
+ok(expect.wiki_first === 103 && D.cases.find(c => c.id === 'wiki').began === '2026-05-24', 'the wiki counted from its first post, 24 May');
 ok(expect.wiki_first === W.began_to_first_public && expect.escape_first === X.began_to_first_public && expect.wiki_maker === W.first_public_to_maker && expect.escape_maker === X.first_public_to_maker && expect.wiki_body === W.first_public_to_body && expect.escape_body === X.first_public_to_body, 'delays recounted from the dates agree with the Field\'s');
-const MS = M.signals, due = MS.filter(m => m.due === 'due'), traced = due.filter(m => m.moved !== 'no trace found');
-const streetIds = S.filter(s => s.room === 'street').map(s => s.id);
+const MS = M.signals, due = MS.filter(m => m.due === 'due');
+const T = Object.fromEntries(pinned['traces92.json'].signals.map(t => [t.id, t]));
+ok(due.length === Object.keys(T).length && due.every(m => T[m.id]), 'the check holds every due signal');
+const traced = due.filter(m => T[m.id].moved !== 'no trace found');
+const streetIds = S.filter(s => s.room === 'street' && s.when.phase === 'before').map(s => s.id);
 expect.due = due.length; expect.traced = traced.length;
-expect.traced_body = traced.filter(m => m.hosts.includes('public body')).length;
+const onBody = traced.filter(m => T[m.id].hosts.includes('public body'));
+expect.traced_body = onBody.length;
+ok(JSON.stringify(onBody.map(m => m.id).sort()) === JSON.stringify([...pinned['results92.json'].B.on_public_body_site].sort()), 'on a public body\'s site: the Field\'s own list');
+expect.traced_body_closed = onBody.filter(m => FINAL[m.id].public === 'not public').length;
 expect.street_all = streetIds.length;
 expect.street_traced = traced.filter(m => streetIds.includes(m.id)).length;
-for (const m of MS) { const s = S.find(x => x.id === m.id); ok(s.due === m.due && s.moved === m.moved, m.id + ' due and trace as the Field coded them'); }
+expect.street_event = S.filter(s => s.room === 'street' && ['event short of harm', 'harm'].includes(FINAL[s.id].trigger)).length;
+for (const m of MS) { const s = S.find(x => x.id === m.id); ok(s.due === m.due && s.moved === (T[m.id] ? T[m.id].moved : m.moved), m.id + ' due and trace as the Field\'s check coded them'); }
 
 const browser = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
 for (const [w, h] of [[1100, 820], [390, 844]]) {
@@ -192,11 +227,30 @@ for (const [w, h] of [[1100, 820], [390, 844]]) {
   await p.waitForTimeout(4200);
   const r2 = await p.evaluate(() => { const s = window.__earshot; return { visitor: s.visitor, voices: s.voices.map(v => [v.id, v.room]), lit: s.lit.oes }; });
   ok(r2.visitor.oes === true && r2.voices.some(([id, room]) => id === 'CA6' && room === 'oes') && r2.lit > 0.5, w + 'px escape: someone from the street carries a report into the office, and its channel speaks');
+  // state 3: the doors are shut while a case runs, and open at today; the rooms the deed reaches light cold
+  const shut = await p.evaluate(() => { const s = window.__earshot; s.standIn('oes'); return { listener: s.listener, locked: s.locked(), woken: { ...s.woken } }; });
+  ok(shut.locked && shut.listener === 'street', w + 'px escape: a door clicked before today stays shut');
+  ok(shut.woken.oes === true && shut.woken.maker === true && !shut.woken.street, w + 'px escape: the office the report reached and the maker\'s room are lit cold');
+  await p.evaluate(() => window.__earshot.seek(window.__earshot.recEnd() + 1));
+  await p.waitForTimeout(400);
+  const open = await p.evaluate(() => { const s = window.__earshot; s.standIn('oes'); const l = s.listener; s.standIn('street'); return { listener: l, locked: s.locked() }; });
+  ok(!open.locked && open.listener === 'oes', w + 'px escape: at today the doors open');
   await p.evaluate(() => window.__earshot.setMode('paper', true));
+  const loop = await p.evaluate(() => window.__earshot.streetLoop());
+  ok(!loop.includes('G7-3') && loop.length === 10, w + 'px the street says its ten release texts; G7-3, with no hour, is set down');
+  await p.evaluate(() => window.__earshot.seek(window.__earshot.hToTau(73)));
+  await p.waitForTimeout(300);
+  const cold = await p.evaluate(() => ({ ...window.__earshot.woken }));
+  ok(cold.dfs === true && cold.maker === true && !cold.bis && !cold.street, w + 'px on paper at 73 h: New York\'s office has heard of the deed, a room of routine paper has not');
   ok(errs.length === 0, w + 'px no page errors: ' + errs.join(' | '));
   if (shot && w === 1100) {
-    await p.evaluate(() => window.__earshot.seek(window.__earshot.hToTau(360) - 0.4));
-    await p.waitForTimeout(4200);
+    // state 3: the escape as the quarterly summary is said, a machine's ear on, a shut door just tried
+    const sc = D.cases.find(c => c.id === 'escape').events.find(e => e.key === 'maker_scope');
+    await p.evaluate(() => { window.__earshot.setMode('escape', false); document.getElementById('ear').click(); });
+    await p.evaluate(h => window.__earshot.seek(window.__earshot.hToTau(h) - 0.2), sc.h);
+    await p.waitForTimeout(4600);
+    await p.evaluate(() => window.__earshot.standIn('eu'));
+    await p.waitForTimeout(400);
     await p.screenshot({ path: shot });
   }
   await p.close();
