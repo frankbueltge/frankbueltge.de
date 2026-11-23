@@ -1,0 +1,382 @@
+{
+ "check": 92,
+ "session": 290,
+ "date": "2026-11-23",
+ "cycle": 18,
+ "programme_step": 6,
+ "codebook_sha256": "97e115554e4d0285bd7319fdf28bd2a8d9cf43028d86044531c6bf26f9f40a52",
+ "predictions_sha256": "d8592954fa6e88061ead68760697f0c6c242f13659b6760995d85322e13a360c",
+ "A": {
+  "agreement": {
+   "kind": {
+    "kappa": 0.93,
+    "raw": 0.941,
+    "same": 48,
+    "of": 51
+   },
+   "unit": {
+    "kappa": 0.75,
+    "raw": 0.863,
+    "same": 44,
+    "of": 51
+   },
+   "trigger": {
+    "kappa": 0.84,
+    "raw": 0.882,
+    "same": 45,
+    "of": 51
+   },
+   "before_harm": {
+    "kappa": 0.77,
+    "raw": 0.941,
+    "same": 48,
+    "of": 51
+   },
+   "receiver": {
+    "kappa": 0.91,
+    "raw": 0.941,
+    "same": 48,
+    "of": 51
+   },
+   "public": {
+    "kappa": 0.96,
+    "raw": 0.98,
+    "same": 50,
+    "of": 51
+   },
+   "machine_or_person": {
+    "kappa": 1.0,
+    "raw": 1.0,
+    "same": 51,
+    "of": 51
+   },
+   "stranger": {
+    "kappa": 0.96,
+    "raw": 0.98,
+    "same": 50,
+    "of": 51
+   },
+   "clock": {
+    "kappa": 0.94,
+    "raw": 0.961,
+    "same": 49,
+    "of": 51
+   },
+   "deadline": {
+    "kappa": 0.81,
+    "raw": 0.882,
+    "same": 45,
+    "of": 51
+   }
+  },
+  "P152": {
+   "receiver": 0.91,
+   "public": 0.96,
+   "trigger": 0.84,
+   "unit": 0.75,
+   "machine_or_person": 1.0,
+   "held": true
+  },
+  "disagreements": 32,
+  "signals_differing": 22,
+  "kept_first": 26,
+  "kept_blind": 4,
+  "kept_neither": 2,
+  "changed": [
+   {
+    "id": "CA3",
+    "code": "deadline_h",
+    "from": 2190,
+    "to": 2208
+   },
+   {
+    "id": "G7-2",
+    "code": "unit",
+    "from": "named only",
+    "to": "defined"
+   },
+   {
+    "id": "G7-3",
+    "code": "receiver",
+    "from": "other party",
+    "to": "public"
+   },
+   {
+    "id": "NY3",
+    "code": "deadline_h",
+    "from": 2190,
+    "to": 2208
+   },
+   {
+    "id": "GPA1",
+    "code": "unit",
+    "from": "named only",
+    "to": "defined"
+   },
+   {
+    "id": "GPA3",
+    "code": "unit",
+    "from": "named only",
+    "to": "defined"
+   }
+  ],
+  "changed_signals": [
+   "CA3",
+   "G7-2",
+   "G7-3",
+   "GPA1",
+   "GPA3",
+   "NY3"
+  ],
+  "final": {
+   "unit": {
+    "quantity": 4,
+    "defined": 26,
+    "named only": 21
+   },
+   "receiver": {
+    "public body": 23,
+    "other party": 7,
+    "own record": 10,
+    "public": 11
+   },
+   "says_unit": 30,
+   "public_law": 6,
+   "events": 19,
+   "P148_n": 7,
+   "P148_awareness": 5,
+   "all_four": [],
+   "says_who_and_public": []
+  },
+  "extras": 20,
+  "extras_ruling": {
+   "missed": 12,
+   "folded": 4,
+   "out": 4
+  },
+  "extras_missed_by_reader": {
+   "A1": 3,
+   "A2": 6,
+   "A3": 3
+  }
+ },
+ "B": {
+  "B1": {
+   "kappa": 0.78,
+   "raw": 0.929,
+   "same": 39,
+   "of": 42,
+   "moved_first": 9,
+   "moved_blind_strict": 7,
+   "moved_blind_broad": 9,
+   "differ": [
+    {
+     "id": "EU4",
+     "first": "fact only",
+     "blind_strict": "no trace found",
+     "blind_broad": "fact only",
+     "reason_blind": "Commission spokesperson says an incident report from OpenAI was received; neither page names the AI Act or the AI Office, so strict = outside the instrument (a stretch to count under broad too, since broad as worded covers sender documents, not receiver statements). Both pages say agents (machines) acted. Brussels Times was empty by curl; read via fetch tool."
+    },
+    {
+     "id": "CA3",
+     "first": "content public",
+     "blind_strict": "no trace found",
+     "blind_broad": "content public",
+     "reason_blind": "The document names the receiver (Cal OES) but not SB 53 or the Act, so strict = outside the instrument; broad counts it as the public version of the quarterly report to the receiver."
+    },
+    {
+     "id": "G7-2",
+     "first": "fact only",
+     "blind_strict": "content public",
+     "blind_broad": "content public",
+     "reason_blind": "Org-level HAIP transparency reports in the OECD register; not per release, and the pages do not say they cover every significant release. Pages say 'HAIP', not 'Code of Conduct'."
+    }
+   ]
+  },
+  "new_traces": 3,
+  "new_signals_moved": 0,
+  "moved": 9,
+  "moved_code": {
+   "fact only": 2,
+   "content public": 7
+  },
+  "host": {
+   "intergovernmental": 3,
+   "public body": 2,
+   "third party": 1,
+   "sender": 3
+  },
+  "on_public_body_site": [
+   "EU4",
+   "CA3"
+  ],
+  "through_receiver": [
+   "EU4"
+  ],
+  "due_to_public_body": 16,
+  "moved_to_public_body": [
+   "EU4",
+   "COP1",
+   "CA3",
+   "CA6"
+  ],
+  "alarm": {
+   "EU4": "report reached",
+   "CA6": "report reached",
+   "G7-3": "listed after"
+  },
+  "P149": {
+   "published": 3,
+   "listed_after_outside": 2,
+   "ids": [
+    "EU4",
+    "CA6",
+    "G7-3"
+   ]
+  },
+  "P153": {
+   "strict": [
+    "EU4",
+    "CA3"
+   ],
+   "broad": [
+    "EU4",
+    "CA3"
+   ],
+   "held": false
+  }
+ },
+ "C": {
+  "deeds": 52,
+  "remeasured": 52,
+  "remeasured_agree": 52,
+  "earliest": {
+   "before": 1,
+   "at": 17,
+   "lands with it": 5,
+   "after": 19,
+   "closed by its own mending": 10
+  },
+  "mend": {
+   "before": 0,
+   "at": 10,
+   "lands with it": 2,
+   "after": 40
+  },
+  "first_hand": 34,
+  "first_hours_shifted": 16,
+  "mending_hours_max_diff": 1.35,
+  "closed_median_h": 6.25,
+  "no_exclusion_median_h": 4.24,
+  "no_exclusion_earlier": 7,
+  "no_exclusion_earlier_rows": [
+   [
+    72,
+    1
+   ],
+   [
+    95,
+    1
+   ],
+   [
+    116,
+    1
+   ],
+   [
+    118,
+    1
+   ],
+   [
+    144,
+    1
+   ],
+   [
+    151,
+    1
+   ],
+   [
+    159,
+    1
+   ]
+  ],
+  "no_exclusion_paths": [
+   "docs/decision-log.md",
+   "src/data/graph/graph.json"
+  ],
+  "P154": {
+   "earlier": 7,
+   "of": 52,
+   "uninformative": false,
+   "held": false
+  }
+ },
+ "wiki": {
+  "began": "2026-05-24",
+  "began_src": [
+   "https://collusion.wiki/",
+   "On May 24, 2026, the agents find DSEWiki"
+  ],
+  "state2_began": "2026-05-11",
+  "earliest_activity": {
+   "date": "2026-05-11",
+   "src": [
+    "https://collusion.wiki/",
+    "On May 11, 2026, we see the first internet activity that we can attribute to this cluster of agents."
+   ]
+  },
+  "maker_staff_viewed": {
+   "date": "2026-06-21",
+   "src": [
+    "https://collusion.wiki/",
+    "We believe OpenAI employees view the agents’ pages starting June 21st."
+   ],
+   "note": "the researchers' inference, from visits from addresses registered to the maker; the agents stopped posting on the wiki the next day"
+  },
+  "delays_days": {
+   "began_to_noticed": 9,
+   "began_to_first_public": 103,
+   "ended_to_first_public": 64,
+   "began_to_body": 106,
+   "lasted": 39,
+   "first_public_to_maker": 1,
+   "first_public_to_body": 3
+  },
+  "state2_delays_days": {
+   "began_to_noticed": 22,
+   "began_to_first_public": 116,
+   "ended_to_first_public": 64,
+   "first_public_to_maker": 1,
+   "first_public_to_body": 3,
+   "began_to_body": 119,
+   "lasted": 52
+  }
+ },
+ "P152": {
+  "receiver": 0.91,
+  "public": 0.96,
+  "trigger": 0.84,
+  "unit": 0.75,
+  "machine_or_person": 1.0,
+  "held": true
+ },
+ "P153": {
+  "strict": [
+   "EU4",
+   "CA3"
+  ],
+  "broad": [
+   "EU4",
+   "CA3"
+  ],
+  "held": false
+ },
+ "P154": {
+  "earlier": 7,
+  "of": 52,
+  "uninformative": false,
+  "held": false
+ },
+ "held": [
+  "P152"
+ ]
+}

@@ -1,0 +1,267 @@
+{
+ "what": "Check 92, part A: Cohen's kappa and raw agreement between study 90 (signals90.json) and the blind second coding (blind92.json), on all 51 signals; every disagreement listed.",
+ "agreement": {
+  "kind": {
+   "kappa": 0.93,
+   "raw": 0.941,
+   "same": 48,
+   "of": 51
+  },
+  "unit": {
+   "kappa": 0.75,
+   "raw": 0.863,
+   "same": 44,
+   "of": 51
+  },
+  "trigger": {
+   "kappa": 0.84,
+   "raw": 0.882,
+   "same": 45,
+   "of": 51
+  },
+  "before_harm": {
+   "kappa": 0.77,
+   "raw": 0.941,
+   "same": 48,
+   "of": 51
+  },
+  "receiver": {
+   "kappa": 0.91,
+   "raw": 0.941,
+   "same": 48,
+   "of": 51
+  },
+  "public": {
+   "kappa": 0.96,
+   "raw": 0.98,
+   "same": 50,
+   "of": 51
+  },
+  "machine_or_person": {
+   "kappa": 1.0,
+   "raw": 1.0,
+   "same": 51,
+   "of": 51
+  },
+  "stranger": {
+   "kappa": 0.96,
+   "raw": 0.98,
+   "same": 50,
+   "of": 51
+  },
+  "clock": {
+   "kappa": 0.94,
+   "raw": 0.961,
+   "same": 49,
+   "of": 51
+  },
+  "deadline": {
+   "kappa": 0.81,
+   "raw": 0.882,
+   "same": 45,
+   "of": 51
+  }
+ },
+ "disagreements": [
+  {
+   "id": "CN5",
+   "code": "kind",
+   "first": "incident",
+   "blind": "evaluation"
+  },
+  {
+   "id": "AS2",
+   "code": "kind",
+   "first": "evaluation",
+   "blind": "framework"
+  },
+  {
+   "id": "PC5",
+   "code": "kind",
+   "first": "log",
+   "blind": "channel"
+  },
+  {
+   "id": "AS1",
+   "code": "unit",
+   "first": "named only",
+   "blind": "defined"
+  },
+  {
+   "id": "G7-2",
+   "code": "unit",
+   "first": "named only",
+   "blind": "defined"
+  },
+  {
+   "id": "BIS1",
+   "code": "unit",
+   "first": "quantity",
+   "blind": "defined"
+  },
+  {
+   "id": "BIS2",
+   "code": "unit",
+   "first": "quantity",
+   "blind": "defined"
+  },
+  {
+   "id": "BIS3",
+   "code": "unit",
+   "first": "quantity",
+   "blind": "defined"
+  },
+  {
+   "id": "GPA1",
+   "code": "unit",
+   "first": "named only",
+   "blind": "defined"
+  },
+  {
+   "id": "GPA3",
+   "code": "unit",
+   "first": "named only",
+   "blind": "defined"
+  },
+  {
+   "id": "COP3",
+   "code": "trigger",
+   "first": "event short of harm",
+   "blind": "harm"
+  },
+  {
+   "id": "CA5",
+   "code": "trigger",
+   "first": "event short of harm",
+   "blind": "harm"
+  },
+  {
+   "id": "CN8",
+   "code": "trigger",
+   "first": "before deployment",
+   "blind": "schedule"
+  },
+  {
+   "id": "PC2",
+   "code": "trigger",
+   "first": "before deployment",
+   "blind": "schedule"
+  },
+  {
+   "id": "NY5",
+   "code": "trigger",
+   "first": "event short of harm",
+   "blind": "harm"
+  },
+  {
+   "id": "BIS2",
+   "code": "trigger",
+   "first": "before deployment",
+   "blind": "event short of harm"
+  },
+  {
+   "id": "COP3",
+   "code": "before_harm",
+   "first": true,
+   "blind": false
+  },
+  {
+   "id": "CA5",
+   "code": "before_harm",
+   "first": true,
+   "blind": false
+  },
+  {
+   "id": "NY5",
+   "code": "before_harm",
+   "first": true,
+   "blind": false
+  },
+  {
+   "id": "COP5",
+   "code": "receiver",
+   "first": "own record",
+   "blind": "public body"
+  },
+  {
+   "id": "AS1",
+   "code": "receiver",
+   "first": "other party",
+   "blind": "public body"
+  },
+  {
+   "id": "G7-3",
+   "code": "receiver",
+   "first": "other party",
+   "blind": "public"
+  },
+  {
+   "id": "EU1",
+   "code": "public",
+   "first": "public",
+   "blind": "not public"
+  },
+  {
+   "id": "EU1",
+   "code": "stranger",
+   "first": "yes",
+   "blind": "no"
+  },
+  {
+   "id": "CA8",
+   "code": "clock",
+   "first": "none",
+   "blind": "schedule"
+  },
+  {
+   "id": "G7-4",
+   "code": "clock",
+   "first": "none",
+   "blind": "schedule"
+  },
+  {
+   "id": "EU1",
+   "code": "deadline",
+   "first": 336.0,
+   "blind": "prompt"
+  },
+  {
+   "id": "CA3",
+   "code": "deadline",
+   "first": 2190.0,
+   "blind": 2208.0
+  },
+  {
+   "id": "CA8",
+   "code": "deadline",
+   "first": "none",
+   "blind": 744.0
+  },
+  {
+   "id": "NY3",
+   "code": "deadline",
+   "first": 2190.0,
+   "blind": 2208.0
+  },
+  {
+   "id": "BIS1",
+   "code": "deadline",
+   "first": 24.0,
+   "blind": 744.0
+  },
+  {
+   "id": "BIS3",
+   "code": "deadline",
+   "first": 1104.0,
+   "blind": 9864.0
+  }
+ ],
+ "P152": {
+  "receiver": 0.91,
+  "public": 0.96,
+  "trigger": 0.84,
+  "unit": 0.75,
+  "machine_or_person": 1.0,
+  "held": true
+ }
+}

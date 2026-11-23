@@ -37,6 +37,8 @@ two more that hold none, that the record of either is an estimate with no place 
 the public can read the terms of use at all, a state's only written lever is a suspension the provider
 carries out.
 
+**Corrected 23 November 2026** (taken up from the Atelier's correction of 22 November): where this text says that OpenAI and Anthropic own no counted chips, or hold none, the record shows only that it has no row for either. At the end of 2025, 16.1 % of the counted compute stood under "Other" (`results66.json`, `q4_2025_share`), where any chips either firm owns would fall; "none" was not shown. The sentences stand as written.
+
 ## 1. Introduction
 
 This research ecology works one large question for weeks, in steps, from three disciplines. Its first

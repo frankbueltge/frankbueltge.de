@@ -1,0 +1,878 @@
+{
+ "what": "Check 92, part B2: the pages study 91 recorded as unsearched, searched by two convened search agents on 2026-11-23 (the US instruments; the EU, Korea and the international texts, the second agent's work written as two files), as each wrote its log. Every candidate is a search agent's report: only the traces the conductor opened and checked are counted (traces92.json, quotes92.json). Some passages came from a fetch tool's summary, not from the page, as the logs say.",
+ "searched_on": "2026-11-23",
+ "groups": [
+  {
+   "agent": "US",
+   "searched_on": "2026-11-23",
+   "log": [
+    {
+     "query_or_page": "Cal OES Transparency in Frontier AI Act reporting page (caloes.ca.gov .../transparency-in-frontier-ai-act-reporting/)",
+     "tool": "page fetch",
+     "result": "Opened. Describes portal for critical safety incidents and periodic internal-use summaries. No date on page, no counts of reports received, no mention of an annual report."
+    },
+    {
+     "query_or_page": "Cal OES newsroom / press / director statements on reports received; hearing testimony",
+     "tool": "web search",
+     "result": "Three searches. No Cal OES press release, count or statement of reports received found. Only secondary: Carnegie (2026-11-10) says OES has begun hiring for SB 53 roles; no counts."
+    },
+    {
+     "query_or_page": "oag.ca.gov/sb53 (Attorney General)",
+     "tool": "page fetch",
+     "result": "Opened. Describes employee-report channel (online form, category 'Catastrophic risks in AI foundation models - employee reports (SB 53)') and future annual report. Only date on page: '(c) 2026 DOJ' footer; search index metadata 2025-12-31. No statement on reports received or enforcement."
+    },
+    {
+     "query_or_page": "AG Bonta SB 53 press release / enforcement action",
+     "tool": "web search",
+     "result": "No press release or enforcement action found. A law-firm summary (Jenner) mentions AG plans to hire AI expert; not opened."
+    },
+    {
+     "query_or_page": "Anthropic news/compliance-framework-SB53",
+     "tool": "page fetch",
+     "result": "Opened. Dated Dec 19, 2025. Frontier Compliance Framework published. No mention of Cal OES, internal-use summaries or incident reports."
+    },
+    {
+     "query_or_page": "Anthropic system-cards index (anthropic.com/system-cards)",
+     "tool": "page fetch",
+     "result": "Opened. Lists Fable 5.2 and Mythos 5.2 (Nov 2026), Haiku 5.5 (Oct 2026), Sonnet 5.5 and Opus 5.5 (Sep 2026), etc. Index itself does not mention SB 53."
+    },
+    {
+     "query_or_page": "Claude Fable 5.2 and Mythos 5.2 system card PDF (assets.claude.com/27d60918...pdf), converted to text and searched",
+     "tool": "page fetch",
+     "result": "Dated November 9, 2026. Names SB 53 once (FCF is compliance framework). Does not call the card a transparency report ('transparency' occurs only in that one sentence)."
+    },
+    {
+     "query_or_page": "Claude Mythos Preview system card (April 7, 2026)",
+     "tool": "web search",
+     "result": "Seen in search excerpt only (covers 'Frontier Compliance Framework'); full text not searched for SB 53. Carnegie says treated as deployed under SB 53 and system card serves as transparency report (third-party reading)."
+    },
+    {
+     "query_or_page": "OpenAI GPT-6 Astra system card (deploymentsafety.openai.com/gpt-6-astra and PDF), converted to text and searched",
+     "tool": "page fetch",
+     "result": "Dated September 3, 2026. No occurrence of SB 53, TFAIA, Transparency in Frontier, California, 'transparency report' or 22757 in the PDF text."
+    },
+    {
+     "query_or_page": "CSA research note on SB 53 / GPT-6 Astra (labs.cloudsecurityalliance.org)",
+     "tool": "page fetch",
+     "result": "Opened. Dated 2026-09-05. States the Astra card 'does not explicitly cite SB 53'."
+    },
+    {
+     "query_or_page": "Gemini 3.7 Flash model card (deepmind.google/models/model-cards/gemini-3-7-flash/)",
+     "tool": "page fetch",
+     "result": "Published 13 August 2026. No mention of SB 53/TFAIA/California/transparency report."
+    },
+    {
+     "query_or_page": "Gemini 3.7 Flash FSF report and Gemini 4 Argon FSF report (October 2026), PDFs searched",
+     "tool": "page fetch",
+     "result": "No mention of SB 53, TFAIA or California in either."
+    },
+    {
+     "query_or_page": "Amazon Frontier Model Safety Framework update (cdn.amazon.science PDF, Sept 17, 2026)",
+     "tool": "page fetch",
+     "result": "Opened and searched. Does not name SB 53/TFAIA/California; says only 'relevant laws and regulations'."
+    },
+    {
+     "query_or_page": "Microsoft Frontier Governance Framework, February 2026 edition (PDF)",
+     "tool": "page fetch",
+     "result": "Opened. Names TFAIA twice (scope of assessments; change log)."
+    },
+    {
+     "query_or_page": "xAI Frontier Artificial Intelligence Framework, edition last updated Dec 30, 2025 (data.x.ai PDF)",
+     "tool": "page fetch",
+     "result": "Opened. States it complies with TFAIA. Note: a later edition (June 30, 2026 per third-party inventory) exists and was not opened."
+    },
+    {
+     "query_or_page": "OpenAI public version of quarterly internal-use catastrophic-risk summary (cdn.openai.com/trust-and-transparency/oai_internal-use-catastrophic-risk-assessments_2026_2.pdf)",
+     "tool": "page fetch",
+     "result": "Opened (PDF text). Says it is the public version of OpenAI's quarterly report to Cal OES; period June 4 to September 4, 2026; file title carries 'Sept 26: New ver'. Does not name SB 53 in the text (names the Office of Emergency Services)."
+    },
+    {
+     "query_or_page": "OpenAI slides, Assembly Privacy and Consumer Protection hearing, Oct 27, 2026 (apcp.assembly.ca.gov PDF)",
+     "tool": "page fetch",
+     "result": "Opened (PDF text). States OpenAI submitted its quarterly CalOES report and published a version."
+    },
+    {
+     "query_or_page": "Assembly Privacy Committee background paper, SB 53 Outcomes Review hearing (Oct 27, 2026)",
+     "tool": "page fetch",
+     "result": "Opened (PDF text). Hearing date Tuesday, October 27, 2026. No count of reports received by CalOES found."
+    },
+    {
+     "query_or_page": "GovOps report 'AI Safety in 2026 and Beyond' (govops.ca.gov, cover date November 16, 2026)",
+     "tool": "page fetch",
+     "result": "Opened (PDF text). Says OpenAI told, per its quarterly assessment, that models in the July 2026 Hugging Face incident fell outside SB 53 scope so reporting was not mandatory. No count of reports received."
+    },
+    {
+     "query_or_page": "California Department of Technology TFAIA report (cdt.ca.gov, 2026-11-18)",
+     "tool": "page fetch",
+     "result": "Opened (PDF text). Definitions review; no counts of reports; this is the state Department of Technology, not the Center for Democracy & Technology."
+    },
+    {
+     "query_or_page": "Carnegie Endowment 'Trust but Verify' (Nov 10, 2026; PDF)",
+     "tool": "page fetch",
+     "result": "Opened. Third party. No count of OES receipts; OES hiring; OpenAI Astra card cited as example of evidence layer; Mythos Preview treated as deployed so card required."
+    },
+    {
+     "query_or_page": "Center for Democracy & Technology analysis PDF of SB 53 compliance",
+     "tool": "web search",
+     "result": "Two searches. No such CDT document found."
+    },
+    {
+     "query_or_page": "OpenAI Frontier Governance Framework page; Google FSF v3.1; Meta Superintelligence Scaling Framework v2.1; Amazon/others' own blog statements",
+     "tool": "web search",
+     "result": "Seen only through third-party inventories (superintelligencelicensing.com, vorplabs.com, singularityplus.com); the framework pages themselves not opened."
+    },
+    {
+     "query_or_page": "regulations.gov docket BIS-2026-0628",
+     "tool": "page fetch",
+     "result": "HTTP 403, could not open. Docket ID read from the Federal Register text."
+    },
+    {
+     "query_or_page": "Federal Register 2026-23529 (govinfo.gov HTML, 91 FR, Nov 19, 2026) and BIS press release (Nov 16, 2026)",
+     "tool": "page fetch",
+     "result": "Opened. Rule text contains the notice-to-recipient duty. BIS press release says nothing about notices, reports, or licences."
+    },
+    {
+     "query_or_page": "public notice that a BIS remote-access notice or report was filed",
+     "tool": "web search",
+     "result": "Two searches. Only law-firm descriptions of the duty; no trace that any notice was sent."
+    }
+   ],
+   "candidates": [
+    {
+     "signal": "CA2",
+     "url": "https://assets.claude.com/27d60918d218125e7504bc7354c4b4626ec56b11.pdf",
+     "date": "November 9, 2026",
+     "date_where": "cover page of the PDF",
+     "who": "Anthropic, System Card: Claude Fable 5.2 and Claude Mythos 5.2",
+     "host": "sender",
+     "names_instrument": true,
+     "passage": "The FCF is our compliance framework for applicable regimes, including California's Transparency in Frontier AI Act (SB 53) and the EU AI Act's General-Purpose AI Code of Practice."
+    },
+    {
+     "signal": "CA2",
+     "url": "https://deploymentsafety.openai.com/gpt-6-astra",
+     "date": "Published September 3, 2026",
+     "date_where": "page header",
+     "who": "OpenAI, GPT-6 Astra System Card",
+     "host": "sender",
+     "names_instrument": false,
+     "passage": "No passage: the card, PDF text searched, never names SB 53, TFAIA or California."
+    },
+    {
+     "signal": "CA2",
+     "url": "https://labs.cloudsecurityalliance.org/research/csa-research-note-sb53-frontier-disclosure-critical-threshol/",
+     "date": "2026-09-05",
+     "date_where": "page date field",
+     "who": "Cloud Security Alliance AI Safety Initiative",
+     "host": "third party",
+     "names_instrument": true,
+     "passage": "the September 3, 2026 system card fulfills the substance of that obligation, though it does not explicitly cite SB 53 or frame itself as a statutory compliance filing."
+    },
+    {
+     "signal": "CA2",
+     "url": "https://deepmind.google/models/model-cards/gemini-3-7-flash/",
+     "date": "13 August 2026",
+     "date_where": "page header 'Published 13 August 2026'",
+     "who": "Google DeepMind, Gemini 3.7 Flash model card",
+     "host": "sender",
+     "names_instrument": false,
+     "passage": "No passage: page does not mention SB 53, TFAIA or California."
+    },
+    {
+     "signal": "CA3",
+     "url": "https://cdn.openai.com/trust-and-transparency/oai_internal-use-catastrophic-risk-assessments_2026_2.pdf",
+     "date": "June 4 to September 4, 2026 (period); file title 'Sept 26: New ver'",
+     "date_where": "page 1 and title metadata",
+     "who": "OpenAI",
+     "host": "sender",
+     "names_instrument": false,
+     "passage": "This is a public version of OpenAI's quarterly report to the California Office of Emergency Services about our assessments of catastrophic risk from internal deployment of our AI models."
+    },
+    {
+     "signal": "CA3",
+     "url": "https://apcp.assembly.ca.gov/system/files/2026-10/morgan-dwyer-openai-sb-53-outcomes-review-hearing.pdf",
+     "date": "October 27, 2026",
+     "date_where": "slide 1 and committee hearing paper date",
+     "who": "OpenAI (Dr. Morgan Dwyer) slides posted by the Assembly Privacy and Consumer Protection Committee",
+     "host": "public body",
+     "names_instrument": true,
+     "passage": "We submitted our quarterly CalOES report and published a version."
+    },
+    {
+     "signal": "CA1",
+     "url": "https://data.x.ai/2025-12-31-xai-frontier-artificial-intelligence-framework.pdf",
+     "date": "December 30, 2025",
+     "date_where": "cover line 'Last updated'",
+     "who": "xAI",
+     "host": "sender",
+     "names_instrument": true,
+     "passage": "This FAIF complies with California's Transparency in Frontier Artificial Intelligence Act (the \"TFAIA\", California Business and Professions Code section 22757.10 et seq.)."
+    },
+    {
+     "signal": "CA1",
+     "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Frontier-Governance-Framework-Feb-2026.pdf",
+     "date": "February 2026",
+     "date_where": "page footer and change log",
+     "who": "Microsoft",
+     "host": "sender",
+     "names_instrument": true,
+     "passage": "A leading indicator assessment is run on any model that is in scope for frontier model requirements under applicable laws, such as the EU AI Act, California's Transparency in Frontier AI Act (TFAIA)"
+    },
+    {
+     "signal": "CA1",
+     "url": "https://anthropic.com/news/compliance-framework-SB53",
+     "date": "Dec 19, 2025",
+     "date_where": "page date",
+     "who": "Anthropic",
+     "host": "sender",
+     "names_instrument": true,
+     "passage": "Our Frontier Compliance Framework (FCF) is now available to the public"
+    },
+    {
+     "signal": "CA1",
+     "url": "https://cdn.amazon.science/a0/4f/bca5cb32495280835d9370a466b7/amazon-fmsf-9-2026.pdf",
+     "date": "September 17, 2026",
+     "date_where": "search index metadata; third-party inventory also gives 2026-09-17",
+     "who": "Amazon",
+     "host": "sender",
+     "names_instrument": false,
+     "passage": "we have reviewed and updated this Framework to reflect our current practices and account for relevant laws and regulations."
+    },
+    {
+     "signal": "CA6",
+     "url": "https://www.caloes.ca.gov/office-of-the-director/operations/homeland-security/california-cybersecurity-integration-center/transparency-in-frontier-ai-act-reporting/",
+     "date": "undated",
+     "date_where": "page shows only 'Copyright 2026 State of California'",
+     "who": "California Governor's Office of Emergency Services",
+     "host": "public body",
+     "names_instrument": true,
+     "passage": "members of the public and frontier developers can confidentially submit the following reports required under the Transparency in Frontier Artificial Intelligence Act. * Critical safety incidents."
+    },
+    {
+     "signal": "CA7",
+     "url": "https://www.oag.ca.gov/sb53",
+     "date": "undated; index metadata 2025-12-31",
+     "date_where": "page shows only '(c) 2026 DOJ' in footer",
+     "who": "California Attorney General",
+     "host": "public body",
+     "names_instrument": true,
+     "passage": "please complete our online contact form and select the 'Catastrophic risks in AI foundation models - employee reports (SB 53)' category."
+    },
+    {
+     "signal": "BIS2",
+     "url": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/html/2026-23529.htm",
+     "date": "November 19, 2026",
+     "date_where": "Federal Register header, Vol. 91, No. 222",
+     "who": "Department of Commerce, Bureau of Industry and Security",
+     "host": "public body",
+     "names_instrument": true,
+     "passage": "the exporter, reexporter, or transferor must inform the recipient that a BIS authorization is required if the item or items will be used at a data center to provide access to more than 12,000,000 'aggregate TPP'"
+    }
+   ],
+   "body_statements": [
+    {
+     "body": "California Government Operations Agency (GovOps)",
+     "url": "https://www.govops.ca.gov/wp-content/uploads/sites/11/2026/11/FINAL_-AI-Safety-in-2026-and-Beyond-v2.pdf",
+     "date": "November 16, 2026 (cover)",
+     "statement": "Report says: 'None of the models involved in this incident fell within the scope of SB 53, according to OpenAI, meaning that existing California law did not make reporting this incident mandatory.' (the July 2026 Hugging Face incident). The report cites OpenAI's quarterly summary. No count of Cal OES receipts."
+    },
+    {
+     "body": "California Assembly Privacy and Consumer Protection Committee",
+     "url": "https://apcp.assembly.ca.gov/system/files/2026-10/sb-53-or-background-paper.pdf",
+     "date": "hearing Tuesday, October 27, 2026",
+     "statement": "Hearing background paper; no count of reports or summaries received by CalOES found; the hearing was to examine whether SB 53 applies to the July 2026 incidents."
+    },
+    {
+     "body": "California Governor's Office of Emergency Services",
+     "url": "https://www.caloes.ca.gov/office-of-the-director/operations/homeland-security/california-cybersecurity-integration-center/transparency-in-frontier-ai-act-reporting/",
+     "date": "undated",
+     "statement": "Page states no number of reports received; says only the portal exists for incident reports and periodic summaries."
+    },
+    {
+     "body": "California Attorney General",
+     "url": "https://www.oag.ca.gov/sb53",
+     "date": "undated",
+     "statement": "Page states no number of employee reports received and no enforcement action; says the AG must produce an annual report on employee reports."
+    },
+    {
+     "body": "Carnegie Endowment (third party, not a public body)",
+     "url": "https://carnegieendowment.org/research/2026/11/trust-but-verify-implementing-frontier-ai-policy-in-california-and-beyond",
+     "date": "Published on Nov 10, 2026",
+     "statement": "Says OES is building the reporting mechanism and has begun hiring; says internal-use summaries are confidential. No count. Neither July 2026 incident 'would apparently have qualified as a critical safety incident'."
+    },
+    {
+     "body": "US Department of Commerce, BIS",
+     "url": "https://www.bis.gov/press-release/bis-issues-rule-addressing-remote-access-american-super-intelligence-technology",
+     "date": "November 16, 2026",
+     "statement": "Press release says nothing about notices sent to recipients, reports filed or licences issued."
+    }
+   ],
+   "unopened": [
+    "https://www.regulations.gov/docket/BIS-2026-0628 (HTTP 403)",
+    "OpenAI Frontier Governance Framework page (openai.com/index/openai-frontier-governance-framework/), known only via a third-party guide (superintelligencelicensing.com, updated Nov 2, 2026) quoting it as saying the FGF is its TFAIA framework; also 'Transparency Reports under the TFAIA' quote from casrai.org; not verified at source",
+    "Google DeepMind Frontier Safety Framework v3.1 (17 Apr 2026) full text; Meta Superintelligence Scaling Framework v2.1 (Oct 2, 2026); xAI June 30, 2026 edition; Meta Muse Spark Safety and Preparedness Report",
+    "Claude Mythos Preview system card (Apr 7, 2026) and Anthropic's Sonnet 5.5, Opus 5.5, Fable 5.1/Mythos 5.1 and Haiku 5.5 cards not searched for SB 53 text",
+    "xAI Grok model cards 2026: no card located",
+    "OpenAI GPT-6 Astra system card text only partly read through the page fetch; PDF text fully searched",
+    "Jenner & Block alert on AG hiring plans; Lawfare 'When Reporting an AI Security Incident Is Not Mandatory' (Jul 24, 2026)",
+    "Cal OES newsroom pages: none located by search, so none opened",
+    "eCFR 15 CFR 744.24 (redirect to an unblock page); read the same text in the Federal Register HTML instead"
+   ],
+   "still_unsearched": "No Center for Democracy & Technology SB 53 compliance PDF was found. No Cal OES press page, annual or interim report, or official count was found; Cal OES statements in the press or at the Oct 27, 2026 hearing (live testimony, transcript) were not found. xAI and Meta 2026 model cards, Anthropic's 2026 cards other than Fable 5.2/Mythos 5.2, and OpenAI/Google/Meta framework pages at source were not read. Developer incident-report statements beyond OpenAI/Hugging Face (Anthropic, Meta disclosures of summer 2026 incidents) not opened. Whether any BIS notice to a recipient was sent is not visible anywhere searched; regulations.gov docket not readable.",
+   "group": "the US instruments"
+  },
+  {
+   "agent": "EUKR",
+   "searched_on": "2026-11-23",
+   "log": [
+    {
+     "query_or_page": "과학기술정보통신부 인공지능기본법 시행 2026 보도자료 연산량 기준 안전성 확보 결과 제출",
+     "tool": "web search",
+     "result": "No MSIT release on compute-threshold notifications or submitted safety results; only background (law in force 2026-01-22, decree amendments, 2026-11-16 policy remarks)."
+    },
+    {
+     "query_or_page": "과기정통부 AI 기본법 고성능 AI 안전성 확보 의무 연산량 10의26승 신고 사업자 현황 2026",
+     "tool": "web search",
+     "result": "No count of submitting operators found. An Oct 2025 press report quotes an MSIT official that no domestic service model is at the level yet (not opened)."
+    },
+    {
+     "query_or_page": "another search service search: MSIT AI Basic Act high-performance AI 10^26 notification / 안전성 확보 조치 결과 제출",
+     "tool": "web search",
+     "result": "MSIT English page, law-firm notes and the draft safety notice (고시 제정안, 2026-07-08 additional notice per a blog) found; no count or notice of any submission."
+    },
+    {
+     "query_or_page": "https://www.msit.go.kr/eng/bbs/view.do?bbsSeqNo=42&mId=4&nttSeqNo=1214&sCode=eng",
+     "tool": "page fetch",
+     "result": "Opened (first 100,000 of 321,464 characters read). Safety obligation criteria (>10^26 FLOPs) and a grace period of at least one year with investigations and penalties deferred. No count of notifications or submissions in the part read."
+    },
+    {
+     "query_or_page": "https://zdnet.co.kr/view?no=20261116144303",
+     "tool": "page fetch",
+     "result": "Opened. 2026-11-16 article quoting the MSIT AI policy director; grace period of at least one year for fines. No compute-threshold notification count."
+    },
+    {
+     "query_or_page": "https://www.law.go.kr/법령/인공지능발전과신뢰기반조성등에관한기본법",
+     "tool": "page fetch",
+     "result": "Opened, but the article text did not load (only title, revision 법률 제21311호 2026.1.20 일부개정, menus). Article 32/40 wording not read from law.go.kr."
+    },
+    {
+     "query_or_page": "https://www.mofa.go.kr/upload/cntnts/www/인공지능 발전과 신뢰 기반 조성 등에 관한 기본법 국문.pdf",
+     "tool": "page fetch",
+     "result": "Too many redirects; not read."
+    },
+    {
+     "query_or_page": "https://ai-act-service-desk.ec.europa.eu/en/faq",
+     "tool": "page fetch",
+     "result": "Opened. No list of systemic-risk models, no counts, no incident-report statement."
+    },
+    {
+     "query_or_page": "https://digital-strategy.ec.europa.eu/en/factpages/general-purpose-ai-obligations-under-ai-act",
+     "tool": "page fetch",
+     "result": "Opened. Describes duties and the notification mailbox; no list, no counts; last updated 1 Aug 2025."
+    },
+    {
+     "query_or_page": "https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai",
+     "tool": "page fetch",
+     "result": "Opened. Lists 22 signatories incl. Amazon, Cohere, Google, IBM, Microsoft, Mistral AI, OpenAI, Anthropic; xAI Safety and Security chapter only. No counts of frameworks or model reports."
+    },
+    {
+     "query_or_page": "https://digital-strategy.ec.europa.eu/en/news/special-meeting-ai-scientific-panel",
+     "tool": "page fetch",
+     "result": "Opened. Commission news of 12 Oct 2026 (updated 13 Oct): AI Office has requested and received serious incident reports; no numbers."
+    },
+    {
+     "query_or_page": "Reuters 7 Sept 2026 OpenAI incident report German website",
+     "tool": "web search",
+     "result": "Reuters piece found only as syndicated copies (The Star, Euronext). reuters.com blocked for search and fetch."
+    },
+    {
+     "query_or_page": "https://www.thestar.com.my/tech/tech-news/2026/09/07/openai-has-sent-eu-incident-report-on-hijacked-german-website-commission-says",
+     "tool": "page fetch",
+     "result": "Opened. Reuters copy, 7 Sep 2026, Mateusz Rabiega; Commission spokesperson confirms receipt of OpenAI report."
+    },
+    {
+     "query_or_page": "https://thenextweb.com/news/openai-eu-incident-report-german-wiki",
+     "tool": "page fetch",
+     "result": "Opened. 7 Sep 2026, names Article 55 and the Code."
+    },
+    {
+     "query_or_page": "https://www.ibtimes.co.uk/openai-eu-scrutiny-dsewiki-incident-1818384",
+     "tool": "page fetch",
+     "result": "Opened. 7 Sep 2026, Dani Oh; Commission statements."
+    },
+    {
+     "query_or_page": "https://oecd.ai/en/incidents/2026-10-09-0587",
+     "tool": "page fetch",
+     "result": "Opened. OECD.AI incident listing, 9 Oct 2026; headlines only."
+    },
+    {
+     "query_or_page": "https://2eu.brussels/en/news/ai-office-seeks-information-from-developers-after-loss-of-control-incidents-involving-advanced-models",
+     "tool": "page fetch",
+     "result": "Opened. 13 Oct 2026 report of the Commission statement."
+    },
+    {
+     "query_or_page": "https://deepmind.google/frontier-safety/",
+     "tool": "page fetch",
+     "result": "Opened. Frontier Safety Framework v3.1 (17 Apr 2026) and FSF reports for named models; does not name the Code, a Model Report, or incident reporting."
+    },
+    {
+     "query_or_page": "https://cdn-dynmedia-1.microsoft.com/.../Frontier-Governance-Framework-Feb-2026.pdf",
+     "tool": "page fetch",
+     "result": "Opened but PDF text not decodable by the fetch tool; could not check whether it names the Code."
+    },
+    {
+     "query_or_page": "Amazon / Mistral / Cohere / IBM framework + Code of Practice",
+     "tool": "web search",
+     "result": "Only the Commission signatory list and old (2025) frameworks surfaced; their own pages not opened."
+    },
+    {
+     "query_or_page": "one search service's page extraction (several URLs)",
+     "tool": "extraction service",
+     "result": "Failed, HTTP 432 plan usage limit."
+    }
+   ],
+   "candidates": [
+    {
+     "signal": "EU4 / COP3",
+     "url": "https://digital-strategy.ec.europa.eu/en/news/special-meeting-ai-scientific-panel",
+     "date": "2026-10-12 (updated 2026-10-13)",
+     "date_where": "page header per fetch summary",
+     "who": "European Commission",
+     "host": "public body",
+     "names_instrument": false,
+     "passage": "The AI Office has already requested and received serious incident reports ... sent requests for information on security practices. (fetch-tool quote of two fragments; page does not name the Act in the quoted sentences)"
+    },
+    {
+     "signal": "EU4",
+     "url": "https://www.thestar.com.my/tech/tech-news/2026/09/07/openai-has-sent-eu-incident-report-on-hijacked-german-website-commission-says",
+     "date": "2026-09-07",
+     "date_where": "article header (The Star, 6:58 PM MYT); Reuters copy",
+     "who": "Reuters (Mateusz Rabiega), republished by The Star",
+     "host": "third party",
+     "names_instrument": false,
+     "passage": "Commission spokesperson Thomas Regnier: 'Incident reports are not just a tick-box'; 'Beyond the incident report we remain in close contact with OpenAI.' (as summarised by fetch tool; no Article 55 in article)"
+    },
+    {
+     "signal": "EU4 / COP3",
+     "url": "https://thenextweb.com/news/openai-eu-incident-report-german-wiki",
+     "date": "2026-09-07",
+     "date_where": "article header, 11:48 am GMT",
+     "who": "TNW (Ana-Maria Stanciuc)",
+     "host": "third party",
+     "names_instrument": true,
+     "passage": "Regnier confirmed OpenAI submitted an incident report over the German wiki, would not say when. Article notes OpenAI is a code signatory; no enforcement step announced. (fetch-tool paraphrase)"
+    },
+    {
+     "signal": "EU4",
+     "url": "https://www.ibtimes.co.uk/openai-eu-scrutiny-dsewiki-incident-1818384",
+     "date": "2026-09-07",
+     "date_where": "article header, 11:05 PM BST",
+     "who": "IBTimes UK (Dani Oh)",
+     "host": "third party",
+     "names_instrument": true,
+     "passage": "'You have to be quite precise and accurate about the measures you are aiming to take.' Commission has not said whether it is a serious incident under Article 55. (partly paraphrase)"
+    },
+    {
+     "signal": "EU4",
+     "url": "https://2eu.brussels/en/news/ai-office-seeks-information-from-developers-after-loss-of-control-incidents-involving-advanced-models",
+     "date": "2026-10-13",
+     "date_where": "article header",
+     "who": "2eu.brussels",
+     "host": "third party",
+     "names_instrument": true,
+     "passage": "The European AI Office has requested and received serious-incident reports and sought information from developers about their security practices, according to the European Commission."
+    },
+    {
+     "signal": "EU4",
+     "url": "https://oecd.ai/en/incidents/2026-10-09-0587",
+     "date": "2026-10-09",
+     "date_where": "incident listing",
+     "who": "OECD.AI incidents monitor",
+     "host": "intergovernmental",
+     "names_instrument": false,
+     "passage": "The European Commission has demanded information from OpenAI, Anthropic, and several Chinese firms (OECD.AI summary; headlines only, no Commission text)."
+    },
+    {
+     "signal": "COP1 / COP2",
+     "url": "https://deepmind.google/frontier-safety/",
+     "date": "Version 3.1 (17 Apr 2026)",
+     "date_where": "framework version list on page; reports undated",
+     "who": "Google DeepMind",
+     "host": "sender",
+     "names_instrument": false,
+     "passage": "You can see the full results from our evaluations and mitigation plans in our safety reports below (lists Gemini 4 Argon, Gemini 3.7 Flash, Gemini 3 Pro). Page does not name the Code or a Model Report."
+    },
+    {
+     "signal": "EU1 / COP1",
+     "url": "https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai",
+     "date": "undated",
+     "date_where": "no date on page per fetch",
+     "who": "European Commission",
+     "host": "public body",
+     "names_instrument": true,
+     "passage": "Lists 22 signatories incl. Amazon, Cohere, Google, IBM, Microsoft, Mistral AI, OpenAI, Anthropic (signing only; not proof of a delivered framework). No counts stated."
+    },
+    {
+     "signal": "KR1",
+     "url": "https://www.msit.go.kr/eng/bbs/view.do?bbsSeqNo=42&mId=4&nttSeqNo=1214&sCode=eng",
+     "date": "2026-01-22 (effect date); list date 2026-02-25 per search metadata",
+     "date_where": "page text / search metadata",
+     "who": "Ministry of Science and ICT",
+     "host": "public body",
+     "names_instrument": true,
+     "passage": "MSIT will grant a grace period of at least one year ... fact-finding investigations and the imposition of penalties will be deferred. (no count of submissions)"
+    },
+    {
+     "signal": "KR1 / KR2",
+     "url": "https://zdnet.co.kr/view?no=20261116144303",
+     "date": "2026-11-16 16:12",
+     "date_where": "byline line (김동원 기자)",
+     "who": "ZDNet Korea, quoting MSIT AI policy director",
+     "host": "third party",
+     "names_instrument": true,
+     "passage": "정부는 시행 초기 최소 1년 이상 과태료 계도기간을 운영하겠다 (fetch-tool paraphrase); no mention of 연산량 기준 or submissions."
+    }
+   ],
+   "body_statements": [
+    "Commission (via spokesperson Regnier, 2026-09-07, as reported by Reuters/TNW/IBTimes): OpenAI sent a report on the German wiki hijack; date of filing and content not disclosed; not stated whether it is a serious incident under Art. 55; no enforcement announced.",
+    "Commission news page, 2026-10-12: the AI Office 'has already requested and received serious incident reports' (no company named, no count, no infringement found).",
+    "Commission EVP Virkkunen speech (Dublin, PDF dated 13 Oct 2026 in metadata): AI Office 'sent Requests for Information addressing issues such as security, external evaluation and monitoring how models are used' (seen only in a search excerpt; PDF text could not be decoded by fetch).",
+    "MSIT: grace period of at least one year in which investigations and fines are deferred except exceptional cases; no statement found on compute-threshold submissions received or not.",
+    "AI Act Service Desk and GPAI factpage: no list of systemic-risk models, no counts of notifications or incident reports."
+   ],
+   "unopened": [
+    "reuters.com original pages (search and fetch blocked; only syndicated copies read; a Reuters 2026-07-31 URL surfaced in search results but could not be fetched)",
+    "www.law.go.kr article text (did not load); mofa.go.kr law PDF (redirect loop)",
+    "Virkkunen speech PDF and 9 Oct opening remarks (PDF not decodable); euronews 2026-10-14 article (search excerpt only)",
+    "techrepublic.com EU/OpenAI/Anthropic article (HTTP 403)",
+    "Microsoft Frontier Governance Framework Feb 2026 PDF (opened, not decodable)",
+    "Own pages of Amazon, Mistral, Cohere, IBM; Google Responsible AI update 2026 PDF; Gemini FSF report pages",
+    "captaincompliance.com, euronews 2026-09-09 wiki article, MSIT Korean-language press pages, one search service (usage limit)"
+   ],
+   "still_unsearched": "MSIT Korean press-release board (msit.go.kr/bbs) and the AI Basic Act Support Desk site; the final (non-draft) MSIT safety-obligation notice; the Commission Q&A or AI Office page for the serious-incident template; signatories' own incident-reporting statements; Google DeepMind model-report pages; Amazon, Mistral, Cohere, IBM framework pages.",
+   "group": "the EU, Korea"
+  },
+  {
+   "agent": "INT",
+   "searched_on": "2026-11-23",
+   "log": [
+    "one search service's page extraction returned HTTP 432 (plan usage limit) - not usable; the page-fetch tool used instead. the page-fetch tool returns a small-model summary, so 'passage' fields are the summariser's quotes, not independently verified verbatim.",
+    "https://oecd.ai/en/transparency/reports opened: 60 reports listed, IDs 25-48,98,107-245; newest 245 By My Side Labs 2026-11-19.",
+    "Opened 30 individual HAIP reports (see haip_reports_opened).",
+    "Searched: OECD HAIP press release Oct 2026 - none found (web search; direct OECD press page not opened).",
+    "Searched: Framework 2.0 + Chinese developers (EN and ZH) - no developer-published safety/incident report naming the Framework found; tc260.org.cn not opened.",
+    "Searched: GPA agentic AI resolution 2026 - no resolution text or authority implementation statement found; only G7 DPA roundtable June 2026 mentioned agentic AI.",
+    "Opened https://www.elysee.fr/en/emmanuel-macron/2026/11/10/paris-call-for-ai-safety-and-security: no follow-up publication listed; page says text 'remains open to new endorsements and is being updated'.",
+    "Searched: Paris Call company follow-ups - none found.",
+    "Searched: ASEAN Guide implementation 2026 - none found."
+   ],
+   "haip_reports_opened": [
+    {
+     "id": "228",
+     "org": "OpenAI Opco, LLC",
+     "date": "2026-10-02",
+     "incident_answer": "links to earlier accounts",
+     "who_received": "not stated",
+     "passage": "Our September 25, 2026 report provides a further example of how incident findings change safeguards. (incident: internal research model reached external chatbot via DNS filtering gap; recipients not named)"
+    },
+    {
+     "id": "151",
+     "org": "Anthropic PBC",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "publishes public threat-intelligence reports on identified misuse; enforcement actions 'tracked and reported in aggregate' (no specific report cited)"
+    },
+    {
+     "id": "138",
+     "org": "Google",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "We may share public information on incidents and mitigations via Google's public blogs."
+    },
+    {
+     "id": "232",
+     "org": "Microsoft",
+     "date": "2026-10-02",
+     "incident_answer": "process only (names Crescendo and Skeleton Key write-ups generically)",
+     "who_received": "none named",
+     "passage": "a postmortem analysis is conducted to assess and absorb the learnings (FMF information-sharing agreement described generally)"
+    },
+    {
+     "id": "230",
+     "org": "Cohere",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "third-party domain experts under NDA, generic",
+     "passage": "share relevant incident information with them under confidentiality agreements."
+    },
+    {
+     "id": "46",
+     "org": "Amazon",
+     "date": "2025-10-31",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "Amazon maintains processes and procedures for addressing reported incidents through established mechanisms."
+    },
+    {
+     "id": "218",
+     "org": "Salesforce",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "Salesforce operationalizes mechanisms to receive reports of risk and misuse directly from our users."
+    },
+    {
+     "id": "204",
+     "org": "Fujitsu",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "Fujitsu continuously collects and reviews internal and external incident information."
+    },
+    {
+     "id": "176",
+     "org": "NTT, Inc.",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none; answer to third-party report mechanism: No",
+     "passage": "We define incidents in line with our AI risk definitions."
+    },
+    {
+     "id": "111",
+     "org": "KDDI Corporation",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none named",
+     "passage": "publicly discloses information regarding significant incidents that exceed a certain severity threshold."
+    },
+    {
+     "id": "41",
+     "org": "SoftBank Corp.",
+     "date": "2025-04-16",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "We have not had any incidents so far."
+    },
+    {
+     "id": "226",
+     "org": "Rakuten Group, Inc.",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "Reported incidents and the steps taken to address them are documented and maintained internally."
+    },
+    {
+     "id": "207",
+     "org": "NEC Corporation",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "the NEC Group Information Security Incident Response Desk, which receives and manages reports of security incidents"
+    },
+    {
+     "id": "205",
+     "org": "Infosys",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "The incident reports including external reports feed into our Responsible AI risk management process"
+    },
+    {
+     "id": "217",
+     "org": "TELUS",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "TELUS has an incident readiness and response playbook that includes notification strategy and execution"
+    },
+    {
+     "id": "123",
+     "org": "Hitachi, Ltd.",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "We have established processes for reporting information on AI-related vulnerabilities and incidents"
+    },
+    {
+     "id": "203",
+     "org": "Criteo",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "Shared information depends on the risks, incidents or vulnerabilities."
+    },
+    {
+     "id": "189",
+     "org": "OpenText",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "Incident reports (internal and shared by others) inform updates to risk assessments and corrective actions."
+    },
+    {
+     "id": "118",
+     "org": "Ubie株式会社",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "External notification is driven by legal and contractual obligation rather than discretion."
+    },
+    {
+     "id": "119",
+     "org": "Jus Mundi",
+     "date": "2026-10-02",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "Jus Mundi reviews internal incidents, vulnerability reports, customer or user feedback, monitoring alerts."
+    },
+    {
+     "id": "39",
+     "org": "OpenAI",
+     "date": "2025-04-15",
+     "incident_answer": "links to earlier accounts",
+     "who_received": "not stated",
+     "passage": "Occasionally via public blog posts or transparency statements. (links to prior threat-intelligence reports on disrupting malicious uses)"
+    },
+    {
+     "id": "42",
+     "org": "Anthropic",
+     "date": "2025-04-15",
+     "incident_answer": "process only",
+     "who_received": "Frontier Model Forum (agreement, no incident)",
+     "passage": "we have signed an agreement designed to facilitate information-sharing"
+    },
+    {
+     "id": "43",
+     "org": "Google",
+     "date": "2025-04-18",
+     "incident_answer": "links to earlier accounts",
+     "who_received": "public (blog)",
+     "passage": "We have shared public information on incidents and mitigations via Google Keyword blog, such as this example. (May 2024 AI Overviews update)"
+    },
+    {
+     "id": "37",
+     "org": "Microsoft",
+     "date": "2025-04-15",
+     "incident_answer": "links to earlier accounts",
+     "who_received": "public (research write-ups)",
+     "passage": "we have recently joined with other members in signing a first-of-its-kind agreement to facilitate information sharing (links Crescendo and Skeleton Key write-ups; read only first 100k of 163k chars)"
+    },
+    {
+     "id": "40",
+     "org": "Salesforce",
+     "date": "2025-04-15",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "track the reported incident, review it against our Acceptable Use Policy"
+    },
+    {
+     "id": "36",
+     "org": "Fujitsu",
+     "date": "2025-04-22",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "has already established a mechanism within the group to share incident information"
+    },
+    {
+     "id": "26",
+     "org": "KDDI Corporation",
+     "date": "2025-04-18",
+     "incident_answer": "links to earlier accounts",
+     "who_received": "public institutions and industry associations, generic",
+     "passage": "KDDI engages in information sharing within established frameworks with public institutions and industry associations (links Cybersecurity Annual Report 2024)"
+    },
+    {
+     "id": "98",
+     "org": "NTT, Inc.",
+     "date": "2025-04-11",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "We plan to share incident and risk detection cases through liaison meetings within the group."
+    },
+    {
+     "id": "35",
+     "org": "NEC Corporation",
+     "date": "2025-04-15",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "Not publicly shared"
+    },
+    {
+     "id": "29",
+     "org": "ai21",
+     "date": "2025-03-20",
+     "incident_answer": "process only",
+     "who_received": "none",
+     "passage": "we have a team dedicated to risk and they maintain a log of reported issues."
+    }
+   ],
+   "candidates": [
+    {
+     "signal": "G7-4 / G7-3",
+     "url": "https://oecd.ai/en/transparency/reports/228",
+     "date": "2026-10-02",
+     "date_where": "OECD portal publication stamp",
+     "who": "OpenAI Opco, LLC via OECD HAIP portal",
+     "host": "intergovernmental",
+     "names_instrument": true,
+     "passage": "Our September 25, 2026 report provides a further example of how incident findings change safeguards. (link to earlier OpenAI account; recipients not stated)"
+    },
+    {
+     "signal": "G7-3",
+     "url": "https://oecd.ai/en/transparency/reports/43",
+     "date": "2025-04-18",
+     "date_where": "OECD portal publication stamp",
+     "who": "Google",
+     "host": "intergovernmental",
+     "names_instrument": true,
+     "passage": "We have shared public information on incidents and mitigations via Google Keyword blog, such as this example. (May 2024 AI Overviews update)"
+    },
+    {
+     "signal": "G7-3",
+     "url": "https://oecd.ai/en/transparency/reports/37",
+     "date": "2025-04-15",
+     "date_where": "OECD portal publication stamp",
+     "who": "Microsoft",
+     "host": "intergovernmental",
+     "names_instrument": true,
+     "passage": "we may share information publicly about emergent risks and mitigations (links Skeleton Key write-up, June 2024 by URL)"
+    },
+    {
+     "signal": "G7-4",
+     "url": "https://oecd.ai/en/transparency/reports",
+     "date": "2026-11-19 (newest of 60)",
+     "date_where": "OECD portal list",
+     "who": "OECD",
+     "host": "intergovernmental",
+     "names_instrument": true,
+     "passage": "60 reports listed, 2025-02-15 to 2026-11-19 (governance/framework disclosure only; no incident shared with a named recipient in any of 30 opened)"
+    },
+    {
+     "signal": "PC1-PC5",
+     "url": "https://www.elysee.fr/en/emmanuel-macron/2026/11/10/paris-call-for-ai-safety-and-security",
+     "date": "2026-11-10",
+     "date_where": "URL path/page",
+     "who": "Elysee",
+     "host": "public body",
+     "names_instrument": true,
+     "passage": "share timely information on serious cyber and AI control incidents (text itself, not a follow-up; page shows no follow-up and says it 'remains open to new endorsements and is being updated')"
+    }
+   ],
+   "unopened": [
+    "https://www.mofa.go.jp/mofaj/files/100573473.pdf (HTTP 403 to the page-fetch tool; search snippet only suggests it is the Code of Conduct, not confirmed; alternative https://www.soumu.go.jp/hiroshimaaiprocess/pdf/document04_en.pdf not opened)",
+    "HAIP reports not opened: 245,242,246,236,231,227,225,216,212,198,180,177,169,160,137,122,107,48,45,47,30,44,31,38,33,32,34,25,28,27",
+    "OECD press release pages (not located)",
+    "tc260.org.cn",
+    "developer sites of Alibaba, Baidu, DeepSeek, Zhipu, Moonshot, ByteDance, Tencent",
+    "GPA member authority sites; globalprivacyassembly.org",
+    "ASEAN Secretariat and member ministries; IMDA WG-AI page",
+    "Paris Call signatory company pages",
+    "one search service's page extraction unusable (usage limit)"
+   ],
+   "still_unsearched": "Direct reads of TC260, Chinese developer sites, GPA and member-authority sites, Paris Call signatory sites, ASEAN/IMDA pages; OECD newsroom; 30 remaining HAIP reports (esp. SoftBank 2026 if any, xAI/Meta/Mistral/Naver/LG/IBM did not appear in the 60-report list); official G7 Code PDF not confirmed by direct open.",
+   "group": "the international texts"
+  }
+ ]
+}

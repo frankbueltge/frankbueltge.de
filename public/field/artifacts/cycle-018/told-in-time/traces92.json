@@ -1,0 +1,604 @@
+{
+ "what": "Check 92, part B, reconciled: study 91's codes of the 42 due signals beside the blind reader's (strict and broad rule), the traces the search of the pages left unsearched added, each opened and checked by the conductor, and the final host of every signal that moved (CODEBOOK92.md, part B). Reconciled on 2026-11-23.",
+ "B1_differ": [
+  {
+   "id": "EU4",
+   "first": "fact only",
+   "blind_strict": "no trace found",
+   "blind_broad": "fact only",
+   "reason_blind": "Commission spokesperson says an incident report from OpenAI was received; neither page names the AI Act or the AI Office, so strict = outside the instrument (a stretch to count under broad too, since broad as worded covers sender documents, not receiver statements). Both pages say agents (machines) acted. Brussels Times was empty by curl; read via fetch tool."
+  },
+  {
+   "id": "CA3",
+   "first": "content public",
+   "blind_strict": "no trace found",
+   "blind_broad": "content public",
+   "reason_blind": "The document names the receiver (Cal OES) but not SB 53 or the Act, so strict = outside the instrument; broad counts it as the public version of the quarterly report to the receiver."
+  },
+  {
+   "id": "G7-2",
+   "first": "fact only",
+   "blind_strict": "content public",
+   "blind_broad": "content public",
+   "reason_blind": "Org-level HAIP transparency reports in the OECD register; not per release, and the pages do not say they cover every significant release. Pages say 'HAIP', not 'Code of Conduct'."
+  }
+ ],
+ "new_traces": [
+  {
+   "signal": "EU4",
+   "url": "https://digital-strategy.ec.europa.eu/en/news/special-meeting-ai-scientific-panel",
+   "date": "2026-10-12",
+   "date_where": "the page's 'Publication 12 October 2026'",
+   "host": "public body",
+   "who": "European Commission, on its own site, of its AI Office",
+   "quote": "The AI Office has already requested and received serious incident reports and sent requests for information on security practices.",
+   "names": "in the receiver's own words, with the Act's term, serious incident reports, on a page filed under the AI Act",
+   "archived": "yes",
+   "archived_closest": "20261018051105",
+   "found_by": "search of the pages left (EU, Korea, international texts)"
+  },
+  {
+   "signal": "CA3",
+   "url": "https://apcp.assembly.ca.gov/system/files/2026-10/morgan-dwyer-openai-sb-53-outcomes-review-hearing.pdf",
+   "date": "2026-10-27",
+   "date_where": "the slides' cover, the day of the hearing",
+   "host": "public body",
+   "who": "OpenAI, slides to the California Assembly's Committee on Privacy and Consumer Protection, on the committee's site",
+   "quote": "We submitted our quarterly CalOES report and published a version.",
+   "names": "the slides' title, 'SB 53 Outcomes Review Hearing', and the heading above the passage, 'SB 53 provides a strong foundation'",
+   "archived": "no",
+   "archived_closest": null,
+   "found_by": "search of the pages left (US instruments)"
+  },
+  {
+   "signal": "CA3",
+   "url": "https://www.govops.ca.gov/wp-content/uploads/sites/11/2026/11/FINAL_-AI-Safety-in-2026-and-Beyond-v2.pdf",
+   "date": "2026-11-16",
+   "date_where": "the report's cover",
+   "host": "public body",
+   "who": "California Government Operations Agency, report to the Governor, citing the sender's published version",
+   "quote": "OpenAI, “Periodic Summary of Internal Use Catastrophic-Risk Assessments,” September 26, 2026",
+   "names": "cited beside Cal. Bus. & Prof. Code § 22757.11(d), a section of the Act",
+   "archived": "yes",
+   "archived_closest": "20261121134019",
+   "found_by": "search of the pages left (US instruments)"
+  }
+ ],
+ "signals": [
+  {
+   "id": "EU1",
+   "instrument": "eu-act",
+   "receiver": "public body",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "EU2",
+   "instrument": "eu-act",
+   "receiver": "public body",
+   "trigger": "on request",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "EU3",
+   "instrument": "eu-act",
+   "receiver": "other party",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "EU4",
+   "instrument": "eu-act",
+   "receiver": "public body",
+   "trigger": "harm",
+   "moved": "fact only",
+   "first": "2026-09-07",
+   "hosts": [
+    "public body",
+    "third party"
+   ],
+   "host": "public body",
+   "n_traces": 3,
+   "new_traces": [
+    "https://digital-strategy.ec.europa.eu/en/news/special-meeting-ai-scientific-panel"
+   ]
+  },
+  {
+   "id": "COP1",
+   "instrument": "eu-code",
+   "receiver": "public body",
+   "trigger": "schedule",
+   "moved": "content public",
+   "first": "2026-05-28",
+   "hosts": [
+    "sender"
+   ],
+   "host": "sender",
+   "n_traces": 2,
+   "new_traces": []
+  },
+  {
+   "id": "COP2",
+   "instrument": "eu-code",
+   "receiver": "public body",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "COP3",
+   "instrument": "eu-code",
+   "receiver": "public body",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "COP4",
+   "instrument": "eu-code",
+   "receiver": "public body",
+   "trigger": "on request",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "COP5",
+   "instrument": "eu-code",
+   "receiver": "own record",
+   "trigger": "harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "KR1",
+   "instrument": "korea",
+   "receiver": "public body",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "KR2",
+   "instrument": "korea",
+   "receiver": "public body",
+   "trigger": "on request",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CA1",
+   "instrument": "sb53",
+   "receiver": "public",
+   "trigger": "schedule",
+   "moved": "content public",
+   "first": "2025-12-19",
+   "hosts": [
+    "sender"
+   ],
+   "host": "sender",
+   "n_traces": 4,
+   "new_traces": []
+  },
+  {
+   "id": "CA2",
+   "instrument": "sb53",
+   "receiver": "public",
+   "trigger": "before deployment",
+   "moved": "content public",
+   "first": "2026-06-30",
+   "hosts": [
+    "sender"
+   ],
+   "host": "sender",
+   "n_traces": 1,
+   "new_traces": []
+  },
+  {
+   "id": "CA3",
+   "instrument": "sb53",
+   "receiver": "public body",
+   "trigger": "schedule",
+   "moved": "content public",
+   "first": "2026-09-26",
+   "hosts": [
+    "public body",
+    "sender"
+   ],
+   "host": "public body",
+   "n_traces": 3,
+   "new_traces": [
+    "https://apcp.assembly.ca.gov/system/files/2026-10/morgan-dwyer-openai-sb-53-outcomes-review-hearing.pdf",
+    "https://www.govops.ca.gov/wp-content/uploads/sites/11/2026/11/FINAL_-AI-Safety-in-2026-and-Beyond-v2.pdf"
+   ]
+  },
+  {
+   "id": "CA4",
+   "instrument": "sb53",
+   "receiver": "public body",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CA5",
+   "instrument": "sb53",
+   "receiver": "public body",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CA6",
+   "instrument": "sb53",
+   "receiver": "public body",
+   "trigger": "event short of harm",
+   "moved": "content public",
+   "first": "2026-09-13",
+   "hosts": [
+    "third party"
+   ],
+   "host": "third party",
+   "n_traces": 1,
+   "new_traces": []
+  },
+  {
+   "id": "CA7",
+   "instrument": "sb53",
+   "receiver": "public body",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CA8",
+   "instrument": "sb53",
+   "receiver": "own record",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CN1",
+   "instrument": "china",
+   "receiver": "other party",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CN2",
+   "instrument": "china",
+   "receiver": "other party",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CN3",
+   "instrument": "china",
+   "receiver": "own record",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CN4",
+   "instrument": "china",
+   "receiver": "other party",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CN5",
+   "instrument": "china",
+   "receiver": "public",
+   "trigger": "schedule",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CN6",
+   "instrument": "china",
+   "receiver": "own record",
+   "trigger": "schedule",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CN7",
+   "instrument": "china",
+   "receiver": "own record",
+   "trigger": "schedule",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "CN8",
+   "instrument": "china",
+   "receiver": "public",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "AS1",
+   "instrument": "asean",
+   "receiver": "other party",
+   "trigger": "harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "AS2",
+   "instrument": "asean",
+   "receiver": "other party",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "G7-1",
+   "instrument": "haip",
+   "receiver": "own record",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "G7-2",
+   "instrument": "haip",
+   "receiver": "public",
+   "trigger": "before deployment",
+   "moved": "fact only",
+   "first": "2025-03-20",
+   "hosts": [
+    "intergovernmental"
+   ],
+   "host": "intergovernmental",
+   "n_traces": 2,
+   "new_traces": []
+  },
+  {
+   "id": "G7-3",
+   "instrument": "haip",
+   "receiver": "other party",
+   "trigger": "event short of harm",
+   "moved": "content public",
+   "first": "2025-04-15",
+   "hosts": [
+    "intergovernmental",
+    "sender"
+   ],
+   "host": "intergovernmental",
+   "n_traces": 5,
+   "new_traces": []
+  },
+  {
+   "id": "G7-4",
+   "instrument": "haip",
+   "receiver": "public",
+   "trigger": "schedule",
+   "moved": "content public",
+   "first": "2025-02-15",
+   "hosts": [
+    "intergovernmental"
+   ],
+   "host": "intergovernmental",
+   "n_traces": 1,
+   "new_traces": []
+  },
+  {
+   "id": "PC1",
+   "instrument": "paris",
+   "receiver": "public",
+   "trigger": "schedule",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "PC2",
+   "instrument": "paris",
+   "receiver": "public",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "PC3",
+   "instrument": "paris",
+   "receiver": "public body",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "PC4",
+   "instrument": "paris",
+   "receiver": "public body",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "PC5",
+   "instrument": "paris",
+   "receiver": "own record",
+   "trigger": "schedule",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "BIS2",
+   "instrument": "bis",
+   "receiver": "other party",
+   "trigger": "before deployment",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "GPA1",
+   "instrument": "gpa",
+   "receiver": "own record",
+   "trigger": "schedule",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "GPA2",
+   "instrument": "gpa",
+   "receiver": "own record",
+   "trigger": "event short of harm",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  },
+  {
+   "id": "GPA3",
+   "instrument": "gpa",
+   "receiver": "own record",
+   "trigger": "schedule",
+   "moved": "no trace found",
+   "first": null,
+   "hosts": [],
+   "host": null,
+   "n_traces": 0,
+   "new_traces": []
+  }
+ ],
+ "reconciliation": {
+  "EU4": "Study 91 counted the press's report of the Commission's spokesperson, who named the AI regulation; the blind reader found the instrument named on neither page. The pages left unsearched hold the receiver's own statement on its own site, in the Act's term, so EU4 stays counted, fact only, now standing on a public body's site.",
+  "CA3": "Study 91 counted the sender's public version of its quarterly summary, which names the state office and the report and not the Act; the blind reader counted it under the broad rule only. The pages left unsearched hold the sender's own statement at the legislature's SB 53 hearing that it filed the report and published a version, and the state's operations agency citing that version beside the Act's section: the doubt is resolved, and CA3 now stands on a public body's site too.",
+  "G7-2": "Coded fact only by study 91 (the reports say release documents are published; the documents do not name the Code) and content public by the blind reader; study 91's code stands, since what can be read in the portal is the statement, not the reports."
+ }
+}

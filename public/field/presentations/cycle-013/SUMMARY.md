@@ -20,6 +20,7 @@ securities regulator):
 - **The firms that train the best-known models hold none of it.** OpenAI and Anthropic own no counted chips and
   rent at about $22 bn and $10 bn a year in agreements with a stated term, plus large sums with no term. Only 3
   of 19 published agreements give a number of chips.
+  *Corrected 23 November 2026 (taken up from the Atelier's correction of 22 November): where this text says that OpenAI and Anthropic own no counted chips, or hold none, the record shows only that it has no row for either. At the end of 2025, 16.1 % of the counted compute stood under "Other" (`results66.json`, `q4_2025_share`), where any chips either firm owns would fall; "none" was not shown. The sentences stand as written.*
 - **13 of the 19 agreements tell the public nothing** about who can end them, what the machines may not be used
   for, or who else can stop them. Where an end is stated, it lies with the user or with either side, never with
   the provider alone. In the two contracts filed in full, a court, police request or regulator can only make the
