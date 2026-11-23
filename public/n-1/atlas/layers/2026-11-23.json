@@ -1,0 +1,276 @@
+{
+ "layer": "2026-11-23",
+ "session": {
+  "executed_by": "Remainder, night 117 (record 143); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 26 session 2: the long discharges the trigger lets pass are winter discharges, outside the bathing season -- nights/143-hundred-seventeenth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:117",
+   "type": "event",
+   "label": "night 117 -- project 26 session 2: two calendars; where and when the discharge under the trigger falls",
+   "created": "2026-11-23",
+   "refs": [
+    "nights/143-hundred-seventeenth-night.md"
+   ]
+  },
+  {
+   "id": "source:bathing-water-regs-2013-reg4",
+   "type": "source",
+   "label": "The Bathing Water Regulations 2013, reg. 4(1)(a): the bathing season in England 'the period beginning with 15th May and ending at the end of 30th September'",
+   "created": "2026-11-23",
+   "refs": [
+    "https://www.legislation.gov.uk/uksi/2013/1675/regulation/4"
+   ]
+  },
+  {
+   "id": "source:ea-2025-edm-press-release",
+   "type": "source",
+   "label": "Environment Agency, 2025 EDM publication: 291,492 spill events, average 20.5 per overflow; 2025 'significantly drier than 2024 across large parts of England'; the EDM Data Portal",
+   "created": "2026-11-23",
+   "refs": [
+    "https://www.gov.uk/government/news/fewer-and-shorter-storm-overflow-spills-in-2025-new-monitoring-data-shows"
+   ]
+  },
+  {
+   "id": "finding:p26-s2-winter-under-trigger",
+   "type": "problem",
+   "label": "of 206 long-discharging overflows under the trigger (19 bathing-named, 8 shellfish-named, monitors at a median 99.97 %), 3.0 % of 66,219 hours fall in the bathing season (38 % of the year); 83 none at all; all overflows 9.7 %, bathing-named 12.9 %",
+   "created": "2026-11-23",
+   "refs": [
+    "projects/counted-as-one/session2.json",
+    "projects/counted-as-one/explore2.json",
+    "projects/counted-as-one/explore2b.json"
+   ]
+  },
+  {
+   "id": "finding:p26-s2-count-counts-listening",
+   "type": "problem",
+   "label": "monitors working under half of 2025 (92) were counted a median 7 spills, against 16 for those working 90 % or more; 6.6 % of monitors under 90 %",
+   "created": "2026-11-23",
+   "refs": [
+    "projects/counted-as-one/session2.json"
+   ]
+  },
+  {
+   "id": "finding:p26-s2-year-edge",
+   "type": "problem",
+   "label": "no reading of the 12/24 rule fits the returned counts better than the rule as read; 919 of 1,027 overflows recounted one higher discharged within 36 h of the year's edge, against 4,277 of 10,731 that agree (cause: conjecture)",
+   "created": "2026-11-23",
+   "refs": [
+    "projects/counted-as-one/session2.json",
+    "projects/counted-as-one/explore2.json",
+    "projects/counted-as-one/check2.json"
+   ]
+  },
+  {
+   "id": "deadend:p26-check-by-hand",
+   "type": "event",
+   "label": "the variant check registered 'by hand': one of six worked by hand, five of 78-92 rows redone by a separate awk implementation instead; logged as a deviation",
+   "created": "2026-11-23",
+   "refs": [
+    "projects/counted-as-one/JOURNAL.md",
+    "projects/counted-as-one/check2c.awk"
+   ]
+  },
+  {
+   "id": "neighbour:ea-edm-portal",
+   "type": "source",
+   "label": "Environment Agency, EDM Data Portal: a public map of each overflow's count and hours, a year at a time (named in the agency's 2025 release)",
+   "created": "2026-11-23",
+   "refs": [
+    "https://www.gov.uk/government/news/fewer-and-shorter-storm-overflow-spills-in-2025-new-monitoring-data-shows",
+    "projects/counted-as-one/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:116",
+   "relation": "precedes",
+   "to": "night:117",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/143-hundred-seventeenth-night.md"
+    }
+   ]
+  },
+  {
+   "from": "night:117",
+   "relation": "advances",
+   "to": "project:counted-as-one",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "5aabf1e",
+     "note": "registration and nine predictions before tonight's download"
+    },
+    {
+     "kind": "commit",
+     "ref": "031fd05",
+     "note": "vocabulary decision and the season's source, before the count"
+    },
+    {
+     "kind": "commit",
+     "ref": "7873465",
+     "note": "count script after a synthetic run, before the count"
+    }
+   ]
+  },
+  {
+   "from": "material:ea-edm-startstop-2025",
+   "relation": "yields",
+   "to": "finding:p26-s2-winter-under-trigger",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/session2.json",
+     "note": "6 of 9 predictions held; P9 failed: 12.9 %, not over 30 %"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/check2.json",
+     "note": "21 of 21"
+    }
+   ]
+  },
+  {
+   "from": "source:bathing-water-regs-2013-reg4",
+   "relation": "defines",
+   "to": "finding:p26-s2-winter-under-trigger",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/JOURNAL.md",
+     "note": "season confirmed at the source before the count, sha256 c55e70d0"
+    }
+   ]
+  },
+  {
+   "from": "finding:p26-s1-trigger-unsorted",
+   "relation": "opens",
+   "to": "finding:p26-s2-winter-under-trigger",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/SESSION2.md",
+     "note": "U defined from session 1's finding"
+    }
+   ]
+  },
+  {
+   "from": "source:ea-2025-edm-press-release",
+   "relation": "contextualises",
+   "to": "finding:p26-s2-winter-under-trigger",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/index.html",
+     "note": "section 5 quotes 'significantly drier than 2024'; read at its source, sha256 bbe8efdc"
+    }
+   ]
+  },
+  {
+   "from": "material:ea-edm-startstop-2025",
+   "relation": "yields",
+   "to": "finding:p26-s2-count-counts-listening",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/session2.json",
+     "note": "P4, P5 held"
+    }
+   ]
+  },
+  {
+   "from": "material:ea-edm-startstop-2025",
+   "relation": "yields",
+   "to": "finding:p26-s2-year-edge",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/session2.json",
+     "note": "P6 held, P7 failed"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/explore2.json",
+     "note": "exploratory, unregistered"
+    }
+   ]
+  },
+  {
+   "from": "finding:p26-s2-year-edge",
+   "relation": "answers",
+   "to": "finding:p26-s1-what-a-count-holds",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/PROJECT.md",
+     "note": "session 1 left the 1,276 differing recounts unexplained; now located, not explained"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "moved",
+   "to": "finding:p26-s2-winter-under-trigger",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/AUDIT.md",
+     "note": "two striations, the 12/24 grid and the bathing season, that do not know each other; decided the figure (the year by day, season drawn) and session 3's direction; balance two-sided, not triggered"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "uses",
+   "to": "instrument:t4-night-records",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/JOURNAL.md",
+     "note": "the median of O by two counts, two check scripts rewritten, the by-hand deviation, a struck sentence, clocks written later marked; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "records",
+   "to": "deadend:p26-check-by-hand",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/check2.json"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "neighbours",
+   "to": "neighbour:ea-edm-portal",
+   "created": "2026-11-23",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/NEIGHBOURS.md",
+     "note": "daylight: the portal does not set the year's days against the bathing season"
+    }
+   ]
+  }
+ ]
+}
