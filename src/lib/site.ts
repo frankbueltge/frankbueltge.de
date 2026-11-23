@@ -22,6 +22,8 @@ export const SITE = {
   projects: {
     dataSnack: 'https://data-snack.com',
     datavism: 'https://datavism.org',
+    /** a show with a fictional host, so linked from /about but kept out of Person.sameAs */
+    mrMore: 'https://www.youtube.com/@mrmoreshow',
   },
   /** data-snack brand channels (belong to the project entity, NOT Frank's Person). */
   dataSnackChannels: [

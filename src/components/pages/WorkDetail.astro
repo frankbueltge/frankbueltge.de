@@ -72,14 +72,15 @@ const visitLabel = !p.url
   )}
 </main>
 
+{/* A project is software unless its entry says otherwise (MR. MORE is a show, 2026-11-23); the
+    application fields belong to software only. */}
 <script type="application/ld+json" set:html={JSON.stringify({
   '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
+  '@type': p.schema ?? 'SoftwareApplication',
   name: p.name,
   description: p.description[locale],
   url: p.url ?? `${SITE.url}${getRelativeLocaleUrl(locale, `/work/${p.slug}`)}`,
-  applicationCategory: 'BusinessApplication',
-  operatingSystem: 'Web',
+  ...(p.schema ? {} : { applicationCategory: 'BusinessApplication', operatingSystem: 'Web' }),
   author: { '@id': `${SITE.url}/#person` },
   ...(p.channels ? { sameAs: p.channels.map((c) => c.href) } : {}),
 })} />

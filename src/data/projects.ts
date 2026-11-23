@@ -20,6 +20,8 @@ export type Project = {
   badge: 'live' | 'dev'
   /** featured order on the work index */
   order: number
+  /** the schema.org type the card page declares; a SoftwareApplication when unset */
+  schema?: 'CreativeWorkSeries'
 }
 
 export const projects: Project[] = [
@@ -104,6 +106,33 @@ export const projects: Project[] = [
     tech: ['Astro', 'TypeScript', 'Multi-Agent Research'],
     badge: 'live',
     order: 4,
+  },
+  // Added 2026-11-23, the day its first episode went up, on Frank's ask. Everything said here is
+  // what the channel and that episode say about themselves. A show, not software: the card page
+  // declares a series (`schema`), not an application.
+  {
+    slug: 'mr-more',
+    name: 'MR. MORE',
+    year: '2026',
+    url: 'https://www.youtube.com/@mrmoreshow',
+    status: { de: 'Aktiv', en: 'Active' },
+    role: { de: 'Eigenprojekt · Konzept & Produktion', en: 'Personal project · concept & production' },
+    tagline: {
+      de: 'Eine Satire auf die Aufmerksamkeitsökonomie, auf YouTube.',
+      en: 'A satire of the attention economy, on YouTube.',
+    },
+    description: {
+      de: 'Mr. More baut groß. Dann größer. Jede Folge ist ein absurdes Bauprojekt, mit einem Gastgeber und einem unbezahlten Praktikanten, der immer Kevin heißt, in einer Welt, in der Dinge nur existieren, solange jemand zusieht. In der ersten Folge, „The $400,000,000 Slingshot“, wünscht sich ein einziger Kommentar eine Schleuder: Mr. More baut sie, setzt Praktikant Kevin #23 in die Kapsel und lässt die Likes entscheiden, wie weit sie gespannt wird. KI-generierte Satire: Alle Figuren sind fiktiv, Mr. More nutzt das Abbild seines Urhebers. Für Erwachsene, nicht für Kinder.',
+      en: 'Mr. More builds big. Then bigger. Every episode is one absurd build, with one host and one unpaid intern who is always called Kevin, in a world where things only exist while somebody is watching. In the first episode, “The $400,000,000 Slingshot”, one comment asks for a slingshot: Mr. More builds it, puts intern Kevin #23 in the capsule and lets the likes decide how far it pulls back. AI-generated satire: every character is fictional, and Mr. More uses the creator’s own likeness. Made for adults, not for kids.',
+    },
+    highlights: {
+      de: ['Ein Gastgeber, ein absurdes Bauprojekt pro Folge', 'Ein unbezahlter Praktikant, der immer Kevin heißt', 'Dinge existieren nur, solange jemand zusieht', 'KI-generiert, alle Figuren fiktiv, für Erwachsene'],
+      en: ['One host, one absurd build per episode', 'An unpaid intern who is always called Kevin', 'Things only exist while somebody is watching', 'AI-generated, every character fictional, made for adults'],
+    },
+    tech: ['YouTube', 'AI-generated video'],
+    badge: 'live',
+    order: 5,
+    schema: 'CreativeWorkSeries',
   },
 ]
 
