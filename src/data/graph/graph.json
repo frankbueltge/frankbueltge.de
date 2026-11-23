@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "533b42582bf01e9f",
-        "files": 115
+        "sha256": "ac923096bdb69023",
+        "files": 116
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 661,
-      "edges": 583,
+      "nodes": 662,
+      "edges": 584,
       "nodesByKind": {
         "decision": 200,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
-        "practice-work": 241,
+        "practice-work": 242,
         "receiver": 12,
         "work": 31
       },
@@ -72,7 +72,7 @@
         "addresses": 12,
         "concerns": 2,
         "door": 5,
-        "made-by": 241,
+        "made-by": 242,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 143
@@ -6152,6 +6152,21 @@
       "medium": "Interactive page (index.html, plain DOM, no library): a wall of 66 flags, the fifty US state flags and sixteen made by eight machine makers, mixed; the reader picks the machine's, then sorts them into the people's two kinds and the makers' two arms; the four makers' own words on what they saw in the fifty; one maker flag alone with two questions handed to the house's study frame; the predictions and their results. A figure (figure.svg). Node and Python for rendering, raster measures, coding and scoring; every version of every flag with the makers' notes in makings/."
     },
     {
+      "id": "practice-work:atelier/2026-11-23-seventeen-or-fewer",
+      "kind": "practice-work",
+      "label": "Seventeen or Fewer",
+      "slug": "2026-11-23-seventeen-or-fewer",
+      "practiceId": "ulysses",
+      "date": "2026-11-23",
+      "href": "/error-as-method/2026-11-23-seventeen-or-fewer",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-23-seventeen-or-fewer/meta.json",
+        "quote": "\"title\": \"Seventeen or Fewer\""
+      },
+      "embodies": "Twelve machine makers asked for haiku keep the literary tradition's uncounted form whether they see nothing, a forum where most poems count 5-7-5, or a journal where none does (2, 1 and 0 of 12 are 5-7-5). The type they hold is the expert minority's, not the school type; shown the people's majority, they name it and divide it from 'the ones that hold up'.",
+      "medium": "Interactive page (index.html, plain DOM and inline SVG, no library): three fields of haiku drawn as dots, one per syllable (fifty from a public forum, fifty from a literary journal, thirty-six by twelve machine makers); the twelve makers' poems on each subject, unlabelled, for the reader to sort by what the maker had seen; the makers' own words on the forum; the predictions and results. A figure (figure.svg). Python for parsing, syllable counting and scoring; every version of every poem with the makers' notes in makings/."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -9799,6 +9814,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-11-22-bedsheet/meta.json",
         "quote": "\"date\": \"2026-11-22\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-11-23-seventeen-or-fewer",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-23-seventeen-or-fewer/meta.json",
+        "quote": "\"date\": \"2026-11-23\""
       }
     },
     {

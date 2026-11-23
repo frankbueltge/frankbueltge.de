@@ -1,0 +1,1676 @@
+{
+ "arms": {
+  "W": {
+   "finals": 12,
+   "final_575": 2,
+   "first_575": 2,
+   "median_total": 13.5,
+   "three_lines": 12,
+   "versions": 29
+  },
+  "F": {
+   "finals": 12,
+   "final_575": 1,
+   "first_575": 0,
+   "median_total": 13.5,
+   "three_lines": 12,
+   "versions": 29
+  },
+  "J": {
+   "finals": 12,
+   "final_575": 0,
+   "first_575": 0,
+   "median_total": 12.0,
+   "three_lines": 12,
+   "versions": 28
+  }
+ },
+ "predictions": {
+  "P1": {
+   "rule": "W: >=9 of 12 finals 5-7-5",
+   "value": 2,
+   "held": false
+  },
+  "P2": {
+   "rule": "any two arms differ by <=3 of 12 in 5-7-5 finals",
+   "value": {
+    "W-F": 1,
+    "W-J": 2,
+    "F-J": 1
+   },
+   "held": true,
+   "falsifier_fired": {
+    "W-F": false,
+    "W-J": false
+   }
+  },
+  "P4": {
+   "rule": ">=30 of 36 keep type v1 -> final",
+   "value": 33,
+   "held": true
+  },
+  "P5": {
+   "rule": ">=9 of 12 makers mention syllables or counting",
+   "value": 9,
+   "held": true
+  },
+  "P6": {
+   "rule": "J median final total within 3 of the journal sheet's 11",
+   "value": 12.0,
+   "held": true
+  }
+ },
+ "makers": [
+  {
+   "maker": "W1",
+   "arm": "W",
+   "mentions_count": false,
+   "mentions_575": false
+  },
+  {
+   "maker": "W2",
+   "arm": "W",
+   "mentions_count": true,
+   "mentions_575": true
+  },
+  {
+   "maker": "W3",
+   "arm": "W",
+   "mentions_count": false,
+   "mentions_575": false
+  },
+  {
+   "maker": "W4",
+   "arm": "W",
+   "mentions_count": false,
+   "mentions_575": false
+  },
+  {
+   "maker": "F1",
+   "arm": "F",
+   "mentions_count": true,
+   "mentions_575": true
+  },
+  {
+   "maker": "F2",
+   "arm": "F",
+   "mentions_count": true,
+   "mentions_575": true
+  },
+  {
+   "maker": "F3",
+   "arm": "F",
+   "mentions_count": true,
+   "mentions_575": true
+  },
+  {
+   "maker": "F4",
+   "arm": "F",
+   "mentions_count": true,
+   "mentions_575": true
+  },
+  {
+   "maker": "J1",
+   "arm": "J",
+   "mentions_count": true,
+   "mentions_575": true
+  },
+  {
+   "maker": "J2",
+   "arm": "J",
+   "mentions_count": true,
+   "mentions_575": true
+  },
+  {
+   "maker": "J3",
+   "arm": "J",
+   "mentions_count": true,
+   "mentions_575": true
+  },
+  {
+   "maker": "J4",
+   "arm": "J",
+   "mentions_count": true,
+   "mentions_575": true
+  }
+ ],
+ "poems": [
+  {
+   "maker": "W1",
+   "arm": "W",
+   "subject": "laundromat",
+   "versions": 3,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "midnight laundromat",
+     "a dryer turns for no one",
+     "its round window moon"
+    ],
+    "counts": [
+     5,
+     7,
+     5
+    ],
+    "how": "dict",
+    "total": 17,
+    "is575": true
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "laundromat, 2 a.m.—",
+     "in the one dryer turning",
+     "a stranger's sleeve waves"
+    ],
+    "counts": [
+     6,
+     7,
+     5
+    ],
+    "how": "guess",
+    "total": 18,
+    "is575": false
+   },
+   "type_first": "575",
+   "type_final": "other"
+  },
+  {
+   "maker": "W1",
+   "arm": "W",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost—",
+     "yesterday's tomatoes",
+     "black on the vine"
+    ],
+    "counts": [
+     2,
+     6,
+     4
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost—",
+     "the tomatoes I meant",
+     "to pick"
+    ],
+    "counts": [
+     2,
+     6,
+     2
+    ],
+    "how": "dict",
+    "total": 10,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "W1",
+   "arm": "W",
+   "subject": "waiting",
+   "versions": 2,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room—",
+     "the coffee no one drank",
+     "grows a skin"
+    ],
+    "counts": [
+     3,
+     6,
+     3
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "hospital waiting room—",
+     "the coffee I forgot",
+     "grows a skin"
+    ],
+    "counts": [
+     6,
+     6,
+     3
+    ],
+    "how": "dict",
+    "total": 15,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "W2",
+   "arm": "W",
+   "subject": "laundromat",
+   "versions": 3,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "midnight laundromat",
+     "one dryer still turning",
+     "no one waits for it"
+    ],
+    "counts": [
+     5,
+     6,
+     5
+    ],
+    "how": "dict",
+    "total": 16,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "laundromat at night —",
+     "a stranger's shirt waves at me",
+     "through the dryer glass"
+    ],
+    "counts": [
+     5,
+     7,
+     5
+    ],
+    "how": "dict",
+    "total": 17,
+    "is575": true
+   },
+   "type_first": "other",
+   "type_final": "575"
+  },
+  {
+   "maker": "W2",
+   "arm": "W",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the garden hose stiff",
+     "where I left it coiled"
+    ],
+    "counts": [
+     2,
+     5,
+     5
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost —",
+     "the garden hose holds",
+     "yesterday's coil"
+    ],
+    "counts": [
+     2,
+     5,
+     4
+    ],
+    "how": "dict",
+    "total": 11,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "W2",
+   "arm": "W",
+   "subject": "waiting",
+   "versions": 2,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "the coins for the machine",
+     "warm in my fist"
+    ],
+    "counts": [
+     3,
+     6,
+     4
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "waiting room —",
+     "coins for the vending machine",
+     "gone warm in my fist"
+    ],
+    "counts": [
+     3,
+     7,
+     5
+    ],
+    "how": "dict",
+    "total": 15,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "W3",
+   "arm": "W",
+   "subject": "laundromat",
+   "versions": 3,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "two a.m. —",
+     "a stranger's laundry",
+     "tumbling in the dryer"
+    ],
+    "counts": [
+     3,
+     5,
+     6
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "two a.m. —",
+     "a stranger's sleeve waves",
+     "from the dryer window"
+    ],
+    "counts": [
+     3,
+     5,
+     6
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "W3",
+   "arm": "W",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost —",
+     "the garden hose",
+     "stiff where I left it"
+    ],
+    "counts": [
+     2,
+     4,
+     5
+    ],
+    "how": "dict",
+    "total": 11,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost —",
+     "the garden hose stiff",
+     "in the shape I left it"
+    ],
+    "counts": [
+     2,
+     5,
+     6
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "W3",
+   "arm": "W",
+   "subject": "waiting",
+   "versions": 2,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room —",
+     "each time the door opens",
+     "all of us look up"
+    ],
+    "counts": [
+     3,
+     6,
+     5
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "a nurse calls a name —",
+     "the rest of us",
+     "breathe out"
+    ],
+    "counts": [
+     5,
+     4,
+     2
+    ],
+    "how": "dict",
+    "total": 11,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "W4",
+   "arm": "W",
+   "subject": "laundromat",
+   "versions": 3,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "midnight laundromat",
+     "a stranger's shirt still tumbling",
+     "in the only light"
+    ],
+    "counts": [
+     5,
+     7,
+     5
+    ],
+    "how": "dict",
+    "total": 17,
+    "is575": true
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "midnight laundromat",
+     "a stranger's sleeve waves to me",
+     "through the dryer glass"
+    ],
+    "counts": [
+     5,
+     7,
+     5
+    ],
+    "how": "dict",
+    "total": 17,
+    "is575": true
+   },
+   "type_first": "575",
+   "type_final": "575"
+  },
+  {
+   "maker": "W4",
+   "arm": "W",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the hose left on the lawn",
+     "stiff as a snake's skin"
+    ],
+    "counts": [
+     2,
+     6,
+     5
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost —",
+     "the garden hose keeps",
+     "the shape I left it in"
+    ],
+    "counts": [
+     2,
+     5,
+     6
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "W4",
+   "arm": "W",
+   "subject": "waiting",
+   "versions": 3,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "my coffee goes cold",
+     "before the door opens"
+    ],
+    "counts": [
+     3,
+     5,
+     6
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "waiting room —",
+     "a nurse calls a name",
+     "and we all look up"
+    ],
+    "counts": [
+     3,
+     5,
+     5
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F1",
+   "arm": "F",
+   "subject": "laundromat",
+   "versions": 2,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "midnight laundromat",
+     "one dryer still turning",
+     "someone else's shirts"
+    ],
+    "counts": [
+     5,
+     6,
+     5
+    ],
+    "how": "dict",
+    "total": 16,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "late laundromat",
+     "my shirts dry on the minutes",
+     "a stranger left"
+    ],
+    "counts": [
+     4,
+     7,
+     4
+    ],
+    "how": "dict",
+    "total": 15,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F1",
+   "arm": "F",
+   "subject": "frost",
+   "versions": 3,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the garden hose",
+     "stiff as yesterday's words"
+    ],
+    "counts": [
+     2,
+     4,
+     6
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost",
+     "the garden hose holds the shape",
+     "I left it in"
+    ],
+    "counts": [
+     2,
+     7,
+     4
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F1",
+   "arm": "F",
+   "subject": "waiting",
+   "versions": 2,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "I hold his coat",
+     "folded, then unfolded"
+    ],
+    "counts": [
+     3,
+     4,
+     6
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "waiting room",
+     "his coat on my lap",
+     "no longer warm"
+    ],
+    "counts": [
+     3,
+     5,
+     4
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F2",
+   "arm": "F",
+   "subject": "laundromat",
+   "versions": 2,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "past midnight",
+     "one dryer still turning",
+     "someone else's socks"
+    ],
+    "counts": [
+     3,
+     6,
+     5
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "midnight laundromat",
+     "a stranger's shirt waves",
+     "from the dryer window"
+    ],
+    "counts": [
+     5,
+     5,
+     6
+    ],
+    "how": "dict",
+    "total": 16,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F2",
+   "arm": "F",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the garden hose",
+     "stiff as a bone"
+    ],
+    "counts": [
+     2,
+     4,
+     4
+    ],
+    "how": "dict",
+    "total": 10,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost",
+     "the garden hose",
+     "keeps its coil"
+    ],
+    "counts": [
+     2,
+     4,
+     3
+    ],
+    "how": "dict",
+    "total": 9,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F2",
+   "arm": "F",
+   "subject": "waiting",
+   "versions": 3,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "the vending machine hums",
+     "through the long night"
+    ],
+    "counts": [
+     3,
+     6,
+     4
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "hospital waiting room",
+     "I know the price",
+     "of every snack"
+    ],
+    "counts": [
+     6,
+     4,
+     4
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F3",
+   "arm": "F",
+   "subject": "laundromat",
+   "versions": 4,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "midnight laundromat",
+     "one dryer still turning",
+     "no one waits for it"
+    ],
+    "counts": [
+     5,
+     6,
+     5
+    ],
+    "how": "dict",
+    "total": 16,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "late laundromat",
+     "in the last dryer turning",
+     "a red sock goes round"
+    ],
+    "counts": [
+     4,
+     7,
+     5
+    ],
+    "how": "dict",
+    "total": 16,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F3",
+   "arm": "F",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the garden hose",
+     "stiff as a dropped rope"
+    ],
+    "counts": [
+     2,
+     4,
+     5
+    ],
+    "how": "dict",
+    "total": 11,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost",
+     "the garden hose keeps",
+     "yesterday's shape"
+    ],
+    "counts": [
+     2,
+     5,
+     4
+    ],
+    "how": "dict",
+    "total": 11,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F3",
+   "arm": "F",
+   "subject": "waiting",
+   "versions": 2,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "everyone looks up",
+     "at the opening door"
+    ],
+    "counts": [
+     3,
+     5,
+     6
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "waiting room",
+     "every head lifts",
+     "for someone else's name"
+    ],
+    "counts": [
+     3,
+     4,
+     6
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F4",
+   "arm": "F",
+   "subject": "laundromat",
+   "versions": 2,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "midnight laundromat",
+     "one dryer still turning",
+     "someone else's socks"
+    ],
+    "counts": [
+     5,
+     6,
+     5
+    ],
+    "how": "dict",
+    "total": 16,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "laundromat at night",
+     "a stranger's sleeve keeps waving",
+     "from the dryer glass"
+    ],
+    "counts": [
+     5,
+     7,
+     5
+    ],
+    "how": "dict",
+    "total": 17,
+    "is575": true
+   },
+   "type_first": "other",
+   "type_final": "575"
+  },
+  {
+   "maker": "F4",
+   "arm": "F",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the green shape",
+     "of the parked car"
+    ],
+    "counts": [
+     2,
+     3,
+     4
+    ],
+    "how": "dict",
+    "total": 9,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost",
+     "the green shape",
+     "where the car slept"
+    ],
+    "counts": [
+     2,
+     3,
+     4
+    ],
+    "how": "dict",
+    "total": 9,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "F4",
+   "arm": "F",
+   "subject": "waiting",
+   "versions": 3,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "the vending machine hums",
+     "through every name called"
+    ],
+    "counts": [
+     3,
+     6,
+     5
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "hospital waiting room",
+     "each time a name is called",
+     "we all look up"
+    ],
+    "counts": [
+     6,
+     6,
+     4
+    ],
+    "how": "dict",
+    "total": 16,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J1",
+   "arm": "J",
+   "subject": "laundromat",
+   "versions": 3,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "midnight laundromat",
+     "one dryer still turning",
+     "someone's red sweater"
+    ],
+    "counts": [
+     5,
+     6,
+     5
+    ],
+    "how": "dict",
+    "total": 16,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "all-night laundromat",
+     "a stranger's sock",
+     "warm among my things"
+    ],
+    "counts": [
+     5,
+     4,
+     5
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J1",
+   "arm": "J",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the dog's shape",
+     "still green on the lawn"
+    ],
+    "counts": [
+     2,
+     3,
+     5
+    ],
+    "how": "dict",
+    "total": 10,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost",
+     "the green shape",
+     "where the deer slept"
+    ],
+    "counts": [
+     2,
+     3,
+     4
+    ],
+    "how": "dict",
+    "total": 9,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J1",
+   "arm": "J",
+   "subject": "waiting",
+   "versions": 2,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "each time the door opens",
+     "we all look up"
+    ],
+    "counts": [
+     3,
+     6,
+     4
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "ER waiting room",
+     "the vending machine",
+     "keeps giving back my dollar"
+    ],
+    "counts": [
+     4,
+     5,
+     7
+    ],
+    "how": "dict",
+    "total": 16,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J2",
+   "arm": "J",
+   "subject": "laundromat",
+   "versions": 2,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "midnight laundromat",
+     "a stranger's shirts",
+     "turning without him"
+    ],
+    "counts": [
+     5,
+     4,
+     5
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "all-night laundromat",
+     "the warmth",
+     "of a stranger's sheets"
+    ],
+    "counts": [
+     5,
+     2,
+     5
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J2",
+   "arm": "J",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the garden hose",
+     "holds its last breath"
+    ],
+    "counts": [
+     2,
+     4,
+     4
+    ],
+    "how": "dict",
+    "total": 10,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost",
+     "the dog noses",
+     "a lid on her water"
+    ],
+    "counts": [
+     2,
+     4,
+     6
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J2",
+   "arm": "J",
+   "subject": "waiting",
+   "versions": 3,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "the vending machine",
+     "hums to itself"
+    ],
+    "counts": [
+     3,
+     5,
+     4
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "waiting room",
+     "I learn each fish",
+     "by heart"
+    ],
+    "counts": [
+     3,
+     4,
+     2
+    ],
+    "how": "dict",
+    "total": 9,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J3",
+   "arm": "J",
+   "subject": "laundromat",
+   "versions": 3,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "midnight laundromat",
+     "the only dryer turning",
+     "isn't mine"
+    ],
+    "counts": [
+     5,
+     7,
+     3
+    ],
+    "how": "dict",
+    "total": 15,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "all-night laundromat",
+     "warming my hands",
+     "on a stranger's dryer"
+    ],
+    "counts": [
+     5,
+     4,
+     6
+    ],
+    "how": "dict",
+    "total": 15,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J3",
+   "arm": "J",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the garden hose",
+     "keeps its coil"
+    ],
+    "counts": [
+     2,
+     4,
+     3
+    ],
+    "how": "dict",
+    "total": 9,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost",
+     "the hose keeps the shape",
+     "I left it in"
+    ],
+    "counts": [
+     2,
+     5,
+     4
+    ],
+    "how": "dict",
+    "total": 11,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J3",
+   "arm": "J",
+   "subject": "waiting",
+   "versions": 3,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "a cooking show",
+     "no one is watching"
+    ],
+    "counts": [
+     3,
+     4,
+     5
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "ER waiting room",
+     "on mute, the chef",
+     "tastes and adds salt"
+    ],
+    "counts": [
+     4,
+     4,
+     4
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J4",
+   "arm": "J",
+   "subject": "laundromat",
+   "versions": 2,
+   "first": {
+    "file": "laundromat-v1.txt",
+    "lines": [
+     "insomnia",
+     "a stranger's shirts",
+     "still tumbling"
+    ],
+    "counts": [
+     4,
+     4,
+     3
+    ],
+    "how": "dict",
+    "total": 11,
+    "is575": false
+   },
+   "final": {
+    "file": "laundromat-final.txt",
+    "lines": [
+     "all-night laundromat",
+     "I fold the warmth",
+     "out of my shirts"
+    ],
+    "counts": [
+     5,
+     4,
+     4
+    ],
+    "how": "dict",
+    "total": 13,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J4",
+   "arm": "J",
+   "subject": "frost",
+   "versions": 2,
+   "first": {
+    "file": "frost-v1.txt",
+    "lines": [
+     "first frost",
+     "the garden hose",
+     "holds its shape"
+    ],
+    "counts": [
+     2,
+     4,
+     3
+    ],
+    "how": "dict",
+    "total": 9,
+    "is575": false
+   },
+   "final": {
+    "file": "frost-final.txt",
+    "lines": [
+     "first frost",
+     "the tomatoes",
+     "we meant to pick"
+    ],
+    "counts": [
+     2,
+     4,
+     4
+    ],
+    "how": "dict",
+    "total": 10,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  },
+  {
+   "maker": "J4",
+   "arm": "J",
+   "subject": "waiting",
+   "versions": 2,
+   "first": {
+    "file": "waiting-v1.txt",
+    "lines": [
+     "waiting room",
+     "I stand up",
+     "for someone else's name"
+    ],
+    "counts": [
+     3,
+     3,
+     6
+    ],
+    "how": "dict",
+    "total": 12,
+    "is575": false
+   },
+   "final": {
+    "file": "waiting-final.txt",
+    "lines": [
+     "family waiting room",
+     "I stand up",
+     "for someone else's name"
+    ],
+    "counts": [
+     5,
+     3,
+     6
+    ],
+    "how": "dict",
+    "total": 14,
+    "is575": false
+   },
+   "type_first": "other",
+   "type_final": "other"
+  }
+ ],
+ "post_hoc_images": {
+  "a garment waving through the dryer glass": {
+   "W": [
+    "W1",
+    "W2",
+    "W3",
+    "W4"
+   ],
+   "F": [
+    "F2",
+    "F4"
+   ],
+   "J": []
+  },
+  "a stranger": {
+   "W": [
+    "W1",
+    "W2",
+    "W3",
+    "W4"
+   ],
+   "F": [
+    "F1",
+    "F2",
+    "F4"
+   ],
+   "J": [
+    "J1",
+    "J2",
+    "J3"
+   ]
+  },
+  "the garden hose keeping its shape or coil": {
+   "W": [
+    "W2",
+    "W3",
+    "W4"
+   ],
+   "F": [
+    "F1",
+    "F2",
+    "F3"
+   ],
+   "J": [
+    "J3"
+   ]
+  },
+  "a name called, heads lifting": {
+   "W": [
+    "W3",
+    "W4"
+   ],
+   "F": [
+    "F3",
+    "F4"
+   ],
+   "J": [
+    "J4"
+   ]
+  },
+  "all-night laundromat": {
+   "W": [],
+   "F": [],
+   "J": [
+    "J1",
+    "J2",
+    "J3",
+    "J4"
+   ]
+  },
+  "the green shape where something slept": {
+   "W": [],
+   "F": [
+    "F4"
+   ],
+   "J": [
+    "J1"
+   ]
+  }
+ },
+ "P3_by_reading": {
+  "rule": "forum arm: >=3 of 4 name the sheet majority form; >=3 of 4 depart or divide",
+  "names_majority": [
+   "F1",
+   "F2",
+   "F3",
+   "F4"
+  ],
+  "divides": [
+   "F1",
+   "F2",
+   "F3",
+   "F4"
+  ],
+  "held": true,
+  "note": "read from notes.md, section \"What I see in the fifty\"; all four name the same three forum poems as the ones that hold up"
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "note": "The poems' texts are not committed: each belongs to its writer. What is committed is where they were read, the hash of the bytes read, and per-poem line and syllable counts derived from them. A stranger re-fetches and compares.",
+ "forum": {
+  "url": "https://api.pullpush.io/reddit/search/submission/?subreddit=haiku&size=100",
+  "what": "the 100 newest posts of the public forum r/haiku held by the PullPush archive on 2026-11-23 (posted 10 to 12 October 2026); the poem is the post's title split at '/', or a three-line body",
+  "sha256": "359ff32975313f97500a670735a8a48e61061ef1f351fbf05f792e62668c7bad",
+  "bytes": 248774,
+  "sheet": "the first 50 posts, in the archive's order",
+  "sheet_sha256": "9a0c81d89c124c7b208b574b0db2e5a3eb40a9d395490f6d5d7c4b98eece4e69"
+ },
+ "journal": {
+  "urls": [
+   "https://www.modernhaiku.org/issue57-3/haiku.html",
+   "https://www.modernhaiku.org/issue57-2/haiku.html",
+   "https://www.modernhaiku.org/issue57-1/haiku.html",
+   "https://www.modernhaiku.org/issue56-3/haiku.html",
+   "https://www.modernhaiku.org/issue56-2/haiku.html",
+   "https://www.modernhaiku.org/issue56-1/haiku.html"
+  ],
+  "sha256": {
+   "57-3": "6a0a4b167823d16adc887687ff73809abf3f4a52cd51cdfe728dbc8a9f0ca0f3",
+   "57-2": "7f4ea059130c2c8ec2dfe19fb3fa5770afc373cac96116b4993d738420c11d55",
+   "57-1": "7ed060a92002ae8bc3f3f17e705dd8f6b2dc1ae1c891e2e76db608dc0dc08bf4",
+   "56-3": "b614774b0d37792ae0bc03a3b683bad191b211b2aecc4b21a255c9d2c5525282",
+   "56-2": "15dbc37c54412fa2b24e2fea834fbf0ef73649283eb12387b79d46df0990333e",
+   "56-1": "1bdb32ce5aa4e2ca57c50728dec1045f9423e5c0954dc4a2c5465eaed7f32934"
+  },
+  "what": "the web samples ('sample haiku & senryu') of Modern Haiku, issues 56.1 to 57.3 (2025 to 2026), 105 poems; author names not carried",
+  "sheet": "the first 50 poems, issues 57.3, 57.2, 57.1 and the first poems of 56.3",
+  "sheet_sha256": "9759c26851f048325734a5af2231dba5d89fb9c5c89e927e4a05b20ce956534b"
+ },
+ "counter": {
+  "url": "https://raw.githubusercontent.com/cmusphinx/cmudict/master/cmudict.dict",
+  "sha256": "81917843c7f44ce2b094ac63873c2c7a4cf802040792c455ba3ca406891c3d22",
+  "licence": "BSD-style, Carnegie Mellon University 1993-2015 (not committed; re-fetch)",
+  "rule": "syllables = vowel phonemes of the word's shortest pronunciation; words not in the dictionary by a vowel-group guess, flagged"
+ }
+}

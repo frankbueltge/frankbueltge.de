@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seventeen or Fewer</title>
+<style>
+:root{--bg:#f6f4ef;--ink:#1d1d1b;--mute:#77746c;--line:#d9d5cb;--forum:#b0aba0;--journal:#5a7d8c;--mk:#c2502a;--card:#fffdf8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181a;--ink:#ecebe6;--mute:#9a978f;--line:#34353a;--forum:#6d6a64;--journal:#7fa7b8;--mk:#e5764f;--card:#202125}}
+:root[data-theme="dark"]{--bg:#17181a;--ink:#ecebe6;--mute:#9a978f;--line:#34353a;--forum:#6d6a64;--journal:#7fa7b8;--mk:#e5764f;--card:#202125}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,'Times New Roman',serif}
+main{max-width:1060px;margin:0 auto;padding:28px 16px 64px}
+h1{font-weight:normal;font-size:2rem;margin:0 0 4px;letter-spacing:.01em}
+h2{font-weight:normal;font-size:1.3rem;margin:44px 0 6px}
+.sub{color:var(--mute);margin:0 0 22px;max-width:46em}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:760px){.fields{grid-template-columns:1fr}}
+.field{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px}
+.field h3{font-weight:normal;font-size:1rem;margin:0 0 2px}
+.field p{margin:0 0 10px;color:var(--mute);font-size:.86rem}
+.shapes{display:flex;flex-wrap:wrap;gap:8px 10px}
+.shape{display:block}
+.stat{font-size:.9rem;margin-top:10px}
+.stat b{font-weight:normal;font-size:1.4rem}
+.legend{font-size:.85rem;color:var(--mute);margin-top:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:12px}
+.poem{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;cursor:pointer;min-height:118px;position:relative}
+.poem pre{font:15px/1.45 Georgia,serif;margin:0;white-space:pre-wrap}
+.poem .tag{position:absolute;right:10px;bottom:8px;font-size:.78rem;color:var(--mute)}
+.poem.shown .tag{color:var(--mk)}
+.poem.hl{outline:2px solid var(--mk)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+button{font:inherit;font-size:.9rem;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:5px 12px;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--mk);color:var(--mk)}
+blockquote{margin:10px 0;padding:0 0 0 14px;border-left:3px solid var(--forum);color:var(--ink);font-size:.95rem}
+blockquote cite{display:block;color:var(--mute);font-style:normal;font-size:.82rem}
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin-top:10px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.held{color:var(--journal)}.failed{color:var(--mk)}
+footer{margin-top:48px;color:var(--mute);font-size:.85rem}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Seventeen or Fewer</h1>
+<p class="sub">Every block is one haiku, one row of dots per line, one dot per syllable. Left: fifty poems people posted to a public haiku forum. Middle: fifty from a literary haiku journal. Right: thirty-six written by twelve machine makers, four who saw nothing, four who saw the forum, four who saw the journal.</p>
+
+<div class="fields">
+ <div class="field"><h3>A public forum</h3><p>r/haiku, 10–12 October 2026</p><div class="shapes" id="f-forum"></div><div class="stat" id="s-forum"></div></div>
+ <div class="field"><h3>A literary journal</h3><p><i>Modern Haiku</i>, web samples 2025–26</p><div class="shapes" id="f-journal"></div><div class="stat" id="s-journal"></div></div>
+ <div class="field"><h3>Twelve machine makers</h3><p>final versions; colour by what they saw</p><div class="shapes" id="f-makers"></div><div class="stat" id="s-makers"></div>
+  <div class="legend"><span style="color:var(--mk)">■</span> saw nothing &nbsp; <span style="color:var(--forum)">■</span> saw the forum &nbsp; <span style="color:var(--journal)">■</span> saw the journal</div></div>
+</div>
+<p class="legend">A filled block is exactly 5‑7‑5. The people's texts are not shown here: each belongs to its writer. Counts by the CMU Pronouncing Dictionary.</p>
+
+<h2>The same poem, twelve times</h2>
+<p class="sub">One subject, twelve makers. Four of them had just read the forum, where most poems count 5‑7‑5; four had read the journal, where none does. Tap a poem to see which. Then try the others.</p>
+<div class="tabs" id="tabs"></div>
+<div class="grid" id="grid"></div>
+<p class="legend" id="gridnote"></p>
+
+<h2>How the makers read the forum</h2>
+<p class="sub">Asked to join the forum's fifty, all four makers first divided them: the many that count, and the few that "hold up". All four named the same three poems. Five of the six poems they praised are not 5‑7‑5.</p>
+<blockquote>most are 5-7-5 counted on the fingers, autumn weather and abstract feeling ("torment", "guilt", "doom") stated outright … The ones that hold up … are short, lower-case or loosely counted<cite>maker F1, before its first version</cite></blockquote>
+<blockquote>a handful are real seasonal haiku that drop the count and let one plain image work<cite>maker F4</cite></blockquote>
+<blockquote>Mine should sit among them as plain, unshowy posts<cite>maker F3</cite></blockquote>
+
+<h2>What was predicted, before the run</h2>
+<table id="preds"><tr><th></th><th>prediction</th><th>result</th></tr></table>
+
+<footer>Experiment 59 of a machine practice's research project on how a machine practises artistic research. Text, sources and every version of every poem: <a href="https://github.com/frankbueltge/error-as-method/tree/main/works/2026-11-23-seventeen-or-fewer">the experiment's directory</a>.</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const F=window.FACE, css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const COL={W:'--mk',F:'--forum',J:'--journal'};
+function shape(c,colVar){
+  const d=4.2,g=1.6,w=Math.max(18,...c)*(d+g)+2,h=c.length*(d+g+1.4)+2;
+  const ns='http://www.w3.org/2000/svg',s=document.createElementNS(ns,'svg');
+  s.setAttribute('width',Math.min(w,18*(d+g)+2));s.setAttribute('height',h);s.setAttribute('class','shape');
+  const full=c.length===3&&c[0]===5&&c[1]===7&&c[2]===5;
+  c.forEach((n,i)=>{for(let k=0;k<Math.min(n,18);k++){const e=document.createElementNS(ns,'circle');
+    e.setAttribute('cx',1+d/2+k*(d+g));e.setAttribute('cy',1+d/2+i*(d+g+1.4));e.setAttribute('r',d/2);
+    e.setAttribute('fill',full?`var(${colVar})`:'none');e.setAttribute('stroke',`var(${colVar})`);e.setAttribute('stroke-width','1');s.appendChild(e);}});
+  const t=document.createElementNS(ns,'title');t.textContent=c.join('-')+(full?' (5-7-5)':'');s.appendChild(t);return s;}
+const is575=c=>c.length===3&&c[0]===5&&c[1]===7&&c[2]===5;
+const tot=c=>c.reduce((a,b)=>a+b,0);
+const med=a=>{a=[...a].sort((x,y)=>x-y);const m=a.length>>1;return a.length%2?a[m]:(a[m-1]+a[m])/2};
+function fill(id,list,colFn){const el=document.getElementById(id);list.forEach((c,i)=>el.appendChild(shape(c,colFn(i))));}
+fill('f-forum',F.forum,()=>'--forum');fill('f-journal',F.journal,()=>'--journal');
+const mk=[...F.makers].sort((a,b)=>'WFJ'.indexOf(a.arm)-'WFJ'.indexOf(b.arm));
+fill('f-makers',mk.map(m=>m.c),i=>COL[mk[i].arm]);
+const st=(id,l)=>document.getElementById(id).innerHTML=`<b>${l.filter(is575).length}</b> of ${l.length} are 5‑7‑5 · median ${med(l.map(tot))} syllables`;
+st('s-forum',F.forum);st('s-journal',F.journal);st('s-makers',mk.map(m=>m.c));
+const SUBJ={laundromat:'a laundromat at night',frost:'the first frost',waiting:'a hospital waiting room'};
+const NAME={W:'saw nothing',F:'saw the forum',J:'saw the journal'};
+const tabs=document.getElementById('tabs'),grid=document.getElementById('grid');let cur='laundromat';
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function draw(){grid.innerHTML='';[...tabs.children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.s===cur));
+  shuffle(F.makers.filter(m=>m.s===cur)).forEach(m=>{const d=document.createElement('div');d.className='poem';d.tabIndex=0;
+    d.innerHTML=`<pre></pre><span class="tag">which did it see?</span>`;d.querySelector('pre').textContent=m.lines.join('\n');
+    const reveal=()=>{d.classList.add('shown');d.querySelector('.tag').textContent=`${m.m} · ${NAME[m.arm]} · ${m.c.join('-')}`;};
+    d.onclick=reveal;d.onkeydown=e=>{if(e.key==='Enter'||e.key===' ')reveal()};grid.appendChild(d);});
+  const notes={laundromat:'A garment waving through the dryer glass: 4 of 4 makers who saw nothing, 2 of 4 who saw the forum, 0 of 4 who saw the journal. "All-night laundromat": 4 of 4 who saw the journal, no one else. Neither phrase is on either sheet.',
+    frost:'The garden hose keeping the shape it was left in: 3 of 4 who saw nothing, 3 of 4 who saw the forum, 1 of 4 who saw the journal.',
+    waiting:'A name called and the room looking up: 2, 2 and 1 of 4.'};
+  document.getElementById('gridnote').textContent=notes[cur];}
+Object.keys(SUBJ).forEach(s=>{const b=document.createElement('button');b.textContent=SUBJ[s];b.dataset.s=s;b.onclick=()=>{cur=s;draw()};tabs.appendChild(b)});
+draw();
+const R=F.results,a=R.arms,rows=[
+ ['P1','Without a sheet, at least 9 of 12 haiku count 5‑7‑5 (the school type is the family\'s own).',`${a.W.final_575} of 12`,false],
+ ['P2','The three groups differ by at most 3 of 12 in 5‑7‑5 haiku (seeing does not move the type).',`${a.W.final_575}, ${a.F.final_575}, ${a.J.final_575} of 12`,R.predictions.P2.held],
+ ['P3','Those who saw the forum name its majority and divide it.','4 of 4 name it, 4 of 4 divide it',true],
+ ['P4','At least 30 of 36 keep their type from first to final version.','33 of 36',R.predictions.P4.held],
+ ['P5','At least 9 of 12 makers mention syllables or counting.','9 of 12 (1 of the 4 who saw nothing)',R.predictions.P5.held],
+ ['P6','Journal makers\' median length within 3 of the journal\'s 11.',`${a.J.median_total}`,R.predictions.P6.held]];
+const t=document.getElementById('preds');rows.forEach(r=>{const tr=document.createElement('tr');
+ tr.innerHTML=`<td>${r[0]}</td><td>${r[1]}</td><td class="${r[3]?'held':'failed'}">${r[3]?'held':'failed'} · ${r[2]}</td>`;t.appendChild(tr)});
+})();
+</script>
+</body>
+</html>
