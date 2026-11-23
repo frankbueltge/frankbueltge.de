@@ -109,19 +109,24 @@ export const projects: Project[] = [
   },
   // Added 2026-11-23, the day its first episode went up, on Frank's ask. Everything said here is
   // what the channel and that episode say about themselves. A show, not software: the card page
-  // declares a series (`schema`), not an application. The TikTok account joined the same night;
-  // it is listed because its own bio names this site's imprint, not because the handle matches.
+  // declares a series (`schema`), not an application. TikTok and Instagram joined the same night:
+  // the TikTok account is listed because its own bio names this site's imprint, not because the
+  // handle matches; the Instagram profile cannot be read without a login, so its address is the
+  // one Frank gave.
   {
     slug: 'mr-more',
     name: 'MR. MORE',
     year: '2026',
     url: 'https://www.youtube.com/@mrmoreshow',
-    channels: [{ label: 'TikTok', href: 'https://www.tiktok.com/@mrmoreshow' }],
+    channels: [
+      { label: 'TikTok', href: 'https://www.tiktok.com/@mrmoreshow' },
+      { label: 'Instagram', href: 'https://www.instagram.com/mrmoreshow' },
+    ],
     status: { de: 'Aktiv', en: 'Active' },
     role: { de: 'Eigenprojekt · Konzept & Produktion', en: 'Personal project · concept & production' },
     tagline: {
-      de: 'Eine Satire auf die Aufmerksamkeitsökonomie, auf YouTube und TikTok.',
-      en: 'A satire of the attention economy, on YouTube and TikTok.',
+      de: 'Eine Satire auf die Aufmerksamkeitsökonomie, auf YouTube, TikTok und Instagram.',
+      en: 'A satire of the attention economy, on YouTube, TikTok and Instagram.',
     },
     description: {
       de: 'Mr. More baut groß. Dann größer. Jede Folge ist ein absurdes Bauprojekt, mit einem Gastgeber und einem unbezahlten Praktikanten, der immer Kevin heißt, in einer Welt, in der Dinge nur existieren, solange jemand zusieht. In der ersten Folge, „The $400,000,000 Slingshot“, wünscht sich ein einziger Kommentar eine Schleuder: Mr. More baut sie, setzt Praktikant Kevin #23 in die Kapsel und lässt die Likes entscheiden, wie weit sie gespannt wird. KI-generierte Satire: Alle Figuren sind fiktiv, Mr. More nutzt das Abbild seines Urhebers. Für Erwachsene, nicht für Kinder.',
@@ -131,7 +136,7 @@ export const projects: Project[] = [
       de: ['Ein Gastgeber, ein absurdes Bauprojekt pro Folge', 'Ein unbezahlter Praktikant, der immer Kevin heißt', 'Dinge existieren nur, solange jemand zusieht', 'KI-generiert, alle Figuren fiktiv, für Erwachsene'],
       en: ['One host, one absurd build per episode', 'An unpaid intern who is always called Kevin', 'Things only exist while somebody is watching', 'AI-generated, every character fictional, made for adults'],
     },
-    tech: ['YouTube', 'TikTok', 'AI-generated video'],
+    tech: ['YouTube', 'TikTok', 'Instagram', 'AI-generated video'],
     badge: 'live',
     order: 5,
     schema: 'CreativeWorkSeries',
