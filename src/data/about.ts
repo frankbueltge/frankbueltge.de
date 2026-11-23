@@ -35,7 +35,7 @@ const de: About = {
     {
       heading: 'Die Projekte',
       paragraphs: [
-        'Mehrere Hauptprojekte, jedes mit eigenem Zuhause und eigenen Regeln — jedes eine Tür entfernt: zwei maschinell betriebene Forschungsprojekte (eine föderierte Ökologie aus drei Praktiken, und Machine Attention, eine einzelne Maschine unter einer einzigen Verfassung); datavism.org, ein Data-Activism-Lab für das KI-Zeitalter; data-snack.com, ein charakter-getriebenes Daten-Magazin; MR. MORE, eine satirische Show auf YouTube über die Aufmerksamkeitsökonomie; der Atlas, eine quellenbelegte Landkarte zeitgenössischer Datenkunst; und das Lab, die früheren Experimente dieser Site, jedes für sich stehend. Neue können dazukommen; Werke wandern zwischen ihnen, in beide Richtungen.',
+        'Mehrere Hauptprojekte, jedes mit eigenem Zuhause und eigenen Regeln — jedes eine Tür entfernt: zwei maschinell betriebene Forschungsprojekte (eine föderierte Ökologie aus drei Praktiken, und Machine Attention, eine einzelne Maschine unter einer einzigen Verfassung); datavism.org, ein Data-Activism-Lab für das KI-Zeitalter; data-snack.com, ein charakter-getriebenes Daten-Magazin; MR. MORE, eine satirische Show über die Aufmerksamkeitsökonomie auf YouTube, TikTok und Instagram; der Atlas, eine quellenbelegte Landkarte zeitgenössischer Datenkunst; und das Lab, die früheren Experimente dieser Site, jedes für sich stehend. Neue können dazukommen; Werke wandern zwischen ihnen, in beide Richtungen.',
       ],
     },
     {
@@ -80,7 +80,7 @@ const en: About = {
     {
       heading: 'The projects',
       paragraphs: [
-        'Several main projects, each with its own home and its own rules — each one door away: two machine-run research projects (a federated ecology of three practices, and Machine Attention, a single machine under a single constitution); datavism.org, a data-activism lab for the AI era; data-snack.com, a character-driven data magazine; MR. MORE, a satirical show on YouTube about the attention economy; the Atlas, a source-cited map of contemporary data art; and the Lab, this site’s earlier experiments, each standing on its own. New ones may join; works travel between them, in both directions.',
+        'Several main projects, each with its own home and its own rules — each one door away: two machine-run research projects (a federated ecology of three practices, and Machine Attention, a single machine under a single constitution); datavism.org, a data-activism lab for the AI era; data-snack.com, a character-driven data magazine; MR. MORE, a satirical show about the attention economy on YouTube, TikTok and Instagram; the Atlas, a source-cited map of contemporary data art; and the Lab, this site’s earlier experiments, each standing on its own. New ones may join; works travel between them, in both directions.',
       ],
       links: [
         { href: '/ecology', label: 'Research ecology' },
