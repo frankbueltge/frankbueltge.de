@@ -47,6 +47,7 @@ CLONES = sys.argv[1]
 SINCE = '2026-11-08'            # the programme's start (cycle.json, programme.started)
 PRACTICE = {'ulysses': 'atelier', 'studio': 'studio', 'field-research': 'field', 'research-ecology': 'middle'}
 SURFACE = {'index.html', 'SUMMARY.md', 'paper.md', 'meta.json'}
+OWN_CORRECTION = 'fa11bc0784c00195fed2829e0738e25788898bae'   # ulysses: this practice marked its own step-1 pages (state 2)
 fails = []
 
 
@@ -255,6 +256,39 @@ for c in cases['cases']:
         'served_lagging': sum(1 for x in served if x['reading'] == 'lags'),
     })
 
+# ---------------------------------------------------------------- the check (2026-11-23): where a correction was addressed
+# The state's corrections of 13 November were offered to the works' makers by this practice on 22 November
+# (ho-2026-11-22-atelier-2 to the Studio, ho-2026-11-22-atelier-3 to the Field). Each commit below is the first that
+# writes the correction onto a page of the work; it is pinned by hand and asserted: the notice stands at the commit
+# and not at its parent. And the state's own note of 15 November, addressed to no one, is asserted where it stands.
+ADDRESSED = [
+    {'cases': ['A', 'C'], 'who': 'studio', 'offer': 'ho-2026-11-22-atelier-2', 'repo': 'studio',
+     'commit': '563d785da31d5c30e94448a47cdeb046921107d6', 'path': 'works/2026-11-08-no-public-land/index.html',
+     'notice': r'Corrected, 22 November 2026'},
+    {'cases': ['B'], 'who': 'field', 'offer': 'ho-2026-11-22-atelier-3', 'repo': 'field-research',
+     'commit': '809bab980be2ac8eb60a307b593b8c030e65321b', 'path': 'presentations/cycle-013/paper.md',
+     'notice': r'Corrected 23 November 2026'},
+    {'cases': ['A'], 'who': 'atelier', 'offer': None, 'repo': 'ulysses', 'commit': OWN_CORRECTION,
+     'path': 'presentations/cycle-013/SUMMARY.md', 'notice': r'compares across a change in what (the record|is) count'},
+]
+STATE_NOTE = {'case': 'A', 'repo': 'research-ecology', 'commit': 'd5aad7e', 'path': 'programme/STATE.md',
+              'notice': r"Studio.s stream still states the counted stock as growing 334-fold"}
+addressed = []
+for a in ADDRESSED:
+    ok(holds(a['repo'], a['commit'], a['path'], a['notice']) and not holds(a['repo'], a['commit'] + '^', a['path'], a['notice']),
+       f"addressed: {a['repo']} {a['commit'][:7]} writes the correction onto {a['path']}")
+    t = ctime(a['repo'], a['commit'])
+    addressed.append({**a, 'commit': a['commit'][:7], 't': t, 'iso': iso(t)})
+sn = STATE_NOTE
+ok(holds(sn['repo'], sn['commit'], sn['path'], sn['notice']) and not holds(sn['repo'], sn['commit'] + '^', sn['path'], sn['notice']),
+   "the state's note of 15 November is new in research-ecology d5aad7e")
+state_note = {**sn, 't': ctime(sn['repo'], sn['commit']), 'iso': iso(ctime(sn['repo'], sn['commit'])),
+              'standing_today': holds(sn['repo'], 'HEAD', sn['path'], sn['notice'])}
+for c in out_cases:
+    c['reached'] = [{'who': a['who'], 't': a['t'], 'iso': a['iso'], 'commit': a['commit'], 'repo': a['repo'],
+                     'offer': a['offer']} for a in addressed if c['id'] in a['cases']]
+    c['state_note'] = state_note if c['id'] == sn['case'] else None
+
 heads = {r: git(r, 'rev-parse', 'HEAD')[1].strip() for r in list(PRACTICE) + ['frankbueltge.de']}
 n = len(out_cases)
 copied = [c for c in out_cases if c['window_closed_t']]
@@ -285,9 +319,11 @@ for c in out_cases:
     for x in c['today']:
         print(f"        today {x['reading']}: {x['repo']}:{x['path']} :: {(x['line'] or '')[:230]}")
 print('summary', json.dumps(summary))
-summary['own_correction'] = iso(ctime('ulysses', heads['ulysses'])) if summary['own_pages_corrected_today'] else None
-summary['own_correction_t'] = ctime('ulysses', heads['ulysses']) if summary['own_pages_corrected_today'] else None
-summary['own_correction_commit'] = heads['ulysses'][:7]
+summary['own_correction'] = iso(ctime('ulysses', OWN_CORRECTION)) if summary['own_pages_corrected_today'] else None
+summary['own_correction_t'] = ctime('ulysses', OWN_CORRECTION) if summary['own_pages_corrected_today'] else None
+summary['own_correction_commit'] = OWN_CORRECTION[:7]   # pinned by the check (2026-11-23); state 2 took ulysses HEAD
+summary['addressed'] = addressed
+summary['state_note'] = state_note
 res = {'built': datetime.now(timezone.utc).strftime('%Y-%m-%d'), 'heads': heads, 'since': SINCE,
        'surfaces': sorted(SURFACE), 'summary': summary, 'cases': out_cases, 'excluded': cases['excluded'],
        'not_cases': cases.get('not_cases', [])}

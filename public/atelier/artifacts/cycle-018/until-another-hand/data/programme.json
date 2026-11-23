@@ -1,11 +1,11 @@
 {
- "built": "2026-11-22",
+ "built": "2026-11-23",
  "heads": {
-  "ulysses": "fa11bc0784c00195fed2829e0738e25788898bae",
-  "studio": "8e34e18510a69545432af5d06de8c9e8930a8667",
-  "field-research": "88ad2595136df772ac8bc08e55d6251333cfe350",
-  "research-ecology": "e9ae6d247d70d303b4e31156202b71968d033976",
-  "frankbueltge.de": "3913e6a2ad06f46e2e7266b15239daaf97e0987d"
+  "ulysses": "2b9ae4e7f37c34628569a1c74a920a4d42d301f3",
+  "studio": "10f9ea061bfbf74b672025ba170acc5209a1c658",
+  "field-research": "809bab980be2ac8eb60a307b593b8c030e65321b",
+  "research-ecology": "efc4c321927f6ccdc0ccaaf20a04808c0a03c882",
+  "frankbueltge.de": "b2fd410a12a52cf4c80cfc8fb530a09043c4c928"
  },
  "since": "2026-11-08",
  "surfaces": [
@@ -15,24 +15,76 @@
   "paper.md"
  ],
  "summary": {
-  "cases": 6,
-  "excluded": 15,
+  "cases": 5,
+  "excluded": 16,
   "in_time": 1,
-  "late": 5,
+  "late": 4,
   "copies_before": 8,
-  "copies_after": 3,
-  "window_closed_median_h": 13.2,
-  "correction_median_h": 46.2,
-  "pages_asserting_today": 6,
-  "assertions_today": 9,
-  "cases_asserting_today": 3,
-  "served_asserting": 6,
-  "served_lagging": 4,
+  "copies_after": 2,
+  "window_closed_median_h": 10.7,
+  "correction_median_h": 67.0,
+  "pages_asserting_today": 3,
+  "assertions_today": 3,
+  "cases_asserting_today": 1,
+  "served_asserting": 3,
+  "served_lagging": 1,
   "own_pages_corrected_today": 6,
   "late_in_state": 3,
   "own_correction": "2026-11-22T05:26Z",
   "own_correction_t": 1795325208,
-  "own_correction_commit": "fa11bc0"
+  "own_correction_commit": "fa11bc0",
+  "addressed": [
+   {
+    "cases": [
+     "A",
+     "C"
+    ],
+    "who": "studio",
+    "offer": "ho-2026-11-22-atelier-2",
+    "repo": "studio",
+    "commit": "563d785",
+    "path": "works/2026-11-08-no-public-land/index.html",
+    "notice": "Corrected, 22 November 2026",
+    "t": 1795335711,
+    "iso": "2026-11-22T08:21Z"
+   },
+   {
+    "cases": [
+     "B"
+    ],
+    "who": "field",
+    "offer": "ho-2026-11-22-atelier-3",
+    "repo": "field-research",
+    "commit": "809bab9",
+    "path": "presentations/cycle-013/paper.md",
+    "notice": "Corrected 23 November 2026",
+    "t": 1795410605,
+    "iso": "2026-11-23T05:10Z"
+   },
+   {
+    "cases": [
+     "A"
+    ],
+    "who": "atelier",
+    "offer": null,
+    "repo": "ulysses",
+    "commit": "fa11bc0",
+    "path": "presentations/cycle-013/SUMMARY.md",
+    "notice": "compares across a change in what (the record|is) count",
+    "t": 1795325208,
+    "iso": "2026-11-22T05:26Z"
+   }
+  ],
+  "state_note": {
+   "case": "A",
+   "repo": "research-ecology",
+   "commit": "d5aad7e",
+   "path": "programme/STATE.md",
+   "notice": "Studio.s stream still states the counted stock as growing 334-fold",
+   "t": 1794747300,
+   "iso": "2026-11-15T12:55Z",
+   "standing_today": true
+  }
  },
  "cases": [
   {
@@ -42,7 +94,7 @@
    "old": "56.6 % in March 2022, while the counted stock grew 334-fold",
    "new": "for 2022 the record counts Nvidia's chips only; on Nvidia's chips alone 56.6 % to 61.6 %, 225-fold",
    "state_passage": "Step 1, point 1: \"The longer comparison does not hold as it stood here\"",
-   "key": "334-fold|56\\.6 ?% to (68\\.6|70\\.9)|56\\.6 ?% (of the counted chips )?in March 2022|held 56\\.6 ?%",
+   "key": "334-fold|334 times|56\\.6 ?% to (68\\.6|70\\.9)|56\\.6 ?% (of the counted chips )?in March 2022|held 56\\.6 ?%",
    "marker": "225-fold|partly a rise in what is counted|Nvidia.s chips (only|alone)",
    "kind": "after the step",
    "first": "2026-11-08T15:58Z",
@@ -92,9 +144,19 @@
      "path": "programme/STATE.md",
      "before_correction": true,
      "line": "mpanies (Google, Microsoft, Meta, Amazon, Oracle) held about 69 % of the world's counted AI chips at the end of 2025 (90 % range 63–73 %), up from 56.6 % in March 2022 while the counted stock grew 334-fold; the share rose about seven points in two years and stood still from"
+    },
+    {
+     "unit": "studio:work:14",
+     "first": "2026-11-12T18:12Z",
+     "first_t": 1794507166,
+     "commit": "acdce2a",
+     "repo": "studio",
+     "path": "works/2026-11-12-whose-gate/index.html",
+     "before_correction": true,
+     "line": "och AI's table of AI chip owners: 16 finished quarters, from 63 thousand H100-equivalents in March 2022 to 20.9 million in December 2025, a growth of 334 times. Six grains in the first quarter, 2,093 by the last. After December 2025 the record has no finished count, so"
     }
    ],
-   "copies_before": 3,
+   "copies_before": 4,
    "copies_after": 0,
    "today": [
     {
@@ -150,7 +212,7 @@
      "path": "presentations/cycle-013/SUMMARY.md",
      "unit": "studio:work:13",
      "marked": false,
-     "reading": "asserts",
+     "reading": "later",
      "line": "m March 2022 to the unfinished first quarter of 2026. Each owner holds a parcel whose area is fitted to its exact share. At true scale the land grows 334-fold, from 63 thousand to 20.9 million H100-equivalents. The five companies inked in red (Google, Microsoft, Meta,"
     },
     {
@@ -158,7 +220,7 @@
      "path": "presentations/cycle-013/index.html",
      "unit": "studio:work:13",
      "marked": false,
-     "reading": "asserts",
+     "reading": "later",
      "line": "rveyed every quarter from March 2022. Each parcel is an owner's holding, its area fitted to the owner's exact share. At true scale the land grows 334-fold in four years. The five companies inked in red hold 70.9 % of the land at the end of 2025, and 68.6 % of ev"
     },
     {
@@ -166,15 +228,31 @@
      "path": "presentations/cycle-013/meta.json",
      "unit": "studio:work:13",
      "marked": false,
-     "reading": "asserts",
+     "reading": "later",
      "line": "ner, every quarter of the record.\", \"embodies\": \"Five companies hold 70.9 % of the land the open record's chip-owner table draws at the end of 2025 (56.6 % in March 2022), and 68.6 % of every chip it counts with the smuggled stock (90 %: 63-73 %); the counted land grew 334-fold"
+    },
+    {
+     "repo": "studio",
+     "path": "presentations/cycle-014/SUMMARY.md",
+     "unit": "studio:work:14",
+     "marked": false,
+     "reading": "asserts",
+     "line": "the open record counts runs as one stream of grains, one grain for ten thousand H100-equivalents: six grains in early 2022, 2,093 by the end of 2025, 334 times as many. On its way from the chip to the running model the stream passes five gates where a public body could"
+    },
+    {
+     "repo": "studio",
+     "path": "presentations/cycle-014/index.html",
+     "unit": "studio:work:14",
+     "marked": false,
+     "reading": "asserts",
+     "line": "och AI's table of AI chip owners: 16 finished quarters, from 63 thousand H100-equivalents in March 2022 to 20.9 million in December 2025, a growth of 334 times. Six grains in the first quarter, 2,093 by the last. After December 2025 the record has no finished count, so"
     },
     {
      "repo": "studio",
      "path": "works/2026-11-08-no-public-land/index.html",
      "unit": "studio:work:13",
      "marked": false,
-     "reading": "asserts",
+     "reading": "later",
      "line": "rveyed every quarter from March 2022. Each parcel is an owner's holding, its area fitted to the owner's exact share. At true scale the land grows 334-fold in four years. The five companies inked in red hold 70.9 % of the land at the end of 2025, and 68.6 % of ev"
     },
     {
@@ -182,8 +260,16 @@
      "path": "works/2026-11-08-no-public-land/meta.json",
      "unit": "studio:work:13",
      "marked": false,
-     "reading": "asserts",
+     "reading": "later",
      "line": "ner, every quarter of the record.\", \"embodies\": \"Five companies hold 70.9 % of the land the open record's chip-owner table draws at the end of 2025 (56.6 % in March 2022), and 68.6 % of every chip it counts with the smuggled stock (90 %: 63-73 %); the counted land grew 334-fold"
+    },
+    {
+     "repo": "studio",
+     "path": "works/2026-11-12-whose-gate/index.html",
+     "unit": "studio:work:14",
+     "marked": false,
+     "reading": "asserts",
+     "line": "och AI's table of AI chip owners: 16 finished quarters, from 63 thousand H100-equivalents in March 2022 to 20.9 million in December 2025, a growth of 334 times. Six grains in the first quarter, 2,093 by the last. After December 2025 the record has no finished count, so"
     },
     {
      "repo": "research-ecology",
@@ -194,47 +280,59 @@
      "line": "n points in two years, from 61.9 % in March 2024, and stood still from mid-2025. The longer comparison does not hold as it stood here (\"up from 56.6 % in March 2022 while the counted stock grew 334-fold\"): for 2022 the record counts Nvidia's chips only, Google's own chip"
     }
    ],
-   "asserting_today": 5,
+   "asserting_today": 3,
    "served": [
     {
      "path": "public/atelier/artifacts/cycle-013/answerable-to/index.html",
      "source": "ulysses:artifacts/cycle-013/answerable-to/index.html",
-     "marked": false,
-     "reading": "lags"
+     "marked": true,
+     "reading": "corrected"
     },
     {
      "path": "public/atelier/presentations/cycle-013/SUMMARY.md",
      "source": "ulysses:presentations/cycle-013/SUMMARY.md",
-     "marked": false,
-     "reading": "lags"
+     "marked": true,
+     "reading": "corrected"
     },
     {
      "path": "public/atelier/presentations/cycle-013/index.html",
      "source": "ulysses:presentations/cycle-013/index.html",
-     "marked": false,
-     "reading": "lags"
+     "marked": true,
+     "reading": "corrected"
     },
     {
      "path": "public/atelier/presentations/cycle-013/meta.json",
      "source": "ulysses:presentations/cycle-013/meta.json",
-     "marked": false,
-     "reading": "lags"
+     "marked": true,
+     "reading": "corrected"
     },
     {
      "path": "public/studio/presentations/cycle-013/SUMMARY.md",
      "source": "studio:presentations/cycle-013/SUMMARY.md",
      "marked": false,
-     "reading": "asserts"
+     "reading": "later"
     },
     {
      "path": "public/studio/presentations/cycle-013/index.html",
      "source": "studio:presentations/cycle-013/index.html",
      "marked": false,
-     "reading": "asserts"
+     "reading": "later"
     },
     {
      "path": "public/studio/presentations/cycle-013/meta.json",
      "source": "studio:presentations/cycle-013/meta.json",
+     "marked": false,
+     "reading": "later"
+    },
+    {
+     "path": "public/studio/presentations/cycle-014/SUMMARY.md",
+     "source": "studio:presentations/cycle-014/SUMMARY.md",
+     "marked": false,
+     "reading": "asserts"
+    },
+    {
+     "path": "public/studio/presentations/cycle-014/index.html",
+     "source": "studio:presentations/cycle-014/index.html",
      "marked": false,
      "reading": "asserts"
     },
@@ -242,13 +340,19 @@
      "path": "public/studio/werke-html/2026-11-08-no-public-land/index.html",
      "source": "studio:works/2026-11-08-no-public-land/index.html",
      "marked": false,
+     "reading": "later"
+    },
+    {
+     "path": "public/studio/werke-html/2026-11-12-whose-gate/index.html",
+     "source": "studio:works/2026-11-12-whose-gate/index.html",
+     "marked": false,
      "reading": "asserts"
     },
     {
      "path": "src/content/studio/works/2026-11-08-no-public-land/meta.json",
      "source": "studio:works/2026-11-08-no-public-land/meta.json",
      "marked": false,
-     "reading": "asserts"
+     "reading": "later"
     },
     {
      "path": "src/data/middle/programme/STATE.md",
@@ -257,8 +361,36 @@
      "reading": "quotes"
     }
    ],
-   "served_asserting": 5,
-   "served_lagging": 4
+   "served_asserting": 3,
+   "served_lagging": 0,
+   "reached": [
+    {
+     "who": "studio",
+     "t": 1795335711,
+     "iso": "2026-11-22T08:21Z",
+     "commit": "563d785",
+     "repo": "studio",
+     "offer": "ho-2026-11-22-atelier-2"
+    },
+    {
+     "who": "atelier",
+     "t": 1795325208,
+     "iso": "2026-11-22T05:26Z",
+     "commit": "fa11bc0",
+     "repo": "ulysses",
+     "offer": null
+    }
+   ],
+   "state_note": {
+    "case": "A",
+    "repo": "research-ecology",
+    "commit": "d5aad7e",
+    "path": "programme/STATE.md",
+    "notice": "Studio.s stream still states the counted stock as growing 334-fold",
+    "t": 1794747300,
+    "iso": "2026-11-15T12:55Z",
+    "standing_today": true
+   }
   },
   {
    "id": "B",
@@ -306,22 +438,41 @@
      "repo": "field-research",
      "path": "presentations/cycle-013/SUMMARY.md",
      "unit": "field:work:13",
-     "marked": false,
-     "reading": "asserts",
+     "marked": true,
+     "reading": "corrected",
      "line": "d its list of named clusters covers only 10–20 % of the world. - **The firms that train the best-known models hold none of it.** OpenAI and Anthropic own no counted chips and rent at about $22 bn and $10 bn a year in agreements with a stated term, plus large sums with no term."
+    },
+    {
+     "repo": "field-research",
+     "path": "presentations/cycle-013/paper.md",
+     "unit": "field:work:13",
+     "marked": true,
+     "reading": "corrected",
+     "line": "carries out. **Corrected 23 November 2026** (taken up from the Atelier's correction of 22 November): where this text says that OpenAI and Anthropic own no counted chips, or hold none, the record shows only that it has no row for either. At the end of 2025, 16.1 % of the counted"
     }
    ],
-   "asserting_today": 1,
+   "asserting_today": 0,
    "served": [
     {
      "path": "public/field/presentations/cycle-013/SUMMARY.md",
      "source": "field-research:presentations/cycle-013/SUMMARY.md",
      "marked": false,
-     "reading": "asserts"
+     "reading": "lags"
     }
    ],
-   "served_asserting": 1,
-   "served_lagging": 0
+   "served_asserting": 0,
+   "served_lagging": 1,
+   "reached": [
+    {
+     "who": "field",
+     "t": 1795410605,
+     "iso": "2026-11-23T05:10Z",
+     "commit": "809bab9",
+     "repo": "field-research",
+     "offer": "ho-2026-11-22-atelier-3"
+    }
+   ],
+   "state_note": null
   },
   {
    "id": "C",
@@ -370,7 +521,7 @@
      "path": "presentations/cycle-013/SUMMARY.md",
      "unit": "studio:work:13",
      "marked": false,
-     "reading": "asserts",
+     "reading": "later",
      "line": "es each cluster at its true area in its owner's parcel. Its public clusters can only stand in the empty column, as crossed markers. The list covers 73.6 % of the land in 2022 and 6.1 % at the end of 2025, and the page says so: the list sees less of a growing lan"
     },
     {
@@ -378,16 +529,32 @@
      "path": "presentations/cycle-013/index.html",
      "unit": "studio:work:13",
      "marked": false,
-     "reading": "asserts",
-     "line": "te ones (one stroke) stand in the empty column as markers, never as ground: 129 and 43 of the 425 standing at the end of 2025. The stakes cover 73.6 % of the land in March 2022 and 6.1 % at the end of 2025; the count line says so in every quarter, becaus"
+     "reading": "later",
+     "line": "in/artifacts/cycle-013/who-holds-the-compute/data/ai_chip_owners_cumulative_by_designer.csv\">the Field's file by designer). (2) \"The stakes cover 73.6 % of the land in March 2022\" holds as arithmetic, not as coverage: the cluster list also holds machines built b"
+    },
+    {
+     "repo": "studio",
+     "path": "presentations/cycle-013/meta.json",
+     "unit": "studio:work:13",
+     "marked": true,
+     "reading": "corrected",
+     "line": "6.6 % compare across a change in what the record counts (2022 counts Nvidia's chips only); on Nvidia's chips alone 56.6 % to 61.6 % and 225-fold. The 73.6 % for 2022 holds as arithmetic, not as coverage: the cluster list also holds machines built before 2022. \\\"embo"
     },
     {
      "repo": "studio",
      "path": "works/2026-11-08-no-public-land/index.html",
      "unit": "studio:work:13",
      "marked": false,
-     "reading": "asserts",
-     "line": "te ones (one stroke) stand in the empty column as markers, never as ground: 129 and 43 of the 425 standing at the end of 2025. The stakes cover 73.6 % of the land in March 2022 and 6.1 % at the end of 2025; the count line says so in every quarter, becaus"
+     "reading": "later",
+     "line": "in/artifacts/cycle-013/who-holds-the-compute/data/ai_chip_owners_cumulative_by_designer.csv\">the Field's file by designer). (2) \"The stakes cover 73.6 % of the land in March 2022\" holds as arithmetic, not as coverage: the cluster list also holds machines built b"
+    },
+    {
+     "repo": "studio",
+     "path": "works/2026-11-08-no-public-land/meta.json",
+     "unit": "studio:work:13",
+     "marked": true,
+     "reading": "corrected",
+     "line": "6.6 % compare across a change in what the record counts (2022 counts Nvidia's chips only); on Nvidia's chips alone 56.6 % to 61.6 % and 225-fold. The 73.6 % for 2022 holds as arithmetic, not as coverage: the cluster list also holds machines built before 2022. \\\"embo"
     },
     {
      "repo": "research-ecology",
@@ -398,25 +565,37 @@
      "line": "k ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md)). Neither work says why they differ. The Studio's 73.6 % for 2022 holds as arithmetic and not as coverage: the list also holds machines built before 2022, which th"
     }
    ],
-   "asserting_today": 3,
+   "asserting_today": 0,
    "served": [
     {
      "path": "public/studio/presentations/cycle-013/SUMMARY.md",
      "source": "studio:presentations/cycle-013/SUMMARY.md",
      "marked": false,
-     "reading": "asserts"
+     "reading": "later"
     },
     {
      "path": "public/studio/presentations/cycle-013/index.html",
      "source": "studio:presentations/cycle-013/index.html",
      "marked": false,
-     "reading": "asserts"
+     "reading": "later"
+    },
+    {
+     "path": "public/studio/presentations/cycle-013/meta.json",
+     "source": "studio:presentations/cycle-013/meta.json",
+     "marked": true,
+     "reading": "corrected"
     },
     {
      "path": "public/studio/werke-html/2026-11-08-no-public-land/index.html",
      "source": "studio:works/2026-11-08-no-public-land/index.html",
      "marked": false,
-     "reading": "asserts"
+     "reading": "later"
+    },
+    {
+     "path": "src/content/studio/works/2026-11-08-no-public-land/meta.json",
+     "source": "studio:works/2026-11-08-no-public-land/meta.json",
+     "marked": true,
+     "reading": "corrected"
     },
     {
      "path": "src/data/middle/programme/STATE.md",
@@ -425,8 +604,19 @@
      "reading": "corrected"
     }
    ],
-   "served_asserting": 3,
-   "served_lagging": 0
+   "served_asserting": 0,
+   "served_lagging": 0,
+   "reached": [
+    {
+     "who": "studio",
+     "t": 1795335711,
+     "iso": "2026-11-22T08:21Z",
+     "commit": "563d785",
+     "repo": "studio",
+     "offer": "ho-2026-11-22-atelier-2"
+    }
+   ],
+   "state_note": null
   },
   {
    "id": "I",
@@ -595,7 +785,9 @@
     }
    ],
    "served_asserting": 0,
-   "served_lagging": 0
+   "served_lagging": 0,
+   "reached": [],
+   "state_note": null
   },
   {
    "id": "K",
@@ -700,158 +892,9 @@
     }
    ],
    "served_asserting": 0,
-   "served_lagging": 0
-  },
-  {
-   "id": "L",
-   "step": 5,
-   "claim": "who saw the house's deeds first",
-   "old": "seen by machines more than by its person",
-   "new": "false for the deeds",
-   "state_passage": "Step 5, corrected within the step: \"its own score's sentence 'seen by machines more than by its person' false for the deeds\"",
-   "key": "by machines more than by its person",
-   "marker": "Tested, and false|false for the (log.s )?deeds",
-   "kind": "within the step",
-   "first": "2026-11-19T23:37Z",
-   "first_t": 1795131469,
-   "origin": "studio:work:17",
-   "origin_commit": "cd72914",
-   "origin_repo": "studio",
-   "origin_path": "works/2026-11-19-small-hours/SCORE.md",
-   "origin_line": "stay readable. **How we will know.** A visitor who ran the census night can say, without the text, that the house works in the dark and is seen late, by machines more than by its person.",
-   "correction": "2026-11-21T01:05Z",
-   "correction_t": 1795223138,
-   "correction_commit": "f50c6d4",
-   "correction_repo": "studio",
-   "correction_path": "works/2026-11-19-small-hours/index.html",
-   "correction_unit": "studio:work:17",
-   "correction_line": "span> the first commit is in the house's site repository, which this field does not hold: their ring marks the deed's day, not its place. Tested, and false: “seen by machines more than by its person”. The score staked the work on this sentence, and the critique",
-   "window_closed": "2026-11-21T00:34Z",
-   "window_closed_t": 1795221291,
-   "in_time": false,
-   "copies": [
-    {
-     "unit": "atelier:critique:17",
-     "first": "2026-11-21T00:34Z",
-     "first_t": 1795221291,
-     "commit": "a030f3c",
-     "repo": "ulysses",
-     "path": "artifacts/cycle-017/step-5-critique.md",
-     "before_correction": true,
-     "line": "frame and text, not walked or heard), and the Studio's own critique, which asks for the eye at the lantern and finds the picture contradicting \"seen by machines more than by its person\". Written 2026-11-21, session 66. This one asks what the work presupposes. 1. **A red ember has two states f"
-    },
-    {
-     "unit": "middle:state:0",
-     "first": "2026-11-21T11:11Z",
-     "first_t": 1795259514,
-     "commit": "8251610",
-     "repo": "research-ecology",
-     "path": "programme/STATE.md",
-     "before_correction": false,
-     "line": "/github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), corrections). The Studio's check found its own score's sentence \"seen by machines more than by its person\" false for the deeds; after the Atelier's critique a breach keeps its red only where it is over on every read"
-    }
-   ],
-   "copies_before": 1,
-   "copies_after": 1,
-   "today": [
-    {
-     "repo": "ulysses",
-     "path": "artifacts/cycle-017/step-5-critique.md",
-     "unit": "atelier:critique:17",
-     "marked": false,
-     "reading": "quotes",
-     "line": "frame and text, not walked or heard), and the Studio's own critique, which asks for the eye at the lantern and finds the picture contradicting \"seen by machines more than by its person\". Written 2026-11-21, session 66. This one asks what the work presupposes. 1. **A red ember has two states f"
-    },
-    {
-     "repo": "studio",
-     "path": "presentations/cycle-017/SUMMARY.md",
-     "unit": "studio:work:17",
-     "marked": true,
-     "reading": "corrected",
-     "line": "e eye down to the lantern, made the census a wall, took in the Field's corrections (88 deeds, 156 breaches), and found the score's own sentence \"seen by machines more than by its person\" false for the deeds. State 4 (s258) asked for the first gesture on the stage, so the work is heard from its"
-    },
-    {
-     "repo": "studio",
-     "path": "presentations/cycle-017/index.html",
-     "unit": "studio:work:17",
-     "marked": true,
-     "reading": "corrected",
-     "line": "in the house's site repository, which this field does not hold: their ring marks the deed's day, not its place. Tested, and false: “seen by machines more than by its person”. The score staked the work on this sentence, and the critique said the picture contradicted it. Of the <"
-    },
-    {
-     "repo": "studio",
-     "path": "presentations/cycle-017/meta.json",
-     "unit": "studio:work:17",
-     "marked": true,
-     "reading": "corrected",
-     "line": "it (12 deed and maker, 69 act only, 7 nothing), with a pillar on the ember where the commit lies in this field (18 deeds); the score's sentence 'seen by machines more than by its person' tested and found false for the deeds (architect 24, a session he set 12, machines 19 of 55 that say), correc"
-    },
-    {
-     "repo": "studio",
-     "path": "works/2026-11-19-small-hours/index.html",
-     "unit": "studio:work:17",
-     "marked": true,
-     "reading": "corrected",
-     "line": "in the house's site repository, which this field does not hold: their ring marks the deed's day, not its place. Tested, and false: “seen by machines more than by its person”. The score staked the work on this sentence, and the critique said the picture contradicted it. Of the <"
-    },
-    {
-     "repo": "studio",
-     "path": "works/2026-11-19-small-hours/meta.json",
-     "unit": "studio:work:17",
-     "marked": true,
-     "reading": "corrected",
-     "line": "it (12 deed and maker, 69 act only, 7 nothing), with a pillar on the ember where the commit lies in this field (18 deeds); the score's sentence 'seen by machines more than by its person' tested and found false for the deeds (architect 24, a session he set 12, machines 19 of 55 that say), correc"
-    },
-    {
-     "repo": "research-ecology",
-     "path": "programme/STATE.md",
-     "unit": "middle:state:0",
-     "marked": true,
-     "reading": "corrected",
-     "line": "/github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), corrections). The Studio's check found its own score's sentence \"seen by machines more than by its person\" false for the deeds; after the Atelier's critique a breach keeps its red only where it is over on every read"
-    }
-   ],
-   "asserting_today": 0,
-   "served": [
-    {
-     "path": "public/studio/presentations/cycle-017/SUMMARY.md",
-     "source": "studio:presentations/cycle-017/SUMMARY.md",
-     "marked": true,
-     "reading": "corrected"
-    },
-    {
-     "path": "public/studio/presentations/cycle-017/index.html",
-     "source": "studio:presentations/cycle-017/index.html",
-     "marked": true,
-     "reading": "corrected"
-    },
-    {
-     "path": "public/studio/presentations/cycle-017/meta.json",
-     "source": "studio:presentations/cycle-017/meta.json",
-     "marked": true,
-     "reading": "corrected"
-    },
-    {
-     "path": "public/studio/werke-html/2026-11-19-small-hours/index.html",
-     "source": "studio:works/2026-11-19-small-hours/index.html",
-     "marked": true,
-     "reading": "corrected"
-    },
-    {
-     "path": "src/content/studio/works/2026-11-19-small-hours/meta.json",
-     "source": "studio:works/2026-11-19-small-hours/meta.json",
-     "marked": true,
-     "reading": "corrected"
-    },
-    {
-     "path": "src/data/middle/programme/STATE.md",
-     "source": "research-ecology:programme/STATE.md",
-     "marked": true,
-     "reading": "corrected"
-    }
-   ],
-   "served_asserting": 0,
-   "served_lagging": 0
+   "served_lagging": 0,
+   "reached": [],
+   "state_note": null
   }
  ],
  "excluded": [
@@ -929,6 +972,11 @@
    "step": 5,
    "what": "the Field's sentence that only the log joins a deed to its mending",
    "why": "this session did not find the paper's first sentence by the phrase STATE.md quotes"
+  },
+  {
+   "step": 5,
+   "what": "the Studio's sentence that the house was 'seen by machines more than by its person' (case L of state 2)",
+   "why": "by this method's own record rule it is not a case: the sentence stood only in the Studio's score (SCORE.md, studio cd72914), a bulletin and a critique, which are records, and it reached a page only in the commit that corrected it; the one page that held it before, this practice's step-5 critique (ulysses a030f3c), quoted it to report that the Studio's own critique had found it contradicted. State 2 counted that refutation as a take-over and so made the critic the cause of the lateness. Moved here by the check, 2026-11-23."
   }
  ],
  "not_cases": [

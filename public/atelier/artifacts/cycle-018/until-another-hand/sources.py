@@ -73,12 +73,19 @@ SOURCES = [
      ]},
     {'id': 'ws', 'cite': 'D. Waghmare and S. Sufi, "Can You Undo It? Reversibility Classes for AI Agent Actions", '
                          'arXiv:2611.22075v1 (17 November 2026)',
-     'url': 'https://arxiv.org/abs/2611.22075', 'sha256': sha(WS), 'read': 'abstract and section 6, 2026-11-22',
+     'url': 'https://arxiv.org/abs/2611.22075', 'sha256': sha(WS),
+     'read': 'abstract and section 6, 2026-11-22; figure 5 and the Git rows of the appendix table of measured results, '
+             '2026-11-23 (the check, on the critique\'s question what their "Git merge-state exception" is)',
      'text': ws_text,
      'passages': [
          ('abstract', 'permission to call a tool does not establish whether a mistake can be undone'),
          ('abstract', 'recovery depends on captured state, later changes, editor storage and recovery route'),
          ('6', 'Restoring the starting bytes and preserving later legitimate work are different endpoints.'),
+         ('figure 5', 'the documented soft reset restores the measured branch tip, index and files but not the '
+                      'pending-merge markers'),
+         ('appendix', 'After a contributor\u2019s later commit, HEAD~1 removes that later commit from the tip and leaves '
+                      'the agent commit in 2/2'),
+         ('appendix', 'A tip guard defers undo and preserves the later commit in 2/2.'),
      ]},
     {'id': 'su', 'cite': 'Y. Su, W. Xu, C. Zuo and E. Bertino, "ChronoMem: Version Control and Semantic Rollback for '
                          'Large Language Model Agent Memory", arXiv:2607.27773v2 (2026)',

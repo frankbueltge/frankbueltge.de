@@ -41,7 +41,7 @@
   "cite": "D. Waghmare and S. Sufi, \"Can You Undo It? Reversibility Classes for AI Agent Actions\", arXiv:2611.22075v1 (17 November 2026)",
   "url": "https://arxiv.org/abs/2611.22075",
   "sha256": "0a9033f273f3e65e2a03e8154aa4c27db9a88a8b9b6e1551dac73f2ced9b0547",
-  "read": "abstract and section 6, 2026-11-22",
+  "read": "abstract and section 6, 2026-11-22; figure 5 and the Git rows of the appendix table of measured results, 2026-11-23 (the check, on the critique's question what their \"Git merge-state exception\" is)",
   "passages": [
    {
     "where": "abstract",
@@ -54,6 +54,18 @@
    {
     "where": "6",
     "text": "Restoring the starting bytes and preserving later legitimate work are different endpoints."
+   },
+   {
+    "where": "figure 5",
+    "text": "the documented soft reset restores the measured branch tip, index and files but not the pending-merge markers"
+   },
+   {
+    "where": "appendix",
+    "text": "After a contributor’s later commit, HEAD~1 removes that later commit from the tip and leaves the agent commit in 2/2"
+   },
+   {
+    "where": "appendix",
+    "text": "A tip guard defers undo and preserves the later commit in 2/2."
    }
   ]
  },

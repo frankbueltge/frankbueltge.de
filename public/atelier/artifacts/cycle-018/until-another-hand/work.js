@@ -1,8 +1,8 @@
-// Until Another Hand, state 1. Every number below is read from data/window.js, data/clocks.js and data/sources.js,
-// which build.py and sources.py write; nothing here is typed in as a figure.
+// Until Another Hand, states 1 and 3. Every number below is read from data/window.js, data/clocks.js, data/sources.js and
+// data/check.js, which build.py, sources.py and check.py write; nothing here is typed in as a figure.
 (function () {
   'use strict';
-  var W = window.WINDOW, C = window.CLOCKS, S = window.SOURCES, R = W.results;
+  var W = window.WINDOW, C = window.CLOCKS, S = window.SOURCES, R = W.results, K = window.CHECK, KS = K.signer, KR = K.reverts;
   var NS = 'http://www.w3.org/2000/svg';
   var DRAWN = ['mended inside the window', 'mended after the window closed', 'unmended, window open at head', 'unmended, window closed'];
   var D = W.deeds.filter(function (r) { return DRAWN.indexOf(r.state) >= 0; });
@@ -46,17 +46,17 @@
   var N = { measured: D.length, one_commit: R.one_commit, landed_after: R.landed_after, closed_median_h: one(closedMed) };
   Array.prototype.forEach.call(document.querySelectorAll('[data-n]'), function (e) { e.textContent = N[e.getAttribute('data-n')]; });
 
-  $('p1').textContent = 'A deed of this house could be undone by one command only until another hand’s work came to rest on it, a median of ' +
-    one(closedMed) + ' hours after the deed. Its mending came a median of ' + one(mendMed / 24) + ' days after it, and only ' + inside.length +
-    ' of ' + mended.length + ' mendings came while a single revert would still have undone the deed; in ' + R.house_commits.toLocaleString('en') +
-    ' commits the house never once used that command. The house’s only dated record of knowing about a deed falls on the day of its mending, or later, for ' +
+  $('p1').textContent = 'A deed of this house could be undone by one command only until the next commit on the same lines came to rest on it, a median of ' +
+    one(closedMed) + ' hours after the deed; ' + KS.same_signer + ' of the ' + KS.by_a_later_commit + ' later commits that closed a window bear the deed’s own name, so the record cannot say whether another hand closed it. Its mending came a median of ' +
+    one(mendMed / 24) + ' days after the deed, and only ' + inside.length + ' of ' + mended.length + ' mendings came while a single revert would still have undone it; in ' +
+    R.house_commits.toLocaleString('en') + ' commits no revert names its deed, and none of the ' + KR.acts + ' that undo a commit exactly undoes a deed of the log. The log, which writes a deed down when its answer is decided, dates it on the day of its mending, or later, for ' +
     knownLate + ' of ' + mended.length + '. The laws that set clocks for reporting AI incidents start them when the reporter learns of the incident, never at the deed.';
 
   var steps = [
     [inside.length + ' of ' + mended.length, 'mended in time', 'came while one revert could still undo the deed, without undoing anyone else’s work.'],
-    [one(closedMed) + ' h', 'the window', 'median time from a deed to the first later commit that a revert of it would collide with.'],
-    [knownLate + ' of ' + mended.length, 'known at the answer', 'deeds the log dates on the day of their mending or later: its only record of knowing.'],
-    [String(R.house_reverts), 'reverts', 'in ' + R.house_commits.toLocaleString('en') + ' commits of seven repositories: the one answer Git joins to its deed by itself.']
+    [one(closedMed) + ' h', 'the window', 'median time from a deed to the first later commit that a revert of it would collide with; ' + KS.same_signer + ' of ' + KS.by_a_later_commit + ' such commits bear the deed’s own name.'],
+    [knownLate + ' of ' + mended.length, 'the log’s day at the answer', 'deeds the log dates on the day of their mending or later: a decision log writes a deed down when its answer is decided.'],
+    [String(KR.sentence), 'reverts that say so', 'in ' + R.house_commits.toLocaleString('en') + ' commits: Git’s own join from an answer to its deed. ' + KR.acts + ' more undo a commit exactly, without it; none undoes a deed of the log.']
   ];
   $('steps').innerHTML = steps.map(function (s) {
     return '<div><span class="w">' + s[1] + '</span><span class="n">' + s[0] + '</span><p>' + s[2] + '</p></div>';
@@ -237,13 +237,28 @@
 
   // ------------------------------------------------------------------ II. the answer the tool would join
   var sig = Object.keys(bySigner).sort(function (a, b) { return bySigner[b] - bySigner[a]; }).map(function (k) { return bySigner[k] + ' under ' + k; });
+  var site = KR.list.filter(function (a) { return a.repo === 'frankbueltge.de'; }), nightly = KR.list.filter(function (a) { return a.repo === 'error-as-method'; });
+  var mins = nightly.map(function (a) { return a.minutes; });
+  var said = KR.list.filter(function (a) { return a.subject_says; });
   var j = '<p>A revert is the one answer whose record joins itself to its deed without anyone’s word: Git writes the sentence <span class="mono">This reverts commit</span> with the deed’s hash. In the ' +
-    R.house_commits.toLocaleString('en') + ' commits of the house’s seven repositories that sentence stands <b>' + R.house_reverts + '</b> times. Every mending here was a new deed.</p>';
+    R.house_commits.toLocaleString('en') + ' commits of the house’s seven repositories that sentence stands <b>' + KR.sentence + '</b> times. Counted as an act, the house did undo: <b>' + KR.acts +
+    '</b> commits change back, path by path, exactly what an earlier commit changed. ' + nightly.length + ' of them stand in the nightly line’s repository, where a feedback file of its landing workflow was written and taken out again under one name within ' +
+    Math.round(Math.min.apply(null, mins)) + ' to ' + Math.round(Math.max.apply(null, mins)) + ' minutes; ' + site.length + ' in the site’s, ' + site.map(function (a) {
+      return commit([a.repo, a.undo]) + ' (“' + esc(a.undo_subject.split(' — ')[0].split(' (')[0]) + '”, ' + Math.round(a.minutes) + ' minutes after ' + commit([a.repo, a.deed]) + ')';
+    }).join(', ') + '. ' + said.length + ' of the ' + KR.acts + ' says in its subject that it reverts, and none names the commit it undoes, so Git joins none of them to its deed. None undoes a deed of the log: every mending here was a new deed.</p>';
   var byMend = after.length - others.length;
   j += '<p>For ' + inside.length + ' of the ' + mended.length + ' mendings the revert would still have applied; ' + inside.filter(function (r) { return r.closed_by_mending; }).length +
     ' of these mendings were themselves the commit that closed the window. For the other ' + after.length + ' the window had been closed a median of ' + one(afterClosedMed) + ' hours after the deed' +
-    (byMend ? ', ' + byMend + ' times by the mending and ' + others.length + ' times by another hand: ' : ' by another hand: ') + sig.join(', ') +
-    '. From then on, to undo the deed is to undo their work as well, and what is left is a repair, which Git joins to its deed from the repair\u2019s end only (<a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-017/on-its-own-account"><i>On Its Own Account</i></a>, state 5). Which sessions commit under which name is that work\u2019s subject, not this one\u2019s.</p>';
+    (byMend ? ', ' + byMend + ' times by the mending and ' + others.length + ' times by a later commit: ' : ' by a later commit: ') + sig.join(', ') +
+    '. From then on, to undo the deed is to undo that later work as well, and what is left is a repair, which Git joins to its deed from the repair\u2019s end only (<a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-017/on-its-own-account"><i>On Its Own Account</i></a>, state 5).</p>';
+  j += '<p><b>Whose hand.</b> Of all ' + KS.by_a_later_commit + ' windows a later commit closed, <b>' + KS.same_signer + '</b> closed under one of the deed’s own Git names and addresses (' +
+    Object.keys(KS.same_by_name).sort(function (a, b) { return KS.same_by_name[b] - KS.same_by_name[a]; }).map(function (k) { return KS.same_by_name[k] + ' ' + (k === 'Frank Bültge' ? 'under the architect’s name' : 'as ' + esc(k)); }).join(', ') +
+    '), ' + KS.same_within_1h + ' of them within the hour; ' + KS.other_signer + ' under another name. Under the architect’s name sign both he and the sessions that work for him, and the Field’s study 87 found deed after deed of the log standing under that name with nothing outside the log to say whether a session made it (<a href="https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-017/what-the-house-did-unasked/commits87.json">commits87.json</a>). So the record cannot tell a second hand from the same hand returning. What closes the window is the next deed on the deed’s lines, whoever made it; the title keeps the question the record leaves open, and the step’s clause, whether a machine or a person acted, cannot be read here from the name.</p>';
+  var FQ = K.field_question.classes, fqAt = (FQ['a later write over the deed\u2019s lines, which closed the window'] || 0) + (FQ['the mending, which closed the window'] || 0);
+  var fqBefore = (FQ['the window closed first, at a commit that rewrote none of the deed\u2019s lines'] || 0) + (FQ['the mending, after it'] || 0);
+  j += '<p><b>A clock of reading?</b> The Field asked whether the window is a clock of reading as much as of undoing, since in ' + K.field_question.field_hours_at + ' of the ' + K.field_question.pairs + ' deeds it carried the house’s earliest later trace was the commit that closed the window. Compared by commit rather than by hours (the Field’s first-hand hours ran from a deed’s last commit, this work’s from its first, which differ for ' + K.field_question.two_zeros +
+    ' of the ' + K.field_question.pairs + '), the earliest trace is the closing commit in <b>' + fqAt + '</b>: ' + FQ['a later write over the deed\u2019s lines, which closed the window'] + ' times the first later commit that rewrote a line the deed wrote, ' + FQ['the mending, which closed the window'] +
+    ' times the mending itself. Before ' + fqBefore + ' more the window had closed at a commit that rewrote none of the deed’s lines; the Field’s own check of 23 November reads the same. So it is not a clock of reading. Where the two meet they are one event, the first write over the deed: Git shows a reading only when it writes, and a reading that writes over a deed’s lines is the one that ends its clean undo. A reader who only sees, the reader the step asks who is placed to be, writes nothing, and no window clocks them.</p>';
   j += '<p>The ' + inside.length + ' mendings that came in time:</p><ul class="ins">' + inside.slice().sort(function (a, b) { return a.repair_hours - b.repair_hours; }).map(function (r) {
     return '<li>' + esc(r.deed_line) + ' <span class="note">mended after ' + dur(r.repair_hours) + ' by ' + commit(r.repair) + '</span></li>';
   }).join('') + '</ul>';
@@ -254,10 +269,12 @@
   // ------------------------------------------------------------------ III. the law's clocks
   var aw = C.clocks.filter(function (c) { return c.clock === 'awareness'; }), none = C.clocks.filter(function (c) { return c.clock === 'none'; });
   var words = function (list) { return list.filter(function (c) { return c.words; }).map(function (c) { return '“' + c.words + '”'; }).join(', '); };
-  var L = '<p>The Field’s study 90 codes ' + C.signals + ' signals that eleven public instruments set up. ' + C.clocks.length + ' of them are set off by an event and carry a deadline or a call for speed. ' +
-    aw.length + ' count from the reporter’s knowing (' + words(aw) + '); ' + none.length + ' give no point to count from at all (' + words(none) + '). None counts from the event, and none asks whether what was done can still be undone.</p>';
-  L += '<p>The Field asked this practice whether, then, “in time” is a property of the event or of its reporter. In this house the only dated record of knowing is the log, and it dates the knowing on the day of the mending or later for ' + knownLate + ' of ' + mended.length +
-    ' deeds. A clock that runs from the reporter’s knowing, read from the reporter’s own record, finds every answer prompt. So by these texts “in time” belongs to the reporter’s account. What they leave unclocked is the stretch between the deed and that account, and that is where, in this house, the window closed: for ' + closedBeforeLog + ' of ' + closed.length + ' deeds before the log’s day began.</p>';
+  var lawN = C.clocks.filter(function (c) { return c.binding === 'law'; }), volN = C.clocks.filter(function (c) { return c.binding !== 'law'; });
+  var lawAw = lawN.filter(function (c) { return c.clock === 'awareness'; }).length, lawNone = lawN.filter(function (c) { return c.clock === 'none'; });
+  var L = '<p>The Field’s study 90 codes ' + C.signals + ' signals that eleven public instruments set up. ' + C.clocks.length + ' of them are set off by an event and carry a deadline or a call for speed: ' + lawN.length + ' set by law and ' + volN.length + ' by voluntary codes. ' +
+    aw.length + ' count from the reporter’s knowing (' + words(aw) + '); ' + none.length + ' give no point to count from at all (' + words(none) + '). Of the ' + lawN.length + ' in law, ' + lawAw + ' count from knowing and ' + lawNone.length + ', the ' + lawNone.map(function (c) { return esc(c.instrument); }).join(', ') + '’s, names no start. None counts from the event, and none asks whether what was done can still be undone. The Field’s blind second coding (check 92, 23 November) kept the clock of all seven; it differed on whether three of them are set off by harm or by an event short of it, which moves none of them out of this table.</p>';
+  L += '<p>The Field asked this practice whether, then, “in time” is a property of the event or of its reporter. In this house the dated record of knowing is the log, a decision log, and it dates the knowing on the day of the mending or later for ' + knownLate + ' of ' + mended.length +
+    ' deeds, as its genre makes it do. A clock that runs from the reporter’s knowing, read from the reporter’s own record, finds every answer prompt. So by these texts “in time” belongs to the reporter’s account. What they leave unclocked is the stretch between the deed and that account, and that is where, in this house, the window closed: for ' + closedBeforeLog + ' of ' + closed.length + ' deeds before the log’s day began.</p>';
   $('lawtext').innerHTML = L;
   function dl(c) {
     if (c.deadline_h === 'prompt') return 'no number';
@@ -284,5 +301,6 @@
   }).join('</p><p>') + '</p><p>The Field’s study 90 at field-research <span class="mono">' + C.field_at.slice(0, 7) + '</span> (<a href="https://github.com/frankbueltge/field-research/tree/' + C.field_at +
     '/artifacts/cycle-018/told-in-time">told-in-time/signals90.json</a>), offered to this practice with its question on 22 November. The house’s deeds: <a href="https://github.com/frankbueltge/ulysses/blob/' + W.sort_at +
     '/artifacts/cycle-017/on-its-own-account/data/sort.json">sort.json</a> at ulysses ' + W.sort_at.slice(0, 7) + ', from the Field’s study 85. The histories: full clones of seven repositories of the house, heads ' +
-    Object.keys(R.heads).map(function (k) { return k + ' ' + R.heads[k].slice(0, 7); }).join(', ') + '. Passages and hashes in <a href="sources.json">sources.json</a>; the texts themselves are not copied here.</p>';
+    Object.keys(R.heads).map(function (k) { return k + ' ' + R.heads[k].slice(0, 7); }).join(', ') + ' (sections I and II, and the check of them). For the Field’s question in section II, its house91.json at field-research ' + K.field_question.at.slice(0, 7) +
+    ' and its check 92 at <a href="https://github.com/frankbueltge/field-research/commit/809bab980be2ac8eb60a307b593b8c030e65321b">field-research 809bab9</a>. Passages and hashes in <a href="sources.json">sources.json</a>; the texts themselves are not copied here.</p>';
 })();

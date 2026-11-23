@@ -1,4 +1,4 @@
-// Until Another Hand, states 1 and 2: read every figure of the page as a visitor's browser shows it, at two widths, and
+// Until Another Hand, states 1 to 3: read every figure of the page as a visitor's browser shows it, at two widths, and
 // compare it with the data the builds wrote. The expected values are computed here from data/window.json and
 // data/clocks.json, independently of the page's own script.
 // Usage: node check_page.mjs <url of index.html>     (needs Playwright with a browser)
@@ -11,6 +11,12 @@ const W = JSON.parse(fs.readFileSync(new URL('./data/window.json', import.meta.u
 const C = JSON.parse(fs.readFileSync(new URL('./data/clocks.json', import.meta.url)));
 const S = JSON.parse(fs.readFileSync(new URL('./sources.json', import.meta.url)));
 const PG = JSON.parse(fs.readFileSync(new URL('./data/programme.json', import.meta.url)));
+const CK = JSON.parse(fs.readFileSync(new URL('./data/check.json', import.meta.url)));
+// the check (state 3), recounted from its rows rather than read from its summary
+const KO = CK.rows.filter(r => !r.by_mending);
+const KE = { later: KO.length, same: KO.filter(r => r.same_signer).length, other: KO.filter(r => !r.same_signer).length,
+  hour: KO.filter(r => r.same_signer && r.closed_hours <= 1).length, arch: KO.filter(r => r.same_signer && r.closer_name === 'Frank Bültge').length,
+  acts: CK.reverts.list.length, site: CK.reverts.list.filter(a => a.repo === 'frankbueltge.de').length };
 const DRAWN = ['mended inside the window', 'mended after the window closed', 'unmended, window open at head', 'unmended, window closed'];
 const D = W.deeds.filter(r => DRAWN.includes(r.state));
 const mended = D.filter(r => r.repair_hours != null);
@@ -57,7 +63,14 @@ for (const width of [1100, 390]) {
   ok(errs.length === 0, `${width}: no script error (${errs})`);
   const plain = await p.textContent('#plain');
   ok(plain.includes(`a median of ${E.closedMed} hours after the deed`), `${width}: plain words carry the window's median ${E.closedMed}`);
-  ok(plain.includes(`a median of ${E.mendDays} days after it`), `${width}: plain words carry the mending's median ${E.mendDays} days`);
+  ok(plain.includes(`a median of ${E.mendDays} days after the deed`), `${width}: plain words carry the mending's median ${E.mendDays} days`);
+  ok(plain.includes(`${KE.same} of the ${KE.later} later commits that closed a window bear the deed’s own name`), `${width}: plain words carry ${KE.same} of ${KE.later} under the deed's own name`);
+  ok(plain.includes(`none of the ${KE.acts} that undo a commit exactly`), `${width}: plain words carry the ${KE.acts} reverts in act`);
+  // the check, written into the work
+  const cl = await p.textContent('#checklist');
+  ok(await p.$$eval('#checklist li', l => l.length) === 8, `${width}: the check lists eight findings`);
+  ok(cl.includes(`Of the ${KE.later} windows that a later commit closed, ${KE.same} closed under one of the deed’s own Git names and addresses, ${KE.arch} of them the architect’s, and ${KE.hour} within the hour; ${KE.other} under another name`), `${width}: the check, another hand (${KE.same}, ${KE.arch}, ${KE.hour}, ${KE.other})`);
+  ok(cl.includes(`But ${KE.acts} commits undo an earlier one exactly`) && cl.includes(`${KE.acts - KE.site} in the nightly line’s repository`) && cl.includes(`and ${KE.site} in the site’s`), `${width}: the check, reverts in act (${KE.acts})`);
   ok(plain.includes(`only ${E.inside} of ${E.mended} mendings`), `${width}: plain words carry ${E.inside} of ${E.mended}`);
   ok(plain.includes(`in ${E.commits} commits`), `${width}: plain words carry ${E.commits} commits`);
   ok(plain.includes(`or later, for ${E.known} of ${E.mended}`), `${width}: plain words carry ${E.known} of ${E.mended} known at the answer`);
@@ -115,14 +128,17 @@ for (const width of [1100, 390]) {
   // section IV: the programme's own answers
   const psay = await p.textContent('#psay');
   ok(psay.includes(`Of the ${PE.n} corrections, ${PE.inTime} came while the wrong wording stood in one work only. For ${PE.late} another work`), `${width}: IV readout, ${PE.inTime} in time of ${PE.n}`);
-  ok(psay.includes(`a median of ${PE.winMed} hours after it was written; the corrections came a median of ${PE.corrMed} hours after`), `${width}: IV readout, medians ${PE.winMed} and ${PE.corrMed}`);
-  ok(psay.includes(`The ${PE.inState} the programme made in its state`) && psay.includes(`${PE.pages} pages a visitor meets still assert them, and the site serves ${PE.served} of them, besides ${PE.lag} copies`), `${width}: IV readout, ${PE.pages} pages, ${PE.served} served, ${PE.lag} lagging`);
+  const lateH = PK.filter(c => firstCopy(c) !== null && firstCopy(c) < c.correction_t).map(c => (firstCopy(c) - c.first_t) / 3600);
+  ok(psay.includes(`taken it over first, ${one(Math.min(...lateH))} to ${one(Math.max(...lateH))} hours after it was written`), `${width}: IV readout, the copies came ${one(Math.min(...lateH))} to ${one(Math.max(...lateH))} hours after`);
+  ok(psay.includes(`The ${PE.inState} the programme made in its state`) && psay.includes(`${PE.pages} pages a visitor meets still assert it, ${PE.served} of them served by the site`), `${width}: IV readout, ${PE.pages} pages, ${PE.served} served`);
   const p2 = await p.textContent('#p2');
-  ok(p2.includes(`Of ${PE.n} corrections`) && p2.includes(`${PE.late} came after another work`) && p2.includes(`${PE.pages} pages a visitor meets still state them, and the site serves ${PE.served}`) && p2.includes(`its own ${PE.own} pages`), `${width}: plain words, state 2`);
+  ok(p2.includes(`Of ${PE.n} corrections`) && p2.includes(`${PE.late} came after another work`) && p2.includes(`still stands on ${PE.pages} pages a visitor meets`), `${width}: plain words, state 3`);
   ok(await p.$$eval('#plan g.plane', g => g.length) === PE.n, `${width}: ${PE.n} lanes in IV`);
   const bigs = await p.$$eval('#plan text.big', t => t.map(x => +x.textContent));
   ok(JSON.stringify(bigs) === JSON.stringify(PK.map(c => c.today.filter(x => !x.marked && x.reading === 'asserts').length)), `${width}: IV, pages asserting per lane ${bigs}`);
-  ok(await p.$$eval('#plan line.corr:not(.own)', l => l.length) === PE.n && await p.$$eval('#plan line.corr.own', l => l.length) === 1, `${width}: IV, one correction per lane and this practice's own`);
+  const nReached = PK.reduce((a, c) => a + (c.reached || []).length, 0);
+  ok(await p.$$eval('#plan line.corr:not(.own)', l => l.length) === PE.n && await p.$$eval('#plan line.corr.own', l => l.length) === nReached, `${width}: IV, one correction per lane and ${nReached} reached works`);
+  ok(await p.$$eval('#plan circle.note', c => c.length) === PK.filter(c => c.state_note).length, `${width}: IV, the state's note drawn`);
   ok(await p.$$eval('#plan rect.copy', r => r.length) === PK.reduce((a, c) => a + c.copies.length, 0), `${width}: IV, every copy drawn`);
   ok((await p.textContent('#pin')).includes(`the ${PE.excluded} that could not`) && (await p.textContent('#method')).includes(`${PE.excluded} corrections could not be followed`), `${width}: IV, ${PE.excluded} excluded named`);
   for (let i = 0; i < PK.length; i++) {
