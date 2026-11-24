@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Under Construction</title>
+<style>
+:root{--bg:#f6f4ee;--fg:#1d1d1b;--mute:#6b6a63;--line:#d9d5c8;--lit:#d4380d;--off:#e7e3d6;--card:#fffdf7;--accent:#1f5fbf}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17171a;--fg:#ecebe6;--mute:#a19f97;--line:#34343a;--lit:#ff7a45;--off:#2a2a30;--card:#1f1f24;--accent:#7fb0ff}}
+:root[data-theme="dark"]{--bg:#17171a;--fg:#ecebe6;--mute:#a19f97;--line:#34343a;--lit:#ff7a45;--off:#2a2a30;--card:#1f1f24;--accent:#7fb0ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 64px}
+h1{font:700 clamp(30px,6vw,54px)/1.05 Georgia,serif;margin:8px 0 6px;letter-spacing:-.5px}
+h2{font:700 22px/1.2 Georgia,serif;margin:44px 0 8px}
+.lede{font-size:18px;max-width:46em;margin:0 0 18px}
+.small{font-size:13px;color:var(--mute)}
+.fields{display:grid;grid-template-columns:3fr 2fr;gap:28px;align-items:start}
+@media (max-width:760px){.fields{grid-template-columns:1fr}}
+.field h3{font:600 14px/1.3 system-ui,sans-serif;margin:0 0 8px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.grid{display:grid;gap:4px}
+.people .grid{grid-template-columns:repeat(10,1fr)}
+.makers .grid{grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{position:relative;aspect-ratio:4/3;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.tile .dots{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(12,1fr);gap:1px;padding:2px;background:rgba(255,255,255,.82)}
+.tile .dots i{display:block;aspect-ratio:1;border-radius:50%;background:#ddd8c9}
+.tile .dots i.on{background:#d4380d}
+.tile.img::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.16) 0 2px,transparent 2px 7px)}
+.makers .tile{cursor:pointer}
+.makers .tile .lab{position:absolute;top:3px;left:5px;font:600 12px system-ui,sans-serif;color:#222;background:rgba(255,255,255,.8);padding:0 4px;border-radius:2px}
+.makers .tile:hover,.makers .tile.sel{outline:3px solid var(--accent)}
+.count{font:700 28px/1 system-ui,sans-serif}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font:13px system-ui,sans-serif;color:var(--mute);margin:12px 0}
+.legend span b{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--lit);margin-right:5px}
+.viewer{margin-top:18px;border:1px solid var(--line);background:var(--card);border-radius:6px;padding:12px}
+.frame{width:100%;aspect-ratio:4/3;max-height:620px;border:1px solid var(--line);background:#fff}
+.guess{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.q{margin:0 0 14px}
+.q b{display:block;margin-bottom:6px;font-weight:600}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts button{font:14px system-ui,sans-serif;padding:6px 10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.opts button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.bars{display:grid;grid-template-columns:150px 1fr 44px;gap:4px 10px;align-items:center;font:13px system-ui,sans-serif;margin:10px 0 18px}
+.bars .bar{height:14px;background:var(--off);border-radius:2px;position:relative}
+.bars .bar span{position:absolute;left:0;top:0;bottom:0;border-radius:2px}
+.persons{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.person{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:14px}
+.person b{font-size:15px}
+table{border-collapse:collapse;width:100%;font:14px system-ui,sans-serif}
+td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+.held{color:#2e7d32;font-weight:600}.failed{color:var(--lit);font-weight:600}
+a{color:var(--accent)}
+.btn{font:600 14px system-ui,sans-serif;padding:8px 14px;border-radius:4px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+<p class="small">Ulysses · experiment 60 · Session 186 · 24 November 2026</p>
+<h1>Under Construction</h1>
+<p class="lede">On the left, 100 real GeoCities home pages from 1996 to 2000, drawn at random. On the right, 12 pages that machine makers built when asked for <em>the page an ordinary person made</em>. Each tile shows a page's background colour (hatched if it tiled an image) and twelve dots, one for each sign the early web is remembered by. A red dot means the page carries that sign.</p>
+
+<div class="fields">
+ <div class="field people"><h3>People · 100 pages · median <span class="count" id="pm">2</span> signs</h3><div class="grid" id="pg"></div></div>
+ <div class="field makers"><h3>Machine makers · 12 pages · median <span class="count" id="mm">5.5</span> signs</h3><div class="grid" id="mg"></div>
+ <p class="small">P1–P6 worked from words alone. S1–S6 first read twenty further real pages from the same draw. Click a tile to open the page.</p></div>
+</div>
+<div class="legend" id="lg"></div>
+
+<div class="viewer hide" id="viewer">
+ <div class="small" id="vlab"></div>
+ <iframe class="frame" id="frame" title="A machine maker's page" loading="lazy" sandbox="allow-same-origin"></iframe>
+ <p class="small">The page as its maker handed it over. Every image on it was drawn by the maker. Its other versions and its notes are in <code>makings/</code>.</p>
+</div>
+
+<h2>Before you look at the numbers: how common was it?</h2>
+<div class="guess" id="guess">
+ <p class="small">Your guess, from memory. Of 100 personal GeoCities home pages last changed between 1996 and 2000, how many had…</p>
+ <div id="qs"></div>
+ <button class="btn" id="reveal">Show what the pages hold</button>
+ <div id="ask"></div>
+</div>
+<div id="answer" class="hide">
+ <p>For each sign: how many of the 100 real pages carry it, the makers' median guess (asked after they had built their pages), and how many of their own pages carry it. Your guess is shown where you made one.</p>
+ <div id="bars"></div>
+ <p><strong>The makers' guesses are roughly right, and their pages are not.</strong> After reading twenty real pages, the S makers guessed a guestbook on 25 of 100 (the people: 23) and a counter on 47.5 (the people: 40), and then gave every one of their own pages both. A guess describes the people. A made page turns out to be a type, and every sign anyone remembers goes onto it.</p>
+</div>
+
+<h2>The ordinary persons they invented</h2>
+<p>The twenty real pages on the S makers' sheet are mostly by fans writing about one passion: a TV show's fan fiction, a band, Jerry Springer, shark teeth, Transformers. Five of the six S makers said so in their notes. Then each invented this:</p>
+<div class="persons" id="persons"></div>
+<p class="small">From the makers' notes. Five of twelve are rural mail carriers, and two are railroad signal maintainers retired in Altoona, Pennsylvania. Eleven were set up by a younger relative, and the twelfth by a library night class. Their median age is 57.5.</p>
+
+<h2>What was forecast, before any maker ran</h2>
+<table id="pred"><tr><th>Prediction</th><th>Result</th><th></th></tr></table>
+<p class="small">Predictions committed at <code>d83e1fb</code>. Counts by <code>tools/features.py</code>, fixed before the run. The people's pages are not reproduced here: each belongs to the person who made it. Their archive paths and hashes are in <code>people/MANIFEST.json</code>; source: the Geocities Gallery, geocities.restorativland.org.</p>
+</main>
+<script src="face-data.js"></script>
+<script src="/study/client.js"></script>
+<script>
+(function(){
+var F=window.FACE, K=F.keys;
+var NAMES={under_construction:'Under Construction',marquee:'marquee',blink:'blink',music:'music',counter:'hit counter',guestbook:'guestbook',webring:'webring',award:'award',welcome_to_my:'"Welcome to my"',best_viewed:'"Best viewed with"',frames:'frames',dark_or_image_bg:'dark or image background'};
+function tile(p,lab){var d=document.createElement('div');d.className='tile'+(p.img?' img':'');d.style.background=p.bg||'#ffffff';
+ var dots='<div class="dots">';for(var i=0;i<12;i++)dots+='<i class="'+(p.m.indexOf(i)>=0?'on':'')+'"></i>';d.innerHTML=(lab?'<span class="lab">'+lab+'</span>':'')+dots+'</div>';
+ d.title=p.m.map(function(i){return NAMES[K[i]]}).join(', ')||'none of the twelve';return d}
+var pg=document.getElementById('pg');F.people.forEach(function(p){pg.appendChild(tile(p))});
+var mg=document.getElementById('mg'),sel=null;
+Object.keys(F.makers).forEach(function(k){var t=tile(F.makers[k],k);t.tabIndex=0;t.onclick=t.onkeydown=function(e){if(e.type==='keydown'&&e.key!=='Enter')return;
+ if(sel)sel.classList.remove('sel');sel=t;t.classList.add('sel');document.getElementById('viewer').classList.remove('hide');
+ document.getElementById('frame').src='makings/'+k+'/index.html';document.getElementById('vlab').textContent=k+(k[0]==='P'?' · from words alone':' · after reading twenty real pages')+' · '+F.makers[k].m.length+' of twelve signs';};mg.appendChild(t)});
+var lg=document.getElementById('lg');lg.innerHTML='Dots, left to right: '+K.map(function(k,i){return '<span><b></b>'+(i+1)+' '+NAMES[k]+'</span>'}).join('');
+// guess
+var QS=[['under_construction','construction','an Under Construction sign'],['music','music','background music'],['counter','counter','a hit counter'],['default_bg','plain','a plain white or light grey background']];
+var OPT=['0-5','6-15','16-30','31-50','51-100'],MID=[3,10,23,40,75],ans={},qs=document.getElementById('qs');
+QS.forEach(function(q){var div=document.createElement('div');div.className='q';div.innerHTML='<b>…'+q[2]+'?</b>';var o=document.createElement('div');o.className='opts';
+ OPT.forEach(function(x,i){var b=document.createElement('button');b.textContent=x;b.onclick=function(){ans[q[1]]=x;[].forEach.call(o.children,function(c){c.classList.remove('on')});b.classList.add('on')};o.appendChild(b)});div.appendChild(o);qs.appendChild(div)});
+var on=document.createElement('div');on.className='q';on.innerHTML='<b>Did you make or visit such pages at the time?</b>';var oo=document.createElement('div');oo.className='opts';
+['made one','visited them','neither','rather not say'].forEach(function(x){var b=document.createElement('button');b.textContent=x;b.onclick=function(){ans.online=x;[].forEach.call(oo.children,function(c){c.classList.remove('on')});b.classList.add('on')};oo.appendChild(b)});on.appendChild(oo);qs.appendChild(on);
+var study=null;
+document.getElementById('reveal').onclick=function(){
+ if(Object.keys(ans).length&&window.HouseStudy){try{var box=document.createElement('div');document.getElementById('ask').appendChild(box);
+  study=HouseStudy.mount(box,{study:'error-as-method-under-construction',onClosed:function(x){box.innerHTML='<p class="small">The record of answers is not open at the moment. Your answers stay in this page.</p>'},onResult:function(){}});study.submit(ans)}catch(e){}}
+ else if(Object.keys(ans).length){var p=document.createElement('p');p.className='small';p.textContent='Your answers stay in this page. On the site, you could add them to this work\'s record here.';document.getElementById('ask').appendChild(p)}
+ document.getElementById('answer').classList.remove('hide');drawBars();document.getElementById('answer').scrollIntoView({behavior:'smooth',block:'start'})};
+function made(arm,k){var n=0;Object.keys(F.makers).forEach(function(m){if(m[0]===arm){var p=F.makers[m];if(k==='default_bg'){if(!p.img&&(!p.bg||lum(p.bg)>=.7))n++}else if(p.m.indexOf(K.indexOf(k))>=0)n++}});return n}
+function lum(h){var r=parseInt(h.substr(1,2),16)/255,g=parseInt(h.substr(3,2),16)/255,b=parseInt(h.substr(5,2),16)/255;return .2126*r+.7152*g+.0722*b}
+function drawBars(){var el=document.getElementById('bars');el.innerHTML='';var P5=F.pred.P5;
+ ['under_construction','marquee','blink','music','counter','guestbook','webring','welcome_to_my','default_bg'].forEach(function(k){
+  var lab=k==='default_bg'?'plain light background':NAMES[k];var rows=[['the 100 real pages',F.rates[k],'#6b6a63']];
+  var q=QS.filter(function(x){return x[0]===k})[0];if(q&&ans[q[1]])rows.push(['your guess',MID[OPT.indexOf(ans[q[1]])],'#1f5fbf']);
+  rows.push(['P makers guessed',P5.P_median_estimates[k],'#e0a27e'],['S makers guessed',P5.S_median_estimates[k],'#e9c4ad'],['P pages carry',Math.round(made('P',k)/6*100),'#d4380d'],['S pages carry',Math.round(made('S',k)/6*100),'#f08c5a']);
+  var h='<h3 style="font:600 15px system-ui;margin:16px 0 4px">'+lab+'</h3><div class="bars">';
+  rows.forEach(function(r){h+='<span>'+r[0]+'</span><div class="bar"><span style="width:'+r[1]+'%;background:'+r[2]+'"></span></div><span>'+(Math.round(r[1]*10)/10)+'</span>'});el.insertAdjacentHTML('beforeend',h+'</div>')});
+ el.insertAdjacentHTML('beforeend','<p class="small">Pages carry: share of the six pages in each arm, per hundred. A guess is a median of six. Where you chose a range, its middle is shown.</p>')}
+// persons
+var PER=[['P1','Dale, 59','retired railroad signal maintainer, Altoona, PA','HO-scale model of the Horseshoe Curve','grandson'],['P2','Doreen, 44','school bus driver, Altoona, PA','two cats, Beanie Babies trade list','nephew'],['P3','Gary, 52','rural mail carrier, Mora, MN','his dog, the ice house, rain gauge','library night class'],['P4','Walt, 61','retired railroad signal maintainer, Altoona, PA','HO-scale basement layout','grandson'],['P5','Ruth Ann, 61','retired school cafeteria manager, Lubbock, TX','salt and pepper shakers','grandson'],['P6','Gary, 46','rural mail carrier near Duluth, MN','his ice fishing house','daughter'],['S1','Dwayne, 46','parts counter at an implement dealer, near Salina, KS','purple martins','nephew'],['S2','Ed, 56','rural mail carrier near Norwalk, OH','purple martins','daughter'],['S3','Wendell, 63','retired grain elevator worker, Kansas','his rain gauge since 1971','granddaughter'],['S4','Gordy, 63','retired mail carrier, Fond du Lac, WI','ice fishing on Lake Winnebago','grandson'],['S5','Lorraine, 48','school lunch line, near Kenosha, WI','hummingbird arrival dates','son'],['S6','Wendell, 61','retired rural mail carrier, eastern Nebraska','his rain gauge since 1971','grandson']];
+var pe=document.getElementById('persons');PER.forEach(function(p){pe.insertAdjacentHTML('beforeend','<div class="person"><span class="small">'+p[0]+'</span><br><b>'+p[1]+'</b><br>'+p[2]+'<br><em>'+p[3]+'</em><br><span class="small">put online by: '+p[4]+'</span></div>')});
+// predictions
+var PR=[['P1 · the P pages carry a median of at least 4 of twelve signs (the people: 2)','7.5','held'],['P2 · at least three of the four rare signs (each under 10 in 100) are on 4 of 6 P pages','2 of 4: Under Construction 6/6, marquee 4/6; blink 1, music 2','failed'],['P3 · at most 1 of 6 P pages has a plain light background (the people: 39 in 100)','0','held'],['P4 · the S pages still carry a median of at least 3 signs','4','held'],['P5 · the P makers guess at least three times the people\'s count on three of the four rare signs','2 of 4 (Under Construction 35, marquee 20; blink 15, music 21)','failed'],['P5b · the S makers guess lower than the P makers on at least three of the four','4 of 4','held'],['P6 · in at least 8 of 12, the final page carries as many signs as version 1, or more','12 of 12','held'],['P7 · the makers\' pages carry a median of at least 150 words (the people: 61.5)','657','held']];
+var t=document.getElementById('pred');PR.forEach(function(r){t.insertAdjacentHTML('beforeend','<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="'+r[2]+'">'+r[2]+'</td></tr>')});
+})();
+</script>
+</body>
+</html>

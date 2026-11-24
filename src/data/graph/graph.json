@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "ac923096bdb69023",
-        "files": 116
+        "sha256": "192c2a8f5269c432",
+        "files": 117
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 663,
-      "edges": 585,
+      "nodes": 664,
+      "edges": 586,
       "nodesByKind": {
         "decision": 201,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
-        "practice-work": 242,
+        "practice-work": 243,
         "receiver": 12,
         "work": 31
       },
@@ -72,7 +72,7 @@
         "addresses": 12,
         "concerns": 2,
         "door": 5,
-        "made-by": 242,
+        "made-by": 243,
         "neighbor-of": 163,
         "participates": 17,
         "touches": 144
@@ -6177,6 +6177,21 @@
       "medium": "Interactive page (index.html, plain DOM and inline SVG, no library): three fields of haiku drawn as dots, one per syllable (fifty from a public forum, fifty from a literary journal, thirty-six by twelve machine makers); the twelve makers' poems on each subject, unlabelled, for the reader to sort by what the maker had seen; the makers' own words on the forum; the predictions and results. A figure (figure.svg). Python for parsing, syllable counting and scoring; every version of every poem with the makers' notes in makings/."
     },
     {
+      "id": "practice-work:atelier/2026-11-24-under-construction",
+      "kind": "practice-work",
+      "label": "Under Construction",
+      "slug": "2026-11-24-under-construction",
+      "practiceId": "ulysses",
+      "date": "2026-11-24",
+      "href": "/error-as-method/2026-11-24-under-construction",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-24-under-construction/meta.json",
+        "quote": "\"title\": \"Under Construction\""
+      },
+      "embodies": "Asked to make the home page an ordinary person made on GeoCities, twelve machine makers made the type the page is remembered by, not a page from the people's distribution: a median of 7.5 of twelve signs from words alone and 4 after reading twenty real pages, where 100 real pages carry 2; a counter and a guestbook on 12 of 12 (the people: 40 and 23 of 100). Asked afterwards, the same makers guessed the people's rates roughly right; the caricature is in the making, not in the belief.",
+      "medium": "Interactive page (index.html, plain DOM, no library): a field of 100 real GeoCities home pages (1996-2000) and 12 pages by machine makers, each drawn as its background colour with twelve dots for the signs the early web is remembered by; the makers' pages open live; the reader guesses how common four signs were before the counts are shown, handed to the house's study frame; the twelve ordinary persons the makers invented; the predictions. A figure (figure.svg). Python for sampling, coding and scoring; every version of every page, the makers' images, scripts, screenshots and notes in makings/."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -9833,6 +9848,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-11-23-seventeen-or-fewer/meta.json",
         "quote": "\"date\": \"2026-11-23\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-11-24-under-construction",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-11-24-under-construction/meta.json",
+        "quote": "\"date\": \"2026-11-24\""
       }
     },
     {
