@@ -1,0 +1,163 @@
+{
+  "date": "2026-11-24",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-24T16:11:19Z",
+    "counts": {
+      "botwall": 22,
+      "gone_404": 3,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 274,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 277,
+    "excluded_unverifiable": 23,
+    "gone": 3,
+    "gone_ci95": [
+      0.0037,
+      0.0314
+    ],
+    "gone_rate": 0.0108,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0137
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-22",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "chvnradio.com",
+        "first_seen": "20261122040000",
+        "http_code": 404,
+        "title": "Event: IRMW SUNDAY SERVICE - CHVNRadio: Southern Manitoba's hub for local and Christian news, and adult contemporary Christian programming.",
+        "url": "https://www.chvnradio.com/events/231244"
+      },
+      {
+        "class": "gone_404",
+        "domain": "gulf104.com",
+        "first_seen": "20261122100000",
+        "http_code": 404,
+        "title": "Josh Groban Expands Cinematic Album With Two Classic Movie Songs",
+        "url": "https://www.gulf104.com/2026/11/22/josh-groban-expands-cinematic-album-with-two-classic-movie-songs/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "swiftcurrentonline.com",
+        "first_seen": "20261122050000",
+        "http_code": 404,
+        "title": "Event: Girls Rock - Free Curling Program - SwiftCurrentOnline.com - Local news, Weather, Sports, Free Classifieds and Job Listings",
+        "url": "https://www.swiftcurrentonline.com/events/241003"
+      }
+    ],
+    "sample_drawn_at": "2026-11-23T16:20:44Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 4042,
+      "replaced": 3882,
+      "trivial": 606,
+      "update": 313
+    },
+    "day": "2026-11-23",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "U",
+          "S",
+          "U",
+          "S"
+        ],
+        "after": "Should you stock up to prepare for outages? U.S. intel chief cites COVID as proof U.S. is resilient",
+        "before": "Should you stock up to prepare for outages? US intel chief cites COVID as proof America is resilient",
+        "detected": "2026-11-23T19:04:18Z",
+        "domain": "fortune.com",
+        "removed": [
+          "US",
+          "America"
+        ],
+        "similarity": 0.8,
+        "url": "https://fortune.com/2026/11/22/should-you-stock-up-to-prepare-for-outages-director-national-intelligence-jay-clayton-covid-resilience/",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "GH",
+          "GH"
+        ],
+        "after": "Amin Adam Challenges Mahama Govt Over GH¢19 Diesel Prices Despite GH¢4bn Dumsor Levy Surplus – Ghanamma.com",
+        "before": "Amin Adam Challenges Mahama Govt Over GHÂ¢19 Diesel Prices Despite GHÂ¢4bn Dumsor Levy Surplus – Ghanamma.com",
+        "detected": "2026-11-23T02:31:30Z",
+        "domain": "ghanamma.com",
+        "removed": [
+          "GHÂ",
+          "GHÂ"
+        ],
+        "similarity": 0.889,
+        "url": "https://www.ghanamma.com/2026/11/16/amin-adam-challenges-mahama-govt-over-gh%C2%A219-diesel-prices-despite-gh%C2%A24bn-dumsor-levy-surplus/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Emer",
+          "Currie"
+        ],
+        "after": "Emer Currie: 'There was sadness that people would feel that way about your mom and dad' – The Irish Times",
+        "before": "Uniting Ireland: 'There was sadness that people would feel that way about your mom and dad' – The Irish Times",
+        "detected": "2026-11-23T09:03:26Z",
+        "domain": "irishtimes.com",
+        "removed": [
+          "Uniting",
+          "Ireland"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.irishtimes.com/politics/2026/11/16/conversations-on-a-united-ireland-there-was-sadness-people-would-feel-that-way-about-your-mom-and-dad/",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 11064,
+      "PAGE_TEXTCHANGE": 97135,
+      "PAGE_TITLECHANGE": 37054,
+      "UNCHANGED_CONTENT": 572025
+    },
+    "title_changes_en": 8843,
+    "trace": [
+      {
+        "bytes_billed": 19922944,
+        "created": "1795536436371",
+        "job_id": "world_gdg_counts_20261123",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 181403648,
+        "created": "1795536441122",
+        "job_id": "world_gdg_titles_20261123",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-24T16:11:19Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-23.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
