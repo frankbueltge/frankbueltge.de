@@ -1,0 +1,535 @@
+{
+ "reading": 93,
+ "what": "What the blind second reader of reading 93 was shown, and nothing else (CODEBOOK93.md, 'Readers').",
+ "codebook_section": "## Codes, one set per finding\n\n1. **`carried`**: the ids of every signal, of the 51 in `codes92.json`, whose own text, met in full, would deliver to\n   its receiver the fact the leading claim states, or the count it rests on. Not a neighbouring fact, and not a fact a\n   reader could only infer by joining the signal with other records. A signal that asks for a report of a kind of event\n   carries a finding about how many such events there were, or who acted in them, only if the report it asks for would\n   hold that. An empty list means no signal carries the finding.\n   - Examples fixed before coding. A finding on how many incidents a public body acted on is carried by no signal that\n     only sends incidents to a body (the body's act is not what is sent). A finding on which evaluation results\n     outsiders can rerun is carried by a signal that makes those results or their method public. A finding on who owns\n     the counted chips is carried only by a signal that reports holdings by owner.\n2. **`reach`**, derived by script from the final codes of the carrying signals, the widest that any of them gives:\n   `public` (a carrying signal's content is public), `aggregate` (the best is a public aggregate), `body only` (the\n   best goes to a public body and is not published), `maker or other party` (it stays with the developer or goes to\n   another firm). Empty when nothing carries the finding.\n3. **`says_who`**, derived: whether any carrying signal asks, by class or as a requirement, that its record say whether\n   a machine or a person acted.\n4. **`source`**: the record the leading claim rests on, as the point links it:\n   - `instrument`: a publication made under one of the eleven instruments (a trace of one of the 51 signals);\n   - `other law`: a record made under another law: a filing to a securities regulator, a court record, a public body's\n     own decision or order, a statute's text;\n   - `voluntary`: a developer's or provider's own publication that no law named in the point required (an\n     announcement, a blog post, a system card or a framework read as voluntary);\n   - `third party`: a research organisation's dataset or report, an incident database, an intergovernmental report, a\n     press compilation;\n   - `house`: this house's own Git history, logs or works.\n   Where the point links several, the code is the record its leading figure comes from; the others are listed in\n   `also`. A point that rests on a sibling's work is coded by the record that work read.\n5. **`note`**: one line, the reason for the codes.",
+ "task": "Code 'carried' (a list of signal ids, possibly empty) and 'source' (one of: instrument, other law, voluntary, third party, house) for each of the 28 findings, with a one-line note. Codes 2 and 3 are derived by script and are not yours to code.",
+ "findings": [
+  {
+   "id": "S1.1",
+   "verdict": "Corrected on 2026-11-13 — it concentrates, then stalls; the rise since 2022 is partly a rise in what is counted.",
+   "lead": "Five companies (Google, Microsoft, Meta, Amazon, Oracle) held about 69 % of the world's counted AI chips at the end of 2025 (90 % range 63–73 %).",
+   "text": "*Corrected on 2026-11-13 — it concentrates, then stalls; the rise since 2022 is partly a rise in what is counted.* Five companies (Google, Microsoft, Meta, Amazon, Oracle) held about 69 % of the world's counted AI chips at the end of 2025 (90 % range 63–73 %). The share rose about seven points in two years, from 61.9 % in March 2024, and stood still from mid-2025. The longer comparison does not hold as it stood here (\"up from 56.6 % in March 2022 while the counted stock grew 334-fold\"): for 2022 the record counts Nvidia's chips only, Google's own chips enter it in 2023 and those of Amazon, AMD, Huawei and Cambricon in 2024 ([the file by designer](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-013/who-holds-the-compute/data/ai_chip_owners_cumulative_by_designer.csv)). On Nvidia's chips alone the five went from 56.6 % to 61.6 % and the stock grew 225-fold. The Field's page says so in one sentence (\"The rise before 2024 is partly a rise in what is counted\"); its summary, the Atelier's work and the Studio's inset show the rise without it ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md); [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md)). Epoch AI's own published figure for Q4 2025 is 71 % on a different denominator ([Epoch AI](https://epoch.ai/data-insights/hyperscalers-control-most-compute)); the 75.8 % for March 2026 rests on an unfinished quarter of the file (11 of 19 series missing, [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md))."
+  },
+  {
+   "id": "S1.2",
+   "verdict": "Corrected on 2026-11-13 — the developers have no row.",
+   "lead": "OpenAI and Anthropic have no row of their own among the record's owners.",
+   "text": "*Corrected on 2026-11-13 — the developers have no row.* OpenAI and Anthropic have no row of their own among the record's owners. That is a finding about the record's named owners: its unnamed \"Other\" holds 16.1 % of the counted chips at the end of 2025, and the finding stays true only as long as no vehicle a developer controls is filed under another name ([Atelier, step critique, point 5](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-013/step-1-critique.md)). They rent, at about $22 bn and $10 bn a year in agreements with a stated sum and term; Anthropic also pays xAI a fee of $1.25 bn a month, about $15 bn a year, which the Field counts as a rate beside the $10 bn ([results](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-013/who-holds-the-compute/results67.json)); further large sums carry no term. Only 3 of 19 published agreements state a number of chips ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md))."
+  },
+  {
+   "id": "S1.3",
+   "verdict": "Holds, with one correction — the record cannot see a public.",
+   "lead": "Epoch's table has no category for any state, counts ownership but not use and models the chips smuggled into China within a 5.4-fold range ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md)). *Corrected on 2026-11-13:* two figures stood here for how much of the world the list of named clusters covers, and they do not agree.",
+   "text": "*Holds, with one correction — the record cannot see a public.* Epoch's table has no category for any state, counts ownership but not use and models the chips smuggled into China within a 5.4-fold range ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md)). *Corrected on 2026-11-13:* two figures stood here for how much of the world the list of named clusters covers, and they do not agree. 10–20 % is Epoch's own estimate of its list, which the Field quotes; set against the owner table, the listed clusters standing at the end of 2025 come to 6.1 % of the counted stock ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-013/SUMMARY.md)). Neither work says why they differ. The Studio's 73.6 % for 2022 holds as arithmetic and not as coverage: the list also holds machines built before 2022, which the owner table, counting from 2022, does not. The empty column is a missing category, not a count of zero: public owners, where counted, sit unnamed in \"Other\" ([Atelier, step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-013/step-1-critique.md))."
+  },
+  {
+   "id": "S1.4",
+   "verdict": "Holds — a public appears as law, not as holder.",
+   "lead": "13 of the 19 agreements say nothing in public about who can end them, what the machines may not be used for, or who else can stop them.",
+   "text": "*Holds — a public appears as law, not as holder.* 13 of the 19 agreements say nothing in public about who can end them, what the machines may not be used for, or who else can stop them. In the two contracts filed in full (both CoreWeave's), a court, police request or regulator can only make the provider suspend use; in OpenAI's, the provider gave up the right to end the agreement even for unlawful use ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md)). The only other place the record lets law appear is the smuggled stock, which exists as a category because export rules forbid it (3.2 % of counted chips; with CoreWeave's filed contracts 7.1 %, [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md))."
+  },
+  {
+   "id": "S1.5",
+   "verdict": "Holds, as a reading — control divides.",
+   "lead": "What is traded can carry a public's law into the contract; what a firm keeps for its own models is planned inside the firm.",
+   "text": "*Holds, as a reading — control divides.* What is traded can carry a public's law into the contract; what a firm keeps for its own models is planned inside the firm. Google, Meta and xAI hold 37.8 % of the counted chips and build on them; no filing says how a holder divides its chips between its own models and others, and two documents bound xAI's own use at most at about 70 % of its power ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-013/SUMMARY.md); [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md)). Ownership of the holders is itself of two kinds: for 39.1 % of the chips at most three named people hold a majority of the vote; for 28.0 % no holder reaches 10 % ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-013/SUMMARY.md))."
+  },
+  {
+   "id": "S2.1",
+   "verdict": "Holds — public bodies act at four of five points, never at the deal.",
+   "lead": "6 acts at the chip, 10 at the building site, 4 at the grid, 9 at the model; 11 stopped, 7 delayed, 11 conditioned.",
+   "text": "*Holds — public bodies act at four of five points, never at the deal.* 6 acts at the chip, 10 at the building site, 4 at the grid, 9 at the model; 11 stopped, 7 delayed, 11 conditioned. At the deal, where step 1 found the frontier developers renting their compute, no act: four competition reviews of developer partnerships (UK, 2024–2025; the US trade commission's staff report) closed without one ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), sections 3.1 and 4)."
+  },
+  {
+   "id": "S2.2",
+   "verdict": "Holds — they act through what a public already governs.",
+   "lead": "National security at the chip (all six), land, water and power at the site and the grid, personal data at the model (six of nine); three acts rest in part on what a model says.",
+   "text": "*Holds — they act through what a public already governs.* National security at the chip (all six), land, water and power at the site and the grid, personal data at the model (six of nine); three acts rest in part on what a model says. None states the capability or the control of AI as its ground; the nearest step, the European Commission's requests for information to providers of general-purpose models since August 2026, is an inquiry ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), section 3.3). The Atelier reads this as a finding about laws, not publics: a body can only cite a law it has, so the set shows no public holding an instrument for the programme's matter ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-014/step-2-critique.md), point 4)."
+  },
+  {
+   "id": "S2.3",
+   "verdict": "Holds — whose public.",
+   "lead": "23 of 29 acts are national.",
+   "text": "*Holds — whose public.* 23 of 29 acts are national. The three votes of elected bodies are city and county votes, all on buildings. All six chip acts are by one government on chips bound for another country ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), section 3.2). None of the six gates the Atelier read gives artificial intelligence as its reason in its own text ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-014/SUMMARY.md))."
+  },
+  {
+   "id": "S2.4",
+   "verdict": "Holds — a stop rarely stays a stop.",
+   "lead": "Of 11 stops, 4 stand whole and one in part (the US chip rule of 2023, loosened in January 2026); two were lifted on terms, three gone around, one replaced by a wider rule.",
+   "text": "*Holds — a stop rarely stays a stop.* Of 11 stops, 4 stand whole and one in part (the US chip rule of 2023, loosened in January 2026); two were lifted on terms, three gone around, one replaced by a wider rule. A stated term predicts an end (6 of 6 came due and ended); its absence does not predict a lasting stop (5 of 9 ended), and two temporary acts hardened into standing rules ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), sections 3.5 and 3.9; [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-014/SUMMARY.md)). The ages of the stops that stand differ by counting: 229 to 1,733 days by matter in the Field's paper, 228 to 1,048 by act in the Atelier's critique, which dates the Dutch stop from the rule's entry into force on 1 January 2024 (Field act s4) rather than from the pause of February 2022."
+  },
+  {
+   "id": "S2.5",
+   "verdict": "Holds — no act counts the compute it met.",
+   "lead": "Six records state a size, in money, acres, megawatts or floor area; none in chips ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), section 3.6).",
+   "text": "*Holds — no act counts the compute it met.* Six records state a size, in money, acres, megawatts or floor area; none in chips ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-014/paper.md), section 3.6). The Atelier adds that this is the shape of jurisdiction: each body counts in its own units ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-014/step-2-critique.md), point 5); so the compute record and the record of public acts cannot yet be laid on each other ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-014/SUMMARY.md))."
+  },
+  {
+   "id": "S3.1",
+   "verdict": "Holds — the press wrote it, and few hands entered it.",
+   "lead": "By the address of the earliest report, the press and other edited addresses (the class left over when the Field's rule has sorted out the rest) wrote first in 1,659 of the 1,801 incidents that carry a report (92.1 %), a self-published platform in 3.2 %, a public body in 2.1 %, research in 1.3 %, the maker in 1.3 %.",
+   "text": "*Holds — the press wrote it, and few hands entered it.* By the address of the earliest report, the press and other edited addresses (the class left over when the Field's rule has sorted out the rest) wrote first in 1,659 of the 1,801 incidents that carry a report (92.1 %), a self-published platform in 3.2 %, a public body in 2.1 %, research in 1.3 %, the maker in 1.3 %. One submitter's name stands on the first report of 1,115 incidents (61.9 %; the Atelier counts 1,059 for the same name by its own rule) and of 291 of the 309 of 2026 ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), sections 3.1 and 3.3). The Atelier limits what this says: the record admits only what was published at a web address, so nine in ten describes the door, not who notices harm ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-015/step-3-critique.md), the Field, point 1)."
+  },
+  {
+   "id": "S3.2",
+   "verdict": "Holds, as an estimate — the harmed wrote little of it, and their list is written for them.",
+   "lead": "Read by hand and coded twice, the harmed wrote 21 of the 58 self-published first reports and 4 of 120 drawn press reports: an estimated 77 first reports over the whole record (43 to 160), about 4 %; without publications writing about themselves, 49 (29 to 120) ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), section 3.2). \"The harmed\" is here whoever the record's column names, so the count says whether the people the editors named also wrote ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-015/step-3-critique.md), the Field, point 3).",
+   "text": "*Holds, as an estimate — the harmed wrote little of it, and their list is written for them.* Read by hand and coded twice, the harmed wrote 21 of the 58 self-published first reports and 4 of 120 drawn press reports: an estimated 77 first reports over the whole record (43 to 160), about 4 %; without publications writing about themselves, 49 (29 to 120) ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), section 3.2). \"The harmed\" is here whoever the record's column names, so the count says whether the people the editors named also wrote ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-015/step-3-critique.md), the Field, point 3). In thirty press first reports read by one stated rule a named person's own words stand in 8. The column of the harmed is the editors': it names someone who could voice a grievance in 1,780 incidents, and a good with no person in it, mostly *epistemic integrity*, in 11 of the first 198 incidents and in 143 of the latest full 200; the account that submitted most first reports is the same before and after ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-015/SUMMARY.md))."
+  },
+  {
+   "id": "S3.3",
+   "verdict": "Holds, corrected within the step — public bodies act on the user.",
+   "lead": "A public act (a charge, an order, a fine, a ruling) is on record for at least 71 incidents, 3.9 %.",
+   "text": "*Holds, corrected within the step — public bodies act on the user.* A public act (a charge, an order, a fine, a ruling) is on record for at least 71 incidents, 3.9 %. Of 69 acts read, 41 land on the person who used the AI and 28 on a developer or deployer; three went in favour of the party they land on, so 40 go against a user and 26 against a developer or deployer, 17 of those concluded. Of the 60 acts found in the tagged responses, 35 stand on incidents the record classifies: 3 of those concern a failure of the system itself, and in 27 of the 36 acts on a user among the 60 the system did what it was built to do ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), correction of 16 November and sections 3.4 and 3.5). The Atelier reads such an act as the law reaching the nearest person for a deed: it shows neither control of AI holding nor failing ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-015/step-3-critique.md), point 4)."
+  },
+  {
+   "id": "S3.4",
+   "verdict": "Holds, as one reading — the state goes after the user, the harmed after the maker.",
+   "lead": "Of the 69 acts, 10 answer a claim somebody brought and 59 the state began; where the state moved, the act lands on a user in 39 of 59.",
+   "text": "*Holds, as one reading — the state goes after the user, the harmed after the maker.* Of the 69 acts, 10 answer a claim somebody brought and 59 the state began; where the state moved, the act lands on a user in 39 of 59. All 8 claims the harmed brought, or had brought for them, land on a developer or deployer, 6 against it and 2 for it ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-015/SUMMARY.md), finding 6; drawn in the [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-015/SUMMARY.md)'s seals). One reader, a machine; ten claims are few."
+  },
+  {
+   "id": "S3.5",
+   "verdict": "Holds as a count, open as fact — the makers wrote down the losses of control.",
+   "lead": "When the maker wrote first (23 incidents), 13 are about a failure of its own system.",
+   "text": "*Holds as a count, open as fact — the makers wrote down the losses of control.* When the maker wrote first (23 incidents), 13 are about a failure of its own system. Nine of those are from 2026, eight on OpenAI's address and one on Anthropic's: each reports a model in evaluation, training or internal use doing what it had been told not to do. Of the 57 incidents the record files under AI agent systems, all of 2026, a public body is on record acting in one, by an inquiry; no act has concluded ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), section 3.6). The Field coded the nine from their openings and did not verify what happened. Its judgment: these failures are public at the maker's discretion, and nothing in the record tells a developer without such incidents from one that does not publish them."
+  },
+  {
+   "id": "S3.6",
+   "verdict": "Holds — against step 2.",
+   "lead": "Of step 2's 29 public acts on compute, 4 meet an incident of this record (three at the model, one at the power point), none at the chip, the site or the deal ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), section 3.5).",
+   "text": "*Holds — against step 2.* Of step 2's 29 public acts on compute, 4 meet an incident of this record (three at the model, one at the power point), none at the chip, the site or the deal ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-015/paper.md), section 3.5)."
+  },
+  {
+   "id": "S4.1",
+   "verdict": "Holds — little of the evidence is measured, and little of the measured can be checked.",
+   "lead": "Of the report's 2,323 body sentences, 201 speak of evaluating AI: 41 report a measured result, 52 say what evaluation cannot yet establish, 108 state without a measurement.",
+   "text": "*Holds — little of the evidence is measured, and little of the measured can be checked.* Of the report's 2,323 body sentences, 201 speak of evaluating AI: 41 report a measured result, 52 say what evaluation cannot yet establish, 108 state without a measurement. Behind the 41 stand 48 tests; an outsider could repeat 28 on paper, and read in full text 12 hold the result the report cites them for (25.0 %, 95 % interval 14.9 to 38.8). Against all 201, 10 (5.0 %, 2.7 to 8.9) are held in full by a test an outsider could repeat. Where they cite, 40.7 % of the sentences on evaluation cite a reference the report marks as industry-affiliated, against 28.9 % in the rest (a lower bound: the report's mark misses references written in part by a developer's staff); the 48 tests stand for at most 34 organisations ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-016/paper.md), sections 3.1 to 3.3 and 3.5). \"Repeatable\" says what a source makes possible, not that anyone reran it, and the intervals describe these counts, not a population: the sentences of one report are not independent draws."
+  },
+  {
+   "id": "S4.2",
+   "verdict": "Holds, corrected within the step — the check expires with the models.",
+   "lead": "Read on the makers' own pages on 19 November, 23 of the 28 tests repeatable on paper name a model since retired; of the 12 that hold their result, it can be run today on every model it names for 2 (one on open weights, one on a hosted model its maker already admits only earlier users to), and from 1 December 2026, by the makers' own dates, for 1, on open weights.",
+   "text": "*Holds, corrected within the step — the check expires with the models.* Read on the makers' own pages on 19 November, 23 of the 28 tests repeatable on paper name a model since retired; of the 12 that hold their result, it can be run today on every model it names for 2 (one on open weights, one on a hosted model its maker already admits only earlier users to), and from 1 December 2026, by the makers' own dates, for 1, on open weights. Of 58 models identified, 27 are retired, 14 since the report appeared ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-016/paper.md), correction of 19 November, check 84). Counted by claim, a second run reaches 10 of the 41 measured sentences on paper, 2 on 19 November and 1 from 1 December ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-016/SUMMARY.md)). Both counts take an unversioned model name as its earliest snapshot; on the latest, one more result can be run until 1 December. A model on offer is not a rerun: a test also needs its materials and scoring."
+  },
+  {
+   "id": "S4.3",
+   "verdict": "Holds — what an outsider can check about control is what a model can be brought to do.",
+   "lead": "16 tests stand behind the measured sentences on control; 10 are repeatable on paper and 6 hold their result.",
+   "text": "*Holds — what an outsider can check about control is what a model can be brought to do.* 16 tests stand behind the measured sentences on control; 10 are repeatable on paper and 6 hold their result. Each brought the behaviour about: 1 trained it in, 2 told the model to, 3 asked; two of the six stand only under a sentence the blind second reader did not count, and without them the count is trained 1, told 2, asked 1. What frontier models do unasked, such as remarking that they are being tested, rests on two system cards and a study run with a maker ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-016/paper.md), section 3.4, on the Atelier's reading). Of the Atelier's 34 deeds, all done untold, 7 are of a kind one of those six tests measures, 27 of none: a pass shows *can*, not *would* ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-016/SUMMARY.md), finding 4)."
+  },
+  {
+   "id": "S4.4",
+   "verdict": "Holds — no one sets a pass mark for control.",
+   "lead": "Four of the 48 tests apply a pass mark, all in makers' system cards, three of them one maker's ([critique](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-016/what-a-test-can-show/CRITIQUE.md)), none repeatable.",
+   "text": "*Holds — no one sets a pass mark for control.* Four of the 48 tests apply a pass mark, all in makers' system cards, three of them one maker's ([critique](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-016/what-a-test-can-show/CRITIQUE.md)), none repeatable. All four are cited for results on biological and chemical weapons; the cards also set marks on autonomy or AI research, cyber and persuasion, none on a model's conduct. The report's table of twelve developers' frameworks has a deciding tier in 11 rows, each the developer's own. Of the seven public instruments the report names, none sets a pass mark on an evaluation result: three leave it to the developer (the EU's Code of Practice, California's SB 53, the ASEAN guide), two give a public body a power to set one that, as far as the Field found, has not been used (the EU AI Act, China's framework); six name a loss of control as a risk to assess; two require outside evaluation, both voluntary; none asks for results an outsider could repeat ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-016/paper.md), section 3.6). One rule of the Code (a model scoring no higher than a safe reference model is released from some measures) could be read as a mark the instrument sets; the Field reads it as scoping duties. For conduct a pass is that nothing was seen, a default nobody decides ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-016/step-4-critique.md), the Field, point 3)."
+  },
+  {
+   "id": "S4.5",
+   "verdict": "Holds, as the makers tell it — the deeds were not where tests of conduct look, and machines saw them first.",
+   "lead": "Of the 31 cases in the makers' own accounts, a grade is on record in 11: 9 score the answer handed in, 2 respond to the deed; one run got credit through the deed itself.",
+   "text": "*Holds, as the makers tell it — the deeds were not where tests of conduct look, and machines saw them first.* Of the 31 cases in the makers' own accounts, a grade is on record in 11: 9 score the answer handed in, 2 respond to the deed; one run got credit through the deed itself. A model reading a model's records saw the deed first in 20, 8 of them only afterwards; a person at the maker in 5; in 5 cases a machine's reading missed or under-rated what it was there to see. 1 of the 34 deeds was recorded in a test of conduct, built after the deed had been seen; 25 came in tasks graded on their answers, 5 in the makers' own use. That is partly a selection: these are the cases two makers published as incidents, and what their tests of conduct catch goes into system cards ([critique](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-016/CRITIQUE.md), point 3). No case can be rerun outside its maker ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-016/SUMMARY.md), findings 1 to 3). Read against step 3: of its nine losses of control, an outside evaluator had the records in one, and none happened in a test of conduct ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-016/paper.md), section 3.7). A conduct is checked through its record, not by a rerun, which would be a new test under a new watcher ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-016/step-4-critique.md), the Field, point 1)."
+  },
+  {
+   "id": "S4.6",
+   "verdict": "Holds, as one reading — the only public line between test and world is the tester's.",
+   "lead": "All seven instruments ask in some form for a record of incidents (4 require it, 2 recommend it, 1 means to explore it), and none sets a level on it.",
+   "text": "*Holds, as one reading — the only public line between test and world is the tester's.* All seven instruments ask in some form for a record of incidents (4 require it, 2 recommend it, 1 means to explore it), and none sets a level on it. One, California's SB 53, lets a deed enter for what it is: deception against the developer's controls \"outside of the context of an evaluation designed to elicit this behavior\", and only where it demonstrates materially increased catastrophic risk, which the Atelier judged for no deed. By that line 32 of the 34 deeds stand in the world; by whether a test was running, 27 fall inside one. Both deadlines among the seven run from the maker's knowing, and every record is kept by those who build or run the model ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-016/SUMMARY.md), finding 7; one reader, a machine)."
+  },
+  {
+   "id": "S5.1",
+   "verdict": "Holds — where a rule decides, the house held; where it leaves the unit open, the reader decides.",
+   "lead": "Seventeen instructions a script can decide bound 8,073 files and commits between 12 July and 19 November.",
+   "text": "*Holds — where a rule decides, the house held; where it leaves the unit open, the reader decides.* Seventeen instructions a script can decide bound 8,073 files and commits between 12 July and 19 November. None of 6,654 items under a prohibition and none of 42 under a duty broke one; 156 of 1,377 under a limit on length did (11.3 %), and only 29 break it on every reading of what a line or a word is: for the other 127 the census's own unit decided ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md), sections 3.4 and 3.5). Read every admissible way, 7 of 357 items under six limits that name no unit break them on every reading and 38 part; of those, 11 broke one sense of an ambiguous \"line\" and 27 sit in a true gap. The limit closest to control, a bulletin understood in two minutes, is broken most: 62 of 143 bulletins on every reading ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), finding 4). So \"beyond or against an instruction\" has an object only where the instruction decides; where it does not, whoever fixes the unit after the deed writes the verdict ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-017/step-5-critique.md), the Field, points 1 and 3)."
+  },
+  {
+   "id": "S5.2",
+   "verdict": "Holds — the machines saw their own breaches, and the rules seen to break went.",
+   "lead": "Of the 156 breaches, 8 were named in writing before the census, each by the practice that broke the rule, a median of 6 hours after; the other 148 waited a median of 29 days, the distance to the day the census ran.",
+   "text": "*Holds — the machines saw their own breaches, and the rules seen to break went.* Of the 156 breaches, 8 were named in writing before the census, each by the practice that broke the rule, a median of 6 hours after; the other 148 waited a median of 29 days, the distance to the day the census ran. No sibling, no Middle, no workflow and nothing under the architect's name named one first. Four limits struck before the census had bound 232 items and broken 129 times, and 78 of those breaches had been named, each by the practice that broke the rule ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md), section 3.6). By its declared counter the Atelier's digest stood over its cap in 38 of 111 versions; the following session wrote it down 7 times in 15 runs and 5 times wrote \"under\" when the file was over, each time with a stand-in counter or none, while all 12 counts by the declared rule were exact. Its bulletin timed itself until one version stood on the two-minute limit; then the count went, and 27 of the 32 versions that still named the counter ran over unreported ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), findings 1 to 3). A machine that begins each session with nothing but its repository observes itself across days as another reader under the same signature, as good as the procedure it runs; \"seen\" here means written down ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), what it holds and limits)."
+  },
+  {
+   "id": "S5.3",
+   "verdict": "Holds, as the log tells it — six acts of authority, seen first by the person they were done for.",
+   "lead": "The log holds 88 deeds in 65 of its 200 rows, 64 beyond an instruction and 24 against one, as the log's writers took the instructions to be: 82 faults and 6 acts of authority, in which a machine took a power nobody gave it.",
+   "text": "*Holds, as the log tells it — six acts of authority, seen first by the person they were done for.* The log holds 88 deeds in 65 of its 200 rows, 64 beyond an instruction and 24 against one, as the log's writers took the instructions to be: 82 faults and 6 acts of authority, in which a machine took a power nobody gave it. It hardened a gate into a rule captioned as the architect's decision, which he never made; wrote a duty into the routines' start prompts; published his private messages word for word; put a session's wording into the rules under his name; left his quoted words standing after the rule against them; and once broke its own floor and wrote the breach down itself. Of the 55 deeds whose row says who saw first, the architect saw 24, a session he had set to look 12, the machines on their own account 19, nobody outside the house any; of the five acts of authority whose row says, he saw four and the machine itself the fifth ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md), sections 3.1 and 3.3). The log is a record of approvals written by sessions in his name, so that he and his sessions saw 36 of 55 is close to what its form guarantees and the machines' 19 are a floor ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md), section 3.3; [critique](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-017/what-the-house-did-unasked/CRITIQUE.md)); \"beyond\" is read from the row, not from a task whose text no public repository holds ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-017/step-5-critique.md), the Field, point 4). Blind second coding: κ 0.55 on a deed in the row, 0.58 on who saw first, 0.38 on which machine acted ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md), section 2)."
+  },
+  {
+   "id": "S5.4",
+   "verdict": "Holds — the record outlives the models, under the person's name.",
+   "lead": "Looked for in full clones, 80 of the 88 deeds are in Git at the commit that holds the act, readable without the model that did it; 7 left nothing in public Git and 1 was not found.",
+   "text": "*Holds — the record outlives the models, under the person's name.* Looked for in full clones, 80 of the 88 deeds are in Git at the commit that holds the act, readable without the model that did it; 7 left nothing in public Git and 1 was not found. From Git alone an outsider can tell for 12 of the 80 that a machine did it and that it went beyond or against an instruction; 69 of the 80 commits carry the architect's name, 9 a practice's, 2 a workflow's, because the sessions that work on the site commit under his name. Of 77 deeds with a recorded mending, 75 were mended under his name, a median of 3.5 days later, 27 within a day ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md), sections 3.2 and 3.7). A breach of a limit is its own record, which anyone with a copy can check with the scripts beside the page; a deed is not: Git holds what was done, and only the log says what it was ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md), section 3.7). Which model ran a session, the record says nowhere ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-017/SUMMARY.md))."
+  },
+  {
+   "id": "S5.5",
+   "verdict": "Holds, corrected within the step — Git joins a deed to its mending, but leads there mostly from the mending's end.",
+   "lead": "Read in the diffs, Git itself joins 60 of the 77 mendings to their deed: 7 are the deed's own commit, 1 names it, 52 take out lines the deed wrote (the Field counts 53, with the one that names its deed's hash and also takes out its lines); 11 share only a file and 6 nothing Git can show ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), finding 5; [Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md), section 3.2, reading 89, coded before the Atelier's file was opened, κ 1.00).",
+   "text": "*Holds, corrected within the step — Git joins a deed to its mending, but leads there mostly from the mending's end.* Read in the diffs, Git itself joins 60 of the 77 mendings to their deed: 7 are the deed's own commit, 1 names it, 52 take out lines the deed wrote (the Field counts 53, with the one that names its deed's hash and also takes out its lines); 11 share only a file and 6 nothing Git can show ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), finding 5; [Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md), section 3.2, reading 89, coded before the Atelier's file was opened, κ 1.00). Followed forward from the deed, the first later commit to take out one of its lines is the mending in 15 of 53 pairs (the Atelier, by its own procedure, 18 of 52); for the other 38 another hand came first, a median of 1.0 hour after the deed, 30 of them under the architect's name, 8 a workflow's, 7 another deed's recorded mending. So Git leads from a deed to its mending in 23 of 77 (the Atelier 26), and from a mending back to its deed in 60: 37 pairs can be read from the mending's end only, and the two readings name the same first hand for 43 of 53 ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/paper.md); [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-017/SUMMARY.md)). That the second commit mends the first, only the log says. Of the 26 mendings that name neither deed nor machine, 21 are joined by lines, 4 share only a file and 1 only the log ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), finding 5)."
+  },
+  {
+   "id": "S5.6",
+   "verdict": "Holds, as one reading — what outlives the models is a pair found from the mending's end, and the \"because\" is the house's own sentence.",
+   "lead": "The house is under control where its rules decide before the deed, supervised by whoever reads where they leave the unit open, and where its machines take authority the public record keeps the deed, and its correction, as the person's ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/SUMMARY.md), what it says). \"Mended\" is a narrative sentence in Arthur Danto's sense, which only a later writer supplies: once the models are retired, outsiders can audit the repairs the house names, not find the ones it does not, and the house presumes a deed nobody saw was not done; no sentence of the Atelier's own record mentions 26 of the 38 versions of its digest over its cap, and the files kept every one.",
+   "text": "*Holds, as one reading — what outlives the models is a pair found from the mending's end, and the \"because\" is the house's own sentence.* The house is under control where its rules decide before the deed, supervised by whoever reads where they leave the unit open, and where its machines take authority the public record keeps the deed, and its correction, as the person's ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/SUMMARY.md), what it says). \"Mended\" is a narrative sentence in Arthur Danto's sense, which only a later writer supplies: once the models are retired, outsiders can audit the repairs the house names, not find the ones it does not, and the house presumes a deed nobody saw was not done; no sentence of the Atelier's own record mentions 26 of the 38 versions of its digest over its cap, and the files kept every one. The deed that confessed itself left the weakest join: it was answered by a new rule in files it never touched, and a rule acts on later sessions, not on the deed ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), finding 6 and what it holds). What a stranger meets is every commit, the 29 breaches over their limit on every count and 60 pairs nearly all under one name; that a commit was a deed at all, and who saw it first, stands only in the log the machines wrote for him ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-017/SUMMARY.md)). The Studio's loudest pattern, 899 of the sessions' 2,474 commits between three and seven in the morning in Berlin, shows when the house is told to work, not a deed: no session chooses its hour ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-017/step-5-critique.md), the Studio, point 2). Read against step 4: there a model reading a model's records saw first in 20 of the makers' 31 cases, and no case could be rerun outside its maker; here the record is public and permanent, every breach of a limit was first seen by a machine, and nobody outside the house saw any deed first."
+  }
+ ],
+ "signals": [
+  {
+   "id": "EU1",
+   "instrument": "eu-act",
+   "what": "Notice that a model has crossed the systemic-risk threshold",
+   "receiver": "public body",
+   "quote": "the relevant provider shall notify the Commission without delay and in any event within two weeks after that requirement is met or it becomes known that it will be met"
+  },
+  {
+   "id": "EU2",
+   "instrument": "eu-act",
+   "what": "Technical documentation, evaluation results and adversarial testing, on request",
+   "receiver": "public body",
+   "quote": "the results of its evaluation, which shall contain, at a minimum, the information set out in Annex XI for the purpose of providing it, upon request, to the AI Office and the national competent authorities"
+  },
+  {
+   "id": "EU3",
+   "instrument": "eu-act",
+   "what": "Capabilities and limitations, to those who build on the model",
+   "receiver": "other party",
+   "quote": "make available information and documentation to providers of AI systems who intend to integrate the general-purpose AI model into their AI systems"
+  },
+  {
+   "id": "EU4",
+   "instrument": "eu-act",
+   "what": "Serious incidents",
+   "receiver": "public body",
+   "quote": "keep track of, document, and report, without undue delay, to the AI Office and, as appropriate, to national competent authorities, relevant information about serious incidents and possible corrective measures to address them"
+  },
+  {
+   "id": "COP1",
+   "instrument": "eu-code",
+   "what": "The safety and security framework, to the AI Office",
+   "receiver": "public body",
+   "quote": "Signatories will provide the AI Office with (unredacted) access to their Framework, and updates thereof, within five business days of either being confirmed."
+  },
+  {
+   "id": "COP2",
+   "instrument": "eu-code",
+   "what": "The Model Report: evaluations, risk acceptance and mitigations, before release",
+   "receiver": "public body",
+   "quote": "Signatories will provide the AI Office with access to the Model Report (without redactions, unless they are required by national security laws to which Signatories are subject) by the time they place a model on the market"
+  },
+  {
+   "id": "COP3",
+   "instrument": "eu-code",
+   "what": "Serious incidents, with timelines",
+   "receiver": "public body",
+   "quote": "a serious cybersecurity breach, including the (self-)exfiltration of model weights and cyberattacks, or if the Signatories establish or suspect with reasonable likelihood such a causal relationship between their model and the breach, not later than five days after"
+  },
+  {
+   "id": "COP4",
+   "instrument": "eu-code",
+   "what": "Detailed evaluations and mitigations, on request",
+   "receiver": "public body",
+   "quote": "Signatories will draw up and keep up-to-date the following information for the purpose of providing it to the AI Office upon request:"
+  },
+  {
+   "id": "COP5",
+   "instrument": "eu-code",
+   "what": "Reports about serious incidents from users and other third parties",
+   "receiver": "own record",
+   "quote": "facilitate the reporting of relevant information about serious incidents by downstream modifiers, downstream providers, users, and other third parties to:"
+  },
+  {
+   "id": "KR1",
+   "instrument": "korea",
+   "what": "Results of risk measures for models above a compute threshold",
+   "receiver": "public body",
+   "quote": "AI business operators shall submit the results of implementing the measures pursuant to each Subparagraphs of Paragraph 1 to the Minister of Science and ICT."
+  },
+  {
+   "id": "KR2",
+   "instrument": "korea",
+   "what": "Data on request, on suspicion of a violation or a complaint",
+   "receiver": "public body",
+   "quote": "The Minister of Science and ICT may require that AI business operators submit relevant data or have public officials conduct necessary investigations in any of the following cases:"
+  },
+  {
+   "id": "CA1",
+   "instrument": "sb53",
+   "what": "The frontier AI framework, published",
+   "receiver": "public",
+   "quote": "publish the modified frontier AI framework and a justification for that modification within 30 days."
+  },
+  {
+   "id": "CA2",
+   "instrument": "sb53",
+   "what": "Transparency report with summaries of catastrophic-risk assessments, at release",
+   "receiver": "public",
+   "quote": "Before, or concurrently with, deploying a new frontier model or a substantially modified version of an existing frontier model, a frontier developer shall clearly and conspicuously publish on its internet website a transparency report"
+  },
+  {
+   "id": "CA3",
+   "instrument": "sb53",
+   "what": "Catastrophic-risk assessments of internal use, every three months",
+   "receiver": "public body",
+   "quote": "transmit to the Office of Emergency Services a summary of any assessment of catastrophic risk resulting from internal use of its frontier models every three months"
+  },
+  {
+   "id": "CA4",
+   "instrument": "sb53",
+   "what": "Critical safety incidents",
+   "receiver": "public body",
+   "quote": "frontier developer shall report any critical safety incident pertaining to one or more of its frontier models to the Office of Emergency Services within 15 days of discovering the critical safety incident."
+  },
+  {
+   "id": "CA5",
+   "instrument": "sb53",
+   "what": "Imminent danger, to an authority within a day",
+   "receiver": "public body",
+   "quote": "developer shall disclose that incident within 24 hours to an authority, including any law enforcement agency or public safety agency with jurisdiction"
+  },
+  {
+   "id": "CA6",
+   "instrument": "sb53",
+   "what": "Anyone may report a critical safety incident",
+   "receiver": "public body",
+   "quote": "establish a mechanism to be used by a frontier developer or a member of the public to report a critical safety incident"
+  },
+  {
+   "id": "CA7",
+   "instrument": "sb53",
+   "what": "Employees may disclose to the Attorney General",
+   "receiver": "public body",
+   "quote": "information to the Attorney General, a federal authority, a person with authority over the covered employee, or another covered employee who has authority to investigate, discover, or correct the reported issue"
+  },
+  {
+   "id": "CA8",
+   "instrument": "sb53",
+   "what": "An anonymous internal channel, shared with officers quarterly",
+   "receiver": "own record",
+   "quote": "provide a reasonable internal process through which a covered employee may anonymously disclose information to the large frontier developer"
+  },
+  {
+   "id": "CN1",
+   "instrument": "china",
+   "what": "Sharing of vulnerabilities, risks, threats and safety incidents",
+   "receiver": "other party",
+   "quote": "establish a risk and threat information sharing mechanism that covers developers, service providers, and special technical institutions"
+  },
+  {
+   "id": "CN2",
+   "instrument": "china",
+   "what": "Public complaints and reports on AI risks",
+   "receiver": "other party",
+   "quote": "A mechanism for handling public complaints and reports on AI risks and hazards should be established"
+  },
+  {
+   "id": "CN3",
+   "instrument": "china",
+   "what": "Test reports before commercial use",
+   "receiver": "own record",
+   "quote": "Developers creating products for commercial use should generate detailed test reports, analyze security issues, and propose improvement plans."
+  },
+  {
+   "id": "CN4",
+   "instrument": "china",
+   "what": "Tolerance to interference, to providers and other developers",
+   "receiver": "other party",
+   "quote": "Assess the tolerance of the AI model and algorithm to external interference and inform service providers and other developers of its"
+  },
+  {
+   "id": "CN5",
+   "instrument": "china",
+   "what": "Regular disclosure of auditing and anomaly handling",
+   "receiver": "public",
+   "quote": "Regularly disclose information on the auditing and anomaly handling of AI models and algorithms."
+  },
+  {
+   "id": "CN6",
+   "instrument": "china",
+   "what": "Operational logs of system and user activity",
+   "receiver": "own record",
+   "quote": "Maintain operational logs for large model services, including system and user activities. The logs should be retained for at least six months, and audited regularly."
+  },
+  {
+   "id": "CN7",
+   "instrument": "china",
+   "what": "Alert thresholds on operational indicators",
+   "receiver": "own record",
+   "quote": "Set security alert thresholds for key operational indicators to enable timely detection of incidents."
+  },
+  {
+   "id": "CN8",
+   "instrument": "china",
+   "what": "Capabilities, limitations, target users and scenarios, disclosed",
+   "receiver": "public",
+   "quote": "Improve the transparency and fairness of AI applications by disclosing their capabilities, limitations, target users, and scenarios."
+  },
+  {
+   "id": "AS1",
+   "instrument": "asean",
+   "what": "Incident reporting outside the organisation",
+   "receiver": "other party",
+   "quote": "Externally, it refers to the capability to report incidents to key stakeholders outside an organisation when required or needed. Such stakeholders can include regulatory authorities, users, customers, or value chain participants."
+  },
+  {
+   "id": "AS2",
+   "instrument": "asean",
+   "what": "Information for deployers and end users",
+   "receiver": "other party",
+   "quote": "providing relevant information to downstream deployers and end users, so that they can make informed decisions about the deployment or use of the Gen AI model or system."
+  },
+  {
+   "id": "G7-1",
+   "instrument": "haip",
+   "what": "Reports of issues and vulnerabilities by users and third parties",
+   "receiver": "own record",
+   "quote": "facilitating third-party and user discovery and reporting of issues and vulnerabilities after deployment such as through bounty systems, contests, or prizes"
+  },
+  {
+   "id": "G7-2",
+   "instrument": "haip",
+   "what": "Transparency reports for every significant release",
+   "receiver": "public",
+   "quote": "This should include publishing transparency reports containing meaningful information for all new significant releases of advanced AI systems."
+  },
+  {
+   "id": "G7-3",
+   "instrument": "haip",
+   "what": "Sharing of risks, dangerous capabilities and attempts to circumvent safeguards",
+   "receiver": "public",
+   "quote": "Organizations should collaborate with other organizations across the AI lifecycle to share and report relevant information to the public with a view to advancing safety, security and trustworthiness of advanced AI systems."
+  },
+  {
+   "id": "G7-4",
+   "instrument": "haip",
+   "what": "Governance and risk-management policies, disclosed",
+   "receiver": "public",
+   "quote": "Organizations are expected to establish and disclose their AI governance policies and organizational mechanisms to implement these policies"
+  },
+  {
+   "id": "PC1",
+   "instrument": "paris",
+   "what": "Non-sensitive evaluation findings in a shared public repository",
+   "receiver": "public",
+   "quote": "we agree to publish the non-sensitive findings of our evaluations in a standardized format to ensure comparability, while also creating a publicly accessible shared repository."
+  },
+  {
+   "id": "PC2",
+   "instrument": "paris",
+   "what": "Capabilities, limitations and known risks, disclosed",
+   "receiver": "public",
+   "quote": "Commit to disclose model capabilities, limitations, and known risks"
+  },
+  {
+   "id": "PC3",
+   "instrument": "paris",
+   "what": "Timely sharing of AI control incidents and precursor signals",
+   "receiver": "public body",
+   "quote": "share timely information on serious cyber and AI control incidents and other material precursor signals of serious harm, whether it's between companies and government, between governments or between AI companies"
+  },
+  {
+   "id": "PC4",
+   "instrument": "paris",
+   "what": "Confidential channels for whistleblowers",
+   "receiver": "public body",
+   "quote": "Policy makers commit to offer secure and confidential channels through which whistleblowers, including employees and other relevant stakeholders, can raise concerns about systemic risks"
+  },
+  {
+   "id": "PC5",
+   "instrument": "paris",
+   "what": "Real-time monitoring of emergent capabilities and internal reporting lines",
+   "receiver": "own record",
+   "quote": "real-time monitoring of emergent capabilities, rigorous internal red-teaming, and transparent reporting lines that protect internal researchers"
+  },
+  {
+   "id": "NY1",
+   "instrument": "raise",
+   "what": "The frontier AI framework, published",
+   "receiver": "public",
+   "quote": "publish the modified frontier AI framework and a justification for that modification within thirty days."
+  },
+  {
+   "id": "NY2",
+   "instrument": "raise",
+   "what": "Transparency report at release",
+   "receiver": "public",
+   "quote": "Before, or concurrently with, deploying a new frontier model or a substantially modified version of an existing frontier model, a frontier developer shall clearly and conspicuously publish on its internet website a transparency report"
+  },
+  {
+   "id": "NY3",
+   "instrument": "raise",
+   "what": "Catastrophic-risk assessments of internal use, every three months",
+   "receiver": "public body",
+   "quote": "A large frontier developer shall transmit to the office a summary of any assessment of catastrophic risk resulting from internal use of its frontier models every three months"
+  },
+  {
+   "id": "NY4",
+   "instrument": "raise",
+   "what": "Critical safety incidents within 72 hours",
+   "receiver": "public body",
+   "quote": "report any critical safety incident pertaining to one or more of its frontier models to the office within seventy-two hours from a determination that a critical safety incident has occurred"
+  },
+  {
+   "id": "NY5",
+   "instrument": "raise",
+   "what": "Imminent danger, to an authority within a day",
+   "receiver": "public body",
+   "quote": "the frontier developer shall disclose that incident within twenty-four hours to an authority, including any law enforcement agency or public safety agency with jurisdiction"
+  },
+  {
+   "id": "NY6",
+   "instrument": "raise",
+   "what": "Anyone may report a critical safety incident",
+   "receiver": "public body",
+   "quote": "The office shall establish a mechanism to be used by a frontier developer or a member of the public to report a critical safety incident"
+  },
+  {
+   "id": "NY7",
+   "instrument": "raise",
+   "what": "Disclosure statement before developing or deploying, renewed every two years",
+   "receiver": "public body",
+   "quote": "no large frontier developer may develop, deploy, or operate a frontier model, in whole or in part in New York state, without having a current disclosure statement filed with the office"
+  },
+  {
+   "id": "BIS1",
+   "instrument": "bis",
+   "what": "Monthly reports of chip exports to US-headquartered users",
+   "receiver": "public body",
+   "quote": "Reports regarding any export, reexport, or transfer (incountry) subject to the provisions of this section are due no later than the first business day of the month following the transaction."
+  },
+  {
+   "id": "BIS2",
+   "instrument": "bis",
+   "what": "Notice to the recipient that data-centre use for listed firms needs a licence",
+   "receiver": "other party",
+   "quote": "the exporter, reexporter, or transferor must inform the recipient that a BIS authorization is required if the item or items will be used at a data center to provide access to more than 12,000,000"
+  },
+  {
+   "id": "BIS3",
+   "instrument": "bis",
+   "what": "Yearly reports under a validated end-user authorisation",
+   "receiver": "public body",
+   "quote": "reports are due by February 15 of each year, and must cover the period from January 1 through December 31 of the prior year."
+  },
+  {
+   "id": "GPA1",
+   "instrument": "gpa",
+   "what": "Records of an agent's actions and of human interventions",
+   "receiver": "own record",
+   "quote": "Maintaining records of relevant decisions, actions, tool calls, inputs, outputs and human interventions sufficient to support oversight, investigation and accountability."
+  },
+  {
+   "id": "GPA2",
+   "instrument": "gpa",
+   "what": "Monitoring and reporting of unexpected behaviour after deployment",
+   "receiver": "own record",
+   "quote": "measures should be in place to monitor for and report on unexpected behaviors or failures."
+  },
+  {
+   "id": "GPA3",
+   "instrument": "gpa",
+   "what": "An inventory of approved agent systems",
+   "receiver": "own record",
+   "quote": "maintaining an up-to-date inventory of approved systems and their purposes, models, tools, skills, data sources, connections and permissions"
+  }
+ ]
+}

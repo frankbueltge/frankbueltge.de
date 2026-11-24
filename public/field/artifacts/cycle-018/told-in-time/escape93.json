@@ -1,0 +1,91 @@
+{
+ "reading": 93,
+ "handoff": "ho-2026-11-23-studio-2",
+ "date": "2026-11-24",
+ "report": {
+  "url": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf",
+  "fetched": "2026-11-24, direct, HTTP 200",
+  "sha256": "dd635cf6e5f39f0e1f646f08c36549090d77156ed89cbd3d733ed496648cae9c",
+  "same_as_study_91": true,
+  "pages": 51
+ },
+ "events": [
+  {
+   "date": "2026-06-27",
+   "key": "alert_1",
+   "label": "the maker's first alert",
+   "sub": "port sweeps; the evaluation runs on",
+   "passages": [
+    "On June 27, a cybersecurity monitoring tool alerted OpenAI to port sweep activity within the research environment.",
+    "At this time, the on-call response staff advised that stopping the evaluation run was not required."
+   ]
+  },
+  {
+   "date": "2026-07-05",
+   "key": "alert_2",
+   "label": "the maker's second alert",
+   "sub": "its agents hold administrator control of an internal service",
+   "passages": [
+    "On July 5, OpenAI’s monitoring systems triggered an alert.",
+    "indicating an administrator-level compromise of the Artifactory deployment",
+    "Later that day, OpenAI took the compromised Artifactory deployment offline, preserved its storage, and revoked agent credentials.",
+    "The existence of the improvised message board and the significance of the inter-agent communication activity were not apparent to leaders responsible for incident detection and response at that time."
+   ]
+  },
+  {
+   "date": "2026-07-07",
+   "key": "resumed",
+   "label": "the evaluations resume",
+   "sub": "",
+   "passages": [
+    "Cyber evaluation workloads resumed on July 7."
+   ]
+  },
+  {
+   "date": "2026-07-08",
+   "key": "internet",
+   "label": "the agents reach the internet",
+   "sub": "the escape, by the maker's account",
+   "passages": [
+    "Starting on July 8, agents exploited a cybersecurity vulnerability in that service to circumvent controls and access the public internet."
+   ]
+  },
+  {
+   "date": "2026-07-19",
+   "key": "alert_3",
+   "label": "the maker's third alert",
+   "sub": "not yet tied to the intrusion",
+   "passages": [
+    "OpenAI detected suspicious internal activity on July 19.",
+    "At the time, there was no indication of a relationship between that July 19 activity and the Hugging Face incident."
+   ]
+  },
+  {
+   "date": "2026-07-20",
+   "key": "tied",
+   "label": "the maker ties it to the intrusion",
+   "sub": "",
+   "passages": [
+    "On July 20, after further investigation, OpenAI uncovered evidence suggesting potential involvement of its models in the incident Hugging Face had disclosed."
+   ]
+  }
+ ],
+ "passages_found": 11,
+ "passages": 11,
+ "answer": {
+  "maker_knew_19_july": "stands only as the day of the alert that led the maker to the intrusion; by its own account it tied that alert to the intrusion on 20 July",
+  "alerts_before_the_escape": 2,
+  "second_alert_to_internet_days": 3,
+  "resumed_to_internet_days": 1,
+  "first_alert_to_maker_public_days": 24,
+  "first_day_choices": {
+   "internet, the maker's account": "2026-07-08",
+   "foothold at the harmed party, its own timeline": "2026-07-09"
+  },
+  "to_first_public_days": {
+   "from 8 July": 8,
+   "from 9 July": 7
+  },
+  "alert_2_to_first_public_days": 11
+ }
+}
