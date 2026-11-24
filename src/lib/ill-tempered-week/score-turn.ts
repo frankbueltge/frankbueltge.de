@@ -5,8 +5,11 @@
 // themselves follow from the renderer's fixed form (scripts/ill-tempered-week/itw/turn.py), mirrored below: ten bars a
 // day whose length glides from the day before's into the day's own over the first half, the turn's two extra bars,
 // and Toussaint's even spread of a family's beats over its bar. score-turn.test.ts rebuilds every bar and holds the
-// days' starts and the piece's length to the record.
-import type { Turn } from './albums'
+// days' starts and the piece's length to the record. Records pressed from 2026-11-23 on carry the album's devices
+// (progression.ts): the inversion moves every family to its undertone, which the rows' pitches follow, and the second
+// subject's bell notes, one a bar, are drawn in a strip of their own.
+import type { Device, SecondSubject, Turn } from './albums'
+import { secondSubject } from './progression'
 import { A1, clip, dayAbbr, dayName, dayShort, fitLabel, frameFor, mmss, r1, tickStep, ticksBetween, xAt, type Frame, type Span } from './score'
 
 /** The renderer's form, as itw/turn.py writes it (the test reads the constants back from the source). */
@@ -74,7 +77,13 @@ export interface TurnScore {
   end: number
   bars: Bar[]
   days: TurnScoreDay[]
+  /** each voiced family: its harmonic (its beats a bar) and the pitch it sings: A1 × harmonic, or under the inversion
+   *  A1 × utonal / harmonic */
   rows: { family: Family; h: number; hz: number; vowel: string }[]
+  /** the album's devices (none before 2026-11-23), the second subject and its bell notes, one a bar */
+  devices: Device[]
+  secondFrom: SecondSubject | null
+  bells: { t: number; hz: number; day: number }[]
 }
 
 const round3 = (x: number): number => Math.round(x * 1000) / 1000
@@ -124,10 +133,28 @@ export function turnScore(r: Turn, week: string): TurnScore {
   })
   const last = bars.at(-1)
   const end = last ? round3(last.t0 + last.len) : FORM.start
+  const devices = r.devices ?? []
+  const utonal = devices.includes('inversion') ? (r.utonal ?? null) : null
   return {
     week, seconds: r.seconds, end, bars, days,
-    rows: FORM.voiced.map((f) => ({ family: f, h: r.harmonics[f]!, hz: A1 * r.harmonics[f]!, vowel: FORM.vowels[f] ?? '' })),
+    rows: FORM.voiced.map((f) => ({ family: f, h: r.harmonics[f]!, hz: utonal ? round3((A1 * utonal) / r.harmonics[f]!) : A1 * r.harmonics[f]!, vowel: FORM.vowels[f] ?? '' })),
+    devices,
+    secondFrom: devices.includes('second subject') ? (r.second ?? null) : null,
+    bells: r.days.flatMap((d, i) => (d.second ?? []).map((b) => ({ t: b.t, hz: b.hz, day: i }))),
   }
+}
+
+/** What the album's devices do to a bar, in a few words each (for the caption and the readout). */
+export function barDevices(s: Pick<TurnScore, 'devices'>): string[] {
+  const words: Partial<Record<Device, string>> = {
+    inversion: 'on the undertones',
+    diminution: 'each pattern twice',
+    augmentation: 'held legato',
+    stretto: 'a canon a quarter bar behind',
+    retrograde: 'every note backwards',
+    'second subject': 'a bell with the second subject',
+  }
+  return s.devices.map((d) => words[d]!).filter(Boolean)
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -144,7 +171,8 @@ export function nowTurn(s: TurnScore, t: number): string {
   if (b.kind === 'all') return `${name}: the week turns. One bar sounds every beat of every family.`
   if (b.kind === 'said') return `${name}: a silent bar carries the day’s most attended AI headline: “${d.said}”.`
   const fams = b.beats.map((x) => `${x.family} ${x.k} of ${x.h}`).join(', ')
-  return `${name}, bar ${b.n} of ${s.bars.filter((x) => x.day === b.day && x.kind === 'bar').length}, ${b.len.toFixed(2)} s a bar: ${fams || 'no family sounds'}.`
+  const dev = barDevices(s)
+  return `${name}, bar ${b.n} of ${s.bars.filter((x) => x.day === b.day && x.kind === 'bar').length}, ${b.len.toFixed(2)} s a bar: ${fams || 'no family sounds'}${dev.length > 0 ? `; ${dev.join(', ')}` : ''}.`
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -164,6 +192,9 @@ export interface TurnLine {
   said: { bar: number; day: number; x: number; w: number }[]
   turns: { bar: number; day: number; x: number; w: number }[]
   days: { index: number; x: number; label: string; detail: string }[]
+  /** the second subject's bell notes, one a bar, in a strip under the rows (only while that device is in force) */
+  bells: { x: number; day: number }[]
+  bellsY: number | null
   /** the tempo: bars a minute, as a step line under the rows */
   tempo: string
   tempoTop: number
@@ -182,6 +213,7 @@ export interface TurnLayout {
 const HEAD = 22
 const ROW = 15
 const ROW_GAP = 4
+const BELLS = 14
 const TEMPO = 22
 const AXIS = 18
 const GAP = 20
@@ -197,7 +229,10 @@ export function layoutTurn(s: TurnScore, width: number): TurnLayout {
     const x = (t: number): number => r1(xAt(frame, span, t))
     const rowsTop = y + HEAD
     const rows = s.rows.map((r, k) => ({ family: r.family, y: rowsTop + k * (ROW + ROW_GAP), label: frame.narrow ? `${r.family} ${r.h}` : `${r.family} · ${r.h} · ${r.vowel}` }))
-    const tempoTop = rowsTop + rows.length * (ROW + ROW_GAP) + 2
+    const strip = s.secondFrom !== null && s.bells.length > 0
+    const bellsY = strip ? rowsTop + rows.length * (ROW + ROW_GAP) + BELLS / 2 - 2 : null
+    const bells = strip ? s.bells.filter((b) => b.t >= span.t0 && b.t < span.t1).map((b) => ({ x: x(b.t), day: b.day })) : []
+    const tempoTop = rowsTop + rows.length * (ROW + ROW_GAP) + (strip ? BELLS : 0) + 2
     const tempoBottom = tempoTop + TEMPO - 6
     const inLine = s.bars.filter((b) => clip(span, b.t0, b.t0 + b.len))
     const cells: TurnLine['cells'] = []
@@ -230,9 +265,9 @@ export function layoutTurn(s: TurnScore, width: number): TurnLayout {
     }
     const la = clip(span, s.end, s.end + FORM.lowA)
     const ticks = ticksBetween(span.t0, span.t1, tickStep(frame.pxPerSecond)).map((t) => ({ x: x(t), label: mmss(t) }))
-    const height = HEAD + rows.length * (ROW + ROW_GAP) + TEMPO + AXIS
+    const height = HEAD + rows.length * (ROW + ROW_GAP) + (strip ? BELLS : 0) + TEMPO + AXIS
     lines.push({
-      span, y, height, rowsTop, rows, cells, barLines, said, turns, days, tempo: path, tempoTop, tempoBottom,
+      span, y, height, rowsTop, rows, cells, barLines, said, turns, days, bells, bellsY, tempo: path, tempoTop, tempoBottom,
       lowA: la ? { x: x(la[0]), w: r1((la[1] - la[0]) * frame.pxPerSecond) } : null, ticks,
     })
     y += height + GAP
@@ -294,8 +329,10 @@ export function describeBar(s: TurnScore, index: number): { head: string; body: 
   if (b.kind === 'said') return { head, body: `Silence, and the day’s most attended AI headline said plainly: “${d.said}”.` }
   const fams = b.beats.map((x) => `${x.family} ${x.k} of ${x.h}`).join(', ')
   const unvoiced = d.unvoiced.filter((u) => u.count > 0).map((u) => `${u.family} ${u.count}`).join(', ')
+  const dev = barDevices(s)
+  const bell = s.secondFrom ? s.bells.find((x) => x.t >= b.t0 && x.t < b.t0 + b.len) : undefined
   return {
     head,
-    body: `${d.signals} AI signal${d.signals === 1 ? '' : 's'} that day; this bar lasts ${b.len.toFixed(2)} s. Beats that sound: ${fams || 'none'}.${unvoiced ? ` Counted but not voiced: ${unvoiced}.` : ''}`,
+    body: `${d.signals} AI signal${d.signals === 1 ? '' : 's'} that day; this bar lasts ${b.len.toFixed(2)} s. Beats that sound: ${fams || 'none'}.${unvoiced ? ` Counted but not voiced: ${unvoiced}.` : ''}${dev.length > 0 ? ` This album’s devices: ${dev.join(', ')}.` : ''}${bell && s.secondFrom ? ` The bell’s note, ${Math.round(bell.hz)} Hz, is one of the second subject, ${secondSubject(s.secondFrom)}.` : ''}`,
   }
 }

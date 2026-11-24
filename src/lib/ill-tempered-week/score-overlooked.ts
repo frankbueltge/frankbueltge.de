@@ -7,9 +7,12 @@
 // softer an older motif sounds, the coda. score-overlooked.test.ts holds the mirror to the renderer's source and the
 // derivation to every recorded time. Two things the records before 2026-11-14 do not hold are estimated and marked so:
 // how long the headline is said (the motif's first bar pins it to within 0.4 s) and when its answer ends. Records
-// pressed from 2026-11-14 on carry both, and the entries of the ensemble, and the score reads them instead.
-import type { Overlooked } from './albums'
+// pressed from 2026-11-14 on carry both, and the entries of the ensemble, and the score reads them instead. Records
+// pressed from 2026-11-23 on carry the album's devices (progression.ts): the score draws what each changes, and the
+// second subject in a lane of its own.
+import type { Device, Overlooked, SecondSubject } from './albums'
 import { FIELD, INSTRUMENT } from './names'
+import { secondSubject } from './progression'
 import {
   clip,
   dayAbbr,
@@ -44,10 +47,12 @@ export const FORM = {
   answerAfter: 0.4,
   /** the answer's last note lasts this long */
   lastAnswerNote: 0.6,
-  /** bars after the motif begins at which each part of the ensemble takes it up */
+  /** bars after the motif begins at which each part of the ensemble takes it up, and under the stretto */
   entries: { violins: 4, violas: 8, piano: 12, low: 14 },
-  /** the canon's offsets, in eighths */
+  entriesStretto: { violins: 2, violas: 4, piano: 6, low: 7 },
+  /** the canon's offsets, in eighths, and under the stretto */
   canon: { violins: 3, violas: 5 },
+  canonStretto: { violins: 1, violas: 2 },
   /** an older motif sounds this many dB softer for each day of age */
   dbPerDay: 4,
   /** a part sounds only if it enters this much before its day ends */
@@ -61,9 +66,9 @@ export const FORM = {
   violinHz: 880,
 } as const
 
-export type LaneId = 'voice' | `solo-${number}` | 'violins' | 'violas' | 'piano' | 'low' | 'brass' | 'coda' | 'murmur'
+export type LaneId = 'voice' | `solo-${number}` | 'violins' | 'violas' | 'piano' | 'low' | 'second' | 'brass' | 'coda' | 'murmur'
 
-export type EventKind = 'bell' | 'said' | 'answer' | 'motif' | 'violins' | 'violas' | 'piano' | 'low' | 'brass' | 'murmur' | 'violin'
+export type EventKind = 'bell' | 'said' | 'answer' | 'motif' | 'violins' | 'violas' | 'piano' | 'low' | 'second' | 'brass' | 'murmur' | 'violin'
 
 export interface ScoreEvent {
   id: string
@@ -76,7 +81,7 @@ export interface ScoreEvent {
   /** motif segments: days since the motif's own day, and the gain against that day in dB */
   age?: number
   db?: number
-  /** the moments a loop begins again (motif, canon, low strings), within [t0, t1) */
+  /** the moments a loop begins again (motif, canon, low strings, second subject), within [t0, t1) */
   loops?: number[]
   /** the tutti's segment of a motif */
   tutti?: boolean
@@ -141,6 +146,10 @@ export interface OverlookedScore {
   days: ScoreDay[]
   lanes: Lane[]
   events: ScoreEvent[]
+  /** the album's devices (none before 2026-11-23), how many eighths the canon trails, and the second subject */
+  devices: Device[]
+  canon: { violins: number; violas: number }
+  second: SecondSubject | null
 }
 
 const ABBR: Record<string, string> = {
@@ -183,6 +192,12 @@ export function overlookedScore(o: Overlooked): OverlookedScore {
   const cut = o.cut_s
   const tutti = o.tutti_from_s
   const lastDay = n - 1
+  const devices = o.devices ?? []
+  const dev = new Set(devices)
+  const stretto = dev.has('stretto')
+  const entryBars = o.entry_bars ?? (stretto ? FORM.entriesStretto : FORM.entries)
+  const canon = o.canon_eighths ?? (stretto ? FORM.canonStretto : FORM.canon)
+  const second = dev.has('second subject') ? (o.second ?? null) : null
   const dayEnd = (i: number): number => (i + 1 < n ? o.days[i + 1]!.from_s : cut)
   const events: ScoreEvent[] = []
   const days: ScoreDay[] = []
@@ -205,7 +220,7 @@ export function overlookedScore(o: Overlooked): OverlookedScore {
         ratio: h?.ratio ?? '',
       }
     })
-    const at = (part: keyof typeof FORM.entries): number => d.entries_s?.[part] ?? round3(mt + FORM.entries[part] * bar)
+    const at = (part: keyof typeof FORM.entries): number => d.entries_s?.[part] ?? round3(mt + entryBars[part] * bar)
     const enters = (t: number): number | null => (t < end - FORM.margin ? t : null)
     const entries = { violins: enters(at('violins')), violas: enters(at('violas')), piano: enters(at('piano')), low: enters(at('low')) }
 
@@ -238,11 +253,17 @@ export function overlookedScore(o: Overlooked): OverlookedScore {
       events.push({ id: `motif-${i}-tutti`, lane: `solo-${i}`, kind: 'motif', day: i, t0: a, t1: cut, age: 0, db: 0, tutti: true, loops: loopStarts(mt, loop, a, cut) })
     }
 
-    // the ensemble takes the day's motif up, each part until the day ends
+    // the ensemble takes the day's motif up, each part until the day ends: under the diminution the piano loops it
+    // at twice the speed, under the augmentation cellos and basses at half the speed
     if (entries.violins !== null) events.push({ id: `violins-${i}`, lane: 'violins', kind: 'violins', day: i, t0: entries.violins, t1: end, loops: loopStarts(entries.violins, loop, entries.violins, end) })
     if (entries.violas !== null) events.push({ id: `violas-${i}`, lane: 'violas', kind: 'violas', day: i, t0: entries.violas, t1: end, loops: loopStarts(entries.violas, loop, entries.violas, end) })
-    if (entries.piano !== null) events.push({ id: `piano-${i}`, lane: 'piano', kind: 'piano', day: i, t0: entries.piano, t1: end })
-    if (entries.low !== null) events.push({ id: `low-${i}`, lane: 'low', kind: 'low', day: i, t0: entries.low, t1: end, loops: loopStarts(entries.low, FORM.lowEvery * bar, entries.low, end) })
+    if (entries.piano !== null) events.push({ id: `piano-${i}`, lane: 'piano', kind: 'piano', day: i, t0: entries.piano, t1: end, ...(dev.has('diminution') ? { loops: loopStarts(entries.piano, loop / 2, entries.piano, end) } : {}) })
+    if (entries.low !== null) events.push({ id: `low-${i}`, lane: 'low', kind: 'low', day: i, t0: entries.low, t1: end, loops: loopStarts(entries.low, dev.has('augmentation') ? 2 * loop : FORM.lowEvery * bar, entries.low, end) })
+    // the horns: the second subject, from the violins' entry to the day's end (on the newest day, to the tutti)
+    const secondEnd = i === lastDay ? Math.min(end, tutti) : end
+    if (second && entries.violins !== null && entries.violins < secondEnd - FORM.margin) {
+      events.push({ id: `second-${i}`, lane: 'second', kind: 'second', day: i, t0: entries.violins, t1: secondEnd, loops: loopStarts(entries.violins, second.eighths * pulse, entries.violins, secondEnd) })
+    }
 
     // under it all, the day's most attended headlines murmur, one after another across the day
     const m = d.attended.length
@@ -274,11 +295,27 @@ export function overlookedScore(o: Overlooked): OverlookedScore {
     { id: 'violas', label: 'violas, canon', short: 'vlas.' },
     { id: 'piano', label: 'piano', short: 'pno.' },
     { id: 'low', label: 'cellos & basses', short: 'vcs. cbs.' },
+    { id: 'second', label: 'horns, 2nd subject', short: 'hns. 2nd' },
     { id: 'brass', label: 'horns & trombones', short: 'hns. tbns.' },
     { id: 'coda', label: 'solo violin, coda', short: 'coda vln.' },
     { id: 'murmur', label: 'murmur', short: 'murmur' },
   ]
-  return { week: o.week, edition: o.edition, seconds: o.seconds, pulse, bar, tutti, cut, coda, days, lanes, events }
+  return { week: o.week, edition: o.edition, seconds: o.seconds, pulse, bar, tutti, cut, coda, days, lanes, events, devices, canon: { ...canon }, second }
+}
+
+const EIGHTHS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight']
+/** "three eighths", "one eighth" */
+export const eighthsWord = (k: number): string => `${EIGHTHS[k] ?? k} eighth${k === 1 ? '' : 's'}`
+
+/** What each part of the ensemble plays under the album's devices, in a few words (for the caption and the readout). */
+export function partPlays(s: Pick<OverlookedScore, 'devices'>): Record<'violins' | 'violas' | 'piano' | 'low', string> {
+  const dev = new Set(s.devices)
+  return {
+    violins: dev.has('retrograde') ? 'violins backwards in canon' : 'violins in canon',
+    violas: dev.has('inversion') ? 'violas upside down, an octave down' : 'violas an octave down',
+    piano: dev.has('diminution') ? 'the piano at twice the speed' : 'the piano',
+    low: dev.has('augmentation') ? 'cellos and basses at half the speed' : 'cellos and basses',
+  }
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -317,8 +354,10 @@ export function nowOverlooked(s: OverlookedScore, t: number): string {
   if (t < said.t1) return `${day}: the bell, then the headline said: “${d.text}”`
   if (t < d.motifFrom) return `${day}: the ${d.instrument} ${does(d.instrument, 'answers')} with the headline’s speech melody, in the rhythm it was spoken.`
   const parts = (['violins', 'violas', 'piano', 'low'] as const).filter((p) => d.entries[p] !== null && t >= d.entries[p]!)
-  const names = { violins: 'violins in canon', violas: 'violas an octave down', piano: 'the piano', low: 'cellos and basses' }
-  const ens = parts.length > 0 ? `, with ${parts.map((p) => names[p]).join(', ')}` : ''
+  const names = partPlays(s)
+  const horns = s.events.some((e) => e.kind === 'second' && e.day === i && t >= e.t0 && t < e.t1) ? ['the horns with the second subject'] : []
+  const playing = [...parts.map((p) => names[p]), ...horns]
+  const ens = playing.length > 0 ? `, with ${playing.join(', ')}` : ''
   const aged = older > 0 ? `; ${older} earlier motif${older === 1 ? '' : 's'} softer underneath` : ''
   return `${day}: the ${d.instrument} ${does(d.instrument, 'loops')} the motif${ens}${aged}.`
 }
@@ -330,6 +369,7 @@ export function describeOverlooked(s: OverlookedScore, id: string): { head: stri
   const span = `${mmss(e.t0)}–${mmss(e.t1)}`
   if (e.kind === 'brass') return { head: `horns and trombones · ${span}`, body: 'A’s harmonic chord, harmonics 4:5:6:7 (220, 275, 330 and 385 Hz), under the tutti until the cut.' }
   const d = s.days[e.day]!
+  const dev = new Set(s.devices)
   const day = `${dayShort(d.day)} · ${d.fieldName}`
   const est = e.estimated ? ' The end is estimated: the record of this edition does not hold how long the headline was said.' : ''
   switch (e.kind) {
@@ -351,13 +391,24 @@ export function describeOverlooked(s: OverlookedScore, id: string): { head: stri
             : `${dayName(d.day)}’s motif ${e.age} day${e.age === 1 ? '' : 's'} on, ${-(e.db ?? 0)} dB softer, still looping: the newest day still names ${d.fieldName}.`,
       }
     case 'violins':
-      return { head: `${dayShort(d.day)} · violins · ${span}`, body: `The violins take ${dayName(d.day)}’s motif up in canon, three eighths behind the ${d.instrument}.` }
+      return { head: `${dayShort(d.day)} · violins · ${span}`, body: `The violins take ${dayName(d.day)}’s motif up in canon${dev.has('retrograde') ? ', backwards (retrograde)' : ''}, ${eighthsWord(s.canon.violins)} behind the ${d.instrument}${dev.has('stretto') ? ', and early (stretto)' : ''}.` }
     case 'violas':
-      return { head: `${dayShort(d.day)} · violas · ${span}`, body: `The violas take ${dayName(d.day)}’s motif up five eighths behind, an octave down.` }
+      return { head: `${dayShort(d.day)} · violas · ${span}`, body: `The violas take ${dayName(d.day)}’s motif up ${eighthsWord(s.canon.violas)} behind, an octave down${dev.has('inversion') ? ', upside down: every interval turned round its first note (inversion)' : ''}${dev.has('stretto') ? ', and early (stretto)' : ''}.` }
     case 'piano':
-      return { head: `${dayShort(d.day)} · piano · ${span}`, body: `The piano pulses the motif’s two lowest notes on every eighth, growing louder towards the day’s end.` }
+      return dev.has('diminution')
+        ? { head: `${dayShort(d.day)} · piano · ${span}`, body: `The piano plays ${dayName(d.day)}’s motif at twice the speed (diminution).` }
+        : { head: `${dayShort(d.day)} · piano · ${span}`, body: `The piano pulses the motif’s two lowest notes on every eighth, growing louder towards the day’s end.` }
     case 'low':
-      return { head: `${dayShort(d.day)} · cellos and basses · ${span}`, body: 'Cellos hold A (110 Hz), basses the motif’s lowest note, two bars at a time.' }
+      return dev.has('augmentation')
+        ? { head: `${dayShort(d.day)} · cellos and basses · ${span}`, body: `Cellos and basses play ${dayName(d.day)}’s motif at half the speed (augmentation).` }
+        : { head: `${dayShort(d.day)} · cellos and basses · ${span}`, body: 'Cellos hold A (110 Hz), basses the motif’s lowest note, two bars at a time.' }
+    case 'second':
+      return {
+        head: `${dayShort(d.day)} · horns · ${span}`,
+        body: s.second
+          ? `The second subject: ${secondSubject(s.second)} (“${s.second.text}”), ${s.second.motif.length} notes in ${s.second.eighths} eighths, looped in the horns against ${dayName(d.day)}’s motif.`
+          : 'The second subject, in the horns.',
+      }
     case 'violin':
       return { head: `coda · solo violin · ${span}`, body: `One high violin note, A ${hzLabel(FORM.violinHz)}.${est}` }
     case 'murmur': {

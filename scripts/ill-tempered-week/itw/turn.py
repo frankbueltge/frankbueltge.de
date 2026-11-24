@@ -15,6 +15,16 @@
   the end         Sunday stops on a downbeat; one low A, fading
   level           -14 LUFS, -1 dBTP
 
+  the devices     (from 2026-11-23, itw/progression.py: each album keeps the devices of the album before and adds one;
+                  with none the piece is exactly the standing form above)
+    inversion       the families sing on the undertones instead of the overtones: A1 x 45/h (search 9, news 7.5,
+                    social 6 3/7, tech 5), Harry Partch's utonality, the rhythm unchanged
+    diminution      every bar plays its pattern twice, at twice the speed
+    augmentation    every note is held to the family's next beat: the pulses become a legato line
+    second subject  one note a bar on a bell, half a bar in: the motif the album before ended on, note by note
+    stretto         every note again a quarter bar later, an octave up from the other side: a canon inside the bar
+    retrograde      every note backwards, swelling into its beat instead of dying away from it
+
 """
 import collections
 import math
@@ -67,7 +77,17 @@ def tick(rng: np.random.Generator) -> np.ndarray:
     return np.diff(np.concatenate([[0.0], x]))
 
 
-def render() -> tuple[np.ndarray, dict]:
+UTONAL = 45                                                    # inversion: a family sings A1 x 45/h, not A1 x h
+STRETTO_LAG = 0.25                                             # the canon's lag, in bars
+STRETTO_GAIN = 0.45
+SECOND_AT = 0.5                                                # the second subject's note, half a bar in
+
+
+def render(devices: tuple[str, ...] | list[str] = (), second: dict | None = None) -> tuple[np.ndarray, dict]:
+    """The week's AI signals as the piece; `devices` and `second` as in overlooked.render."""
+    dev = set(devices)
+    if 'second subject' in dev and not second:
+        raise ValueError('the second subject needs the motif the album before ended on')
     ledger.use_days(ledger.DAYS)
     ch, week = ledger.field_week('ai')
     counts = [d['count'] for d in week]
@@ -101,6 +121,32 @@ def render() -> tuple[np.ndarray, dict]:
     n = int((t + 8.0) * SR)
     voices, ground, ticks, voice = (np.zeros((2, n)) for _ in range(4))
     rng = np.random.default_rng(base.seed('turn', ledger.WEEK))
+
+    def sung_hz(f: str, octave: int = 0) -> float:
+        return base.F0 * UTONAL / HARM[f] * 2 ** octave if 'inversion' in dev else base.hz_of(f, octave)
+
+    def family_with_devices(f: str, h: int, k: int, start: float, L: float) -> None:
+        """A family's beats in a bar under the album's devices."""
+        steps = euclid(k, h)
+        reps = 2 if 'diminution' in dev else 1
+        span = L / reps
+        for r in range(reps):
+            for q, step in enumerate(steps):
+                at = start + r * span + step * span / h
+                gap = ((steps[q + 1] if q + 1 < len(steps) else h + steps[0]) - step) * span / h
+                length = min(1.2, 0.95 * gap) if 'augmentation' in dev else min(0.4, 0.85 * span / h)
+                voices_ = [(at, vowels.sung(f, sung_hz(f), length), PAN[f], 1.0)]
+                if 'stretto' in dev:
+                    lag = start + (at - start + STRETTO_LAG * L) % L
+                    voices_.append((lag, vowels.sung(f, sung_hz(f, 1), length), -PAN[f], STRETTO_GAIN))
+                for t_, note, p_, g_ in voices_:
+                    if 'retrograde' in dev:
+                        note = note[::-1].copy()
+                        t_ = max(0.0, t_ - len(note) / SR)   # it swells into its beat and stops there
+                    base.place(voices, int(t_ * SR), pan(note, p_) * g_)
+
+    second_at = 0
+    second_log: dict[int, list] = collections.defaultdict(list)
     for (start, L, i, kind) in bars:
         d = week[i]
         fams = [f for f in ('search', 'news', 'social', 'tech') if d['families'].get(f) or kind == 'all']
@@ -112,14 +158,28 @@ def render() -> tuple[np.ndarray, dict]:
         for f in fams:
             h = HARM[f]
             k = h if kind == 'all' else min(h, d['families'].get(f, 0))
+            if dev:
+                family_with_devices(f, h, k, start, L)
+                continue
             for step in euclid(k, h):
                 at = start + step * L / h
                 note = vowels.sung(f, base.hz_of(f, 0), min(0.4, 0.85 * L / h))
                 base.place(voices, int(at * SR), pan(note, PAN[f]))
         base.place(ground, int(start * SR), pan(sub(), 0.0) * 0.9)
         if fams:
-            hz = sorted(base.hz_of(f, 1) for f in fams)
+            hz = sorted(sung_hz(f, 1) for f in fams) if dev else sorted(base.hz_of(f, 1) for f in fams)
             base.place(ground, int(start * SR), pan(bell(hz), 0.0) * 0.25)
+        if 'second subject' in dev:                            # one note of the album before's last motif a bar
+            nt = second['motif'][second_at % len(second['motif'])]
+            hz2 = nt['hz']
+            while hz2 > 1320:
+                hz2 /= 2
+            while hz2 < 330:
+                hz2 *= 2
+            at2 = start + SECOND_AT * L
+            base.place(ground, int(at2 * SR), pan(bell([hz2], 2.0), 0.0) * 0.3)
+            second_log[i].append({'t': round(at2, 3), 'hz': round(hz2, 1)})
+            second_at += 1
         dens = d['count'] / peak
         for s in range(36):
             if rng.random() < 0.15 + 0.7 * dens:
@@ -140,5 +200,11 @@ def render() -> tuple[np.ndarray, dict]:
 
     mix = lev(voices, -16.0) + lev(ground, -17.0) + lev(ticks, -27.0) + lev(voice, -17.0)
     mix = mix[:, :int((end + 6.5) * SR)]
+    if 'second subject' in dev:
+        for i, notes in second_log.items():
+            log[i]['second'] = notes
     return base.level(mix, -14.0), {'field': 'ai', 'week': ledger.WEEK, 'round': ledger.ROUND, 'bars_per_day': BARS,
-                                 'harmonics': HARM, 'days': log}
+                                 'harmonics': HARM, 'days': log,
+                                 # from 2026-11-23 (itw/progression.py): the album's devices, and the second subject
+                                 'devices': list(devices), **({'utonal': UTONAL} if 'inversion' in dev else {}),
+                                 **({'second': second} if 'second subject' in dev else {})}

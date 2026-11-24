@@ -11,6 +11,7 @@
 import * as React from 'react'
 
 import type { Turn } from '@/lib/ill-tempered-week/albums'
+import { secondSubject } from '@/lib/ill-tempered-week/progression'
 import { dayName, dayShort, hzLabel, mmss } from '@/lib/ill-tempered-week/score'
 import {
   barAt,
@@ -65,6 +66,16 @@ const Drawing = React.memo(function Drawing({ layout }: { layout: TurnLayout }) 
                 <path className="itw-said-mark" d={`M${b.x + b.w / 2} ${line.rowsTop + 3}l4 4l-4 4l-4 -4z`} />
               </g>
             ))}
+            {line.bellsY !== null && (
+              <g>
+                <text className="itw-lab" x={frame.left - 8} y={line.bellsY + 3} textAnchor="end">
+                  {frame.narrow ? 'bell' : 'bell · 2nd subject'}
+                </text>
+                {line.bells.map((b, k) => (
+                  <path key={k} className="itw-sbell" d={`M${b.x} ${line.bellsY! - 3.5}l3.5 3.5l-3.5 3.5l-3.5 -3.5z`} />
+                ))}
+              </g>
+            )}
             {line.days.map((d) => (
               <g key={d.index}>
                 <line className="itw-daysep" x1={d.x} x2={d.x} y1={line.y + 2} y2={line.tempoBottom + 2} />
@@ -114,7 +125,7 @@ function Measure({ beats, cursor, label }: { beats: Beat[]; cursor: number | nul
 }
 
 /** The key to the drawing: each mark once, drawn with the drawing's own classes. */
-function Legend() {
+function Legend({ second }: { second: string | null }) {
   const sw = (body: React.ReactNode) => (
     <svg className="itw-key-swatch" viewBox="0 0 36 14" aria-hidden="true">
       {body}
@@ -141,6 +152,12 @@ function Legend() {
         {sw(<path className="itw-tempo" d="M0 10H12L12 6H24L24 3H36" />)}
         <span>Tempo: a busy day plays faster, a quiet one slower, gliding from day to day.</span>
       </li>
+      {second && (
+        <li>
+          {sw(<path className="itw-sbell" d="M18 3.5l3.5 3.5l-3.5 3.5l-3.5 -3.5z" />)}
+          <span>A bell, one note a bar, half a bar in: the second subject, {second}.</span>
+        </li>
+      )}
       <li>
         {sw(<rect className="itw-lowa" x={2} y={5} width={32} height={4} />)}
         <span>Not drawn bar by bar: a low A and a bell chord of the day’s families on every bar line, and noise ticks as dense as the day was busy. At the end, one low A, fading.</span>
@@ -214,10 +231,10 @@ export default function TurnScore({ record, week, saidLink, audioId, id, label, 
         </svg>
         <div ref={readoutRef} className="dv-readout itw-readout" hidden aria-hidden="true" />
       </div>
-      <Legend />
+      <Legend second={score.secondFrom ? secondSubject(score.secondFrom) : null} />
 
       <p className="itw-part-note itw-key">
-        Each family sings its vowel on its harmonic of A:{' '}
+        {score.devices.includes('inversion') ? 'Each family sings its vowel on an undertone of A (the inversion): ' : 'Each family sings its vowel on its harmonic of A: '}
         {score.rows.map((r, k) => (
           <span key={r.family}>
             {k > 0 ? ', ' : ''}

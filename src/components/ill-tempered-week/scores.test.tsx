@@ -110,6 +110,48 @@ describe.runIf(standingTurn(complete?.pieces.turn))('Turn, on the server', () =>
   })
 })
 
+describe('an album under the devices (Contrapunctus 47 pressed again locally with all six), on the server', () => {
+  const read = (name: string) => JSON.parse(readFileSync(`src/lib/ill-tempered-week/fixtures/devices-2026-W47-${name}.json`, 'utf8'))
+  const o = read('overlooked-six') as Overlooked
+  const u = read('unison-six') as Unison
+  const r = read('turn-six') as Turn
+
+  it('draws the second subject in Overlooked’s own lane, deterministic and clean', () => {
+    const links = { days: o.days.map((_, i) => ({ text: `https://example.org/day/${i}`, attended: o.days[i]!.attended.map((__, k) => `https://example.org/day/${i}/${k}`) })) }
+    const render = () => renderToStaticMarkup(<OverlookedScore record={o} links={links} audioId="a" id="s" label="The score" hint="Press play" />)
+    const html = render()
+    expect(html).toBe(render())
+    clean(html)
+    const s = overlookedScore(o)
+    expect(drawing(html).match(/class="itw-second"/g)?.length ?? 0).toBe(s.events.filter((e) => e.kind === 'second').length)
+    expect(drawing(html)).toContain('horns, 2nd subject')
+    expect(html).toContain('Contrapunctus 46')
+  })
+
+  it('draws the horns and the inverted sections in Unison', () => {
+    const links = { days: u.days.map((d, i) => ({ said: d.said ? `https://example.org/said/${i}` : null, overlooked: `https://example.org/bass/${i}` })) }
+    const render = () => renderToStaticMarkup(<UnisonScore record={u} week="2026-W47" links={links} audioId="a" id="s" label="The score" hint="Press play" />)
+    const html = render()
+    expect(html).toBe(render())
+    clean(html)
+    const s = unisonScore(u, '2026-W47')
+    expect(drawing(html).match(/class="itw-gl s-(violins|violas|cellos|basses) /g) ?? []).toHaveLength(s.glides.length)
+    expect(drawing(html).match(/class="itw-hn"/g)?.length ?? 0).toBeGreaterThan(0)
+    expect(html).toContain('turned round (inversion)')
+    expect(html).toContain('Contrapunctus 46')
+  })
+
+  it('draws the second subject’s bells and the undertones in Turn', () => {
+    const render = () => renderToStaticMarkup(<TurnScore record={r} week="2026-W47" saidLink="https://example.org/turn" audioId="a" id="s" label="The score" hint="Press play" />)
+    const html = render()
+    expect(html).toBe(render())
+    clean(html)
+    const s = turnScore(r, '2026-W47')
+    expect(drawing(html).match(/class="itw-sbell"/g)?.length ?? 0).toBe(s.bells.length)
+    expect(html).toContain('on an undertone of A')
+  })
+})
+
 describe('the forms the week chose, on the server', () => {
   const read = (name: string) => JSON.parse(readFileSync(`src/lib/ill-tempered-week/fixtures/form-${name}.json`, 'utf8'))
   const cases: [string, 'overlooked' | 'unison' | 'turn'][] = [
