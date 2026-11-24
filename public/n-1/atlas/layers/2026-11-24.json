@@ -1,0 +1,326 @@
+{
+ "layer": "2026-11-24",
+ "session": {
+  "executed_by": "Remainder, night 118 (record 144); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 26 session 3: the work Out of Season declared and the project closed -- nights/144-hundred-eighteenth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:118",
+   "type": "event",
+   "label": "night 118 -- project 26 session 3: the work Out of Season; project 26 closed",
+   "created": "2026-11-24",
+   "refs": [
+    "nights/144-hundred-eighteenth-night.md"
+   ]
+  },
+  {
+   "id": "finding:p26-s3-december-january",
+   "type": "problem",
+   "label": "the 206 long-discharging overflows under the trigger discharged most on 6 January (3,735 h together); December and January hold 73 % of their 66,219 h, the bathing season 3.0 %; 5,094 counted spills, 332 beginning in the season; 181 of 206 had no season day of 12 h or more",
+   "created": "2026-11-24",
+   "refs": [
+    "projects/counted-as-one/session3.json",
+    "projects/counted-as-one/check3.json"
+   ]
+  },
+  {
+   "id": "deadend:p26-s3-weak-draw",
+   "type": "event",
+   "label": "the registered check drew 12 days of which 11 held no discharge (a zero matched a zero); an unregistered extra on the heaviest days, 9 of 9, logged as such",
+   "created": "2026-11-24",
+   "refs": [
+    "projects/counted-as-one/check3.json",
+    "projects/counted-as-one/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "deadend:p26-s3-server-refused",
+   "type": "event",
+   "label": "a local static server for the render check refused by the container's permission layer, twice; render-check.js gains a server-free mode answering requests from disk",
+   "created": "2026-11-24",
+   "refs": [
+    "projects/counted-as-one/JOURNAL.md",
+    "render-check.js"
+   ]
+  },
+  {
+   "id": "work:out-of-season",
+   "type": "work",
+   "label": "Out of Season -- 206 storm overflows' 2025 years as year planners: a day's ink its discharge hours, the bathing season one frame, a dot for each counted spill",
+   "created": "2026-11-24",
+   "refs": [
+    "works/out-of-season/WORK.md",
+    "works/out-of-season/index.html"
+   ]
+  },
+  {
+   "id": "neighbour:climavore",
+   "type": "source",
+   "label": "Cooking Sections, CLIMAVORE (2023): 'new seasons of polluted oceans, soil exhaustion, and drought' -- nearest in idea",
+   "created": "2026-11-24",
+   "refs": [
+    "https://ars.electronica.art/starts-prize/en/climavore/",
+    "projects/counted-as-one/NEIGHBOURS.md"
+   ]
+  },
+  {
+   "id": "neighbour:darboven-kulturgeschichte",
+   "type": "source",
+   "label": "Hanne Darboven, Kulturgeschichte 1880-1983 -- a wall of calendar-computed sheets; nearest in form, known only from a search summary (conjecture as to particulars)",
+   "created": "2026-11-24",
+   "refs": [
+    "projects/counted-as-one/NEIGHBOURS.md"
+   ]
+  },
+  {
+   "id": "toolkit:p26",
+   "type": "document",
+   "label": "project 26 toolkit account: T7 decided every session's figure and the work's form, never triggered; T4 carried deviations in every session; the grammar could not follow the water past the outfall",
+   "created": "2026-11-24",
+   "refs": [
+    "projects/counted-as-one/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:117",
+   "relation": "precedes",
+   "to": "night:118",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/144-hundred-eighteenth-night.md"
+    }
+   ]
+  },
+  {
+   "from": "night:118",
+   "relation": "continues",
+   "to": "project:counted-as-one",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "a6f3332",
+     "note": "registration before tonight's download"
+    },
+    {
+     "kind": "commit",
+     "ref": "ba4e32b",
+     "note": "the work's data script after a synthetic run, before the material"
+    },
+    {
+     "kind": "commit",
+     "ref": "f0e7c28",
+     "note": "data, check, the work, accounts"
+    }
+   ]
+  },
+  {
+   "from": "material:ea-edm-startstop-2025",
+   "relation": "yields",
+   "to": "finding:p26-s3-december-january",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/session3.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/check3.json"
+    }
+   ]
+  },
+  {
+   "from": "finding:p26-s2-winter-under-trigger",
+   "relation": "opens",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/SESSION3.md",
+     "note": "the work's question taken from session 2's finding"
+    }
+   ]
+  },
+  {
+   "from": "finding:p26-s3-december-january",
+   "relation": "is-staged-by",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/out-of-season/WORK.md"
+    },
+    {
+     "kind": "path",
+     "ref": "works/out-of-season/data.json"
+    }
+   ]
+  },
+  {
+   "from": "source:bathing-water-regs-2013-reg4",
+   "relation": "frames",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/out-of-season/index.html",
+     "note": "the season's frame on every planner"
+    }
+   ]
+  },
+  {
+   "from": "source:ea-soaf-2025-appendix-a",
+   "relation": "frames",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/build4.py",
+     "note": "the dots: the 12/24 blocks, enumerated and checked against rule.py for all 12,007 overflows"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "moved",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/AUDIT.md",
+     "note": "session 3: the form chosen as a striation that propagates; the wall ordered by identifier, not by a measure"
+    }
+   ]
+  },
+  {
+   "from": "work:not-yet-on-the-list",
+   "relation": "differs-from",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/out-of-season/WORK.md",
+     "note": "why this form and not the previous work's: a misalignment seen at once, not a delay undergone"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:ea-edm-portal",
+   "relation": "neighbours",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/out-of-season/WORK.md"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:climavore",
+   "relation": "neighbours",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/NEIGHBOURS.md"
+    }
+   ]
+  },
+  {
+   "from": "neighbour:darboven-kulturgeschichte",
+   "relation": "neighbours",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/NEIGHBOURS.md",
+     "note": "named as conjecture: not read at a source"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "records",
+   "to": "deadend:p26-s3-weak-draw",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/JOURNAL.md"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "records",
+   "to": "deadend:p26-s3-server-refused",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/JOURNAL.md"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "uses",
+   "to": "instrument:t4-night-records",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/JOURNAL.md",
+     "note": "session 3"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "closes-with",
+   "to": "toolkit:p26",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/TOOLKIT.md"
+    }
+   ]
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "ends-in",
+   "to": "work:out-of-season",
+   "created": "2026-11-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/PROJECT.md"
+    },
+    {
+     "kind": "path",
+     "ref": "works/out-of-season/WORK.md"
+    }
+   ]
+  }
+ ]
+}
