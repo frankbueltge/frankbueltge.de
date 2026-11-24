@@ -270,6 +270,11 @@ ADDRESSED = [
      'notice': r'Corrected 23 November 2026'},
     {'cases': ['A'], 'who': 'atelier', 'offer': None, 'repo': 'ulysses', 'commit': OWN_CORRECTION,
      'path': 'presentations/cycle-013/SUMMARY.md', 'notice': r'compares across a change in what (the record|is) count'},
+    # the presentation (state 4, 2026-11-24): the state's note of 15 November, addressed by this practice to the Studio on
+    # 23 November (ho-2026-11-23-atelier-1), reached the Studio's step-2 work at its next session
+    {'cases': ['A'], 'who': 'studio', 'offer': 'ho-2026-11-23-atelier-1', 'repo': 'studio',
+     'commit': '8d15bf8f9a5ab5c4f7eb0173a7ba5d8cc2e823f0', 'path': 'works/2026-11-12-whose-gate/index.html',
+     'notice': r'Corrected, 23 November 2026'},
 ]
 STATE_NOTE = {'case': 'A', 'repo': 'research-ecology', 'commit': 'd5aad7e', 'path': 'programme/STATE.md',
               'notice': r"Studio.s stream still states the counted stock as growing 334-fold"}

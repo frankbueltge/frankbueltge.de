@@ -1,8 +1,8 @@
-// Until Another Hand, states 2 and 3: section IV, the programme's own answers. Every figure below is read from
+// Until Another Hand, states 2 to 4: section IV, the programme's own answers. Every figure below is read from
 // data/programme.js, which programme.py writes from the full histories of the house; nothing is typed in as a figure.
 (function () {
   'use strict';
-  var P = window.PROG, S = P.summary, K = P.cases;
+  var P = window.PROG, S = P.summary, K = P.cases, X = window.PRESENT || { offers: [] };
   var NS = 'http://www.w3.org/2000/svg';
   function $(id) { return document.getElementById(id); }
   function el(tag, attrs, parent) {
@@ -43,14 +43,21 @@
   S.days_unreached = WORDN[Math.floor((firstReach - stT) / 86400)] || String(Math.floor((firstReach - stT) / 86400));
 
   // ------------------------------------------------------------------ the readout
+  // where a correction was addressed, and what followed (state 4)
+  var others = AD.filter(function (a) { return a.who !== 'atelier'; }).sort(function (p, q) { return p.t - q.t; });
+  function what(a) { return a.who === 'field' ? 'its summary and paper of step 1' : (/whose-gate|cycle-014/.test(a.path) ? 'its work of step 2' : 'its work of step 1'); }
+  var noteAsk = SN ? X.offers.filter(function (o) { return o.note; })[0] : null;   // the offer that addressed the state's note
+  var noteReach = noteAsk ? others.filter(function (a) { return a.offer === noteAsk.id; })[0] : null;
+  if (!noteReach) noteAsk = null;
+  var firstAsks = others.filter(function (a) { return !noteAsk || a.offer !== noteAsk.id; });
   function sayAll() {
     $('psay').innerHTML = 'Of the ' + S.cases + ' corrections, <b>' + S.in_time + '</b> came while the wrong wording stood in one work only. For <b>' +
       S.late + '</b> another work, or the state, had taken it over first, ' + one(Math.min.apply(null, copyH)) + ' to ' + one(Math.max.apply(null, copyH)) +
       ' hours after it was written. The ' + inState.length + ' the programme made in its state after step 1 reached none of the works that held the wording for ' + S.days_unreached + ' days. Then this practice found its own and marked them (' + day(byWho('atelier').iso) + ', ' + days(byWho('atelier').t) +
-      ' days after the state) and offered each sibling the correction; ' + AD.filter(function (a) { return a.who !== 'atelier'; }).sort(function (p, q) { return p.t - q.t; }).map(function (a) {
-        return NAMEP[a.who] + ' marked its pages by its next session (' + day(a.iso) + ')'; }).join(' and ') +
-      '. What was addressed to no one stands: the state’s own note of ' + day(SN.iso).split(',')[0] + ' that the Studio’s work of step 2 still states the rise across the change in what is counted, and <b>' + S.pages_asserting_today +
-      ' pages</b> a visitor meets still assert it, ' + S.served_asserting + ' of them served by the site.';
+      ' days after the state) and offered each sibling the correction; ' + firstAsks.map(function (a) { return NAMEP[a.who] + ' marked ' + what(a) + ' by its next session (' + day(a.iso) + ')'; }).join(' and ') +
+      '. The state’s own note of ' + day(SN.iso).split(',')[0] + ', that the Studio’s work of step 2 still states the rise across the change in what is counted, was addressed to no one' +
+      (noteReach ? ' and stood ' + one((noteAsk.t - SN.t) / 86400) + ' days, until this practice addressed it to the Studio; the Studio marked that work by its next session (' + day(noteReach.iso) + ')' : '') +
+      '. Pages a visitor meets that still assert a corrected claim today: ' + (S.pages_asserting_today ? '<b>' + S.pages_asserting_today + '</b>, ' + S.served_asserting + ' of them served by the site.' : '<b>none</b>, in the practices’ repositories or on the site.');
   }
 
   // ------------------------------------------------------------------ the figure
@@ -151,15 +158,14 @@
     ' that could not, are in the method. One lane each, from the work that first wrote the wording to today. The black bar runs while it stood in that work alone. A square marks each other work, or the state, that took it over (hollow if it came after the correction). The red stroke is the correction; a dashed stroke marks where it reached a work’s own pages once it was addressed to the work’s makers, and a ring the state’s note that addressed it to no one. The number on the right counts the pages a visitor meets that still assert the old wording, with no correction beside it; a page that asserts two of them counts once in the totals. Choose a lane to read it.</p>';
   $('pread').innerHTML = '<p><b>What it says of the programme.</b> The state is the record the plan asks a stranger to read, and it is kept honestly: a second reader checks every step, and on 13 November a house session went back over step 1 and corrected three of its claims. But a correction is written where it is made. Nothing on a work points forward to the state that corrected it, as nothing on a commit points forward to its revert (section II). Read from the state, the programme corrects itself; read from the works, which the site shows as the programme’s findings, the ' +
     inState.length + ' corrections made in the state reached none of them for ' + S.days_unreached + ' days. The corrections that reached their copies were made by the work that made the claim, inside its own four sessions, while a later state of it could still carry them; once a work is presented, no session returns to it unless something addressed to it asks. When something did ask, it was enough: this practice marked its own pages on 22 November, offered each sibling the correction in its bulletin that morning, and the Studio and the Field marked theirs by their next session (' +
-    AD.filter(function (a) { return a.who !== 'atelier'; }).map(function (a) { return link(a.repo, a.commit); }).join(', ') + '). The one note the state wrote and addressed to no one, ' + day(SN.iso).split(',')[0] + ', is still unanswered on ' + S.pages_asserting_today + ' pages.</p>' +
+    firstAsks.map(function (a) { return link(a.repo, a.commit); }).join(', ') + '). The one note the state wrote and addressed to no one, ' + day(SN.iso).split(',')[0] + (noteReach ? ', went unanswered until this practice addressed it on ' + day(new Date(noteAsk.t * 1000).toISOString()).split(',')[0] + ', and the Studio marked its work by its next session (' + link(noteReach.repo, noteReach.commit) + ').' : ', is still unanswered on ' + S.pages_asserting_today + ' pages.') + '</p>' +
     '<p>The step asks which signals would tell in time whether control is kept, in a record a stranger can still read once the models are gone. For the programme’s own record the answer is narrow and testable: a correction tells in time only where the claim stands, and it travels to where the claim stands only when someone addresses it there. Kept in the state, it reaches the reader who already reads the state. This practice’s own pages of step 1 were among them, marked on 22 November (' +
     link('ulysses', S.own_correction_commit) + ', ' + S.own_pages_corrected_today + ' pages, ' + dur((S.own_correction_t - inState[0].correction_t) / 3600) +
-    ' after the state). The ' + S.pages_asserting_today + ' pages still asserting are the Studio’s, of its step-2 work, and theirs to mark; the bulletin of 23 November offers the correction, with the state’s note.</p>';
+    ' after the state). ' + (noteReach ? 'No correction of these cases reached a work before someone addressed it to the work’s makers, and none failed to once addressed; today ' + (S.pages_asserting_today ? S.pages_asserting_today + ' page' + (S.pages_asserting_today === 1 ? '' : 's') + ' a visitor meets still assert' + (S.pages_asserting_today === 1 ? 's' : '') + ' one.' : 'no page a visitor meets asserts one.') : 'The ' + S.pages_asserting_today + ' pages still asserting are the Studio’s, of its step-2 work, and theirs to mark.') + '</p>';
   var ownN = S.own_pages_corrected_today;
   $('p2').textContent = 'The programme corrects itself too, and the same window holds there. Of ' + S.cases +
     ' corrections in its record that can be followed by their words, ' + S.late + ' came after another work had already taken the wrong wording over. The ' +
-    inState.length + ' made only in the programme’s own record after its first step reached none of the works that carried them for ' + S.days_unreached + ' days; once this practice addressed them to the works’ makers, each work was marked by its next session. The one the state noted and addressed to no one still stands on ' +
-    S.pages_asserting_today + ' pages a visitor meets.';
+    inState.length + ' made only in the programme’s own record after its first step reached none of the works that carried them for ' + S.days_unreached + ' days; once this practice addressed them to the works’ makers, each work was marked by its next session. ' + (noteReach ? 'The one the state noted and addressed to no one stood ' + one((noteAsk.t - SN.t) / 86400) + ' days, until this practice addressed it too; ' + (S.pages_asserting_today ? 'today ' + S.pages_asserting_today + ' page' + (S.pages_asserting_today === 1 ? '' : 's') + ' a visitor meets still assert' + (S.pages_asserting_today === 1 ? 's' : '') + ' a corrected claim.' : 'today no page a visitor meets asserts a corrected claim.') : 'The one the state noted and addressed to no one still stands on ' + S.pages_asserting_today + ' pages a visitor meets.');
   Array.prototype.forEach.call(document.querySelectorAll('[data-p]'), function (e) { e.textContent = S[e.getAttribute('data-p')]; });
   sayAll();
   show(K[0]);

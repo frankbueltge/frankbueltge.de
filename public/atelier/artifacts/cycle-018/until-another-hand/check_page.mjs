@@ -1,4 +1,4 @@
-// Until Another Hand, states 1 to 3: read every figure of the page as a visitor's browser shows it, at two widths, and
+// Until Another Hand, states 1 to 4: read every figure of the page as a visitor's browser shows it, at two widths, and
 // compare it with the data the builds wrote. The expected values are computed here from data/window.json and
 // data/clocks.json, independently of the page's own script.
 // Usage: node check_page.mjs <url of index.html>     (needs Playwright with a browser)
@@ -12,6 +12,10 @@ const C = JSON.parse(fs.readFileSync(new URL('./data/clocks.json', import.meta.u
 const S = JSON.parse(fs.readFileSync(new URL('./sources.json', import.meta.url)));
 const PG = JSON.parse(fs.readFileSync(new URL('./data/programme.json', import.meta.url)));
 const CK = JSON.parse(fs.readFileSync(new URL('./data/check.json', import.meta.url)));
+const PR = JSON.parse(fs.readFileSync(new URL('./data/present.json', import.meta.url)));
+// state 4, recounted from the rows of present.json rather than read from its summary
+const RE = { read: PR.deeds.rows.length, only: PR.deeds.rows.filter(r => r.names.length === 1 && r.names[0] === 'Frank Bültge').length,
+  house: PR.field93.house.length, findings: PR.field93.findings };
 // the check (state 3), recounted from its rows rather than read from its summary
 const KO = CK.rows.filter(r => !r.by_mending);
 const KE = { later: KO.length, same: KO.filter(r => r.same_signer).length, other: KO.filter(r => !r.same_signer).length,
@@ -130,9 +134,28 @@ for (const width of [1100, 390]) {
   ok(psay.includes(`Of the ${PE.n} corrections, ${PE.inTime} came while the wrong wording stood in one work only. For ${PE.late} another work`), `${width}: IV readout, ${PE.inTime} in time of ${PE.n}`);
   const lateH = PK.filter(c => firstCopy(c) !== null && firstCopy(c) < c.correction_t).map(c => (firstCopy(c) - c.first_t) / 3600);
   ok(psay.includes(`taken it over first, ${one(Math.min(...lateH))} to ${one(Math.max(...lateH))} hours after it was written`), `${width}: IV readout, the copies came ${one(Math.min(...lateH))} to ${one(Math.max(...lateH))} hours after`);
-  ok(psay.includes(`The ${PE.inState} the programme made in its state`) && psay.includes(`${PE.pages} pages a visitor meets still assert it, ${PE.served} of them served by the site`), `${width}: IV readout, ${PE.pages} pages, ${PE.served} served`);
+  const zero = PE.pages === 0 && PE.served === 0;
+  ok(psay.includes(`The ${PE.inState} the programme made in its state`) && (zero ? psay.includes('still assert a corrected claim today: none, in the practices’ repositories or on the site') :
+    psay.includes(`still assert a corrected claim today: ${PE.pages}, ${PE.served} of them served by the site`)), `${width}: IV readout, ${PE.pages} pages, ${PE.served} served`);
   const p2 = await p.textContent('#p2');
-  ok(p2.includes(`Of ${PE.n} corrections`) && p2.includes(`${PE.late} came after another work`) && p2.includes(`still stands on ${PE.pages} pages a visitor meets`), `${width}: plain words, state 3`);
+  ok(p2.includes(`Of ${PE.n} corrections`) && p2.includes(`${PE.late} came after another work`) && (zero ? p2.includes('today no page a visitor meets asserts a corrected claim') : p2.includes(`today ${PE.pages} page`)), `${width}: plain words, state 4`);
+  // state 4: the walk of case A, its stations recounted from the data
+  const CA = PK.find(c => c.id === 'A');
+  const nOff = (CA.reached || []).filter(r => r.offer && PR.offers.some(o => o.id === r.offer)).length;
+  const nSt = 1 + CA.copies.length + 1 + (CA.state_note ? 1 : 0) + (CA.reached || []).length + nOff + 1;
+  ok(await p.$$eval('#walk li', l => l.length) === nSt, `${width}: the walk has ${nSt} stations`);
+  ok((await p.textContent('#wpos')) === `station 1 of ${nSt}` && await p.$$eval('#walk li.on', l => l.length) === 1, `${width}: the walk starts at station 1`);
+  for (let i = 1; i < nSt; i++) await p.click('#wnext');
+  ok((await p.textContent('#wpos')) === `station ${nSt} of ${nSt}` && await p.$eval('#walk li:last-child', li => li.classList.contains('on')), `${width}: the walk reaches today`);
+  const lastSt = await p.textContent('#walk li:last-child');
+  const aAss = CA.today.filter(x => !x.marked && x.reading === 'asserts').length, aMark = CA.today.filter(x => x.marked).length;
+  ok((aAss ? lastSt.includes(`${aAss} page`) : lastSt.includes('no page a visitor meets asserts it')) && lastSt.includes(`${aMark} carry the correction beside it`), `${width}: the walk's today: ${aAss} asserting, ${aMark} marked`);
+  const times = await p.$$eval('#walk li .when', w => w.map(x => x.textContent));
+  ok(times.length === nSt, `${width}: every station is dated`);
+  const right = await p.$$eval('#walk li', l => Math.max(...l.map(x => x.getBoundingClientRect().right)));
+  ok(right <= width, `${width}: the walk fits the screen (${Math.round(right)})`);
+  await p.click('#walk li:nth-child(1)');
+  ok((await p.textContent('#wpos')) === `station 1 of ${nSt}`, `${width}: a station can be chosen`);
   ok(await p.$$eval('#plan g.plane', g => g.length) === PE.n, `${width}: ${PE.n} lanes in IV`);
   const bigs = await p.$$eval('#plan text.big', t => t.map(x => +x.textContent));
   ok(JSON.stringify(bigs) === JSON.stringify(PK.map(c => c.today.filter(x => !x.marked && x.reading === 'asserts').length)), `${width}: IV, pages asserting per lane ${bigs}`);
@@ -149,6 +172,18 @@ for (const width of [1100, 390]) {
     ok(det.includes(`${c.copies_before} took it over before the correction`) && det.includes(`${c.asserting_today} pages assert it today`) &&
        (await p.$$eval('#pdet li', l => l.length)) === un.length, `${width}: IV, lane ${c.id} opens with its copies and its ${un.length} unreached pages`);
   }
+  // state 4: the page opens on the window; the answer to Kiener and the Field's reading 93
+  const h2s = await p.$$eval('main > h2', h => h.map(x => x.textContent));
+  ok(h2s[0] === 'I. Two clocks', `${width}: the page opens on section I (${h2s[0]})`);
+  ok(await p.evaluate(() => { const c = document.getElementById('checked'), r = document.getElementById('reading'); return !!(r.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING); }), `${width}: the check box stands after the reading`);
+  ok((await p.textContent('#sub')).includes('“another hand” can mean another commit on a deed’s lines, never another person or another machine'), `${width}: the title's question said in one sentence`);
+  const ki = S.find(x => x.id === 'ki');
+  for (let i = 0; i < ki.passages.length; i++) ok((await p.textContent(`#q-ki${i + 1}`)) === ki.passages[i].text, `${width}: Kiener passage ${i + 1} as checked`);
+  const ans = await p.textContent('#answer');
+  ok(ans.includes(`of the ${RE.read} deeds of the house’s machines whose commits this work reads, ${RE.only} stand under the architect’s name alone, and ${KE.arch} of the ${KE.same} windows`), `${width}: the answer's names (${RE.only} of ${RE.read}; ${KE.arch} of ${KE.same})`);
+  ok(ans.includes(`${RE.house} of the programme’s ${RE.findings} findings of steps 1 to 5 rest on this house’s own Git and log`) && ans.includes(`${RE.only} stand under the architect’s name alone`), `${width}: the Field's reading 93 (${RE.house} of ${RE.findings})`);
+  ok((await p.textContent('#holds')).includes(`${RE.only} of ${RE.read} under the architect’s alone`), `${width}: what it holds, the names`);
+  ok(cl.includes(`Pages still asserting a corrected claim: ${PR.checked_iv.pages_asserting_today}, all of the one case`), `${width}: the check box keeps its own day's count (${PR.checked_iv.pages_asserting_today})`);
   if (width === 390) {
     const sw = await p.evaluate(() => document.documentElement.scrollWidth);
     ok(sw <= 392, `390: the page itself does not scroll sideways (${sw})`);
