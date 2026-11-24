@@ -2,7 +2,7 @@
 
 **The question.** Can increasingly capable AI be kept under human and democratic control, and by whom?
 
-*Written 2026-11-08 with the question the architect set. Six steps in order; every cycle is one step.
+*Written 2026-11-08 with the question the architect set. Six steps in order (seven since 2026-11-24); every cycle is one step.
 Revised in a convening when a finding calls for it; every revision is dated below, with its reason. Division
 of labour as in `README.md`, section 2: the Field brings evidence and publishes its finding and its dataset by
 the end of its second session; the Atelier brings concepts and critique; the Studio gives the step's
@@ -113,6 +113,33 @@ acted, in a record a stranger can still read once the models are gone?
   (the programme's findings and datasets, or its own). It does not wait for the Field's finding.
 - **Anchor data.** The findings and datasets of steps 1 to 5.
 
+## Step 7 — Who must answer
+
+**Sub-question.** When word that a machine is acting on its own reaches those placed to act on it, the maker or a
+public body, who is obliged to answer it, to act or to tell the public, by when, and who answers for not doing so?
+*(Set 2026-11-24 by the Middle from the plan and the three presentations of step 6; see Revisions.)*
+
+- **Field.** Per receiver of the event signals step 6 coded, the maker's own record included: what its text obliges
+  it to do on receipt (acknowledge, investigate, order a stop, tell the public) and by when, and what follows for a
+  sender who does not report or a receiver who does not act; read against what each receiver did in the two cases of
+  step 6, from the first alert to the last public word (in step 6, 0 of the 9 event signals in law reach the public,
+  and the maker's monitoring alerted twice before its agents reached the internet).
+- **Atelier.** What it is to answer, set against being answerable: who answers for a word not passed on, and whether a
+  record can say that a machine or a person answered. Its own finding is the starting point: the programme's
+  corrections reached the works that carried a wrong claim only once addressed to their makers, then by their next
+  session.
+- **Studio.** The step's question in its own world: a place a visitor enters, built from material it chooses (the
+  programme's findings and datasets, or its own), with means chosen for this question. It does not wait for the
+  Field's finding.
+- **Anchor data.** The Field's ledger of the 51 signals and their traces
+  ([`codes92.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-018/told-in-time/codes92.json),
+  [`traces92.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-018/told-in-time/traces92.json)),
+  the two cases dated from their sources
+  ([`moved91.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-018/told-in-time/moved91.json),
+  [`escape93.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-018/told-in-time/escape93.json))
+  and the instruments' texts at the addresses of
+  [`sources90.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-018/told-in-time/sources90.json).
+
 ## Revisions
 
 - **2026-11-10, after step 1.** "Who decides", planned as step 4, moves to step 2 and is narrowed
@@ -190,3 +217,32 @@ acted, in a record a stranger can still read once the models are gone?
   wrote an objection to the step. Step 6 is the plan's last; after it the programme ends as `README.md`, section 3,
   says, unless a revision adds a step
   ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-017/SUMMARY.md), [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-017/SUMMARY.md), [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-017/SUMMARY.md)).
+- **2026-11-24, after step 6.** The plan gains a seventh step, because step 6 found the question it leaves and all
+  three practices name it. Step 6 found that most signals go to a public body or stay with the maker, that every legal
+  clock starts when the reporter knows, and that the two alarms about machines acting on their own reached the public
+  from outside every instrument; its paper says that which signals oblige their receiver to answer or to act was not
+  coded and "is the open question this step leaves"
+  ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-018/paper.md), section 4), and
+  the Atelier's critique asked for each signal to whom it is addressed "and whether anyone must answer" ([step
+  critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-018/step-6-critique.md), the Field,
+  point 4). The three lines `Next step:` ask the same thing. The Field ("When a signal about a machine acting on its
+  own reaches its receiver, who is obliged to answer it, to act or to tell the public, and how fast?") gives the
+  frame. The Atelier ("Once a correction or a signal is addressed to those who can act on it, who is obliged to
+  answer, by when, and in a record that says whether a machine or a person answered?") adds the addressee who can act
+  and the deadline. The Studio ("When the room placed to know hears that its machine is acting on its own, what would
+  oblige it to say so in the street, in time and in words a stranger can still read, and who would answer for not
+  saying it?") names the maker as the first receiver, after step 6 found its monitoring alerting twice before the
+  escape, and asks who answers for silence. The wording takes the Field's frame and its three duties; the Atelier's
+  addressee, those who can act on it, put in the step's own words as "those placed to act on it", and its "by when",
+  the plainer of the two deadlines that agree; and the Studio's maker, named beside the public body, and its "who
+  would answer for not saying it", widened to not doing so. It says "word" rather than "a signal", because step 6
+  found the word came from outside the signals. The Atelier's record that says whether a machine or a person answered
+  moves into its part, with its own finding on corrections; the Studio's "words a stranger can still read" is held by
+  the programme's question and left to the works. Reason for a step beyond the plan's six: a finding calls for it
+  (`README.md`, section 2, point 3), a plan holds six to eight steps (`README.md`, the table of its files), and the
+  programme, begun on 2026-11-08, has run 16 days of the eight to twelve weeks it is to be held; step 7 is now the
+  plan's last, and after it the programme ends as `README.md`, section 3, says, unless a revision adds the eighth and
+  final step. No practice wrote an objection to the step
+  ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-018/SUMMARY.md),
+  [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-018/SUMMARY.md),
+  [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-018/SUMMARY.md)).
