@@ -11,6 +11,8 @@
 // Since 2026-11-14 evening (Frank's choice of that day, wording private) the page opens with the album as a track
 // list of three equal pieces; a piece's score unfolds under the list when it plays (one at a time, the script at the
 // end), the running week is a strip with its player, and every album is listed with its players.
+// Since 2026-11-23 (Frank's request of that day, wording private) the weeks build on each other: the steps below say
+// how, and each album's place in its cycle stands over its pieces (AlbumPieces.astro, progression.ts).
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import AlbumPieces from '@/components/ill-tempered-week/AlbumPieces.astro'
@@ -50,7 +52,7 @@ const tracks = [
   />
 
   <section id="itw-album" class="mb-16" aria-label="The newest album">
-    <p class="kicker mb-1">The newest album · {span(album.days)} · {album.complete ? 'complete' : `edition ${o.edition} of 7`}{album.character && album.character.form !== 'standing' ? ` · ${album.character.form}` : ''}</p>
+    <p class="kicker mb-1">The newest album · {span(album.days)} · {album.complete ? 'complete' : `edition ${o.edition} of 7`}{album.progression?.added ? ` · cycle ${album.progression.cycle}, step ${album.progression.step}` : album.character && album.character.form !== 'standing' ? ` · ${album.character.form}` : ''}</p>
     <h2 class="itw-albumtitle"><a class={link} href={albumPath(album.week)}>{album.title}</a></h2>
     <ol class="itw-tracks">
       {tracks.map((k) => (
@@ -118,6 +120,7 @@ const tracks = [
       <li><b>Speech gives the pitch.</b> A synthetic voice reads each headline aloud. In <em>Overlooked</em> the rise and fall of that reading becomes the melody; in <em>Unison</em> its pitch is where a string begins.</li>
       <li><b>The ledger gives the time.</b> The day, the hour a story was published and how many signals a day held decide when a note sounds and how fast the music moves.</li>
       <li><b>Field and attention give the sound.</b> A field has its instrument, a platform family its vowel; a more attended signal plays higher, longer and louder.</li>
+      <li><b>The weeks build on each other.</b> Every album keeps the devices of the album before it and, once its week is complete, adds one more: inversion, diminution, augmentation, a second subject, stretto, retrograde, the ways a fugue treats its subject. The week decides which. A week whose attention turned over in one night adds the inversion, a week one story held the augmentation, a week whose lead passed to another story and stayed the second subject (the motif the album before ended on), a week whose lead kept changing the stretto; any other week, or one whose device is already in force, the next in that order. After six albums the cycle begins again.</li>
     </ol>
     <p class="mt-5 max-w-3xl leading-relaxed text-fg-muted">
       The tuning is just intonation on A: scale, chord and rhythm are all taken from the harmonics of A1 = 55 Hz, and no interval is

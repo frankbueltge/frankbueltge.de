@@ -40,6 +40,40 @@ export interface OverlookedDay {
   entries_s?: { violins: number; violas: number; piano: number; low: number }
 }
 
+/** The ways a fugue treats its subject, as the albums take them up one week after the next (from 2026-11-23,
+ *  scripts/ill-tempered-week/itw/progression.py; src/lib/ill-tempered-week/progression.ts names them for the page). */
+export type Device = 'inversion' | 'diminution' | 'augmentation' | 'second subject' | 'stretto' | 'retrograde'
+
+/** The second subject: the motif the album before ended on, its newest day's in Overlooked, note by note (each
+ *  note's eighth, pitch and length in eighths). */
+export interface SecondSubject {
+  week: string
+  day: string
+  field: string
+  text: string
+  instrument: string
+  eighths: number
+  motif: { step: number; hz: number; eighths: number }[]
+}
+
+/** How an album builds on the album before (recorded from 2026-11-23 on, itw/progression.py). */
+export interface Progression {
+  cycle: number
+  /** how many devices the album plays: 1 to 6 once its week is complete */
+  step: number
+  /** the album it builds on: the newest complete one before it */
+  from: string | null
+  taken_over: Device[]
+  /** the week's verdict once the week is complete (the seventh pressing), else null */
+  verdict: Form | null
+  /** the device the verdict asked for, and the one added: the next in the order where that one was in force */
+  asked: Device | null
+  added: Device | null
+  /** in the order they came in */
+  devices: Device[]
+  second: SecondSubject | null
+}
+
 export interface Overlooked extends Rendered {
   edition: number
   week: string
@@ -56,6 +90,12 @@ export interface Overlooked extends Rendered {
   /** recorded from the pressing of 2026-11-14 on: when the coda's sentence begins */
   coda_s?: number
   days: OverlookedDay[]
+  /** recorded from 2026-11-23 on: the album's devices, the bars after which each part of the ensemble takes a motif
+   *  up, how many eighths the canon trails, and the second subject while that device is in force */
+  devices?: Device[]
+  entry_bars?: { violins: number; violas: number; piano: number; low: number }
+  canon_eighths?: { violins: number; violas: number }
+  second?: SecondSubject
 }
 
 export interface UnisonEvent {
@@ -67,6 +107,9 @@ export interface UnisonEvent {
   to_hz: number
   chord_tone_hz: number
   text: string
+  /** recorded while the album plays a device (from 2026-11-23 on): how long the glissando lasts, which augmentation
+   *  and diminution change; without it, the form's 5 s plus 4 s times the attention */
+  dur_s?: number
 }
 
 export interface UnisonDay {
@@ -86,6 +129,9 @@ export interface UnisonDay {
   said_s?: number | null
   bass_from_s?: number
   bass?: { t: number; hz: number; s: number }[]
+  /** the second subject's notes in the horns before the peak (seconds into the piece, pitch, length), while that
+   *  device is in force */
+  second?: { t: number; hz: number; s: number }[]
 }
 
 export interface Unison extends Rendered {
@@ -94,6 +140,9 @@ export interface Unison extends Rendered {
   chord: string
   median_spoken_hz: number
   days: UnisonDay[]
+  /** recorded from 2026-11-23 on */
+  devices?: Device[]
+  second?: SecondSubject
 }
 
 export interface TurnDay {
@@ -104,6 +153,8 @@ export interface TurnDay {
   turn: boolean
   said: string | null
   from_s: number
+  /** the second subject's bell notes, one a bar (seconds into the piece, pitch), while that device is in force */
+  second?: { t: number; hz: number }[]
 }
 
 export interface Turn extends Rendered {
@@ -111,6 +162,10 @@ export interface Turn extends Rendered {
   bars_per_day: number
   harmonics: Record<string, number>
   days: TurnDay[]
+  /** recorded from 2026-11-23 on; `utonal` while the inversion is in force: a family sings A1 × utonal / harmonic */
+  devices?: Device[]
+  utonal?: number
+  second?: SecondSubject
 }
 
 export type Form = 'handover' | 'break' | 'held' | 'mosaic' | 'standing'
@@ -249,7 +304,8 @@ export interface Character {
   verdict: Form
   thresholds: { break: number; held: number; mosaic: number }
   days_read: number
-  /** the form pressed: the verdict once the week is complete and every piece and score can take it, else standing */
+  /** the form pressed: from 2026-11-16 to 2026-11-23 the verdict once the week was complete, else standing; since
+   *  2026-11-23 always standing, and the verdict chooses the device the album adds (`progression`) */
   form: Form
   why: string
 }
@@ -267,6 +323,9 @@ export interface Album {
    *  days were read, the verdict, and the form the album was pressed in. An album without it was pressed in the
    *  standing form, before the week chose. */
   character?: Character
+  /** recorded from 2026-11-23 on: how the album builds on the one before (itw/progression.py). An album without it
+   *  was pressed before the weeks built on each other. */
+  progression?: Progression
   pieces: { overlooked: Overlooked | OverlookedForm; unison?: Unison | UnisonForm; turn?: Turn | TurnForm }
   library: string
   voices: string

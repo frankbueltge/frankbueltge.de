@@ -16,6 +16,15 @@
                 sound is the bass alone
   level         -16 LUFS, -1 dBTP; a stereo orchestra in a hall
 
+  the devices   (from 2026-11-23, itw/progression.py: each album keeps the devices of the album before and adds one;
+                with none the piece is exactly the standing form above)
+    inversion       the sections turned round: the least attended quarter in the violins, the most attended in the basses
+    diminution      the lower strings (cellos and basses) glide three times as fast: a rain under the mass
+    augmentation    the upper strings (violins and violas) glide twice as slowly
+    second subject  before each peak the horns play the motif the album before ended on, four times as slow
+    stretto         every signal enters in the last third before the peak, the hours of the day pressed together
+    retrograde      every glissando runs backwards, from where the agreement takes it back to its own pitch
+
 """
 import collections
 import math
@@ -61,7 +70,16 @@ def nearest_chord(hz: float, lo: float, hi: float) -> float:
     return min(pool, key=lambda f: abs(math.log2(f / hz)))
 
 
-def render() -> tuple[np.ndarray, dict]:
+SECOND_EIGHTH_S = 0.2 * 4                                      # the second subject's eighths, four times as long
+STRETTO_FROM = 2 / 3                                           # the stretto's entries: the last third before the peak
+UPPER, LOWER = ('violins', 'violas'), ('cellos', 'basses')
+
+
+def render(devices: tuple[str, ...] | list[str] = (), second: dict | None = None) -> tuple[np.ndarray, dict]:
+    """The week's war signals as the piece; `devices` and `second` as in overlooked.render."""
+    dev = set(devices)
+    if 'second subject' in dev and not second:
+        raise ValueError('the second subject needs the motif the album before ended on')
     ledger.use_days(ledger.DAYS)
     ch, week = ledger.field_week('war')
     pitches = {}
@@ -81,6 +99,7 @@ def render() -> tuple[np.ndarray, dict]:
 
     n = int((INTRO_S + 7 * DAY_S + 16.0) * SR)
     strings, brass, perc, voice, solo = (np.zeros((2, n)) for _ in range(5))
+    cantus = np.zeros((2, n)) if 'second subject' in dev else None
 
     def put(buf, t, sig, gain=1.0):
         base.place(buf, int(round(t * SR)), sig * gain)
@@ -95,7 +114,8 @@ def render() -> tuple[np.ndarray, dict]:
         put(perc, t0, pan(get('Timpani').note(110.0, 2.5, 80, release=1.5), 0.0))
         events = []
         for j, s in enumerate(sig):
-            sec = next(x for x in SECTIONS if s['attention'] >= x[0])
+            rank = 1.0 - s['attention'] if 'inversion' in dev else s['attention']
+            sec = next(x for x in SECTIONS if rank >= x[0])
             _, name, sus, trem, lo, hi, p = sec
             centre = math.sqrt(lo * hi)
             sp = pitches.get(s['text'], 0.0) or median
@@ -104,15 +124,24 @@ def render() -> tuple[np.ndarray, dict]:
             end = start * (target / start) ** agree
             rng = np.random.default_rng(base.seed('unison', d['day'], s['source'], s['text'], str(j)))
             hour = s['hour'] if s['hour'] is not None else float(rng.uniform(0, 24))
-            at = t0 + 1.0 + hour / 24.0 * (PEAK_S - 2.0) + float(rng.uniform(-0.3, 0.3))
+            if 'stretto' in dev:
+                at = t0 + 1.0 + (STRETTO_FROM + (1 - STRETTO_FROM) * hour / 24.0) * (PEAK_S - 2.0) + float(rng.uniform(-0.3, 0.3))
+            else:
+                at = t0 + 1.0 + hour / 24.0 * (PEAK_S - 2.0) + float(rng.uniform(-0.3, 0.3))
             dur = 5.0 + 4.0 * s['attention']
+            if 'augmentation' in dev and name in UPPER:
+                dur *= 2
+            if 'diminution' in dev and name in LOWER:
+                dur /= 3
+            if 'retrograde' in dev:
+                start, end = end, start
             vel = int(48 + 50 * s['attention'])
             which = trem if (d['count'] >= 25 and s['attention'] >= 0.5) else sus
             g = sampler.glide(get(which), start, end, 0.8 * dur, vel, release=0.2 * dur + 0.4, key=f'{d["day"]}{j}')
             put(strings, at, pan(g, p + float(rng.uniform(-0.12, 0.12))))
             events.append({'at_s': round(at, 2), 'section': name, 'tremolo': which == trem, 'attention': s['attention'],
                            'from_hz': round(start, 1), 'to_hz': round(end, 1), 'chord_tone_hz': round(target, 1),
-                           'text': s['text']})
+                           'text': s['text'], **({'dur_s': round(dur, 3)} if dev else {})})
         last = i == len(week) - 1
         peak = t0 + PEAK_S
         said, said_s = None, None
@@ -136,6 +165,24 @@ def render() -> tuple[np.ndarray, dict]:
         hz = [x['hz'] for x in syl if x['hz'] > 0]
         med = float(np.median(hz)) if hz else 120.0
         solo_at = (t0 + DAY_S - 0.5) if last else (peak + 5.5)
+        second_notes = []
+        if 'second subject' in dev:                            # the horns, before the peak: the album before's last motif
+            stop2 = solo_at if last else peak
+            t = t0 + 1.0
+            while t < stop2 - 0.05:
+                for q, nt in enumerate(second['motif']):
+                    at2 = t + nt['step'] * SECOND_EIGHTH_S
+                    if at2 >= stop2 - 0.05:
+                        continue
+                    hz2 = nt['hz']
+                    while hz2 > 440:
+                        hz2 /= 2
+                    while hz2 < 110:
+                        hz2 *= 2
+                    s2 = min(stop2 - at2, max(0.3, 0.9 * nt['eighths'] * SECOND_EIGHTH_S))
+                    put(cantus, at2, pan(get('FHornSus').note(hz2, s2, 62, release=0.8, key=f'cf{i}{q}'), 0.2))
+                    second_notes.append({'t': round(at2, 3), 'hz': round(hz2, 1), 's': round(s2, 3)})
+                t += second['eighths'] * SECOND_EIGHTH_S
         bass = []
         for q, x in enumerate(syl):
             nxt = syl[q + 1]['t'] if q + 1 < len(syl) else x['t'] + 0.9
@@ -151,7 +198,8 @@ def render() -> tuple[np.ndarray, dict]:
                     # for the score on the page (src/lib/ill-tempered-week/score-unison.ts), recorded since
                     # 2026-11-14: when the day begins, how long its headline is said at the peak, and the solo
                     # double bass (when it begins; each note's onset after that, its pitch and its length)
-                    'from_s': round(t0, 2), 'said_s': said_s, 'bass_from_s': round(solo_at, 2), 'bass': bass})
+                    'from_s': round(t0, 2), 'said_s': said_s, 'bass_from_s': round(solo_at, 2), 'bass': bass,
+                    **({'second': second_notes} if 'second subject' in dev else {})})
 
     strings = pb.Pedalboard([pb.HighpassFilter(35), pb.Reverb(room_size=0.88, damping=0.4, wet_level=0.3, dry_level=0.8, width=1.0)])(
         strings.astype(np.float32), SR).astype(np.float64)
@@ -166,10 +214,16 @@ def render() -> tuple[np.ndarray, dict]:
         return x * 10 ** ((target - L) / 20) if np.isfinite(L) else x
 
     mix = lev(strings, -17.5) + lev(brass, -21.0) + lev(perc, -22.0) + lev(voice, -20.0) + lev(solo, -21.0)
+    if cantus is not None:
+        cantus = pb.Pedalboard([pb.Reverb(room_size=0.88, damping=0.4, wet_level=0.3, dry_level=0.8, width=1.0)])(
+            cantus.astype(np.float32), SR).astype(np.float64)
+        mix = mix + lev(cantus, -23.0)
     end = int((INTRO_S + 7 * DAY_S + 12.0) * SR)
     mix = mix[:, :end]
     fade = int(2.0 * SR)
     mix[:, -fade:] *= np.linspace(1, 0, fade)
     return base.level(mix, -16.0), {'field': 'war', 'week': ledger.WEEK, 'round': ledger.ROUND, 'day_s': DAY_S,
                                  'chord': 'A harmonics 4:5:6:7', 'median_spoken_hz': round(median, 1), 'days': log,
-                                 'library': 'VSCO 2 CE 1.1.0 (CC0)'}
+                                 'library': 'VSCO 2 CE 1.1.0 (CC0)',
+                                 # from 2026-11-23 (itw/progression.py): the album's devices, and the second subject
+                                 'devices': list(devices), **({'second': second} if 'second subject' in dev else {})}

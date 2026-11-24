@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "0a8da7d1435b9a6e"
+        "sha256": "3ddc9ecd871a52a3"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "21ed8a2c8a7754c2"
+        "sha256": "88ce99f70d2a0460"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 662,
-      "edges": 584,
+      "nodes": 663,
+      "edges": 585,
       "nodesByKind": {
-        "decision": 200,
+        "decision": 201,
         "encounter": 6,
         "neighbor": 161,
         "practice": 10,
@@ -75,7 +75,7 @@
         "made-by": 242,
         "neighbor-of": 163,
         "participates": 17,
-        "touches": 143
+        "touches": 144
       }
     }
   },
@@ -2078,6 +2078,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "The Studio works the programme's question in its own world, with force"
+      }
+    },
+    {
+      "id": "decision:2026-11-23-1",
+      "kind": "decision",
+      "label": "The weeks of the ill-tempered week build on each other",
+      "date": "2026-11-23",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The weeks of the ill-tempered week build on each other"
       }
     },
     {
@@ -13923,6 +13933,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "scripts/ill-tempered-week/itw/character.py"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-11-23-1",
+      "to": "work:ill-tempered-week",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "scripts/ill-tempered-week/itw/progression.py"
       }
     }
   ]

@@ -15,6 +15,7 @@ import * as React from 'react'
 
 import type { Unison } from '@/lib/ill-tempered-week/albums'
 import type { UnisonLinks } from '@/lib/ill-tempered-week/pages'
+import { secondSubject } from '@/lib/ill-tempered-week/progression'
 import { dayName, dayShort, mmss } from '@/lib/ill-tempered-week/score'
 import {
   describeGlide,
@@ -102,6 +103,13 @@ const Drawing = React.memo(function Drawing({ layout }: { layout: UnisonLayout }
                 {b.notes.length === 0 && <path className="itw-bass" d={`M${b.x} ${b.y - 5}l5 5l-5 5l-5 -5z`} />}
               </g>
             ))}
+            {line.horns.map((h) => (
+              <g key={`h${h.day}`} className="itw-hn">
+                {h.notes.map((n, k) => (
+                  <rect key={k} x={n.x} y={n.y - 1.5} width={n.w} height={3} />
+                ))}
+              </g>
+            ))}
             {line.strokes.map((s) => (
               <line key={`k${s.day}`} className="itw-timp" x1={s.x} x2={s.x} y1={line.laneY} y2={line.laneY + 8} />
             ))}
@@ -125,16 +133,23 @@ const Drawing = React.memo(function Drawing({ layout }: { layout: UnisonLayout }
 })
 
 /** The four string sections: a signal's attention on its own platform decides which one plays it, and the section is
- *  the glissando's hue (the sections overlap in pitch, so place alone would not tell them apart). */
+ *  the glissando's hue (the sections overlap in pitch, so place alone would not tell them apart). Under the inversion
+ *  the sections are turned round: the least attended quarter plays in the violins. */
 const SECTIONS = [
   { id: 'violins', weight: 3, label: 'Violins: the most attended quarter of the day’s war signals, the thickest line.' },
   { id: 'violas', weight: 2, label: 'Violas: the second quarter.' },
   { id: 'cellos', weight: 1, label: 'Cellos: the third quarter.' },
   { id: 'basses', weight: 0, label: 'Double basses: the least attended quarter, the thinnest line.' },
 ] as const
+const SECTIONS_INVERTED = [
+  { id: 'violins', weight: 0, label: 'Violins, turned round (inversion): the least attended quarter of the day’s war signals, the thinnest line.' },
+  { id: 'violas', weight: 1, label: 'Violas: the third quarter.' },
+  { id: 'cellos', weight: 2, label: 'Cellos: the second quarter.' },
+  { id: 'basses', weight: 3, label: 'Double basses: the most attended quarter, the thickest line.' },
+] as const
 
 /** The key to the drawing: each mark once, drawn with the drawing's own classes. */
-function Legend() {
+function Legend({ inverted, second }: { inverted: boolean; second: string | null }) {
   const sw = (body: React.ReactNode) => (
     <svg className="itw-key-swatch" viewBox="0 0 36 14" aria-hidden="true">
       {body}
@@ -146,7 +161,7 @@ function Legend() {
         {sw(<line className="itw-gl s-violas w2" x1={2} y1={12} x2={30} y2={4} />)}
         <span>One war signal: a string glissando from its headline’s spoken pitch towards A’s chord, entering at the hour it was published (where its platform gives no hour, at a place in the day drawn once from its own text).</span>
       </li>
-      {SECTIONS.map((s) => (
+      {(inverted ? SECTIONS_INVERTED : SECTIONS).map((s) => (
         <li key={s.id}>
           {sw(<line className={`itw-gl s-${s.id} w${s.weight}`} x1={2} y1={7} x2={34} y2={7} />)}
           <span>{s.label}</span>
@@ -178,6 +193,18 @@ function Legend() {
         {sw(<path className="itw-bass" d="M12 2l5 5l-5 5l-5 -5z" />)}
         <span>The solo double bass: the speech melody of the day’s least attended war headline, outside the chord.</span>
       </li>
+      {second && (
+        <li>
+          {sw(
+            <g className="itw-hn">
+              <rect x={2} y={8} width={9} height={3} />
+              <rect x={13} y={4} width={9} height={3} />
+              <rect x={24} y={6} width={10} height={3} />
+            </g>,
+          )}
+          <span>The horns before the peak: the second subject, {second}, four times as slow.</span>
+        </li>
+      )}
       <li>
         {sw(
           <>
@@ -252,7 +279,7 @@ export default function UnisonScore({ record, week, links, audioId, id, label, h
         </svg>
         <div ref={readoutRef} className="dv-readout itw-readout" hidden aria-hidden="true" />
       </div>
-      <Legend />
+      <Legend inverted={score.devices.includes('inversion')} second={score.secondFrom ? secondSubject(score.secondFrom) : null} />
 
       <ol className="itw-udays" aria-label="The days of the week">
         {score.days.map((d) => {

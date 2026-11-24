@@ -9,6 +9,7 @@ import UnisonScore from '@/components/ill-tempered-week/UnisonScore'
 import { clock, formedOverlooked, formedTurn, formedUnison, standingOverlooked, standingTurn, standingUnison, weekday, type Album } from '@/lib/ill-tempered-week/albums'
 import { formSaidLinks, formWarSignals, HINT, overlookedLinks, turnSaidLink as saidLink, unisonLinks, warSignals } from '@/lib/ill-tempered-week/pages'
 import { dayShort, mmss } from '@/lib/ill-tempered-week/score'
+import { devicesText, progressionText } from '@/lib/ill-tempered-week/progression'
 import { FORM_PHRASE, formText, whyForm } from '@/lib/ill-tempered-week/score-forms'
 import { FORM as OV } from '@/lib/ill-tempered-week/score-overlooked'
 import { FORM as UN } from '@/lib/ill-tempered-week/score-unison'
@@ -41,8 +42,18 @@ const signals = u ? warSignals(u) : []
 const formSignals = fu ? formWarSignals(fu) : []
 const turnSaidLink = t ? saidLink(t) : ft ? saidLink(ft) : null
 const character = album.character && album.character.form !== 'standing' ? album.character : null
+// From 2026-11-23 on every album builds on the one before (itw/progression.py): its place in the cycle on top, and in
+// each piece what its devices change there.
+const progression = progressionText(album)
+const devicesIn = { overlooked: devicesText('overlooked', o), unison: devicesText('unison', u), turn: devicesText('turn', t) }
 const hint = HINT
 ---
+
+{progression && (
+  <p class="itw-formline mb-8 max-w-3xl font-mono text-mono-sm text-fg-muted">
+    <span class="text-fg">The weeks build on each other.</span>{' '}{progression}
+  </p>
+)}
 
 {character && (
   <p class="itw-formline mb-8 max-w-3xl font-mono text-mono-sm text-fg-muted">
@@ -69,6 +80,7 @@ const hint = HINT
     attended headlines murmur underneath. A motif ends with its day if the newest day no longer names its field. At the end of
     the newest day everything still kept sounds at once; then a cut, and the first day’s headline once more, alone.
   </p>
+  {devicesIn.overlooked && <p class="mt-3 max-w-3xl leading-relaxed">{devicesIn.overlooked}</p>}
   <OverlookedScore
     client:idle
     record={o}
@@ -114,6 +126,7 @@ const hint = HINT
       The press agreed most on {weekday(most.day)}, {pct(most.agreement)} on {most.story};
       {clusters === 0 ? ' every day before the last reached the chord, and the last never takes it.' : ` ${clusters} day${clusters === 1 ? '' : 's'} before the last stayed a cluster, and the last never takes the chord.`}
     </p>
+    {devicesIn.unison && <p class="mt-3 max-w-3xl leading-relaxed">{devicesIn.unison}</p>}
     <UnisonScore
       client:idle
       record={u}
@@ -214,6 +227,7 @@ const hint = HINT
         ? <>The week turned on {weekday(turnDay.day)}, with {turnDay.signals} signals: one bar sounds every beat of every family, and a silent bar carries the day’s most attended AI headline, “{turnDay.said}”.</>
         : <>This week did not turn.</>}
     </p>
+    {devicesIn.turn && <p class="mt-3 max-w-3xl leading-relaxed">{devicesIn.turn}</p>}
     <TurnScore
       client:idle
       record={t}

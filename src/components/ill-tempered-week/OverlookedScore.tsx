@@ -18,6 +18,7 @@ import * as React from 'react'
 
 import type { Overlooked } from '@/lib/ill-tempered-week/albums'
 import type { OverlookedLinks } from '@/lib/ill-tempered-week/pages'
+import { secondSubject } from '@/lib/ill-tempered-week/progression'
 import { dayName, dayShort, hzLabel, mmss } from '@/lib/ill-tempered-week/score'
 import {
   describeOverlooked,
@@ -77,6 +78,13 @@ function MarkShape({ m }: { m: Mark }) {
     case 'low':
       return (
         <g className={`itw-ens itw-${m.kind}`}>
+          <rect x={m.x} y={m.y} width={m.w} height={m.h} />
+          {loops}
+        </g>
+      )
+    case 'second':
+      return (
+        <g className="itw-second">
           <rect x={m.x} y={m.y} width={m.w} height={m.h} />
           {loops}
         </g>
@@ -205,7 +213,7 @@ function entriesLine(d: ScoreDay): string {
 }
 
 /** The key to the drawing: each mark once, drawn with the drawing's own classes. */
-function Legend() {
+function Legend({ score }: { score: Score }) {
   const sw = (body: React.ReactNode) => (
     <svg className="itw-key-swatch" viewBox="0 0 36 14" aria-hidden="true">
       {body}
@@ -253,6 +261,17 @@ function Legend() {
         )}
         <span>The ensemble takes each day’s motif up: violins and violas in canon, then piano, cellos and basses.</span>
       </li>
+      {score.second && (
+        <li>
+          {sw(
+            <g className="itw-second">
+              <rect x={1} y={3} width={34} height={8} />
+              <path className="itw-loop" d="M18 3v8" />
+            </g>,
+          )}
+          <span>The second subject in the horns: {secondSubject(score.second)}, looped against each day’s motif.</span>
+        </li>
+      )}
       <li>
         {sw(<rect className="itw-murmur" x={1} y={4} width={34} height={6} />)}
         <span>Underneath, the day’s most attended headlines murmur, granulated and far.</span>
@@ -324,7 +343,7 @@ export default function OverlookedScore({ record, links, audioId, id, label, hin
         </svg>
         <div ref={readoutRef} className="dv-readout itw-readout" hidden aria-hidden="true" />
       </div>
-      <Legend />
+      <Legend score={score} />
 
       <ol className="itw-parts" aria-label="The days of this edition">
         {score.days.map((d) => {

@@ -337,6 +337,20 @@
   fill-opacity: 0.55;
 }
 
+/* the second subject (from 2026-11-23, when the album plays that device): outlined, where every other part is filled,
+   so it reads as the one voice that comes from outside the week */
+.itw-second rect {
+  fill: none;
+  stroke: var(--color-fg);
+  stroke-width: 1;
+  stroke-dasharray: 3 1.5;
+}
+
+.itw-second .itw-loop {
+  stroke: var(--color-fg);
+  stroke-width: 0.8;
+}
+
 /* what sounds at the playhead: an outline around it, a little apart */
 .itw-on rect {
   fill: none;
@@ -418,6 +432,14 @@
 
 .itw-bassn {
   fill: var(--color-fg);
+}
+
+/* Unison and Turn: the second subject, in the horns before the peak and on a bell once a bar, outlined in the ink */
+.itw-hn rect,
+.itw-sbell {
+  fill: var(--color-bg);
+  stroke: var(--color-fg);
+  stroke-width: 1;
 }
 
 .itw-timp {

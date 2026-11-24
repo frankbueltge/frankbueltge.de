@@ -10,6 +10,8 @@ const albums = readAlbums()
 const first = albums[0]!
 // The newest complete album (the growing week only until one exists).
 const album = albums.filter((a) => a.complete).at(-1) ?? albums.at(-1)!
+// The one album pressed in a form its week chose (16 to 22 November 2026), named where the sheet tells that history.
+const mosaicTitle = albums.find((a) => a.week === '2026-W47')?.title ?? 'Contrapunctus 47'
 const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
 ---
 
@@ -86,15 +88,23 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
         day’s most attended AI headline.
       </li>
       <li>
-        <strong class="text-fg">The week’s form</strong> (from the albums pressed after 16 November 2026). Each complete week is read
-        from every field of its round: the term most named each day across all fields (a story’s variants folded, Kyiv into Ukraine,
-        Hormuz into Iran), the longest run of one leading term, how often it changed, and the sharpest overnight change in the fields’
-        shares (Jensen–Shannon distance). One verdict, in this order: a <em>handover</em> when a lead held two days and another then
-        holds to the end for at least three; a <em>break</em> from a distance of 0.30; <em>held</em> when one lead ran five days or more;
-        a <em>mosaic</em> from four changes; else the standing form above. Held: one unbroken sound over a pedal or a wall of strings,
-        no day heard as a day. Mosaic: a block per day, as long as the day’s material, silence between. Break: held until that day,
-        a timpani stroke, blocks after. Handover: held, and the ground moves up a whole tone on the day the lead passed. Each piece keeps
-        its question in every form; the album says which form it took and why, and its record keeps the measurement.
+        <strong class="text-fg">The week’s character.</strong> Each complete week is read from every field of its round: the term most
+        named each day across all fields (a story’s variants folded, Kyiv into Ukraine, Hormuz into Iran), the longest run of one leading
+        term, how often it changed, and the sharpest overnight change in the fields’ shares (Jensen–Shannon distance). One verdict, in
+        this order: a <em>handover</em> when a lead held two days and another then holds to the end for at least three; a
+        <em>break</em> from a distance of 0.30; <em>held</em> when one lead ran five days or more; a <em>mosaic</em> from four changes;
+        else <em>standing</em>. The album’s record keeps the measurement.
+      </li>
+      <li>
+        <strong class="text-fg">The weeks build on each other</strong> (from the album of 23 to 29 November 2026 on). Every album is
+        pressed in the form above and keeps every device of the album before it; once its week is complete it adds one more. The
+        devices are the ways the <em>Art of Fugue</em> treats its subject, one contrapunctus after the next: inversion, diminution,
+        augmentation, a second subject, stretto, retrograde. The verdict chooses the one a week adds: a break the inversion, held the
+        augmentation, a handover the second subject (the motif the album before ended on), a mosaic the stretto; a standing week, or one
+        whose device is already in force, the next in that order. Six albums complete a cycle, and the album after it begins the next.
+        Each piece plays every device in its own idiom (the album’s page says how), and editions of <em>Overlooked</em> before the week
+        is complete play only the devices the album took over. From 16 to 23 November 2026 a complete week was instead pressed in a form
+        of its own (held, a mosaic, a break or a handover); the one album completed then, {mosaicTitle}, is a mosaic and stays as pressed.
       </li>
       <li>
         Headlines are voiced as they stand: only what a voice cannot say stays out (web addresses, code, formulas, non-Latin script,
@@ -116,7 +126,7 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
       <li>Attention is a platform’s own ranking that day, not a reach measured across platforms; a headline at the bottom of a busy feed counts as overlooked.</li>
       <li>A story is a field term (Iran, Ukraine), not an event; two different events under one name count as one story, which is how the press’s agreement is measured.</li>
       <li>Speech melodies come from a synthetic voice reading the headline, not from a person; they are the voice’s intonation of the words, not the writer’s.</li>
-      <li>The five forms are composed and fixed; the data choose which of them a complete week takes, by the thresholds above, which were set against ten measured weeks (no handover among them), not derived. Editions of <em>Overlooked</em> before the week is complete stay in the standing form, because the week’s character is only known at its end.</li>
+      <li>The six devices, their order and what each does in each piece are composed and fixed; the data choose which of them a complete week adds, by the thresholds above, which were set against ten measured weeks (no handover among them), not derived. Editions of <em>Overlooked</em> before the week is complete add nothing, because the week’s character is only known at its end.</li>
       <li>The leading term is a count across fields, so a story that spreads over several fields leads more easily than one that stays in one; a story’s variants are folded by a short fixed list, and a variant missing from it counts apart.</li>
       <li>A record pressed before 14 November 2026 does not hold how long a headline was said in <em>Overlooked</em>, nor the notes of the answering instrument or of <em>Unison</em>’s double bass. Their scores place the end of each sentence from the bar its motif begins on, to within half a bar, and mark the double bass by its entry alone. Later records hold these times, and the scores read them.</li>
     </ul>
@@ -143,6 +153,7 @@ const minutes = Object.values(album.pieces).reduce((s, p) => s + p!.seconds, 0)
       <li>2026-11-14 — the scores wear four hues where a hue carries a distinction the drawing cannot carry alone: the four string sections in <em>Unison</em>, the four platform families in <em>Turn</em>, and in <em>Overlooked</em> the overlooked headline against the ensemble that takes it up. The set is validated for both themes and recorded in the house’s palette register.</li>
       <li>2026-11-14 — <em>Overlooked</em> and <em>Turn</em> are drawn in ink again: each of their voices has a lane or a row of its own, so a hue said nothing the place did not. <em>Unison</em> keeps its four, because its string sections overlap in pitch.</li>
         <li>2026-11-16 — the week chooses its form: held, a mosaic, a break or a handover, measured from what led the web’s attention, for all three pieces of every week completed from then on, each with a score drawn for its form. Albums pressed before keep the standing form and their scores.</li>
+      <li>2026-11-23 — the weeks build on each other instead: a form chosen by one week alone made each album jump away from the one before, and a mosaic left the pieces thin. Every album is pressed in the standing form again, keeps the devices of the album before it and adds the one its week’s character chooses, six to a cycle. Without devices the renderers play exactly as before (an album pressed again with the change gives the same hashes). The scores draw what each device changes.</li>
     </ul>
   </section>
 </MethodSheet>

@@ -5,8 +5,11 @@
 // tone it heads for, and the headline. What it does not hold follows from the renderer's fixed form
 // (scripts/ill-tempered-week/itw/unison.py), mirrored below and held to the source by score-unison.test.ts: when a day
 // begins, how long a glissando lasts, the peak's brass and timpani, when the solo double bass begins. Records pressed
-// from 2026-11-14 on also carry the day's start, how long the peak's headline is said and the bass's notes.
-import type { Unison, UnisonEvent } from './albums'
+// from 2026-11-14 on also carry the day's start, how long the peak's headline is said and the bass's notes. Records
+// pressed from 2026-11-23 on carry the album's devices (progression.ts), each glissando's own length under them, and
+// the second subject's notes in the horns.
+import type { Device, SecondSubject, Unison, UnisonEvent } from './albums'
+import { secondSubject } from './progression'
 import {
   CHORD_HARMONICS,
   clip,
@@ -92,6 +95,8 @@ export interface UnisonScoreDay {
   bassAt: number
   /** the bass's notes (absolute seconds, pitch, length), where the record holds them */
   bass: { t: number; hz: number; s: number }[] | null
+  /** the horns' notes of the second subject (absolute seconds, pitch, length), while that device is in force */
+  second: { t: number; hz: number; s: number }[]
 }
 
 export interface UnisonScore {
@@ -104,14 +109,26 @@ export interface UnisonScore {
   chord: Harmonic[]
   hzLo: number
   hzHi: number
+  /** the album's devices (none before 2026-11-23) and the second subject */
+  devices: Device[]
+  secondFrom: SecondSubject | null
 }
 
 const round3 = (x: number): number => Math.round(x * 1000) / 1000
 
-/** The glissando's three times: entry, arrival, silence. */
-export function glideTimes(at: number, attention: number): [number, number, number] {
-  const dur = FORM.baseSeconds + FORM.perAttention * attention
+/** The glissando's three times: entry, arrival, silence. Its length is the form's unless the record holds its own
+ *  (augmentation and diminution change it). */
+export function glideTimes(at: number, attention: number, recorded?: number): [number, number, number] {
+  const dur = recorded ?? FORM.baseSeconds + FORM.perAttention * attention
   return [at, round3(at + FORM.glide * dur), round3(at + FORM.glide * dur + 0.2 * dur + 0.4)]
+}
+
+/** The pitch a glissando has reached at a moment, as the score draws it: straight in time and in log pitch from its
+ *  start to its arrival, then held. */
+export function glideHz(g: Pick<Glide, 't0' | 't1' | 'fromHz' | 'toHz'>, t: number): number {
+  if (t <= g.t0) return g.fromHz
+  if (t >= g.t1) return g.toHz
+  return 2 ** (Math.log2(g.fromHz) + ((Math.log2(g.toHz) - Math.log2(g.fromHz)) * (t - g.t0)) / (g.t1 - g.t0))
 }
 
 export function unisonScore(u: Unison, week: string): UnisonScore {
@@ -127,20 +144,28 @@ export function unisonScore(u: Unison, week: string): UnisonScore {
       peak: d.peak, said: d.said, saidSeconds: d.said_s ?? null, overlooked: d.overlooked, overlookedAttention: d.overlooked_attention,
       bassAt: d.bass_from_s ?? (last ? from + u.day_s - FORM.bassBeforeEnd : peakAt + FORM.bassAfterPeak),
       bass: d.bass ? d.bass.map((b) => ({ t: round3((d.bass_from_s ?? 0) + b.t), hz: b.hz, s: b.s })) : null,
+      second: d.second ?? [],
     })
     d.events.forEach((e, k) => {
-      const [t0, t1, t2] = glideTimes(e.at_s, e.attention)
+      const [t0, t1, t2] = glideTimes(e.at_s, e.attention, e.dur_s)
       glides.push({
         id: `g-${i}-${k}`, day: i, t0, t1, t2, fromHz: e.from_hz, toHz: e.to_hz, chord: harmonicOf(e.chord_tone_hz, CHORD_HARMONICS),
         section: e.section, tremolo: e.tremolo, attention: e.attention, text: e.text,
       })
     })
   })
-  const all = glides.flatMap((g) => [g.fromHz, g.toHz])
+  const all = [...glides.flatMap((g) => [g.fromHz, g.toHz]), ...days.flatMap((d) => d.second.map((n) => n.hz))]
   const hzLo = Math.min(40, ...all) * 0.98
   const hzHi = Math.max(1250, ...all) * 1.04
-  return { week, seconds: u.seconds, dayS: u.day_s, days, glides, chord: harmonicsBetween(hzLo, hzHi, CHORD_HARMONICS), hzLo, hzHi }
+  const devices = u.devices ?? []
+  return {
+    week, seconds: u.seconds, dayS: u.day_s, days, glides, chord: harmonicsBetween(hzLo, hzHi, CHORD_HARMONICS), hzLo, hzHi,
+    devices, secondFrom: devices.includes('second subject') ? (u.second ?? null) : null,
+  }
 }
+
+/** Whether the horns play the second subject at a moment of a day. */
+export const hornsAt = (d: UnisonScoreDay, t: number): boolean => d.second.some((n) => t >= n.t && t < n.t + n.s)
 
 // ---------------------------------------------------------------------------------------------------------------
 // What sounds now
@@ -164,7 +189,8 @@ export function nowUnison(s: UnisonScore, t: number): string {
   if (d.peak && t >= d.peakAt - FORM.rollBefore && t < d.peakAt) return `${name}: the timpani roll swells; the press agreed ${pct(d.agreement)} on ${d.story}.`
   const sounding = s.glides.filter((g) => g.day === i && t >= g.t0 && t < g.t2).length
   if (sounding === 0 && t > d.peakAt) return `${name} rings out.`
-  return `${name}: ${d.signals} war signals enter through the day (${sounding} sounding now), each gliding ${pct(d.agreement)} of the way to A’s chord${d.peak ? '' : ', too little agreement for the brass'}.`
+  const horns = hornsAt(d, t) ? '; the horns play the second subject' : ''
+  return `${name}: ${d.signals} war signals enter through the day (${sounding} sounding now), each gliding ${pct(d.agreement)} of the way to A’s chord${d.peak ? '' : ', too little agreement for the brass'}${horns}.`
 }
 
 export function describeGlide(s: UnisonScore, id: string): { head: string; body: string } | null {
@@ -178,8 +204,17 @@ export function describeGlide(s: UnisonScore, id: string): { head: string; body:
   }
 }
 
-export function describeUnisonDay(s: UnisonScore, i: number, part: 'peak' | 'bass' | 'said'): { head: string; body: string } {
+export function describeUnisonDay(s: UnisonScore, i: number, part: 'peak' | 'bass' | 'said' | 'second'): { head: string; body: string } {
   const d = s.days[i]!
+  if (part === 'second') {
+    const from = d.second[0]?.t ?? d.from
+    return {
+      head: `${dayShort(d.day)} · horns · ${mmss(from)}`,
+      body: s.secondFrom
+        ? `The second subject before the peak: ${secondSubject(s.secondFrom)} (“${s.secondFrom.text}”), four times as slow, ${d.second.length} notes.`
+        : `The second subject before the peak, ${d.second.length} notes.`,
+    }
+  }
   if (part === 'bass') return { head: `${dayShort(d.day)} · solo double bass · ${mmss(d.bassAt)}`, body: `The speech melody of the day’s least attended war headline, outside the chord: “${d.overlooked}” (attention ${pct(d.overlookedAttention)}).` }
   if (part === 'said') return { head: `${dayShort(d.day)} · said · ${mmss(d.peakAt + FORM.saidAfter)}`, body: `“${d.said}”, the day’s most attended war headline, said over the chord.` }
   return { head: `${dayShort(d.day)} · peak · ${mmss(d.peakAt)}`, body: `The press agreed ${pct(d.agreement)} on ${d.story}: a timpani roll swells, then horns, trombones and tuba hold A’s harmonic chord for ${FORM.brass} s.` }
@@ -218,6 +253,8 @@ export interface UnisonLine {
   rolls: { day: number; x: number; w: number }[]
   strokes: { day: number; x: number }[]
   bass: { day: number; x: number; y: number; notes: { x: number; w: number; y: number }[] }[]
+  /** the horns' notes of the second subject, at their pitch */
+  horns: { day: number; notes: { x: number; w: number; y: number }[] }[]
   ticks: { x: number; label: string }[]
   laneY: number
 }
@@ -246,12 +283,18 @@ export function layoutUnison(s: UnisonScore, width: number): UnisonLayout {
     const yHz = (hz: number): number => r1(plotTop + plotH * (1 - (Math.log2(hz) - lo) / (hi - lo)))
     const x = (t: number): number => r1(xAt(frame, span, t))
     const inSpan = (t: number): boolean => t >= span.t0 && t < span.t1
+    // a glissando that crosses the line's edge (under the augmentation or the stretto one can run into the next day,
+    // and so into the next line) is cut there, at the pitch it has reached by then
     const glides = s.glides
       .filter((g) => clip(span, g.t0, g.t2))
-      .map((g) => ({
-        id: g.id, day: g.day, section: g.section, x1: x(g.t0), y1: yHz(g.fromHz), x2: x(Math.min(g.t1, span.t1)), y2: yHz(g.toHz), x3: x(Math.min(g.t2, span.t1)),
-        weight: g.attention >= 0.75 ? 3 : g.attention >= 0.5 ? 2 : g.attention >= 0.25 ? 1 : 0, tremolo: g.tremolo,
-      }))
+      .map((g) => {
+        const a = Math.max(g.t0, span.t0)
+        const b = Math.max(a, Math.min(g.t1, span.t1))
+        return {
+          id: g.id, day: g.day, section: g.section, x1: x(a), y1: yHz(glideHz(g, a)), x2: x(b), y2: yHz(glideHz(g, b)), x3: x(Math.min(g.t2, span.t1)),
+          weight: g.attention >= 0.75 ? 3 : g.attention >= 0.5 ? 2 : g.attention >= 0.25 ? 1 : 0, tremolo: g.tremolo,
+        }
+      })
     const dayW = s.dayS * frame.pxPerSecond
     const daysIn = s.days.filter((d) => inSpan(d.from))
     const days = daysIn.map((d, k) => {
@@ -273,10 +316,14 @@ export function layoutUnison(s: UnisonScore, width: number): UnisonLayout {
       day: d.index, x: x(d.bassAt), y: yHz(82),
       notes: (d.bass ?? []).filter((b) => inSpan(b.t)).map((b) => ({ x: x(b.t), w: r1(Math.max(1, b.s * frame.pxPerSecond)), y: yHz(b.hz) })),
     }))
+    const horns = s.days.map((d) => ({
+      day: d.index,
+      notes: d.second.filter((n) => inSpan(n.t)).map((n) => ({ x: x(n.t), w: r1(Math.max(1, Math.min(n.s, span.t1 - n.t) * frame.pxPerSecond)), y: yHz(n.hz) })),
+    })).filter((h) => h.notes.length > 0)
     const chord = s.chord.map((c) => ({ y: yHz(c.hz), hz: c.hz, a: c.harmonic === 4, label: c.harmonic === 4 ? `A ${Math.round(c.hz)}` : `${Math.round(c.hz)}` }))
     const ticks = ticksBetween(span.t0, span.t1, tickStep(frame.pxPerSecond)).map((t) => ({ x: x(t), label: mmss(t) }))
     const height = HEAD + plotH + LANE + AXIS
-    lines.push({ span, y, height, plotTop, plotBottom, chord, glides, days, peaks, rolls, strokes, bass, ticks, laneY: plotBottom + 4 })
+    lines.push({ span, y, height, plotTop, plotBottom, chord, glides, days, peaks, rolls, strokes, bass, horns, ticks, laneY: plotBottom + 4 })
     y += height + GAP
   }
   return { frame, height: y - GAP, lines }
@@ -297,7 +344,7 @@ const distToSegment = (px: number, py: number, x1: number, y1: number, x2: numbe
   return Math.hypot(px - (x1 + u * dx), py - (y1 + u * dy))
 }
 
-export type UnisonHit = { kind: 'glide'; id: string } | { kind: 'peak' | 'bass' | 'said'; day: number }
+export type UnisonHit = { kind: 'glide'; id: string } | { kind: 'peak' | 'bass' | 'said' | 'second'; day: number }
 
 /** What the pointer is over: the moment under it and the nearest glissando within reach (its glide or its fading
  *  tail), else the bass, the sentence or the peak it is on. */
@@ -313,6 +360,8 @@ export function hitUnison(l: UnisonLayout, x: number, y: number, reach = 7): { t
   if (best) return { t, hit: { kind: 'glide', id: best.id } }
   const bass = line.bass.find((b) => Math.hypot(x - b.x, y - b.y) <= reach + 3)
   if (bass) return { t, hit: { kind: 'bass', day: bass.day } }
+  const horns = line.horns.find((h) => h.notes.some((n) => x >= n.x - 2 && x <= n.x + n.w + 2 && Math.abs(y - n.y) <= 4))
+  if (horns) return { t, hit: { kind: 'second', day: horns.day } }
   const said = line.peaks.find((p) => p.said !== null && Math.abs(x - p.said) <= reach + 3 && y <= line.plotTop + 16)
   if (said) return { t, hit: { kind: 'said', day: said.day } }
   const peak = line.peaks.find((p) => x >= p.x && x <= p.x + p.w && y >= line.plotTop && y <= line.plotBottom)

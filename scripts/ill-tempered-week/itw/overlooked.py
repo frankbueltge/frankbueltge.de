@@ -22,6 +22,16 @@
                 silence; Monday's headline once more, alone, and one high violin note
   level         -16 LUFS, -1 dBTP; a stereo ensemble in a hall
 
+  the devices   (from 2026-11-23, itw/progression.py: each album keeps the devices of the album before and adds one;
+                with none the piece is exactly the standing form above)
+    inversion       the violas play the motif upside down, mirrored about its first note on the scale
+    diminution      the piano plays the motif at twice the speed instead of pulsing its two lowest notes
+    augmentation    cellos and basses play the motif at half the speed instead of holding A and its floor
+    second subject  the horns play the motif the album before ended on, from the violins' entry to the day's end
+    stretto         the ensemble takes the motif up twice as soon (2, 4, 6 and 7 bars on), the canon one and two
+                    eighths behind instead of three and five
+    retrograde      the violins play the motif backwards
+
 """
 import collections
 import math
@@ -47,7 +57,13 @@ SOLOIST = {'nature': ('FluteSusVib', 700), 'economy': ('BassoonSus', 160), 'clim
            'ai': ('ClarinetSus', 400), 'health': ('CelloEnsSusVib', 220), 'democracy': ('TrumpetSus', 500),
            'displacement': ('ViolaEnsSusVib', 330), 'information': ('PiccoloSus', 1300), 'inequality': ('TubaSus', 90),
            'poverty': ('ContrabassSusVB', 80)}
-PAN = {'violins': -0.45, 'violas': 0.15, 'cellos': 0.35, 'basses': 0.5, 'piano': -0.2, 'bells': 0.0}
+PAN = {'violins': -0.45, 'violas': 0.15, 'cellos': 0.35, 'basses': 0.5, 'piano': -0.2, 'bells': 0.0, 'horns': 0.3}
+# when each part of the ensemble takes a day's motif up (bars after the motif begins) and how far the canon trails
+# (eighths): the standing form, and the stretto
+ENTRIES = {'violins': 4, 'violas': 8, 'piano': 12, 'low': 14}
+ENTRIES_STRETTO = {'violins': 2, 'violas': 4, 'piano': 6, 'low': 7}
+CANON = {'violins': 3, 'violas': 5}
+CANON_STRETTO = {'violins': 1, 'violas': 2}
 
 
 def pan(x: np.ndarray, p: float) -> np.ndarray:
@@ -140,9 +156,35 @@ def melody(d: dict) -> dict:
 # ---------------------------------------------------------------------------------------------
 # The piece
 # ---------------------------------------------------------------------------------------------
-def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tuple[np.ndarray, dict]:
+def inverted(motif: list[dict]) -> list[dict]:
+    """The motif upside down: every note mirrored about the first (its interval to the first turned round), on the
+    nearest tone of the scale, its rhythm kept."""
+    first = motif[0]['hz']
+    return [{**nt, 'hz': nearest(first * first / nt['hz'], 20.0, 5000.0)} for nt in motif]
+
+
+def backwards(motif: list[dict], length: int) -> list[dict]:
+    """The motif from its last note to its first, each note as long as before, in a loop of the same length."""
+    out = [{**nt, 'step': length - nt['step'] - nt['eighths']} for nt in motif]
+    return sorted(out, key=lambda nt: nt['step'])
+
+
+def scaled(motif: list[dict], factor: float) -> list[dict]:
+    """The motif at another speed: factor 2 twice as slow (augmentation), 0.5 twice as fast (diminution)."""
+    return [{**nt, 'step': nt['step'] * factor, 'eighths': nt['eighths'] * factor} for nt in motif]
+
+
+def render(days_so_far: list[str] | None = None, hindsight: bool = False, devices: tuple[str, ...] | list[str] = (),
+           second: dict | None = None) -> tuple[np.ndarray, dict]:
     """The piece for the days so far (an edition) or the whole week. With hindsight, an earlier day's motif keeps
-    sounding after its own day only if the newest day still names its field, and is missing from the tutti if not."""
+    sounding after its own day only if the newest day still names its field, and is missing from the tutti if not.
+    `devices` are the album's (itw/progression.py, the module docstring above); `second` is the second subject, the
+    motif the album before ended on, when that device is in force."""
+    dev = set(devices)
+    if 'second subject' in dev and not second:
+        raise ValueError('the second subject needs the motif the album before ended on')
+    entry_bars = ENTRIES_STRETTO if 'stretto' in dev else ENTRIES
+    canon = CANON_STRETTO if 'stretto' in dev else CANON
     week = the_week(days_so_far)
     mel = [melody(d) for d in week]
     inst = {k: sampler.Instrument(v) for k, v in {
@@ -152,6 +194,7 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
     solo = {i: sampler.Instrument(m['instrument']) for i, m in enumerate(mel)}
     day0 = lambda i: (INTRO_BARS + i * DAY_BARS) * BAR
     end_music = day0(len(week))
+    tutti_at = day0(len(week) - 1) + 20 * BAR                # where the second subject gives way to the tutti
     coda_at = end_music + 2.4
     n = int((coda_at + 18.0) * SR)
     ens, voice, murmur, aged = np.zeros((2, n)), np.zeros((2, n)), np.zeros((2, n)), np.zeros((2, n))
@@ -163,15 +206,16 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
 
     def motif_loop(i: int, start: float, stop: float, which, vel: int, shift8: int = 0, transpose: float = 1.0,
                    p: float = 0.0, lo: float = 30.0, hi: float = 4000.0, key: str = '', origin: float | None = None,
-                   buf=None, gain: float = 1.0):
+                   buf=None, gain: float = 1.0, notes: list[dict] | None = None, length: float | None = None):
         """The motif looped from `origin` (its first downbeat), sounding only between start and stop, so a loop
-        split into segments keeps its phase."""
+        split into segments keeps its phase. `notes` and `length` (eighths) play another form of it: inverted,
+        backwards, slower or faster, or the second subject."""
         m = mel[i]
-        L = m['length'] * PULSE
+        L = (m['length'] if length is None else length) * PULSE
         origin = start if origin is None else origin
         t = origin + max(0, math.floor((start - origin) / L) - 1) * L
         while t < stop - 0.05:
-            for nt in m['motif']:
+            for nt in (m['motif'] if notes is None else notes):
                 at = t + (nt['step'] + shift8) * PULSE
                 if at < start or at >= stop:
                     continue
@@ -202,14 +246,19 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
         last = i == len(week) - 1
         origins.append(mt)
         # when each part of the ensemble takes the motif up (named, and recorded below, for the page's score)
-        entries = {'violins': mt + 4 * BAR, 'violas': mt + 8 * BAR, 'piano': mt + 12 * BAR, 'low': mt + 14 * BAR}
-        motif_loop(i, entries['violins'], t_end, inst['violins'], 74, shift8=3, lo=300, hi=1400, p=PAN['violins'], key=f'v{i}')
-        motif_loop(i, entries['violas'], t_end, inst['violas'], 70, shift8=5, transpose=0.5, lo=150, hi=700, p=PAN['violas'], key=f'a{i}')
+        entries = {part: mt + bars * BAR for part, bars in entry_bars.items()}
+        motif_loop(i, entries['violins'], t_end, inst['violins'], 74, shift8=canon['violins'], lo=300, hi=1400, p=PAN['violins'], key=f'v{i}',
+                   notes=backwards(m['motif'], m['length']) if 'retrograde' in dev else None)
+        motif_loop(i, entries['violas'], t_end, inst['violas'], 70, shift8=canon['violas'], transpose=0.5, lo=150, hi=700, p=PAN['violas'], key=f'a{i}',
+                   notes=inverted(m['motif']) if 'inversion' in dev else None)
         lows = sorted({nt['hz'] for nt in m['motif']})[:2]
         piano_from = entries['piano']
+        if 'diminution' in dev:                                  # the piano: the motif at twice the speed
+            motif_loop(i, piano_from, t_end, inst['piano'], 64, p=PAN['piano'], lo=130, hi=1000, key=f'p{i}d',
+                       notes=scaled(m['motif'], 0.5), length=m['length'] / 2)
         t = piano_from
         k = 0
-        while t < t_end - 0.05:                                  # the piano pulse
+        while t < t_end - 0.05 and 'diminution' not in dev:      # the piano pulse
             hz = lows[k % len(lows)]
             while hz > 500:
                 hz /= 2
@@ -222,11 +271,18 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
         floor = min(nt['hz'] for nt in m['motif'])
         while floor > 130:
             floor /= 2
+        if 'augmentation' in dev:                                # cellos and basses: the motif at half the speed
+            slow = scaled(m['motif'], 2.0)
+            motif_loop(i, entries['low'], t_end, inst['cellos'], 66, p=PAN['cellos'], lo=90, hi=260, key=f'c{i}', notes=slow, length=m['length'] * 2)
+            motif_loop(i, entries['low'], t_end, inst['basses'], 62, p=PAN['basses'], lo=41, hi=130, key=f'b{i}', notes=slow, length=m['length'] * 2)
         t = entries['low']
-        while t < t_end - 0.05:                                  # cellos and basses: A and the motif's floor
+        while t < t_end - 0.05 and 'augmentation' not in dev:   # cellos and basses: A and the motif's floor
             put(ens, t, pan(inst['cellos'].note(110.0, 2 * BAR * 0.98, 64, release=0.6), PAN['cellos']))
             put(ens, t, pan(inst['basses'].note(max(41.2, floor / 2 if floor > 82 else floor), 2 * BAR * 0.98, 60, release=0.6), PAN['basses']))
             t += 2 * BAR
+        if 'second subject' in dev:                              # the horns: the motif the album before ended on
+            motif_loop(i, entries['violins'], min(t_end, tutti_at) if last else t_end, inst['horn'], 60, p=PAN['horns'],
+                       lo=110, hi=440, key=f'h{i}', notes=second['motif'], length=second['eighths'])
         # the murmur of the most attended, granulated and far
         span = t_end - t0
         for k, a in enumerate(d['attended']):
@@ -308,4 +364,8 @@ def render(days_so_far: list[str] | None = None, hindsight: bool = False) -> tup
                                  'day_bars': DAY_BARS, 'days_so_far': len(week), 'newest_day': week[-1]['day'],
                                  'round': ledger.ROUND, 'hindsight': hindsight, 'silenced_after_their_day': silenced,
                                  'tutti_from_s': round(tutti, 2), 'cut_s': round(end_music, 2), 'coda_s': round(coda_at, 2),
-                                 'days': log, 'library': 'VSCO 2 CE 1.1.0 (CC0)'}
+                                 'days': log, 'library': 'VSCO 2 CE 1.1.0 (CC0)',
+                                 # from 2026-11-23 (itw/progression.py): the album's devices, where the ensemble enters
+                                 # and how far the canon trails, and the second subject when it is in force
+                                 'devices': list(devices), 'entry_bars': dict(entry_bars), 'canon_eighths': dict(canon),
+                                 **({'second': second} if 'second subject' in dev else {})}

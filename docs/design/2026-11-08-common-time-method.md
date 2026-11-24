@@ -38,7 +38,52 @@ Written down at Frank's request before the next build (wording private). It repl
 pressings on this branch were made with. The probes behind this method (04 to 06) live in `_drafts/` and
 are not part of the repository.
 
-## The week chooses its form (Frank's decision of 2026-11-16, wording private)
+## The weeks build on each other (Frank's request of 2026-11-23, wording private)
+
+Frank found Contrapunctus 46 stronger than 47, its scores too, and asked what varies from week to week, and for a
+variation that builds up from album to album rather than one that changes at random (2026-11-23, wording private). The cause was the
+rule of 16 November below. Week 47's character was a mosaic (its leads Ebola, climate, Iran, Ukraine, Ukraine, COP31,
+Ukraine: five changes), so its complete album was pressed as one block per day, a soloist alone with silence around
+it: no ensemble, no canon, no tutti, each piece about half as long as 46's, and scores with little in them. Weeks 45
+and 46 were pressed in the standing form. A form chosen by one week alone made every album start from nothing.
+
+**The rule** (`scripts/ill-tempered-week/itw/progression.py`, recorded in each album as `progression`, held by
+`test_progression.py` and `src/lib/ill-tempered-week/progression.test.ts`). Every album is pressed in the standing
+form and keeps every device of the album before it (the newest complete one); when its week is complete it adds one
+more. The devices are the ways the *Art of Fugue* treats its subject, one contrapunctus after the next, which the
+title already names: inversion, diminution, augmentation, a second subject, stretto, retrograde. The week's
+character (below, unchanged) chooses the device: a **break** adds the inversion (attention turned over in one night),
+**held** the augmentation (one story held the week), a **handover** the second subject (the lead passed on and
+stayed), a **mosaic** the stretto (the lead kept changing); a **standing** week, or one whose device is already in
+force, takes the next in that order. Six albums complete a cycle; the album after it begins the next with its week's
+device alone. Editions 1 to 6 of *Overlooked* play the devices the album took over; the seventh pressing adds its
+own. The second subject is the motif the album before ended on, the newest day's motif of its *Overlooked*, so while
+that device is in force every album quotes the end of the one before.
+
+**What each device does**, in each piece's idiom (the docstrings of `itw/overlooked.py`, `unison.py`, `turn.py`; the
+album's page says it per piece, and the scores draw it):
+
+| device | Overlooked | Unison | Turn |
+|---|---|---|---|
+| inversion | the violas play the motif upside down, mirrored about its first note | the sections turned round: the least attended quarter in the violins | the families on the undertones of A (A1 × 45/h), the rhythm unchanged |
+| diminution | the piano plays the motif twice as fast instead of its pulse | cellos and basses glide three times as fast | every bar plays its pattern twice, twice as fast |
+| augmentation | cellos and basses play the motif twice as slow instead of holding A | violins and violas glide twice as slowly | every note held to its family's next beat |
+| second subject | the horns loop it from the violins' entry to the day's end | the horns play it before each peak, four times as slow | a bell, one note a bar, half a bar in |
+| stretto | the ensemble enters twice as soon (2, 4, 6, 7 bars), the canon one and two eighths behind | every signal enters in the last third before the peak | every note again a quarter bar later, an octave up |
+| retrograde | the violins play the motif backwards | every glissando runs from the agreed pitch back to its own | every note backwards, swelling into its beat |
+
+Without devices every renderer is exactly the standing form: week 46 pressed again on one machine with this code and
+with the code before it gives the same float32 digest for each piece, and for *Overlooked* and *Unison* the digests
+in its record (its *Turn*, pressed on the runner, differs from both local renders alike).
+
+**From when.** Contrapunctus 48 (23 to 29 November 2026) is the first album under the rule. It builds on 47, which
+was pressed before it and hands on no device, so it begins cycle 1, plays none through edition 6, and adds the one
+its week chooses. Contrapunctus 47 stays as pressed; `itw/forms_*.py` and their scores stay, so it can be pressed again
+from them. Probe for Frank's ear: week 47 pressed under the rule (the standing form with the stretto its verdict asks
+for), and with all six devices, to hear where a cycle leads; their records are the fixtures the score tests hold
+(`src/lib/ill-tempered-week/fixtures/devices-2026-W47-*.json`).
+
+## The week chooses its form (Frank's decision of 2026-11-16, wording private; replaced on 2026-11-23 by the section above)
 
 Listening to the first albums, Frank found that every week sounded alike: the same forms, the same instrument per
 field, always on A (2026-11-14, wording private). Probe 32 varied root, instruments and Unison's chord inside the

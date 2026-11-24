@@ -4,7 +4,9 @@ docs/design/2026-11-08-common-time-method.md).
 
 Each week is one album, Contrapunctus N (N = its ISO week). Overlooked grows night by night: edition k is pressed
 from the week's first k days and replaces the edition before. When all seven days are in the ledger, Unison and Turn
-are pressed too and the album is complete; a complete album is never pressed again (the archive rule).
+are pressed too and the album is complete; a complete album is never pressed again (the archive rule). Every album
+builds on the one before (itw/progression.py): it keeps that album's devices from its first edition on and, with its
+seventh day, adds the one its week's character chooses.
 
   python scripts/ill-tempered-week/press.py                 # the newest week in the ledger and the week before it:
                                                             # each one's next edition, and the rest of an album once
@@ -34,12 +36,10 @@ DATA = base.SITE / 'src' / 'data' / 'ill-tempered-week'
 PIECES = ('overlooked', 'unison', 'turn')
 FIRST = '2026-W45'  # the week the work began; the weeks before it were never pressed as albums
 
-# The week chooses its form (Frank's decision of 2026-11-16, wording private; see the method doc's section of that name).
-# A form is pressed only once every piece can be rendered in it AND its score can draw it; until then a week whose
-# verdict is not ready is pressed in the standing form, and the album says so. Editions 1 to 6 of Overlooked are
-# always the standing form: the character is only known when the week is.
-ALL_FORMS = {'standing', 'held', 'mosaic', 'break', 'handover'}
-READY = {'overlooked': ALL_FORMS, 'unison': ALL_FORMS, 'turn': ALL_FORMS}
+# The weeks build on each other (Frank's request of 2026-11-23, wording private; the method doc's section of that name).
+# It replaces "the week chooses its form" of 2026-11-16, under which a complete week was pressed in one of four other
+# forms (Contrapunctus 47 as a mosaic): every album is pressed in the standing form again, and the week's character
+# chooses the device it adds. itw/forms_*.py stay, so the one album pressed in a form can be pressed again from them.
 
 
 def ledger_days() -> list[str]:
@@ -87,34 +87,33 @@ def press(week: str) -> None:
     path = DATA / f'{week}.json'
     album = json.loads(path.read_text()) if path.exists() else {}
     k = len(days)
-    from itw import character, overlooked
+    from itw import character, overlooked, progression
     ch = character.measure(days)
-    ready = k == 7 and all(ch['verdict'] in READY[p] for p in PIECES)
-    form = ch['verdict'] if ready else 'standing'
-    ch = {**ch, 'days_read': k, 'form': form,
-          'why': ('the verdict' if ready else 'editions 1 to 6 are the standing form' if k < 7
-                  else f"no score draws the {ch['verdict']} form yet")}
-    print(f"{week}: character {ch['verdict']} (hold {ch['hold']}, changes {ch['changes']}, break {ch['break']}), "
-          f"pressed {form}: {ch['why']}")
+    ch = {**ch, 'days_read': k, 'form': 'standing',
+          'why': ('every album is pressed standing; its verdict chooses the device it adds' if k == 7
+                  else 'editions 1 to 6 play the devices the album took over')}
+    prog = progression.plan(week, ch['verdict'] if k == 7 else None, progression.read_albums(DATA))
+    print(f"{week}: character {ch['verdict']} (hold {ch['hold']}, changes {ch['changes']}, break {ch['break']}); "
+          f"cycle {prog['cycle']}, devices {', '.join(prog['devices']) or 'none'}"
+          + (f", {prog['added']} added" if prog['added'] else ''))
     base.RECEIPTS.clear()
-    if form == 'standing':
-        x, rec = overlooked.render(days, hindsight=True)
-    else:
-        from itw import forms_overlooked
-        x, rec = forms_overlooked.render(form, ch, days)
+    if prog['from']:
+        base.load(f"src/data/ill-tempered-week/{prog['from']}.json")  # the album this one builds on, in the receipts
+    x, rec = overlooked.render(days, hindsight=True, devices=prog['devices'], second=prog['second'])
     pieces = dict(album.get('pieces', {}))
     pieces['overlooked'] = {**write_piece(week, 'overlooked', x, rec), 'edition': k}
     print(f'{week}: Overlooked, edition {k}, {pieces["overlooked"]["seconds"]} s')
     if k == 7:
-        from itw import forms_turn, forms_unison, turn, unison
-        for name, mod, formed in (('unison', unison, forms_unison), ('turn', turn, forms_turn)):
+        from itw import turn, unison
+        for name, mod in (('unison', unison), ('turn', turn)):
             ledger.use_days(days)
-            x, rec = mod.render() if form == 'standing' else formed.render(form, ch)
+            x, rec = mod.render(devices=prog['devices'], second=prog['second'])
             pieces[name] = write_piece(week, name, x, rec)
             print(f'{week}: {name.capitalize()}, {pieces[name]["seconds"]} s')
     number = int(week.split('-W')[1])
     album = {'work': 'the ill-tempered week', 'title': f'Contrapunctus {number}', 'week': week, 'days': days,
-             'complete': k == 7, 'pressed': date.today().isoformat(), 'character': ch, 'pieces': {p: pieces[p] for p in PIECES if p in pieces},
+             'complete': k == 7, 'pressed': date.today().isoformat(), 'character': ch, 'progression': prog,
+             'pieces': {p: pieces[p] for p in PIECES if p in pieces},
              'library': 'VSCO 2 Community Edition 1.1.0 (Versilian Studios, CC0)', 'voices': 'Kokoro-82M (Apache 2.0), local',
              'receipts': dict(sorted(base.RECEIPTS.items()))}
     DATA.mkdir(parents=True, exist_ok=True)
