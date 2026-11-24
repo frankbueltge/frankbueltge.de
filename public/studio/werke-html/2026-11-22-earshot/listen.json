@@ -1,13 +1,13 @@
 {
- "what": "Words of each passage an open speech recogniser recovered, in order, from the page's own sound: inside the room and through the wall (state 3, session 262)",
+ "what": "Words of each passage an open speech recogniser recovered, in order, from the page's own sound: inside the room and through the wall (state 3, session 262; the escape's six sentences from the maker's report heard in state 4, session 263, the rows before kept as heard)",
  "recogniser": "Whisper base.en (open weights, MIT), run with faster-whisper 1.2.1, int8 on CPU, beam 5, word timestamps",
  "wall": "the page's own audio graph (earshot.js, renderOffline), run offline in headless Chromium by render_page.mjs: the listener in the voice's room, or on the other side of its wall (in the street; for a voice of the street, in the Commission's room); then the level restored to a peak of 0.9",
  "words": 1235,
  "near": 1208,
  "wall_words": 15,
- "record_words": 141,
- "record_near": 134,
- "record_wall": 2,
+ "record_words": 249,
+ "record_near": 237,
+ "record_wall": 3,
  "rows": [
   {
    "id": "EU1",
@@ -505,6 +505,51 @@
    "heard_wall": "I'll see you in the next video."
   },
   {
+   "id": "escape-ran_on",
+   "kind": "record",
+   "words": 16,
+   "near": 15,
+   "wall": 0,
+   "heard_near": "At this time, the on -call response staff advised that stopping the evaluation run was not required.",
+   "heard_wall": ". . . . . . ."
+  },
+  {
+   "id": "escape-alert_2",
+   "kind": "record",
+   "words": 17,
+   "near": 16,
+   "wall": 1,
+   "heard_near": "On July 5, OpenAI's monitoring systems triggered an alert, indicating an administrator level compromise of the artifactory deployment.",
+   "heard_wall": "I'll see you in the next video."
+  },
+  {
+   "id": "escape-offline",
+   "kind": "record",
+   "words": 17,
+   "near": 17,
+   "wall": 0,
+   "heard_near": "Later that day, OpenAI took the compromised artifactory deployment offline, preserved its storage and revoked agent credentials.",
+   "heard_wall": "You"
+  },
+  {
+   "id": "escape-not_apparent",
+   "kind": "record",
+   "words": 29,
+   "near": 28,
+   "wall": 0,
+   "heard_near": "The existence of the improvised message board and the significance of the inter -agent communication activity were not apparent to leaders responsible for incident detection and response at that time.",
+   "heard_wall": "You"
+  },
+  {
+   "id": "escape-resumed",
+   "kind": "record",
+   "words": 7,
+   "near": 6,
+   "wall": 0,
+   "heard_near": "Cyber evaluation workloads resumed on July 7th.",
+   "heard_wall": ". . . . . . ."
+  },
+  {
    "id": "escape-first_public",
    "kind": "record",
    "words": 12,
@@ -521,6 +566,15 @@
    "wall": 0,
    "heard_near": "OpenAI detected suspicious internal activity on July 19.",
    "heard_wall": "We'll see you in the next video."
+  },
+  {
+   "id": "escape-tied",
+   "kind": "record",
+   "words": 22,
+   "near": 21,
+   "wall": 0,
+   "heard_near": "On July 20 after further investigation, open AI uncovered evidence suggesting potential involvement of its models in the incident hugging face had disclosed.",
+   "heard_wall": "You"
   },
   {
    "id": "escape-maker_public",

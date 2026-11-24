@@ -64,10 +64,17 @@ def rendered(args, model):
     data = json.loads(src[src.index("{"):src.rindex("}") + 1])
     items = [(s["id"], s["quote"], "signal") for s in data["signals"]]
     items += [(e["vid"], e["show"], "record") for c in data["cases"] for e in c["events"] if e.get("vid")]
-    state1 = json.load(open(os.path.join(HERE, "listen.json")))
-    state1 = state1.get("state1") or {k: state1[k] for k in ("what", "recogniser", "wall", "words", "near", "wall_words")}
+    before = json.load(open(os.path.join(HERE, "listen.json")))
+    state1 = before.get("state1") or {k: before[k] for k in ("what", "recogniser", "wall", "words", "near", "wall_words")}
+    only = set(args.only.split(",")) if args.only else None
+    kept = {r["id"]: r for r in before.get("rows", [])} if only else {}
+    hj = open(os.path.join(HERE, "heard.js")).read() if only else ""
+    kept_heard = json.loads(hj[hj.index("{"):hj.rindex("}") + 1])["rows"] if only else {}
     rows, heard = [], {}
     for vid, ref, kind in items:
+        if only and vid not in only:  # state 4: what was heard before stays as it was heard
+            rows.append(kept[vid]); heard[vid] = kept_heard[vid]
+            continue
         near = hear_words(model, os.path.join(args.rendered, vid + ".near.wav"))
         wall = hear_words(model, os.path.join(args.rendered, vid + ".wall.wav"))
         rn, m = recovered(ref.split(), [w[0] for w in near])
@@ -79,7 +86,8 @@ def rendered(args, model):
     sig = [r for r in rows if r["kind"] == "signal"]
     out = {
         "what": "Words of each passage an open speech recogniser recovered, in order, from the page's own sound: inside the "
-                "room and through the wall (state 3, session 262)",
+                "room and through the wall (state 3, session 262; the escape's six sentences from the maker's report heard in "
+                "state 4, session 263, the rows before kept as heard)",
         "recogniser": "Whisper base.en (open weights, MIT), run with faster-whisper 1.2.1, int8 on CPU, beam 5, word timestamps",
         "wall": "the page's own audio graph (earshot.js, renderOffline), run offline in headless Chromium by render_page.mjs: "
                 "the listener in the voice's room, or on the other side of its wall (in the street; for a voice of the "
@@ -116,6 +124,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", required=True)
     ap.add_argument("--rendered", default="", help="the folder render_page.mjs wrote (state 3)")
+    ap.add_argument("--only", default="", help="state 4: hear only these ids (comma list) and keep every other row")
     args = ap.parse_args()
     model = WhisperModel("base.en", device="cpu", compute_type="int8", download_root=os.path.join(args.cache, "asr"))
     if args.rendered:

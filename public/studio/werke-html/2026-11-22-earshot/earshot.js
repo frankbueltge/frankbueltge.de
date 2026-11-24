@@ -19,6 +19,10 @@
   const LA = Math.log10(E.clock.from_h), LB = Math.log10(E.clock.to_h);
   const hToTau = h => PRE + (Math.log10(Math.max(h, E.clock.from_h)) - LA) / (LB - LA) * RUN;
   const tauToH = t => t < PRE ? null : Math.pow(10, LA + Math.min(1, (t - PRE) / RUN) * (LB - LA));
+  // As it happened, the days before the deed run on a plain scale (state 4): 0.6 s a day, ending half a second before
+  // the deed, so the maker's own alerts stand apart on their days.
+  const PRE_DAY = 0.6, preTau = h => PRE - 0.5 + h / 24 * PRE_DAY;
+  const preDays = t => Math.max(1, Math.ceil(-(t - PRE + 0.5) / PRE_DAY));
   const MARKS = [[1, 'one hour'], [24, 'one day'], [168, 'one week'], [730, 'one month'], [8760, 'one year'], [17520, 'two years']];
 
   function fmtH(h) {
@@ -69,7 +73,7 @@
       // the case's own events, on the day the record gives them
       c.events.forEach((e, i) => {
         if (e.kind === 'deed') return;                       // the deed is the clock's zero
-        const tau = e.h < 0 ? PRE - 7 + i * 0.01 : hToTau(e.h);
+        const tau = e.h < 0 ? preTau(e.h) + i * 0.001 : hToTau(e.h);
         ev.push({ tau, kind: 'case', ce: e, h: e.h });
       });
       // the hours the paper names, counted from the first day the maker's own record says it knew
@@ -375,12 +379,13 @@
       case 'murmur': murmur(); break;
       case 'retain': st.retained[ev.id] = st.tau; stopTicker(ev.id); break;
       case 'mark': if (!st.telling) mark(ev.label + ' after the deed'); bell(ev.h >= 8760 ? 660 : 990); break;
-      case 'paper': mark(PH_WORD[ev.ph] + ' after the maker knew · an hour the paper names · nothing public', 4.5); bell(1480); break;
+      case 'paper': mark(PH_WORD[ev.ph] + ' after the maker knew · an hour the paper names · owed to an office, not to the street', 4.5); bell(1480); break;
       case 'case': {
         const e = ev.ce;
         if (e.kind === 'voice') st.queue.push(e);
         else if (e.kind === 'deed_end') { st.deedOn = false; stopPulse(); mark(dateAtH(st.mode, e.h) + ' · ' + e.label + (e.sub ? ' ' + e.sub : ''), 5); }
         else if (e.kind === 'silent') { st.notes.push({ e, t0: st.now }); sweep(); }
+        else if (e.kind === 'caption') mark(dateAtH(st.mode, e.h) + ' · ' + e.label + ', ' + e.sub + ' · not public', 5);
         break;
       }
       case 'today':
@@ -396,7 +401,7 @@
     let off = 0, until = 0;
     for (const v of st.voices) if (v.room === 'street' && !v.caseV && !v.murmur) { try { v.src && v.src.stop(); } catch (x) {} v.t0 = -1e9; }
     if (e.walk) { st.walk = { t0: st.now, room: e.place }; off = 3.0; }
-    if (e.key === 'precursor') { alarm(); st.alarm = 1; }
+    if (e.alarm) { alarm(); st.alarm = 1; }
     if (e.place !== 'street') wake(e.place, e.walk ? null : (e.place === 'maker' ? null : 'street'), off - 1);
     if (e.wake) {
       wake(e.wake.room, e.walk ? null : 'street', off - 1.6);
@@ -500,21 +505,35 @@
       ctx.fillStyle = gl; ctx.fillRect(x - 120, y - 120, 240, 240);
     }
   }
-  // what a machine at the wall heard (state 3): the page's own sound rendered and given to an open recogniser
+  // what a machine at the wall heard (state 3): the page's own sound rendered and given to an open recogniser.
+  // State 4, on the Atelier's reading: through the wall a sentence in which no word that carries content stands in the
+  // passage is the recogniser's own, and all of it is drawn red, its small words too: they match by chance.
+  const SMALL = new Set(('a an the to of in on at by for from with as and or but so if then than that this these those it its ' +
+    'is are was were be been am do does did can could will would shall should may might must i i\'ll i\'m we we\'ll you he she they ' +
+    'me us him her them my our your their not no yes all some there here what which who how').split(' '));
+  const key = w => w.toLowerCase().replace(/[^a-z0-9']/g, '');
+  function invented(words, ref) {
+    const out = [], cur = [];
+    const close = () => { const own = !cur.some(i => !SMALL.has(key(words[i][0])) && ref.has(key(words[i][0]).replace(/'/g, ''))); cur.forEach(i => { out[i] = own; }); cur.length = 0; };
+    words.forEach(([w], i) => { cur.push(i); if (/[.?!]$/.test(w)) close(); });
+    if (cur.length) close();
+    return out;
+  }
   function earWords(g, v, r, side, top, size, color) {
     const h = EH && EH.rows[v.id] && EH.rows[v.id][side]; if (!h) return;
     const el = (st.now - v.t0) * v.rate; if (el < 0) return;
     const ref = new Set((v.s.show || v.s.quote).split(/\s+/).map(w => w.toLowerCase().replace(/[^a-z0-9]/g, '')));
+    const own = side === 'wall' ? invented(h, ref) : [];
     g.font = size + 'px ui-monospace, Menlo, monospace'; g.textBaseline = 'top';
     const sp = g.measureText(' ').width, maxW = r.w - 44; let x = 0, line = 0;
     const lines = Math.max(1, Math.floor((r.y + r.h - 10 - top) / (size * 1.3)));
     const fade = el > v.dur + 3.5 ? Math.max(0, 1 - (el - v.dur - 3.5) / 1.6) : 1;
     const out = [];
-    for (const [w, a] of h) { const ww = g.measureText(w).width; if (x > 0 && x + ww > maxW) { x = 0; line++; } out.push([w, a, x, line]); x += ww + sp; }
+    h.forEach(([w, a], i) => { const ww = g.measureText(w).width; if (x > 0 && x + ww > maxW) { x = 0; line++; } out.push([w, a, x, line, i]); x += ww + sp; });
     const sc = Math.max(0, line + 1 - lines);
-    for (const [w, a, wx, ln] of out) {
+    for (const [w, a, wx, ln, i] of out) {
       if (a - 0.1 > el || ln < sc) continue;
-      const miss = !ref.has(w.toLowerCase().replace(/[^a-z0-9]/g, ''));
+      const miss = own[i] || !ref.has(w.toLowerCase().replace(/[^a-z0-9]/g, ''));
       g.globalAlpha = fade * Math.min(1, (el - a + 0.1) / 0.2); g.fillStyle = miss ? '#ff9d8a' : color;
       g.fillText(w, r.x + 22 + wx, top + (ln - sc) * size * 1.3);
     }
@@ -600,9 +619,13 @@
         }
       }
       seated(g, r.x + r.w * 0.78, y1, DEPTH * 0.35, 150, dark);
-      if (st.alarm > 0.01 && Math.sin(st.now * 14) > 0) {
-        const a = P(r.x + r.w * 0.5, r.y + 48, DEPTH * 0.6);
-        g.fillStyle = 'rgba(255,90,70,' + (0.95 * st.alarm) + ')'; g.beginPath(); g.arc(a[0], a[1], 9, 0, Math.PI * 2); g.fill();
+      if (st.alarm > 0.01) {
+        // state 4: the monitor's light turns, and its red fills the room, so it shows through the glass to the street
+        const a = P(r.x + r.w * 0.5, r.y + 48, DEPTH * 0.6), on = Math.max(0, Math.sin(st.now * 7));
+        const gl = g.createRadialGradient(a[0], a[1], 4, a[0], a[1], r.w * 0.6);
+        gl.addColorStop(0, 'rgba(255,70,55,' + (0.55 * st.alarm * on) + ')'); gl.addColorStop(1, 'rgba(255,70,55,0)');
+        g.fillStyle = gl; g.fillRect(r.x, r.y, r.w, r.h);
+        if (on > 0.2) { g.fillStyle = 'rgba(255,90,70,' + (0.95 * st.alarm) + ')'; g.beginPath(); g.arc(a[0], a[1], 9, 0, Math.PI * 2); g.fill(); }
       }
     } else if (id === 'others') {
       for (let i = 0; i < 4; i++) person(g, r.x + r.w * (0.25 + i * 0.16), y1, DEPTH * (0.45 + (i % 2) * 0.15), 140, dark);
@@ -691,7 +714,7 @@
       const panes = Math.max(2, Math.round(r.w / 120));
       for (let i = 1; i < panes; i++) { const x = r.x + i * r.w / panes; ctx.beginPath(); ctx.moveTo(x, r.y); ctx.lineTo(x, r.y + r.h); ctx.stroke(); }
       ctx.beginPath(); ctx.moveTo(r.x, r.y + r.h * 0.72); ctx.lineTo(r.x + r.w, r.y + r.h * 0.72); ctx.stroke();
-      if (st.ear) for (const v of st.voices.filter(v => v.room === id && !v.murmur)) earWords(ctx, v, r, 'wall', r.y + 50, 15, '#bcd6ff');
+      if (st.ear) st.voices.filter(v => v.room === id && !v.murmur).forEach((v, i) => earWords(ctx, v, r, 'wall', r.y + 50 + (i % 3) * 21, 15, '#bcd6ff'));
       if (st.shut[id] > 0.01) { ctx.strokeStyle = 'rgba(255,170,120,' + (0.9 * st.shut[id]) + ')'; ctx.lineWidth = 4; ctx.strokeRect(r.x + 2, r.y + 2, r.w - 4, r.h - 4); }
     }
     if (inside && st.ear) for (const v of st.voices.filter(v => v.room === id && v.caseV)) earWords(ctx, v, r, 'near', r.y + r.h - 64, 14, '#bcd6ff');
@@ -808,7 +831,7 @@
     if (rec && st.telling) {
       const e = st.telling.e, d = e.day;
       elTime.textContent = dateAtH(st.mode, e.h) + ' · ' + (d < 0 ? -d + ' days before the deed' : d + (d === 1 ? ' day' : ' days') + ' after the deed');
-    } else if (rec) elTime.textContent = h === null ? 'the model is released' : fmtH(h) + ' after the deed · ' + dateAtH(st.mode, h);
+    } else if (rec) { const d = preDays(st.tau); elTime.textContent = h === null ? dateAtH(st.mode, -d * 24) + ' · ' + d + (d === 1 ? ' day' : ' days') + ' before the deed' : fmtH(h) + ' after the deed · ' + dateAtH(st.mode, h); }
     else elTime.textContent = h === null ? 'the model is released' : (st.ended ? 'two years after the deed' : fmtH(h) + ' after the deed');
     const m = roomById[st.listener];
     elWhere.textContent = st.listener === 'street' ? 'You stand in the street, with the public.' + (locked() ? ' The doors are shut until today.' : (st.mode !== 'paper' ? ' The doors are open: click a room.' : '')) : 'You stand in: ' + m.name + ' (' + m.sub + ').';
@@ -826,7 +849,7 @@
     const after = document.getElementById('after');
     if (st.mode === 'paper') { after.hidden = true; return; }
     after.hidden = false; after.style.left = (100 * REC_END / END) + '%';
-    for (const e of CASES[st.mode].events) if (e.kind === 'voice') add(e.h < 0 ? PRE - 7 : hToTau(e.h), '', 'dot' + (e.place === 'street' ? ' told' : ''));
+    for (const e of CASES[st.mode].events) if (e.kind === 'voice') add(e.h < 0 ? preTau(e.h) : hToTau(e.h), '', 'dot' + (e.place === 'street' ? ' told' : ''));
   }
   const elModes = document.getElementById('modes'), elNext = document.getElementById('next');
   function modeButtons() { for (const b of elModes.querySelectorAll('button')) b.classList.toggle('on', b.dataset.mode === st.mode); }
@@ -916,5 +939,5 @@
   requestAnimationFrame(t => { st.last = t; requestAnimationFrame(frame); });
   // for the check: the clock and its events, as the page runs them
   st.events = events.map(e => ({ tau: e.tau, kind: e.kind, id: e.id || null, h: e.h || null, again: !!e.again }));
-  Object.assign(st, { PRE, RUN, END, hToTau, tauToH, seek, standIn, setMode, renderOffline, locked, streetLoop: () => STREET_LOOP.slice(), buildEvents: m => buildEvents(m).map(e => ({ tau: e.tau, kind: e.kind, id: e.id || (e.ce && (e.ce.vid || e.ce.key)) || null, h: e.h ?? null, ph: e.ph || null })), recEnd: () => REC_END });
+  Object.assign(st, { PRE, RUN, END, hToTau, tauToH, preTau, invented: (id, side) => { const s = byId[id] || CASEV[id]; return invented(EH.rows[id][side], new Set((s.show || s.quote).split(/\s+/).map(w => w.toLowerCase().replace(/[^a-z0-9]/g, '')))); }, seek, standIn, setMode, renderOffline, locked, streetLoop: () => STREET_LOOP.slice(), buildEvents: m => buildEvents(m).map(e => ({ tau: e.tau, kind: e.kind, id: e.id || (e.ce && (e.ce.vid || e.ce.key)) || null, h: e.h ?? null, ph: e.ph || null })), recEnd: () => REC_END });
 })();

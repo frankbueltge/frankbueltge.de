@@ -6,6 +6,11 @@
 // State 3 (the check, session 262): the Field's own check 92 at its commit (final codes, reconciled traces, the wiki's
 // first day) in place of the codes of studies 90 and 91; the listener's totals from the page's own sound; the doors shut
 // while a case runs; a room that hears of the deed lit cold.
+// State 4 (the presentation, session 263): the Field's reading 93 at its commit, its answer on the maker's own alerts:
+// every sentence of the maker's report the escape now says stands in the Field's file, on its day, in the maker's room;
+// the paper's hours run from 20 July, the day the maker tied its alert to the hub's incident. On the Atelier's reading
+// of the wall: every word that came through is a small word, nearly all inside sentences nobody said, and the ear on
+// the page draws every one of them as the recogniser's own.
 // Run with a static server on this folder:  python3 -m http.server 8771 --bind 127.0.0.1   then   node check.mjs
 import { readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -87,7 +92,42 @@ ok(L.rows.every(r => HW.EARSHOT_HEARD.rows[r.id] && HW.EARSHOT_HEARD.rows[r.id].
 const fmt = n => n.toLocaleString('en-US');
 expect.ear_words = fmt(sum(LS, 'words')); expect.ear_near = fmt(sum(LS, 'near')); expect.ear_wall = fmt(sum(LS, 'wall'));
 expect.record_words = fmt(sum(LR, 'words')); expect.record_wall = fmt(sum(LR, 'wall'));
+// what session 3 counted, before the maker's six sentences joined (state 4): the rows of then, kept as they were heard
+const R93 = new Set(D.cases.flatMap(c => c.events.filter(e => e.vid && e.reading === 93).map(e => e.vid)));
+const LR3 = LR.filter(r => !R93.has(r.id));
+ok(LR3.length === 10 && R93.size === 6, 'ten sentences of the record in state 3, six added in state 4');
+expect.record_words_s3 = fmt(sum(LR3, 'words')); expect.record_wall_s3 = fmt(sum(LR3, 'wall'));
 expect.listen1_wall = fmt(L.state1.wall_words);
+// state 4, on the Atelier's reading of the wall: which words came through, and inside what
+const SMALLW = new Set('a an the to of in on at by for from with as and or but so if can will i we you it is be'.split(' '));
+const nrm = w => w.toLowerCase().replace('\u2019', "'").replace(/[^a-z0-9']/g, '');
+const NUMW = { '24': 'twentyfour', '72': 'seventytwo', '15': 'fifteen', '30': 'thirty', '12000000': 'twelvemillion' };
+const refOf = id => { const s = S.find(x => x.id === id); if (s) return s.quote; for (const c of D.cases) { const e = c.events.find(e => e.vid === id); if (e) return e.show; } };
+function lcsIdx(ref, hyp) {  // listen.py's match, with the places in what was heard
+  const a = ref.split(/\s+/).map(nrm).filter(x => x).map(x => NUMW[x] || x.replace(/-/g, '')), b = hyp.map(w => { const n = nrm(w); return NUMW[n] || n; });
+  const Lm = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
+  for (let i = 0; i < a.length; i++) for (let j = 0; j < b.length; j++) Lm[i + 1][j + 1] = a[i] === b[j] ? Lm[i][j] + 1 : Math.max(Lm[i][j + 1], Lm[i + 1][j]);
+  const out = []; let i = a.length, j = b.length;
+  while (i && j) { if (a[i - 1] === b[j - 1]) { out.push(j - 1); i--; j--; } else if (Lm[i - 1][j] >= Lm[i][j - 1]) i--; else j--; }
+  return out.reverse();
+}
+const through = { signal: [], record: [] };
+for (const r of L.rows) {
+  const hw = HW.EARSHOT_HEARD.rows[r.id].wall.map(w => w[0]);
+  const idx = lcsIdx(refOf(r.id), hw);
+  ok(idx.length === r.wall, r.id + ' the wall\'s matches recounted: ' + idx.length);
+  for (const k of idx) through[r.kind].push({ id: r.id, k, w: nrm(hw[k]) });
+}
+ok([...through.signal, ...through.record].every(x => SMALLW.has(x.w)), 'every word through the wall is a small word');
+expect.wall_small = through.signal.length; expect.record_small = through.record.length;
+expect.wall_words_list = [...new Set(through.signal.map(x => x.w))].join(', ');
+// a word stands in a sentence nobody said when the sentence the recogniser wrote around it (to its full stop) has
+// more than one word and does not stand in the passage
+function sentenceOf(words, k) { let a = k; while (a > 0 && !/[.?!]$/.test(words[a - 1])) a--; let b = k; while (b < words.length - 1 && !/[.?!]$/.test(words[b])) b++; return words.slice(a, b + 1); }
+const flat = t => t.split(/\s+/).map(nrm).filter(x => x).join(' ');
+const unsaid = x => { const sn = sentenceOf(HW.EARSHOT_HEARD.rows[x.id].wall.map(w => w[0]), x.k); return sn.length > 1 && !flat(refOf(x.id)).includes(flat(sn.join(' '))); };
+expect.wall_in_said = through.signal.filter(unsaid).length;
+expect.record_in_said = through.record.filter(unsaid).length;
 // the five hours, as the work sounds them: the hour each passage names for itself
 const hoursWord = { 24: '24 hours', 72: '72 hours', 120: 'five days', 360: '15 days' };
 expect.numbered_list = at.map(s => s.when.h).sort((a, b) => a - b).map(h => hoursWord[h]).join(', ');
@@ -120,13 +160,15 @@ const M = JSON.parse(mraw.toString('utf8'));
   ok(mc.began === w.state2_began && b.date === w.state2_began, 'the wiki began on ' + w.state2_began + ' in study 91');
   mc.began = b.date = w.began; b.src = w.began_src; mc.delays_days = w.delays_days; }
 const dayOf = iso => Math.round(Date.parse(iso + 'T00:00:00Z') / 864e5);
+const MON = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const fmtDay = iso => { const d = new Date(iso + 'T12:00:00Z'); return d.getUTCDate() + ' ' + MON[d.getUTCMonth()]; };
 for (const mc of M.cases) {
   const c = D.cases.find(x => x.id === mc.id);
   ok(!!c, 'case ' + mc.id + ' present');
   if (!c) continue;
   ok(c.began === mc.began, mc.id + ' began');
   ok(c.today_day === dayOf(D.moved.record_date) - dayOf(mc.began), mc.id + ' today counted from the deed');
-  ok(c.events.length === mc.events.length, mc.id + ' every event of the record');
+  ok(c.events.length === mc.events.length + (mc.id === 'escape' ? 7 : 0), mc.id + ' every event of the record');
   for (const me of mc.events) {
     const e = c.events.find(x => x.key === me.key);
     ok(!!e, mc.id + ' ' + me.key + ' present'); if (!e) continue;
@@ -147,7 +189,34 @@ for (const mc of M.cases) {
   ok(bodyDays.length > 0 && Math.min(...bodyDays) > firstStreet, mc.id + ' a public body speaks after the street');
   ok(c.events.find(e => e.key === 'first_public').day === firstStreet, mc.id + ' the first voice in the street is the first public one');
   const kn = c.events.find(e => e.knew);
-  ok(kn ? c.paper_from_h === kn.h && mc.maker_knew.date === kn.date : c.paper_from_h === null && mc.maker_knew.date === null, mc.id + ' the paper\'s hours counted from the maker\'s own dated knowing, or not at all');
+  if (mc.id === 'escape') ok(kn && c.paper_from_h === kn.h && c.maker_knew_state3.date === mc.maker_knew.date && kn.date > mc.maker_knew.date, 'escape: study 91\'s day of knowing kept beside the corrected one');
+  else ok(kn ? c.paper_from_h === kn.h && mc.maker_knew.date === kn.date : c.paper_from_h === null && mc.maker_knew.date === null, mc.id + ' the paper\'s hours counted from the maker\'s own dated knowing, or not at all');
+}
+// state 4: the Field's reading 93, at its pin
+const e93raw = Buffer.from(await (await fetch(D.reading93.url)).arrayBuffer());
+ok(createHash('sha256').update(e93raw).digest('hex') === D.reading93.sha256, 'escape93.json sha256');
+const E93 = JSON.parse(e93raw.toString('utf8'));
+const XE = D.cases.find(c => c.id === 'escape');
+{ const R = XE.events.filter(e => e.reading === 93), fev = E93.events;
+  ok(R.length === 7, 'escape: seven events from the maker\'s report join the record');
+  for (const e of R) {
+    const parts = e.quote.split(' \u2026 ').map((x, i, a) => i < a.length - 1 ? x : x);
+    const f = fev.find(f => f.date === e.date && parts.every(p => f.passages.some(q => q === p || q.replace(/\.$/, '') === p)));
+    ok(!!f && e.src === E93.report.url && e.public === false, 'escape ' + e.key + ': its passage stands in reading 93 on ' + e.date);
+    if (e.kind === 'voice') ok(e.place === 'maker' && e.show === e.quote, 'escape ' + e.key + ': said in the maker\'s room, word for word');
+    else ok(e.kind === 'caption' && !e.vid && f.key === 'internet', 'escape ' + e.key + ': the maker did not know it that day, so it is not said');
+  }
+  const said = new Set(XE.events.flatMap(e => e.quote.split(' \u2026 ')));
+  const left = fev.flatMap(f => f.passages).filter(p => !said.has(p) && !said.has(p.replace(/\.$/, '')));
+  ok(left.length === 1 && /no indication of a relationship/.test(left[0]), 'every passage of reading 93 is in the escape but the one the caption of 19 July carries: ' + left.length);
+  const third = XE.events.find(e => e.key === 'maker_knew'), tied = XE.events.find(e => e.key === 'tied');
+  ok(!third.knew && third.alarm && /not yet tied/.test(third.sub) && third.date === fev.find(f => f.key === 'alert_3').date, 'escape: 19 July is the third alert, not yet tied');
+  ok(tied.knew && tied.date === fev.find(f => f.key === 'tied').date && XE.maker_knew.date === tied.date && XE.paper_from_h === tied.h, 'escape: the paper\'s hours from 20 July, the day the maker tied it');
+  ok(XE.events.filter(e => e.alarm && e.date < XE.began).length === E93.answer.alerts_before_the_escape, 'escape: two alerts before the deed, as the Field counts them');
+  expect.alerts_before = E93.answer.alerts_before_the_escape;
+  expect.knew_tied = fmtDay(tied.date); expect.first_alert = fmtDay(fev[0].date);
+  expect.first_alert_days = dayOf(XE.began) - dayOf(fev[0].date);
+  expect.alert_to_tied = dayOf(tied.date) - dayOf(fev[0].date);
 }
 const W = M.cases.find(c => c.id === 'wiki').delays_days, X = M.cases.find(c => c.id === 'escape').delays_days;
 const dd = (c, a, b) => { const k = M.cases.find(x => x.id === c); const ev = key => k.events.find(e => e.key === key).date; return dayOf(ev(b)) - dayOf(ev(a)); };
@@ -173,6 +242,7 @@ expect.street_traced = traced.filter(m => streetIds.includes(m.id)).length;
 expect.street_event = S.filter(s => s.room === 'street' && ['event short of harm', 'harm'].includes(FINAL[s.id].trigger)).length;
 for (const m of MS) { const s = S.find(x => x.id === m.id); ok(s.due === m.due && s.moved === (T[m.id] ? T[m.id].moved : m.moved), m.id + ' due and trace as the Field\'s check coded them'); }
 
+const a2h = XE.events.find(e => e.key === 'alert_2').h;
 const browser = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
 for (const [w, h] of [[1100, 820], [390, 844]]) {
   const p = await browser.newPage({ viewport: { width: w, height: h } });
@@ -180,6 +250,7 @@ for (const [w, h] of [[1100, 820], [390, 844]]) {
   await p.goto(url + '?auto=sound');
   await p.waitForTimeout(2500);
   const page = await p.evaluate(() => Object.fromEntries([...document.querySelectorAll('[data-k]')].map(e => [e.dataset.k, e.textContent.trim()])));
+  ok(await p.evaluate(() => /^Presented · state 4 of 4/.test(document.querySelector('.wip').textContent)), w + 'px the face says presented');
   for (const [k, v] of Object.entries(expect)) ok(page[k] === String(v), w + 'px ' + k + ': page ' + page[k] + ' / recount ' + v);
   // the clock the page runs
   const clock = await p.evaluate(() => { const s = window.__earshot; return { events: s.events, PRE: s.PRE, END: s.END, h: s.events.filter(e => e.h).map(e => [e.h, s.tauToH(e.tau)]) }; });
@@ -242,15 +313,27 @@ for (const [w, h] of [[1100, 820], [390, 844]]) {
   await p.waitForTimeout(300);
   const cold = await p.evaluate(() => ({ ...window.__earshot.woken }));
   ok(cold.dfs === true && cold.maker === true && !cold.bis && !cold.street, w + 'px on paper at 73 h: New York\'s office has heard of the deed, a room of routine paper has not');
+  // state 4: the ear draws every word that came through the wall as the recogniser's own
+  const red = await p.evaluate(ids => ids.map(([id, k]) => window.__earshot.invented(id, 'wall')[k]), [...through.signal, ...through.record].map(x => [x.id, x.k]));
+  ok(red.length === through.signal.length + through.record.length && red.every(Boolean), w + 'px every word through the wall is drawn as the recogniser\'s own');
+  // state 4: the escape before the deed, on the maker's own alerts
+  await p.evaluate(() => window.__earshot.setMode('escape', false));
+  await p.waitForTimeout(300);
+  const t0 = await p.evaluate(() => document.getElementById('time').textContent);
+  ok(/^2[0-9] June 2026 · 1[0-9] days before the deed$/.test(t0), w + 'px escape opens on a day in June: ' + t0);
+  const a2 = XE.events.find(e => e.key === 'alert_2');
+  await p.evaluate(t => window.__earshot.seek(t - 0.05), await p.evaluate(h => window.__earshot.preTau(h), a2.h));
+  await p.waitForTimeout(2200);
+  const r0 = await p.evaluate(() => { const s = window.__earshot; return { telling: s.telling && s.telling.e.key, alarm: s.alarm, voices: s.voices.map(v => [v.id, v.room]), time: document.getElementById('time').textContent, locked: s.locked() }; });
+  ok(r0.telling === 'alert_2' && r0.alarm > 0.5 && r0.voices.some(([id, room]) => id === 'escape-alert_2' && room === 'maker'), w + 'px escape: on 5 July the maker\'s monitoring alarms in its room');
+  ok(r0.time === '5 July 2026 · 4 days before the deed' && r0.locked, w + 'px escape: the page names the day, and the street is shut out: ' + r0.time);
   ok(errs.length === 0, w + 'px no page errors: ' + errs.join(' | '));
   if (shot && w === 1100) {
-    // state 3: the escape as the quarterly summary is said, a machine's ear on, a shut door just tried
-    const sc = D.cases.find(c => c.id === 'escape').events.find(e => e.key === 'maker_scope');
+    // state 4: the escape on 5 July, four days before the deed: the maker's monitoring alarms, a machine's ear on
     await p.evaluate(() => { window.__earshot.setMode('escape', false); document.getElementById('ear').click(); });
-    await p.evaluate(h => window.__earshot.seek(window.__earshot.hToTau(h) - 0.2), sc.h);
-    await p.waitForTimeout(4600);
-    await p.evaluate(() => window.__earshot.standIn('eu'));
-    await p.waitForTimeout(400);
+    await p.evaluate(t => window.__earshot.seek(t - 0.05), await p.evaluate(h => window.__earshot.preTau(h), a2h));
+    await p.waitForTimeout(1200);
+    await p.waitForFunction(() => window.__earshot.alarm > 0.5 && Math.sin(window.__earshot.now * 7) > 0.85);
     await p.screenshot({ path: shot });
   }
   await p.close();

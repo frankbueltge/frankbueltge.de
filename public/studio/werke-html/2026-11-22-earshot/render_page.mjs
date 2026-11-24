@@ -9,14 +9,17 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
+// State 4 (session 263): with a third argument, a comma list of ids, only those voices are rendered; the reverbs are
+// generated afresh on every load, so voices rendered before are not rendered again.
 const out = process.argv[2]; mkdirSync(out, { recursive: true });
+const only = process.argv[3] ? new Set(process.argv[3].split(',')) : null;
 const browser = await chromium.launch();
 const p = await browser.newPage({ viewport: { width: 1100, height: 820 } });
 await p.goto('http://127.0.0.1:8771/');
 await p.waitForTimeout(800);
 const items = await p.evaluate(() => window.EARSHOT.signals.map(s => [s.id, s.room]).concat(window.EARSHOT.cases.flatMap(c => c.events.filter(e => e.vid).map(e => [e.vid, e.place]))));
 const plan = [];
-for (const [id, room] of items) {
+for (const [id, room] of items.filter(([id]) => !only || only.has(id))) {
   plan.push([id, 'near', room]);
   plan.push([id, 'wall', room === 'street' ? 'eu' : 'street']);
 }
