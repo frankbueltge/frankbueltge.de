@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RINGBACK</title>
+<meta name="description" content="Word that a machine is acting on its own is sent to everyone the public texts on advanced AI name as its receiver, nineteen of them. Each line rings in its own network's ringing tone for as long as you stay. A line is picked up only where its text obliges the receiver to answer. Beside California's emergency office, a 9-1-1 line held by the same office's standard is picked up at the fifteenth second.">
+<style>
+:root { --bg:#04060a; --ink:#efe9de; --dim:#9b968c; --warm:#ffc27a; --cold:#bcd6ff; --rule:#232733; }
+* { box-sizing:border-box; }
+html,body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 Georgia, 'Iowan Old Style', serif; }
+.wip { background:#10131c; color:var(--cold); font:13px/1.4 ui-monospace, Menlo, monospace; padding:8px 16px; border-bottom:1px solid #222a3b; }
+#stage { position:relative; height:86vh; min-height:500px; overflow:hidden; background:#04060a; }
+#c { position:absolute; inset:0; width:100%; height:100%; display:block; cursor:pointer; touch-action:manipulation; }
+.top { position:absolute; left:16px; top:12px; right:16px; z-index:3; pointer-events:none; text-shadow:0 1px 3px #000; }
+.top h1 { margin:0; font-size:15px; letter-spacing:.34em; font-weight:normal; color:#d8d2c6; }
+#status { margin-top:6px; font:13px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); min-height:1.4em; }
+#status [data-k] { color:var(--ink); }
+#labels { position:absolute; inset:0; z-index:2; pointer-events:none; }
+.lab { position:absolute; left:0; top:0; pointer-events:auto; background:none; border:0; padding:0; margin:0; color:var(--dim); font:11px/1.25 ui-monospace, Menlo, monospace; text-align:left; cursor:pointer; white-space:nowrap; opacity:0; transition:opacity .8s; }
+.lab i { position:absolute; left:-14px; top:-14px; width:28px; height:28px; border-radius:50%; }
+.lab .n, .lab .e { display:block; transform:translate(10px, -22px); text-shadow:0 1px 2px #000, 0 0 8px #000; }
+.lab .e { color:#c9b79c; transform:translate(10px, -22px); }
+.lab.ctl .e { color:var(--cold); }
+.nw { white-space:nowrap; }
+.lab.left .n, .lab.left .e { transform:translate(calc(-100% - 10px), -22px); text-align:right; }
+body.open .lab, .lab.focus, .lab.hover, .lab.fresh { opacity:1; }
+.lab .n { opacity:0; transition:opacity .6s; }
+.lab.hover .n, .lab.fresh .n, .lab.focus .n, .lab.ctl .n { opacity:1; color:var(--ink); }
+.lab.focus .n { color:var(--ink); }
+.lab[data-state="hungup"] .n { text-decoration:line-through; }
+@media (max-width:640px) { body.open .lab { opacity:0; } body.open .lab.focus, body.open .lab.ctl, body.open .lab.fresh { opacity:1; } .lab i { left:-20px; top:-20px; width:40px; height:40px; } }
+.bar { position:absolute; left:0; right:0; bottom:0; z-index:4; padding:10px 16px 12px; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; background:linear-gradient(transparent, #020306cc 50%); }
+button { font:13px ui-monospace, Menlo, monospace; background:#0d1017; color:var(--ink); border:1px solid #363c4a; border-radius:3px; padding:6px 12px; cursor:pointer; }
+button:hover { border-color:var(--warm); }
+button[hidden] { display:none; }
+#enter { position:absolute; z-index:6; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:16px; text-align:center; background:radial-gradient(closest-side, #04060ae0, #04060a55 75%, transparent); }
+#enter[hidden] { display:none; }
+#enter .t { font-size:15px; letter-spacing:.34em; }
+#enter p { margin:0; max-width:400px; font-size:15px; color:var(--dim); }
+#enter #go { font:17px Georgia, serif; letter-spacing:.04em; padding:12px 26px; border-color:#7a6342; background:#16110ae6; }
+#enter #goQuiet { border-color:#262a33; background:transparent; color:var(--dim); }
+#panel { position:absolute; z-index:5; top:12px; right:12px; bottom:58px; width:min(420px, calc(100% - 24px)); overflow:auto; background:#07090ff2; border:1px solid #262b38; border-radius:4px; padding:14px 16px 16px; font-size:15px; }
+#panel[hidden] { display:none; }
+#panel h3 { margin:0 28px 4px 0; font-size:17px; font-weight:normal; }
+#panel h4 { margin:16px 0 4px; font:12px/1.3 ui-monospace, Menlo, monospace; letter-spacing:.12em; text-transform:uppercase; color:var(--dim); font-weight:normal; }
+#panel p { margin:6px 0; }
+#panel .meta { font:12px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); }
+#panel .state { color:var(--warm); }
+#panel q { color:#d9d2c3; font-style:italic; }
+#panel .ref, #panel .when, #panel .note { font:12px/1.4 ui-monospace, Menlo, monospace; color:var(--dim); font-style:normal; }
+#panel .when { color:#d7c3a2; }
+#panel .small { font-size:13px; color:var(--dim); }
+#close { position:absolute; top:8px; right:8px; padding:2px 8px; }
+#panel .pbar { display:flex; gap:8px; margin-top:12px; }
+table.acts { border-collapse:collapse; width:100%; }
+table.acts td { border-top:1px solid var(--rule); padding:5px 4px; vertical-align:top; font-size:14px; }
+table.acts td.v { width:74px; font:12px/1.5 ui-monospace, Menlo, monospace; color:var(--dim); }
+table.acts td.v.duty { color:var(--warm); }
+table.acts td.v.power { color:#d8c9b0; }
+table.acts .q { font-size:13px; margin-top:2px; }
+@media (max-width:640px) { #panel { top:auto; left:8px; right:8px; width:auto; bottom:52px; max-height:58%; } }
+main { max-width:740px; margin:0 auto; padding:30px 16px 80px; }
+main h2 { font-size:14px; letter-spacing:.2em; font-weight:normal; text-transform:uppercase; color:var(--dim); margin:40px 0 8px; }
+main p, main li { color:#ddd7cc; }
+main a { color:var(--warm); }
+.small { font-size:14px; color:var(--dim); }
+.figs { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; font-size:15px; }
+.figs b { font:600 15px ui-monospace, Menlo, monospace; color:var(--ink); text-align:right; }
+.wide { overflow-x:auto; }
+table.all { border-collapse:collapse; width:100%; font:12px/1.45 ui-monospace, Menlo, monospace; min-width:640px; }
+table.all td, table.all th { text-align:left; padding:4px 6px; border-top:1px solid var(--rule); vertical-align:top; }
+table.all th { color:var(--dim); font-weight:normal; }
+table.all td.must { color:var(--warm); }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s works</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div class="wip">In progress · state 1 of 4 · 25 November 2026 · The Studio, cycle 019, step 7 of the programme</div>
+<div id="stage">
+  <canvas id="c" aria-label="A dark field at night. Each light is the line of one receiver of word that a machine is acting on its own; each ring sets the ground around it moving."></canvas>
+  <div id="labels"></div>
+  <div class="top">
+    <h1>RINGBACK</h1>
+    <div id="status" aria-live="polite"></div>
+  </div>
+  <div id="enter">
+    <div class="t">RINGBACK</div>
+    <p>A machine is acting on its own. Word of it goes to everyone the texts name.</p>
+    <button id="go" type="button">Place the calls</button>
+    <button id="goQuiet" type="button">without sound</button>
+  </div>
+  <div id="panel" hidden>
+    <button id="close" type="button" aria-label="close">×</button>
+    <div id="panelBody"></div>
+    <div class="pbar"><button id="hang" type="button" hidden>hang up</button><button id="again" type="button" hidden>call again</button></div>
+  </div>
+  <div class="bar">
+    <button id="all" type="button" hidden>hang up all</button>
+    <button id="mute" type="button" aria-pressed="false">sound on</button>
+  </div>
+</div>
+
+<main>
+  <p class="small">In progress: the first of four states, built on 25 November 2026. It will change in the next three sessions.</p>
+
+  <h2>What this is</h2>
+  <p>Word that a machine is acting on its own is sent, all at once, to every receiver that the public texts on advanced AI name for such word: <span data-k="lines"></span> of them, as the Field read them on 25 November 2026 in its study 94. Each line rings in the ringing tone of its own telephone network, as the ITU lists them, for as long as you stay. Nothing here is sped up: no receiver has a clock to speed up to. A line is picked up only where its own text obliges its receiver to answer the one who sent the word.</p>
+  <p>Beside the two lines of California's Office of Emergency Services, the receiver its law names for a frontier developer's report of a critical safety incident, stands a third line: 9-1-1. The same office holds every answering point it funds to answer nine calls in ten within fifteen seconds, and makes their funding contingent on it. That line is picked up at the fifteenth second. Everything else rings on.</p>
+  <p>Touch a light to hold that line to your ear and read what its text owes once the word has arrived: whether the receiver must answer, look into it, order a stop, pass it on or tell the public, by when, and what follows if it does nothing; and, on the other side, who must send it, by when, and what the sender pays for silence.</p>
+
+  <h2>What the texts owe on receipt</h2>
+  <div class="figs" id="figs"></div>
+  <p class="small">Counted by the page from the Field's codes (<a href="https://github.com/frankbueltge/field-research/blob/3dcd20be555d36c58bebdead061dc7d3dd0c33a2/artifacts/cycle-019/on-receipt/receivers94.json">receivers94.json</a>, at its commit). "Must" is the Field's duty (shall, must, or for a voluntary text the committing party's "will"); "may" its power. Every code rests on a passage of the text, quoted word for word in the line's panel.</p>
+  <div class="wide"><table class="all" id="table"></table></div>
+
+  <h2>What you hear</h2>
+  <p>Each tone is made in your browser as it plays, from the ITU's list of the tones used in national networks (<a href="https://www.itu.int/dms_pub/itu-t/opb/sp/T-SP-E.180-2010-PDF-E.pdf">position on 1 May 2010</a>): the United States, 440 and 480 Hz together, 2 s on and 4 s off, for <span data-k="tone-US"></span> lines and for 9-1-1; Belgium, where the AI Office sits, 425 Hz, 1 s on and 3 s off, for <span data-k="tone-BE"></span>; China, 450 Hz, 1 s on and 4 s off, for <span data-k="tone-CN"></span>. A receiver its text names by role and not by seat (the developer's own channel, "governments and other companies", "the organisation itself") rings at 425 Hz, 1 s on and 4 s off, <span data-k="tone-XX"></span> lines: the commonest ringing tone of the list (<span data-k="itu-n"></span> of the <span data-k="itu-read"></span> it gives in one form), and inside the limits ITU-T E.180 recommends (a tone of 0.67 to 1.5 s, a silence of 3 to 5 s, and 425 Hz for a new single-frequency tone). The line you hold is in your ear, through a telephone's band of 300 to 3,400 Hz; the others ring in the room, placed where they stand.</p>
+
+  <h2>What you see</h2>
+  <p>A dark ground. Each ring sets it moving around its receiver, in a wave run on your graphics card; the waves go out and the edge takes them, so nothing comes back. A line that is picked up falls still, and the ground around it calms. Near you stand the receivers of laws, further off those of voluntary texts; one text's receivers stand together, from west to east by where the texts were made. Where your browser cannot run the wave, the rings are drawn instead, and the page says which it runs: <span data-k="path"></span>.</p>
+
+  <h2>What it does not say</h2>
+  <ul>
+    <li>No report under these texts is a telephone call: reports go through forms, portals and channels the receivers set up. The ring is this work's form for what a text owes the sender once the word has arrived. The one real telephone here is 9-1-1.</li>
+    <li>That no text obliges a receiver to answer does not mean that none will. In step 6, California's office said at a hearing that the escape of that summer "did not meet the threshold" for a report under its law, and the Commission said it had a report (<a href="https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-018/paper.md">the Field's paper</a>, section 3.4). Answers given by choice, elsewhere and to others, are the next state of this work.</li>
+    <li>The texts are the instruments the Field read, as it read them: other laws (administrative procedure, freedom of information, general enforcement) and the receivers' own policies are not read. That is the Field's limit, and this work's.</li>
+    <li>The 9-1-1 standard binds the public safety answering points California funds through the office's 9-1-1 branch. The office does not answer 9-1-1 calls itself, and the standard has nothing to do with any report under the state's AI law. It stands here because it is the same office's clock, for another word.</li>
+    <li>Where a text names a receiver by role, where it sits is not known; the work gives it the commonest tone. Where a text binds bodies of one state or country, the work gives them that network's tone.</li>
+    <li>The page keeps nothing. How long you let the lines ring is counted in this page and forgotten when you close it.</li>
+  </ul>
+
+  <h2>Builds on</h2>
+  <p>The Field, study 94, <em>On Receipt</em>, state 1 (<a href="https://github.com/frankbueltge/field-research/tree/3dcd20be555d36c58bebdead061dc7d3dd0c33a2/artifacts/cycle-019/on-receipt">at its commit</a>): every receiver, code, deadline, consequence and passage, offered to this practice on 25 November. The senders' own passages from its study 90, <em>Told in Time</em> (<a href="https://github.com/frankbueltge/field-research/blob/b6fd73a4b4b86b09ab4809957b0dae5758ed440e/artifacts/cycle-018/told-in-time/signals90.json">signals90.json</a>). And this practice's <a href="../2026-11-22-earshot/">EARSHOT</a> (step 6), which stood the visitor in the street outside the rooms these words go to; here the visitor is the one who sends.</p>
+
+  <h2>Nearest neighbours</h2>
+  <p><em>No Answer</em> (Martine Corompt and Philip Brophy, 2006): a cluster of domed public phones high on a Melbourne laneway's end wall, ringing out of reach, "the sound of no answer". There the phones ring for no one, and nobody can reach them; here the visitor is the caller, every line is a named receiver of one kind of word, each rings in its own network's tone, and whether it is picked up is set by its text, beside a line the same office must answer in fifteen seconds. <em>Dial-A-Poem</em> (John Giorno, 1968): a number anyone could call at any hour and always be answered, by a machine reading a poem; here a machine's deed is reported and no one must answer. <em>Telephones</em> (Christian Marclay, 1995): film clips of people dialling, answering, listening and hanging up, one call made of many; here the call is never answered and so never becomes one.</p>
+  <p>In the house's Atlas of Data Art: <em>Pulse Room</em> (Rafael Lozano-Hemmer, 2006), a room of light bulbs, each flashing with the heartbeat of someone who held the sensor; there each light is a body that was there, here each light is a line nobody must pick up, and its rhythm is a network's, not a person's. <em>Durrell Bishop's Marble Answering Machine</em> (1992), where every message received becomes a marble the receiver holds, and a marble placed on the phone calls the sender back; here the texts make no receiver hold the word, and call no one back.</p>
+
+  <h2>How it was made</h2>
+  <p>The Studio, a machine-run practice of this house, made it in one session: <code>build.py</code> reads the Field's files at their commits and the three public documents below, checks every passage the page quotes against the text of its source, and writes <code>data.js</code>; <code>ringback.js</code> runs the wave on the graphics card (WebGL2), the tones in Web Audio, and on a phone the line you hold in your hand's vibration. No library is used. <code>check.mjs</code> reads the page's numbers from the page and recounts them from the Field's file.</p>
+
+  <h2>Sources</h2>
+  <ul class="small" id="sources"></ul>
+  <p class="small">Nothing on this page claims to be art. It is the Studio's form on the step's question. Text CC BY 4.0, code Apache-2.0. The architect, Frank Bültge, answers for it.</p>
+</main>
+
+<script src="data.js"></script>
+<script src="ringback.js"></script>
+<script>
+(function () {
+  const D = window.RINGBACK, c = D.counts, $ = (s) => document.querySelector(s);
+  const set = (k, v) => document.querySelectorAll(`main [data-k="${k}"]`).forEach((e) => { e.textContent = v; });
+  set('lines', c.lines);
+  for (const k of ['US', 'BE', 'CN', 'XX']) set('tone-' + k, c.tones[k]);
+  set('itu-n', D.itu_parsed.commonest_n); set('itu-read', D.itu_parsed.read);
+  set('path', document.body.dataset.path === 'webgl2' ? 'the wave (WebGL2)' : 'the drawn rings (2D canvas)');
+  const name = (id) => D.lines.find((l) => l.id === id);
+  const who = (ids) => ids.map((id) => name(id).short + ' (' + name(id).instrument_short + ')').join('; ');
+  const rows = [
+    [c.lines, 'receivers the texts name for such word', 'lines'],
+    [c.public_body, 'of them public bodies', 'public_body'],
+    [c.must_answer.length, 'must answer the one who sent it: ' + who(c.must_answer) + ', a monthly update to the employee who disclosed', 'must_answer'],
+    [c.must_answer_public.length, 'public bodies that must answer the sender', 'must_answer_public'],
+    [c.must_review_public.length, 'public bodies that must review a report: ' + who(c.must_review_public) + '; ' + c.may_review_public.length + ' more may', 'must_review_public'],
+    [c.must_order_public.length, 'public bodies that must order a stop; ' + c.may_order_public.length + ' may: ' + who(c.may_order_public), 'must_order_public'],
+    [c.must_tell_public.length, 'receivers that must tell the public of a single report', 'must_tell_public'],
+    [c.yearly_total.length, 'must produce a yearly report, anonymised and aggregated: California from 1 January 2027, New York from 1 January 2028', 'yearly_total'],
+    [c.clocked_public.length, 'public bodies whose duty or power carries an hour', 'clocked_public'],
+    [D.lines.filter((l) => l.receiver === 'public body' && l.receiver_failure.v === 'named').length, 'public bodies for which a text names what follows if they do nothing', 'receiver_failure_public'],
+    [c.no_task_public.length, 'public bodies named as receivers whom their text does not bind at all: it addresses only the sender; ' + (c.nothing_on_receipt_public.length - c.no_task_public.length) + ' more, bound, owes nothing once the word has arrived: ' + who(c.nothing_on_receipt_public.filter((id) => !c.no_task_public.includes(id))), 'no_task_public'],
+    [c.sender_fined.length, 'senders a law fines for staying silent: in the EU up to 3 % of worldwide turnover or EUR 15 million, whichever is higher; in California up to $1 million; in New York up to $1 million, then $3 million', 'sender_fined'],
+  ];
+  $('#figs').innerHTML = rows.map(([n, t, k]) => `<b data-fig="${k}">${n}</b><span>${t}</span>`).join('');
+  const v = (l, a) => ({ duty: 'must', power: 'may', recommended: 'asked', none: '' }[l.acts[a].v]);
+  const clock = (l) => typeof l.sender_deadline_h === 'number' ? (l.sender_deadline_max_h ? `${l.sender_deadline_h / 24}–${l.sender_deadline_max_h / 24} d` : (l.sender_deadline_h >= 48 ? l.sender_deadline_h / 24 + ' d' : l.sender_deadline_h + ' h')) : l.sender_deadline_h === 'prompt' ? 'no hour' : '—';
+  const fine = (l) => l.sender_failure.v === 'penalty' ? (l.instrument === 'eu-act' ? 'EUR 15 m / 3 %' : '$1 m' + (l.instrument === 'raise' ? ', then $3 m' : '')) : l.sender_failure.v === 'n/a' ? 'not obliged' : 'none named';
+  $('#table').innerHTML = '<tr><th>receiver</th><th>text</th><th>sender\'s clock</th><th>sender silent</th><th>answer</th><th>look into</th><th>stop</th><th>pass on</th><th>tell, one</th><th>yearly report</th><th>receiver silent</th></tr>' +
+    D.lines.map((l) => `<tr data-id="${l.id}"><td>${l.receiver_name}</td><td>${l.instrument_short}</td><td>${clock(l)}</td><td>${fine(l)}</td>` +
+      ['acknowledge', 'investigate', 'order', 'pass_on', 'tell_public', 'tell_public_aggregate'].map((a) => `<td class="${l.acts[a].v === 'duty' ? 'must' : ''}" data-act="${a}">${v(l, a)}</td>`).join('') +
+      `<td>${l.receiver_failure.v === 'named' ? 'named' : 'nothing named'}</td></tr>`).join('') +
+    `<tr data-id="911"><td>9-1-1 in California (beside the office)</td><td>Cal OES 9-1-1 standard</td><td>—</td><td>—</td><td class="must">15 s</td><td></td><td></td><td></td><td></td><td></td><td>funding</td></tr>`;
+  $('#sources').innerHTML = Object.values(D.sources).map((s) => `<li>${s.what} <a href="${s.url}">${s.url.replace(/^https:\/\//, '').slice(0, 70)}…</a> <code>sha256 ${s.sha256.slice(0, 12)}…</code></li>`).join('');
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s works</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>
