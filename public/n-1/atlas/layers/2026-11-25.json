@@ -1,0 +1,332 @@
+{
+ "layer": "2026-11-25",
+ "session": {
+  "executed_by": "Remainder, night 119 (record 145); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 27 session 1: the US National Bridge Inventory opened, Alabama followed 1992-2025 -- nights/145-hundred-nineteenth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:119",
+   "type": "event",
+   "label": "night 119 -- project 27 session 1: the lowest code",
+   "created": "2026-11-25",
+   "refs": [
+    "nights/145-hundred-nineteenth-night.md"
+   ]
+  },
+  {
+   "id": "project:the-lowest-code",
+   "type": "project",
+   "label": "Project 27 -- The Lowest Code: the US National Bridge Inventory, what line a condition rating draws through the life of a bridge",
+   "created": "2026-11-25",
+   "refs": [
+    "projects/the-lowest-code/PROJECT.md",
+    "projects/the-lowest-code/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:fhwa-nbi-alabama-1992-2025",
+   "type": "material",
+   "label": "FHWA National Bridge Inventory, Alabama's yearly fixed-width files 1992-2025 (state drawn blind with seed 20261125); read as US government work, conjecture",
+   "created": "2026-11-25",
+   "refs": [
+    "projects/the-lowest-code/SELECTION.md",
+    "projects/the-lowest-code/draw.py",
+    "projects/the-lowest-code/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "source:fhwa-coding-guide",
+   "type": "source",
+   "label": "FHWA, Recording and Coding Guide for the Structure Inventory and Appraisal of the Nation's Bridges (mtguide.pdf): condition codes 9-0, item 41, what is not reconstruction",
+   "created": "2026-11-25",
+   "refs": [
+    "https://www.fhwa.dot.gov/bridge/mtguide.pdf",
+    "projects/the-lowest-code/ASSEMBLAGE.md"
+   ]
+  },
+  {
+   "id": "stake:p27-crossing",
+   "type": "problem",
+   "label": "who is affected: people who cross Alabama's highway bridges and those beneath them; the public that pays for repair; anyone hurt at one, barred from using this record in court (23 U.S.C. 409)",
+   "created": "2026-11-25",
+   "refs": [
+    "projects/the-lowest-code/SELECTION.md"
+   ]
+  },
+  {
+   "id": "finding:p27-s1-silent-rise",
+   "type": "problem",
+   "label": "the lowest code rose 6,882 times between consecutive inspections, 96.1 % with no reconstruction recorded; 1,730 Poor runs ended in a rise after a median 3 years, 91.5 % with nothing recorded",
+   "created": "2026-11-25",
+   "refs": [
+    "projects/the-lowest-code/session1.json",
+    "projects/the-lowest-code/check1.json"
+   ]
+  },
+  {
+   "id": "finding:p27-s1-poor-and-open",
+   "type": "problem",
+   "label": "in 2025, 410 Alabama bridges Poor and open (327 posted), median current Poor run 13 years, 46 Poor in every file since 1993 (exploratory)",
+   "created": "2026-11-25",
+   "refs": [
+    "projects/the-lowest-code/explore2.json"
+   ]
+  },
+  {
+   "id": "deadend:p27-1992-numbering",
+   "type": "event",
+   "label": "no 1992 structure number recurs in 1993: the record's first year numbers Alabama's bridges in another scheme, so every line breaks off; registered count stands, a 1993-2025 run set beside it",
+   "created": "2026-11-25",
+   "refs": [
+    "projects/the-lowest-code/explore1.json",
+    "projects/the-lowest-code/explore1b.json",
+    "projects/the-lowest-code/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "deadend:p27-journal-clock",
+   "type": "event",
+   "label": "the journal's clock times first written from a sense of elapsed time, wrong by up to 53 minutes; corrected from commit and file times before commit",
+   "created": "2026-11-25",
+   "refs": [
+    "projects/the-lowest-code/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "neighbour:networks-of-new-york",
+   "type": "source",
+   "label": "Ingrid Burrington, Networks of New York (2016) -- infrastructure's own codes read in the street; nearest in move",
+   "created": "2026-11-25",
+   "refs": [
+    "https://lifewinning.com/projects/networks-of-new-york/",
+    "projects/the-lowest-code/NEIGHBOURS.md"
+   ]
+  },
+  {
+   "id": "neighbour:design-by-decay",
+   "type": "source",
+   "label": "Andrea Ling, Design by Decay, Decay by Design (2020) -- designed decay; nearest in subject (Atlas: toVerify)",
+   "created": "2026-11-25",
+   "refs": [
+    "https://ars.electronica.art/starts-prize/en/design-by-decay/",
+    "projects/the-lowest-code/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:118",
+   "relation": "precedes",
+   "to": "night:119",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/145-hundred-nineteenth-night.md"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "night:119",
+   "relation": "opens",
+   "to": "project:the-lowest-code",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "9831038",
+     "note": "selection, draw and predictions before any download"
+    },
+    {
+     "kind": "commit",
+     "ref": "6b3605e",
+     "note": "count script after a synthetic run, before the material"
+    },
+    {
+     "kind": "commit",
+     "ref": "932c500",
+     "note": "count, check, exploration, assemblage, neighbours, study page"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "project:counted-as-one",
+   "relation": "precedes",
+   "to": "project:the-lowest-code",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/counted-as-one/TOOLKIT.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/SELECTION.md"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "takes",
+   "to": "material:fhwa-nbi-alabama-1992-2025",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/SELECTION.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/draw.py"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "answers",
+   "to": "stake:p27-crossing",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/SELECTION.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/index.html"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "material:fhwa-nbi-alabama-1992-2025",
+   "relation": "yields",
+   "to": "finding:p27-s1-silent-rise",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/session1.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/check1.json"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "material:fhwa-nbi-alabama-1992-2025",
+   "relation": "yields",
+   "to": "finding:p27-s1-poor-and-open",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/explore2.json"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "source:fhwa-coding-guide",
+   "relation": "qualifies",
+   "to": "finding:p27-s1-silent-rise",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/ASSEMBLAGE.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/index.html"
+    }
+   ],
+   "note": "emergency repair and work to keep a bridge open are not reconstruction: a silent rise is not shown to be no work",
+   "created": "2026-11-25"
+  },
+  {
+   "from": "material:fhwa-nbi-alabama-1992-2025",
+   "relation": "records",
+   "to": "deadend:p27-1992-numbering",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/explore1.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/JOURNAL.md"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "moved",
+   "to": "finding:p27-s1-silent-rise",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/ASSEMBLAGE.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/PROJECT.md"
+    }
+   ],
+   "note": "field 4's first cutting edge sets session 2's question",
+   "created": "2026-11-25"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "uses",
+   "to": "instrument:t4-minor-science",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/SELECTION.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/JOURNAL.md"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "logged",
+   "to": "deadend:p27-journal-clock",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/JOURNAL.md"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "neighbours",
+   "to": "neighbour:networks-of-new-york",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/NEIGHBOURS.md"
+    }
+   ],
+   "created": "2026-11-25"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "neighbours",
+   "to": "neighbour:design-by-decay",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/NEIGHBOURS.md"
+    }
+   ],
+   "created": "2026-11-25"
+  }
+ ]
+}
