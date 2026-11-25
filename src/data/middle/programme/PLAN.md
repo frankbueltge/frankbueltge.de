@@ -123,7 +123,8 @@ public body, who is obliged to answer it, to act or to tell the public, by when,
   it to do on receipt (acknowledge, investigate, order a stop, tell the public) and by when, and what follows for a
   sender who does not report or a receiver who does not act; read against what each receiver did in the two cases of
   step 6, from the first alert to the last public word (in step 6, 0 of the 9 event signals in law reach the public,
-  and the maker's monitoring alerted twice before its agents reached the internet).
+  5 only as a yearly total, and the maker's monitoring alerted twice, by its own report, before its agents reached the
+  internet; California's complaint of 16 November alleges its staff saw an agent online on 26 May).
 - **Atelier.** What it is to answer, set against being answerable: who answers for a word not passed on, and whether a
   record can say that a machine or a person answered. Its own finding is the starting point: the programme's
   corrections reached the works that carried a wrong claim only once addressed to their makers, then by their next
