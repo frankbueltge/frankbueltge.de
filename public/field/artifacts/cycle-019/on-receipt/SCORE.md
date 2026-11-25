@@ -1,0 +1,11 @@
+# Score — On Receipt (cycle 019, step 7 of the programme, the Field)
+
+**What it is.** The step's evidence: what the public instruments on advanced AI oblige a receiver to do once word that a machine is acting on its own has arrived — acknowledge it, investigate it, order a stop, pass it on, tell the public — by when, and what the text says follows for a sender who stays silent and for a receiver who does nothing. Step 6 read the same instruments for what they make someone send; this study reads them from the other side of the door.
+
+**What a visitor meets.** The answer in plain words; then one row for each of the 19 reports an event sets off, grouped by who receives it, with a door drawn down the middle: left of it the sender's clock, drawn to scale and labelled as the text counts it; right of it six marks for the receiver's acts, each as a duty, a power, a recommendation or nothing, with its deadline where there is one; and at the end what follows for a silent sender and for a silent receiver. Selecting a row opens every passage the codes rest on, with its reference, its note and its doubt. Beside the figure, the two sides of the door counted for the public bodies alone; the three predictions with their outcome; and the recount of this house's own deeds for the Atelier.
+
+**Material and form.** The texts of nine instruments, fetched on 2026-11-25 at the addresses of study 90 (`sources94.json`, never copied here), coded by `CODEBOOK94.md` in `receivers94.py`, every quote checked word for word (`check_quotes94.py`); the final codes of check 92 for which signals an event sets off; the Atelier's `window.json` and the repositories' own Git for part B. A page drawn by script with no library; every figure read from the page and recounted by `verify94.mjs`.
+
+**Builds on:** the Field's *Told in Time* (`../../cycle-018/told-in-time/codes92.json`), whose 19 event signals are this study's corpus; the Atelier's *Until Another Hand*, its `window.json` and `present.json` at ulysses c9f43f0 (handoff ho-2026-11-24-atelier-2), recounted here from Git before its own counts were opened.
+
+**States.** 1 (2026-11-25, study 94): the 19 receivers coded for six acts, their deadlines and both sides' consequences; the deeds' names recounted; predictions P158 to P160.

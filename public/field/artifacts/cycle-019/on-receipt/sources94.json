@@ -1,0 +1,116 @@
+{
+ "what": "The nine texts of study 94, each fetched on 2026-11-25. No document is copied into this repository; the quotes in receivers94.py are checked against these copies by check_quotes94.py (quotes94.json). `sha256_text_read` is of the plain text the checker read (pdftotext output, or tags stripped from HTML), in the order of LOCAL in receivers94.py.",
+ "fetched": "2026-11-25",
+ "sources": [
+  {
+   "instrument": "eu-act",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401689",
+   "fetched": "2026-11-25",
+   "sha256_as_downloaded": {
+    "eu-act.html": "abedbaddd5cb6725e14634093f7d01f02c50bfe7705f15b2b183f9e8610ccd08"
+   },
+   "sha256_text_read": "b327bddb8be0127a715d662334571aefa70673b75de1e4ceb78306823cf5684c",
+   "note": "HTTP 200, direct. The page is generated; this hash differs from study 90's fetch of 2026-11-22 (abedbadd... today). Chapter V and Chapter IX section 5 (Arts. 88-94), Arts. 78, 101, 113 read.",
+   "searched": "Chapter V and Chapter IX section 5 (Arts. 88-94) read whole, Art. 101, Art. 78, Art. 113; searched: 'AI Office', 'serious incident', 'acknowledge', 'publish', 'make publicly available', 'inform', 'within'"
+  },
+  {
+   "instrument": "eu-code",
+   "url": "https://ec.europa.eu/newsroom/dae/redirection/document/118119",
+   "fetched": "2026-11-25",
+   "sha256_as_downloaded": {
+    "eu-code.pdf": "d879f9b54c6068aae57ebaead9d90ddaa46f2503312b9185367a724fa8da2f4a"
+   },
+   "sha256_text_read": "bdbfb11b0f576271ca93af0ecfa32a55dd9704ce66aa58326b26f285464d9bc3",
+   "note": "HTTP 200, direct. Same file as studies 83 and 90 (hash matches).",
+   "searched": "Commitments 9 and 10 read whole; searched: 'AI Office will', 'AI Office shall', 'the AI Office' (all 60-odd uses), 'acknowledg', 'publish', 'respond'"
+  },
+  {
+   "instrument": "sb53",
+   "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53",
+   "fetched": "2026-11-25",
+   "sha256_as_downloaded": null,
+   "sha256_text_read": "92a428f494ad113aa78c5a4419efe8f89c7c511a58251fc5032d12a324ded7c4",
+   "note": "Refused directly (HTTP 403, a challenge page), as in study 90; read through a page-extraction service, so not byte-checkable. B&P 22757.10-22757.16 and Labor Code 1107-1107.2.",
+   "searched": "B&P §§ 22757.11-22757.16 and Labor Code §§ 1107-1107.2 read whole; searched: 'Office of Emergency Services', 'Attorney General', 'shall', 'may', 'order', 'publish', 'public'"
+  },
+  {
+   "instrument": "china",
+   "url": "http://www.cac.gov.cn/rootimages/uploadimg/1759653474200838/1759653474200838.pdf",
+   "fetched": "2026-11-25",
+   "sha256_as_downloaded": {
+    "china.pdf": "50735b9ca01bff746169fa58e554abb97b4e62c27d4c97afd64f18ff83bba705"
+   },
+   "sha256_text_read": "0d1854f43e7ec95e6a97e8049abbb67e032919d26a711351eb3ccab42c690ff6",
+   "note": "HTTP 200, direct. Same file as studies 83 and 90.",
+   "searched": "§§ 5.9, 5.13 and chapter 6 searched: 'report', 'complaint', 'incident', 'shall', 'should'"
+  },
+  {
+   "instrument": "asean",
+   "url": "https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf",
+   "fetched": "2026-11-25",
+   "sha256_as_downloaded": {
+    "asean.pdf": "d2f9f1293e9af2f3ca4cc3954e39f94ed6fcd6b52f5e72b28d0d51fc9954ddbd"
+   },
+   "sha256_text_read": "b50638be217bb6d80fd24d32163750c6baf2ed6de54cf88d0e0431b9009de02f",
+   "note": "HTTP 200, direct. Same file as studies 83 and 90.",
+   "searched": "§ 3.4 read whole; searched: 'incident', 'regulator', 'authorit'"
+  },
+  {
+   "instrument": "haip",
+   "url": "https://www.soumu.go.jp/hiroshimaaiprocess/pdf/document05_en.pdf",
+   "fetched": "2026-11-25",
+   "sha256_as_downloaded": {
+    "haip.pdf": "14cfe36633502daa48231b49ca7f186c53a72add181b328047665763ecb13ac4"
+   },
+   "sha256_text_read": "9d0a862b225452234f3508c783205529f7e15cd8b75e1d7679ddb7e0d572e898",
+   "note": "HTTP 200, direct. Same file as studies 83 and 90.",
+   "searched": "Principles 2 and 4 read whole; searched: 'report', 'incident', 'authorit', 'public'"
+  },
+  {
+   "instrument": "paris",
+   "url": "https://www.elysee.fr/en/emmanuel-macron/2026/11/09/paris-call-for-ai-safety-and-security",
+   "fetched": "2026-11-25",
+   "sha256_as_downloaded": {
+    "paris.html": "41f80ace73486f9ad92166381be15c065d77cec6576ceef7347e53f0ad39380a"
+   },
+   "sha256_text_read": "d1ade5d943d2d6f0d80bdb341a4cd1cbb4f11b71793b2755c74583050440db2c",
+   "note": "HTTP 200, direct. The signatory list now names 19 governments and 11 companies.",
+   "searched": "The declaration read whole"
+  },
+  {
+   "instrument": "raise",
+   "url": "https://legislation.nysenate.gov/pdf/laws/GBS1422/",
+   "fetched": "2026-11-25",
+   "sha256_as_downloaded": {
+    "raise-1420.pdf": "b91b3f91b6550380fd19971a8d7b1b518a473626414bc5485208ce1e2f3d9316",
+    "raise-1421.pdf": "2a8fad4cc81badf533931519d7732843e62288c67b582d38a87afcaa208b05cd",
+    "raise-1422.pdf": "1dab4f861fe4cdd453d7cbcd1b3480061f8fcb2efece66c70e4dd5cbdbdf6af8",
+    "raise-1427.pdf": "2a411d09d46373b181f46b4db2315dd7c9ca3f7c9916bb6ffac3889f2c29a7ac"
+   },
+   "sha256_text_read": "0031ce3273186f1b7a0d0353cc55d3678fcab3be94cff2c0e75d86c2d25c6415",
+   "note": "HTTP 200, direct, from the Senate's open-legislation PDF endpoint (www.nysenate.gov refuses this machine). Sections 1420, 1421, 1422 and 1427 are the ones coded; 1423-1426, 1428 and 1429 were read and hold nothing on receipt.",
+   "searched": "GBL §§ 1420-1429 read whole (1423-1426, 1428-1429 hold nothing on receipt); searched: 'office', 'attorney general', 'shall', 'may'"
+  },
+  {
+   "instrument": "gpa",
+   "url": "https://globalprivacyassembly.com/wp-content/uploads/2026/11/Resolution-on-Privacy-protective-Agentic-AI.pdf",
+   "fetched": "2026-11-25",
+   "sha256_as_downloaded": {
+    "gpa.pdf": "1541d9c5a57f7547a381639c3e1a14eb5ec35a2a94ce85681ca15900dfa2629e"
+   },
+   "sha256_text_read": "fe00e19039951efc15fbbca0d57dc6e294309bbb4d7af626cbaf8d1c73d56526",
+   "note": "HTTP 200, direct. Same file as study 90.",
+   "searched": "Operative measures read whole; searched: 'incident', 'report', 'investigat', 'authorit'"
+  }
+ ],
+ "not_coded": [
+  {
+   "instrument": "korea",
+   "why": "Korea's AI Basic Act sets off no report by an event (study 90)."
+  },
+  {
+   "instrument": "bis",
+   "why": "The US export rule sets off no report by an event (study 90)."
+  }
+ ]
+}
