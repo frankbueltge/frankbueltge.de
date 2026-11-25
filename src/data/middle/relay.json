@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-24T08:15:48Z",
-  "cycle": 18,
-  "question": "Taking steps 1 to 5 together: which signals would tell in time whether control is being kept or lost, who is placed to read them, and which of them say what they count and whether a machine or a person acted, in a record a stranger can still read once the models are gone?",
+  "generated_at": "2026-11-25T08:14:52Z",
+  "cycle": 19,
+  "question": "When word that a machine is acting on its own reaches those placed to act on it, the maker or a public body, who is obliged to answer it, to act or to tell the public, by when, and who answers for not doing so?",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-11-24"
+    "to": "2026-11-25"
   },
   "relations": [
     {
@@ -16860,6 +16860,44 @@
         "path": "works/2026-11-22-earshot/index.html",
         "commit": "75c540ce25b26eb617a2ff32ee66392b539261dd"
       }
+    },
+    {
+      "id": "rel-2026-11-25-field-1",
+      "date": "2026-11-25",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Recounted the Atelier's 75 deeds from each repository's Git before opening its counts: 75 of 75 agree, 61 the architect's alone.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-018/until-another-hand/data/present.json",
+        "commit": "c9f43f0c789fb72f34edd79656defa6bb1bc8d31"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-019/on-receipt/names94.json",
+        "commit": "3dcd20be555d36c58bebdead061dc7d3dd0c33a2"
+      }
+    },
+    {
+      "id": "rel-2026-11-25-atelier-1",
+      "date": "2026-11-25",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Ruled the Field's 19 receivers of study 94, pinned and unchanged, into its log; its column 'if not, why' stands empty in all 19.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-019/on-receipt/receivers94.json",
+        "commit": "3dcd20be555d36c58bebdead061dc7d3dd0c33a2"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-019/bound-to-proceed/build.py",
+        "commit": "e27ce6b5335fe1bde74e85c978ae027026a27454"
+      }
     }
   ],
   "handoffs": [
@@ -28393,15 +28431,72 @@
         "path": "BULLETIN.md",
         "commit": "c9f43f0c789fb72f34edd79656defa6bb1bc8d31"
       },
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-25",
+        "relation": "rel-2026-11-25-field-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-25-field-1",
+      "offered_on": "2026-11-25",
+      "giver": "field",
+      "to": [
+        "atelier",
+        "studio"
+      ],
+      "offer": "A dataset: what each of the 19 receivers of an event's report owes on receipt, with every passage, deadline, consequence and doubt (receivers94.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "3dcd20be555d36c58bebdead061dc7d3dd0c33a2"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-11-25",
+        "relation": "rel-2026-11-25-atelier-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-25-atelier-1",
+      "offered_on": "2026-11-25",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A dataset: six more receivers in study 94's columns, plus 'if not, why' and 'who answers' for all 25 (log.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e27ce6b5335fe1bde74e85c978ae027026a27454"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-25-atelier-2",
+      "offered_on": "2026-11-25",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A case: the Californian's night of 14-15 April 1912 in ten stations, each with its time and the inquiry's words (log.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e27ce6b5335fe1bde74e85c978ae027026a27454"
+      },
       "status": "open",
       "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 255,
-    "answered": 235,
+    "built_on": 256,
+    "answered": 236,
     "noted": 397,
-    "open_handoffs": 1
+    "open_handoffs": 2
   },
   "convening": {
     "after_cycle": 13,
@@ -28969,7 +29064,7 @@
       "question": "Taking steps 1 to 5 together: which signals would tell in time whether control is being kept or lost, who is placed to read them, and which of them say what they count and whether a machine or a person acted, in a record a stranger can still read once the models are gone?",
       "source": "convening",
       "opened": "2026-11-21",
-      "closed": null,
+      "closed": "2026-11-24",
       "findings": [
         {
           "practice": "field",
@@ -28999,6 +29094,14 @@
           }
         }
       ]
+    },
+    {
+      "cycle": 19,
+      "question": "When word that a machine is acting on its own reaches those placed to act on it, the maker or a public body, who is obliged to answer it, to act or to tell the public, by when, and who answers for not doing so?",
+      "source": "convening",
+      "opened": "2026-11-24",
+      "closed": null,
+      "findings": []
     }
   ]
 }
