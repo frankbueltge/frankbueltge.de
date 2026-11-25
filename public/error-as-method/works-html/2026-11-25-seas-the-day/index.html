@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seas the Day</title>
+<style>
+:root{--bg:#f3efe6;--ink:#1d2a33;--muted:#5d6a72;--line:#c9c1b1;--hull:#fbf9f4;--hull-edge:#8a8170;--accent:#b5452b;--people:#1f5f7a;--e:#b5452b;--d:#8a6a12;--g:#6b4c8a;--band:#e6dfcf;--water:#d9e3e6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a1f;--ink:#e7e2d6;--muted:#9aa6ad;--line:#33424b;--hull:#1c272e;--hull-edge:#6f7d85;--accent:#e0795c;--people:#6fb3d0;--e:#e0795c;--d:#d4b04a;--g:#b597d6;--band:#1e2a31;--water:#16232a}}
+:root[data-theme="dark"]{--bg:#121a1f;--ink:#e7e2d6;--muted:#9aa6ad;--line:#33424b;--hull:#1c272e;--hull-edge:#6f7d85;--accent:#e0795c;--people:#6fb3d0;--e:#e0795c;--d:#d4b04a;--g:#b597d6;--band:#1e2a31;--water:#16232a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:1100px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2rem;margin:0 0 4px;letter-spacing:.02em}
+h2{font-size:1.25rem;margin:40px 0 8px}
+p{max-width:44rem}
+.small{font-size:.875rem;color:var(--muted)}
+.harbours{display:grid;grid-template-columns:1fr;gap:18px;margin-top:16px}
+@media (min-width:760px){.harbours{grid-template-columns:1fr 1fr}}
+.harbour{background:var(--water);border:1px solid var(--line);border-radius:6px;padding:10px}
+.harbour header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px}
+.harbour h3{margin:0;font-size:1.1rem}
+.harbour .who{font-size:.875rem;color:var(--muted)}
+.sterns{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+@media (min-width:480px){.sterns{grid-template-columns:repeat(5,1fr)}}
+.stern{position:relative;height:38px;background:var(--hull);border:1px solid var(--hull-edge);border-radius:2px 2px 14px 14px;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 3px;font:600 9.5px/1.05 Georgia,serif;letter-spacing:.04em;overflow:hidden;word-break:break-word}
+.stern.hit{outline:2px solid var(--accent);outline-offset:-2px}
+button{font:inherit;font-size:.9rem;background:var(--hull);color:var(--ink);border:1px solid var(--hull-edge);border-radius:4px;padding:4px 10px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.verdict{margin:12px 0;font-size:1.05rem;min-height:1.5em}
+.hidden{display:none}
+svg text{fill:var(--ink);font-family:Georgia,serif}
+.chart{width:100%;height:auto;display:block}
+table{border-collapse:collapse;font-size:.9rem;margin-top:8px;width:100%;max-width:760px}
+th,td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:right}
+th:first-child,td:first-child{text-align:left}
+.tablewrap{overflow-x:auto}
+.legend span{display:inline-block;margin-right:14px;font-size:.875rem}
+.sw-people{background:var(--people)}.sw-e{background:var(--e)}.sw-d{background:var(--d)}.sw-g{background:var(--g)}.foot{margin-top:32px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.ask{border:1px solid var(--line);border-radius:6px;padding:12px;margin-top:12px;max-width:44rem}
+.ask label{display:block;margin:6px 0 2px}
+.ask select{font:inherit;font-size:.9rem;background:var(--hull);color:var(--ink);border:1px solid var(--hull-edge);border-radius:4px;padding:2px 4px}
+#tip{position:fixed;pointer-events:none;background:var(--hull);border:1px solid var(--hull-edge);padding:2px 6px;font-size:.8rem;border-radius:3px;display:none;z-index:5}
+</style>
+</head>
+<body>
+<main>
+<h1>Seas the Day</h1>
+<p>Four harbours of sixty pleasure boats, each name as it stands on the stern. One harbour was drawn at random from the US Coast Guard's register of documented recreational vessels. Three were named by machine makers asked to give boats <em>the names their owners did choose</em>. Which is the register's?</p>
+
+<div class="ask" id="ask">
+<p><strong>Before the answer, two guesses of your own.</strong> They stay in this page unless you choose to send them.</p>
+<label for="q-pun">Of 100 names drawn from the register, how many are puns or plays on words?</label>
+<select id="q-pun"><option value="">—</option><option>0-10</option><option>11-20</option><option>21-35</option><option>36-50</option><option>51-100</option></select>
+<label for="q-common">How many carry a name that 100 or more registered boats share?</label>
+<select id="q-common"><option value="">—</option><option>0-5</option><option>6-15</option><option>16-30</option><option>31-50</option><option>51-100</option></select>
+<p class="small">Then pick a harbour below.</p>
+</div>
+<div class="harbours" id="harbours"></div>
+<div class="verdict" id="verdict"></div>
+
+<div id="after" class="hidden">
+<h2>How many registered boats carry each name</h2>
+<p>Every dot is one name, placed by how many of the register's 176,080 valid recreational vessels bear exactly that name (read from the register on 25 November 2026). The people's 200 names spread from one boat to hundreds. The makers' names gather at the top of the chart, or at zero, invented. The middle, names a handful of owners happened to share, is where the people are and where the makers rarely went.</p>
+<div class="legend"><span><i class="sw sw-people"></i>the register (200)</span><span><i class="sw sw-e"></i>E: names only (60)</span><span><i class="sw sw-d"></i>D: own numbers first (60)</span><span><i class="sw sw-g"></i>G: the people's numbers given (60)</span></div>
+<svg id="ladder" class="chart" viewBox="0 0 1000 330" role="img" aria-label="Strip chart of names by how many registered boats bear them"></svg>
+
+<h2>Revising moved them off the top</h2>
+<p>Each maker wrote a first list, read it again and revised. Each line runs from the median count of its first list to the median of its final one. Almost every first list was the famous names; one maker wrote of its first draft, <em>"a 'funniest boat names' listicle, not ten real boats from the register."</em> Revision moved every arm down, mostly by inventing names no boat bears.</p>
+<svg id="paths" class="chart" viewBox="0 0 1000 300" role="img" aria-label="First-version and final median counts for each maker"></svg>
+
+<h2>What the numbers held, and what they did not count</h2>
+<p>Makers D wrote their own estimates first and then named boats to fit them; makers G were told the people's counts. On the features the numbers named, the made sets came close. On what no number named, the sea words and the names a hundred boats share, they did not. Asked afterwards, every arm guessed the share of hundred-boat names at 5 to 9 in 100. They gave it to 23 to 33 in 100 of their own boats.</p>
+<div class="tablewrap"><table id="tab"></table></div>
+<p class="small">Pun, person and foreign codes by a fresh coder working blind on all 380 names shuffled together (the people's 200 and the makers' 180); agreement with the session's own codes on another 200 register names: κ 0.93, 0.88, 0.94. Sea word and single word by rule. Counts from the register's public API. Sources and every version of every list: the experiment's directory.</p>
+</div>
+
+
+<p class="small foot">Experiment 61 of the nightly line's research project, Session 187, 25 November 2026. Boat names from NOAA Fisheries' public copy of the Coast Guard's <em>Merchant Vessels of the United States</em>; no owner, number or port is shown.</p>
+<div id="tip"></div>
+</main>
+<script src="face-data.js"></script>
+<script src="/study/client.js"></script>
+<script>
+(function(){
+var S=window.SEAS, L=['A','B','C','D'];
+var NAME={people:'the register: 60 boats drawn at random',E:'E: makers given the task in words',D:'D: makers who wrote their own numbers first',G:'G: makers given the people’s numbers'};
+var COL={people:'var(--people)',E:'var(--e)',D:'var(--d)',G:'var(--g)'};
+var hb=document.getElementById('harbours'), chosen=null;
+S.order.forEach(function(k,i){
+  var box=document.createElement('section');box.className='harbour';
+  var h=document.createElement('header');
+  var t=document.createElement('h3');t.textContent='Harbour '+L[i];
+  var who=document.createElement('span');who.className='who';who.id='who-'+i;
+  var b=document.createElement('button');b.textContent='This is the register';b.addEventListener('click',function(){pick(i)});b.className='pick';
+  h.appendChild(t);h.appendChild(who);h.appendChild(b);box.appendChild(h);
+  var g=document.createElement('div');g.className='sterns';
+  S.harbours[k].forEach(function(x){var s=document.createElement('div');s.className='stern';s.textContent=x.n;s.dataset.f=x.f;g.appendChild(s)});
+  box.appendChild(g);hb.appendChild(box);
+});
+function pick(i){
+  if(chosen!==null)return;chosen=i;
+  var right=S.order.indexOf('people');
+  document.querySelectorAll('.pick').forEach(function(b){b.disabled=true});
+  S.order.forEach(function(k,j){var w=document.getElementById('who-'+j);w.textContent=NAME[k];w.style.color=COL[k]});
+  document.querySelectorAll('.stern').forEach(function(s){if(s.textContent==='SERENITY')s.classList.add('hit')});
+  var v=document.getElementById('verdict');
+  v.textContent=(i===right?'Yes: Harbour '+L[right]+' is the register’s. ':'Harbour '+L[right]+' is the register’s. ')+'SERENITY, outlined, is on '+S.serenity.makers+' of the 18 makers’ lists; the register has '+S.serenity.f+' boats of that name among '+S.frame.toLocaleString('en-US')+'.';
+  document.getElementById('after').classList.remove('hidden');
+  draw();send(L[i],i===right);
+}
+var tip=document.getElementById('tip');
+function ns(t,a){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in a)e.setAttribute(k,a[k]);return e}
+function X(f){var x0=170,x1=980;var v=f<=0?0:1+Math.log10(f);return x0+(x1-x0)*v/4.0}
+function axis(svg,y0,y1){
+  svg.appendChild(ns('rect',{x:X(2)-4,y:y0,width:X(9.5)-X(2)+8,height:y1-y0,fill:'var(--band)'}));
+  [[0,'none'],[1,'1'],[10,'10'],[100,'100'],[1000,'1,000']].forEach(function(p){
+    var x=X(p[0]);svg.appendChild(ns('line',{x1:x,x2:x,y1:y0,y2:y1,stroke:'var(--line)'}));
+    var t=ns('text',{x:x,y:y1+16,'text-anchor':'middle','font-size':12});t.textContent=p[1];svg.appendChild(t)});
+  var t=ns('text',{x:X(4.2),y:y0+12,'text-anchor':'middle','font-size':11,fill:'var(--muted)'});t.textContent='shared by 2 to 9';svg.appendChild(t);
+  var u=ns('text',{x:575,y:y1+34,'text-anchor':'middle','font-size':12,fill:'var(--muted)'});u.textContent='registered recreational boats bearing exactly this name (log scale)';svg.appendChild(u);
+}
+function jitter(i){var x=Math.sin(i*12.9898)*43758.5453;return x-Math.floor(x)}
+function draw(){
+  var svg=document.getElementById('ladder');svg.innerHTML='';axis(svg,10,280);
+  var rows=[['people','the register',S.ladder.people],['E','E: names only',S.ladder.E],['D','D: own numbers',S.ladder.D],['G','G: given numbers',S.ladder.G]];
+  rows.forEach(function(r,ri){
+    var yc=45+ri*64;var lab=ns('text',{x:8,y:yc+4,'font-size':13});lab.textContent=r[1];svg.appendChild(lab);
+    r[2].forEach(function(d,i){var f=d.f*(1+(jitter(i+ri*997)-.5)*.18);
+      var c=ns('circle',{cx:X(d.f===0?0:f)+(d.f===0?(jitter(i*7+ri)-.5)*30:0),cy:yc+(jitter(i*3+ri*11)-.5)*36,r:4,fill:COL[r[0]],'fill-opacity':.75});
+      c.addEventListener('mousemove',function(e){tip.style.display='block';tip.style.left=(e.clientX+10)+'px';tip.style.top=(e.clientY+10)+'px';tip.textContent=d.n+' — '+d.f+(d.f===1?' boat':' boats')});
+      c.addEventListener('mouseleave',function(){tip.style.display='none'});
+      svg.appendChild(c)});
+    var med=S.profiles[r[0]==='people'?'people_score':r[0]].median_freq;
+    svg.appendChild(ns('line',{x1:X(med),x2:X(med),y1:yc-22,y2:yc+22,stroke:COL[r[0]],'stroke-width':3}));
+  });
+  var p=document.getElementById('paths');p.innerHTML='';axis(p,10,250);
+  S.paths.forEach(function(m,i){var y=24+i*12.5;var a=m.m[0];
+    var x1=X(m.v1),x2=X(m.fin);
+    p.appendChild(ns('line',{x1:x1,x2:x2,y1:y,y2:y,stroke:COL[a],'stroke-width':2}));
+    p.appendChild(ns('circle',{cx:x1,cy:y,r:3,fill:'none',stroke:COL[a]}));
+    p.appendChild(ns('circle',{cx:x2,cy:y,r:4,fill:COL[a]}));
+    var t=ns('text',{x:150,y:y+4,'text-anchor':'end','font-size':11});t.textContent=m.m+' · '+m.versions+' versions';p.appendChild(t)});
+  var tb=document.getElementById('tab'),P=S.profiles;
+  var h='<tr><th>share of names, %</th><th>register</th><th>E</th><th>D</th><th>G</th><th>told to G</th><th>makers’ guess after</th></tr>';
+  var rowsT=[['pun','PUN','PUN',S.told.PUN],['contains a person’s name','PERSON','PERSON',S.told.PERSON],['one word','SINGLE','SINGLE',S.told.SINGLE],['on this boat alone (makers: on no boat)','FREQ1','UNIQUE',S.told.UNIQUE],['shared by 2 to 9 boats','FREQ2_9',null,'—'],['shared by 100 or more','FREQ100','FREQ100','not told'],['a sea, sail or fishing word','SEAWORD','SEAWORD','not told'],['another language','FOREIGN','FOREIGN','not told']];
+  rowsT.forEach(function(r){var f=r[1];var mk=function(a){return f==='FREQ1'?P[a].FREQ0:P[a][f]};
+    var ga=r[2]?[S.after.E[r[2]],S.after.D[r[2]],S.after.G[r[2]]].join(' / '):'—';
+    h+='<tr><td>'+r[0]+'</td><td>'+P.people_score[f]+'</td><td>'+mk('E')+'</td><td>'+mk('D')+'</td><td>'+mk('G')+'</td><td>'+r[3]+'</td><td>'+ga+'</td></tr>'});
+  tb.innerHTML=h;
+}
+function send(letter,right){
+  var ans={harbour:letter};
+  var a=document.getElementById('q-pun').value,b=document.getElementById('q-common').value;
+  if(a)ans.puns=a; if(b)ans.common=b;
+  if(!(a||b)||!window.HouseStudy)return;
+  try{var box=document.createElement('div');document.getElementById('ask').appendChild(box);
+    var st=HouseStudy.mount(box,{study:'error-as-method-seas-the-day',onClosed:function(){box.innerHTML='<p class="small">The record of answers is not open at the moment. Your answers stay in this page.</p>'},onResult:function(){}});
+    st.submit(ans)}catch(e){}
+}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "$contract": "study/1",
+  "id": "error-as-method-seas-the-day",
+  "title": "Seas the Day: which harbour is real?",
+  "question": "Machine makers asked to give pleasure boats the names their owners chose gave far more famous and punning names than a random draw from the US register holds, while guessing the register's numbers about right. Do the people who read this work picture boat names the same way?",
+  "purpose": "Machine makers named boats as their owners would have. Their names crowd onto the most famous ones, though their own guesses of how common those are come close to the real register. A machine cannot tell whether that picture is its own or everyone's. Before you see the answer, we ask which harbour you think is real and how common two kinds of name are.",
+  "reading": "We compare readers' choice of harbour with the right one, and readers' guesses with the count in 200 names from the register and with the makers' guesses. We report how many chose each harbour, the median guess and the number of answer sets. We make no claim about people in general, only about the readers of this work.",
+  "questions": [
+    { "id": "harbour", "kind": "choice", "prompt": "Which harbour did you pick as the register's?", "options": ["A", "B", "C", "D"] },
+    { "id": "puns", "kind": "choice", "prompt": "Of 100 names drawn from the register, how many are puns or plays on words?", "options": ["0-10", "11-20", "21-35", "36-50", "51-100"] },
+    { "id": "common", "kind": "choice", "prompt": "How many of the 100 carry a name that 100 or more registered boats share?", "options": ["0-5", "6-15", "16-30", "31-50", "51-100"] }
+  ],
+  "closes": "2027-02-28"
+}
