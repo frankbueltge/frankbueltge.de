@@ -1,0 +1,144 @@
+{
+  "date": "2026-11-25",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-25T15:59:06Z",
+    "counts": {
+      "botwall": 15,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 279,
+      "other": 1,
+      "server_error": 1,
+      "unreachable": 3
+    },
+    "decided": 281,
+    "excluded_unverifiable": 19,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0199
+    ],
+    "gone_rate": 0.0036,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0135
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-23",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "allthehitsb951.com",
+        "first_seen": "20261123140000",
+        "http_code": 404,
+        "title": "James Blunt Reflects on the Unexpected Backlash to His Hit You're Beautiful",
+        "url": "https://www.allthehitsb951.com/2026/11/23/james-blunt-reflects-on-the-unexpected-backlash-to-his-hit-youre-beautiful/"
+      }
+    ],
+    "sample_drawn_at": "2026-11-24T16:07:35Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5747,
+      "replaced": 5229,
+      "trivial": 874,
+      "update": 410
+    },
+    "day": "2026-11-24",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "JD",
+          "Vance"
+        ],
+        "after": "Jd Vance: JD Vance says US will not fight 'forever war' with Iran, defends Donald Trump's military action",
+        "before": "Donald Trump: JD Vance says US will not fight 'forever war' with Iran, defends Donald Trump's military action",
+        "detected": "2026-11-24T04:46:15Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Donald",
+          "Trump"
+        ],
+        "similarity": 1.0,
+        "url": "https://timesofindia.indiatimes.com/world/us/jd-vance-says-us-will-not-fight-forever-war-with-iran-defends-donald-trumps-military-action/articleshow/135909834.cms",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "ROLAND",
+          "WHITE"
+        ],
+        "after": "Lucy will do anything to bring the past back to life... even torture! ROLAND WHITE reviews Lucy Worsley's Keys To The Castle",
+        "before": "Lucy will do anything to bring the past back to life... even torture! CHRISTOPHER STEVENS reviews Lucy Worsley's Keys To The Castle",
+        "detected": "2026-11-24T22:47:42Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "CHRISTOPHER",
+          "STEVENS"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16316463/Reviews-Lucy-Worsleys-Keys-Castle.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Cyberpunk"
+        ],
+        "after": "'Blade Runner 2099' Review: Prime Video's Cyberpunk Spinoff Is Beautiful, and Oh So Boring",
+        "before": "'Blade Runner 2099' Review: Prime Video's Cyber Punk Spinoff Is Beautiful, and Oh So Boring",
+        "detected": "2026-11-24T15:32:13Z",
+        "domain": "cnet.com",
+        "removed": [
+          "Cyber",
+          "Punk"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.cnet.com/culture/entertainment/blade-runner-2099-review/",
+        "weight": 6,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14350,
+      "PAGE_TEXTCHANGE": 124607,
+      "PAGE_TITLECHANGE": 47395,
+      "UNCHANGED_CONTENT": 703582
+    },
+    "title_changes_en": 12260,
+    "trace": [
+      {
+        "bytes_billed": 24117248,
+        "created": "1795622088935",
+        "job_id": "world_gdg_counts_20261124",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 225443840,
+        "created": "1795622093807",
+        "job_id": "world_gdg_titles_20261124",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-25T15:59:06Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-24.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
