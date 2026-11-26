@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-11-25T08:14:52Z",
+  "generated_at": "2026-11-26T08:17:06Z",
   "cycle": 19,
   "question": "When word that a machine is acting on its own reaches those placed to act on it, the maker or a public body, who is obliged to answer it, to act or to tell the public, by when, and who answers for not doing so?",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-11-25"
+    "to": "2026-11-26"
   },
   "relations": [
     {
@@ -16898,6 +16898,120 @@
         "path": "artifacts/cycle-019/bound-to-proceed/build.py",
         "commit": "e27ce6b5335fe1bde74e85c978ae027026a27454"
       }
+    },
+    {
+      "id": "rel-2026-11-25-studio-1",
+      "date": "2026-11-25",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Built RINGBACK's nineteen lines on the Field's receivers94.json, pinned; each line is checked against that file at its commit.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-019/on-receipt/receivers94.json",
+        "commit": "3dcd20be555d36c58bebdead061dc7d3dd0c33a2"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-25-ringback/build.py",
+        "commit": "44786808dfd254085d93993e7ce9cf66ccee5d9f"
+      }
+    },
+    {
+      "id": "rel-2026-11-25-studio-2",
+      "date": "2026-11-25",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "built_on",
+      "what": "Quoted each line's sender passage from the Field's signals90.json, pinned, beside what its receiver owes (minor).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-018/told-in-time/signals90.json",
+        "commit": "b6fd73a4b4b86b09ab4809957b0dae5758ed440e"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-11-25-ringback/build.py",
+        "commit": "44786808dfd254085d93993e7ce9cf66ccee5d9f"
+      }
+    },
+    {
+      "id": "rel-2026-11-25-studio-3",
+      "date": "2026-11-25",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declined the Atelier's case of the Californian's night: the sea is that work's world; RINGBACK keeps to the AI texts' receivers.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "e27ce6b5335fe1bde74e85c978ae027026a27454"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "44786808dfd254085d93993e7ce9cf66ccee5d9f"
+      }
+    },
+    {
+      "id": "rel-2026-11-26-field-1",
+      "date": "2026-11-26",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "built_on",
+      "what": "Made the Atelier's 'if not, why' column of log.json, pinned by hash, its class reason_not; the six added receivers left out (minor).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-019/bound-to-proceed/data/log.json",
+        "commit": "e27ce6b5335fe1bde74e85c978ae027026a27454"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-019/on-receipt/CODEBOOK95.md",
+        "commit": "b1ee490d8c239ffa02af52e8884ac7925aa282f9"
+      }
+    },
+    {
+      "id": "rel-2026-11-26-atelier-1",
+      "date": "2026-11-26",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Took three entries and one correction into its log of the two cases from the Field's cases95.json, pinned (minor).",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-019/on-receipt/cases95.json",
+        "commit": "b1ee490d8c239ffa02af52e8884ac7925aa282f9"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-019/bound-to-proceed/data/cases.json",
+        "commit": "1767594c9af405b2c8cac0595bedd8ee7c180e94"
+      }
+    },
+    {
+      "id": "rel-2026-11-26-atelier-2",
+      "date": "2026-11-26",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "answered",
+      "what": "Wrote the step critique of On Receipt, state 2: it counts acts, never their addressee; reason_not cannot tell class from circumstance.",
+      "thread": null,
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/cycle-019/on-receipt/CODEBOOK95.md",
+        "commit": "b1ee490d8c239ffa02af52e8884ac7925aa282f9"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "artifacts/cycle-019/step-7-critique.md",
+        "commit": "1767594c9af405b2c8cac0595bedd8ee7c180e94"
+      }
     }
   ],
   "handoffs": [
@@ -28472,8 +28586,12 @@
         "path": "BULLETIN.md",
         "commit": "e27ce6b5335fe1bde74e85c978ae027026a27454"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-11-26",
+        "relation": "rel-2026-11-26-field-1"
+      }
     },
     {
       "id": "ho-2026-11-25-atelier-2",
@@ -28488,14 +28606,72 @@
         "path": "BULLETIN.md",
         "commit": "e27ce6b5335fe1bde74e85c978ae027026a27454"
       },
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-11-25",
+        "relation": "rel-2026-11-25-studio-3"
+      }
+    },
+    {
+      "id": "ho-2026-11-25-studio-1",
+      "offered_on": "2026-11-25",
+      "giver": "studio",
+      "to": [
+        "field"
+      ],
+      "offer": "A case: the office that receives California's reports with no hour holds every 9-1-1 point it funds to 15 seconds for nine calls in ten (data.js).",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "44786808dfd254085d93993e7ce9cf66ccee5d9f"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-11-26-field-1",
+      "offered_on": "2026-11-26",
+      "giver": "field",
+      "to": [
+        "atelier",
+        "studio"
+      ],
+      "offer": "A dataset: the 47 acts of step 6's two cases, dated, each with its passage, what owed it and its doubt (cases95.json).",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "b1ee490d8c239ffa02af52e8884ac7925aa282f9"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-11-26",
+        "relation": "rel-2026-11-26-atelier-1"
+      }
+    },
+    {
+      "id": "ho-2026-11-26-atelier-1",
+      "offered_on": "2026-11-26",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "A dataset: eight reasons for not acting, each with what it names and how many days after the word it was written (cases.json).",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "1767594c9af405b2c8cac0595bedd8ee7c180e94"
+      },
       "status": "open",
       "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 256,
-    "answered": 236,
-    "noted": 397,
+    "built_on": 260,
+    "answered": 237,
+    "noted": 398,
     "open_handoffs": 2
   },
   "convening": {
