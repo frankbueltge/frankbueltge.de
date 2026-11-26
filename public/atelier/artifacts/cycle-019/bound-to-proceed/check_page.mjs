@@ -11,6 +11,16 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const LOG = JSON.parse(readFileSync(path.join(here, "data/log.json"), "utf8"));
 const SRC = JSON.parse(readFileSync(path.join(here, "sources.json"), "utf8"));
 const QUOTE = Object.fromEntries(SRC.quotes.map((q) => [q.id, q]));
+const CASES = JSON.parse(readFileSync(path.join(here, "data/cases.json"), "utf8"));
+const Q2 = {};
+for (const s of CASES.stations) for (const p of s.passages) Q2[p.id] = p;
+const ALL = Object.assign({}, LOG, { cases: CASES });
+// a section III quotation is a contiguous excerpt of a passage cases.py found word for word in its source
+function sameQuote2(id, pageText) {
+  const q = Q2[id]; if (!q || q.found !== "exact") return false;
+  const b = norm(pageText);
+  return b.length >= 20 && norm(q.text).includes(b);
+}
 
 let checks = 0, fails = 0;
 function ok(cond, what) { checks++; if (!cond) { fails++; console.log("FAIL", what); } }
@@ -68,7 +78,7 @@ for (const width of [1100, 390]) {
   // figures typed into the prose
   const ks = await page.$$eval("[data-k]", (els) => els.map((e) => [e.getAttribute("data-k"), e.textContent.trim()]));
   for (const [k, t] of ks) {
-    const v = at(LOG, k);
+    const v = at(ALL, k);
     const good = typeof v === "number" ? Number(t.replace(/,/g, "")) === v : String(v) === t;
     ok(v !== undefined && good, `${width}px data-k ${k}: page "${t}" vs data "${v}"`);
   }
@@ -76,6 +86,45 @@ for (const width of [1100, 390]) {
   // quotations in the prose
   const qs = await page.$$eval("q[data-q]", (els) => els.map((e) => [e.getAttribute("data-q"), e.textContent]));
   for (const [id, t] of qs) ok(sameQuote(id, t), `${width}px quote ${id}`);
+
+  for (const [id, t] of await page.$$eval("q[data-q2]", (els) => els.map((e) => [e.getAttribute("data-q2"), e.textContent]))) ok(sameQuote2(id, t), `${width}px case quote ${id}`);
+
+  // section III: the word in 2026
+  const K = CASES.counts;
+  const marks = await page.evaluate(() => { const o = {}; document.querySelectorAll("#cases [data-kind]").forEach((m) => { o[m.dataset.kind] = (o[m.dataset.kind] || 0) + 1; }); return o; });
+  ok((marks.received || 0) === K.receipts_no_record && (marks.acted || 0) === K.acted && (marks.told || 0) === K.told && (marks.reason || 0) === K.reason_stations, `${width}px case marks ${JSON.stringify(marks)}`);
+  ok(K.receipts_no_record + K.acted + K.told + K.reason_stations === K.stations && CASES.stations.length === K.stations, "case stations add up");
+  ok(CASES.reasons.length === K.reasons && CASES.reasons.filter((r) => r.names === "a circumstance").length === K.reasons_circumstance, "case reasons");
+  ok(CASES.quotes.exact === CASES.quotes.n && Object.values(Q2).every((q) => q.found === "exact"), "every case passage found");
+  const cs = await page.evaluate(() => ({ owed: document.querySelectorAll("#cases rect.owedn").length, lag: document.querySelectorAll("#cases path.lag").length }));
+  ok(cs.owed === K.receipts_no_record && cs.lag === K.reason_stations, `${width}px sea boxes and lags`);
+  const lagsData = CASES.stations.filter((s) => s.kind === "reason").map((s) => Math.round((Date.parse(s.written) - Date.parse(s.received)) / 864e5));
+  ok(Math.min(...lagsData) === K.reason_lag_min && Math.max(...lagsData) === K.reason_lag_max && lagsData.filter((d) => d === 0).length === K.reasons_at_the_hour, "reason lags");
+  await page.click("#b-sea26");
+  const csay = await page.$eval("#csay", (e) => e.textContent);
+  ok(csay.includes(`each of the ${K.receipts_no_record} words`) && csay.includes(`The ${K.reasons} reasons`) && csay.includes(`${K.reason_lag_min} to ${K.reason_lag_max} days`), `${width}px sea sentence: ${csay}`);
+  ok(await page.$eval("#cases", (e) => e.classList.contains("ruled")), `${width}px cases ruled`);
+  // a click at a mark's centre reaches that mark, not a neighbour's hit area
+  const reach = await page.evaluate(() => [...document.querySelectorAll("#cases circle.hit")].map((h) => {
+    h.scrollIntoView({ block: "center", inline: "center" });
+    const r = h.getBoundingClientRect();
+    return [h.getAttribute("aria-label"), document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2) === h];
+  }));
+  for (const [lab, own] of reach) ok(own, `${width}px mark reached at its centre: ${lab}`);
+  const cq = await page.evaluate(() => {
+    const out = [];
+    document.querySelectorAll("#cases circle.hit").forEach((h) => {
+      h.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      document.querySelectorAll("#cdet blockquote[data-quote2]").forEach((b) => out.push([b.getAttribute("data-quote2"), b.textContent]));
+    });
+    return out;
+  });
+  ok(cq.length === CASES.stations.reduce((a, s) => a + s.passages.length, 0), `${width}px case panel quotes count ${cq.length}`);
+  for (const [id, t] of cq) ok(sameQuote2(id, unwrap(t)), `${width}px case panel quote ${id}`);
+  await page.click("#b-reasons");
+  const rows = await page.$$eval("#reasons tr[data-reason]", (e) => e.length);
+  ok(rows === K.reasons && (await page.$eval("#reasons", (e) => !e.hidden)), `${width}px reasons table ${rows}`);
+  for (const [id, t] of await page.$$eval("#reasons q[data-q]", (els) => els.map((e) => [e.getAttribute("data-q"), e.textContent]))) ok(sameQuote(id, t), `${width}px reasons ref ${id}`);
 
   // the log: drawn cells against the data
   const drawn = await page.evaluate(() => {
