@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As It Is Played</title>
+<style>
+:root{--bg:#f1eee8;--ink:#1f2326;--muted:#5f676c;--line:#cdc6b8;--card:#faf8f4;--light:#e9dcc3;--dark:#b48a5c;--accent:#a8432a;--mate:#a8432a;--resign:#3f6e8c;--time:#b58a1c;--draw:#6c6c6c;--a:#a8432a;--b:#4f7a3a;--c:#6a4c8c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181a;--ink:#e6e2da;--muted:#9aa3a8;--line:#353c40;--card:#1d2225;--light:#8f8068;--dark:#5d4a33;--accent:#e07a5f;--mate:#e07a5f;--resign:#79abc9;--time:#d9b24a;--draw:#a0a0a0;--a:#e07a5f;--b:#8fbf72;--c:#b597d6}}
+:root[data-theme="dark"]{--bg:#15181a;--ink:#e6e2da;--muted:#9aa3a8;--line:#353c40;--card:#1d2225;--light:#8f8068;--dark:#5d4a33;--accent:#e07a5f;--mate:#e07a5f;--resign:#79abc9;--time:#d9b24a;--draw:#a0a0a0;--a:#e07a5f;--b:#8fbf72;--c:#b597d6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:1100px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2rem;margin:0 0 4px;letter-spacing:.02em}
+h2{font-size:1.25rem;margin:40px 0 8px}
+p{max-width:46rem}
+.small{font-size:.875rem;color:var(--muted)}
+.walls{display:grid;grid-template-columns:1fr;gap:18px;margin-top:14px}
+@media (min-width:900px){.walls{grid-template-columns:1fr 1fr}}
+.wall{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px}
+.wall header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.wall h3{margin:0;font-size:1.1rem}
+.boards{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.bw{min-width:0}
+.board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;border:1px solid var(--line);width:100%}
+.sq{display:flex;align-items:center;justify-content:center;font-size:clamp(7px,1.5vw,15px);line-height:1;overflow:hidden}
+.sq.l{background:var(--light)}.sq.d{background:var(--dark)}
+.pw{color:#fff;text-shadow:0 0 1px #000,0 0 1px #000}
+.pb{color:#111}
+.cap{font-size:.72rem;color:var(--muted);line-height:1.25;margin-top:2px;min-height:2.5em}
+.end{display:inline-block;padding:0 4px;border-radius:3px;color:#fff;font-size:.7rem}
+.e-checkmate{background:var(--mate)}.e-resignation{background:var(--resign)}.e-time{background:var(--time)}.e-draw{background:var(--draw)}
+button{font:inherit;font-size:.9rem;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:4px 10px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.verdict{margin:14px 0;font-size:1.05rem;min-height:1.5em;max-width:46rem}
+.hidden{display:none}
+.ask{border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-top:12px;max-width:46rem}
+.ask label{display:block;margin:6px 0 2px;font-size:.92rem}
+.ask select{font:inherit;font-size:.9rem;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:2px 4px}
+.sixty{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:10px}
+@media (min-width:700px){.sixty{grid-template-columns:repeat(10,1fr)}}
+.tile{border:1px solid var(--line);border-radius:4px;background:var(--card);padding:3px;cursor:pointer;font-size:.7rem;line-height:1.2;text-align:left;color:var(--ink)}
+.tile:hover,.tile.on{border-color:var(--accent)}
+.tile .bar{height:5px;border-radius:2px;margin:2px 0}
+.dots{display:flex;gap:2px;flex-wrap:wrap;min-height:8px}
+.dot{width:6px;height:6px;border-radius:50%}
+.da{background:var(--a)}.db{background:var(--b)}.dc{background:var(--c)}
+.big{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:16px;align-items:start;margin-top:12px}
+@media (max-width:600px){.big{grid-template-columns:1fr}}
+.big .board .sq{font-size:clamp(14px,3.6vw,26px)}
+.legend span{display:inline-block;margin-right:14px;font-size:.85rem}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+table{border-collapse:collapse;font-size:.9rem;margin-top:8px;width:100%;max-width:820px}
+th,td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:right}
+th:first-child,td:first-child{text-align:left}
+.tablewrap{overflow-x:auto}
+.foot{margin-top:32px}
+</style>
+</head>
+<body>
+<main>
+<h1>As It Is Played</h1>
+<p>Two walls of eight online chess games, replaying now. People played all sixteen in the first two hours of 1 October 2026. <strong>One wall was drawn by chance</strong>, just now, by your browser, from sixty games picked at random from 128,323. <strong>The other was chosen</strong> from the same sixty by machine selectors asked for eight games that show <em>how people play chess online today, as it is</em>. Which wall is chance?</p>
+<div class="walls" id="walls"></div>
+<div class="ask" id="ask">
+<p class="small" style="margin:0 0 4px">Before you answer, two guesses of your own (optional; sent to the house's study only if you give them):</p>
+<label for="q-mate">Of 100 rated games people play online, how many end in checkmate?</label>
+<select id="q-mate"><option value="">—</option><option>0-10</option><option>11-25</option><option>26-40</option><option>41-60</option><option>61-100</option></select>
+<label for="q-short">How many of the 100 are over before move 15?</label>
+<select id="q-short"><option value="">—</option><option>0-5</option><option>6-10</option><option>11-20</option><option>21-35</option><option>36-100</option></select>
+<p style="margin:10px 0 0"><button id="g0">Wall I is chance</button> <button id="g1">Wall II is chance</button></p>
+</div>
+<div class="verdict" id="verdict"></div>
+
+<section id="after" class="hidden">
+<h2>The sixty, and who chose what</h2>
+<p>Every game the selectors could choose from, ordered by how it ended and then by length. The bar is the ending; each dot is one selector who put the game in a final eight: <span class="sw da"></span>six asked for the games <em>as it is</em>, <span class="sw db"></span>six given the sixty's own counts of endings and speeds and told to keep them, <span class="sw dc"></span>six asked for the eight <em>most worth showing</em>. Touch a game to replay it.</p>
+<p class="legend"><span><span class="sw e-checkmate"></span>checkmate</span><span><span class="sw e-resignation"></span>resignation</span><span><span class="sw e-time"></span>on time</span><span><span class="sw e-draw"></span>draw</span></p>
+<div class="big"><div><div class="board" id="bigboard"></div><div class="cap" id="bigcap"></div></div><div id="bigtext" class="small"></div></div>
+<div class="sixty" id="sixty"></div>
+<h2>What the eights held</h2>
+<div class="tablewrap"><table id="tab"></table></div>
+<p class="small" id="tabnote"></p>
+</section>
+
+<p class="small foot">Experiment 62 of the nightly line's research project, Session 188, 26 November 2026. Games from the Lichess open database (CC0), October 2026, the first 128,323 rated standard games of the month; player names, links and clocks removed.</p>
+</main>
+<script src="face-data.js"></script>
+<script src="/study/client.js"></script>
+<script>
+(function(){
+var P=window.PLAYED, pool=P.pool;
+var GL={K:'♚',Q:'♛',R:'♜',B:'♝',N:'♞',P:'♟'};
+var ENDW={checkmate:'checkmate',resignation:'resigned',time:'lost on time',draw:'draw'};
+function mkBoard(el){el.innerHTML='';var cells=[];for(var r=0;r<8;r++)for(var c=0;c<8;c++){var d=document.createElement('div');d.className='sq '+((r+c)%2?'d':'l');el.appendChild(d);cells.push(d)}return cells}
+function draw(cells,fen){var r=0,c=0;for(var i=0;i<64;i++)cells[i].innerHTML='';for(var k=0;k<fen.length;k++){var ch=fen[k];if(ch==='/'){r++;c=0;continue}if(ch>='1'&&ch<='8'){c+=+ch;continue}var w=ch===ch.toUpperCase();cells[r*8+c].innerHTML='<span class="'+(w?'pw':'pb')+'">'+GL[ch.toUpperCase()]+'</span>';c++}}
+function rand(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+var rnd=rand((Date.now()^ (Math.random()*1e9))>>>0);
+function drawEight(){var a=[];for(var i=1;i<=60;i++)a.push(i);for(var j=a.length-1;j>0;j--){var k=Math.floor(rnd()*(j+1));var t=a[j];a[j]=a[k];a[k]=t}return a.slice(0,8)}
+var chance=drawEight(), aIds=['A1','A2','A3','A4','A5','A6'], who=aIds[Math.floor(rnd()*6)], chosen=P.eights[who].slice();
+var chanceFirst=rnd()<.5;
+var walls=chanceFirst?[chance,chosen]:[chosen,chance];
+var players=[];
+function cap(g,done,ply){var s=g.sp+' · '+g.we+'–'+g.be;if(done)s+='<br><span class="end e-'+g.end+'">'+ENDW[g.end]+'</span> move '+g.mv;else s+='<br>move '+Math.floor(ply/2+1);return s}
+function addPlayer(boardEl,capEl,n){var g=pool[n-1];var p={g:g,cells:mkBoard(boardEl),cap:capEl,ply:0,hold:0};draw(p.cells,g.f[0]);capEl.innerHTML=cap(g,false,0);players.push(p);return p}
+var W=document.getElementById('walls');
+walls.forEach(function(w,i){var d=document.createElement('div');d.className='wall';d.innerHTML='<header><h3>Wall '+(i?'II':'I')+'</h3><span class="small" id="wl'+i+'"></span></header><div class="boards"></div>';W.appendChild(d);var b=d.querySelector('.boards');w.forEach(function(n){var bw=document.createElement('div');bw.className='bw';bw.innerHTML='<div class="board"></div><div class="cap"></div>';b.appendChild(bw);addPlayer(bw.firstChild,bw.lastChild,n)})});
+var big=null;
+function tick(){players.forEach(function(p){var g=p.g;if(p.hold>0){p.hold--;if(p.hold===0){p.ply=0;draw(p.cells,g.f[0]);p.cap.innerHTML=cap(g,false,0)}return}if(p.ply<g.f.length-1){p.ply++;draw(p.cells,g.f[p.ply]);p.cap.innerHTML=cap(g,p.ply===g.f.length-1,p.ply);if(p.ply===g.f.length-1)p.hold=14}})}
+setInterval(tick,260);
+function share(list,k){return list.filter(function(n){return pool[n-1].end===k}).length}
+function short(list){return list.filter(function(n){return pool[n-1].mv<15}).length}
+function guess(i){document.getElementById('g0').disabled=true;document.getElementById('g1').disabled=true;
+  var ci=chanceFirst?0:1,right=(i===ci);
+  ['I','II'].forEach(function(x,k){var w=walls[k];document.getElementById('wl'+k).textContent=(k===ci?'chance, drawn by your browser':'chosen by selector '+who+', asked for games "as it is"')+' · checkmates '+share(w,'checkmate')+' of 8, on time '+share(w,'time')+', over before move 15: '+short(w)});
+  var S=P.stats;
+  document.getElementById('verdict').innerHTML=(right?'Right. ':'Not this time. ')+'Wall '+(ci?'II':'I')+' is chance. The chosen wall is one of six eights picked by selectors asked for games <em>as it is</em>. They did not pick the showpieces. They counted the sixty and built a copy of it at small scale: all six eights match the sixty\u2019s mix of endings within two games, which a random eight does only '+S.null_close+' % of the time, and none of the six holds a draw, which '+S.null_draw+' % of random eights do. Chance is lumpier than their picture of it. A fresh chance wall and a different selector each visit: <button id="again">draw again</button>';
+  document.getElementById('again').onclick=function(){location.reload()};
+  document.getElementById('after').classList.remove('hidden');
+  send(right);
+}
+document.getElementById('g0').onclick=function(){guess(0)};document.getElementById('g1').onclick=function(){guess(1)};
+// the sixty
+var order=pool.map(function(g,i){return i+1});var EO={checkmate:0,resignation:1,time:2,draw:3};
+order.sort(function(a,b){var x=pool[a-1],y=pool[b-1];return EO[x.end]-EO[y.end]||x.mv-y.mv});
+var SX=document.getElementById('sixty');
+var bigcells=mkBoard(document.getElementById('bigboard'));
+var bigp={g:null,cells:bigcells,cap:document.getElementById('bigcap'),ply:0,hold:0};
+order.forEach(function(n){var g=pool[n-1];var t=document.createElement('button');t.className='tile';
+  var dots='';['A','B','C'].forEach(function(a){for(var k=0;k<(P.counts[a][n]||0);k++)dots+='<span class="dot d'+a.toLowerCase()+'"></span>'});
+  t.innerHTML='#'+n+' · '+g.mv+'<div class="bar e-'+g.end+'"></div><div class="dots">'+dots+'</div>';
+  t.onclick=function(){Array.prototype.forEach.call(SX.children,function(c){c.classList.remove('on')});t.classList.add('on');
+    bigp.g=g;bigp.ply=0;bigp.hold=0;draw(bigcells,g.f[0]);bigp.cap.innerHTML=cap(g,false,0);
+    if(players.indexOf(bigp)<0)players.push(bigp);
+    var why=(P.why[n]||[]).map(function(w){return '<li><b>'+w[0]+'</b>: '+w[1]+'</li>'}).join('');
+    document.getElementById('bigtext').innerHTML='<p>Game '+n+': '+g.sp+' ('+g.tc+'), ratings '+g.we+' and '+g.be+', '+g.op+'. '+ENDW[g.end]+' at move '+g.mv+'.</p><p>Chosen by '+((P.counts.A[n]||0)+(P.counts.B[n]||0)+(P.counts.C[n]||0))+' of 18 selectors.</p>'+(why?'<p>What they wrote:</p><ul>'+why+'</ul>':'<p>No selector kept it.</p>')};
+  SX.appendChild(t)});
+// table
+var T=P.table,rows=[['','the sixty','random eight (mean, 90 % range)','A: as it is','B: told the counts','C: most worth showing']];
+T.forEach(function(r){rows.push(r)});
+document.getElementById('tab').innerHTML=rows.map(function(r,i){return '<tr>'+r.map(function(c){return (i?'<td>':'<th>')+c+(i?'</td>':'</th>')}).join('')+'</tr>'}).join('');
+document.getElementById('tabnote').textContent=P.tabnote;
+function send(right){var a=document.getElementById('q-mate').value,b=document.getElementById('q-short').value;
+  if(!(a||b)||!window.HouseStudy)return;var ans={guess:right?'right':'wrong'};if(a)ans.mate=a;if(b)ans.short=b;
+  try{var box=document.createElement('div');document.getElementById('ask').appendChild(box);
+    var st=HouseStudy.mount(box,{study:'error-as-method-as-it-is-played',onClosed:function(){box.innerHTML='<p class="small">The record of answers is not open at the moment. Your answers stay in this page.</p>'},onResult:function(){}});
+    st.submit(ans)}catch(e){}}
+})();
+</script>
+</body>
+</html>
