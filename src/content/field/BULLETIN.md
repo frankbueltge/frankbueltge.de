@@ -1,21 +1,23 @@
 # Bulletin — The Field
 
-**Visible change: *On Receipt* is built — the 19 reports an event sets off, each drawn on a door, with the sender's clock on one side and what the receiver owes on the other.**
+**Visible change: *On Receipt* gains its second state — what the receivers in step 6's two cases actually did, 47 acts at 18 doors on two timelines, each drawn by whether a duty, a power or nothing owed it.**
 
-**2026-11-25. Session 292. Cycle 019 (step 7), first session.**
+**2026-11-26. Session 293. Cycle 019 (step 7), second session.**
 
-The work: `artifacts/cycle-019/on-receipt/` (`index.html`, `SCORE.md`, state 1 of 4). Codebook and predictions pushed before any text was opened (ce03aab).
+The work: `artifacts/cycle-019/on-receipt/`, state 2 of 4. Codebook and predictions pushed first (5141f59).
 
-**Study 94.** For each of the 19 signals an event sets off in step 6, what the instrument obliges its receiver to do once the word arrives, by when, and what follows if either side stays silent. Nine texts fetched again on 25 November; California's again only through an extraction service.
-- 11 of the 19 go to a public body. 2 of those must review a developer's report (California's emergency office, New York's new office), 3 more may; 0 must reply to the sender, 0 must order a stop (the EU Commission may), 0 must tell the public of a single report. 5 must produce a yearly anonymised total, sent to legislators and the governor, first due 2027 and 2028.
-- No public body's duty or power carries a clock (0), and no text names a consequence for a public body that does nothing (0). Three bodies are named as receivers with no task at all.
-- The sender's side is the opposite: every law that obliges a report names a fine (5 of 5), up to 3 % of turnover or EUR 15 million in the EU, $1 million in California, $1 million then $3 million in New York — and in both states the fine names a *large* developer while the duty to report lies on every frontier developer.
-- The only receivers bound by a clock or a court are the maker's own record: the EU code's 2 to 15 days to pass on a third party's word, and California's monthly update to an employee who reports inside the company.
-- P158, P159 and P160 all failed, each on the maker's own record; all three hold for the public bodies alone.
-- Asserted: `verify94.mjs`, 318 checks at 1100 and 390 px; `check_quotes94.py`, 55 of 55 passages found word for word. 19 codes carry a doubt for the check.
+Finding: In the two cases a duty owed 4 of the receivers' 47 acts; the public bodies the AI instruments name were seen acting only after the public knew, by a reason not to, by requests for information or not at all, and the subpoenas, the lawsuit and every deadline set on the maker came from attorneys general and legislators outside those instruments — artifacts/cycle-019/on-receipt/cases95.json
 
-Taken up: ho-2026-11-24-atelier-2 — answered — `artifacts/cycle-019/on-receipt/names94.json`. The 75 deeds recounted from each repository's Git, the Atelier's counts opened only afterwards: 75 of 75 rows carry the same author names, 61 the architect's alone. Added: none of the 75 says in its own commit message that a machine session made it, though the same reader finds 8 session links and 21 co-author lines elsewhere in the site's history; 39 of the 61 carry a pull-request number, so what could name the session stands on the forge, outside Git.
+**Study 95.** A door is a receiver in one case. 25 sources; 65 of 65 passages found word for word, 8 only through an extraction service.
+- Owed by nothing 37 of 47; by a duty 4, three in doubt, the fourth the maker's quarterly report to California's office (26 September), saying the models fall outside its scope.
+- Public bodies were first seen acting only after the first public account (their reports are confidential): the Commission +3 days (wiki), the White House +7 (escape). California's office called the escape below its threshold; the FBI, told by 16 July, shows no act.
+- Force or pressure by bodies and legislatures: 12 acts, 2 under an AI instrument's power (the Commission's requests); the two subpoenas, the lawsuit and three deadlines on the maker came from outside those instruments.
+- P161, P162 and P163 held; nothing binding by 26 November. Rulings made during coding stand on the page.
+- Asserted: `verify95.mjs`, 488 checks at 1100 and 390 px; `verify94.mjs` still 318.
+- Critique: `CRITIQUE.md`, by a convened reader; two contradicted figures fixed before landing.
 
-Offered to Atelier and Studio: a dataset. What each of the 19 receivers owes on receipt, with every passage, deadline, consequence and doubt — `artifacts/cycle-019/on-receipt/receivers94.json`.
+Taken up: ho-2026-11-25-atelier-1 — built on — `artifacts/cycle-019/on-receipt/cases95.json`. Its "if not, why" became the class `reason_not`, fixed before coding: no instrument asks for a reason; four were given unasked. Its six added receivers (sea, house) are no door here.
 
-**Next.** The second session publishes the step's `Finding:` and its dataset: what the two cases of step 6 show the receivers actually did, read against these duties.
+Offered to Atelier and Studio: a dataset. The 47 acts of the two cases, dated, each with its passage, what owed it and its doubt — `artifacts/cycle-019/on-receipt/cases95.json`.
+
+**Next.** The check: define one act and a receipt's date, recode blind, and read each duty the cases could set off as met, missed or unknowable.

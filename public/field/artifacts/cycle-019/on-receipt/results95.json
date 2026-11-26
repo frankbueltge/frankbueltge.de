@@ -1,0 +1,344 @@
+{
+ "what": "Study 95 (session 293): what the receivers did in the two cases of step 6, counted from cases95.json.",
+ "doors": 18,
+ "doors_by_kind": {
+  "harmed party": 2,
+  "outside party": 2,
+  "maker": 2,
+  "public body": 8,
+  "legislature": 4
+ },
+ "doors_with_acts": 17,
+ "acts": 47,
+ "by_code": {
+  "acknowledge": 2,
+  "investigate": 13,
+  "order": 7,
+  "pass_on": 7,
+  "tell_public": 13,
+  "reason_not": 4,
+  "proceed": 1
+ },
+ "by_owed": {
+  "choice": 37,
+  "sender duty": 3,
+  "power": 2,
+  "receiver duty": 1,
+  "other law": 4
+ },
+ "per_case": {
+  "wiki": {
+   "doors": 4,
+   "acts": 8,
+   "first_public": "2026-09-04"
+  },
+  "escape": {
+   "doors": 14,
+   "acts": 39,
+   "first_public": "2026-07-16"
+  }
+ },
+ "public_bodies": 8,
+ "named_public_bodies": [
+  "W-EC",
+  "E-FBI",
+  "E-OES",
+  "E-CAAG",
+  "E-EC"
+ ],
+ "unnamed_public_bodies": [
+  "E-WH",
+  "E-AGS",
+  "E-AL"
+ ],
+ "named_force": 5,
+ "named_force_under_ai": 2,
+ "unnamed_force": 3,
+ "legislature_force": 4,
+ "deadlines_set": [
+  {
+   "door": "E-AL",
+   "set_on": "2026-08-20",
+   "due": "2026-09-14",
+   "days": 25
+  },
+  {
+   "door": "E-HOUSE",
+   "set_on": "2026-08-10",
+   "due": "2026-08-24",
+   "days": 14
+  },
+  {
+   "door": "E-SEN",
+   "set_on": "2026-09-09",
+   "due": "2026-10-01",
+   "days": 22
+  }
+ ],
+ "reasons_not": [
+  {
+   "door": "W-MAKER",
+   "date": "2026-09-05",
+   "quote": "In its more recent social media post, OpenAI said it had considered the “wiki incident” to be “an instance of misalignment similar” to others that it had already shared."
+  },
+  {
+   "door": "E-MAKER",
+   "date": "2026-06-27",
+   "quote": "At this time, the on-call response staff advised that stopping the evaluation run was not required."
+  },
+  {
+   "door": "E-MAKER",
+   "date": "2026-09-26",
+   "quote": "The models involved in this incident fall outside the report’s model scope."
+  },
+  {
+   "door": "E-OES",
+   "date": "2026-08-10",
+   "quote": "said that the OpenAI hack “did not meet the threshold” for reporting under SB 53, which requires frontier developers to report critical safety incidents to the Office of Emergency Services within 15"
+  }
+ ],
+ "lags": [
+  {
+   "door": "W-MOD",
+   "received": "2026-06-02",
+   "first_act": "2026-06-02",
+   "days": 0,
+   "bound": "on"
+  },
+  {
+   "door": "W-MAKER",
+   "received": "2026-06-21",
+   "first_act": "2026-06-22",
+   "days": 1,
+   "bound": "on"
+  },
+  {
+   "door": "E-MAKER",
+   "received": "2026-06-27",
+   "first_act": "2026-06-27",
+   "days": 0,
+   "bound": "on"
+  }
+ ],
+ "maker": {
+  "wiki": {
+   "received": "2026-06-21",
+   "first_public_word": "2026-09-04",
+   "days_from_receipt": 75,
+   "days_after_first_public": 0,
+   "received_doubt": "inferred by outside researchers from network addresses; the maker has not dated when it knew (tc)"
+  },
+  "escape": {
+   "received": "2026-06-27",
+   "first_public_word": "2026-07-21",
+   "days_from_receipt": 24,
+   "days_after_first_public": 5,
+   "received_doubt": null
+  }
+ },
+ "P161": {
+  "letter": {
+   "owed": 8,
+   "of": 47,
+   "share": 0.17
+  },
+  "letter_without_proceed": {
+   "owed": 7,
+   "of": 46,
+   "share": 0.152
+  },
+  "duty_only": {
+   "owed": 4,
+   "of": 47,
+   "share": 0.085
+  },
+  "duty_only_without_proceed": {
+   "owed": 4,
+   "of": 46,
+   "share": 0.087
+  },
+  "owed_ids": [
+   "W-MAKER:pass_on",
+   "E-MAKER:investigate",
+   "E-MAKER:pass_on",
+   "E-MAKER:pass_on",
+   "E-AGS:investigate",
+   "E-AGS:order",
+   "E-AL:investigate",
+   "E-CAAG:proceed"
+  ],
+  "duty_with_doubt": 3,
+  "duty_without_doubt": [
+   "E-MAKER:pass_on"
+  ],
+  "other_law_all_powers": true,
+  "out_letter": "held",
+  "out_duty_only": "held",
+  "out_letter_without_proceed": "held",
+  "out": "held"
+ },
+ "P162": {
+  "public_bodies": [
+   {
+    "door": "W-EC",
+    "case": "wiki",
+    "name": "The European Commission and its AI Office",
+    "first_act": "2026-09-07",
+    "days_after_public": 3,
+    "received": null,
+    "named": true
+   },
+   {
+    "door": "E-FBI",
+    "case": "escape",
+    "name": "Federal law enforcement (the FBI)",
+    "first_act": null,
+    "days_after_public": null,
+    "received": "2026-07-16",
+    "named": true
+   },
+   {
+    "door": "E-WH",
+    "case": "escape",
+    "name": "The White House science office",
+    "first_act": "2026-07-23",
+    "days_after_public": 7,
+    "received": "2026-07-23",
+    "named": false
+   },
+   {
+    "door": "E-AGS",
+    "case": "escape",
+    "name": "Fifteen state attorneys general, led by Iowa's",
+    "first_act": "2026-08-03",
+    "days_after_public": 18,
+    "received": "2026-08-03",
+    "named": false
+   },
+   {
+    "door": "E-AL",
+    "case": "escape",
+    "name": "Alabama's Attorney General",
+    "first_act": "2026-08-20",
+    "days_after_public": 35,
+    "received": "2026-08-03",
+    "named": false
+   },
+   {
+    "door": "E-OES",
+    "case": "escape",
+    "name": "California's Office of Emergency Services",
+    "first_act": "2026-08-10",
+    "days_after_public": 25,
+    "received": "2026-08-10",
+    "named": true
+   },
+   {
+    "door": "E-CAAG",
+    "case": "escape",
+    "name": "California's Attorney General",
+    "first_act": "2026-09-04",
+    "days_after_public": 50,
+    "received": "2026-09-04",
+    "named": true
+   },
+   {
+    "door": "E-EC",
+    "case": "escape",
+    "name": "The European Commission and its AI Office",
+    "first_act": "2026-10-14",
+    "days_after_public": 90,
+    "received": null,
+    "named": true
+   }
+  ],
+  "legislatures": [
+   {
+    "door": "E-HOUSE",
+    "case": "escape",
+    "name": "Members of the US House",
+    "first_act": "2026-08-10",
+    "days_after_public": 25,
+    "received": "2026-08-10",
+    "named": false
+   },
+   {
+    "door": "E-ASM",
+    "case": "escape",
+    "name": "The California Assembly's privacy committee",
+    "first_act": "2026-08-10",
+    "days_after_public": 25,
+    "received": "2026-08-10",
+    "named": false
+   },
+   {
+    "door": "E-SEN",
+    "case": "escape",
+    "name": "Senator Hawley, chair of a Senate subcommittee",
+    "first_act": "2026-09-09",
+    "days_after_public": 55,
+    "received": "2026-09-09",
+    "named": false
+   },
+   {
+    "door": "E-VH",
+    "case": "escape",
+    "name": "Senator Van Hollen",
+    "first_act": "2026-09-10",
+    "days_after_public": 56,
+    "received": "2026-09-10",
+    "named": false
+   }
+  ],
+  "before_or_on_public": [],
+  "out": "held",
+  "no_act": [
+   "E-FBI"
+  ],
+  "earliest_after": {
+   "wiki": 3,
+   "escape": 7
+  }
+ },
+ "P163": {
+  "consequences": 0,
+  "proceedings": [
+   "E-CAAG:2026-11-16"
+  ],
+  "subpoenas": [
+   "E-AL:2026-08-20",
+   "E-CAAG:2026-09-30"
+  ],
+  "demands_to_stop": [
+   "E-AGS:2026-08-03"
+  ],
+  "lag_days": {
+   "W-MOD": 0,
+   "W-RES": null,
+   "W-MAKER": 1,
+   "W-EC": null,
+   "E-MAKER": 0,
+   "E-HF": 0,
+   "E-FBI": null,
+   "E-WH": 0,
+   "E-AGS": 0,
+   "E-AL": 17,
+   "E-HOUSE": 0,
+   "E-ASM": 0,
+   "E-OES": 0,
+   "E-CAAG": 0,
+   "E-SEN": 0,
+   "E-VH": 0,
+   "E-FOUND": 0,
+   "E-EC": null
+  },
+  "out": "held"
+ },
+ "predictions_held": 3,
+ "quotes": {
+  "n": 65,
+  "found": 65,
+  "extraction": 8
+ },
+ "searched_not_doors": 7
+}
