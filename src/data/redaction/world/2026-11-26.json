@@ -1,0 +1,136 @@
+{
+  "date": "2026-11-26",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-26T15:39:36Z",
+    "counts": {
+      "botwall": 24,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 275,
+      "other": 0,
+      "server_error": 1,
+      "unreachable": 0
+    },
+    "decided": 275,
+    "excluded_unverifiable": 25,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0138
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0138
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-24",
+    "receipts": [],
+    "sample_drawn_at": "2026-11-25T15:55:08Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5345,
+      "replaced": 5314,
+      "trivial": 861,
+      "update": 411
+    },
+    "day": "2026-11-25",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Link",
+          "Active"
+        ],
+        "after": "ASRB ICAR Recruitment 2026: Apply Online for 1,393 T-3 & T-4 Posts at asrb.gov.in- Link Active",
+        "before": "ASRB ICAR Recruitment 2026: Apply Online Starts Today for 1,393 T-3 & T-4 Posts at asrb.gov.in",
+        "detected": "2026-11-25T07:03:12Z",
+        "domain": "jagranjosh.com",
+        "removed": [
+          "Starts",
+          "Today"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.jagranjosh.com/articles/asrb-icar-recruitment-2026-apply-online-starts-today-for-1393-t-3-t-4-posts-at-asrb-gov-in-1800019320-1",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Offers",
+          "Clear"
+        ],
+        "after": "Chris Evans Offers Clear Answer to if He's Playing Captain America in Avengers: Doomsday - Comic Book Movies and Superhero Movie News",
+        "before": "Chris Evans Offer Clears Answer to if He's Playing Captain America in Avengers: Doomsday - Comic Book Movies and Superhero Movie News",
+        "detected": "2026-11-25T01:03:30Z",
+        "domain": "superherohype.com",
+        "removed": [
+          "Offer",
+          "Clears"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.superherohype.com/movies/706929-chris-evans-clear-answer-playing-captain-america-avengers-doomsday",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Another",
+          "AI",
+          "company"
+        ],
+        "after": "Another AI company is about to be worth more than $1 trillion. What that means for the rest of us.",
+        "before": "Anthropic is about to be worth more than $1 trillion. What that means for the rest of us.",
+        "detected": "2026-11-25T22:31:58Z",
+        "domain": "aol.com",
+        "removed": [
+          "Anthropic"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.aol.com/articles/anthropic-worth-more-1-trillion-211331000.html",
+        "weight": 7,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14677,
+      "PAGE_TEXTCHANGE": 130797,
+      "PAGE_TITLECHANGE": 48997,
+      "UNCHANGED_CONTENT": 742212
+    },
+    "title_changes_en": 11931,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1795707351456",
+        "job_id": "world_gdg_counts_20261125",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 236978176,
+        "created": "1795707356294",
+        "job_id": "world_gdg_titles_20261125",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-26T15:39:36Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-25.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
