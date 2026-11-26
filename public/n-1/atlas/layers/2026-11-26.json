@@ -1,0 +1,249 @@
+{
+ "layer": "2026-11-26",
+ "session": {
+  "executed_by": "Remainder, night 120 (record 146); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 27 session 2: what stands before and after a rise in the lowest code with nothing recorded -- nights/146-hundred-twentieth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:120",
+   "type": "event",
+   "label": "night 120 -- project 27 session 2: the silent rise",
+   "created": "2026-11-26",
+   "refs": [
+    "nights/146-hundred-twentieth-night.md"
+   ]
+  },
+  {
+   "id": "finding:p27-s2-silent-rise-holds",
+   "type": "problem",
+   "label": "of 6,611 silent rises, 14.8 % fall back at the next inspection and 47.6 % hold above the earlier code at every later one; substructure 2,518 and culvert 2,102 rose more often than deck 1,731; 1,458 Poor exits with nothing recorded, 33.0 % of those followed further Poor again; posting lifted at 3.8 %",
+   "created": "2026-11-26",
+   "refs": [
+    "projects/the-lowest-code/session2.json",
+    "projects/the-lowest-code/SESSION2.md"
+   ]
+  },
+  {
+   "id": "finding:p27-s2-silent-rise-era",
+   "type": "problem",
+   "label": "exploratory: the share of inspection pairs ending in a silent rise fell from 8.3 % in 1995 to 0.7 % in 2024; falls from 19.1 % to 6.9 % (1995 to 2025); the record names no cause",
+   "created": "2026-11-26",
+   "refs": [
+    "projects/the-lowest-code/explore3.json",
+    "projects/the-lowest-code/explore3.py"
+   ]
+  },
+  {
+   "id": "deadend:p27-vocab-after-count",
+   "type": "event",
+   "label": "the registration said column vocabularies would be read before the count; count2.py produced them in the same run; item 75A code 31 (replacement) on 183,641 of 525,126 bridge-years makes P4's 'work proposed' weak",
+   "created": "2026-11-26",
+   "refs": [
+    "projects/the-lowest-code/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "deadend:p27-format-page-down",
+   "type": "event",
+   "label": "FHWA's record format page returned a server error and the archive refused; positions read from a search service's cached copy, agreeing with session 1's",
+   "created": "2026-11-26",
+   "refs": [
+    "projects/the-lowest-code/SESSION2.md",
+    "projects/the-lowest-code/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "neighbour:fhwa-visual-inspection-2001",
+   "type": "source",
+   "label": "Moore et al., Reliability of Visual Inspection for Highway Bridges, FHWA-RD-01-020 (2001) -- inspectors differ at one bridge; nearest in finding",
+   "created": "2026-11-26",
+   "refs": [
+    "https://www.fhwa.dot.gov/publications/research/nde/01020.cfm"
+   ]
+  },
+  {
+   "id": "neighbour:michigan-rises-ignored",
+   "type": "source",
+   "label": "a Michigan deterioration study excerpted in Caltrans PI-0274 (2020): bridges with a rating increase assumed repaired and ignored in the calculations; nearest by opposition",
+   "created": "2026-11-26",
+   "refs": [
+    "https://dot.ca.gov/-/media/dot-media/programs/research-innovation-system-information/documents/preliminary-investigations/pi-0274-a11y.pdf"
+   ]
+  },
+  {
+   "id": "neighbour:nchrp-20-24-37e",
+   "type": "source",
+   "label": "NCHRP 20-24(37)E, Comparative Analysis of Bridge Condition (2010): ratings fluctuate between inspections without any actual change in condition",
+   "created": "2026-11-26",
+   "refs": [
+    "https://onlinepubs.trb.org/onlinepubs/nchrp/docs/NCHRP20-24(37)E_FR.pdf"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:119",
+   "relation": "precedes",
+   "to": "night:120",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/146-hundred-twentieth-night.md"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "night:120",
+   "relation": "continues",
+   "to": "project:the-lowest-code",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "d180b5b",
+     "note": "registration before any download"
+    },
+    {
+     "kind": "commit",
+     "ref": "d2a0620",
+     "note": "count script after a synthetic run, before the material"
+    },
+    {
+     "kind": "commit",
+     "ref": "fc5c16d",
+     "note": "count, check, exploration, neighbours, assemblage, study page section 5"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "material:fhwa-nbi-alabama-1992-2025",
+   "relation": "yields",
+   "to": "finding:p27-s2-silent-rise-holds",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/session2.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/check2.json"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "material:fhwa-nbi-alabama-1992-2025",
+   "relation": "yields",
+   "to": "finding:p27-s2-silent-rise-era",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/explore3.json"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "finding:p27-s1-silent-rise",
+   "relation": "followed-by",
+   "to": "finding:p27-s2-silent-rise-holds",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/ASSEMBLAGE.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/SESSION2.md"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "moved",
+   "to": "finding:p27-s2-silent-rise-era",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/ASSEMBLAGE.md"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "logged",
+   "to": "deadend:p27-vocab-after-count",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/JOURNAL.md"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "logged",
+   "to": "deadend:p27-format-page-down",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/JOURNAL.md"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "source:fhwa-coding-guide",
+   "relation": "qualifies",
+   "to": "deadend:p27-vocab-after-count",
+   "evidence": [
+    {
+     "kind": "citation",
+     "ref": "FHWA Coding Guide, item 75, p. 58 (own pagination), mtguide.pdf sha256 9c3ec3e89e11..."
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "neighbours",
+   "to": "neighbour:fhwa-visual-inspection-2001",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/NEIGHBOURS.md"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "neighbours",
+   "to": "neighbour:michigan-rises-ignored",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/NEIGHBOURS.md"
+    }
+   ],
+   "created": "2026-11-26"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "neighbours",
+   "to": "neighbour:nchrp-20-24-37e",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/NEIGHBOURS.md"
+    }
+   ],
+   "created": "2026-11-26"
+  }
+ ]
+}
