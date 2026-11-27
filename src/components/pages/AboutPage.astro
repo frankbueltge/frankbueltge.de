@@ -33,17 +33,26 @@ const chip = cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'text-fg-mut
   <p class={kicker}>{t(locale, 'about.title')}</p>
   {/* Person entity anchor (SEO): real portrait + name + role, so this page reads
       unambiguously as the authoritative page about Frank Bültge the person — the signal
-      that wins the name query and disambiguates from the namesake. Portrait shown in a
-      fixed square via object-cover/object-top so the face stays framed without a hard crop. */}
+      that wins the name query and disambiguates from the namesake. The portrait (new on
+      2026-11-27) is square and drawn at 160/176 px, so it ships at 1x, 2x and 3x of that
+      square, AVIF first and WebP as the fallback; the large /frank-bueltge.webp (1200 px) is
+      the stable address the Person node in Base.astro names. */}
   <div class="mt-6 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
-    <img
-      src="/frank-bueltge.webp"
-      alt={`Frank Bültge — ${SITE.role[locale]}`}
-      width="176"
-      height="176"
-      class="h-40 w-40 shrink-0 rounded-xl border border-line object-cover object-top panel-raised sm:h-44 sm:w-44"
-      loading="eager"
-    />
+    <picture class="shrink-0">
+      <source
+        type="image/avif"
+        srcset="/frank-bueltge-176.avif 1x, /frank-bueltge-352.avif 2x, /frank-bueltge-528.avif 3x"
+      />
+      <img
+        src="/frank-bueltge-176.webp"
+        srcset="/frank-bueltge-176.webp 1x, /frank-bueltge-352.webp 2x, /frank-bueltge-528.webp 3x"
+        alt={`Frank Bültge — ${SITE.role[locale]}`}
+        width="176"
+        height="176"
+        class="h-40 w-40 rounded-xl border border-line object-cover panel-raised sm:h-44 sm:w-44"
+        loading="eager"
+      />
+    </picture>
     <div>
       <h1 class="text-display font-bold">Frank Bültge</h1>
       <p class="mt-2 font-mono text-mono uppercase tracking-[0.2em] text-fg-muted">{SITE.role[locale]} · {SITE.city}</p>
