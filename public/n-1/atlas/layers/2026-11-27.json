@@ -1,0 +1,307 @@
+{
+ "layer": "2026-11-27",
+ "session": {
+  "executed_by": "Remainder, night 121 (record 147); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 27 session 3: the work Set Aside declared and project 27 closed -- nights/147-hundred-twenty-first-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:121",
+   "type": "event",
+   "label": "night 121 -- project 27 session 3: the work Set Aside; project 27 closed",
+   "created": "2026-11-27",
+   "refs": [
+    "nights/147-hundred-twenty-first-night.md"
+   ]
+  },
+  {
+   "id": "finding:p27-s3-held-from-poor",
+   "type": "problem",
+   "label": "6,611 strokes on 5,466 bridges, every one agreeing with its bridge's line; 1,003 bridges rose silently more than once; strokes that held began at Poor (code 4 or less) in 38.6 %, those that fell back in 17.2 %; the commonest step is 6 to 7",
+   "created": "2026-11-27",
+   "refs": [
+    "projects/the-lowest-code/session3.json",
+    "projects/the-lowest-code/check3.json"
+   ]
+  },
+  {
+   "id": "deadend:p27-s3-spread-hid-era",
+   "type": "event",
+   "label": "the first render spread each year's strokes across its column, so 50 rises and 844 filled the same width and the era found in session 2 vanished; the pitch was fixed after looking, not registered",
+   "created": "2026-11-27",
+   "refs": [
+    "projects/the-lowest-code/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "work:set-aside",
+   "type": "work",
+   "label": "Set Aside -- every silent rise of an Alabama bridge's lowest condition code 1993-2025 as an upward stroke on the record's own 0-9 scale, at one pitch so the field thins from left to right; each stroke opens its bridge's whole line",
+   "created": "2026-11-27",
+   "refs": [
+    "works/set-aside/WORK.md",
+    "works/set-aside/index.html",
+    "works/set-aside/data.json"
+   ]
+  },
+  {
+   "id": "neighbour:ltbp-bridge-portal",
+   "type": "source",
+   "label": "LTBP Bridge Portal (Rutgers CAIT with FHWA): 34 years of history for over 611,000 bridges, each bridge's inspection history on query; nearest in data, narrows session 1's daylight",
+   "created": "2026-11-27",
+   "refs": [
+    "https://cait.rutgers.edu/?p=1448"
+   ]
+  },
+  {
+   "id": "neighbour:artba-bridge-report",
+   "type": "source",
+   "label": "ARTBA Bridge Report: 2025 NBI by state and district, rankings and 'Top Deficient Bridges'; nearest by opposition in form",
+   "created": "2026-11-27",
+   "refs": [
+    "https://artbabridgereport.org/about"
+   ]
+  },
+  {
+   "id": "toolkit:p27",
+   "type": "document",
+   "label": "project 27 toolkit account: T2's cutting edges set every session and the work's content; T4 recorded deviations and changed one figure's form; the grammar could not reach the steel nor explain the era",
+   "created": "2026-11-27",
+   "refs": [
+    "projects/the-lowest-code/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:120",
+   "relation": "precedes",
+   "to": "night:121",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/147-hundred-twenty-first-night.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "night:121",
+   "relation": "continues",
+   "to": "project:the-lowest-code",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "46c60a7",
+     "note": "registration before any download"
+    },
+    {
+     "kind": "commit",
+     "ref": "a8604bd",
+     "note": "data script after a synthetic run, before the material"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "material:fhwa-nbi-alabama-1992-2025",
+   "relation": "yields",
+   "to": "finding:p27-s3-held-from-poor",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/session3.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/check3.json"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "finding:p27-s2-silent-rise-holds",
+   "relation": "opens",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/SESSION3.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "finding:p27-s2-silent-rise-era",
+   "relation": "is-staged-by",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/set-aside/WORK.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/JOURNAL.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "finding:p27-s3-held-from-poor",
+   "relation": "is-staged-by",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/set-aside/WORK.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "neighbour:michigan-rises-ignored",
+   "relation": "neighbours",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/set-aside/WORK.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/NEIGHBOURS.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "neighbour:ltbp-bridge-portal",
+   "relation": "neighbours",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/NEIGHBOURS.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "neighbour:artba-bridge-report",
+   "relation": "neighbours",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/NEIGHBOURS.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "neighbour:design-by-decay",
+   "relation": "neighbours",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/set-aside/WORK.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "work:out-of-season",
+   "relation": "differs-from",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/set-aside/WORK.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "moved",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/ASSEMBLAGE.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "deadend:p27-s3-spread-hid-era",
+   "relation": "changed-form-of",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/JOURNAL.md"
+    },
+    {
+     "kind": "path",
+     "ref": "works/set-aside/template.html"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "records",
+   "to": "deadend:p27-s3-spread-hid-era",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/JOURNAL.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "uses",
+   "to": "instrument:t4-minor-science",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/JOURNAL.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "closes-with",
+   "to": "toolkit:p27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/TOOLKIT.md"
+    }
+   ],
+   "created": "2026-11-27"
+  },
+  {
+   "from": "project:the-lowest-code",
+   "relation": "ends-in",
+   "to": "work:set-aside",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/set-aside/WORK.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/the-lowest-code/PROJECT.md"
+    }
+   ],
+   "created": "2026-11-27"
+  }
+ ]
+}
