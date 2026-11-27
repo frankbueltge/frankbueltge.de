@@ -1,0 +1,145 @@
+{
+  "date": "2026-11-27",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-11-27T15:31:16Z",
+    "counts": {
+      "botwall": 24,
+      "gone_404": 0,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 271,
+      "other": 2,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 274,
+    "excluded_unverifiable": 26,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0204
+    ],
+    "gone_rate": 0.0036,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0138
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-11-25",
+    "receipts": [
+      {
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20261125220000",
+        "http_code": 410,
+        "title": "Henderson upbeat as Constitution Hill battles on at Kempton",
+        "url": "https://www.breakingnews.ie/racing/henderson-upbeat-as-constitution-hill-battles-on-at-kempton-1960151.html"
+      }
+    ],
+    "sample_drawn_at": "2026-11-26T15:36:10Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5737,
+      "replaced": 5781,
+      "trivial": 1224,
+      "update": 511
+    },
+    "day": "2026-11-26",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Truman",
+          "Show"
+        ],
+        "after": "Real-life Truman Show: Google wants to make a TV channel where YOU are the main character in every programme",
+        "before": "Real-life Black Mirror: Google wants to make a TV channel where YOU are the main character in every programme",
+        "detected": "2026-11-26T14:49:24Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Black",
+          "Mirror"
+        ],
+        "similarity": 0.818,
+        "url": "https://www.dailymail.com/sciencetech/article-16320643/black-mirror-google-tv-main-character.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "BPS"
+        ],
+        "after": "BPS psychologist charged with sexually abusing student over 19-month span - Boston News, Weather, Sports",
+        "before": "Boston Public Schools psychologist charged with sexually abusing student over 19-month span - Boston News, Weather, Sports",
+        "detected": "2026-11-26T22:03:00Z",
+        "domain": "whdh.com",
+        "removed": [
+          "Public",
+          "Schools",
+          "Boston"
+        ],
+        "similarity": 0.824,
+        "url": "https://whdh.com/news/boston-public-schools-psychologist-charged-with-sexually-abusing-student-over-19-month-span/",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Another",
+          "AI",
+          "company"
+        ],
+        "after": "Another AI company is about to be worth more than $1 trillion. What that means for the rest of us.",
+        "before": "Anthropic is about to be worth more than $1 trillion. What that means for the rest of us.",
+        "detected": "2026-11-26T22:33:47Z",
+        "domain": "aol.com",
+        "removed": [
+          "Anthropic"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.aol.com/articles/anthropic-worth-more-1-trillion-211331000.html",
+        "weight": 7,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 15582,
+      "PAGE_TEXTCHANGE": 131363,
+      "PAGE_TITLECHANGE": 52009,
+      "UNCHANGED_CONTENT": 746901
+    },
+    "title_changes_en": 13253,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1795793263472",
+        "job_id": "world_gdg_counts_20261126",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 240123904,
+        "created": "1795793268955",
+        "job_id": "world_gdg_titles_20261126",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-11-27T15:31:16Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-11-26.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
