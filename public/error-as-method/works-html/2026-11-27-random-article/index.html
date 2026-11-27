@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Random Article</title>
+<style>
+:root{--bg:#f2efe9;--ink:#1e2124;--muted:#5d6468;--line:#cfc8bb;--card:#fbfaf7;--stamp:#b2321f;--ok:#4d6b3c;
+--kP:#a8432a;--kX:#7d7d7d;--kS:#3f6e8c;--kD:#b58a1c;--kW:#6a4c8c;--kT:#4f7a3a;--kB:#8c5a3c;--kO:#2f8a7a;--kG:#5a7fb0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181a;--ink:#e7e3dc;--muted:#9aa2a7;--line:#363d41;--card:#1d2225;--stamp:#ef7a63;--ok:#9cc483;
+--kP:#e07a5f;--kX:#a8a8a8;--kS:#79abc9;--kD:#d9b24a;--kW:#b597d6;--kT:#8fbf72;--kB:#c99572;--kO:#6cc7b5;--kG:#93b4e0}}
+:root[data-theme="dark"]{--bg:#15181a;--ink:#e7e3dc;--muted:#9aa2a7;--line:#363d41;--card:#1d2225;--stamp:#ef7a63;--ok:#9cc483;
+--kP:#e07a5f;--kX:#a8a8a8;--kS:#79abc9;--kD:#d9b24a;--kW:#b597d6;--kT:#8fbf72;--kB:#c99572;--kO:#6cc7b5;--kG:#93b4e0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:1120px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2rem;margin:0 0 4px;letter-spacing:.02em}
+h2{font-size:1.25rem;margin:40px 0 8px}
+p{max-width:46rem}
+.small{font-size:.875rem;color:var(--muted)}
+.bar-ctl{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0}
+button{font:inherit;font-size:.9rem;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:3px 10px;cursor:pointer}
+button:hover{border-color:var(--stamp)}
+button.on{border-color:var(--ink);font-weight:bold}
+.wall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:700px){.wall{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:980px){.wall{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:9px 10px 8px;min-height:170px;overflow:hidden}
+.card h3{font-size:.98rem;margin:2px 0 2px;line-height:1.2;padding-right:6px}
+.chip{display:inline-block;font-size:.68rem;color:#fff;border-radius:3px;padding:0 5px}
+.lead{font-size:.74rem;color:var(--muted);line-height:1.3;margin:4px 0}
+.cap{font-size:.8rem;line-height:1.3;margin:4px 0 44px;font-style:italic}
+.stamp{position:absolute;right:6px;bottom:22px;transform:rotate(-8deg);font:bold .78rem/1 "Courier New",monospace;letter-spacing:.12em;border:2px solid currentColor;padding:3px 5px;border-radius:3px;opacity:.88}
+.stamp.u{color:var(--stamp)}.stamp.t{color:var(--muted);opacity:.55}
+.freq{position:absolute;left:10px;right:10px;bottom:6px;font-size:.66rem;color:var(--muted)}
+.freq i{display:block;height:4px;border-radius:2px;margin-top:2px;background:var(--line)}
+.freq i b{display:block;height:4px;border-radius:2px}
+.walltext{border-left:3px solid var(--line);padding:4px 12px;margin:14px 0;max-width:46rem;white-space:pre-line}
+.field{display:grid;grid-template-columns:repeat(20,1fr);gap:2px;align-items:end;height:120px;margin-top:10px}
+@media (max-width:600px){.field{grid-template-columns:repeat(16,1fr);height:150px}}
+.cell{border-radius:1px;min-height:3px;cursor:pointer;position:relative}
+.cell.in{outline:2px solid var(--ink);outline-offset:0}
+.legend span{display:inline-block;margin-right:12px;font-size:.82rem}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.tagbtns{position:absolute;right:6px;bottom:20px;display:flex;gap:4px}
+.tagbtns button{font-size:.7rem;padding:1px 6px}
+table{border-collapse:collapse;font-size:.9rem;margin-top:8px;width:100%;max-width:760px}
+th,td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:right}
+th:first-child,td:first-child{text-align:left}
+.tablewrap{overflow-x:auto}
+.hidden{display:none}
+.ask{border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-top:12px;max-width:46rem}
+.ask label{display:block;margin:6px 0 2px;font-size:.92rem}
+.ask select{font:inherit;font-size:.9rem;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:2px 4px;max-width:100%}
+#tip{font-size:.85rem;min-height:1.4em;margin-top:6px}
+.foot{margin-top:32px}
+</style>
+</head>
+<body>
+<main>
+<h1>Random Article</h1>
+<p>Twelve articles of English Wikipedia, drawn by chance. A machine curator, told nobody chose them, captioned each and stamped it <b>typical</b> or <b>unusual</b>. The bar under each card shows how common its kind of article is in 160 drawn the same way. The cards hang as all twelve curators hung theirs, without being asked: shortest to longest.</p>
+
+<div class="bar-ctl"><span class="small">draw</span><span id="drawbtns"></span><span class="small">&nbsp; curator</span><button id="armA">without the 160</button><button id="armB">with the 160</button></div>
+<div class="wall" id="wall"></div>
+<div class="walltext" id="walltext"></div>
+<p class="small" id="judge"></p>
+
+<h2>What the stamps follow</h2>
+<p id="finding"></p>
+<div class="tablewrap"><table id="tab"></table></div>
+
+<h2>Your turn</h2>
+<p>Twelve more, drawn by your browser from the same 160 just now. Stamp each one yourself. When all twelve are stamped, the kinds and their counts appear.</p>
+<div class="wall" id="mine"></div>
+<p id="mineout" class="small"></p>
+<div class="ask hidden" id="ask">
+<p class="small" style="margin:0">If you like, send two answers to the house's study of this work (nothing is sent before you confirm in the frame that opens):</p>
+<label for="q-what">What decided most of your stamps?</label>
+<select id="q-what"><option value="">—</option><option>the kind of subject</option><option>how famous the subject is</option><option>how long the article is</option><option>something else</option></select>
+<label for="q-fair">Does a chance draw of twelve show Wikipedia as it is?</label>
+<select id="q-fair"><option value="">—</option><option>yes</option><option>partly</option><option>no</option></select>
+<p><button id="send">send</button></p>
+<div id="frame"></div>
+</div>
+
+<h2>The 160</h2>
+<p class="small">Each bar is one article, its height the log of its length, its colour its kind. The current wall is outlined. Tap a bar for its title.</p>
+<div class="field" id="field"></div>
+<div id="tip"></div>
+<p class="legend" id="legend"></p>
+
+<p class="small foot">Experiment 63 of the nightly line's research project, Session 189, 27 November 2026. Articles from the <code>wikimedia/wikipedia</code> snapshot of English Wikipedia, 1 November 2023 (text CC BY-SA 4.0, Wikipedia contributors); 160 drawn by seed 189 from 6,407,814; leads shortened, some with gaps left by the snapshot's plain-text extraction. Curators' texts are reproduced as written. The kinds were coded by the practice before any curator ran.</p>
+</main>
+<script src="face-data.js"></script>
+<script src="/study/client.js"></script>
+<script>
+(function(){
+var R=window.RA,pool=R.pool,K=R.kinds,KO='PXSDWTBOG';
+var share={};KO.split('').forEach(function(k){share[k]=pool.filter(function(p){return p.k===k}).length});
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function col(k){return 'var(--k'+k+')'}
+function freqHTML(k){var n=share[k];return '<div class="freq">'+K[k]+': '+n+' of 160<i><b style="width:'+(300*n/160).toFixed(0)+'%;background:'+col(k)+'"></b></i></div>'}
+var draw=1,arm='A';
+var DB=document.getElementById('drawbtns');
+for(var i=1;i<=6;i++)(function(i){var b=document.createElement('button');b.textContent=i;b.onclick=function(){draw=i;show()};DB.appendChild(b)})(i);
+document.getElementById('armA').onclick=function(){arm='A';show()};
+document.getElementById('armB').onclick=function(){arm='B';show()};
+function show(){var c=R.cur[arm+draw];
+  Array.prototype.forEach.call(DB.children,function(b,j){b.classList.toggle('on',j+1===draw)});
+  document.getElementById('armA').classList.toggle('on',arm==='A');document.getElementById('armB').classList.toggle('on',arm==='B');
+  var W=document.getElementById('wall');W.innerHTML='';
+  c.items.slice().sort(function(a,b){return pool[a.n-1].w-pool[b.n-1].w}).forEach(function(it){var p=pool[it.n-1];var d=document.createElement('div');d.className='card';
+    d.innerHTML='<span class="chip" style="background:'+col(p.k)+'">'+K[p.k]+'</span><h3>'+esc(p.t)+'</h3><div class="small">'+p.w+' words</div><div class="lead">'+esc(p.lead.slice(0,120))+'…</div><div class="cap">'+esc(it.cap)+'</div><div class="stamp '+(it.tag==='unusual'?'u':'t')+'">'+it.tag.toUpperCase()+'</div>'+freqHTML(p.k);
+    W.appendChild(d)});
+  document.getElementById('walltext').textContent=c.wall;
+  var dr=R.draws[draw-1];
+  document.getElementById('judge').innerHTML='Curator '+arm+draw+(arm==='A'?' saw only these twelve.':' also read the 160.')+' Rated the twelve '+c.rating+' of 5 as a picture of Wikipedia. Would replace: '+(c.replaced.length?c.replaced.join(', '):'none')+'. This draw sits at the '+Math.round(dr.quantile*100)+'th percentile of how far chance twelves stray from the 160’s mix.';
+  field(dr.items)}
+// finding + table
+var all=[];Object.keys(R.cur).forEach(function(id){R.cur[id].items.forEach(function(it){var p=pool[it.n-1];all.push({k:p.k,w:p.w,u:it.tag==='unusual'})})});
+function rate(f){var s=all.filter(f);var u=s.filter(function(x){return x.u}).length;return [u,s.length]}
+var rows=[['kind of article','in the 160','stamps','stamped unusual']];
+KO.split('').forEach(function(k){var r=rate(function(x){return x.k===k});rows.push([K[k],share[k],r[1],r[0]+' ('+(r[1]?Math.round(100*r[0]/r[1]):0)+' %)'])});
+var s1=rate(function(x){return x.w<100}),s2=rate(function(x){return x.w>=1000});
+rows.push(['under 100 words','46',s1[1],s1[0]+' ('+Math.round(100*s1[0]/s1[1])+' %)']);
+rows.push(['1,000 words or more','17',s2[1],s2[0]+' ('+Math.round(100*s2[0]/s2[1])+' %)']);
+document.getElementById('tab').innerHTML=rows.map(function(r,i){return '<tr>'+r.map(function(c){return (i?'<td>':'<th>')+c+(i?'</td>':'</th>')}).join('')+'</tr>'}).join('');
+var tot=rate(function(){return true});
+document.getElementById('finding').innerHTML='Across twelve curators and 144 stamps, '+tot[0]+' say <b>unusual</b>. No curator without the 160 asked to replace a single article: <em>“the draw is the point.”</em> The stamps did not follow how common a kind is. They followed prominence and length: the short and obscure was called typical, the long and well known unusual. That is a picture of Wikipedia, and the 160 mostly agree with it. Where they disagree, the stamps followed the picture.';
+// your turn
+function rnd(){return Math.random()}
+var ids=[];for(var j=1;j<=160;j++)ids.push(j);for(var j=159;j>0;j--){var k=Math.floor(rnd()*(j+1));var t=ids[j];ids[j]=ids[k];ids[k]=t}
+var mine=ids.slice(0,12),tagsM={};
+var M=document.getElementById('mine');
+mine.forEach(function(n){var p=pool[n-1];var d=document.createElement('div');d.className='card';
+  d.innerHTML='<h3>'+esc(p.t)+'</h3><div class="small">'+p.w+' words</div><div class="lead">'+esc(p.lead.slice(0,150))+'…</div><div class="tagbtns"><button data-t="typical">typical</button><button data-t="unusual">unusual</button></div><div class="freq hidden" data-k="'+p.k+'"></div>';
+  Array.prototype.forEach.call(d.querySelectorAll('.tagbtns button'),function(b){b.onclick=function(){tagsM[n]=b.getAttribute('data-t');
+    var tb=d.querySelector('.tagbtns');tb.outerHTML='<div class="stamp '+(tagsM[n]==='unusual'?'u':'t')+'">'+tagsM[n].toUpperCase()+'</div>';
+    if(Object.keys(tagsM).length===12)reveal()}});
+  M.appendChild(d)});
+function reveal(){Array.prototype.forEach.call(M.querySelectorAll('.freq'),function(f){var k=f.getAttribute('data-k');f.outerHTML=freqHTML(k)});
+  var u=mine.filter(function(n){return tagsM[n]==='unusual'});
+  var kinds={};mine.forEach(function(n){var k=pool[n-1].k;kinds[k]=(kinds[k]||0)+1});
+  var lump=Object.keys(kinds).sort(function(a,b){return kinds[b]-kinds[a]})[0];
+  document.getElementById('mineout').innerHTML='You stamped '+u.length+' of 12 unusual. Your twelve hold '+kinds[lump]+' of one kind ('+K[lump]+'), where the 160 would lead you to expect about '+(12*share[lump]/160).toFixed(1)+'. The curators stamped '+tot[0]+' of 144 unusual.';
+  document.getElementById('ask').classList.remove('hidden')}
+document.getElementById('send').onclick=function(){var a=document.getElementById('q-what').value,b=document.getElementById('q-fair').value;
+  if(!(a||b)||!window.HouseStudy)return;var ans={};if(a)ans.what=a;if(b)ans.fair=b;
+  var u=mine.filter(function(n){return tagsM[n]==='unusual'}).length;ans.unusual=u<=2?'0-2':u<=5?'3-5':u<=8?'6-8':'9-12';
+  try{var box=document.getElementById('frame');var st=HouseStudy.mount(box,{study:'error-as-method-random-article',onClosed:function(){box.innerHTML='<p class="small">The record of answers is not open at the moment. Your answers stay in this page.</p>'},onResult:function(){}});st.submit(ans)}catch(e){}};
+// field
+var F=document.getElementById('field');var mx=Math.log(14000);
+pool.forEach(function(p,i){var c=document.createElement('div');c.className='cell';c.style.background=col(p.k);c.style.height=(100*Math.log(Math.max(p.w,10))/mx).toFixed(0)+'%';
+  c.onclick=function(){document.getElementById('tip').innerHTML='<a href="'+esc(p.u)+'">'+esc(p.t)+'</a>, '+K[p.k]+', '+p.w+' words'};F.appendChild(c)});
+function field(sel){Array.prototype.forEach.call(F.children,function(c,i){c.classList.toggle('in',sel.indexOf(i+1)>=0)})}
+document.getElementById('legend').innerHTML=KO.split('').map(function(k){return '<span><i class="sw" style="background:'+col(k)+'"></i>'+K[k]+' '+share[k]+'</span>'}).join('');
+show();
+})();
+</script>
+</body>
+</html>

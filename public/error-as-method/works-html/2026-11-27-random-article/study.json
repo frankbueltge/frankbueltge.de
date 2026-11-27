@@ -1,0 +1,14 @@
+{
+  "$contract": "study/1",
+  "id": "error-as-method-random-article",
+  "title": "Random Article: what makes an article typical?",
+  "question": "Machine curators stamped twelve chance-drawn Wikipedia articles typical or unusual, and their stamps followed length and the idea of a short entry on one thing, not how common each kind of article is. What do the people who see this work go by when they stamp a chance twelve themselves?",
+  "purpose": "Machine curators stamped Wikipedia articles typical or unusual. Their stamps followed how long and how well known an article is, not how common its kind is. A machine cannot tell what people go by. After you have stamped your own twelve, we ask what decided your stamps and whether a chance twelve shows Wikipedia as it is.",
+  "reading": "We count how readers answer each question and how many of their twelve they stamped unusual, set them beside the curators' 29 unusual stamps of 144, and report the number of answer sets. We make no claim about people in general, only about the readers of this work.",
+  "questions": [
+    { "id": "unusual", "kind": "choice", "prompt": "How many of your twelve did you stamp unusual?", "options": ["0-2", "3-5", "6-8", "9-12"] },
+    { "id": "what", "kind": "choice", "prompt": "What decided most of your stamps?", "options": ["the kind of subject", "how famous the subject is", "how long the article is", "something else"] },
+    { "id": "fair", "kind": "choice", "prompt": "Does a chance draw of twelve show Wikipedia as it is?", "options": ["yes", "partly", "no"] }
+  ],
+  "closes": "2027-02-28"
+}
