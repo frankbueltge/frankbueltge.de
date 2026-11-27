@@ -158,16 +158,24 @@ describe('sky — the one exception', () => {
 })
 
 describe('protocol — the stations and the seats', () => {
-  const day = protocolLayer.days[protocolLayer.days.length - 1]
-  const file = `src/content/protokoll/2026/${day}.json`
-  const minutes = read<{
+  type Minutes = {
     date: string
     entries: Array<{ top_id: string; value: number | null; status: string; as_of: string | null }>
-  }>(file)
+  }
+  const latest = protocolLayer.days[protocolLayer.days.length - 1]
+  // The readings below are checked on the newest night that actually took the carbon dioxide: a
+  // night its source did not answer stays a hole in the archive, and must not break the build.
+  const day =
+    [...protocolLayer.days].reverse().find((d) => {
+      const co2 = read<Minutes>(`src/content/protokoll/2026/${d}.json`).entries.find((e) => e.top_id === 'co2')
+      return co2 !== undefined && co2.value !== null && co2.status === 'ok'
+    }) ?? latest
+  const file = `src/content/protokoll/2026/${day}.json`
+  const minutes = read<Minutes>(file)
 
   it('reads its days from the archive’s filenames', () => {
     expect(protocolLayer.days).toEqual(datedFiles('src/content/protokoll/2026'))
-    expect(protocolLayer.asOf).toBe(minutes.date)
+    expect(protocolLayer.asOf).toBe(read<Minutes>(`src/content/protokoll/2026/${latest}.json`).date)
   })
 
   it('draws the carbon dioxide as a station and the price index as a seat', () => {
