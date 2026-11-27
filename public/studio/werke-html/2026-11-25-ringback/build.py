@@ -36,6 +36,11 @@ SRC = {
         url='https://www.itu.int/rec/dologin_pub.asp?id=T-REC-E.180-199803-I!!PDF-E&lang=e&type=items',
         sha256='9ea28a838c1f4da2bb84c1d42a03a9c4fceddfd6a1ea9baeb38570c260a41b0a',
         what="ITU-T Recommendation E.180/Q.35 (03/98), section 5: the recommended limits of a ringing tone."),
+    'codes96': dict(
+        url=FIELD + '/828e88a6e9a3f037ba2b18ea55e0a072086448cc/artifacts/cycle-019/on-receipt/codes96.json',
+        sha256='17753d9c43c918834b920ddfdc4e45c0b301d7cdb3e96851f93e19cc38606ed0',
+        what="The Field's study 96, its check (2026-11-27): study 94's codes read again blind, every disagreement "
+             "decided with its reason; one code moved."),
     'caloes_911': dict(
         url='https://www.caloes.ca.gov/wp-content/uploads/PSC/Documents/Chapter-I-Standards-update-2023.pdf',
         sha256='db59a5bf65ba7942e2c4cd05ff7b81d679063b81f53b8106097e897ec5b59123',
@@ -77,6 +82,19 @@ def must_contain(text, passage, where):
 # ---------------------------------------------------------------- the Field's receivers and their senders' passages
 _, raw = fetch('receivers94')
 R = json.loads(raw)['receivers']
+# The Field's check of study 94 (study 96, 2026-11-27, this work's own check the same day): every code it moved is
+# moved here, with its reason, and every code it kept stays.
+_, raw = fetch('codes96')
+MOVED = [d for d in json.loads(raw)['decisions'] if d['moves']]
+for d in MOVED:
+    r = next(x for x in R if x['id'] == d['signal'])
+    act = d['code']
+    assert r['acts'][act]['v'] == d['first'], d
+    r['acts'][act]['v'] = d['final']
+    r['acts'][act]['note'] = ((r['acts'][act].get('note') or '') + ' Corrected by the Field\'s check of 27 November '
+                              f'(study 96): {d["first"]} to {d["final"]}. ' + d['why']).strip()
+    r['acts'][act]['corrected'] = dict(first=d['first'], final=d['final'], why=d['why'])
+assert [(d['signal'], d['code']) for d in MOVED] == [('PC3', 'pass_on')]
 _, raw = fetch('signals90')
 S = {s['id']: s for s in json.loads(raw)['signals']}
 assert len(R) == 19
@@ -179,7 +197,7 @@ for r in R:
     for a in ACTS:
         v = r['acts'][a]
         acts[a] = dict(v=v['v'], deadline_h=v['deadline_h'], deadline_max_h=v['deadline_max_h'], ref=v['ref'],
-                       quotes=v['quotes'], note=v['note'], doubt=v['doubt'])
+                       quotes=v['quotes'], note=v['note'], doubt=v['doubt'], corrected=v.get('corrected'))
     sf, rf = r['sender_failure'], r['receiver_failure']
     lines.append(dict(
         id=r['id'], short=short, receiver_name=r['receiver_name'], receiver=r['receiver'],
@@ -213,14 +231,20 @@ counts = dict(
     no_task_public=[l['id'] for l in pub if l['receiver_party'] == 'no'],
     nothing_on_receipt_public=[l['id'] for l in pub if all(l['acts'][a]['v'] == 'none' for a in ACTS)],
     sender_fined=[l['id'] for l in lines if l['sender_failure']['v'] == 'penalty'],
+    # who may send at all: the channels that take word from the public or from users (the Atelier's critique of
+    # 27 November, counted from the Field's own `sender` field)
+    public_may_send=[l['id'] for l in lines if re.search(r'\b(public|users)\b', l['sender'])],
+    must_pass_on_public=[l['id'] for l in pub if must(l, 'pass_on')],
     tones={k: sum(l['tone'] == k for l in lines) for k in TONES},
 )
 assert counts['must_answer'] == ['CA8'] and counts['must_answer_public'] == [] and counts['clocked_public'] == []
 assert counts['sender_fined'] == ['EU4', 'CA4', 'CA5', 'NY4', 'NY5'] and len(counts['yearly_total']) == 5
-assert counts['no_task_public'] == ['COP3', 'CA5', 'NY5'] and counts['nothing_on_receipt_public'] == ['COP3', 'CA5', 'PC4', 'NY5']
+assert counts['no_task_public'] == ['COP3', 'CA5', 'NY5']
+assert counts['nothing_on_receipt_public'] == ['COP3', 'CA5', 'PC3', 'PC4', 'NY5'], counts['nothing_on_receipt_public']
+assert len(counts['public_may_send']) == 5, counts['public_may_send']
 
 DATA = dict(
-    title='RINGBACK', state=1, date='2026-11-25', session=264,
+    title='RINGBACK', state=3, date='2026-11-27', session=266, built=dict(first=264, checked=266),
     sources={k: dict(url=v['url'], sha256=v['sha256'], what=v['what']) for k, v in SRC.items()},
     tones=TONES, control=CONTROL, lines=lines, counts=counts,
     itu_parsed=dict(read=sum(parsed.values()), commonest=list(common), commonest_n=common_n),

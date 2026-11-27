@@ -1,9 +1,13 @@
 // RINGBACK, data (written by build.py; do not edit by hand)
 window.RINGBACK = {
  "title": "RINGBACK",
- "state": 1,
- "date": "2026-11-25",
- "session": 264,
+ "state": 3,
+ "date": "2026-11-27",
+ "session": 266,
+ "built": {
+  "first": 264,
+  "checked": 266
+ },
  "sources": {
   "receivers94": {
    "url": "https://raw.githubusercontent.com/frankbueltge/field-research/3dcd20be555d36c58bebdead061dc7d3dd0c33a2/artifacts/cycle-019/on-receipt/receivers94.json",
@@ -24,6 +28,11 @@ window.RINGBACK = {
    "url": "https://www.itu.int/rec/dologin_pub.asp?id=T-REC-E.180-199803-I!!PDF-E&lang=e&type=items",
    "sha256": "9ea28a838c1f4da2bb84c1d42a03a9c4fceddfd6a1ea9baeb38570c260a41b0a",
    "what": "ITU-T Recommendation E.180/Q.35 (03/98), section 5: the recommended limits of a ringing tone."
+  },
+  "codes96": {
+   "url": "https://raw.githubusercontent.com/frankbueltge/field-research/828e88a6e9a3f037ba2b18ea55e0a072086448cc/artifacts/cycle-019/on-receipt/codes96.json",
+   "sha256": "17753d9c43c918834b920ddfdc4e45c0b301d7cdb3e96851f93e19cc38606ed0",
+   "what": "The Field's study 96, its check (2026-11-27): study 94's codes read again blind, every disagreement decided with its reason; one code moved."
   },
   "caloes_911": {
    "url": "https://www.caloes.ca.gov/wp-content/uploads/PSC/Documents/Chapter-I-Standards-update-2023.pdf",
@@ -139,7 +148,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "power",
@@ -150,7 +160,8 @@ window.RINGBACK = {
       "The AI Office, after consulting the Board, may conduct evaluations of the general-purpose AI model concerned"
      ],
      "note": "Also Art. 91(1): the Commission may request documentation and information. Neither is tied to an incident report.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "power",
@@ -162,7 +173,8 @@ window.RINGBACK = {
       "restrict the making available on the market, withdraw or recall the model."
      ],
      "note": "A request that binds: failing to comply is fined under Art. 101(1)(c).",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -171,7 +183,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -182,7 +195,8 @@ window.RINGBACK = {
       "Any information or documentation obtained pursuant to this Article, including trade secrets, shall be treated in accordance with the confidentiality obligations set out in Article 78."
      ],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -191,7 +205,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "BE",
@@ -240,7 +255,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "none",
@@ -249,7 +265,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -258,7 +275,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -267,7 +285,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -276,7 +295,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -285,7 +305,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "BE",
@@ -334,7 +355,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "duty",
@@ -345,7 +367,8 @@ window.RINGBACK = {
       "Signatories will investigate the causes and effects of serious incidents, including the information within the preceding list, with a view to informing systemic risk assessment."
      ],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -354,7 +377,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "duty",
@@ -366,7 +390,8 @@ window.RINGBACK = {
       "not later than 15 days after the Signatories become aware of the involvement of their model in the incident"
      ],
      "note": "Two days for critical infrastructure, five for a serious cybersecurity breach, ten for a death, fifteen for other serious harm; an initial report to the AI Office, counted from the signatory's awareness.",
-     "doubt": "The duty is to report the serious incident, not to forward the third party's report as such."
+     "doubt": "The duty is to report the serious incident, not to forward the third party's report as such.",
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -375,7 +400,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -384,7 +410,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "XX",
@@ -437,7 +464,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "duty",
@@ -448,7 +476,8 @@ window.RINGBACK = {
       "Office of Emergency Services shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public."
      ],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -457,7 +486,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "power",
@@ -468,7 +498,8 @@ window.RINGBACK = {
       "The Attorney General or the Office of Emergency Services may transmit reports of critical safety incidents and reports from covered employees"
      ],
      "note": "To the Legislature, the Governor, the federal government or appropriate state agencies, at the receiver's discretion.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -479,7 +510,8 @@ window.RINGBACK = {
       "are exempt from the California Public Records Act"
      ],
      "note": "The reports themselves are exempt from the Public Records Act; nothing requires publishing one.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "duty",
@@ -490,7 +522,8 @@ window.RINGBACK = {
       "Beginning January 1, 2027, and annually thereafter, the Office of Emergency Services shall produce a report with anonymized and aggregated information about critical safety incidents that have been reviewed by the Office of Emergency Services since the preceding report."
      ],
      "note": null,
-     "doubt": "The text has the report transmitted to the Legislature and the Governor (§ 22757.13(g)(3)); it does not say the report is published."
+     "doubt": "The text has the report transmitted to the Legislature and the Governor (§ 22757.13(g)(3)); it does not say the report is published.",
+     "corrected": null
     }
    },
    "tone": "US",
@@ -543,7 +576,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "none",
@@ -552,7 +586,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -561,7 +596,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -570,7 +606,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -579,7 +616,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -588,7 +626,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "US",
@@ -637,7 +676,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "power",
@@ -648,7 +688,8 @@ window.RINGBACK = {
       "Office of Emergency Services shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public."
      ],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -657,7 +698,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "power",
@@ -668,7 +710,8 @@ window.RINGBACK = {
       "The Attorney General or the Office of Emergency Services may transmit reports of critical safety incidents and reports from covered employees"
      ],
      "note": "To the Legislature, the Governor, the federal government or appropriate state agencies, at the receiver's discretion.",
-     "doubt": "(e)(1) names 'reports of critical safety incidents', read to include reports by the public."
+     "doubt": "(e)(1) names 'reports of critical safety incidents', read to include reports by the public.",
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -679,7 +722,8 @@ window.RINGBACK = {
       "are exempt from the California Public Records Act"
      ],
      "note": "The reports themselves are exempt from the Public Records Act; nothing requires publishing one.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "duty",
@@ -690,7 +734,8 @@ window.RINGBACK = {
       "Beginning January 1, 2027, and annually thereafter, the Office of Emergency Services shall produce a report with anonymized and aggregated information about critical safety incidents that have been reviewed by the Office of Emergency Services since the preceding report."
      ],
      "note": null,
-     "doubt": "Only incidents the office reviewed, and it need not review a public report; transmitted to the Legislature and the Governor, not said to be published."
+     "doubt": "Only incidents the office reviewed, and it need not review a public report; transmitted to the Legislature and the Governor, not said to be published.",
+     "corrected": null
     }
    },
    "tone": "US",
@@ -739,7 +784,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "none",
@@ -748,7 +794,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -757,7 +804,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "power",
@@ -768,7 +816,8 @@ window.RINGBACK = {
       "The Attorney General or the Office of Emergency Services may transmit reports of critical safety incidents and reports from covered employees"
      ],
      "note": "To the Legislature, the Governor, the federal government or appropriate state agencies, at the receiver's discretion.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -777,7 +826,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "duty",
@@ -788,7 +838,8 @@ window.RINGBACK = {
       "Beginning January 1, 2027, and annually thereafter, the Attorney General shall produce a report with anonymized and aggregated information about reports from covered employees"
      ],
      "note": null,
-     "doubt": "Only reports 'that have been reviewed by the Attorney General', and no text requires a review; transmitted to the Legislature and the Governor, not said to be published."
+     "doubt": "Only reports 'that have been reviewed by the Attorney General', and no text requires a review; transmitted to the Legislature and the Governor, not said to be published.",
+     "corrected": null
     }
    },
    "tone": "US",
@@ -841,7 +892,8 @@ window.RINGBACK = {
       "including a monthly update to the person who made the disclosure regarding the status of the large frontier developer’s investigation of the disclosure and the actions taken by the large frontier developer in response to the disclosure"
      ],
      "note": "A monthly update to the discloser.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "duty",
@@ -852,7 +904,8 @@ window.RINGBACK = {
       "including a monthly update to the person who made the disclosure regarding the status of the large frontier developer’s investigation of the disclosure and the actions taken by the large frontier developer in response to the disclosure"
      ],
      "note": null,
-     "doubt": "The text presupposes an investigation by requiring updates on its status; it does not order one in so many words."
+     "doubt": "The text presupposes an investigation by requiring updates on its status; it does not order one in so many words.",
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -861,7 +914,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -872,7 +926,8 @@ window.RINGBACK = {
       "the disclosures and responses of the process required by this subdivision shall be shared with officers and directors of the large frontier developer at least once each quarter"
      ],
      "note": "Shared inside the company, not with a public body.",
-     "doubt": "A disclosure that reveals a critical safety incident falls under B&P § 22757.13(c)(1), fifteen days from discovery."
+     "doubt": "A disclosure that reveals a critical safety incident falls under B&P § 22757.13(c)(1), fifteen days from discovery.",
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -881,7 +936,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -890,7 +946,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "XX",
@@ -939,7 +996,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "recommended",
@@ -950,7 +1008,8 @@ window.RINGBACK = {
       "We should track and analyze AI technologies, products, service safety vulnerabilities, defects, risks, threats, and safety incidents."
      ],
      "note": null,
-     "doubt": "'We' is the framework's own voice, not the receiver's commitment."
+     "doubt": "'We' is the framework's own voice, not the receiver's commitment.",
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -959,7 +1018,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "recommended",
@@ -970,7 +1030,8 @@ window.RINGBACK = {
       "We should advance international exchange and cooperation on sharing AI risks and threat information"
      ],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -979,7 +1040,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -988,7 +1050,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "CN",
@@ -1037,7 +1100,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "recommended",
@@ -1048,7 +1112,8 @@ window.RINGBACK = {
       "A mechanism for handling public complaints and reports on AI risks and hazards should be established"
      ],
      "note": null,
-     "doubt": "'Handling' is read as examining the complaint; the text says no more."
+     "doubt": "'Handling' is read as examining the complaint; the text says no more.",
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -1057,7 +1122,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -1066,7 +1132,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -1075,7 +1142,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -1084,7 +1152,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "CN",
@@ -1133,7 +1202,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "none",
@@ -1142,7 +1212,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -1151,7 +1222,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -1160,7 +1232,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -1169,7 +1242,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -1178,7 +1252,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "XX",
@@ -1227,7 +1302,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "recommended",
@@ -1238,7 +1314,8 @@ window.RINGBACK = {
       "Organizations should use, as and when appropriate commensurate to the level of risk, AI systems as intended and monitor for vulnerabilities, incidents, emerging risks and misuse after deployment"
      ],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "recommended",
@@ -1249,7 +1326,8 @@ window.RINGBACK = {
       "and take appropriate action to address these. Organizations are encouraged to consider"
      ],
      "note": "On its own system: 'mitigate the identified risks and vulnerabilities' is also only encouraged.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "recommended",
@@ -1260,7 +1338,8 @@ window.RINGBACK = {
       "Organizations should also collaborate and share the aforementioned information with relevant public authorities, as appropriate."
      ],
      "note": null,
-     "doubt": "Principle 4 is the sharing signal G7-3 itself, read here for what the receiver of a user's report should do with it."
+     "doubt": "Principle 4 is the sharing signal G7-3 itself, read here for what the receiver of a user's report should do with it.",
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -1269,7 +1348,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -1278,7 +1358,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "XX",
@@ -1327,7 +1408,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "none",
@@ -1336,7 +1418,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -1345,7 +1428,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -1354,7 +1438,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -1363,7 +1448,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -1372,7 +1458,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "XX",
@@ -1421,7 +1508,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "none",
@@ -1430,7 +1518,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -1439,18 +1528,24 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
-     "v": "duty",
+     "v": "none",
      "deadline_h": null,
      "deadline_max_h": null,
      "ref": "Third commitment",
      "quotes": [
       "Thirdly, policy makers, researchers and developers are committed to information sharing, reporting and early warning systems."
      ],
-     "note": null,
-     "doubt": "A commitment to systems of sharing, not a duty to forward a given report; the sentence on 'timely information' only recognises the value of it."
+     "note": "Corrected by the Field's check of 27 November (study 96): duty to none. The third commitment commits its signatories to 'information sharing, reporting and early warning systems' and only 'recognize[s] the value' of sharing timely information; the first coding's own doubt said so. A commitment to build systems is no duty to pass on a given word.",
+     "doubt": "A commitment to systems of sharing, not a duty to forward a given report; the sentence on 'timely information' only recognises the value of it.",
+     "corrected": {
+      "first": "duty",
+      "final": "none",
+      "why": "The third commitment commits its signatories to 'information sharing, reporting and early warning systems' and only 'recognize[s] the value' of sharing timely information; the first coding's own doubt said so. A commitment to build systems is no duty to pass on a given word."
+     }
     },
     "tell_public": {
      "v": "none",
@@ -1459,7 +1554,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -1468,7 +1564,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "XX",
@@ -1517,7 +1614,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "none",
@@ -1528,7 +1626,8 @@ window.RINGBACK = {
       "Policy makers commit to offer secure and confidential channels through which whistleblowers, including employees and other relevant stakeholders, can raise concerns about systemic risks"
      ],
      "note": "The commitment is to the channel; nothing is said of what is done with a concern raised through it.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -1537,7 +1636,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -1546,7 +1646,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -1555,7 +1656,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -1564,7 +1666,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "XX",
@@ -1618,7 +1721,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "duty",
@@ -1629,7 +1733,8 @@ window.RINGBACK = {
       "The office shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public."
      ],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -1638,7 +1743,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "power",
@@ -1650,7 +1756,8 @@ window.RINGBACK = {
       "The office shall consider transmitting such reports or summaries to the office of the attorney general, as appropriate."
      ],
      "note": "A duty to consider transmitting to the attorney general, not a duty to transmit.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -1661,7 +1768,8 @@ window.RINGBACK = {
       "are exempt from disclosure under article six of the public officers law"
      ],
      "note": "The reports are exempt from New York's freedom of information law; nothing requires publishing one.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "duty",
@@ -1672,7 +1780,8 @@ window.RINGBACK = {
       "Beginning January first, two thousand twenty-eight, and annually thereafter, the office shall produce a report, that includes the following: (i) anonymized and aggregated information about critical safety incidents that have been reviewed by the office"
      ],
      "note": null,
-     "doubt": "The text has the report transmitted to the governor and named legislators (§ 1422(7)(c)); it does not say the report is published."
+     "doubt": "The text has the report transmitted to the governor and named legislators (§ 1422(7)(c)); it does not say the report is published.",
+     "corrected": null
     }
    },
    "tone": "US",
@@ -1726,7 +1835,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "none",
@@ -1735,7 +1845,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -1744,7 +1855,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -1753,7 +1865,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -1762,7 +1875,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -1771,7 +1885,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "US",
@@ -1822,7 +1937,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "power",
@@ -1833,7 +1949,8 @@ window.RINGBACK = {
       "The office shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public."
      ],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "order": {
      "v": "none",
@@ -1842,7 +1959,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "pass_on": {
      "v": "power",
@@ -1854,7 +1972,8 @@ window.RINGBACK = {
       "The office shall consider transmitting such reports or summaries to the office of the attorney general, as appropriate."
      ],
      "note": "A duty to consider transmitting to the attorney general, not a duty to transmit.",
-     "doubt": "§ 1422(5)(a) names 'reports of critical safety incidents', read to include reports by the public."
+     "doubt": "§ 1422(5)(a) names 'reports of critical safety incidents', read to include reports by the public.",
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -1865,7 +1984,8 @@ window.RINGBACK = {
       "are exempt from disclosure under article six of the public officers law"
      ],
      "note": "The reports are exempt from New York's freedom of information law; nothing requires publishing one.",
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "duty",
@@ -1876,7 +1996,8 @@ window.RINGBACK = {
       "Beginning January first, two thousand twenty-eight, and annually thereafter, the office shall produce a report, that includes the following: (i) anonymized and aggregated information about critical safety incidents that have been reviewed by the office"
      ],
      "note": null,
-     "doubt": "Only incidents the office reviewed, and it need not review a public report; transmitted to the governor and named legislators, not said to be published."
+     "doubt": "Only incidents the office reviewed, and it need not review a public report; transmitted to the governor and named legislators, not said to be published.",
+     "corrected": null
     }
    },
    "tone": "US",
@@ -1925,7 +2046,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "investigate": {
      "v": "recommended",
@@ -1936,7 +2058,8 @@ window.RINGBACK = {
       "establishing procedures to detect, investigate and respond to incidents"
      ],
      "note": null,
-     "doubt": "Given as an example of a measure organisations should implement."
+     "doubt": "Given as an example of a measure organisations should implement.",
+     "corrected": null
     },
     "order": {
      "v": "recommended",
@@ -1947,7 +2070,8 @@ window.RINGBACK = {
       "enabling users or operators to pause or stop execution"
      ],
      "note": null,
-     "doubt": "Given as an example of a measure organisations should implement."
+     "doubt": "Given as an example of a measure organisations should implement.",
+     "corrected": null
     },
     "pass_on": {
      "v": "none",
@@ -1956,7 +2080,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public": {
      "v": "none",
@@ -1965,7 +2090,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     },
     "tell_public_aggregate": {
      "v": "none",
@@ -1974,7 +2100,8 @@ window.RINGBACK = {
      "ref": null,
      "quotes": [],
      "note": null,
-     "doubt": null
+     "doubt": null,
+     "corrected": null
     }
    },
    "tone": "XX",
@@ -2025,6 +2152,7 @@ window.RINGBACK = {
   "nothing_on_receipt_public": [
    "COP3",
    "CA5",
+   "PC3",
    "PC4",
    "NY5"
   ],
@@ -2035,6 +2163,14 @@ window.RINGBACK = {
    "NY4",
    "NY5"
   ],
+  "public_may_send": [
+   "COP5",
+   "CA6",
+   "CN2",
+   "G7-1",
+   "NY6"
+  ],
+  "must_pass_on_public": [],
   "tones": {
    "US": 7,
    "BE": 2,

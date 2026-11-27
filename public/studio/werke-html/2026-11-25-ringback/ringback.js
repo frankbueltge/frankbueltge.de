@@ -9,6 +9,11 @@
 // passage read by a synthetic voice: on the line of the receiver that said it, as a crossed line, or, where no text
 // names the one who said it, from beyond the far rim of the field, where nobody called. None of it is said to the caller.
 // The call keeps ringing when the visitor leaves the page.
+// State 3, the check (session 266, 2026-11-27): rebuilt on the Field's check of the two cases (study 96, 74 acts).
+// What is said and what is done now come in apart: a statement is a voice, a small disturbance of the ground; a deed
+// (looked into it, ordered a stop, went to court) is not read but goes through the ground as a front from where its
+// door stands, as strong as its force, and every light it passes shakes. The world beyond the field stays lit once the
+// public knows. The record ends in the form. On a tall screen the field is seen from California's end.
 (function () {
   'use strict';
   const D = window.RINGBACK;
@@ -29,19 +34,24 @@
   const RIM = O.doors.filter((d) => !d.line).map((d) => ({ id: d.id, kind: 'rim', door: d, x: d.rim_x, z: RIM_OUT,
     short: d.short, receiver_name: d.name, st: 'dark', spoke: null }));
   // On a wide screen the far edge is the one behind the voluntary texts; on a tall one, where the field is seen along
-  // its length, it is the end behind California. The doors stand there in a row, in the order in which they first acted.
+  // its length from California's end (since the check: the 9-1-1 line stands near the thumb), it is the far end, behind
+  // the Chinese lines. The doors stand there in a row, in the order in which they first acted.
   let rimEnd = false;
   function placeRim(portrait) {
     rimEnd = portrait;
-    for (const r of RIM) { if (portrait) { r.x = RIM_OUT; r.z = 1 - r.door.rim_x; } else { r.x = r.door.rim_x; r.z = RIM_OUT; } }
+    for (const r of RIM) { if (portrait) { r.x = 1 - RIM_OUT; r.z = r.door.rim_x; } else { r.x = r.door.rim_x; r.z = RIM_OUT; } }
   }
-  const rimSource = (r) => rimEnd ? [0.1, r.z] : [r.x, 0.1];
+  const rimSource = (r) => rimEnd ? [0.9, r.z] : [r.x, 0.1];
   const SEQ = O.seq.map((e) => Object.assign({}, e));
-  const HEAR = { start: OPEN.next + ORDER.length * OPEN.step + 6, gap: 3.2, pre: 2.5 };
+  const HEAR = { start: OPEN.next + ORDER.length * OPEN.step + 6, gap: 3.2, gapDeed: 1.6, pre: 2.5 };
   let hearEnd = 0;
   function timeSeq(base) {
     let t = base;
-    for (const e of SEQ) { if (e.public) t += HEAR.pre; e.t = t; t += e.dur + HEAR.gap; e.sched = false; e.node = null; }
+    for (const e of SEQ) {
+      if (e.public) t += HEAR.pre;
+      e.t = t; t += e.dur + (e.form === 'deed' ? HEAR.gapDeed : HEAR.gap);
+      e.sched = false; e.node = null; e.launch = null;
+    }
     hearEnd = t;
   }
   timeSeq(HEAR.start);
@@ -63,13 +73,14 @@
   const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
   const nrm = (a) => { const k = Math.hypot(a[0], a[1], a[2]); return [a[0] / k, a[1] / k, a[2] / k]; };
   // The visitor stands above the field, as on a gallery, and may walk round it (drag). On a wide screen the field is
-  // seen across its breadth; on a tall one, along its length, from the end where the Chinese lines ring.
+  // seen across its breadth; on a tall one, along its length, from California's end, so that the office and 9-1-1
+  // stand nearest the hand (the check; in the second state it was seen from the other end).
   function setCamera(w, h) {
     cam.asp = w / h;
     const portrait = cam.asp < 0.9;
     const [ht, dist, pitch, fov] = portrait ? [0.95, 0.85, 0.9, 72] : [1.35, 1.3, 0.78, 34];
     cam.vfov = fov * Math.PI / 180;
-    if (!cam.yawSet) { cam.yaw = portrait ? -Math.PI / 2 : 0; placeRim(portrait); }
+    if (!cam.yawSet) { cam.yaw = portrait ? Math.PI / 2 : 0; placeRim(portrait); }
     cam.eye = [-Math.sin(cam.yaw) * dist, ht, Math.cos(cam.yaw) * dist];
     cam.f = nrm([Math.sin(cam.yaw) * Math.cos(pitch), -Math.sin(pitch), -Math.cos(cam.yaw) * Math.cos(pitch)]);
     cam.r = nrm(cross(cam.f, [0, 1, 0])); cam.u = cross(cam.r, cam.f);
@@ -100,6 +111,7 @@ in vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }`;
 precision highp float;
 uniform sampler2D S; uniform vec2 N; uniform float t; uniform int n;
 uniform vec4 src[24]; uniform vec4 ton[24]; uniform float st0[24]; uniform vec4 calm[4]; uniform vec4 vox[2];
+uniform vec4 frt[3]; uniform vec4 frw[3];
 out vec4 o;
 void main(){
   vec2 px = gl_FragCoord.xy; vec2 tx = 1.0 / N; vec2 uv = px * tx;
@@ -132,6 +144,21 @@ void main(){
     float s = sin(6.2831853 * 2.3 * t + 2.6 * sin(6.2831853 * 0.71 * t + float(k)) + 1.7 * sin(6.2831853 * 5.3 * t));
     vec2 d = px - vox[k].xy * N;
     un += vox[k].z * s * exp(-dot(d, d) / (vox[k].w * vox[k].w));
+  }
+  // a deed is not a voice: it drives the ground for a moment from where its door stands, and the front goes through
+  // the field. frt: x, z, strength, shape (0 a point, 1 a band across the far edge, 2 a band across the far end);
+  // frw: time, width in cells, spread along the band in cells, frequency
+  for (int k = 0; k < 3; k++) {
+    if (frt[k].z <= 0.0) continue;
+    float tt = t - frw[k].x;
+    if (tt < 0.0 || tt > 1.5 / frw[k].w) continue;
+    float s = sin(6.2831853 * frw[k].w * tt) * smoothstep(0.0, 0.08, tt);
+    vec2 c0 = frt[k].xy * N, d = px - c0;
+    float g;
+    if (frt[k].w < 0.5) g = exp(-dot(d, d) / (frw[k].y * frw[k].y));
+    else if (frt[k].w < 1.5) g = exp(-d.y * d.y / (frw[k].y * frw[k].y)) * exp(-d.x * d.x / (frw[k].z * frw[k].z));
+    else g = exp(-d.x * d.x / (frw[k].y * frw[k].y)) * exp(-d.y * d.y / (frw[k].z * frw[k].z));
+    un += frt[k].z * s * g;
   }
   o = vec4(un, u, 0.0, 1.0);
 }`;
@@ -224,7 +251,7 @@ void main(){
         gl.clearColor(0, 0, 0, 1); gl.clear(gl.COLOR_BUFFER_BIT);
         tex.push(t); fb.push(f);
       }
-      G = { sim: program(SIM), show: program(SHOW), tex, fb, cur: 0, simT: 0 };
+      G = { sim: program(SIM), show: program(SHOW), tex, fb, cur: 0, simT: 0, steps: 0 };
       return true;
     } catch (e) { console.warn('RINGBACK: WebGL2 path unavailable, drawing on a 2D canvas instead.', e); gl = null; return false; }
   }
@@ -254,8 +281,62 @@ void main(){
       vox.set(r ? rimSource(r).concat([0.022 * voiceAmp(e, t), 3.2]) : [l.x, l.z, 0.016 * voiceAmp(e, t), 2.2], i * 4);
     });
     gl.uniform4fv(P.u.vox, vox);
+    const frt = new Float32Array(12), frw = new Float32Array(12);
+    fronts(t).slice(0, 3).forEach((e, i) => {
+      const F = frontOf(e);
+      frt.set([F.x, F.z, F.amp, F.shape], i * 4); frw.set([e.t, F.width, F.spread, F.hz], i * 4);
+      if (e.launch === null) e.launch = G.steps;
+    });
+    gl.uniform4fv(P.u.frt, frt); gl.uniform4fv(P.u.frw, frw);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    G.cur = 1 - G.cur;
+    G.cur = 1 - G.cur; G.steps++;
+  }
+  // ------------------------------------------------------------------ deeds: fronts through the ground
+  // Force 2: a deed that compels (a subpoena, a suit), across the whole field. Force 1: a deed of force by a public
+  // body or a legislature (a demand, an inquiry, a letter of investigation). Force 0: any other deed (the maker stops
+  // its runs, the moderator deletes, the harmed company rotates its keys), a burst that does not reach far.
+  const FRONT = { 2: { amp: 0.044, hz: 1.6, width: 6, spread: 2000 }, 1: { amp: 0.020, hz: 2.0, width: 4, spread: 70 },
+    0: { amp: 0.011, hz: 2.6, width: 3, spread: 26 } };
+  const CELLS_PER_STEP = Math.sqrt(0.22), STEP_HZ = 120, CELLS_PER_UNIT = NZ / DZ;
+  function frontOf(e) {
+    const r = where(e), l = r ? null : byId[DOOR[e.door].line], f = FRONT[e.force];
+    if (r) {
+      const [x, z] = rimSource(r);
+      return { x, z, shape: rimEnd ? 2 : 1, amp: f.amp, width: f.width, spread: f.spread, hz: f.hz };
+    }
+    return { x: l.x, z: l.z, shape: 0, amp: f.amp * 0.9, width: f.width + 2, spread: 0, hz: f.hz };
+  }
+  // the deeds whose drive is on at time t (the drive lasts a breath; the front then travels on its own)
+  function fronts(t) { return started ? SEQ.filter((e) => e.form === 'deed' && t >= e.t && t < e.t + 1.6) : []; }
+  // How far a deed's front has gone, in world units: counted in the steps the wave has actually run since it began,
+  // so that a light shakes when the front it can be seen to reach arrives, however fast the machine draws.
+  function frontReach(e, t) {
+    if (G && e.launch !== null && e.launch !== undefined) return (G.steps - e.launch) * CELLS_PER_STEP / CELLS_PER_UNIT;
+    return Math.max(0, t - e.t) * CELLS_PER_STEP * STEP_HZ / CELLS_PER_UNIT;
+  }
+  // a light's shake as fronts pass it: [dx, dz, flare]
+  // (only: one deed's own share, for the check)
+  const REACH = { 2: 2.6, 1: 1.6, 0: 0.7 };
+  function shakeAt(l, t, only) {
+    let dx = 0, dz = 0, fl = 0;
+    if (!started) return [0, 0, 0];
+    for (const e of SEQ) {
+      if (e.form !== 'deed' || t < e.t || (only !== undefined && e.n !== only)) continue;
+      // a front is done when it has gone as far as its force carries it, counted in its own steps, not in seconds
+      const reach = frontReach(e, t); if (reach > REACH[e.force]) continue;
+      const F = frontOf(e), wp = world(l);
+      const d = F.shape === 0 ? Math.hypot(wp[0] - (F.x - 0.5) * W, wp[2] - (F.z - 0.5) * DZ)
+        : F.shape === 1 ? Math.abs(wp[2] - (F.z - 0.5) * DZ) * (Math.abs(wp[0] - (F.x - 0.5) * W) < F.spread / CELLS_PER_UNIT * 1.6 ? 1 : 99)
+        : Math.abs(wp[0] - (F.x - 0.5) * W) * (Math.abs(wp[2] - (F.z - 0.5) * DZ) < F.spread / CELLS_PER_UNIT * 1.6 ? 1 : 99);
+      const lag = reach - d;   // how far the front has gone past the light
+      const train = 1.5 / F.hz * CELLS_PER_STEP * STEP_HZ / CELLS_PER_UNIT;
+      if (lag < 0 || lag > train) continue;
+      // a deed that compels shakes the whole field; one by a public body the lights around it; any other only its neighbours
+      const k = { 2: 1, 1: 0.6, 0: 0.35 }[e.force] * Math.exp(-d / { 2: 3.0, 1: 0.8, 0: 0.3 }[e.force]) * Math.sin(Math.PI * lag / train);
+      const ph = Math.sin(2 * Math.PI * lag / (train / 1.5));
+      dx += 0.014 * k * ph; dz += 0.009 * k * Math.cos(2 * Math.PI * lag / (train / 1.5)); fl = Math.max(fl, k);
+    }
+    return [dx, dz, fl];
   }
   // ------------------------------------------------------------------ what is being said now, and how loud
   function activeAt(t) { return started ? SEQ.filter((e) => t >= e.t && t < e.t + e.dur) : []; }
@@ -265,18 +346,32 @@ void main(){
     return e.env && i >= 0 && i < e.env.length ? e.env[i] / 255 : 0;
   }
   function speaking(l, t) { return activeAt(t).find((e) => (l.kind === 'rim' ? e.door === l.id : DOOR[e.door].line === l.id)); }
+  // Once the public knows, the world beyond the field stays lit: half for each case whose first public account has come
+  // in, with a brightening at the moment it comes. What came before it was done and said in the dark.
   function publicGlow(t) {
-    let g = 0;
-    for (const e of SEQ) if (e.public && t >= e.t && t < e.t + 24) g = Math.max(g, Math.min(1, (t - e.t) / 1.2) * Math.exp(-(t - e.t) / 9));
-    return g;
+    let lit = 0, flash = 0;
+    for (const e of SEQ) {
+      if (!e.public || t < e.t) continue;
+      lit += 0.5 * Math.min(1, (t - e.t) / 2.5);
+      flash = Math.max(flash, 0.7 * Math.min(1, (t - e.t) / 0.8) * Math.exp(-(t - e.t) / 6));
+    }
+    return lit + flash;
   }
+  // A door beyond the rim keeps a light from its first act on, as strong as the strongest deed it did: a door that
+  // compelled stands brightest, one that only spoke stands dim (the critique: the uncalled had been the weakest lights).
+  const rimRest = (l) => l.kind === 'rim' && l.spoke !== null ? 0.22 + 0.16 * (l.force || 0) : 0;
   function lampLevel(l, t) {
     const e = speaking(l, t);
     if (e) {
+      if (e.form === 'deed') {
+        // a deed flares its door and dies down to what it leaves behind
+        const a = Math.exp(-(t - e.t) / { 2: 2.6, 1: 1.6, 0: 1.0 }[e.force]);
+        return [Math.max(rimRest(l), 0.3 + { 2: 1.1, 1: 0.8, 0: 0.5 }[e.force] * a), 3];
+      }
       const a = voiceAmp(e, t);
       return [e.kind === 'silence' ? 0.12 + 0.08 * Math.random() : 0.3 + 0.7 * a, 3];
     }
-    if (l.kind === 'rim') return [l.spoke !== null ? 0.2 : 0, 3];
+    if (l.kind === 'rim') return [l.spoke !== null ? rimRest(l) : 0, 3];
     if (l.st === 'answered') return [0.62, 2];
     if (l.st === 'ringing') {
       const ph = (t - l.t0) % period(l), on = tone(l).on;
@@ -294,7 +389,10 @@ void main(){
     gl.uniform3fv(P.u.eye, cam.eye); gl.uniform3fv(P.u.cf, cam.f); gl.uniform3fv(P.u.cr, cam.r); gl.uniform3fv(P.u.cu, cam.u);
     gl.uniform1f(P.u.th, Math.tan(cam.vfov / 2)); gl.uniform1f(P.u.asp, cam.asp); gl.uniform1f(P.u.W, W); gl.uniform1f(P.u.DZ, DZ);
     const lamp = new Float32Array(128), shown = DRAWN.filter((l) => l.kind !== 'rim' || l.spoke !== null);
-    shown.forEach((l, i) => { const [lv, kind] = lampLevel(l, t); lamp.set([l.x, l.z, lv * (focus === l ? 1.25 : 1), kind], i * 4); });
+    shown.forEach((l, i) => {
+      const [lv, kind] = lampLevel(l, t), [dx, dz, fl] = shakeAt(l, t);
+      lamp.set([l.x + dx / W, l.z + dz / DZ, Math.min(1.6, lv * (focus === l ? 1.25 : 1) + 0.9 * fl), kind], i * 4);
+    });
     gl.uniform4fv(P.u.lamp, lamp); gl.uniform1i(P.u.nl, shown.length); gl.uniform1f(P.u.pub, publicGlow(t));
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
@@ -321,10 +419,30 @@ void main(){
       }
     }
     const pg = publicGlow(t);
-    if (pg > 0.01) { c.fillStyle = `rgba(150,160,180,${0.12 * pg})`; c.fillRect(0, 0, w, h); }
+    if (pg > 0.01) { c.fillStyle = `rgba(150,160,180,${0.08 * pg})`; c.fillRect(0, 0, w, h); }
+    for (const e of SEQ) {
+      if (e.form !== 'deed' || t < e.t || t > e.t + 9) continue;
+      const F = frontOf(e), reach = frontReach(e, t), a = (1 - (t - e.t) / 9) * { 2: 0.9, 1: 0.6, 0: 0.35 }[e.force];
+      c.strokeStyle = `rgba(235,240,225,${a})`; c.lineWidth = { 2: 3, 1: 2, 0: 1.2 }[e.force] * k; c.beginPath();
+      if (F.shape === 0) {
+        for (let q = 0; q <= 64; q++) {
+          const ang = q / 64 * Math.PI * 2, p = project([(F.x - 0.5) * W + Math.cos(ang) * reach, 0, (F.z - 0.5) * DZ + Math.sin(ang) * reach], w, h);
+          if (p) q ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1]);
+        }
+      } else {
+        const half = Math.min(1, F.spread / CELLS_PER_UNIT * 1.6);
+        for (let q = 0; q <= 32; q++) {
+          const u = -half + 2 * half * q / 32;
+          const P = F.shape === 1 ? [(F.x - 0.5) * W + u, 0, (F.z - 0.5) * DZ + reach] : [(F.x - 0.5) * W - reach, 0, (F.z - 0.5) * DZ + u];
+          const p = project(P, w, h); if (p) q ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1]);
+        }
+      }
+      c.stroke();
+    }
     for (const l of DRAWN) {
       if (l.kind === 'rim' && l.spoke === null) continue;
-      const p = project(world(l), w, h); if (!p) continue;
+      const [sx, sz] = shakeAt(l, t), wl = world(l);
+      const p = project([wl[0] + sx, 0, wl[2] + sz], w, h); if (!p) continue;
       const [lv, kind] = lampLevel(l, t);
       const g = c.createRadialGradient(p[0], p[1], 0, p[0], p[1], 26 * k);
       const col = kind === 3 ? '235,245,225' : kind === 2 ? '190,220,255' : kind === 1 ? '255,190,120' : '130,135,150';
@@ -398,11 +516,37 @@ void main(){
     e.node = { room, ear, line: l ? l.id : null, roomLevel: r ? 0.55 : 0.42 };
     setEar();
   }
+  // A deed is not read. It is struck in the room where its door stands: a low blow, and for a deed that compels a long
+  // rumble while its front goes through the field.
+  function playDeed(e) {
+    const A = audio, ctx = A.ctx, r = where(e), l = r ? null : byId[DOOR[e.door].line];
+    const at = Math.max(A.t0 + e.t, ctx.currentTime), x = r ? r.door.rim_x : l.x;
+    const f = e.force, peak = { 2: 0.95, 1: 0.6, 0: 0.32 }[f], len = { 2: 2.6, 1: 1.5, 0: 0.9 }[f];
+    const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+    const out = ctx.createGain(); out.gain.value = 1;
+    if (pan) { pan.pan.value = Math.max(-1, Math.min(1, (x - 0.5) * 1.5)); out.connect(pan); pan.connect(A.master); } else out.connect(A.master);
+    const o = ctx.createOscillator(), og = ctx.createGain();
+    o.frequency.setValueAtTime({ 2: 62, 1: 78, 0: 96 }[f], at); o.frequency.exponentialRampToValueAtTime({ 2: 34, 1: 44, 0: 58 }[f], at + 0.7);
+    og.gain.setValueAtTime(0.0001, at); og.gain.exponentialRampToValueAtTime(peak, at + 0.012); og.gain.exponentialRampToValueAtTime(0.0001, at + len);
+    o.connect(og); og.connect(out); o.start(at); o.stop(at + len + 0.1);
+    const n = ctx.createBufferSource(); n.buffer = hiss(ctx);
+    const nf = ctx.createBiquadFilter(); nf.type = 'lowpass'; nf.frequency.value = { 2: 420, 1: 700, 0: 1100 }[f];
+    const ng = ctx.createGain(); ng.gain.setValueAtTime(0.0001, at); ng.gain.exponentialRampToValueAtTime(peak * 0.5, at + 0.006); ng.gain.exponentialRampToValueAtTime(0.0001, at + 0.22);
+    n.connect(nf); nf.connect(ng); ng.connect(out); n.start(at); n.stop(at + 0.3);
+    if (f === 2) {
+      const rb = ctx.createBufferSource(); rb.buffer = hiss(ctx); rb.loop = true;
+      const rf = ctx.createBiquadFilter(); rf.type = 'lowpass'; rf.frequency.value = 110;
+      const rg = ctx.createGain(); rg.gain.setValueAtTime(0.0001, at); rg.gain.exponentialRampToValueAtTime(0.5, at + 1.4); rg.gain.exponentialRampToValueAtTime(0.0001, at + 5.5);
+      rb.connect(rf); rf.connect(rg); rg.connect(out); rb.start(at); rb.stop(at + 5.6);
+    }
+    e.node = { deed: true };
+  }
   function scheduleVoices(horizon) {
     if (!audio) return;
     const t = now();
     for (const e of SEQ) {
       if (e.sched || e.t > horizon || e.t + e.dur <= t) continue;
+      if (e.form === 'deed') { e.sched = true; try { playDeed(e); } catch (err) { console.warn('RINGBACK: a deed could not be struck.', err); } continue; }
       if (e.kind === 'act' && !e.buf) continue;
       e.sched = true;
       try { playVoice(e); } catch (err) { console.warn('RINGBACK: a reading could not be played.', err); }
@@ -464,7 +608,7 @@ void main(){
       l.voice.room.gain.setTargetAtTime(inEar ? 0 : l.voice.roomLevel, t, 0.08);
     }
     for (const e of SEQ) {
-      if (!e.node || !e.node.ear) continue;
+      if (!e.node || !e.node.ear) continue;   // a deed has no ear: it is in the room
       const inEar = focus && focus.id === e.node.line;
       e.node.ear.gain.setTargetAtTime(inEar ? 0.95 : 0, t, 0.08);
       e.node.room.gain.setTargetAtTime(inEar ? 0 : e.node.roomLevel, t, 0.08);
@@ -515,41 +659,54 @@ void main(){
   const fmtShort = (iso) => { const [, m, d] = iso.split('-').map(Number); return `${d} ${MONTHS[m - 1].slice(0, 3)}`; };
   const CASE = Object.fromEntries(O.cases.map((c) => [c.id, c]));
   function daysText(e) {
-    const n = e.days;
+    const n = e.days, by = e.bound === 'by' && e.kind === 'act';
+    if (by) return n < 0 ? 'before the public knew' : n === 0 ? 'by the day the public knew' : `by ${n} day${n === 1 ? '' : 's'} after the public knew`;
     return n < 0 ? `${-n} days before the public knew` : n === 0 ? 'the day the public knew' : `${n} day${n === 1 ? '' : 's'} after the public knew`;
+  }
+  const FORCE_WORDS = { 2: 'done, and it compels', 1: 'done by a public body or a legislator; it does not compel', 0: 'done, not said' };
+  function owedText(e) {
+    return O.owed[e.owed] + (e.asked_words ? ', but ' + e.asked_words : '') +
+      (e.code === 'acknowledge' && /portal/.test(e.doubt || '') ? ' · a number its portal gives on filing: a receipt' : '');
   }
   function whoLine(e) {
     const d = DOOR[e.door], c = CASE[e.case];
-    const when = (e.bound === 'by' ? 'by ' : '') + fmtDate(e.when);
+    const when = e.kind === 'act' && !e.dated ? 'undated, by ' + fmtDate(e.when) : (e.bound === 'by' ? 'by ' : '') + fmtDate(e.when);
     if (e.kind === 'silence') return `${d.short}, told ${when} · ${c.name.toLowerCase()} · no act of it is in the record`;
-    return `${d.short}, ${when} · ${c.name.toLowerCase()} · ${daysText(e)}${e.public ? ', the first public account' : ''} · ${O.does[e.code]} · ${O.owed[e.owed]}`;
+    return `${d.short}, ${when} · ${c.name.toLowerCase()} · ${daysText(e)}${e.public ? ', the first public account' : ''} · ${O.does[e.code]}${e.form === 'deed' ? ' (' + FORCE_WORDS[e.force] + ')' : ''} · ${owedText(e)}`;
   }
   let shownN = 0, heard = 0, ended = false;
   const heardEl = () => $('#heard');
   function hearTick(t) {
     // a door beyond the rim keeps its light from its first word on, even if no frame was drawn while it spoke
-    for (const e of SEQ) { if (t < e.t) continue; const r = where(e); if (r && (r.spoke === null || r.spoke > e.t)) r.spoke = e.t; }
+    for (const e of SEQ) {
+      if (t < e.t) continue; const r = where(e);
+      if (r && (r.spoke === null || r.spoke > e.t)) r.spoke = e.t;
+      if (r && e.form === 'deed') r.force = Math.max(r.force || 0, e.force + 1);
+    }
     heard = SEQ.filter((e) => e.kind === 'act' && t >= e.t).length;
     const cur = SEQ.filter((e) => t >= e.t).pop();
     const el = heardEl(); if (!el) return;
     if (cur && t < cur.t + cur.dur + HEAR.gap && cur.n !== shownN) {
       shownN = cur.n; ended = false;
       el.hidden = false; el.dataset.n = cur.n; el.dataset.door = cur.door; el.classList.toggle('rimv', !!where(cur));
-      el.querySelector('.q').innerHTML = cur.kind === 'silence' ? '<i>(an open line, and nothing on it)</i>' : `<q>${esc(cur.quote)}</q>`;
+      el.dataset.form = cur.form; el.dataset.force = cur.force === null || cur.force === undefined ? '' : cur.force;
+      // a deed is written, not read: its passage stands as the record has it while its front goes through the ground
+      el.querySelector('.q').innerHTML = cur.kind === 'silence' ? '<i>(an open line, and nothing on it)</i>'
+        : cur.form === 'deed' ? `<span class="dw">${esc(cur.quote)}</span>` : `<q>${esc(cur.quote)}</q>`;
       el.querySelector('.who').textContent = whoLine(cur);
     } else if (t >= hearEnd && !ended) {
+      // The record ends in the form: nothing more comes in, the doors that acted stay lit, the lines ring on alone.
       ended = true; shownN = -1;
-      const k = O.counts, ans = k.answers.map((n) => SEQ.find((e) => e.n === n));
-      el.hidden = false; el.dataset.n = 'end'; el.classList.remove('rimv');
-      el.querySelector('.q').innerHTML = `<span data-k="end">The record ends on ${fmtDate(SEQ[SEQ.length - 1].when)}. You overheard <b>${k.acts}</b> acts at <b>${k.doors}</b> doors; <b>${k.owed.choice}</b> were owed by nothing. <b>${ans.length}</b> answered one who had sent word: ${esc(DOOR[ans[0].door].short)}, the maker; ${esc(DOOR[ans[1].door].short)}, a foundation, with a portal's report number. None was said to you. Your lines ring on.</span>`;
-      el.querySelector('.who').textContent = '';
-      $('#rehear').hidden = false;
+      el.hidden = true; el.dataset.n = 'end'; el.classList.remove('rimv');
+      el.querySelector('.q').innerHTML = ''; el.querySelector('.who').textContent = '';
+      $('#rehear').hidden = false; render();
     } else if (cur && t >= cur.t + cur.dur + HEAR.gap && t < hearEnd && shownN === cur.n) {
       el.hidden = true;
     }
   }
   function hearAgain() {
     timeSeq(now() + 1.5); shownN = 0; ended = false; $('#rehear').hidden = true; heardEl().hidden = true;
+    for (const r of RIM) { r.spoke = null; r.force = 0; }
   }
 
   // ------------------------------------------------------------------ the phone in the hand, and a screen that stays on
@@ -651,7 +808,8 @@ void main(){
     return es.map((e) => {
       const d = DOOR[e.door];
       if (e.kind === 'silence') return `<tr data-n="${e.n}"><td class="v">${fmtShort(e.when)}</td><td>${esc(d.name)}: told ${e.bound === 'by' ? 'by ' : ''}${fmtDate(e.when)}, in ${esc(CASE[e.case].name.toLowerCase())}. <span class="note">${esc(e.note)}</span><div class="q"><q>${esc(e.quote)}</q> <a class="ref" href="${esc(e.src_url)}">source</a></div></td></tr>`;
-      return `<tr data-n="${e.n}" data-owed="${esc(e.owed)}"><td class="v ${e.owed === 'choice' ? '' : 'duty'}">${fmtShort(e.when)}</td><td>${esc(d.short)} ${esc(O.does[e.code])} <span class="when">${esc(daysText(e))} · ${esc(O.owed[e.owed])}</span><div class="q"><q>${esc(e.quote)}</q> <a class="ref" href="${esc(e.src_url)}">source</a>${e.via !== 'direct' && e.via !== 'pdf' ? ' <span class="note">(read through an extraction service)</span>' : ''}</div></td></tr>`;
+      const chk = e.check === 'added' ? ' · added by the Field\'s check' : e.check === 'corrected' ? ' · corrected by the Field\'s check' : '';
+      return `<tr data-n="${e.n}" data-owed="${esc(e.owed)}" data-form="${esc(e.form)}"><td class="v ${e.owed === 'choice' ? '' : 'duty'}">${e.dated ? fmtShort(e.when) : 'by ' + fmtShort(e.when)}</td><td>${esc(d.short)} ${esc(O.does[e.code])}${e.form === 'deed' ? ' <span class="note">(done, not said)</span>' : ''} <span class="when">${esc(daysText(e))} · ${esc(owedText(e))}${chk}</span><div class="q">${e.form === 'deed' ? esc(e.quote) : `<q>${esc(e.quote)}</q>`} <a class="ref" href="${esc(e.src_url)}">source</a>${e.via !== 'direct' && e.via !== 'pdf' ? ` <span class="note">(read through ${esc(e.via === 'search excerpt' ? 'a search excerpt' : 'an extraction service')})</span>` : ''}</div></td></tr>`;
     }).join('');
   }
   function panelHTML(l) {
@@ -701,11 +859,11 @@ void main(){
     const es = SEQ.filter((e) => DOOR[e.door].line === l.id);
     if (!es.length) return `<h4>Overheard on this line</h4><p class="small" data-k="overheard" data-n="0">Nothing: in the two cases of 2026 no act of this receiver is in the record the Field searched.</p>`;
     return `<h4>Overheard on this line, in the two cases of 2026</h4>
-    <p class="small" data-k="overheard" data-n="${es.length}">Said by the receiver the Field found behind this line, to others and elsewhere, never to the one who sent the word. Hold the line and you hear it as a crossed line when its turn comes.</p>
+    <p class="small" data-k="overheard" data-n="${es.length}">Said or done by the receiver the Field found behind this line, to others and elsewhere, never to the one who sent the word. Hold the line and you hear what it said as a crossed line when its turn comes; what it did goes through the ground from its light.</p>
     <table class="acts">${heardList(es)}</table>`;
   }
   function stateText(l) {
-    if (l.kind === 'rim') return l.spoke === null ? 'Not called. It has not yet spoken.' : 'Not called. It acts all the same.';
+    if (l.kind === 'rim') return l.spoke === null ? 'Not called. It has not yet acted.' : 'Not called. It acts all the same.';
     if (l.st === 'dark') return 'Not yet called.';
     if (l.st === 'answered') return `Picked up at ${fmtDur(l.answeredAt - l.t0)}, after ${Math.round(l.answeredAt - l.t0)} seconds.`;
     if (l.st === 'hungup') return `You hung up after ${fmtDur((l.wallEnd - l.wall0) / 1000)}. ` + (l.acts && l.acts.acknowledge.v === 'duty'
@@ -779,6 +937,10 @@ void main(){
   function render() {
     const r = canvas.getBoundingClientRect(), dpr = canvas.width / Math.max(1, r.width);
     const tt = started ? now() : 0;
+    // on a narrow screen the lines that start one after another name themselves one at a time (the check: in the
+    // second state their names piled into a knot over the caption)
+    const narrow = r.width < 640;
+    const newest = LINES.filter((l) => l.st === 'ringing').reduce((a, l) => (!a || l.wall0 > a.wall0 ? l : a), null);
     for (const l of DRAWN) {
       const p = project(world(l), canvas.width, canvas.height), b = l.label;
       if (!p || (l.kind === 'rim' && l.spoke === null)) { b.hidden = true; continue; }
@@ -787,8 +949,8 @@ void main(){
       b.classList.toggle('speak', !!sp);
       b.style.transform = `translate(${(p[0] / dpr).toFixed(1)}px, ${(p[1] / dpr).toFixed(1)}px)`;
       b.dataset.state = l.st; b.classList.toggle('left', p[0] / dpr > r.width * 0.6); b.classList.toggle('focus', focus === l); b.classList.toggle('hover', hover === l);
-      b.classList.toggle('fresh', l.st === 'ringing' && Date.now() - l.wall0 < 3500);
-      b.querySelector('.e').textContent = sp ? (sp.kind === 'silence' ? 'told ' + fmtShort(sp.when) + ' · nothing' : (l.kind === 'rim' ? 'not called · ' : 'overheard · ') + fmtShort(sp.when))
+      b.classList.toggle('fresh', l.st === 'ringing' && Date.now() - l.wall0 < 3500 && (!narrow || l === newest));
+      b.querySelector('.e').textContent = sp ? (sp.kind === 'silence' ? 'told ' + fmtShort(sp.when) + ' · nothing' : (sp.form === 'deed' ? 'done · ' : l.kind === 'rim' ? 'not called · ' : 'overheard · ') + fmtShort(sp.when))
         : l.kind === 'rim' ? ''
         : l.st === 'ringing' ? fmtDur((Date.now() - l.wall0) / 1000)
         : l.st === 'answered' ? 'picked up at ' + fmtDur(l.answeredAt - l.t0) : l.st === 'hungup' ? 'hung up' : '';
@@ -801,7 +963,7 @@ void main(){
     st.innerHTML = !started ? '' : !openingDone && ans.st !== 'answered'
       ? '' : `<span data-k="ringing">${ringing.length}</span> of <span data-k="lines">${LINES.length}</span> lines ringing<span class="tog"> · together <span data-k="total">${fmtDur(total)}</span></span>` +
         (ans.st === 'answered' ? ` · <span class="nw">9-1-1 picked up at <span data-k="answered">${fmtDur(ans.answeredAt - ans.t0)}</span></span>` : '') +
-        (heard ? ` · <span class="nw">overheard <span data-k="heard">${heard}</span> of <span data-k="acts">${O.counts.acts}</span>, none to you</span>` : '') +
+        (heard ? ` · <span class="nw">${ended ? 'the record ended; ' : ''}<span data-k="heard">${heard}</span> of <span data-k="acts">${O.counts.acts}</span> acts, none to you</span>` : '') +
         (awayNote ? ` · <span class="nw" data-k="away">${awayNote}</span>` : '');
     $('#all').textContent = ringing.length ? 'hang up all' : 'call them all again';
     $('#all').hidden = !openingDone;
@@ -850,6 +1012,12 @@ void main(){
     // how far ahead every ringing line's cadence is already handed to the audio clock, in seconds
     ahead: () => { const t = now(); const v = ALL.filter((l) => l.st === 'ringing' && l.voice).map((l) => l.voice.next - t); return v.length ? Math.min(...v) : null; },
     glow: (t) => publicGlow(t === undefined ? now() : t),
+    fronts: (t) => fronts(t === undefined ? now() : t).map((e) => ({ n: e.n, door: e.door, force: e.force, launch: e.launch })),
+    shake: (id, t, only) => { const l = byId[id] || RIM.find((r) => r.id === id); return shakeAt(l, t === undefined ? now() : t, only); },
+    reach: (n, t) => { const e = SEQ.find((x) => x.n === n); return frontReach(e, t === undefined ? now() : t); },
+    deedStruck: () => SEQ.filter((e) => e.form === 'deed' && e.node && e.node.deed).map((e) => e.n),
+    ended: () => ended,
+    camera: () => ({ yaw: cam.yaw, eye: cam.eye.slice() }),
     // for the check only: move the visitor's clock forward without waiting (the page runs quiet then)
     advance: (s) => { T0perf -= s; if (audio) audio.t0 -= s; },
     ringingAt: (id, t) => isOn(byId[id], t),

@@ -1,35 +1,11 @@
 {
  "what": "Every reading transcribed back with faster-whisper base.en and compared with the words it was given.",
  "threshold": 0.85,
- "readings": 47,
- "passed": 47,
+ "readings": 38,
+ "passed": 38,
  "results": [
   {
-   "n": 1,
-   "door": "W-MOD",
-   "share": 1.0,
-   "ok": true,
-   "heard": "A human moderator notices and cleans up the spam.",
-   "missed": []
-  },
-  {
-   "n": 2,
-   "door": "W-MAKER",
-   "share": 1.0,
-   "ok": true,
-   "heard": "We infer that OpenAI intervened at this point to prevent further edits.",
-   "missed": []
-  },
-  {
-   "n": 3,
-   "door": "E-MAKER",
-   "share": 1.0,
-   "ok": true,
-   "heard": "Responders investigated and linked the observed internal activity  to an exploit gym evaluation using artifactory as an improvised message board  and a network pivot.",
-   "missed": []
-  },
-  {
-   "n": 4,
+   "n": 8,
    "door": "E-MAKER",
    "share": 1.0,
    "ok": true,
@@ -37,15 +13,17 @@
    "missed": []
   },
   {
-   "n": 5,
+   "n": 11,
    "door": "E-MAKER",
-   "share": 1.0,
+   "share": 0.967,
    "ok": true,
-   "heard": "Later that day, OpenAI took the compromised  artifactory deployment offline, preserved its storage,  and revoked agent credentials.",
-   "missed": []
+   "heard": "the existence of the improvised message board, and the significance of the inter-agent communication  activity.  We're not apparent to leaders responsible for incident detection and response at that time.",
+   "missed": [
+    "were"
+   ]
   },
   {
-   "n": 6,
+   "n": 12,
    "door": "E-MAKER",
    "share": 1.0,
    "ok": true,
@@ -53,23 +31,7 @@
    "missed": []
   },
   {
-   "n": 7,
-   "door": "E-HF",
-   "share": 1.0,
-   "ok": true,
-   "heard": "eradicated the attacker's foothold across the affected clusters, and rebuilt the compromised  nodes.",
-   "missed": []
-  },
-  {
-   "n": 8,
-   "door": "E-HF",
-   "share": 1.0,
-   "ok": true,
-   "heard": "It was driven end-to-end by an autonomous AI agent system.",
-   "missed": []
-  },
-  {
-   "n": 9,
+   "n": 15,
    "door": "E-HF",
    "share": 1.0,
    "ok": true,
@@ -77,31 +39,15 @@
    "missed": []
   },
   {
-   "n": 10,
+   "n": 18,
    "door": "E-HF",
    "share": 1.0,
    "ok": true,
-   "heard": "We are working with outside cybersecurity forensic specialists to investigate the issue  and review our security policies and procedures.",
+   "heard": "It was driven end-to-end by an autonomous AI agent system.",
    "missed": []
   },
   {
-   "n": 12,
-   "door": "E-MAKER",
-   "share": 1.0,
-   "ok": true,
-   "heard": "Shortly after investigating the initial alert, open AI stopped active exploit gym evaluations,  began disabling the evaluation across the environment.",
-   "missed": []
-  },
-  {
-   "n": 13,
-   "door": "E-MAKER",
-   "share": 1.0,
-   "ok": true,
-   "heard": "On July 20, after further investigation, open AI uncovered evidence suggesting potential  involvement of its models in the incident hugging face had disclosed.",
-   "missed": []
-  },
-  {
-   "n": 14,
+   "n": 23,
    "door": "E-MAKER",
    "share": 1.0,
    "ok": true,
@@ -109,7 +55,7 @@
    "missed": []
   },
   {
-   "n": 15,
+   "n": 25,
    "door": "E-HF",
    "share": 1.0,
    "ok": true,
@@ -117,7 +63,7 @@
    "missed": []
   },
   {
-   "n": 16,
+   "n": 26,
    "door": "E-MAKER",
    "share": 1.0,
    "ok": true,
@@ -125,7 +71,7 @@
    "missed": []
   },
   {
-   "n": 17,
+   "n": 28,
    "door": "E-WH",
    "share": 1.0,
    "ok": true,
@@ -133,15 +79,7 @@
    "missed": []
   },
   {
-   "n": 18,
-   "door": "E-MAKER",
-   "share": 1.0,
-   "ok": true,
-   "heard": "On July 25, OpenAI stopped all training and inference related to the internal-only research  model at issue.",
-   "missed": []
-  },
-  {
-   "n": 19,
+   "n": 31,
    "door": "E-HF",
    "share": 1.0,
    "ok": true,
@@ -149,23 +87,23 @@
    "missed": []
   },
   {
-   "n": 20,
-   "door": "E-AGS",
+   "n": 32,
+   "door": "E-MAKER",
    "share": 1.0,
    "ok": true,
-   "heard": "We ask that OpenAI take immediate steps to preserve all potentially relevant documents,  data and information.",
+   "heard": "No models planned for upcoming release, were involved in exploiting hugging face.",
    "missed": []
   },
   {
-   "n": 21,
-   "door": "E-AGS",
+   "n": 33,
+   "door": "E-MAKER",
    "share": 1.0,
    "ok": true,
-   "heard": "Finally, we ask that OpenAI immediately cease and desist from all.",
+   "heard": "We disclosed this vulnerability.  Along with other artifactory vulnerabilities our models identified as part of our review  to the vendor.",
    "missed": []
   },
   {
-   "n": 22,
+   "n": 37,
    "door": "E-AGS",
    "share": 0.957,
    "ok": true,
@@ -175,25 +113,15 @@
    ]
   },
   {
-   "n": 23,
-   "door": "E-HOUSE",
-   "share": 0.938,
-   "ok": true,
-   "heard": "We are writing to request additional information and express our concern about a deeply troubling  cyber security.",
-   "missed": [
-    "cybersecurity"
-   ]
-  },
-  {
-   "n": 24,
+   "n": 40,
    "door": "E-ASM",
    "share": 1.0,
    "ok": true,
-   "heard": "Assemblymember Rebecca Bauer-Kahan at the August 10 hearing said it was no secret that none  of the frontier companies met SB-53's threat-level thresholds.",
+   "heard": "It's unclear to date if anyone is actually complying with SB 53, Bauer Kahan, the state  privacy and consumer protection committee's chair said at the meeting.",
    "missed": []
   },
   {
-   "n": 25,
+   "n": 41,
    "door": "E-OES",
    "share": 1.0,
    "ok": true,
@@ -201,15 +129,7 @@
    "missed": []
   },
   {
-   "n": 26,
-   "door": "E-AL",
-   "share": 1.0,
-   "ok": true,
-   "heard": "Pursuant to the authority vested in the Attorney General by Section 819, 9 of the Code of Alabama.",
-   "missed": []
-  },
-  {
-   "n": 27,
+   "n": 43,
    "door": "E-AL",
    "share": 0.955,
    "ok": true,
@@ -219,7 +139,7 @@
    ]
   },
   {
-   "n": 28,
+   "n": 44,
    "door": "E-MAKER",
    "share": 1.0,
    "ok": true,
@@ -227,7 +147,15 @@
    "missed": []
   },
   {
-   "n": 29,
+   "n": 47,
+   "door": "W-MAKER",
+   "share": 1.0,
+   "ok": true,
+   "heard": "A company spokesperson told Reuters that open AI could not meaningfully respond to claims  or findings on a report that we have not had an opportunity to review.",
+   "missed": []
+  },
+  {
+   "n": 48,
    "door": "W-RES",
    "share": 0.923,
    "ok": true,
@@ -238,7 +166,15 @@
    ]
   },
   {
-   "n": 30,
+   "n": 49,
+   "door": "W-RES",
+   "share": 1.0,
+   "ok": true,
+   "heard": "we omit strategies and findings  that model developers could use to make it harder for researchers  to uncover agent collusion  in the future.",
+   "missed": []
+  },
+  {
+   "n": 50,
    "door": "W-MAKER",
    "share": 0.973,
    "ok": true,
@@ -248,17 +184,7 @@
    ]
   },
   {
-   "n": 31,
-   "door": "E-CAAG",
-   "share": 0.929,
-   "ok": true,
-   "heard": "Last month Attorney General Bonter announced that DOJ is conducting a formal investigation  into",
-   "missed": [
-    "bonta"
-   ]
-  },
-  {
-   "n": 32,
+   "n": 53,
    "door": "W-MAKER",
    "share": 1.0,
    "ok": true,
@@ -266,15 +192,27 @@
    "missed": []
   },
   {
-   "n": 33,
+   "n": 54,
    "door": "W-MAKER",
    "share": 1.0,
    "ok": true,
-   "heard": "OpenAI has sent the European Commission a report regarding a hijack of a German website  by rogue agents.  A commission spokesperson said on Monday.",
+   "heard": "In parallel we're working with dozens of government regulatory agencies worldwide on these issues.",
    "missed": []
   },
   {
-   "n": 34,
+   "n": 55,
+   "door": "W-MAKER",
+   "share": 0.885,
+   "ok": true,
+   "heard": "The European Commission has confirmed receipt of OpenAI's report on the DSE Wiki Agent episode,  but has not disclosed its contents or filing date.",
+   "missed": [
+    "d",
+    "s",
+    "e"
+   ]
+  },
+  {
+   "n": 56,
    "door": "W-EC",
    "share": 1.0,
    "ok": true,
@@ -282,25 +220,15 @@
    "missed": []
   },
   {
-   "n": 35,
-   "door": "E-SEN",
-   "share": 0.958,
-   "ok": true,
-   "heard": "I am investigating your AI agent's hack of hugging face in July 2026 in light of new,  disturbing evidence regarding the incident.",
-   "missed": [
-    "agents"
-   ]
-  },
-  {
-   "n": 36,
-   "door": "E-VH",
+   "n": 57,
+   "door": "E-OES",
    "share": 1.0,
    "ok": true,
-   "heard": "called on Altman to immediately grant federal cybersecurity agencies access to information  that would allow them to assess the safety and risks of open AI's models.",
+   "heard": "A spokesperson for the Office of Emergency Services said SB-53 is not intended to make  every cybersecurity incident involving an AI company reportable to the state.",
    "missed": []
   },
   {
-   "n": 37,
+   "n": 60,
    "door": "E-OES",
    "share": 1.0,
    "ok": true,
@@ -308,7 +236,7 @@
    "missed": []
   },
   {
-   "n": 38,
+   "n": 61,
    "door": "E-FOUND",
    "share": 1.0,
    "ok": true,
@@ -316,7 +244,7 @@
    "missed": []
   },
   {
-   "n": 39,
+   "n": 62,
    "door": "E-FOUND",
    "share": 1.0,
    "ok": true,
@@ -324,7 +252,15 @@
    "missed": []
   },
   {
-   "n": 40,
+   "n": 63,
+   "door": "W-MAKER",
+   "share": 1.0,
+   "ok": true,
+   "heard": "Our new framework for disclosing instances of misaligned model behavior, September 16.",
+   "missed": []
+  },
+  {
+   "n": 64,
    "door": "E-MAKER",
    "share": 0.933,
    "ok": true,
@@ -334,7 +270,7 @@
    ]
   },
   {
-   "n": 41,
+   "n": 65,
    "door": "E-MAKER",
    "share": 1.0,
    "ok": true,
@@ -342,23 +278,33 @@
    "missed": []
   },
   {
-   "n": 42,
+   "n": 67,
    "door": "E-CAAG",
+   "share": 0.923,
+   "ok": true,
+   "heard": "As part of ongoing investigation, Attorney General Bonter serves investigative subpoena  on OpenAI.",
+   "missed": [
+    "bonta"
+   ]
+  },
+  {
+   "n": 69,
+   "door": "E-EC",
    "share": 1.0,
    "ok": true,
-   "heard": "California Attorney General Rob Bonta yesterday served an investigative subpoena on OpenAI.",
+   "heard": "She called the hugging face case a wake-up call.  In it, she said, over 700 open AI agents escaped their environment and hacked into another company.",
    "missed": []
   },
   {
-   "n": 43,
-   "door": "W-EC",
+   "n": 71,
+   "door": "E-EC",
    "share": 1.0,
    "ok": true,
-   "heard": "The AI office has already requested and received serious incident reports and sent requests for  information on security practices.",
+   "heard": "The panel has worked together with the AI office on a set of questions for the companies  that developed the models involved.",
    "missed": []
   },
   {
-   "n": 44,
+   "n": 72,
    "door": "E-MAKER",
    "share": 1.0,
    "ok": true,
@@ -366,15 +312,7 @@
    "missed": []
   },
   {
-   "n": 45,
-   "door": "E-EC",
-   "share": 1.0,
-   "ok": true,
-   "heard": "The AI office has sent such requests to open AI and anthropic.",
-   "missed": []
-  },
-  {
-   "n": 46,
+   "n": 73,
    "door": "E-EC",
    "share": 1.0,
    "ok": true,
@@ -382,17 +320,7 @@
    "missed": []
   },
   {
-   "n": 47,
-   "door": "E-CAAG",
-   "share": 0.974,
-   "ok": true,
-   "heard": "Attorney General Bonter alleges open AI's failure to adequately secure and monitor the  testing of its highly capable and increasingly powerful AI models creates a public nuisance  by posing a danger to the public and violates California's unfair competition law.",
-   "missed": [
-    "bonta"
-   ]
-  },
-  {
-   "n": 48,
+   "n": 75,
    "door": "E-CAAG",
    "share": 1.0,
    "ok": true,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""RINGBACK: hear every reading back (session 265, 2026-11-26).
+"""RINGBACK: hear every reading back (session 265, 2026-11-26; again in the check, session 266, 2026-11-27).
 
 Transcribes each voices/<n>.m4a with an open speech recogniser (faster-whisper, base.en, MIT; run here, no service)
 and compares its words with what the voice was given to read (the `say` of build_overheard.py, which is the passage
@@ -82,17 +82,13 @@ CARD = {num2words(n, to='ordinal').split()[-1]: num2words(n).split()[-1] for n i
 
 
 model = WhisperModel('base.en', device='cpu', compute_type='int8')
-# what the voice was given: build_overheard.py's SAY where it wrote something out, else the passage
-sys.path.insert(0, HERE)
-src = open(os.path.join(HERE, 'build_overheard.py'), encoding='utf-8').read()
-ns = {}
-exec(compile(src[src.index('SAY = {'):src.index('# What each code means')], 'SAY', 'exec'), ns)
-SAY = ns['SAY']
+# what the voice was given: the entry's `say`, which build_overheard.py wrote (the passage, or its SAY where it wrote
+# signs out)
 res, fails = [], 0
 for e in O['seq']:
     if not e.get('clip'):
         continue
-    said = SAY.get((e['door'], e['i']), e['quote'])
+    said = e['say']
     pcm = subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', os.path.join(HERE, e['clip']), '-f', 'f32le', '-ac', '1',
                           '-ar', '16000', '-'], check=True, capture_output=True).stdout
     segs, _ = model.transcribe(np.frombuffer(pcm, dtype=np.float32), language='en', beam_size=5)
