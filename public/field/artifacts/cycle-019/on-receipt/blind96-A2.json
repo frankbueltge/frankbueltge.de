@@ -1,0 +1,556 @@
+{
+ "reader": "A2",
+ "texts": [
+  {
+   "instrument": "sb53",
+   "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53",
+   "via": "extraction",
+   "sha256": null,
+   "note": "direct fetch HTTP 403 (error page, sha of that page 20204034...); text read via a page-extraction service (the first search service over its limit); chaptered version Chapter 138"
+  },
+  {
+   "instrument": "raise",
+   "url": "https://legislation.nysenate.gov/pdf/laws/GBS1422/ (also GBS1420, 1421, 1423-1429 at the same pattern)",
+   "via": "pdf",
+   "sha256": "299ecd6c92900b080603d22e653e3f51da98c73a5f293cb6ab1c926e2624035e"
+  }
+ ],
+ "signals": [
+  {
+   "id": "CA4",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "shall review critical safety incident reports submitted by frontier developers",
+     "ref": "B&P 22757.13(d)",
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "may transmit reports of critical safety incidents and reports from covered employees made pursuant to Chapter 5.1 (commencing with Section 1107)",
+     "ref": "B&P 22757.13(e)(1)",
+     "doubt": "Receiver is OES or the Attorney General; recipients are Legislature, Governor, federal government, state agencies."
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": "periodic",
+     "quote": "the Office of Emergency Services shall produce a report with anonymized and aggregated information about critical safety incidents that have been reviewed",
+     "ref": "B&P 22757.13(g)(1)",
+     "doubt": "Aggregate report goes to the Legislature (Section 9795) and the Governor; text says produce and transmit, not publish; coded as aggregate publication."
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quote": "fails to report an incident as required by Section 22757.13, or fails to comply with its own frontier AI framework shall be subject to a civil penalty",
+    "ref": "B&P 22757.15(a)",
+    "max": "$1,000,000 per violation",
+    "who": "Attorney General, civil action (22757.15(b))"
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Penalty applies by its words to a large frontier developer only; the sender here is a frontier developer (15 days to report, 22757.13(c)(1)). Annual report to Legislature/Governor read as aggregate duty, not as receiver accounting for handling (receiver_failure none; doubtful)."
+  },
+  {
+   "id": "CA5",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quote": "fails to report an incident as required by Section 22757.13, or fails to comply with its own frontier AI framework shall be subject to a civil penalty",
+    "ref": "B&P 22757.15(a)",
+    "max": "$1,000,000 per violation",
+    "who": "Attorney General, civil action (22757.15(b))"
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "no",
+   "note": "Text addresses only the developer's duty to disclose within 24 hours to an authority; names no handling duty of the authority. Penalty reaches large frontier developers only. Searched: authority, law enforcement agency, public safety agency, and verbs of codes 1-6."
+  },
+  {
+   "id": "CA6",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "power",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "may review reports submitted by members of the public",
+     "ref": "B&P 22757.13(d)",
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "may transmit reports of critical safety incidents and reports from covered employees made pursuant to Chapter 5.1 (commencing with Section 1107)",
+     "ref": "B&P 22757.13(e)(1)",
+     "doubt": "Covers 'reports of critical safety incidents' generally; not limited to public reports."
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": "periodic",
+     "quote": "the Office of Emergency Services shall produce a report with anonymized and aggregated information about critical safety incidents that have been reviewed",
+     "ref": "B&P 22757.13(g)(1)",
+     "doubt": "Aggregate report goes to the Legislature (Section 9795) and the Governor; text says produce and transmit, not publish; coded as aggregate publication. Covers public reports only to the extent OES chose to review them."
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Mechanism for public reports: 22757.13(a)."
+  },
+  {
+   "id": "CA7",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "may transmit reports of critical safety incidents and reports from covered employees made pursuant to Chapter 5.1 (commencing with Section 1107)",
+     "ref": "B&P 22757.13(e)(1)",
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": "periodic",
+     "quote": "the Attorney General shall produce a report with anonymized and aggregated information about reports from covered employees",
+     "ref": "B&P 22757.14(d)(1)",
+     "doubt": "Aggregate report goes to the Legislature (Section 9795) and the Governor; text says produce and transmit, not publish; coded as aggregate publication."
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Labor Code 1107.1(a) only bars the developer from preventing or retaliating against disclosure; AG duties are in 22757.13(e) and 22757.14(d). 22757.14(d)(1) speaks of reports 'reviewed by the Attorney General' but requires no review (investigate none). Federal authority named as alternative receiver is not coded. Reports exempt from CPRA (22757.13(f)): tell_public none."
+  },
+  {
+   "id": "CA8",
+   "acts": {
+    "acknowledge": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": "periodic",
+     "quote": "including a monthly update to the person who made the disclosure regarding the status of the large frontier developer’s investigation of the disclosure",
+     "ref": "Labor Code 1107.1(e)(1)",
+     "doubt": "Reply to sender is a monthly status update, not a receipt confirmation."
+    },
+    "investigate": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "including a monthly update to the person who made the disclosure regarding the status of the large frontier developer’s investigation of the disclosure and the actions taken by the large frontier developer in response to the disclosure",
+     "ref": "Labor Code 1107.1(e)(1)",
+     "doubt": "Investigation is presupposed by the update duty, not commanded in terms."
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "named",
+    "quote": "The court is authorized to award reasonable attorney’s fees to a plaintiff who brings a successful action for a violation of this section.",
+    "ref": "Labor Code 1107.1(f)"
+   },
+   "receiver_party": "yes",
+   "note": "pass_on none: quarterly sharing with officers and directors (1107.1(e)(2)(A)) stays inside the developer, not a public body. receiver_failure named is doubtful: 1107.1(f)-(h) remedies attach to a violation of the section, which includes (e)."
+  },
+  {
+   "id": "NY4",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "shall review critical safety incident reports submitted by frontier developers",
+     "ref": "GBL 1422(4)",
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "may transmit reports of critical safety incidents or summaries of any assessments of catastrophic risk from internal use of frontier models to other governmental entities at their discretion",
+     "ref": "GBL 1422(5)(a)",
+     "doubt": "Also: 'shall consider transmitting' to the attorney general; consideration is not a duty to forward."
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": "periodic",
+     "quote": "the office shall produce a report, that includes the following: (i) anonymized and aggregated information about critical safety incidents that have been reviewed by the office",
+     "ref": "GBL 1422(7)(a)(i)",
+     "doubt": "Report goes to governor and legislative leaders (1422(7)(c)); text says produce and transmit, not publish; coded as aggregate publication. Starts January 1, 2028."
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quote": "fails to report an incident as required by section fourteen hundred twenty-two of this article",
+    "ref": "GBL 1427(1)",
+    "max": "$1,000,000 first violation; $3,000,000 per subsequent violation",
+    "who": "Attorney General, civil action (1427(1))"
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Penalty reaches large frontier developers only; sender here is a frontier developer. Reports exempt from FOIL (1422(6)): tell_public none. Office also has rulemaking (1429)."
+  },
+  {
+   "id": "NY5",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quote": "fails to report an incident as required by section fourteen hundred twenty-two of this article",
+    "ref": "GBL 1427(1)",
+    "max": "$1,000,000 first violation; $3,000,000 per subsequent violation",
+    "who": "Attorney General, civil action (1427(1))"
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "no",
+   "note": "Text addresses only the developer's 24-hour disclosure to an authority; no handling duty or power of the authority. Penalty reaches large frontier developers only."
+  },
+  {
+   "id": "NY6",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "power",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "may review reports submitted by members of the public",
+     "ref": "GBL 1422(4)",
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "may transmit reports of critical safety incidents or summaries of any assessments of catastrophic risk from internal use of frontier models to other governmental entities at their discretion",
+     "ref": "GBL 1422(5)(a)",
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": "periodic",
+     "quote": "the office shall produce a report, that includes the following: (i) anonymized and aggregated information about critical safety incidents that have been reviewed by the office",
+     "ref": "GBL 1422(7)(a)(i)",
+     "doubt": "Report goes to governor and legislative leaders (1422(7)(c)); text says produce and transmit, not publish; coded as aggregate publication. Starts January 1, 2028."
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Mechanism for public reports: 1422(1)."
+  }
+ ]
+}

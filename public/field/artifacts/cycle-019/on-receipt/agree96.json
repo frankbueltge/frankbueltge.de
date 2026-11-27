@@ -1,0 +1,322 @@
+{
+ "what": "Check 96: agreement of the blind second codes with studies 94 and 95 (agree96.py).",
+ "A": {
+  "receivers": 19,
+  "act_cells_pooled": {
+   "n": 114,
+   "agree": 113,
+   "raw": 0.991,
+   "kappa": 0.972,
+   "kappa_exact": 0.9717891610987378
+  },
+  "per_act": {
+   "acknowledge": {
+    "n": 19,
+    "agree": 19,
+    "raw": 1.0,
+    "kappa": 1.0,
+    "kappa_exact": 1.0
+   },
+   "investigate": {
+    "n": 19,
+    "agree": 19,
+    "raw": 1.0,
+    "kappa": 1.0,
+    "kappa_exact": 1.0
+   },
+   "order": {
+    "n": 19,
+    "agree": 19,
+    "raw": 1.0,
+    "kappa": 1.0,
+    "kappa_exact": 1.0
+   },
+   "pass_on": {
+    "n": 19,
+    "agree": 18,
+    "raw": 0.947,
+    "kappa": 0.893,
+    "kappa_exact": 0.893258426966292
+   },
+   "tell_public": {
+    "n": 19,
+    "agree": 19,
+    "raw": 1.0,
+    "kappa": null,
+    "kappa_exact": null
+   },
+   "tell_public_aggregate": {
+    "n": 19,
+    "agree": 19,
+    "raw": 1.0,
+    "kappa": 1.0,
+    "kappa_exact": 1.0
+   }
+  },
+  "deadline_on_cells_both_coded": {
+   "n": 20,
+   "agree": 19,
+   "raw": 0.95,
+   "kappa": 0.897,
+   "kappa_exact": 0.8974358974358974
+  },
+  "sender_failure": {
+   "n": 19,
+   "agree": 18,
+   "raw": 0.947,
+   "kappa": 0.919,
+   "kappa_exact": 0.9188034188034185
+  },
+  "receiver_failure": {
+   "n": 19,
+   "agree": 19,
+   "raw": 1.0,
+   "kappa": 1.0,
+   "kappa_exact": 1.0
+  },
+  "receiver_party": {
+   "n": 19,
+   "agree": 18,
+   "raw": 0.947,
+   "kappa": 0.89,
+   "kappa_exact": 0.8901734104046242
+  },
+  "disagreements": [
+   {
+    "signal": "AS1",
+    "code": "sender_failure",
+    "first": "none",
+    "blind": "n/a"
+   },
+   {
+    "signal": "COP5",
+    "code": "pass_on.deadline_h",
+    "first": "48",
+    "blind": "prompt",
+    "blind_doubt": "Commitment 9: 'without undue delay'; 9.3 sets tiers of 2, 5, 10, 15 days from awareness, four-weekly updates, final within 60 days."
+   },
+   {
+    "signal": "G7-3",
+    "code": "receiver_party",
+    "first": "no",
+    "blind": "yes"
+   },
+   {
+    "signal": "PC3",
+    "code": "pass_on",
+    "first": "duty",
+    "blind": "none",
+    "blind_quote": null
+   }
+  ],
+  "P164": "held"
+ },
+ "B": {
+  "acts_first": 47,
+  "acts_blind": 80,
+  "paired": 46,
+  "only_first": 1,
+  "only_blind": 34,
+  "unitising_agreement": 0.568,
+  "class_on_pairs": {
+   "n": 46,
+   "agree": 46,
+   "raw": 1.0,
+   "kappa": 1.0,
+   "kappa_exact": 1.0
+  },
+  "owed5_on_pairs": {
+   "n": 46,
+   "agree": 40,
+   "raw": 0.87,
+   "kappa": 0.535,
+   "kappa_exact": 0.5345699831365934
+  },
+  "owed2_on_pairs": {
+   "n": 46,
+   "agree": 40,
+   "raw": 0.87,
+   "kappa": 0.355,
+   "kappa_exact": 0.3551401869158879
+  },
+  "receipt_date": {
+   "n": 18,
+   "agree": 14,
+   "raw": 0.778,
+   "kappa": 0.76,
+   "kappa_exact": 0.76
+  },
+  "receipts": [
+   {
+    "door": "W-MOD",
+    "first": "2026-06-02",
+    "blind_earliest": "2026-06-02",
+    "same": true
+   },
+   {
+    "door": "W-RES",
+    "first": null,
+    "blind_earliest": "2026-09-04",
+    "same": false
+   },
+   {
+    "door": "W-MAKER",
+    "first": "2026-06-21",
+    "blind_earliest": "2026-06-21",
+    "same": true
+   },
+   {
+    "door": "W-EC",
+    "first": null,
+    "blind_earliest": "2026-09-07",
+    "same": false
+   },
+   {
+    "door": "E-MAKER",
+    "first": "2026-06-27",
+    "blind_earliest": "2026-06-27",
+    "same": true
+   },
+   {
+    "door": "E-HF",
+    "first": "2026-07-13",
+    "blind_earliest": "2026-07-13",
+    "same": true
+   },
+   {
+    "door": "E-FBI",
+    "first": "2026-07-16",
+    "blind_earliest": "2026-07-16",
+    "same": true
+   },
+   {
+    "door": "E-WH",
+    "first": "2026-07-23",
+    "blind_earliest": "2026-07-23",
+    "same": true
+   },
+   {
+    "door": "E-AGS",
+    "first": "2026-08-03",
+    "blind_earliest": "2026-08-03",
+    "same": true
+   },
+   {
+    "door": "E-AL",
+    "first": "2026-08-03",
+    "blind_earliest": "2026-08-03",
+    "same": true
+   },
+   {
+    "door": "E-HOUSE",
+    "first": "2026-08-10",
+    "blind_earliest": "2026-08-10",
+    "same": true
+   },
+   {
+    "door": "E-ASM",
+    "first": "2026-08-10",
+    "blind_earliest": "2026-08-10",
+    "same": true
+   },
+   {
+    "door": "E-OES",
+    "first": "2026-08-10",
+    "blind_earliest": "2026-08-10",
+    "same": true
+   },
+   {
+    "door": "E-CAAG",
+    "first": "2026-09-04",
+    "blind_earliest": "2026-09-09",
+    "same": false
+   },
+   {
+    "door": "E-SEN",
+    "first": "2026-09-09",
+    "blind_earliest": "2026-09-09",
+    "same": true
+   },
+   {
+    "door": "E-VH",
+    "first": "2026-09-10",
+    "blind_earliest": "2026-09-10",
+    "same": true
+   },
+   {
+    "door": "E-FOUND",
+    "first": "2026-09-13",
+    "blind_earliest": "2026-09-13",
+    "same": true
+   },
+   {
+    "door": "E-EC",
+    "first": null,
+    "blind_earliest": "2026-10-09",
+    "same": false
+   }
+  ]
+ },
+ "D": {
+  "reasons": 8,
+  "same": 7,
+  "rows": [
+   {
+    "item": "R1",
+    "passage": "At this time, the on-call response staff advised that stopping the evaluation run was not required.",
+    "atelier": "class",
+    "blind": "class",
+    "same": true
+   },
+   {
+    "item": "R2",
+    "passage": "Jonathan Snow, the deputy director for the Homeland Security Division of the Governor's Office of Emergency Services, said that the OpenAI hack \"did not meet the threshold\" for reporting under SB 53",
+    "atelier": "class",
+    "blind": "class",
+    "same": true
+   },
+   {
+    "item": "R3",
+    "passage": "SB 53 \"is not intended to make every cybersecurity incident involving an AI company reportable\" to the state.",
+    "atelier": "class",
+    "blind": "class",
+    "same": true
+   },
+   {
+    "item": "R4",
+    "passage": "In its more recent social media post, OpenAI said it had considered the \"wiki incident\" to be \"an instance of misalignment similar\" to others that it had already shared.",
+    "atelier": "class",
+    "blind": "class",
+    "same": true
+   },
+   {
+    "item": "R5",
+    "passage": "The models involved in this incident fall outside the report's model scope.",
+    "atelier": "class",
+    "blind": "class",
+    "same": true
+   },
+   {
+    "item": "R6",
+    "passage": "The impacts of these incidents were below the threshold of catastrophic harm",
+    "atelier": "class",
+    "blind": "both",
+    "same": false
+   },
+   {
+    "item": "R7",
+    "passage": "We initially understood this primarily as a security incident.",
+    "atelier": "class",
+    "blind": "class",
+    "same": true
+   },
+   {
+    "item": "R8",
+    "passage": "None of the models involved in this incident fell within the scope of SB 53, according to OpenAI, meaning that existing California law did not make reporting this incident mandatory.",
+    "atelier": "class",
+    "blind": "class",
+    "same": true
+   }
+  ]
+ }
+}

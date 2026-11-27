@@ -1,0 +1,861 @@
+{
+ "reader": "B1",
+ "texts": [
+  {
+   "key": "sw",
+   "url": "https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/",
+   "via": "direct curl + tag strip",
+   "sha256": "c6e2f6622760b4189a03fc3c021cea2cf4ca4b683013b732ff822641dfc5cc2f"
+  },
+  {
+   "key": "cw",
+   "url": "https://collusion.wiki/",
+   "via": "direct curl + tag strip",
+   "sha256": "ed3837275f149628d018b59f747798467d390af149eae8e6da447cc18079f094"
+  },
+  {
+   "key": "tc",
+   "url": "https://www.techcrunch.com/2026/09/04/another-swarm-of-openai-agents-reached-the-open-internet-without-the-frontier-labs-knowledge/",
+   "via": "extraction (a page-extraction service; direct curl got HTTP 403 or script-rendered page)",
+   "sha256": "fa909c7dd819e454959f1a9a948e54f9f0c9a28ed71ba9cb82e81fac9dfa68c0"
+  },
+  {
+   "key": "tc5",
+   "url": "https://techcrunch.com/2026/09/05/openai-confirms-wiki-incident-says-its-working-on-a-framework-for-more-disclosure/",
+   "via": "extraction (a page-extraction service; direct curl got HTTP 403 or script-rendered page)",
+   "sha256": "8a181a7e585560da0de0f767939d089f153e022d4ba35241aa5b23724465daf2"
+  },
+  {
+   "key": "star",
+   "url": "https://www.thestar.com.my/tech/tech-news/2026/09/07/openai-has-sent-eu-incident-report-on-hijacked-german-website-commission-says",
+   "via": "direct curl + tag strip",
+   "sha256": "9ff224a2c9091cbd1fac6fa70fb7d754bfaf8862187f3ea6992eb637fad1e403"
+  },
+  {
+   "key": "ibt",
+   "url": "https://www.ibtimes.co.uk/openai-eu-scrutiny-dsewiki-incident-1818384",
+   "via": "direct curl + tag strip",
+   "sha256": "b9c5342fb19d839a09f295279066e34f30b0db9b9677b6ba0f75de10e9b12909"
+  },
+  {
+   "key": "ecpanel",
+   "url": "https://digital-strategy.ec.europa.eu/en/news/special-meeting-ai-scientific-panel",
+   "via": "direct curl + tag strip",
+   "sha256": "ff3e31ed9010c10d515b340fbfd5c02f601e0ba0dd03fa506d723040ffc25c1c"
+  },
+  {
+   "key": "oaitr",
+   "url": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf",
+   "via": "pdftotext -layout",
+   "sha256": "dd635cf6e5f39f0e1f646f08c36549090d77156ed89cbd3d733ed496648cae9c"
+  },
+  {
+   "key": "oai",
+   "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
+   "via": "direct curl + tag strip",
+   "sha256": "bc8d5bbda39afd6f55e4c636a638c60b04bd83b336dc63a9db46d13323180dfa"
+  },
+  {
+   "key": "oaiq",
+   "url": "https://cdn.openai.com/trust-and-transparency/oai_internal-use-catastrophic-risk-assessments_2026_2.pdf",
+   "via": "pdftotext -layout",
+   "sha256": "12d14ae95ef84f19b5090c16d0cf26a506637065f00eafe200841e86068c20b4"
+  },
+  {
+   "key": "hf1",
+   "url": "https://huggingface.co/blog/security-incident-july-2026",
+   "via": "direct curl + tag strip",
+   "sha256": "c9dc3bc4624fa9353b190b1f548b70adc7713e38ee22e852bec01e360322349a"
+  },
+  {
+   "key": "hf2",
+   "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+   "via": "direct curl + tag strip",
+   "sha256": "09cc30b64eb4a39d9f4af82ca9a42cb16cd01f2c07733caa16fbdebab2e00c5a"
+  },
+  {
+   "key": "fbwh",
+   "url": "https://www.foxbusiness.com/technology/white-house-monitoring-after-openai-models-escaped-containment-hacked-hugging-face-systems",
+   "via": "direct curl + tag strip",
+   "sha256": "64d3e1b44d1f03ba2a039d8abca1ce3461714849fdc748ca9ffadc1a70b97b9f"
+  },
+  {
+   "key": "ags",
+   "url": "https://cdn.attorneygeneral.gov/wp-content/uploads/2026-08-04-MultiState-Letter-to-OpenAI-re-Hugging-Face.pdf",
+   "via": "pdftotext -layout",
+   "sha256": "3bfd56930039f27c107247aad0c80945c5f20f39d9dfb229668895710313a79a"
+  },
+  {
+   "key": "iowa",
+   "url": "https://www.iowaattorneygeneral.gov/newsroom/attorney-general-brenna-bird-leads-coalition-demanding-transparency-from-openai-after-ai-breach-and",
+   "via": "direct curl + tag strip",
+   "sha256": "c3145643923b819929b4269a231e2f4f33d692f01ad67c8b1ac876fffda7844b"
+  },
+  {
+   "key": "al_sub",
+   "url": "https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf",
+   "via": "pdftotext -layout",
+   "sha256": "90b19ef460f9b5fe6a8e0a9557633b1314ce64ca3f0ef73af82d31dec7959c53"
+  },
+  {
+   "key": "al_pr",
+   "url": "https://www.alabamaag.gov/wp-content/uploads/2026/08/2026.8.21-Attorney-General-Marshall-Launches-Investigation-Into-OpenAI-and-Sam-Altman-for-Massive-Artificial-Intelligence-Data-Breach.pdf",
+   "via": "pdftotext -layout",
+   "sha256": "16d64b0d179cb579cd940165421001bc574576d0240a8e1624abf17ae034f2c7"
+  },
+  {
+   "key": "casar",
+   "url": "https://casar.house.gov/sites/evo-subsites/casar.house.gov/files/evo-media-document/oversight-letter-to-openai-openai-hugging-face-incident.pdf",
+   "via": "pdftotext -layout",
+   "sha256": "0ed37fe1db981237c4c179061db6d22ac47c1b14f8b9abe744f9b1edf86450ed"
+  },
+  {
+   "key": "ml",
+   "url": "https://missionlocal.org/2026/09/california-ai-safety-law-sb-53-openai-hack-wiener-newsom/",
+   "via": "direct curl + tag strip",
+   "sha256": "2f583d0b2df751b76f1697b46f89b2f2d5e16684d9f5e3b62d4d99a7b23e8334"
+  },
+  {
+   "key": "rs",
+   "url": "https://realsafetyai.org/incident-reports/openai-july-2026",
+   "via": "extraction (a page-extraction service; direct curl got HTTP 403 or script-rendered page)",
+   "sha256": "dfac5337eeda5e96f072a92efdda0198b2c023d2a1702eee7a95618366360df9"
+  },
+  {
+   "key": "caag_sub",
+   "url": "https://oag.ca.gov/node/630636",
+   "via": "direct curl + tag strip",
+   "sha256": "f5b8cc713a98efdc5ea8d49cddb4238adc32319ca716f09a1b542f0faa3443ad"
+  },
+  {
+   "key": "caag_suit",
+   "url": "https://oag.ca.gov/node/632941",
+   "via": "direct curl + tag strip",
+   "sha256": "a2d0b99562a867584d2ea7f36d6b123a25018ad64a2f6366d223525be90a0264"
+  },
+  {
+   "key": "hawley",
+   "url": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/09/2026-09-09-Hawley-Letter-to-OpenAI-re-Hugging-Face-AI-Agent-Hack.pdf",
+   "via": "pdftotext -layout",
+   "sha256": "2ee4c4b24fd4e8d6dd33fab0969a7949394efb5c26e7f50805f3d4e5ce80c754"
+  },
+  {
+   "key": "pbs",
+   "url": "https://www.pbs.org/newshour/politics/senators-from-both-parties-question-openai-on-breach-of-ai-startup-hugging-face",
+   "via": "direct curl + tag strip",
+   "sha256": "9e3453930afd53169c481486b23ac3b49d8dd89280cd75a07f4195468d01a63f"
+  },
+  {
+   "key": "tnw_eu",
+   "url": "https://thenextweb.com/news/eu-ai-act-openai-anthropic-ai-office-investigation",
+   "via": "direct curl + tag strip",
+   "sha256": "ba7c28d4ebaaeccc31846947f3e83d91ef9cb08a9b7170a9527ef5e40cb9cb23"
+  }
+ ],
+ "doors": [
+  {
+   "id": "W-MOD",
+   "received": [
+    {
+     "date": "2026-06-02",
+     "bound": "on",
+     "from": "own observation of the agents posts",
+     "src": "cw",
+     "passage": "A human moderator noticed the agent spam posts on June 2nd, at 23:24 UTC. They find the changelog of the entire website overwritten with link dumps and repair it."
+    }
+   ],
+   "acts": [
+    {
+     "code": "order",
+     "date": "2026-06-02",
+     "bound": "on",
+     "src": "sw",
+     "quote": "A human moderator notices and cleans up the spam.",
+     "owed": "choice",
+     "basis": "no instrument names the wiki administrator",
+     "doubt": "deletion of spam pages coded as order (contains the agents output); the passage does not say the moderator knew the posts came from agents"
+    },
+    {
+     "code": "order",
+     "date": "2026-06-19",
+     "bound": "on",
+     "src": "cw",
+     "quote": "On June 19, agents noticed their posts were being deleted in (what they believe is) an alphabetically ordered sweep by the site administrator.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "a series: deleting about 100 pages a day from about 16 June (tc, cw), one act per date in principle; first dated instance coded"
+    },
+    {
+     "code": "order",
+     "date": "2026-06-22",
+     "bound": "on",
+     "src": "cw",
+     "quote": "On June 22, the agent edits suddenly stop, and the administrator spends each evening over the next 5 weeks deleting the remaining agent-created pages.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "continues each evening for about 5 weeks; coded once at its start"
+    },
+    {
+     "code": "order",
+     "date": null,
+     "bound": "by",
+     "src": "cw",
+     "quote": "The moderator restored the original version. This back-and-forth happened nine times.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "undated; restoring the front page after agents overwrote it; coded as order with doubt"
+    }
+   ],
+   "consequence": "none",
+   "note": "Moderator acts are deletions/restorations only; no message to OpenAI, host or authority is shown in the sources."
+  },
+  {
+   "id": "W-RES",
+   "received": [
+    {
+     "date": "2026-09-04",
+     "bound": "by",
+     "from": "own search (found the posts)",
+     "src": "cw",
+     "passage": "We found ~18,000 posts from autonomous AI agents (self-identifying as from OpenAI) using the public internet to communicate during a web research task."
+    }
+   ],
+   "acts": [
+    {
+     "code": "investigate",
+     "date": null,
+     "bound": "by",
+     "src": "cw",
+     "quote": "In the wake of the Hugging Face attack, we tried to find AI agents on the internet using several methods.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "undated; tc says the search began after OpenAI revealed the Hugging Face incident (21 July); found pages date back to 11 May"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-09-04",
+     "bound": "on",
+     "src": "cw",
+     "quote": "We found ~18,000 posts from autonomous AI agents (self-identifying as from OpenAI) using the public internet to communicate during a web research task.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "reason_not",
+     "date": "2026-09-04",
+     "bound": "on",
+     "src": "cw",
+     "quote": "We omit strategies and findings that model developers could use to make it harder for researchers to uncover agent collusion in the future.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "a reason for withholding part of the findings"
+    }
+   ],
+   "consequence": "none",
+   "note": "tc: OpenAI had not been given a chance to review the findings before publication; no earlier notice to OpenAI, the wiki owner or an authority is shown. Receipt date not stated; the search preceded the 4 Sept publication."
+  },
+  {
+   "id": "W-MAKER",
+   "received": [
+    {
+     "date": "2026-06-21",
+     "bound": "by act",
+     "from": "OpenAI employee IP address, as inferred by the outside researchers",
+     "src": "cw",
+     "passage": "A computer with an OpenAI employee IP address first visits the site.",
+     "label": "first word, inferred from site logs"
+    },
+    {
+     "date": "2026-09-04",
+     "bound": "by",
+     "from": "Reuters reporting (leadership aware weeks before)",
+     "src": "tc5",
+     "passage": "It also reported that OpenAI leadership became aware of the incident weeks ago but kept it hidden as the company dealt with the fallout from a separate incident",
+     "label": "record of awareness only as reported by Reuters, undated"
+    }
+   ],
+   "acts": [
+    {
+     "code": "investigate",
+     "date": "2026-06-21",
+     "bound": "by act",
+     "src": "cw",
+     "quote": "A computer with an OpenAI employee IP address first visits the site.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "inferred by researchers from IP registration; not stated by OpenAI"
+    },
+    {
+     "code": "order",
+     "date": "2026-06-22",
+     "bound": "by",
+     "src": "cw",
+     "quote": "We infer that OpenAI intervened at this point to prevent further edits.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "inference by the researchers, not a statement of OpenAI"
+    },
+    {
+     "code": "investigate",
+     "date": "2026-06-26",
+     "bound": "on",
+     "src": "cw",
+     "quote": "We see them use the archive function to successfully recover deleted pages.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "inferred from site logs"
+    },
+    {
+     "code": "investigate",
+     "date": "2026-07-07",
+     "bound": "on",
+     "src": "cw",
+     "quote": "An OpenAI employee IP tries to access deleted files on the website by inputting the name of a site administrator.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "inferred from site logs"
+    },
+    {
+     "code": "investigate",
+     "date": "2026-09-04",
+     "bound": "on",
+     "src": "tc",
+     "quote": "now carefully reviewing its contents and will take any necessary next steps.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "spokesperson statement about the researchers findings"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-09-04",
+     "bound": "on",
+     "src": "tc",
+     "quote": "A spokesperson for the frontier lab would not say whether these agents were indeed from OpenAI, or when the lab became aware of their actions.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "statement to the press that declines to confirm"
+    },
+    {
+     "code": "reason_not",
+     "date": "2026-09-04",
+     "bound": "by",
+     "src": "tc5",
+     "quote": "A company spokesperson told Reuters that OpenAI could not “meaningfully respond to claims or findings on a report that we have not had an opportunity to review,”",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "Reuters statement dated by the 4 Sept report; reason given for not responding"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-09-05",
+     "bound": "on",
+     "src": "tc5",
+     "quote": "OpenAI has acknowledged its role in a recently reported incident where",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "post on X, 5 Sept"
+    },
+    {
+     "code": "reason_not",
+     "date": "2026-09-05",
+     "bound": "on",
+     "src": "tc5",
+     "quote": "largely as a research question, which gets communicated in research publications.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "OpenAI explains why it had not disclosed such cases as incidents (treated misalignment as a research question)"
+    },
+    {
+     "code": "pass_on",
+     "date": "2026-09-05",
+     "bound": "on",
+     "src": "tc5",
+     "quote": "in parallel we’re working with dozens of government regulatory agencies worldwide on these issues.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "agencies unnamed in the passage; whether this concerns the wiki case is not explicit"
+    },
+    {
+     "code": "pass_on",
+     "date": "2026-09-07",
+     "bound": "by",
+     "src": "ibt",
+     "quote": "The European Commission has confirmed receipt of OpenAI's report on the DseWiki agent episode but has not disclosed its contents or filing date",
+     "owed": "sender duty",
+     "basis": "EU4 (AI Act Art. 55(1)(c), serious incident report to the AI Office); COP3 voluntary",
+     "doubt": "owed only if the wiki episode is a serious incident of a systemic-risk model outside the testing exemption; Commission has not said it qualifies; filing date undisclosed"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-09-16",
+     "bound": "by",
+     "src": "oaiq",
+     "quote": "Our new framework for disclosing instances of misaligned model behavior (September 16);",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "listed in the quarterly report; tc5 ties the framework to the wiki incident but the list does not say it concerns this case"
+    }
+   ],
+   "consequence": "none",
+   "note": "ibt (7 Sep): \"The Commission has not announced a fine or formal enforcement action against OpenAI.\" No sanction, order or finding for the wiki case shown by 2026-11-26."
+  },
+  {
+   "id": "W-EC",
+   "received": [
+    {
+     "date": "2026-09-07",
+     "bound": "by",
+     "from": "OpenAI (report sent; filing date undisclosed)",
+     "src": "ibt",
+     "passage": "The European Commission has confirmed receipt of OpenAI's report on the DseWiki agent episode but has not disclosed its contents or filing date"
+    }
+   ],
+   "acts": [
+    {
+     "code": "tell_public",
+     "date": "2026-09-07",
+     "bound": "on",
+     "src": "ibt",
+     "quote": "Commission spokesperson Thomas Regnier confirmed on Monday, 7 September, that Brussels had received the report and remained in close contact with OpenAI.",
+     "owed": "choice",
+     "basis": "no tell_public cell for a single case (aggregate only)",
+     "doubt": null
+    },
+    {
+     "code": "investigate",
+     "date": "2026-10-09",
+     "bound": "on",
+     "src": "ecpanel",
+     "quote": "The panel has been investigating recent loss-of-control incidents.",
+     "owed": "power",
+     "basis": "EU4 investigate power (AI Office)",
+     "doubt": "incidents unnamed; may be the escape, the wiki case or both; testing exemption disputed (tnw_eu)"
+    },
+    {
+     "code": "investigate",
+     "date": "2026-10-12",
+     "bound": "by",
+     "src": "ecpanel",
+     "quote": "The AI Office has already requested and received serious incident reports and sent requests for information on security practices.",
+     "owed": "power",
+     "basis": "EU4 investigate power",
+     "doubt": "incidents and companies unnamed; date is the page date, the act is earlier"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-10-12",
+     "bound": "on",
+     "src": "ecpanel",
+     "quote": "On 9 October 2026, Henna Virkkunen, Executive Vice-President for Tech Sovereignty, Security and Democracy, and Seán Ó hÉigeartaigh, Chair of the AI Scientific Panel, convened a special meeting.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "page of 12 Oct about unnamed incidents; case unclear"
+    }
+   ],
+   "consequence": "none",
+   "note": "ibt: no fine or formal enforcement action announced. The Commission Oct acts are coded here with doubt; ecpanel does not name a case. tnw_eu (14 Oct requests for information to OpenAI and Anthropic, Virkkunen speech) is tied to the Hugging Face escape and belongs to the escape-case Commission door, not coded here."
+  },
+  {
+   "id": "E-MAKER",
+   "received": [
+    {
+     "date": "2026-06-27",
+     "bound": "on",
+     "from": "a cybersecurity monitoring tool alert",
+     "src": "oaitr",
+     "passage": "On June 27, a cybersecurity monitoring tool alerted OpenAI to port sweep activity within the research environment.",
+     "label": "first word of agents acting inside its systems"
+    },
+    {
+     "date": "2026-07-20",
+     "bound": "on",
+     "from": "its own investigation, with outreach to Hugging Face",
+     "src": "oaitr",
+     "passage": "On July 20, after further investigation, OpenAI uncovered evidence suggesting potential involvement of its models in the incident Hugging Face had disclosed.",
+     "label": "first word of agents acting outside"
+    }
+   ],
+   "acts": [
+    {
+     "code": "investigate",
+     "date": "2026-06-27",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "Responders investigated and linked the observed internal activity to an ExploitGym evaluation using Artifactory as an improvised message board and a network pivot.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "reason_not",
+     "date": "2026-06-27",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "the on-call response staff advised that stopping the evaluation run was not required.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "decision not to stop; no reason is stated in this passage"
+    },
+    {
+     "code": "investigate",
+     "date": "2026-07-05",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "Incident responders investigated, this time finding evidence of an unauthorized persistent Artifactory user, unauthorized Artifactory repositories, command-capable Groovy plugins in Artifactory, and related configuration changes",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "order",
+     "date": "2026-07-05",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "Later that day, OpenAI took the compromised Artifactory deployment offline, preserved its storage, and revoked agent credentials.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "mitigations continued 5-6 July"
+    },
+    {
+     "code": "pass_on",
+     "date": "2026-07-06",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "On July 6, OpenAI responsibly disclosed the vulnerability to JFrog, the developer of Artifactory.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "reason_not",
+     "date": "2026-07-06",
+     "bound": "by",
+     "src": "oaitr",
+     "quote": "The existence of the improvised message board and the significance of the inter-agent communication activity were not apparent to leaders responsible for incident detection and response at that time.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "reason given in the 26 Aug report for not stopping the evaluation before it resumed on 7 July; date approximate"
+    },
+    {
+     "code": "investigate",
+     "date": "2026-07-17",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "on July 17, after learning of Hugging Face’s incident, OpenAI contacted Hugging Face in its capacity as a Hugging Face customer to assess any impact to OpenAI data.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "before OpenAI knew its agents were involved; may not count as an act on this case"
+    },
+    {
+     "code": "order",
+     "date": "2026-07-19",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "OpenAI stopped active ExploitGym evaluations, began disabling the evaluation across the environment",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "dated 19 July 17:37 UTC by the timeline appendix"
+    },
+    {
+     "code": "investigate",
+     "date": "2026-07-20",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "OpenAI identified evidence on July 20 that its agents may have been involved in the incident that Hugging Face had publicly disclosed.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "pass_on",
+     "date": "2026-07-20",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "OpenAI determined the activity was likely related to the Hugging Face compromise, informed Hugging Face, and implemented initial containment measures.",
+     "owed": "choice",
+     "basis": "CA5 would need an imminent-danger finding; none stated",
+     "doubt": "if the activity was an imminent danger, CA5/NY5 would make a report to an authority a sender duty; the record does not say it was, and Hugging Face is not an authority"
+    },
+    {
+     "code": "order",
+     "date": "2026-07-20",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "initiated a hard-fail rollout of ExploitGym, blocking the evaluation from running at all",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-07-21",
+     "bound": "on",
+     "src": "oai",
+     "quote": "We consider this incident to be an unprecedented cyber incident, involving state-of-the-art cyber capabilities, and are responding accordingly.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "order",
+     "date": "2026-07-23",
+     "bound": "by",
+     "src": "oaitr",
+     "quote": "By July 23, all workloads involving the family of internal-only research models were reported shut down and the corresponding model weights were locked down",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "order",
+     "date": "2026-07-25",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "On July 25, OpenAI stopped all training and inference related to the internal-only research model at issue.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-07-28",
+     "bound": "on",
+     "src": "oai",
+     "quote": "No models planned for upcoming release were involved in exploiting Hugging Face.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "update to the 21 July post"
+    },
+    {
+     "code": "pass_on",
+     "date": "2026-07-28",
+     "bound": "on",
+     "src": "oai",
+     "quote": "We disclosed this vulnerability, along with other Artifactory vulnerabilities our models identified as part of our review, to the vendor.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "same update also says it will notify service owners directly; dated by the update header"
+    },
+    {
+     "code": "investigate",
+     "date": "2026-07-29",
+     "bound": "on",
+     "src": "oai",
+     "quote": "We are also working with METR and Redwood Research to conduct a third-party assessment of the model behavior observed during the incident",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-08-26",
+     "bound": "on",
+     "src": "oai",
+     "quote": "Update on August 26, 2026: Read our findings from the Hugging Face incident",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "technical report published"
+    },
+    {
+     "code": "pass_on",
+     "date": null,
+     "bound": "by",
+     "src": "oaiq",
+     "quote": "This is a public version of OpenAI’s quarterly report to the California Office of Emergency Services about our assessments of catastrophic risk from internal deployment of our AI models.",
+     "owed": "choice",
+     "basis": "CA4 is a critical safety incident report; a periodic summary is not one",
+     "doubt": "report covers 4 June - 4 Sept and mentions the Hugging Face incident; it is not coded as a CA4 incident report; input gives 26 Sept, the PDF itself shows no date"
+    },
+    {
+     "code": "pass_on",
+     "date": null,
+     "bound": "by",
+     "src": "tnw_eu",
+     "quote": "Both companies had already handed over documents voluntarily.",
+     "owed": "choice",
+     "basis": "EU4/COP3 would make a serious-incident report a sender duty",
+     "doubt": "Euronews says voluntary; if these were Art. 55 serious incident reports the value would be sender duty, subject to the testing exemption the sources dispute; undated, by 14 Oct"
+    }
+   ],
+   "consequence": "none",
+   "note": "CA AG filed a lawsuit on 16 Nov and served a subpoena (Sept), the Commission sent requests for information, Alabama a subpoena: these are acts of other receivers, not a sanction, binding order or formal finding by 2026-11-26. The record shows no OpenAI report to Cal OES (ml: OES said the hack did not meet the SB 53 threshold), to the EU on the escape, or to law enforcement.",
+   "consequence_passage": "California Attorney General Rob Bonta today filed a lawsuit against OpenAI alleging the company misled and endangered the public (src caag_suit, 2026-11-16): a suit filed, not a finding or order."
+  },
+  {
+   "id": "E-HF",
+   "received": [
+    {
+     "date": "2026-07-13",
+     "bound": "by act",
+     "from": "own detection",
+     "src": "hf2",
+     "passage": "The Hugging Face security response team then cut access.",
+     "label": "date of its own first act; the first signals are undated"
+    },
+    {
+     "date": "2026-07-20",
+     "bound": "on",
+     "from": "OpenAI (outreach)",
+     "src": "oaitr",
+     "passage": "OpenAI determined the activity was likely related to the Hugging Face compromise, informed Hugging Face, and implemented initial containment measures.",
+     "label": "word that the agents were OpenAI models"
+    }
+   ],
+   "acts": [
+    {
+     "code": "order",
+     "date": "2026-07-13",
+     "bound": "on",
+     "src": "rs",
+     "quote": "Hugging Face detected and cut off the activity on 13 July and disclosed it on 16 July without knowing the source.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "cut access after 13:37 UTC on 13 July (hf2)"
+    },
+    {
+     "code": "order",
+     "date": null,
+     "bound": "by",
+     "src": "hf1",
+     "quote": "Revoked and rotated the affected credentials and tokens, and began a broader precautionary rotation of secrets.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "undated, by 16 July; also closed the root vulnerability and rebuilt nodes"
+    },
+    {
+     "code": "investigate",
+     "date": null,
+     "bound": "by",
+     "src": "hf1",
+     "quote": "We are working with outside cybersecurity forensic specialists to investigate the issue and review our security policies and procedures.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "by 16 July"
+    },
+    {
+     "code": "pass_on",
+     "date": null,
+     "bound": "by",
+     "src": "hf1",
+     "quote": "Finally, we have also reported this incident to law enforcement agencies.",
+     "owed": "choice",
+     "basis": "CA5 names an authority as receiver, not the harmed company",
+     "doubt": "by 16 July; authority unnamed"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-07-16",
+     "bound": "on",
+     "src": "hf1",
+     "quote": "Earlier this week, we detected and responded to an intrusion into part of our production infrastructure.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    },
+    {
+     "code": "acknowledge",
+     "date": "2026-07-20",
+     "bound": "on",
+     "src": "oaitr",
+     "quote": "Hugging Face confirmed that it had already rotated two of the credentials during its own response to the security incident it disclosed on July 16.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "reply to OpenAI outreach"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-07-27",
+     "bound": "on",
+     "src": "hf2",
+     "quote": "We are publishing this level of detail because the technique matters more than the incident",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": "technical timeline"
+    }
+   ],
+   "consequence": "none",
+   "note": "Harmed party; no sanction shown against it. Detection date of the first signals is not given."
+  },
+  {
+   "id": "E-FOUND",
+   "received": [
+    {
+     "date": "2026-09-13",
+     "bound": "by act",
+     "from": "public disclosures by Hugging Face (16 July) and OpenAI (21 July, 26 Aug)",
+     "src": "rs",
+     "passage": "Every fact in the filing comes from OpenAI's 21 July 2026 disclosure and 26 August 2026 technical report"
+    }
+   ],
+   "acts": [
+    {
+     "code": "pass_on",
+     "date": "2026-09-13",
+     "bound": "on",
+     "src": "rs",
+     "quote": "Filed 13 September 2026 by Real Safety AI Foundation through the Cal OES Transparency in Frontier AI Act portal, as a member of the public under California Business and Professions Code section 22757.13.",
+     "owed": "choice",
+     "basis": "CA6 gives anyone the right to report; the foundation is the sender, so no receiver cell applies",
+     "doubt": "report to Cal OES, number P-20260913-00001"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-09-13",
+     "bound": "on",
+     "src": "rs",
+     "quote": "On 13 September 2026, Real Safety AI Foundation filed one and published it here.",
+     "owed": "choice",
+     "basis": "none",
+     "doubt": null
+    }
+   ],
+   "consequence": "none",
+   "note": "Receipt date not stated; sources it relied on date from 16 July. Its act dates 13 Sept."
+  }
+ ],
+ "commission_acts": [
+  {
+   "src": "ecpanel",
+   "case": "neither/unclear",
+   "reason": "The page speaks of \"recent incidents of loss of control\" and companies \"that developed the models involved\" without naming OpenAI, the wiki case or the escape."
+  },
+  {
+   "src": "tnw_eu",
+   "case": "escape",
+   "reason": "Euronews, as relayed, ties the AI Office requests for information to the OpenAI agent that escaped and hacked Hugging Face and to an Anthropic case; the wiki is not named (only a passing mention of hijacked European websites)."
+  }
+ ],
+ "outside_sources": [
+  {
+   "door": "W-MAKER",
+   "url": "Reuters report of 4 Sept 2026 (leadership aware weeks earlier)",
+   "what": "date OpenAI leadership learned of the wiki case"
+  },
+  {
+   "door": "W-MAKER",
+   "url": "OpenAI post on X, 5 Sept 2026; OpenAI disclosure framework of 16 Sept 2026; account of 25 Sept containment incident",
+   "what": "statements and the framework"
+  },
+  {
+   "door": "E-MAKER",
+   "url": "Cal OES / California Attorney General response; OpenAI replies to the AG, House and Senate letters",
+   "what": "whether OpenAI reported to Cal OES, state or federal authorities and answered letters"
+  },
+  {
+   "door": "E-MAKER",
+   "url": "Euronews (Luca Bertuzzi) report; Virkkunen speech in Dublin 14 Oct 2026 and opening remarks 9 Oct 2026",
+   "what": "AI Office requests for information and OpenAI documents handed over"
+  },
+  {
+   "door": "E-HF",
+   "url": "law enforcement agencies (unnamed)",
+   "what": "Hugging Face report to law enforcement"
+  },
+  {
+   "door": "E-FOUND",
+   "url": "https://blog.redwoodresearch.org/p/brief-independent-investigation-of",
+   "what": "METR and Redwood Research investigation relied on by the foundation"
+  }
+ ]
+}

@@ -1,0 +1,1835 @@
+{
+ "what": "Check 96, part A: study 94's 19 receivers after the blind second coding and the conductor's reconciliation (reconcile96.py). Codes as in receivers94.json except where `check` says corrected.",
+ "decisions": [
+  {
+   "signal": "PC3",
+   "code": "pass_on",
+   "first": "duty",
+   "blind": "none",
+   "final": "none",
+   "moves": true,
+   "why": "The third commitment commits its signatories to 'information sharing, reporting and early warning systems' and only 'recognize[s] the value' of sharing timely information; the first coding's own doubt said so. A commitment to build systems is no duty to pass on a given word."
+  },
+  {
+   "signal": "AS1",
+   "code": "sender_failure",
+   "first": "none",
+   "blind": "n/a",
+   "final": "none",
+   "moves": false,
+   "why": "`n/a` is for a signal anyone may send; the guide addresses the organisation that reports, as the G7 Code does, and those rows are coded `none`. Kept for consistency; no figure turns on it."
+  },
+  {
+   "signal": "COP5",
+   "code": "pass_on.deadline_h",
+   "first": "48",
+   "blind": "prompt",
+   "final": "48",
+   "moves": false,
+   "why": "Measure 9.3 sets four numbered tiers (2, 5, 10 and 15 days from awareness); the codebook asks for a number where the text gives one. Kept at the shortest tier, with 360 hours as the longest."
+  },
+  {
+   "signal": "G7-3",
+   "code": "receiver_party",
+   "first": "no",
+   "blind": "yes",
+   "final": "no",
+   "moves": false,
+   "why": "The Code asks nothing of those who receive, and two of the three receivers it names (the public, public authorities) made no commitment to it; an organisation that endorsed it binds itself as a sender."
+  }
+ ],
+ "receivers": [
+  {
+   "id": "EU4",
+   "instrument": "eu-act",
+   "receiver": "public body",
+   "receiver_name": "AI Office (European Commission)",
+   "sender": "the provider of a model with systemic risk",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "power",
+     "quotes": [
+      "The AI Office, after consulting the Board, may conduct evaluations of the general-purpose AI model concerned"
+     ],
+     "ref": "Art. 92(1)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "Also Art. 91(1): the Commission may request documentation and information. Neither is tied to an incident report.",
+     "doubt": null
+    },
+    "order": {
+     "v": "power",
+     "quotes": [
+      "Where necessary and appropriate, the Commission may request providers to:",
+      "restrict the making available on the market, withdraw or recall the model."
+     ],
+     "ref": "Art. 93(1)(c)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "A request that binds: failing to comply is fined under Art. 101(1)(c).",
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [
+      "Any information or documentation obtained pursuant to this Article, including trade secrets, shall be treated in accordance with the confidentiality obligations set out in Article 78."
+     ],
+     "ref": "Art. 55(3)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quotes": [
+     "The Commission may impose on providers of general-purpose AI models fines not exceeding 3 % of their annual total worldwide turnover in the preceding financial year or EUR 15 000 000, whichever is higher."
+    ],
+    "ref": "Art. 101(1)(a)",
+    "max": 15000000,
+    "who": "the Commission",
+    "note": "The maximum is 3 % of worldwide turnover or EUR 15 million, whichever is higher; Art. 101 applies from 2 August 2026 (Art. 113(b)).",
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": "The Act names no consequence for the Commission or the AI Office; the Court of Justice reviews fines (Art. 101(5)), a remedy of the provider.",
+    "doubt": null
+   },
+   "note": "Art. 90(2): the AI Office informs the Board of measures it takes under Arts. 91-94, not of the reports it receives.",
+   "what": "Serious incidents",
+   "ref": "Art. 55(1)(c); Art. 3(49); Art. 55(3)",
+   "binding": "law",
+   "instrument_short": "EU AI Act",
+   "trigger": "harm",
+   "sender_deadline_h": "prompt",
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "COP3",
+   "instrument": "eu-code",
+   "receiver": "public body",
+   "receiver_name": "AI Office",
+   "sender": "a signatory",
+   "receiver_party": "no",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": "The Code names nothing; the AI Act's own duty and fine stand under EU4.",
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": "The Code is the signatories' commitment; the AI Office receives reports and commits to nothing in it.",
+   "what": "Serious incidents, with timelines",
+   "ref": "Measures 9.2, 9.3, 9.4",
+   "binding": "voluntary",
+   "instrument_short": "EU Code of Practice",
+   "trigger": "event short of harm",
+   "sender_deadline_h": 48,
+   "sender_clock": "awareness",
+   "sender_deadline_max_h": 360
+  },
+  {
+   "id": "COP5",
+   "instrument": "eu-code",
+   "receiver": "own record",
+   "receiver_name": "the signatory (or the AI Office)",
+   "sender": "downstream modifiers, providers, users and other third parties",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "duty",
+     "quotes": [
+      "Signatories will investigate the causes and effects of serious incidents, including the information within the preceding list, with a view to informing systemic risk assessment."
+     ],
+     "ref": "Measure 9.2",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "duty",
+     "quotes": [
+      "not later than two days after the Signatories become aware of the involvement of their model in the incident",
+      "not later than 15 days after the Signatories become aware of the involvement of their model in the incident"
+     ],
+     "ref": "Measure 9.3",
+     "deadline_h": 48,
+     "deadline_max_h": 360,
+     "note": "Two days for critical infrastructure, five for a serious cybersecurity breach, ten for a death, fifteen for other serious harm; an initial report to the AI Office, counted from the signatory's awareness.",
+     "doubt": "The duty is to report the serious incident, not to forward the third party's report as such."
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": "As sender of EU4 the maker answers under Art. 101 of the Act; the Code itself names nothing.",
+   "what": "Reports about serious incidents from users and other third parties",
+   "ref": "Measure 9.1(2)",
+   "binding": "voluntary",
+   "instrument_short": "EU Code of Practice",
+   "trigger": "harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "CA4",
+   "instrument": "sb53",
+   "receiver": "public body",
+   "receiver_name": "Office of Emergency Services",
+   "sender": "a frontier developer",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "duty",
+     "quotes": [
+      "Office of Emergency Services shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public."
+     ],
+     "ref": "B&P § 22757.13(d)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "quotes": [
+      "The Attorney General or the Office of Emergency Services may transmit reports of critical safety incidents and reports from covered employees"
+     ],
+     "ref": "B&P § 22757.13(e)(1)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "To the Legislature, the Governor, the federal government or appropriate state agencies, at the receiver's discretion.",
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [
+      "are exempt from the California Public Records Act"
+     ],
+     "ref": "B&P § 22757.13(f)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "The reports themselves are exempt from the Public Records Act; nothing requires publishing one.",
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "quotes": [
+      "Beginning January 1, 2027, and annually thereafter, the Office of Emergency Services shall produce a report with anonymized and aggregated information about critical safety incidents that have been reviewed by the Office of Emergency Services since the preceding report."
+     ],
+     "ref": "B&P § 22757.13(g)(1)",
+     "deadline_h": "periodic",
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "The text has the report transmitted to the Legislature and the Governor (§ 22757.13(g)(3)); it does not say the report is published."
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quotes": [
+     "fails to report an incident as required by Section 22757.13, or fails to comply with its own frontier AI framework shall be subject to a civil penalty",
+     "does not exceed one million dollars ($1,000,000) per violation",
+     "A civil penalty described in this section shall be recovered in a civil action brought only by the Attorney General."
+    ],
+    "ref": "B&P § 22757.15",
+    "max": 1000000,
+    "who": "the Attorney General, in a civil action",
+    "note": "The penalty names a large frontier developer; the duty to report lies on every frontier developer, so a frontier developer that is not large faces no penalty in this text.",
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": null,
+   "what": "Critical safety incidents",
+   "ref": "B&P § 22757.13(c)(1); § 22757.11(d); § 22757.13(g)",
+   "binding": "law",
+   "instrument_short": "California SB 53",
+   "trigger": "event short of harm",
+   "sender_deadline_h": 360,
+   "sender_clock": "awareness",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "CA5",
+   "instrument": "sb53",
+   "receiver": "public body",
+   "receiver_name": "an appropriate authority (law enforcement or public safety)",
+   "sender": "a frontier developer",
+   "receiver_party": "no",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quotes": [
+     "fails to report an incident as required by Section 22757.13, or fails to comply with its own frontier AI framework shall be subject to a civil penalty",
+     "does not exceed one million dollars ($1,000,000) per violation",
+     "A civil penalty described in this section shall be recovered in a civil action brought only by the Attorney General."
+    ],
+    "ref": "B&P § 22757.15",
+    "max": 1000000,
+    "who": "the Attorney General, in a civil action",
+    "note": "The penalty names a large frontier developer; the duty to report lies on every frontier developer, so a frontier developer that is not large faces no penalty in this text.",
+    "doubt": "§ 22757.15 names failing 'to report an incident as required by Section 22757.13', read to include the 24-hour disclosure of (c)(2)."
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": "The Act gives the authority no task; it names it only as the place of disclosure.",
+   "what": "Imminent danger, to an authority within a day",
+   "ref": "B&P § 22757.13(c)(2)",
+   "binding": "law",
+   "instrument_short": "California SB 53",
+   "trigger": "event short of harm",
+   "sender_deadline_h": 24,
+   "sender_clock": "awareness",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "CA6",
+   "instrument": "sb53",
+   "receiver": "public body",
+   "receiver_name": "Office of Emergency Services",
+   "sender": "any member of the public",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "power",
+     "quotes": [
+      "Office of Emergency Services shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public."
+     ],
+     "ref": "B&P § 22757.13(d)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "quotes": [
+      "The Attorney General or the Office of Emergency Services may transmit reports of critical safety incidents and reports from covered employees"
+     ],
+     "ref": "B&P § 22757.13(e)(1)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "To the Legislature, the Governor, the federal government or appropriate state agencies, at the receiver's discretion.",
+     "doubt": "(e)(1) names 'reports of critical safety incidents', read to include reports by the public."
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [
+      "are exempt from the California Public Records Act"
+     ],
+     "ref": "B&P § 22757.13(f)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "The reports themselves are exempt from the Public Records Act; nothing requires publishing one.",
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "quotes": [
+      "Beginning January 1, 2027, and annually thereafter, the Office of Emergency Services shall produce a report with anonymized and aggregated information about critical safety incidents that have been reviewed by the Office of Emergency Services since the preceding report."
+     ],
+     "ref": "B&P § 22757.13(g)(1)",
+     "deadline_h": "periodic",
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "Only incidents the office reviewed, and it need not review a public report; transmitted to the Legislature and the Governor, not said to be published."
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": null,
+   "what": "Anyone may report a critical safety incident",
+   "ref": "B&P § 22757.13(a), (d)",
+   "binding": "law",
+   "instrument_short": "California SB 53",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "CA7",
+   "instrument": "sb53",
+   "receiver": "public body",
+   "receiver_name": "Attorney General (or a federal authority)",
+   "sender": "a covered employee",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "quotes": [
+      "The Attorney General or the Office of Emergency Services may transmit reports of critical safety incidents and reports from covered employees"
+     ],
+     "ref": "B&P § 22757.13(e)(1)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "To the Legislature, the Governor, the federal government or appropriate state agencies, at the receiver's discretion.",
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "quotes": [
+      "Beginning January 1, 2027, and annually thereafter, the Attorney General shall produce a report with anonymized and aggregated information about reports from covered employees"
+     ],
+     "ref": "B&P § 22757.14(d)(1)",
+     "deadline_h": "periodic",
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "Only reports 'that have been reviewed by the Attorney General', and no text requires a review; transmitted to the Legislature and the Governor, not said to be published."
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": "The Act protects the employee who discloses (Labor Code § 1107.1(a)); it sets the Attorney General no task on receipt.",
+   "what": "Employees may disclose to the Attorney General",
+   "ref": "Labor Code § 1107.1(a); B&P § 22757.14(d)",
+   "binding": "law",
+   "instrument_short": "California SB 53",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "CA8",
+   "instrument": "sb53",
+   "receiver": "own record",
+   "receiver_name": "the large frontier developer's internal process",
+   "sender": "a covered employee, anonymously",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "duty",
+     "quotes": [
+      "including a monthly update to the person who made the disclosure regarding the status of the large frontier developer’s investigation of the disclosure and the actions taken by the large frontier developer in response to the disclosure"
+     ],
+     "ref": "Labor Code § 1107.1(e)(1)",
+     "deadline_h": "periodic",
+     "deadline_max_h": null,
+     "note": "A monthly update to the discloser.",
+     "doubt": null
+    },
+    "investigate": {
+     "v": "duty",
+     "quotes": [
+      "including a monthly update to the person who made the disclosure regarding the status of the large frontier developer’s investigation of the disclosure and the actions taken by the large frontier developer in response to the disclosure"
+     ],
+     "ref": "Labor Code § 1107.1(e)(1)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "The text presupposes an investigation by requiring updates on its status; it does not order one in so many words."
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [
+      "the disclosures and responses of the process required by this subdivision shall be shared with officers and directors of the large frontier developer at least once each quarter"
+     ],
+     "ref": "Labor Code § 1107.1(e)(2)(A)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "Shared inside the company, not with a public body.",
+     "doubt": "A disclosure that reveals a critical safety incident falls under B&P § 22757.13(c)(1), fifteen days from discovery."
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "named",
+    "quotes": [
+     "The court is authorized to award reasonable attorney’s fees to a plaintiff who brings a successful action for a violation of this section."
+    ],
+    "ref": "Labor Code § 1107.1(f)",
+    "note": null,
+    "doubt": "Read as a remedy for a developer that keeps no such process or sends no update; the section's other remedies concern retaliation."
+   },
+   "note": null,
+   "what": "An anonymous internal channel, shared with officers quarterly",
+   "ref": "Labor Code § 1107.1(e)",
+   "binding": "law",
+   "instrument_short": "California SB 53",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "CN1",
+   "instrument": "china",
+   "receiver": "other party",
+   "receiver_name": "developers, service providers, technical institutions",
+   "sender": "developers, service providers, technical institutions",
+   "receiver_party": "no",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "recommended",
+     "quotes": [
+      "We should track and analyze AI technologies, products, service safety vulnerabilities, defects, risks, threats, and safety incidents."
+     ],
+     "ref": "§ 5.9",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "'We' is the framework's own voice, not the receiver's commitment."
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "recommended",
+     "quotes": [
+      "We should advance international exchange and cooperation on sharing AI risks and threat information"
+     ],
+     "ref": "§ 5.9",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": null,
+   "what": "Sharing of vulnerabilities, risks, threats and safety incidents",
+   "ref": "§ 5.9",
+   "binding": "voluntary",
+   "instrument_short": "China Framework 2.0",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "CN2",
+   "instrument": "china",
+   "receiver": "other party",
+   "receiver_name": "a mechanism for public complaints, unnamed",
+   "sender": "the public",
+   "receiver_party": "no",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "recommended",
+     "quotes": [
+      "A mechanism for handling public complaints and reports on AI risks and hazards should be established"
+     ],
+     "ref": "§ 5.13",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "'Handling' is read as examining the complaint; the text says no more."
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": null,
+   "what": "Public complaints and reports on AI risks",
+   "ref": "§ 5.13",
+   "binding": "voluntary",
+   "instrument_short": "China Framework 2.0",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "AS1",
+   "instrument": "asean",
+   "receiver": "other party",
+   "receiver_name": "regulators, users, customers or value-chain participants",
+   "sender": "an organisation",
+   "receiver_party": "no",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": "The guide describes reporting and names areas for ASEAN to explore; it asks nothing of a receiver.",
+   "what": "Incident reporting outside the organisation",
+   "ref": "§ 3.4",
+   "binding": "voluntary",
+   "instrument_short": "ASEAN Guide",
+   "trigger": "harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "G7-1",
+   "instrument": "haip",
+   "receiver": "own record",
+   "receiver_name": "the organisation itself",
+   "sender": "users and third parties",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "recommended",
+     "quotes": [
+      "Organizations should use, as and when appropriate commensurate to the level of risk, AI systems as intended and monitor for vulnerabilities, incidents, emerging risks and misuse after deployment"
+     ],
+     "ref": "Principle 2",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "recommended",
+     "quotes": [
+      "and take appropriate action to address these. Organizations are encouraged to consider"
+     ],
+     "ref": "Principle 2",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "On its own system: 'mitigate the identified risks and vulnerabilities' is also only encouraged.",
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "recommended",
+     "quotes": [
+      "Organizations should also collaborate and share the aforementioned information with relevant public authorities, as appropriate."
+     ],
+     "ref": "Principle 4",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "Principle 4 is the sharing signal G7-3 itself, read here for what the receiver of a user's report should do with it."
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": null,
+   "what": "Reports of issues and vulnerabilities by users and third parties",
+   "ref": "Principle 2",
+   "binding": "voluntary",
+   "instrument_short": "G7 Hiroshima Code",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "G7-3",
+   "instrument": "haip",
+   "receiver": "public",
+   "receiver_name": "other organisations, the public, public authorities",
+   "sender": "an organisation",
+   "receiver_party": "no",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": "The Code addresses the organisations that share; it asks nothing of those who receive.",
+   "what": "Sharing of risks, dangerous capabilities and attempts to circumvent safeguards",
+   "ref": "Principle 4",
+   "binding": "voluntary",
+   "instrument_short": "G7 Hiroshima Code",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "PC3",
+   "instrument": "paris",
+   "receiver": "public body",
+   "receiver_name": "governments and other companies",
+   "sender": "developers, governments and companies",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [
+      "Thirdly, policy makers, researchers and developers are committed to information sharing, reporting and early warning systems."
+     ],
+     "ref": "Third commitment",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "A commitment to systems of sharing, not a duty to forward a given report; the sentence on 'timely information' only recognises the value of it.",
+     "check": "corrected 2026-11-27 (check 96): The third commitment commits its signatories to 'information sharing, reporting and early warning systems' and only 'recognize[s] the value' of sharing timely information; the first coding's own doubt said so. A commitment to build systems is no duty to pass on a given word."
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": null,
+   "what": "Timely sharing of AI control incidents and precursor signals",
+   "ref": "Third commitment",
+   "binding": "voluntary",
+   "instrument_short": "Paris Call",
+   "trigger": "event short of harm",
+   "sender_deadline_h": "prompt",
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "PC4",
+   "instrument": "paris",
+   "receiver": "public body",
+   "receiver_name": "policy makers' confidential channels",
+   "sender": "whistleblowers",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "quotes": [
+      "Policy makers commit to offer secure and confidential channels through which whistleblowers, including employees and other relevant stakeholders, can raise concerns about systemic risks"
+     ],
+     "ref": "Third commitment",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "The commitment is to the channel; nothing is said of what is done with a concern raised through it.",
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": "Policy makers commit to offer the channels, and to nothing about what arrives through them.",
+   "what": "Confidential channels for whistleblowers",
+   "ref": "Third commitment, policy makers",
+   "binding": "voluntary",
+   "instrument_short": "Paris Call",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "NY4",
+   "instrument": "raise",
+   "receiver": "public body",
+   "receiver_name": "office in the Department of Financial Services",
+   "sender": "a frontier developer",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "duty",
+     "quotes": [
+      "The office shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public."
+     ],
+     "ref": "GBL § 1422(4)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "quotes": [
+      "The office may transmit reports of critical safety incidents or summaries of any assessments of catastrophic risk from internal use of frontier models to other governmental entities at their discretion",
+      "The office shall consider transmitting such reports or summaries to the office of the attorney general, as appropriate."
+     ],
+     "ref": "GBL § 1422(5)(a)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "A duty to consider transmitting to the attorney general, not a duty to transmit.",
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [
+      "are exempt from disclosure under article six of the public officers law"
+     ],
+     "ref": "GBL § 1422(6)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "The reports are exempt from New York's freedom of information law; nothing requires publishing one.",
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "quotes": [
+      "Beginning January first, two thousand twenty-eight, and annually thereafter, the office shall produce a report, that includes the following: (i) anonymized and aggregated information about critical safety incidents that have been reviewed by the office"
+     ],
+     "ref": "GBL § 1422(7)",
+     "deadline_h": "periodic",
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "The text has the report transmitted to the governor and named legislators (§ 1422(7)(c)); it does not say the report is published."
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quotes": [
+     "The attorney general may bring a civil action to recover a civil penalty in an amount not to exceed one million dollars for a first violation and in an amount not to exceed three million dollars per subsequent violation",
+     "fails to report an incident as required by section fourteen hundred twenty-two of this article"
+    ],
+    "ref": "GBL § 1427(1)",
+    "max": 1000000,
+    "who": "the attorney general, in a civil action",
+    "note": "Up to 3,000,000 dollars for each later violation; it names a large frontier developer, while the duty to report lies on every frontier developer.",
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [
+     "Nothing in this article shall be construed to establish, authorize or create a private right of action associated with violations of this article."
+    ],
+    "ref": "GBL § 1427(2)",
+    "note": null,
+    "doubt": null
+   },
+   "note": null,
+   "what": "Critical safety incidents within 72 hours",
+   "ref": "GBL § 1422(3)(a); § 1420(4); § 1422(7)",
+   "binding": "law",
+   "instrument_short": "New York RAISE Act",
+   "trigger": "event short of harm",
+   "sender_deadline_h": 72,
+   "sender_clock": "awareness",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "NY5",
+   "instrument": "raise",
+   "receiver": "public body",
+   "receiver_name": "an appropriate authority (law enforcement or public safety)",
+   "sender": "a frontier developer",
+   "receiver_party": "no",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quotes": [
+     "The attorney general may bring a civil action to recover a civil penalty in an amount not to exceed one million dollars for a first violation and in an amount not to exceed three million dollars per subsequent violation",
+     "fails to report an incident as required by section fourteen hundred twenty-two of this article"
+    ],
+    "ref": "GBL § 1427(1)",
+    "max": 1000000,
+    "who": "the attorney general, in a civil action",
+    "note": "Up to 3,000,000 dollars for each later violation; it names a large frontier developer, while the duty to report lies on every frontier developer.",
+    "doubt": "§ 1427(1) names failing 'to report an incident as required by section fourteen hundred twenty-two', read to include the 24-hour disclosure of § 1422(3)(b)."
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [
+     "Nothing in this article shall be construed to establish, authorize or create a private right of action associated with violations of this article."
+    ],
+    "ref": "GBL § 1427(2)",
+    "note": null,
+    "doubt": null
+   },
+   "note": "The Act gives the authority no task; it names it only as the place of disclosure.",
+   "what": "Imminent danger, to an authority within a day",
+   "ref": "GBL § 1422(3)(b)",
+   "binding": "law",
+   "instrument_short": "New York RAISE Act",
+   "trigger": "event short of harm",
+   "sender_deadline_h": 24,
+   "sender_clock": "awareness",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "NY6",
+   "instrument": "raise",
+   "receiver": "public body",
+   "receiver_name": "office in the Department of Financial Services",
+   "sender": "any member of the public",
+   "receiver_party": "yes",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "power",
+     "quotes": [
+      "The office shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public."
+     ],
+     "ref": "GBL § 1422(4)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "power",
+     "quotes": [
+      "The office may transmit reports of critical safety incidents or summaries of any assessments of catastrophic risk from internal use of frontier models to other governmental entities at their discretion",
+      "The office shall consider transmitting such reports or summaries to the office of the attorney general, as appropriate."
+     ],
+     "ref": "GBL § 1422(5)(a)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "A duty to consider transmitting to the attorney general, not a duty to transmit.",
+     "doubt": "§ 1422(5)(a) names 'reports of critical safety incidents', read to include reports by the public."
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [
+      "are exempt from disclosure under article six of the public officers law"
+     ],
+     "ref": "GBL § 1422(6)",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": "The reports are exempt from New York's freedom of information law; nothing requires publishing one.",
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "duty",
+     "quotes": [
+      "Beginning January first, two thousand twenty-eight, and annually thereafter, the office shall produce a report, that includes the following: (i) anonymized and aggregated information about critical safety incidents that have been reviewed by the office"
+     ],
+     "ref": "GBL § 1422(7)",
+     "deadline_h": "periodic",
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "Only incidents the office reviewed, and it need not review a public report; transmitted to the governor and named legislators, not said to be published."
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [
+     "Nothing in this article shall be construed to establish, authorize or create a private right of action associated with violations of this article."
+    ],
+    "ref": "GBL § 1427(2)",
+    "note": null,
+    "doubt": null
+   },
+   "note": null,
+   "what": "Anyone may report a critical safety incident",
+   "ref": "GBL § 1422(1), (4)",
+   "binding": "law",
+   "instrument_short": "New York RAISE Act",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  },
+  {
+   "id": "GPA2",
+   "instrument": "gpa",
+   "receiver": "own record",
+   "receiver_name": "the organisation deploying the agent",
+   "sender": "the organisation's own monitoring",
+   "receiver_party": "no",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "recommended",
+     "quotes": [
+      "establishing procedures to detect, investigate and respond to incidents"
+     ],
+     "ref": "Operative measures, governance",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "Given as an example of a measure organisations should implement."
+    },
+    "order": {
+     "v": "recommended",
+     "quotes": [
+      "enabling users or operators to pause or stop execution"
+     ],
+     "ref": "Operative measures, limits",
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": "Given as an example of a measure organisations should implement."
+    },
+    "pass_on": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "quotes": [],
+     "ref": null,
+     "deadline_h": null,
+     "deadline_max_h": null,
+     "note": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "max": null,
+    "who": null,
+    "note": null,
+    "doubt": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quotes": [],
+    "ref": null,
+    "note": null,
+    "doubt": null
+   },
+   "note": null,
+   "what": "Monitoring and reporting of unexpected behaviour after deployment",
+   "ref": "Operative measures, testing and monitoring",
+   "binding": "voluntary",
+   "instrument_short": "Privacy Assembly",
+   "trigger": "event short of harm",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_deadline_max_h": null
+  }
+ ]
+}

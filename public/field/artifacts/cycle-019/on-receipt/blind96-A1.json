@@ -1,0 +1,786 @@
+{
+ "reader": "A1",
+ "texts": [
+  {
+   "instrument": "eu-act",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401689",
+   "via": "direct",
+   "sha256": "bb1b0f9925d54a91d34cf3c7ce321cc527be15c8be6618a54535df7123b9674c"
+  },
+  {
+   "instrument": "eu-code",
+   "url": "https://ec.europa.eu/newsroom/dae/redirection/document/118119",
+   "via": "pdf",
+   "sha256": "d879f9b54c6068aae57ebaead9d90ddaa46f2503312b9185367a724fa8da2f4a"
+  },
+  {
+   "instrument": "china",
+   "url": "http://www.cac.gov.cn/rootimages/uploadimg/1759653474200838/1759653474200838.pdf",
+   "via": "pdf",
+   "sha256": "50735b9ca01bff746169fa58e554abb97b4e62c27d4c97afd64f18ff83bba705"
+  },
+  {
+   "instrument": "asean",
+   "url": "https://asean.org/wp-content/uploads/2025/01/Expanded-ASEAN-Guide-on-AI-Governance-and-Ethics-Generative-AI.pdf",
+   "via": "pdf",
+   "sha256": "d2f9f1293e9af2f3ca4cc3954e39f94ed6fcd6b52f5e72b28d0d51fc9954ddbd"
+  },
+  {
+   "instrument": "haip",
+   "url": "https://www.soumu.go.jp/hiroshimaaiprocess/pdf/document05_en.pdf",
+   "via": "pdf",
+   "sha256": "14cfe36633502daa48231b49ca7f186c53a72add181b328047665763ecb13ac4"
+  },
+  {
+   "instrument": "paris",
+   "url": "https://www.elysee.fr/en/emmanuel-macron/2026/11/09/paris-call-for-ai-safety-and-security",
+   "via": "direct",
+   "sha256": "2f7f708c8c2bd118f9aa4b9fdf8454c1f30da0488b5faa31abd16a8185de944e"
+  },
+  {
+   "instrument": "gpa",
+   "url": "https://globalprivacyassembly.com/wp-content/uploads/2026/11/Resolution-on-Privacy-protective-Agentic-AI.pdf",
+   "via": "pdf",
+   "sha256": "1541d9c5a57f7547a381639c3e1a14eb5ec35a2a94ce85681ca15900dfa2629e"
+  }
+ ],
+ "signals": [
+  {
+   "id": "EU4",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "power",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "The AI Office, after consulting the Board, may conduct evaluations of the general-purpose AI model concerned: (a) to assess compliance of the provider with obligations under this Regulation, where the information gathered pursuant to Article 91 is insufficient",
+     "ref": "Art. 92(1)(a)",
+     "doubt": "Power concerns evaluation of the model/compliance, not expressly of an incident report; 92(1)(b) adds investigating systemic risks following a scientific-panel alert only."
+    },
+    "order": {
+     "v": "power",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "restrict the making available on the market, withdraw or recall the model.",
+     "ref": "Art. 93(1)(c); lead-in: Where necessary and appropriate, the Commission may request providers to",
+     "doubt": "93(1)(b) also: implement mitigation measures where evaluation gave rise to serious and substantiated concern of a systemic risk. Power is of the Commission via AI Office; request, backed by fine Art. 101(1)(c)."
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "penalty",
+    "quote": "The Commission may impose on providers of general-purpose AI models fines not exceeding 3 % of their annual total worldwide turnover in the preceding financial year or EUR 15 000 000, whichever is higher.",
+    "ref": "Art. 101(1)(a)",
+    "max": "3 % of annual total worldwide turnover or EUR 15 000 000, whichever is higher",
+    "who": "the Commission"
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Sender duty: Art. 55(1)(c) 'report, without undue delay, to the AI Office'. No receiver duty to acknowledge, publish or forward the report; Art. 55(3) confidentiality (Art. 78) bars publication. Art. 90(2) AI Office informs Board of measures (not coded as a duty to account for handling of reports)."
+  },
+  {
+   "id": "COP3",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "no",
+   "note": "Code addresses only Signatories (sender). Nothing in the Code sets what the AI Office does with reports (Objective B only 'to enable the AI Office to assess compliance'). Sender duties: Measures 9.2-9.3 (initial report 2/5/10/15 days; intermediate every four weeks; final 60 days). Code states no consequence for non-reporting."
+  },
+  {
+   "id": "COP5",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": "Signatories will investigate the causes and effects of serious incidents, including the information within the preceding list, with a view to informing systemic risk assessment.",
+     "ref": "Measure 9.2, final para",
+     "doubt": "Duty attaches to serious incidents the Signatory tracks (incl. via 9.1 sources), not expressly to each third-party report."
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "duty",
+     "recommends": false,
+     "deadline_h": "prompt",
+     "quote": "Signatories will keep track of, document, and report to the AI Office and, as applicable, to national competent authorities, at least the following information",
+     "ref": "Measure 9.2; Commitment 9; Measure 9.3",
+     "doubt": "Commitment 9: 'without undue delay'; 9.3 sets tiers of 2, 5, 10, 15 days from awareness, four-weekly updates, final within 60 days."
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Receiver coded = the Signatory (first named). 9.1(2) only requires the Signatory to facilitate third-party reporting by informing them of channels. No acknowledgement, publication or aggregate duty (Measure 10.2 covers Framework/Model Reports only). Sender (third parties) has no duty."
+  },
+  {
+   "id": "CN1",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "no",
+   "note": "Section 5.9 uses only 'We should': track and analyse incidents, build an AI vulnerability database, establish a risk and threat information sharing mechanism covering developers, service providers and technical institutions. No receiver act is assigned; recommendation only. Framework is non-binding guidance."
+  },
+  {
+   "id": "CN2",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "no",
+   "note": "5.13 (text of fetched PDF English part): complaint/report handling mechanism 'should be established' - recommendation to establish a mechanism; no handling act (acknowledge, investigate, forward) specified. Mechanism unnamed. Searched: complaint, report, hazards, scrutiny."
+  },
+  {
+   "id": "AS1",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "no",
+   "note": "3.4 only describes capability to report externally 'when required or needed' to regulators, users, customers or value-chain participants; no act of any receiver, no duty. Policy recommendations are for ASEAN to explore."
+  },
+  {
+   "id": "G7-1",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": true,
+     "deadline_h": null,
+     "quote": null,
+     "ref": "Principle 2",
+     "doubt": "Monitoring for incidents is recommended ('should ... monitor'); not tied to third-party reports."
+    },
+    "order": {
+     "v": "none",
+     "recommends": true,
+     "deadline_h": null,
+     "quote": null,
+     "ref": "Principle 2",
+     "doubt": "'take appropriate action'/'mitigate identified risks' recommended only."
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Principle 2: organisations 'are encouraged to consider ... facilitating third-party and user discovery and reporting' and 'encouraged to maintain appropriate documentation of reported incidents and to mitigate'. Voluntary; uses should/encouraged throughout, no duty. Receiver = organisation that endorses the Code (party status doubtful: voluntary guidance)."
+  },
+  {
+   "id": "G7-3",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Principle 4: sender organisations 'should collaborate ... share and report relevant information to the public' and 'share ... with relevant public authorities' (recommendation to the sender). No act assigned to the receiving organisations, public or authorities. Receiver coded = other organisations (first named); party status doubtful (voluntary Code endorsed by organisations)."
+  },
+  {
+   "id": "PC3",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Third commitment: 'We recognize the value of strengthening existing reporting arrangements to align on incident classification and share timely information on serious cyber and AI control incidents and other material precursor signals' - sender-side sharing; 'exploring whether a cooperation mechanism would help'. No receiver act; no consequence stated."
+  },
+  {
+   "id": "PC4",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "n/a",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "yes",
+   "note": "Policy makers commit only to 'offer secure and confidential channels' (third commitment); no stated act on what the channel receives (acknowledge, investigate, forward); protection from retaliation is a sender-side assurance. Whistleblowers have no duty."
+  },
+  {
+   "id": "GPA2",
+   "acts": {
+    "acknowledge": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "investigate": {
+     "v": "none",
+     "recommends": true,
+     "deadline_h": null,
+     "quote": null,
+     "ref": "Operative measures: governance bullet",
+     "doubt": "Recommended only: 'establishing procedures to detect, investigate and respond to incidents' (governance bullet) - recommends, 'could include'."
+    },
+    "order": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "pass_on": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": "Operative measures: testing and real-time monitoring",
+     "doubt": "'measures should be in place to monitor for and report on unexpected behaviors or failures' - recipient of the report unspecified; recommendation."
+    },
+    "tell_public": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    },
+    "tell_public_aggregate": {
+     "v": "none",
+     "recommends": false,
+     "deadline_h": null,
+     "quote": null,
+     "ref": null,
+     "doubt": null
+    }
+   },
+   "sender_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null,
+    "max": null,
+    "who": null
+   },
+   "receiver_failure": {
+    "v": "none",
+    "quote": null,
+    "ref": null
+   },
+   "receiver_party": "no",
+   "note": "Resolution only calls on organisations and lists examples ('should implement risk-based measures'); the organisation is not a party that committed. Sender is the organisation's own monitoring; no consequence stated. Resolution operative paragraphs 1-4 concern GPA working group work, no duty."
+  }
+ ]
+}

@@ -1,0 +1,239 @@
+{
+ "what": "Check 96 (session 294, 2026-11-27): every count of the third state of On Receipt, from the files of the check (build96.py).",
+ "k": {
+  "A.cells": 114,
+  "A.agree": 113,
+  "A.kappa": "0.97",
+  "A.sender.n": 19,
+  "A.sender.agree": 18,
+  "A.sender.kappa": "0.92",
+  "A.recv.n": 19,
+  "A.recv.agree": 19,
+  "A.recv.kappa": "1.00",
+  "A.party.n": 19,
+  "A.party.agree": 18,
+  "A.party.kappa": "0.89",
+  "A.dl.n": 20,
+  "A.dl.agree": 19,
+  "A.dl.kappa": "0.90",
+  "A.diffs": 4,
+  "A.moved": 1,
+  "A.P158.n": 4,
+  "A.pb_duty": 2,
+  "A.P158.out": "failed",
+  "B.first": 47,
+  "B.blind": 80,
+  "B.paired": 46,
+  "B.union": 81,
+  "B.unit": "0.57",
+  "B.class.kappa": "1.00",
+  "B.owed5.agree": 40,
+  "B.owed5.kappa": "0.53",
+  "B.owed2.kappa": "0.36",
+  "B.rec.agree": 14,
+  "B.rec.n": 18,
+  "B.rec.kappa": "0.76",
+  "B.accepted": 28,
+  "B.declined": 6,
+  "B.only_first": 1,
+  "acts": 74,
+  "acts.wiki": 19,
+  "doors.wiki": 4,
+  "acts.escape": 55,
+  "doors.escape": 14,
+  "held": 41,
+  "corrected": 5,
+  "added": 28,
+  "removed": 1,
+  "doors": 18,
+  "doors_with_acts": 17,
+  "owed.letter": 5,
+  "owed.duty": 3,
+  "owed.power": 1,
+  "owed.other_law": 2,
+  "owed.choice": 68,
+  "owed.letter.pct": 6.8,
+  "named.doors": 7,
+  "named.acts": 46,
+  "named.owed": 4,
+  "named.pct": 8.7,
+  "named.unnamed_acts": 28,
+  "P165.contested": 1,
+  "P165.no_contested.owed": 4,
+  "P165.no_contested.acts": 73,
+  "found_outside": 2,
+  "P165.with_found.owed": 6,
+  "P165.with_found.acts": 76,
+  "P165.with_found.pct": 7.9,
+  "P165.out": "held",
+  "duty.periodic": 1,
+  "duty.doubt": 2,
+  "duty.clean": 0,
+  "force.bodies": 13,
+  "compels": 3,
+  "pressure": 10,
+  "compels.under_ai": 0,
+  "rec.on": 2,
+  "rec.by_act": 12,
+  "rec.by": 1,
+  "rec.none": 3,
+  "lags.measured": 2,
+  "rec.bodies_dated": 9,
+  "rec.bodies_by_act": 9,
+  "clock.inside": 24,
+  "clock.outside": 1,
+  "clock.to_escape": 11,
+  "clock.resumed_to_escape": 1,
+  "clock.earlier_to_inside": 32,
+  "P162.wiki": 3,
+  "P162.escape": 7,
+  "P162.al": 18,
+  "P162.no_act": 1,
+  "P162.out": "held",
+  "P163.consequences": 0,
+  "P163.out": "held",
+  "C.cells": 20,
+  "C.met": 0,
+  "C.done": 4,
+  "C.declared": 2,
+  "C.missed": 0,
+  "C.notdue": 6,
+  "C.unknowable": 8,
+  "P166.out": "held",
+  "C.queries": 3,
+  "C.opened": 6,
+  "D.same": 7,
+  "D.of": 8,
+  "Q.n": 66,
+  "Q.found": 66,
+  "Q.extraction": 4,
+  "Q.excerpt": 1,
+  "P164.out": "held",
+  "predictions_held": 3
+ },
+ "A": {
+  "disagreements": [
+   {
+    "signal": "AS1",
+    "code": "sender_failure",
+    "first": "none",
+    "blind": "n/a"
+   },
+   {
+    "signal": "COP5",
+    "code": "pass_on.deadline_h",
+    "first": "48",
+    "blind": "prompt",
+    "blind_doubt": "Commitment 9: 'without undue delay'; 9.3 sets tiers of 2, 5, 10, 15 days from awareness, four-weekly updates, final within 60 days."
+   },
+   {
+    "signal": "G7-3",
+    "code": "receiver_party",
+    "first": "no",
+    "blind": "yes"
+   },
+   {
+    "signal": "PC3",
+    "code": "pass_on",
+    "first": "duty",
+    "blind": "none",
+    "blind_quote": null
+   }
+  ],
+  "decisions": [
+   {
+    "signal": "PC3",
+    "code": "pass_on",
+    "first": "duty",
+    "blind": "none",
+    "final": "none",
+    "moves": true,
+    "why": "The third commitment commits its signatories to 'information sharing, reporting and early warning systems' and only 'recognize[s] the value' of sharing timely information; the first coding's own doubt said so. A commitment to build systems is no duty to pass on a given word."
+   },
+   {
+    "signal": "AS1",
+    "code": "sender_failure",
+    "first": "none",
+    "blind": "n/a",
+    "final": "none",
+    "moves": false,
+    "why": "`n/a` is for a signal anyone may send; the guide addresses the organisation that reports, as the G7 Code does, and those rows are coded `none`. Kept for consistency; no figure turns on it."
+   },
+   {
+    "signal": "COP5",
+    "code": "pass_on.deadline_h",
+    "first": "48",
+    "blind": "prompt",
+    "final": "48",
+    "moves": false,
+    "why": "Measure 9.3 sets four numbered tiers (2, 5, 10 and 15 days from awareness); the codebook asks for a number where the text gives one. Kept at the shortest tier, with 360 hours as the longest."
+   },
+   {
+    "signal": "G7-3",
+    "code": "receiver_party",
+    "first": "no",
+    "blind": "yes",
+    "final": "no",
+    "moves": false,
+    "why": "The Code asks nothing of those who receive, and two of the three receivers it names (the public, public authorities) made no commitment to it; an organisation that endorsed it binds itself as a sender."
+   }
+  ],
+  "P158_rows_with_duty": [
+   "COP5",
+   "CA4",
+   "CA8",
+   "NY4"
+  ],
+  "public_bodies_with_duty": [
+   "CA4",
+   "NY4"
+  ]
+ },
+ "P165": {
+  "letter": [
+   "W-MAKER:pass_on:2026-09-07",
+   "E-MAKER:investigate:2026-07-20",
+   "E-MAKER:pass_on:2026-09-26",
+   "E-AL:investigate:2026-08-20",
+   "E-CAAG:proceed:2026-11-16"
+  ],
+  "named_letter": [
+   "W-MAKER:pass_on:2026-09-07",
+   "E-MAKER:investigate:2026-07-20",
+   "E-MAKER:pass_on:2026-09-26",
+   "E-CAAG:proceed:2026-11-16"
+  ],
+  "contested": [
+   "W-MAKER:pass_on:2026-09-07"
+  ]
+ },
+ "compels": [
+  "E-AL:investigate:2026-08-20",
+  "E-CAAG:investigate:2026-09-30",
+  "E-CAAG:proceed:2026-11-16"
+ ],
+ "lags": {
+  "W-MOD": 0,
+  "E-MAKER": 0
+ },
+ "first_seen_after": {
+  "W-EC": 3,
+  "E-FBI": null,
+  "E-WH": 7,
+  "E-AGS": 18,
+  "E-AL": 18,
+  "E-HOUSE": 25,
+  "E-ASM": 25,
+  "E-OES": 25,
+  "E-CAAG": 50,
+  "E-SEN": 55,
+  "E-VH": 56,
+  "E-EC": 85
+ },
+ "duty_codes": {
+  "unknowable": 8,
+  "done, set-off or time unknown": 4,
+  "not due": 6,
+  "declared not set off": 2
+ }
+}
