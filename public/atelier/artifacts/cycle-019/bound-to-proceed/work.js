@@ -73,7 +73,10 @@
     var yy = it.y;
     el("line", { "class": "base", x1: 0, y1: yy + RH - 1, x2: W, y2: yy + RH - 1 }, g);
     var t = el("text", { "class": "nm", x: 0, y: yy + 14 }, g);
-    var nm = r.band === "ai" ? cut(r.name, 30) : cut(r.name, 44);
+    // two receivers stand in two rows each (a developer's report, the public's); a cut name kept them apart nowhere (critique of 26 November)
+    var ROWNAME = { CA4: "Cal OES, from a developer", CA6: "Cal OES, from the public", NY4: "DFS office, from a developer",
+      NY6: "DFS office, from the public", EU4: "AI Office, under the Act", COP3: "AI Office, under the Code" };
+    var nm = r.band === "ai" ? cut(ROWNAME[r.id] || r.name, 30) : cut(r.name, 44);
     t.appendChild(document.createTextNode(nm));
     if (r.band === "ai") el("tspan", { dx: 6, "class": "mute" }, t, cut(r.instrument, 18));
     D.columns.forEach(function (c, i) {
@@ -138,7 +141,8 @@
       var dim = on && g.getAttribute("data-band") === "ai" && g.getAttribute("data-kind") !== "public body";
       g.classList.toggle("dim", dim);
     });
-    say.innerHTML = on ? "The <b>" + C.public_bodies + "</b> public bodies among the AI receivers: none must say so to the sender, none has a deadline on receipt, none must write why, and for none is a consequence named." : "Read across a row: what the receiver must do. Read down a column: who must do it.";
+    var X = (window.CHECK || {}).counts || {};
+    say.innerHTML = on ? "The <b>" + C.public_bodies + "</b> public bodies among the AI receivers: none must say so to the sender, none has a deadline on receipt, none must write why, and for none is a consequence named. <b>" + X.voluntary_public + "</b> of them rest on voluntary texts; the span that compares is the <b>" + X.law_public + "</b> a law names." : "Read across a row: what the receiver must do. Read down a column: who must do it.";
   });
 
   /* ---------- II. the night ---------- */

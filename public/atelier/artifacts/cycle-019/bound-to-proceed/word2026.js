@@ -106,7 +106,7 @@
     var on = bS.getAttribute("aria-pressed") !== "true";
     bS.setAttribute("aria-pressed", on); svg.classList.toggle("ruled", on);
     csay.innerHTML = on ? "Under the sea's rule each of the <b>" + C.receipts_no_record + "</b> words received with nothing on record leaves a cell someone must fill. The <b>" +
-      C.reasons + "</b> reasons are there, but none was entered at the time: each stands in a record made " + C.reason_lag_min + " to " + C.reason_lag_max + " days after the word." : csay0;
+      C.reasons + "</b> reasons are there, but none is on record from the hour: each stands in a record made public " + C.reason_lag_min + " to " + C.reason_lag_max + " days after the word." : csay0;
   });
 
   /* the reasons, side by side, between the sea's two references */
@@ -116,24 +116,28 @@
   var company = null;
   D.night.forEach(function (s) { s.quotes.forEach(function (q) { if (q.id === "i12-company") company = q; }); });
   var tb = h("table"), th = h("tr");
-  ["When", "Who gave it", "The reason, as written", "What it names"].forEach(function (c) { th.appendChild(h("th", null, c)); });
+  var HEADS = ["When", "Who gave it", "The reason, as written", "What it names", "What asked for it"];
+  HEADS.forEach(function (c) { th.appendChild(h("th", null, c)); });
   var thead = h("thead"); thead.appendChild(th); tb.appendChild(thead);
   var body = h("tbody");
-  function row(cls, when, who, text, names, qid, attr) {
-    var tr = h("tr", cls); tr.appendChild(h("td", "nm", when)); tr.appendChild(h("td", null, who));
-    var td = h("td"), q = h("q", null, text); q.setAttribute(attr, qid); td.appendChild(q); tr.appendChild(td);
-    var tn = h("td", "names"); tn.appendChild(h("b", null, names)); tr.appendChild(tn);
+  function row(cls, when, who, text, names, qid, attr, asked) {
+    var tr = h("tr", cls), c0 = h("td", "nm", when), c1 = h("td", null, who);
+    c0.setAttribute("data-h", HEADS[0]); c1.setAttribute("data-h", HEADS[1]); tr.appendChild(c0); tr.appendChild(c1);
+    var td = h("td"), q = h("q", null, text); q.setAttribute(attr, qid); td.appendChild(q); td.setAttribute("data-h", HEADS[2]); tr.appendChild(td);
+    var tn = h("td", "names"); tn.appendChild(h("b", null, names)); tn.setAttribute("data-h", HEADS[3]); tr.appendChild(tn);
+    var ta = h("td", "asked", asked); ta.setAttribute("data-h", HEADS[4]); tr.appendChild(ta);
     if (cls !== "ref") tr.setAttribute("data-reason", qid);
     body.appendChild(tr);
   }
-  row("ref", "15 Apr 1912, 01:10", "the Californian's Master", company.text, "a class", company.id, "data-q");
+  var ASKED = { "none": "nothing: given by choice", "a hearing": "legislators, at a hearing", "a law's report": "a report the law asks for every three months, which asks for no reason", "an executive order": "the Governor's executive order of 18 September" };
+  row("ref", "15 Apr 1912, 01:10", "the Californian's Master", company.text, "a class", company.id, "data-q", "a report from his bridge");
   K.reasons.forEach(function (r) {
     var s = K.stations.filter(function (x) { return x.id === r.station; })[0];
-    row("", s.label + " 2026", s.receiver, r.passage, r.names, r.q, "data-q2");
+    row("", s.label + " 2026", s.receiver, r.passage, r.names, r.q, "data-q2", ASKED[r.asked]);
   });
-  row("ref", "SOLAS V/33.1 (today)", "the reason the sea's rule asks for", solas.text, "a circumstance", solas.id, "data-q");
+  row("ref", "SOLAS V/33.1 (today)", "the reason the sea's rule asks for", solas.text, "the special circumstances of the case", solas.id, "data-q", "the rule itself, on receipt");
   tb.appendChild(body); box.appendChild(tb);
-  box.appendChild(h("p", "note", "Coded by this practice from the passages; each row's passage is found word for word in its source (cases.py). The first and the last rows are the references from sections I and II."));
+  box.appendChild(h("p", "note", "Coded by this practice from the passages; each row's passage is found word for word in its source (cases.py). What asked for a reason is read from the record it stands in (checked 27 November). The first and the last rows are the references from sections I and II; \"the special circumstances of the case\" is the regulation's own phrase, and the sea accepts a reason that it is unnecessary to proceed."));
   bR.addEventListener("click", function () {
     var on = bR.getAttribute("aria-pressed") !== "true";
     bR.setAttribute("aria-pressed", on); box.hidden = !on;

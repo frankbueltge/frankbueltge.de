@@ -14,7 +14,14 @@ const QUOTE = Object.fromEntries(SRC.quotes.map((q) => [q.id, q]));
 const CASES = JSON.parse(readFileSync(path.join(here, "data/cases.json"), "utf8"));
 const Q2 = {};
 for (const s of CASES.stations) for (const p of s.passages) Q2[p.id] = p;
-const ALL = Object.assign({}, LOG, { cases: CASES });
+const CHECK = JSON.parse(readFileSync(path.join(here, "data/check.json"), "utf8"));
+const ALL = Object.assign({}, LOG, { cases: CASES, check: CHECK });
+// a passage of the check (state 3) is a contiguous excerpt of a passage check.py found word for word
+function sameQuote3(id, pageText) {
+  const q = CHECK.passages[id]; if (!q || q.found !== "exact") return false;
+  const b = norm(pageText);
+  return b.length >= 20 && norm(q.text).includes(b);
+}
 // a section III quotation is a contiguous excerpt of a passage cases.py found word for word in its source
 function sameQuote2(id, pageText) {
   const q = Q2[id]; if (!q || q.found !== "exact") return false;
@@ -57,6 +64,7 @@ for (const q of dataQuotes) {
 
 // the claims the buttons make, from the data
 const C = LOG.counts;
+function C_PUBLIC() { return C.public_bodies; }
 const empty = LOG.rows.filter((r) => r.cells.why.v === "none").length;
 ok(empty === (C.sea_rows - C.sea_why) + C.receivers + (C.house_rows - C.house_why), "empty why column = sea + all AI + architect");
 ok(C.say_duty_public === 0 && C.when_public === 0 && C.why === 0 && C.silent_named_public === 0, "public-bodies sentence holds");
@@ -88,6 +96,18 @@ for (const width of [1100, 390]) {
   for (const [id, t] of qs) ok(sameQuote(id, t), `${width}px quote ${id}`);
 
   for (const [id, t] of await page.$$eval("q[data-q2]", (els) => els.map((e) => [e.getAttribute("data-q2"), e.textContent]))) ok(sameQuote2(id, t), `${width}px case quote ${id}`);
+
+  // the check (state 3): every passage it quotes, the list against its data
+  for (const [id, t] of await page.$$eval("q[data-q3]", (els) => els.map((e) => [e.getAttribute("data-q3"), e.textContent]))) ok(sameQuote3(id, t), `${width}px check quote ${id}`);
+  const items = await page.$$eval("#checklist li[data-check]", (els) => els.map((e) => [e.getAttribute("data-check"), e.getAttribute("data-verdict")]));
+  ok(items.length === CHECK.items.length && items.every(([id, v], i) => CHECK.items[i].id === id && CHECK.items[i].verdict === v), `${width}px checklist ${items.length} items`);
+  for (const v of Object.keys(CHECK.counts.verdicts)) ok(items.filter((x) => x[1] === v).length === CHECK.counts.verdicts[v], `${width}px verdicts ${v}`);
+  ok(Object.values(CHECK.passages).every((q) => q.found === "exact"), "every passage of the check found");
+  ok(CHECK.counts.law_public + CHECK.counts.voluntary_public === C_PUBLIC(), "public bodies: under a law + voluntary = all");
+  const cues = await page.$$eval(".swipe", (els) => els.map((e) => getComputedStyle(e).display !== "none"));
+  ok(cues.length === 2 && cues.every((v) => v === (width < 640)), `${width}px swipe cues shown only on a phone`);
+  const labs = await page.$$eval('#log g.row[data-band="ai"] text.nm', (els) => els.map((e) => e.textContent));
+  ok(new Set(labs).size === labs.length, `${width}px every AI row's label and instrument differ from every other row's`);
 
   // section III: the word in 2026
   const K = CASES.counts;
@@ -124,6 +144,12 @@ for (const width of [1100, 390]) {
   await page.click("#b-reasons");
   const rows = await page.$$eval("#reasons tr[data-reason]", (e) => e.length);
   ok(rows === K.reasons && (await page.$eval("#reasons", (e) => !e.hidden)), `${width}px reasons table ${rows}`);
+  const asked = await page.$$eval("#reasons tr[data-reason] td.asked", (els) => els.map((e) => e.textContent));
+  const want = { "none": "nothing: given by choice", "a hearing": "legislators, at a hearing", "a law's report": "a report the law asks for every three months, which asks for no reason", "an executive order": "the Governor's executive order of 18 September" };
+  ok(asked.length === K.reasons && asked.every((t, i) => t === want[CASES.reasons[i].asked]), `${width}px reasons: what asked for each`);
+  ok(asked.filter((t) => t === want.none).length === K.reasons_by_choice, `${width}px reasons by choice`);
+  const rw = await page.$eval("#reasons", (e) => [e.scrollWidth, e.clientWidth]);
+  ok(width > 640 || rw[0] <= rw[1] + 1, `${width}px reasons fit the screen (${rw})`);
   for (const [id, t] of await page.$$eval("#reasons q[data-q]", (els) => els.map((e) => [e.getAttribute("data-q"), e.textContent]))) ok(sameQuote(id, t), `${width}px reasons ref ${id}`);
 
   // the log: drawn cells against the data
@@ -165,7 +191,7 @@ for (const width of [1100, 390]) {
   ok(await page.$eval("#log", (e) => e.classList.contains("ruled")), `${width}px log ruled`);
   await page.click("#b-public");
   const say2 = await page.$eval("#say", (e) => e.textContent);
-  ok(say2.includes(`The ${C.public_bodies} public bodies`), `${width}px public sentence`);
+  ok(say2.includes(`The ${C.public_bodies} public bodies`) && say2.includes(`the ${CHECK.counts.law_public} a law names`), `${width}px public sentence`);
   const dimmed = await page.$$eval("#log g.row.dim", (e) => e.length);
   ok(dimmed === C.receivers - C.public_bodies, `${width}px dimmed rows ${dimmed}`);
 

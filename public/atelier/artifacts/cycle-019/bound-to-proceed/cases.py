@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Bound to Proceed, state 2: the word in the two cases of step 6, entered as a log.
+"""Bound to Proceed, state 2, corrected by the check of state 3: the word in the two cases of step 6, entered as a log.
 
 Usage: python3 cases.py <dir with the fetched copies>
 
-Reads the copies of the case sources fetched on 2026-11-26 (not committed; their addresses, how they
-were fetched and their SHA-256 are recorded), finds every quoted passage in its copy, codes each
+Reads the copies of the case sources (not committed; their addresses, how they were fetched and their
+SHA-256 are recorded). State 2 read copies fetched on 2026-11-26; the check of 2026-11-27 fetched every
+source again, and the PDFs came back byte for byte the same (the web pages carry changing furniture), finds every quoted passage in its copy, codes each
 station of the word (who received it, what the record shows they did, and any reason the record gives
 for not acting), counts, asserts the counts the page states, and writes data/cases.json and
 data/cases.js.
@@ -17,7 +18,7 @@ import hashlib, html, json, os, re, sys
 from datetime import date
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-FETCHED = "2026-11-26"
+FETCHED = "2026-11-27"   # state 2 read copies of 2026-11-26; the check fetched them again
 
 SOURCES = {
     "report": {"title": "OpenAI, OpenAI – Hugging Face Incident Technical Report (26 August 2026)",
@@ -40,7 +41,7 @@ SOURCES = {
                      "file": "missionlocal.html", "text": "missionlocal.html", "how": "direct", "html": True},
     "brussels": {"title": "The Brussels Times with Belga, EU launches investigation into new incident of OpenAI's takeover of a German website (7 September 2026)",
                  "url": "https://www.brusselstimes.com/eu-affairs/2307044/eu-launches-investigation-into-new-incident-of-openais-takeover-of-a-german-website",
-                 "file": "brussels.html", "text": "brussels.html", "how": "direct", "html": True},
+                 "file": "brussels.html", "text": "brussels.html", "how": "direct (on 27 November the site served a script shell to a browser's agent string and the article to a plain client)", "html": True},
     "willison": {"title": "Simon Willison, timeline of the wiki case after the researchers' account (4 September 2026)",
                  "url": "https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/",
                  "file": "willison.html", "text": "willison.html", "how": "direct", "html": True},
@@ -55,7 +56,7 @@ SOURCES = {
             "file": "ags.pdf", "text": "ags.txt", "how": "direct"},
     "tc5": {"title": "TechCrunch, OpenAI confirms 'wiki incident,' says it's 'working on a framework' for more disclosure (5 September 2026), quoting the maker's own post",
             "url": "https://techcrunch.com/2026/09/05/openai-confirms-wiki-incident-says-its-working-on-a-framework-for-more-disclosure/",
-            "file": "tc5-extracted.txt", "text": "tc5-extracted.txt", "how": "extraction service (direct fetch refused, HTTP 403, 2026-11-26)"},
+            "file": "tc5.html", "text": "tc5.html", "how": "direct (refused with HTTP 403 on 26 November and read through an extraction service; fetched directly on 27 November)", "html": True},
     "rsaipage": {"title": "Real Safety AI Foundation, the filing's public page (its own summary in the page's description; the body renders by script and was not read)",
                  "url": "https://realsafetyai.org/incident-reports/openai-july-2026/",
                  "file": "realsafety.html", "text": "realsafety.html", "how": "direct", "html": True, "raw": True},
@@ -87,6 +88,7 @@ QUOTES = [
     ("q-scope", "quarterly", "The models involved in this incident fall outside the report's model scope."),
     ("q-below", "quarterly", "The impacts of these incidents were below the threshold of catastrophic harm"),
     ("l-initially", "letter", "We initially understood this primarily as a security incident."),
+    ("l-eo", "letter", "Re: Recommendations under Sept. 18, 2026 Executive Order"),
     # those outside
     ("w-mod", "willison", "A human moderator notices and cleans up the spam."),
     ("w-zzz", "willison", "The agents notice that a moderator has been deleting pages in alphabetical order, and start creating ZZZ prefixed backup copies"),
@@ -104,8 +106,12 @@ QUOTES = [
     ("m-snow", "missionlocal", "Jonathan Snow, the deputy director for the Homeland Security Division of the Governor's Office of Emergency Services, said that the OpenAI hack \"did not meet the threshold\" for reporting under SB 53"),
     ("m-hearing", "missionlocal", "in an Aug. 10 state privacy and consumer protection hearing on the cyberattack"),
     ("m-intended", "missionlocal", "SB 53 \"is not intended to make every cybersecurity incident involving an AI company reportable\" to the state."),
+    ("m-statement", "missionlocal", "a spokesperson for the Office of Emergency Services said SB 53"),
     ("b-regnier", "brussels", "\"It is not the first time that control over AI agents has been lost, but we take the matter very seriously and are monitoring the situation closely,\" EU spokesperson Thomas Regnier said on Monday."),
     ("b-report", "brussels", "Regnier said the Commission had received an incident report from OpenAI and was in close contact with the company."),
+    ("g-eo", "govops", "In response to Executive Order N-9-26, the California Government Operations Agency, in consultation with the California Office of Emergency Services and outside AI experts, has developed recommendations for legislative action."),
+    ("c-defendants", "complaint", "action against Defendants OpenAI Foundation, OpenAI Group PBC, and DOES 1-100"),
+    ("c-does", "complaint", "The People are not aware of the true names and capacities of defendants sued herein as DOES 1 through 100, inclusive, and, therefore, sue these defendants by such fictitious names."),
     ("g-scope", "govops", "None of the models involved in this incident fell within the scope of SB 53, according to OpenAI, meaning that existing California law did not make reporting this incident mandatory."),
 ]
 
@@ -127,7 +133,7 @@ STATIONS = [
      "receiver": "the maker's on-call response staff", "word": "a monitoring alert: port sweeps in the research environment",
      "did": "They traced it to an evaluation and let the evaluation run.", "who": "role", "who_text": "\"the on-call response staff\"",
      "basis": "the maker's own account", "quotes": ["r-jun27", "r-notreq", "c-jun27"],
-     "reasons": [{"q": "r-notreq", "names": "a requirement", "text": "not required"}], "written": "2026-08-26",
+     "reasons": [{"q": "r-notreq", "names": "a requirement", "text": "not required", "asked": "none", "asked_q": "r-notreq"}], "written": "2026-08-26",
      "received": "2026-06-27", "received_what": "the alert itself; the decision stands in a report written two months later"},
     {"id": "jul05", "date": "2026-07-05", "label": "4–5 July", "case": "escape", "lane": "maker", "kind": "acted",
      "receiver": "the maker's incident responders", "word": "a service brought down by the agents' traffic; an alert",
@@ -157,12 +163,20 @@ STATIONS = [
      "quotes": ["ags-cease", "ags-preserve"]},
     {"id": "aug10", "date": "2026-08-10", "label": "10 August", "case": "escape", "lane": "public", "kind": "reason",
      "receiver": "California's Office of Emergency Services", "word": "the case, at an Assembly hearing; no report had reached it",
-     "did": "Its deputy director said the case did not meet the law's threshold; a spokesperson said the law is not meant to make every such incident reportable.",
-     "who": "name", "who_text": "Jonathan Snow, deputy director; \"a spokesperson\"", "basis": "a newspaper's report of 9 September",
-     "quotes": ["m-snow", "m-hearing", "m-intended"],
-     "reasons": [{"q": "m-snow", "names": "a threshold", "text": "did not meet the threshold"},
-                 {"q": "m-intended", "names": "a law's intent", "text": "not intended to make every cybersecurity incident ... reportable"}],
+     "did": "Its deputy director told the legislators that the case did not meet the law's threshold.",
+     "who": "name", "who_text": "Jonathan Snow, deputy director", "basis": "a newspaper's report of 9 September",
+     "quotes": ["m-snow", "m-hearing"],
+     "reasons": [{"q": "m-snow", "names": "a threshold", "text": "did not meet the threshold",
+                  "asked": "a hearing", "asked_q": "m-hearing"}],
      "written": "2026-08-10", "received": "2026-07-16", "received_what": "the harmed party's public account; no report reached the office"},
+    {"id": "sep09", "date": "2026-09-09", "label": "by 9 September", "case": "escape", "lane": "public", "kind": "reason",
+     "receiver": "California's Office of Emergency Services, a spokesperson", "word": "a newspaper's question",
+     "did": "Tells the newspaper that the law is not meant to make every such incident reportable. State 2 set this at the hearing of 10 August; its source says it was a statement to the paper (corrected by the check, 27 November).",
+     "who": "role", "who_text": "\"a spokesperson\"", "basis": "a newspaper's report of 9 September",
+     "quotes": ["m-statement", "m-intended"],
+     "reasons": [{"q": "m-intended", "names": "a law's intent", "text": "not intended to make every cybersecurity incident ... reportable",
+                  "asked": "none", "asked_q": "m-statement"}],
+     "written": "2026-09-09", "received": "2026-07-16", "received_what": "the harmed party's public account; no report reached the office; the statement is dated by the report that prints it"},
     {"id": "sep07", "date": "2026-09-07", "label": "7 September", "case": "wiki", "lane": "public", "kind": "told",
      "receiver": "the European Commission", "word": "the maker's incident report on the wiki case",
      "did": "Says in public that it has the report and is monitoring the situation closely.", "who": "name",
@@ -177,38 +191,39 @@ STATIONS = [
      "did": "Says why it had not told of the case: it had classed it with other misalignment it had shared, whereas the escape had gone to its security playbook.",
      "who": "organisation", "who_text": "\"OpenAI\" (a post, quoted by the press)", "basis": "the maker's own post, as the press quotes it",
      "quotes": ["tc5-class", "tc5-playbook", "tc5-research"],
-     "reasons": [{"q": "tc5-class", "names": "a class", "text": "an instance of misalignment similar to others"}],
+     "reasons": [{"q": "tc5-class", "names": "a class", "text": "an instance of misalignment similar to others", "asked": "none", "asked_q": "tc5-class"}],
      "written": "2026-09-05", "received": "2026-06-21", "received_what": "the first visit of its staff to the wiki, as the researchers and the complaint date it"},
     {"id": "sep26", "date": "2026-09-26", "label": "late September", "case": "escape", "lane": "maker", "kind": "reason",
      "receiver": "the maker, reporting to the state office", "word": "its own incident, in its quarterly report",
      "did": "Names the incident and sets it outside what the report covers.", "who": "organisation", "who_text": "\"OpenAI\"",
      "basis": "the maker's own account", "quotes": ["q-to", "q-scope", "q-below"],
-     "reasons": [{"q": "q-scope", "names": "a scope", "text": "outside the report's model scope"},
-                 {"q": "q-below", "names": "a threshold", "text": "below the threshold of catastrophic harm"}],
+     "reasons": [{"q": "q-scope", "names": "a scope", "text": "outside the report's model scope", "asked": "a law's report", "asked_q": "q-to"},
+                 {"q": "q-below", "names": "a threshold", "text": "below the threshold of catastrophic harm", "asked": "a law's report", "asked_q": "q-to"}],
      "written": "2026-09-26", "received": "2026-07-20", "received_what": "the day the maker tied its agents to the case"},
     {"id": "oct20", "date": "2026-10-20", "label": "20 October", "case": "escape", "lane": "maker", "kind": "reason",
      "receiver": "the maker, writing to the Governor", "word": "its own reading of July",
      "did": "Says how it first classed the word.", "who": "organisation", "who_text": "\"we\" (a letter signed by its head of policy)",
-     "basis": "the maker's own account", "quotes": ["l-initially"],
-     "reasons": [{"q": "l-initially", "names": "a class", "text": "initially understood ... primarily as a security incident"}],
+     "basis": "the maker's own account", "quotes": ["l-eo", "l-initially"],
+     "reasons": [{"q": "l-initially", "names": "a class", "text": "initially understood ... primarily as a security incident", "asked": "an executive order", "asked_q": "l-eo"}],
      "written": "2026-10-20", "received": "2026-07-20", "received_what": "the day the maker tied its agents to the case"},
     {"id": "nov16g", "date": "2026-11-16", "label": "16 November", "case": "escape", "lane": "public", "kind": "reason",
      "receiver": "California's Government Operations Agency, reporting to the Governor", "word": "the case, in the state's report on AI safety",
      "did": "Takes the maker's scope as the reason no report was owed.", "who": "organisation", "who_text": "the agency",
-     "basis": "the state's own report", "quotes": ["g-scope"],
-     "reasons": [{"q": "g-scope", "names": "a scope, the maker's", "text": "fell within the scope of SB 53, according to OpenAI"}],
+     "basis": "the state's own report", "quotes": ["g-eo", "g-scope"],
+     "reasons": [{"q": "g-scope", "names": "a scope, the maker's", "text": "fell within the scope of SB 53, according to OpenAI", "asked": "an executive order", "asked_q": "g-eo"}],
      "written": "2026-11-16", "received": "2026-07-16", "received_what": "the harmed party's public account"},
     {"id": "nov16a", "date": "2026-11-16", "label": "16 November", "case": "both", "lane": "public", "kind": "acted",
      "receiver": "the Attorney General of California", "word": "the four warnings it lists",
      "did": "Sues the maker for not heeding them, under the unfair competition law and the law of public nuisance; the AI law appears only as a public policy offended.",
      "who": "name", "who_text": "the People, through Attorney General Rob Bonta", "basis": "allegation",
-     "quotes": ["c-71", "c-heed", "c-ucl", "c-policy", "c-tfaia", "c-dated"]},
+     "quotes": ["c-71", "c-heed", "c-ucl", "c-policy", "c-tfaia", "c-defendants", "c-does", "c-dated"]},
 ]
 
 
 def norm(s):
     s = s.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
     s = s.replace("–", "-").replace("—", "-").replace("­", "").replace("​", "")
+    s = s.replace("\u200b", "").replace("\u00ad", "")   # zero-width spaces and soft hyphens of a PDF's text layer
     s = re.sub(r"-\s*\n\s*", "-", s)
     s = re.sub(r"\s+", " ", s)
     return s.strip()
@@ -266,9 +281,12 @@ def main(base):
         del s["quotes"]
     assert used == set(quotes), set(quotes) - used
 
-    reasons = [dict(r, station=s["id"], date=s["date"], lane=s["lane"], written=s["written"]) for s in STATIONS for r in s.get("reasons", [])]
+    reasons = [dict(r, station=s["id"], date=s["date"], lane=s["lane"], written=s["written"], received=s["received"])
+               for s in STATIONS for r in s.get("reasons", [])]
     for r in reasons:
         r["passage"] = quotes[r["q"]]["text"]
+        r["asked_passage"] = quotes[r["asked_q"]]["text"]
+        r["lag_days"] = days(r["received"], r["written"])
     first_alert = "2026-06-27"
     c = {
         "stations": len(STATIONS),
@@ -290,14 +308,24 @@ def main(base):
         "threshold_after_public_days": days("2026-07-16", "2026-08-10"),
         "alert_to_letter_days": days(first_alert, "2026-08-03"),
     }
-    lags = [days(s["received"], s["written"]) for s in STATIONS if s["kind"] == "reason"]
+    lags = [r["lag_days"] for r in reasons]
+    # the check (2026-11-27): what each reason answered, by its own record
+    asked = {}
+    for r in reasons:
+        asked[r["asked"]] = asked.get(r["asked"], 0) + 1
+    c["reasons_asked"] = asked
+    c["reasons_by_choice"] = asked.get("none", 0)
+    c["reasons_answering_a_demand"] = c["reasons"] - c["reasons_by_choice"]
+    c["reasons_rule_of_receipt"] = asked.get("a rule of receipt", 0)
     c["reason_lag_min"], c["reason_lag_max"] = min(lags), max(lags)
     c["reasons_at_the_hour"] = sum(1 for x in lags if x == 0)
     # the complaint's list of four warnings, read from its own passages
     assert [x for x in ("c-may26", "c-wiki", "c-jun27", "c-jul4")] and c["complaint_warnings"] == 4
     # what the page states, asserted
-    assert c["stations"] == 18, c
-    assert (c["reason_stations"], c["reasons"]) == (6, 8), c
+    assert c["stations"] == 19, c
+    assert (c["reason_stations"], c["reasons"]) == (7, 8), c
+    assert asked == {"none": 3, "a hearing": 1, "a law's report": 2, "an executive order": 2}, asked
+    assert c["reasons_rule_of_receipt"] == 0
     assert c["reasons_circumstance"] == 0, c
     assert (c["reasons_maker"], c["reasons_public"]) == (5, 3), c
     assert c["maker_named"] == 0 and c["maker_roles"] == 4, c
@@ -308,7 +336,7 @@ def main(base):
     assert c["threshold_after_public_days"] == 25, c
     assert (c["reason_lag_min"], c["reason_lag_max"], c["reasons_at_the_hour"]) == (25, 123, 0), c
 
-    out = {"what": "Bound to Proceed, state 2 (2026-11-26): the word in the two cases of step 6, from the first warning on record to the first suit, entered as a log by this practice. Coding declared; every station carries its passages.",
+    out = {"what": "Bound to Proceed, state 2 (2026-11-26), corrected by the check of state 3 (2026-11-27): the word in the two cases of step 6, from the first warning on record to the first suit, entered as a log by this practice. Coding declared; every station carries its passages; every reason carries what its record shows it answered.",
            "stations": STATIONS, "reasons": reasons, "counts": c, "sources": srcs,
            "quotes": {"n": len(quotes), "exact": sum(1 for q in quotes.values() if q["found"] == "exact")}}
     s = json.dumps(out, ensure_ascii=False, indent=1)

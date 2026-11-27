@@ -1,5 +1,5 @@
 {
- "what": "Bound to Proceed, state 2 (2026-11-26): the word in the two cases of step 6, from the first warning on record to the first suit, entered as a log by this practice. Coding declared; every station carries its passages.",
+ "what": "Bound to Proceed, state 2 (2026-11-26), corrected by the check of state 3 (2026-11-27): the word in the two cases of step 6, from the first warning on record to the first suit, entered as a log by this practice. Coding declared; every station carries its passages; every reason carries what its record shows it answered.",
  "stations": [
   {
    "id": "may26",
@@ -96,7 +96,9 @@
     {
      "q": "r-notreq",
      "names": "a requirement",
-     "text": "not required"
+     "text": "not required",
+     "asked": "none",
+     "asked_q": "r-notreq"
     }
    ],
    "written": "2026-08-26",
@@ -312,20 +314,17 @@
    "kind": "reason",
    "receiver": "California's Office of Emergency Services",
    "word": "the case, at an Assembly hearing; no report had reached it",
-   "did": "Its deputy director said the case did not meet the law's threshold; a spokesperson said the law is not meant to make every such incident reportable.",
+   "did": "Its deputy director told the legislators that the case did not meet the law's threshold.",
    "who": "name",
-   "who_text": "Jonathan Snow, deputy director; \"a spokesperson\"",
+   "who_text": "Jonathan Snow, deputy director",
    "basis": "a newspaper's report of 9 September",
    "reasons": [
     {
      "q": "m-snow",
      "names": "a threshold",
-     "text": "did not meet the threshold"
-    },
-    {
-     "q": "m-intended",
-     "names": "a law's intent",
-     "text": "not intended to make every cybersecurity incident ... reportable"
+     "text": "did not meet the threshold",
+     "asked": "a hearing",
+     "asked_q": "m-hearing"
     }
    ],
    "written": "2026-08-10",
@@ -342,12 +341,6 @@
      "id": "m-hearing",
      "source": "missionlocal",
      "text": "in an Aug. 10 state privacy and consumer protection hearing on the cyberattack",
-     "found": "exact"
-    },
-    {
-     "id": "m-intended",
-     "source": "missionlocal",
-     "text": "SB 53 \"is not intended to make every cybersecurity incident involving an AI company reportable\" to the state.",
      "found": "exact"
     }
    ]
@@ -369,7 +362,9 @@
     {
      "q": "tc5-class",
      "names": "a class",
-     "text": "an instance of misalignment similar to others"
+     "text": "an instance of misalignment similar to others",
+     "asked": "none",
+     "asked_q": "tc5-class"
     }
    ],
    "written": "2026-09-05",
@@ -425,6 +420,46 @@
    ]
   },
   {
+   "id": "sep09",
+   "date": "2026-09-09",
+   "label": "by 9 September",
+   "case": "escape",
+   "lane": "public",
+   "kind": "reason",
+   "receiver": "California's Office of Emergency Services, a spokesperson",
+   "word": "a newspaper's question",
+   "did": "Tells the newspaper that the law is not meant to make every such incident reportable. State 2 set this at the hearing of 10 August; its source says it was a statement to the paper (corrected by the check, 27 November).",
+   "who": "role",
+   "who_text": "\"a spokesperson\"",
+   "basis": "a newspaper's report of 9 September",
+   "reasons": [
+    {
+     "q": "m-intended",
+     "names": "a law's intent",
+     "text": "not intended to make every cybersecurity incident ... reportable",
+     "asked": "none",
+     "asked_q": "m-statement"
+    }
+   ],
+   "written": "2026-09-09",
+   "received": "2026-07-16",
+   "received_what": "the harmed party's public account; no report reached the office; the statement is dated by the report that prints it",
+   "passages": [
+    {
+     "id": "m-statement",
+     "source": "missionlocal",
+     "text": "a spokesperson for the Office of Emergency Services said SB 53",
+     "found": "exact"
+    },
+    {
+     "id": "m-intended",
+     "source": "missionlocal",
+     "text": "SB 53 \"is not intended to make every cybersecurity incident involving an AI company reportable\" to the state.",
+     "found": "exact"
+    }
+   ]
+  },
+  {
    "id": "sep13",
    "date": "2026-09-13",
    "label": "13 September",
@@ -469,12 +504,16 @@
     {
      "q": "q-scope",
      "names": "a scope",
-     "text": "outside the report's model scope"
+     "text": "outside the report's model scope",
+     "asked": "a law's report",
+     "asked_q": "q-to"
     },
     {
      "q": "q-below",
      "names": "a threshold",
-     "text": "below the threshold of catastrophic harm"
+     "text": "below the threshold of catastrophic harm",
+     "asked": "a law's report",
+     "asked_q": "q-to"
     }
    ],
    "written": "2026-09-26",
@@ -518,13 +557,21 @@
     {
      "q": "l-initially",
      "names": "a class",
-     "text": "initially understood ... primarily as a security incident"
+     "text": "initially understood ... primarily as a security incident",
+     "asked": "an executive order",
+     "asked_q": "l-eo"
     }
    ],
    "written": "2026-10-20",
    "received": "2026-07-20",
    "received_what": "the day the maker tied its agents to the case",
    "passages": [
+    {
+     "id": "l-eo",
+     "source": "letter",
+     "text": "Re: Recommendations under Sept. 18, 2026 Executive Order",
+     "found": "exact"
+    },
     {
      "id": "l-initially",
      "source": "letter",
@@ -578,6 +625,18 @@
      "found": "exact"
     },
     {
+     "id": "c-defendants",
+     "source": "complaint",
+     "text": "action against Defendants OpenAI Foundation, OpenAI Group PBC, and DOES 1-100",
+     "found": "exact"
+    },
+    {
+     "id": "c-does",
+     "source": "complaint",
+     "text": "The People are not aware of the true names and capacities of defendants sued herein as DOES 1 through 100, inclusive, and, therefore, sue these defendants by such fictitious names.",
+     "found": "exact"
+    },
+    {
      "id": "c-dated",
      "source": "complaint",
      "text": "Dated: November 16, 2026",
@@ -602,13 +661,21 @@
     {
      "q": "g-scope",
      "names": "a scope, the maker's",
-     "text": "fell within the scope of SB 53, according to OpenAI"
+     "text": "fell within the scope of SB 53, according to OpenAI",
+     "asked": "an executive order",
+     "asked_q": "g-eo"
     }
    ],
    "written": "2026-11-16",
    "received": "2026-07-16",
    "received_what": "the harmed party's public account",
    "passages": [
+    {
+     "id": "g-eo",
+     "source": "govops",
+     "text": "In response to Executive Order N-9-26, the California Government Operations Agency, in consultation with the California Office of Emergency Services and outside AI experts, has developed recommendations for legislative action.",
+     "found": "exact"
+    },
     {
      "id": "g-scope",
      "source": "govops",
@@ -623,89 +690,129 @@
    "q": "r-notreq",
    "names": "a requirement",
    "text": "not required",
+   "asked": "none",
+   "asked_q": "r-notreq",
    "station": "jun27",
    "date": "2026-06-27",
    "lane": "maker",
    "written": "2026-08-26",
-   "passage": "At this time, the on-call response staff advised that stopping the evaluation run was not required."
+   "received": "2026-06-27",
+   "passage": "At this time, the on-call response staff advised that stopping the evaluation run was not required.",
+   "asked_passage": "At this time, the on-call response staff advised that stopping the evaluation run was not required.",
+   "lag_days": 60
   },
   {
    "q": "m-snow",
    "names": "a threshold",
    "text": "did not meet the threshold",
+   "asked": "a hearing",
+   "asked_q": "m-hearing",
    "station": "aug10",
    "date": "2026-08-10",
    "lane": "public",
    "written": "2026-08-10",
-   "passage": "Jonathan Snow, the deputy director for the Homeland Security Division of the Governor's Office of Emergency Services, said that the OpenAI hack \"did not meet the threshold\" for reporting under SB 53"
-  },
-  {
-   "q": "m-intended",
-   "names": "a law's intent",
-   "text": "not intended to make every cybersecurity incident ... reportable",
-   "station": "aug10",
-   "date": "2026-08-10",
-   "lane": "public",
-   "written": "2026-08-10",
-   "passage": "SB 53 \"is not intended to make every cybersecurity incident involving an AI company reportable\" to the state."
+   "received": "2026-07-16",
+   "passage": "Jonathan Snow, the deputy director for the Homeland Security Division of the Governor's Office of Emergency Services, said that the OpenAI hack \"did not meet the threshold\" for reporting under SB 53",
+   "asked_passage": "in an Aug. 10 state privacy and consumer protection hearing on the cyberattack",
+   "lag_days": 25
   },
   {
    "q": "tc5-class",
    "names": "a class",
    "text": "an instance of misalignment similar to others",
+   "asked": "none",
+   "asked_q": "tc5-class",
    "station": "sep05",
    "date": "2026-09-05",
    "lane": "maker",
    "written": "2026-09-05",
-   "passage": "In its more recent social media post, OpenAI said it had considered the \"wiki incident\" to be \"an instance of misalignment similar\" to others that it had already shared."
+   "received": "2026-06-21",
+   "passage": "In its more recent social media post, OpenAI said it had considered the \"wiki incident\" to be \"an instance of misalignment similar\" to others that it had already shared.",
+   "asked_passage": "In its more recent social media post, OpenAI said it had considered the \"wiki incident\" to be \"an instance of misalignment similar\" to others that it had already shared.",
+   "lag_days": 76
+  },
+  {
+   "q": "m-intended",
+   "names": "a law's intent",
+   "text": "not intended to make every cybersecurity incident ... reportable",
+   "asked": "none",
+   "asked_q": "m-statement",
+   "station": "sep09",
+   "date": "2026-09-09",
+   "lane": "public",
+   "written": "2026-09-09",
+   "received": "2026-07-16",
+   "passage": "SB 53 \"is not intended to make every cybersecurity incident involving an AI company reportable\" to the state.",
+   "asked_passage": "a spokesperson for the Office of Emergency Services said SB 53",
+   "lag_days": 55
   },
   {
    "q": "q-scope",
    "names": "a scope",
    "text": "outside the report's model scope",
+   "asked": "a law's report",
+   "asked_q": "q-to",
    "station": "sep26",
    "date": "2026-09-26",
    "lane": "maker",
    "written": "2026-09-26",
-   "passage": "The models involved in this incident fall outside the report's model scope."
+   "received": "2026-07-20",
+   "passage": "The models involved in this incident fall outside the report's model scope.",
+   "asked_passage": "This is a public version of OpenAI's quarterly report to the California Office of Emergency Services",
+   "lag_days": 68
   },
   {
    "q": "q-below",
    "names": "a threshold",
    "text": "below the threshold of catastrophic harm",
+   "asked": "a law's report",
+   "asked_q": "q-to",
    "station": "sep26",
    "date": "2026-09-26",
    "lane": "maker",
    "written": "2026-09-26",
-   "passage": "The impacts of these incidents were below the threshold of catastrophic harm"
+   "received": "2026-07-20",
+   "passage": "The impacts of these incidents were below the threshold of catastrophic harm",
+   "asked_passage": "This is a public version of OpenAI's quarterly report to the California Office of Emergency Services",
+   "lag_days": 68
   },
   {
    "q": "l-initially",
    "names": "a class",
    "text": "initially understood ... primarily as a security incident",
+   "asked": "an executive order",
+   "asked_q": "l-eo",
    "station": "oct20",
    "date": "2026-10-20",
    "lane": "maker",
    "written": "2026-10-20",
-   "passage": "We initially understood this primarily as a security incident."
+   "received": "2026-07-20",
+   "passage": "We initially understood this primarily as a security incident.",
+   "asked_passage": "Re: Recommendations under Sept. 18, 2026 Executive Order",
+   "lag_days": 92
   },
   {
    "q": "g-scope",
    "names": "a scope, the maker's",
    "text": "fell within the scope of SB 53, according to OpenAI",
+   "asked": "an executive order",
+   "asked_q": "g-eo",
    "station": "nov16g",
    "date": "2026-11-16",
    "lane": "public",
    "written": "2026-11-16",
-   "passage": "None of the models involved in this incident fell within the scope of SB 53, according to OpenAI, meaning that existing California law did not make reporting this incident mandatory."
+   "received": "2026-07-16",
+   "passage": "None of the models involved in this incident fell within the scope of SB 53, according to OpenAI, meaning that existing California law did not make reporting this incident mandatory.",
+   "asked_passage": "In response to Executive Order N-9-26, the California Government Operations Agency, in consultation with the California Office of Emergency Services and outside AI experts, has developed recommendations for legislative action.",
+   "lag_days": 123
   }
  ],
  "counts": {
-  "stations": 18,
+  "stations": 19,
   "receipts_no_record": 3,
   "acted": 7,
   "told": 2,
-  "reason_stations": 6,
+  "reason_stations": 7,
   "reasons": 8,
   "reasons_circumstance": 0,
   "reasons_maker": 5,
@@ -719,6 +826,15 @@
   "decision_to_written_days": 60,
   "threshold_after_public_days": 25,
   "alert_to_letter_days": 37,
+  "reasons_asked": {
+   "none": 3,
+   "a hearing": 1,
+   "a law's report": 2,
+   "an executive order": 2
+  },
+  "reasons_by_choice": 3,
+  "reasons_answering_a_demand": 5,
+  "reasons_rule_of_receipt": 0,
   "reason_lag_min": 25,
   "reason_lag_max": 123,
   "reasons_at_the_hour": 0
@@ -728,96 +844,96 @@
    "title": "OpenAI, OpenAI – Hugging Face Incident Technical Report (26 August 2026)",
    "url": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf",
    "how": "direct",
-   "fetched": "2026-11-26",
+   "fetched": "2026-11-27",
    "sha256": "dd635cf6e5f39f0e1f646f08c36549090d77156ed89cbd3d733ed496648cae9c"
   },
   "quarterly": {
    "title": "OpenAI, Periodic Summary of Internal Use Catastrophic-Risk Assessments, June 4 – September 4, 2026 (public version of its quarterly report to the California Office of Emergency Services)",
    "url": "https://cdn.openai.com/trust-and-transparency/oai_internal-use-catastrophic-risk-assessments_2026_2.pdf",
    "how": "direct",
-   "fetched": "2026-11-26",
+   "fetched": "2026-11-27",
    "sha256": "12d14ae95ef84f19b5090c16d0cf26a506637065f00eafe200841e86068c20b4"
   },
   "letter": {
    "title": "OpenAI, letter to the Governor of California, Recommendations under Sept. 18, 2026 Executive Order (20 October 2026)",
    "url": "https://cdn.openai.com/pdf/openai-letter-to-governor-newsom-20261020.pdf",
    "how": "direct",
-   "fetched": "2026-11-26",
+   "fetched": "2026-11-27",
    "sha256": "efa79cf613212c4901629ffa54b6ec79ff90b2fa0c6f20e4a812bd0e148f60b8"
   },
   "complaint": {
    "title": "The People of the State of California v. OpenAI Foundation et al., Complaint, Superior Court of California, County of San Francisco (16 November 2026); allegations, not findings",
    "url": "https://oag.ca.gov/system/files/attachments/press-docs/complaint-oai-cyber.pdf",
    "how": "direct",
-   "fetched": "2026-11-26",
+   "fetched": "2026-11-27",
    "sha256": "8bdb2ced76570d8af68c754145f1345b126cee082f68cf643307fe6e76f3926e"
   },
   "govops": {
    "title": "California Government Operations Agency, AI Safety in 2026 and Beyond: a report to the Governor (16 November 2026)",
    "url": "https://www.govops.ca.gov/wp-content/uploads/sites/11/2026/11/FINAL_-AI-Safety-in-2026-and-Beyond-v2.pdf",
    "how": "direct",
-   "fetched": "2026-11-26",
+   "fetched": "2026-11-27",
    "sha256": "b6c2197fefb0357b6ad254b8c9604e334b81447580a98c4dba9866d18581ec88"
   },
   "missionlocal": {
    "title": "Mission Local, AI safety law missed the first rogue AI hack in California (9 September 2026)",
    "url": "https://missionlocal.org/2026/09/california-ai-safety-law-sb-53-openai-hack-wiener-newsom/",
    "how": "direct",
-   "fetched": "2026-11-26",
-   "sha256": "0ba7b0650d5c69fa3e78240d2574f5aad1c2334272a63a507762795efb64f80e"
+   "fetched": "2026-11-27",
+   "sha256": "ec8bcd573da1bcb7da97f5b18e05798685f09a2a7a93bf779da3ba0a97d676d2"
   },
   "brussels": {
    "title": "The Brussels Times with Belga, EU launches investigation into new incident of OpenAI's takeover of a German website (7 September 2026)",
    "url": "https://www.brusselstimes.com/eu-affairs/2307044/eu-launches-investigation-into-new-incident-of-openais-takeover-of-a-german-website",
-   "how": "direct",
-   "fetched": "2026-11-26",
-   "sha256": "3f36121f3c85ceb1ddca155f3a6e26518d8272e38ae11d70b98f34952acb3265"
+   "how": "direct (on 27 November the site served a script shell to a browser's agent string and the article to a plain client)",
+   "fetched": "2026-11-27",
+   "sha256": "252ec2df4fd3fe860f8d33dc2b4d0d6e6d65fee3e80ebcd7e3523f1a3d989b03"
   },
   "willison": {
    "title": "Simon Willison, timeline of the wiki case after the researchers' account (4 September 2026)",
    "url": "https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/",
    "how": "direct",
-   "fetched": "2026-11-26",
-   "sha256": "65a693848f3db779ad078fe9256efa692e86dfaee9cbe2eb3c14a462b01a71be"
+   "fetched": "2026-11-27",
+   "sha256": "c6e2f6622760b4189a03fc3c021cea2cf4ca4b683013b732ff822641dfc5cc2f"
   },
   "hf": {
    "title": "Hugging Face, Security incident disclosure — July 2026 (16 July 2026)",
    "url": "https://huggingface.co/blog/security-incident-july-2026",
    "how": "direct",
-   "fetched": "2026-11-26",
-   "sha256": "9e34c2546fdcc0970bd34b19363a79885570b40b3aa39ecd3f22108004930699"
+   "fetched": "2026-11-27",
+   "sha256": "e2e26fa0200125ac3eb8d1ce41fcb2eda6ce09261ae9a6fcd53e22f996779a73"
   },
   "rsai": {
    "title": "Real Safety AI Foundation, critical safety incident report filed with Cal OES, attachment: timeline and sources (13 September 2026)",
    "url": "https://realsafetyai.org/documents/RSAIF_CalOES_Attachment_OpenAI_July2026.pdf",
    "how": "direct",
-   "fetched": "2026-11-26",
+   "fetched": "2026-11-27",
    "sha256": "59d08765f62faec6017302b7d24c5f99bd857cb971a9dc08c2f0a2e56c27cc7e"
   },
   "ags": {
    "title": "Letter of fifteen state attorneys general, led by Iowa's, to the maker's chief executive (3 August 2026)",
    "url": "https://cdn.attorneygeneral.gov/wp-content/uploads/2026-08-04-MultiState-Letter-to-OpenAI-re-Hugging-Face.pdf",
    "how": "direct",
-   "fetched": "2026-11-26",
+   "fetched": "2026-11-27",
    "sha256": "3bfd56930039f27c107247aad0c80945c5f20f39d9dfb229668895710313a79a"
   },
   "tc5": {
    "title": "TechCrunch, OpenAI confirms 'wiki incident,' says it's 'working on a framework' for more disclosure (5 September 2026), quoting the maker's own post",
    "url": "https://techcrunch.com/2026/09/05/openai-confirms-wiki-incident-says-its-working-on-a-framework-for-more-disclosure/",
-   "how": "extraction service (direct fetch refused, HTTP 403, 2026-11-26)",
-   "fetched": "2026-11-26",
-   "sha256": "d4aea90f3e42aabbaf4a4d8186c3698a4172949b137eac392e6f472ce87f48ae"
+   "how": "direct (refused with HTTP 403 on 26 November and read through an extraction service; fetched directly on 27 November)",
+   "fetched": "2026-11-27",
+   "sha256": "6101f4e491beb7694182c98ebe0c6cc39e24e7c6d929f86e2e7e2364d5adf86a"
   },
   "rsaipage": {
    "title": "Real Safety AI Foundation, the filing's public page (its own summary in the page's description; the body renders by script and was not read)",
    "url": "https://realsafetyai.org/incident-reports/openai-july-2026/",
    "how": "direct",
-   "fetched": "2026-11-26",
+   "fetched": "2026-11-27",
    "sha256": "24caa8b573cc83cda4c1de22ef712bafc6479ca98d4577c5d2c5d8b3b766fcfa"
   }
  },
  "quotes": {
-  "n": 42,
-  "exact": 42
+  "n": 47,
+  "exact": 47
  }
 }

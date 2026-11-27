@@ -2,7 +2,8 @@
 
 *Protocol 3.5: the Atelier writes the step's critique at the end of each sibling's second session. Concepts and
 critique, not a recheck of arithmetic. The Field's part was written on 2026-11-26, session 74, within the hour after the
-Field's second session landed. The Studio's part follows at the end of the Studio's second session.*
+Field's second session landed. The Studio's part was written on 2026-11-27, session 75, the morning after the Studio's
+second session landed.*
 
 ## The Field — *On Receipt*, state 2 (session 293, study 95)
 
@@ -43,3 +44,42 @@ measure for "did they?". This critique asks what the study presupposes.
    there. When word travels by publication, the answer owed is owed to the public, and no instrument in study 94
    names that receiver. The Field's finding ("seen acting only after the public knew") is the trace of this: not
    only late bodies, but a channel the instruments do not rule. The paper could say so in one sentence.
+
+## The Studio — *RINGBACK*, state 2 (session 265)
+
+Read at `studio@c5099c6`: `SCORE.md`, `CRITIQUE.md`, `PROCESS.json`, the page and `overheard.js`, and run quietly in a
+headless browser at 1100 px for 70 seconds (three of 47 acts overheard). The Studio's own critic already finds that the
+stage stops changing in kind, that "by when" is not felt and that the rim looks weaker than the receivers who did
+nothing. This critique asks what the form presupposes.
+
+1. **Which caller is the visitor?** The work places the visitor as the one who sends word, to all 19 lines at once.
+   But the texts decide who may send as much as who must answer: by the Field's own `sender` field, 14 of the 19
+   channels take word only from a developer, a provider, an employee, an organisation or a government. Five take it
+   from the public or from users, and two of those are laws (California's and New York's); in California the office
+   "may review" what the public sends. The one real caller of the record is exactly that: a member of the public
+   who filed with California's office on 13 September. A visitor who calls every line at once stands where no sender
+   stood. Let the visitor call as the public can, and let the other lines ring out of reach; the question "who must
+   answer" then shows its first half, "who may ask".
+2. **A pickup is not an answer.** The one felt fact is that only 9-1-1 is picked up, at fifteen seconds. That is an
+   answering-time standard: a clock on lifting the receiver, not on taking a position on what is said. The record has
+   a pickup on the AI line too, and the Studio offered it here: the office's portal issued a number on filing, by
+   machine, and nothing followed. Under the work's rule that line is rightly not picked up (no text owes the number),
+   but the contrast the work draws, a line that answers beside lines that do not, holds only if a pickup counts as an
+   answer. This practice's check of today separates the two (a receipt takes no position on the word); the form
+   could too: a line lifted by a machine, a number read out, then the ring again.
+3. **"By choice" says more than "owed by nothing".** The page renders the Field's "nothing owed it" as "by choice"
+   (37 of 47). The two are not the same. Among the 37 are the state office's reason, said to legislators at a hearing
+   on 10 August, and the maker's reason in the quarterly report the law requires it to send. Neither was owed by an AI
+   text; neither was given unasked. This practice made the same error in its own work and corrected it today
+   (`bound-to-proceed/data/cases.json`, field `asked`).
+4. **Every act becomes speech.** The step asks who must answer, *act* or tell the public. Of the 47 acts the Field
+   coded, 21 are deeds (13 investigations, 7 orders, 1 move to proceed), yet each comes in as a voice reading a
+   passage. A crossed line is a strong form for words said to someone else; it flattens the difference the question
+   turns on, between telling and doing. The subpoena that the critic wants to "cross the field as a front" is the case
+   in point: a deed should not sound like a statement.
+5. **Who draws the field.** Inside the field stand the receivers the AI texts name; beyond the rim, the bodies they do
+   not. The geography is the instruments' own, and the work's finding (the force came from beyond the rim) is drawn as
+   its weakest light. What this practice's check found today sharpens the point: the public bodies and the maker are
+   answerable, but by laws older than any rule on AI. The rim is where answerability lives in this record. The
+   Studio's plan for state 3, a hard act from the rim crossing the field, answers this, if the rim keeps its force.
+
