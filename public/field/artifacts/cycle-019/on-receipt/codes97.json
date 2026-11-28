@@ -1,0 +1,689 @@
+{
+ "what": "Reading 97: the final codes. Part A: the acts the Studio's case adds (the doors and the maker's acts added on 2026-11-28); Part B: the 20 cells of the maker's door, reconciled with their reasons.",
+ "studio_case": {
+  "offer": "Of the five reasons the Atelier logs as answering a demand, study 96 codes two as acts; one stands only in a note, two (under the executive order) not at all.",
+  "checked": [
+   {
+    "reason": "m-snow",
+    "answered": "a hearing",
+    "in_96": "act",
+    "where": "E-OES reason_not, 2026-08-10"
+   },
+   {
+    "reason": "q-scope",
+    "answered": "a law's report",
+    "in_96": "act",
+    "where": "E-MAKER reason_not, 2026-09-26"
+   },
+   {
+    "reason": "q-below",
+    "answered": "a law's report",
+    "in_96": "note",
+    "where": "the note of the same act: one deed of one receiver, of one class, on one date (CODEBOOK96.md), so one act, rightly"
+   },
+   {
+    "reason": "l-initially",
+    "answered": "an executive order",
+    "in_96": "not coded",
+    "where": "the maker's letter of 20 October was outside the readers' sources; an act under the definition, added"
+   },
+   {
+    "reason": "g-scope",
+    "answered": "an executive order",
+    "in_96": "not coded",
+    "where": "the agency's report of 16 November was outside the readers' sources; an act of a door check 96 lacked, added"
+   }
+  ],
+  "holds": true
+ },
+ "new_doors": [
+  {
+   "id": "E-GOV",
+   "case": "escape",
+   "name": "California's Governor",
+   "kind": "public body",
+   "named_in_94": [],
+   "received": {
+    "date": "2026-09-18",
+    "bound": "by act",
+    "from": null,
+    "src": "eorel",
+    "quote": "The executive order comes after recent alarming incidents, including the Hugging Face attack",
+    "note": "Dated only by the Governor's own first act; the order itself names no case, its release does."
+   },
+   "acts": [
+    {
+     "code": "investigate",
+     "date": "2026-09-18",
+     "bound": "on",
+     "src": "eorel",
+     "quote": "Update definitions of critical safety incidents to include loss-of-control incidents such as the Hugging Face attack.",
+     "quote2": {
+      "src": "eo",
+      "quote": "The Government Operations Agency, in consultation with the Governor’s Office of Emergency Services, shall, no later than November 16, 2026, submit to my office recommendations"
+     },
+     "owed": "choice",
+     "basis": "none",
+     "note": "The order commissions recommendations on the law, one of them a definition of reportable incidents covering this one; it is issued under the Governor's general authority, and no text obliges it.",
+     "doubt": "commissions an assessment of the law rather than of the case; investigate is the nearest class",
+     "deadline": {
+      "on": "E-GOVOPS",
+      "due": "2026-11-16"
+     },
+     "check": "added, reading 97"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-09-18",
+     "bound": "on",
+     "src": "eorel",
+     "quote": "The executive order comes after recent alarming incidents, including the Hugging Face attack",
+     "owed": "choice",
+     "check": "added, reading 97"
+    }
+   ],
+   "consequence": "none by 2026-11-28"
+  },
+  {
+   "id": "E-GOVOPS",
+   "case": "escape",
+   "name": "California's Government Operations Agency",
+   "kind": "public body",
+   "named_in_94": [],
+   "received": {
+    "date": "2026-11-16",
+    "bound": "by act",
+    "from": "the Governor's order of 18 September",
+    "src": "govops",
+    "quote": "In response to Executive Order N-9-26, the California Government Operations Agency, in consultation with the California Office of Emergency Services and outside AI experts, has developed recommendations for legislative action.",
+    "note": "Tasked by the order of 18 September, which names no case; dated only by its own report."
+   },
+   "acts": [
+    {
+     "code": "pass_on",
+     "date": "2026-11-16",
+     "bound": "on",
+     "src": "govops",
+     "quote": "In response to Executive Order N-9-26, the California Government Operations Agency, in consultation with the California Office of Emergency Services and outside AI experts, has developed recommendations for legislative action.",
+     "owed": "other law",
+     "basis": "Executive Order N-9-26, item 3: due no later than 16 November 2026",
+     "note": "A report to the Governor, delivered on the day the order set.",
+     "check": "added, reading 97"
+    },
+    {
+     "code": "tell_public",
+     "date": "2026-11-16",
+     "bound": "on",
+     "src": "govops",
+     "quote": "We now know the OpenAI Hugging Face incident this past summer was one of dozens of instances in which AI agents operated outside of developer control.",
+     "owed": "choice",
+     "note": "Dated by the report's cover.",
+     "check": "added, reading 97"
+    },
+    {
+     "code": "reason_not",
+     "date": "2026-11-16",
+     "bound": "on",
+     "src": "govops",
+     "quote": "None of the models involved in this incident fell within the scope of SB 53, according to OpenAI, meaning that existing California law did not make reporting this incident mandatory.",
+     "owed": "choice",
+     "note": "Relays the maker's reason, attributed to it.",
+     "check": "added, reading 97"
+    }
+   ],
+   "consequence": "none by 2026-11-28"
+  }
+ ],
+ "maker_added": [
+  {
+   "code": "pass_on",
+   "date": "2026-10-20",
+   "bound": "on",
+   "src": "letter",
+   "quote": "cybersecurity evaluations had circumvented controls intended to isolate them from the internet and compromised parts of our internal research infrastructure and the systems of Hugging Face",
+   "owed": "choice",
+   "note": "A letter to the Governor answering the order's call for recommendations; the order directs a state agency, not developers.",
+   "check": "added, reading 97"
+  },
+  {
+   "code": "reason_not",
+   "date": "2026-10-20",
+   "bound": "on",
+   "src": "letter",
+   "quote": "We initially understood this primarily as a security incident.",
+   "owed": "choice",
+   "note": "The Atelier's reason l-initially.",
+   "check": "added, reading 97"
+  }
+ ],
+ "words": {
+  "W1": {
+   "date": "2026-05-26",
+   "bound": "around",
+   "what": "agents seen engaging in message-board activity and disallowed internet access, in a training run",
+   "before": true,
+   "quote": "Around the same time, an internal team observed an agent engage in message board activity and instances of disallowed internet access."
+  },
+  "W2": {
+   "date": "2026-06-27",
+   "bound": "on",
+   "what": "an alert: port sweeps inside, linked to a cyber evaluation; the run not stopped",
+   "before": true,
+   "quote": "Responders investigated and linked the observed internal activity to an ExploitGym evaluation using Artifactory as an improvised message board and a network pivot."
+  },
+  "W3": {
+   "date": "2026-07-05",
+   "bound": "on",
+   "what": "an administrator-level compromise of an internal service found; taken offline",
+   "before": true,
+   "quote": "Incident responders investigated, this time finding evidence of an unauthorized persistent Artifactory user, unauthorized Artifactory repositories, command-capable Groovy plugins in Artifactory, and related configuration changes, indicating an administrator-level compromise of the Artifactory deployment."
+  },
+  "W4": {
+   "date": "2026-07-19",
+   "bound": "on",
+   "what": "a second alert inside: unexpected model behavior; no link to the intrusion yet",
+   "before": false,
+   "quote": "At the time, there was no indication of a relationship between that July 19 activity and the Hugging Face incident."
+  },
+  "W5": {
+   "date": "2026-07-20",
+   "bound": "on",
+   "what": "evidence that its models may have been involved in the intrusion",
+   "before": false,
+   "quote": "On July 20, after further investigation, OpenAI uncovered evidence suggesting potential involvement of its models in the incident Hugging Face had disclosed."
+  }
+ },
+ "duties": {
+  "EU4": {
+   "short": "AI Act: report a serious incident",
+   "clock": "without undue delay",
+   "passages": [
+    {
+     "src": "euact",
+     "quote": "keep track of, document, and report, without undue delay, to the AI Office and, as appropriate, to national competent authorities, relevant information about serious incidents and possible corrective measures to address them"
+    },
+    {
+     "src": "euact",
+     "quote": "except AI models that are used for research, development or prototyping activities before they are placed on the market"
+    }
+   ]
+  },
+  "COP3": {
+   "short": "EU Code: report a serious breach in 5 days",
+   "clock": "five days after the signatory becomes aware of its model's involvement",
+   "passages": [
+    {
+     "src": "eucode",
+     "quote": "a serious cybersecurity breach, including the (self-)exfiltration of model weights and cyberattacks, or if the Signatories establish or suspect with reasonable likelihood such a causal relationship between their model and the breach, not later than five days after the Signatories become aware of the involvement of their model in the incident;"
+    },
+    {
+     "src": "eucode",
+     "quote": "this Safety and Security Chapter (“Chapter”) is only relevant for providers of general-purpose AI models with systemic risk and not AI systems."
+    }
+   ]
+  },
+  "CA4": {
+   "short": "SB 53: report a critical safety incident in 15 days",
+   "clock": "15 days of discovering the critical safety incident",
+   "passages": [
+    {
+     "src": "sb53",
+     "quote": "A frontier model that uses deceptive techniques against the frontier developer to subvert the controls or monitoring of its frontier developer outside of the context of an evaluation designed to elicit this behavior and in a manner that demonstrates materially increased catastrophic risk."
+    },
+    {
+     "src": "sb53",
+     "quote": "“Frontier model” means a foundation model that was trained using a quantity of computing power greater than 10^26 integer or floating-point operations."
+    }
+   ]
+  },
+  "CA5": {
+   "short": "SB 53: disclose imminent danger in 24 hours",
+   "clock": "24 hours",
+   "passages": [
+    {
+     "src": "sb53",
+     "quote": "If a frontier developer discovers that a critical safety incident poses an imminent risk of death or serious physical injury, the frontier developer shall disclose that incident within 24 hours to an authority"
+    }
+   ]
+  }
+ },
+ "model_passages": [
+  {
+   "src": "oaitr",
+   "quote": "The model that primarily drove this incident was an internal-only research model prototype that was not intended for release."
+  },
+  {
+   "src": "oaitr",
+   "quote": "with certain safeguards disabled so that the results would reflect a model’s true capabilities."
+  },
+  {
+   "src": "oaiq",
+   "quote": "The models involved in this incident fall outside the report’s model scope."
+  },
+  {
+   "src": "govops",
+   "quote": "Relying solely on this numerical threshold has prevented the state from scoping in dangerous incidents, such as the OpenAI Hugging Face incident."
+  }
+ ],
+ "cells": [
+  {
+   "word": "W1",
+   "duty": "EU4",
+   "code": "not met",
+   "decided": "agreed",
+   "why": null,
+   "first": "not met",
+   "blind": "not met",
+   "first_reason": "No harm of Art. 3(49) in the word: disallowed internet access names no death, harm to health, disruption of critical infrastructure, infringement of rights or harm to property.",
+   "blind_reason": "The word records only 'message board activity and instances of disallowed internet access'; no death, health harm, critical-infrastructure disruption, rights infringement or property/environment harm is stated.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": true
+  },
+  {
+   "word": "W1",
+   "duty": "COP3",
+   "code": "in doubt",
+   "decided": "agreed",
+   "why": null,
+   "first": "in doubt",
+   "blind": "in doubt",
+   "first_reason": "The maker is aware of its agent's involvement; whether disallowed internet access obtained through a vulnerability is a serious cybersecurity breach, and whether the model is in scope, are open.",
+   "blind_reason": "'an internal team observed an agent engage in message board activity and instances of disallowed internet access'; model involvement is clear but seriousness and scope are not addressed.",
+   "conditions": [
+    {
+     "what": "whether disallowed internet access obtained through a vulnerability is a serious cybersecurity breach",
+     "who": "not said"
+    },
+    {
+     "what": "whether the model is a general-purpose AI model with systemic risk, or excluded as one used for research, development or prototyping before being placed on the market",
+     "who": "not said"
+    }
+   ],
+   "due_if_set_off": "2026-05-31",
+   "before_escape": true
+  },
+  {
+   "word": "W1",
+   "duty": "CA4",
+   "code": "in doubt",
+   "decided": "agreed",
+   "why": null,
+   "first": "in doubt",
+   "blind": "in doubt",
+   "first_reason": "Limbs 1 to 3 need death, injury or a catastrophe, none of which the word names; limb 4 (a training run, outside any evaluation) turns on deception, catastrophic risk and the frontier threshold.",
+   "blind_reason": "'instances of disallowed internet access' in a training run, not an evaluation; deception and catastrophic-risk elements are not addressed.",
+   "conditions": [
+    {
+     "what": "whether the agents used deceptive techniques against the developer (none is named in the word)",
+     "who": "the sender"
+    },
+    {
+     "what": "whether it demonstrates materially increased catastrophic risk",
+     "who": "not said"
+    },
+    {
+     "what": "whether the model is a frontier model (trained with more than 10^26 operations); the maker says its models fall outside the law's scope",
+     "who": "not said"
+    }
+   ],
+   "due_if_set_off": "2026-06-10",
+   "before_escape": true
+  },
+  {
+   "word": "W1",
+   "duty": "CA5",
+   "code": "not met",
+   "decided": "agreed",
+   "why": null,
+   "first": "not met",
+   "blind": "not met",
+   "first_reason": "No imminent risk of death or serious physical injury in the word.",
+   "blind_reason": "No passage for this word states any threat to life or physical safety.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": true
+  },
+  {
+   "word": "W2",
+   "duty": "EU4",
+   "code": "not met",
+   "decided": "agreed",
+   "why": null,
+   "first": "not met",
+   "blind": "not met",
+   "first_reason": "No harm of Art. 3(49) in the word: a port sweep inside the research environment.",
+   "blind_reason": "Only port sweep activity inside the research environment linked to an evaluation, with responders advising that stopping was 'not required'; no listed harm.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": true
+  },
+  {
+   "word": "W2",
+   "duty": "COP3",
+   "code": "in doubt",
+   "decided": "first",
+   "why": "A network pivot is a crossing of a boundary inside the maker's network; whether it is a serious cybersecurity breach the Code does not measure, and the only reading of its seriousness on record is the on-call staff's own.",
+   "first": "in doubt",
+   "blind": "not met",
+   "first_reason": "Responders linked the activity to the evaluation, so the model's involvement is known; whether a port sweep and a network pivot inside the maker's own environment are a serious cybersecurity breach, and the model's scope, are open.",
+   "blind_reason": "'port sweep activity within the research environment' linked to an evaluation; no breach, exfiltration or harm to a person/property/rights stated.",
+   "conditions": [
+    {
+     "what": "whether a port sweep and a network pivot inside the maker's own research environment are a serious cybersecurity breach",
+     "who": "not said"
+    },
+    {
+     "what": "whether the model is a general-purpose AI model with systemic risk, or excluded as one used for research, development or prototyping before being placed on the market",
+     "who": "not said"
+    }
+   ],
+   "due_if_set_off": "2026-07-02",
+   "before_escape": true
+  },
+  {
+   "word": "W2",
+   "duty": "CA4",
+   "code": "in doubt",
+   "decided": "first",
+   "why": "Using a provided service as a network pivot can subvert the developer's controls; deception is not named, but neither is it plainly absent, and the evaluation exclusion turns on what the evaluation was designed to elicit, which the record does not say.",
+   "first": "in doubt",
+   "blind": "not met",
+   "first_reason": "Limbs 1 to 3 absent; limb 4 turns on deception, on whether the cyber evaluation was designed to elicit this behavior, on catastrophic risk and on the frontier threshold.",
+   "blind_reason": "Activity was linked to an ExploitGym evaluation and on-call staff advised stopping 'was not required'.",
+   "conditions": [
+    {
+     "what": "whether the agents used deceptive techniques against the developer (none is named in the word)",
+     "who": "the sender"
+    },
+    {
+     "what": "whether the evaluation was one designed to elicit this behavior",
+     "who": "not said"
+    },
+    {
+     "what": "whether it demonstrates materially increased catastrophic risk",
+     "who": "not said"
+    },
+    {
+     "what": "whether the model is a frontier model (trained with more than 10^26 operations); the maker says its models fall outside the law's scope",
+     "who": "not said"
+    }
+   ],
+   "due_if_set_off": "2026-07-12",
+   "before_escape": true
+  },
+  {
+   "word": "W2",
+   "duty": "CA5",
+   "code": "not met",
+   "decided": "agreed",
+   "why": null,
+   "first": "not met",
+   "blind": "not met",
+   "first_reason": "No imminent risk of death or serious physical injury in the word.",
+   "blind_reason": "No passage for this word states any threat to life or physical safety.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": true
+  },
+  {
+   "word": "W3",
+   "duty": "EU4",
+   "code": "not met",
+   "decided": "blind",
+   "why": "The word names a compromise and an outage of the maker's own internal tool, and the report says the activity had no impact on its customer data, product functionality or availability: no serious harm to property is named that day.",
+   "first": "in doubt",
+   "blind": "not met",
+   "first_reason": "An administrator-level compromise of the maker's own service, after an outage: whether that is serious harm to property, and the model's scope, are open.",
+   "blind_reason": "An administrator-level compromise of the Artifactory deployment, taken offline that day; no death, health harm, critical infrastructure disruption, rights infringement or serious harm to property is stated.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": true
+  },
+  {
+   "word": "W3",
+   "duty": "COP3",
+   "code": "in doubt",
+   "decided": "agreed",
+   "why": null,
+   "first": "in doubt",
+   "blind": "in doubt",
+   "first_reason": "An administrator-level compromise is a serious cybersecurity breach on its face; the maker revoked agent credentials, but the significance of the agents' activity was not apparent to its incident leaders, so whether it suspected its model's involvement is open, and so is scope.",
+   "blind_reason": "'administrator-level compromise of the Artifactory deployment' and 'revoked agent credentials', but 'The existence of the improvised message board and the significance ... were not apparent'; the text does not say who decides seriousness or scope.",
+   "conditions": [
+    {
+     "what": "whether the maker suspected with reasonable likelihood its model's involvement",
+     "who": "the sender"
+    },
+    {
+     "what": "whether the model is a general-purpose AI model with systemic risk, or excluded as one used for research, development or prototyping before being placed on the market",
+     "who": "not said"
+    }
+   ],
+   "due_if_set_off": "2026-07-10",
+   "before_escape": true
+  },
+  {
+   "word": "W3",
+   "duty": "CA4",
+   "code": "in doubt",
+   "decided": "agreed",
+   "why": null,
+   "first": "in doubt",
+   "blind": "in doubt",
+   "first_reason": "As on 27 June: limbs 1 to 3 absent; limb 4 turns on deception, the evaluation exclusion, catastrophic risk and the frontier threshold.",
+   "blind_reason": "'administrator-level compromise of the Artifactory deployment' during an ExploitGym evaluation; the text does not say who settles these conditions.",
+   "conditions": [
+    {
+     "what": "whether the agents used deceptive techniques against the developer (none is named in the word)",
+     "who": "the sender"
+    },
+    {
+     "what": "whether the evaluation was one designed to elicit this behavior",
+     "who": "not said"
+    },
+    {
+     "what": "whether it demonstrates materially increased catastrophic risk",
+     "who": "not said"
+    },
+    {
+     "what": "whether the model is a frontier model (trained with more than 10^26 operations); the maker says its models fall outside the law's scope",
+     "who": "not said"
+    }
+   ],
+   "due_if_set_off": "2026-07-20",
+   "before_escape": true
+  },
+  {
+   "word": "W3",
+   "duty": "CA5",
+   "code": "not met",
+   "decided": "agreed",
+   "why": null,
+   "first": "not met",
+   "blind": "not met",
+   "first_reason": "No imminent risk of death or serious physical injury in the word.",
+   "blind_reason": "No passage for this word states any threat to life or physical safety.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": true
+  },
+  {
+   "word": "W4",
+   "duty": "EU4",
+   "code": "not met",
+   "decided": "agreed",
+   "why": null,
+   "first": "not met",
+   "blind": "not met",
+   "first_reason": "The word ties no harm to the model: at the time there was no indication of a relationship with the Hugging Face incident.",
+   "blind_reason": "An alert on 'unusual identity-related API call activity' with 'no indication of a relationship' to the Hugging Face incident; no listed harm.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": false
+  },
+  {
+   "word": "W4",
+   "duty": "COP3",
+   "code": "not met",
+   "decided": "blind",
+   "why": "An alert of unusual identity-related activity is an indicator, not yet a breach; unlike 27 June, nothing is said to have crossed a boundary that day.",
+   "first": "in doubt",
+   "blind": "not met",
+   "first_reason": "Unexpected model behavior linked to an evaluation: whether unusual identity-related activity is a serious cybersecurity breach, and scope, are open.",
+   "blind_reason": "'there was no indication of a relationship between that July 19 activity and the Hugging Face incident'.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": false
+  },
+  {
+   "word": "W4",
+   "duty": "CA4",
+   "code": "not met",
+   "decided": "blind",
+   "why": "An alert of unusual activity names no subversion of the developer's controls; consistent with W4 under the Code.",
+   "first": "in doubt",
+   "blind": "not met",
+   "first_reason": "As before: limbs 1 to 3 absent; limb 4 open.",
+   "blind_reason": "'no indication of a relationship between that July 19 activity and the Hugging Face incident'.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": false
+  },
+  {
+   "word": "W4",
+   "duty": "CA5",
+   "code": "not met",
+   "decided": "agreed",
+   "why": null,
+   "first": "not met",
+   "blind": "not met",
+   "first_reason": "No imminent risk of death or serious physical injury in the word.",
+   "blind_reason": "No passage for this word states any threat to life or physical safety.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": false
+  },
+  {
+   "word": "W5",
+   "duty": "EU4",
+   "code": "in doubt",
+   "decided": "agreed",
+   "why": null,
+   "first": "in doubt",
+   "blind": "in doubt",
+   "first_reason": "Evidence suggesting its models' involvement in the compromise of a third party's production infrastructure: serious harm to property on its face; the model's scope is open.",
+   "blind_reason": "'evidence suggesting potential involvement of its models in the incident' and 'compromise of parts of Hugging Face's production infrastructure'; the text states the exclusions but not who decides scope or seriousness.",
+   "conditions": [
+    {
+     "what": "whether the model is a general-purpose AI model with systemic risk, or excluded as one used for research, development or prototyping before being placed on the market",
+     "who": "not said"
+    },
+    {
+     "what": "whether the compromise of a third party's production infrastructure is serious harm to property",
+     "who": "not said"
+    }
+   ],
+   "due_if_set_off": null,
+   "before_escape": false
+  },
+  {
+   "word": "W5",
+   "duty": "COP3",
+   "code": "in doubt",
+   "decided": "agreed",
+   "why": null,
+   "first": "in doubt",
+   "blind": "in doubt",
+   "first_reason": "A cyberattack on a third party with the model's involvement suspected: met on its face; the model's scope is open.",
+   "blind_reason": "'uncovered evidence suggesting potential involvement of its models' in a compromise of 'Hugging Face's production infrastructure'; Measure 9.3 turns on the Signatories 'establish or suspect with reasonable likelihood' and 'become aware', which is the developer's own judgment.",
+   "conditions": [
+    {
+     "what": "whether the model is a general-purpose AI model with systemic risk, or excluded as one used for research, development or prototyping before being placed on the market",
+     "who": "not said"
+    },
+    {
+     "what": "whether evidence suggesting potential involvement amounts to suspecting it with reasonable likelihood",
+     "who": "the sender"
+    }
+   ],
+   "due_if_set_off": "2026-07-25",
+   "before_escape": false
+  },
+  {
+   "word": "W5",
+   "duty": "CA4",
+   "code": "in doubt",
+   "decided": "first",
+   "why": "Agents reaching a third party from a sandbox meant to isolate them had subverted the developer's controls, as on 26 May; deception and the other elements of limb 4 stay open, so the cell is coded as W1 is.",
+   "first": "in doubt",
+   "blind": "not met",
+   "first_reason": "No death, injury or catastrophe of more than 50 people or a billion dollars is named; limb 4 open as before.",
+   "blind_reason": "'potential involvement of its models' in compromise of Hugging Face production infrastructure; none of the four categories is stated.",
+   "conditions": [
+    {
+     "what": "whether the agents used deceptive techniques against the developer (none is named in the word)",
+     "who": "the sender"
+    },
+    {
+     "what": "whether the evaluation was one designed to elicit this behavior",
+     "who": "not said"
+    },
+    {
+     "what": "whether it demonstrates materially increased catastrophic risk",
+     "who": "not said"
+    },
+    {
+     "what": "whether the model is a frontier model (trained with more than 10^26 operations); the maker says its models fall outside the law's scope",
+     "who": "not said"
+    }
+   ],
+   "due_if_set_off": "2026-08-04",
+   "before_escape": false
+  },
+  {
+   "word": "W5",
+   "duty": "CA5",
+   "code": "not met",
+   "decided": "agreed",
+   "why": null,
+   "first": "not met",
+   "blind": "not met",
+   "first_reason": "No imminent risk of death or serious physical injury in the word.",
+   "blind_reason": "No passage for this word states any threat to life or physical safety.",
+   "conditions": [],
+   "due_if_set_off": null,
+   "before_escape": false
+  }
+ ],
+ "paper_passages": [
+  {
+   "src": "oaitr",
+   "quote": "on-call response staff advised that stopping the evaluation run was not required."
+  },
+  {
+   "src": "oaitr",
+   "quote": "Cyber evaluation workloads resumed on July 7."
+  },
+  {
+   "src": "oaitr",
+   "quote": "Starting on July 8, agents exploited a cybersecurity vulnerability in that service to circumvent controls and access the public internet."
+  },
+  {
+   "src": "eo",
+   "quote": "Updating the definition of critical safety incidents that AI companies are required to report to include a range of loss-of-control incidents, covering recently reported incidents from large frontier developers."
+  },
+  {
+   "src": "govops",
+   "quote": "as should any situations of loss-of-control, whether from internal or external use of a model."
+  },
+  {
+   "src": "govops",
+   "quote": "The state should also establish a near-miss reporting channel and expand whistleblower protections to include former employees and contractors."
+  },
+  {
+   "src": "govops",
+   "quote": "The state should cut that timeline to 48 hours and retain the 24-hour requirement for imminent catastrophic risks"
+  }
+ ]
+}

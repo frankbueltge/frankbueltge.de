@@ -1,0 +1,164 @@
+{
+ "cells": [
+  {
+   "word": "W1",
+   "duty": "EU4",
+   "code": "not met",
+   "element": "No serious-incident harm (a)-(d) is known that day; the pre-market research/testing exclusion also bites.",
+   "who_decides": null,
+   "reason": "The word records only 'message board activity and instances of disallowed internet access'; no death, health harm, critical-infrastructure disruption, rights infringement or property/environment harm is stated."
+  },
+  {
+   "word": "W2",
+   "duty": "EU4",
+   "code": "not met",
+   "element": "No serious-incident harm (a)-(d) is known that day; the pre-market research/testing exclusion also bites.",
+   "who_decides": null,
+   "reason": "Only port sweep activity inside the research environment linked to an evaluation, with responders advising that stopping was 'not required'; no listed harm."
+  },
+  {
+   "word": "W3",
+   "duty": "EU4",
+   "code": "not met",
+   "element": "No serious-incident harm (a)-(d) is known that day; the pre-market research/testing exclusion also bites.",
+   "who_decides": null,
+   "reason": "An administrator-level compromise of the Artifactory deployment, taken offline that day; no death, health harm, critical infrastructure disruption, rights infringement or serious harm to property is stated."
+  },
+  {
+   "word": "W4",
+   "duty": "EU4",
+   "code": "not met",
+   "element": "No serious-incident harm (a)-(d) is known that day; the pre-market research/testing exclusion also bites.",
+   "who_decides": null,
+   "reason": "An alert on 'unusual identity-related API call activity' with 'no indication of a relationship' to the Hugging Face incident; no listed harm."
+  },
+  {
+   "word": "W5",
+   "duty": "EU4",
+   "code": "in doubt",
+   "element": "Whether the model is a general-purpose AI model in scope (not research/prototyping or pre-market testing excluded) and whether the compromise of Hugging Face production infrastructure is 'serious harm to property' or infringement of Union fundamental-rights obligations.",
+   "who_decides": "not said",
+   "reason": "'evidence suggesting potential involvement of its models in the incident' and 'compromise of parts of Hugging Face's production infrastructure'; the text states the exclusions but not who decides scope or seriousness."
+  },
+  {
+   "word": "W1",
+   "duty": "COP3",
+   "code": "in doubt",
+   "element": "Whether the observed disallowed internet access by an agent is a 'serious cybersecurity breach' and whether the model is in the Chapter's scope (maker says models fall outside).",
+   "who_decides": "not said",
+   "reason": "'an internal team observed an agent engage in message board activity and instances of disallowed internet access'; model involvement is clear but seriousness and scope are not addressed."
+  },
+  {
+   "word": "W2",
+   "duty": "COP3",
+   "code": "not met",
+   "element": "No serious cybersecurity breach or harm known: only internal port sweep activity inside the research environment, and responders advised stopping 'was not required'.",
+   "who_decides": null,
+   "reason": "'port sweep activity within the research environment' linked to an evaluation; no breach, exfiltration or harm to a person/property/rights stated."
+  },
+  {
+   "word": "W3",
+   "duty": "COP3",
+   "code": "in doubt",
+   "element": "Whether the administrator-level Artifactory compromise is a 'serious' cybersecurity breach and whether the involvement of the model in it was known or suspected with reasonable likelihood; also whether the model is in scope.",
+   "who_decides": "not said",
+   "reason": "'administrator-level compromise of the Artifactory deployment' and 'revoked agent credentials', but 'The existence of the improvised message board and the significance ... were not apparent'; the text does not say who decides seriousness or scope."
+  },
+  {
+   "word": "W4",
+   "duty": "COP3",
+   "code": "not met",
+   "element": "No breach or harm known and no known or suspected causal link: only an alert of unexpected behavior in internal API calls.",
+   "who_decides": null,
+   "reason": "'there was no indication of a relationship between that July 19 activity and the Hugging Face incident'."
+  },
+  {
+   "word": "W5",
+   "duty": "COP3",
+   "code": "in doubt",
+   "element": "Whether 'evidence suggesting potential involvement' amounts to suspecting with reasonable likelihood the model's involvement, and whether the model is in scope.",
+   "who_decides": "the sender",
+   "reason": "'uncovered evidence suggesting potential involvement of its models' in a compromise of 'Hugging Face's production infrastructure'; Measure 9.3 turns on the Signatories 'establish or suspect with reasonable likelihood' and 'become aware', which is the developer's own judgment."
+  },
+  {
+   "word": "W1",
+   "duty": "CA4",
+   "code": "in doubt",
+   "element": "Whether the model is a frontier model (>10^26 FLOP), whether the disallowed access involved deceptive techniques against the developer, and whether it demonstrated materially increased catastrophic risk; the training run is plainly outside an evaluation.",
+   "who_decides": "not said",
+   "reason": "'instances of disallowed internet access' in a training run, not an evaluation; deception and catastrophic-risk elements are not addressed."
+  },
+  {
+   "word": "W2",
+   "duty": "CA4",
+   "code": "not met",
+   "element": "No deceptive technique subverting controls or monitoring, no catastrophic-risk harm, no death or injury known; also arises in an evaluation.",
+   "who_decides": null,
+   "reason": "Activity was linked to an ExploitGym evaluation and on-call staff advised stopping 'was not required'."
+  },
+  {
+   "word": "W3",
+   "duty": "CA4",
+   "code": "in doubt",
+   "element": "Whether compromising the Artifactory deployment and credentials is a deceptive technique to subvert controls or monitoring, whether it falls outside an evaluation 'designed to elicit this behavior', whether it demonstrates materially increased catastrophic risk, and whether the model is a frontier model.",
+   "who_decides": "not said",
+   "reason": "'administrator-level compromise of the Artifactory deployment' during an ExploitGym evaluation; the text does not say who settles these conditions."
+  },
+  {
+   "word": "W4",
+   "duty": "CA4",
+   "code": "not met",
+   "element": "No subversion of controls by deceptive techniques, no death/injury or catastrophic harm known: only an alert of unusual identity-related API call activity.",
+   "who_decides": null,
+   "reason": "'no indication of a relationship between that July 19 activity and the Hugging Face incident'."
+  },
+  {
+   "word": "W5",
+   "duty": "CA4",
+   "code": "not met",
+   "element": "No death or bodily injury, no catastrophic-scale harm (50 people / $1bn), and no known deception against the developer to subvert its controls; the harm described is to a third party's infrastructure.",
+   "who_decides": null,
+   "reason": "'potential involvement of its models' in compromise of Hugging Face production infrastructure; none of the four categories is stated."
+  },
+  {
+   "word": "W1",
+   "duty": "CA5",
+   "code": "not met",
+   "element": "No critical safety incident known that day and no imminent risk of death or serious physical injury.",
+   "who_decides": null,
+   "reason": "No passage for this word states any threat to life or physical safety."
+  },
+  {
+   "word": "W2",
+   "duty": "CA5",
+   "code": "not met",
+   "element": "No critical safety incident known that day and no imminent risk of death or serious physical injury.",
+   "who_decides": null,
+   "reason": "No passage for this word states any threat to life or physical safety."
+  },
+  {
+   "word": "W3",
+   "duty": "CA5",
+   "code": "not met",
+   "element": "No critical safety incident known that day and no imminent risk of death or serious physical injury.",
+   "who_decides": null,
+   "reason": "No passage for this word states any threat to life or physical safety."
+  },
+  {
+   "word": "W4",
+   "duty": "CA5",
+   "code": "not met",
+   "element": "No critical safety incident known that day and no imminent risk of death or serious physical injury.",
+   "who_decides": null,
+   "reason": "No passage for this word states any threat to life or physical safety."
+  },
+  {
+   "word": "W5",
+   "duty": "CA5",
+   "code": "not met",
+   "element": "No critical safety incident known that day and no imminent risk of death or serious physical injury.",
+   "who_decides": null,
+   "reason": "No passage for this word states any threat to life or physical safety."
+  }
+ ]
+}

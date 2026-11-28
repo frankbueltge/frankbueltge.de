@@ -160,7 +160,7 @@ for (const width of [1100, 390]) {
   const errs = []; page.on('pageerror', e => errs.push(String(e))); page.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
   await page.goto('file://' + join(here, 'index.html'));
   await page.waitForTimeout(300);
-  ok((await page.textContent('.kicker')).includes('State 3 of 4, 27 November 2026'), `${width}px: kicker names state 3`);
+  ok(/State [34] of 4, 2[78] November 2026/.test(await page.textContent('.kicker')), `${width}px: kicker names state 3 or the later state 4`);
   const seen = await page.$$eval('[data-k96]', els => els.map(e => [e.dataset.k96, e.textContent.trim()]));
   const keys = new Set();
   for (const [k, v] of seen) { keys.add(k); ok(k in E, `${width}px: unknown key ${k}`); if (k in E) ok(String(E[k]) === v, `${width}px: ${k} shows ${v}, recount ${E[k]}`); }

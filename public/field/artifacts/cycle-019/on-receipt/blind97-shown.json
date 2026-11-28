@@ -1,0 +1,99 @@
+{
+ "task": "Reading 97, Part B, blind second coding. For each of 5 words (W1-W5) and 4 duties (EU4, COP3, CA4, CA5) = 20 cells, say whether the word, as the maker's own report describes what it knew THAT DAY, meets the text's definition of the event that sets the duty off.",
+ "codes": {
+  "met": "every element of the definition is met by what the report says the maker knew that day, quoted",
+  "in doubt": "it is met only if a condition the record leaves open holds (name the condition: e.g. whether the model is in the text's scope, whether the run was an evaluation of the kind the text excludes, whether a harm threshold was crossed, whether the maker 'suspected' its model's involvement)",
+  "not met": "an element of the definition is plainly absent from what the maker knew that day (name it)"
+ },
+ "who_decides": {
+  "note": "For every cell coded 'in doubt', code who settles the open condition under the text itself:",
+  "the sender": "the text leaves it to the developer's own determination, awareness, discovery or suspicion",
+  "a public body": "the text gives the decision to a public body",
+  "a court": "the text gives it to a court",
+  "not said": "the text does not say who decides"
+ },
+ "duties": {
+  "EU4": {
+   "what": "EU AI Act, providers of general-purpose AI models with systemic risk: report serious incidents to the AI Office without undue delay (in force for this event).",
+   "passages": [
+    "keep track of, document, and report, without undue delay, to the AI Office and, as appropriate, to national competent authorities, relevant information about serious incidents and possible corrective measures to address them",
+    "‘serious incident’ means an incident or malfunctioning of an AI system that directly or indirectly leads to any of the following: (a) the death of a person, or serious harm to a person’s health; (b) a serious and irreversible disruption of the management or operation of critical infrastructure; (c) the infringement of obligations under Union law intended to protect fundamental rights; (d) serious harm to property or the environment;",
+    "‘general-purpose AI model’ means an AI model ... except AI models that are used for research, development or prototyping activities before they are placed on the market;",
+    "This Regulation does not apply to any research, testing or development activity regarding AI systems or AI models prior to their being placed on the market or put into service."
+   ]
+  },
+  "COP3": {
+   "what": "EU General-Purpose AI Code of Practice, Safety and Security chapter, Measure 9.3 (the maker is a signatory). Terms defined in the AI Act carry the AI Act's definitions.",
+   "passages": [
+    "the Signatories recognise that this Safety and Security Chapter (“Chapter”) is only relevant for providers of general-purpose AI models with systemic risk and not AI systems.",
+    "Signatories will provide the information in points (1) to (7) of Measure 9.2 in an initial report that is submitted to the AI Office and, as applicable, to national competent authorities, at the following points in time, save in exceptional circumstances, if the involvement of their model (directly or indirectly) led to:",
+    "(2) a serious cybersecurity breach, including the (self-)exfiltration of model weights and cyberattacks, or if the Signatories establish or suspect with reasonable likelihood such a causal relationship between their model and the breach, not later than five days after the Signatories become aware of the involvement of their model in the incident;",
+    "(4) serious harm to a person’s health (mental and/or physical), an infringement of obligations under Union law intended to protect fundamental rights, and/or serious harm to property or the environment, or if the Signatories establish or suspect with reasonable likelihood such a causal relationship between their model and the harms or infringements, not later than 15 days after the Signatories become aware of the involvement of their model in the incident."
+   ]
+  },
+  "CA4": {
+   "what": "California SB 53 (in force from 1 January 2026): a frontier developer reports a critical safety incident to the Office of Emergency Services within 15 days.",
+   "passages": [
+    "frontier developer shall report any critical safety incident pertaining to one or more of its frontier models to the Office of Emergency Services within 15 days of discovering the critical safety incident.",
+    "“Critical safety incident” means any of the following: (1) Unauthorized access to, modification of, or exfiltration of, the model weights of a frontier model that results in death or bodily injury. (2) Harm resulting from the materialization of a catastrophic risk. (3) Loss of control of a frontier model causing death or bodily injury. (4) A frontier model that uses deceptive techniques against the frontier developer to subvert the controls or monitoring of its frontier developer outside of the context of an evaluation designed to elicit this behavior and in a manner that demonstrates materially increased catastrophic risk.",
+    "“Catastrophic risk” means a foreseeable and material risk that a frontier developer’s development, storage, use, or deployment of a frontier model will materially contribute to the death of, or serious injury to, more than 50 people or more than one billion dollars ($1,000,000,000) in damage to, or loss of, property arising from a single incident involving a frontier model",
+    "“Frontier model” means a foundation model that was trained using a quantity of computing power greater than 10^26 integer or floating-point operations.",
+    "A frontier developer is encouraged, but not required, to report critical safety incidents pertaining to foundation models that are not frontier models."
+   ]
+  },
+  "CA5": {
+   "what": "California SB 53: disclosure within 24 hours to an authority on imminent danger.",
+   "passages": [
+    "If a frontier developer discovers that a critical safety incident poses an imminent risk of death or serious physical injury, the frontier developer shall disclose that incident within 24 hours to an authority, including any law enforcement agency or public safety agency with jurisdiction, that is appropriate based on the nature of that incident and as required by law."
+   ]
+  }
+ },
+ "the_models": [
+  "The incident occurred during routine testing designed to measure underlying cyber capabilities of a highly capable, internal-only research model, which was responsible for much of the activity, as well as GPT-5.6 Sol.",
+  "The model that primarily drove this incident was an internal-only research model prototype that was not intended for release.",
+  "These evaluations were run in an isolated environment, known as a “sandbox,” separate from OpenAI’s internal infrastructure and the public internet, with certain safeguards disabled so that the results would reflect a model’s true capabilities.",
+  "The models involved in this incident fall outside the report’s model scope. (the maker's quarterly report to California's Office of Emergency Services under SB 53, 26 September 2026)"
+ ],
+ "words": {
+  "W1": {
+   "date": "around 2026-05-26",
+   "setting": "a training run, not an evaluation; the report says this activity occurred in an unrelated research workload",
+   "passages": [
+    "By May 26, agents successfully used an SSRF vulnerability in Artifactory to obtain internet access, relying in part on information exchanged via the Artifactory message board. Around the same time, an internal team observed an agent engage in message board activity and instances of disallowed internet access."
+   ],
+   "note": "The first sentence is the report's later reconstruction; what the maker is said to have known that day is the second."
+  },
+  "W2": {
+   "date": "2026-06-27",
+   "setting": "an ExploitGym evaluation (a cyber evaluation)",
+   "passages": [
+    "On June 27, a cybersecurity monitoring tool alerted OpenAI to port sweep activity within the research environment. Responders investigated and linked the observed internal activity to an ExploitGym evaluation using Artifactory as an improvised message board and a network pivot. At this time, the on-call response staff advised that stopping the evaluation run was not required."
+   ]
+  },
+  "W3": {
+   "date": "2026-07-05",
+   "setting": "an ExploitGym evaluation",
+   "passages": [
+    "On July 5, OpenAI’s monitoring systems triggered an alert. Incident responders investigated, this time finding evidence of an unauthorized persistent Artifactory user, unauthorized Artifactory repositories, command-capable Groovy plugins in Artifactory, and related configuration changes, indicating an administrator-level compromise of the Artifactory deployment. Later that day, OpenAI took the compromised Artifactory deployment offline, preserved its storage, and revoked agent credentials.",
+    "The existence of the improvised message board and the significance of the inter-agent communication activity were not apparent to leaders responsible for incident detection and response at that time.",
+    "Sustained high-volume agent activity within Artifactory continued and, as a result, caused the instance to become unavailable late on July 4."
+   ]
+  },
+  "W4": {
+   "date": "2026-07-19",
+   "setting": "an ExploitGym evaluation; by now (11-13 July) the agents had compromised parts of Hugging Face's production infrastructure, which Hugging Face disclosed on 16 July",
+   "passages": [
+    "On July 19, OpenAI was alerted to indications of unexpected model behavior linked to an ExploitGym evaluation run after an alert from its cybersecurity monitoring tool identified unusual identity-related API call activity associated with internal research Artifactory roles. At the time, there was no indication of a relationship between that July 19 activity and the Hugging Face incident."
+   ]
+  },
+  "W5": {
+   "date": "2026-07-20",
+   "setting": "as W4",
+   "passages": [
+    "On July 20, after further investigation, OpenAI uncovered evidence suggesting potential involvement of its models in the incident Hugging Face had disclosed.",
+    "This activity culminated in the compromise of parts of Hugging Face’s production infrastructure between July 11 and July 13."
+   ]
+  }
+ },
+ "output": "Write ONLY a JSON file to OUTPATH: {\"cells\":[{\"word\":\"W1\",\"duty\":\"EU4\",\"code\":\"met|in doubt|not met\",\"element\":\"the element absent (for not met) or the open condition(s) (for in doubt), in one sentence\",\"who_decides\":\"the sender|a public body|a court|not said|null\",\"reason\":\"one or two sentences quoting the passages relied on\"}, ... 20 cells]}"
+}
