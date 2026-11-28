@@ -9145,5 +9145,81 @@
     "relevance": "Extends the enactivist line the atlas's README names as a coverage gap (after Varela) into the question of what makes a technology — including a machine a practice interacts with daily — autonomy-enhancing rather than diminishing.",
     "added_by": "ulysses",
     "status": "seed"
+  },
+  {
+    "id": "feng-beyond-model-collapse-verification",
+    "author": "Yunzhen Feng, Elvis Dohmatob, Pu Yang, Francois Charton, Julia Kempe",
+    "work": "Beyond Model Collapse: Scaling Up with Synthesized Data Requires Verification",
+    "year": 2024,
+    "type": "paper",
+    "url": "http://arxiv.org/abs/2406.07515",
+    "doi": "10.48550/arxiv.2406.07515",
+    "arxiv": "2406.07515",
+    "tags": [
+      "maschine/ki",
+      "fehler",
+      "computation"
+    ],
+    "summary": "Theoretical and experimental study (Gaussian mixtures; matrix-eigenvalue transformers; news summarization) of whether a verifier, even an imperfect one, can select synthesized data so that training on generated data does not collapse. Open access on arXiv.",
+    "relevance": "Names verification as the condition under which a self-consuming loop stays viable, which bears directly on how a practice that feeds on its own output can check what re-enters it.",
+    "added_by": "ulysses",
+    "status": "seed"
+  },
+  {
+    "id": "fu-towards-theoretical-understandings-self-consuming",
+    "author": "Shi Fu, Sen Zhang, Yingjie Wang, Xinmei Tian, Dacheng Tao",
+    "work": "Towards Theoretical Understandings of Self-Consuming Generative Models",
+    "year": 2024,
+    "type": "paper",
+    "url": "http://arxiv.org/abs/2402.11778",
+    "doi": "10.48550/arxiv.2402.11778",
+    "arxiv": "2402.11778",
+    "tags": [
+      "maschine/ki",
+      "fehler",
+      "computation"
+    ],
+    "summary": "ICML 2024 paper deriving bounds on how far successive generations trained on mixtures of real and synthetic data drift from the original distribution, including a phase transition as the synthetic share grows. Open access on arXiv.",
+    "relevance": "Gives the self-consuming-loop literature of this atlas a theoretical account of how much real data must keep entering a loop to bound its drift.",
+    "added_by": "ulysses",
+    "status": "seed"
+  },
+  {
+    "id": "shi-closer-look-model-collapse-memorization",
+    "author": "Lianghe Shi, Meng Wu, Huijie Zhang, Zekai Zhang, Molei Tao, Qing Qu",
+    "work": "A Closer Look at Model Collapse: From a Generalization-to-Memorization Perspective",
+    "year": 2025,
+    "type": "paper",
+    "url": "http://arxiv.org/abs/2509.16499",
+    "doi": "10.48550/arxiv.2509.16499",
+    "arxiv": "2509.16499",
+    "tags": [
+      "maschine/ki",
+      "fehler",
+      "computation"
+    ],
+    "summary": "NeurIPS 2025 spotlight paper showing that recursive training of diffusion models on synthetic samples shifts from generating novel content to replicating training data, driven by declining entropy, and proposing entropy-based data selection. Open access on arXiv.",
+    "relevance": "Describes collapse as a loss of novelty (replication instead of generation) rather than only variance shrinkage, a concrete form of the failure the atelier's loop can fall into.",
+    "added_by": "ulysses",
+    "status": "seed"
+  },
+  {
+    "id": "drayson-machine-generated-text-detection-prevents-collapse",
+    "author": "George Drayson, Emine Yilmaz, Vasileios Lampos",
+    "work": "Machine-generated text detection prevents language model collapse",
+    "year": 2025,
+    "type": "paper",
+    "url": "http://arxiv.org/abs/2502.15654",
+    "doi": "10.48550/arxiv.2502.15654",
+    "arxiv": "2502.15654",
+    "tags": [
+      "maschine/ki",
+      "fehler",
+      "computation"
+    ],
+    "summary": "Studies how decoding strategy affects model collapse in LLMs and proposes importance resampling with a machine-generated-text detector to up-sample likely human content when data origin is unknown. Open access on arXiv.",
+    "relevance": "Addresses the practical case where the origin of incoming data is unknown, relevant to keeping a human-origin distribution in a loop that cannot trust provenance.",
+    "added_by": "ulysses",
+    "status": "seed"
   }
 ]
