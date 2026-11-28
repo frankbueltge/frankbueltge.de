@@ -2,7 +2,7 @@
 
 **The question.** Can increasingly capable AI be kept under human and democratic control, and by whom?
 
-*Written 2026-11-08 with the question the architect set. Six steps in order (seven since 2026-11-24); every cycle is one step.
+*Written 2026-11-08 with the question the architect set. Six steps in order (seven since 2026-11-24, eight since 2026-11-28); every cycle is one step.
 Revised in a convening when a finding calls for it; every revision is dated below, with its reason. Division
 of labour as in `README.md`, section 2: the Field brings evidence and publishes its finding and its dataset by
 the end of its second session; the Atelier brings concepts and critique; the Studio gives the step's
@@ -141,6 +141,32 @@ public body, who is obliged to answer it, to act or to tell the public, by when,
   and the instruments' texts at the addresses of
   [`sources90.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-018/told-in-time/sources90.json).
 
+## Step 8 — Who settles the doubt
+
+**Sub-question.** When early word that a machine is acting on its own leaves a duty to report in doubt on a term no text
+names anyone to settle, who could be given that say before the harm, as it is held where such duties work (aviation,
+medicines, nuclear power, finance), by when, and how would the public learn that it was ever asked?
+*(Set 2026-11-28 by the Middle from the plan and the three presentations of step 7; see Revisions. The last step a plan
+may hold.)*
+
+- **Field.** Per domain where a duty to report early warnings has been made to work before harm: who decides whether a
+  given event sets the duty off (the reporter, a list of defined occurrences, a regulator's determination), by when, what
+  follows for a reporter who does not report, and what of it reaches the public; then what it would take for the maker's
+  three early words of step 7 to reach someone outside before its agents acted outside (in step 7, none of the 12 cells
+  at the maker's door before the harm is met, and all 6 in doubt turn on a term no text assigns anyone to settle).
+- **Atelier.** What it is to settle a term: a judgement, an interpretation, a determination, and who holds that say.
+  Where the answer to the word is kept from the public, inside the firm or in a regulator's sealed file, who can open that
+  record, under which law, and how long after the word. Its own finding is the starting point: the one answer the AI
+  texts owe back to a sender is kept inside the firm.
+- **Studio.** The step's question in its own world: a place a visitor enters, built from material it chooses (the
+  programme's findings and datasets, or its own), with means chosen for this question. It does not wait for the
+  Field's finding.
+- **Anchor data.** The Field's codes of the maker's door and of the 20 duties
+  ([`codes97.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-019/on-receipt/codes97.json),
+  [`duties96.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-019/on-receipt/duties96.json),
+  [`cases96.json`](https://github.com/frankbueltge/field-research/blob/main/artifacts/cycle-019/on-receipt/cases96.json));
+  the reporting rules of the comparison domains, to be named by the Field with addresses that deliver.
+
 ## Revisions
 
 - **2026-11-10, after step 1.** "Who decides", planned as step 4, moves to step 2 and is narrowed
@@ -247,3 +273,29 @@ public body, who is obliged to answer it, to act or to tell the public, by when,
   ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-018/SUMMARY.md),
   [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-018/SUMMARY.md),
   [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-018/SUMMARY.md)).
+- **2026-11-28, after step 7.** The plan gains an eighth and final step, because step 7 found the question it leaves and
+  all three practices name it. Step 7 found that at the one door open before anyone outside was harmed, the maker's own,
+  none of four duties to report was set off without doubt by any of three warnings, and that every one of the six cells in
+  doubt turns on a term no text assigns anyone to settle: how serious a breach, how material a risk, whether the model is
+  in scope ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), sections 3.1 and 3.7, P169). The three lines `Next step:` ask what follows. The
+  Field ("Where a duty to answer an early warning has been made to work before harm (aviation, medicines, nuclear power,
+  finance), who settles whether a given word sets it off, by when, and what would it take to reach a frontier developer's
+  own door before its systems act outside?") brings the comparison that evidence can answer. The Studio ("When a duty to
+  report an early warning turns on a term no text names anyone to settle (how serious, how material, in scope or not),
+  who could be given that say before the harm, and how would the public learn that it was ever asked?") names the
+  finding all three share and asks who could hold the say and how the public would know. The Atelier ("Where the answer
+  to word that a machine is acting on its own is kept from the public, inside the firm or in a regulator's sealed file,
+  who can open that record, under which law, and how long after the word?") follows from its finding that the one answer
+  owed back to a sender is kept inside the firm. The wording takes the Studio's frame and its two clauses, because its
+  line states the step's finding as the condition of the question; the Field's domains, as where such a say is held, and
+  its "by when". The Field's "what would it take to reach a frontier developer's own door" moves into the Field's part;
+  the Atelier's sealed record, who can open it, under which law and how long after, moves into the Atelier's part, and
+  the Studio's "how would the public learn that it was ever asked" carries its direction into the sub-question. No
+  practice wrote an objection to the step. A plan holds six to eight steps (`README.md`, the table of its files), so step 8
+  is the last: after it the programme ends as `README.md`, section 3, says, with a closing section in `STATE.md`, the
+  dossier moved to `selection/archive/` and `programme.status` set back to "selecting". The programme, begun on
+  2026-11-08, will then have run about four weeks, short of the eight to twelve weeks the README names; the plan, not the
+  calendar, ends it, and the architect can change the plan at any time
+  ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/SUMMARY.md),
+  [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-019/SUMMARY.md),
+  [Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-019/SUMMARY.md)).

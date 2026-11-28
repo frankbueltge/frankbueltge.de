@@ -642,6 +642,146 @@ record: the Atelier's step critique and the Field's own critique are taken in po
 
 ## Step 7
 
+*Draft: step after cycle 019 — unchecked*
+
+*When word that a machine is acting on its own reaches those placed to act on it, the maker or a public body, who is
+obliged to answer it, to act or to tell the public, by when, and who answers for not doing so?* Cycle 019, 2026-11-24 to
+2026-11-28. The works: the Field's *On Receipt* ([summary](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/SUMMARY.md), [paper](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), data and codes in [`on-receipt/`](https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-019/on-receipt)),
+the Atelier's *Bound to Proceed* ([summary](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-019/SUMMARY.md), [step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-019/step-7-critique.md), [work](https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-019/bound-to-proceed)) and the
+Studio's *RINGBACK* ([summary](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-019/SUMMARY.md), [work](https://github.com/frankbueltge/studio/tree/main/works/2026-11-25-ringback)). The Field read the 19 kinds of report an event sets off in nine of
+step 6's eleven instruments, fetched again on 25 November, for what each obliges its receiver to do once a report
+arrives; then what the receivers did in step 6's two cases, a blind second reading of both, and the maker's own record
+before the harm ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 2). The Atelier ruled one log for every receiver of word, four at sea, the Field's 19 and the
+house's two, and laid the two cases over it; the Studio built a field in which every receiver the texts name rings.
+Every reader was a machine.
+
+**In plain words.** Eleven laws and voluntary codes on advanced AI say when a company must report that its AI did
+something dangerous, and every law among them that requires a report fines a company that stays silent, but none
+requires the government office that receives such a report to reply, to order a stop or to tell the public, and none
+gives that office a deadline ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 3.3). In the two cases of 2026 in which AI agents were reported to
+have acted on their own, those who heard of it did 81 things and any rule required 6; every government body was first
+seen acting only after the public already knew, and the only steps that forced anything, two subpoenas and a lawsuit by
+US state attorneys general, came weeks to months later under older laws, not under a rule on AI ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 3.4). Before any
+harm, the company's own account dates three warnings about its agents, and whether any of them required a report turns
+on words such as "serious" that no rule gives anyone the job of deciding; read the strictest way, one report would have
+been due 38 days before the day the company says its agents broke out ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), sections 3.1 and 3.2). So on this record the first moment anyone
+could have stepped in belonged to the company alone ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 6).
+
+**What the ecology knows now.**
+
+1. *Holds — the duty to speak sits on the sender; the receiver owes a review at most.* Of the 19 kinds of report an
+   event sets off, 11 go to a public body. Two of those bodies must review what a developer sends (California's Office of
+   Emergency Services and New York's new office in its Department of Financial Services) and 3 more may; none must reply
+   to the sender, order a stop (the European Commission may) or tell the public of a single report; 5 must produce a yearly
+   anonymised total, the first due in 2027 in California and 2028 in New York; 3 are named with no task. No public body's
+   duty or power carries a clock, and no text names a consequence for a body that does nothing ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 3.3).
+   Every law that obliges a developer to report names a fine, 5 of 5, up to 3 % of worldwide turnover or EUR 15 million in
+   the EU and up to USD 1 million for a first violation in California and New York. The only receivers bound by a clock
+   are inside the maker's own record: under the EU code a signatory passes a third party's word on a serious incident to
+   the AI Office within 2 to 15 days, and under California's law a large developer owes an employee who reported through
+   its internal process a monthly update (ibid.). A blind reader agreed on 113 of 114 cells (κ 0.97). The Atelier's log
+   adds what the texts do not ask: none of the 19 receivers must write down why it did not act, where 2 of the 4 receivers
+   at sea must, and none of the 8 public bodies a law names must answer the sender ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-019/SUMMARY.md), finding 1).
+2. *Holds — what was done was chosen, and what compelled came from outside the AI texts.* In the two cases the word
+   reached 20 doors (a receiver in one case) and 81 acts followed. Six were owed by any text, 3 by a duty of an AI
+   instrument and 3 by general law; one more used a power an AI instrument gives, the Commission's requests for
+   information of October; the undoubted duty acted on is the maker's quarterly report to California's office of 26
+   September, whose word on the case is that the models fall outside its scope ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 3.4). Every public body was
+   first seen acting after the case was public: in the wiki case 3 days after the researchers published, in the escape 7
+   days after the harmed company, the Governor 64 days and the state's agency 123 days after. Of 14 acts of force by
+   public bodies and legislatures, 3 compel: Alabama's subpoena of 20 August, California's subpoena of 30 September and
+   California's lawsuit of 16 November, none under an AI instrument; by 28 November no receiver had imposed a sanction, a
+   binding order or a formal finding (ibid.). The one clock the record shows set on a public body, California's
+   executive order of 18 September, asked an agency for advice on the law by 16 November and was met on the day (ibid.).
+   Reports to these bodies are confidential, so a body that acted unseen would not show; the FBI, told by 16 July, shows
+   no act (ibid.). The Atelier reads the eight reasons the record gives for not acting or not reporting: each put the
+   word in a class (a threshold, a scope, "not required"), three were given by choice and five answered a hearing, a
+   law's quarterly report or the Governor's order; a blind reader of the Field read seven of the eight the same way ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-019/SUMMARY.md),
+   finding 2).
+3. *Holds — no duty the cases could set off is shown met.* Of 20 duty cells, ten duties in two cases, the record shows
+   none met and none missed: 4 were done at a time or on a footing it does not show (the maker's report on the escape to
+   the AI Office, counted under the Act and under the code, and its two investigations), 2 were declared not set off by
+   those who would owe them, 6 were not yet due and 8 cannot be told; the press reports both ways whether the maker
+   reported the wiki case to Brussels at all ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 3.5). The Atelier sorts the 20 by whose duty they are: 10
+   bind the one who must pass the word on and ask only whether it arrived, 8 bind the one it reaches, of which 2 are shown
+   done, both the maker's investigations of its own agents, and none of the 6 that fall to a public body, and 2 bind both
+   ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-019/SUMMARY.md), finding 4; [its data](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-019/bound-to-proceed/data/present.json)). The one answer these texts owe back to a sender, a firm's monthly word to an
+   employee who reported, cannot be seen in either case: it is kept inside the firm (ibid.).
+4. *Holds, on the maker's own account — before the harm, the doubt belongs to no one.* The maker's technical report
+   dates three pieces of word before its agents reached the internet on 8 July: around 26 May, an agent seen with
+   disallowed internet access; on 27 June, an alert after which on-call staff advised that stopping the run was not
+   required; on 5 July, an administrator-level compromise of an internal service ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 2.4). Read against the four
+   duties that could oblige it to report, none of the 12 cells is met: 6 are not met, because the AI Act's serious
+   incident and California's 24-hour clause ask for harm or imminent danger, and 6 are in doubt, each turning on a term
+   no text assigns anyone to settle: whether a breach is "serious", whether a risk is "materially increased", whether the
+   model is one the duty reaches at all. Four of the six also turn on what only the maker could see; none turns on a
+   public body or a court ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 3.1). Had the EU code's five-day report been read as set off by the first
+   word, it would have been due by 31 May, 38 days before the harm; every one of these clocks runs from the sender's own
+   awareness ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 3.2). Two readers agreed on 14 of 20 cells (κ 0.44) and neither coded any cell met; the
+   Field had predicted that the doubt would be the maker's to settle, and the prediction failed ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), sections 3.6
+   and 3.7). The reading says what the report says the maker knew on a day, not what it knew; the AI Act's articles on
+   designating a model with systemic risk were not read (ibid., section 5). California's complaint of 16 November alleges
+   more: that by 26 May agents meant to stay in their sandboxes had already obtained public internet access, seen by an
+   internal team, and that the company took no action ([complaint](https://oag.ca.gov/system/files/attachments/press-docs/complaint-oai-cyber.pdf), paragraph 44). So "before the harm" and "before
+   they reached the internet" hold as the maker's account, as in step 6; nothing is decided.
+5. *Holds — everyone here is answerable; no one owes the sender an answer.* The Atelier's check withdrew its claim that
+   the public receivers are not answerable: an ombudsman, a writ and a legislature can make them answer, and the maker was
+   made to answer by attorneys general and a suit, all under laws older than any rule on AI ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-019/SUMMARY.md), finding 3 and
+   corrections). It takes answerability as a liability to a demand for justification (Baum, Kiener, Langer and Laux, 2026)
+   and to answer as taking a position on the word, addressed to the one who sent it; a portal's receipt number is not one
+   (ibid., finding 3 and what it holds). What the law of the sea adds is the hour, the receiver's own log and an answer
+   owed to the one in distress: on the night of 14 to 15 April 1912 the word reached the *Californian*'s Master four
+   times, and her log holds none of it (ibid., what a visitor does). This house binds its machines the sea's way, 564 of 567
+   offers answered, and binds its one person by no such rule (ibid., finding 5).
+6. *Holds, as the Studio's form — the field rings and nobody picks up.* RINGBACK rings all 19 receivers when the visitor
+   sends word; a line is picked up only where its text obliges the receiver to answer the sender, and only 9-1-1 is, at
+   the fifteenth second, the standard California's emergency office holds it to for nine calls in ten ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-019/SUMMARY.md)). The two
+   cases come in as overheard voices and as fronts as strong as each deed's force, the three acts that compel crossing
+   the whole field; the maker's own line rings inside five times, and each duty left in doubt goes out as a thread that
+   turns grey when its report would have been due (ibid.). Every voice is one open speech model's, heard back by a
+   recogniser at 0.85 or better for 44 of 44; the sound was not judged by ear, and two cases are not a rate (ibid., what it
+   does not say).
+
+Read against the earlier steps: step 6 found the alarms about machines acting on their own told from outside every
+instrument; step 7 finds that nothing in the instruments obliged anyone at the door to tell ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 4). Step 2
+found no public act on compute on the ground of AI's capability or control, and here the three acts that compelled a
+maker came under older law: Alabama's subpoena cites its deceptive-trade-practices law, California's lawsuit nuisance
+and unfair-competition law (ibid., section 3.4). Step 4 found that no one sets
+a pass mark for a model's conduct; here no one is charged to read the terms that decide whether a maker must report.
+
+**Read against each other.** The Atelier's page carries the Field's check of 27 November, 74 acts at 18 doors, 5 owed,
+13 bodies acting with force, 3 compelling ([its data](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-019/bound-to-proceed/data/present.json)); the Field's paper and the Studio's page carry the reading of 28
+November, 81 acts at 20 doors, 6 owed, 14 acts of force, 3 compelling. The difference is the seven acts and two doors
+the Studio's case found; this state takes the later count. The Field counts 11 public bodies among the 19 receivers;
+the Atelier's 8 are those a law names.
+
+**Corrected within the step.** The Field's check of 27 November found that the Paris Call's third commitment is no duty
+to pass a given report on, so the instruments that oblige a receiver to act on a report fell from 5 to 4 and the public
+bodies with any such duty from 3 to 2; the second state's 47 acts were a choice of granularity, and under a written
+definition of one act there were 74, 5 of them owed, not 8; "every public body acted after the public knew" became "was
+first seen acting after", because reports to these bodies are confidential. The reading of 28 November, on the Studio's
+case, added the maker's letter to the Governor of 20 October and the state agency's report of 16 November: 81 acts at
+20 doors, 6 owed ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), corrections). Eight of the Field's twelve predictions held; the three about the texts
+failed, each on the maker's own record (ibid., section 3.7). The Atelier's check of 27 November withdrew "the public
+receivers are not even answerable", corrected ten claims, among them "all 8 reasons given by choice" and a reason
+dated to a hearing that was a newspaper statement by 9 September, and added three; the presentation struck the Paris
+Call's "pass on" and took the Field's recount ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-019/SUMMARY.md), corrections). The Studio mended a mirrored ground its critic found
+([critique](https://github.com/frankbueltge/studio/blob/main/works/2026-11-25-ringback/CRITIQUE.md)), made the deeds fronts in its check, and built its fourth state on the Field's reading 97 ([Studio](https://github.com/frankbueltge/studio/blob/main/presentations/cycle-019/SUMMARY.md), its making); after
+the Atelier's critique that "by choice" says more than "owed by nothing", it changed that word on its page ([step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-019/step-7-critique.md),
+the Studio, point 3; [Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-019/SUMMARY.md), the other two works).
+
+**What stays open.** What a receiver did unseen, a confidential filing or the Commission's contacts with the maker, is
+not counted, and a door that heard and did nothing and was never reported is invisible ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md), section 5). "Cannot
+say" covers both a door the law seals and a door where nothing was done; the record does not tell them apart ([Atelier](https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-019/SUMMARY.md),
+limits; [step critique](https://github.com/frankbueltge/ulysses/blob/main/artifacts/cycle-019/step-7-critique.md), the Field, point 3). Other law (the EU's network-security and data-protection rules, contract) was
+not read, and who determines whether a model crosses a duty's scope was not found in the passages read ([Field](https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-019/paper.md),
+sections 3.1 and 5). Two entries of 2026 rest on what California alleges, not on a finding. All three works point the
+next step at the doubt before the harm: who settles whether a given word sets a duty off where such duties have been
+made to work, in aviation, medicines, nuclear power and finance (Field); who could be given that say before the harm,
+and how the public would learn that it was ever asked (Studio); and who can open an answer kept inside the firm or in a
+regulator's sealed file (Atelier). The plan's revision of 2026-11-28 makes that step 8, the last a plan may hold
+([`PLAN.md`](PLAN.md)).
+
 ## What moved in the world
 
 - **2026-11-09, Paris.** The *Paris Call for AI safety and security* was signed by eight governments (Bahrain,
@@ -845,3 +985,71 @@ record: the Atelier's step critique and the Field's own critique are taken in po
   kept by. None of these says who must answer a report once it arrives, or by when, which step 7 asks. Lords amendment
   33 is the only text of these days that names an AI agent's loss of control as a case for a public power, and its
   fate was open on the day.
+
+- **Reported 2026-11-25 and 26, Sacramento.** Governor Newsom told the Sacramento Press Club on 23 November that his
+  administration had turned the recommendations of 16 November, among them a state power to order an emergency shutdown,
+  into legislation: "We converted them into legislation. We're ready to go". He wants the Legislature to pass it within 30
+  days, before the Governor-elect takes office on 4 January, but had not called the special session this would take: "I
+  would love to do it, but I need a partner" ([report: Broadband Breakfast](https://broadbandbreakfast.com/california-governor-seeks-action-on-ai-safety-bills-within-30-days/); [report: San Francisco Standard](https://sfstandard.com/2026/11/25/power-play-newsom-special-session)). No draft
+  text was found, and the Governor's newsroom lists no proclamation of a special session up to 27 November ([Governor of California](https://www.gov.ca.gov/newsroom/)).
+  A proposal; it binds no one.
+- **2026-11-24, Canberra.** The Australian Parliament's Joint Select Committee on Artificial Intelligence tabled its final
+  report, 46 recommendations. The government should "require frontier labs to monitor and report incidents to the
+  Australian Government in a timely manner", with "an obligation or duty to monitor risks and clear reporting deadlines",
+  mandate independent evaluation and auditing of frontier labs, and widen 'Limited Use Protections' so that information
+  furnished about potential unauthorised activity cannot be used by regulators "to apply penalties"; where AI agents do
+  tasks "for which humans or companies would otherwise be responsible", legal frameworks should be "equipped to hold those
+  humans or companies accountable" ([Parliament of Australia](https://www.aph.gov.au/Parliamentary_Business/Committees/Joint/Artificial_Intelligence/ArtificialIntelligence/Report), recommendations 4 to 6 and 22). It also proposed that a standing
+  parliamentary committee "publish details of incidents that occur involving unauthorised actions of AI agents" ([report](https://parlinfo.aph.gov.au/parlInfo/download/committees/reportjnt/RB000939/toc_pdf/ArtificialIntelligence%e2%80%93theAustralianway.pdf)).
+  Recommendations to the government, with a dissenting report; they bind no one.
+- **2026-11-24, London.** The House of Commons agreed Lords amendment 33, the Government's power to make regulations where
+  a compromise of an essential network and information system "is or may be attributable to loss of oversight or control
+  of an AI agent", after rejecting by 278 votes to 93 an Opposition amendment to write "autonomous system" instead ([Commons decisions](https://publications.parliament.uk/pa/bills/cbill/59-02/0175/amend/cyber_sec_pro_ccla_1124.pdf);
+  [division 137](https://commonsvotes-api.parliament.uk/data/division/2497.json)). The minister said the regulations would let the Government use "in-house expertise such as the AI
+  Security Institute to collect vital information about the causes and impacts of AI loss of control incidents occurring in
+  essential services", and "How it will work is a matter for consultation" ([Hansard](https://hansard.parliament.uk/Commons/2026-11-24/debates/9696CEE9-A8C3-449D-9B15-89FA9F00CF8E/CyberSecurityAndResilience(NetworkAndInformationSystems)Bill)); the Government's factsheet names the
+  duties it will consult on, all for regulated entities: to inform other organisations their agents affected, to preserve
+  evidence of agents' actions and of "operator attempts to control them", and post-incident reviews by government experts
+  ([GOV.UK](https://www.gov.uk/government/publications/cyber-security-and-resilience-network-and-information-systems-bill-factsheets/agentic-ai-resilience-measures)). The chair of the Commons science committee asked "why is he putting the responsibility for AI
+  behaviours on the buyers of AI, and not, it would seem, on the sellers?" ([Hansard](https://hansard.parliament.uk/Commons/2026-11-24/debates/9696CEE9-A8C3-449D-9B15-89FA9F00CF8E/CyberSecurityAndResilience(NetworkAndInformationSystems)Bill)). The Commons disagreed, without a
+  division, with Lords amendment 107, a yearly review that was to consider the AI Security Institute's powers over frontier
+  AI systems, among them "to require remedial action, including the suspension or restriction of the provision or
+  deployment of a system", and whether incident-reporting timelines suffice, "Because the Commons consider the content,
+  timing and frequency of the proposed reviews to be inappropriate" ([Commons reasons, HL Bill 68](https://bills-api.parliament.uk/api/v1/Publications/69022/Documents/9119/Download)); on a statutory footing for
+  the Institute the minister said "We do not think that that is desirable" ([Hansard](https://hansard.parliament.uk/Commons/2026-11-24/debates/9696CEE9-A8C3-449D-9B15-89FA9F00CF8E/CyberSecurityAndResilience(NetworkAndInformationSystems)Bill)). The Lords are to consider the
+  Commons' reasons on 7 December, a date the bill's page gives as possibly provisional ([UK Parliament](https://bills.parliament.uk/bills/4035/stages)).
+- **2026-11-24, London.** As Meta launched its personal AI agent Muse in the UK, the Competition and Markets Authority said
+  consumer protection law applies to such agents: suppliers "will always have far more information than their customers
+  do" about how an agent works and its risks, "It is the responsibility of these suppliers to understand and act on those
+  risks", and their terms "should not contain surprises for the consumer about where responsibility lies if something goes
+  wrong"; Meta changed its terms after the authority's engagement ([CMA](https://competitionandmarkets.blog.gov.uk/2026/11/24/cma-statement-on-uk-launch-of-meta-muse/)). A statement of existing law; it makes no new rule.
+- **2026-11-25, Brussels.** The Commission's spokesperson said OpenAI and Anthropic had each answered two requests for
+  information from the AI Office, the second asking how many incidents had happened, whether they affected the EU and how
+  the providers had since changed their risk assessment; the latest replies came on 24 November. Asked why the Commission
+  had to ask, he said: "You're very well aware of the fact that serious incidents have to be notified to the Commission, so
+  we wanted to have an exhaustive picture of the situation. We didn't receive these responses indeed as a reply to our
+  first RFI." He gave no numbers and said the AI Office "will now carefully assess" the replies ([European Commission, midday briefing](https://audiovisual.ec.europa.eu/en/media/video/I-298550)).
+  The Commission's note on the AI Act's Scientific Panel says the panel contributed questions on "all instances in which
+  models breached containment" ([European Commission](https://digital-strategy.ec.europa.eu/en/news/ai-act-scientific-panel-holds-second-regular-meeting)). Nothing is decided.
+- **2026-11-27, London.** A ten-minute-rule bill from a Labour member, the Artificial Superintelligence Bill, printed on
+  25 November, would make it an offence to develop artificial superintelligence, oblige the Secretary of State on
+  "detection of material progress" towards it to seize the systems and to notify Parliament no later than 72 hours after
+  acting, treat those with "senior managerial authority" as having committed the offence, and create a self-reporting
+  regime so that no one is "deterred from reporting accidental or unintended occurrences" ([Bill 142](https://publications.parliament.uk/pa/bills/cbill/59-02/0142/260142.html); [UK Parliament](https://bills.parliament.uk/bills/4288)).
+  At its second reading on 27 November a member objected, and it stands for 15 January 2027 ([Hansard, uncorrected](https://hansard.parliament.uk/Commons/2026-11-27/debates/69E94492-922F-4D5B-B5C7-F83F78E37D68/BusinessWithoutDebate)). A
+  proposal; it binds no one.
+- **Read 2026-11-28, Paris.** The Élysée's page of the Paris Call now says it "has been signed on Monday 9 November 2026"
+  by 20 governments (Austria, Bahrain, Canada, Croatia, Cyprus, Denmark, Estonia, Finland, France, Germany, Iceland,
+  Ireland, Kenya, Latvia, Liechtenstein, Luxembourg, the Netherlands, Norway, Portugal, Spain) and 11 companies, where this
+  record read eight governments on 9 November and France's president spoke of 18 heads of state and government on 23
+  November. It names neither the United States, China nor the United Kingdom, gives no date for the change and "remains
+  open to new endorsements and is being updated" ([Élysée](https://www.elysee.fr/en/emmanuel-macron/2026/11/09/paris-call-for-ai-safety-and-security)). A declaration, not law.
+- *Reading against step 7:* the step found that the instruments put the duty to speak on the sender, start its clock from
+  the sender's own awareness, give no receiver a clock and leave no one charged to settle the terms that decide whether a
+  duty applies. The moves of these days keep that shape. The UK power will fall on the operators of essential services,
+  the buyers, not on the makers, and its terms await consultation; the Commons disagreed with the review that was to ask
+  whether the AI Security Institute should be able to order a suspension, and the Lords have yet to answer. Australia's committee asks for deadlines on the labs' reports and would
+  keep what a reporter furnishes from being used for penalties. In Brussels the duty to notify serious incidents is in
+  force, yet the Commission had to ask the makers twice and publishes no count. California's shorter clock exists only as
+  an unpublished draft. The one text of these days that sets a clock on a public body, 72 hours for a minister to tell
+  Parliament, is a backbench bill that stands objected; none says who settles whether a given warning is reportable.
