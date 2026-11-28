@@ -14,6 +14,12 @@
 // (looked into it, ordered a stop, went to court) is not read but goes through the ground as a front from where its
 // door stands, as strong as its force, and every light it passes shakes. The world beyond the field stays lit once the
 // public knows. The record ends in the form. On a tall screen the field is seen from California's end.
+// State 4, the presentation (session 267, 2026-11-28): rebuilt on the Field's reading 97 (81 acts at 20 doors, the two
+// doors and seven acts this practice's case found missing) and on its reading of the maker's own door. Five times the
+// maker's own line rings inside: its report says word of its machine reached it. Each word is held against the four
+// duties that could ask the maker to pass it on; every duty it leaves in doubt goes out as a thread from the maker's
+// light to the light of the receiver that duty names, flickering, and turns grey when the day its report would have
+// been due has passed. No text names anyone who settles the doubt, so the threads stay to the end.
 (function () {
   'use strict';
   const D = window.RINGBACK;
@@ -56,6 +62,35 @@
   }
   timeSeq(HEAR.start);
   const where = (e) => { const d = DOOR[e.door]; return d.line ? null : RIM.find((r) => r.id === d.id); };
+
+  // ------------------------------------------------------------------ state 4: the maker's door (the Field's reading 97)
+  // A word that reached the maker is no act. Its own line rings inside, an extension's double ring heard through a
+  // wall, twice, and is picked up: the report says the word reached it. Then every duty the word leaves in doubt goes
+  // out as a thread to the receiver that duty names. A thread turns grey once the record has passed the day its report
+  // would have been due, had the duty been set off. No thread is ever settled.
+  const INSIDE = { on: 0.4, gap: 0.2, period: 2.4, rings: 2, pick: 4.6, out: 5.2, hz: 425 };
+  const insideAt = (e, t) => {
+    const dt = t - e.t; if (dt < 0 || dt >= INSIDE.pick) return 0;
+    const ph = dt % INSIDE.period;
+    if (dt >= INSIDE.period * INSIDE.rings) return 0;
+    return (ph < INSIDE.on || (ph >= INSIDE.on + INSIDE.gap && ph < 2 * INSIDE.on + INSIDE.gap)) ? 1 : 0;
+  };
+  const THREADS = [];
+  for (const e of SEQ) {
+    if (e.kind !== 'inside') continue;
+    const doubt = e.cells.filter((c) => c.code === 'in doubt');
+    doubt.forEach((c) => THREADS.push({ e, cell: c, from: DOOR[e.door].line, to: c.line }));
+  }
+  // threads to one receiver lie side by side, each bent a little further, the oldest closest to the straight line
+  const bend = {};
+  for (const th of THREADS) { bend[th.to] = (bend[th.to] || 0) + 1; th.k = bend[th.to]; }
+  const born = (th) => th.e.t + INSIDE.out;
+  // the moment the record passes the day the report would have been due: the first entry dated after it comes in
+  function dueAt(th) {
+    if (!th.cell.due) return null;
+    const x = SEQ.find((y) => y.when > th.cell.due);
+    return x ? x.t : hearEnd;
+  }
 
   // ------------------------------------------------------------------ state of every line
   // st: 'dark' (not called) | 'ringing' | 'answered' | 'hungup'
@@ -165,7 +200,7 @@ void main(){
   const SHOW = `#version 300 es
 precision highp float;
 uniform sampler2D S; uniform vec2 N; uniform vec2 R; uniform vec3 eye, cf, cr, cu; uniform float th, asp;
-uniform vec4 lamp[32]; uniform int nl; uniform float W, DZ, pub;
+uniform vec4 lamp[40]; uniform int nl; uniform float W, DZ, pub;
 out vec4 o;
 void main(){
   vec2 q = gl_FragCoord.xy / R * 2.0 - 1.0;
@@ -190,7 +225,7 @@ void main(){
       float b = clamp(g * 9.0, 0.0, 1.0);
       vec3 ring = vec3(1.0, 0.78, 0.52) * pow(b, 0.85) * 0.9 + vec3(0.55, 0.62, 0.85) * clamp(h * 2.2, 0.0, 0.6) * 0.25;
       col = mix(col, ground + ring, fog * edge);
-      for (int i = 0; i < 32; i++) {
+      for (int i = 0; i < 40; i++) {
         if (i >= nl) break;
         vec2 lp = lamp[i].xy; float d = length((P.xz - vec2((lp.x - 0.5) * W, (lp.y - 0.5) * DZ)));
         vec3 lc = lamp[i].w > 2.5 ? vec3(0.9, 0.95, 0.88) : lamp[i].w > 1.5 ? vec3(0.75, 0.86, 1.0) : vec3(1.0, 0.72, 0.42);
@@ -198,7 +233,7 @@ void main(){
       }
     }
   }
-  for (int i = 0; i < 32; i++) {
+  for (int i = 0; i < 40; i++) {
     if (i >= nl) break;
     vec2 lp = lamp[i].xy; vec3 L = vec3((lp.x - 0.5) * W, 0.012, (lp.y - 0.5) * DZ);
     vec3 v = L - eye; float a = dot(v, dir); if (a <= 0.0) continue;
@@ -342,6 +377,7 @@ void main(){
   function activeAt(t) { return started ? SEQ.filter((e) => t >= e.t && t < e.t + e.dur) : []; }
   function voiceAmp(e, t) {
     if (e.kind === 'silence') return 0.1;   // an open line, and nothing on it
+    if (e.kind === 'inside') return 0.55 * insideAt(e, t);   // the maker's own line, ringing inside
     const i = Math.floor((t - e.t) * 30);
     return e.env && i >= 0 && i < e.env.length ? e.env[i] / 255 : 0;
   }
@@ -363,6 +399,7 @@ void main(){
   function lampLevel(l, t) {
     const e = speaking(l, t);
     if (e) {
+      if (e.kind === 'inside') return t - e.t < INSIDE.pick ? [0.25 + 0.75 * insideAt(e, t), 3] : [0.62, 2];
       if (e.form === 'deed') {
         // a deed flares its door and dies down to what it leaves behind
         const a = Math.exp(-(t - e.t) / { 2: 2.6, 1: 1.6, 0: 1.0 }[e.force]);
@@ -388,13 +425,61 @@ void main(){
     gl.uniform1i(P.u.S, 0); gl.uniform2f(P.u.N, NX, NZ); gl.uniform2f(P.u.R, w, h);
     gl.uniform3fv(P.u.eye, cam.eye); gl.uniform3fv(P.u.cf, cam.f); gl.uniform3fv(P.u.cr, cam.r); gl.uniform3fv(P.u.cu, cam.u);
     gl.uniform1f(P.u.th, Math.tan(cam.vfov / 2)); gl.uniform1f(P.u.asp, cam.asp); gl.uniform1f(P.u.W, W); gl.uniform1f(P.u.DZ, DZ);
-    const lamp = new Float32Array(128), shown = DRAWN.filter((l) => l.kind !== 'rim' || l.spoke !== null);
+    const lamp = new Float32Array(160), shown = DRAWN.filter((l) => l.kind !== 'rim' || l.spoke !== null);
     shown.forEach((l, i) => {
       const [lv, kind] = lampLevel(l, t), [dx, dz, fl] = shakeAt(l, t);
       lamp.set([l.x + dx / W, l.z + dz / DZ, Math.min(1.6, lv * (focus === l ? 1.25 : 1) + 0.9 * fl), kind], i * 4);
     });
     gl.uniform4fv(P.u.lamp, lamp); gl.uniform1i(P.u.nl, shown.length); gl.uniform1f(P.u.pub, publicGlow(t));
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  // ------------------------------------------------------------------ the threads of doubt, drawn over the ground
+  // Each thread is a dashed curve on the ground from the maker's light to the light of the receiver its duty names. It
+  // is drawn out from the maker once the maker's line has been picked up, then stays: it flickers, never travels, and
+  // never arrives or goes. Once the record has passed the day its report would have been due, it turns grey. A duty
+  // with no day ("without undue delay") keeps its colour.
+  const tcan = $('#t'), tctx = tcan ? tcan.getContext('2d') : null;
+  function threadPoints(th) {
+    const a = world(byId[th.from]), b = world(byId[th.to]);
+    const mx = (a[0] + b[0]) / 2, mz = (a[2] + b[2]) / 2, dx = b[0] - a[0], dz = b[2] - a[2], L = Math.hypot(dx, dz) || 1;
+    const off = (0.05 + 0.045 * th.k) * Math.min(1, 0.35 + L);
+    const cx = mx - dz / L * off, cz = mz + dx / L * off, pts = [];
+    for (let i = 0; i <= 40; i++) {
+      const u = i / 40, v = 1 - u;
+      pts.push([v * v * a[0] + 2 * u * v * cx + u * u * b[0], 0, v * v * a[2] + 2 * u * v * cz + u * u * b[2]]);
+    }
+    return pts;
+  }
+  function threadState(th, t) {
+    const b0 = born(th);
+    if (!started || t < b0) return null;
+    const due = dueAt(th);
+    return { grow: Math.min(1, (t - b0) / 1.4), past: due !== null && t >= due };
+  }
+  function drawThreads(t) {
+    if (!tctx) return;
+    const w = tcan.width, h = tcan.height, c = tctx, k = w / 1100;
+    c.clearRect(0, 0, w, h);
+    THREADS.forEach((th, idx) => {
+      const S = threadState(th, t); if (!S) return;
+      const pts = threadPoints(th).map((p) => project(p, w, h));
+      const near = focus && (focus.id === th.from || focus.id === th.to);
+      const fl = 0.62 + 0.38 * (0.5 + 0.5 * Math.sin(t * 6.1 + idx * 1.9)) * (0.5 + 0.5 * Math.sin(t * 2.3 + idx * 0.7));
+      const base = S.past ? 0.26 : 0.6, col = S.past ? '150,156,168' : '236,240,226';
+      c.lineWidth = (near ? 2.0 : 1.3) * Math.max(0.7, k); c.lineCap = 'round';
+      const n = Math.round(S.grow * 40);
+      for (let i = 0; i < n; i += 2) {
+        const p = pts[i], q = pts[i + 1]; if (!p || !q) continue;
+        c.strokeStyle = `rgba(${col},${(base * fl * (near ? 1.5 : 1)).toFixed(3)})`;
+        c.beginPath(); c.moveTo(p[0], p[1]); c.lineTo(q[0], q[1]); c.stroke();
+      }
+      if (S.grow < 1 && pts[n]) {
+        const g = c.createRadialGradient(pts[n][0], pts[n][1], 0, pts[n][0], pts[n][1], 10 * k);
+        g.addColorStop(0, 'rgba(240,244,232,0.9)'); g.addColorStop(1, 'rgba(240,244,232,0)');
+        c.fillStyle = g; c.beginPath(); c.arc(pts[n][0], pts[n][1], 10 * k, 0, Math.PI * 2); c.fill();
+      }
+    });
   }
 
   // ------------------------------------------------------------------ the 2D path: rings drawn, not simulated
@@ -541,12 +626,39 @@ void main(){
     }
     e.node = { deed: true };
   }
+  // The maker's own line rings inside: an extension's double ring through a wall, twice, then the click of a receiver
+  // lifted. Nothing goes out of it.
+  function playInside(e) {
+    const A = audio, ctx = A.ctx, l = byId[DOOR[e.door].line];
+    const at = A.t0 + e.t;
+    const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+    const wall = ctx.createBiquadFilter(); wall.type = 'lowpass'; wall.frequency.value = 520; wall.Q.value = 0.4;
+    const out = ctx.createGain(); out.gain.value = 0.55;
+    wall.connect(out); if (pan) { pan.pan.value = Math.max(-1, Math.min(1, (l.x - 0.5) * 1.7)); out.connect(pan); pan.connect(A.master); } else out.connect(A.master);
+    const gate = ctx.createGain(); gate.gain.value = 0;
+    const o1 = ctx.createOscillator(), o2 = ctx.createOscillator(); o1.frequency.value = INSIDE.hz; o2.frequency.value = INSIDE.hz * 2;
+    const g2 = ctx.createGain(); g2.gain.value = 0.35;
+    o1.connect(gate); o2.connect(g2); g2.connect(gate); gate.connect(wall);
+    const g = gate.gain;
+    for (let r = 0; r < INSIDE.rings; r++) {
+      for (const off of [0, INSIDE.on + INSIDE.gap]) {
+        const a = at + r * INSIDE.period + off; if (a + INSIDE.on < ctx.currentTime) continue;
+        const a0 = Math.max(a, ctx.currentTime);
+        g.setValueAtTime(0, a0); g.linearRampToValueAtTime(1, a0 + 0.01); g.setValueAtTime(1, a + INSIDE.on - 0.01); g.linearRampToValueAtTime(0, a + INSIDE.on);
+      }
+    }
+    const end = at + INSIDE.pick + 0.2;
+    o1.start(Math.max(at, ctx.currentTime)); o2.start(Math.max(at, ctx.currentTime)); o1.stop(end); o2.stop(end);
+    if (at + INSIDE.pick > ctx.currentTime) click(e.t + INSIDE.pick, 0.18);
+    e.node = { inside: true };
+  }
   function scheduleVoices(horizon) {
     if (!audio) return;
     const t = now();
     for (const e of SEQ) {
       if (e.sched || e.t > horizon || e.t + e.dur <= t) continue;
       if (e.form === 'deed') { e.sched = true; try { playDeed(e); } catch (err) { console.warn('RINGBACK: a deed could not be struck.', err); } continue; }
+      if (e.kind === 'inside') { e.sched = true; try { playInside(e); } catch (err) { console.warn('RINGBACK: the maker\'s line could not ring.', err); } continue; }
       if (e.kind === 'act' && !e.buf) continue;
       e.sched = true;
       try { playVoice(e); } catch (err) { console.warn('RINGBACK: a reading could not be played.', err); }
@@ -668,8 +780,20 @@ void main(){
     return O.owed[e.owed] + (e.asked_words ? ', but ' + e.asked_words : '') +
       (e.code === 'acknowledge' && /portal/.test(e.doubt || '') ? ' · a number its portal gives on filing: a receipt' : '');
   }
+  const WHO = { 'not said': 'no text says who settles it', 'the sender': 'the maker\'s own judgement settles it',
+    'a public body': 'a public body settles it', 'a court': 'a court settles it' };
+  const dutyDue = (c) => `${O.duties[c.duty].short}${c.due ? ', due by ' + fmtShort(c.due) + ' if it was set off' : ', no day'}`;
+  function insideLine(e) {
+    const dbt = e.cells.filter((c) => c.code === 'in doubt'), met = e.cells.filter((c) => c.code === 'met').length;
+    return `of the ${e.cells.length} duties that could ask it to pass the word on, ${met ? met + ' set off' : 'none plainly set off'}` +
+      (dbt.length ? `, ${dbt.length} in doubt: ${dbt.map(dutyDue).join('; ')}` : '');
+  }
   function whoLine(e) {
     const d = DOOR[e.door], c = CASE[e.case];
+    if (e.kind === 'inside') {
+      return `${d.short}, ${e.bound === 'around' ? 'around ' : ''}${fmtDate(e.when)} · ${c.name.toLowerCase()} · ${daysText(e)}` +
+        `${e.days_to_harm > 0 ? `, ${e.days_to_harm} before its agents reached the internet` : ''} · word of its own machine reached it, its report says · ${insideLine(e)}`;
+    }
     const when = e.kind === 'act' && !e.dated ? 'undated, by ' + fmtDate(e.when) : (e.bound === 'by' ? 'by ' : '') + fmtDate(e.when);
     if (e.kind === 'silence') return `${d.short}, told ${when} · ${c.name.toLowerCase()} · no act of it is in the record`;
     return `${d.short}, ${when} · ${c.name.toLowerCase()} · ${daysText(e)}${e.public ? ', the first public account' : ''} · ${O.does[e.code]}${e.form === 'deed' ? ' (' + FORCE_WORDS[e.force] + ')' : ''} · ${owedText(e)}`;
@@ -691,7 +815,8 @@ void main(){
       el.hidden = false; el.dataset.n = cur.n; el.dataset.door = cur.door; el.classList.toggle('rimv', !!where(cur));
       el.dataset.form = cur.form; el.dataset.force = cur.force === null || cur.force === undefined ? '' : cur.force;
       // a deed is written, not read: its passage stands as the record has it while its front goes through the ground
-      el.querySelector('.q').innerHTML = cur.kind === 'silence' ? '<i>(an open line, and nothing on it)</i>'
+      el.querySelector('.q').innerHTML = cur.kind === 'inside' ? `<q>${esc(cur.quote)}</q>`
+        : cur.kind === 'silence' ? '<i>(an open line, and nothing on it)</i>'
         : cur.form === 'deed' ? `<span class="dw">${esc(cur.quote)}</span>` : `<q>${esc(cur.quote)}</q>`;
       el.querySelector('.who').textContent = whoLine(cur);
     } else if (t >= hearEnd && !ended) {
@@ -804,11 +929,16 @@ void main(){
     if (!qs || !qs.length) return '';
     return `<q>${qs.map(esc).join(' … ')}</q>${ref ? ` <span class="ref">${esc(ref)}</span>` : ''}`;
   }
+  function cellsHTML(e) {
+    return `<table class="cells">${e.cells.map((c) => `<tr data-duty="${esc(c.duty)}" data-code="${esc(c.code)}"><td class="v ${c.code === 'in doubt' ? 'doubt' : ''}">${esc(c.code)}</td><td>${esc(O.duties[c.duty].short)}${c.code === 'in doubt' ? ` <span class="when">${c.due ? 'had it been set off, its report was due by ' + fmtDate(c.due) : 'no day: without undue delay'}</span><div class="q">It turns on ${c.conditions.map((x) => `${esc(x.what)} <span class="note">(${esc(WHO[x.who] || x.who)})</span>`).join('; and ')}.</div>` : `<div class="q note">${esc(c.reason)}</div>`}</td></tr>`).join('')}</table>`;
+  }
   function heardList(es) {
     return es.map((e) => {
       const d = DOOR[e.door];
+      if (e.kind === 'inside') return `<tr data-n="${e.n}" data-form="inside"><td class="v">${e.bound === 'around' ? 'c. ' : ''}${fmtShort(e.when)}</td><td>word of its own machine reached it <span class="when">${esc(daysText(e))}${e.days_to_harm > 0 ? ` · ${e.days_to_harm} days before its agents reached the internet` : ''} · in its own report</span><div class="q"><q>${esc(e.quote)}</q> <a class="ref" href="${esc(e.src_url)}">source</a></div>${cellsHTML(e)}</td></tr>`;
       if (e.kind === 'silence') return `<tr data-n="${e.n}"><td class="v">${fmtShort(e.when)}</td><td>${esc(d.name)}: told ${e.bound === 'by' ? 'by ' : ''}${fmtDate(e.when)}, in ${esc(CASE[e.case].name.toLowerCase())}. <span class="note">${esc(e.note)}</span><div class="q"><q>${esc(e.quote)}</q> <a class="ref" href="${esc(e.src_url)}">source</a></div></td></tr>`;
-      const chk = e.check === 'added' ? ' · added by the Field\'s check' : e.check === 'corrected' ? ' · corrected by the Field\'s check' : '';
+      const chk = e.check === 'added' ? ' · added by the Field\'s check' : e.check === 'corrected' ? ' · corrected by the Field\'s check'
+        : e.check === 'added, reading 97' ? ' · added by the Field\'s reading 97, on this work\'s case' : '';
       return `<tr data-n="${e.n}" data-owed="${esc(e.owed)}" data-form="${esc(e.form)}"><td class="v ${e.owed === 'choice' ? '' : 'duty'}">${e.dated ? fmtShort(e.when) : 'by ' + fmtShort(e.when)}</td><td>${esc(d.short)} ${esc(O.does[e.code])}${e.form === 'deed' ? ' <span class="note">(done, not said)</span>' : ''} <span class="when">${esc(daysText(e))} · ${esc(owedText(e))}${chk}</span><div class="q">${e.form === 'deed' ? esc(e.quote) : `<q>${esc(e.quote)}</q>`} <a class="ref" href="${esc(e.src_url)}">source</a>${e.via !== 'direct' && e.via !== 'pdf' ? ` <span class="note">(read through ${esc(e.via === 'search excerpt' ? 'a search excerpt' : 'an extraction service')})</span>` : ''}</div></td></tr>`;
     }).join('');
   }
@@ -855,7 +985,26 @@ void main(){
     <p class="small">The tone: ${T.line ? `${esc(T.network)}'s ringing tone, ${T.hz.join(' and ')} Hz, ${T.on} s on and ${T.off} s off, as the ITU lists it` : `425 Hz, ${T.on} s on and ${T.off} s off, the commonest in the ITU's list`}; ${esc(l.seat)}.</p>
     ${overheardHTML(l)}`;
   }
+  const D96 = { 'unknowable': 'cannot be read from the record', 'done, set-off or time unknown': 'done; when it was set off or done is not known',
+    'declared not set off': 'declared not set off', 'not due': 'not due', 'met': 'met' };
+  function makerDoorHTML(l) {
+    if (l.id !== DOOR['E-MAKER'].line) {
+      const ts = THREADS.filter((th) => th.to === l.id);
+      if (!ts.length) return '';
+      return `<h4>Threads from the maker</h4><p class="small" data-k="threads-in" data-n="${ts.length}">${ts.length} thread${ts.length === 1 ? '' : 's'} from the maker's light end${ts.length === 1 ? 's' : ''} here: word of its own machine reached the maker, and whether that word set off its duty to report to this receiver (${esc(O.duties[ts[0].cell.duty].short)}${ts.some((th) => th.cell.duty !== ts[0].cell.duty) ? ', and ' + esc(O.duties[ts.find((th) => th.cell.duty !== ts[0].cell.duty).cell.duty].short) : ''}) turns on terms no text names anyone to settle. ${ts.map((th) => `${th.e.bound === 'around' ? 'Around ' : ''}${fmtDate(th.e.when)}${th.cell.due ? ': due by ' + fmtDate(th.cell.due) + ' if it was' : ': no day'}`).join('. ')}.</p>`;
+    }
+    const md = O.counts.maker_door;
+    const rows = O.duties96.map((x) => `<tr data-case="${esc(x.case)}" data-code="${esc(x.code)}"><td class="v">${esc(x.case === 'wiki' ? 'wiki' : 'escape')}</td><td>${esc(x.duty)} <span class="when">${esc(D96[x.code] || x.code)}</span><div class="q note">${esc(x.reason)}</div></td></tr>`).join('');
+    return `<h4>The maker's own door</h4>
+    <p class="small" data-k="maker-door">Before its agents reached the internet on 8 July, word of its own machine reached the maker ${md.words_before} times, its own report says. The Field held each word against the ${md.duties} duties that could ask the maker to pass it on (reading 97, read twice, the second time blind): of those ${md.cells_before}, none is plainly set off, ${md.notmet_before} plainly are not, and ${md.doubt_before} are in doubt. Every doubt turns on a term no text names anyone to settle (how serious a breach, how material a risk, whether the model is in the text's scope), ${md.doubt_before_sender} also on what only the maker could see, none on a public body or a court. Had the EU Code's duty been set off by the first word, its report was due by ${fmtDate(md.earliest_due)}, ${md.earliest_due_days_before_harm} days before the agents reached the internet. Each word in doubt sends threads across the field to the receivers its duties name.</p>
+    <h4>What the two cases could set off at the maker's door</h4>
+    <p class="small" data-k="duties96">As the Field's check read the record on 27 November. None is shown done in time: ${O.duties96.filter((x) => x.code === 'done, set-off or time unknown').length} were done, but when the duty was set off or the act done no record gives, ${O.duties96.filter((x) => x.code === 'unknowable').length} cannot be read from the record, ${O.duties96.filter((x) => x.code === 'declared not set off').length} the maker declared not set off, and ${O.duties96.filter((x) => x.code === 'not due').length} were not yet due.</p>
+    <table class="acts">${rows}</table>`;
+  }
   function overheardHTML(l) {
+    return overheardLines(l) + makerDoorHTML(l);
+  }
+  function overheardLines(l) {
     const es = SEQ.filter((e) => DOOR[e.door].line === l.id);
     if (!es.length) return `<h4>Overheard on this line</h4><p class="small" data-k="overheard" data-n="0">Nothing: in the two cases of 2026 no act of this receiver is in the record the Field searched.</p>`;
     return `<h4>Overheard on this line, in the two cases of 2026</h4>
@@ -974,6 +1123,7 @@ void main(){
   function resize() {
     const r = canvas.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = Math.max(2, Math.round(r.width * dpr)); canvas.height = Math.max(2, Math.round(r.height * dpr));
+    if (tcan) { tcan.width = canvas.width; tcan.height = canvas.height; }
     setCamera(canvas.width, canvas.height); render();
   }
   let lastLabel = 0;
@@ -987,6 +1137,7 @@ void main(){
       if (G.simT < t) G.simT = t;
       drawGL(t);
     } else draw2D(t);
+    drawThreads(t);
     if (performance.now() - lastLabel > 250) { render(); lastLabel = performance.now(); }
     requestAnimationFrame(frame);
   }
@@ -1021,6 +1172,14 @@ void main(){
     // for the check only: move the visitor's clock forward without waiting (the page runs quiet then)
     advance: (s) => { T0perf -= s; if (audio) audio.t0 -= s; },
     ringingAt: (id, t) => isOn(byId[id], t),
+    // state 4: the maker's door
+    inside: () => SEQ.filter((e) => e.kind === 'inside').map((e) => ({ n: e.n, word: e.word, t: e.t, dur: e.dur, sched: e.sched,
+      played: !!(e.node && e.node.inside), line: DOOR[e.door].line })),
+    insideAt: (n, t) => insideAt(SEQ.find((e) => e.n === n), t === undefined ? now() : t),
+    threads: (t) => THREADS.map((th) => { const S = threadState(th, t === undefined ? now() : t);
+      return { word: th.e.word, duty: th.cell.duty, from: th.from, to: th.to, due: th.cell.due, born: born(th), dueAt: dueAt(th),
+        drawn: !!S, grow: S ? S.grow : 0, past: S ? S.past : false }; }),
+    threadPixels: () => { if (!tctx) return 0; const d = tctx.getImageData(0, 0, tcan.width, tcan.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i] > 8) n++; return n; },
     project: (id) => project(world(byId[id]), canvas.width, canvas.height),
   };
 })();
