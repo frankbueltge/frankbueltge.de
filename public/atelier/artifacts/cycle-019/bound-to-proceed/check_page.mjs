@@ -15,7 +15,8 @@ const CASES = JSON.parse(readFileSync(path.join(here, "data/cases.json"), "utf8"
 const Q2 = {};
 for (const s of CASES.stations) for (const p of s.passages) Q2[p.id] = p;
 const CHECK = JSON.parse(readFileSync(path.join(here, "data/check.json"), "utf8"));
-const ALL = Object.assign({}, LOG, { cases: CASES, check: CHECK });
+const PRESENT = JSON.parse(readFileSync(path.join(here, "data/present.json"), "utf8"));
+const ALL = Object.assign({}, LOG, { cases: CASES, check: CHECK, present: PRESENT });
 // a passage of the check (state 3) is a contiguous excerpt of a passage check.py found word for word
 function sameQuote3(id, pageText) {
   const q = CHECK.passages[id]; if (!q || q.found !== "exact") return false;
@@ -212,6 +213,37 @@ for (const width of [1100, 390]) {
   });
   ok(nq.length === LOG.night.reduce((a, s) => a + s.quotes.length, 0), `${width}px night panel quotes count`);
   for (const [id, t] of nq) ok(sameQuote(id, unwrap(t)), `${width}px night quote ${id}`);
+
+  // the presentation (state 4): the two cases laid over the log, from the Field's check 96
+  const PK = PRESENT.counts;
+  ok(await page.$eval("#duties", (e) => e.hidden), `${width}px duties hidden before the button`);
+  const was = await page.$$eval("#log rect.c-was", (e) => e.map((x) => x.getAttribute("data-was")));
+  const wantWas = LOG.rows.flatMap((r) => LOG.columns.filter((c) => r.cells[c].was).map((c) => r.id + "/" + c));
+  ok(JSON.stringify(was) === JSON.stringify(wantWas) && wantWas.length === PRESENT.moved.length, `${width}px struck cells ${was}`);
+  for (const r of ["b-rule", "b-public"]) if (await page.$eval("#" + r, (e) => e.getAttribute("aria-pressed") === "true")) await page.click("#" + r);
+  await page.click("#b-cases");
+  ok(await page.$eval("#log", (e) => e.classList.contains("cases")) && !(await page.$eval("#duties", (e) => e.hidden)), `${width}px cases laid over`);
+  const sayc = norm(await page.$eval("#say", (e) => e.textContent));
+  ok(sayc.includes(`could set off ${PK.cells} duties`) && sayc.includes(`shows ${PK.met} met`) && sayc.includes(`${PK.sender} bind the one who must pass`) &&
+     sayc.includes(`${PK.receiver} bind the one the word reaches`) && sayc.includes(`(${PK.back_unknowable} of ${PK.back_cases})`), `${width}px cases sentence: ${sayc}`);
+  const spots = await page.evaluate(() => ({ doors: [...document.querySelectorAll("#log rect.door")].map((e) => e.getAttribute("data-door")),
+    rings: [...document.querySelectorAll("#log rect.ring")].map((e) => e.getAttribute("data-ring")) }));
+  const wantDoors = [...new Set(PRESENT.cells.flatMap((c) => c.doors))].sort(), wantRings = [...new Set(PRESENT.cells.flatMap((c) => c.cells.map((x) => x[0] + "/" + x[1])))].sort();
+  ok(JSON.stringify(spots.doors.slice().sort()) === JSON.stringify(wantDoors) && JSON.stringify(spots.rings.slice().sort()) === JSON.stringify(wantRings) &&
+     spots.doors.length + spots.rings.length === PK.spots, `${width}px doors ${spots.doors} rings ${spots.rings}`);
+  const fates = await page.$$eval("#duties td.fate[data-fate]", (els) => els.map((e) => [Number(e.getAttribute("data-n")), e.getAttribute("data-fate")]));
+  ok(fates.length === PK.cells && fates.every(([n, f]) => PRESENT.cells[n].fate === f), `${width}px duty table ${fates.length} cells`);
+  for (const f of ["met", "done", "declared", "notdue", "unknowable"]) ok(fates.filter((x) => x[1] === f).length === PK[f], `${width}px fate ${f}`);
+  const fq = await page.$$eval("#duties blockquote[data-fq]", (els) => els.map((e) => [Number(e.getAttribute("data-fq")), e.textContent]));
+  ok(fq.length === PRESENT.cells.reduce((a, c) => a + c.passages.length, 0) && fq.every(([n, t]) => PRESENT.cells[n].passages.some((q) => norm("“" + q.quote + "”") === norm(t))), `${width}px duty passages ${fq.length}`);
+  const tw = await page.$eval("#duties-table", (e) => [e.scrollWidth, e.clientWidth]);
+  ok(width > 640 || tw[0] <= tw[1] + 1, `${width}px duty table fits the screen (${tw})`);
+  // a lit door opens its duties
+  const doorPanel = await page.evaluate(() => { const d = document.querySelector("#log rect.dhit"); d.dispatchEvent(new MouseEvent("click", { bubbles: true })); return document.getElementById("det").textContent; });
+  ok(/THE DOOR/.test(doorPanel) && /In the two cases/.test(doorPanel), `${width}px door panel`);
+  const items4 = await page.$$eval("#presentlist li[data-present]", (e) => e.length);
+  ok(items4 === 4, `${width}px presented list ${items4}`);
+  await page.click("#b-cases");
 
   // the house's log
   const strip = await page.evaluate(() => {

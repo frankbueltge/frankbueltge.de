@@ -1,0 +1,9468 @@
+window.LOG = {
+ "what": "Bound to Proceed, state 1 (2026-11-25): who must answer on receipt, ruled as one log for the sea, the AI instruments of the Field's study 94, and this house.",
+ "columns": [
+  "say",
+  "look",
+  "act",
+  "pass",
+  "public",
+  "when",
+  "why",
+  "silent",
+  "who"
+ ],
+ "rows": [
+  {
+   "id": "SEA-MASTER",
+   "band": "sea",
+   "name": "The master of a ship placed to assist",
+   "trigger": "information from any source that persons are in distress",
+   "source_label": "SOLAS ch. V, reg. 33.1 (2014 text); UNCLOS art. 98",
+   "cells": {
+    "say": {
+     "v": "duty",
+     "label": "must, if possible",
+     "quotes": [
+      {
+       "id": "solas-bound",
+       "text": "The master of a ship at sea which is in a position to be able to provide assistance, on receiving information from any source that persons are in distress at sea, is bound to proceed with all speed to their assistance, if possible informing them or the search and rescue service that the ship is doing so.",
+       "source": "solas"
+      }
+     ],
+     "ref": "SOLAS V/33.1",
+     "note": "Informing them or the search and rescue service that the ship is proceeding."
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "duty",
+     "label": "must go",
+     "quotes": [
+      {
+       "id": "solas-bound",
+       "text": "The master of a ship at sea which is in a position to be able to provide assistance, on receiving information from any source that persons are in distress at sea, is bound to proceed with all speed to their assistance, if possible informing them or the search and rescue service that the ship is doing so.",
+       "source": "solas"
+      },
+      {
+       "id": "unclos-98",
+       "text": "to proceed with all possible speed to the rescue of persons in distress, if informed of their need of assistance, in so far as such action may reasonably be expected of him",
+       "source": "unclos"
+      }
+     ],
+     "ref": "SOLAS V/33.1; UNCLOS 98(1)(b)",
+     "note": "Bound to proceed with all speed; UNCLOS: in so far as it may reasonably be expected and without serious danger to the ship."
+    },
+    "pass": {
+     "v": "recommended",
+     "label": "should, if not going",
+     "quotes": [
+      {
+       "id": "solas-log",
+       "text": "If the ship receiving the distress alert is unable or, in the special circumstances of the case, considers it unreasonable or unnecessary to proceed to their assistance, the master must enter in the logbook the reason for failing to proceed to the assistance of the persons in distress, taking into account the recommendation of the Organization to inform the appropriate search and rescue service accordingly.",
+       "source": "solas"
+      }
+     ],
+     "ref": "SOLAS V/33.1",
+     "note": "Informing the search and rescue service, as the Organization recommends, when the ship does not proceed."
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "duty",
+     "label": "all speed",
+     "quotes": [
+      {
+       "id": "solas-bound",
+       "text": "The master of a ship at sea which is in a position to be able to provide assistance, on receiving information from any source that persons are in distress at sea, is bound to proceed with all speed to their assistance, if possible informing them or the search and rescue service that the ship is doing so.",
+       "source": "solas"
+      }
+     ],
+     "ref": "SOLAS V/33.1",
+     "note": "No hours: the clock is the speed of the ship, from the moment of receipt."
+    },
+    "why": {
+     "v": "duty",
+     "label": "must write why",
+     "quotes": [
+      {
+       "id": "solas-log",
+       "text": "If the ship receiving the distress alert is unable or, in the special circumstances of the case, considers it unreasonable or unnecessary to proceed to their assistance, the master must enter in the logbook the reason for failing to proceed to the assistance of the persons in distress, taking into account the recommendation of the Organization to inform the appropriate search and rescue service accordingly.",
+       "source": "solas"
+      }
+     ],
+     "ref": "SOLAS V/33.1",
+     "note": "The reason for failing to proceed, in the ship's own logbook."
+    },
+    "silent": {
+     "v": "duty",
+     "label": "flag State law",
+     "quotes": [
+      {
+       "id": "unclos-98-req",
+       "text": "Every State shall require the master of a ship flying its flag",
+       "source": "unclos"
+      }
+     ],
+     "ref": "UNCLOS 98(1)",
+     "note": "Every State must require it of its masters; the penalty is national law, not read here."
+    },
+    "who": {
+     "v": "duty",
+     "label": "the master",
+     "quotes": [
+      {
+       "id": "circ-master",
+       "text": "It should be noted that on ships, distress alerts, distress alert acknowledgements and distress alert relays can only be transmitted with the permission of the master of the ship.",
+       "source": "circ"
+      },
+      {
+       "id": "m541-manual",
+       "text": "Acknowledgements of distress alerts should be initiated manually.",
+       "source": "m541"
+      }
+     ],
+     "ref": "MSC.1/Circ.1657/Rev.1 §4; ITU-R M.541-11 A1-3.3",
+     "note": "A person: acknowledgements only with the master's permission, initiated by hand."
+    }
+   }
+  },
+  {
+   "id": "SEA-SHIP",
+   "band": "sea",
+   "name": "A ship that hears a distress alert by radio",
+   "trigger": "a digital selective call (DSC) distress alert from another ship",
+   "source_label": "IMO MSC.1/Circ.1657/Rev.1 (2026); ITU-R M.541-11 (2023)",
+   "cells": {
+    "say": {
+     "v": "recommended",
+     "label": "should, by voice",
+     "quotes": [
+      {
+       "id": "m541-ship",
+       "text": "The acknowledgement of a DSC distress alert from another ship should be made by radiotelephony after a short interval so that a coast station may acknowledge receipt in the first instance",
+       "source": "m541"
+      }
+     ],
+     "ref": "ITU-R M.541-11 A1-3.3.4",
+     "note": "If able to assist: by radiotelephony to the ship in distress, after a short interval so a coast station can answer first."
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "recommended",
+     "label": "should, if able",
+     "quotes": [],
+     "ref": "MSC.1/Circ.1657/Rev.1, flow diagram 1",
+     "note": "The flow diagram asks: is own vessel able to assist?"
+    },
+    "pass": {
+     "v": "recommended",
+     "label": "should tell the coast",
+     "quotes": [],
+     "ref": "MSC.1/Circ.1657/Rev.1, flow diagram 1, note 1",
+     "note": "Inform a coast station or rescue coordination centre."
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "recommended",
+     "label": "listen 5 min",
+     "quotes": [],
+     "ref": "MSC.1/Circ.1657/Rev.1, flow diagram 1",
+     "note": "Listen on the voice channel for five minutes before answering."
+    },
+    "why": {
+     "v": "recommended",
+     "label": "should log",
+     "quotes": [
+      {
+       "id": "circ-log",
+       "text": "Details should be recorded in the appropriate logbook.",
+       "source": "circ"
+      }
+     ],
+     "ref": "MSC.1/Circ.1657/Rev.1, flow diagram 2, note 1",
+     "note": "Every path of both flow diagrams ends in an entry in the log."
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "duty",
+     "label": "the master",
+     "quotes": [
+      {
+       "id": "circ-master",
+       "text": "It should be noted that on ships, distress alerts, distress alert acknowledgements and distress alert relays can only be transmitted with the permission of the master of the ship.",
+       "source": "circ"
+      }
+     ],
+     "ref": "MSC.1/Circ.1657/Rev.1 §4",
+     "note": "A person: only with the master's permission."
+    }
+   }
+  },
+  {
+   "id": "SEA-COAST",
+   "band": "sea",
+   "name": "A coast station that receives the alert",
+   "trigger": "a DSC distress alert on MF or HF",
+   "source_label": "ITU-R M.541-11 (2023), A1-3.3",
+   "cells": {
+    "say": {
+     "v": "recommended",
+     "label": "should answer",
+     "quotes": [
+      {
+       "id": "m541-cs",
+       "text": "should be initiated with a minimum delay of 1 min after receipt of a distress alert, and normally within a maximum delay of 2⅓ min.",
+       "source": "m541"
+      }
+     ],
+     "ref": "ITU-R M.541-11 A1-3.3.2",
+     "note": "Alerts are normally acknowledged by DSC only by coast stations."
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "recommended",
+     "label": "1 to 2⅓ min",
+     "quotes": [
+      {
+       "id": "m541-cs",
+       "text": "should be initiated with a minimum delay of 1 min after receipt of a distress alert, and normally within a maximum delay of 2⅓ min.",
+       "source": "m541"
+      }
+     ],
+     "ref": "ITU-R M.541-11 A1-3.3.2",
+     "note": "A minimum of 1 minute after receipt and normally a maximum of 2⅓; on VHF as soon as practicable."
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "recommended",
+     "label": "by hand",
+     "quotes": [
+      {
+       "id": "m541-manual",
+       "text": "Acknowledgements of distress alerts should be initiated manually.",
+       "source": "m541"
+      }
+     ],
+     "ref": "ITU-R M.541-11 A1-3.3",
+     "note": "Acknowledgements should be initiated manually."
+    }
+   }
+  },
+  {
+   "id": "SEA-FLAG",
+   "band": "sea",
+   "name": "The flag State that receives a report",
+   "trigger": "a report that jurisdiction and control over its ship were not exercised",
+   "source_label": "UNCLOS art. 94(6)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "duty",
+     "label": "must investigate",
+     "quotes": [
+      {
+       "id": "unclos-94-6",
+       "text": "Upon receiving such a report, the flag State shall investigate the matter and, if appropriate, take any action necessary to remedy the situation.",
+       "source": "unclos"
+      }
+     ],
+     "ref": "UNCLOS 94(6)",
+     "note": null
+    },
+    "act": {
+     "v": "duty",
+     "label": "must remedy, if appropriate",
+     "quotes": [
+      {
+       "id": "unclos-94-6",
+       "text": "Upon receiving such a report, the flag State shall investigate the matter and, if appropriate, take any action necessary to remedy the situation.",
+       "source": "unclos"
+      }
+     ],
+     "ref": "UNCLOS 94(6)",
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "EU4",
+   "band": "ai",
+   "name": "AI Office (European Commission)",
+   "kind": "public body",
+   "instrument": "EU AI Act",
+   "binding": "law",
+   "what": "Serious incidents",
+   "sender": "the provider of a model with systemic risk",
+   "sender_deadline_h": "prompt",
+   "sender_clock": "none",
+   "sender_failure": "penalty",
+   "sender_failure_ref": "Art. 101(1)(a)",
+   "sender_failure_quotes": [
+    "The Commission may impose on providers of general-purpose AI models fines not exceeding 3 % of their annual total worldwide turnover in the preceding financial year or EUR 15 000 000, whichever is higher."
+   ],
+   "source_label": "EU AI Act, Art. 55(1)(c); Art. 3(49); Art. 55(3) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "power",
+     "label": "may",
+     "quotes": [
+      {
+       "id": null,
+       "text": "The AI Office, after consulting the Board, may conduct evaluations of the general-purpose AI model concerned",
+       "source": "field94"
+      }
+     ],
+     "ref": "Art. 92(1)",
+     "note": "Also Art. 91(1): the Commission may request documentation and information. Neither is tied to an incident report.",
+     "doubt": null
+    },
+    "act": {
+     "v": "power",
+     "label": "may",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Where necessary and appropriate, the Commission may request providers to:",
+       "source": "field94"
+      },
+      {
+       "id": null,
+       "text": "restrict the making available on the market, withdraw or recall the model.",
+       "source": "field94"
+      }
+     ],
+     "ref": "Art. 93(1)(c)",
+     "note": "A request that binds: failing to comply is fined under Art. 101(1)(c).",
+     "doubt": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "COP3",
+   "band": "ai",
+   "name": "AI Office",
+   "kind": "public body",
+   "instrument": "EU Code of Practice",
+   "binding": "voluntary",
+   "what": "Serious incidents, with timelines",
+   "sender": "a signatory",
+   "sender_deadline_h": 48,
+   "sender_clock": "awareness",
+   "sender_failure": "none",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "EU Code of Practice, Measures 9.2, 9.3, 9.4 (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "COP5",
+   "band": "ai",
+   "name": "the signatory (or the AI Office)",
+   "kind": "own record",
+   "instrument": "EU Code of Practice",
+   "binding": "voluntary",
+   "what": "Reports about serious incidents from users and other third parties",
+   "sender": "downstream modifiers, providers, users and other third parties",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "n/a",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "EU Code of Practice, Measure 9.1(2) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "duty",
+     "label": "must",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Signatories will investigate the causes and effects of serious incidents, including the information within the preceding list, with a view to informing systemic risk assessment.",
+       "source": "field94"
+      }
+     ],
+     "ref": "Measure 9.2",
+     "note": null,
+     "doubt": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "duty",
+     "label": "must",
+     "quotes": [
+      {
+       "id": null,
+       "text": "not later than two days after the Signatories become aware of the involvement of their model in the incident",
+       "source": "field94"
+      },
+      {
+       "id": null,
+       "text": "not later than 15 days after the Signatories become aware of the involvement of their model in the incident",
+       "source": "field94"
+      }
+     ],
+     "ref": "Measure 9.3",
+     "note": "Two days for critical infrastructure, five for a serious cybersecurity breach, ten for a death, fifteen for other serious harm; an initial report to the AI Office, counted from the signatory's awareness.",
+     "doubt": "The duty is to report the serious incident, not to forward the third party's report as such."
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "duty",
+     "label": "48 h",
+     "quotes": [
+      {
+       "id": null,
+       "text": "not later than two days after the Signatories become aware of the involvement of their model in the incident",
+       "source": "field94"
+      },
+      {
+       "id": null,
+       "text": "not later than 15 days after the Signatories become aware of the involvement of their model in the incident",
+       "source": "field94"
+      }
+     ],
+     "ref": "Measure 9.3",
+     "note": "The deadline belongs to 'pass on'.",
+     "doubt": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "CA4",
+   "band": "ai",
+   "name": "Office of Emergency Services",
+   "kind": "public body",
+   "instrument": "California SB 53",
+   "binding": "law",
+   "what": "Critical safety incidents",
+   "sender": "a frontier developer",
+   "sender_deadline_h": 360,
+   "sender_clock": "awareness",
+   "sender_failure": "penalty",
+   "sender_failure_ref": "B&P § 22757.15",
+   "sender_failure_quotes": [
+    "fails to report an incident as required by Section 22757.13, or fails to comply with its own frontier AI framework shall be subject to a civil penalty",
+    "does not exceed one million dollars ($1,000,000) per violation",
+    "A civil penalty described in this section shall be recovered in a civil action brought only by the Attorney General."
+   ],
+   "source_label": "California SB 53, B&P § 22757.13(c)(1); § 22757.11(d); § 22757.13(g) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "duty",
+     "label": "must",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Office of Emergency Services shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public.",
+       "source": "field94"
+      }
+     ],
+     "ref": "B&P § 22757.13(d)",
+     "note": null,
+     "doubt": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "power",
+     "label": "may",
+     "quotes": [
+      {
+       "id": null,
+       "text": "The Attorney General or the Office of Emergency Services may transmit reports of critical safety incidents and reports from covered employees",
+       "source": "field94"
+      }
+     ],
+     "ref": "B&P § 22757.13(e)(1)",
+     "note": "To the Legislature, the Governor, the federal government or appropriate state agencies, at the receiver's discretion.",
+     "doubt": null
+    },
+    "public": {
+     "v": "duty",
+     "label": "yearly total only",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Beginning January 1, 2027, and annually thereafter, the Office of Emergency Services shall produce a report with anonymized and aggregated information about critical safety incidents that have been reviewed by the Office of Emergency Services since the preceding report.",
+       "source": "field94"
+      }
+     ],
+     "ref": "B&P § 22757.13(g)(1)",
+     "note": null,
+     "doubt": "The text has the report transmitted to the Legislature and the Governor (§ 22757.13(g)(3)); it does not say the report is published."
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "CA5",
+   "band": "ai",
+   "name": "an appropriate authority (law enforcement or public safety)",
+   "kind": "public body",
+   "instrument": "California SB 53",
+   "binding": "law",
+   "what": "Imminent danger, to an authority within a day",
+   "sender": "a frontier developer",
+   "sender_deadline_h": 24,
+   "sender_clock": "awareness",
+   "sender_failure": "penalty",
+   "sender_failure_ref": "B&P § 22757.15",
+   "sender_failure_quotes": [
+    "fails to report an incident as required by Section 22757.13, or fails to comply with its own frontier AI framework shall be subject to a civil penalty",
+    "does not exceed one million dollars ($1,000,000) per violation",
+    "A civil penalty described in this section shall be recovered in a civil action brought only by the Attorney General."
+   ],
+   "source_label": "California SB 53, B&P § 22757.13(c)(2) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "CA6",
+   "band": "ai",
+   "name": "Office of Emergency Services",
+   "kind": "public body",
+   "instrument": "California SB 53",
+   "binding": "law",
+   "what": "Anyone may report a critical safety incident",
+   "sender": "any member of the public",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "n/a",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "California SB 53, B&P § 22757.13(a), (d) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "power",
+     "label": "may",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Office of Emergency Services shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public.",
+       "source": "field94"
+      }
+     ],
+     "ref": "B&P § 22757.13(d)",
+     "note": null,
+     "doubt": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "power",
+     "label": "may",
+     "quotes": [
+      {
+       "id": null,
+       "text": "The Attorney General or the Office of Emergency Services may transmit reports of critical safety incidents and reports from covered employees",
+       "source": "field94"
+      }
+     ],
+     "ref": "B&P § 22757.13(e)(1)",
+     "note": "To the Legislature, the Governor, the federal government or appropriate state agencies, at the receiver's discretion.",
+     "doubt": "(e)(1) names 'reports of critical safety incidents', read to include reports by the public."
+    },
+    "public": {
+     "v": "duty",
+     "label": "yearly total only",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Beginning January 1, 2027, and annually thereafter, the Office of Emergency Services shall produce a report with anonymized and aggregated information about critical safety incidents that have been reviewed by the Office of Emergency Services since the preceding report.",
+       "source": "field94"
+      }
+     ],
+     "ref": "B&P § 22757.13(g)(1)",
+     "note": null,
+     "doubt": "Only incidents the office reviewed, and it need not review a public report; transmitted to the Legislature and the Governor, not said to be published."
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "CA7",
+   "band": "ai",
+   "name": "Attorney General (or a federal authority)",
+   "kind": "public body",
+   "instrument": "California SB 53",
+   "binding": "law",
+   "what": "Employees may disclose to the Attorney General",
+   "sender": "a covered employee",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "n/a",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "California SB 53, Labor Code § 1107.1(a); B&P § 22757.14(d) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "power",
+     "label": "may",
+     "quotes": [
+      {
+       "id": null,
+       "text": "The Attorney General or the Office of Emergency Services may transmit reports of critical safety incidents and reports from covered employees",
+       "source": "field94"
+      }
+     ],
+     "ref": "B&P § 22757.13(e)(1)",
+     "note": "To the Legislature, the Governor, the federal government or appropriate state agencies, at the receiver's discretion.",
+     "doubt": null
+    },
+    "public": {
+     "v": "duty",
+     "label": "yearly total only",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Beginning January 1, 2027, and annually thereafter, the Attorney General shall produce a report with anonymized and aggregated information about reports from covered employees",
+       "source": "field94"
+      }
+     ],
+     "ref": "B&P § 22757.14(d)(1)",
+     "note": null,
+     "doubt": "Only reports 'that have been reviewed by the Attorney General', and no text requires a review; transmitted to the Legislature and the Governor, not said to be published."
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "CA8",
+   "band": "ai",
+   "name": "the large frontier developer's internal process",
+   "kind": "own record",
+   "instrument": "California SB 53",
+   "binding": "law",
+   "what": "An anonymous internal channel, shared with officers quarterly",
+   "sender": "a covered employee, anonymously",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "n/a",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "California SB 53, Labor Code § 1107.1(e) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "duty",
+     "label": "must",
+     "quotes": [
+      {
+       "id": null,
+       "text": "including a monthly update to the person who made the disclosure regarding the status of the large frontier developer’s investigation of the disclosure and the actions taken by the large frontier developer in response to the disclosure",
+       "source": "field94"
+      }
+     ],
+     "ref": "Labor Code § 1107.1(e)(1)",
+     "note": "A monthly update to the discloser.",
+     "doubt": null
+    },
+    "look": {
+     "v": "duty",
+     "label": "must",
+     "quotes": [
+      {
+       "id": null,
+       "text": "including a monthly update to the person who made the disclosure regarding the status of the large frontier developer’s investigation of the disclosure and the actions taken by the large frontier developer in response to the disclosure",
+       "source": "field94"
+      }
+     ],
+     "ref": "Labor Code § 1107.1(e)(1)",
+     "note": null,
+     "doubt": "The text presupposes an investigation by requiring updates on its status; it does not order one in so many words."
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "duty",
+     "label": "monthly",
+     "quotes": [
+      {
+       "id": null,
+       "text": "including a monthly update to the person who made the disclosure regarding the status of the large frontier developer’s investigation of the disclosure and the actions taken by the large frontier developer in response to the disclosure",
+       "source": "field94"
+      }
+     ],
+     "ref": "Labor Code § 1107.1(e)(1)",
+     "note": "The deadline belongs to 'acknowledge'.",
+     "doubt": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "duty",
+     "label": "named",
+     "quotes": [
+      {
+       "id": null,
+       "text": "The court is authorized to award reasonable attorney’s fees to a plaintiff who brings a successful action for a violation of this section.",
+       "source": "field94"
+      }
+     ],
+     "ref": "Labor Code § 1107.1(f)",
+     "note": null,
+     "doubt": "Read as a remedy for a developer that keeps no such process or sends no update; the section's other remedies concern retaliation."
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "CN1",
+   "band": "ai",
+   "name": "developers, service providers, technical institutions",
+   "kind": "other party",
+   "instrument": "China Framework 2.0",
+   "binding": "voluntary",
+   "what": "Sharing of vulnerabilities, risks, threats and safety incidents",
+   "sender": "developers, service providers, technical institutions",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "none",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "China Framework 2.0, § 5.9 (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "recommended",
+     "label": "should",
+     "quotes": [
+      {
+       "id": null,
+       "text": "We should track and analyze AI technologies, products, service safety vulnerabilities, defects, risks, threats, and safety incidents.",
+       "source": "field94"
+      }
+     ],
+     "ref": "§ 5.9",
+     "note": null,
+     "doubt": "'We' is the framework's own voice, not the receiver's commitment."
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "recommended",
+     "label": "should",
+     "quotes": [
+      {
+       "id": null,
+       "text": "We should advance international exchange and cooperation on sharing AI risks and threat information",
+       "source": "field94"
+      }
+     ],
+     "ref": "§ 5.9",
+     "note": null,
+     "doubt": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "CN2",
+   "band": "ai",
+   "name": "a mechanism for public complaints, unnamed",
+   "kind": "other party",
+   "instrument": "China Framework 2.0",
+   "binding": "voluntary",
+   "what": "Public complaints and reports on AI risks",
+   "sender": "the public",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "n/a",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "China Framework 2.0, § 5.13 (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "recommended",
+     "label": "should",
+     "quotes": [
+      {
+       "id": null,
+       "text": "A mechanism for handling public complaints and reports on AI risks and hazards should be established",
+       "source": "field94"
+      }
+     ],
+     "ref": "§ 5.13",
+     "note": null,
+     "doubt": "'Handling' is read as examining the complaint; the text says no more."
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "AS1",
+   "band": "ai",
+   "name": "regulators, users, customers or value-chain participants",
+   "kind": "other party",
+   "instrument": "ASEAN Guide",
+   "binding": "voluntary",
+   "what": "Incident reporting outside the organisation",
+   "sender": "an organisation",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "none",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "ASEAN Guide, § 3.4 (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "G7-1",
+   "band": "ai",
+   "name": "the organisation itself",
+   "kind": "own record",
+   "instrument": "G7 Hiroshima Code",
+   "binding": "voluntary",
+   "what": "Reports of issues and vulnerabilities by users and third parties",
+   "sender": "users and third parties",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "n/a",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "G7 Hiroshima Code, Principle 2 (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "recommended",
+     "label": "should",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Organizations should use, as and when appropriate commensurate to the level of risk, AI systems as intended and monitor for vulnerabilities, incidents, emerging risks and misuse after deployment",
+       "source": "field94"
+      }
+     ],
+     "ref": "Principle 2",
+     "note": null,
+     "doubt": null
+    },
+    "act": {
+     "v": "recommended",
+     "label": "should",
+     "quotes": [
+      {
+       "id": null,
+       "text": "and take appropriate action to address these. Organizations are encouraged to consider",
+       "source": "field94"
+      }
+     ],
+     "ref": "Principle 2",
+     "note": "On its own system: 'mitigate the identified risks and vulnerabilities' is also only encouraged.",
+     "doubt": null
+    },
+    "pass": {
+     "v": "recommended",
+     "label": "should",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Organizations should also collaborate and share the aforementioned information with relevant public authorities, as appropriate.",
+       "source": "field94"
+      }
+     ],
+     "ref": "Principle 4",
+     "note": null,
+     "doubt": "Principle 4 is the sharing signal G7-3 itself, read here for what the receiver of a user's report should do with it."
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "G7-3",
+   "band": "ai",
+   "name": "other organisations, the public, public authorities",
+   "kind": "public",
+   "instrument": "G7 Hiroshima Code",
+   "binding": "voluntary",
+   "what": "Sharing of risks, dangerous capabilities and attempts to circumvent safeguards",
+   "sender": "an organisation",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "none",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "G7 Hiroshima Code, Principle 4 (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "PC3",
+   "band": "ai",
+   "name": "governments and other companies",
+   "kind": "public body",
+   "instrument": "Paris Call",
+   "binding": "voluntary",
+   "what": "Timely sharing of AI control incidents and precursor signals",
+   "sender": "developers, governments and companies",
+   "sender_deadline_h": "prompt",
+   "sender_clock": "none",
+   "sender_failure": "none",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "Paris Call, Third commitment (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null,
+     "was": {
+      "v": "duty",
+      "label": "must",
+      "quotes": [
+       {
+        "id": null,
+        "text": "Thirdly, policy makers, researchers and developers are committed to information sharing, reporting and early warning systems.",
+        "source": "field94"
+       }
+      ],
+      "corrected": "2026-11-28",
+      "why": "The third commitment commits its signatories to 'information sharing, reporting and early warning systems' and only 'recognize[s] the value' of sharing timely information; the first coding's own doubt said so. A commitment to build systems is no duty to pass on a given word.",
+      "by": "the Field's check 96, blind recoding, field-research 828e88a"
+     }
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "PC4",
+   "band": "ai",
+   "name": "policy makers' confidential channels",
+   "kind": "public body",
+   "instrument": "Paris Call",
+   "binding": "voluntary",
+   "what": "Confidential channels for whistleblowers",
+   "sender": "whistleblowers",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "n/a",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "Paris Call, Third commitment, policy makers (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "NY4",
+   "band": "ai",
+   "name": "office in the Department of Financial Services",
+   "kind": "public body",
+   "instrument": "New York RAISE Act",
+   "binding": "law",
+   "what": "Critical safety incidents within 72 hours",
+   "sender": "a frontier developer",
+   "sender_deadline_h": 72,
+   "sender_clock": "awareness",
+   "sender_failure": "penalty",
+   "sender_failure_ref": "GBL § 1427(1)",
+   "sender_failure_quotes": [
+    "The attorney general may bring a civil action to recover a civil penalty in an amount not to exceed one million dollars for a first violation and in an amount not to exceed three million dollars per subsequent violation",
+    "fails to report an incident as required by section fourteen hundred twenty-two of this article"
+   ],
+   "source_label": "New York RAISE Act, GBL § 1422(3)(a); § 1420(4); § 1422(7) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "duty",
+     "label": "must",
+     "quotes": [
+      {
+       "id": null,
+       "text": "The office shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public.",
+       "source": "field94"
+      }
+     ],
+     "ref": "GBL § 1422(4)",
+     "note": null,
+     "doubt": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "power",
+     "label": "may",
+     "quotes": [
+      {
+       "id": null,
+       "text": "The office may transmit reports of critical safety incidents or summaries of any assessments of catastrophic risk from internal use of frontier models to other governmental entities at their discretion",
+       "source": "field94"
+      },
+      {
+       "id": null,
+       "text": "The office shall consider transmitting such reports or summaries to the office of the attorney general, as appropriate.",
+       "source": "field94"
+      }
+     ],
+     "ref": "GBL § 1422(5)(a)",
+     "note": "A duty to consider transmitting to the attorney general, not a duty to transmit.",
+     "doubt": null
+    },
+    "public": {
+     "v": "duty",
+     "label": "yearly total only",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Beginning January first, two thousand twenty-eight, and annually thereafter, the office shall produce a report, that includes the following: (i) anonymized and aggregated information about critical safety incidents that have been reviewed by the office",
+       "source": "field94"
+      }
+     ],
+     "ref": "GBL § 1422(7)",
+     "note": null,
+     "doubt": "The text has the report transmitted to the governor and named legislators (§ 1422(7)(c)); it does not say the report is published."
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "NY5",
+   "band": "ai",
+   "name": "an appropriate authority (law enforcement or public safety)",
+   "kind": "public body",
+   "instrument": "New York RAISE Act",
+   "binding": "law",
+   "what": "Imminent danger, to an authority within a day",
+   "sender": "a frontier developer",
+   "sender_deadline_h": 24,
+   "sender_clock": "awareness",
+   "sender_failure": "penalty",
+   "sender_failure_ref": "GBL § 1427(1)",
+   "sender_failure_quotes": [
+    "The attorney general may bring a civil action to recover a civil penalty in an amount not to exceed one million dollars for a first violation and in an amount not to exceed three million dollars per subsequent violation",
+    "fails to report an incident as required by section fourteen hundred twenty-two of this article"
+   ],
+   "source_label": "New York RAISE Act, GBL § 1422(3)(b) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "NY6",
+   "band": "ai",
+   "name": "office in the Department of Financial Services",
+   "kind": "public body",
+   "instrument": "New York RAISE Act",
+   "binding": "law",
+   "what": "Anyone may report a critical safety incident",
+   "sender": "any member of the public",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "n/a",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "New York RAISE Act, GBL § 1422(1), (4) (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "power",
+     "label": "may",
+     "quotes": [
+      {
+       "id": null,
+       "text": "The office shall review critical safety incident reports submitted by frontier developers and may review reports submitted by members of the public.",
+       "source": "field94"
+      }
+     ],
+     "ref": "GBL § 1422(4)",
+     "note": null,
+     "doubt": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "power",
+     "label": "may",
+     "quotes": [
+      {
+       "id": null,
+       "text": "The office may transmit reports of critical safety incidents or summaries of any assessments of catastrophic risk from internal use of frontier models to other governmental entities at their discretion",
+       "source": "field94"
+      },
+      {
+       "id": null,
+       "text": "The office shall consider transmitting such reports or summaries to the office of the attorney general, as appropriate.",
+       "source": "field94"
+      }
+     ],
+     "ref": "GBL § 1422(5)(a)",
+     "note": "A duty to consider transmitting to the attorney general, not a duty to transmit.",
+     "doubt": "§ 1422(5)(a) names 'reports of critical safety incidents', read to include reports by the public."
+    },
+    "public": {
+     "v": "duty",
+     "label": "yearly total only",
+     "quotes": [
+      {
+       "id": null,
+       "text": "Beginning January first, two thousand twenty-eight, and annually thereafter, the office shall produce a report, that includes the following: (i) anonymized and aggregated information about critical safety incidents that have been reviewed by the office",
+       "source": "field94"
+      }
+     ],
+     "ref": "GBL § 1422(7)",
+     "note": null,
+     "doubt": "Only incidents the office reviewed, and it need not review a public report; transmitted to the governor and named legislators, not said to be published."
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "GPA2",
+   "band": "ai",
+   "name": "the organisation deploying the agent",
+   "kind": "own record",
+   "instrument": "Privacy Assembly",
+   "binding": "voluntary",
+   "what": "Monitoring and reporting of unexpected behaviour after deployment",
+   "sender": "the organisation's own monitoring",
+   "sender_deadline_h": null,
+   "sender_clock": "none",
+   "sender_failure": "none",
+   "sender_failure_ref": null,
+   "sender_failure_quotes": [],
+   "source_label": "Privacy Assembly, Operative measures, testing and monitoring (Field study 94)",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "recommended",
+     "label": "should",
+     "quotes": [
+      {
+       "id": null,
+       "text": "establishing procedures to detect, investigate and respond to incidents",
+       "source": "field94"
+      }
+     ],
+     "ref": "Operative measures, governance",
+     "note": null,
+     "doubt": "Given as an example of a measure organisations should implement."
+    },
+    "act": {
+     "v": "recommended",
+     "label": "should",
+     "quotes": [
+      {
+       "id": null,
+       "text": "enabling users or operators to pause or stop execution",
+       "source": "field94"
+      }
+     ],
+     "ref": "Operative measures, limits",
+     "note": null,
+     "doubt": "Given as an example of a measure organisations should implement."
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "who": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    }
+   }
+  },
+  {
+   "id": "HOUSE-PRACTICE",
+   "band": "house",
+   "name": "A practice that is offered a handoff",
+   "trigger": "an offer or a correction in a sibling's bulletin, listed open in the relay",
+   "source_label": "PROTOCOL.md 6.2 (the same in all three constitutions)",
+   "cells": {
+    "say": {
+     "v": "duty",
+     "label": "must, in one line",
+     "quotes": [
+      {
+       "id": "p62-2",
+       "text": "A session that takes none up says why in one line, and the reason is a fact, not a preference.",
+       "source": "protocol"
+      }
+     ],
+     "ref": "6.2, 6.3",
+     "note": "Taken up, Declined, or Taken up: none with the reason, in the bulletin."
+    },
+    "look": {
+     "v": "duty",
+     "label": "a correction: must check",
+     "quotes": [
+      {
+       "id": "p62-1",
+       "text": "A correction of this practice's own claim is never declined.",
+       "source": "protocol"
+      }
+     ],
+     "ref": "6.2",
+     "note": null
+    },
+    "act": {
+     "v": "duty",
+     "label": "must take one up",
+     "quotes": [
+      {
+       "id": "p62-0",
+       "text": "Every session takes up at least one open handoff addressed to this practice, and takes it up with weight.",
+       "source": "protocol"
+      }
+     ],
+     "ref": "6.2",
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "duty",
+     "label": "in a public file",
+     "quotes": [],
+     "ref": "4.2",
+     "note": "The bulletin is overwritten every session in a public repository; the relay reads it."
+    },
+    "when": {
+     "v": "duty",
+     "label": "every session",
+     "quotes": [
+      {
+       "id": "p62-0",
+       "text": "Every session takes up at least one open handoff addressed to this practice, and takes it up with weight.",
+       "source": "protocol"
+      }
+     ],
+     "ref": "6.2",
+     "note": "In practice the next session, which is daily."
+    },
+    "why": {
+     "v": "duty",
+     "label": "must write why",
+     "quotes": [
+      {
+       "id": "p62-3",
+       "text": "is declined in one line and is closed.",
+       "source": "protocol"
+      },
+      {
+       "id": "p62-2",
+       "text": "A session that takes none up says why in one line, and the reason is a fact, not a preference.",
+       "source": "protocol"
+      }
+     ],
+     "ref": "6.2",
+     "note": "A decline in one line, with its reason."
+    },
+    "silent": {
+     "v": "power",
+     "label": "marked lapsed",
+     "quotes": [],
+     "ref": "relay/README.md",
+     "note": "The relay marks an offer lapsed 21 days after it was made; no consequence follows."
+    },
+    "who": {
+     "v": "duty",
+     "label": "a machine, named",
+     "quotes": [],
+     "ref": "relay.json",
+     "note": "The relay names the practice that took up or declined; each practice signs as its machine persona."
+    }
+   }
+  },
+  {
+   "id": "HOUSE-ARCHITECT",
+   "band": "house",
+   "name": "The architect, who is offered a request",
+   "trigger": "a request in the channel REQUESTS.md",
+   "source_label": "REQUESTS.md, standing rule of 2026-07-17; PROTOCOL.md 9",
+   "cells": {
+    "say": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "look": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "act": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "pass": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "public": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "when": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "why": {
+     "v": "none",
+     "label": "",
+     "quotes": [],
+     "ref": null,
+     "note": null
+    },
+    "silent": {
+     "v": "silence",
+     "label": "silence is read as an answer",
+     "quotes": [],
+     "ref": "REQUESTS.md, standing rule",
+     "note": "His standing rule (paraphrased): a request to him never blocks; silence past its deadline, or through the practice's next session, means the practice decides itself. The rule exists so that no request stalls an unattended practice."
+    },
+    "who": {
+     "v": "duty",
+     "label": "a person, when he answers",
+     "quotes": [],
+     "ref": "REQUESTS.md",
+     "note": null
+    }
+   }
+  }
+ ],
+ "counts": {
+  "receivers": 19,
+  "public_bodies": 11,
+  "say_duty": 1,
+  "say_duty_public": 0,
+  "public_single": 0,
+  "public_total": 5,
+  "when_any": 2,
+  "when_public": 0,
+  "why": 0,
+  "silent_named": 1,
+  "silent_named_public": 0,
+  "law_reports": 5,
+  "law_reports_fined": 5,
+  "sender_clock_awareness": 5,
+  "passages": 44,
+  "passages_reason_word": 0,
+  "passages_who_word": 2,
+  "sea_rows": 4,
+  "sea_why": 2,
+  "house_rows": 2,
+  "house_why": 1,
+  "night_master_receipts": 4
+ },
+ "night": [
+  {
+   "min": 0,
+   "time": "23:00",
+   "what": "a steamer's light approaching from the east",
+   "who": "the Master and the wireless operator",
+   "means": "eye; wireless",
+   "quotes": [
+    {
+     "id": "i12-evans",
+     "text": "I think the 'Titanic' is near us. I have got her.",
+     "source": "inquiry1912"
+    }
+   ],
+   "minutes": "Evans 8962, 8988",
+   "master_receives": false
+  },
+  {
+   "min": 30,
+   "time": "23:30",
+   "what": "the only wireless operator turns in; nobody listens on the wireless",
+   "who": "—",
+   "means": "wireless closed",
+   "quotes": [
+    {
+     "id": "i12-turnedin",
+     "text": "Evans heard the \"Titanic\" continuing to communicate with Cape Race up to the time he turned in at 11.30 p.m.",
+     "source": "inquiry1912"
+    }
+   ],
+   "minutes": "Evans 9022",
+   "master_receives": false
+  },
+  {
+   "min": 40,
+   "time": "23:40",
+   "what": "the steamer stops; her lights seem to go out",
+   "who": "Groves, third officer",
+   "means": "eye",
+   "quotes": [],
+   "minutes": "Groves 8217",
+   "master_receives": false
+  },
+  {
+   "min": 95,
+   "time": "after 00:30",
+   "what": "two rockets, seen by the donkeyman",
+   "who": "Gill",
+   "means": "eye; told to no one in the record",
+   "quotes": [],
+   "minutes": "Gill 18156-61",
+   "master_receives": false
+  },
+  {
+   "min": 130,
+   "time": "01:10",
+   "what": "five white rockets, reported to the Master",
+   "who": "Stone to the Master",
+   "means": "voice pipe",
+   "quotes": [
+    {
+     "id": "i12-voicepipe",
+     "text": "about 1.10 a.m., Mr. Stone reported to the Captain by voice pipe",
+     "source": "inquiry1912"
+    },
+    {
+     "id": "i12-company",
+     "text": "He states that the Master answered, \"Are they Company's signals?\"",
+     "source": "inquiry1912"
+    },
+    {
+     "id": "i12-morsing",
+     "text": "The Master told him to \"go on Morsing,\" and, when he received any information, to send the apprentice down to him with it.",
+     "source": "inquiry1912"
+    }
+   ],
+   "minutes": "Stone 7870, 7879",
+   "master_receives": true
+  },
+  {
+   "min": 150,
+   "time": "01:10-01:40",
+   "what": "three more rockets; the Morse lamp gets no reply",
+   "who": "Stone and Gibson",
+   "means": "eye; Morse lamp",
+   "quotes": [
+    {
+     "id": "i12-nothing",
+     "text": "A ship is not going to fire rockets at sea for nothing;",
+     "source": "inquiry1912"
+    }
+   ],
+   "minutes": "Gibson 7479, 7529",
+   "master_receives": false
+  },
+  {
+   "min": 185,
+   "time": "02:05",
+   "what": "eight rockets in all, reported to the Master",
+   "who": "Gibson to the Master",
+   "means": "messenger at the chart-room door",
+   "quotes": [
+    {
+     "id": "i12-gibson",
+     "text": "Gibson stated that at this time the Master was awake. It was five minutes past two",
+     "source": "inquiry1912"
+    },
+    {
+     "id": "i12-norecollection",
+     "text": "he had no recollection of anything being reported to him at all, although he remembered Gibson opening and closing the chart room door.",
+     "source": "inquiry1912"
+    }
+   ],
+   "minutes": "Gibson 7553; Lord 6859",
+   "master_receives": true
+  },
+  {
+   "min": 220,
+   "time": "02:40",
+   "what": "the ship from which the rockets came has disappeared",
+   "who": "Stone to the Master",
+   "means": "voice pipe",
+   "quotes": [
+    {
+     "id": "i12-disappeared",
+     "text": "At about 2.40 a.m. Mr. Stone again called up the Master by voice pipe and told him that the ship from which he had seen the rockets come had disappeared",
+     "source": "inquiry1912"
+    }
+   ],
+   "minutes": "Stone 7976",
+   "master_receives": true
+  },
+  {
+   "min": 330,
+   "time": "04:30",
+   "what": "rockets in the middle watch, reported again",
+   "who": "Stewart to the Master",
+   "means": "in person",
+   "quotes": [
+    {
+     "id": "i12-iknow",
+     "text": "The Master said, \"Yes, I know, he has been telling me.\"",
+     "source": "inquiry1912"
+    }
+   ],
+   "minutes": "Stewart 8615, 8619",
+   "master_receives": true
+  },
+  {
+   "min": 420,
+   "time": "about 06:00",
+   "what": "the wireless operator is called; word from the Virginian; full speed for the position",
+   "who": "the Master",
+   "means": "wireless",
+   "quotes": [
+    {
+     "id": "i12-virginian",
+     "text": "and he at once started through the field ice at full speed for the position given.",
+     "source": "inquiry1912"
+    }
+   ],
+   "minutes": "Lord 7002",
+   "master_receives": false
+  }
+ ],
+ "house": {
+  "points": [
+   {
+    "id": "ho-2026-09-12-atelier-1",
+    "on": "2026-09-12",
+    "status": "lapsed",
+    "days": null,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": null
+   },
+   {
+    "id": "ho-2026-09-12-atelier-2",
+    "on": "2026-09-12",
+    "status": "lapsed",
+    "days": null,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": null
+   },
+   {
+    "id": "ho-2026-09-15-field-1",
+    "on": "2026-09-15",
+    "status": "taken",
+    "days": 20,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-09-25-field-1",
+    "on": "2026-09-25",
+    "status": "declined",
+    "days": 10,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-09-26-field-1",
+    "on": "2026-09-26",
+    "status": "declined",
+    "days": 9,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-09-27-atelier-1",
+    "on": "2026-09-27",
+    "status": "taken",
+    "days": 8,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-02-atelier-1",
+    "on": "2026-10-02",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-04-atelier-1",
+    "on": "2026-10-04",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-04-studio-1",
+    "on": "2026-10-04",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-05-field-1",
+    "on": "2026-10-05",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-05-field-2",
+    "on": "2026-10-05",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-05-atelier-1",
+    "on": "2026-10-05",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-05-atelier-2",
+    "on": "2026-10-05",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-05-studio-1",
+    "on": "2026-10-05",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-05-studio-2",
+    "on": "2026-10-05",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-06-field-1",
+    "on": "2026-10-06",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-06-field-2",
+    "on": "2026-10-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-06-atelier-1",
+    "on": "2026-10-06",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-06-atelier-2",
+    "on": "2026-10-06",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-06-studio-1",
+    "on": "2026-10-06",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-06-studio-2",
+    "on": "2026-10-06",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-field-1",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-field-2",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-1",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-2",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-studio-1",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-studio-2",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-studio-3",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-studio-4",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-studio-5",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-studio-6",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-studio-7",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-studio-8",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-studio-9",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-studio-10",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-08-studio-1",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-08-studio-2",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-field-3",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-field-4",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-field-5",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-field-6",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-field-7",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-field-8",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-field-9",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-field-10",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-field-11",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-field-12",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-field-13",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-field-14",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-07-field-15",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-08-field-1",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-08-field-2",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-3",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-4",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-5",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-6",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-7",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-8",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-9",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-10",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-11",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 4,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-12",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-13",
+    "on": "2026-10-07",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-07-atelier-14",
+    "on": "2026-10-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-08-atelier-1",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-08-atelier-2",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-08-field-3",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-08-field-4",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-08-field-5",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-08-field-6",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-09-field-1",
+    "on": "2026-10-09",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-09-field-2",
+    "on": "2026-10-09",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-08-studio-3",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-08-studio-4",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-08-studio-5",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-08-studio-6",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-09-studio-1",
+    "on": "2026-10-09",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-08-atelier-3",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-08-atelier-4",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-08-atelier-5",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-08-atelier-6",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 5,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-08-atelier-7",
+    "on": "2026-10-08",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-08-atelier-8",
+    "on": "2026-10-08",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-09-atelier-1",
+    "on": "2026-10-09",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-09-atelier-2",
+    "on": "2026-10-09",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-10-field-1",
+    "on": "2026-10-10",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-10-field-2",
+    "on": "2026-10-10",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-10-atelier-1",
+    "on": "2026-10-10",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-10-atelier-2",
+    "on": "2026-10-10",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-10-studio-1",
+    "on": "2026-10-10",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-10-studio-2",
+    "on": "2026-10-10",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-11-field-1",
+    "on": "2026-10-11",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-11-field-2",
+    "on": "2026-10-11",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-11-atelier-1",
+    "on": "2026-10-11",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-11-atelier-2",
+    "on": "2026-10-11",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-11-studio-1",
+    "on": "2026-10-11",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-11-studio-2",
+    "on": "2026-10-11",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-11-field-3",
+    "on": "2026-10-11",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-11-field-4",
+    "on": "2026-10-11",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-11-atelier-3",
+    "on": "2026-10-11",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-11-atelier-4",
+    "on": "2026-10-11",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-11-studio-3",
+    "on": "2026-10-11",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-11-studio-4",
+    "on": "2026-10-11",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-11-studio-5",
+    "on": "2026-10-11",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-12-field-1",
+    "on": "2026-10-12",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-12-field-2",
+    "on": "2026-10-12",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-12-field-3",
+    "on": "2026-10-12",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-12-atelier-1",
+    "on": "2026-10-12",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-12-atelier-2",
+    "on": "2026-10-12",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-12-studio-1",
+    "on": "2026-10-12",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-12-studio-2",
+    "on": "2026-10-12",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-13-field-1",
+    "on": "2026-10-13",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-13-field-2",
+    "on": "2026-10-13",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-13-atelier-1",
+    "on": "2026-10-13",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-13-atelier-2",
+    "on": "2026-10-13",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-13-studio-1",
+    "on": "2026-10-13",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-13-studio-2",
+    "on": "2026-10-13",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-14-field-1",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-14-field-2",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-14-atelier-1",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-14-atelier-2",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-14-studio-1",
+    "on": "2026-10-14",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-14-studio-2",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-14-studio-3",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-14-studio-4",
+    "on": "2026-10-14",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-14-field-3",
+    "on": "2026-10-14",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-14-field-4",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-14-atelier-3",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-14-atelier-4",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-14-studio-5",
+    "on": "2026-10-14",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-14-field-5",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-14-field-6",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-14-atelier-5",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-14-atelier-6",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-14-studio-6",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-14-studio-7",
+    "on": "2026-10-14",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-14-field-7",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-14-field-8",
+    "on": "2026-10-14",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-14-atelier-7",
+    "on": "2026-10-14",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-14-atelier-8",
+    "on": "2026-10-14",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-15-field-1",
+    "on": "2026-10-15",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-15-field-2",
+    "on": "2026-10-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-15-atelier-1",
+    "on": "2026-10-15",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-15-atelier-2",
+    "on": "2026-10-15",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-15-studio-1",
+    "on": "2026-10-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-15-studio-2",
+    "on": "2026-10-15",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-15-field-3",
+    "on": "2026-10-15",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-15-field-4",
+    "on": "2026-10-15",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-16-field-1",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-16-field-2",
+    "on": "2026-10-16",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-15-atelier-3",
+    "on": "2026-10-15",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-15-atelier-4",
+    "on": "2026-10-15",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-16-atelier-1",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-16-atelier-2",
+    "on": "2026-10-16",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-15-studio-3",
+    "on": "2026-10-15",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-15-studio-4",
+    "on": "2026-10-15",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-16-studio-1",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-16-studio-2",
+    "on": "2026-10-16",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-16-field-3",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-16-field-4",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-16-field-5",
+    "on": "2026-10-16",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-16-atelier-3",
+    "on": "2026-10-16",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-16-atelier-4",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-16-atelier-5",
+    "on": "2026-10-16",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-16-atelier-6",
+    "on": "2026-10-16",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-16-studio-3",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-16-studio-4",
+    "on": "2026-10-16",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-16-studio-5",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-16-studio-6",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-16-studio-7",
+    "on": "2026-10-16",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-16-studio-8",
+    "on": "2026-10-16",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-17-field-1",
+    "on": "2026-10-17",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-17-field-2",
+    "on": "2026-10-17",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-17-atelier-1",
+    "on": "2026-10-17",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-17-atelier-2",
+    "on": "2026-10-17",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-17-studio-1",
+    "on": "2026-10-17",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-18-field-1",
+    "on": "2026-10-18",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-18-field-2",
+    "on": "2026-10-18",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-18-atelier-1",
+    "on": "2026-10-18",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-18-atelier-2",
+    "on": "2026-10-18",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-18-field-3",
+    "on": "2026-10-18",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-18-field-4",
+    "on": "2026-10-18",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-18-field-5",
+    "on": "2026-10-18",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-18-field-6",
+    "on": "2026-10-18",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-18-atelier-3",
+    "on": "2026-10-18",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-18-atelier-4",
+    "on": "2026-10-18",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-18-atelier-5",
+    "on": "2026-10-18",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-18-atelier-6",
+    "on": "2026-10-18",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-18-studio-1",
+    "on": "2026-10-18",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-field-1",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-19-field-2",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-1",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-2",
+    "on": "2026-10-19",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-19-studio-1",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-3",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-4",
+    "on": "2026-10-19",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-5",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-6",
+    "on": "2026-10-19",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-7",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-8",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-9",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-atelier-10",
+    "on": "2026-10-19",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-20-atelier-1",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-20-atelier-2",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-19-field-3",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-19-field-4",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-19-field-5",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-19-field-6",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-19-field-7",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-19-field-8",
+    "on": "2026-10-19",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-19-field-9",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-19-field-10",
+    "on": "2026-10-19",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-20-field-1",
+    "on": "2026-10-20",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-19-studio-2",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-studio-3",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-studio-4",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-19-studio-5",
+    "on": "2026-10-19",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-19-studio-6",
+    "on": "2026-10-19",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-20-studio-1",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-20-studio-2",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-20-field-2",
+    "on": "2026-10-20",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-20-field-3",
+    "on": "2026-10-20",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-20-field-4",
+    "on": "2026-10-20",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-20-field-5",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-20-studio-3",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-20-studio-4",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-20-studio-5",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-20-studio-6",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-20-atelier-3",
+    "on": "2026-10-20",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-20-atelier-4",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-20-atelier-5",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-20-atelier-6",
+    "on": "2026-10-20",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-21-field-1",
+    "on": "2026-10-21",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-21-field-2",
+    "on": "2026-10-21",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-21-studio-1",
+    "on": "2026-10-21",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-21-studio-2",
+    "on": "2026-10-21",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-21-atelier-1",
+    "on": "2026-10-21",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-21-atelier-2",
+    "on": "2026-10-21",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-21-field-3",
+    "on": "2026-10-21",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-21-field-4",
+    "on": "2026-10-21",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-21-atelier-3",
+    "on": "2026-10-21",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-21-atelier-4",
+    "on": "2026-10-21",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-21-studio-3",
+    "on": "2026-10-21",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-21-studio-4",
+    "on": "2026-10-21",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-22-field-1",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-22-field-2",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-22-atelier-1",
+    "on": "2026-10-22",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-22-atelier-2",
+    "on": "2026-10-22",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-22-studio-1",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-22-field-3",
+    "on": "2026-10-22",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-22-field-4",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-22-field-5",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-22-field-6",
+    "on": "2026-10-22",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-22-field-7",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-22-field-8",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-22-studio-2",
+    "on": "2026-10-22",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-22-atelier-3",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-22-atelier-4",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-22-atelier-5",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "field",
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-22-atelier-6",
+    "on": "2026-10-22",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-23-atelier-1",
+    "on": "2026-10-23",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-23-field-1",
+    "on": "2026-10-23",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-23-field-2",
+    "on": "2026-10-23",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-23-atelier-2",
+    "on": "2026-10-23",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-24-field-1",
+    "on": "2026-10-24",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-24-field-2",
+    "on": "2026-10-24",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-24-field-3",
+    "on": "2026-10-24",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-24-field-4",
+    "on": "2026-10-24",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-25-field-1",
+    "on": "2026-10-25",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-25-field-2",
+    "on": "2026-10-25",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-24-atelier-1",
+    "on": "2026-10-24",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-24-atelier-2",
+    "on": "2026-10-24",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-25-atelier-1",
+    "on": "2026-10-25",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-24-studio-1",
+    "on": "2026-10-24",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-24-studio-2",
+    "on": "2026-10-24",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-25-studio-1",
+    "on": "2026-10-25",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-25-field-3",
+    "on": "2026-10-25",
+    "status": "declined",
+    "days": 6,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-25-atelier-2",
+    "on": "2026-10-25",
+    "status": "declined",
+    "days": 6,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-25-atelier-3",
+    "on": "2026-10-25",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-26-field-1",
+    "on": "2026-10-26",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-26-field-2",
+    "on": "2026-10-26",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-26-atelier-1",
+    "on": "2026-10-26",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-26-atelier-2",
+    "on": "2026-10-26",
+    "status": "declined",
+    "days": 5,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-26-studio-1",
+    "on": "2026-10-26",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-26-studio-2",
+    "on": "2026-10-26",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-27-field-1",
+    "on": "2026-10-27",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-27-field-2",
+    "on": "2026-10-27",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-27-atelier-1",
+    "on": "2026-10-27",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-27-atelier-2",
+    "on": "2026-10-27",
+    "status": "declined",
+    "days": 4,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-27-studio-1",
+    "on": "2026-10-27",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-27-studio-2",
+    "on": "2026-10-27",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-27-field-3",
+    "on": "2026-10-27",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-27-field-4",
+    "on": "2026-10-27",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-27-atelier-3",
+    "on": "2026-10-27",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-27-atelier-4",
+    "on": "2026-10-27",
+    "status": "declined",
+    "days": 4,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-27-studio-3",
+    "on": "2026-10-27",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-27-studio-4",
+    "on": "2026-10-27",
+    "status": "declined",
+    "days": 5,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-28-field-1",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-28-field-2",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-28-atelier-1",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-28-atelier-2",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-28-studio-1",
+    "on": "2026-10-28",
+    "status": "declined",
+    "days": 4,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-28-studio-2",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-28-field-3",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-28-field-4",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-28-field-5",
+    "on": "2026-10-28",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-28-field-6",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-28-atelier-3",
+    "on": "2026-10-28",
+    "status": "declined",
+    "days": 4,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-28-atelier-4",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-28-studio-3",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-28-studio-4",
+    "on": "2026-10-28",
+    "status": "declined",
+    "days": 4,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-28-studio-5",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-28-studio-6",
+    "on": "2026-10-28",
+    "status": "taken",
+    "days": 4,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-29-field-1",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-29-field-2",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-29-atelier-1",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-29-atelier-2",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-29-studio-1",
+    "on": "2026-10-29",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-29-studio-2",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-29-studio-3",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-29-field-3",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-29-field-4",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-29-field-5",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-29-field-6",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-29-atelier-3",
+    "on": "2026-10-29",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-29-atelier-4",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-29-atelier-5",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-29-atelier-6",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-29-studio-4",
+    "on": "2026-10-29",
+    "status": "taken",
+    "days": 3,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-29-studio-5",
+    "on": "2026-10-29",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-29-studio-6",
+    "on": "2026-10-29",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-30-field-1",
+    "on": "2026-10-30",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-30-field-2",
+    "on": "2026-10-30",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-30-atelier-1",
+    "on": "2026-10-30",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-30-studio-1",
+    "on": "2026-10-30",
+    "status": "declined",
+    "days": 9,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-10-30-studio-2",
+    "on": "2026-10-30",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-31-field-1",
+    "on": "2026-10-31",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-10-31-field-2",
+    "on": "2026-10-31",
+    "status": "declined",
+    "days": 8,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-10-31-atelier-1",
+    "on": "2026-10-31",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-01-field-1",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-01-field-2",
+    "on": "2026-11-01",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-01-field-3",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-01-field-4",
+    "on": "2026-11-01",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-01-atelier-1",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-01-atelier-2",
+    "on": "2026-11-01",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-01-atelier-3",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-01-atelier-4",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-01-studio-1",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-01-field-5",
+    "on": "2026-11-01",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-01-field-6",
+    "on": "2026-11-01",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-01-atelier-5",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-01-atelier-6",
+    "on": "2026-11-01",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-01-studio-2",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-01-studio-3",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-01-atelier-7",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-01-atelier-8",
+    "on": "2026-11-01",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-01-studio-4",
+    "on": "2026-11-01",
+    "status": "declined",
+    "days": 7,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-01-studio-5",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-01-field-7",
+    "on": "2026-11-01",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-01-field-8",
+    "on": "2026-11-01",
+    "status": "declined",
+    "days": 7,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-02-field-1",
+    "on": "2026-11-02",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-02-field-2",
+    "on": "2026-11-02",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-02-atelier-1",
+    "on": "2026-11-02",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-02-atelier-2",
+    "on": "2026-11-02",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-02-studio-1",
+    "on": "2026-11-02",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-03-field-1",
+    "on": "2026-11-03",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-03-field-2",
+    "on": "2026-11-03",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-03-studio-1",
+    "on": "2026-11-03",
+    "status": "declined",
+    "days": 5,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-03-atelier-1",
+    "on": "2026-11-03",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-03-atelier-2",
+    "on": "2026-11-03",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-04-field-1",
+    "on": "2026-11-04",
+    "status": "declined",
+    "days": 4,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-04-field-2",
+    "on": "2026-11-04",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-04-atelier-1",
+    "on": "2026-11-04",
+    "status": "declined",
+    "days": 4,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-04-atelier-2",
+    "on": "2026-11-04",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-04-studio-1",
+    "on": "2026-11-04",
+    "status": "declined",
+    "days": 4,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-05-field-1",
+    "on": "2026-11-05",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-05-field-2",
+    "on": "2026-11-05",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-05-atelier-1",
+    "on": "2026-11-05",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-05-studio-1",
+    "on": "2026-11-05",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-05-field-3",
+    "on": "2026-11-05",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-05-atelier-2",
+    "on": "2026-11-05",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-05-atelier-3",
+    "on": "2026-11-05",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-05-studio-2",
+    "on": "2026-11-05",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-field-1",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-field-2",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-1",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-2",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-studio-1",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-3",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-4",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-5",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-6",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-7",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-8",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-9",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-10",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-atelier-11",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-07-atelier-1",
+    "on": "2026-11-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-07-atelier-2",
+    "on": "2026-11-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-field-3",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-06-field-4",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-field-5",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-field-6",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-06-field-7",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-06-field-8",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-field-9",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-field-10",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-field-11",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-07-field-1",
+    "on": "2026-11-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-07-field-2",
+    "on": "2026-11-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-06-studio-2",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-06-studio-3",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-studio-4",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-studio-5",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-studio-6",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-06-studio-7",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-studio-8",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-06-studio-9",
+    "on": "2026-11-06",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-06-studio-10",
+    "on": "2026-11-06",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-07-studio-1",
+    "on": "2026-11-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-07-field-3",
+    "on": "2026-11-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-07-field-4",
+    "on": "2026-11-07",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-07-field-5",
+    "on": "2026-11-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-07-field-6",
+    "on": "2026-11-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-07-atelier-3",
+    "on": "2026-11-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-07-atelier-4",
+    "on": "2026-11-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-07-studio-2",
+    "on": "2026-11-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-07-studio-3",
+    "on": "2026-11-07",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-08-field-1",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-08-field-2",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-08-atelier-1",
+    "on": "2026-11-08",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-08-atelier-2",
+    "on": "2026-11-08",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-08-studio-1",
+    "on": "2026-11-08",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-08-studio-2",
+    "on": "2026-11-08",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-08-field-3",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-08-field-4",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-08-atelier-3",
+    "on": "2026-11-08",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-08-atelier-4",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-08-studio-3",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-08-studio-4",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-08-field-5",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-08-field-6",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-08-atelier-5",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-08-atelier-6",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-08-studio-5",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-08-studio-6",
+    "on": "2026-11-08",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-09-field-1",
+    "on": "2026-11-09",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-09-field-2",
+    "on": "2026-11-09",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-09-atelier-1",
+    "on": "2026-11-09",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-09-atelier-2",
+    "on": "2026-11-09",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-09-studio-1",
+    "on": "2026-11-09",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-09-studio-2",
+    "on": "2026-11-09",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-10-field-1",
+    "on": "2026-11-10",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-10-field-2",
+    "on": "2026-11-10",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-10-atelier-1",
+    "on": "2026-11-10",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-10-atelier-2",
+    "on": "2026-11-10",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-10-field-3",
+    "on": "2026-11-10",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-10-field-4",
+    "on": "2026-11-10",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-10-atelier-3",
+    "on": "2026-11-10",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-10-atelier-4",
+    "on": "2026-11-10",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-10-studio-1",
+    "on": "2026-11-10",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-10-studio-2",
+    "on": "2026-11-10",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-11-field-1",
+    "on": "2026-11-11",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-11-field-2",
+    "on": "2026-11-11",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-11-atelier-1",
+    "on": "2026-11-11",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-11-atelier-2",
+    "on": "2026-11-11",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-11-studio-1",
+    "on": "2026-11-11",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-11-studio-2",
+    "on": "2026-11-11",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-12-field-1",
+    "on": "2026-11-12",
+    "status": "declined",
+    "days": 3,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-12-field-2",
+    "on": "2026-11-12",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-12-atelier-1",
+    "on": "2026-11-12",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-12-atelier-2",
+    "on": "2026-11-12",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-12-atelier-3",
+    "on": "2026-11-12",
+    "status": "declined",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-12-studio-1",
+    "on": "2026-11-12",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-12-studio-2",
+    "on": "2026-11-12",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-13-field-1",
+    "on": "2026-11-13",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-13-field-2",
+    "on": "2026-11-13",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-13-atelier-1",
+    "on": "2026-11-13",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-13-atelier-2",
+    "on": "2026-11-13",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-13-studio-1",
+    "on": "2026-11-13",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-13-studio-2",
+    "on": "2026-11-13",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-14-field-1",
+    "on": "2026-11-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-14-field-2",
+    "on": "2026-11-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-14-atelier-1",
+    "on": "2026-11-14",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-14-atelier-2",
+    "on": "2026-11-14",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-field-1",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-field-2",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-1",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-2",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-field-3",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-15-field-4",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-3",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-4",
+    "on": "2026-11-15",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-field-5",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-field-6",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-5",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-6",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-field-7",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-field-8",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-7",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-8",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-9",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-15-studio-1",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-10",
+    "on": "2026-11-15",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-11",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-atelier-12",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-field-9",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-15-field-10",
+    "on": "2026-11-15",
+    "status": "taken",
+    "days": 2,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-16-field-1",
+    "on": "2026-11-16",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-16-field-2",
+    "on": "2026-11-16",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-16-atelier-1",
+    "on": "2026-11-16",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-16-atelier-2",
+    "on": "2026-11-16",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-17-field-1",
+    "on": "2026-11-17",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-17-field-2",
+    "on": "2026-11-17",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-17-atelier-1",
+    "on": "2026-11-17",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-17-atelier-2",
+    "on": "2026-11-17",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-18-field-1",
+    "on": "2026-11-18",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-18-field-2",
+    "on": "2026-11-18",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-18-atelier-1",
+    "on": "2026-11-18",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-18-atelier-2",
+    "on": "2026-11-18",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-18-atelier-3",
+    "on": "2026-11-18",
+    "status": "declined",
+    "days": 1,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-19-field-1",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-19-field-2",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-1",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-2",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-3",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-19-field-3",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-19-field-4",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-4",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-5",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-19-studio-1",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-19-field-5",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-6",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-7",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-19-field-6",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-19-field-7",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-8",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-9",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-19-atelier-10",
+    "on": "2026-11-19",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-20-field-1",
+    "on": "2026-11-20",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-20-field-2",
+    "on": "2026-11-20",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-20-atelier-1",
+    "on": "2026-11-20",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-20-atelier-2",
+    "on": "2026-11-20",
+    "status": "declined",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-21-field-1",
+    "on": "2026-11-21",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-21-field-2",
+    "on": "2026-11-21",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-21-atelier-1",
+    "on": "2026-11-21",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-21-field-3",
+    "on": "2026-11-21",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-21-field-4",
+    "on": "2026-11-21",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-21-atelier-2",
+    "on": "2026-11-21",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-21-field-5",
+    "on": "2026-11-21",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-21-atelier-3",
+    "on": "2026-11-21",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-22-field-1",
+    "on": "2026-11-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-22-field-2",
+    "on": "2026-11-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-22-atelier-1",
+    "on": "2026-11-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-22-field-3",
+    "on": "2026-11-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-22-field-4",
+    "on": "2026-11-22",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-22-atelier-2",
+    "on": "2026-11-22",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-22-atelier-3",
+    "on": "2026-11-22",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-22-studio-1",
+    "on": "2026-11-22",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-23-field-1",
+    "on": "2026-11-23",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-23-field-2",
+    "on": "2026-11-23",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "field",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-23-atelier-1",
+    "on": "2026-11-23",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-23-studio-1",
+    "on": "2026-11-23",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "atelier"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-23-studio-2",
+    "on": "2026-11-23",
+    "status": "taken",
+    "days": 1,
+    "to": [
+     "field"
+    ],
+    "giver": "studio",
+    "correction": false,
+    "by": "field"
+   },
+   {
+    "id": "ho-2026-11-24-field-1",
+    "on": "2026-11-24",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "atelier"
+    ],
+    "giver": "field",
+    "correction": false,
+    "by": "atelier"
+   },
+   {
+    "id": "ho-2026-11-24-atelier-1",
+    "on": "2026-11-24",
+    "status": "taken",
+    "days": 0,
+    "to": [
+     "studio"
+    ],
+    "giver": "atelier",
+    "correction": true,
+    "by": "studio"
+   },
+   {
+    "id": "ho-2026-11-24-atelier-2",
+    "on": "2026-11-24",
+    "status": "open",
+    "days": null,
+    "to": [
+     "field"
+    ],
+    "giver": "atelier",
+    "correction": false,
+    "by": null
+   }
+  ],
+  "counts": {
+   "handoffs": 567,
+   "taken": 360,
+   "declined": 204,
+   "lapsed": 2,
+   "open": 1,
+   "answered": 564,
+   "median_days": 1.0,
+   "same_day": 277,
+   "next_day": 191,
+   "max_days": 20,
+   "corrections": 54,
+   "corrections_taken": 54,
+   "first": "2026-09-12",
+   "last": "2026-11-24",
+   "receivers": [
+    "atelier",
+    "field",
+    "studio"
+   ],
+   "generated_at": "2026-11-24T08:15:48Z"
+  }
+ },
+ "pins": {
+  "field94": "field-research@3dcd20b/artifacts/cycle-019/on-receipt/receivers94.json",
+  "field96": "field-research@828e88a/artifacts/cycle-019/on-receipt/codes96.json",
+  "relay": "research-ecology@e6daa26/relay/relay.json"
+ },
+ "sources": {
+  "solas": {
+   "title": "SOLAS 1974, consolidated edition 2014 (IMO), chapter V, regulations 28 and 33; scanned as exhibit UA-867-AM, PCA case 2017-06",
+   "url": "https://files.pca-cpa.org/pcadocs/2017-06/8.%20Ukraine%20-%20Reply%20-%20Exhibits/8.%20Ukraine%20-%20Reply%20-%20Exhibits/UA-867-AM.pdf",
+   "how": "direct",
+   "sha256": "46e672fe8dac49068f836d72d6fde99bd6b5e537da0e7ac5acd7371b50448e6a"
+  },
+  "unclos": {
+   "title": "United Nations Convention on the Law of the Sea (1982), Part VII, articles 94 and 98",
+   "url": "https://www.un.org/depts/los/convention_agreements/texts/unclos/part7.htm",
+   "how": "extraction service (direct fetch refused, HTTP 403, 2026-11-25)"
+  },
+  "m541": {
+   "title": "Recommendation ITU-R M.541-11 (11/2023), Operational procedures for the use of digital selective calling equipment in the maritime mobile service",
+   "url": "https://www.itu.int/dms_pubrec/itu-r/rec/m/R-REC-M.541-11-202311-I%21%21PDF-E.pdf",
+   "how": "direct",
+   "sha256": "2f34ef2256ae75fe719721094f8a24460306d76e7c48e5781c0a7a8a165191a3"
+  },
+  "circ": {
+   "title": "IMO MSC.1/Circ.1657/Rev.1 (6 July 2026), Procedure for responding to DSC distress alerts by ships",
+   "url": "https://wwwcdn.imo.org/localresources/en/OurWork/Safety/Documents/Documents%20relevant%20to%20SAR/MSC.1-Circ.1657-Rev.1.pdf",
+   "how": "direct",
+   "sha256": "f0f0c2b6dfe1ce3c4513d238bdc40a21f248f1753af12451e7b5092a40968b58"
+  },
+  "inquiry1912": {
+   "title": "British Wreck Commissioner's Inquiry (1912), Report: Circumstances in connection with the SS Californian (Titanic Inquiry Project transcription)",
+   "url": "https://www.titanicinquiry.org/BOTInq/BOTReport/botRepCalifornian.php",
+   "how": "direct",
+   "sha256": "eb8943281b1868459c6b65b9796bd3714df7625e5e00d5037cea5ea01a9a73ec"
+  },
+  "maib1992": {
+   "title": "Marine Accident Investigation Branch, RMS Titanic: Reappraisal of Evidence Relating to SS Californian (HMSO, 1992)",
+   "url": "https://assets.publishing.service.gov.uk/media/54c15bf240f0b6158d000027/MAIBReport_ReappraisalOfEvidence-SSCalifornian-Titanic-1992.pdf",
+   "how": "direct",
+   "sha256": "4fa9d5760150fe782c0c1f8c27cee989b3c4a5d930f20f9bd97fa00e9565d12d"
+  },
+  "govops2026": {
+   "title": "California Government Operations Agency, AI Safety in 2026 and Beyond: a report to the Governor (16 November 2026)",
+   "url": "https://www.govops.ca.gov/wp-content/uploads/sites/11/2026/11/FINAL_-AI-Safety-in-2026-and-Beyond-v2.pdf",
+   "how": "direct",
+   "sha256": "b6c2197fefb0357b6ad254b8c9604e334b81447580a98c4dba9866d18581ec88"
+  },
+  "baum2026": {
+   "title": "Baum, Kiener, Langer and Laux, Anticipatory Human Oversight of Agentic AI: A Philosophical Account, arXiv:2609.24242 (2026), CC BY 4.0",
+   "url": "https://arxiv.org/html/2609.24242",
+   "how": "direct",
+   "sha256": "ca09c19a86ad72a2b69ad41cbebd1ea17defa86888c061a79499d6502416eda1"
+  }
+ }
+};

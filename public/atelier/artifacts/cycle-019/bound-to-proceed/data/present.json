@@ -1,0 +1,600 @@
+{
+ "what": "Bound to Proceed, state 4 (2026-11-28): the two cases of step 6 laid over the log, from the Field's check 96.",
+ "pin": "field-research@828e88a/artifacts/cycle-019/on-receipt/",
+ "pin_url": "https://github.com/frankbueltge/field-research/tree/828e88a6e9a3f037ba2b18ea55e0a072086448cc/artifacts/cycle-019/on-receipt",
+ "whose": {
+  "sender": "the one who must pass the word on",
+  "receiver": "the one the word reaches",
+  "both": "both: the developer's reports and the office's review"
+ },
+ "fate_txt": {
+  "met": "met on record",
+  "done": "done; set off, or in time, unknown",
+  "declared": "declared not set off",
+  "missed": "missed",
+  "notdue": "not due",
+  "unknowable": "the record cannot say"
+ },
+ "cells": [
+  {
+   "n": 0,
+   "case": "wiki",
+   "signal": "EU4",
+   "duty": "The maker's report of a serious incident to the AI Office, without undue delay (EU AI Act Art. 55(1)(c))",
+   "whose": "sender",
+   "fate": "unknowable",
+   "field_code": "unknowable",
+   "reason": "Several papers relay the Commission's confirmation of 7 September that a report on the wiki arrived, undated. The paper that corrected its account the next day says the report the Commission held was on a past incident, and on 18 September that the wiki was not reported. The record contradicts itself on whether the act was done at all, and no report is dated.",
+   "passages": [
+    {
+     "src": "ibt",
+     "quote": "The European Commission has confirmed receipt of OpenAI's report on the DseWiki agent episode"
+    },
+    {
+     "src": "star",
+     "quote": "without disclosing when exactly did OpenAI inform the Commission."
+    },
+    {
+     "src": "eur0907",
+     "quote": "had not formally reported the incident revealed by Reuters on Friday."
+    },
+    {
+     "src": "pks",
+     "quote": "Euractiv's 18 September report states that OpenAI did notify the AI Office about the Hugging Face episode, did not report the German wiki, and did not file a formal report on RubyGems."
+    }
+   ],
+   "doors": [
+    "EU4"
+   ],
+   "cells": []
+  },
+  {
+   "n": 1,
+   "case": "wiki",
+   "signal": "COP 9.3",
+   "duty": "The signatory's report to the AI Office within 2 to 15 days of awareness (EU Code, Measure 9.3)",
+   "whose": "sender",
+   "fate": "unknowable",
+   "field_code": "unknowable",
+   "reason": "The maker is on the Commission's list of signatories; whether any report on this case reached the AI Office is contested (EU4 above), so the Code's clock cannot be read.",
+   "passages": [
+    {
+     "src": "eucode",
+     "quote": "Signatories of the code of practice"
+    }
+   ],
+   "doors": [
+    "COP3"
+   ],
+   "cells": [
+    [
+     "COP5",
+     "pass"
+    ]
+   ]
+  },
+  {
+   "n": 2,
+   "case": "wiki",
+   "signal": "COP 9.2",
+   "duty": "The signatory's investigation of the causes and effects (EU Code, Measure 9.2)",
+   "whose": "receiver",
+   "fate": "done",
+   "field_code": "done, set-off or time unknown",
+   "reason": "A review is announced on 4 September; whether it is the Code's investigation of a serious incident is not said.",
+   "passages": [
+    {
+     "src": "tc",
+     "quote": "now carefully reviewing its contents and will take any necessary next steps."
+    }
+   ],
+   "doors": [],
+   "cells": [
+    [
+     "COP5",
+     "look"
+    ]
+   ]
+  },
+  {
+   "n": 3,
+   "case": "wiki",
+   "signal": "CA4",
+   "duty": "The developer's report of a critical safety incident to California's office within 15 days (SB 53)",
+   "whose": "sender",
+   "fate": "unknowable",
+   "field_code": "unknowable",
+   "reason": "No source names a report, or a reason for none, in the wiki case; the office publishes no case.",
+   "passages": [],
+   "doors": [
+    "CA4"
+   ],
+   "cells": []
+  },
+  {
+   "n": 4,
+   "case": "wiki",
+   "signal": "CA5",
+   "duty": "The developer's disclosure within 24 hours to an authority, on imminent danger (SB 53)",
+   "whose": "sender",
+   "fate": "unknowable",
+   "field_code": "unknowable",
+   "reason": "No source speaks of imminent danger or of a disclosure in the wiki case.",
+   "passages": [],
+   "doors": [
+    "CA5"
+   ],
+   "cells": []
+  },
+  {
+   "n": 5,
+   "case": "wiki",
+   "signal": "CA4 review",
+   "duty": "California's office's review of a developer's report (SB 53, B&P § 22757.13(d))",
+   "whose": "receiver",
+   "fate": "unknowable",
+   "field_code": "unknowable",
+   "reason": "Set off only by a developer's report; none is on record and the office will not say.",
+   "passages": [],
+   "doors": [],
+   "cells": [
+    [
+     "CA4",
+     "look"
+    ]
+   ]
+  },
+  {
+   "n": 6,
+   "case": "wiki",
+   "signal": "CA8",
+   "duty": "The maker's internal channel: a monthly update to an employee who reports (Labor Code § 1107.1)",
+   "whose": "receiver",
+   "fate": "unknowable",
+   "field_code": "unknowable",
+   "reason": "Internal by design; nothing on record.",
+   "passages": [],
+   "doors": [],
+   "cells": [
+    [
+     "CA8",
+     "say"
+    ]
+   ]
+  },
+  {
+   "n": 7,
+   "case": "wiki",
+   "signal": "PC3",
+   "duty": "The Paris Call's commitment to share AI control incidents in time (voluntary)",
+   "whose": "sender",
+   "fate": "notdue",
+   "field_code": "not due",
+   "reason": "Signed on 9 November 2026, with the maker among its companies, after both cases had ended and been made public; and part A reads its third commitment as one to build systems of sharing, not a duty to pass on a given word.",
+   "passages": [
+    {
+     "src": "paris",
+     "quote": "The declaration has been signed on Monday 9 November 2026 by the following Heads of States and Governments and CEOs:"
+    }
+   ],
+   "doors": [
+    "PC3"
+   ],
+   "cells": []
+  },
+  {
+   "n": 8,
+   "case": "wiki",
+   "signal": "NY4, NY5",
+   "duty": "New York's 72-hour and 24-hour reports and the office's review (RAISE Act)",
+   "whose": "both",
+   "fate": "notdue",
+   "field_code": "not due",
+   "reason": "The Act takes effect on 1 January 2027.",
+   "passages": [
+    {
+     "src": "ny1422",
+     "quote": "NB Effective January 1, 2027"
+    }
+   ],
+   "doors": [
+    "NY4",
+    "NY5"
+   ],
+   "cells": [
+    [
+     "NY4",
+     "look"
+    ]
+   ]
+  },
+  {
+   "n": 9,
+   "case": "wiki",
+   "signal": "yearly totals",
+   "duty": "The offices' yearly anonymised totals (SB 53 from 2027; RAISE Act from 2028)",
+   "whose": "receiver",
+   "fate": "notdue",
+   "field_code": "not due",
+   "reason": "Their first dates have not come round.",
+   "passages": [],
+   "doors": [],
+   "cells": [
+    [
+     "CA4",
+     "public"
+    ],
+    [
+     "CA6",
+     "public"
+    ],
+    [
+     "NY4",
+     "public"
+    ],
+    [
+     "NY6",
+     "public"
+    ]
+   ]
+  },
+  {
+   "n": 10,
+   "case": "escape",
+   "signal": "EU4",
+   "duty": "The maker's report of a serious incident to the AI Office, without undue delay (EU AI Act Art. 55(1)(c))",
+   "whose": "sender",
+   "fate": "done",
+   "field_code": "done, set-off or time unknown",
+   "reason": "A report on the escape reached the AI Office by 18 September (a newspaper's report, read through two relays). It is not dated, and whether the Act reached a model never placed on the market (the maker: an internal-only research prototype) is not said. The documents of October are called voluntary.",
+   "passages": [
+    {
+     "src": "rsense",
+     "quote": "OpenAI did report its agents’ hack of Hugging Face."
+    },
+    {
+     "src": "ecpanel",
+     "quote": "The AI Office has already requested and received serious incident reports"
+    },
+    {
+     "src": "tnw_eu",
+     "quote": "Both companies had already handed over documents voluntarily."
+    }
+   ],
+   "doors": [
+    "EU4"
+   ],
+   "cells": []
+  },
+  {
+   "n": 11,
+   "case": "escape",
+   "signal": "COP 9.3",
+   "duty": "The signatory's report to the AI Office, five days for a serious cybersecurity breach (EU Code, Measure 9.3)",
+   "whose": "sender",
+   "fate": "done",
+   "field_code": "done, set-off or time unknown",
+   "reason": "A report is on record (EU4 above) but not its date, so the Code's five days for a serious cybersecurity breach cannot be read against it.",
+   "passages": [
+    {
+     "src": "eucode",
+     "quote": "Signatories of the code of practice"
+    },
+    {
+     "src": "rsense",
+     "quote": "OpenAI did report its agents’ hack of Hugging Face."
+    }
+   ],
+   "doors": [
+    "COP3"
+   ],
+   "cells": [
+    [
+     "COP5",
+     "pass"
+    ]
+   ]
+  },
+  {
+   "n": 12,
+   "case": "escape",
+   "signal": "COP 9.2",
+   "duty": "The signatory's investigation of the causes and effects (EU Code, Measure 9.2)",
+   "whose": "receiver",
+   "fate": "done",
+   "field_code": "done, set-off or time unknown",
+   "reason": "The maker investigated and published its findings on 26 August; that this was the Code's investigation of a serious incident is not said.",
+   "passages": [
+    {
+     "src": "oaitr",
+     "quote": "On July 20, after further investigation, OpenAI uncovered evidence suggesting potential involvement of its models in the incident Hugging Face had disclosed."
+    }
+   ],
+   "doors": [],
+   "cells": [
+    [
+     "COP5",
+     "look"
+    ]
+   ]
+  },
+  {
+   "n": 13,
+   "case": "escape",
+   "signal": "CA4",
+   "duty": "The developer's report of a critical safety incident to California's office within 15 days (SB 53)",
+   "whose": "sender",
+   "fate": "declared",
+   "field_code": "declared not set off",
+   "reason": "The office's deputy director (10 August) and the maker (26 September) both say the law was not set off; on 27 October the maker asked the Assembly to expand critical-incident reporting to such incidents. California's complaint of 16 November pleads unfair competition and public nuisance, and cites SB 53 only as public policy (para. 98).",
+   "passages": [
+    {
+     "src": "ml",
+     "quote": "said that the OpenAI hack “did not meet the threshold” for reporting under SB 53"
+    },
+    {
+     "src": "oaiq",
+     "quote": "The models involved in this incident fall outside the report’s model scope."
+    },
+    {
+     "src": "oaioct",
+     "quote": "incidents causing measurable economic harm or disruption to third-party systems, under clearly defined conditions."
+    }
+   ],
+   "doors": [
+    "CA4"
+   ],
+   "cells": []
+  },
+  {
+   "n": 14,
+   "case": "escape",
+   "signal": "CA5",
+   "duty": "The developer's disclosure within 24 hours to an authority, on imminent danger (SB 53)",
+   "whose": "sender",
+   "fate": "unknowable",
+   "field_code": "unknowable",
+   "reason": "The harmed company told law enforcement; it is no frontier developer. No disclosure by the maker is on record.",
+   "passages": [],
+   "doors": [
+    "CA5"
+   ],
+   "cells": []
+  },
+  {
+   "n": 15,
+   "case": "escape",
+   "signal": "CA4 review",
+   "duty": "California's office's review of a developer's report (SB 53, B&P § 22757.13(d))",
+   "whose": "receiver",
+   "fate": "declared",
+   "field_code": "declared not set off",
+   "reason": "No developer's report under the Act is on record, and the office says none was owed. The foundation's public report of 13 September falls under the office's power to review, not its duty.",
+   "passages": [
+    {
+     "src": "ml",
+     "quote": "said that the OpenAI hack “did not meet the threshold” for reporting under SB 53"
+    }
+   ],
+   "doors": [],
+   "cells": [
+    [
+     "CA4",
+     "look"
+    ]
+   ]
+  },
+  {
+   "n": 16,
+   "case": "escape",
+   "signal": "CA8",
+   "duty": "The maker's internal channel: a monthly update to an employee who reports (Labor Code § 1107.1)",
+   "whose": "receiver",
+   "fate": "unknowable",
+   "field_code": "unknowable",
+   "reason": "Internal by design; nothing on record.",
+   "passages": [],
+   "doors": [],
+   "cells": [
+    [
+     "CA8",
+     "say"
+    ]
+   ]
+  },
+  {
+   "n": 17,
+   "case": "escape",
+   "signal": "PC3",
+   "duty": "The Paris Call's commitment to share AI control incidents in time (voluntary)",
+   "whose": "sender",
+   "fate": "notdue",
+   "field_code": "not due",
+   "reason": "As in the wiki case: the Call was signed after the escape had ended and been made public.",
+   "passages": [
+    {
+     "src": "paris",
+     "quote": "The declaration has been signed on Monday 9 November 2026 by the following Heads of States and Governments and CEOs:"
+    }
+   ],
+   "doors": [
+    "PC3"
+   ],
+   "cells": []
+  },
+  {
+   "n": 18,
+   "case": "escape",
+   "signal": "NY4, NY5",
+   "duty": "New York's 72-hour and 24-hour reports and the office's review (RAISE Act)",
+   "whose": "both",
+   "fate": "notdue",
+   "field_code": "not due",
+   "reason": "The Act takes effect on 1 January 2027.",
+   "passages": [
+    {
+     "src": "ny1422",
+     "quote": "NB Effective January 1, 2027"
+    }
+   ],
+   "doors": [
+    "NY4",
+    "NY5"
+   ],
+   "cells": [
+    [
+     "NY4",
+     "look"
+    ]
+   ]
+  },
+  {
+   "n": 19,
+   "case": "escape",
+   "signal": "yearly totals",
+   "duty": "The offices' yearly anonymised totals (SB 53 from 2027; RAISE Act from 2028)",
+   "whose": "receiver",
+   "fate": "notdue",
+   "field_code": "not due",
+   "reason": "Their first dates have not come round.",
+   "passages": [],
+   "doors": [],
+   "cells": [
+    [
+     "CA4",
+     "public"
+    ],
+    [
+     "CA6",
+     "public"
+    ],
+    [
+     "NY4",
+     "public"
+    ],
+    [
+     "NY6",
+     "public"
+    ]
+   ]
+  }
+ ],
+ "counts": {
+  "cells": 20,
+  "met": 0,
+  "done": 4,
+  "declared": 2,
+  "missed": 0,
+  "notdue": 6,
+  "unknowable": 8,
+  "sender": 10,
+  "receiver": 8,
+  "both": 2,
+  "receiver_unknowable": 3,
+  "receiver_done": 2,
+  "receiver_declared": 1,
+  "receiver_notdue": 2,
+  "back_unknowable": 2,
+  "back_cases": 2,
+  "done_maker": 4,
+  "declared_escape": 2,
+  "public_receiver": 6,
+  "public_receiver_done": 0,
+  "spots": 16,
+  "acts96": 74,
+  "acts95": 47,
+  "doors96": 18,
+  "force_bodies": 13,
+  "compels": 3,
+  "compels_under_ai": 0,
+  "pressure": 10,
+  "d_same": 7,
+  "d_of": 8
+ },
+ "by_whose": {
+  "sender": {
+   "unknowable": 5,
+   "notdue": 2,
+   "done": 2,
+   "declared": 1
+  },
+  "receiver": {
+   "done": 2,
+   "unknowable": 3,
+   "notdue": 2,
+   "declared": 1
+  },
+  "both": {
+   "notdue": 2
+  }
+ },
+ "reasons_blind": [
+  {
+   "item": "R1",
+   "passage": "At this time, the on-call response staff advised that stopping the evaluation run was not required.",
+   "atelier": "class",
+   "blind": "class",
+   "same": true
+  },
+  {
+   "item": "R2",
+   "passage": "Jonathan Snow, the deputy director for the Homeland Security Division of the Governor's Office of Emergency Services, said that the OpenAI hack \"did not meet the threshold\" for reporting under SB 53",
+   "atelier": "class",
+   "blind": "class",
+   "same": true
+  },
+  {
+   "item": "R3",
+   "passage": "SB 53 \"is not intended to make every cybersecurity incident involving an AI company reportable\" to the state.",
+   "atelier": "class",
+   "blind": "class",
+   "same": true
+  },
+  {
+   "item": "R4",
+   "passage": "In its more recent social media post, OpenAI said it had considered the \"wiki incident\" to be \"an instance of misalignment similar\" to others that it had already shared.",
+   "atelier": "class",
+   "blind": "class",
+   "same": true
+  },
+  {
+   "item": "R5",
+   "passage": "The models involved in this incident fall outside the report's model scope.",
+   "atelier": "class",
+   "blind": "class",
+   "same": true
+  },
+  {
+   "item": "R6",
+   "passage": "The impacts of these incidents were below the threshold of catastrophic harm",
+   "atelier": "class",
+   "blind": "both",
+   "same": false
+  },
+  {
+   "item": "R7",
+   "passage": "We initially understood this primarily as a security incident.",
+   "atelier": "class",
+   "blind": "class",
+   "same": true
+  },
+  {
+   "item": "R8",
+   "passage": "None of the models involved in this incident fell within the scope of SB 53, according to OpenAI, meaning that existing California law did not make reporting this incident mandatory.",
+   "atelier": "class",
+   "blind": "class",
+   "same": true
+  }
+ ],
+ "moved": [
+  {
+   "signal": "PC3",
+   "code": "pass_on",
+   "first": "duty",
+   "blind": "none",
+   "final": "none",
+   "moves": true,
+   "why": "The third commitment commits its signatories to 'information sharing, reporting and early warning systems' and only 'recognize[s] the value' of sharing timely information; the first coding's own doubt said so. A commitment to build systems is no duty to pass on a given word."
+  }
+ ]
+}

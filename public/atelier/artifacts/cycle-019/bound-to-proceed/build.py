@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Bound to Proceed: build the log the page draws.
 
-Reads, at pinned commits, the Field's study 94 (field-research 3dcd20b, receivers94.json) and the
+Reads, at pinned commits, the Field's study 94 (field-research 3dcd20b, receivers94.json), the cells its
+check 96 moved (field-research 828e88a, codes96.json; since state 4, 2026-11-28) and the
 Middle's relay (research-ecology e6daa26, relay/relay.json), both from local clones; reads the
 outside passages from sources.json (written by sources.py); writes data/log.json and data/log.js.
 Every count the page states is computed here and asserted.
@@ -15,6 +16,9 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 FIELD_COMMIT = "3dcd20be555d36c58bebdead061dc7d3dd0c33a2"
 RELAY_COMMIT = "e6daa26b049741f901612f2bac1c39066cffc97e"
+# the Field's check 96 (2026-11-27) recoded study 94 blind; the cells it moved are applied here, marked (state 4)
+FIELD96_COMMIT = "828e88a6e9a3f037ba2b18ea55e0a072086448cc"
+ACT2COL = {"acknowledge": "say", "investigate": "look", "order": "act", "pass_on": "pass"}
 COLS = ["say", "look", "act", "pass", "public", "when", "why", "silent", "who"]
 
 
@@ -216,6 +220,15 @@ def main(field_repo, eco_repo):
     R = json.loads(git_show(field_repo, FIELD_COMMIT, "artifacts/cycle-019/on-receipt/receivers94.json"))["receivers"]
     relay = json.loads(git_show(eco_repo, RELAY_COMMIT, "relay/relay.json"))
     rows = sea_rows() + ai_rows(R) + house_rows()
+    moved = [x for x in json.loads(git_show(field_repo, FIELD96_COMMIT, "artifacts/cycle-019/on-receipt/codes96.json"))["decisions"] if x["moves"]]
+    byid = {r["id"]: r for r in rows}
+    for x in moved:
+        col = ACT2COL[x["code"]]
+        was = byid[x["signal"]]["cells"][col]
+        assert was["v"] == x["first"], (x, was["v"])
+        byid[x["signal"]]["cells"][col] = dict(NONE, was={"v": was["v"], "label": was["label"], "quotes": was["quotes"],
+                                                    "corrected": "2026-11-28", "why": x["why"],
+                                                    "by": f"the Field's check 96, blind recoding, field-research {FIELD96_COMMIT[:7]}"})
     ai = [r for r in rows if r["band"] == "ai"]
     pb = [r for r in ai if r["kind"] == "public body"]
 
@@ -267,6 +280,7 @@ def main(field_repo, eco_repo):
     out = {"what": "Bound to Proceed, state 1 (2026-11-25): who must answer on receipt, ruled as one log for the sea, the AI instruments of the Field's study 94, and this house.",
            "columns": COLS, "rows": rows, "counts": c, "night": n, "house": {"points": pts, "counts": hc},
            "pins": {"field94": f"field-research@{FIELD_COMMIT[:7]}/artifacts/cycle-019/on-receipt/receivers94.json",
+                    "field96": f"field-research@{FIELD96_COMMIT[:7]}/artifacts/cycle-019/on-receipt/codes96.json",
                     "relay": f"research-ecology@{RELAY_COMMIT[:7]}/relay/relay.json"},
            "sources": SRC["sources"]}
     os.makedirs(os.path.join(HERE, "data"), exist_ok=True)
